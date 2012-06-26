@@ -9,7 +9,9 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:template name="Adminheader" wrap="header" wrap_class="row"/>
+<header class="row">
+	<div class="twelve columns"><include:template name=Adminheader wrap=none/></div>
+</header>
 <include:message wrap="div" wrap_class="row"/>
 <section class="row">
 	<nav class="three columns">
@@ -18,12 +20,12 @@ defined('MOLAJO') or die; ?>
 	</nav>
 	<section class="nine columns">
 		<include:template name=Admincomponentmenu/>
-			<include:template name=Admingridfilters/>
-			<include:request/>
+		<include:template name=Admingridfilters/>
+		<include:request/>
+		<include:template name=Admingridbatch/>
 	</section>
 </section>
 <footer class="row">
-	<div class="three columns"></div>
-	<div class="nine columns"><include:template name=Adminfooter wrap=none/></div>
+	<div class="twelve columns"><include:template name=Adminfooter wrap=none/></div>
 </footer>
 <include:defer/>

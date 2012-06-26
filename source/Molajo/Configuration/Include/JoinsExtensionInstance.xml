@@ -1,3 +1,8 @@
+<join model="Catalog"
+      alias="catalog"
+      select="id,sef_request"
+      jointo="source_id,catalog_type_id,redirect_to_id"
+      joinwith="id,catalog_type_id,0"/>
 <join model="Extensions"
       alias="extensions"
       select="id,name"

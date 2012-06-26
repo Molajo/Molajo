@@ -20,7 +20,6 @@ if (count(Services::Registry()->get('Trigger', 'AdminBreadcrumbs')) > 0) {
 	}
 }
 defined('MOLAJO') or die; ?>
-
 <dl class="sub-nav">
-	<dt><?php echo Services::Language()->translate('OPTIONS'); ?></dt>
+	<dt><?php echo Services::Language()->translate('STATUS'); ?></dt>
 	<dd<?php echo $class; ?>><a href="<?php echo $component; ?>"><?php echo $componentTitle; ?></a></dd>

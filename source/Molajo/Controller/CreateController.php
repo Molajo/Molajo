@@ -53,13 +53,13 @@ class CreateController extends ModelController
 		$valid = $this->onBeforeCreateEvent();
 		if ($valid === false) {
 			return false;
-			//errror
+			//error
 		}
 
 		$valid = $this->checkFields();
 		if ($valid === false) {
 			return false;
-			//errror
+			//error
 		}
 
 		$value = $this->checkForeignKeys();
@@ -93,7 +93,7 @@ class CreateController extends ModelController
 				$results = $this->onAfterCreateEvent($data);
 				if ($results === false) {
 					return false;
-					//errror
+					//error
 				}
 				$results = $data->id;
 			}

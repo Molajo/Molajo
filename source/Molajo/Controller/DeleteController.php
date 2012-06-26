@@ -35,10 +35,9 @@ class DeleteController extends ModelController
 			return false;
 		}
 
-		$this->connect('Table', $this->data->model_name, 'DeleteModel');
-		if (isset($this->data->id) && (int)$this->data->id > 0) {
-		} else {
-			$this->data->id = Services::Registry()->get($this->table_registry_name, 'id');
+		$results = $this->getDeleteData();
+		if ($results === false) {
+			return false;
 		}
 
 		$results = $this->checkPermissions();
@@ -47,54 +46,28 @@ class DeleteController extends ModelController
 			//return false (not yet)
 		}
 
-		$this->getTriggerList('create');
+		$this->getTriggerList('delete');
 
 		$valid = $this->onBeforeDeleteEvent();
 		if ($valid === false) {
 			return false;
-			//errror
+			//error
 		}
-
-		$valid = $this->checkFields();
-		if ($valid === false) {
-			return false;
-			//errror
-		}
-
-		$value = $this->checkForeignKeys();
 
 		if ($valid === true) {
 
-			$fields = Services::Registry()->get($this->table_registry_name, 'fields');
-
-			if (count($fields) == 0 || $fields === null) {
-				return false;
-			}
-
-			$data = new \stdClass();
-			foreach ($fields as $f) {
-				foreach ($f as $key => $value) {
-					if ($key == 'name') {
-						if (isset($this->data->$value)) {
-							$data->$value = $this->data->$value;
-						} else {
-							$data->$value = null;
-						}
-					}
-				}
-			}
-
-			$results = $this->model->create($data, $this->table_registry_name);
+			$this->connect('Table', $this->data->model_name, 'DeleteModel');
+			$results = $this->model->delete($this->data, $this->table_registry_name);
 
 			if ($results === false) {
 			} else {
-				$data->id = $results;
-				$results = $this->onAfterDeleteEvent($data);
+				$this->data->id = $results;
+				$results = $this->onAfterDeleteEvent();
 				if ($results === false) {
 					return false;
-					//errror
+					//error
 				}
-				$results = $data->id;
+				$results = $this->data->id;
 			}
 		}
 
@@ -122,6 +95,89 @@ class DeleteController extends ModelController
 	}
 
 	/**
+	 * Retrieve data to be deleted
+	 *
+	 * @param string $connect
+	 *
+	 * @return bool|mixed
+	 * @since  1.0
+	 */
+	public function getDeleteData()
+	{
+		$hold_model_name = $this->data->model_name;
+		$this->connect('Table', $hold_model_name);
+
+		$this->set('use_special_joins', 0);
+		$name_key = $this->get('name_key');
+		$primary_key = $this->get('primary_key');
+		$primary_prefix = $this->get('primary_prefix', 'a');
+
+		if (isset($this->data->$primary_key)) {
+			$this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($primary_key)
+				. ' = ' . $this->model->db->q($this->data->$primary_key));
+
+		} elseif (isset($this->data->$name_key)) {
+			$this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($name_key)
+			. ' = ' . $this->model->db->q($this->data->$name_key));
+
+		} else {
+			//only deletes single rows
+			return false;
+		}
+
+		if (isset($this->data->catalog_type_id)) {
+			$this->model->query->where($this->model->db->qn($primary_prefix)
+				. '.' . $this->model->db->qn('catalog_type_id')
+				. ' = ' . $this->model->db->q($this->data->catalog_type_id));
+		}
+
+		$item = $this->getData('item');
+//		echo '<br /><br /><br />';
+//		echo $this->model->query->__toString();
+//		echo '<br /><br /><br />';
+
+		if ($item === false)  {
+			//error
+			return false;
+		}
+
+		$fields = Services::Registry()->get($this->table_registry_name, 'fields');
+		if (count($fields) == 0 || $fields === null) {
+			return false;
+		}
+
+		$this->data = new \stdClass();
+		foreach ($fields as $f) {
+			foreach ($f as $key => $value) {
+				if ($key == 'name') {
+					if (isset($item->$value)) {
+						$this->data->$value = $item->$value;
+					} else {
+						$this->data->$value = null;
+					}
+				}
+			}
+		}
+
+		if (isset($item->catalog_id)) {
+			$this->data->catalog_id = $item->catalog_id;
+		}
+		$this->data->model_name = $hold_model_name;
+
+		/** Process each field namespace  */
+		$customFieldTypes = Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups');
+
+		if (count($customFieldTypes) > 0) {
+			foreach ($customFieldTypes as $customFieldName) {
+				$customFieldName = ucfirst(strtolower($customFieldName));
+				Services::Registry()->merge($this->table_registry_name . $customFieldName, $customFieldName);
+				Services::Registry()->deleteRegistry($this->table_registry_name . $customFieldName);
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * checkPermissions for Delete
 	 *
 	 * @return bool
@@ -129,273 +185,14 @@ class DeleteController extends ModelController
 	 */
 	protected function checkPermissions()
 	{
-
-		$results = Services::Authorisation()->authoriseTask('Delete', $this->data->catalog_id);
-		if ($results === false) {
+		//todo - figure out what joining isn't working, get catalog id
+		//$results = Services::Authorisation()->authoriseTask('Delete', $this->data->catalog_id);
+		//if ($results === false) {
 			//error
 			//return false (not yet)
-		}
+		//}
 
 		return true;
-	}
-
-	/**
-	 * checkFields
-	 *
-	 * Runs custom validation methods
-	 *
-	 * @return object
-	 * @since   1.0
-	 */
-	protected function checkFields()
-	{
-
-		$userHTMLFilter = Services::Authorisation()->setHTMLFilter();
-
-		/** Custom Field Groups */
-		$customfieldgroups = Services::Registry()->get(
-			$this->table_registry_name, 'customfieldgroups', array());
-
-		if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
-
-			foreach ($customfieldgroups as $customFieldName) {
-
-				/** For this Custom Field Group (ex. Parameters, metadata, etc.) */
-				$customFieldName = strtolower($customFieldName);
-				if (isset($this->data->$customFieldName)) {
-				} else {
-					$this->data->$customFieldName = '';
-				}
-
-				/** Retrieve Field Definitions from Registry (XML) */
-				$fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
-
-				/** Shared processing  */
-				$valid = $this->processFieldGroup($fields, $userHTMLFilter, $customFieldName);
-
-				if ($valid === true) {
-				} else {
-					return false;
-				}
-			}
-		}
-
-		/** Standard Field Group */
-		$fields = Services::Registry()->get($this->table_registry_name, 'fields');
-		if (count($fields) == 0 || $fields === null) {
-			return false;
-		}
-
-		$valid = $this->processFieldGroup($fields, $userHTMLFilter, '');
-		if ($valid === true) {
-		} else {
-			return false;
-		}
-
-		Services::Debug()->set('DeleteController::checkFields Filter::Success: ' . $valid);
-
-		return $valid;
-	}
-
-	/**
-	 * processFieldGroup - runs custom filtering, defaults, validation for a field group
-	 *
-	 * @param $fields
-	 * @param $userHTMLFilter
-	 *
-	 * @return bool
-	 * @since  1.0
-	 */
-	protected function processFieldGroup($fields, $userHTMLFilter, $customFieldName = '')
-	{
-		$valid = true;
-
-		if ($customFieldName == '') {
-		} else {
-			$fieldArray = array();
-		}
-
-		foreach ($fields as $f) {
-
-			if (isset($f['name'])) {
-				$name = $f['name'];
-			} else {
-				return false;
-				//error
-			}
-
-			if (isset($f['type'])) {
-				$type = $f['type'];
-			} else {
-				$type = null;
-			}
-
-			if (isset($f['null'])) {
-				$null = $f['null'];
-			} else {
-				$null = null;
-			}
-
-			if (isset($f['default'])) {
-				$default = $f['default'];
-			} else {
-				$default = null;
-			}
-
-			if (isset($f['identity'])) {
-				$identity = $f['identity'];
-			} else {
-				$identity = 0;
-			}
-
-			/** Retrieve value from data */
-			if ($customFieldName == '') {
-
-				if (isset($this->data->$name)) {
-					$value = $this->data->$name;
-				} else {
-					$value = null;
-				}
-
-			} else {
-				if (isset($this->data->$customFieldName[$name])) {
-					$value = $this->data->$customFieldName[$name];
-				} else {
-					$value = null;
-				}
-			}
-
-			if ($type == null || $type == 'customfield') {
-
-			} elseif ($type == 'text' && $userHTMLFilter === false) {
-
-			} elseif ($identity == '1') {
-
-			} else {
-
-				try {
-					/** Filters, sets defaults, and validates */
-					$value = Services::Filter()->filter($value, $type, $null, $default);
-
-					if ($customFieldName == '') {
-						$this->data->$name = trim($value);
-
-					} else {
-
-						$fieldArray[$name] = trim($value);
-					}
-
-				} catch (Exception $e) {
-
-					echo 'DeleteController::checkFields Filter Failed' . ' ' . $e->message;
-					die;
-				}
-			}
-		}
-
-
-		if ($customFieldName == '') {
-		} else {
-			ksort($fieldArray);
-			$this->data->$customFieldName = $fieldArray;
-		}
-
-		Services::Debug()->set('DeleteController::checkFields Filter::Success: ' . $valid);
-
-		return $valid;
-	}
-
-	/**
-	 * checkForeignKeys - validates the existence of all foreign keys
-	 *
-	 * @return object
-	 * @since   1.0
-	 */
-	protected function checkForeignKeys()
-	{
-
-		$foreignkeys = Services::Registry()->get($this->table_registry_name, 'foreignkeys');
-
-		if (count($foreignkeys) == 0 || $foreignkeys === null) {
-			return false;
-		}
-
-		$valid = true;
-
-		foreach ($foreignkeys as $fk) {
-
-			/** Retrieve Model Foreign Key Definitions */
-			if (isset($fk['name'])) {
-				$name = $fk['name'];
-			} else {
-				return false;
-				//error
-			}
-			if (isset($fk['source_id'])) {
-				$source_id = $fk['source_id'];
-			} else {
-				return false;
-				//error
-			}
-
-			if (isset($fk['source_model'])) {
-				$source_model = ucfirst(strtolower($fk['source_model']));
-			} else {
-				return false;
-				//error
-			}
-
-			if (isset($fk['required'])) {
-				$required = $fk['required'];
-			} else {
-				return false;
-				//error
-			}
-
-			/** Retrieve Model Foreign Key Definitions */
-			if (isset($this->data->$name)) {
-			} else {
-				if ((int)$required == 0) {
-					return true;
-				}
-				// error
-				return false;
-			}
-
-			if (isset($this->data->$name)) {
-
-				$controllerClass = 'Molajo\\Controller\\ModelController';
-				$m = new $controllerClass();
-				$results = $m->connect('Table', $source_model);
-				if ($results == false) {
-					return false;
-				}
-
-				$m->model->query->select('COUNT(*)');
-				$m->model->query->from($m->model->db->qn($m->get('table_name')));
-				$m->model->query->where($m->model->db->qn($source_id)
-					. ' = ' . (int)$this->data->$name);
-
-				$m->set('get_customfields', 0);
-				$m->set('get_item_children', 0);
-				$m->set('use_special_joins', 0);
-				$m->set('check_view_level_access', 0);
-				$m->set('process_triggers', 0);
-
-				$value = $m->getData('result');
-
-				if (empty($value)) {
-					//error
-					return false;
-				}
-
-			} else {
-				if ($required == 0) {
-				} else {
-					return false;
-				}
-			}
-		}
 	}
 
 	/**
@@ -440,7 +237,7 @@ class DeleteController extends ModelController
 	 * @return boolean
 	 * @since   1.0
 	 */
-	protected function onAfterDeleteEvent($data)
+	protected function onAfterDeleteEvent()
 	{
 		if (count($this->triggers) == 0
 			|| (int)$this->get('process_triggers') == 0
@@ -452,7 +249,7 @@ class DeleteController extends ModelController
 		$arguments = array(
 			'table_registry_name' => $this->table_registry_name,
 			'db' => $this->model->db,
-			'data' => $data,
+			'data' => $this->data,
 			'parameters' => $this->parameters,
 			'model_name' => $this->get('model_name')
 		);
@@ -464,8 +261,8 @@ class DeleteController extends ModelController
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
-		$data = $arguments['data'];
+		$this->data = $arguments['data'];
 
-		return $data;
+		return true;
 	}
 }

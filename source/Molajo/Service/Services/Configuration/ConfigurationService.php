@@ -518,7 +518,19 @@ Class ConfigurationService
 			}
 		}
 
-		/** 5. Application Configuration folder is the last */
+
+		/** 5. Any Component (in case of delete or using a component in a non-request position, etc.) */
+		$folders = Services::Filesystem()->folderFolders(EXTENSIONS_COMPONENTS, $filter = '',
+			$recurse = false, $fullpath = false, $exclude = array('.git'));
+		foreach ($folders as $folder) {
+			if (strtolower($folder) == strtolower($model_name)) {
+				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $folder . '/Configuration.xml')) {
+					return EXTENSIONS_COMPONENTS . '/' . $folder . '/Configuration.xml';
+				}
+			}
+		}
+
+		/** 6. Application Configuration folder is the last */
 		if (file_exists(CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml')) {
 			return CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
 		}

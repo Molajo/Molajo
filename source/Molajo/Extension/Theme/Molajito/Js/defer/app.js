@@ -1,81 +1,76 @@
-/* Foundation v2.2.1 http://foundation.zurb.com */
 jQuery(document).ready(function ($) {
 
-	/* Use this js doc for all application specific JS */
+  /* Use this js doc for all application specific JS */
 
-	/* TABS --------------------------------- */
-	/* Remove if you don't need :) */
+  /* TABS --------------------------------- */
+  /* Remove if you don't need :) */
 
-	function activateTab($tab) {
-		var $activeTab = $tab.closest('dl').find('a.active'),
-				contentLocation = $tab.attr("href") + 'Tab';
-				
-		// Strip off the current url that IE adds
-		contentLocation = contentLocation.replace(/^.+#/, '#');
+  function activateTab($tab) {
+    var $activeTab = $tab.closest('dl').find('a.active'),
+        contentLocation = $tab.attr("href") + 'Tab';
 
-		//Make Tab Active
-		$activeTab.removeClass('active');
-		$tab.addClass('active');
+    // Strip off the current url that IE adds
+    contentLocation = contentLocation.replace(/^.+#/, '#');
+
+    //Make Tab Active
+    $activeTab.removeClass('active').parent('dd').removeClass('active');
+    $tab.addClass('active').parent('dd').addClass('active');
 
     //Show Tab Content
-		$(contentLocation).closest('.tabs-content').children('li').hide();
-		$(contentLocation).css('display', 'block');
-	}
+    $(contentLocation).closest('.tabs-content').children('li').hide();
+    $(contentLocation).css('display', 'block');
+  }
 
-	$('dl.tabs').each(function () {
-		//Get all tabs
-		var tabs = $(this).children('dd').children('a');
-		tabs.click(function (e) {
-			activateTab($(this));
-		});
-	});
+  $('dl.tabs dd a').live('click', function (event) {
+    activateTab($(this));
+  });
 
-	if (window.location.hash) {
-		activateTab($('a[href="' + window.location.hash + '"]'));
-		$.foundation.customForms.appendCustomMarkup();
-	}
+  if (window.location.hash) {
+    activateTab($('a[href="' + window.location.hash + '"]'));
+    $.foundation.customForms.appendCustomMarkup();
+  }
 
-	/* ALERT BOXES ------------ */
-	$(".alert-box").delegate("a.close", "click", function(event) {
+  /* ALERT BOXES ------------ */
+  $(".alert-box").delegate("a.close", "click", function(event) {
     event.preventDefault();
-	  $(this).closest(".alert-box").fadeOut(function(event){
-	    $(this).remove();
-	  });
-	});
+    $(this).closest(".alert-box").fadeOut(function(event){
+      $(this).remove();
+    });
+  });
 
 
-	/* PLACEHOLDER FOR FORMS ------------- */
-	/* Remove this and jquery.placeholder.min.js if you don't need :) */
+  /* PLACEHOLDER FOR FORMS ------------- */
+  /* Remove this and jquery.placeholder.min.js if you don't need :) */
 
-	$('input, textarea').placeholder();
+  $('input, textarea').placeholder();
 
-	/* TOOLTIPS ------------ */
-	$(this).tooltips();
-
-
-
-	/* UNCOMMENT THE LINE YOU WANT BELOW IF YOU WANT IE6/7/8 SUPPORT AND ARE USING .block-grids */
-//	$('.block-grid.two-up>li:nth-child(2n+1)').css({clear: 'left'});
-//	$('.block-grid.three-up>li:nth-child(3n+1)').css({clear: 'left'});
-//	$('.block-grid.four-up>li:nth-child(4n+1)').css({clear: 'left'});
-//	$('.block-grid.five-up>li:nth-child(5n+1)').css({clear: 'left'});
+  /* TOOLTIPS ------------ */
+  $(this).tooltips();
 
 
 
-	/* DROPDOWN NAV ------------- */
+  /* UNCOMMENT THE LINE YOU WANT BELOW IF YOU WANT IE6/7/8 SUPPORT AND ARE USING .block-grids */
+//  $('.block-grid.two-up>li:nth-child(2n+1)').css({clear: 'left'});
+//  $('.block-grid.three-up>li:nth-child(3n+1)').css({clear: 'left'});
+//  $('.block-grid.four-up>li:nth-child(4n+1)').css({clear: 'left'});
+//  $('.block-grid.five-up>li:nth-child(5n+1)').css({clear: 'left'});
 
-	var lockNavBar = false;
-	$('.nav-bar a.flyout-toggle').live('click', function(e) {
-		e.preventDefault();
-		var flyout = $(this).siblings('.flyout');
-		if (lockNavBar === false) {
-			$('.nav-bar .flyout').not(flyout).slideUp(500);
-			flyout.slideToggle(500, function(){
-				lockNavBar = false;
-			});
-		}
-		lockNavBar = true;
-	});
+
+
+  /* DROPDOWN NAV ------------- */
+
+  var lockNavBar = false;
+  $('.nav-bar a.flyout-toggle').live('click', function(e) {
+    e.preventDefault();
+    var flyout = $(this).siblings('.flyout');
+    if (lockNavBar === false) {
+      $('.nav-bar .flyout').not(flyout).slideUp(500);
+      flyout.slideToggle(500, function(){
+        lockNavBar = false;
+      });
+    }
+    lockNavBar = true;
+  });
   if (Modernizr.touch) {
     $('.nav-bar>li.has-flyout>a.main').css({
       'padding-right' : '75px'
@@ -92,7 +87,7 @@ jQuery(document).ready(function ($) {
   }
 
 
-	/* DISABLED BUTTONS ------------- */
-	/* Gives elements with a class of 'disabled' a return: false; */
-  
+  /* DISABLED BUTTONS ------------- */
+  /* Gives elements with a class of 'disabled' a return: false; */
+
 });
