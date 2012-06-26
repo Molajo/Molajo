@@ -282,11 +282,14 @@ Class ModelController extends Controller
 			$offset,
 			$count
 		);
-/**
+		/**
+		echo '<br /><br /><br />';
+		Services::Registry()->get($this->table_registry_name, '*');
 		echo '<br /><br /><br />';
 		echo $this->model->query->__toString();
 		echo '<br /><br /><br />';
-**/
+		 */
+
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
 		/**
@@ -360,8 +363,9 @@ Class ModelController extends Controller
 		}
 		/**
 		echo $query_object.'<br />';
+
 		echo '<pre>';
-		var_dump($query_results);
+		var_dump($this->query_results);
 		echo '</pre>';
 		 */
 		/** Return List */

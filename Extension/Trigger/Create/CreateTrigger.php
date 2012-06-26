@@ -203,10 +203,10 @@ class CreateTrigger extends ContentTrigger
 						$newName = $with . '.' . $file_extension,
 						$folder);
 
-					$this->changeWords($folder . '/' . $newName, $replace, $with);
+					$this->changeWords($folder, $newName, $replace, $with);
 
 				} else {
-					$this->changeWords($folder . '/' . $file, $replace, $with);
+					$this->changeWords($folder, $file, $replace, $with);
 				}
 			}
 		}
@@ -290,27 +290,39 @@ class CreateTrigger extends ContentTrigger
 	}
 
 	/**
-	 * changeWords
+	 * Changes words in file with consideration for case logic
 	 *
-	 * Changes words in file for plural and singular
+	 * @param $path
+	 * @param $file
+	 * @param $replace
+	 * @param $with
 	 *
-	 * @string  $file
-	 * @return  boolean
+	 * @return bool
+	 * @since  1.0
 	 */
-	protected function changeWords($file, $replace, $with)
+	protected function changeWords($path, $file, $replace, $with)
 	{
-		if (Services::Filesystem()->fileExists($file)) {
+
+		$pathfile = $path . '/' . $file;
+
+		if (Services::Filesystem()->fileExists($pathfile)) {
 		} else {
 			return false;
 		}
 
-		$body = Services::Filesystem()->fileRead($file);
+		$body = Services::Filesystem()->fileRead($pathfile);
 
-		$body = str_replace($replace, strtolower($with), $body);
+		$body = str_replace(strtolower($replace), strtolower($with), $body);
 		$body = str_replace(strtoupper($replace), strtoupper($with), $body);
-		$body = str_replace(ucfirst($replace), ucfirst($with), $body);
+		$body = str_replace(ucfirst(strtolower($replace)), ucfirst(strtolower($with)), $body);
 
-		return Services::Filesystem()->fileWrite($file, &$body);
+		if ($file = 'Configuration.xml') {
+			$body = str_replace('xxxxx', $this->data->catalog_type_id, $body);
+		}
+
+		Services::Filesystem()->fileWrite($file, &$body);
+
+		return true;
 	}
 
 	/**

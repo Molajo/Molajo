@@ -31,6 +31,12 @@ class PublishedstatusTrigger extends ContentTrigger
 	 */
 	public function onBeforeRead()
 	{
+
+		if (isset($this->parameters['action'])
+				&& $this->parameters['action'] == 'delete') {
+			return true;
+		}
+
 		$primary_prefix = $this->get('primary_prefix');
 
 		$this->query->where($this->db->qn($primary_prefix)

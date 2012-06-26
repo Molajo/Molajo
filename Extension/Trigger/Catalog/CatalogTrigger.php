@@ -103,6 +103,20 @@ class CatalogTrigger extends ContentTrigger
 	 */
 	public function onBeforeDelete()
 	{
+		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect();
+
+		$sql = 'DELETE FROM ' . $m->model->db->qn('#__catalog_categories');
+		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
+		$m->model->db->setQuery($sql);
+		$m->model->db->execute();
+
+		$sql = 'DELETE FROM ' . $m->model->db->qn('#__catalog_activity');
+		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
+		$m->model->db->setQuery($sql);
+		$m->model->db->execute();
+
 		return true;
 	}
 

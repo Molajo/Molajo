@@ -7,6 +7,17 @@
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
+$class = Services::Registry()->get('Parameters', 'page_view_css_class');
+if (trim($class) == '') {
+} else {
+	$class = ' class="' . htmlspecialchars($class) . '"';
+}
+$id = Services::Registry()->get('Parameters', 'page_view_css_id');
+if (trim($id) == '') {
+} else {
+	$id = ' id="' . htmlspecialchars($id) . '"';
+}
+
 $html5 = $this->query_results[0]->html5;
 $end = $this->query_results[0]->end;
 if ((int) $html5 == 1): ?>
@@ -30,11 +41,4 @@ if ((int) $html5 == 1): ?>
 	<include:asset name=Assetsjs wrap=None value=Js/>
 	<include:asset name=Assetsjsdeclarations wrap=None value=JsDeclarations/>
 </head>
-<?php
-$bodyClassSuffix = Services::Registry()->get('Parameters', 'body_class_suffix');
-if (trim(Services::Registry()->get('Parameters', 'body_class_suffix', '')) == '') {
-	$bodyElement = '<body>';
-} else {
-	$bodyElement = '<body ' . ' class="' . htmlspecialchars(Services::Registry()->get('Parameters', 'body_class_suffix')) . '">';
-}
-echo $bodyElement;
+<body<?php echo $id; ?><?php echo $class; ?>>

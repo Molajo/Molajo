@@ -7,7 +7,9 @@
 namespace Molajo\Extension\Trigger\Extensioninstance;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Controller;
 use Molajo\Controller\CreateController;
+use Molajo\Controller\DeleteController;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -21,9 +23,8 @@ defined('MOLAJO') or die;
  */
 class ExtensioninstanceTrigger extends ContentTrigger
 {
-
 	/**
-	 * Pre-create processing
+	 * onBeforeCreate processing
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -37,6 +38,8 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		} else {
 			return true;
 		}
+
+		/** Check ACL */
 
 		/** Ensure no other entry exists for this specific Extension Name/Catalog Type combination */
 		$controllerClass = 'Molajo\\Controller\\ModelController';
@@ -82,7 +85,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			return true;
 		}
 
-		/** If not existing, create  */
+		/** If Extension Node does not exist, create it */
 		$controller = new CreateController();
 
 		$data = new \stdClass();
@@ -110,7 +113,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Post-create processing
+	 * onAfterCreate processing
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -127,12 +130,9 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
 		/** Extension ID */
 		$id = $this->data->id;
-
 		if ((int) $id == 0) {
 			return false;
 		}
-
-		/** Check ACL */
 
 		/** Site Extension Instances */
 		$controller = new CreateController();
@@ -260,31 +260,72 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	public function onBeforeDelete()
 	{
 
-		// ACL
-		$results = Services::Authorisation()->authoriseTask('Delete', $this->data->catalog_id);
+		/** Only Extension Instances */
+		if (isset($this->data->catalog_type_id)
+			&& ($this->data->catalog_type_id == 1050)) {
+		} else {
+			return true;
+		}
 
-		// if there is content - no delete (must unpublish or trash)
+		/** Do not allow delete if there is content for this component */
+		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$m = new $controllerClass();
 
-		// remove view group permissions
+		$m->connect('Table', $this->data->title);
 
-		// remove group permissions
+		$primary_prefix = $m->get('primary_prefix', 'a');
 
-		// remove catalog entries
+		$m->set('get_customfields', '0');
+		$m->set('get_item_children', '0');
+		$m->set('use_special_joins', '0');
+		$m->set('check_view_level_access', '0');
 
-		// remove catalog categories
+		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('catalog_type_id')
+			. ' = ' . (int)Services::Registry()->get($this->data->title.'Table', 'catalog_type_id'));
 
-		// remove orphan categories tht were associated with the catalog
+		$item = $m->getData('item');
 
-		// mremove catalog activity
+		if ($item === false) {
+		} else {
+			//name already exists
+			return false;
+		}
 
-		// remove user activity
+		/** Connect to Model */
+		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect();
 
-		//remove application extension instances
+		$sql = 'DELETE FROM ' . $m->model->db->qn('#__application_extension_instances');
+		$sql .= ' WHERE ' . $m->model->db->qn('extension_instance_id') . ' = ' . (int) $this->data->id;
+		$m->model->db->setQuery($sql);
+		$m->model->db->execute();
 
-		// remove site extension instances
+		$sql = 'DELETE FROM ' . $m->model->db->qn('#__site_extension_instances');
+		$sql .= ' WHERE ' . $m->model->db->qn('extension_instance_id') . ' = ' . (int) $this->data->id;
+		$m->model->db->setQuery($sql);
+		$m->model->db->execute();
 
-		// then it can delete
+		$sql = 'DELETE FROM ' . $m->model->db->qn('#__group_permissions');
+		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->catalog_id;
+		$m->model->db->setQuery($sql);
+		$m->model->db->execute();
 
+		$sql = 'DELETE FROM ' . $m->model->db->qn('#__view_group_permissions');
+		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->catalog_id;
+		$m->model->db->setQuery($sql);
+		$m->model->db->execute();
+
+		/** Use MVC for catalog and related tables */
+		$controller = new DeleteController();
+
+		$data = new \stdClass();
+		$data->model_name = ucfirst(strtolower('Catalog'));
+		$data->id = $this->data->catalog_id;
+		$controller->data = $data;
+		$controller->set('action', 'delete');
+
+		$id = $controller->delete();
 
 		return true;
 	}
