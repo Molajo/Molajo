@@ -49,6 +49,6 @@ class IpaddressTrigger extends ContentTrigger
 	public function onBeforeUpdate()
 	{
 		// No updates allowed for activity
-		return false;
+		return true;
 	}
 }

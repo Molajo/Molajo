@@ -1,3 +1,3 @@
-<field name="tags" type="list" shape="" size=""/>
-<field name="categories" type="list" shape="" size=""/>
-<field name="author_notes" type="char" null="0" default="" length="500"/>
+<field name="tags" type="char" null="0" default=" "/>
+<field name="categories" type="char" null="0" default=" "/>
+<field name="author_notes" type="char" null="0" default=" " length="500"/>

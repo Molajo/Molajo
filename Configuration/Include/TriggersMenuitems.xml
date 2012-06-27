@@ -4,3 +4,5 @@
 <trigger name="Adminmenu"/>
 <trigger name="Admindashboard"/>
 <trigger name="Admingrid"/>
+<trigger name="Version"/>
+<trigger name="Ordering"/>

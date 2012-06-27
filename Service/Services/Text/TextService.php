@@ -260,7 +260,7 @@ Class TextService
 	 *
 	 * @param  int  $paragraph_word_count - number of words per paragraph
 	 * @param  int  $paragraph_count
-	 * @param  char $format
+	 * @param  char $format      txt, plain, html
 	 * @param  $start_with_lorem_ipsum 0 or 1
 	 *
 	 * @return string

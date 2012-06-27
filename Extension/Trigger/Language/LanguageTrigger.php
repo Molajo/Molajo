@@ -31,7 +31,7 @@ class LanguageTrigger extends ContentTrigger
 	 */
 	public function onBeforeCreate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -45,7 +45,7 @@ class LanguageTrigger extends ContentTrigger
 	 */
 	public function onBeforeUpdate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -59,6 +59,6 @@ class LanguageTrigger extends ContentTrigger
 	 */
 	public function onBeforeDelete()
 	{
-		return false;
+		return true;
 	}
 }

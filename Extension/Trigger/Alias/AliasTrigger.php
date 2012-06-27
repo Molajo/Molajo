@@ -28,7 +28,7 @@ class AliasTrigger extends ContentTrigger
 	public function onBeforeCreate()
 	{
 		//unique
-		return false;
+		return true;
 	}
 
 	/**
@@ -43,6 +43,6 @@ class AliasTrigger extends ContentTrigger
 	public function onBeforeUpdate()
 	{
 		//reserved words - /edit
-		return false;
+		return true;
 	}
 }

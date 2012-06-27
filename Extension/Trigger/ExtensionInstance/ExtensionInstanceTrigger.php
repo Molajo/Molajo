@@ -31,7 +31,6 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	 */
 	public function onBeforeCreate()
 	{
-
 		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
 			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
 		) {
@@ -41,7 +40,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
 		/** Check ACL */
 
-		/** Ensure no other entry exists for this specific Extension Name/Catalog Type combination */
+		/** Check if the Extension Instance already exists */
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$m->connect('Table', 'ExtensionInstances');
@@ -66,7 +65,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			return false;
 		}
 
-		/** Next, see if the Extension base exists */
+		/** Next, see if the Extension node exists */
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$m->connect('Table', 'Extensions');
@@ -77,36 +76,51 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$m->model->query->where($m->model->db->qn('a.catalog_type_id')
 			. ' = ' . (int) $this->data->catalog_type_id);
 
-		$id = $m->getData('result');
+		$item = $m->getData('item');
 
-		if ((int)$id > 0) {
-			$field = $this->getField('extension_id');
-			$this->saveField($field, $field->name, $id);
-			return true;
+		if ($item === false) {
+		} else {
+			$this->data->extension_id = $item->id;
+			$this->data->catalog_type_id = $item->catalog_type_id;
+			return;
 		}
 
-		/** If Extension Node does not exist, create it */
-		$controller = new CreateController();
+		/** If Extension Node does not exist */
 
+		//todo decide if another query is warranted for verifying existence of catalog type
+
+		/** Create a new Catalog Type */
+		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$m->connect();
+
+		/** Catalog Types */
+		$sql = 'INSERT INTO ' . $m->model->db->qn('#__catalog_types');
+		$sql .= ' VALUES ( NULL, '
+			. $m->model->db->q($this->data->title)
+			. ', 0, '
+			. $m->model->db->q($this->data->title)
+			. ', ' . $m->model->db->q('#__content') . ')';
+
+		$m->model->db->setQuery($sql);
+		$m->model->db->execute();
+
+		$this->parameters['content_catalog_type_id'] = $m->model->db->insertid();
+
+		/** Create a new Extension Node */
 		$data = new \stdClass();
 		$data->name = $this->data->title;
 		$data->catalog_type_id = $this->data->catalog_type_id;
 		$data->model_name = 'Extensions';
 
+		$controller = new CreateController();
 		$controller->data = $data;
 
-		$id = $controller->create();
+		$this->data->extension_id = $controller->create();
 
-		if ($id === false) {
+		if ($this->data->extension_id  === false) {
 			//error
 			return false;
-		} else {
-			if ((int)$id > 0) {
-				$field = $this->getField('extension_id');
-				$this->saveField($field, $field->name, $id);
-				var_dump($this->data);
-				return true;
-			}
 		}
 
 		return true;
@@ -120,6 +134,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	 */
 	public function onAfterCreate()
 	{
+		echo 'Catalog ID ' . $this->data->catalog_type_id . '<br />';
 
 		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
 			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
@@ -128,7 +143,8 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			return true;
 		}
 
-		/** Extension ID */
+		echo 'ID ' . $this->data->id . '<br />';
+		/** Extension Instance ID */
 		$id = $this->data->id;
 		if ((int) $id == 0) {
 			return false;
@@ -149,6 +165,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			//install failed
 			return false;
 		}
+echo 'results are true for site '.'<br />';
 
 		/** Application Extension Instances */
 		$controller = new CreateController();
@@ -165,7 +182,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			//install failed
 			return false;
 		}
-
+echo 'results are true for app '.'<br />';
 		/** Catalog */
 		$controller = new CreateController();
 
@@ -178,12 +195,12 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
 		$controller->data = $data;
 
-		$catalog_id = $controller->create();
+		$this->data->catalog_id = $controller->create();
 		if ($results === false) {
 			//install failed
 			return false;
 		}
-
+echo 'results are true for catalog '.'<br />';
 		return true;
 	}
 
@@ -202,7 +219,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	 * Post-read processing
 	 *
 	 * @return boolean
-	 * @since   1.0
+	 * @since   1.0                                   ve
 	 */
 	public function onAfterRead()
 	{
@@ -223,9 +240,6 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
@@ -237,9 +251,6 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
@@ -249,10 +260,11 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	}
 
 	/**
-	 * Pre-delete processing
+	 * onBeforeDelete -
 	 *
-	 * @param   $this->data
-	 * @param   $model
+	 * Returns false and does not delete if there is content for this extension
+	 *
+	 * Deletes ACL and catalog data for this extension to be deleted
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -280,18 +292,23 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$m->set('use_special_joins', '0');
 		$m->set('check_view_level_access', '0');
 
-		$m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('catalog_type_id')
-			. ' = ' . (int)Services::Registry()->get($this->data->title.'Table', 'catalog_type_id'));
+		if (isset($this->parameters['content_catalog_type_id'])) {
+			$temp = (int) $this->parameters['content_catalog_type_id'];
 
-		$item = $m->getData('item');
+			$m->model->query->where($m->model->db->qn($primary_prefix)
+				. '.' . $m->model->db->qn('catalog_type_id')
+				. ' = ' . $temp);
 
-		if ($item === false) {
-		} else {
-			//name already exists
-			return false;
+			$item = $m->getData('item');
+
+			if ($item === false) {
+			} else {
+				//content exists - cannot delete
+				return false;
+			}
 		}
 
-		/** Connect to Model */
+		/** Delete allowed - get rid of ACL info */
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$m->connect();
@@ -316,8 +333,9 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$m->model->db->setQuery($sql);
 		$m->model->db->execute();
 
-		/** Use MVC for catalog and related tables */
+		/** Catalog has triggers for more deletions */
 		$controller = new DeleteController();
+echo 'Passing this catalog id in to Delete Controller ' . $this->data->catalog_id.'<br />';
 
 		$data = new \stdClass();
 		$data->model_name = ucfirst(strtolower('Catalog'));
@@ -333,15 +351,48 @@ class ExtensioninstanceTrigger extends ContentTrigger
 	/**
 	 * Post-delete processing
 	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
 	public function onAfterDelete()
 	{
-		// remove teh extension node if there are no other extension instances for that extension
+		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$m = new $controllerClass();
+		$results = $m->connect('Table', 'ExtensionInstances');
+		if ($results == false) {
+			return false;
+		}
+
+		$m->set('get_customfields', 0);
+		$m->set('get_item_children', 0);
+		$m->set('use_special_joins', 0);
+		$m->set('check_view_level_access', 0);
+		$m->set('process_triggers', 0);
+
+		$m->model->query->select('COUNT(*)');
+		$m->model->query->from($m->model->db->qn('#__extension_instances'));
+		$m->model->query->where($m->model->db->qn('extension_id')
+			. ' = ' . (int)$this->data->extension_id);
+
+		$value = $m->getData('result');
+
+		if (empty($value) || (int) $value == 0) {
+		} else {
+			/** do not delete - more instances remain */
+			return true;
+		}
+
+		/** Delete orphan node */
+		$controller = new DeleteController();
+
+		$data = new \stdClass();
+		$data->model_name = ucfirst(strtolower('Extensions'));
+		$data->id = $this->data->extension_id;
+		$controller->data = $data;
+		$controller->set('action', 'delete');
+
+		$controller->delete();
+
 		return true;
 	}
 }

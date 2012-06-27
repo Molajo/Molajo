@@ -38,12 +38,10 @@ class SnippetTrigger extends ContentTrigger
 
 		if (is_array($fields) && count($fields) > 0) {
 
-			/** @noinspection PhpWrongForeachArgumentTypeInspection */
 			foreach ($fields as $field) {
 
 				$name = $field->name;
 
-				/** Retrieves the actual field value from the 'normal' or special field */
 				$fieldValue = $this->getFieldValue($field);
 
 				if ($fieldValue == false) {
@@ -54,7 +52,6 @@ class SnippetTrigger extends ContentTrigger
 					if ($newField == false) {
 					} else {
 
-						/** Creates the new 'normal' or special field and populates the value */
 						$newFieldName = $name . '_' . 'snippet';
 						$fieldValue = $this->saveField($field, $newFieldName, $newField);
 					}

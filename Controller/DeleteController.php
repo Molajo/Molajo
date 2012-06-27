@@ -118,7 +118,7 @@ class DeleteController extends ModelController
 
 		} elseif (isset($this->data->$name_key)) {
 			$this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($name_key)
-			. ' = ' . $this->model->db->q($this->data->$name_key));
+				. ' = ' . $this->model->db->q($this->data->$name_key));
 
 		} else {
 			//only deletes single rows
@@ -136,7 +136,7 @@ class DeleteController extends ModelController
 //		echo $this->model->query->__toString();
 //		echo '<br /><br /><br />';
 
-		if ($item === false)  {
+		if ($item === false) {
 			//error
 			return false;
 		}
@@ -188,8 +188,8 @@ class DeleteController extends ModelController
 		//todo - figure out what joining isn't working, get catalog id
 		//$results = Services::Authorisation()->authoriseTask('Delete', $this->data->catalog_id);
 		//if ($results === false) {
-			//error
-			//return false (not yet)
+		//error
+		//return false (not yet)
 		//}
 
 		return true;

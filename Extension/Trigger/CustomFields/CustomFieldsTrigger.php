@@ -30,7 +30,7 @@ class CustomfieldsTrigger extends ContentTrigger
 	 */
 	public function onBeforeCreate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -44,7 +44,7 @@ class CustomfieldsTrigger extends ContentTrigger
 	 */
 	public function onAfterRead()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -58,7 +58,7 @@ class CustomfieldsTrigger extends ContentTrigger
 	 */
 	public function onBeforeUpdate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -72,7 +72,7 @@ class CustomfieldsTrigger extends ContentTrigger
 	 */
 	public function onAfterUpdate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -86,7 +86,7 @@ class CustomfieldsTrigger extends ContentTrigger
 	 */
 	public function onBeforeDelete()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -100,6 +100,6 @@ class CustomfieldsTrigger extends ContentTrigger
 	 */
 	public function onAfterDelete()
 	{
-		return false;
+		return true;
 	}
 }

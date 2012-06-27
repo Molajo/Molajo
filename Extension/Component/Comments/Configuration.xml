@@ -9,7 +9,7 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>COMPONENT_COMMENTS_DESCRIPTION</description>
-    <model name="Comments" catalog_type_id="20000"/>
+    <model name="Comments" catalog_type_id="30000"/>
     <customfields>
         <customfield name="parameters">
             <field name="moderate_visitor_comments" type="boolean" null="0" default="1"/>

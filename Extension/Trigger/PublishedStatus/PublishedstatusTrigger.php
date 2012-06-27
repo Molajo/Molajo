@@ -87,6 +87,7 @@ class PublishedstatusTrigger extends ContentTrigger
 	{
 		// hold status
 		// if it is published (or greater) make certain published dates are ok
+		// if status changes -- it should unpublished below
 		return true;
 	}
 

@@ -20,21 +20,6 @@ defined('MOLAJO') or die;
  */
 class EmailTrigger extends ContentTrigger
 {
-
-	/**
-	 * Pre-create processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeCreate()
-	{
-		return false;
-	}
-
 	/**
 	 * After-read processing
 	 *
