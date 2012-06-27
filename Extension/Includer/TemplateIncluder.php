@@ -134,17 +134,6 @@ Services::Registry()->get('Parameters', 'model*');
 	}
 
 	/**
-	 * Loads Language Files for extension
-	 *
-	 * @return null
-	 * @since   1.0
-	 */
-	protected function loadLanguage()
-	{
-		return $this;
-	}
-
-	/**
 	 * Loads Media CSS and JS files for Template and Template Views
 	 *
 	 * @return  object

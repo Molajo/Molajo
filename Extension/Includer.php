@@ -289,7 +289,18 @@ class Includer
 	 */
 	protected function loadLanguage()
 	{
-		return Helpers::Extension()->loadLanguage(Services::Registry()->get('Parameters', 'extension_path'));
+
+		Helpers::Extension()->loadLanguage(
+			Services::Registry()->get('Parameters', 'extension_path')
+		);
+		Helpers::Extension()->loadLanguage(
+			Services::Registry()->get('Parameters', 'template_view_path')
+		);
+		Helpers::Extension()->loadLanguage(
+			Services::Registry()->get('Parameters', 'wrap_view_path')
+		);
+
+		return;
 	}
 
 	/**

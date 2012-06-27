@@ -58,7 +58,8 @@ Class UrlService
 	 *
 	 * @source http://gravatar.com/site/implement/images/php/
 	 */
-	public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g', $image = false, $attributes = array())
+	public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g',
+								$image = false, $attributes = array(), $align='left')
 	{
 
 		if ((int)$size == 0) {
@@ -68,11 +69,18 @@ Class UrlService
 			$image = Services::Registry()->get('Configuration', 'gravatar_image', 0);
 		}
 
+		if ($align == 'right') {
+			$css = '.gravatar { float:right; margin: 0 0 15px 15px; }';
+		} else {
+			$css = '.gravatar { float:left; margin: 0 15px 15px 0; }';
+		}
+		Services::Asset()->addCssDeclaration($css, 'text/css');
+
 		$url = 'http://www.gravatar.com/avatar/';
 		$url .= md5(strtolower(trim($email)));
 		$url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;
 		if ($image) {
-			$url = '<img src="' . $url . '"';
+			$url = '<img class="gravatar" src="' . $url . '"';
 			if (count($attributes) > 0) {
 				foreach ($attributes as $key => $val) {
 					$url .= ' ' . $key . '="' . $val . '"';

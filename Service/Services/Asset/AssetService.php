@@ -251,20 +251,23 @@ Class AssetService
 	 * Usage:
 	 * Services::Asset()->addCssDeclaration($css_in_here, 'text/css');
 	 *
-	 * @param string $content
+	 * @param $content
 	 * @param string $mimetype
+	 * @param int $priority
 	 *
 	 * @return  object
 	 * @since   1.0
 	 */
 	public function addCssDeclaration($content, $mimetype = 'text/css', $priority = 500)
 	{
-		$css = Services::Registry()->get('Assets', 'CssDeclarations', array());
+		$css = Services::Registry()->get('Assets', 'CssDeclarations');
 
 		/** Do not load the same file multiple times */
-		foreach ($css as $item) {
-			if ($item->content == $content) {
-				return $this;
+		if (is_array($css) && count($css) > 0) {
+			foreach ($css as $item) {
+				if ($item->content == $content) {
+					return $this;
+				}
 			}
 		}
 

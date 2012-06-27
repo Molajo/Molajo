@@ -101,16 +101,6 @@ Class HeadIncluder extends Includer
     }
 
     /**
-     * Loads Language Files for extension
-     *
-     * @return null
-     * @since   1.0
-     */
-    protected function loadLanguage()
-    {
-    }
-
-    /**
      * Loads Media CSS and JS files for Template and Wrap Views
      *
      * @return null

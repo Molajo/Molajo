@@ -21,10 +21,10 @@
     <service>Redirect</service>
     <service>Language</service>
     <service>Date</service>
+    <service>Asset</service>
     <service>User</service>
     <service>Debug</service>
     <service>Authorisation</service>
-    <service>Asset</service>
     <service>Metadata</service>
     <service>Image</service>
     <service>Filter</service>
