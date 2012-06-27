@@ -207,6 +207,7 @@ Class LanguageService
 		/** Retrieve the list of strings already loaded for this language */
 		$loadedStrings = Services::Registry()->getArray($language . 'translate');
 
+		$new = array();
 		/** Process each file, loading the language strings and override strings */
 		foreach ($loadFiles as $file) {
 
@@ -230,11 +231,17 @@ Class LanguageService
 				}
 
 				/** Save strings in an array */
-				$new = array_merge($strings, $override_strings);
+				if (is_array($strings) && is_array($override_strings)) {
+					$new = array_merge($strings, $override_strings);
+				} else {
+					$new = $strings;
+				}
 			}
 		}
 
-		$loadedStrings = array_merge($loadedStrings, $new);
+		if (is_array($loadedStrings) && is_array($new)) {
+			$loadedStrings = array_merge($loadedStrings, $new);
+		}
 
 		/** Update registry for work accomplished */
 		Services::Registry()->set($language, 'LoadedPaths', $loadedPaths);
@@ -259,6 +266,8 @@ Class LanguageService
 	 */
 	protected function parse($filename)
 	{
+		//todo - think thru ini error and other settings
+
 		/** capture php errors during parsing */
 		$track_errors = ini_get('track_errors');
 		if ($track_errors === false) {
@@ -270,7 +279,7 @@ Class LanguageService
 		if ($contents) {
 			$contents = str_replace('"', '', $contents);
 			$contents = str_replace(LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
-			$strings = parse_ini_string($contents);
+			$strings = parse_ini_string($contents, false, INI_SCANNER_RAW);
 		} else {
 			$strings = array();
 		}

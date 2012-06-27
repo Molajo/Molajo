@@ -30,11 +30,6 @@ class CreateController extends ModelController
 	{
 		/** tokens */
 
-		echo '<br /><br />Inside of CreateController::Create <br /><br />';
-		echo '<pre>';
-		var_dump($this->data);
-		echo '</pre>';
-
 		if (isset($this->data->model_type)) {
 		} else {
 			$this->data->model_type = 'Table';
@@ -304,7 +299,7 @@ class CreateController extends ModelController
 						$this->data->$name = trim($value);
 
 					} else {
-echo $name . ' Value '. $value.'<br />';
+
 						$fieldArray[$name] = trim($value);
 					}
 
