@@ -14,49 +14,6 @@ defined('MOLAJO') or die;
 /**
  * Model Controller
  *
- * Interacts with the ReadModel using these indicators serialized in $this->parameters
- *
- * model_name
- *     Ex., Articles, used with custom fields to create registry with data, ex. ArticlesParameters
- *
- * table_name
- *     Ex., #__content, used in the physical database query
- *
- * primary_key
- *     Ex., id, used to indicate single item requests
- *
- * name_key
- *     Ex., title or username, used to retrieve single item by unique value, not primary key
- *
- * primary_prefix
- *     Ex. "a", used in query development
- *
- * Processing Indicators:
- *
- * get_customfields
- *     0: do not retrieve custom fields
- *     1: retrieve fields
- *     2: retrieve and return as "normal" columns
- *
- * get_item_children
- *     0: no
- *     1: yes - executes a new read for additional data, query results return as column
- *
- * use_special_joins
- *     0: no
- *     1: yes - adds joins defined by model
- *
- * check_view_level_access
- *     0: no
- *     1: yes - adds joins to catalog and primary table, verifies view access
- *
- * process_triggers
- *     0: no
- *     1: yes - list of specific database triggers for this data source
- *
- * db
- *     typically 'JDatabase', but can be other data sources, like Messages, Registry, and Assets
- *
  * @package     Molajo
  * @subpackage  Model
  * @since       1.0

@@ -101,7 +101,8 @@ Class Application
 			Services::Debug()->set('Application Route succeeded');
 		}
 
-		/** onAfterRoute using Primary Route Content (Menu Item or Content) Triggers */;
+		/** onAfterRoute using Primary Route Content (Menu Item or Content) Triggers */
+		;
 		Services::Event()->schedule('onAfterRoute',
 			array('parameters' => Services::Registry()->get('Parameters')),
 			Services::Registry()->get('Parameters', 'Triggers')
@@ -233,12 +234,10 @@ Class Application
 	 */
 	protected function route()
 	{
-//$results = Services::Install()->testCreateExtension('Test', 'Components');
-//die;
-$results = Services::Install()->testDeleteExtension('Test', 'Components');
-die;
-//$results = Services::Install()->extension();
-//die;
+//$results = Services::Install()->content();
+//$results = Services::Install()->testCreateExtension('Data Dictionary', 'Components');
+//$results = Services::Install()->testDeleteExtension('Test', 'Components');
+
 		$results = Services::Route()->process();
 
 		if ($results == false) {
@@ -363,7 +362,7 @@ die;
 		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 			$url = Services::Registry()->get('Parameters', 'catalog_url_sef_request');
 
-		}  else {
+		} else {
 			$url = Services::Registry()->get('Parameters', 'catalog_url_request');
 		}
 

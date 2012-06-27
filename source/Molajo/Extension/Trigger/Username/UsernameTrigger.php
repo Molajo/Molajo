@@ -31,7 +31,7 @@ class UsernameTrigger extends ContentTrigger
 	 */
 	public function onBeforeCreate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -45,7 +45,7 @@ class UsernameTrigger extends ContentTrigger
 	 */
 	public function onBeforeUpdate()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -59,6 +59,6 @@ class UsernameTrigger extends ContentTrigger
 	 */
 	public function onAfterUpdate()
 	{
-		return false;
+		return true;
 	}
 }

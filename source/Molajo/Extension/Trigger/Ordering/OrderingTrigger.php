@@ -20,6 +20,8 @@ defined('MOLAJO') or die;
  */
 class OrderingTrigger extends ContentTrigger
 {
+	//todo reorder on delete, too
+
 	/**
 	 * Pre-create processing
 	 *

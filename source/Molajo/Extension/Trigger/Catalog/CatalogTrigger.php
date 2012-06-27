@@ -21,7 +21,6 @@ defined('MOLAJO') or die;
  */
 class CatalogTrigger extends ContentTrigger
 {
-
 	/**
 	 * Post-create processing
 	 *
@@ -30,7 +29,6 @@ class CatalogTrigger extends ContentTrigger
 	 */
 	public function onAfterCreate()
 	{
-
 		/** Just inserted UD */
 		$id = $this->data->id;
 		if ((int)$id == 0) {
@@ -44,6 +42,7 @@ class CatalogTrigger extends ContentTrigger
 				return false;
 			}
 		}
+
 		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
 			$results = $this->logCatalogActivity($id, Services::Registry()->get('Actions', 'create'));
 			if ($results == false) {
@@ -62,7 +61,6 @@ class CatalogTrigger extends ContentTrigger
 	 */
 	public function onAfterUpdate()
 	{
-
 		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
 			$results = $this->logUserActivity($this->data->id,
 				Services::Registry()->get('Actions', 'delete'));
@@ -70,6 +68,7 @@ class CatalogTrigger extends ContentTrigger
 				return false;
 			}
 		}
+
 		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
 			$results = $this->logCatalogActivity($this->data->id,
 				Services::Registry()->get('Actions', 'delete'));
@@ -137,6 +136,7 @@ class CatalogTrigger extends ContentTrigger
 			$this->logCatalogActivity($id, Services::Registry()->get('Actions', 'delete'));
 		}
 		 */
+		return true;
 	}
 
 	/**
@@ -164,7 +164,6 @@ class CatalogTrigger extends ContentTrigger
 		return true; // only redirect id
 	}
 
-
 	/**
 	 * Pre-update processing
 	 *
@@ -173,7 +172,6 @@ class CatalogTrigger extends ContentTrigger
 	 */
 	public function logCatalogActivity($id, $action_id)
 	{
-
 		$data = new \stdClass();
 		$data->model_name = 'CatalogActivity';
 		$data->model_table = 'Table';

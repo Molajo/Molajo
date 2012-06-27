@@ -1,11 +1,11 @@
-<field name="id" type="integer" null="1" default="" identity="1"/>
+<field name="id" type="integer" null="0" default=" " identity="1"/>
 <field name="extension_instance_id" type="integer" null="0" default="0"/>
 <field name="catalog_type_id" type="integer" null="0" default="0"/>
 <field name="title" type="char" null="0" default=" "/>
 <field name="subtitle" type="char" null="1" default=" "/>
 <field name="path" type="char" null="1" default=" "/>
 <field name="alias" type="char" null="1" default=" "/>
-<field name="content_text" type="text" null="1" default=""/>
+<field name="content_text" type="text" null="0" default=" "/>
 <field name="protected" type="boolean" null="0" default="0"/>
 <field name="featured" type="boolean" null="0" default="0"/>
 <field name="stickied" type="boolean" null="0" default="0"/>
@@ -30,6 +30,6 @@
 <field name="customfields" type="customfield"/>
 <field name="parameters" type="customfield"/>
 <field name="metadata" type="customfield"/>
-<field name="language" type="char" null="1" default=""/>
+<field name="language" type="char" null="0" default=" "/>
 <field name="translation_of_id" type="integer" null="0" default="0"/>
 <field name="ordering" type="integer" null="0" default="0"/>

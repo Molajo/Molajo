@@ -284,7 +284,7 @@ abstract class JFolder
 		// Remove all the files in folder if they exist; disable all filtering
 		$files = self::files($path, '.', false, true, array(), array());
 		if (!empty($files)) {
-			jimport('joomla.filesystem.file');
+//jimport('joomla.filesystem.file');
 			if (JFile::delete($files) !== true) {
 				// JFile::delete throws an error
 				return false;
@@ -307,27 +307,27 @@ abstract class JFolder
 			}
 		}
 
-		if ($FTPOptions['enabled'] == 1) {
-			// Connect the FTP client
-			$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
-		}
+		//if ($FTPOptions['enabled'] == 1) {
+		//	// Connect the FTP client
+		//	$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
+		//}
 
 		// In case of restricted permissions we zap it one way or the other
 		// as long as the owner is either the webserver or the ftp.
 		if (@rmdir($path)) {
 			$ret = true;
 		}
-		elseif ($FTPOptions['enabled'] == 1) {
+		//elseif ($FTPOptions['enabled'] == 1) {
 			// Translate path and delete
-			$path = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $path), '/');
+			//$path = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $path), '/');
 
 			// FTP connector throws an error
-			$ret = $ftp->delete($path);
-		}
-		else {
+			//$ret = $ftp->delete($path);
+		//}
+		//else {
 			JLog::add(JText::sprintf('JLIB_FILESYSTEM_ERROR_FOLDER_DELETE', $path), JLog::WARNING, 'jerror');
 			$ret = false;
-		}
+		//}
 		return $ret;
 	}
 
@@ -367,27 +367,27 @@ abstract class JFolder
 			$ret = true;
 		}
 		else {
-			if ($FTPOptions['enabled'] == 1) {
+			//if ($FTPOptions['enabled'] == 1) {
 				// Connect the FTP client
-				$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
+			//	$ftp = JClientFtp::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
 
 				// Translate path for the FTP account
-				$src = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $src), '/');
-				$dest = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $dest), '/');
+			//	$src = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $src), '/');
+			//	$dest = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $dest), '/');
 
 				// Use FTP rename to simulate move
-				if (!$ftp->rename($src, $dest)) {
-					return JText::_('Rename failed');
-				}
-				$ret = true;
-			}
-			else {
+			//	if (!$ftp->rename($src, $dest)) {
+			//		return JText::_('Rename failed');
+			//	}
+			//	$ret = true;
+			//}
+			//else {
 				if (!@rename($src, $dest)) {
 					return JText::_('Rename failed');
 				}
 				$ret = true;
 			}
-		}
+		//}
 		return $ret;
 	}
 

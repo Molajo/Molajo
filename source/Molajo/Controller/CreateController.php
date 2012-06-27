@@ -23,7 +23,6 @@ class CreateController extends ModelController
 	/**
 	 * create new row
 	 *
-	 *
 	 * @return bool|object
 	 * @since  1.0
 	 */
@@ -31,12 +30,21 @@ class CreateController extends ModelController
 	{
 		/** tokens */
 
+		echo '<br /><br />Inside of CreateController::Create <br /><br />';
+		echo '<pre>';
+		var_dump($this->data);
+		echo '</pre>';
+
+		if (isset($this->data->model_type)) {
+		} else {
+			$this->data->model_type = 'Table';
+		}
 		if (isset($this->data->model_name)) {
 		} else {
 			return false;
 		}
 
-		$this->connect('Table', $this->data->model_name, 'CreateModel');
+		$this->connect($this->data->model_type, $this->data->model_name, 'CreateModel');
 		if (isset($this->data->catalog_type_id) && (int)$this->data->catalog_type_id > 0) {
 		} else {
 			$this->data->catalog_type_id = Services::Registry()->get($this->table_registry_name, 'catalog_type_id');
@@ -179,6 +187,8 @@ class CreateController extends ModelController
 				$fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
 
 				/** Shared processing  */
+				echo 'going into processFieldGroups with ' . $customFieldName . '<br />';
+
 				$valid = $this->processFieldGroup($fields, $userHTMLFilter, $customFieldName);
 
 				if ($valid === true) {
@@ -210,6 +220,7 @@ class CreateController extends ModelController
 	 *
 	 * @param $fields
 	 * @param $userHTMLFilter
+	 * @param string $customFieldName
 	 *
 	 * @return bool
 	 * @since  1.0
@@ -221,6 +232,8 @@ class CreateController extends ModelController
 		if ($customFieldName == '') {
 		} else {
 			$fieldArray = array();
+			$inputArray = array();
+			$inputArray = $this->data->$customFieldName;
 		}
 
 		foreach ($fields as $f) {
@@ -266,14 +279,16 @@ class CreateController extends ModelController
 				}
 
 			} else {
-				if (isset($this->data->$customFieldName[$name])) {
-					$value = $this->data->$customFieldName[$name];
+				echo '(before filter) Name '. $name . ' Value ' . $inputArray[$name] . '<br />';
+
+				if (isset($inputArray[$name])) {
+					$value = $inputArray[$name];
 				} else {
 					$value = null;
 				}
 			}
 
-			if ($type == null || $type == 'customfield') {
+			if ($type == null || $type == 'customfield' || $type == 'list') {
 
 			} elseif ($type == 'text' && $userHTMLFilter === false) {
 
@@ -289,18 +304,18 @@ class CreateController extends ModelController
 						$this->data->$name = trim($value);
 
 					} else {
-
+echo $name . ' Value '. $value.'<br />';
 						$fieldArray[$name] = trim($value);
 					}
 
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 
-					echo 'CreateController::checkFields Filter Failed' . ' ' . $e->message;
+					echo 'CreateController::checkFields Filter Failed ';
+					echo 'Fieldname: ' . $name.' Value: '. $value.' Type: '. $type.' Null: '. $null.' Default: '. $default.'<br /> ';
 					die;
 				}
 			}
 		}
-
 
 		if ($customFieldName == '') {
 		} else {
@@ -321,7 +336,6 @@ class CreateController extends ModelController
 	 */
 	protected function checkForeignKeys()
 	{
-
 		$foreignkeys = Services::Registry()->get($this->table_registry_name, 'foreignkeys');
 
 		if (count($foreignkeys) == 0 || $foreignkeys === null) {
@@ -435,7 +449,6 @@ class CreateController extends ModelController
 			return false;
 		}
 
-		/** Process results */
 		$this->parameters = $arguments['parameters'];
 		$this->data = $arguments['data'];
 
@@ -470,7 +483,6 @@ class CreateController extends ModelController
 			return false;
 		}
 
-		/** Process results */
 		$this->parameters = $arguments['parameters'];
 		$data = $arguments['data'];
 
