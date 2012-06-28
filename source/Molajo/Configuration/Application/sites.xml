@@ -2,9 +2,16 @@
 <sites>
     <site>
         <id>1</id>
-        <name>Primary</name>
-        <base>localhost/molajo/source/</base>
+        <name>Site 1</name>
+        <base>site1/source/</base>
         <folderpath>/Users/AmyStephen/Sites/molajo/source/Site/1</folderpath>
         <appendtobaseurl>/Site/1</appendtobaseurl>
+    </site>
+    <site>
+        <id>2</id>
+        <name>Site 2</name>
+        <base>site2/source/</base>
+        <folderpath>/Users/AmyStephen/Sites/molajo/source/Site/2</folderpath>
+        <appendtobaseurl>/Site/2</appendtobaseurl>
     </site>
 </sites>

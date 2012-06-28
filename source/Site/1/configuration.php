@@ -2,7 +2,7 @@
 Class SiteConfiguration
 {
 	/* Site Settings */
-	public $site_name = 'Molajo';
+	public $site_name = 'Site 1';
 
 	/* JDatabaseDriver Settings */
 	public $jdatabase_dbtype = 'mysqli';

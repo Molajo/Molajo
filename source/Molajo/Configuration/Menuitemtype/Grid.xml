@@ -3,6 +3,7 @@
     <customfields>
         <customfield name="parameters">
             <include name="ParametersGrid"/>
+            <include name="CustomFieldsContent"/>
         </customfield>
     </customfields>
 </model>

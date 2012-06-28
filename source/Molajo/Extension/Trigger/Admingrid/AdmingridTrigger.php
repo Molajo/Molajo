@@ -41,7 +41,7 @@ class AdmingridTrigger extends ContentTrigger
 		if ($results == false) {
 			return false;
 		}
-
+		$connect->set('get_customfields', 1);
 		$connect->set('use_special_joins', 1);
 
 		$url = Services::Registry()->get('Configuration', 'application_base_url');
@@ -122,7 +122,7 @@ class AdmingridTrigger extends ContentTrigger
 	 */
 	protected function setFilter($connect, $primary_prefix)
 	{
-		$grid_list = explode(',', $this->get('grid_list', 'Author,Tags,Status'));
+		$grid_list = explode(',', $this->get('grid_lists', 'Author,Tags,Status'));
 
 		$lists = array();
 		if (is_array($grid_list) && count($grid_list) > 0) {
@@ -180,9 +180,10 @@ class AdmingridTrigger extends ContentTrigger
 		$connect->model->query->order($connect->model->db->qn($ordering));
 
 		$connect->set('model_offset', 0);
-		$connect->set('model_count', 10);
+		$connect->set('model_count', 8);
 
 		$query_results = $connect->getData('list');
+
 
 		Services::Registry()->set('Trigger', 'GridQueryResults', $query_results);
 
@@ -232,7 +233,6 @@ class AdmingridTrigger extends ContentTrigger
 
 		return true;
 	}
-
 
 	/**
 	 * Creates and stores lists for Grid Batch area

@@ -68,7 +68,7 @@ Class Application
 	 *  2. Route
 	 *  3. Authorise
 	 *  3. Execute (Display or Action)
-	 *  4. Response
+	 *  4. Respond
 	 *
 	 * @return mixed
 	 * @since   1.0

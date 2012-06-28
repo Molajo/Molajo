@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
+    <service>Registry</service>
     <service>Error</service>
     <service>Version</service>
-    <service>Registry</service>
     <service>Client</service>
     <service>Url</service>
     <service>Text</service>

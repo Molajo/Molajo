@@ -2,3 +2,8 @@
 <field name="criteria_display_view_on_no_results" type="binary" null="0" default="1" values="0,1"/>
 <field name="criteria_snippet_length" type="integer" null="0" default="200" values=""/>
 <field name="content_catalog_type_id" type="integer" null="0" default="0" values=""/>
+<field name="filter_status" type="integer" null="0" default="0" values=""/>
+<field name="filter_catalog_type_id" type="integer" null="0" default="0" values=""/>
+<field name="filter_check_published_status" type="integer" null="0" default="0" values=""/>
+<field name="filter_extension_instance_id" type="integer" null="0" default="0" values=""/>
+<field name="menu_extension_catalog_type_id" type="integer" null="0" default="0" values=""/>

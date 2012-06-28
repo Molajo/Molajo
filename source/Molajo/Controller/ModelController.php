@@ -225,12 +225,20 @@ Class ModelController extends Controller
 			$this->onBeforeReadEvent();
 		}
 
-		if ($query_object == 'result') {
-			$offset = 0;
-			$count = 1;
-		} else {
-			$offset = $this->get('model_offset', 0);
-			$count = $this->get('model_count', 5);
+		$offset = $this->get('model_offset', 0);
+		$count = $this->get('model_count', 0);
+
+		if ($offset == 0 && $count == 0) {
+			if ($query_object == 'result') {
+				$offset = 0;
+				$count = 1;
+			} elseif ($query_object == 'distinct' || $query_object = 'getListdata') {
+				$offset = $this->get('model_offset', 0);
+				$count = $this->get('model_count', 9999);
+			} else {
+				$offset = $this->get('model_offset', 0);
+				$count = $this->get('model_count', 10);
+			}
 		}
 
 		$this->model->getQueryResults(
@@ -272,7 +280,6 @@ Class ModelController extends Controller
 
 			/** Load Special Fields */
 			if ((int)$this->get('get_customfields') == 0) {
-
 			} else {
 
 				$customFieldTypes = Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups');
@@ -291,6 +298,7 @@ Class ModelController extends Controller
 								$this->get('get_customfields'),
 								$results
 							);
+
 					}
 				}
 
