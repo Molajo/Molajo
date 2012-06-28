@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Title"
+        table="#__content"
+        primary_key="id"
+        name_key="title"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="0"
+        check_view_level_access="1"
+        process_triggers="0"
+        filter_catalog_type_id=""
+        filter_check_published_status="1"
+        data_source="JDatabase">
+    <table>
+        <fields>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
+            <field name="title" type="char" null="0" default=" " unique="1"/>
+        </fields>
+        <triggers>
+            <trigger name="Publishedstatus"/>
+        </triggers>
+    </table>
+</model>

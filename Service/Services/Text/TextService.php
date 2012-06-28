@@ -269,7 +269,8 @@ Class TextService
 	public function getPlaceHolderText($paragraph_word_count, $paragraph_count, $format, $start_with_lorem_ipsum)
 	{
 		$generator = new LoremIpsumGenerator($paragraph_word_count);
-		return ucfirst($generator->getContent($paragraph_word_count * $paragraph_count, $format, $start_with_lorem_ipsum));
+		return ucfirst($generator->getContent($paragraph_word_count * $paragraph_count,
+			$format, $start_with_lorem_ipsum));
 	}
 
 	/**
@@ -328,9 +329,12 @@ Class TextService
 
 			if (count($fields) < 2) {
 
-				$m->model->query->select('DISTINCT ' . $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id');
-				$m->model->query->select($m->model->db->qn($primary_prefix . '.' . $name_key) . ' as value');
-				$m->model->query->order($m->model->db->qn($primary_prefix . '.' . $name_key) . ' ASC');
+				$m->model->query->select('DISTINCT '
+					. $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id');
+				$m->model->query->select($m->model->db->qn($primary_prefix
+					. '.' . $name_key) . ' as value');
+				$m->model->query->order($m->model->db->qn($primary_prefix
+					. '.' . $name_key) . ' ASC');
 
 			} else {
 
@@ -363,24 +367,25 @@ Class TextService
 			}
 
 			/** Where */
+		   //todo -- loop thru all parameters that start with filter*
 
 			$this->setWhereCriteria (
 				'catalog_type_id',
-				$m->get('filter_catalog_type_id'),
+				$parameters['filter_catalog_type_id'],
 				$primary_prefix,
 				$m
 			);
 
 			$this->setWhereCriteria (
 				'status',
-				$m->get('filter_check_published_status'),
+				$parameters['filter_status'],
 				$primary_prefix,
 				$m
 			);
 
 			$this->setWhereCriteria (
 				'extension_instance_id',
-				$m->get('filter_extension_instance_id'),
+				$parameters['filter_extension_instance_id'],
 				$primary_prefix,
 				$m
 			);
@@ -407,6 +412,8 @@ Class TextService
 			$query_object = 'getListdata';
 		}
 
+		$offset = $m->set('model_offset', 0);
+		$count = $m->set('model_count', 9999999);
 
 		$query_results = $m->getData($query_object);
 

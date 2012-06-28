@@ -10,6 +10,9 @@ use Molajo\Application;
 
 defined('MOLAJO') or die;
 
+//todo make it easy to tell if a service is running or not
+//todo acl per service
+
 /**
  * Service
  *

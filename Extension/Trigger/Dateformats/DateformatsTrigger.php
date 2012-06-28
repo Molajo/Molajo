@@ -87,8 +87,10 @@ class DateformatsTrigger extends ContentTrigger
 	{
 		$fields = $this->retrieveFieldsByType('datetime');
 
-		if (method_exists('DateService', 'convertCCYYMMDD')) {
-		} else {
+		try {
+			Services::Date()->convertCCYYMMDD('2011-11-11');
+		/** Date Service is not available (likely startup) */
+		} catch (\Exception $e) {
 			return true;
 		}
 

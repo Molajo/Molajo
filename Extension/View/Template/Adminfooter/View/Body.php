@@ -23,6 +23,6 @@ if ($first_year == null || $first_year == '') {
 <p>
 	<?php echo '&#169;' . ' ' . $ccDateSpan . ' ' . $this->row->copyright_holder; ?>
     <a href="<?php echo $this->row->link; ?>">
-        <?php echo $this->row->linked_text; ?> v.<?php echo MOLAJOVERSION; ?></a>
+        <?php echo $this->row->linked_text; ?> </a>
     <?php echo ' ' . $this->row->remaining_text; ?>.
 </p>
