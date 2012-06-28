@@ -1,5 +1,5 @@
 .idea
 .DS_Store
 .sass-cache
-/Molajo/Configuration
-/Site
+source/Molajo/Configuration
+source/Site
