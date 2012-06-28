@@ -197,7 +197,6 @@ Class AuthorisationService
             && in_array(Services::Registry()->get('Parameters', 'extension_view_group_id'),
                 Services::Registry()->get('User', 'ViewGroups'))
         ) {
-
             Services::Registry()->set('Parameters', 'status_authorised', true);
 
         } else {
@@ -258,7 +257,8 @@ Class AuthorisationService
                 'AuthorisationServices::authoriseTask '
                     . ' Task: ' . $action
                     . ' Action: ' . $action
-                    . ' Action ID: ' . $action_id
+                    . ' Action ID: ' . $action_id,
+				'Authorisation'
             );
         }
 
@@ -290,7 +290,8 @@ Class AuthorisationService
                 'AuthorisationServices::authoriseTask No Query Results  '
                     . ' Task: ' . $action
                     . ' Action: ' . $action
-                    . ' Action ID: ' . $action_id
+                    . ' Action ID: ' . $action_id,
+				'Authorisation'
             );
 
             return false;

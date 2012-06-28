@@ -73,7 +73,9 @@
 
             <field name="debug" type="boolean" null="1" default="0" values=""/>
             <field name="debug_log" type="text" null="0" default="echo"
-                   values="echo,formattedtext,database,email,messages"/>
+                   values="echo,formattedtext,database,email,firephp,messages"/>
+            <field name="debug_output" type="text" null="0" default="echo"
+                   values="Application,Authorisation,Queries,Rendering,Routing,Services,Triggers"/>
 
             <field name="head_template_view_id" type="integer" null="1" default="" values=""/>
             <field name="head_wrap_view_id" type="integer" null="1" default="" values=""/>

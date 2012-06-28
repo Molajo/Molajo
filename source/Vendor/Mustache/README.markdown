@@ -3,6 +3,8 @@ Mustache.php
 
 A [Mustache](http://defunkt.github.com/mustache/) implementation in PHP.
 
+How to use [Mustache in PHP] (https://github.com/bobthecow/mustache.php/blob/master/README.markdown) examples and github repository.
+
 
 Usage
 -----
@@ -36,7 +38,7 @@ Along with the associated Mustache class:
 class Chris extends Mustache {
     public $name = "Chris";
     public $value = 10000;
-    
+
     public function taxed_value() {
         return $this->value - ($this->value * 0.4);
     }

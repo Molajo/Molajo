@@ -100,7 +100,9 @@ Class RedirectService
             }
         }
 
-        Services::Debug()->set('RedirectServices::set URL: ' . $this->url . ' Status Code: ' . $this->code);
+        Services::Debug()->set('RedirectServices::set URL: ' . $this->url
+			. ' Status Code: ' . $this->code, 'Application'
+		);
 
         return;
     }
@@ -121,7 +123,8 @@ Class RedirectService
 		} else {
 			$this->code = $code;
 		}
-        Services::Debug()->set('RedirectServices::redirect to: ' . $this->url . ' Status Code: ' . $this->code);
+        Services::Debug()->set('RedirectServices::redirect to: ' . $this->url
+			. ' Status Code: ' . $this->code, 'Application');
 
         return new RedirectResponse($this->url, $this->code);
     }

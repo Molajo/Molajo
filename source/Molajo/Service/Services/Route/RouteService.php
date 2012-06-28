@@ -85,7 +85,7 @@ Class RouteService
 		$continue = $this->checkHome($path);
 
 		if ($continue == false) {
-			Services::Debug()->set('Route checkHome() Redirect to Real Home');
+			Services::Debug()->set('Route checkHome() Redirect to Real Home', 'Route');
 
 			return false;
 		}
@@ -93,7 +93,7 @@ Class RouteService
 		/** See if Application is in Offline Mode */
 		if (Services::Registry()->get('Configuration', 'offline', 0) == 1) {
 			Services::Error()->set(503);
-			Services::Debug()->set('Application::Route() Direct to Offline Mode');
+			Services::Debug()->set('Application::Route() Direct to Offline Mode', 'Route');
 
 			return true;
 		}
@@ -102,7 +102,7 @@ Class RouteService
 		$continue = $this->getNonRouteParameters();
 
 		if ($continue == false) {
-			Services::Debug()->set('Route getNonRouteParameters() Failed');
+			Services::Debug()->set('Route getNonRouteParameters() Failed', 'Route');
 
 			return false;
 		}
@@ -114,7 +114,7 @@ Class RouteService
 		if (Services::Registry()->get('Parameters', 'status_found') === false) {
 			echo 404;
 			Services::Error()->set(404);
-			Services::Debug()->set('Application::Route() 404');
+			Services::Debug()->set('Application::Route() 404', 'Route');
 
 			return false;
 		}
@@ -127,7 +127,7 @@ Class RouteService
 					Services::Registry()->get('Parameters', 'redirect_to_id', 0)
 				), 301
 			);
-			Services::Debug()->set('Application::Route() Redirect');
+			Services::Debug()->set('Application::Route() Redirect', 'Route');
 
 			return false;
 		}
@@ -142,7 +142,7 @@ Class RouteService
 				Services::Registry()->get('Configuration', 'application_logon_requirement', 0)
 				, 303
 			);
-			Services::Debug()->set('Application::Route() Redirect to Logon');
+			Services::Debug()->set('Application::Route() Redirect to Logon', 'Route');
 
 			return false;
 		}

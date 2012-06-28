@@ -69,6 +69,14 @@ Class DebugService
 	protected $options;
 
 	/**
+	 * Types of debug output desired
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $debug_output_options = array();
+
+	/**
 	 * Log Type
 	 *
 	 * @var   string
@@ -109,6 +117,8 @@ Class DebugService
 
 		Services::Registry()->set('DebugService', 'on', true);
 
+		$this->setDebugOutputOptions();
+
 		$this->debug_started_time = $this->getMicrotimeFloat();
 
 		$results = $this->setDebugLogger();
@@ -124,13 +134,21 @@ Class DebugService
 	 * Sets debug message that is routed to the selected logger
 	 *
 	 * @param string  $message
+	 * @param string  $output_type Application,Authorisation,Queries,Rendering,Routing,Services,Triggers
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function set($message)
+	public function set($message, $output_type = '')
 	{
 		if ((int)$this->on == 0) {
+			return true;
+		}
+	  echo $output_type.'<br />';
+		if (in_array($output_type, $this->debug_output_options)
+			|| $output_type == ''
+		) {
+		} else {
 			return true;
 		}
 
@@ -157,7 +175,7 @@ Class DebugService
 					$elapsed - $this->previous_time,
 					$memory,
 					$memory_difference,
-					$message
+					$output_type . ':' . $message
 				),
 				LOG_TYPE_DEBUG,
 				self::log_type,
@@ -172,6 +190,35 @@ Class DebugService
 	}
 
 	/**
+	 * setDebugOutputOptions - set options for debugging output specified in the configuration
+	 *
+	 * @return  Boolean
+	 * @since   1.0
+	 */
+	protected function setDebugOutputOptions()
+	{
+		$outputOptions = array('Actions,Application','Authorisation','Queries',
+			'Registry', 'Rendering','Routing','Services','Triggers');
+
+		$temp = Services::Registry()->get('Configuration', 'debug_output');
+
+		if ($temp == '' || $temp == null) {
+			$temp = 'Actions,Application,Authorisation,Queries,
+			Registry,Rendering,Routing,Services,Triggers';
+		}
+
+		$this->debug_output_options = array();
+		$temp2 = explode(',', $temp);
+		foreach ($temp2 as $item) {
+			if (in_array($item, $outputOptions)) {
+				$this->debug_output_options[] = $item;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * setDebugLogger - establish connection to the selected debug logger
 	 *
 	 * @return  mixed
@@ -179,27 +226,27 @@ Class DebugService
 	 */
 	protected function setDebugLogger()
 	{
-		$loggerOptions = array('echo,formattedtext,database,email,chromephp,firephp,messages');
+		$loggerOptions = array('echo,formattedtext,database,email,firephp,messages');
 
-		$this->options = array();
-		$this->options['logger'] = Services::Registry()->get('Configuration', 'debug_logger', 'echo');
+		$this->debug_options = array();
+		$this->debug_options['logger'] = Services::Registry()->get('Configuration', 'debug_log', 'echo');
 
 		$results = false;
-		if (in_array($this->options['logger'], $loggerOptions)) {
+		if (in_array($this->debug_options['logger'], $loggerOptions)) {
 		} else {
-			$this->options['logger'] = 'echo';
+			$this->debug_options['logger'] = 'echo';
 		}
 
-		$results = $logMethod = 'set'. ucfirst(strtolower($this->options['logger'])) . 'Logger';
+		$results = $logMethod = 'set' . ucfirst(strtolower($this->debug_options['logger'])) . 'Logger';
 		$this->$logMethod();
 
 		if ($results == false) {
-			$this->options = array();
-			$this->options['logger'] = 'echo';
+			$this->debug_options = array();
+			$this->debug_options['logger'] = 'echo';
 		}
 
 		/** Establish log for activated debug option */
-		Services::Log()->setLog($this->options, LOG_TYPE_DEBUG, self::log_type);
+		Services::Log()->setLog($this->debug_options, LOG_TYPE_DEBUG, self::log_type);
 
 		return true;
 	}
@@ -212,12 +259,12 @@ Class DebugService
 	protected function setEmailLogger()
 	{
 
-		$this->options['mailer'] = Services::Mail();
+		$this->debug_options['mailer'] = Services::Mail();
 
-		$this->options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
-		$this->options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
-		$this->options['subject'] = Services::Registry()->get('Configuration', 'debug_email_subject', '');
-		$this->options['to'] = Services::Registry()->get('Configuration', 'debug_email_to', '');
+		$this->debug_options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
+		$this->debug_options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
+		$this->debug_options['subject'] = Services::Registry()->get('Configuration', 'debug_email_subject', '');
+		$this->debug_options['to'] = Services::Registry()->get('Configuration', 'debug_email_to', '');
 
 		return true;
 	}
@@ -229,19 +276,19 @@ Class DebugService
 	 */
 	protected function setFormattedtextLogger()
 	{
-		$this->options['text_file'] = Services::Registry()->get('Configuration', 'debug_text_file', 'debug.php');
+		$this->debug_options['text_file'] = Services::Registry()->get('Configuration', 'debug_text_file', 'debug.php');
 
 		$temp = Services::Registry()->get('Configuration', 'debug_text_file_path', 'SITE_LOGS_FOLDER');
 		if ($temp == 'SITE_LOGS_FOLDER' || $temp == '') {
-			$this->options['text_file_path'] = SITE_LOGS_FOLDER;
+			$this->debug_options['text_file_path'] = SITE_LOGS_FOLDER;
 
 		} else {
-			$this->options['text_file_path'] = $temp;
+			$this->debug_options['text_file_path'] = $temp;
 		}
 
-		if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . $this->options['text_file'])) {
-			$this->options['text_file_no_php']
-				= (int) Services::Registry()->get('Configuration', 'debug_text_file_no_php', false);
+		if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . $this->debug_options['text_file'])) {
+			$this->debug_options['text_file_no_php']
+				= (int)Services::Registry()->get('Configuration', 'debug_text_file_no_php', false);
 
 		} else {
 			return false;
@@ -257,8 +304,8 @@ Class DebugService
 	 */
 	protected function setDatabaseLogger()
 	{
-		$this->options['dbo'] = Services::JDatabase()->get('db');
-		$this->options['db_table'] = Services::Registry()
+		$this->debug_options['dbo'] = Services::JDatabase()->get('db');
+		$this->debug_options['db_table'] = Services::Registry()
 			->get('Configuration', 'debug_database_table', '#__log');
 
 		return true;
@@ -271,20 +318,20 @@ Class DebugService
 	 */
 	protected function setMessagesLogger()
 	{
-		$this->options['messages_namespace'] = Services::Registry()
+		$this->debug_options['messages_namespace'] = Services::Registry()
 			->get('Configuration', 'debug_messages_namespace', 'debug');
 
 		return true;
 	}
 
 	/**
-	 * setMessagesLogger
+	 * setFirephpLogger
 	 *
 	 * @return bool
 	 */
-	protected function setChromephpLogger()
+	protected function setFirephpLogger()
 	{
-		$this->options['messages_namespace'] = Services::Registry()
+		$this->debug_options['messages_namespace'] = Services::Registry()
 			->get('Configuration', 'debug_messages_namespace', 'debug');
 
 		return true;
@@ -297,7 +344,7 @@ Class DebugService
 	 */
 	protected function setEchoLogger()
 	{
-		$this->options['line_separator'] = Services::Registry()
+		$this->debug_options['line_separator'] = Services::Registry()
 			->get('Configuration', 'debug_line_separator', '<br />');
 
 		return true;

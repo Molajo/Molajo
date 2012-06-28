@@ -205,7 +205,7 @@ class CreateController extends ModelController
 			return false;
 		}
 
-		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid);
+		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid, 'Actions');
 
 		return $valid;
 	}
@@ -318,7 +318,7 @@ class CreateController extends ModelController
 			$this->data->$customFieldName = $fieldArray;
 		}
 
-		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid);
+		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid, 'Actions');
 
 		return $valid;
 	}

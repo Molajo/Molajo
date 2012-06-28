@@ -132,8 +132,8 @@ class FilesystemService
             $method = substr($name, 4, strlen($name) - 4);
 
         } else {
-            Services::Debug()->set('Invalid Filesystem Class: ' . $name);
-
+            Echo 'Invalid Filesystem Class: ';
+			//error
             return false;
         }
 
