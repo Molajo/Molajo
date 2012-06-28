@@ -194,10 +194,10 @@ Class RegistryService
 					$this->debug_available = true;
 					/* Catch up logging Registries created before Debug Service started */
 					foreach ($this->registryKeys as $ns) {
-						Services::Debug()->set('Create Registry ' . $ns);
+						Services::Debug()->set('Create Registry ' . $ns, 'Registry');
 					}
 				} else {
-					Services::Debug()->set('Create Registry ' . $namespace);
+					Services::Debug()->set('Create Registry ' . $namespace, 'Registry');
 				}
 			}
 		}

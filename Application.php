@@ -85,20 +85,20 @@ Class Application
 		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
 
 		if ($continue == false) {
-			Services::Debug()->set('Application Initialise failed');
+			Services::Debug()->set('Application Initialise failed', 'Application');
 			return;
 		} else {
-			Services::Debug()->set('Application Initialise succeeded');
+			Services::Debug()->set('Application Initialise succeeded', 'Application');
 		}
 
 		/** Route: Sets the Request, Catalog, and Menuitem Registry */
 		$continue = $this->route();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application Route failed');
+			Services::Debug()->set('Application Route failed', 'Application');
 			return;
 		} else {
-			Services::Debug()->set('Application Route succeeded');
+			Services::Debug()->set('Application Route succeeded', 'Application');
 		}
 
 		/** onAfterRoute using Primary Route Content (Menu Item or Content) Triggers */
@@ -112,30 +112,30 @@ Class Application
 		$continue = $this->authorise();
 
 		if ($continue === false) {
-			Services::Debug()->set('Application Authorise failed');
+			Services::Debug()->set('Application Authorise failed', 'Application');
 			return;
 		} else {
-			Services::Debug()->set('Application Authorise succeeded');
+			Services::Debug()->set('Application Authorise succeeded', 'Application');
 		}
 
 		/** Execute */
 		$continue = $this->execute();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application Execute failed');
+			Services::Debug()->set('Application Execute failed', 'Application');
 			return;
 		} else {
-			Services::Debug()->set('Application Execute succeeded');
+			Services::Debug()->set('Application Execute succeeded', 'Application');
 		}
 
 		/** Response */
 		$continue = $this->response();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application Response failed');
+			Services::Debug()->set('Application Response failed', 'Application');
 			return;
 		} else {
-			Services::Debug()->set('Application Response succeeded');
+			Services::Debug()->set('Application Response succeeded', 'Application');
 		}
 
 		return;
@@ -212,7 +212,7 @@ Class Application
 		//        Services::Session()->getHash(get_class($this))
 		//  );
 		// Services::Debug()
-		// ->set('Services::Session()->create complete');
+		// ->set('Services::Session()->create complete, 'Application');
 
 		return true;
 	}
@@ -277,11 +277,11 @@ Class Application
 			$continue = $this->display();
 
 			if ($continue == false) {
-				Services::Debug()->set('Application execute Display failed');
+				Services::Debug()->set('Application execute Display failed', 'Application');
 				return false;
 
 			} else {
-				Services::Debug()->set('Application execute Display succeeded');
+				Services::Debug()->set('Application execute Display succeeded', 'Application');
 				return true;
 			}
 		}
@@ -290,11 +290,11 @@ Class Application
 		$continue = $this->action();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application execute ' . $action . ' failed');
+			Services::Debug()->set('Application execute ' . $action . ' failed', 'Application');
 			return false;
 
 		} else {
-			Services::Debug()->set('Application execute ' . $action . ' succeeded');
+			Services::Debug()->set('Application execute ' . $action . ' succeeded', 'Application');
 			return true;
 		}
 	}
@@ -384,7 +384,8 @@ Class Application
 		) {
 
 			Services::Debug()
-				->set('Services::Response()->setContent() for ' . $this->rendered_output . ' Code: 200');
+				->set('Services::Response()->setContent() for ' . $this->rendered_output . ' Code: 200',
+						'Application');
 
 			Services::Response()
 				->setContent($this->rendered_output)
@@ -396,7 +397,8 @@ Class Application
 
 			Services::Debug()
 				->set('Services::Redirect()->redirect()->send() for '
-				. Services::Redirect()->url . ' Code: ' . Services::Redirect()->code);
+				. Services::Redirect()->url . ' Code: ' . Services::Redirect()->code,
+				'Application');
 
 			Services::Redirect()
 				->redirect()
@@ -404,7 +406,7 @@ Class Application
 		}
 
 		Services::Debug()
-			->set('Application response End');
+			->set('Application response End', 'Application');
 
 		exit(0);
 	}

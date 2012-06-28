@@ -154,7 +154,7 @@ Class Helpers
         }
 
         foreach ($this->message as $message) {
-            Services::Debug()->set($message);
+            Services::Debug()->set($message, 'Application');
         }
 
         return true;
