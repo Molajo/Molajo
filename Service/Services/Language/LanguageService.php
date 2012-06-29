@@ -266,8 +266,6 @@ Class LanguageService
 	 */
 	protected function parse($filename)
 	{
-		//todo - think thru ini error and other settings
-
 		/** capture php errors during parsing */
 		$track_errors = ini_get('track_errors');
 		if ($track_errors === false) {

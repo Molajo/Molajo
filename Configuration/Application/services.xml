@@ -8,11 +8,12 @@
     <service>Text</service>
     <service>Mail</service>
     <service>Filesystem</service>
-    <service>Event</service>
     <service>Message</service>
     <service>JDatabase</service>
     <service>Configuration</service>
     <service>Log</service>
+    <service>Debug</service>
+    <service>Event</service>
     <service>Request</service>
     <service>Route</service>
     <service>Cookie</service>
@@ -23,7 +24,6 @@
     <service>Date</service>
     <service>Asset</service>
     <service>User</service>
-    <service>Debug</service>
     <service>Authorisation</service>
     <service>Metadata</service>
     <service>Image</service>

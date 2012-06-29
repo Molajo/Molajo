@@ -139,11 +139,12 @@ class FilesystemService
 
         $method = strtolower($method);
         if (method_exists($class, $method)) {
-            return call_user_func_array(array($class, &$method), &$arguments);
+            return call_user_func_array(array($class, &$method), $arguments);
 
         }
 
-        Services::Debug()->set('Invalid Filesystem Method: ' . $name);
+        echo 'Invalid Filesystem Method: ' . $name;
+		//throw error
 
         return false;
     }

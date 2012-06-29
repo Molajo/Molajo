@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Service\Services\Authorisation;
 
@@ -31,7 +31,7 @@ Class AuthorisationService
     /**
      * Registry specific to the AuthorisationService class
      *
-     * @var    Registry
+     * @var    object
      * @since  1.0
      */
     protected $registry;
@@ -65,14 +65,14 @@ Class AuthorisationService
     /**
      * Load ACL-related data for use with Authorisation
      *
-     * @return null
-     * @since  1.0
+     * @return  null
+     * @since   1.0
      */
     protected function initialise()
     {
         $actions = Services::Configuration()->getFile('Application', 'Actions');
         if (count($actions) == 0) {
-            echo '<br />Error in AuthorisationService -- Application Actions table returned no rows <br />';
+            //echo '<br />Error in AuthorisationService -- Application Actions table returned no rows <br />';
             //error
         }
 
@@ -81,7 +81,6 @@ Class AuthorisationService
             Services::Registry()->set('action_to_controller', (string) $t['action'], (string) $t['controller']);
         }
 
-        /** retrieve action key pairs */
         $items = Services::Registry()->get('Actions');
 		foreach ($items as $title => $id) {
             Services::Registry()->set('action_to_action_id', $title, (int) $id);
@@ -91,13 +90,15 @@ Class AuthorisationService
     }
 
     /**
-     * Check if the site is authorised for this application
+     * Check if the Site is authorised for this Application
      *
      * Usage:
      * $results = Services::Authorisation()->authoriseSiteApplication();
      *
      * @param  mixed   $application_id if valid, or false
+	 *
      * @return boolean
+	 * @since  1.0
      */
     public function authoriseSiteApplication()
     {
@@ -253,13 +254,11 @@ Class AuthorisationService
         $action_id = Services::Registry()->get('action_to_action_id', $action);
 
         if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
-            Services::Debug()->set(
-                'AuthorisationServices::authoriseTask '
-                    . ' Task: ' . $action
-                    . ' Action: ' . $action
-                    . ' Action ID: ' . $action_id,
-				'Authorisation'
-            );
+           //Echo 'AuthorisationServices::authoriseTask '
+           //         . ' Task: ' . $action
+           //         . ' Action: ' . $action
+           //         . ' Action ID: ' . $action_id;
+			//throw error
         }
 
         //todo: amy fill database with real sample action permissions
@@ -286,13 +285,11 @@ Class AuthorisationService
             return true;
 
         } else {
-            Services::Debug()->set(
-                'AuthorisationServices::authoriseTask No Query Results  '
-                    . ' Task: ' . $action
-                    . ' Action: ' . $action
-                    . ' Action ID: ' . $action_id,
-				'Authorisation'
-            );
+            //echo 'AuthorisationServices::authoriseTask No Query Results  '
+             //       . ' Task: ' . $action
+             //       . ' Action: ' . $action
+             //       . ' Action ID: ' . $action_id;
+			//throwerrror
 
             return false;
         }
@@ -352,9 +349,9 @@ Class AuthorisationService
      *     )
      * );
      *
-     * @param array $query
+     * @param  array $query
      * $param  array       $db
-     * @param Registry $parameters
+     * @param  Registry $parameters
      *
      * @return boolean
      * @since      1.0
@@ -435,13 +432,10 @@ Class AuthorisationService
     public function setHTMLFilter()
     {
         $groups = Services::Registry()->get('Configuration', 'disable_filter_for_groups');
-
         $groupArray = explode(',', $groups);
-
         $userGroups = Services::Registry()->get('User', 'groups');
 
         foreach ($groupArray as $single) {
-
             if (in_array($single, $userGroups)) {
                 return false;
                 break;

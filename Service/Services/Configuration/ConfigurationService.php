@@ -260,6 +260,8 @@ Class ConfigurationService
 			define('APPLICATION_ID', Services::Registry()->get('Configuration', 'application_id'));
 		}
 
+		Services::Registry()->sort('Configuration');
+
 		return $this;
 	}
 

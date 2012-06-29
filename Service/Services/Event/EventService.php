@@ -73,7 +73,7 @@ Class EventService
 	 * the event manager then fires off triggers which have registered for the event
 	 *
 	 * Usage:
-	 * Services::Event()->schedule('onAfterDelete', $parameters, $selections);
+	 * Services::Event()->schedule('onAfterDelete', $arguments, $selections);
 	 *
 	 * @param string $event
 	 * @param array  $parameters
@@ -85,15 +85,20 @@ Class EventService
 	 */
 	public function schedule($event, $arguments = array(), $selections = array())
 	{
+		Services::Debug()->set('EventService->schedule Initiated Event ' . $event, LOG_OUTPUT_TRIGGERS, 1);
+
 		/** Does Event (with registration) exist? */
 		$exists = Services::Registry()->exists('Events', $event);
 		if ($exists == false) {
-			return false;
+			Services::Debug()->set('EventService->schedule Event: ' . $event . ' does not exist', LOG_OUTPUT_TRIGGERS);
+			return true;	//not a problem
 		}
 
 		/** Retrieve Event Registrations */
 		$registrations = Services::Registry()->get($event);
 		if (count($registrations) == 0) {
+			Services::Debug()->set('EventService->schedule Event ' . $event
+				. ' has no registrations, exiting', LOG_OUTPUT_TRIGGERS);
 			return $arguments;
 		}
 
@@ -123,53 +128,101 @@ Class EventService
 			}
 		}
 
-		/** Process each trigger */
+		/** Process each selected trigger */
 		foreach ($selections as $selection) {
 
-			$key = strtolower($selection) . 'trigger';
+			$triggerClass = strtolower($selection) . 'trigger';
 
-			if (isset($registrations[$key])) {
+			Services::Debug()->set('EventService->schedule Event '
+					. $event . ' Key ' . $triggerClass,
+				LOG_OUTPUT_TRIGGERS,
+				VERBOSE);
 
-				if (method_exists($registrations[$key], $event)) {
-					/** Retrieve Connection Information for the Trigger */
-					$triggerClass = $registrations[$key];
+			if (isset($registrations[$triggerClass])) {
 
-					try {
-						$connection = new $triggerClass();
+				if (method_exists($registrations[$triggerClass], $event)) {
 
-					} catch (\Exception $e) {
-						echo '<br />Could not Instantiate Trigger Class: ' . $triggerClass;
-						return false;
-					}
+					$results = $this->processTriggerClass($registrations[$triggerClass], $event, $arguments);
 
-					/** Set Properties for Trigger Class */
-					if (count($arguments) > 0) {
-						foreach ($arguments as $key => $value) {
-							$connection->set($key, $value);
-						}
-						$connection->setFields();
-					}
-
-					/** Execute the Trigger Method */
-					$results = $connection->$event();
-
-					if ($results == false) {
-						echo '<br />Trigger: ' . $triggerClass . ' Failed for Event ' . $event . ' ' . ' All other triggers aborted';
-						$arguments = false;
-						break;
-
-					} else {
-
-						/** Retrieve Properties from Trigger Class to send back to Controller */
-						if (count($arguments) > 0) {
-							foreach ($arguments as $key2 => $value2) {
-								$arguments[$key2] = $connection->get($key2, $value2);
-							}
-						}
-					}
 				} else {
-					echo 'Event does not exist ' . $registrations[$key] . ' ' . $event . '<br />';
-					die;
+
+					Services::Debug()->set('EventService->schedule Event '
+							. $event . ' Class does not exist '
+							. $registrations[$triggerClass],
+						LOG_OUTPUT_TRIGGERS);
+					//throw error
+				}
+
+			} else {
+				Services::Debug()->set('EventService->schedule Event '
+						. $event . ' No valid registrations for class '
+						. $triggerClass,
+					LOG_OUTPUT_TRIGGERS,
+					VERBOSE
+				);
+			}
+		}
+
+		return $arguments;
+	}
+
+	/**
+	 * processTriggerClass for Event given passed in arguments
+	 *
+	 * @param $class
+	 * @param $event
+	 * @param array $arguments
+	 *
+	 * @return array|bool
+	 * @since  1.0
+	 */
+	protected function processTriggerClass($class, $event, $arguments = array())
+	{
+		/** 1. Instantiate Trigger Class */
+		$triggerClass = $class;
+
+		try {
+			$connection = new $triggerClass();
+
+		} catch (\Exception $e) {
+
+			Services::Debug()->set('EventService->schedule Event ' . $event
+				. ' Instantiating Class ' . $triggerClass . ' Failed', LOG_OUTPUT_TRIGGERS);
+
+			echo '<br />Could not Instantiate Trigger Class: ' . $triggerClass;
+			return false;
+			//throw error
+		}
+
+		/** 2. Set Properties for Trigger Class */
+		if (count($arguments) > 0) {
+			foreach ($arguments as $propertyKey => $propertyValue) {
+				$connection->set($propertyKey, $propertyValue);
+			}
+			$connection->setFields();
+		}
+
+		/** 3. Execute Trigger Class Method */
+		Services::Debug()->set('EventService->schedule Event ' . $event
+			. ' calling ' . $triggerClass . ' ' . $event, LOG_OUTPUT_TRIGGERS, 1);
+
+		$results = $connection->$event();
+
+		if ($results == false) {
+
+			Services::Debug()->set('EventService->schedule Event '
+					. $event . ' Trigger Class '
+					. $class
+					. ' Failed. ',
+				LOG_OUTPUT_TRIGGERS);
+//todo: decide if all other triggers should be aborted
+
+		} else {
+
+			/** Retrieve Properties from Trigger Class to send back to Controller */
+			if (count($arguments) > 0) {
+				foreach ($arguments as $propertyKey => $propertyValue) {
+					$arguments[$propertyKey] = $connection->get($propertyKey, $propertyValue);
 				}
 			}
 		}
@@ -196,6 +249,14 @@ Class EventService
 	 */
 	public function register($trigger, $triggerPath, $event)
 	{
+		Services::Debug()->set('EventService->register '
+				. 'Trigger: ' . $trigger
+				. ' Class: ' . $triggerPath
+				. ' Event: ' . $event,
+			LOG_OUTPUT_TRIGGERS,
+			1
+		);
+
 		/** Register Event (if not already registered) */
 		$exists = Services::Registry()->exists('Events', $event);
 
@@ -227,6 +288,8 @@ Class EventService
 	 */
 	protected function registerInstalledTriggers()
 	{
+		Services::Debug()->set('EventService->registerInstalledTriggers ', LOG_OUTPUT_TRIGGERS, 1);
+
 		$triggers = Services::Filesystem()->folderFolders(EXTENSIONS_TRIGGERS);
 
 		/** Load Parent Classes first */

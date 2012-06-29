@@ -76,7 +76,7 @@ Class Application
 	public function process($override_url_request = false, $override_catalog_id = false,
 							$override_sequence_xml = false, $override_final_xml = false)
 	{
-		/** Initialise Sets the Configuration Registry  */
+		/** 1. Initialise */
 		$continue = $this->initialise();
 
 		Services::Registry()->set('Override', 'url_request', $override_url_request);
@@ -85,57 +85,72 @@ Class Application
 		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
 
 		if ($continue == false) {
-			Services::Debug()->set('Application Initialise failed', 'Application');
+			Services::Debug()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
 			return;
 		} else {
-			Services::Debug()->set('Application Initialise succeeded', 'Application');
+			Services::Debug()->set('Initialise succeeded', LOG_OUTPUT_APPLICATION);
 		}
 
-		/** Route: Sets the Request, Catalog, and Menuitem Registry */
+		/** 2. Route */
+		Services::Debug()->set(START_ROUTE, LOG_OUTPUT_APPLICATION);
+
 		$continue = $this->route();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application Route failed', 'Application');
+			Services::Debug()->set('Route failed', LOG_OUTPUT_APPLICATION);
 			return;
 		} else {
-			Services::Debug()->set('Application Route succeeded', 'Application');
+			Services::Debug()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
 		}
 
-		/** onAfterRoute using Primary Route Content (Menu Item or Content) Triggers */
-		;
-		Services::Event()->schedule('onAfterRoute',
+		Services::Debug()->set('Application->process Schedules onAfterRoute', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
+		$results = Services::Event()->schedule('onAfterRoute',
 			array('parameters' => Services::Registry()->get('Parameters')),
 			Services::Registry()->get('Parameters', 'Triggers')
 		);
 
-		/** Authorise: Services::Registry()->get('Parameters', 'status_authorised') */
+		if ($results == false) {
+			Services::Debug()->set('Application->process OnAfterRoute failed.', LOG_OUTPUT_TRIGGERS);
+			return false;
+		}
+
+		Services::Debug()->set('Application->process OnAfterRoute successful.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
+		/** 3. Authorise */
+		Services::Debug()->set(START_AUTHORISE, LOG_OUTPUT_APPLICATION);
+
 		$continue = $this->authorise();
 
 		if ($continue === false) {
-			Services::Debug()->set('Application Authorise failed', 'Application');
+			Services::Debug()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
 			return;
 		} else {
-			Services::Debug()->set('Application Authorise succeeded', 'Application');
+			Services::Debug()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
 		}
 
-		/** Execute */
+		/** 4. Execute */
+		Services::Debug()->set(START_EXECUTE, LOG_OUTPUT_APPLICATION);
+
 		$continue = $this->execute();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application Execute failed', 'Application');
+			Services::Debug()->set('Execute failed', LOG_OUTPUT_APPLICATION);
 			return;
 		} else {
-			Services::Debug()->set('Application Execute succeeded', 'Application');
+			Services::Debug()->set('Execute succeeded', LOG_OUTPUT_APPLICATION);
 		}
 
-		/** Response */
+		/** 5. Response */
+		Services::Debug()->set(START_RESPONSE, LOG_OUTPUT_APPLICATION);
+
 		$continue = $this->response();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application Response failed', 'Application');
+			Services::Debug()->set('Response failed', LOG_OUTPUT_APPLICATION);
 			return;
 		} else {
-			Services::Debug()->set('Application Response succeeded', 'Application');
+			Services::Debug()->set('Response succeeded', LOG_OUTPUT_APPLICATION);
 		}
 
 		return;
@@ -277,12 +292,12 @@ Class Application
 			$continue = $this->display();
 
 			if ($continue == false) {
-				Services::Debug()->set('Application execute Display failed', 'Application');
+				Services::Debug()->set('Execute Display failed', LOG_OUTPUT_APPLICATION);
 				return false;
 
 			} else {
-				Services::Debug()->set('Application execute Display succeeded', 'Application');
-				return true;
+				Services::Debug()->set('Execute Display succeeded', LOG_OUTPUT_APPLICATION);
+				return $continue;
 			}
 		}
 
@@ -290,11 +305,11 @@ Class Application
 		$continue = $this->action();
 
 		if ($continue == false) {
-			Services::Debug()->set('Application execute ' . $action . ' failed', 'Application');
+			Services::Debug()->set('Execute ' . $action . ' failed', LOG_OUTPUT_APPLICATION);
 			return false;
 
 		} else {
-			Services::Debug()->set('Application execute ' . $action . ' succeeded', 'Application');
+			Services::Debug()->set('Execute ' . $action . ' succeeded', LOG_OUTPUT_APPLICATION);
 			return true;
 		}
 	}
@@ -384,8 +399,7 @@ Class Application
 		) {
 
 			Services::Debug()
-				->set('Services::Response()->setContent() for ' . $this->rendered_output . ' Code: 200',
-						'Application');
+				->set('Response Code 200: ' . $this->rendered_output, LOG_OUTPUT_APPLICATION);
 
 			Services::Response()
 				->setContent($this->rendered_output)
@@ -396,17 +410,15 @@ Class Application
 		} else {
 
 			Services::Debug()
-				->set('Services::Redirect()->redirect()->send() for '
-				. Services::Redirect()->url . ' Code: ' . Services::Redirect()->code,
-				'Application');
+				->set('Response Code:' . Services::Redirect()->code
+					. 'Redirect to: ' . Services::Redirect()->url
+					. LOG_OUTPUT_APPLICATION);
 
-			Services::Redirect()
-				->redirect()
-				->send();
+			Services::Redirect()->redirect()->send();
 		}
 
 		Services::Debug()
-			->set('Application response End', 'Application');
+			->set('Response exit', LOG_OUTPUT_APPLICATION);
 
 		exit(0);
 	}
@@ -745,13 +757,10 @@ Class Application
 	 */
 	protected function sslCheck()
 	{
-		/** @noinspection PhpUndefinedMethodInspection */
 		Services::Registry()->get('ApplicationsParameters');
 
-		/** @noinspection PhpUndefinedMethodInspection */
 		if ((int)Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
 
-			/** @noinspection PhpUndefinedMethodInspection */
 			if ((Services::Request()->get('connection')->isSecure() === true)) {
 
 			} else {
