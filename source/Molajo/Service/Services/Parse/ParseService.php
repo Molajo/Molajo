@@ -165,6 +165,8 @@ Class ParseService
 	 */
 	public function process()
 	{
+		Services::Debug()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
+
 		/** Retrieve overrides */
 		$overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
 		$overrideIncludesFinalXML = Services::Registry()->get('Override', 'final_xml', false);
@@ -204,7 +206,16 @@ Class ParseService
 		}
 
 		/** Before Event */
-		Services::Event()->schedule('onBeforeRender');
+		Services::Debug()->set('ParseService->process Schedules onBeforeRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
+		$results = Services::Event()->schedule('onBeforeRender');
+
+		if ($results == false) {
+			Services::Debug()->set('ParseService->process onBeforeRender failed', LOG_OUTPUT_TRIGGERS);
+			return false;
+		}
+
+		Services::Debug()->set('ParseService->process onBeforeRender succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$this->final_indicator = false;
 
@@ -217,10 +228,7 @@ Class ParseService
 
 		$body = $this->renderLoop();
 
-		/**
-		 *  Final Includers: Now, the theme, head, messages, and defer includes run
-		 *      This process also removes <include values not found
-		 */
+		/** Final Includers: Now, the theme, head, messages, and defer <includes /> run */
 		$this->sequence = $this->final;
 
 		/** initialize so it is no longer used to exclude this set of include values */
@@ -246,7 +254,15 @@ Class ParseService
 		$body = $this->renderLoop($body);
 
 		/** after rendering */
-		Services::Event()->schedule('onAfterRender', $body);
+		Services::Debug()->set('ParseService->process scheduled onAfterRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
+		$results = Services::Event()->schedule('onAfterRender', $body);
+		if ($results == false) {
+			Services::Debug()->set('ParseService->process onAfterRender failed', LOG_OUTPUT_TRIGGERS);
+			//throw error
+		}
+
+		Services::Debug()->set('ParseService->process onAfterRender succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		return $body;
 	}
@@ -264,15 +280,25 @@ Class ParseService
 		/** initial run: start with theme and page */
 		if ($body == null) {
 			$first = true;
+
+			Services::Debug()->set('ParseService->renderLoop include Theme:'
+				. Services::Registry()->get('Parameters', 'theme_path_include')
+				. ' which includes Page: '
+				. Services::Registry()->get('Parameters', 'page_view_path_include'),
+				LOG_OUTPUT_RENDERING, 0);
+
 			ob_start();
 			require Services::Registry()->get('Parameters', 'theme_path_include');
 			$body = ob_get_contents();
 			ob_end_clean();
 
 		} else {
+
 			/* final run (for page head): start with rendered body */
 			$first = false;
 			$final = true;
+			Services::Debug()->set('ParseService->renderLoop Final Run ',
+				LOG_OUTPUT_RENDERING, 0);
 		}
 
 		/** process all input for include: statements  */
@@ -402,6 +428,16 @@ Class ParseService
 			}
 		}
 
+		ob_start();
+		echo 'ParseService->parseIncludeRequests identified the following includes:<br />';
+		foreach ($this->include_request as $request) {
+			echo $request['replace'] . '<br />';
+		}
+		$includeDisplay = ob_get_contents();
+		ob_end_clean();
+
+		Services::Debug()->set($includeDisplay, LOG_OUTPUT_RENDERING, 0);
+
 		return;
 	}
 
@@ -468,12 +504,23 @@ Class ParseService
 						$rc = new $class ($includerType, $includeName);
 
 					} else {
+						Services::Debug()->set('ParseService->callIncluder failed instantiating class '
+							. $class, LOG_OUTPUT_RENDERING, 0);
 						echo 'failed includer = ' . $class . '<br />';
-						die;
 						// ERROR
 					}
 
 					/** 8. render output and store results as "replace with" */
+					ob_start();
+						echo 'ParseService->callIncluder invoking class ' . $class . ' Attributes: '. '<br />';
+						echo '<pre>';
+						var_dump($attributes);
+						echo '</pre>';
+					$includeDisplay = ob_get_contents();
+					ob_end_clean();
+
+					Services::Debug()->set($includeDisplay, LOG_OUTPUT_RENDERING, 0);
+
 					$with[] = trim($rc->process($attributes));
 
 					Services::Registry()->deleteRegistry('Parameters');

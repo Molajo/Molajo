@@ -8,7 +8,7 @@ namespace Molajo\Extension;
 
 use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
-use Molajo\Controller\DisplayController;
+use Molajo\Controller\ReadController;
 
 defined('MOLAJO') or die;
 
@@ -363,7 +363,7 @@ class Includer
 		Services::Registry()->get('Parameters', '*');
 		echo '<br /><br /><br />';
 		 */
-		$controller = new DisplayController();
+		$controller = new ReadController();
 
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));
 

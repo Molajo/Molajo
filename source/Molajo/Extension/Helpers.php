@@ -117,17 +117,14 @@ Class Helpers
             $try = true;
             $connection = '';
 
-            /** class name */
             if (substr($filename, 0, 4) == 'hold') {
                 break;
             }
             $entry = substr($filename, 0, strlen($filename) - 4);
             $helperClass = 'Molajo\\Extension\\Helper\\' . $entry;
 
-            /** method name */
             $helperMethod = 'getInstance';
 
-            /** trap errors for missing class or method */
             if (class_exists($helperClass)) {
                 if (method_exists($helperClass, $helperMethod)) {
                 } else {
@@ -139,7 +136,6 @@ Class Helpers
                 $connection = $helperClass . ' Class does not exist';
             }
 
-            /** make helper connection */
             if ($try === true) {
                 try {
                     $connection = $helperClass::$helperMethod();
@@ -149,12 +145,11 @@ Class Helpers
                 }
             }
 
-            /** store connection or error message */
             $this->set($entry, $connection, $try);
         }
 
         foreach ($this->message as $message) {
-            Services::Debug()->set($message, 'Application');
+            Services::Debug()->set($message, LOG_OUTPUT_APPLICATION, VERBOSE);
         }
 
         return true;
@@ -176,11 +171,11 @@ Class Helpers
         $i = count($this->message);
 
         if ($value == null || $try == false) {
-            $this->message[$i] = 'Trigger: ' . $key . ' FAILED' . $value;
+            $this->message[$i] = ' ' . $key . ' FAILED' . $value;
 
         } else {
             $this->helper_connection[$key] = $value;
-            $this->message[$i] = 'Trigger: ' . $key . ' started successfully. ';
+            $this->message[$i] = ' ' . $key . ' started successfully. ';
         }
     }
 }

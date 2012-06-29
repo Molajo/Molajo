@@ -80,6 +80,23 @@
     <define name="LOG_TYPE_INFO" value="64"/>
     <define name="LOG_TYPE_DEBUG" value="128"/>
 
+    <define name="LOG_OUTPUT_ACTIONS" value="Actions"/>
+    <define name="LOG_OUTPUT_APPLICATION" value="Application"/>
+    <define name="LOG_OUTPUT_AUTHORISATION" value="Authorisation"/>
+    <define name="LOG_OUTPUT_QUERIES" value="Queries"/>
+    <define name="LOG_OUTPUT_REGISTRY" value="Registry"/>
+    <define name="LOG_OUTPUT_RENDERING" value="Rendering"/>
+    <define name="LOG_OUTPUT_ROUTING" value="Routing"/>
+    <define name="LOG_OUTPUT_SERVICES" value="Services"/>
+    <define name="LOG_OUTPUT_TRIGGERS" value="Triggers"/>
+    <define name="VERBOSE" value="1"/>
+
+    <define name="START_INITIALISE" value="Initialise"/>
+    <define name="START_ROUTE" value="Route"/>
+    <define name="START_AUTHORISE" value="Authorise"/>
+    <define name="START_EXECUTE" value="Execute"/>
+    <define name="START_RESPONSE" value="Response"/>
+
     <define name="AUTHENTICATE_STATUS_SUCCESS" value="1"/>
     <define name="AUTHENTICATE_STATUS_CANCEL" value="2"/>
     <define name="AUTHENTICATE_STATUS_FAILURE" value="4"/>

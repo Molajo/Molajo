@@ -98,7 +98,7 @@ class CreateController extends Controller
 	/**
 	 * saveItemBatch
 	 *
-	 * Called from ListController::processItem to obtain a current row and prepare data for a new item
+	 * Called from UpdateController::processItem to obtain a current row and prepare data for a new item
 	 *
 	 * uses saveItem to process save after preparing the data
 	 *

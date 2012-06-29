@@ -56,7 +56,7 @@ Class SiteConfiguration
 	public $smtphost = 'localhost';
 
 	/* Debug Logging */
-	public $debug_logger = 'echo';
+	public $debug_log = 'echo';
 	/* Text */
 	public $debug_text_file = 'debug.php';
 	public $debug_text_file_path = 'SITE_LOGS_FOLDER';

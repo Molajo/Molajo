@@ -31,7 +31,7 @@ Class Services
     protected static $instance;
 
     /**
-     * Stores messages locally until the Message Service has been activated
+     * Stores messages locally until the Debug Service has been activated
      *
      * @var    object
      * @since  1.0
@@ -108,18 +108,15 @@ Class Services
 
             /** trap errors for missing class or method */
             if (class_exists($serviceClass)) {
-
                 if (method_exists($serviceClass, $serviceMethod)) {
 
                 } else {
                     $connectionSucceeded = false;
                     $connection = $serviceClass . '::' . $serviceMethod . ' Class Method does not exist';
-                    echo $connection;
                 }
             } else {
                 $connectionSucceeded = false;
                 $connection = $serviceClass . ' Class does not exist';
-                echo $connection;
             }
 
             /** make service connection */
@@ -142,7 +139,7 @@ Class Services
         }
 
         foreach ($this->message as $message) {
-            Services::Debug()->set($message);
+            Services::Debug()->set($message, LOG_OUTPUT_SERVICES, VERBOSE);
         }
 
         return true;
@@ -182,11 +179,14 @@ Class Services
         $i = count($this->message);
 
         if ($value == null || $connectionSucceeded == false) {
-            $this->message[$i] = 'Service: ' . $key . ' FAILED' . $value;
+            $this->message[$i] = ' ' . $key . ' FAILED' . $value;
+			Services::Registry()->set('Service', $key, false);
 
         } else {
             $this->service_connection[$key] = $value;
-            $this->message[$i] = 'Service: ' . $key . ' started successfully. ';
+            $this->message[$i] = ' ' . $key . ' started successfully. ';
+			Services::Registry()->set('Service', $key, true);
         }
+
     }
 }

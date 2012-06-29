@@ -33,7 +33,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class DisplayController extends ModelController
+class ReadController extends ModelController
 {
 	/**
 	 * Add action is used to render view output for a form used to create new content
@@ -262,11 +262,15 @@ class DisplayController extends ModelController
 			'model_name' => $this->get('model_name')
 		);
 
-		$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
+//		Services::Debug()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 
+		$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
 		if ($arguments == false) {
+//			Services::Debug()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
+
+//		Services::Debug()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 
 		$this->query_results = $arguments['data'];
 
@@ -284,6 +288,7 @@ class DisplayController extends ModelController
 	protected function onAfterViewRender($rendered_output)
 	{
 		return $rendered_output;
+
 		if ((int)$this->get('process_triggers') == 0) {
 			return $rendered_output;
 		}
@@ -296,11 +301,15 @@ class DisplayController extends ModelController
 			'model_name' => $this->get('model_name')
 		);
 
-		$arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
+//		Services::Debug()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 
+		$arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
 		if ($arguments == false) {
+//			Services::Debug()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
+
+//		Services::Debug()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 
 		$rendered_output = $arguments['rendered_output'];
 

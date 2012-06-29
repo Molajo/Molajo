@@ -205,7 +205,7 @@ class CreateController extends ModelController
 			return false;
 		}
 
-		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid, 'Actions');
+		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid, LOG_OUTPUT_ACTIONS);
 
 		return $valid;
 	}
@@ -318,7 +318,7 @@ class CreateController extends ModelController
 			$this->data->$customFieldName = $fieldArray;
 		}
 
-		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid, 'Actions');
+		Services::Debug()->set('CreateController::checkFields Filter::Success: ' . $valid, LOG_OUTPUT_ACTIONS);
 
 		return $valid;
 	}
@@ -439,10 +439,15 @@ class CreateController extends ModelController
 			'model_name' => $this->get('model_name')
 		);
 
+		Services::Debug()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_TRIGGERS);
+
 		$arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
 		if ($arguments == false) {
+			Services::Debug()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
+
+		Services::Debug()->set('CreateController->onBeforeCreateEvent successful.', LOG_OUTPUT_TRIGGERS);
 
 		$this->parameters = $arguments['parameters'];
 		$this->data = $arguments['data'];
@@ -473,10 +478,15 @@ class CreateController extends ModelController
 			'model_name' => $this->get('model_name')
 		);
 
+		Services::Debug()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_TRIGGERS);
+
 		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
 		if ($arguments == false) {
+			Services::Debug()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
+
+		Services::Debug()->set('CreateController->onAfterCreateEvent successful.', LOG_OUTPUT_TRIGGERS);
 
 		$this->parameters = $arguments['parameters'];
 		$data = $arguments['data'];

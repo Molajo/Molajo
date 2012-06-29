@@ -219,10 +219,15 @@ class DeleteController extends ModelController
 			'model_name' => $this->get('model_name')
 		);
 
+		Services::Debug()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
+
 		$arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
 		if ($arguments == false) {
+			Services::Debug()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
+
+		Services::Debug()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
@@ -254,10 +259,15 @@ class DeleteController extends ModelController
 			'model_name' => $this->get('model_name')
 		);
 
+		Services::Debug()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
+
 		$arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
 		if ($arguments == false) {
+			Services::Debug()->set('CreateController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
+
+		Services::Debug()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];

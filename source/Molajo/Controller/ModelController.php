@@ -165,7 +165,7 @@ Class ModelController extends Controller
 				$this->query_results = $this->model->$query_object($model_parameter);
 			}
 
-			return $this->query_results; //must directly return for non-DisplayController calls
+			return $this->query_results; //must directly return for non-ReadController calls
 		}
 
 		/** Only JDatabase queries follow */
@@ -405,14 +405,29 @@ echo '</pre>';
 			'model_name' => $this->get('model_name')
 		);
 
+		Services::Debug()->set('ModelController->onBeforeReadEvent '
+			. $this->table_registry_name
+			. ' Schedules onBeforeRead', LOG_OUTPUT_TRIGGERS, VERBOSE
+		);
+
 		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);
+
 		if ($arguments == false) {
+			Services::Debug()->set('ModelController->onBeforeReadEvent '
+					. $this->table_registry_name
+					. ' failure ', LOG_OUTPUT_TRIGGERS
+			);
 			return false;
 		}
 
+		Services::Debug()->set('ModelController->onBeforeReadEvent '
+				. $this->table_registry_name
+				. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+		);
+
 		/** Process results */
-		$this->parameters = $arguments['parameters'];
 		$this->model->query = $arguments['query'];
+		$this->parameters = $arguments['parameters'];
 
 		return true;
 	}
@@ -445,11 +460,25 @@ echo '</pre>';
 				'model_name' => $this->get('model_name')
 			);
 
+			Services::Debug()->set('ModelController->onAfterReadEvent '
+					. $this->table_registry_name
+					. ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE
+			);
+
 			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->triggers);
 
 			if ($arguments == false) {
+				Services::Debug()->set('ModelController->onAfterReadEvent '
+						. $this->table_registry_name
+						. ' failure ', LOG_OUTPUT_TRIGGERS
+				);
 				return false;
 			}
+
+			Services::Debug()->set('ModelController->onAfterReadEvent '
+					. $this->table_registry_name
+					. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+			);
 
 			$this->query_results[] = $arguments['data'];
 		}

@@ -4,6 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
+namespace Molajo\Extension\Theme\Molajito\Helper;
 use Mustache\Mustache;
 use Molajo\Service\Services;
 
