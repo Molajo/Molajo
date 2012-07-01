@@ -7,6 +7,7 @@
 namespace Molajo\Controller;
 
 use Molajo\Service\Services;
+use Molajo\Controller\Controller;
 
 defined('MOLAJO') or die;
 
@@ -25,7 +26,7 @@ class CreateController extends Controller
 	 * @return bool|object
 	 * @since  1.0
 	 */
-	public function create()
+	public function execute()
 	{
 		/** tokens */
 
@@ -50,7 +51,7 @@ class CreateController extends Controller
 			//return false (not yet)
 		}
 
-		$this->getTriggerList('create');
+		parent::getTriggerList('create');
 
 		$valid = $this->onBeforeCreateEvent();
 		if ($valid === false) {
@@ -273,7 +274,7 @@ class CreateController extends Controller
 				}
 
 			} else {
-				echo '(before filter) Name '. $name . ' Value ' . $inputArray[$name] . '<br />';
+				echo '(before filter) Name ' . $name . ' Value ' . $inputArray[$name] . '<br />';
 
 				if (isset($inputArray[$name])) {
 					$value = $inputArray[$name];
@@ -305,7 +306,7 @@ class CreateController extends Controller
 				} catch (\Exception $e) {
 
 					echo 'CreateController::checkFields Filter Failed ';
-					echo 'Fieldname: ' . $name.' Value: '. $value.' Type: '. $type.' Null: '. $null.' Default: '. $default.'<br /> ';
+					echo 'Fieldname: ' . $name . ' Value: ' . $value . ' Type: ' . $type . ' Null: ' . $null . ' Default: ' . $default . '<br /> ';
 					die;
 				}
 			}

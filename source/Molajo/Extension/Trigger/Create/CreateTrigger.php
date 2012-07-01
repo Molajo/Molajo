@@ -473,7 +473,7 @@ class CreateTrigger extends ContentTrigger
 		/** Create Menu Item  */
 		$controller = new CreateController();
 		$controller->data = $data;
-		$data->id = $controller->create();
+		$data->id = $controller->execute();
 
 		if ($data->id === false) {
 			//install failed
@@ -495,7 +495,7 @@ class CreateTrigger extends ContentTrigger
 
 		$controller->data = $data2;
 
-		$controller->create();
+		$controller->execute();
 
 		return true;
 	}
