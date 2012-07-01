@@ -6,18 +6,20 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die;
-?>
+$blockquote = Services::Registry()->exists('Trigger', 'Blockquote');
+if ((int) $blockquote > 0) {
+	$columns = 'nine ';
+} else {
+	$columns = 'twelve ';
+} ?>
 <section class="row">
-	<nav class="twelve columns">
-		<h2><?php echo $this->row->title; ?></h2>
-	</nav>
-</section>
-<section class="row">
-	<section class="nine columns">
+	<section class="<?php echo $columns; ?> columns">
 		<?php echo $this->row->content_text; ?>
 		<include:template name=Author wrap=Section value=author/>
 	</section>
-	<nav class="three columns">
-		<include:wrap name=Aside value=content_text_pullquote/>
-	</nav>
+	<?php if ((int) $blockquote > 0) { ?>
+		<aside class="three columns">
+			<include:template name=Blockquote/>
+		</aside>
+	<?php } ?>
 </section>

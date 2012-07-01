@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Controller;
 
@@ -20,21 +20,25 @@ defined('MOLAJO') or die;
  */
 Class ModelController extends Controller
 {
-
 	/**
 	 * Prepares data needed for the model using an XML table definition
 	 *
-	 * @param string $model_name
 	 * @param string $model_type
+	 * @param null $model_name
+	 * @param string $model_class
 	 *
-	 * @return object
+	 * @return bool|ModelController
+	 * @since  1.0
 	 *
-	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
 	public function connect($model_type = 'Table', $model_name = null, $model_class = 'ReadModel')
 	{
-//echo '<br />In connect: Type: ' . $model_type . ' $name: ' . $model_name. ' Query '.Services::Registry()->get('Query', 'Current') . '<br />';
+		$debugMessage = 'ModelController->connect '
+			. ' Type ' . $model_type
+			. ' Name ' . $model_name
+			. ' Class: ' . $model_class;
+
 		if ($model_name == null) {
 			$this->table_registry_name = null;
 
@@ -58,13 +62,18 @@ Class ModelController extends Controller
 
 			if (Services::Registry()->exists($table_registry_name) == true) {
 				$this->table_registry_name = $table_registry_name;
+				$debugMessage .= ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
 
 			} else {
 				$this->table_registry_name = ConfigurationService::getFile($model_type, $model_name);
+
 				if ($this->table_registry_name == false) {
-					echo '<br />ModelController: Table registry: ' . $this->table_registry_name . ' could not be defined. <br />';
+					$debugMessage .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
+					Services::Debug()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
 					return false;
 				}
+
+				$debugMessage .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getFile. ';
 			}
 
 			/** Serialize Options */
@@ -97,8 +106,17 @@ Class ModelController extends Controller
 				Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
 			$this->get('model_offset', 0);
 			$this->get('model_count', 5);
-
 		}
+
+		if (Services::Registry()->get('Configuration', 'debug_output_queries_table_registry') == 0) {
+		} else {
+			ob_start();
+			Services::Registry()->get($this->table_registry_name, '*');
+			$debugMessage .= ob_get_contents();
+			ob_end_clean();
+		}
+
+		Services::Debug()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
 
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\Model\\' . $model_class;
@@ -147,18 +165,20 @@ Class ModelController extends Controller
 	{
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
 
-		if (Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase') == 'JDatabase') {
+		if ($dbo == 'JDatabase') {
 		} else {
 			$model_parameter = null;
 			if ($this->get('model_parameter') == '') {
 			} else {
 				$model_parameter = $this->get('model_parameter');
 			}
-			/**
-			echo 'DBO '.$dbo.'<br />';
-			echo $query_object.'<br />';
-			echo $model_parameter.'<br />';
-			 */
+
+			Services::Debug()->set('ModelController->getData DBO '
+				. $dbo . 'Query_object: '
+				. $query_object . ' Model Parameter: '
+				. $model_parameter,
+				LOG_OUTPUT_QUERIES, VERBOSE);
+
 			if (strtolower($query_object) == 'getdummy') {
 				$this->query_results = array();
 			} else {
@@ -248,22 +268,29 @@ Class ModelController extends Controller
 			$count
 		);
 
-//		echo '<br /><br /><br />';
-//		//Services::Registry()->get($this->table_registry_name, '*');
-//		echo '<br /><br /><br />';
-//		echo $this->model->query->__toString();
-//		echo '<br /><br /><br />';
-
+		if (Services::Registry()->get('Configuration', 'debug_output_queries_sql', 0) == 1) {
+			Services::Debug()->set('ModelController->getData SQL Query: <br /><br />'
+					. $this->model->query->__toString(),
+				LOG_OUTPUT_RENDERING, VERBOSE);
+		}
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
 
-//		echo '<pre>';
-//		var_dump($query_results);
-//		echo '</pre>';
-
 		/** Return result (single value) */
 		if ($query_object == 'result' || $query_object == 'distinct') {
+
+			if (Services::Registry()->get('Configuration', 'debug_output_queries_query_results', 0) == 1) {
+				$message = 'ModelController->getData Query Results <br /><br />';
+				ob_start();
+				echo '<pre>';
+				var_dump($query_results);
+				echo '</pre><br /><br />';
+				$message .= ob_get_contents();
+				ob_end_clean();
+				Services::Debug()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
+			}
+
 			return $query_results;
 		}
 
@@ -326,17 +353,22 @@ Class ModelController extends Controller
 		if (count($this->triggers) > 0) {
 			$this->onAfterReadEvent();
 		}
-/**
-echo $query_object.'<br />';
 
-echo '<pre>';
-var_dump($this->query_results);
-echo '</pre>';
-*/
 		/** Return List */
 		if ($query_object == 'list') {
-			return $this->query_results;
 
+			if (Services::Registry()->get('Configuration', 'debug_output_queries_query_results', 0) == 1) {
+				$message = 'ModelController->getData Query Results <br /><br />';
+				ob_start();
+				echo '<pre>';
+				var_dump($query_results);
+				echo '</pre><br /><br />';
+				$message .= ob_get_contents();
+				ob_end_clean();
+				Services::Debug()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
+			}
+
+			return $this->query_results;
 		}
 
 		/** Return Item */
@@ -406,8 +438,8 @@ echo '</pre>';
 		);
 
 		Services::Debug()->set('ModelController->onBeforeReadEvent '
-			. $this->table_registry_name
-			. ' Schedules onBeforeRead', LOG_OUTPUT_TRIGGERS, VERBOSE
+				. $this->table_registry_name
+				. ' Schedules onBeforeRead', LOG_OUTPUT_TRIGGERS, VERBOSE
 		);
 
 		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);

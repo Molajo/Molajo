@@ -19,7 +19,6 @@ defined('MOLAJO') or die;
  */
 class Trigger
 {
-
 	/**
 	 * Pre-create processing
 	 *

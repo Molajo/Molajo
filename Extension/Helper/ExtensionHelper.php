@@ -58,7 +58,6 @@ Class ExtensionHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Extension getExtension: ' . $extension_id);
 
-		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($extension_id, $model_type, $model_name);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -100,14 +99,6 @@ Class ExtensionHelper
 			}
 		}
 
-		/**
-		echo '<br /><br /><br />';
-		echo 'In getExtension ROW <br />';
-		echo '<pre>';
-		var_dump($item);
-		echo '</pre>';
-		 */
-
 		return true;
 	}
 
@@ -127,6 +118,19 @@ Class ExtensionHelper
 		$extension_id = 0, $model_type = 'Table', $model_name = 'ExtensionInstances',
 		$query_object = 'item', $catalog_type_id = null)
 	{
+		if (Services::Registry()->get('CurrentPhase') == 'LOG_OUTPUT_ROUTING') {
+			$phase = LOG_OUTPUT_ROUTING;
+		} else {
+			$phase = LOG_OUTPUT_RENDERING;
+		}
+
+		Services::Debug()->set('ExtensionHelper->get '
+				. ' ID: ' . $extension_id
+				. ' Model Type: ' . $model_type
+				. ' Model Name: ' . $model_name
+				. ' Model Query: ' . VERBOSE
+				. ' Catalog Type ID: ' . $catalog_type_id,
+			$phase, VERBOSE);
 
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
@@ -140,7 +144,6 @@ Class ExtensionHelper
 		} else {
 			$m->set('id', (int)$extension_id);
 		}
-
 
 		if ((int)$catalog_type_id == 0) {
 		} else {

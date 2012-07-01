@@ -107,36 +107,61 @@ Class TextService
 	}
 
 	/**
-	 * pullquotes - searches for and returns pullquotes
+	 * blockquote - searches for and returns blockquote
 	 *
 	 * @param  $text
 	 *
 	 * @return array
 	 * @since   1.0
 	 */
-	public function pullquotes($text)
+	public function blockquote($text)
 	{
-		$pattern = '/{pullquote}(.*){\/pullquote}/';
+		$pattern = '/{blockquote}(.*){\/blockquote}/';
 
 		preg_match_all($pattern, $text, $matches);
 
-		$pullquote = array();
+		$blockquote = array();
+		$cite = array();
+
+		$replaceThis = array();
+		$withThis = array();
+
+		$found = false;
 		if (count($matches) == 0) {
+
 		} else {
 
-			/** add wrap for each */
 			foreach ($matches[1] as $match) {
-				$temp = strip_tags($match);
-				if (trim($temp) == '') {
+
+				$blockquoteTemp = strip_tags($match);
+
+				if (trim($blockquoteTemp) == '') {
 				} else {
-					$pullquote[] = $temp;
+					$found = true;
+					$citeTemp = '';
+					if (substr($blockquoteTemp, 0, 6) == '{cite:') {
+						$blockquoteTemp = substr($blockquoteTemp, 6, strlen($blockquoteTemp) - 6);
+						$citeTemp = substr($blockquoteTemp, 0, strpos($blockquoteTemp, '}'));
+						$replaceThis[] = '{cite:' . $citeTemp . '}';
+						$withThis[] = '';
+						$blockquoteTemp = substr($blockquoteTemp, strlen($citeTemp) + 1, 9999);
+					}
+					$blockquote[] = $blockquoteTemp;
+					$cite[] = $citeTemp;
 				}
 			}
 		}
 
-		$text = str_replace($matches[0], $matches[1], $text);
+		if ($found == 1) {
+			$replaceThis[] = '{blockquote}';
+			$withThis[] = '';
+			$replaceThis[] = '{/blockquote}';
+			$withThis[] = '';
+		}
 
-		return array($pullquote, $text);
+		$text = str_replace($replaceThis, $withThis, $text);
+
+		return array($blockquote, $cite, $text);
 	}
 
 	/**

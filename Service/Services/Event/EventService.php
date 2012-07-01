@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Service\Services\Event;
 
@@ -85,7 +85,7 @@ Class EventService
 	 */
 	public function schedule($event, $arguments = array(), $selections = array())
 	{
-		Services::Debug()->set('EventService->schedule Initiated Event ' . $event, LOG_OUTPUT_TRIGGERS, 1);
+		Services::Debug()->set('EventService->schedule Initiated Event ' . $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		/** Does Event (with registration) exist? */
 		$exists = Services::Registry()->exists('Events', $event);
@@ -134,7 +134,7 @@ Class EventService
 			$triggerClass = strtolower($selection) . 'trigger';
 
 			Services::Debug()->set('EventService->schedule Event '
-					. $event . ' Key ' . $triggerClass,
+				. $event . ' Key ' . $triggerClass,
 				LOG_OUTPUT_TRIGGERS,
 				VERBOSE);
 
@@ -204,7 +204,7 @@ Class EventService
 
 		/** 3. Execute Trigger Class Method */
 		Services::Debug()->set('EventService->schedule Event ' . $event
-			. ' calling ' . $triggerClass . ' ' . $event, LOG_OUTPUT_TRIGGERS, 1);
+			. ' calling ' . $triggerClass . ' ' . $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$results = $connection->$event();
 
@@ -254,7 +254,7 @@ Class EventService
 				. ' Class: ' . $triggerPath
 				. ' Event: ' . $event,
 			LOG_OUTPUT_TRIGGERS,
-			1
+			VERBOSE
 		);
 
 		/** Register Event (if not already registered) */
@@ -288,7 +288,7 @@ Class EventService
 	 */
 	protected function registerInstalledTriggers()
 	{
-		Services::Debug()->set('EventService->registerInstalledTriggers ', LOG_OUTPUT_TRIGGERS, 1);
+		Services::Debug()->set('EventService->registerInstalledTriggers ', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$triggers = Services::Filesystem()->folderFolders(EXTENSIONS_TRIGGERS);
 

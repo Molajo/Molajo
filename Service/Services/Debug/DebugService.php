@@ -77,20 +77,12 @@ Class DebugService
 	protected $debug_output_options = array();
 
 	/**
-	 * Hold debug output until Dependency Date Service is started
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $hold_for_date_service_startup = array();
-
-	/**
 	 * Begin debugging with this phase
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $debug_start_with = array();
+	protected $debug_start_with;
 
 	/**
 	 * End debugging with this phase
@@ -98,7 +90,7 @@ Class DebugService
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $debug_end_with = array();
+	protected $debug_end_with;
 
 	/**
 	 * Verbose mode provides considerably more detail
@@ -123,12 +115,45 @@ Class DebugService
 	 * @since  1.0
 	 */
 	protected $phase_array = array(
-		'Initialise' => 1,
-		'Route' => 2,
-		'Authorise' => 3,
-		'Execute' => 4,
-		'Response' => 5
+		START_INITIALISE => 1,
+		START_ROUTING => 2,
+		START_AUTHORISATION => 3,
+		START_EXECUTE => 4,
+		START_RESPONSE => 5
 	);
+
+	/**
+	 * Phase List
+	 *
+	 * @var array
+	 * @since  1.0
+	 */
+	protected $phase_array_list = array(
+		START_INITIALISE,
+		START_ROUTING,
+		START_AUTHORISATION,
+		START_EXECUTE,
+		START_RESPONSE
+	);
+
+	/**
+	 * Debug is started as a service, collecting entries internally until the Configuration and Log Services
+	 *   have been activated, and have interacted with this service, completing the configuration process.
+	 *   Before that process is complete, debug entries are held to see if debug is activated, and
+	 *   if so, what log should be used. Once that information is available, the class then operates normally.
+	 *
+	 * @var array
+	 * @since  1.0
+	 */
+	protected $configuration_complete = false;
+
+	/**
+	 * Hold debug output until Dependency Date Service is started
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $hold_for_date_service_startup = array();
 
 	/**
 	 * Log Type
@@ -162,45 +187,9 @@ Class DebugService
 	 */
 	public function __construct()
 	{
-		if (Services::Registry()->get('Configuration', 'Debug', 0) == 0) {
-			$this->on = 0;
-			return $this;
-		}
-
-		$this->on = 1;
-
-		$this->hold_for_date_service_startup = array();
-
-		$this->setDebugOutputOptions();
-
-		$this->debug_started_time = $this->getMicrotimeFloat();
-
-		$results = $this->setDebugLogger();
-
-		if ($results == false) {
-			$this->on = 0;
-			return $this;
-		}
-
-		$this->debug_start_with = Services::Registry()->get('Configuration', 'debug_start_with', 'Initialise');
-		if ($this->debug_start_with == '') {
-			$this->debug_start_with = 'Initialise';
-		}
-
-		$this->debug_end_with = Services::Registry()->get('Configuration', 'debug_end_with', 'Response');
-		if ($this->debug_end_with == '') {
-			$this->debug_end_with = 'Response';
-		}
-
-		$this->verbose = (int)Services::Registry()->get('Configuration', 'verbose', '0');
-		if ($this->verbose == 1) {
-		} else {
-			$this->verbose = 0;
-		}
-
-		$this->current_phase = 'Initialise';
-
-		$this->set(START_INITIALISE, LOG_OUTPUT_APPLICATION);
+		$this->current_phase = START_INITIALISE;
+		$this->debug_start_with = START_INITIALISE;
+		$this->debug_end_with = START_RESPONSE;
 
 		return $this;
 	}
@@ -216,9 +205,24 @@ Class DebugService
 	 */
 	public function set($message, $output_type = '', $verbose = 0)
 	{
+		/** Exit if current phase not yet defined */
+		if (in_array($message, $this->phase_array_list)) {
+			Services::Registry()->set('DebugService', 'CurrentPhase', $message);
+		}
+
+		$current_phase = Services::Registry()->get('DebugService', 'CurrentPhase');
+
+		if (in_array($current_phase, $this->phase_array_list)) {
+		} else {
+			return true;
+		}
+
 		/** 1. Is Debug on? */
 		if ((int)$this->on == 0) {
-			return true;
+			if ((int)$this->configuration_complete == 0) {
+			} else {
+				return true;
+			}
 		}
 
 		/** 2. Verbose Mode for Verbose Detail? */
@@ -230,20 +234,8 @@ Class DebugService
 		}
 
 		/** 3. Is there a start and end phase? And, does the current phase fall within the range? */
-		$phases = array(
-			START_INITIALISE,
-			START_ROUTE,
-			START_AUTHORISE,
-			START_EXECUTE,
-			START_RESPONSE
-		);
-
-		if (in_array($message, $phases)) {
-			$this->current_phase = $message;
-		}
-
-		if ($this->phase_array[$this->current_phase] >= $this->phase_array[$this->debug_start_with]
-			&& $this->phase_array[$this->current_phase] <= $this->phase_array[$this->debug_end_with]
+		if ($this->phase_array[$current_phase] >= $this->phase_array[$this->debug_start_with]
+			&& $this->phase_array[$current_phase] <= $this->phase_array[$this->debug_end_with]
 		) {
 		} else {
 			return true;
@@ -277,8 +269,6 @@ Class DebugService
 
 		try {
 
-			/** Debug entries are held until the Date Service has been started and then spooled out when available */
-
 			if (Services::Registry()->get('Service', 'DateService') == 1) {
 
 				if (count($this->hold_for_date_service_startup) > 0) {
@@ -308,26 +298,90 @@ Class DebugService
 				);
 
 			} else {
-				$i = count($this->hold_for_date_service_startup) + 1;
 
-				$entry = array(
-					'message' => sprintf('%.3f seconds (+%.3f); %0.2f MB (+%.3f) - %s',
-						$elapsed,
-						$elapsed - $this->previous_time,
-						$memory,
-						$memory_difference,
-						$output_type . ': ' . trim($message)
-					),
-					'log_level' => LOG_TYPE_DEBUG,
-					'log_type' => self::log_type,
-					'entry_date' => date("Y-m-d") . ' ' . date("H:m:s")); // will not be set to timezone
-
-				$this->hold_for_date_service_startup[$i] = $entry;
+				$this->holdEntries($elapsed, $memory, $memory_difference, $output_type . ': ' . trim($message));
 			}
 
 		} catch (\Exception $e) {
 			throw new \RuntimeException('Unable to add Log Entry: ' . $message . ' ' . $e->getMessage());
 		}
+
+		return true;
+	}
+
+	/**
+	 * holdEntries until the Configuration, Log, and Date Services are running and all
+	 * information needed to process, or not process, debug entries is known.
+	 *
+	 * @param  $elapsed
+	 * @param  $memory
+	 * @param  $memory_difference
+	 * @param  $message
+	 *
+	 * @return  void
+	 * @since   1.0
+	 */
+	public function holdEntries($elapsed, $memory, $memory_difference, $message)
+	{
+		$i = count($this->hold_for_date_service_startup) + 1;
+
+		$entry = array(
+			'message' => sprintf('%.3f seconds (+%.3f); %0.2f MB (+%.3f) - %s',
+				$elapsed,
+				$elapsed - $this->previous_time,
+				$memory,
+				$memory_difference,
+				$message
+			),
+			'log_level' => LOG_TYPE_DEBUG,
+			'log_type' => self::log_type,
+			'entry_date' => date("Y-m-d") . ' ' . date("H:m:s")); // will not be set to timezone
+
+		$this->hold_for_date_service_startup[$i] = $entry;
+
+		return;
+	}
+
+	/**
+	 * Configuration invokes this method to initiate the debug service if so configured
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	public function initiate()
+	{
+		$this->hold_for_date_service_startup = array();
+
+		$this->setDebugOutputOptions();
+
+		$this->debug_started_time = $this->getMicrotimeFloat();
+
+		$results = $this->setDebugLogger();
+
+		if ($results == false) {
+			$this->on = 0;
+			return $this;
+		}
+
+		$this->debug_start_with = Services::Registry()->get('Configuration', 'debug_start_with', START_INITIALISE);
+		if (in_array($this->debug_start_with, $this->phase_array)) {
+			$this->debug_start_with = START_INITIALISE;
+		}
+
+		$this->debug_end_with = Services::Registry()->get('Configuration', 'debug_end_with', START_RESPONSE);
+		if (in_array($this->debug_end_with, $this->phase_array)) {
+			$this->debug_end_with = START_RESPONSE;
+		}
+
+		$this->verbose = (int)Services::Registry()->get('Configuration', 'debug_verbose', VERBOSE);
+		if ($this->verbose == VERBOSE) {
+		} else {
+			$this->verbose = 0;
+		}
+
+		Services::Registry()->set('DebugService', 'CurrentPhase', START_INITIALISE);
+
+		$this->set(START_INITIALISE, LOG_OUTPUT_APPLICATION);
 
 		return true;
 	}
@@ -370,22 +424,31 @@ Class DebugService
 	}
 
 	/**
-	 * setDebugLogger - establish connection to the selected debug logger
+	 * setDebugLogger - establish connection to the selected debug logger and initiate Debugging
 	 *
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	protected function setDebugLogger()
+	public function setDebugLogger()
 	{
-		$loggerOptions = array('echo,formattedtext,database,email,firephp,messages');
+		$this->on = 1;
+
+		$loggerOptions = array(
+			LOG_ECHO_LOGGER,
+			LOG_FORMATTEDTEXT_LOGGER,
+			LOG_DATABASE_LOGGER,
+			LOG_EMAIL_LOGGER,
+			LOG_CONSOLE_LOGGER,
+			LOG_MESSAGES_LOGGER
+		);
 
 		$this->debug_options = array();
-		$this->debug_options['logger'] = Services::Registry()->get('Configuration', 'debug_log', 'echo');
+		$this->debug_options['logger'] = Services::Registry()->get('Configuration', 'debug_log', LOG_ECHO_LOGGER);
 
 		$results = false;
 		if (in_array($this->debug_options['logger'], $loggerOptions)) {
 		} else {
-			$this->debug_options['logger'] = 'echo';
+			$this->debug_options['logger'] = LOG_ECHO_LOGGER;
 		}
 
 		$results = $logMethod = 'set' . ucfirst(strtolower($this->debug_options['logger'])) . 'Logger';
@@ -393,13 +456,30 @@ Class DebugService
 
 		if ($results == false) {
 			$this->debug_options = array();
-			$this->debug_options['logger'] = 'echo';
+			$this->debug_options['logger'] = LOG_ECHO_LOGGER;
 		}
 
 		/** Establish log for activated debug option */
-		Services::Log()->setLog($this->debug_options, LOG_TYPE_DEBUG, self::log_type);
+		$results = array();
+		$results['options'] = $this->debug_options;
+		$results['priority'] = LOG_TYPE_DEBUG;
+		$results['types'] = self::log_type;
 
-		return true;
+		return $results;
+	}
+
+	/**
+	 * The Log Service invokes this method to mark the configuration process complete.
+	 *     All that remains to be initiated is the Date Service. Once that is complete, the class
+	 *     switches over to normal logging (if it is so configured).
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	public function setConfigurationComplete()
+	{
+		$this->configuration_complete = 1;
+		return $this;
 	}
 
 	/**
@@ -409,7 +489,6 @@ Class DebugService
 	 */
 	protected function setEmailLogger()
 	{
-
 		$this->debug_options['mailer'] = Services::Mail();
 
 		$this->debug_options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');

@@ -58,7 +58,6 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getMenuItemRoute');
 
-		/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
 			'Menuitem',
@@ -190,7 +189,6 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getRouteContent');
 
-		/** Retrieve the query results */
 		$item = $this->get(
 			$id, $model_type, $model_name, $model_query_object
 		);
@@ -262,7 +260,6 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getRouteCategory');
 
-		/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_category_id'),
 			'Table',
@@ -312,6 +309,13 @@ Class ContentHelper
 	 */
 	public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $model_query_object = 'list')
 	{
+		Services::Debug()->set('ContentHelper->get '
+				. ' ID: ' . $id
+				. ' Model Type: ' . $model_type
+				. ' Model Name: ' . $model_name
+				. ' Model Query: ' . $model_query_object,
+			LOG_OUTPUT_ROUTING, VERBOSE);
+
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$results = $m->connect($model_type, $model_name);

@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License version 2 or later; see LICENSE
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Helper;
 
@@ -52,34 +52,29 @@ Class CatalogHelper
 	 */
 	public function getRouteCatalog()
 	{
-
+		/** Retrieve the query results */
 		Services::Registry()->set('Query', 'Current', 'Catalog getRouteCatalog');
-
-			/** Retrieve the query results */
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'request_catalog_id'),
 			Services::Registry()->get('Parameters', 'request_url_query')
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
-		if (count($item) == 0 || (int)$item->id == 0) {
+		if (count($item) == 0 || (int)$item->id == 0 || (int)$item->routable == 0)  {
 			Services::Registry()->set('Parameters', 'status_found', false);
-
-			return false;
-		}
-
-		/** 404: item not routable, redirecting to error page */
-		if ((int)$item->routable == 0) {
-			Services::Registry()->set('Parameters', 'status_found', false);
-
+			Services::Debug()->set('CatalogHelper->getRouteCatalog 404 - Not Found '
+				. ' Requested Catalog ID: ' . Services::Registry()->get('Parameters', 'request_catalog_id')
+				. ' Requested URL Query: ' . Services::Registry()->get('Parameters', 'request_url_query'),
+				LOG_OUTPUT_ROUTING, 0);
 			return false;
 		}
 
 		/** Redirect: routeRequest handles rerouting the request */
 		if ((int)$item->redirect_to_id == 0) {
 		} else {
+			Services::Debug()->set('CatalogHelper->getRouteCatalog Redirect to ID '
+				. (int)$item->redirect_to_id, LOG_OUTPUT_ROUTING, 0);
 			Services::Registry()->set('Parameters', 'redirect_to_id', (int)$item->redirect_to_id);
-
 			return false;
 		}
 
@@ -126,14 +121,12 @@ Class CatalogHelper
 		if ((int)$catalog_id > 0) {
 
 		} elseif ((int)$source_id > 0 && (int)$catalog_type_id > 0) {
-
 			$catalog_id = $this->getID((int)$catalog_type_id, (int)$source_id);
 			if ($catalog_id == false) {
 				return array();
 			}
 
 		} else {
-
 			$catalog_id = $this->getIDUsingSEFURL($url_sef_request);
 			if ((int)$catalog_id == 0) {
 				return array();
@@ -149,6 +142,15 @@ Class CatalogHelper
 
 		$m->set('id', (int)$catalog_id);
 		$m->set('use_special_joins', 1);
+
+		Services::Debug()->set('CatalogHelper->get '
+			. ' Request Catalog ID: ' . $catalog_id
+			. ' Request URL SEF: ' . $url_sef_request
+			. ' Request Source ID: ' . $source_id
+			. ' Request Catalog Type ID: ' . $catalog_type_id
+			. ' Model Type: ' . 'Table'
+			. ' Model Name: ' . 'Catalog',
+			LOG_OUTPUT_ROUTING, 0);
 
 		$item = $m->getData('item');
 
@@ -175,6 +177,7 @@ Class CatalogHelper
 	 */
 	public function getIDUsingSEFURL($url_sef_request)
 	{
+
 		$controllerClass = 'Molajo\\Controller\\ModelController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');

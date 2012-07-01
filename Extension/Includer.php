@@ -61,10 +61,6 @@ class Includer
 	protected $attributes = array();
 
 	/**
-	 * __construct
-	 *
-	 * Class constructor.
-	 *
 	 * @param string $name
 	 * @param string $type
 	 *
@@ -84,8 +80,6 @@ class Includer
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Theme*');
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Page*');
 
-//		Services::Registry()->get('Parameters', '*');
-
 		return;
 	}
 
@@ -96,42 +90,25 @@ class Includer
 	 * - Loads Language files for Extension
 	 * - Loads Assets for Extension
 	 * - Activates Controller for Task
-	 * - Captures Rendered Output
-	 * - Returns Rendered Output to Molajo::Parse to use for replacing with <include:type />
+	 * - Returns Rendered Output to Parse for <include:type /> replacement
 	 *
 	 * @param   $attributes <include:type attr1=x attr2=y attr3=z ... />
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   1.0
 	 */
 	public function process($attributes = array())
 	{
-
 		/** attributes from <include:type */
 		$this->attributes = $attributes;
 
 		$this->getAttributes();
-		/**
-		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
-		} else {
-		Services::Registry()->copy('RouteParameters', 'Parameters', 'theme*');
-		Services::Registry()->copy('RouteParameters', 'Parameters', 'page*');
-		}
 
-
-		echo 'Includer Extension: ' . $this->name . ' Type: ' . $this->type . '<br />';
-		echo 'Attributes from Parsing<pre>';
-		var_dump($this->attributes);
-		echo '</pre>';
-		 */
 		/** retrieve the extension that will be used to generate the MVC request */
 		$this->getExtension();
 
 		/** initialises and populates the MVC request */
 		$results = $this->setRenderCriteria();
-		//if ($results == false) {
-		//	return '';
-		//}
 
 		/** language must be there before the extension runs */
 		$this->loadLanguage();
@@ -147,9 +124,6 @@ class Includer
 			$this->loadMedia();
 			$this->loadViewMedia();
 		}
-
-		/** further processing of rendered output - move mustache here? */
-		$rendered_output = $this->postMVCProcessing($rendered_output);
 
 		return $rendered_output;
 	}
@@ -354,22 +328,21 @@ class Includer
 	 */
 	protected function invokeMVC()
 	{
-
-		/**
-		echo '<br /><br /><br />';
-		echo Services::Registry()->get('Parameters', 'extension_title');
-		echo '<br />';
 		Services::Registry()->sort('Parameters');
-		Services::Registry()->get('Parameters', '*');
-		echo '<br /><br /><br />';
-		 */
-		$controller = new ReadController();
 
+		$message = 'Includer->invokeMVC ' . 'Name ' . $this->name . ' Type: ' . $this->type;
+		$message .= ' Parameters:<br />';
+
+		ob_start();
+		$message .= Services::Registry()->get('Parameters', '*');
+		$message .= ob_get_contents();
+		ob_end_clean();
+		Services::Debug()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
+
+		$controller = new ReadController();
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));
 
 		/** Set Parameters */
-		Services::Registry()->sort('Parameters');
-
 		$parms = Services::Registry()->getArray('Parameters');
 
 		if (count($parms) > 0) {
@@ -381,16 +354,5 @@ class Includer
 		$results = $controller->Display();
 
 		return $results;
-	}
-
-	/**
-	 * postMVCProcessing
-	 *
-	 * @return string
-	 * @since   1.0
-	 */
-	protected function postMVCProcessing($rendered_output)
-	{
-		return $rendered_output;
 	}
 }

@@ -10,7 +10,9 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die; ?>
 <include:head/>
 <header class="row">
-	<div class="twelve columns"><include:template name=Adminheader wrap=none/></div>
+	<div class="twelve columns">
+		<include:template name=Adminheader wrap=none/>
+	</div>
 </header>
 <include:message wrap="div" wrap_class="row"/>
 <section class="row">
@@ -26,6 +28,8 @@ defined('MOLAJO') or die; ?>
 	</section>
 </section>
 <footer class="row">
-	<div class="twelve columns"><include:template name=Adminfooter wrap=none/></div>
+	<div class="twelve columns">
+		<include:template name=Adminfooter wrap=none/>
+	</div>
 </footer>
 <include:defer/>

@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo;
 
@@ -92,7 +92,7 @@ Class Application
 		}
 
 		/** 2. Route */
-		Services::Debug()->set(START_ROUTE, LOG_OUTPUT_APPLICATION);
+		Services::Debug()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
 
 		$continue = $this->route();
 
@@ -118,7 +118,7 @@ Class Application
 		Services::Debug()->set('Application->process OnAfterRoute successful.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		/** 3. Authorise */
-		Services::Debug()->set(START_AUTHORISE, LOG_OUTPUT_APPLICATION);
+		Services::Debug()->set(START_AUTHORISATION, LOG_OUTPUT_APPLICATION);
 
 		$continue = $this->authorise();
 
