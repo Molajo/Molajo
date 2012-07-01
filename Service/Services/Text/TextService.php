@@ -265,12 +265,12 @@ Class TextService
 		$table_registry_name = ucfirst(strtolower($model_name)) . 'Table';
 
 		$data = new \stdClass();
-		$data->title = $extension_name;
+		$data->title = $model_name;
 		$data->model_name = $model_name;
 		//http://placekitten.com/200/300
 		$controller->data = $data;
 
-		$id = $controller->create();
+		$id = $controller->execute();
 		if ($id === false) {
 			//install failed
 			return false;

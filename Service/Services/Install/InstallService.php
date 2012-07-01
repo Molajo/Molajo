@@ -5,7 +5,7 @@
  * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 namespace Molajo\Service\Services\Install;
-use Molajo\Controller;
+use Molajo\Controller\Controller;
 use Molajo\Controller\CreateController;
 use Molajo\Controller\DeleteController;
 use Molajo\Service\Services;
@@ -232,7 +232,7 @@ Class InstallService
 			/** Create Catalog for Item (it will trigger more) */
 			$controller = new CreateController();
 			$controller->data = $data;
-			$id = $controller->create();
+			$id = $controller->execute();
 
 			/** Create Catalog for Item (it will trigger more) */
 			$controller2 = new CreateController();
@@ -253,7 +253,7 @@ Class InstallService
 
 			$controller2->data = $data2;
 
-			$controller2->create();
+			$controller2->execute();
 		}
 
 		return true;
@@ -284,7 +284,7 @@ Class InstallService
 
 		$controller->data = $data2;
 
-		$controller->create();
+		$controller->execute();
 
 
 	}
@@ -301,7 +301,7 @@ Class InstallService
 
 		$controller->data = $data;
 
-		$id = $controller->create();
+		$id = $controller->execute();
 		if ($id === false) {
 			//install failed
 			return false;
@@ -339,7 +339,7 @@ Class InstallService
 
 		$controller->set('action', 'delete');
 
-		$id = $controller->delete();
+		$id = $controller->execute();
 
 		if ($id === false) {
 			//install failed

@@ -155,7 +155,7 @@ class CatalogTrigger extends ContentTrigger
 
 		$controller = new CreateController();
 		$controller->data = $data;
-		$user_activity_id = $controller->create();
+		$user_activity_id = $controller->execute();
 		if ($user_activity_id === false) {
 			//install failed
 			return false;
@@ -180,7 +180,7 @@ class CatalogTrigger extends ContentTrigger
 
 		$controller = new CreateController();
 		$controller->data = $data;
-		$catalog_activity_id = $controller->create();
+		$catalog_activity_id = $controller->execute();
 		if ($catalog_activity_id === false) {
 			//install failed
 			return false;

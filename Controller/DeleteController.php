@@ -7,7 +7,7 @@
 namespace Molajo\Controller;
 
 use Molajo\Service\Services;
-use Molajo\Controller
+use Molajo\Controller\ReadController;
 
 defined('MOLAJO') or die;
 
@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class DeleteController extends Controller
+class DeleteController extends ReadController
 {
 	/**
 	 * Delete row and trigger other delete actions
@@ -46,7 +46,7 @@ class DeleteController extends Controller
 			//return false (not yet)
 		}
 
-		$this->getTriggerList('delete');
+		parent::getTriggerList('delete');
 
 		$valid = $this->onBeforeDeleteEvent();
 		if ($valid === false) {

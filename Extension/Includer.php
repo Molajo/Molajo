@@ -351,7 +351,7 @@ class Includer
 			}
 		}
 
-		$results = $controller->Display();
+		$results = $controller->execute();
 
 		return $results;
 	}

@@ -116,7 +116,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$controller = new CreateController();
 		$controller->data = $data;
 
-		$this->data->extension_id = $controller->create();
+		$this->data->extension_id = $controller->execute();
 
 		if ($this->data->extension_id  === false) {
 			//error
@@ -160,7 +160,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
 		$controller->data = $data;
 
-		$results = $controller->create();
+		$results = $controller->execute();
 		if ($results === false) {
 			//install failed
 			return false;
@@ -177,7 +177,7 @@ echo 'results are true for site '.'<br />';
 
 		$controller->data = $data;
 
-		$results = $controller->create();
+		$results = $controller->execute();
 		if ($results === false) {
 			//install failed
 			return false;
@@ -195,7 +195,7 @@ echo 'results are true for app '.'<br />';
 
 		$controller->data = $data;
 
-		$this->data->catalog_id = $controller->create();
+		$this->data->catalog_id = $controller->execute();
 		if ($results === false) {
 			//install failed
 			return false;
@@ -343,7 +343,7 @@ echo 'Passing this catalog id in to Delete Controller ' . $this->data->catalog_i
 		$controller->data = $data;
 		$controller->set('action', 'delete');
 
-		$id = $controller->delete();
+		$id = $controller->execute();
 
 		return true;
 	}
@@ -391,7 +391,7 @@ echo 'Passing this catalog id in to Delete Controller ' . $this->data->catalog_i
 		$controller->data = $data;
 		$controller->set('action', 'delete');
 
-		$controller->delete();
+		$controller->execute();
 
 		return true;
 	}
