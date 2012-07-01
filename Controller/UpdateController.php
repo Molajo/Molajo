@@ -26,7 +26,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class UpdateController extends CreateController
+class UpdateController extends Controller
 {
 	/**
 	 * Tasks: reorder, orderup, orderdown, saveorder

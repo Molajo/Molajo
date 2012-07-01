@@ -103,4 +103,90 @@ class VersionTrigger extends ContentTrigger
 	{
 		return true;
 	}
+
+	/**
+	 * createVersion
+	 *
+	 * Automatic version management save and restore processes for components
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function createVersion()
+	{
+		if ($this->get('version_management', 1) == 1) {
+		} else {
+			return true;
+		}
+
+		/** create **/
+		if ((int)$this->get('id') == 0) {
+			return true;
+		}
+
+		/** versions deleted with delete **/
+		if ($this->get('action') == 'delete'
+			&& $this->get('retain_versions_after_delete', 1) == 0
+		) {
+			return true;
+		}
+
+		/** create version **/
+		$versionKey = $this->model->createVersion($this->get('id'));
+
+		/** error processing **/
+		if ($versionKey === false) {
+			// redirect error
+			return false;
+		}
+
+		/** Trigger_Event: onContentCreateVersion
+		 **/
+
+		return true;
+	}
+
+	/**
+	 * maintainVersionCount
+	 *
+	 * Prune version history, if necessary
+	 *
+	 * @return boolean
+	 */
+	public function maintainVersionCount()
+	{
+		if ($this->get('version_management', 1) == 1) {
+		} else {
+			return true;
+		}
+
+		/** no versions to delete for create **/
+		if ((int)$this->get('id') == 0) {
+			return true;
+		}
+
+		/** versions deleted with delete **/
+		if ($this->get('action') == 'delete'
+			&& $this->get('retain_versions_after_delete', 1) == 0
+		) {
+			$maintainVersions = 0;
+		} else {
+			/** retrieve versions desired **/
+			$maintainVersions = $this->get('maintain_version_count', 5);
+		}
+
+		/** delete extra versions **/
+		$results = $this->model->maintainVersionCount($this->get('id'), $maintainVersions);
+
+		/** version delete failed **/
+		if ($results === false) {
+			// redirect false
+			return false;
+		}
+
+		/** Trigger_Event: onContentMaintainVersions
+		 **/
+
+		return true;
+	}
 }

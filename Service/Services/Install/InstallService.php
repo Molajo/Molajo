@@ -58,7 +58,7 @@ Class InstallService
 		$copy_extension_instance_id = 2;
 		$copy_catalog_type_id = 10000;
 
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$m->connect($copy_model_type, $copy_model_name);
 
@@ -313,7 +313,7 @@ Class InstallService
 	public function testDeleteExtension($extension_name, $model_name, $source_path = null)
 	{
 		/** Get Catalog Type ID */
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 
 		$m->connect('CatalogTypes', 'Table');

@@ -41,7 +41,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		/** Check ACL */
 
 		/** Check if the Extension Instance already exists */
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$m->connect('Table', 'ExtensionInstances');
 
@@ -66,7 +66,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		}
 
 		/** Next, see if the Extension node exists */
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$m->connect('Table', 'Extensions');
 
@@ -90,7 +90,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		//todo decide if another query is warranted for verifying existence of catalog type
 
 		/** Create a new Catalog Type */
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$m->connect();
 
@@ -280,7 +280,7 @@ echo 'results are true for catalog '.'<br />';
 		}
 
 		/** Do not allow delete if there is content for this component */
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 
 		$m->connect('Table', $this->data->title);
@@ -309,7 +309,7 @@ echo 'results are true for catalog '.'<br />';
 		}
 
 		/** Delete allowed - get rid of ACL info */
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$m->connect();
 
@@ -356,7 +356,7 @@ echo 'Passing this catalog id in to Delete Controller ' . $this->data->catalog_i
 	 */
 	public function onAfterDelete()
 	{
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'ExtensionInstances');
 		if ($results == false) {

@@ -7,7 +7,6 @@
 namespace Molajo\Controller;
 
 use Molajo\Service\Services;
-use Molajo\Controller\ModelController;
 
 defined('MOLAJO') or die;
 
@@ -18,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class CreateController extends ModelController
+class CreateController extends Controller
 {
 	/**
 	 * create new row
@@ -381,7 +380,7 @@ class CreateController extends ModelController
 
 			if (isset($this->data->$name)) {
 
-				$controllerClass = 'Molajo\\Controller\\ModelController';
+				$controllerClass = 'Molajo\\Controller\\ReadController';
 				$m = new $controllerClass();
 				$results = $m->connect('Table', $source_model);
 				if ($results == false) {

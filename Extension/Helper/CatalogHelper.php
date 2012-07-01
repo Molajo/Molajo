@@ -133,7 +133,7 @@ Class CatalogHelper
 			}
 		}
 
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
@@ -178,7 +178,7 @@ Class CatalogHelper
 	public function getIDUsingSEFURL($url_sef_request)
 	{
 
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
@@ -202,7 +202,7 @@ Class CatalogHelper
 	 */
 	public function getID($catalog_type_id, $source_id)
 	{
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
@@ -228,7 +228,7 @@ Class CatalogHelper
 	 */
 	public function getRedirectURL($catalog_id)
 	{
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
@@ -263,7 +263,7 @@ Class CatalogHelper
 
 		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
-			$controllerClass = 'Molajo\\Controller\\ModelController';
+			$controllerClass = 'Molajo\\Controller\\ReadController';
 			$m = new $controllerClass();
 			$results = $m->connect('Table', 'Catalog');
 			if ($results == false) {

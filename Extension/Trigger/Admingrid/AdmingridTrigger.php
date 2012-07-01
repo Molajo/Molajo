@@ -34,7 +34,7 @@ class AdmingridTrigger extends ContentTrigger
 			return true;
 		}
 
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$connect = new $controllerClass();
 
 		$results = $connect->connect($this->parameters['model_type'], $this->parameters['model_name']);

@@ -52,4 +52,63 @@ class CheckoutTrigger extends ContentTrigger
 		// if so, allow, else cancel
 		return false;
 	}
+
+
+	/**
+	 * verifyCheckout
+	 *
+	 * Checks that the current user is the checked_out user for item
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function verifyCheckout()
+	{
+		if ($this->get('id') == 0) {
+			return true;
+		}
+
+		if (property_exists($this->model, 'checked_out')) {
+		} else {
+			return true;
+		}
+// or super admin
+		if ($this->model->checked_out == Services::Registry()->get('User', 'id')) {
+
+		} else {
+			// redirect error
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * checkoutItem
+	 *
+	 * method to set the checkout_time and checked_out values of the item
+	 *
+	 * @return boolean
+	 * @since    1.0
+	 */
+	public function checkoutItem()
+	{
+		if ($this->get('id') == 0) {
+			return true;
+		}
+
+		if (property_exists($this->model, 'checked_out')) {
+		} else {
+			return true;
+		}
+
+		$results = $this->model->checkout($this->get('id'));
+		if ($results === false) {
+			// redirect error
+			return false;
+		}
+
+		return true;
+	}
+
 }

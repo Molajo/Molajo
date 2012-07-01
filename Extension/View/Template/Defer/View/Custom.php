@@ -6,7 +6,7 @@
  */
 use Molajo\Service\Services;
 defined('MOLAJO') or die; ?>
-	<include:asset name=Assetsjs wrap=None value=JsDefer/>
-	<include:asset name=Assetsjsdeclarations wrap=None value=JsDeclarationsDefer/>
-</body>
+	<include:asset name=Assetsjs value=JsDefer/>
+	<include:asset name=Assetsjsdeclarations value=JsDeclarationsDefer/>
+	</body>
 </html>

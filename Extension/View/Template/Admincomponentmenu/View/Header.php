@@ -1,11 +1,10 @@
 <?php
-/**
- * @package     Molajo
- * @copyright   2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
- */
 use Molajo\Service\Services;
-
+/**
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ */
 if (count(Services::Registry()->get('Trigger', 'AdminBreadcrumbs')) > 0) {
 	$class = '';
 	foreach (Services::Registry()->get('Trigger', 'AdminBreadcrumbs') as $crumb) {

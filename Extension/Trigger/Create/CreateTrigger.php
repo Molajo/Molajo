@@ -353,7 +353,7 @@ class CreateTrigger extends ContentTrigger
 	 */
 	protected function cloneGridMenuItem()
 	{
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$m->connect('Menuitem', 'Grid');
 		$table_registry_name = 'GridMenuitem';
