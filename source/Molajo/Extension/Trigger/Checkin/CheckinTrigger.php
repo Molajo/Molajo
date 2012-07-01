@@ -35,4 +35,31 @@ class CheckinTrigger extends ContentTrigger
 		// if so, checkin by zeroing otu that value and the date
 		return false;
 	}
+
+	/**
+	 * checkinItem
+	 *
+	 * Method to check in an item after processing
+	 *
+	 * @return bool
+	 */
+	public function checkinItem()
+	{
+		if ($this->get('id') == 0) {
+			return true;
+		}
+
+		if (property_exists($this->model, 'checked_out')) {
+		} else {
+			return true;
+		}
+
+		$results = $this->model->checkin($this->get('id'));
+
+		if ($results === false) {
+			// redirect
+		}
+
+		return true;
+	}
 }

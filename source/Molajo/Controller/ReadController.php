@@ -33,35 +33,8 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class ReadController extends ModelController
+class ReadController extends Controller
 {
-	/**
-	 * Add action is used to render view output for a form used to create new content
-	 *
-	 * @return  string Rendered output
-	 * @since   1.0
-	 */
-	public function add()
-	{
-		return $this->display();
-	}
-
-	/**
-	 * Edit action is used to render view output for a form used to display existing content
-	 *
-	 * @return  string Rendered output
-	 * @since   1.0
-	 */
-	public function edit()
-	{
-		$results = parent::checkoutItem();
-
-		if ($results === false) {
-			//
-		}
-
-		return $this->display();
-	}
 
 	/**
 	 * Display action is used to render view output
@@ -71,6 +44,12 @@ class ReadController extends ModelController
 	 */
 	public function display()
 	{
+		/**
+		if ($action == 'edit') {
+		} elseif ($action == 'edit') {
+		} elseif ($action == 'display') {
+		}
+		*/
 		$includer_type = $this->get('includer_type', '');
 		$includer_name = $this->get('includer_name', '');
 
@@ -146,6 +125,112 @@ class ReadController extends ModelController
 
 		/** Wrap template view results */
 		return $this->wrapView($this->get('wrap_view_title'), $rendered_output);
+	}
+
+	/**
+	 * Schedule onBeforeRead Event - could update model and parameter objects
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	protected function onBeforeReadEvent()
+	{
+		if (count($this->triggers) == 0
+			|| (int)$this->get('process_triggers') == 0
+		) {
+			return true;
+		}
+
+		/** Schedule onBeforeRead Event */
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'db' => $this->model->db,
+			'query' => $this->model->query,
+			'null_date' => $this->model->null_date,
+			'now' => $this->model->now,
+			'parameters' => $this->parameters,
+			'model_name' => $this->get('model_name')
+		);
+
+		Services::Debug()->set('ReadController->onBeforeReadEvent '
+				. $this->table_registry_name
+				. ' Schedules onBeforeRead', LOG_OUTPUT_TRIGGERS, VERBOSE
+		);
+
+		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);
+
+		if ($arguments == false) {
+			Services::Debug()->set('ReadController->onBeforeReadEvent '
+					. $this->table_registry_name
+					. ' failure ', LOG_OUTPUT_TRIGGERS
+			);
+			return false;
+		}
+
+		Services::Debug()->set('ReadController->onBeforeReadEvent '
+				. $this->table_registry_name
+				. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+		);
+
+		/** Process results */
+		$this->model->query = $arguments['query'];
+		$this->parameters = $arguments['parameters'];
+
+		return true;
+	}
+
+	/**
+	 * Schedule onAfterRead Event - could update parameters and query_results objects
+	 *
+	 * @return bool
+	 * @since   1.0
+	 */
+	protected function onAfterReadEvent()
+	{
+		/** Prepare input */
+		if (count($this->triggers) == 0
+			|| (int)$this->get('process_triggers') == 0
+		) {
+			return true;
+		}
+
+		/** Process each item, on at a time */
+		$items = $this->query_results;
+		$this->query_results = array();
+
+		foreach ($items as $item) {
+
+			$arguments = array(
+				'table_registry_name' => $this->table_registry_name,
+				'parameters' => $this->parameters,
+				'data' => $item,
+				'model_name' => $this->get('model_name')
+			);
+
+			Services::Debug()->set('ReadController->onAfterReadEvent '
+					. $this->table_registry_name
+					. ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE
+			);
+
+			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->triggers);
+
+			if ($arguments == false) {
+				Services::Debug()->set('ReadController->onAfterReadEvent '
+						. $this->table_registry_name
+						. ' failure ', LOG_OUTPUT_TRIGGERS
+				);
+				return false;
+			}
+
+			Services::Debug()->set('ReadController->onAfterReadEvent '
+					. $this->table_registry_name
+					. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+			);
+
+			$this->query_results[] = $arguments['data'];
+		}
+
+		return true;
 	}
 
 	/**

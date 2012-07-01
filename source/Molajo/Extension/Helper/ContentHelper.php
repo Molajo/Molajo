@@ -316,7 +316,7 @@ Class ContentHelper
 				. ' Model Query: ' . $model_query_object,
 			LOG_OUTPUT_ROUTING, VERBOSE);
 
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect($model_type, $model_name);
 		if ($results == false) {

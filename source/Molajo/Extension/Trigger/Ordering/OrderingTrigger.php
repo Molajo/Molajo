@@ -49,7 +49,7 @@ class OrderingTrigger extends ContentTrigger
 			|| (int)$fieldValue == 0
 		) {
 
-			$controllerClass = 'Molajo\\Controller\\ModelController';
+			$controllerClass = 'Molajo\\Controller\\ReadController';
 			$m = new $controllerClass();
 			$results = $m->connect($this->get('model_type'), $this->get('model_name'));
 			if ($results == false) {

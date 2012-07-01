@@ -34,11 +34,11 @@ if ((int) $html5 == 1): ?>
 <?php else : ?>
     <meta http-equiv="Content-Type" content="<?php echo $this->query_results[0]->mimetype; ?>; charset=utf-8"<?php echo $end; ?>
 	<?php endif; ?>
-	<include:asset name=Assetslinks wrap=None value=Links/>
-	<include:metadata name=Metadata wrap=None value=Metadata/>
-	<include:asset name=Assetscss wrap=None value=Css/>
-	<include:asset name=Assetscssdeclarations wrap=None value=CssDeclarations/>
-	<include:asset name=Assetsjs wrap=None value=Js/>
-	<include:asset name=Assetsjsdeclarations wrap=None value=JsDeclarations/>
+	<include:asset name=Assetslinks value=Links/>
+	<include:metadata name=Metadata value=Metadata/>
+	<include:asset name=Assetscss value=Css/>
+	<include:asset name=Assetscssdeclarations value=CssDeclarations/>
+	<include:asset name=Assetsjs value=Js/>
+	<include:asset name=Assetsjsdeclarations value=JsDeclarations/>
 </head>
 <body<?php echo $id; ?><?php echo $class; ?>>

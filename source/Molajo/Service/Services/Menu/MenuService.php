@@ -73,7 +73,7 @@ Class MenuService
 		}
 
 		/** Query Connection */
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'Menuitem');
@@ -170,7 +170,7 @@ Class MenuService
 		}
 
 		/** Query Connection */
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'MenuitemNested');

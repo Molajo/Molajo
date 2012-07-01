@@ -331,7 +331,7 @@ Class TextService
 	 */
 	public function getList($filter, $parameters)
 	{
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect('Listbox', $filter);
 		if ($results == false) {

@@ -9,27 +9,27 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<header class="row">
+<div class="row">
 	<div class="twelve columns">
-		<include:template name=Adminheader wrap=none/>
+		<include:template name=Adminheader/>
 	</div>
-</header>
+</div>
 <include:message wrap="div" wrap_class="row"/>
-<section class="row">
-	<nav class="three columns">
+<div class="row">
+	<div class="three columns">
 		<include:template name=Adminnavigationbar/>
 		<include:template name=Adminsectionmenu/>
-	</nav>
-	<section class="nine columns">
+	</div>
+	<div class="nine columns">
 		<include:template name=Admincomponentmenu/>
 		<include:template name=Admingridfilters/>
 		<include:request/>
 		<include:template name=Admingridbatch/>
-	</section>
-</section>
-<footer class="row">
-	<div class="twelve columns">
-		<include:template name=Adminfooter wrap=none/>
 	</div>
-</footer>
+</div>
+<div class="row">
+	<div class="twelve columns">
+		<include:template name=Adminfooter/>
+	</div>
+</div>
 <include:defer/>

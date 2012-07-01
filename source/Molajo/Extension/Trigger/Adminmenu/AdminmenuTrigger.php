@@ -33,7 +33,7 @@ class AdminmenuTrigger extends ContentTrigger
 		$model_type = $this->get('model_type');
 		$model_name = $this->get('model_name');
 
-		$controllerClass = 'Molajo\\Controller\\ModelController';
+		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$connect = new $controllerClass();
 
 		$results = $connect->connect($model_type, $model_name);
