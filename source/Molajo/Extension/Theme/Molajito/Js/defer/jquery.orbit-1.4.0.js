@@ -8,7 +8,7 @@
 
 
 (function($) {
-
+  'use strict';
   $.fn.findFirstImage = function () {
     return this.first()
             .find('img')

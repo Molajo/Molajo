@@ -92,16 +92,26 @@ Class LogService
         $this->loggers = array();
 
         /** Provided with JPlatform */
-        $this->loggers[] = 'formattedtext';
-        $this->loggers[] = 'echo';
-        $this->loggers[] = 'database';
+        $this->loggers[] = LOG_FORMATTEDTEXT_LOGGER;
+        $this->loggers[] = LOG_ECHO_LOGGER;
+        $this->loggers[] = LOG_DATABASE_LOGGER;
 
         /** Custom Molajo loggers */
-        $this->loggers[] = 'messages';
-        $this->loggers[] = 'email';
-        $this->loggers[] = 'console';
+        $this->loggers[] = LOG_MESSAGES_LOGGER;
+        $this->loggers[] = LOG_EMAIL_LOGGER;
+        $this->loggers[] = LOG_CONSOLE_LOGGER;
 
-        return true;
+		if (Services::Registry()->get('DebugService', 'CurrentPhase') == START_INITIALISE) {
+			$response = Services::Debug()->setDebugLogger();
+			if ($response == false) {
+				Services::Debug()->setConfigurationComplete();
+				return $this;
+			}
+			$this->setLog($response['options'], $response['priority'], $response['types']);
+			Services::Debug()->setConfigurationComplete();
+		}
+
+        return $this;
     }
 
     /**
@@ -159,8 +169,9 @@ Class LogService
         try {
             $class = 'Joomla\\log\\JLog';
             $class::addLogger($options, $priority, $types);
-        } catch (\Exception $e) {
-            throw new \RuntimeException('Unable to set Log: ' . $e->getMessage());
+
+			} catch (\Exception $e) {
+				throw new \RuntimeException('Unable to set Log: ' . $e->getMessage());
         }
 
         return true;
@@ -201,8 +212,8 @@ Class LogService
             $class = 'Joomla\\log\\JLog';
             $class::add($message, $priority, $type, $date);
         } catch (\Exception $e) {
-            throw new \RuntimeException('Log entry failed for ' . $message . 'Error: ' . $e->getMessage());
-        }
+			throw new \RuntimeException('Log entry failed for ' . $message . 'Error: ' . $e->getMessage());
+		}
 
         return true;
     }

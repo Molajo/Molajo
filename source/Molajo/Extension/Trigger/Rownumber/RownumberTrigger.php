@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class RownumberTrigger extends ContentTrigger
 {
-
 	/**
 	 * Before the Query results are injected into the View
 	 *
@@ -39,6 +38,11 @@ class RownumberTrigger extends ContentTrigger
 		$i = 1;
 		$even_or_odd = 'odd';
 		foreach ($this->data as $item) {
+
+			if (is_object($item)) {
+			} else {
+				return true;
+			}
 
 			if ($i == 1) {
 				$item->first_row = 'first';

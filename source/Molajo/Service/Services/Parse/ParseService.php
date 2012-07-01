@@ -282,10 +282,10 @@ Class ParseService
 			$first = true;
 
 			Services::Debug()->set('ParseService->renderLoop include Theme:'
-				. Services::Registry()->get('Parameters', 'theme_path_include')
-				. ' which includes Page: '
-				. Services::Registry()->get('Parameters', 'page_view_path_include'),
-				LOG_OUTPUT_RENDERING, 0);
+					. Services::Registry()->get('Parameters', 'theme_path_include')
+					. ' which includes Page: '
+					. Services::Registry()->get('Parameters', 'page_view_path_include'),
+				LOG_OUTPUT_RENDERING, VERBOSE);
 
 			ob_start();
 			require Services::Registry()->get('Parameters', 'theme_path_include');
@@ -298,7 +298,7 @@ Class ParseService
 			$first = false;
 			$final = true;
 			Services::Debug()->set('ParseService->renderLoop Final Run ',
-				LOG_OUTPUT_RENDERING, 0);
+				LOG_OUTPUT_RENDERING, VERBOSE);
 		}
 
 		/** process all input for include: statements  */
@@ -436,7 +436,7 @@ Class ParseService
 		$includeDisplay = ob_get_contents();
 		ob_end_clean();
 
-		Services::Debug()->set($includeDisplay, LOG_OUTPUT_RENDERING, 0);
+		Services::Debug()->set($includeDisplay, LOG_OUTPUT_RENDERING);
 
 		return;
 	}
@@ -454,11 +454,10 @@ Class ParseService
 		$replace = array();
 		$with = array();
 
-		/** 1. process extension includers in order defined by sequence.xml */
+		/** 1. process extension includers in order defined by includespage.xml and includesfinal */
 		foreach ($this->sequence as $sequence) {
 
-			/** 2. if necessary, split includer name and type     */
-			/** (ex. request:component and defer:head)            */
+			/** 2. if necessary, split includer name and type (ex. request:component and defer:head) */
 			if (stripos($sequence, ':')) {
 				$includeName = substr($sequence, 0, strpos($sequence, ':'));
 				$includerType = substr($sequence, strpos($sequence, ':') + 1, 999);
@@ -487,11 +486,9 @@ Class ParseService
 					/** 6. initialize registry */
 					Services::Registry()->createRegistry('Parameters');
 
-//					if ($first && $includeName == 'request') {
 					if ($includeName == 'request') {
 						Services::Registry()->copy('RouteParameters', 'Parameters');
 						Services::Registry()->set('Parameters', 'extension_primary', true);
-						//$first = false;
 					} else {
 						Services::Registry()->set('Parameters', 'extension_primary', false);
 					}
@@ -505,24 +502,26 @@ Class ParseService
 
 					} else {
 						Services::Debug()->set('ParseService->callIncluder failed instantiating class '
-							. $class, LOG_OUTPUT_RENDERING, 0);
-						echo 'failed includer = ' . $class . '<br />';
+							. $class, LOG_OUTPUT_RENDERING);
 						// ERROR
 					}
 
 					/** 8. render output and store results as "replace with" */
 					ob_start();
-						echo 'ParseService->callIncluder invoking class ' . $class . ' Attributes: '. '<br />';
-						echo '<pre>';
-						var_dump($attributes);
-						echo '</pre>';
+					echo 'ParseService->callIncluder invoking class ' . $class . ' Attributes: ' . '<br />';
+					echo '<pre>';
+					var_dump($attributes);
+					echo '</pre>';
 					$includeDisplay = ob_get_contents();
 					ob_end_clean();
 
-					Services::Debug()->set($includeDisplay, LOG_OUTPUT_RENDERING, 0);
+					Services::Debug()->set($includeDisplay, LOG_OUTPUT_RENDERING, VERBOSE);
 
-					$with[] = trim($rc->process($attributes));
+					$output = trim($rc->process($attributes));
 
+					Services::Debug()->set('ParseService->callIncluder rendered output ' .$output, LOG_OUTPUT_RENDERING, VERBOSE);
+
+					$with[] = $output;
 					Services::Registry()->deleteRegistry('Parameters');
 				}
 			}
@@ -530,9 +529,6 @@ Class ParseService
 
 		/** 9. replace it */
 		$body = str_replace($replace, $with, $body);
-
-		/** 10. make certain all <include:xxx /> literals are removed on final */
-
 		return $body;
 	}
 }

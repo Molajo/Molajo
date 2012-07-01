@@ -91,9 +91,16 @@
     <define name="LOG_OUTPUT_TRIGGERS" value="Triggers"/>
     <define name="VERBOSE" value="1"/>
 
+    <define name="LOG_FORMATTEDTEXT_LOGGER" value="formattedtext"/>
+    <define name="LOG_ECHO_LOGGER" value="echo"/>
+    <define name="LOG_DATABASE_LOGGER" value="database"/>
+    <define name="LOG_MESSAGES_LOGGER" value="messages"/>
+    <define name="LOG_EMAIL_LOGGER" value="email"/>
+    <define name="LOG_CONSOLE_LOGGER" value="console"/>
+
     <define name="START_INITIALISE" value="Initialise"/>
-    <define name="START_ROUTE" value="Route"/>
-    <define name="START_AUTHORISE" value="Authorise"/>
+    <define name="START_ROUTING" value="Routing"/>
+    <define name="START_AUTHORISATION" value="Authorisation"/>
     <define name="START_EXECUTE" value="Execute"/>
     <define name="START_RESPONSE" value="Response"/>
 

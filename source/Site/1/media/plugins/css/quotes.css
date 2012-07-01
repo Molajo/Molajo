@@ -50,7 +50,7 @@ cite {
 .citeodd {
 }
 
-span.pullquote {
+span.blockquote {
     background: transparent url(../images/gquote.gif) no-repeat;
     border-top: 1px #CFCFCF solid;
     float: right;

@@ -220,7 +220,7 @@ Class ConfigurationService
 		} else {
 
 			try {
-
+				$debug = 0;
 				$controllerClass = 'Molajo\\Controller\\ModelController';
 				$m = new $controllerClass();
 				$results = $m->connect('Table', 'Applications');
@@ -247,6 +247,9 @@ Class ConfigurationService
 				$parameters = Services::Registry()->get('ApplicationsTableParameters');
 				foreach ($parameters as $key => $value) {
 					Services::Registry()->set('Configuration', $key, $value);
+					if (strtolower($key) == 'debug') {
+						$debug = $value;
+					}
 				}
 
 			} catch (\Exception $e) {
@@ -261,6 +264,10 @@ Class ConfigurationService
 		}
 
 		Services::Registry()->sort('Configuration');
+
+		if ((int)$debug == 1) {
+			Services::Debug()->initiate();
+		}
 
 		return $this;
 	}
@@ -316,7 +323,6 @@ Class ConfigurationService
 	 */
 	public static function getFile($model_type, $model_name)
 	{
-//echo '<br /> Model Type:' . $model_type . ' Model Name: ' . $model_name;
 		/** Use existing registry values, if existing */
 		$registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
 
@@ -602,37 +608,6 @@ Class ConfigurationService
 	}
 
 	/**
-	 * Retrieves base Extension Registry data and stores it to the datasource registry
-	 *
-	 * @static
-	 * @param  $registryName
-	 * @param  $xml
-	 * @return mixed
-	 */
-	public static function seExtensionRegistry($registryName, $xml)
-	{
-		foreach ($xml->attributes() as $key => $value) {
-			echo $key .' ' .$value. '<br />';
-			Services::Registry()->set($registryName, 'extension_'. $key, (string)$value);
-		}
-
-/**
-$data['type'] = (string) $xml->type;
-$data['name'] = (string) $xml->name;
-$data['author'] = (string) $xml->author();
-$data['create_date'] = (string) $xml->create_date();
-$data['copyright'] = (string) $xml->copyright;
-$data['license'] = (string) $xml->license;
-$data['author_email'] = (string) $xml->author_email;
-$data['author_url'] = (string) $xml->author_url;
-$data['version'] = (string) $xml->version;
-$data['description'] = (string) $xml->description;
- */
-
-		return;
-	}
-
-	/**
 	 * Retrieves base Model Registry data and stores it to the datasource registry
 	 *
 	 * @static
@@ -903,7 +878,7 @@ $data['description'] = (string) $xml->description;
 
 				foreach ($selectArray as $x) {
 
-					foreach($tempFields as $t) {
+					foreach ($tempFields as $t) {
 						if ($t['name'] == $x) {
 							$t['as_name'] = trim($alias) . '_' . trim($x);
 							$t['alias'] = $alias;
@@ -1285,7 +1260,6 @@ $data['description'] = (string) $xml->description;
 	public static function replaceIncludeStatement(
 		$include, $model_name, $replace_this, $xml_string)
 	{
-//echo 'In replace: ' . $include . ' ' . $model_name . ' ' . $replace_this . ' ' . $xml_string . ' <br />';
 		$path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
 
 		if (file_exists($path_and_file)) {
@@ -1304,5 +1278,4 @@ $data['description'] = (string) $xml->description;
 			);
 		}
 	}
-
 }

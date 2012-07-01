@@ -20,57 +20,39 @@ defined('MOLAJO') or die;
  */
 Class HeadIncluder extends Includer
 {
-    /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @param string $name
-     * @param string $type
-     *
-     * @return null
-     * @since   1.0
-     */
-    public function __construct($name = null, $type = null)
-    {
+	/**
+	 * @return null
+	 * @since   1.0
+	 */
+	public function __construct($name = null, $type = null)
+	{
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 0);
-        parent::__construct($name, $type);
-        return Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
-    }
+		parent::__construct($name, $type);
+		Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
 
-    /**
-     * getExtension
-     *
-     * Retrieve extension information after looking up the ID in the extension-specific includer
-     *
-     * @return bool
-     * @since 1.0
-     */
-    protected function getExtension($extension_id = null)
-    {
-        return;
-    }
+		return;
+	}
 
-    /**
-     *  setRenderCriteria
-     *
-     *  Retrieve default values, if not provided by extension
-     *
-     * @return bool
-     * @since   1.0
-     */
-    protected function setRenderCriteria()
-    {
-        Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
+	/**
+	 *  setRenderCriteria
+	 *
+	 *  Retrieve default values, if not provided by extension
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	protected function setRenderCriteria()
+	{
+		Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
-        if ($this->type == 'defer') {
+		if ($this->type == 'defer') {
 
-			if ((int) Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
+			if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 				Services::Registry()->set('Parameters', 'template_view_id',
 					Services::Registry()->get('Configuration', 'defer_template_view_id'));
 			}
 
-			if ((int) Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
+			if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
 				Services::Registry()->set('Parameters', 'wrap_view_id',
 					Services::Registry()->get('Configuration', 'defer_wrap_view_id'));
 			}
@@ -80,12 +62,12 @@ Class HeadIncluder extends Includer
 			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
 			Services::Registry()->set('Parameters', 'model_parameter', 'defer');
 
-        } else {
-			if ((int) Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
+		} else {
+			if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 				Services::Registry()->set('Parameters', 'template_view_id',
 					Services::Registry()->get('Configuration', 'head_template_view_id'));
 			}
-			if ((int) Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
+			if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
 				Services::Registry()->set('Parameters', 'wrap_view_id',
 					Services::Registry()->get('Configuration', 'head_wrap_view_id'));
 			}
@@ -93,20 +75,10 @@ Class HeadIncluder extends Includer
 			Services::Registry()->set('Parameters', 'model_type', 'dbo');
 			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
 			Services::Registry()->set('Parameters', 'model_parameter', 'head');
-        }
+		}
 
-        parent::setRenderCriteria();
+		parent::setRenderCriteria();
 
-        return;
-    }
-
-    /**
-     * Loads Media CSS and JS files for Template and Wrap Views
-     *
-     * @return null
-     * @since   1.0
-     */
-    protected function loadViewMedia()
-    {
-    }
+		return true;
+	}
 }

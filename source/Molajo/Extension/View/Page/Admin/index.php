@@ -1,7 +1,7 @@
 <?php
 use Molajo\Service\Services;
 /**
- * @package     Molajito
+ * @package     Molajo
  * @copyright   2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -18,6 +18,8 @@ defined('MOLAJO') or die; ?>
 	</section>
 </section>
 <footer class="row">
-	<div class="twelve columns"><include:template name=Adminfooter wrap=none/></div>
+	<div class="twelve columns">
+		<include:template name=Adminfooter wrap=none/>
+	</div>
 </footer>
 <include:defer/>

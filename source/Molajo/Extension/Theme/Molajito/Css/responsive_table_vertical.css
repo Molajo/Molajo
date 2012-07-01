@@ -1,4 +1,0 @@
-table.responsive.vertical.pinned { max-width: auto; max-height: 200px; overflow: hidden; }
-
-table.responsive.vertical tr:first-child { position: absolute; top: 0; z-index: 10000;}
-div.scrollable.vertical { height: 400px; }

@@ -22,13 +22,6 @@ defined('MOLAJO') or die;
 class ComponentIncluder extends Includer
 {
     /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @param string $name
-     * @param string $type
-     *
      * @return null
      * @since   1.0
      */
@@ -44,14 +37,14 @@ class ComponentIncluder extends Includer
      *
      * Use the view and/or wrap criteria ife specified on the <include statement
      *
-     * @return null
+     * @return  array
      * @since   1.0
      */
     protected function getAttribute()
     {
         /** Include and Parameter Registries are already loaded for Primary Component */
         if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
-            return;
+            return array();
         } else {
             return parent::getAttribute();
         }
@@ -86,7 +79,7 @@ class ComponentIncluder extends Includer
             Services::Error()->set(500, 'Extension not found');
         }
 
-        return parent::__construct();
+        return parent::getExtension();
     }
 
     /**

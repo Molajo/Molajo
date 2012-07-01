@@ -119,13 +119,6 @@ Class TemplateIncluder extends Includer
 		/** Sort */
 		Services::Registry()->sort('Parameters');
 
-/**
-echo 'Final test view: '. Services::Registry()->get('Parameters', 'template_view_title').'<br />';
-echo 'View ' . Services::Registry()->get('Parameters', 'template_view_title') . '<br />';
-echo 'Model '.$model_name .'<br />';
-Services::Registry()->get('Parameters', 'model*');
-*/
-
 		/** Was a View selected? */
 		if (Services::Registry()->get('Parameters', 'template_view_title', '') == '') {
 			return false;

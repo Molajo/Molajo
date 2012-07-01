@@ -22,8 +22,6 @@ defined('MOLAJO') or die;
 Class MessageIncluder extends Includer
 {
 	/**
-	 * Class constructor.
-	 *
 	 * @param string $name
 	 * @param string $type
 	 *
@@ -49,7 +47,6 @@ Class MessageIncluder extends Includer
 	 */
 	protected function setRenderCriteria()
 	{
-
 		Services::Registry()->set('Parameters', 'template_view_id',
 			Services::Registry()->get('Configuration', 'message_template_view_id'));
 		Services::Registry()->set('Parameters', 'wrap_view_id',

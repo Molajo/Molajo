@@ -54,6 +54,7 @@ Class ThemeHelper
 	 */
 	public function get($theme_id = 0)
 	{
+
 		if ($theme_id == 0) {
 			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
 		}

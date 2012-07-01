@@ -108,6 +108,7 @@ function categorizr()
 			$_SESSION[$category] = "mobile";
 		}
 
+
 	}
 	// End if session not set
 
