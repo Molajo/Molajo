@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Extension\Trigger\Snippet;
 
@@ -22,12 +22,7 @@ class SnippetTrigger extends ContentTrigger
 {
 
 	/**
-	 * After-read processing
-	 *
 	 * Parses the Content Text into a snippet, stripped of HTML tags
-	 *
-	 * @param   $this->data
-	 * @param   $model
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -35,6 +30,8 @@ class SnippetTrigger extends ContentTrigger
 	public function onAfterRead()
 	{
 		$fields = $this->retrieveFieldsByType('text');
+
+		$snippetLength = $this->get('criteria_snippet_length', 200);
 
 		if (is_array($fields) && count($fields) > 0) {
 
@@ -47,13 +44,13 @@ class SnippetTrigger extends ContentTrigger
 				if ($fieldValue == false) {
 				} else {
 
-					$newField = Services::Text()->snippet($fieldValue);
+					$newField = substr(strip_tags($fieldValue), 0, $snippetLength);
 
 					if ($newField == false) {
 					} else {
 
 						$newFieldName = $name . '_' . 'snippet';
-						$fieldValue = $this->saveField($field, $newFieldName, $newField);
+						$this->saveField($field, $newFieldName, $newField);
 					}
 				}
 			}

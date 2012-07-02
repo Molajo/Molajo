@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Extension\Trigger\IFrame;
 
@@ -58,7 +58,7 @@ class IFrameTrigger extends ContentTrigger
 						foreach ($matches[0] as $iframe) {
 							$element = 'IFrame' . $i++;
 							$video = '<include:wrap name=IFrame value=' . $element . '/>';
-							Services::Registry()->set('Trigger', $element, $iframe);
+							Services::Registry()->set('Triggerdata', $element, $iframe);
 							$fieldValue = str_replace($iframe, $video, $fieldValue);
 						}
 

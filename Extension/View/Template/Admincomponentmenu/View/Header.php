@@ -3,15 +3,17 @@ use Molajo\Service\Services;
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
-if (count(Services::Registry()->get('Trigger', 'AdminBreadcrumbs')) > 0) {
-	$class = '';
-	foreach (Services::Registry()->get('Trigger', 'AdminBreadcrumbs') as $crumb) {
+$class = '';
+$component = '';
+$componentTitle = '';
+if (count(Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs')) > 0) {
+	foreach (Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs') as $crumb) {
 		if ($crumb->component == 1) {
 			$componentTitle = $crumb->title;
 			$component = $crumb->url;
-			if ($component == Services::Registry()->get('Trigger', 'PageURL')) {
+			if ($component == Services::Registry()->get('Triggerdata', 'PageURL')) {
 				$class = ' class="active" ';
 			}
 			break;

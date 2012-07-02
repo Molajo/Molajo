@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Extension\Trigger\Author;
 
@@ -46,7 +46,7 @@ class AuthorTrigger extends ContentTrigger
 		/** Author information already available */
 		if (Services::Registry()->exists('Trigger', 'Author' . $fieldValue)) {
 
-			$item = Services::Registry()->get('Trigger', 'Author' . $fieldValue);
+			$item = Services::Registry()->get('Triggerdata', 'Author' . $fieldValue);
 
 			foreach ($item[0] as $key => $value) {
 				$new_field_name = $key;
@@ -96,8 +96,8 @@ class AuthorTrigger extends ContentTrigger
 		}
 
 		/** Save Trigger Data */
-		Services::Registry()->set('Trigger', 'Author' . $fieldValue, $authorArray);
-		Services::Registry()->set('Trigger', 'Author', $authorArray);
+		Services::Registry()->set('Triggerdata', 'Author' . $fieldValue, $authorArray);
+		Services::Registry()->set('Triggerdata', 'Author', $authorArray);
 
 		return true;
 	}

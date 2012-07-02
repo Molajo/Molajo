@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <actions>
-    <action name="apply" action="edit" controller="update"/>
-    <action name="archive" action="publish" controller="updatelist"/>
-    <action name="cancel" action="none" controller="update"/>
-    <action name="checkin" action="administer" controller="updatelist"/>
-    <action name="copy" action="view" controller="updatelist"/>
-    <action name="create" action="view" controller="update"/>
-    <action name="delete" action="delete" controller="updatelist"/>
-    <action name="display" action="view" controller="display"/>
-    <action name="edit" action="view" controller="display"/>
-    <action name="feature" action="publish" controller="updatelist"/>
-    <action name="login" action="login" controller="login"/>
-    <action name="logout" action="logout" controller="login"/>
-    <action name="move" action="edit" controller="updatelist"/>
-    <action name="new" action="create" controller="display"/>
-    <action name="orderdown" action="publish" controller="updatelist"/>
-    <action name="orderup" action="publish" controller="updatelist"/>
-    <action name="options" action="administer" controller="options"/>
-    <action name="publish" action="publish" controller="updatelist"/>
-    <action name="reorder" action="publish" controller="updatelist"/>
-    <action name="restore" action="publish" controller="updatelist"/>
-    <action name="save" action="edit" controller="update"/>
-    <action name="saveandnew" action="edit" controller="update"/>
-    <action name="saveascopy" action="edit" controller="update"/>
-    <action name="spam" action="publish" controller="updatelist"/>
-    <action name="sticky" action="publish" controller="updatelist"/>
-    <action name="trash" action="delete" controller="updatelist"/>
-    <action name="unfeature" action="publish" controller="updatelist"/>
-    <action name="unpublish" action="publish" controller="updatelist"/>
-    <action name="unsticky" action="publish" controller="updatelist"/>
-    <action name="restore" action="publish" controller="updatelist"/>
+    <action name="create" authorisation="create" controller="create"/>
+    <action name="copy" authorisation="create" controller="create"/>
+    <action name="saveascopy" authorisation="create" controller="create"/>
+    <action name="draft" authorisation="create" controller="create"/>
+
+    <action name="display" authorisation="read" controller="read"/>
+    <action name="edit" authorisation="read" controller="read"/>
+    <action name="new" authorisation="read" controller="read"/>
+
+    <action name="apply" authorisation="update" controller="update"/>
+    <action name="save" authorisation="update" controller="update"/>
+    <action name="saveandnew" authorisation="update" controller="update"/>
+    <action name="move" authorisation="update" controller="update"/>
+    <action name="tag" authorisation="update" controller="update"/>
+
+    <action name="cancel" authorisation="none" controller="update"/>
+
+    <action name="archive" authorisation="publish" controller="update"/>
+    <action name="categorize" authorisation="publish" controller="update"/>
+    <action name="checkin" authorisation="publish" controller="update"/>
+    <action name="feature" authorisation="publish" controller="update"/>
+    <action name="orderdown" authorisation="publish" controller="update"/>
+    <action name="orderup" authorisation="publish" controller="update"/>
+    <action name="publish" authorisation="publish" controller="update"/>
+    <action name="reorder" authorisation="publish" controller="update"/>
+    <action name="restore" authorisation="publish" controller="update"/>
+    <action name="spam" authorisation="publish" controller="update"/>
+    <action name="sticky" authorisation="publish" controller="update"/>
+    <action name="trash" authorisation="publish" controller="update"/>
+    <action name="unfeature" authorisation="publish" controller="update"/>
+    <action name="unpublish" authorisation="publish" controller="update"/>
+    <action name="unsticky" authorisation="publish" controller="update"/>
+
+    <action name="delete" authorisation="delete" controller="delete"/>
+
+    <action name="login" authorisation="login" controller="authenticate"/>
+    <action name="logout" authorisation="login" controller="authenticate"/>
 </actions>

@@ -78,8 +78,6 @@ class Controller
 	protected $row;
 
 	/**
-	 * $data
-	 *
 	 * Public as it is passed into triggered events
 	 *
 	 * @var    array
@@ -94,16 +92,6 @@ class Controller
 	 * @since  1.0
 	 */
 	protected $triggers = array();
-
-	/**
-	 *
-	 * Constructor.
-	 *
-	 * @since  1.0
-	 */
-	public function __construct()
-	{
-	}
 
 	/**
 	 * Get the current value (or default) of the specified Model property

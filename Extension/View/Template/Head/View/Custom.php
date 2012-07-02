@@ -1,10 +1,11 @@
 <?php
+use Molajo\Service\Services;
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
-use Molajo\Service\Services;
+
 defined('MOLAJO') or die;
 
 $class = Services::Registry()->get('Parameters', 'page_view_css_class');
@@ -22,10 +23,15 @@ $html5 = $this->query_results[0]->html5;
 $end = $this->query_results[0]->end;
 if ((int) $html5 == 1): ?>
 <!DOCTYPE html>
-<?php else : ?>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
+<!--[if IE 8]>  <html class="no-js lt-ie9"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
+<!--[if gt IE 8]><!--> <html<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <!--<![endif]-->
+	<?php else : ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" <?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>">
 <?php endif; ?>
-<html<?php if ((int) $html5 == 0) : ?> xmlns="http://www.w3.org/1999/xhtml"<?php endif; ?><?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>">
 <head>
 	<title><?php echo $this->query_results[0]->title; ?></title>
 	<base href="<?php echo $this->query_results[0]->base_url . '"' . $end; ?>

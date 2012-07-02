@@ -1,13 +1,23 @@
 <?php
+use Molajo\Service\Services;
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
-use Molajo\Service\Services;
 defined('MOLAJO') or die;
-$action = Services::Registry()->get('Trigger', 'PageURL'); ?>
-<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
-	<input type="submit" class="submit button small" name="submit" id="searchsubmit" value="Filter">
-	<input type="search" placeholder="Search..." name="s" >
-</form>
+$action = Services::Registry()->get('Triggerdata', 'PageURL'); ?>
+<label>Search</label>
+<div class="row">
+	<div class="five columns">
+		<div class="row collapse">
+			<div class="eight mobile-three columns">
+				<input type="text" />
+			</div>
+			<div class="four mobile-one columns">
+				<a href="<?php echo $action; ?>" class="postfix button">Search</a>
+			</div>
+		</div>
+	</div>
+</div>
+

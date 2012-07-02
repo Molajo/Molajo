@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Model;
 
@@ -94,11 +94,7 @@ class ReadModel extends Model
 					. ' = ' . $this->db->q($name_key_value));
 			}
 		}
-		/**
-		echo '<br /><br /><br />';
-		echo $this->query->__toString();
-		echo '<br /><br /><br />';
-		 */
+
 		return $this;
 	}
 
@@ -329,6 +325,7 @@ class ReadModel extends Model
 	public function addCustomFields(
 		$table_registry_name, $customFieldName, $fields, $retrieval_method, $query_results)
 	{
+
 		/** Prepare Registry Name */
 		$customFieldName = strtolower($customFieldName);
 		$useRegistryName = $table_registry_name . ucfirst($customFieldName);
@@ -365,10 +362,8 @@ class ReadModel extends Model
 				unset($query_results->$customFieldName);
 			}
 
-			/** No data in query results for this specific custom field */
-
 		} else {
-
+			/** No data in query results for this specific custom field */
 			$data = array();
 			$lookup = array();
 		}
@@ -398,12 +393,15 @@ class ReadModel extends Model
 			/** Filter Input and Save the Registry */
 			//$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
-			/** Option 2: Make each custom field a "regular" field in query results */
-			if ($retrieval_method == 2 && strtolower($customFieldName) == 'customfields') {
-				$query_results->$name = $setValue;
-			} else {
+			if ($retrieval_method == 1
+				|| strtolower($customFieldName) == 'parameters'
+				|| strtolower($customFieldName) == 'metadata') {
 				/** Option 1: all custom field pairs are saved in Registry */
 				Services::Registry()->set($useRegistryName, $name, $setValue);
+
+			} else {
+				/** Option 2: Make each custom field a "regular" field in query results */
+				$query_results->$name = $setValue;
 			}
 		}
 

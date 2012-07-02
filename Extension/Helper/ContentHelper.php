@@ -194,7 +194,7 @@ Class ContentHelper
 		);
 
 		/** Save Content in Trigger Registry */
-		Services::Registry()->set('Trigger', $item->table_registry_name . 'query_results', $item);
+		Services::Registry()->set('Triggerdata', $item->table_registry_name . 'query_results', $item);
 
 		/** 404  */
 		if (count($item) == 0) {
@@ -202,7 +202,7 @@ Class ContentHelper
 		}
 
 		/** Save in Trigger Registry for primary view */
-		Services::Registry()->set('Trigger', $item->table_registry_name . 'query_results', $item);
+		Services::Registry()->set('Triggerdata', $item->table_registry_name . 'query_results', $item);
 
 		/** Route Registry */
 		Services::Registry()->set('Parameters', 'content_id', (int)$item->id);
@@ -230,7 +230,7 @@ Class ContentHelper
 
 			/** Save for primary view */
 			$array = Services::Registry()->getArray($item->table_registry_name . $customFieldName);
-			Services::Registry()->set('Trigger', $item->table_registry_name . $customFieldName, $array);
+			Services::Registry()->set('Triggerdata', $item->table_registry_name . $customFieldName, $array);
 
 			/** Delete */
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
@@ -268,7 +268,7 @@ Class ContentHelper
 		);
 
 		/** Save Content in Trigger Registry */
-		Services::Registry()->set('Trigger', 'RequestCategory' . 'query_results', $item);
+		Services::Registry()->set('Triggerdata', 'RequestCategory' . 'query_results', $item);
 
 		/** Route Registry with Category Data */
 		Services::Registry()->set('Parameters', 'category_id', (int)$item->id);

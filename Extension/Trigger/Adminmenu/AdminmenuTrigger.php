@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Extension\Trigger\Adminmenu;
 
@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class AdminmenuTrigger extends ContentTrigger
 {
-
 	/**
 	 * Before-read processing
 	 *
@@ -58,8 +57,8 @@ class AdminmenuTrigger extends ContentTrigger
 			$connector = '&';
 		}
 
-		Services::Registry()->set('Trigger', 'PageURL', $url);
-		Services::Registry()->set('Trigger', 'PageURLConnector', $connector);
+		Services::Registry()->set('Triggerdata', 'PageURL', $url);
+		Services::Registry()->set('Triggerdata', 'PageURLConnector', $connector);
 
 		/** Create Admin Menus, verifying ACL */
 		$this->setMenu();
@@ -98,7 +97,7 @@ class AdminmenuTrigger extends ContentTrigger
 			$activeCatalogID[] = $item_id;
 		}
 
-		Services::Registry()->get('Trigger', 'AdminBreadcrumbs', $bread_crumbs);
+		Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs', $bread_crumbs);
 
 		$menuArray = array();
 
@@ -119,7 +118,7 @@ class AdminmenuTrigger extends ContentTrigger
 				$extension_instance_id, $lvl, $lvl, $parent_id, $activeCatalogID
 			);
 
-			Services::Registry()->set('Trigger', $menuArray[$i++], $query_results);
+			Services::Registry()->set('Triggerdata', $menuArray[$i++], $query_results);
 
 			if ($i > 3) {
 				break;
@@ -139,14 +138,14 @@ class AdminmenuTrigger extends ContentTrigger
 	 */
 	public function setPageTitle()
 	{
-		$bread_crumbs = Services::Registry()->get('Trigger', 'AdminBreadcrumbs');
+		$bread_crumbs = Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs');
 
 		$title = '';
 		foreach ($bread_crumbs as $item) {
 			$title = $item->title;
 		}
 
-		Services::Registry()->set('Trigger', 'AdminTitle', $title);
+		Services::Registry()->set('Triggerdata', 'AdminTitle', $title);
 
 		return $this;
 	}

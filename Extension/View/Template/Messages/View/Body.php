@@ -1,11 +1,12 @@
 <?php
+use Molajo\Service\Services;
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 defined('MOLAJO') or die;
-use Molajo\Service\Services;
+$action = Services::Registry()->get('Triggerdata', 'PageURL');
 
 $class = 'alert-box';
 if ($this->row->type == MESSAGE_TYPE_SUCCESS) {
@@ -18,15 +19,16 @@ if ($this->row->type == MESSAGE_TYPE_SUCCESS) {
 
 } elseif ($this->row->type == MESSAGE_TYPE_ERROR) {
 	$heading = Services::Language()->translate('Error');
-	$class .= ' error';
+	$class .= ' alert';
 
 } else {
 // defaults MESSAGE_TYPE_INFORMATION
 	$heading = Services::Language()->translate('Information');
+	$class .= ' secondary';
 }
 ?>
 <div class="<?php echo $class; ?>">
 	<?php echo $this->row->message; ?>
-	<a class="close" href="">&times;</a>
+	<a class="close" href="<?php echo $action; ?>">&times;</a>
 	<h4 class="alert-heading"><?php echo $heading; ?></h4>
 </div>

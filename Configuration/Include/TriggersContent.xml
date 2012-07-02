@@ -1,3 +1,5 @@
+<trigger name="Mockimage"/>
+<trigger name="Blockquote"/>
 <trigger name="Rownumber"/>
 <trigger name="Itemurl"/>
 <trigger name="Author"/>
@@ -5,7 +7,6 @@
 <trigger name="Email"/>
 <trigger name="Gravatar"/>
 <trigger name="IFrame"/>
-<trigger name="Blockquote"/>
 <trigger name="Dateformats"/>
 <trigger name="Snippet"/>
 <trigger name="Publishedstatus"/>

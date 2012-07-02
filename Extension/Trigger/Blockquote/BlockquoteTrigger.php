@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Extension\Trigger\Blockquote;
 
@@ -23,6 +23,8 @@ class BlockquoteTrigger extends ContentTrigger
 	/**
 	 * Blockquote extraction and formatting
 	 *
+	 * {blockquote}{cite:xYZ}*.*{/blockquote}
+	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
@@ -42,43 +44,66 @@ class BlockquoteTrigger extends ContentTrigger
 				if ($fieldValue == false) {
 				} else {
 
-					/** search for blockquote statements, remove from text */
-					$results = Services::Text()->blockquote($fieldValue);
+					$results = $this->blockquote($fieldValue);
 
 					if ($results == false || $results == '') {
 					} else {
-						/** Initialise */
-						$query_results = array();
-
 						/** Replace existing text */
-						$fieldValue = $results[2];
+						$fieldValue = $results;
 						$this->saveField($field, $name, $fieldValue);
-
-						/** Save new blockquote array */
-						$blockquote = $results[0];
-						$cite = $results[1];
-
-						$blockQuoteName = $name . '_blockquote';
-						$this->saveField($field, $blockQuoteName, $blockquote);
-
-						$citeName = $name . '_cite';
-						$this->saveField($field, $citeName, $cite);
-
-						$i = 0;
-						foreach ($blockquote as $quote) {
-							$row = new \stdClass();
-							$row->blockquote = $quote;
-							$row->cite = $cite[$i];
-							$query_results[] = $row;
-							$i++;
-						}
-
-						Services::Registry()->set('Trigger', 'Blockquote', $query_results);
 					}
 				}
 			}
 		}
 
 		return true;
+	}
+
+	/**
+	 * blockquote - searches for and returns blockquote
+	 *
+	 * @param  $text
+	 *
+	 * @return array
+	 * @since   1.0
+	 */
+	protected function blockquote($text)
+	{
+		$pattern = '/{blockquote}(.*){\/blockquote}/';
+
+		preg_match_all($pattern, $text, $matches);
+
+		$replaceThis = array();
+		$withThis = array();
+
+		if (count($matches) == 0) {
+
+		} else {
+
+			$i = 0;
+			foreach ($matches[1] as $match) {
+
+				$replaceThis[] = $matches[0][$i];
+
+				$blockquote = strip_tags($match);
+
+				if (trim($blockquote) == '') {
+				} else {
+					$cite = '';
+					if (substr($blockquote, 0, 6) == '{cite:') {
+						$blockquote = substr($blockquote, 6, strlen($blockquote) - 6);
+						$cite = substr($blockquote, 0, strpos($blockquote, '}'));
+						$blockquote = substr($blockquote, strlen($cite) + 1, 9999);
+						$cite = '<cite>'. $cite . '</cite>';
+					}
+					$withThis[] = '<blockquote>' . $blockquote . $cite . '</blockquote>';
+				}
+				$i++;
+			}
+		}
+
+		$text = str_replace($replaceThis, $withThis, $text);
+
+		return $text;
 	}
 }

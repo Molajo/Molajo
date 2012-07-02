@@ -3,18 +3,18 @@ use Molajo\Service\Services;
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 defined('MOLAJO') or die;
 
 $checked = '';
-$rowCount = Services::Registry()->get('Trigger', 'GridTableRows'); ?>
+$rowCount = Services::Registry()->get('Triggerdata', 'GridTableRows'); ?>
 <table class="responsive">
 <thead>
     <tr>
         <?php
         $count = 1;
-		$columnArray = Services::Registry()->get('Trigger', 'GridTableColumns');
+		$columnArray = Services::Registry()->get('Triggerdata', 'GridTableColumns');
         foreach ($columnArray as $column) {
             $extraClass = '';
             if ($count == 1) {

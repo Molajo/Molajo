@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Service\Services\Event;
 
@@ -132,11 +132,6 @@ Class EventService
 		foreach ($selections as $selection) {
 
 			$triggerClass = strtolower($selection) . 'trigger';
-
-			Services::Debug()->set('EventService->schedule Event '
-				. $event . ' Key ' . $triggerClass,
-				LOG_OUTPUT_TRIGGERS,
-				VERBOSE);
 
 			if (isset($registrations[$triggerClass])) {
 

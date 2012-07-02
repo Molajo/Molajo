@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Extension\Trigger\Readmore;
 
@@ -46,7 +46,7 @@ class ReadmoreTrigger extends ContentTrigger
 				if ($fieldValue == false) {
 				} else {
 
-					$newFields = Services::Text()->splitReadMoreText($fieldValue);
+					$newFields = $this->splitReadMoreText($fieldValue);
 
 					if ($newFields == false) {
 					} else {
@@ -64,5 +64,30 @@ class ReadmoreTrigger extends ContentTrigger
 		}
 
 		return true;
+	}
+	/**
+	 * splitReadMoreText - search for the system-readmore break and split the text at that point into two text fields
+	 *
+	 * @param  $text
+	 *
+	 * @return array
+	 * @since   1.0
+	 */
+	public function splitReadMoreText($text)
+	{
+		$pattern = '#{readmore}#';
+
+		$tagPos = preg_match($pattern, $text);
+
+		$introductory_text = '';
+		$fulltext = '';
+
+		if ($tagPos == 0) {
+			$introductory_text = $text;
+		} else {
+			list($introductory_text, $fulltext) = preg_split($pattern, $text, 2);
+		}
+
+		return (array($introductory_text, $fulltext));
 	}
 }

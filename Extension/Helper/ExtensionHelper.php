@@ -124,21 +124,9 @@ Class ExtensionHelper
 			$phase = LOG_OUTPUT_RENDERING;
 		}
 
-		Services::Debug()->set('ExtensionHelper->get '
-				. ' ID: ' . $extension_id
-				. ' Model Type: ' . $model_type
-				. ' Model Name: ' . $model_name
-				. ' Model Query: ' . VERBOSE
-				. ' Catalog Type ID: ' . $catalog_type_id,
-			$phase, VERBOSE);
-
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
-
-		$results = $m->connect($model_type, $model_name);
-		if ($results == false) {
-			return false;
-		}
+		$m->connect($model_type, $model_name);
 
 		if ((int)$extension_id == 0) {
 		} else {
@@ -161,10 +149,20 @@ Class ExtensionHelper
 		}
 
 		$query_results = $m->getData($query_object);
+		if ($query_results == false || $query_results == null) {
+
+			echo 'Extension ID ' . $extension_id . '<br />';
+			echo 'Model Type ' . $model_type . '<br />';
+			echo 'Model Name ' . $model_name . '<br />';
+			echo 'Query Object ' . $query_object . '<br />';
+			echo 'Catalog Type ID ' . $catalog_type_id . '<br />';
+			return false;
+		}
 
 		if ($query_object == 'item') {
 			$query_results->table_registry_name = $m->table_registry_name;
 			$query_results->model_name = $m->get('model_name');
+			$query_results->model_type = $m->get('model_type');
 		}
 
 		return $query_results;
@@ -185,8 +183,8 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
-		$results = $m->connect('Table', 'ExtensionInstances');
-		if ($results == false) {
+		$query_results = $m->connect('Table', 'ExtensionInstances');
+		if ($query_results == false) {
 			return false;
 		}
 
@@ -213,8 +211,8 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
-		$results = $m->connect('Table', 'ExtensionInstances');
-		if ($results == false) {
+		$query_results = $m->connect('Table', 'ExtensionInstances');
+		if ($query_results == false) {
 			return false;
 		}
 
@@ -241,8 +239,8 @@ Class ExtensionHelper
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 
-		$results = $m->connect();
-		if ($results == false) {
+		$query_results = $m->connect();
+		if ($query_results == false) {
 			return false;
 		}
 

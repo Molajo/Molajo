@@ -2,7 +2,7 @@
 @package     Molajo
 @subpackage  Views
 @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
-@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+@license     GNU GPL v 2, or later and MIT, see license folder
 */
 ul.toolbar { display: block; height: 24px; margin-left: -5px; }
 ul.toolbar li { float: left; display: block; height: 24px; color: #999; font-size: 15px; margin-left: 5px; }

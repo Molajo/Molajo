@@ -2,7 +2,7 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license   GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Service\Services\Filesystem;
 
@@ -116,7 +116,7 @@ class FilesystemService
      * @param $arguments
      * @return bool|mixed
      */
-    public function processCall($name, &$arguments)
+    public function processCall($name, $arguments)
     {
 
         if (strtolower(substr($name, 0, 4)) == 'file') {
@@ -139,7 +139,7 @@ class FilesystemService
 
         $method = strtolower($method);
         if (method_exists($class, $method)) {
-            return call_user_func_array(array($class, &$method), $arguments);
+            return call_user_func_array(array($class, $method), $arguments);
 
         }
 
