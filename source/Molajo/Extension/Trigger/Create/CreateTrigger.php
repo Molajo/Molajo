@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Extension\Trigger\Create;
 
@@ -340,7 +340,7 @@ class CreateTrigger extends ContentTrigger
 		$body = str_replace('xxxxx', $catalog_type_id, $body);
 
 		//todo get the ftp stream stuff working -
-		Services::Filesystem()->fileWrite($file, &$body);
+		Services::Filesystem()->fileWrite($file, $body);
 
 		return true;
 	}

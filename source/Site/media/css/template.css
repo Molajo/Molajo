@@ -1,71 +1,19 @@
 /*
 @package     Molajo
-@subpackage  Test - Media - Administrator - CSS
-@copyright   Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.
-@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+@copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+@license     GNU GPL v 2, or later and MIT, see license folder
 */
-.alignright {
-    float: right;
-}
+.alignright { float: right; }
+.alignleft { float: left; }
+.aligncenter { display: block; margin-left: auto; margin-right: auto }
 
-.alignleft {
-    float: left;
-}
-
-.aligncenter {
-    display: block;
-    margin-left: auto;
-    margin-right: auto
-}
-
-img.alignright {
-    padding: 4px;
-    margin: 0 0 2px 7px;
-    display: inline;
-}
-
-img.alignleft {
-    padding: 4px;
-    margin: 0 7px 2px 0;
-    display: inline;
-}
-
-img.aligncenter {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-span img {
-    border: solid #a9a9a9 2px
-}
+/* mock images */
+img.imageleft { padding: 4px; margin: 10px 10px 5px 0; display: inline; }
+img.imageright { padding: 4px; margin: 10px 0 5px 10px; display: inline; }
+img.imagecenter { display: block; margin-left: auto; margin-right: auto; }
+span.mockimage img { border: solid #a9a9a9 2px; padding: 2px }
+span.floatleft { float: left; }
+span.floatright { float: right; }
 
 /* smileys */
-img.smiley-class {
-    border: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* footnotes */
-#content span.footnote {
-    color: #f30;
-}
-
-#content a.ftnlink {
-    font-size: 0.8em;
-    vertical-align: super;
-}
-
-.footnoteholder {
-    border-left: 1px solid #ccc;
-    font-size: 0.8em;
-    line-height: 1.2em;
-    margin: 20px 0 50px;
-    padding: 20px 10px;
-}
-
-.footnoteholder div.footnote {
-    margin: 0 0 10px;
-}
-
+img.smiley-class { border: 0 !important; margin: 0 !important; padding: 0 !important;}

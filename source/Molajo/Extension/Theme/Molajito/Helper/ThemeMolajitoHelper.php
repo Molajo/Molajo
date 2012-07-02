@@ -5,14 +5,13 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Theme\Molajito\Helper;
+
 use Mustache\Mustache;
 use Molajo\Service\Services;
 
 /**
- * Helper
+ * Theme Helper
  *
- * @package     Molajo
- * @subpackage  Helper
  * @since       1.0
  */
 Class ThemeMolajitoHelper extends Mustache
@@ -26,19 +25,8 @@ Class ThemeMolajitoHelper extends Mustache
     public $parameters;
 
     /**
-     * loadMedia - automatically loaded in the Theme Rendering process
-     * Method can be used to load external media, special metadata or links
-     *
-     * http://coding.smashingmagazine.com/2012/01/16/resolution-independence-with-svg/
-     *
-     * http://24ways.org/2011/displaying-icons-with-fonts-and-data-attributes
-     *
-     * http://keyamoon.com/icomoon/#toHome
-     * adapt.js
-     * http://responsivepx.com/
-     * http://mattkersley.com/responsive/
-     * http://www.responsinator.com/
-     * http://quirktools.com/screenfly/
+     * loadMedia - automatically loaded in last step of Rendering process
+     * 	Method can be used to load external media, special metadata or links
      *
      * @since  1.0
      */
@@ -50,25 +38,61 @@ Class ThemeMolajitoHelper extends Mustache
 		/** IE */
 		Services::Metadata()->set('X-UA-Compatible', 'IE=EmulateIE7; IE=EmulateIE9', 'http-equiv');
 
-		/** Mobile Specific Meta */
+		/** Mobile Specific Meta: Sets the viewport width to device width for mobile */
 		Services::Metadata()->set(
-			'viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no', 'name'
+			'viewport', 'width=device-width, initial-scale=1.0', 'name'
 		);
+
+		/** Favicons */
+
+		/** For non-Retina iPhone, iPod Touch, and Android 2.1+ devices */
+		Services::Asset()->addLink(
+			$url = EXTENSIONS_THEMES_URL . '/' . $theme
+				. '/' . 'images/favicons/apple-touch-icon-precomposed.png',
+			$relation = 'apple-touch-icon-precomposed',
+			$relation_type = 'rel',
+			$attributes = array()
+		);
+		/** For first- and second-generation iPad */
+		Services::Asset()->addLink(
+			$url = EXTENSIONS_THEMES_URL . '/' . $theme
+				. '/' . 'images/favicons/apple-touch-icon-72x72-precomposed.png',
+			$relation = 'apple-touch-icon-precomposed',
+			$relation_type = 'rel',
+			$attributes = array('sizes,72x72')
+		);
+		/** For iPhone with high-resolution Retina display */
+		Services::Asset()->addLink(
+			$url = EXTENSIONS_THEMES_URL . '/' . $theme
+				. '/' . 'images/favicons/apple-touch-icon-114x114-precomposed.png',
+			$relation = 'apple-touch-icon-precomposed',
+			$relation_type = 'rel',
+			$attributes = array('sizes,114x114')
+		);
+		/** For third-generation iPad with high-resolution Retina display */
+		Services::Asset()->addLink(
+			$url = EXTENSIONS_THEMES_URL . '/' . $theme
+				. '/' . 'images/favicons/apple-touch-icon-144x144-precomposed.png',
+			$relation = 'apple-touch-icon-precomposed',
+			$relation_type = 'rel',
+			$attributes = array('sizes,144x144')
+		);
+
 
 		/** Media Queries to load CSS
 		Services::Asset()->addCss(
-			$url = EXTENSIONS_THEMES_URL . '/' . $theme . '/' . 'css/grid/base.css',
-			$priority=1000,
-			$mimetype='test/css',
-			$media='all',
-			$conditional='',
-			$attributes=array());
-		*/
+		$url = EXTENSIONS_THEMES_URL . '/' . $theme . '/' . 'css/grid/base.css',
+		$priority=1000,
+		$mimetype='test/css',
+		$media='all',
+		$conditional='',
+		$attributes=array());
+		 */
 
-        /** jQuery CDN and fallback */
+		/** jQuery CDN and fallback */
 //        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1);
 
-        /** Modernizer */
+		/** Modernizer */
 //        Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);
 
 		/** HTML5 Shiv */
@@ -83,26 +107,6 @@ Class ThemeMolajitoHelper extends Mustache
 
 
 //        Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 10000);
-
-		/** Favicons */
-		Services::Asset()->addLink(
-			$url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'images/apple-touch-icon.png',
-			$relation = 'apple-touch-icon-precomposed',
-			$relation_type = 'rel',
-			$attributes = array()
-		);
-		Services::Asset()->addLink(
-			$url = EXTENSIONS_THEMES_URL . '/' . $theme . '/' . 'images/apple-touch-icon-72x72.png',
-			$relation = 'apple-touch-icon-precomposed',
-			$relation_type = 'rel',
-			$attributes = array('sizes,72x72')
-		);
-		Services::Asset()->addLink(
-			$url = EXTENSIONS_THEMES_URL . '/' . $theme . '/' . 'images/apple-touch-icon-114x114.png',
-			$relation = 'apple-touch-icon-precomposed',
-			$relation_type = 'rel',
-			$attributes = array('sizes,114x114')
-		);
 
 		return;
     }

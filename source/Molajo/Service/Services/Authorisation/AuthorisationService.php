@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Service\Services\Authorisation;
 
@@ -77,13 +77,13 @@ Class AuthorisationService
         }
 
         foreach ($actions->action as $t) {
-            Services::Registry()->set('action_to_action', (string) $t['name'], (string) $t['action']);
-            Services::Registry()->set('action_to_controller', (string) $t['action'], (string) $t['controller']);
+            Services::Registry()->set('action_to_authorisation', (string) $t['name'], (string) $t['authorisation']);
+            Services::Registry()->set('action_to_controller', (string) $t['name'], (string) $t['controller']);
         }
 
         $items = Services::Registry()->get('Actions');
 		foreach ($items as $title => $id) {
-            Services::Registry()->set('action_to_action_id', $title, (int) $id);
+            Services::Registry()->set('action_to_authorisation_id', $title, (int) $id);
         }
 
         return;
@@ -144,7 +144,7 @@ Class AuthorisationService
      */
     public function getTaskController($action)
     {
-        $action = $this->request->get('action_to_action', $action);
+        $action = $this->request->get('action_to_authorisation', $action);
         $controller = $this->request->get('action_to_controller', $action);
 
         return $controller;
@@ -244,14 +244,19 @@ Class AuthorisationService
      */
     public function authoriseTask($action, $catalog_id)
     {
+		return true;
+
+
+
+
 
         if ($action == 'login') {
             return $this->authoriseLogin('login', $catalog_id);
         }
 
         /** Retrieve ACL Action for this Task */
-        $action = Services::Registry()->get('action_to_action', $action);
-        $action_id = Services::Registry()->get('action_to_action_id', $action);
+        $action = Services::Registry()->get('action_to_authorisation', $action);
+        $action_id = Services::Registry()->get('action_to_authorisation_id', $action);
 
         if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
            //Echo 'AuthorisationServices::authoriseTask '

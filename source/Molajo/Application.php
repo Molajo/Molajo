@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo;
 
@@ -339,7 +339,7 @@ Class Application
 	 */
 	protected function display()
 	{
-		//Services::Registry()->get('Parameters', '*');
+//Services::Registry()->get('Parameters', '*');
 //Services::Message()->set('Test message', MESSAGE_TYPE_INFORMATION);
 //Services::Message()->set('Test message', MESSAGE_TYPE_SUCCESS);
 //Services::Message()->set('Test message', MESSAGE_TYPE_WARNING);

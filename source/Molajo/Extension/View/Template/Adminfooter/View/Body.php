@@ -3,7 +3,7 @@ use Molajo\Service\Services;
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 defined('MOLAJO') or die;
 
@@ -24,5 +24,5 @@ if ($first_year == null || $first_year == '') {
 	<?php echo '&#169;' . ' ' . $ccDateSpan . ' ' . $this->row->copyright_holder; ?>
     <a href="<?php echo $this->row->link; ?>">
         <?php echo $this->row->linked_text; ?> </a>
-    <?php echo ' ' . $this->row->remaining_text; ?>.
+    <?php echo ' ' . $this->row->remaining_text; ?>
 </p>

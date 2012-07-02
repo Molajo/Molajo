@@ -1,14 +1,33 @@
 <?php
 use Molajo\Service\Services;
 /**
- * @package     Molajito
+ * @package     Molajo
  * @copyright   2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license     GNU GPL v 2, or later and MIT, see license folder
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:module name=Adminheader wrap=Header wrap_class=banner-wrap/>
-<include:message/>
-<include:request/>
-<include:module name=Adminfooter wrap=Footer wrap_class=row,footer/>
+<div class="row">
+	<div class="twelve columns">
+		<include:template name=Adminheader/>
+	</div>
+</div>
+<include:message wrap="div" wrap_class="row"/>
+<div class="row">
+	<div class="three columns">
+		<include:template name=Adminnavigationbar/>
+		<include:template name=Adminsectionmenu/>
+	</div>
+	<div class="nine columns">
+		<include:template name=Admincomponentmenu/>
+		<include:template name=Admingridfilters/>
+				<include:request/>
+		<include:template name=Admingridbatch/>
+	</div>
+</div>
+<div class="row">
+	<div class="twelve columns">
+		<include:template name=Adminfooter/>
+	</div>
+</div>
 <include:defer/>

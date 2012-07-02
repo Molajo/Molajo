@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license    GNU GPL v 2, or later and MIT, see license folder
  */
 namespace Molajo\Model;
 
@@ -182,10 +182,10 @@ class Model
 	public function getTriggerdata($model_type = null)
 	{
 		if ($model_type == '*' || strpos($model_type, '*')) {
-			return $this->db->getData('Trigger', $model_type, false);
+			return $this->db->getData('Triggerdata', $model_type, false);
 		}
 
-		return $this->db->getData('Trigger', $model_type, true);
+		return $this->db->getData('Triggerdata', $model_type, true);
 	}
 
 	/**
@@ -305,44 +305,5 @@ class Model
 	public function getPagination()
 	{
 		return $this->pagination;
-	}
-
-	/**
-	 * store
-	 *
-	 * Method to store a row (insert: no PK; update: PK) in the database.
-	 *
-	 * @param   boolean True to update fields even if they are null.
-	 *
-	 * @return boolean True on success.
-	 * @since   1.0
-	 */
-	public function store($id, $table_name, $primary_key)
-	{
-		/**
-		echo '<pre>';
-		var_dump($this->row);
-		echo '</pre>';
-		 */
-		if ((int)$id == 0) {
-			$stored = $this->db->insertObject($table_name, $this->row, $primary_key);
-		} else {
-			$stored = $this->db->updateObject($table_name, $this->row, $primary_key);
-		}
-
-		if ($stored) {
-
-		} else {
-
-//			throw new \Exception($this->db->getErrorMsg()
-//			);
-		}
-		/**
-		if ($this->_locked) {
-		$this->_unlock();
-		}
-		 */
-
-		return true;
 	}
 }

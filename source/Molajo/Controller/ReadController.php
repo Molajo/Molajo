@@ -2,21 +2,6 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- *
- *
-if ($table_registry_name == 'XYZ') {
-echo '<br /><br />' . $model_name . '<br /><br />';
-echo 'Table Registry Name ' . $table_registry_name . '<br />';
-
-echo 'Includer Type ' . $includer_type . '<br />';
-echo 'Includer Name ' . $includer_name . '<br />';
-
-echo 'Model Type: ' . $model_type . '<br />'
-. 'Model Name:  ' . $model_name . '<br />'
-. 'Table Registry Name ' . $table_registry_name . '<br />'
-. 'Model Parameter ' . $model_parameter . '<br />'
-. 'Model query_object: ' . $model_query_object . '<br /><br /><br />';
-}
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Controller;
@@ -51,33 +36,47 @@ class ReadController extends Controller
 		} elseif ($action == 'display') {
 		}
 		 */
-		$includer_type = $this->get('includer_type', '');
-		$includer_name = $this->get('includer_name', '');
 
-		$model_type = $this->get('model_type', '');
-		$model_name = $this->get('model_name', '');
-		$model_parameter = $this->get('model_parameter', '');
-		$model_query_object = $this->get('model_query_object', 'item');
-
-		$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
-
-		if ($model_name == '') {
+		if ($this->get('model_name', '') == '') {
 			$this->query_results = array();
 
 		} else {
-			$this->connect($model_type, $model_name);
+			$this->connect($this->get('model_type'), $this->get('model_name'));
 
 			if ((int)$this->get('content_id') == 0) {
 //todo end up with: 1. result, 2. item, 3. list(dbo needs to change - add parameter for specific query, don't hijack
-			} elseif (strtolower($model_type) == 'dbo') {
+			} elseif (strtolower($this->get('model_type', '')) == 'dbo') {
 
 			} else {
 				$this->set('id', $this->get('content_id'));
-				$model_query_object = 'item';
+				$this->set('model_query_object', 'item');
 			}
 
 			/** Run Query */
-			$this->getData($model_query_object);
+			$this->getData($this->get('model_query_object', 'item'));
+
+			if (Services::Registry()->get('Configuration', 'debug_output_queries_query_results', 0) == 1) {
+
+				$debug_message = 'ReadController->execute '
+					. ' <br />Includer: ' . $this->get('includer_type', '')
+					. ' <br />Model Type: ' . $this->get('model_type', '')
+					. ' <br />Model Type: ' . $this->get('model_type', '')
+					. ' <br />Model Name: ' . $this->get('model_name', '')
+					. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
+					. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
+					. ' <br />Template Path: ' . $this->get('template_view_path', '')
+					. ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
+
+				ob_start();
+				echo '<pre>';
+				var_dump($this->query_results);
+				echo '</pre>';
+				$debug_message .= ob_get_contents();
+				ob_end_clean();
+
+				Services::Debug()->set('ReadController->onAfterReadEvent ' . $debug_message
+					. ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE);
+			}
 		}
 
 //todo - move this into a trigger?
@@ -90,7 +89,7 @@ class ReadController extends Controller
 			return '';
 		}
 
-		if (strtolower($includer_name) == 'wrap') {
+		if (strtolower($this->get('includer_name', '')) == 'wrap') {
 			$rendered_output = $this->query_results;
 
 		} else {
@@ -109,12 +108,10 @@ class ReadController extends Controller
 			 *  For primary content (the extension determined in Application::Request),
 			 *      save query results in the Request object for reuse by other
 			 *      extensions.
-			 *
-			 * todo: simplify all of the various dbo's into application-wide and single-view storage
 			 */
 			if ($this->get('extension_primary') == true) {
-				Services::Registry()->set('Parameters', 'query_resultset', $this->query_results);
-				Services::Registry()->set('Parameters', 'query_pagination', $this->pagination);
+				Services::Registry()->set('RouteParameters', 'query_resultset', $this->query_results);
+				Services::Registry()->set('RouteParameters', 'query_pagination', $this->pagination);
 			}
 
 			/** Render View */
@@ -127,7 +124,6 @@ class ReadController extends Controller
 		/** Wrap template view results */
 		return $this->wrapView($this->get('wrap_view_title'), $rendered_output);
 	}
-
 
 	/**
 	 * Method to execute a model method which interacts with the data source and returns results
@@ -145,21 +141,24 @@ class ReadController extends Controller
 
 		if ($dbo == 'JDatabase') {
 		} else {
+
 			$model_parameter = null;
+
 			if ($this->get('model_parameter') == '') {
 			} else {
 				$model_parameter = $this->get('model_parameter');
 			}
 
-			Services::Debug()->set('ReadController->getData DBO '
-					. $dbo . 'Query_object: '
-					. $query_object . ' Model Parameter: '
-					. $model_parameter,
+			Services::Debug()->set('ReadController->getData '
+					. ' DBO: ' . $dbo
+					. ' Query Object: ' . $query_object
+					. ' Model Parameter: ' . $model_parameter,
 				LOG_OUTPUT_QUERIES, VERBOSE);
 
 			if (strtolower($query_object) == 'getdummy') {
 				$this->query_results = array();
 			} else {
+
 				$this->query_results = $this->model->$query_object($model_parameter);
 			}
 

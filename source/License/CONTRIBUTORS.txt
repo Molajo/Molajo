@@ -1,0 +1,10 @@
+CONTRIBUTORS
+============
+
+Molajo was written by Amy Stephen, Copyright (c) 2012, All Rights Reserved
+
+Libraries and other external code are contained within the Vendor folder where license information can be found.
+
+Molajo code has also been contributed by these people:
+
+...when this happens, those names will be listed here

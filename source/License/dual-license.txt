@@ -1,0 +1,10 @@
+Molajo is Copyright (c) 2012 Amy Stephen and dual licensed under:
+- GPL v 2, or later - see GPL-LICENSE.txt
+- MIT - see MIT-LICENSE.txt
+
+The license and copyright information must accompany distribution of this code.
+
+Others who have contributed to the Molajo Code are listed in CONTRIBUTORS.txt
+
+Libraries and other external code contained within this distribution are found within the Vendor
+folder where license information can also be found.
