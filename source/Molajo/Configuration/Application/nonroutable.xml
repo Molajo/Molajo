@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <list>
     <parameter name="#" filter="int"/>
-    <parameter name="action" filter="char"/>
-    <parameter name="filter" filter="char"/>
-    <parameter name="submenu" filter="char"/>
-    <parameter name="action" filter="char"/>
-    <parameter name="author" filter="char"/>
-    <parameter name="category" filter="char"/>
-    <parameter name="count" filter="int"/>
-    <parameter name="date"/>
+    <parameter name="create" filter="char"/>
+    <parameter name="edit" filter="char"/>
+    <parameter name="delete" filter="char"/>
+    <parameter name="save" filter="char"/>
     <parameter name="next" filter="int"/>
-    <parameter name="page" filter="int"/>
     <parameter name="prev" filter="int"/>
-    <parameter name="return" filter="int"/>
     <parameter name="tag" filter="char"/>
 </list>

@@ -54,17 +54,18 @@ Class CatalogHelper
 	{
 		/** Retrieve the query results */
 		Services::Registry()->set('Query', 'Current', 'Catalog getRouteCatalog');
+
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'request_catalog_id'),
 			Services::Registry()->get('Parameters', 'request_url_query')
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
-		if (count($item) == 0 || (int)$item->id == 0 || (int)$item->routable == 0)  {
+		if (count($item) == 0 || (int)$item->id == 0 || (int)$item->routable == 0) {
 			Services::Registry()->set('Parameters', 'status_found', false);
 			Services::Debug()->set('CatalogHelper->getRouteCatalog 404 - Not Found '
-				. ' Requested Catalog ID: ' . Services::Registry()->get('Parameters', 'request_catalog_id')
-				. ' Requested URL Query: ' . Services::Registry()->get('Parameters', 'request_url_query'),
+					. ' Requested Catalog ID: ' . Services::Registry()->get('Parameters', 'request_catalog_id')
+					. ' Requested URL Query: ' . Services::Registry()->get('Parameters', 'request_url_query'),
 				LOG_OUTPUT_ROUTING, 0);
 			return false;
 		}
@@ -144,12 +145,12 @@ Class CatalogHelper
 		$m->set('use_special_joins', 1);
 
 		Services::Debug()->set('CatalogHelper->get '
-			. ' Request Catalog ID: ' . $catalog_id
-			. ' Request URL SEF: ' . $url_sef_request
-			. ' Request Source ID: ' . $source_id
-			. ' Request Catalog Type ID: ' . $catalog_type_id
-			. ' Model Type: ' . 'Table'
-			. ' Model Name: ' . 'Catalog',
+				. ' Request Catalog ID: ' . $catalog_id
+				. ' Request URL SEF: ' . $url_sef_request
+				. ' Request Source ID: ' . $source_id
+				. ' Request Catalog Type ID: ' . $catalog_type_id
+				. ' Model Type: ' . 'Table'
+				. ' Model Name: ' . 'Catalog',
 			LOG_OUTPUT_ROUTING, 0);
 
 		$item = $m->getData('item');

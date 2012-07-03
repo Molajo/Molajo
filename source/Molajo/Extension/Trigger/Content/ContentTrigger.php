@@ -443,9 +443,13 @@ class ContentTrigger extends Trigger
 	 */
 	public function getFieldValue($field)
 	{
-		if (isset($field->as_name)) {
-			$name = $field->as_name;
 
+		if (isset($field->as_name)) {
+			if ($field->as_name == '') {
+				$name = $field->name;
+			} else {
+				$name = $field->as_name;
+			}
 		} else {
 			$name = $field->name;
 		}
