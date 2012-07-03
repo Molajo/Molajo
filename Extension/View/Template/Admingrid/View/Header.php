@@ -7,10 +7,6 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-echo '<pre>';
-var_dump($this->row);
-echo '</pre>';
-
 $checked = '';
 $rowCount = Services::Registry()->get('Triggerdata', 'GridTableRows'); ?>
 <table class="responsive">

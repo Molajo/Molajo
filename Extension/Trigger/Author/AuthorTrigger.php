@@ -39,6 +39,7 @@ class AuthorTrigger extends ContentTrigger
 
 		/** Retrieve the current value for created by field */
 		$fieldValue = $this->getFieldValue($field);
+
 		if ((int)$fieldValue == 0) {
 			return true;
 		}

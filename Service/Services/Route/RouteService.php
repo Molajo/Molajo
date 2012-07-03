@@ -99,11 +99,10 @@ Class RouteService
 		}
 
 		/** Remove Parameters from path and save for later use */
-		$continue = $this->getNonRouteParameters();
+		$continue = $this->getNonRoute();
 
 		if ($continue == false) {
-			Services::Debug()->set('Route getNonRouteParameters() Failed', 'Route');
-
+			Services::Debug()->set('Route getNonRoute() Failed', 'Route');
 			return false;
 		}
 
@@ -213,143 +212,95 @@ Class RouteService
 	/**
 	 * Retrieve non route parameter values and remove from path
 	 *
-	 * Note: $path has already been stripped of Host, Folder, and Application
-	 *
-	 *   ex. index.php?option=article&tag=XYZ&prev=6
-	 *      ex. access/groups/tag/XYZ/prev/6
-	 *
-	 * todo: remove tag/value if SEF URL
-	 *
-	 * @since 1.0
+	 * @since   1.0
+	 * @return  boolean
 	 */
-	protected function getNonRouteParameters()
+	protected function getNonRoute()
 	{
-		$action = 'display';
-
 		$path = Services::Registry()->get('Parameters', 'request_url_query');
 
-		if ($path == '') {
-			Services::Registry()->set('Parameters', 'request_non_route_parameters', array());
-			Services::Registry()->set('Parameters', 'request_action', 'display');
-			Services::Registry()->set('Parameters', 'request_catalog_id',
-				Services::Registry()->get('Configuration', 'application_home_catalog_id', 0));
+		/** Defaults */
+		Services::Registry()->set('Parameters', 'request_non_route_parameters', '');
+		Services::Registry()->set('Parameters', 'request_action', 'display');
+		Services::Registry()->set('Parameters', 'request_action_authorisation', 'read');
+		Services::Registry()->set('Parameters', 'request_controller', 'read');
 
-			return true;
-		}
-
-				/** Retrieve ID */
+		/** Retrieve ID */
 		$value = (int)Services::Request()->get('request')->get('id');
 		Services::Registry()->set('Parameters', 'request_catalog_id', $value);
-/**
-		$request_url_query = Services::Registry()->get('Parameters', 'request_url_query');
-		$value = substr($request_url_query, strlen($request_url_query) - 12 , 12);
-		echo $value;
-		if ($value == '?action=edit') {
-			$request_url_query = substr($request_url_query, 0, strlen($request_url_query) - 12);
-			Services::Registry()->set('Parameters', 'action', 'edit');
-			Services::Registry()->set('Parameters', 'request_url_query', $request_url_query);
 
+		/** URL Type */
+		$sef = Services::Registry()->get('Parameters', 'sef_url', 1);
+		if ($sef == 1) {
+			$this->getNonRouteSEF();
 		} else {
-
-			$request_url_query = Services::Registry()->get('Parameters', 'request_url_query');
-			$value = substr($request_url_query, strlen($request_url_query) - 14 , 14);
-
-			if ($value == '?action=create') {
-				$request_url_query = substr($request_url_query, 0, strlen($request_url_query) - 14);
-				Services::Registry()->set('Parameters', 'action', 'create');
-				Services::Registry()->set('Parameters', 'request_url_query', $request_url_query);
-			} else {
-				Services::Registry()->set('Parameters', 'action', 'display');
-			}
+			$this->getNonRouteParameters();
 		}
 
 		return true;
+	}
 
-		Services::Registry()->get('Parameters', '*');
-		die;
- */
-		/** save non-routable parameter pairs in array */
-		$use = array();
 
-		/** XML with system defined nonroutable pairs */
-		$list = Services::Configuration()->getFile('Application', 'Nonroutable');
+	/**
+	 * Retrieve non-route values from parameterized URL
+	 * @return bool
+	 */
+	protected function getNonRouteParameters()
+	{
+		return true;
+	}
 
-		foreach ($list->parameter as $item) {
+	/**
+	 * Retrieve non-route values for SEF URLs
+	 *
+	 * @since   1.0
+	 * @return  boolean
+	 */
+	protected function getNonRouteSEF()
+	{
+		$path = Services::Registry()->get('Parameters', 'request_url_query');
+
+		$testKey = '';
+		$testPath = '';
+		if (strrpos($path, '/') > 0) {
+			$testKey = substr($path, strrpos($path, '/') + 1, strlen($path) - strrpos($path, '/'));
+			$testPath = substr($path, 0, strrpos($path, '/'));
+		}
+		if ($testKey == '') {
+			return true;
+		}
+
+		$action = '';
+		$path = '';
+		$authorisation = '';
+		$controller = '';
+
+		$list = Services::Configuration()->getFile('Application', 'Actions');
+
+		foreach ($list->action as $item) {
 
 			$key = (string)$item['name'];
 
-			$filter = (string)$item['filter'];
-			if ($filter === null) {
-				$filter = 'int';
-			}
-
-			if ($key == '#') {
-				$value = null;
-			} else {
-				$value = Services::Request()->get('request')->get($key);
-			}
-
-			if ($value === null) {
-			} else {
-
-				/** Action */
-				if ($key == 'action') {
-					$action = $value;
-				}
-
-				/** remove non-route parameters - as it is - from the route path */
-				$remove = $key . '=' . $value;
-
-				$path = substr($path, 0, strpos($path, $remove))
-					. substr($path, strpos($path, $remove) + 1 + strlen($remove), 999);
-
-				/** filter input */
-				$value = $this->filterInput($key, $value, $filter, 1, null);
-
-				if ($value === false) {
-				} else {
-					$use[$key] = $value;
-				}
+			if ($key == $testKey) {
+				$action = $key;
+				$path = $testPath;
+				$authorisation = (string)$item['authorisation'];
+				$controller = (string)$item['controller'];
+				break;
 			}
 		}
 
-		/** Remove trailing ? or & */
-		if (trim($path) == '') {
-		} else {
-			if (strrpos($path, '&') == (strlen($path) - 1)
-				|| strrpos($path, '?') == (strlen($path) - 1)
-			) {
-				$path = substr($path, 0, strlen($path) - 1);
-			}
+		if ($action == '') {
+			//defaults are fine;
+			return true;
 		}
 
 		/** Update Path and store Non-routable parameters for Extension Use */
 		Services::Registry()->set('Parameters', 'request_url_query', $path);
-		Services::Registry()->set('Parameters', 'request_non_route_parameters', $use);
+		Services::Registry()->set('Parameters', 'request_non_route_parameters', $action);
 		Services::Registry()->set('Parameters', 'request_action', $action);
-
-		/** add Edit and Add later
-
-		2. add /add and /edit
-		3. deal with nonroutable sef
-		 *
-		if (strripos($pageRequest, '/edit') == (strlen($pageRequest) - 5)) {
-		} elseif (strripos($pageRequest, '/add') == (strlen($pageRequest) - 4)) {
-		Services::Registry()->set('Parameters', 'request_action', 'add');
-		 */
-
-		/**
-		look up the URL in the catalog first to determine if it's internal
-		if (trim($return) == '') {
-		Services::Registry()->set('Parameters', 'redirect_on_success', '');
-
-		} elseif (JUri::isInternal(base64_decode($return))) {
-		Services::Registry()->set('Parameters', 'redirect_on_success', base64_decode($return));
-
-		} else {
-		Services::Registry()->set('Parameters', 'redirect_on_success', '');
-		}
-		 */
+		Services::Registry()->set('Parameters', 'request_action_authorisation', $authorisation);
+		Services::Registry()->set('Parameters', 'request_controller', $controller);
 
 		return true;
 	}
@@ -382,8 +333,6 @@ Class RouteService
 	}
 
 	/**
-	 * getRouteParameters
-	 *
 	 * Retrieve the Menu Item, Content, Extension and Primary Category Parameters for Route
 	 *
 	 * Determine the Theme and Page Values
@@ -406,7 +355,7 @@ Class RouteService
 			$id = Services::Registry()->get('Parameters', 'catalog_source_id');
 
 			$model_type = 'Table';
-			$model_name= ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_type')));
+			$model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_type')));
 			$model_query_object = 'item';
 
 			/**  Content (with or without a menu item) */
@@ -420,12 +369,12 @@ Class RouteService
 			/**  Category
 			if ((int)Services::Registry()->get('Parameters', 'catalog_category_id') == 0) {
 			} else {
-				Helpers::Content()->getRouteCategory();
+			Helpers::Content()->getRouteCategory();
 			}  */
 		}
 
 		/**  Extension */
-		if ((int) Services::Registry()->get('Parameters', 'extension_instance_id', 0) > 0) {
+		if ((int)Services::Registry()->get('Parameters', 'extension_instance_id', 0) > 0) {
 			$response = Helpers::Extension()->getExtension(
 				Services::Registry()->get('Parameters', 'extension_instance_id'),
 				'Table',
@@ -451,6 +400,5 @@ Class RouteService
 		Services::Registry()->sort('Metadata');
 
 		return true;
-
 	}
 }
