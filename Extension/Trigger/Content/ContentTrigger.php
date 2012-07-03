@@ -179,13 +179,11 @@ class ContentTrigger extends Trigger
 
 		/** process normal fields */
 		$fields = Services::Registry()->get($this->table_registry_name, 'fields');
-
-		/** "Normal" fields */
 		if (is_array($fields) && count($fields) > 0) {
 			$this->processFieldType($type = '', $fields);
 		}
 
-		/** "Custom" fields */
+		/** "Custom" field groups and fields */
 		$this->customfieldgroups = Services::Registry()->get($this->table_registry_name, 'customfieldgroups', array());
 
 		if (is_array($this->customfieldgroups) && count($this->customfieldgroups) > 0) {
@@ -205,10 +203,14 @@ class ContentTrigger extends Trigger
 
 		/** join fields */
 		$joinfields = Services::Registry()->get($this->table_registry_name, 'JoinFields');
-
-		/** "Normal" fields */
 		if (is_array($joinfields) && count($joinfields) > 0) {
 			$this->processFieldType('JoinFields', $joinfields);
+		}
+
+		/** foreign keys */
+		$foreignkeys = Services::Registry()->get($this->table_registry_name, 'foreignkeys');
+		if (is_array($foreignkeys) && count($foreignkeys) > 0) {
+			$this->processFieldType('foreignkeys', $foreignkeys);
 		}
 
 		return $this;
@@ -228,7 +230,11 @@ class ContentTrigger extends Trigger
 
 			/** Name */
 			if (isset($fields[$key]['name'])) {
-				$row->name = $fields[$key]['name'];
+				if ($type == 'foreignkeys') {
+					$row->name = 'fk_' . $fields[$key]['name'];
+				} else {
+					$row->name = $fields[$key]['name'];
+				}
 			} else {
 				$row->name = 'Unknown';
 			}
@@ -345,8 +351,35 @@ class ContentTrigger extends Trigger
 				$row->values = '';
 			}
 
-			/** Customfield */
-			$row->customfield = $type;
+			if ($type == '') {
+				//regular field
+				$row->customfield = '';
+				$row->foreignkey = 0;
+
+			} elseif ($type == 'foreignkeys') {
+				$row->customfield = '';
+				$row->foreignkey = 1;
+				$row->type = $type;
+
+			} else {
+				/** Customfield */
+				$row->customfield = $type;
+				$row->foreignkey = 0;
+			}
+
+			/** Source ID */
+			if (isset($fields[$key]['source_id'])) {
+				$row->source_id = $fields[$key]['source_id'];
+			} else {
+				$row->source_id = '0';
+			}
+
+			/** Source Model */
+			if (isset($fields[$key]['source_model'])) {
+				$row->source_model = $fields[$key]['source_model'];
+			} else {
+				$row->source_model = '';
+			}
 
 			$this->fields[] = $row;
 		}
@@ -384,13 +417,17 @@ class ContentTrigger extends Trigger
 	{
 		foreach ($this->fields as $field) {
 
-			if ($field->as_name == '') {
-				if ($field->name == $name) {
-					return $field;
-				}
+			if ((int)$field->foreignkey = 0) {
+
 			} else {
-				if ($field->as_name == $name) {
-					return $field;
+				if ($field->as_name == '') {
+					if ($field->name == $name) {
+						return $field;
+					}
+				} else {
+					if ($field->as_name == $name) {
+						return $field;
+					}
 				}
 			}
 		}
@@ -406,10 +443,11 @@ class ContentTrigger extends Trigger
 	 */
 	public function getFieldValue($field)
 	{
-		if ($field->as_name == '') {
-			$name = $field->name;
-		} else {
+		if (isset($field->as_name)) {
 			$name = $field->as_name;
+
+		} else {
+			$name = $field->name;
 		}
 
 		if (isset($this->data->$name)) {
@@ -451,6 +489,28 @@ class ContentTrigger extends Trigger
 		} elseif (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
 			Services::Registry()->set($this->get('model_name') . $field->customfield, $new_field_name);
 		}
+
+		return;
+	}
+
+	/**
+	 * saveForeignKeyValue
+	 *
+	 * @param $field
+	 * @param $new_field_name
+	 * @param $value
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	public function saveForeignKeyValue($new_field_name, $value)
+	{
+		if (isset($this->data->$new_field_name)) {
+			return;
+		}
+
+		/** Add new field */
+		$this->data->$new_field_name = $value;
 
 		return;
 	}

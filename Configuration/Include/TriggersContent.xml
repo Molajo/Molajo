@@ -1,4 +1,5 @@
 <trigger name="Mockimage"/>
+<trigger name="Referencedata"/>
 <trigger name="Blockquote"/>
 <trigger name="Rownumber"/>
 <trigger name="Itemurl"/>
