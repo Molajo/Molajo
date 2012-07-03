@@ -46,5 +46,8 @@ if ((int) $html5 == 1): ?>
 	<include:asset name=Assetscssdeclarations value=CssDeclarations/>
 	<include:asset name=Assetsjs value=Js/>
 	<include:asset name=Assetsjsdeclarations value=JsDeclarations/>
+<?php
+include __DIR__.'/alohahead.php';
+?>
 </head>
 <body<?php echo $id; ?><?php echo $class; ?>>
