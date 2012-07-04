@@ -3,7 +3,7 @@
  * @package   Molajo
  * @subpackage  Wrap
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
 if ((int) Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1

@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Extension\Trigger\ItemUserPermissions;
 
@@ -46,7 +46,7 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 
 		/** User Permissions */
 		$permissions = Services::Authorisation()
-			->authoriseTaskList($actionsArray, $this->data->catalog_id);
+			->verifyTaskList($actionsArray, $this->data->catalog_id);
 
 		/** Append onto row */
 		foreach ($actionsArray as $action) {

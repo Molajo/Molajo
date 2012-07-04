@@ -3,7 +3,7 @@
 @package     Molajo
 @subpackage  External Links
 @copyright   Copyright (C) 2010-2011 individual Molajo Contributors. All rights reserved. See http://molajo.org/copyright
-@license     GNU GPL v 2, or later and MIT, see license folder
+@license     GNU GPL v 2, or later and MIT, see License folder
 */
 a[class="external"], a.external {
     background: url(../images/external.png) no-repeat 100% 50%;

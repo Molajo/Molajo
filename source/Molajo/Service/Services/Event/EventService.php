@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Event;
 
@@ -85,13 +85,15 @@ Class EventService
 	 */
 	public function schedule($event, $arguments = array(), $selections = array())
 	{
-		Services::Debug()->set('EventService->schedule Initiated Event ' . $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Debug()->set('EventService->schedule Initiated Event '
+			. $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		/** Does Event (with registration) exist? */
 		$exists = Services::Registry()->exists('Events', $event);
 		if ($exists == false) {
-			Services::Debug()->set('EventService->schedule Event: ' . $event . ' does not exist', LOG_OUTPUT_TRIGGERS);
-			return true;	//not a problem
+			Services::Debug()->set('EventService->schedule Event: '
+				. $event . ' does not exist', LOG_OUTPUT_TRIGGERS);
+			return array('success' => true, $arguments);
 		}
 
 		/** Retrieve Event Registrations */
@@ -99,7 +101,7 @@ Class EventService
 		if (count($registrations) == 0) {
 			Services::Debug()->set('EventService->schedule Event ' . $event
 				. ' has no registrations, exiting', LOG_OUTPUT_TRIGGERS);
-			return $arguments;
+			return array('success' => true, $arguments);
 		}
 
 		/** Filter for specified triggers (Query triggers) or use all triggers registered for event */
@@ -158,7 +160,7 @@ Class EventService
 			}
 		}
 
-		return $arguments;
+		return array('success' => true, $arguments);
 	}
 
 	/**
@@ -185,7 +187,7 @@ Class EventService
 				. ' Instantiating Class ' . $triggerClass . ' Failed', LOG_OUTPUT_TRIGGERS);
 
 			echo '<br />Could not Instantiate Trigger Class: ' . $triggerClass;
-			return false;
+			return array('success' => false, $arguments);
 			//throw error
 		}
 
@@ -210,7 +212,8 @@ Class EventService
 					. $class
 					. ' Failed. ',
 				LOG_OUTPUT_TRIGGERS);
-//todo: decide if all other triggers should be aborted
+
+			return array('success' => false, $arguments);
 
 		} else {
 
@@ -222,7 +225,7 @@ Class EventService
 			}
 		}
 
-		return $arguments;
+		return array('success' => true, $arguments);
 	}
 
 	/**

@@ -2,7 +2,7 @@
 @package     Molajo
 @subpackage  Views
 @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
-@license     GNU GPL v 2, or later and MIT, see license folder
+@license     GNU GPL v 2, or later and MIT, see License folder
 */
 ul.nav-section { list-style: none; margin-left: 5px; overflow: hidden; margin-top: 0;}
 ul.nav-section li { float: left; margin-bottom: 5px; margin-right: 5px; color: #999;}

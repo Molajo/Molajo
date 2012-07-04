@@ -1,6 +1,6 @@
 <extension type="Component" version="1.0" extends="Categories">
     <model
-            name="TagCategories"
+            name="CategoryTags"
             catalog_type_id="3500">
     </model>
 </extension>

@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Extension\Trigger\Admindashboard;
 
@@ -27,7 +27,7 @@ class AdmindashboardTrigger extends ContentTrigger
 	 * @return  void
 	 * @since   1.0
 	 */
-	public function onAfterRoute()
+	public function onAfterAuthorise()
 	{
 		/** Is this an Administrative Grid Request?  */
 		if (strtolower($this->get('template_view_path_node')) == 'admindashboard') {

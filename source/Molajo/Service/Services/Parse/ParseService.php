@@ -2,7 +2,7 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Parse;
 
@@ -208,9 +208,10 @@ Class ParseService
 		/** Before Event */
 		Services::Debug()->set('ParseService->process Schedules onBeforeRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$results = Services::Event()->schedule('onBeforeRender');
-
-		if ($results == false) {
+		$trigger = Services::Event()->schedule('onBeforeRender');
+		if ($trigger['success'] == true) {
+			$arguments = $trigger['arguments'];
+		}  else {
 			Services::Debug()->set('ParseService->process onBeforeRender failed', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
@@ -256,8 +257,10 @@ Class ParseService
 		/** after rendering */
 		Services::Debug()->set('ParseService->process scheduled onAfterRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$results = Services::Event()->schedule('onAfterRender', $body);
-		if ($results == false) {
+		$trigger = Services::Event()->schedule('onAfterRender', $body);
+		if ($trigger['success'] == true) {
+			$arguments = $trigger['arguments'];
+		} else {
 			Services::Debug()->set('ParseService->process onAfterRender failed', LOG_OUTPUT_TRIGGERS);
 			//throw error
 		}

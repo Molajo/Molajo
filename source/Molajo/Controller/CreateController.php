@@ -45,7 +45,7 @@ class CreateController extends Controller
 			$this->data->catalog_type_id = Services::Registry()->get($this->table_registry_name, 'catalog_type_id');
 		}
 
-		$results = $this->checkPermissions();
+		$results = $this->verifyPermissions();
 		if ($results === false) {
 			//error
 			//return false (not yet)
@@ -126,22 +126,22 @@ class CreateController extends Controller
 	}
 
 	/**
-	 * checkPermissions for Create
+	 * verifyPermissions for Create
 	 *
 	 * @return bool
 	 * @since  1.0
 	 */
-	protected function checkPermissions()
+	protected function verifyPermissions()
 	{
 
 		if (isset($this->data->primary_category_id)) {
-			$results = Services::Authorisation()->authoriseTask('Create', $this->data->primary_category_id);
+			$results = Services::Authorisation()->verifyTask('Create', $this->data->primary_category_id);
 			if ($results === true) {
 				return true;
 			}
 		}
 
-		$results = Services::Authorisation()->authoriseTask('Create', $this->data->catalog_type_id);
+		$results = Services::Authorisation()->verifyTask('Create', $this->data->catalog_type_id);
 		if ($results === false) {
 			//error
 			//return false (not yet)
@@ -441,8 +441,10 @@ class CreateController extends Controller
 
 		Services::Debug()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_TRIGGERS);
 
-		$arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
-		if ($arguments == false) {
+		$trigger = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
+		if ($trigger['success'] == true) {
+			$arguments = $trigger['arguments'];
+		} else {
 			Services::Debug()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
@@ -480,8 +482,10 @@ class CreateController extends Controller
 
 		Services::Debug()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_TRIGGERS);
 
-		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
-		if ($arguments == false) {
+		$trigger = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
+		if ($trigger['success'] == true) {
+			$arguments = $trigger['arguments'];
+		} else {
 			Services::Debug()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}

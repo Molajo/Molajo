@@ -61,5 +61,6 @@ Share your ideas and comments about how to improve the software on [**Molajo Use
 
 Please see the [Contributor Workflow](https://github.com/Molajo/Molajo/wiki/Contributor-Workflow) for more information on contributing code to the Molajo project.
 
-
+## Compliance ##
+Molajo is developed in accordance with [PHP-FIG Standards http://www.php-fig.org/faq/].
 
