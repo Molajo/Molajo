@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Configuration;
 
@@ -61,9 +61,9 @@ Class ConfigurationService
 	public function __construct($configuration_file = null)
 	{
 		/** Initialize list of valid field attributes */
-		self::$valid_field_attributes = array('name', 'asname', 'alias', 'type', 'default', 'file',
-			'identity', 'length', 'minimum', 'maximum', 'null', 'required',
-			'shape', 'size', 'table', 'unique', 'values');
+		self::$valid_field_attributes = array('name', 'as_name', 'alias', 'default',
+			'file',	'form', 'identity', 'length', 'minimum', 'maximum', 'null',
+			'required', 'shape', 'size', 'table', 'type', 'unique', 'values');
 
 		/** Retrieve Site Data */
 		$this->getSite($configuration_file);

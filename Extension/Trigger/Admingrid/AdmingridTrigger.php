@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Extension\Trigger\Admingrid;
 
@@ -25,8 +25,9 @@ class AdmingridTrigger extends ContentTrigger
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRoute()
+	public function onAfterAuthorise()
 	{
+
 		if (strtolower($this->get('template_view_path_node')) == 'admingrid') {
 		} else {
 			return true;
@@ -42,7 +43,8 @@ class AdmingridTrigger extends ContentTrigger
 		$connect->set('get_customfields', 2);
 		$connect->set('use_special_joins', 1);
 
-		$this->table_registry_name = ucfirst(strtolower($this->parameters['model_name'])) .  ucfirst(strtolower($this->parameters['model_type']));
+		$this->table_registry_name = ucfirst(strtolower($this->parameters['model_name']))
+			. ucfirst(strtolower($this->parameters['model_type']));
 
 		if (Services::Registry()->get('Configuration', 'debug_output_queries_table_registry', 0) == 1) {
 
@@ -62,23 +64,10 @@ class AdmingridTrigger extends ContentTrigger
 			Services::Debug()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
 		}
 
-		$url = Services::Registry()->get('Configuration', 'application_base_url');
-
-		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
-			$url .= '/' . $this->parameters['catalog_url_sef_request'];
-			$connector = '?';
-		} else {
-			$url .= '/' . $this->parameters['catalog_url_request'];
-			$connector = '&';
-		}
-
-		Services::Registry()->set('Triggerdata', 'PageURL', $url);
-		Services::Registry()->set('Triggerdata', 'PageURLConnector', $connector);
-
-		$this->setToolbar($url, $connector);
+		$this->setToolbar();
 		$this->setFilter($connect, $connect->get('primary_prefix'));
 		$this->setGrid($connect, $connect->get('primary_prefix'), $connect->get('table_name'));
-		$this->setPagination($url, $connector);
+		$this->setPagination();
 		$this->setBatch($connect, $connect->get('primary_prefix'));
 
 		return true;
@@ -90,14 +79,16 @@ class AdmingridTrigger extends ContentTrigger
 	 * @return boolean
 	 * @since  1.0
 	 */
-	protected function setToolbar($url, $connector)
+	protected function setToolbar()
 	{
+		$url = Services::Registry()->set('Parameters', 'full_page_url');
+
 		$grid_toolbar_buttons = explode(',', $this->get('grid_toolbar_buttons',
 				'new,edit,publish,feature,archive,checkin,restore,delete,trash,options')
 		);
 
 		$permissions = Services::Authorisation()
-			->authoriseTaskList($grid_toolbar_buttons, $this->get('extension_catalog_id')
+			->verifyTaskList($grid_toolbar_buttons, $this->get('extension_catalog_id')
 		);
 
 		$query_results = array();
@@ -219,8 +210,10 @@ class AdmingridTrigger extends ContentTrigger
 	 * @return boolean
 	 * @since  1.0
 	 */
-	protected function setPagination($url, $connector)
+	protected function setPagination()
 	{
+		$url = Services::Registry()->set('Parameters', 'full_page_url');
+		$connector = '';
 		$query_results = array();
 		$current = 0;
 

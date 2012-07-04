@@ -3,7 +3,7 @@
  * @package   	Molajo
  * @subpackage  Module
  * @copyright 	2012 Amy Stephen. All rights reserved.
- * @license   	GNU GPL v 2, or later and MIT, see license folder
+ * @license   	GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Model;
 namespace Molajo\Extension\Module;

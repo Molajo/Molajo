@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo;
 
@@ -77,157 +77,133 @@ Class Application
 							$override_sequence_xml = false, $override_final_xml = false)
 	{
 		/** 1. Initialise */
-		$continue = $this->initialise();
-
-		Services::Registry()->set('Override', 'url_request', $override_url_request);
-		Services::Registry()->set('Override', 'catalog_id', $override_catalog_id);
-		Services::Registry()->set('Override', 'sequence_xml', $override_sequence_xml);
-		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
-
-		if ($continue == false) {
-			Services::Debug()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
-			return;
-		} else {
-			Services::Debug()->set('Initialise succeeded', LOG_OUTPUT_APPLICATION);
-		}
+		$results = $this->initialise($override_url_request, $override_catalog_id,
+			$override_sequence_xml, $override_final_xml);
 
 		/** 2. Route */
-		Services::Debug()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
-
-		$continue = $this->route();
-
-		if ($continue == false) {
-			Services::Debug()->set('Route failed', LOG_OUTPUT_APPLICATION);
-			return;
-		} else {
-			Services::Debug()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
+		if ($results == true) {
+			$results = $this->route();
 		}
-
-		Services::Debug()->set('Application->process Schedules onAfterRoute', LOG_OUTPUT_TRIGGERS, VERBOSE);
-
-		$results = Services::Event()->schedule('onAfterRoute',
-			array('parameters' => Services::Registry()->get('Parameters')),
-			Services::Registry()->get('Parameters', 'Triggers')
-		);
-
-		if ($results == false) {
-			Services::Debug()->set('Application->process OnAfterRoute failed.', LOG_OUTPUT_TRIGGERS);
-			return false;
-		}
-
-		Services::Debug()->set('Application->process OnAfterRoute successful.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		/** 3. Authorise */
-		Services::Debug()->set(START_AUTHORISATION, LOG_OUTPUT_APPLICATION);
-
-		$continue = $this->authorise();
-
-		if ($continue === false) {
-			Services::Debug()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
-			return;
-		} else {
-			Services::Debug()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
+		if ($results == true) {
+			$results = $this->authorise();
 		}
 
 		/** 4. Execute */
-		Services::Debug()->set(START_EXECUTE, LOG_OUTPUT_APPLICATION);
-
-		$continue = $this->execute();
-
-		if ($continue == false) {
-			Services::Debug()->set('Execute failed', LOG_OUTPUT_APPLICATION);
-			return;
-		} else {
-			Services::Debug()->set('Execute succeeded', LOG_OUTPUT_APPLICATION);
+		if ($results == true) {
+			$results = $this->execute();
 		}
 
 		/** 5. Response */
-		Services::Debug()->set(START_RESPONSE, LOG_OUTPUT_APPLICATION);
-
-		$continue = $this->response();
-
-		if ($continue == false) {
-			Services::Debug()->set('Response failed', LOG_OUTPUT_APPLICATION);
-			return;
-		} else {
-			Services::Debug()->set('Response succeeded', LOG_OUTPUT_APPLICATION);
+		if ($results == true) {
+			$results = $this->response();
 		}
 
-		return;
+		exit(0);
 	}
 
 	/**
 	 * Initialise Site, Application, and Services
 	 *
-	 * @return boolean
+	 * @param  string $override_url_request
+	 * @param  string $override_catalog_id
+	 * @param  string $override_sequence_xml
+	 * @param  string $override_final_xml
+	 *
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	protected function initialise()
+	protected function initialise($override_url_request = false, $override_catalog_id = false,
+								  $override_sequence_xml = false, $override_final_xml = false)
+
 	{
 		if (version_compare(PHP_VERSION, '5.3', '<')) {
 			die('Your host needs to use PHP 5.3 or higher to run Molajo.');
 		}
 
 		/** HTTP class */
-		$continue = $this->setBaseURL();
-		if ($continue == false) {
+		$results = $this->setBaseURL();
+		if ($results == false) {
 			return false;
 		}
 
 		/** PHP constants */
-		$continue = $this->setDefines();
-		if ($continue == false) {
+		$results = $this->setDefines();
+		if ($results == false) {
 			return false;
 		}
 
 		/** Site determination and paths */
-		$continue = $this->setSite();
-		if ($continue == false) {
+		$results = $this->setSite();
+		if ($results == false) {
 			return false;
 		}
 
 		/** Application determination and paths */
-		$continue = $this->setApplication();
-		if ($continue == false) {
+		$results = $this->setApplication();
+		if ($results == false) {
 			return false;
 		}
 
-		/** Application installation check */
-		$continue = $this->installCheck();
-		if ($continue == false) {
+		/** Installation check */
+		$results = $this->installCheck();
+		if ($results == false) {
 			return false;
 		}
 
-		/** Connect Application Services */
-		$continue = Application::Services()->StartServices();
-		if ($continue == false) {
+		/** Connect Services */
+		$results = Application::Services()->StartServices();
+		if ($results == false) {
 			return false;
 		}
 
 		/** SSL Check */
-		$continue = $this->sslCheck();
-		if ($continue == false) {
+		$results = $this->sslCheck();
+		if ($results == false) {
 			return false;
 		}
 
-		/** Verify that this site is authorised to access this application */
-		$continue = $this->getSiteApplicationAuthorisation();
-		if ($continue == false) {
+		/** Verify site authorised for application */
+		$results = $this->verifySiteApplication();
+		if ($results == false) {
 			return false;
 		}
 
 		/** Connect Helpers */
-		$continue = Application::Helpers()->connect();
-		if ($continue == false) {
+		$results = Application::Helpers()->connect();
+		if ($results == false) {
 			return false;
 		}
 
-		/** Session */
+		/** LAZY LOAD Session */
 		//Services::Session()->create(
 		//        Services::Session()->getHash(get_class($this))
 		//  );
 		// Services::Debug()
 		// ->set('Services::Session()->create complete, 'Application');
+
+		Services::Registry()->set('Override', 'url_request', $override_url_request);
+		Services::Registry()->set('Override', 'catalog_id', $override_catalog_id);
+		Services::Registry()->set('Override', 'sequence_xml', $override_sequence_xml);
+		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
+
+		if ($results == true) {
+			Services::Debug()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
+			$trigger = Services::Event()->schedule('onAfterInitialise');
+			if ($trigger['success'] == true) {
+				$results = true;
+			} else {
+				$results = false;
+			}
+		}
+
+		if ($results == false) {
+			Services::Debug()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
+			return false;
+		}
+
+		Services::Debug()->set('Initialise succeeded', LOG_OUTPUT_APPLICATION);
 
 		return true;
 	}
@@ -236,11 +212,15 @@ Class Application
 	 * Evaluates HTTP Request to determine routing requirements, including:
 	 *
 	 * - Normal page request: populates Registry for Request, Catalog, and Menuitem (if appropriate)
-	 *     Saves array of request_non_routable_parameters (if identified in request) to Request registry
+	 *
 	 * - Issues redirect request for "home" duplicate content
-	 * - For 'Application Offline Mode', sets a 503 error and registry values for View
+	 *
+	 * - Checks for 'Application Offline Mode', sets a 503 error and registry values for View
+	 *
 	 * - For 'Page not found', sets 404 error and registry values for Error Template/View
+	 *
 	 * - For defined redirect with Catalog, issues 301 Redirect to new URL
+	 *
 	 * - For 'Logon requirement' situations, issues 303 redirect to configured login page
 	 *
 	 * @return boolean
@@ -253,65 +233,113 @@ Class Application
 //$results = Services::Install()->testCreateExtension('Data Dictionary', 'Components');
 //$results = Services::Install()->testDeleteExtension('Test', 'Components');
 
+		Services::Debug()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
+
+		echo 'asfsafds';
+		die;
 		$results = Services::Route()->process();
 
-		if ($results == false) {
-			return false;
+		if ($results == true
+			&& Services::Redirect()->url === null
+			&& (int)Services::Redirect()->code == 0
+		) {
+			Services::Debug()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
+			$trigger = Services::Event()->schedule('onAfterRoute');
+			if ($trigger['success'] == true) {
+				$results = true;
+			} else {
+				$results = false;
+			}
+		}
 
-		} elseif (Services::Redirect()->url === null && (int)Services::Redirect()->code == 0) {
+		if ($results == false) {
+			Services::Debug()->set('Route failed', LOG_OUTPUT_APPLICATION);
+			return false;
+		}
+
+		if ($results == true
+			&& Services::Redirect()->url === null
+			&& (int)Services::Redirect()->code == 0
+		) {
+			Services::Debug()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
 			return true;
 		}
 
-		return false;
+		Services::Debug()->set('Route redirected ' . Services::Redirect()->url, LOG_OUTPUT_APPLICATION);
+
+		return true;
 	}
 
 	/**
 	 * Verify user authorization
+	 *
+	 * OnAfterAuthorise Event is invoked even when core authorisation fails to authorise
+	 * so that authorisation can be overridden and other methods of authorisation can be used
 	 *
 	 * @return boolean
 	 * @since    1.0
 	 */
 	protected function authorise()
 	{
-		return Services::Authorisation()->authoriseAction();
+		Services::Debug()->set(START_AUTHORISATION, LOG_OUTPUT_APPLICATION);
+
+		$results = Services::Authorisation()->verifyAction();
+
+		Services::Debug()->set('Application Schedule onAfterAuthorise', LOG_OUTPUT_TRIGGERS);
+		$trigger = Services::Event()->schedule('onAfterAuthorise');
+		if ($trigger['success'] == true) {
+			$results = true;
+		} else {
+			$results = false;
+		}
+
+		if ($results === false) {
+			Services::Debug()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
+			return false;
+		}
+
+		Services::Debug()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
+
+		return true;
 	}
 
 	/**
-	 * execute the action requested
+	 * Execute the action requested
 	 *
 	 * @return boolean
 	 * @since  1.0
 	 */
 	protected function execute()
 	{
+		Services::Debug()->set(START_EXECUTE, LOG_OUTPUT_APPLICATION);
+
 		$action = Services::Registry()->get('Parameters', 'request_action', 'display');
 
 		/** Display Action */
 		if ($action == 'display' || $action == 'edit' || $action == 'add') {
+			$results = $this->display();
+		} else {
+			$results = $this->action();
+		}
 
-			$continue = $this->display();
-
-			if ($continue == false) {
-				Services::Debug()->set('Execute Display failed', LOG_OUTPUT_APPLICATION);
-				return false;
-
+		if ($results == true) {
+			Services::Debug()->set('Application Schedule onAfterExecute', LOG_OUTPUT_TRIGGERS);
+			$trigger = Services::Event()->schedule('onAfterExecute');
+			if ($trigger['success'] == true) {
+				$results = true;
 			} else {
-				Services::Debug()->set('Execute Display succeeded', LOG_OUTPUT_APPLICATION);
-				return $continue;
+				$results = false;
 			}
 		}
 
-		/** Non-Display Actions */
-		$continue = $this->action();
-
-		if ($continue == false) {
+		if ($results == false) {
 			Services::Debug()->set('Execute ' . $action . ' failed', LOG_OUTPUT_APPLICATION);
 			return false;
-
-		} else {
-			Services::Debug()->set('Execute ' . $action . ' succeeded', LOG_OUTPUT_APPLICATION);
-			return true;
 		}
+
+		Services::Debug()->set('Execute ' . $action . ' succeeded', LOG_OUTPUT_APPLICATION);
+
+		return true;
 	}
 
 	/**
@@ -332,9 +360,9 @@ Class Application
 	 * Steps 1-3 continue until no more <include:type statements are
 	 *    found in the Theme and rendered output
 	 *
-	 * @param string $override_sequenceXML
-	 * @param string $override_finalXML
+	 * Override Registry have values for sequence_xml and final_xml
 	 *
+	 * @since  1.0
 	 * @return Application
 	 */
 	protected function display()
@@ -356,12 +384,12 @@ Class Application
 			die;
 		}
 
-		/** Save Route Parameters */
+		/** Save Route Parameters  move to after route */
 		Services::Registry()->copy('Parameters', 'RouteParameters');
 
 		$this->rendered_output = Services::Parse()->process();
 
-		return $this;
+		return true;
 	}
 
 	/**
@@ -374,6 +402,12 @@ Class Application
 
 // -> sessions Services::Message()->set('Status updated', MESSAGE_TYPE_SUCCESS);
 
+// 	What action and Controller (authorisation should be okay)
+
+// what redirect for good and bad
+
+// what parameters
+
 		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 			$url = Services::Registry()->get('Parameters', 'catalog_url_sef_request');
 
@@ -383,7 +417,7 @@ Class Application
 
 		Services::Redirect()->redirect(Services::Url()->getApplicationURL($url), '301')->send();
 
-		exit(0);
+		return true;
 	}
 
 	/**
@@ -394,14 +428,16 @@ Class Application
 	 */
 	protected function response()
 	{
+		Services::Debug()->set(START_RESPONSE, LOG_OUTPUT_APPLICATION);
+
 		if (Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
 		) {
 
 			Services::Debug()
-				->set('Response Code 200: ' . $this->rendered_output, LOG_OUTPUT_APPLICATION);
+				->set('Response Code 200', LOG_OUTPUT_APPLICATION);
 
-			Services::Response()
+			$results = Services::Response()
 				->setContent($this->rendered_output)
 				->setStatusCode(200)
 				->prepare(Services::Request()->get('request'))
@@ -411,16 +447,26 @@ Class Application
 
 			Services::Debug()
 				->set('Response Code:' . Services::Redirect()->code
-					. 'Redirect to: ' . Services::Redirect()->url
-					. LOG_OUTPUT_APPLICATION);
+				. 'Redirect to: ' . Services::Redirect()->url
+				. LOG_OUTPUT_APPLICATION);
 
-			Services::Redirect()->redirect()->send();
+			$results = Services::Redirect()->redirect()->send();
+		}
+
+		if ($results == true) {
+			Services::Debug()->set('Application Schedule onAfterResponse', LOG_OUTPUT_TRIGGERS);
+			$trigger = Services::Event()->schedule('onAfterResponse');
+			if ($trigger['success'] == true) {
+				$results = true;
+			} else {
+				$results = false;
+			}
 		}
 
 		Services::Debug()
-			->set('Response exit', LOG_OUTPUT_APPLICATION);
+			->set('Response exit '. (int) $results, LOG_OUTPUT_APPLICATION);
 
-		exit(0);
+		return true;
 	}
 
 	/**
@@ -786,9 +832,9 @@ Class Application
 	 * @returns boolean
 	 * @since   1.0
 	 */
-	protected function getSiteApplicationAuthorisation()
+	protected function verifySiteApplication()
 	{
-		$authorise = Services::Authorisation()->authoriseSiteApplication();
+		$authorise = Services::Authorisation()->verifySiteApplication();
 		if ($authorise === false) {
 			$message = '304: ' . BASE_URL;
 			echo $message;

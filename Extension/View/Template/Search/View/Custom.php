@@ -3,10 +3,10 @@ use Molajo\Service\Services;
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$action = Services::Registry()->get('Triggerdata', 'PageURL'); ?>
+$action = Services::Registry()->get('Parameters', 'full_page_url'); ?>
 <label>Search</label>
 <div class="row">
 	<div class="five columns">

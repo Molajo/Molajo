@@ -2,6 +2,7 @@
 <trigger name="Referencedata"/>
 <trigger name="Blockquote"/>
 <trigger name="Rownumber"/>
+<trigger name="Readmore"/>
 <trigger name="Itemurl"/>
 <trigger name="Author"/>
 <trigger name="Smilies"/>

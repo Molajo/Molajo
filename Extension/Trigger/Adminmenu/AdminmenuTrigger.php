@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Extension\Trigger\Adminmenu;
 
@@ -19,46 +19,61 @@ defined('MOLAJO') or die;
 class AdminmenuTrigger extends ContentTrigger
 {
 	/**
-	 * Before-read processing
+	 * Prepares data for the Administrator Menus
 	 *
-	 * Prepares data for the Administrator Grid  - position AdminmenuTrigger last
+	 * Run this LAST
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onAfterRoute()
+	public function onAfterAuthorise()
 	{
 		/** Data Source Connection */
-		$model_type = $this->get('model_type');
-		$model_name = $this->get('model_name');
-
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$connect = new $controllerClass();
 
-		$results = $connect->connect($model_type, $model_name);
+		$results = $connect->connect(
+			$this->get('model_type'),
+			$this->get('model_name')
+		);
 		if ($results == false) {
 			return false;
 		}
 
-		$table_name = $connect->get('table_name');
-
-		$primary_prefix = $connect->get('primary_prefix');
-		$primary_key = $connect->get('primary_key');
-		$name_key = $connect->get('name_key');
-
 		/** URL */
-		$url = Services::Registry()->get('Configuration', 'application_base_url');
+		$base = Services::Registry()->get('Configuration', 'application_base_url');
 
+		$field = $this->getField('catalog_url_sef_request');
+
+		var_dump($field);
+
+		$sef_url = $this->getFieldValue($field);
+
+		echo $sef_url;
+		echo 'diying in onAfterAuthorise';
+		die;
+
+
+
+		die;
 		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
-			$url .= '/' . $this->get('catalog_url_sef_request');
-			$connector = '?';
-		} else {
-			$url .= '/' . $this->get('catalog_url_request');
-			$connector = '&';
-		}
+			echo 'in here';
 
-		Services::Registry()->set('Triggerdata', 'PageURL', $url);
-		Services::Registry()->set('Triggerdata', 'PageURLConnector', $connector);
+			$field = $this->getField('page_url');
+
+			echo '<pre>';
+			var_dump($field);
+
+			$fieldValue = $this->getFieldValue($field);
+
+
+			$url .= '/' . $fieldValue;
+		} else {
+			$url .= '/' . $this->getFieldValue('catalog_url_request');
+		}
+		echo $url;
+		die;
+		Services::Registry()->set('Parameters', 'full_page_url', $url);
 
 		/** Create Admin Menus, verifying ACL */
 		$this->setMenu();

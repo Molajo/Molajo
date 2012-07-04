@@ -2,7 +2,7 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Route;
 
@@ -56,6 +56,8 @@ Class RouteService
 	 */
 	public function process()
 	{
+		echo 'in process';
+		die;
 		/** Route Registry */
 		Services::Registry()->createRegistry('Parameters');
 		Services::Registry()->createRegistry('Metadata');
@@ -97,12 +99,13 @@ Class RouteService
 
 			return true;
 		}
-
-		/** Remove Parameters from path and save for later use */
-		$continue = $this->getNonRoute();
+		 echo 'going into getResurces';
+		die;
+		/** Identify Resource and sub-resource values */
+		$continue = $this->getResource();
 
 		if ($continue == false) {
-			Services::Debug()->set('Route getNonRoute() Failed', 'Route');
+			Services::Debug()->set('Route getResource() Failed', 'Route');
 			return false;
 		}
 
@@ -212,12 +215,17 @@ Class RouteService
 	/**
 	 * Retrieve non route parameter values and remove from path
 	 *
-	 * @since   1.0
 	 * @return  boolean
+	 * @since   1.0
 	 */
-	protected function getNonRoute()
+	protected function getResource()
 	{
 		$path = Services::Registry()->get('Parameters', 'request_url_query');
+
+		echo 'In getResource ' . $path;
+		die;
+
+		Services::Registry()->set('Parameters', 'page_url', $path);
 
 		/** Defaults */
 		Services::Registry()->set('Parameters', 'request_non_route_parameters', '');
@@ -232,20 +240,21 @@ Class RouteService
 		/** URL Type */
 		$sef = Services::Registry()->get('Parameters', 'sef_url', 1);
 		if ($sef == 1) {
-			$this->getNonRouteSEF();
+			$this->getResourceSEF();
 		} else {
-			$this->getNonRouteParameters();
+			$this->getResourceParameters();
 		}
 
 		return true;
 	}
 
-
 	/**
-	 * Retrieve non-route values from parameterized URL
-	 * @return bool
+	 * Retrieve non-route values from parameter URL
+	 *
+	 * @return  bool
+	 * @since   1.0
 	 */
-	protected function getNonRouteParameters()
+	protected function getResourceParameters()
 	{
 		return true;
 	}
@@ -253,10 +262,10 @@ Class RouteService
 	/**
 	 * Retrieve non-route values for SEF URLs
 	 *
-	 * @since   1.0
 	 * @return  boolean
+	 * @since   1.0
 	 */
-	protected function getNonRouteSEF()
+	protected function getResourceSEF()
 	{
 		$path = Services::Registry()->get('Parameters', 'request_url_query');
 
@@ -298,6 +307,7 @@ Class RouteService
 		/** Update Path and store Non-routable parameters for Extension Use */
 		Services::Registry()->set('Parameters', 'request_url_query', $path);
 		Services::Registry()->set('Parameters', 'request_non_route_parameters', $action);
+
 		Services::Registry()->set('Parameters', 'request_action', $action);
 		Services::Registry()->set('Parameters', 'request_action_authorisation', $authorisation);
 		Services::Registry()->set('Parameters', 'request_controller', $controller);

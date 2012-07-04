@@ -2,13 +2,13 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Triggerdata', 'PageURL');
+$action = Services::Registry()->get('Parameters', 'full_page_url');
 ?>
 
 <dl class="tabs contained">

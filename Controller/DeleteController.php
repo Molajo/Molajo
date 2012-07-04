@@ -40,7 +40,7 @@ class DeleteController extends ReadController
 			return false;
 		}
 
-		$results = $this->checkPermissions();
+		$results = $this->verifyPermissions();
 		if ($results === false) {
 			//error
 			//return false (not yet)
@@ -178,15 +178,15 @@ class DeleteController extends ReadController
 	}
 
 	/**
-	 * checkPermissions for Delete
+	 * verifyPermissions for Delete
 	 *
 	 * @return bool
 	 * @since  1.0
 	 */
-	protected function checkPermissions()
+	protected function verifyPermissions()
 	{
 		//todo - figure out what joining isn't working, get catalog id
-		//$results = Services::Authorisation()->authoriseTask('Delete', $this->data->catalog_id);
+		//$results = Services::Authorisation()->verifyTask('Delete', $this->data->catalog_id);
 		//if ($results === false) {
 		//error
 		//return false (not yet)
@@ -221,13 +221,15 @@ class DeleteController extends ReadController
 
 		Services::Debug()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
 
-		$arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
-		if ($arguments == false) {
-			Services::Debug()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
+		$trigger = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
+		if ($trigger['success'] == true) {
+			$arguments = $trigger['arguments'];
+		} else {
+			Services::Debug()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 			return false;
 		}
 
-		Services::Debug()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
+		Services::Debug()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_TRIGGERS);
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
@@ -261,13 +263,15 @@ class DeleteController extends ReadController
 
 		Services::Debug()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
 
-		$arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
-		if ($arguments == false) {
-			Services::Debug()->set('CreateController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
+		$trigger = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
+		if ($trigger['success'] == true) {
+			$arguments = $trigger['arguments'];
+		} else {
+			Services::Debug()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
 
-		Services::Debug()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
+		Services::Debug()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];

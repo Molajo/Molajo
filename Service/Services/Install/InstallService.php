@@ -2,7 +2,7 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Install;
 use Molajo\Controller\Controller;
@@ -383,11 +383,13 @@ Class InstallService
 			'model_name' => 'Articles'
 		);
 
-		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $triggers);
+		$trigger = Services::Event()->schedule('onAfterCreate', $arguments, $triggers);
+		if ($trigger['success'] == true) {
+			$arguments = $trigger['arguments'];
+		}  else {
 
-		var_dump($arguments);
-		die;
-		if ($arguments == false) {
+			var_dump($arguments);
+
 			return false;
 		}
 	}

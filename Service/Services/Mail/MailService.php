@@ -2,7 +2,7 @@
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see license folder
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Mail;
 
@@ -252,7 +252,7 @@ Class MailService
 
         /** authorization event */
         //todo: what is the catalog id of a service?
-        //$results = Services::Authorisation()->authoriseTask('email', $catalog_id);
+        //$results = Services::Authorisation()->verifyTask('email', $catalog_id);
 
         return $permission;
     }
