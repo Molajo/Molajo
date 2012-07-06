@@ -16,16 +16,16 @@ defined('MOLAJO') or die; ?>
 					<input type="text" placeholder="Standard Input"/>
 
 					<label>Address</label>
-						<input type="text"/>
-						<input type="text" class="six"/>
+					<input type="text"/>
+					<input type="text" class="six"/>
 
-						<label for="radio1">
-							<input name="radio1" type="radio" id="radio1"> Featured
-						</label>
+					<label for="radio1">
+						<input name="radio1" type="radio" id="radio1"> Featured
+					</label>
 
-						<label for="radio2">
-							<input name="radio1" type="radio" id="radio2"> Not Featured
-						</label>
+					<label for="radio2">
+						<input name="radio1" type="radio" id="radio2"> Not Featured
+					</label>
 
 				</fieldset>
 			</div>

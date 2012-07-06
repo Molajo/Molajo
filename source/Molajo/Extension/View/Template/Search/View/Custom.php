@@ -1,5 +1,6 @@
 <?php
 use Molajo\Service\Services;
+
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
@@ -12,7 +13,7 @@ $action = Services::Registry()->get('Parameters', 'full_page_url'); ?>
 	<div class="five columns">
 		<div class="row collapse">
 			<div class="eight mobile-three columns">
-				<input type="text" />
+				<input type="text"/>
 			</div>
 			<div class="four mobile-one columns">
 				<a href="<?php echo $action; ?>" class="postfix button">Search</a>

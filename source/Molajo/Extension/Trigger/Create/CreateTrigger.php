@@ -401,7 +401,7 @@ class CreateTrigger extends ContentTrigger
 		/** Overlay for this extension */
 		$data->id = NULL;
 		$data->title = $this->data->title;
-		$data->alias =  Services::Filter()->filter($this->data->title, 'alias', 0, $this->data->title);
+		$data->alias = Services::Filter()->filter($this->data->title, 'alias', 0, $this->data->title);
 
 		$data->start_publishing_datetime = NULL;
 		$data->stop_publishing_datetime = NULL;

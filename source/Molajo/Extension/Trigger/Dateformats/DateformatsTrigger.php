@@ -89,7 +89,7 @@ class DateformatsTrigger extends ContentTrigger
 
 		try {
 			Services::Date()->convertCCYYMMDD('2011-11-11');
-		/** Date Service is not available (likely startup) */
+			/** Date Service is not available (likely startup) */
 		} catch (\Exception $e) {
 			return true;
 		}

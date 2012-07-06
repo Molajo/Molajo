@@ -54,7 +54,6 @@ class AdminmenuTrigger extends ContentTrigger
 		die;
 
 
-
 		die;
 		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
 			echo 'in here';

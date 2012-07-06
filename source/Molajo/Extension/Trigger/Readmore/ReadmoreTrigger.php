@@ -65,6 +65,7 @@ class ReadmoreTrigger extends ContentTrigger
 
 		return true;
 	}
+
 	/**
 	 * splitReadMoreText - search for the system-readmore break and split the text at that point into two text fields
 	 *

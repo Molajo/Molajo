@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="View" group="Page" version="1.0" extends="ExtensionInstances">
+<extension type="ViewPage" version="1.0" extends="ExtensionInstancesViewsPages">
     <name>VIEW_PAGE_DEFAULT_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
-    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
     <author_email>AmyStephen@gmail.com</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_PAGE_DEFAULT_DESCRIPTION</description>
-    <model name="Page" catalog_type_id="1150" />
+    <model name="Page" catalog_type_id="1150"/>
 </extension>

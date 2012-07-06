@@ -1,5 +1,3 @@
-<extension type="Resource" version="1.0" extends="Groups">
-<model
-        name="SystemGroups"
-        catalog_type_id="100">
-</model>
+<extension type="Group" version="1.0" extends="Groups">
+    <model name="GroupsSystem" catalog_type_id="100"/>
+</extension>

@@ -1,3 +1,3 @@
-define({ 
-	"plugin2.test1": "english" 
+define({
+    "plugin2.test1":"english"
 });

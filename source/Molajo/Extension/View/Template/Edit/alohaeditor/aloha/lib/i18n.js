@@ -63,11 +63,11 @@
     }
 
     define({
-        version: '0.24.0',
+        version:'0.24.0',
         /**
          * Called when a dependency needs to be loaded.
          */
-        load: function (name, req, onLoad, config) {
+        load:function (name, req, onLoad, config) {
             config = config || {};
 
             var masterName,
@@ -92,9 +92,9 @@
                 masterName = name;
                 suffix = match[4];
                 locale = config.locale || (config.locale =
-                        typeof navigator === "undefined" ? "root" :
+                    typeof navigator === "undefined" ? "root" :
                         (navigator.language ||
-                         navigator.userLanguage || "root").toLowerCase());
+                            navigator.userLanguage || "root").toLowerCase());
                 parts = locale.split("-");
             }
 
@@ -132,18 +132,18 @@
                             }
                             require.mixin(value, partBundle);
                         }
-						
-						// MODIFICATION FROM ALOHA START: add a t() function
-						value.t = function(key) {
-							if (this[key]) {
-								return this[key];
-							} else {
-								return key;
-							}
-						}
-						// END OF ALOHA MODIFICATION
 
-						//All done, notify the loader.
+                        // MODIFICATION FROM ALOHA START: add a t() function
+                        value.t = function (key) {
+                            if (this[key]) {
+                                return this[key];
+                            } else {
+                                return key;
+                            }
+                        }
+                        // END OF ALOHA MODIFICATION
+
+                        //All done, notify the loader.
                         onLoad(value);
                     });
                 });

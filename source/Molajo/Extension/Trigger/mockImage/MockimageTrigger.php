@@ -89,13 +89,13 @@ class MockimageTrigger extends ContentTrigger
 				$i = 0;
 				foreach ($ImageRequest as $parameter) {
 					if ($width == 0) {
-						$width = (int) $parameter;
+						$width = (int)$parameter;
 
 					} elseif ($height == 0) {
-						$height = (int) $parameter;
+						$height = (int)$parameter;
 
 					} elseif ($class == '') {
-						if (in_array($parameter, array('right','left','center'))) {
+						if (in_array($parameter, array('right', 'left', 'center'))) {
 						} else {
 							$class = 'left';
 						}
@@ -133,23 +133,23 @@ class MockimageTrigger extends ContentTrigger
 	 * @return string
 	 * @since   1.0
 	 */
-	public function addImage($width = 250, $height = 250, $class='left', $type = 'box')
+	public function addImage($width = 250, $height = 250, $class = 'left', $type = 'box')
 	{
 
-		if (in_array($class, array('right','left','center'))) {
-			$float = 'float: '. $class;
+		if (in_array($class, array('right', 'left', 'center'))) {
+			$float = 'float: ' . $class;
 		} else {
 			$class = 'left';
 			$float = 'float: left';
 		}
 
 		$imageclass = 'image' . $class;
-		$spanclass = 'mockimage float'.$class;
+		$spanclass = 'mockimage float' . $class;
 
 		if ($type == 'cat') {
-			$mockimage = '<span class="' . $spanclass . '"><img src="http://placekitten.com/' . (int)$width . '/'. (int) $height . '" class="' . $imageclass . '"/></span>';
+			$mockimage = '<span class="' . $spanclass . '"><img src="http://placekitten.com/' . (int)$width . '/' . (int)$height . '" class="' . $imageclass . '"/></span>';
 		} else {
-			$mockimage = '<span class="' . $spanclass . '"><img src="http://placehold.it/' . (int)$width . 'x'. (int) $height . '" class="' . $imageclass . '"/></span>';
+			$mockimage = '<span class="' . $spanclass . '"><img src="http://placehold.it/' . (int)$width . 'x' . (int)$height . '" class="' . $imageclass . '"/></span>';
 		}
 
 		return $mockimage;

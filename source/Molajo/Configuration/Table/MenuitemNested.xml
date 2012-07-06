@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="MenuitemNested" extends="Menuitem">
+<model name="MenuitemNested" extends="Menuitems">
     <table>
         <joins>
-            <include name="JoinsNestedMenuItems"/>
+            <include name="JoinsNestedMenuitems"/>
         </joins>
     </table>
 </model>

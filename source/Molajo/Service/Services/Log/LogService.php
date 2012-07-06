@@ -117,9 +117,9 @@ Class LogService
     /**
      * Initiate a logging activity and define logging options
      *
-     * @param array   $options  Configuration array
-     * @param integer $priority Valid priority for log
-     * @param array   $types    Valid types for log
+     * @param  array   $options  Configuration array
+     * @param  integer $priority Valid priority for log
+     * @param  array   $types    Valid types for log
      *
      * $options array
      *
@@ -146,15 +146,17 @@ Class LogService
      * +++ Molajo custom loggers
      *
      * 4. Email
+	 *
      * $this->options['sender'] = array(
-     *             Services::Registry()->get('Configuration', 'mail_from'),
-     *          Services::Registry()->get('Configuration', 'mail_from_name')
-     *         };
+     * 	Services::Registry()->get('Configuration', 'mail_from'),
+     * 	Services::Registry()->get('Configuration', 'mail_from_name')
+     * };
      * $this->options['recipient'] = Services::Registry()->get('Configuration', 'mail_from_email_address');
      * $this->options['subject'] = Services::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
      * $this->options['mailer'] = Services::Mail();
      *
      * 5. ChromePHP
+	 *
      * No addition $option[] values. However, this option requires using Google Chrome and installing this
      * Google Chrome extension: https://chrome.google.com/webstore/detail/noaneddfkdjfnfdakjjmocngnfkfehhd
      * and https://github.com/ccampbell/chromephp

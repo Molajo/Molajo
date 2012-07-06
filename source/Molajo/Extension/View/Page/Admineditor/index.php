@@ -1,5 +1,6 @@
 <?php
 use Molajo\Service\Services;
+
 /**
  * @package     Molajo
  * @copyright   2012 Amy Stephen. All rights reserved.
@@ -16,11 +17,11 @@ defined('MOLAJO') or die; ?>
 <div class="row">
 	<div class="three columns">
 		<include:template name=Adminnavigationbar/>
-		<include:template name=Adminsectionmenu/>
+			<include:template name=Adminsectionmenu/>
 	</div>
 	<div class="nine columns">
 		<include:template name=Adminresourcemenu/>
-				<include:request/>
+			<include:request/>
 	</div>
 </div>
 <div class="row">

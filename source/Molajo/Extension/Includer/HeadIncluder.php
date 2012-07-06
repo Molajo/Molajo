@@ -34,9 +34,7 @@ Class HeadIncluder extends Includer
 	}
 
 	/**
-	 *  setRenderCriteria
-	 *
-	 *  Retrieve default values, if not provided by extension
+	 *  Retrieve default values for Rendering, if not provided by extension
 	 *
 	 * @return  bool
 	 * @since   1.0

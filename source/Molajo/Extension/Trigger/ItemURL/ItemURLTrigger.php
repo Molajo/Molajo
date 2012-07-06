@@ -96,20 +96,20 @@ class ItemurlTrigger extends ContentTrigger
 		echo Services::Registry()->get('Configuration', 'application_base_url');
 		echo '<br />';
 
-  /**
+		/**
 
-echo '<pre>';
-var_dump($this->parameters);
-echo '</pre>';
+		echo '<pre>';
+		var_dump($this->parameters);
+		echo '</pre>';
 
 		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
-			$url .= '/' . $this->parameters['page_url'];
-			$connector = '?';
+		$url .= '/' . $this->parameters['page_url'];
+		$connector = '?';
 		} else {
-			$url .= '/' . $this->parameters['catalog_url_request'];
-			$connector = '&';
+		$url .= '/' . $this->parameters['catalog_url_request'];
+		$connector = '&';
 		}
-	 */
-	//	Services::Registry()->set('Trigger', 'full_page_url', $url);
+		 */
+		//	Services::Registry()->set('Trigger', 'full_page_url', $url);
 	}
 }

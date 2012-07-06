@@ -1,385 +1,385 @@
 /*!
-* Aloha Editor
-* Author & Copyright (c) 2010 Gentics Software GmbH
-* aloha-sales@gentics.com
-* Licensed unter the terms of http://www.aloha-editor.com/license.html
-*/
+ * Aloha Editor
+ * Author & Copyright (c) 2010 Gentics Software GmbH
+ * aloha-sales@gentics.com
+ * Licensed unter the terms of http://www.aloha-editor.com/license.html
+ */
 define(
-['aloha', 'aloha/jquery', 'aloha/contenthandlermanager'],
-function( Aloha, jQuery, ContentHandlerManager ) {
-	
+    ['aloha', 'aloha/jquery', 'aloha/contenthandlermanager'],
+    function (Aloha, jQuery, ContentHandlerManager) {
 
-	var WordContentHandler = ContentHandlerManager.createHandler({
-		/**
-		 * Handle the pasting. Try to detect content pasted from word and transform to clean html
-		 * @param content
-		 */
-		handleContent: function( content ) {
 
-			if ( typeof content === 'string' ){
-				content = jQuery( '<div>' + content + '</div>' );
-			} else if ( content instanceof jQuery ) {
-				content = jQuery( '<div>' ).append(content);
-			}
+        var WordContentHandler = ContentHandlerManager.createHandler({
+            /**
+             * Handle the pasting. Try to detect content pasted from word and transform to clean html
+             * @param content
+             */
+            handleContent:function (content) {
 
-			if (this.detectWordContent(content)) {
-				this.transformWordContent(content);
-			}
+                if (typeof content === 'string') {
+                    content = jQuery('<div>' + content + '</div>');
+                } else if (content instanceof jQuery) {
+                    content = jQuery('<div>').append(content);
+                }
 
-			return content.html();
-		},
+                if (this.detectWordContent(content)) {
+                    this.transformWordContent(content);
+                }
 
-		/**
-		 * Check whether the content of the given jQuery object is assumed to be pasted from word.
-		 * @param content
-		 * @return true for content pasted from word, false for other content
-		 */
-		detectWordContent: function (content) {
-			var wordDetected = false;
-			// check every element which was pasted.
+                return content.html();
+            },
 
-			content.find('*').each(function() {
-				// get the element style
-				var style = jQuery(this).attr('style'),
-					clazz;
+            /**
+             * Check whether the content of the given jQuery object is assumed to be pasted from word.
+             * @param content
+             * @return true for content pasted from word, false for other content
+             */
+            detectWordContent:function (content) {
+                var wordDetected = false;
+                // check every element which was pasted.
 
-				if (style) {
-					// if 'mso' is found somewhere in the style, we found word content
-					if (style.toLowerCase().indexOf('mso') >= 0) {
-						wordDetected = true;
-						return false;
-					}
-				}
-				// get the element class
-				clazz = jQuery(this).attr('class');
-				if (clazz) {
-					// if 'mso' is found somewhere in the class, we found word content
-					if (clazz.toLowerCase().indexOf('mso') >= 0) {
-						wordDetected = true;
-						return false;
-					}
-				}
-			});
-			// return the result
-			return wordDetected;
-		},
+                content.find('*').each(function () {
+                    // get the element style
+                    var style = jQuery(this).attr('style'),
+                        clazz;
 
-		/**
-		 * Check whether the given list span (first span in a paragraph which shall be a list item) belongs to an ordered list
-		 * @param listSpan
-		 * @return true for ordered lists, false for unordered
-		 */
-		isOrderedList: function(listSpan) {
-			// when the span has fontFamily "Wingdings" it is an unordered list
-			if (listSpan.css('fontFamily') == 'Wingdings' || listSpan.css('fontFamily') == 'Symbol') {
-				return false;
-			}
-			// otherwise check for a number, letter or '(' as first character
-			return listSpan.text().match(/^([0-9]{1,3}\.)|([0-9]{1,3}\)|([a-zA-Z]{1,5}\.)|([a-zA-Z]{1,5}\)))$/) ? true : false;
-		},
+                    if (style) {
+                        // if 'mso' is found somewhere in the style, we found word content
+                        if (style.toLowerCase().indexOf('mso') >= 0) {
+                            wordDetected = true;
+                            return false;
+                        }
+                    }
+                    // get the element class
+                    clazz = jQuery(this).attr('class');
+                    if (clazz) {
+                        // if 'mso' is found somewhere in the class, we found word content
+                        if (clazz.toLowerCase().indexOf('mso') >= 0) {
+                            wordDetected = true;
+                            return false;
+                        }
+                    }
+                });
+                // return the result
+                return wordDetected;
+            },
 
-		/**
-		 * Transform lists pasted from word
-		 * @param content
-		 */
-		transformListsFromWord: function (content) {
-			var that = this,
-				negateDetectionFilter, detectionFilter, spans,
-				paragraphs, bulletClass, listElementClass;
+            /**
+             * Check whether the given list span (first span in a paragraph which shall be a list item) belongs to an ordered list
+             * @param listSpan
+             * @return true for ordered lists, false for unordered
+             */
+            isOrderedList:function (listSpan) {
+                // when the span has fontFamily "Wingdings" it is an unordered list
+                if (listSpan.css('fontFamily') == 'Wingdings' || listSpan.css('fontFamily') == 'Symbol') {
+                    return false;
+                }
+                // otherwise check for a number, letter or '(' as first character
+                return listSpan.text().match(/^([0-9]{1,3}\.)|([0-9]{1,3}\)|([a-zA-Z]{1,5}\.)|([a-zA-Z]{1,5}\)))$/) ? true : false;
+            },
 
-			// this will be the class to mark paragraphs that will be transformed to lists
-			listElementClass = 'aloha-list-element';
-			bulletClass = 'aloha-list-bullet';
+            /**
+             * Transform lists pasted from word
+             * @param content
+             */
+            transformListsFromWord:function (content) {
+                var that = this,
+                    negateDetectionFilter, detectionFilter, spans,
+                    paragraphs, bulletClass, listElementClass;
 
-			// first step is to find all paragraphs which will be converted into list elements and mark them by adding the class 'aloha-list-element'
-			detectionFilter = 'p.MsoListParagraphCxSpFirst,p.MsoListParagraph,p span';
-			paragraphs = content.find(detectionFilter);
-			paragraphs.each(function() {
-				var jqElem = jQuery(this),
-					fontFamily = jqElem.css('font-family') || '',
-					msoList = jqElem.css('mso-list') || '',
-					style = jqElem.attr('style') || '';
+                // this will be the class to mark paragraphs that will be transformed to lists
+                listElementClass = 'aloha-list-element';
+                bulletClass = 'aloha-list-bullet';
 
-				// detect special classes
-				if (jqElem.hasClass('MsoListParagraphCxSpFirst') || jqElem.hasClass('MsoListParagraph')) {
-					jqElem.addClass(listElementClass);
-				} else if (fontFamily.indexOf('Symbol') >= 0) {
-					jqElem.closest('p').addClass(listElementClass);
-				} else if (fontFamily.indexOf('Wingdings') >= 0) {
-					jqElem.closest('p').addClass(listElementClass);
-				} else if (msoList !== '') {
-					jqElem.closest('p').addClass(listElementClass);
-				} else if (style.indexOf('mso-list') >= 0) {
-					jqElem.closest('p').addClass(listElementClass);
-				}
-			});
+                // first step is to find all paragraphs which will be converted into list elements and mark them by adding the class 'aloha-list-element'
+                detectionFilter = 'p.MsoListParagraphCxSpFirst,p.MsoListParagraph,p span';
+                paragraphs = content.find(detectionFilter);
+                paragraphs.each(function () {
+                    var jqElem = jQuery(this),
+                        fontFamily = jqElem.css('font-family') || '',
+                        msoList = jqElem.css('mso-list') || '',
+                        style = jqElem.attr('style') || '';
 
-			// now we search for paragraphs with three levels of nested spans, where the innermost span contains nothing but &nbsp;
-			detectionFilter = 'p span span span';
-			spans = content.find(detectionFilter);
-			spans.each(function() {
-				var jqElem = jQuery(this),
-					innerText = jqElem.text().trim().replace(/&nbsp;/g, ''),
-					outerText;
-				
-				if (innerText.length === 0) {
-					// check whether the outermost of the three spans contains nothing more than numbering
-					outerText = jqElem.parent().parent().text().trim().replace(/&nbsp;/g, '');
+                    // detect special classes
+                    if (jqElem.hasClass('MsoListParagraphCxSpFirst') || jqElem.hasClass('MsoListParagraph')) {
+                        jqElem.addClass(listElementClass);
+                    } else if (fontFamily.indexOf('Symbol') >= 0) {
+                        jqElem.closest('p').addClass(listElementClass);
+                    } else if (fontFamily.indexOf('Wingdings') >= 0) {
+                        jqElem.closest('p').addClass(listElementClass);
+                    } else if (msoList !== '') {
+                        jqElem.closest('p').addClass(listElementClass);
+                    } else if (style.indexOf('mso-list') >= 0) {
+                        jqElem.closest('p').addClass(listElementClass);
+                    }
+                });
 
-					// patterns for list numbering
-					// 1.
-					// 1)
-					// (1)
-					// a.
-					// a)
-					// I.
-					// i.
-					// o § (or any other single character)
-					if (outerText.match(/^([0-9]{1,3}\.)|([0-9]{1,3}\))|([a-zA-Z]{1,5}\.)|([a-zA-Z]{1,5}\))|(.)$/)) {
-						jqElem.closest('p').addClass(listElementClass);
-						jqElem.parent().parent().addClass(bulletClass);
-					}
-				}
-			});
+                // now we search for paragraphs with three levels of nested spans, where the innermost span contains nothing but &nbsp;
+                detectionFilter = 'p span span span';
+                spans = content.find(detectionFilter);
+                spans.each(function () {
+                    var jqElem = jQuery(this),
+                        innerText = jqElem.text().trim().replace(/&nbsp;/g, ''),
+                        outerText;
 
-			// no detect all marked paragraphs and transform into lists
-			detectionFilter = 'p.' + listElementClass;
-			negateDetectionFilter = ':not('+detectionFilter+')';
-			paragraphs = content.find(detectionFilter);
+                    if (innerText.length === 0) {
+                        // check whether the outermost of the three spans contains nothing more than numbering
+                        outerText = jqElem.parent().parent().text().trim().replace(/&nbsp;/g, '');
 
-			if (paragraphs.length > 0) {
-				paragraphs.each(function() {
-					var jqElem = jQuery(this),
-						jqNewLi, jqList, ordered, firstSpan, following, lists, margin, nestLevel;
+                        // patterns for list numbering
+                        // 1.
+                        // 1)
+                        // (1)
+                        // a.
+                        // a)
+                        // I.
+                        // i.
+                        // o § (or any other single character)
+                        if (outerText.match(/^([0-9]{1,3}\.)|([0-9]{1,3}\))|([a-zA-Z]{1,5}\.)|([a-zA-Z]{1,5}\))|(.)$/)) {
+                            jqElem.closest('p').addClass(listElementClass);
+                            jqElem.parent().parent().addClass(bulletClass);
+                        }
+                    }
+                });
 
-					jqElem.removeClass(listElementClass);
-					// first remove all font tags
-					jqElem.find('font').each(function() {
-						jQuery(this).contents().unwrap();
-					});
+                // no detect all marked paragraphs and transform into lists
+                detectionFilter = 'p.' + listElementClass;
+                negateDetectionFilter = ':not(' + detectionFilter + ')';
+                paragraphs = content.find(detectionFilter);
 
-					// initialize the nestlevel and the margin (we will try to detect nested
-					// lists by comparing the left margin)
-					nestLevel = [];
-					margin = parseFloat(jqElem.css('marginLeft'));
-					// this array will hold all ul/ol elements
-					lists = [];
-					// get all following list elements
-					following = jqElem.nextUntil(negateDetectionFilter);
+                if (paragraphs.length > 0) {
+                    paragraphs.each(function () {
+                        var jqElem = jQuery(this),
+                            jqNewLi, jqList, ordered, firstSpan, following, lists, margin, nestLevel;
 
-					// get the first span in the element
-					firstSpan = jQuery(jqElem.find('span.' + bulletClass));
-					if (firstSpan.length === 0) {
-						firstSpan = jqElem.find('span').eq(0);
-					}
-					// use the span to detect whether the list shall be ordered or unordered
-					ordered = that.isOrderedList(firstSpan);
-					// finally remove the span (numbers, bullets are rendered by the browser)
-					firstSpan.remove();
+                        jqElem.removeClass(listElementClass);
+                        // first remove all font tags
+                        jqElem.find('font').each(function () {
+                            jQuery(this).contents().unwrap();
+                        });
 
-					// create the list element
-					jqList = jQuery(ordered ? '<ol></ol>' : '<ul></ul>');
-					lists.push(jqList);
+                        // initialize the nestlevel and the margin (we will try to detect nested
+                        // lists by comparing the left margin)
+                        nestLevel = [];
+                        margin = parseFloat(jqElem.css('marginLeft'));
+                        // this array will hold all ul/ol elements
+                        lists = [];
+                        // get all following list elements
+                        following = jqElem.nextUntil(negateDetectionFilter);
 
-					// add a new list item
-					jqNewLi = jQuery('<li></li>');
-					// add the li into the list
-					jqList.append(jqNewLi);
-					// append the contents of the old dom element to the li
-					jqElem.contents().appendTo(jqNewLi);
-					// replace the old dom element with the new list
-					jqElem.replaceWith(jqList);
+                        // get the first span in the element
+                        firstSpan = jQuery(jqElem.find('span.' + bulletClass));
+                        if (firstSpan.length === 0) {
+                            firstSpan = jqElem.find('span').eq(0);
+                        }
+                        // use the span to detect whether the list shall be ordered or unordered
+                        ordered = that.isOrderedList(firstSpan);
+                        // finally remove the span (numbers, bullets are rendered by the browser)
+                        firstSpan.remove();
 
-					// now proceed all following list elements
-					following.each(function() {
-						var jqElem = jQuery(this),
-							newMargin, jqNewList;
+                        // create the list element
+                        jqList = jQuery(ordered ? '<ol></ol>' : '<ul></ul>');
+                        lists.push(jqList);
 
-						// remove all font tags
-						jqElem.find('font').each(function() {
-							jQuery(this).contents().unwrap();
-						});
-						// check the new margin
-						newMargin = parseFloat(jqElem.css('marginLeft'));
+                        // add a new list item
+                        jqNewLi = jQuery('<li></li>');
+                        // add the li into the list
+                        jqList.append(jqNewLi);
+                        // append the contents of the old dom element to the li
+                        jqElem.contents().appendTo(jqNewLi);
+                        // replace the old dom element with the new list
+                        jqElem.replaceWith(jqList);
 
-						// get the first span
-						firstSpan = jQuery(jqElem.find('span.' + bulletClass));
-						if (firstSpan.length === 0) {
-							firstSpan = jqElem.find('span').eq(0);
-						}
-						// ... and use it to detect ordered/unordered list elements (this
-						// information will only be used at the start of a new list anyway)
-						ordered = that.isOrderedList(firstSpan);
-						// remove the span
-						firstSpan.remove();
+                        // now proceed all following list elements
+                        following.each(function () {
+                            var jqElem = jQuery(this),
+                                newMargin, jqNewList;
 
-						// check for nested lists by comparing the margins
-						if (newMargin > margin) {
-							// create a new list
-							jqNewList = jQuery(ordered ? '<ol></ol>' : '<ul></ul>');
-							// append the new list to the last list item of the prior list
-							jqList.children(':last').append(jqNewList);
+                            // remove all font tags
+                            jqElem.find('font').each(function () {
+                                jQuery(this).contents().unwrap();
+                            });
+                            // check the new margin
+                            newMargin = parseFloat(jqElem.css('marginLeft'));
 
-							// store the list and increase the nest level
-							jqList = jqNewList;
-							lists.push(jqList);
-							nestLevel.push(newMargin);
-							margin = newMargin;
-						} else if (newMargin < margin && nestLevel.length > 0) {
-							while(nestLevel.length > 0 && nestLevel[nestLevel.length - 1] > newMargin) {
-								nestLevel.pop();
-								lists.pop();
-							}
-							// end nested list and append element to outer list
-							jqList = lists[lists.length - 1];
-							margin = newMargin;
-						}
+                            // get the first span
+                            firstSpan = jQuery(jqElem.find('span.' + bulletClass));
+                            if (firstSpan.length === 0) {
+                                firstSpan = jqElem.find('span').eq(0);
+                            }
+                            // ... and use it to detect ordered/unordered list elements (this
+                            // information will only be used at the start of a new list anyway)
+                            ordered = that.isOrderedList(firstSpan);
+                            // remove the span
+                            firstSpan.remove();
 
-						// create a list item
-						jqNewLi = jQuery('<li></li>');
-						// add the li into the list
-						jqList.append(jqNewLi);
-						// append the contents of the old dom element to the li
-						jqElem.contents().appendTo(jqNewLi);
-						// remove the old dom element
-						jqElem.remove();
-					});
-				});
-			}
-		},
+                            // check for nested lists by comparing the margins
+                            if (newMargin > margin) {
+                                // create a new list
+                                jqNewList = jQuery(ordered ? '<ol></ol>' : '<ul></ul>');
+                                // append the new list to the last list item of the prior list
+                                jqList.children(':last').append(jqNewList);
 
-		/**
-		 * Transform Title and Subtitle pasted from word
-		 * @param content
-		 */
-		transformTitles: function(content) {
-			content.find('p.MsoTitle').each(function() {
-				// titles will be transformed to h1
-				Aloha.Markup.transformDomObject(jQuery(this), 'h1');
-			});
-			content.find('p.MsoSubtitle').each(function() {
-				// sub titles will be transformed to h2
-				Aloha.Markup.transformDomObject(jQuery(this), 'h2');
-			});
-		},
-		
-		/**
-		 * Cleanup MS Word HTML
-		 * @param content
-		 */
-		cleanHtml: function ( content ) {
-			
-			// unwrap empty tags
-			// do not remove them here because of eg. spaces wrapped in spans which are needed
-			content.find('*').filter( function() {
-				return jQuery.trim(jQuery(this).text()) == '';
-			}).contents().unwrap();
-			
-			// unwrap all spans
-			content.find('span').contents().unwrap();
-			
-			// when href starts with #, it's the link to an anchor. remove it.
-			content.find('a').each(function() {
-				if ( jQuery(this).attr('href') && jQuery(this).attr('href').trim().match(/^#(.*)$/) ) {
-					jQuery(this).contents().unwrap();
-				}
-			});
-			
-			// eg. footnotes are wrapped in divs. unwrap them.
-			content.find('div').contents().unwrap();
-			
-			// remove empty tags
-			content.find('*').filter( function() {
-			    return jQuery.trim(jQuery(this).text()) == '';
-			}).remove();
-			
-		},
-		
-		/**
-		 * Remove paragraph numbering from TOC feature
-		 * @param content
-		*/
-		removeParagraphNumbering: function( content ) {
-			var detectionFilter = 'h1,h2,h3,h4,h5,h6',
-				paragraphs = content.find(detectionFilter);
-			
-			if (paragraphs.length > 0) {
-				paragraphs.each(function() {
-					var jqElem = jQuery(this),
-						spans = jqElem.find('span'),
-						links = jqElem.find('a');
-				
-					// remove TOC numbering
-					spans.each(function() {
-						if ( jQuery(this).text().trim().match(/^([\.\(]?[\d\D][\.\(]?){1,4}$/) ) {
-							jQuery(this).remove();
-						}
-					})
-				
-					// remove TOC anchor links
-					links.each(function() {
-						// no href, so it's an anchor
-						if ( typeof jQuery(this).attr('href') === 'undefined' ) {
-							jQuery(this).contents().unwrap();
-						}
-					});
-				
-				});
-			}
-		},
+                                // store the list and increase the nest level
+                                jqList = jqNewList;
+                                lists.push(jqList);
+                                nestLevel.push(newMargin);
+                                margin = newMargin;
+                            } else if (newMargin < margin && nestLevel.length > 0) {
+                                while (nestLevel.length > 0 && nestLevel[nestLevel.length - 1] > newMargin) {
+                                    nestLevel.pop();
+                                    lists.pop();
+                                }
+                                // end nested list and append element to outer list
+                                jqList = lists[lists.length - 1];
+                                margin = newMargin;
+                            }
 
-		
-		/**
-		 * Transform TOC
-		 * @param content
-		*/
-		transformToc: function( content ) {
-			var detectionFilter = '[class*=MsoToc]',
-				paragraphs = content.find(detectionFilter);
+                            // create a list item
+                            jqNewLi = jQuery('<li></li>');
+                            // add the li into the list
+                            jqList.append(jqNewLi);
+                            // append the contents of the old dom element to the li
+                            jqElem.contents().appendTo(jqNewLi);
+                            // remove the old dom element
+                            jqElem.remove();
+                        });
+                    });
+                }
+            },
 
-			paragraphs.each(function() {
-				var jqElem = jQuery(this),
-					spans = jqElem.find('span'),
-					links = jqElem.find('a');
+            /**
+             * Transform Title and Subtitle pasted from word
+             * @param content
+             */
+            transformTitles:function (content) {
+                content.find('p.MsoTitle').each(function () {
+                    // titles will be transformed to h1
+                    Aloha.Markup.transformDomObject(jQuery(this), 'h1');
+                });
+                content.find('p.MsoSubtitle').each(function () {
+                    // sub titles will be transformed to h2
+                    Aloha.Markup.transformDomObject(jQuery(this), 'h2');
+                });
+            },
 
-				// a table of contents entry looks like
-				// 1. Title text ... 5
-				// we get rid of the "... 5" part which repesents the page number
-				spans.each(function() {
-					if ( jQuery(this).attr('style') && jQuery(this).attr('style').search('mso-hide') > -1 ) {
-						jQuery(this).remove();
-					}
-					jQuery(this).contents().unwrap();
-				});
+            /**
+             * Cleanup MS Word HTML
+             * @param content
+             */
+            cleanHtml:function (content) {
 
-				// remove the anchor link of the toc item
-				links.each(function() {
-					jQuery(this).contents().unwrap();
-				});
-			});
-		},
+                // unwrap empty tags
+                // do not remove them here because of eg. spaces wrapped in spans which are needed
+                content.find('*').filter(function () {
+                    return jQuery.trim(jQuery(this).text()) == '';
+                }).contents().unwrap();
 
-		/**
-		 * This is the main transformation method
-		 * @param content
-		 */
-		transformWordContent: function( content ) {
-			// transform table of contents
-			this.transformToc( content );
+                // unwrap all spans
+                content.find('span').contents().unwrap();
 
-			// remove paragraph numbering
-			this.removeParagraphNumbering( content );
+                // when href starts with #, it's the link to an anchor. remove it.
+                content.find('a').each(function () {
+                    if (jQuery(this).attr('href') && jQuery(this).attr('href').trim().match(/^#(.*)$/)) {
+                        jQuery(this).contents().unwrap();
+                    }
+                });
 
-			// transform lists
-			this.transformListsFromWord( content );
+                // eg. footnotes are wrapped in divs. unwrap them.
+                content.find('div').contents().unwrap();
 
-			// transform titles
-			this.transformTitles( content );
+                // remove empty tags
+                content.find('*').filter(function () {
+                    return jQuery.trim(jQuery(this).text()) == '';
+                }).remove();
 
-			// clean html
-			this.cleanHtml( content );
-		}
-	});
-	
-	return WordContentHandler;
-});
+            },
+
+            /**
+             * Remove paragraph numbering from TOC feature
+             * @param content
+             */
+            removeParagraphNumbering:function (content) {
+                var detectionFilter = 'h1,h2,h3,h4,h5,h6',
+                    paragraphs = content.find(detectionFilter);
+
+                if (paragraphs.length > 0) {
+                    paragraphs.each(function () {
+                        var jqElem = jQuery(this),
+                            spans = jqElem.find('span'),
+                            links = jqElem.find('a');
+
+                        // remove TOC numbering
+                        spans.each(function () {
+                            if (jQuery(this).text().trim().match(/^([\.\(]?[\d\D][\.\(]?){1,4}$/)) {
+                                jQuery(this).remove();
+                            }
+                        })
+
+                        // remove TOC anchor links
+                        links.each(function () {
+                            // no href, so it's an anchor
+                            if (typeof jQuery(this).attr('href') === 'undefined') {
+                                jQuery(this).contents().unwrap();
+                            }
+                        });
+
+                    });
+                }
+            },
+
+
+            /**
+             * Transform TOC
+             * @param content
+             */
+            transformToc:function (content) {
+                var detectionFilter = '[class*=MsoToc]',
+                    paragraphs = content.find(detectionFilter);
+
+                paragraphs.each(function () {
+                    var jqElem = jQuery(this),
+                        spans = jqElem.find('span'),
+                        links = jqElem.find('a');
+
+                    // a table of contents entry looks like
+                    // 1. Title text ... 5
+                    // we get rid of the "... 5" part which repesents the page number
+                    spans.each(function () {
+                        if (jQuery(this).attr('style') && jQuery(this).attr('style').search('mso-hide') > -1) {
+                            jQuery(this).remove();
+                        }
+                        jQuery(this).contents().unwrap();
+                    });
+
+                    // remove the anchor link of the toc item
+                    links.each(function () {
+                        jQuery(this).contents().unwrap();
+                    });
+                });
+            },
+
+            /**
+             * This is the main transformation method
+             * @param content
+             */
+            transformWordContent:function (content) {
+                // transform table of contents
+                this.transformToc(content);
+
+                // remove paragraph numbering
+                this.removeParagraphNumbering(content);
+
+                // transform lists
+                this.transformListsFromWord(content);
+
+                // transform titles
+                this.transformTitles(content);
+
+                // clean html
+                this.cleanHtml(content);
+            }
+        });
+
+        return WordContentHandler;
+    });

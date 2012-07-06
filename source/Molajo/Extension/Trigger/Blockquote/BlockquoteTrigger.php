@@ -94,7 +94,7 @@ class BlockquoteTrigger extends ContentTrigger
 						$blockquote = substr($blockquote, 6, strlen($blockquote) - 6);
 						$cite = substr($blockquote, 0, strpos($blockquote, '}'));
 						$blockquote = substr($blockquote, strlen($cite) + 1, 9999);
-						$cite = '<cite>'. $cite . '</cite>';
+						$cite = '<cite>' . $cite . '</cite>';
 					}
 					$withThis[] = '<blockquote>' . $blockquote . $cite . '</blockquote>';
 				}

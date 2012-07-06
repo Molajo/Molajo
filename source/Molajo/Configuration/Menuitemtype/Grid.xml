@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="GridMenuitemtype" extends="Menuitem">
+<model name="GridMenutype" extends="MenuitemsResources">
     <customfields>
         <customfield name="parameters">
             <include name="ParametersGrid"/>

@@ -1,5 +1,6 @@
 <?php
 use Molajo\Service\Services;
+
 /**
  * @package   Molajo
  * @copyright 2012 Amy Stephen. All rights reserved.
@@ -21,33 +22,43 @@ if (trim($id) == '') {
 
 $html5 = $this->query_results[0]->html5;
 $end = $this->query_results[0]->end;
-if ((int) $html5 == 1): ?>
+if ((int)$html5 == 1): ?>
 <!DOCTYPE html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
-<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
-<!--[if IE 8]>  <html class="no-js lt-ie9"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
-<!--[if gt IE 8]><!--> <html<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html
+	class="no-js lt-ie9 lt-ie8 lt-ie7"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
+<!--[if IE 7]>
+<html
+	class="no-js lt-ie9 lt-ie8"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
+<!--[if IE 8]>
+<html
+	class="no-js lt-ie9"<?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>"> <![endif]-->
+<!--[if gt IE 8]><!--> <html<?php echo $this->query_results[0]->language_direction; ?>
+	lang="<?php echo $this->query_results[0]->language; ?>"> <!--<![endif]-->
 	<?php else : ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" <?php echo $this->query_results[0]->language_direction; ?> lang="<?php echo $this->query_results[0]->language; ?>">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+>
+<html xmlns="http://www.w3.org/1999/xhtml" <?php echo $this->query_results[0]->language_direction; ?>
+	  lang="<?php echo $this->query_results[0]->language; ?>">
 <?php endif; ?>
 <head>
 	<title><?php echo $this->query_results[0]->title; ?></title>
 	<base href="<?php echo $this->query_results[0]->base_url . '"' . $end; ?>
-<?php if ((int) $html5 == 1): ?>
+<?php if ((int)$html5 == 1): ?>
     <meta charset="utf-8"<?php echo $end; ?>
-<?php else : ?>
-    <meta http-equiv="Content-Type" content="<?php echo $this->query_results[0]->mimetype; ?>; charset=utf-8"<?php echo $end; ?>
+	<?php else : ?>
+    <meta http-equiv="Content-Type"
+		  content="<?php echo $this->query_results[0]->mimetype; ?>; charset=utf-8"<?php echo $end; ?>
 	<?php endif; ?>
 	<include:asset name=Assetslinks value=Links/>
-	<include:metadata name=Metadata value=Metadata/>
-	<include:asset name=Assetscss value=Css/>
-	<include:asset name=Assetscssdeclarations value=CssDeclarations/>
-	<include:asset name=Assetsjs value=Js/>
-	<include:asset name=Assetsjsdeclarations value=JsDeclarations/>
-<?php
-include __DIR__.'/alohahead.php';
-?>
+		<include:metadata name=Metadata value=Metadata/>
+			<include:asset name=Assetscss value=Css/>
+				<include:asset name=Assetscssdeclarations value=CssDeclarations/>
+					<include:asset name=Assetsjs value=Js/>
+						<include:asset name=Assetsjsdeclarations value=JsDeclarations/>
+							<?php
+							include __DIR__ . '/alohahead.php';
+							?>
 </head>
 <body<?php echo $id; ?><?php echo $class; ?>>

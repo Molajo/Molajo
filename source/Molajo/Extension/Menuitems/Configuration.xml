@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Menuitem" version="1.0" extends="Menuitem">
+<extension type="Menuitem" version="1.0" extends="ExtensionInstances">
     <name>RESOURCE_MENUITEMS_NAME</name>
     <author>Amy Stephen</author>
     <create_date>June 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
-    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
     <author_email>AmyStephen@gmail.com</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>RESOURCE_MENUITEMS_DESCRIPTION</description>
-    <model name="Menuitems">
-        <customfields>
-            <customfield name="parameters">
-                <field name="molajito" type="boolean" null="0" default="1"/>
-            </customfield>
-        </customfields>
-    </model>
+    <model name="Menuitems" />
 </extension>

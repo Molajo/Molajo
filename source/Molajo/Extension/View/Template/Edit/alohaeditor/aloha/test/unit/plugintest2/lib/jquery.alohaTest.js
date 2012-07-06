@@ -1,3 +1,3 @@
-$.fn.alohaTest = function() {
+$.fn.alohaTest = function () {
     return 'ok';
 };

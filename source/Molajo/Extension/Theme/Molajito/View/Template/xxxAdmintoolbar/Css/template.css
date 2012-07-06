@@ -4,7 +4,28 @@
 @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
 @license     GNU GPL v 2, or later and MIT, see License folder
 */
-ul.toolbar { display: block; height: 24px; margin-left: -5px; }
-ul.toolbar li { float: left; display: block; height: 24px; color: #999; font-size: 15px; margin-left: 5px; }
-ul.toolbar li a { display: block; padding: 6px 7px 4px; color: #555; }
-ul.toolbar li.current a, ul.toolbar li:hover a, ul.toolbar li a:focus { border-bottom: solid 2px #00a6fc; color: #141414; }
+ul.toolbar {
+    display: block;
+    height: 24px;
+    margin-left: -5px;
+}
+
+ul.toolbar li {
+    float: left;
+    display: block;
+    height: 24px;
+    color: #999;
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+ul.toolbar li a {
+    display: block;
+    padding: 6px 7px 4px;
+    color: #555;
+}
+
+ul.toolbar li.current a, ul.toolbar li:hover a, ul.toolbar li a:focus {
+    border-bottom: solid 2px #00a6fc;
+    color: #141414;
+}

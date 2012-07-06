@@ -22,11 +22,11 @@ $action = Services::Registry()->get('Parameters', 'full_page_url');
 
 	<li class="active" id="batchStatusTab">
 		<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
-		<p>Set the status of items selected above with the status specified below.
-			<include:template name=Formselect value=<?php echo 'gridbatch_status*'; ?>/>
-			<input type="submit" class="submit button small" name="submit" id="action"
-				   value="Apply">
-		</p>
+			<p>Set the status of items selected above with the status specified below.
+				<include:template name=Formselect value=<?php echo 'gridbatch_status*'; ?>/>
+				<input type="submit" class="submit button small" name="submit" id="action"
+					   value="Apply">
+			</p>
 		</form>
 	</li>
 

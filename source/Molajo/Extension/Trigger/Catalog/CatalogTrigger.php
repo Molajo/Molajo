@@ -107,12 +107,12 @@ class CatalogTrigger extends ContentTrigger
 		$m->connect();
 
 		$sql = 'DELETE FROM ' . $m->model->db->qn('#__catalog_categories');
-		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
+		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int)$this->data->id;
 		$m->model->db->setQuery($sql);
 		$m->model->db->execute();
 
 		$sql = 'DELETE FROM ' . $m->model->db->qn('#__catalog_activity');
-		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
+		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int)$this->data->id;
 		$m->model->db->setQuery($sql);
 		$m->model->db->execute();
 
@@ -130,10 +130,10 @@ class CatalogTrigger extends ContentTrigger
 		//how to get id - referential integrity?
 		/**
 		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
-			$this->logUserActivity($id, Services::Registry()->get('Actions', 'delete'));
+		$this->logUserActivity($id, Services::Registry()->get('Actions', 'delete'));
 		}
 		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
-			$this->logCatalogActivity($id, Services::Registry()->get('Actions', 'delete'));
+		$this->logCatalogActivity($id, Services::Registry()->get('Actions', 'delete'));
 		}
 		 */
 		return true;

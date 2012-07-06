@@ -5,7 +5,7 @@
  */
 /*jslint nomen: false, plusplus: false, strict: false */
 /*global require: false, define: false, window: false, document: false,
-  setTimeout: false */
+ setTimeout: false */
 
 (function () {
     //Sadly necessary browser inference due to differences in the way
@@ -24,13 +24,13 @@
     //plugin in a non-browser env, but the file should not error out if included
     //in a file, then loaded in a non-browser env.
     var supportsInOrderExecution = typeof document !== "undefined" &&
-                                   typeof window !== "undefined" &&
-                                   (document.createElement("script").async ||
-                               (window.opera && Object.prototype.toString.call(window.opera) === "[object Opera]") ||
-                               //If Firefox 2 does not have to be supported, then
-                               //a better check may be:
-                               //('mozIsLocallyAvailable' in window.navigator)
-                               ("MozAppearance" in document.documentElement.style)),
+            typeof window !== "undefined" &&
+            (document.createElement("script").async ||
+                (window.opera && Object.prototype.toString.call(window.opera) === "[object Opera]") ||
+                //If Firefox 2 does not have to be supported, then
+                //a better check may be:
+                //('mozIsLocallyAvailable' in window.navigator)
+                ("MozAppearance" in document.documentElement.style)),
         readyRegExp = /^(complete|loaded)$/,
         waiting = [],
         cached = {};
@@ -85,9 +85,9 @@
     }
 
     define({
-        version: '0.26.0',
+        version:'0.26.0',
 
-        load: function (name, req, onLoad, config) {
+        load:function (name, req, onLoad, config) {
             var url = req.nameToUrl(name, null);
 
             //If a build, just load the module as usual.
@@ -128,9 +128,9 @@
                     });
                 } else {
                     waiting.push({
-                        name: name,
-                        req: req,
-                        onLoad: onLoad
+                        name:name,
+                        req:req,
+                        onLoad:onLoad
                     });
                     require.attach(url, null, name, scriptCacheCallback, "script/cache");
                 }
