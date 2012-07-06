@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model name="Theme" extends="ExtensionInstances">
-    <customfields>
-        <customfield name="parameters">
-            <field name="page_view_css_id" type="char" null="1" default="" values=""/>
-            <field name="page_view_css_class" type="char" null="1" default="" values=""/>
-        </customfield>
-    </customfields>
-</model>

@@ -15,6 +15,9 @@
             <field name="parameters" type="customfield" null="1" default=""/>
             <field name="metadata" type="customfield" null="1" default=""/>
         </fields>
+        <children>
+            <child name="Extensions" join="site_id"/>
+        </children>
         <triggers>
             <trigger name="Customfields"/>
             <trigger name="Metadata"/>
