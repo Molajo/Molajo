@@ -1,4 +1,4 @@
-<extension type="Resource" version="1.0" extends="Content">
+<extension type="Menuitem" version="1.0" extends="Menuitem">
 <model
         name="LinkMenuItem"
         catalog_type_id="2100">

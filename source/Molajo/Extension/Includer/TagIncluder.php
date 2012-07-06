@@ -30,24 +30,13 @@ Class TagIncluder extends Includer
         return 'still need to do Tag Includer';
     }
 
-    /**
-     * Renders multiple modules script and returns the results as a string
-     *
-     * @param string $position The position of the modules to render
-     * @param array  $params   Associative array of values
-     * @param string $content  Module content
-     *
-     * @return string The output of the script
-     *
-     * @since   11.1
-     */
-    public function render($position, $params = array(), $content = null)
-    {
-        $renderer = $this->_doc->loadIncluder('module');
-        $buffer = '';
 
-        foreach (JModuleHelper::getModules($position) as $mod) {
-            $buffer .= $renderer->render($mod, $params, $content);
+    public function render($tag)
+    {
+
+
+        foreach (x::y($tag) as $item) {
+            $buffer .= $includer->etc($thing;
         }
 
         return $buffer;

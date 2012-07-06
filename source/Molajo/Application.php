@@ -536,10 +536,6 @@ Class Application
 		} else {
 			define('EXTENSIONS_MENUITEMS', EXTENSIONS . '/Menuitems');
 		}
-		if (defined('EXTENSIONS_MODULES')) {
-		} else {
-			define('EXTENSIONS_MODULES', EXTENSIONS . '/Module');
-		}
 		if (defined('EXTENSIONS_THEMES')) {
 		} else {
 			define('EXTENSIONS_THEMES', EXTENSIONS . '/Theme');
@@ -562,10 +558,6 @@ Class Application
 			define('EXTENSIONS_RESOURCES_URL', BASE_URL . 'Molajo/Extension/Resource');
 		}
 
-		if (defined('EXTENSIONS_MODULES_URL')) {
-		} else {
-			define('EXTENSIONS_MODULES_URL', BASE_URL . 'Molajo/Extension/Module');
-		}
 		if (defined('EXTENSIONS_THEMES_URL')) {
 		} else {
 			define('EXTENSIONS_THEMES_URL', BASE_URL . 'Molajo/Extension/Theme');

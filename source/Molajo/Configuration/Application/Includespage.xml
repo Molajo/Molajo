@@ -2,7 +2,6 @@
 <sequence>
     <include>request:resource</include>
     <include>formfield</include>
-    <include>module</include>
     <include>tag</include>
     <include>resource</include>
     <include>wrap</include>

@@ -507,7 +507,7 @@ Class ConfigurationService
 		}
 
 		/** 4. The Manifest for the model type/name itself */
-		if ($model_type == 'Menuitem' || $model_type == 'Module' || $model_type == 'Trigger'
+		if ($model_type == 'Menuitem' || $model_type == 'Trigger'
 			|| $model_type == 'Theme' || $model_type == 'Page'
 			|| $model_type == 'Template' || $model_type == 'Wrap'
 		) {
