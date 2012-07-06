@@ -441,10 +441,8 @@ class CreateController extends Controller
 
 		Services::Debug()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_TRIGGERS);
 
-		$trigger = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-		} else {
+		$arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
+		if ($arguments == false) {
 			Services::Debug()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
@@ -482,10 +480,8 @@ class CreateController extends Controller
 
 		Services::Debug()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_TRIGGERS);
 
-		$trigger = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-		} else {
+		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
+		if ($arguments == false) {
 			Services::Debug()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}

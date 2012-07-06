@@ -83,7 +83,7 @@ Class JDatabaseService
     public function __construct($configuration_file = null)
     {
         if ($configuration_file === null) {
-            $configuration_file = SITE_FOLDER_PATH . '/configuration.php';
+            $configuration_file = SITE_BASE_PATH . '/configuration.php';
         }
         if (file_exists($configuration_file)) {
             require_once $configuration_file;

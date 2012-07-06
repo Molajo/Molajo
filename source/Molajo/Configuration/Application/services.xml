@@ -13,9 +13,7 @@
     <service>JDatabase</service>
     <service>Configuration</service>
     <service>Log</service>
-
     <service>Event</service>
-    <service>Request</service>
     <service>Route</service>
     <service>Cookie</service>
     <service>Session</service>

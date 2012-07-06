@@ -383,7 +383,7 @@ Class InstallService
 			'model_name' => 'Articles'
 		);
 
-		$trigger = Services::Event()->schedule('onAfterCreate', $arguments, $triggers);
+		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $triggers);
 		if ($trigger['success'] == true) {
 			$arguments = $trigger['arguments'];
 		}  else {

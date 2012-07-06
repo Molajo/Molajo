@@ -383,14 +383,12 @@ class ReadController extends Controller
 		);
 
 		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);
-		$trigger = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-		} else {
+		if ($arguments == false) {
 			Services::Debug()->set('ReadController->onBeforeReadEvent '
 					. $this->table_registry_name
 					. ' failure ', LOG_OUTPUT_TRIGGERS
 			);
+			return false;
 		}
 
 		Services::Debug()->set('ReadController->onBeforeReadEvent '
@@ -438,11 +436,8 @@ class ReadController extends Controller
 					. ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE
 			);
 
-			$trigger = Services::Event()->schedule('onAfterRead', $arguments, $this->triggers);
-			if ($trigger['success'] == true) {
-				$arguments = $trigger['arguments'];
-
-			} else {
+			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->triggers);
+			if ($arguments == false) {
 				Services::Debug()->set('ReadController->onAfterRead '
 						. $this->table_registry_name
 						. ' failure ', LOG_OUTPUT_TRIGGERS
@@ -577,11 +572,8 @@ class ReadController extends Controller
 
 //		Services::Debug()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 
-		$trigger = Services::Event()->schedule('onBeforeViewRender', $arguments);
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-
-		} else {
+		$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
+		if ($arguments == false) {
 //			Services::Debug()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
@@ -619,10 +611,8 @@ class ReadController extends Controller
 
 //		Services::Debug()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 
-		$trigger = Services::Event()->schedule('onAfterViewRender', $arguments);
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-		}  else {
+		$arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
+		if ($arguments == false) {
 //			Services::Debug()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}

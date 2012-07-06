@@ -208,10 +208,8 @@ Class ParseService
 		/** Before Event */
 		Services::Debug()->set('ParseService->process Schedules onBeforeRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$trigger = Services::Event()->schedule('onBeforeRender');
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-		}  else {
+		$arguments = Services::Event()->schedule('onBeforeRender');
+		if ($arguments == false) {
 			Services::Debug()->set('ParseService->process onBeforeRender failed', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
@@ -257,10 +255,8 @@ Class ParseService
 		/** after rendering */
 		Services::Debug()->set('ParseService->process scheduled onAfterRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$trigger = Services::Event()->schedule('onAfterRender', $body);
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-		} else {
+		$results = Services::Event()->schedule('onAfterRender', $body);
+		if ($results == false) {
 			Services::Debug()->set('ParseService->process onAfterRender failed', LOG_OUTPUT_TRIGGERS);
 			//throw error
 		}
