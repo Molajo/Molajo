@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="trigger">
+<extension type="Trigger" version="1.0" extends="ExtensionInstancesTrigger">
     <name>USERNAME_TRIGGER_NAME</name>
     <author>Amy Stephen</author>
     <create_date>August 2012</create_date>

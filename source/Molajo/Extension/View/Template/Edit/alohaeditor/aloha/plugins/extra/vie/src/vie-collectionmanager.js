@@ -3,16 +3,16 @@ if (typeof VIE === 'undefined') {
 }
 
 VIE.CollectionManager = {
-    collections:[],
+    collections: [],
 
-    loadCollections:function () {
-        jQuery('[typeof="http://purl.org/dc/dcmitype/Collection"]').each(function () {
+    loadCollections: function() {
+        jQuery('[typeof="http://purl.org/dc/dcmitype/Collection"]').each(function() {
             VIE.CollectionManager.getCollectionForContainer(this);
         });
         return VIE.CollectionManager.collections;
     },
 
-    getCollectionForContainer:function (element) {
+    getCollectionForContainer: function(element) {
         element = jQuery(element);
 
         var firstChild = element.children(':first-child');
@@ -23,7 +23,7 @@ VIE.CollectionManager = {
         var preparedNewElement = VIE.ContainerManager.cloneContainer(firstChild);
 
         var Collection = Backbone.Collection.extend({
-            model:VIE.ContainerManager.getModelForContainer(preparedNewElement)
+            model: VIE.ContainerManager.getModelForContainer(preparedNewElement)
         });
 
         var collectionInstance = new Collection({});
@@ -38,25 +38,25 @@ VIE.CollectionManager = {
     /**
      * @private
      */
-    _getViewForCollection:function (element, collectionElement, collectionInstance) {
+    _getViewForCollection: function(element, collectionElement, collectionInstance) {
         var collectionView = Backbone.View.extend({
-            collection:collectionInstance,
-            el:collectionElement,
+            collection: collectionInstance,
+            el: collectionElement,
 
-            initialize:function () {
+            initialize: function() {
                 _.bindAll(this, 'addItem', 'removeItem');
                 this.collection.bind('add', this.addItem);
                 this.collection.bind('remove', this.removeItem);
             },
 
-            addItem:function (itemInstance) {
+            addItem: function(itemInstance) {
                 itemInstance = VIE.ContainerManager.registerInstance(itemInstance, VIE.ContainerManager.cloneContainer(element));
                 var itemViewElement = itemInstance.views[0].render().el;
                 this.el.append(itemViewElement);
                 itemViewElement.show();
             },
 
-            removeItem:function (itemInstance) {
+            removeItem: function(itemInstance) {
                 if (typeof itemInstance.view === 'undefined') {
                     return;
                 }

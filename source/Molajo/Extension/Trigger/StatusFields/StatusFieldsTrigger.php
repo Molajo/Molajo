@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Trigger\StatusFields;
+namespace Molajo\Extension\Trigger\Statusfields;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class StatusFieldsTrigger extends ContentTrigger
+class StatusfieldsTrigger extends ContentTrigger
 {
 
 }

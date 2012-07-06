@@ -4,11 +4,9 @@
  * in the filesystem, make shure that the folder is writeable
  */
 
-class upload
-{
+class upload {
 
-	public function writeFile($rawContent)
-	{
+	public function writeFile($rawContent) {
 		$headers = getallheaders();
 		$filename = $headers['X-File-Name'];
 		$filecontent = $rawContent;
@@ -24,3 +22,5 @@ class upload
 
 $file = new upload();
 echo $file->writeFile($HTTP_RAW_POST_DATA);
+
+?>

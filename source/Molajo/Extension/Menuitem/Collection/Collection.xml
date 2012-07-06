@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="GridMenutype" extends="MenuitemsResources">
+<model name="CollectionMenutype" extends="MenuitemResources">
     <customfields>
         <customfield name="parameters">
-            <include name="ParametersGrid"/>
+            <include name="ParametersCollection"/>
             <include name="CustomFieldsContent"/>
         </customfield>
     </customfields>

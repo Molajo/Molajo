@@ -1,3 +1,3 @@
 define(
-    {"button.addtoc.tooltip":"Table of contents"}
+	{"button.addtoc.tooltip":"Table of contents"}
 );

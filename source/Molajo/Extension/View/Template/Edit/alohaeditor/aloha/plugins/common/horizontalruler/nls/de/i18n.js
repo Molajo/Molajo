@@ -1,1 +1,1 @@
-define({"button.addhr.tooltip":"Eine horizontale Linie hinzuf&uuml;gen"});
+define({"button.addhr.tooltip": "Eine horizontale Linie hinzuf&uuml;gen"});

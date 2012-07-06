@@ -1,1 +1,1 @@
-define({"button.createulist.tooltip":"Enmeti senordan liston", "button.createolist.tooltip":"Enmeti ordan liston"});
+define({"button.createulist.tooltip":"Enmeti senordan liston","button.createolist.tooltip":"Enmeti ordan liston"});

@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ACCESSCONTROL_DESCRIPTION</description>
-    <model name="Dummy"/>
+    <model name="Accesscontrol"/>
 </extension>

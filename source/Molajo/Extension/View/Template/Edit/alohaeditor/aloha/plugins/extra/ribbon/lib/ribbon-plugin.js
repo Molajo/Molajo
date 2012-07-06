@@ -1,186 +1,186 @@
 /*
- * Aloha Editor
- * Author & Copyright (c) 2010 Gentics Software GmbH
- * aloha-sales@gentics.com
- * Licensed unter the terms of http://www.aloha-editor.com/license.html
- *
- */
+* Aloha Editor
+* Author & Copyright (c) 2010 Gentics Software GmbH
+* aloha-sales@gentics.com
+* Licensed unter the terms of http://www.aloha-editor.com/license.html
+*
+*/
 
 define(
-    ['aloha/jquery', 'aloha/plugin', 'aloha/floatingmenu', 'i18n!aloha/nls/i18n'],
-    function (jQuery, Plugin, FloatingMenu, i18nCore) {
+['aloha/jquery', 'aloha/plugin', 'aloha/floatingmenu', 'i18n!aloha/nls/i18n'],
+	function(jQuery, Plugin, FloatingMenu, i18nCore) {
+	
+	var
+		$ = jQuery,
+		GENTICS = window.GENTICS,
+		Aloha = window.Aloha;
 
-        var
-            $ = jQuery,
-            GENTICS = window.GENTICS,
-            Aloha = window.Aloha;
+	/**
+	 * register the plugin with unique name
+	 */
+	var ribbon = Plugin.create('ribbon', {
 
-        /**
-         * register the plugin with unique name
-         */
-        var ribbon = Plugin.create('ribbon', {
+		
+		/**
+		 * Initialize the plugin and set initialize flag on true
+		 */
+		init: function () {
 
+			// Check if the ribbon is enabled
+			if (typeof this.settings.enable == 'undefined' || this.settings.enable === true) {
+				var that = this;
+				
+				// flag to mark whether ribbon is visible
+				this.visible = false;
 
-            /**
-             * Initialize the plugin and set initialize flag on true
-             */
-            init:function () {
+				// the ribbon
+				this.toolbar = new Ext.Toolbar({
+					height: '25px',
+					cls: 'ext-root',
+					id: 'aloha-ribbon'
+				});
 
-                // Check if the ribbon is enabled
-                if (typeof this.settings.enable == 'undefined' || this.settings.enable === true) {
-                    var that = this;
+				// left spacer to gain some space from the left screen border
+				this.toolbar.add(new Ext.Toolbar.Spacer({width: '5'}));
+				// icon
+				this.icon = new Ext.Toolbar.Spacer();
+				this.toolbar.add(this.icon);
+				// fill so Aloha.Ribbon everything after it is aligned right
+				this.toolbar.add(new Ext.Toolbar.Fill());
+				// seperator before the fade out button
+				this.toolbar.add(new Ext.Toolbar.Separator());
+				// fade out button
+				var fadeButton = new Ext.Button({
+					iconCls : 'aloha-fade-out',
+					handler : function (button) {
+						var toolbar = jQuery(that.toolbar.getEl().dom);
 
-                    // flag to mark whether ribbon is visible
-                    this.visible = false;
+						if (button.iconCls == 'aloha-fade-out') {
+							toolbar.animate({
+								left: '-100%',
+								marginLeft: '34px'
+							});
+							jQuery('body').animate({
+								paddingTop: 0
+							});
+							button.setIconClass('aloha-fade-in');
+						} else {
+							toolbar.animate({
+								left: 0,
+								marginLeft: 0
+							});
+							jQuery('body').animate({
+								paddingTop: '30px'
+							});
+							button.setIconClass('aloha-fade-out');
+						}
+						that.toolbar.doLayout();
+					}
+				});
+				this.toolbar.add(fadeButton);
+				// spacer to gain some space from the right screen border
+				this.toolbar.add(new Ext.Toolbar.Spacer({width: '5'}));
 
-                    // the ribbon
-                    this.toolbar = new Ext.Toolbar({
-                        height:'25px',
-                        cls:'ext-root',
-                        id:'aloha-ribbon'
-                    });
+				this.toolbar.render(document.body, 0);
 
-                    // left spacer to gain some space from the left screen border
-                    this.toolbar.add(new Ext.Toolbar.Spacer({width:'5'}));
-                    // icon
-                    this.icon = new Ext.Toolbar.Spacer();
-                    this.toolbar.add(this.icon);
-                    // fill so Aloha.Ribbon everything after it is aligned right
-                    this.toolbar.add(new Ext.Toolbar.Fill());
-                    // seperator before the fade out button
-                    this.toolbar.add(new Ext.Toolbar.Separator());
-                    // fade out button
-                    var fadeButton = new Ext.Button({
-                        iconCls:'aloha-fade-out',
-                        handler:function (button) {
-                            var toolbar = jQuery(that.toolbar.getEl().dom);
+				jQuery('body').css('paddingTop', '30px');
+			}
+		},
+		
+		/**
+		 * Sets the icon class for the ribbon icon
+		 * @param {String} iconClass CSS class for the icon
+		 */
+		setIcon: function (iconClass) {
+			if (typeof this.icon.cls !== 'undefined') {
+				this.icon.removeClass(this.icon.cls);
+			}
 
-                            if (button.iconCls == 'aloha-fade-out') {
-                                toolbar.animate({
-                                    left:'-100%',
-                                    marginLeft:'34px'
-                                });
-                                jQuery('body').animate({
-                                    paddingTop:0
-                                });
-                                button.setIconClass('aloha-fade-in');
-                            } else {
-                                toolbar.animate({
-                                    left:0,
-                                    marginLeft:0
-                                });
-                                jQuery('body').animate({
-                                    paddingTop:'30px'
-                                });
-                                button.setIconClass('aloha-fade-out');
-                            }
-                            that.toolbar.doLayout();
-                        }
-                    });
-                    this.toolbar.add(fadeButton);
-                    // spacer to gain some space from the right screen border
-                    this.toolbar.add(new Ext.Toolbar.Spacer({width:'5'}));
+			this.icon.addClass(iconClass);
+		},
 
-                    this.toolbar.render(document.body, 0);
+		/**
+		 * Adds a Aloha.ui.Button the Ribbon
+		 * @param {Button} button Button to be added to the Ribbon
+		 */
+		addButton: function (button) {
+			if (button.menu != null && typeof button.menu === 'object') {
+				// build the drop down menu
+				var menu = new Ext.menu.Menu();
+				jQuery.each(button.menu, function(index, entry) {
+					menu.addItem(new Ext.menu.Item({
+						text: entry.label,
+						icon: entry.icon,
+						iconCls: entry.iconClass,
+						handler: function() {
+							entry.onclick.apply(entry);
+						}
+					}));
+				});
+			}
 
-                    jQuery('body').css('paddingTop', '30px');
-                }
-            },
+			// configuration for the button
+			var buttonConfig = {
+				text : button.label,
+				enableToggle: button.toggle,
+				icon: button.icon,
+				pressed : button.pressed,
+				iconCls: button.iconClass,
+				menu : menu,
+				handler : function() {
+					if (typeof button.onclick === 'function') {
+						button.onclick.apply(button);
+					}
+					button.pressed = !button.pressed;
+				}
+			}
 
-            /**
-             * Sets the icon class for the ribbon icon
-             * @param {String} iconClass CSS class for the icon
-             */
-            setIcon:function (iconClass) {
-                if (typeof this.icon.cls !== 'undefined') {
-                    this.icon.removeClass(this.icon.cls);
-                }
+			var extButton;
 
-                this.icon.addClass(iconClass);
-            },
+			// Build a split button if we have a menu and a handler
+			if (menu && typeof button.onclick == 'function') {
+				// build the split button for the menu
+				extButton = new Ext.SplitButton(buttonConfig);
+			} else {
+				// build a normal button
+				extButton = new Ext.Button(buttonConfig);
+			}
 
-            /**
-             * Adds a Aloha.ui.Button the Ribbon
-             * @param {Button} button Button to be added to the Ribbon
-             */
-            addButton:function (button) {
-                if (button.menu != null && typeof button.menu === 'object') {
-                    // build the drop down menu
-                    var menu = new Ext.menu.Menu();
-                    jQuery.each(button.menu, function (index, entry) {
-                        menu.addItem(new Ext.menu.Item({
-                            text:entry.label,
-                            icon:entry.icon,
-                            iconCls:entry.iconClass,
-                            handler:function () {
-                                entry.onclick.apply(entry);
-                            }
-                        }));
-                    });
-                }
+			this.toolbar.insert(this.toolbar.items.getCount() - 3, extButton);
+			this.toolbar.doLayout();
+		},
 
-                // configuration for the button
-                var buttonConfig = {
-                    text:button.label,
-                    enableToggle:button.toggle,
-                    icon:button.icon,
-                    pressed:button.pressed,
-                    iconCls:button.iconClass,
-                    menu:menu,
-                    handler:function () {
-                        if (typeof button.onclick === 'function') {
-                            button.onclick.apply(button);
-                        }
-                        button.pressed = !button.pressed;
-                    }
-                }
+		/**
+		 * Adds a seperator to the Ribbon.
+		 */
+		addSeparator: function() {
+			this.toolbar.insert(this.toolbar.items.getCount() - 3, new Ext.Toolbar.Separator());
+		},
 
-                var extButton;
+		/**
+		 * Shows the ribbAloha.Ribbonon
+		 */
+		hide: function () {
+			jQuery('#aloha-ribbon').fadeOut();
+			this.visible = false;
+		},
 
-                // Build a split button if we have a menu and a handler
-                if (menu && typeof button.onclick == 'function') {
-                    // build the split button for the menu
-                    extButton = new Ext.SplitButton(buttonConfig);
-                } else {
-                    // build a normal button
-                    extButton = new Ext.Button(buttonConfig);
-                }
+		/**
+		 * Hides the ribbon
+		 */
+		show: function () {
+			jQuery('#aloha-ribbon').fadeIn();
+			this.visible = true;
+		},
 
-                this.toolbar.insert(this.toolbar.items.getCount() - 3, extButton);
-                this.toolbar.doLayout();
-            },
+		/**
+		 * Check whether the ribbon is visible right now
+		 * @return true when the ribbon is visible, false when not
+		 */
+		isVisible: function () {
+			return this.visible;
+		}
+	});
 
-            /**
-             * Adds a seperator to the Ribbon.
-             */
-            addSeparator:function () {
-                this.toolbar.insert(this.toolbar.items.getCount() - 3, new Ext.Toolbar.Separator());
-            },
-
-            /**
-             * Shows the ribbAloha.Ribbonon
-             */
-            hide:function () {
-                jQuery('#aloha-ribbon').fadeOut();
-                this.visible = false;
-            },
-
-            /**
-             * Hides the ribbon
-             */
-            show:function () {
-                jQuery('#aloha-ribbon').fadeIn();
-                this.visible = true;
-            },
-
-            /**
-             * Check whether the ribbon is visible right now
-             * @return true when the ribbon is visible, false when not
-             */
-            isVisible:function () {
-                return this.visible;
-            }
-        });
-
-        return ribbon;
-    });
+	return ribbon;
+});

@@ -1,5 +1,0 @@
-<extension type="Menuitem" version="1.0" extends="Menuitem">
-    <model
-            name="MenuitemsTemplates"
-            catalog_type_id="2200">
-    </model>
