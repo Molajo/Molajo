@@ -56,8 +56,7 @@ Class RouteService
 	 */
 	public function process()
 	{
-		echo 'in process';
-		die;
+
 		/** Route Registry */
 		Services::Registry()->createRegistry('Parameters');
 		Services::Registry()->createRegistry('Metadata');
@@ -99,8 +98,7 @@ Class RouteService
 
 			return true;
 		}
-		 echo 'going into getResurces';
-		die;
+
 		/** Identify Resource and sub-resource values */
 		$continue = $this->getResource();
 
@@ -213,7 +211,41 @@ Class RouteService
 	}
 
 	/**
-	 * Retrieve non route parameter values and remove from path
+	 * rest/urls
+	 *
+	 * http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+	 *
+	 * http://microformats.org/wiki/rest/urls
+	 *
+	 * POST - create a resource within a given collection
+	 * GET - retrieve
+	 * PUT - update
+	 * DELETE - Delete
+	 *
+	 * Most browsers do not support PUT and DELETE.
+	 * However, adding method="PUT" or method="DELETE" within the form works
+	 *
+	 * Routing - operate on the collection
+	 *
+	 * GET/articles - returns a list
+	 *
+	 * GET/articles/new - create a new article
+	 * POST/article - submit fields for creating a new record
+	 *
+	 * GET/articles/1 - returns the record with 1 for a primary key
+	 * PUT/articles/1 - update the record with 1 for a primary key
+	 * DELETE/articles/1 - delete the record with 1 for a primary key
+	 *
+	 * To compensate for browser limitations
+	 * POST/articles/1?_method=DELETE
+	 * POST/articles/1?_method=PUT
+	 *
+	 * Follow a relationship:
+	 * GET /articles/1/comments
+	 * GET /articles/1/comments/new
+	 * POST /articles/1/comments (new comment save)
+	 *
+	 * Response http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success
 	 *
 	 * @return  boolean
 	 * @since   1.0
@@ -221,11 +253,47 @@ Class RouteService
 	protected function getResource()
 	{
 		$path = Services::Registry()->get('Parameters', 'request_url_query');
+	   echo PAGE_REQUEST.'<br />';
 
-		echo 'In getResource ' . $path;
+		echo '<pre>';
+		var_dump(Application::Request()->request);
+		echo '</pre>';
+
+die;
+		echo Application::Request()->get('title');
+		//echo $server->parameters['accept_language'];
 		die;
 
-		Services::Registry()->set('Parameters', 'page_url', $path);
+		echo '<pre>';
+		var_dump(Application::Request()->get('attributes'));
+		echo '</pre>';
+
+		echo '<pre>';
+		var_dump(Application::Request()->get('server'));
+		echo '</pre>';
+
+		echo '<pre>';
+		var_dump(Application::Request()->get('request'));
+		echo '</pre>';
+
+		echo '<pre>';
+		var_dump(Application::Request()->get('query'));
+		echo '</pre>';
+
+		echo '<pre>';
+		var_dump(Application::Request()->get('cookies'));
+		echo '</pre>';
+
+		die;
+
+		echo '<pre>';
+		var_dump($parms);
+		echo '</pre>';
+
+		die;
+
+		echo $_SERVER['REQUEST_METHOD'];
+		die;
 
 		/** Defaults */
 		Services::Registry()->set('Parameters', 'request_non_route_parameters', '');
@@ -234,7 +302,7 @@ Class RouteService
 		Services::Registry()->set('Parameters', 'request_controller', 'read');
 
 		/** Retrieve ID */
-		$value = (int)Services::Request()->get('request')->get('id');
+		$value = (int)Application::Request()->get('request')->get('id');
 		Services::Registry()->set('Parameters', 'request_catalog_id', $value);
 
 		/** URL Type */

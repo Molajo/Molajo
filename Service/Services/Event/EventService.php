@@ -93,7 +93,7 @@ Class EventService
 		if ($exists == false) {
 			Services::Debug()->set('EventService->schedule Event: '
 				. $event . ' does not exist', LOG_OUTPUT_TRIGGERS);
-			return array('success' => true, $arguments);
+			return $arguments;
 		}
 
 		/** Retrieve Event Registrations */
@@ -101,7 +101,7 @@ Class EventService
 		if (count($registrations) == 0) {
 			Services::Debug()->set('EventService->schedule Event ' . $event
 				. ' has no registrations, exiting', LOG_OUTPUT_TRIGGERS);
-			return array('success' => true, $arguments);
+			return $arguments;
 		}
 
 		/** Filter for specified triggers (Query triggers) or use all triggers registered for event */
@@ -139,7 +139,12 @@ Class EventService
 
 				if (method_exists($registrations[$triggerClass], $event)) {
 
-					$results = $this->processTriggerClass($registrations[$triggerClass], $event, $arguments);
+					$results = $this->processTriggerClass(
+						$registrations[$triggerClass], $event, $arguments);
+
+					if ($results == false) {
+						return false;
+					}
 
 				} else {
 
@@ -147,6 +152,8 @@ Class EventService
 							. $event . ' Class does not exist '
 							. $registrations[$triggerClass],
 						LOG_OUTPUT_TRIGGERS);
+
+					return false;
 					//throw error
 				}
 
@@ -157,10 +164,12 @@ Class EventService
 					LOG_OUTPUT_TRIGGERS,
 					VERBOSE
 				);
+
+				return $arguments;
 			}
 		}
 
-		return array('success' => true, $arguments);
+		return $arguments;
 	}
 
 	/**
@@ -187,12 +196,14 @@ Class EventService
 				. ' Instantiating Class ' . $triggerClass . ' Failed', LOG_OUTPUT_TRIGGERS);
 
 			echo '<br />Could not Instantiate Trigger Class: ' . $triggerClass;
-			return array('success' => false, $arguments);
+
+			return array('success' => true, $arguments);
 			//throw error
 		}
 
 		/** 2. Set Properties for Trigger Class */
 		if (count($arguments) > 0) {
+
 			foreach ($arguments as $propertyKey => $propertyValue) {
 				$connection->set($propertyKey, $propertyValue);
 			}
@@ -213,7 +224,7 @@ Class EventService
 					. ' Failed. ',
 				LOG_OUTPUT_TRIGGERS);
 
-			return array('success' => false, $arguments);
+			return array('success' => true, $arguments);
 
 		} else {
 

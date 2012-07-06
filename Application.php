@@ -190,11 +190,9 @@ Class Application
 
 		if ($results == true) {
 			Services::Debug()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
-			$trigger = Services::Event()->schedule('onAfterInitialise');
-			if ($trigger['success'] == true) {
+			$results = Services::Event()->schedule('onAfterInitialise');
+			if (is_array($results)) {
 				$results = true;
-			} else {
-				$results = false;
 			}
 		}
 
@@ -235,8 +233,6 @@ Class Application
 
 		Services::Debug()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
 
-		echo 'asfsafds';
-		die;
 		$results = Services::Route()->process();
 
 		if ($results == true
@@ -244,11 +240,9 @@ Class Application
 			&& (int)Services::Redirect()->code == 0
 		) {
 			Services::Debug()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
-			$trigger = Services::Event()->schedule('onAfterRoute');
-			if ($trigger['success'] == true) {
+			$results = Services::Event()->schedule('onAfterRoute');
+			if (is_array($results)) {
 				$results = true;
-			} else {
-				$results = false;
 			}
 		}
 
@@ -286,11 +280,10 @@ Class Application
 		$results = Services::Authorisation()->verifyAction();
 
 		Services::Debug()->set('Application Schedule onAfterAuthorise', LOG_OUTPUT_TRIGGERS);
-		$trigger = Services::Event()->schedule('onAfterAuthorise');
-		if ($trigger['success'] == true) {
+
+		$results = Services::Event()->schedule('onAfterAuthorise');
+		if (is_array($results)) {
 			$results = true;
-		} else {
-			$results = false;
 		}
 
 		if ($results === false) {
@@ -315,7 +308,6 @@ Class Application
 
 		$action = Services::Registry()->get('Parameters', 'request_action', 'display');
 
-		/** Display Action */
 		if ($action == 'display' || $action == 'edit' || $action == 'add') {
 			$results = $this->display();
 		} else {
@@ -324,11 +316,9 @@ Class Application
 
 		if ($results == true) {
 			Services::Debug()->set('Application Schedule onAfterExecute', LOG_OUTPUT_TRIGGERS);
-			$trigger = Services::Event()->schedule('onAfterExecute');
-			if ($trigger['success'] == true) {
+			$results = Services::Event()->schedule('onAfterExecute');
+			if (is_array($results)) {
 				$results = true;
-			} else {
-				$results = false;
 			}
 		}
 
@@ -440,7 +430,7 @@ Class Application
 			$results = Services::Response()
 				->setContent($this->rendered_output)
 				->setStatusCode(200)
-				->prepare(Services::Request()->get('request'))
+				->prepare(Application::Request()->get('request'))
 				->send();
 
 		} else {
@@ -455,11 +445,9 @@ Class Application
 
 		if ($results == true) {
 			Services::Debug()->set('Application Schedule onAfterResponse', LOG_OUTPUT_TRIGGERS);
-			$trigger = Services::Event()->schedule('onAfterResponse');
-			if ($trigger['success'] == true) {
+			$results = Services::Event()->schedule('onAfterResponse');
+			if (is_array($results)) {
 				$results = true;
-			} else {
-				$results = false;
 			}
 		}
 
@@ -472,7 +460,7 @@ Class Application
 	/**
 	 * Populate BASE_URL using scheme, host, and base URL
 	 *
-	 * Note: The Application::Request object is used instead of the Services::Request due to where
+	 * Note: The Application::Request object is used instead of the Application::Request due to where
 	 * processing is at this point
 	 *
 	 * @return boolean
@@ -480,17 +468,14 @@ Class Application
 	 */
 	protected function setBaseURL()
 	{
-		$baseURL = Application::Request()->get('request')->getScheme()
-			. '://'
-			. Application::Request()->get('request')->getHttpHost()
-			. Application::Request()->get('request')->getBaseUrl();
+		Application::Request()->get('base_url');
 
 		if (defined('BASE_URL')) {
 		} else {
 			/**
 			 * BASE_URL - root of the website with a trailing slash
 			 */
-			define('BASE_URL', $baseURL . '/');
+			define('BASE_URL', Application::Request()->get('base_url') . '/');
 		}
 
 		return true;
@@ -664,9 +649,7 @@ Class Application
 			define('SITES_TEMP_URL', BASE_URL . 'site/temp');
 		}
 
-		/** Note: The Application::Request object is used due to where processing is at this point */
-		$scheme = Application::Request()->get('request')->getScheme() . '://';
-		$siteBase = substr(BASE_URL, strlen($scheme), strlen(BASE_URL) - strlen($scheme));
+		$site_base_url = Application::Request()->get('base_url_path');
 
 		if (defined('SITE_BASE_URL')) {
 		} else {
@@ -674,17 +657,16 @@ Class Application
 			$sites = ConfigurationService::getFile('Application', 'Sites');
 
 			foreach ($sites->site as $single) {
-				if (strtolower($single->base) == strtolower($siteBase)) {
-					define('SITE_BASE_URL', $single->base);
-					define('SITE_FOLDER_PATH', $single->folderpath);
-					define('SITE_APPEND_TO_BASE_URL', $single->appendtobaseurl);
+				if (strtolower((string) $single->site_base_url) == strtolower($site_base_url)) {
+					define('SITE_BASE_URL', (string)$single->site_base_url);
+					define('SITE_BASE_PATH', BASE_FOLDER . (string)$single->site_base_folder);
 					define('SITE_ID', $single->id);
 					break;
 				}
 			}
 			if (defined('SITE_BASE_URL')) {
 			} else {
-				echo 'Fatal Error: Cannot identify site for: ' . $siteBase;
+				echo 'Fatal Error: Cannot identify site for: ' . $site_base_url;
 				die;
 			}
 		}
@@ -702,9 +684,10 @@ Class Application
 	 */
 	protected function setApplication()
 	{
+
 		/** ex. /molajo/administrator/index.php?option=login    */
-		$p1 = Application::Request()->get('request')->getPathInfo();
-		$t2 = Application::Request()->get('request')->getQueryString();
+		$p1 = Application::Request()->get('path_info');
+		$t2 = Application::Request()->get('query_string');
 
 		if (trim($t2) == '') {
 			$requestURI = $p1;
@@ -762,6 +745,13 @@ Class Application
 			}
 			define('PAGE_REQUEST', $pageRequest);
 		}
+	 ;
+		Application::Request()->set(
+			'base_url_path_for_application',
+				Application::Request()->get('base_url_path_with_scheme')
+				. '/'
+				. APPLICATION_URL_PATH
+		);
 
 		return true;
 	}
@@ -782,12 +772,12 @@ Class Application
 			return true;
 		}
 
-		if (file_exists(SITE_FOLDER_PATH . '/configuration.php')
-			&& filesize(SITE_FOLDER_PATH . '/configuration.php') > 10
+		if (file_exists(SITE_BASE_PATH . '/configuration.php')
+			&& filesize(SITE_BASE_PATH . '/configuration.php') > 10
 		) {
 			return true;
 		}
-
+//todo - install -
 		/** Redirect to Installation Application */
 		$redirect = BASE_URL . 'installation/';
 		header('Location: ' . $redirect);
@@ -807,7 +797,7 @@ Class Application
 
 		if ((int)Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
 
-			if ((Services::Request()->get('connection')->isSecure() === true)) {
+			if ((Application::Request()->get('connection')->isSecure() === true)) {
 
 			} else {
 

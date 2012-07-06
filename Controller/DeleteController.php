@@ -221,7 +221,7 @@ class DeleteController extends ReadController
 
 		Services::Debug()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
 
-		$trigger = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
+		$arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
 		if ($trigger['success'] == true) {
 			$arguments = $trigger['arguments'];
 		} else {
@@ -263,7 +263,7 @@ class DeleteController extends ReadController
 
 		Services::Debug()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
 
-		$trigger = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
+		$arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
 		if ($trigger['success'] == true) {
 			$arguments = $trigger['arguments'];
 		} else {

@@ -93,7 +93,7 @@ Class ConfigurationService
 	public function getSite($configuration_file = null)
 	{
 		if ($configuration_file === null) {
-			$configuration_file = SITE_FOLDER_PATH . '/configuration.php';
+			$configuration_file = SITE_BASE_PATH . '/configuration.php';
 		}
 		$configuration_class = 'SiteConfiguration';
 
@@ -165,20 +165,20 @@ Class ConfigurationService
 		if (defined('SITE_CACHE_FOLDER')) {
 		} else {
 			define('SITE_CACHE_FOLDER',
-			Services::Registry()->get('Configuration', 'cache_path', SITE_FOLDER_PATH . '/cache'));
+			Services::Registry()->get('Configuration', 'cache_path', SITE_BASE_PATH . '/cache'));
 		}
 
 		if (defined('SITE_LOGS_FOLDER')) {
 		} else {
-			define('SITE_LOGS_FOLDER', SITE_FOLDER_PATH . '/'
-				. Services::Registry()->get('Configuration', 'logs_path', SITE_FOLDER_PATH . '/logs'));
+			define('SITE_LOGS_FOLDER', SITE_BASE_PATH . '/'
+				. Services::Registry()->get('Configuration', 'logs_path', SITE_BASE_PATH . '/logs'));
 		}
 
 		/** following must be within the web document folder */
 		if (defined('SITE_MEDIA_FOLDER')) {
 		} else {
-			define('SITE_MEDIA_FOLDER', SITE_FOLDER_PATH . '/'
-				. Services::Registry()->get('Configuration', 'media_path', SITE_FOLDER_PATH . '/media'));
+			define('SITE_MEDIA_FOLDER', SITE_BASE_PATH . '/'
+				. Services::Registry()->get('Configuration', 'media_path', SITE_BASE_PATH . '/media'));
 		}
 		if (defined('SITE_MEDIA_URL')) {
 		} else {
@@ -189,8 +189,8 @@ Class ConfigurationService
 		/** following must be within the web document folder */
 		if (defined('SITE_TEMP_FOLDER')) {
 		} else {
-			define('SITE_TEMP_FOLDER', SITE_FOLDER_PATH . '/'
-				. Services::Registry()->get('Configuration', 'temp_path', SITE_FOLDER_PATH . '/temp'));
+			define('SITE_TEMP_FOLDER', SITE_BASE_PATH . '/'
+				. Services::Registry()->get('Configuration', 'temp_path', SITE_BASE_PATH . '/temp'));
 		}
 		if (defined('SITE_TEMP_URL')) {
 		} else {

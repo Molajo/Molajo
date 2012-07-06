@@ -98,7 +98,7 @@ Class SessionService
      */
     public function setSessionStorageData()
     {
-        $save_path = Services::Registry()->get('Configuration', 'cache_path', SITE_FOLDER_PATH . '/cache');
+        $save_path = Services::Registry()->get('Configuration', 'cache_path', SITE_BASE_PATH . '/cache');
         $options = array();
         $options['cookie_lifetime'] = Services::Registry()->get('Configuration', 'lifetime', 15);
         $options['cookie_domain'] = $cookie_domain = Services::Registry()->get('Configuration', 'cookie_domain', '');
@@ -108,4 +108,43 @@ Class SessionService
 
         return $sessionStorage;
     }
+
+
+	/**
+	 * Loads the session configuration.
+	 *
+	 * @param array            $config    A session configuration array
+	 * @param ContainerBuilder $container A ContainerBuilder instance
+	 * @param XmlFileLoader    $loader    An XmlFileLoader instance
+	 */
+	private function registerSessionConfiguration(array $config, ContainerBuilder $container, XmlFileLoader $loader)
+	{
+		$loader->load('session.xml');
+
+		// session
+		$container->getDefinition('session_listener')->addArgument($config['auto_start']);
+		$container->setParameter('session.default_locale', $config['default_locale']);
+
+		// session storage
+		$container->setAlias('session.storage', $config['storage_id']);
+		$options = array();
+		foreach (array('name', 'lifetime', 'path', 'domain', 'secure', 'httponly') as $key) {
+			if (isset($config[$key])) {
+				$options[$key] = $config[$key];
+			}
+		}
+		$container->setParameter('session.storage.options', $options);
+
+		$this->addClassesToCompile(array(
+			'Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener',
+			'Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface',
+			$container->getDefinition('session')->getClass(),
+		));
+
+		if ($container->hasDefinition($config['storage_id'])) {
+			$this->addClassesToCompile(array(
+				$container->findDefinition('session.storage')->getClass(),
+			));
+		}
+	}
 }

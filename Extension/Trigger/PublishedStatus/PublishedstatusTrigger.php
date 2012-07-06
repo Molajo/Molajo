@@ -39,6 +39,7 @@ class PublishedstatusTrigger extends ContentTrigger
 
 		$primary_prefix = $this->get('primary_prefix');
 
+
 		$this->query->where($this->db->qn($primary_prefix)
 			. '.' . $this->db->qn('status')
 			. ' > ' . STATUS_UNPUBLISHED);
@@ -57,7 +58,7 @@ class PublishedstatusTrigger extends ContentTrigger
 				. ' >= ' . $this->db->q($this->now) . ')'
 		);
 
-		return $this;
+		return true;
 	}
 
 	/**
