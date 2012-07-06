@@ -180,7 +180,7 @@ Class Application
 		//Services::Session()->create(
 		//        Services::Session()->getHash(get_class($this))
 		//  );
-		// Services::Debug()
+		// Services::Profiler()
 		// ->set('Services::Session()->create complete, 'Application');
 
 		Services::Registry()->set('Override', 'url_request', $override_url_request);
@@ -189,7 +189,7 @@ Class Application
 		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
 
 		if ($results == true) {
-			Services::Debug()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
 			$results = Services::Event()->schedule('onAfterInitialise');
 			if (is_array($results)) {
 				$results = true;
@@ -197,11 +197,11 @@ Class Application
 		}
 
 		if ($results == false) {
-			Services::Debug()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
+			Services::Profiler()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
 			return false;
 		}
 
-		Services::Debug()->set('Initialise succeeded', LOG_OUTPUT_APPLICATION);
+		Services::Profiler()->set('Initialise succeeded', LOG_OUTPUT_APPLICATION);
 
 		return true;
 	}
@@ -231,7 +231,7 @@ Class Application
 //$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
 //$results = Services::Install()->testDeleteExtension('Test', 'Resources');
 
-		Services::Debug()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
+		Services::Profiler()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
 
 		$results = Services::Route()->process();
 
@@ -239,7 +239,7 @@ Class Application
 			&& Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
 		) {
-			Services::Debug()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
 			$results = Services::Event()->schedule('onAfterRoute');
 			echo 'here';
 			die;
@@ -249,7 +249,7 @@ Class Application
 		}
 
 		if ($results == false) {
-			Services::Debug()->set('Route failed', LOG_OUTPUT_APPLICATION);
+			Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
 			return false;
 		}
 
@@ -257,11 +257,11 @@ Class Application
 			&& Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
 		) {
-			Services::Debug()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
+			Services::Profiler()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
 			return true;
 		}
 
-		Services::Debug()->set('Route redirected ' . Services::Redirect()->url, LOG_OUTPUT_APPLICATION);
+		Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, LOG_OUTPUT_APPLICATION);
 
 		return true;
 	}
@@ -272,16 +272,16 @@ Class Application
 	 * OnAfterAuthorise Event is invoked even when core authorisation fails to authorise
 	 * so that authorisation can be overridden and other methods of authorisation can be used
 	 *
-	 * @return boolean
-	 * @since    1.0
+	 * @return  boolean
+	 * @since   1.0
 	 */
 	protected function authorise()
 	{
-		Services::Debug()->set(START_AUTHORISATION, LOG_OUTPUT_APPLICATION);
+		Services::Profiler()->set(START_AUTHORISATION, LOG_OUTPUT_APPLICATION);
 
 		$results = Services::Authorisation()->verifyAction();
 
-		Services::Debug()->set('Application Schedule onAfterAuthorise', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('Application Schedule onAfterAuthorise', LOG_OUTPUT_TRIGGERS);
 
 		$results = Services::Event()->schedule('onAfterAuthorise');
 		if (is_array($results)) {
@@ -289,11 +289,11 @@ Class Application
 		}
 
 		if ($results === false) {
-			Services::Debug()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
+			Services::Profiler()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
 			return false;
 		}
 
-		Services::Debug()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
+		Services::Profiler()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
 
 		return true;
 	}
@@ -301,12 +301,12 @@ Class Application
 	/**
 	 * Execute the action requested
 	 *
-	 * @return boolean
-	 * @since  1.0
+	 * @return  boolean
+	 * @since   1.0
 	 */
 	protected function execute()
 	{
-		Services::Debug()->set(START_EXECUTE, LOG_OUTPUT_APPLICATION);
+		Services::Profiler()->set(START_EXECUTE, LOG_OUTPUT_APPLICATION);
 
 		$action = Services::Registry()->get('Parameters', 'request_action', 'display');
 
@@ -317,7 +317,7 @@ Class Application
 		}
 
 		if ($results == true) {
-			Services::Debug()->set('Application Schedule onAfterExecute', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('Application Schedule onAfterExecute', LOG_OUTPUT_TRIGGERS);
 			$results = Services::Event()->schedule('onAfterExecute');
 			if (is_array($results)) {
 				$results = true;
@@ -325,11 +325,11 @@ Class Application
 		}
 
 		if ($results == false) {
-			Services::Debug()->set('Execute ' . $action . ' failed', LOG_OUTPUT_APPLICATION);
+			Services::Profiler()->set('Execute ' . $action . ' failed', LOG_OUTPUT_APPLICATION);
 			return false;
 		}
 
-		Services::Debug()->set('Execute ' . $action . ' succeeded', LOG_OUTPUT_APPLICATION);
+		Services::Profiler()->set('Execute ' . $action . ' succeeded', LOG_OUTPUT_APPLICATION);
 
 		return true;
 	}
@@ -354,8 +354,8 @@ Class Application
 	 *
 	 * Override Registry have values for sequence_xml and final_xml
 	 *
-	 * @since  1.0
-	 * @return Application
+	 * @since   1.0
+	 * @return  Application
 	 */
 	protected function display()
 	{
@@ -387,7 +387,7 @@ Class Application
 	/**
 	 * Execute action (other than Display)
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function action()
 	{
@@ -415,18 +415,18 @@ Class Application
 	/**
 	 * Return HTTP response
 	 *
-	 * @return object
-	 * @since  1.0
+	 * @return  object
+	 * @since   1.0
 	 */
 	protected function response()
 	{
-		Services::Debug()->set(START_RESPONSE, LOG_OUTPUT_APPLICATION);
+		Services::Profiler()->set(START_RESPONSE, LOG_OUTPUT_APPLICATION);
 
 		if (Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
 		) {
 
-			Services::Debug()
+			Services::Profiler()
 				->set('Response Code 200', LOG_OUTPUT_APPLICATION);
 
 			$results = Services::Response()
@@ -437,7 +437,7 @@ Class Application
 
 		} else {
 
-			Services::Debug()
+			Services::Profiler()
 				->set('Response Code:' . Services::Redirect()->code
 				. 'Redirect to: ' . Services::Redirect()->url
 				. LOG_OUTPUT_APPLICATION);
@@ -446,14 +446,14 @@ Class Application
 		}
 
 		if ($results == true) {
-			Services::Debug()->set('Application Schedule onAfterResponse', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('Application Schedule onAfterResponse', LOG_OUTPUT_TRIGGERS);
 			$results = Services::Event()->schedule('onAfterResponse');
 			if (is_array($results)) {
 				$results = true;
 			}
 		}
 
-		Services::Debug()
+		Services::Profiler()
 			->set('Response exit ' . (int)$results, LOG_OUTPUT_APPLICATION);
 
 		return true;
@@ -465,7 +465,7 @@ Class Application
 	 * Note: The Application::Request object is used instead of the Application::Request due to where
 	 * processing is at this point
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function setBaseURL()
@@ -497,7 +497,7 @@ Class Application
 	 * SITES contains content that must be accessible by the
 	 * Website and thus cannot be moved
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function setDefines()
@@ -583,6 +583,7 @@ Class Application
 
 		/**
 		 *  Allows for quoting in language .ini files.
+		 *  todo: PHP 5.3 allows escaping in ini files -- this approach should be removed
 		 */
 		if (defined('LANGUAGE_QUOTE_REPLACEMENT')) {
 		} else {
@@ -598,16 +599,6 @@ Class Application
 				define((string)$item['name'], $value);
 			}
 		}
-
-		/**
-		 *  EXTENSION OPTIONS
-		 *
-		 *  TO BE REMOVED
-		 */
-		define('EXTENSION_OPTION_ID_MIMES_AUDIO', 400);
-		define('EXTENSION_OPTION_ID_MIMES_IMAGE', 410);
-		define('EXTENSION_OPTION_ID_MIMES_TEXT', 420);
-		define('EXTENSION_OPTION_ID_MIMES_VIDEO', 430);
 
 		return true;
 	}
@@ -678,7 +669,7 @@ Class Application
 	 */
 	protected function setApplication()
 	{
-		/** ex. /molajo/administrator/index.php?option=login    */
+		/** Used to isolate the application portion of the URL    */
 		$p1 = Application::Request()->get('path_info');
 		$t2 = Application::Request()->get('query_string');
 
@@ -730,7 +721,7 @@ Class Application
 			}
 		}
 
-		/*  Page Request used in Application::Request                */
+		/*  Page Request used in Application::Request */
 		if (strripos($requested_resource_for_route, '/') == (strlen($requested_resource_for_route) - 1)) {
 			$requested_resource_for_route = substr($requested_resource_for_route, 0, strripos($requested_resource_for_route, '/'));
 		}
@@ -776,7 +767,7 @@ Class Application
 	}
 
 	/**
-	 * Check to see if the secure access to the application is required
+	 * Check to see if secure access to the application is required by configuration
 	 *
 	 * @return bool
 	 * @since   1.0
@@ -784,7 +775,9 @@ Class Application
 	protected function sslCheck()
 	{
 		Services::Registry()->get('ApplicationsParameters');
-
+		echo '<pre>';
+		var_dump(Application::Request()->request);
+		echo '</pre>';
 		if ((int)Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
 
 			if ((Application::Request()->get('connection')->isSecure() === true)) {

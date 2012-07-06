@@ -74,7 +74,7 @@ class ReadController extends Controller
 				$debug_message .= ob_get_contents();
 				ob_end_clean();
 
-				Services::Debug()->set('ReadController->onAfterReadEvent ' . $debug_message
+				Services::Profiler()->set('ReadController->onAfterReadEvent ' . $debug_message
 					. ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE);
 			}
 		}
@@ -145,7 +145,7 @@ class ReadController extends Controller
 				$model_parameter = $this->get('model_parameter');
 			}
 
-			Services::Debug()->set('ReadController->getData '
+			Services::Profiler()->set('ReadController->getData '
 					. ' DBO: ' . $dbo
 					. ' Query Object: ' . $query_object
 					. ' Model Parameter: ' . $model_parameter,
@@ -242,7 +242,7 @@ class ReadController extends Controller
 		);
 
 		if (Services::Registry()->get('Configuration', 'debug_output_queries_sql', 0) == 1) {
-			Services::Debug()->set('ReadController->getData SQL Query: <br /><br />'
+			Services::Profiler()->set('ReadController->getData SQL Query: <br /><br />'
 					. $this->model->query->__toString(),
 				LOG_OUTPUT_RENDERING, VERBOSE);
 		}
@@ -261,7 +261,7 @@ class ReadController extends Controller
 				echo '</pre><br /><br />';
 				$message .= ob_get_contents();
 				ob_end_clean();
-				Services::Debug()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
+				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
 			}
 
 			return $query_results;
@@ -338,7 +338,7 @@ class ReadController extends Controller
 				echo '</pre><br /><br />';
 				$message .= ob_get_contents();
 				ob_end_clean();
-				Services::Debug()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
+				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
 			}
 
 			return $this->query_results;
@@ -373,21 +373,21 @@ class ReadController extends Controller
 			'model_name' => $this->get('model_name')
 		);
 
-		Services::Debug()->set('ReadController->onBeforeReadEvent '
+		Services::Profiler()->set('ReadController->onBeforeReadEvent '
 				. $this->table_registry_name
 				. ' Schedules onBeforeRead', LOG_OUTPUT_TRIGGERS, VERBOSE
 		);
 
 		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);
 		if ($arguments == false) {
-			Services::Debug()->set('ReadController->onBeforeReadEvent '
+			Services::Profiler()->set('ReadController->onBeforeReadEvent '
 					. $this->table_registry_name
 					. ' failure ', LOG_OUTPUT_TRIGGERS
 			);
 			return false;
 		}
 
-		Services::Debug()->set('ReadController->onBeforeReadEvent '
+		Services::Profiler()->set('ReadController->onBeforeReadEvent '
 				. $this->table_registry_name
 				. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
 		);
@@ -427,21 +427,21 @@ class ReadController extends Controller
 				'model_name' => $this->get('model_name')
 			);
 
-			Services::Debug()->set('ReadController->onAfterReadEvent '
+			Services::Profiler()->set('ReadController->onAfterReadEvent '
 					. $this->table_registry_name
 					. ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE
 			);
 
 			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->triggers);
 			if ($arguments == false) {
-				Services::Debug()->set('ReadController->onAfterRead '
+				Services::Profiler()->set('ReadController->onAfterRead '
 						. $this->table_registry_name
 						. ' failure ', LOG_OUTPUT_TRIGGERS
 				);
 				return false;
 			}
 
-			Services::Debug()->set('ReadController->onAfterReadEvent '
+			Services::Profiler()->set('ReadController->onAfterReadEvent '
 					. $this->table_registry_name
 					. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
 			);
@@ -566,15 +566,15 @@ class ReadController extends Controller
 			'model_name' => $this->get('model_name')
 		);
 
-//		Services::Debug()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+//		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 
 		$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
 		if ($arguments == false) {
-//			Services::Debug()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+//			Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
 
-//		Services::Debug()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+//		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 
 		$this->query_results = $arguments['data'];
 
@@ -605,15 +605,15 @@ class ReadController extends Controller
 			'model_name' => $this->get('model_name')
 		);
 
-//		Services::Debug()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+//		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 
 		$arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
 		if ($arguments == false) {
-//			Services::Debug()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+//			Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
 
-//		Services::Debug()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+//		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 
 		$rendered_output = $arguments['rendered_output'];
 

@@ -219,17 +219,17 @@ class DeleteController extends ReadController
 			'model_name' => $this->get('model_name')
 		);
 
-		Services::Debug()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
 
 		$arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
 		if ($trigger['success'] == true) {
 			$arguments = $trigger['arguments'];
 		} else {
-			Services::Debug()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+			Services::Profiler()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 			return false;
 		}
 
-		Services::Debug()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_TRIGGERS);
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];
@@ -261,17 +261,17 @@ class DeleteController extends ReadController
 			'model_name' => $this->get('model_name')
 		);
 
-		Services::Debug()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
 
 		$arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
 		if ($trigger['success'] == true) {
 			$arguments = $trigger['arguments'];
 		} else {
-			Services::Debug()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
 
-		Services::Debug()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		/** Process results */
 		$this->parameters = $arguments['parameters'];

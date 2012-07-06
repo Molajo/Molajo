@@ -178,7 +178,7 @@ class Controller
 
 				if ($this->table_registry_name == false) {
 					$debugMessage .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
-					Services::Debug()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
+					Services::Profiler()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
 					return false;
 				}
 
@@ -225,7 +225,7 @@ class Controller
 			ob_end_clean();
 		}
 
-		Services::Debug()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
+		Services::Profiler()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
 
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\Model\\' . $model_class;

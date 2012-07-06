@@ -266,7 +266,7 @@ Class ConfigurationService
 		Services::Registry()->sort('Configuration');
 
 		if ((int)$debug == 1) {
-			Services::Debug()->initiate();
+			Services::Profiler()->initiate();
 		}
 
 		return $this;

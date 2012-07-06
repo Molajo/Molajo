@@ -41,7 +41,7 @@ Class RegistryService
 
 	/**
 	 * The debug service is activated after the registry and therefore cannot be used
-	 * to log system activity immediately. Once Services::Debug()->on = true this indicator
+	 * to log system activity immediately. Once Services::Profiler()->on = true this indicator
 	 * is set to true, existing registries are logged, and individual creates are logged
 	 *
 	 * @var    object
@@ -194,10 +194,10 @@ Class RegistryService
 					$this->debug_available = true;
 					/* Catch up logging Registries created before Debug Service started */
 					foreach ($this->registryKeys as $ns) {
-						Services::Debug()->set('Create Registry ' . $ns, 'Registry');
+						Services::Profiler()->set('Create Registry ' . $ns, 'Registry');
 					}
 				} else {
-					Services::Debug()->set('Create Registry ' . $namespace, 'Registry');
+					Services::Profiler()->set('Create Registry ' . $namespace, 'Registry');
 				}
 			}
 		}

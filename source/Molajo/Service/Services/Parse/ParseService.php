@@ -165,7 +165,7 @@ Class ParseService
 	 */
 	public function process()
 	{
-		Services::Debug()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
+		Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
 		/** Retrieve overrides */
 		$overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
@@ -206,15 +206,15 @@ Class ParseService
 		}
 
 		/** Before Event */
-		Services::Debug()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$arguments = Services::Event()->schedule('onBeforeParse');
 		if ($arguments == false) {
-			Services::Debug()->set('ParseService->process onBeforeParse failed', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('ParseService->process onBeforeParse failed', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
 
-		Services::Debug()->set('ParseService->process onBeforeParse succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Profiler()->set('ParseService->process onBeforeParse succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$this->final_indicator = false;
 
@@ -253,15 +253,15 @@ Class ParseService
 		$body = $this->renderLoop($body);
 
 		/** after rendering */
-		Services::Debug()->set('ParseService->process scheduled onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Profiler()->set('ParseService->process scheduled onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$results = Services::Event()->schedule('onAfterParse', $body);
 		if ($results == false) {
-			Services::Debug()->set('ParseService->process onAfterParse failed', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('ParseService->process onAfterParse failed', LOG_OUTPUT_TRIGGERS);
 			//throw error
 		}
 
-		Services::Debug()->set('ParseService->process onAfterParse succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Profiler()->set('ParseService->process onAfterParse succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		return $body;
 	}
@@ -280,7 +280,7 @@ Class ParseService
 		if ($body == null) {
 			$first = true;
 
-			Services::Debug()->set('ParseService->renderLoop include Theme:'
+			Services::Profiler()->set('ParseService->renderLoop include Theme:'
 					. Services::Registry()->get('Parameters', 'theme_path_include')
 					. ' which includes Page: '
 					. Services::Registry()->get('Parameters', 'page_view_path_include'),
@@ -296,7 +296,7 @@ Class ParseService
 			/* final run (for page head): start with rendered body */
 			$first = false;
 			$final = true;
-			Services::Debug()->set('ParseService->renderLoop Final Run ',
+			Services::Profiler()->set('ParseService->renderLoop Final Run ',
 				LOG_OUTPUT_RENDERING, VERBOSE);
 		}
 
@@ -435,7 +435,7 @@ Class ParseService
 		$includeDisplay = ob_get_contents();
 		ob_end_clean();
 
-		Services::Debug()->set($includeDisplay, LOG_OUTPUT_RENDERING);
+		Services::Profiler()->set($includeDisplay, LOG_OUTPUT_RENDERING);
 
 		return;
 	}
@@ -500,7 +500,7 @@ Class ParseService
 						$rc = new $class ($includerType, $includeName);
 
 					} else {
-						Services::Debug()->set('ParseService->callIncluder failed instantiating class '
+						Services::Profiler()->set('ParseService->callIncluder failed instantiating class '
 							. $class, LOG_OUTPUT_RENDERING);
 						// ERROR
 					}
@@ -514,11 +514,11 @@ Class ParseService
 					$includeDisplay = ob_get_contents();
 					ob_end_clean();
 
-					Services::Debug()->set($includeDisplay, LOG_OUTPUT_RENDERING, VERBOSE);
+					Services::Profiler()->set($includeDisplay, LOG_OUTPUT_RENDERING, VERBOSE);
 
 					$output = trim($rc->process($attributes));
 
-					Services::Debug()->set('ParseService->callIncluder rendered output ' .$output, LOG_OUTPUT_RENDERING, VERBOSE);
+					Services::Profiler()->set('ParseService->callIncluder rendered output ' .$output, LOG_OUTPUT_RENDERING, VERBOSE);
 
 					$with[] = $output;
 					Services::Registry()->deleteRegistry('Parameters');

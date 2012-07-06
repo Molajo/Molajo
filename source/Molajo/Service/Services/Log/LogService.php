@@ -102,13 +102,13 @@ Class LogService
         $this->loggers[] = LOG_CONSOLE_LOGGER;
 
 		if (Services::Registry()->get('DebugService', 'CurrentPhase') == START_INITIALISE) {
-			$response = Services::Debug()->setDebugLogger();
+			$response = Services::Profiler()->setDebugLogger();
 			if ($response == false) {
-				Services::Debug()->setConfigurationComplete();
+				Services::Profiler()->setConfigurationComplete();
 				return $this;
 			}
 			$this->setLog($response['options'], $response['priority'], $response['types']);
-			Services::Debug()->setConfigurationComplete();
+			Services::Profiler()->setConfigurationComplete();
 		}
 
         return $this;

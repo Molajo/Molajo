@@ -24,22 +24,22 @@ defined('MOLAJO') or die;
 Class RequestService
 {
 	/**
-	 * @var \Symfony\Resource\HttpFoundation\ParameterBag
+	 * @var \Symfony\Component\HttpFoundation\ParameterBag
 	 *
 	 *  public $attributes;
 	 *  public $request;
 	 *  public $query;
 	 *  public $cookies;
 	 *
-	 * @var \Symfony\Resource\HttpFoundation\ServerBag
+	 * @var \Symfony\Component\HttpFoundation\ServerBag
 	 *
 	 *  public $server;
 	 *
-	 * @var \Symfony\Resource\HttpFoundation\FileBag
+	 * @var \Symfony\Component\HttpFoundation\FileBag
 	 *
 	 *  public $files;
 	 *
-	 * @var \Symfony\Resource\HttpFoundation\HeaderBag
+	 * @var \Symfony\Component\HttpFoundation\HeaderBag
 	 *
 	 *  public $headers;
 	 */

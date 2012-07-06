@@ -309,7 +309,7 @@ Class ContentHelper
 	 */
 	public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $model_query_object = 'list')
 	{
-		Services::Debug()->set('ContentHelper->get '
+		Services::Profiler()->set('ContentHelper->get '
 				. ' ID: ' . $id
 				. ' Model Type: ' . $model_type
 				. ' Model Name: ' . $model_name

@@ -100,7 +100,7 @@ Class RedirectService
             }
         }
 
-        Services::Debug()->set('Redirect Services Set URL: ' . $this->url
+        Services::Profiler()->set('Redirect Services Set URL: ' . $this->url
 			. ' Status Code: ' . $this->code, LOG_OUTPUT_APPLICATION
 		);
 
@@ -110,7 +110,7 @@ Class RedirectService
     /**
      * redirect
      *
-     * @return \Symfony\Resource\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @since  1.0
      */
     public function redirect($url = null, $code = null)
@@ -123,7 +123,7 @@ Class RedirectService
 		} else {
 			$this->code = $code;
 		}
-        Services::Debug()->set('RedirectServices::redirect to: ' . $this->url
+        Services::Profiler()->set('RedirectServices::redirect to: ' . $this->url
 			. ' Status Code: ' . $this->code, LOG_OUTPUT_APPLICATION);
 
         return new RedirectResponse($this->url, $this->code);
