@@ -31,7 +31,7 @@ class Includer
 
 	/**
 	 * $type
-	 * Examples: head, module, message, tag, request, module, defer
+	 * Examples: head, message, tag, request, resource, defer
 	 *
 	 * @var    string
 	 * @since  1.0

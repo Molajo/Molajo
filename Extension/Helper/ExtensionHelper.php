@@ -498,9 +498,6 @@ Class ExtensionHelper
 			} elseif ($catalog_type == 'Language') {
 				return CATALOG_TYPE_EXTENSION_LANGUAGE;
 
-			} elseif ($catalog_type == 'Module') {
-				return CATALOG_TYPE_EXTENSION_MODULE;
-
 			} elseif ($catalog_type == 'Theme') {
 				return CATALOG_TYPE_EXTENSION_THEME;
 
@@ -524,9 +521,6 @@ Class ExtensionHelper
 
 			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_LANGUAGE) {
 				return 'Language';
-
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_MODULE) {
-				return 'Module';
 
 			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
 				return 'Theme';

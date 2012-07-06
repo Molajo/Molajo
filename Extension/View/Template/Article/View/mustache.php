@@ -3,8 +3,6 @@
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
- *
- * <include:module name=blockquote template=blockquote wrap=aside/>
  */
 defined('MOLAJO') or die; ?>
 {{# items }}

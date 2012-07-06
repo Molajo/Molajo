@@ -1,14 +1,23 @@
 <?php
+use Molajo\Service\Services;
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * @package     Molajo
+ * @copyright   2012 Amy Stephen. All rights reserved.
+ * @license     GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:module name=PageHeader template=PageHeader wrap=Head wrap_class=header/>
-<include:message/>
+<div class="row">
+	<div class="twelve columns">
+		<include:template name=Adminheader/>
+	</div>
+</div>
+<include:message wrap="div" wrap_class="row"/>
 <include:request/>
 <include:tag name=sidebar template=sidebar wrap=aside wrap_class=leftsidebar/>
-<include:module name=PageFooter template=PageFooter wrap=Footer wrap_class="footer"/>
+<div class="row">
+	<div class="twelve columns">
+		<include:template name=Adminfooter/>
+	</div>
+</div>
 <include:defer/>

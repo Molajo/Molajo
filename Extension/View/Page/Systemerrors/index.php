@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<include:module name=PageHeader template=PageHeader wrap=Head/>
+<include:template name=Adminheader/>
 <include:message/>
-<include:module name=PageFooter template=PageFooter wrap=Footer/>
+	<include:template name=Adminfooter/>
 <include:defer/>
