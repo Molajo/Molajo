@@ -70,14 +70,6 @@ class Model
 	protected $query_results;
 
 	/**
-	 * Pagination object from display query
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $pagination;
-
-	/**
 	 * Parameters
 	 *
 	 * @var    object
@@ -93,7 +85,6 @@ class Model
 	{
 		$this->parameters = array();
 		$this->query_results = array();
-		$this->pagination = array();
 	}
 
 	/**
@@ -109,7 +100,7 @@ class Model
 	{
 		$value = null;
 
-		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results', 'pagination'))) {
+		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results'))) {
 			$value = $this->$key;
 
 		} else {
@@ -136,7 +127,7 @@ class Model
 	 */
 	public function set($key, $value = null)
 	{
-		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results', 'pagination'))) {
+		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results'))) {
 			$this->$key = $value;
 		} else {
 			$this->parameters[$key] = $value;
@@ -294,16 +285,5 @@ class Model
 
 		return $this->query_results;
 
-	}
-
-	/**
-	 * getPagination
-	 *
-	 * @return array
-	 * @since    1.0
-	 */
-	public function getPagination()
-	{
-		return $this->pagination;
 	}
 }

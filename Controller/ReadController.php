@@ -31,7 +31,7 @@ class ReadController extends Controller
 	public function execute()
 	{
 		/**
-		if ($action == 'edit') {
+		if ($action == 'add') {
 		} elseif ($action == 'edit') {
 		} elseif ($action == 'display') {
 		}
@@ -79,9 +79,6 @@ class ReadController extends Controller
 			}
 		}
 
-//todo - move this into a trigger?
-		$this->pagination = array();
-
 		/** no results */
 		if (count($this->query_results) == 0
 			&& (int)$this->get('criteria_display_view_on_no_results', 0) == 0
@@ -111,7 +108,6 @@ class ReadController extends Controller
 			 */
 			if ($this->get('extension_primary') == true) {
 				Services::Registry()->set('RouteParameters', 'query_resultset', $this->query_results);
-				Services::Registry()->set('RouteParameters', 'query_pagination', $this->pagination);
 			}
 
 			/** Render View */

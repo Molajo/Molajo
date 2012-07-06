@@ -206,15 +206,15 @@ Class ParseService
 		}
 
 		/** Before Event */
-		Services::Debug()->set('ParseService->process Schedules onBeforeRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Debug()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$arguments = Services::Event()->schedule('onBeforeRender');
+		$arguments = Services::Event()->schedule('onBeforeParse');
 		if ($arguments == false) {
-			Services::Debug()->set('ParseService->process onBeforeRender failed', LOG_OUTPUT_TRIGGERS);
+			Services::Debug()->set('ParseService->process onBeforeParse failed', LOG_OUTPUT_TRIGGERS);
 			return false;
 		}
 
-		Services::Debug()->set('ParseService->process onBeforeRender succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Debug()->set('ParseService->process onBeforeParse succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$this->final_indicator = false;
 
@@ -253,15 +253,15 @@ Class ParseService
 		$body = $this->renderLoop($body);
 
 		/** after rendering */
-		Services::Debug()->set('ParseService->process scheduled onAfterRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Debug()->set('ParseService->process scheduled onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$results = Services::Event()->schedule('onAfterRender', $body);
+		$results = Services::Event()->schedule('onAfterParse', $body);
 		if ($results == false) {
-			Services::Debug()->set('ParseService->process onAfterRender failed', LOG_OUTPUT_TRIGGERS);
+			Services::Debug()->set('ParseService->process onAfterParse failed', LOG_OUTPUT_TRIGGERS);
 			//throw error
 		}
 
-		Services::Debug()->set('ParseService->process onAfterRender succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Debug()->set('ParseService->process onAfterParse succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		return $body;
 	}
