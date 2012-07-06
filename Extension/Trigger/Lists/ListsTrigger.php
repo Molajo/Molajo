@@ -34,7 +34,7 @@ class ListsTrigger extends ContentTrigger
 		/** Initialize Filter Registry */
 		Services::Registry()->createRegistry('Lists');
 
-		/** Retrieve Filters from Parameters for Component */
+		/** Retrieve Filters from Parameters for Resource */
 		$createLists = explode(',', $this->get('grid_lists'));
 
 		$lists = array();

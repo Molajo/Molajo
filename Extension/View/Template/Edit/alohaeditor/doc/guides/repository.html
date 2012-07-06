@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -183,25 +183,25 @@ define(
 [ 'aloha', 'aloha/jquery' ],
 function ( Aloha, jQuery ) {
 	'use strict';
-	
+
 	new ( Aloha.AbstractRepository.extend( {
-		
+
 		_constructor: function () {
 			this._super( 'myRepository' );
 		},
-				
+
 		/**
 		 * initalize the repository
 		 */
 		init: function () {	},
-		
-		
-		/** 
+
+
+		/**
 		 * Searches a repository for object items matching queryString if none found returns null.
 		 * The returned object items must be an array of Aloha.Repository.Object
-		 * 
+		 *
 		 * @param {object} params object with properties
-		 * @property {String} queryString 
+		 * @property {String} queryString
 		 * @property {array} objectTypeFilter OPTIONAL Object types that will be returned.
 		 * @property {array} filter OPTIONAL Attributes that will be returned.
 		 * @property {string} inFolderId OPTIONAL his is a predicate function that tests whether or not a candidate object is a child-object of the folder object identified by the given inFolderId (objectId).
@@ -222,10 +222,10 @@ function ( Aloha, jQuery ) {
 			     }
 			]);
 		},
-		
+
 		/**
 		 * Returns all children of a given motherId.
-		 * 
+		 *
 		 * @param {object} params object with properties
 		 * @property {array} objectTypeFilter OPTIONAL Object types that will be returned.
 		 * @property {array} filter OPTIONAL Attributes that will be returned.
@@ -246,7 +246,7 @@ function ( Aloha, jQuery ) {
  			     }
  			]);
 		},
-				
+
 		/**
 		 * Get the repositoryItem with given id
 		 * Callback: {Aloha.Repository.Object} item with given id
@@ -263,7 +263,7 @@ function ( Aloha, jQuery ) {
   			     }
   			]);
 		},
-		
+
 		/**
 		 * Mark or modify an object as needed by that repository for handling, processing or identification.
 		 * Objects can be any DOM object as A, SPAN, ABBR, etc..
@@ -277,7 +277,7 @@ function ( Aloha, jQuery ) {
 
 		/**
 		 * Make the given jQuery object (representing an object marked as object of this type)
-		 * clean. All attributes needed for handling should be removed. 
+		 * clean. All attributes needed for handling should be removed.
 		 * @param {jQuery} obj jQuery object to make clean
 		 * @return void
 		 */
@@ -285,7 +285,7 @@ function ( Aloha, jQuery ) {
 			obj.removeAttr('data-myRepository-temporary-data');
 		};
 
-	}))(); 
+	}))();
 
 });
 </pre></div><h3 id="reccomandation-of-repository-item-attributes">4 Reccomandation of repository item attributes</h3>

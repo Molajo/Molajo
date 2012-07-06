@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -143,7 +143,7 @@ define(
 function( dependendmodule1, dependendmodule2 ) {
 	&quot;use strict&quot;;
 
-	// you can use  dependendmodule1, dependendmodule2 here. 
+	// you can use  dependendmodule1, dependendmodule2 here.
 	// both are loaded.
 
 	return {};
@@ -159,15 +159,15 @@ define(
 function() {
 	&quot;use strict&quot;;
 
-	var 
+	var
 		Aloha = Aloha.require(),
 		dependendmodule1 = require( Aloha.settings.requireConf, 'dependendmodule1' ),
 		dependendmodule2 = Aloha.require( 'dependendmodule2' ); // shorthand to the above
-		
+
 	Aloha.require( function( localAloha ) {
-		// localAloha is available here  
+		// localAloha is available here
 	};
-	
+
 	return {};
 
 });
@@ -184,18 +184,18 @@ function() {
 		// but not neccessarily fully initialized
 		Aloha.jQuery('body').bind('aloha', function() {
 			// Aloha is initialized here
-		});  
+		});
 	});
-	
+
 	Aloha.require( ['dependendmodule1'], function( dependendmodule1 ) {
-		// dependendmodule1 is available here  
+		// dependendmodule1 is available here
 	};
-	
+
 	return {};
 
 });
 </pre></div><h3 id="aloha-plugins-and-their-dependencies">3 Aloha plugins and their dependencies</h3>
-<p>In the following example, we define a components plugin with two modules. The first module <code>componenttype</code> defines two classes. The second module <code>component</code> has a dependency to <code>componenttype</code>, and RequireJS injects what has been returned by <code>componenttype</code>.</p>
+<p>In the following example, we define a resources plugin with two modules. The first module <code>resourcetype</code> defines two classes. The second module <code>resource</code> has a dependency to <code>resourcetype</code>, and RequireJS injects what has been returned by <code>resourcetype</code>.</p>
 <p>The plugin requires the module <tt>aloha/plugin</tt> which gives you the plugin factory method <tt>create()</tt></p>
 <div class="code_container">
 <div class="filename">plugin1/lib/plugin1-plugin.js</div>
@@ -205,10 +205,10 @@ define(
 [ 'aloha/plugin' ],
 function( plugin ) {
     &quot;use strict&quot;;
-	// we do nothing but provide component modules...
+	// we do nothing but provide resource modules...
     return plugin.create( 'plugin1', {});
 });
-</pre></div><p>The <tt>componenttye</tt> has no dependency thus the dependency array is empty.</p>
+</pre></div><p>The <tt>resourcetye</tt> has no dependency thus the dependency array is empty.</p>
 <div class="code_container">
 <div class="filename">plugin1/lib/abstractmodule.js</div>
 <pre class="brush: javascript; gutter: false; toolbar: false">
@@ -227,7 +227,7 @@ function() {
 	return abstractModule;
 
 });
-</pre></div><p>The <tt>component</tt> depends on the local module <tt>componenttype</tt> and defines its dependency.</p>
+</pre></div><p>The <tt>resource</tt> depends on the local module <tt>resourcetype</tt> and defines its dependency.</p>
 <div class="code_container">
 <div class="filename">plugin1/lib/module.js</div>
 <pre class="brush: javascript; gutter: false; toolbar: false">
@@ -255,7 +255,7 @@ define(
 [ 'aloha/plugin' ],
 function( plugin, module ) {
     &quot;use strict&quot;;
-    
+
     // now we require the the modue of plugin1
     Aloha.require( [ 'plugin1/module' ], function( module ) }
  	   // module is available here
@@ -263,8 +263,8 @@ function( plugin, module ) {
     		return 'didThis';
     	};
     });
-    
-	// we do nothing but provide component modules...
+
+	// we do nothing but provide resource modules...
     return plugin.create( 'plugin2', {});
 });
 </pre></div><h3 id="aloha-require-path-mapping-for-plugins">4 Aloha require path mapping for plugins</h3>

@@ -110,11 +110,11 @@ is widely used among developers working in that language.
 
   The "System Libraries" of an executable work include anything, other
 than the work as a whole, that (a) is included in the normal form of
-packaging a Major Component, but which is not part of that Major
-Component, and (b) serves only to enable use of the work with that
-Major Component, or to implement a Standard Interface for which an
+packaging a Major Resource, but which is not part of that Major
+Resource, and (b) serves only to enable use of the work with that
+Major Resource, or to implement a Standard Interface for which an
 implementation is available to the public in source code form.  A
-"Major Component", in this context, means a major essential component
+"Major Resource", in this context, means a major essential resource
 (kernel, window system, and so on) of the specific operating system
 (if any) on which the executable work runs, or a compiler used to
 produce the work, or an object code interpreter used to run it.

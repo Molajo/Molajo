@@ -279,7 +279,7 @@ echo 'results are true for catalog '.'<br />';
 			return true;
 		}
 
-		/** Do not allow delete if there is content for this component */
+		/** Do not allow delete if there is content for this resource */
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 

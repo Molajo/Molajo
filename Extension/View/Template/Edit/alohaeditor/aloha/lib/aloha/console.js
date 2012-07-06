@@ -1,7 +1,7 @@
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php 
+* Contributors http://aloha-editor.org/contribution.php
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 define(
 ['aloha/core', 'util/class', 'aloha/jquery'],
 function(Aloha, Class, jQuery ) {
-	
-	
+
+
 	var
 //		$ = jQuery,
 //		Aloha = window.Aloha,
@@ -42,7 +42,7 @@ var alohaConsole = Class.extend({
 	 * @hide
 	 */
 	init: function() {
-		
+
 		// initialize the logging settings (if not present)
 		if (typeof Aloha.settings.logLevels === 'undefined' || !Aloha.settings.logLevels) {
 			Aloha.settings.logLevels = {'error' : true, 'warn' : true};
@@ -63,13 +63,13 @@ var alohaConsole = Class.extend({
 			Aloha.settings.logHistory.levels = {'error' : true, 'warn' : true};
 		}
 		this.flushLogHistory();
-		
+
 		Aloha.trigger('aloha-logger-ready');
 	},
 
 	/**
 	 * Log History as array of Message Objects. Every object has the properties
-	 * 'level', 'component' and 'message'
+	 * 'level', 'resource' and 'message'
 	 * @property
 	 * @type Array
 	 * @hide
@@ -87,45 +87,45 @@ var alohaConsole = Class.extend({
 	 * Logs a message to the console
 	 * @method
 	 * @param {String} level Level of the log ('error', 'warn' or 'info', 'debug')
-	 * @param {String} component Component that calls the log
+	 * @param {String} resource Resource that calls the log
 	 * @param {String} message log message
 	 */
-	log: function(level, component, message) {
-		
+	log: function(level, resource, message) {
+
 
 		// log ('Logging message');
-		if ( typeof component === 'undefined' ) {
+		if ( typeof resource === 'undefined' ) {
 			message = level;
 		}
-		if ( typeof component !== 'string' && component && component.toString ) {
-			component = component.toString();
+		if ( typeof resource !== 'string' && resource && resource.toString ) {
+			resource = resource.toString();
 		}
-		
+
 		// log ('warn', 'Warning message');
 		if ( typeof message === 'undefined' ) {
-			message = component;
-			component = undefined;
+			message = resource;
+			resource = undefined;
 		}
 
 		if (typeof level === 'undefined' || !level) {
 			level = 'log';
 		}
-		
+
 		level = level.toLowerCase();
-		
+
 		if ( typeof Aloha.settings.logLevels === "undefined" ) {
 			return;
 		}
-		
+
 		// now check whether the log level is activated
 		if ( !Aloha.settings.logLevels[ level ] ) {
 			return;
 		}
-		
-		component = component || "Unkown Aloha Component";
 
-		this.addToLogHistory({'level' : level, 'component' : component, 'message' : message, 'date' : new Date()});
-		
+		resource = resource || "Unkown Aloha Resource";
+
+		this.addToLogHistory({'level' : level, 'resource' : resource, 'message' : message, 'date' : new Date()});
+
 		switch (level) {
 		case 'error':
 			if (window.console && console.error) {
@@ -133,32 +133,32 @@ var alohaConsole = Class.extend({
 				// Using console.error rather than throwing an error is very
 				// problematic because we get not stack.
 				// We ought to consider doing the following:
-				// throw component + ': ' + message;
-				if(!component && !message) {
-					console.error("Error occured without message and component");
+				// throw resource + ': ' + message;
+				if(!resource && !message) {
+					console.error("Error occured without message and resource");
 				} else {
-					console.error(component + ': ' + message);
+					console.error(resource + ': ' + message);
 				}
 			}
 			break;
 		case 'warn':
 			if (window.console && console.warn) {
-				console.warn(component + ': ' + message);
+				console.warn(resource + ': ' + message);
 			}
 			break;
 		case 'info':
 			if (window.console && console.info) {
-				console.info(component + ': ' + message);
+				console.info(resource + ': ' + message);
 			}
 			break;
 		case 'debug':
 			if (window.console && console.log) {
-				console.log(component + ' [' + level + ']: ' + message);
+				console.log(resource + ' [' + level + ']: ' + message);
 			}
 			break;
 		default:
 			if (window.console && console.log) {
-				console.log(component + ' [' + level + ']: ' + message);
+				console.log(resource + ' [' + level + ']: ' + message);
 			}
 			break;
 		}
@@ -167,55 +167,55 @@ var alohaConsole = Class.extend({
 	/**
 	 * Log a message of log level 'error'
 	 * @method
-	 * @param {String} component Component that calls the log
+	 * @param {String} resource Resource that calls the log
 	 * @param {String} message log message
 	 */
-	error: function(component, message) {
-		this.log('error', component, message);
+	error: function(resource, message) {
+		this.log('error', resource, message);
 	},
 
 	/**
 	 * Log a message of log level 'warn'
 	 * @method
-	 * @param {String} component Component that calls the log
+	 * @param {String} resource Resource that calls the log
 	 * @param {String} message log message
 	 */
-	warn: function(component, message) {
-		this.log('warn', component, message);
+	warn: function(resource, message) {
+		this.log('warn', resource, message);
 	},
 
 	/**
 	 * Log a message of log level 'info'
 	 * @method
-	 * @param {String} component Component that calls the log
+	 * @param {String} resource Resource that calls the log
 	 * @param {String} message log message
 	 */
-	info: function(component, message) {
-		this.log('info', component, message);
+	info: function(resource, message) {
+		this.log('info', resource, message);
 	},
 
 	/**
 	 * Log a message of log level 'debug'
-	 * @param {String} component Component that calls the log
+	 * @param {String} resource Resource that calls the log
 	 * @param {String} message log message
 	 */
-	debug: function(component, message) {
-		this.log('debug', component, message);
+	debug: function(resource, message) {
+		this.log('debug', resource, message);
 	},
 
 	/**
 	 * Methods to mark function as deprecated for developers.
-	 * @param {String} component String that calls the log
+	 * @param {String} resource String that calls the log
 	 * @param {String} message log message
 	 */
-	deprecated: function(component, message) {
-		this.log( 'warn', component, message );
+	deprecated: function(resource, message) {
+		this.log( 'warn', resource, message );
 		// help the developer to locate the call.
 		 if ( Aloha.settings.logLevels[ 'deprecated' ] ) {
 			 throw new Error ( message );
 		 }
 	},
-	
+
 	/**
 	 * Check whether the given log level is currently enabled
 	 * @param {String} level
@@ -263,7 +263,7 @@ var alohaConsole = Class.extend({
 	 * @hide
 	 */
 	addToLogHistory: function(entry) {
-		
+
 		if ( !Aloha.settings.logHistory ) {
 			this.init();
 		}
@@ -273,7 +273,7 @@ var alohaConsole = Class.extend({
 		if ( Aloha.settings.logHistory.maxEntries <= 0
 				|| !Aloha.settings.logHistory.levels[ entry.level ]
 			) {
-			
+
 			return;
 		}
 
@@ -282,9 +282,9 @@ var alohaConsole = Class.extend({
 
 		// check whether the highWaterMark was reached, if so, fire an event
 		if ( !this.highWaterMarkReached ) {
-			
+
 			if ( this.logHistory.length >= Aloha.settings.logHistory.maxEntries * Aloha.settings.logHistory.highWaterMark / 100 ) {
-				
+
 				// fire the event
 				Aloha.trigger('aloha-log-full');
 				// set the flag (so we will not fire the event again until the logHistory is flushed)

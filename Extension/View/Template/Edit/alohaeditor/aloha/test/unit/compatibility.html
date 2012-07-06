@@ -9,11 +9,11 @@
 
 	<!-- include jquery for testing-->
 	<script	src="../../lib/vendor/jquery-1.5.1.js" ></script>
-		
+
 	<script>
-		
+
 		var beforeNoConflict = $;
-		
+
 		var Aloha = {};
 		Aloha.settings = {
 			jQuery: $.noConflict(),
@@ -25,7 +25,7 @@
 		};
 
 		var afterNoConflict = $;
-	
+
 	</script>
 
 	<!-- include old jQuery version for compatibility checks -->
@@ -36,11 +36,11 @@
 
 	<!-- include testswarm inject script -->
 	<script>
-		var 
+		var
 			require = Aloha._require,
 			define = Aloha.define,
 			url = window.location.search;
-		url = decodeURIComponent( url.slice( url.indexOf("swarmURL=") + 9 ) );
+		url = decodeURIResource( url.slice( url.indexOf("swarmURL=") + 9 ) );
 		if ( url && url.indexOf("http") === 0 ) {
 			require(["http://testswarm.aloha-editor.org/js/inject.js?" + (new Date).getTime()], function() {});
 		}
@@ -49,11 +49,11 @@
 <body>
 	<!-- include the tests -->
 	<script>
-		
+
 		// define realtive baseUrl path to requireJS
 		// and paths back to aloha path
 		require( ['compatibilitytests']	);
-		
+
 	</script>
 	<h1 id="qunit-header">Aloha Editor Compatibility Test Suite</h1>
 	<h2 id="qunit-banner"></h2>

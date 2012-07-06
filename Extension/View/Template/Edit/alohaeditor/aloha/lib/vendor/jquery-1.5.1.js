@@ -6786,7 +6786,7 @@ jQuery.extend({
 			add = function( key, value ) {
 				// If value is a function, invoke it and return its value
 				value = jQuery.isFunction( value ) ? value() : value;
-				s[ s.length ] = encodeURIComponent( key ) + "=" + encodeURIComponent( value );
+				s[ s.length ] = encodeURIResource( key ) + "=" + encodeURIResource( value );
 			};
 
 		// Set traditional to true for jQuery <= 1.3.2 behavior.
@@ -7316,7 +7316,7 @@ if ( jQuery.support.ajax ) {
 
 						// Firefox throws exceptions when accessing properties
 						// of an xhr when a network error occured
-						// http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+						// http://helpful.knobs-dials.com/index.php/Resource_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
 						try {
 
 							// Was never called and is aborted or complete

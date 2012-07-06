@@ -107,7 +107,7 @@ class VersionTrigger extends ContentTrigger
 	/**
 	 * createVersion
 	 *
-	 * Automatic version management save and restore processes for components
+	 * Automatic version management save and restore processes for resources
 	 *
 	 * @return boolean
 	 * @since   1.0

@@ -39,7 +39,7 @@ class ItemUserPermissionsTrigger extends ContentTrigger
 			return false;
 		}
 
-		/** Component Buttons */
+		/** Resource Buttons */
 		$actions = $this->get('toolbar_buttons');
 
 		$actionsArray = explode(',', $actions);

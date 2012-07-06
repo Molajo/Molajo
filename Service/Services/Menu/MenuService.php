@@ -52,7 +52,7 @@ Class MenuService
 	 * @param   int $parent_id
 	 * @param   int $catalog_type_id
 	 *
-	 * CATALOG_TYPE_MENU_ITEM_COMPONENT
+	 * CATALOG_TYPE_MENU_ITEM_RESOURCE
 	 * CATALOG_TYPE_MENU_ITEM_LINK
 	 * CATALOG_TYPE_MENU_ITEM_TEMPLATE_VIEW
 	 * CATALOG_TYPE_MENU_ITEM_SEPARATOR
@@ -128,7 +128,7 @@ Class MenuService
 		/** Add in URL */
 		foreach ($query_results as $item) {
 
-			if ($item->catalog_type_id == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+			if ($item->catalog_type_id == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
 
 				if (in_array($item->catalog_id, $active_catalog_ids)) {
 					$item->css_class = 'active';
@@ -191,7 +191,7 @@ Class MenuService
 		/** Add in URL */
 		foreach ($query_results as $item) {
 
-			if ($item->catalog_type_id == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+			if ($item->catalog_type_id == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
 				if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 					$item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
 				} else {
@@ -201,24 +201,24 @@ Class MenuService
 			if ($item->lvl == 1) {
 				$item->home = 1;
 				$item->section = 0;
-				$item->component = 0;
+				$item->resource = 0;
 				$item->submenu = 0;
 
 			} elseif ($item->lvl == 2) {
 				$item->home = 0;
 				$item->section = 1;
-				$item->component = 0;
+				$item->resource = 0;
 				$item->submenu = 0;
 
 			} elseif ($item->lvl == 3) {
 				$item->home = 0;
 				$item->section = 0;
-				$item->component = 1;
+				$item->resource = 1;
 				$item->submenu = 0;
 			} else {
 				$item->home = 0;
 				$item->section = 0;
-				$item->component = 0;
+				$item->resource = 0;
 				$item->submenu = 1;
 			}
 		}

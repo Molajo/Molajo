@@ -7,10 +7,10 @@
 define(
 [],
 function() {
-	
-	
+
+
 	Aloha.ready( function() {
-	
+
 		var testOrder = [
 		     		settingsTest,
 		     		pathsTest,
@@ -21,7 +21,7 @@ function() {
 		     		asyncModuleTest,
 		     		crossAsyncModuleTest
 		     	];
-		
+
 		function runNextTest () {
 			if ( testOrder.length ) {
 				var test = testOrder.shift();
@@ -30,13 +30,13 @@ function() {
 				}
 			}
 		};
-		
+
 		module('Plugin API test', {});
-		
+
 		test('Aloha plugin invocation Test', function() {
 			equal(window.AlohaPlugin1, 'called', 'Checking window.AlohaPlugin1.');
 		});
-		
+
 		runNextTest();
 
 		function settingsTest() {
@@ -57,10 +57,10 @@ function() {
 				runNextTest();
 			});
 		};
-		
+
 		function pathsTest() {
 			asyncTest('Aloha plugin paths [lib, vendor, nls, res, css]', function() {
-				
+
 				Aloha.require( ['plugintest1/test', 'plugintest1/vendor/test', 'i18n!plugintest1/nls/i18n',
 			               'plugintest1/test', 'plugintest1/css/test'],	function( lib, vendor, i18n, res, css ) {
 					ok(true, 'Plugin loaded with all path');
@@ -73,12 +73,12 @@ function() {
 					clearTimeout( t );
 					runNextTest();
 				});
-	
+
 				var t = setTimeout(function() {
 					ok(false, 'Aloha plugin localization did not return in 5 seconds');
 					start();
 					runNextTest();
-				}, 
+				},
 				5000);
 			});
 		};
@@ -88,7 +88,7 @@ function() {
 				var url = Aloha.getPluginUrl('plugintest1') + '/res/test.json';
 				jQuery.ajax({
 					url: url,
-					dataType: 'json',		
+					dataType: 'json',
 					success: function( data ) {
 						ok(true, 'Ressource1 loaded from ' + url);
 						ok(data.data == 'ok', 'Loaded data is correct');
@@ -104,13 +104,13 @@ function() {
 			});
 		}
 
-		
+
 		function absoluteResourceTest() {
 			asyncTest('Aloha absolute bundle plugin resource loading', function() {
 				var url = Aloha.getPluginUrl('plugintest2') + '/res/test.json';
 				jQuery.ajax({
 					url: url,
-					dataType: 'json',		
+					dataType: 'json',
 					success: function( data ) {
 						ok(true, 'Ressource2 loaded from ' + url);
 						ok(data.data == 'ok', 'Loaded data is correct');
@@ -123,7 +123,7 @@ function() {
 						runNextTest();
 					}
 				});
-		
+
 			});
 		}
 
@@ -142,10 +142,10 @@ function() {
 					ok(false, 'Aloha plugin localization did not return in 5 seconds');
 					start();
 					runNextTest();
-				}, 
+				},
 				5000);
 			});
-		}		
+		}
 
 		function germanLocaleTest() {
 			asyncTest('Aloha plugin german localization', function() {
@@ -162,19 +162,19 @@ function() {
 					ok(false, 'Aloha plugin localization did not return in 5 seconds');
 					start();
 					runNextTest();
-				}, 
+				},
 				5000);
 			});
-			
+
 		}
-		
+
 		function asyncModuleTest() {
 			asyncTest('Aloha plugin async dynamic module loading', function() {
-				Aloha.require( ['plugintest1/component'],
-					function( component ) {
+				Aloha.require( ['plugintest1/resource'],
+					function( resource ) {
 						ok(true, 'module loaded.');
-						ok(component.doOther() == 'didOther', 'module function present.');
-						ok(component.doSome() == 'didSome', 'function from dependend module present.');
+						ok(resource.doOther() == 'didOther', 'module function present.');
+						ok(resource.doSome() == 'didSome', 'function from dependend module present.');
 						start();
 						clearTimeout( t );
 						runNextTest();
@@ -184,16 +184,16 @@ function() {
 					ok(false, 'Aloha plugin dynamically async module loading did not return in 5 seconds');
 					start();
 					runNextTest();
-				}, 
+				},
 				5000);
 			});
 		}
 
 		function crossAsyncModuleTest() {
 			asyncTest('Aloha cross plugin async dynamic module loading', function() {
-				Aloha.require( ['plugintest2/component'],
-					function( component ) {
-						ok(component.doSome() == 'didSome', 'Sucessfully dynamically async loaded cross plugin module dependency.');
+				Aloha.require( ['plugintest2/resource'],
+					function( resource ) {
+						ok(resource.doSome() == 'didSome', 'Sucessfully dynamically async loaded cross plugin module dependency.');
 						start();
 						clearTimeout( t );
 						runNextTest();
@@ -203,10 +203,10 @@ function() {
 					ok(false, 'Aloha plugin dynamically async module loading did not return in 5 seconds');
 					start();
 					runNextTest();
-				}, 
+				},
 				5000);
 			});
-		}		
-		
+		}
+
 	});
 });

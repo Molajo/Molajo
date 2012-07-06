@@ -49,8 +49,8 @@
  * default is 50 msec.
  *
  * You may specify an alternate file extension:
- *      require('css!myproj/component.less') // --> myproj/component.less
- *      require('css!myproj/component.scss') // --> myproj/component.scss
+ *      require('css!myproj/resource.less') // --> myproj/resource.less
+ *      require('css!myproj/resource.scss') // --> myproj/resource.scss
  *
  * When using alternative file extensions, be sure to serve the files from
  * the server with the correct mime type (text/css) or some browsers won't
@@ -157,7 +157,7 @@ function createLink (doc, optHref) {
 // of an XD stylesheet.  Therefore, there's no way to detect the load
 // event of XD stylesheets until Google fixes this, preferably with a
 // functional load event!  As a work-around, use ready() before rendering
-// widgets / components that need the css to be ready.
+// widgets / resources that need the css to be ready.
 var testEl;
 function styleIsApplied () {
 	if (!testEl) {

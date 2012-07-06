@@ -2,7 +2,7 @@ define(
 //['aloha/ecma5'],
 ['aloha/ecma5shims', 'aloha/jquery'],
 function($_, jQuery) {
-	
+
 
 var htmlNamespace = "http://www.w3.org/1999/xhtml";
 
@@ -618,7 +618,7 @@ function myExecCommand(command, showUi, value, range) {
 
 		// always fix the range after the command is complete
 		setActiveRange(range);
-		
+
 		// "Return true."
 		return true;
 	}})(command, showUi, value));
@@ -776,7 +776,7 @@ function isProhibitedParagraphChild(node) {
 // resolved value "inline" or "inline-block" or "inline-table" or "none", or a
 // Document, or a DocumentFragment."
 function isBlockNode(node) {
-	
+
 	return node
 		&& ((node.nodeType == $_.Node.ELEMENT_NODE && $_( ["inline", "inline-block", "inline-table", "none"] ).indexOf($_.getComputedStyle(node).display) == -1)
 		|| node.nodeType == $_.Node.DOCUMENT_NODE
@@ -1196,18 +1196,18 @@ function isCollapsedBlockProp(node) {
 
 function setActiveRange( range ) {
 	var rangeObject = new window.GENTICS.Utils.RangeObject();
-	
+
 	rangeObject.startContainer = range.startContainer;
 	rangeObject.startOffset = range.startOffset;
 	rangeObject.endContainer = range.endContainer;
 	rangeObject.endOffset = range.endOffset;
-	
+
 	rangeObject.select();
 }
 
-// Please note: This method is deprecated and will be removed. 
-// Every command should use the value and range parameter. 
-// 
+// Please note: This method is deprecated and will be removed.
+// Every command should use the value and range parameter.
+//
 // "The active range is the first range in the Selection given by calling
 // getSelection() on the context object, or null if there is no such range."
 //
@@ -1392,7 +1392,7 @@ function movePreservingRanges(node, newParent, newIndex, range) {
 	}
 
 	// if we're off actual node boundaries this implies that the move was
-	// part of a deletion process (backspace). If that's the case we 
+	// part of a deletion process (backspace). If that's the case we
 	// attempt to fix this by restoring the range to the first index of
 	// the node that has been moved
 	if (boundaryPoints[0][1] > boundaryPoints[0][0].childNodes.length
@@ -1418,22 +1418,22 @@ function movePreservingRanges(node, newParent, newIndex, range) {
 
 /**
  * Copy all non empty attributes from an existing to a new element
- * 
+ *
  * @param {dom} element The source DOM element
  * @param {dom} newElement The new DOM element which will get the attributes of the source DOM element
  * @return void
  */
 function copyAttributes( element, newElement ) {
 
-	// This is an IE7 workaround. We identified three places that were connected 
+	// This is an IE7 workaround. We identified three places that were connected
 	// to the mysterious ie7 crash:
 	// 1. Add attribute to dom element (Initialization of jquery-ui sortable)
-	// 2. Access the jquery expando attribute. Just reading the name is 
+	// 2. Access the jquery expando attribute. Just reading the name is
 	//    sufficient to make the browser vulnerable for the crash (Press enter)
 	// 3. On editable blur the Aloha.editables[0].getContents(); gets invoked.
-	//    This invokation somehow crashes the ie7. We assume that the access of 
-	//    shared expando attribute updates internal references which are not 
-	//    correclty handled during clone(); 
+	//    This invokation somehow crashes the ie7. We assume that the access of
+	//    shared expando attribute updates internal references which are not
+	//    correclty handled during clone();
 	if ( jQuery.browser.msie && jQuery.browser.version >=7 && typeof element.attributes[jQuery.expando] !== 'undefined' ) {
 		jQuery(element).removeAttr(jQuery.expando);
 	}
@@ -1442,7 +1442,7 @@ function copyAttributes( element, newElement ) {
 		if ( typeof newElement.setAttributeNS === 'function' ) {
 			newElement.setAttributeNS( element.attributes[i].namespaceURI, element.attributes[i].name, element.attributes[i].value );
 		} else if ( element.attributes[i].specified ) {
-			// fixes https://github.com/alohaeditor/Aloha-Editor/issues/515 
+			// fixes https://github.com/alohaeditor/Aloha-Editor/issues/515
 			newElement.setAttribute( element.attributes[i].name, element.attributes[i].value );
 		}
 	}
@@ -1470,7 +1470,7 @@ function setTagName(element, newName, range) {
 
 	// "Copy all attributes of element to replacement element, in order."
 	copyAttributes( element,  replacementElement );
-	
+
 	// "While element has children, append the first child of element as the
 	// last child of replacement element, preserving ranges."
 	while (element.childNodes.length) {
@@ -2969,7 +2969,7 @@ function forceValue(node, command, newValue, range) {
 		}
 
 		// "If command is "foreColor", and new value is fully opaque with red,
-		// green, and blue components in the range 0 to 255:"
+		// green, and blue resources in the range 0 to 255:"
 		if (command == "forecolor" && parseSimpleColor(newValue)) {
 			// "Let new parent be the result of calling createElement("span")
 			// on the ownerDocument of node."
@@ -3132,10 +3132,10 @@ function forceValue(node, command, newValue, range) {
 //@{
 
 function setSelectionValue(command, newValue, range) {
-	
+
 	// Use current selected range if no range passed
 	range = range || getActiveRange();
-	
+
 	// "If there is no editable text node effectively contained in the active
 	// range:"
 	if (!$_( getAllEffectivelyContainedNodes(range) )
@@ -3144,7 +3144,7 @@ function setSelectionValue(command, newValue, range) {
 		// "If command has inline command activated values, set the state
 		// override to true if new value is among them and false if it's not."
 		if ("inlineCommandActivatedValues" in commands[command]) {
-			setStateOverride(command, 
+			setStateOverride(command,
       $_(commands[command].inlineCommandActivatedValues).indexOf(newValue) != -1,
       range);
 		}
@@ -3211,7 +3211,7 @@ function setSelectionValue(command, newValue, range) {
 		// here as well.  The active range will be temporarily in orphaned
 		// nodes, so calling getActiveRange() after splitText() but before
 		// fixing the range will throw an exception.
-		// TODO: check if this is still neccessary 
+		// TODO: check if this is still neccessary
 		var activeRange = range;
 		var newStart = [activeRange.startContainer, activeRange.startOffset];
 		var newEnd = [activeRange.endContainer, activeRange.endOffset];
@@ -3251,10 +3251,10 @@ function setSelectionValue(command, newValue, range) {
  * which is located one step right of the current caret position.
  * If an appropriate element is found it will be returned or
  * false otherwise
- * 
+ *
  * @param {element} node current node we're in
  * @param {number} offset current offset within that node
- * 
+ *
  * @return the dom node if found or false if no appropriate
  * element was found
  */
@@ -3282,7 +3282,7 @@ function getBlockAtNextPosition(node, offset) {
 	node.nextSibling.className.indexOf("aloha-table-wrapper") >= 0) {
 		return node.nextSibling;
 	}
-	
+
 	// since we got only ignorable whitespace here determine if
 	// our nodes parents next sibling is a table
 	if (node.parentNode &&
@@ -3314,10 +3314,10 @@ function getBlockAtNextPosition(node, offset) {
  * which is located right before the current position.
  * If an appropriate element is found, it will be returned or
  * false otherwise
- * 
+ *
  * @param {element} node current node
  * @param {offset} offset current offset
- * 
+ *
  * @return dom node of found or false if no appropriate
  * element was found
  */
@@ -3395,7 +3395,7 @@ commands.backcolor = {
 	}, standardInlineValueCommand: true, relevantCssProperty: "backgroundColor",
 	equivalentValues: function(val1, val2) {
 		// "Either both strings are valid CSS colors and have the same red,
-		// green, blue, and alpha components, or neither string is a valid CSS
+		// green, blue, and alpha resources, or neither string is a valid CSS
 		// color."
 		return normalizeColor(val1) === normalizeColor(val2);
 	}
@@ -3413,7 +3413,7 @@ commands.bold = {
 		} else {
 			setSelectionValue("bold", "bold", range);
 		}
-	}, 
+	},
 	inlineCommandActivatedValues: ["bold", "600", "700", "800", "900"],
 	relevantCssProperty: "fontWeight",
 	equivalentValues: function(val1, val2) {
@@ -3565,7 +3565,7 @@ commands.fontsize = {
 
 		// "Set the selection's value to value."
 		setSelectionValue("fontsize", value);
-	}, 
+	},
 	indeterm: function() {
 		// "True if among editable Text nodes that are effectively contained in
 		// the active range, there are two that have distinct effective command
@@ -3577,7 +3577,7 @@ commands.fontsize = {
 		}, true).filter(function(value, i, arr) {
 			return $_(arr.slice(0, i)).indexOf(value) == -1;
 		}).length >= 2;
-	}, 
+	},
 	value: function(range) {
 		// "Let pixel size be the effective command value of the first editable
 		// Text node that is effectively contained in the active range, or if
@@ -3682,7 +3682,7 @@ commands.forecolor = {
 	}, standardInlineValueCommand: true, relevantCssProperty: "color",
 	equivalentValues: function(val1, val2) {
 		// "Either both strings are valid CSS colors and have the same red,
-		// green, blue, and alpha components, or neither string is a valid CSS
+		// green, blue, and alpha resources, or neither string is a valid CSS
 		// color."
 		return normalizeColor(val1) === normalizeColor(val2);
 	}
@@ -3727,7 +3727,7 @@ commands.hilitecolor = {
 	}, standardInlineValueCommand: true, relevantCssProperty: "backgroundColor",
 	equivalentValues: function(val1, val2) {
 		// "Either both strings are valid CSS colors and have the same red,
-		// green, blue, and alpha components, or neither string is a valid CSS
+		// green, blue, and alpha resources, or neither string is a valid CSS
 		// color."
 		return normalizeColor(val1) === normalizeColor(val2);
 	}
@@ -4973,14 +4973,14 @@ function deleteContents() {
 
 	// "Let end block be the end node of range."
 	var endBlock = range.endContainer;
-	
+
 	// "While end block's parent is in the same editing host and end block is
 	// an inline node, set end block to its parent."
 	while (inSameEditingHost(endBlock, endBlock.parentNode)
 	&& isInlineNode(endBlock)) {
 		endBlock = endBlock.parentNode;
 	}
-	
+
 	// "If end block is neither a block node nor an editing host, or "span" is
 	// not an allowed child of end block, or end block is a td or th, set end
 	// block to null."
@@ -6029,7 +6029,7 @@ function toggleLists(tagName, range) {
 
 				// "Wrap children, with sibling criteria returning true for an
 				// HTML element with local name tag name and false otherwise."
-				wrap(children, 
+				wrap(children,
 					function(node) { return isHtmlElement(node, tagName) },
 					function() {return null },
 					range
@@ -6223,14 +6223,14 @@ function toggleLists(tagName, range) {
 						|| !isHtmlElement(sublist[0].parentNode.previousSibling, tagName)) {
 							return document.createElement(tagName);
 						}
-	
+
 						// "Let list be sublist's first member's parent's
 						// previousSibling."
 						var list = sublist[0].parentNode.previousSibling;
-	
+
 						// "Normalize sublists of list's lastChild."
 						normalizeSublists(list.lastChild, range);
-	
+
 						// "If list's lastChild is not an editable HTML element
 						// with local name tag name, call createElement(tag name)
 						// on the context object, and append the result as the last
@@ -6239,7 +6239,7 @@ function toggleLists(tagName, range) {
 						|| !isHtmlElement(list.lastChild, tagName)) {
 							list.appendChild(document.createElement(tagName));
 						}
-	
+
 						// "Return the last child of list."
 						return list.lastChild;
 					},
@@ -6257,7 +6257,7 @@ function toggleLists(tagName, range) {
 //@{
 
 function justifySelection(alignment, range) {
-	
+
 	// "Block-extend the active range, and let new range be the result."
 	var newRange = blockExtend(range);
 
@@ -6495,7 +6495,7 @@ commands["delete"] = {
 		}
 
 		// @iebug
-		// when inserting a special char via the plugin 
+		// when inserting a special char via the plugin
 		// there where problems deleting them again with backspace after insertation
 		// see https://github.com/alohaeditor/Aloha-Editor/issues/517
 		if (node.nodeType == $_.Node.TEXT_NODE
@@ -7006,7 +7006,7 @@ commands.formatblock = {
 //@{
 commands.forwarddelete = {
 	action: function(value, range) {
-	
+
 		// "If the active range is not collapsed, delete the contents of the
 		// active range and abort these steps."
 		if (!range.collapsed) {
@@ -7091,7 +7091,7 @@ commands.forwarddelete = {
 			delBlock.parentNode.removeChild(delBlock);
 			return;
 		}
-		
+
 		// "If node is a Text node and offset is not node's length:"
 		if (node.nodeType == $_.Node.TEXT_NODE
 		&& offset != getNodeLength(node)) {
@@ -7306,7 +7306,7 @@ commands.indent = {
 //@{
 commands.inserthorizontalrule = {
 	action: function(value, range) {
-		
+
 		// "While range's start offset is 0 and its start node's parent is not
 		// null, set range's start to (parent of start node, index of start
 		// node)."
@@ -7380,8 +7380,8 @@ commands.inserthorizontalrule = {
 //@{
 commands.inserthtml = {
 	action: function(value, range) {
-		
-		
+
+
 		// "Delete the contents of the active range."
 		deleteContents(range);
 
@@ -7445,7 +7445,7 @@ commands.inserthtml = {
 		for (var i = 0; i < descendants.length; i++) {
 			fixDisallowedAncestors(descendants[i], range);
 		}
-		
+
 		setActiveRange( range );
 	}
 };
@@ -7593,7 +7593,7 @@ commands.insertlinebreak = {
 			range.setStart(br.parentNode, 1 + getNodeIndex(br));
 			range.setEnd(br.parentNode, 1 + getNodeIndex(br));
 		}
-		
+
 		// IE7 is adding this styles: height: auto; min-height: 0px; max-height: none;
 		// with that there is the ugly "IE-editable-outline"
 		if (jQuery.browser.msie && jQuery.browser.version < 8) {
@@ -7721,7 +7721,7 @@ commands.insertparagraph = {
 				// "Call collapse(container, 0) on the context object's
 				// Selection."
 				// TODO: remove selection from command
-				Aloha.getSelection().collapse(container, 0); 
+				Aloha.getSelection().collapse(container, 0);
 				range.setStart(container, 0);
 				range.setEnd(container, 0);
 

@@ -6,7 +6,7 @@
  */
 namespace Molajo\Service\Services\Request;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Resource\HttpFoundation\Request;
 
 defined('MOLAJO') or die;
 
@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  *
  * Initiated by Application, not Services
  *
- * @url http://symfony.com/doc/current/components/http_foundation.html#accessing-request-data
+ * @url http://symfony.com/doc/current/resources/http_foundation.html#accessing-request-data
  *
  * @package   Molajo
  * @subpackage  Services
@@ -24,22 +24,22 @@ defined('MOLAJO') or die;
 Class RequestService
 {
 	/**
-	 * @var \Symfony\Component\HttpFoundation\ParameterBag
+	 * @var \Symfony\Resource\HttpFoundation\ParameterBag
 	 *
 	 *  public $attributes;
 	 *  public $request;
 	 *  public $query;
 	 *  public $cookies;
 	 *
-	 * @var \Symfony\Component\HttpFoundation\ServerBag
+	 * @var \Symfony\Resource\HttpFoundation\ServerBag
 	 *
 	 *  public $server;
 	 *
-	 * @var \Symfony\Component\HttpFoundation\FileBag
+	 * @var \Symfony\Resource\HttpFoundation\FileBag
 	 *
 	 *  public $files;
 	 *
-	 * @var \Symfony\Component\HttpFoundation\HeaderBag
+	 * @var \Symfony\Resource\HttpFoundation\HeaderBag
 	 *
 	 *  public $headers;
 	 */
@@ -84,7 +84,7 @@ Class RequestService
 	public function __construct()
 	{
 		$this->request = new \stdClass();
-		$request_class = '\\Symfony\\Component\\HttpFoundation\\Request';
+		$request_class = '\\Symfony\\Resource\\HttpFoundation\\Request';
 		$connection = new $request_class();
 		$this->symfony_request = $connection->createFromGlobals();
 

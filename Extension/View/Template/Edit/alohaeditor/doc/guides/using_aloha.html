@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -155,10 +155,10 @@ cp -r aloha-minified path_to_your_webapp/javascripts/aloha
 
 &lt;script type=&quot;text/javascript&quot;&gt;
 	Aloha.ready( function() {
-		
+
 		// Make #content editable once Aloha is loaded and ready.
 		Aloha.jQuery('#content').aloha();
-		
+
 	});
 &lt;/script&gt;
 </pre></div><p>Et voilà! You should now see the floating menu of Aloha when you click into your <tt>#content</tt> element.</p>
@@ -187,8 +187,8 @@ Aloha.settings.locale = 'fr';
 <pre class="brush: xml; gutter: false; toolbar: false">
 
 &lt;head&gt;
-	&lt;script 
-		src=&quot;javascripts/aloha/aloha.js&quot; 
+	&lt;script
+		src=&quot;javascripts/aloha/aloha.js&quot;
 		data-aloha-plugins=&quot;common/format,common/list,common/table&quot; &gt;
 	&lt;/script&gt;
 &lt;/head&gt;
@@ -202,7 +202,7 @@ Aloha.settings = {
 	pluginA: {
 		// set value for pluginA
 		value: 20,
-		// set an array 
+		// set an array
 		list: ['some', 'other'],
 		// set an object
 		object: {
@@ -231,7 +231,7 @@ Aloha.settings = {
 		custom1: '../mybundle',
 		// Path for custom bundle with an absolute path at the server
 		custom2: '/yourbundle',
-		// Path for a custom bundle located at another server 
+		// Path for a custom bundle located at another server
 		//(NOTE: cross site scritping issues with that configuration)
 		custom3: 'http://theserver.com/their/bundle'
 	}
@@ -241,8 +241,8 @@ Aloha.settings = {
 <pre class="brush: xml; gutter: false; toolbar: false">
 
 &lt;head&gt;
-	&lt;script 
-		src=&quot;javascripts/aloha/aloha.js&quot; 
+	&lt;script
+		src=&quot;javascripts/aloha/aloha.js&quot;
 		data-aloha-plugins=&quot;common/link,custom1/plugin1,custom2/plugin2,custom3/plugin3&quot; &gt;
 	&lt;/script&gt;
 &lt;/head&gt;

@@ -462,27 +462,27 @@ Class ConfigurationService
 			/** Extension path not available until after the first content read - use Catalog data */
 			if (Services::Registry()->exists('Parameters', 'catalog_type')) {
 				$catalog_type = Services::Registry()->get('Parameters', 'catalog_type');
-				$extension_path = EXTENSIONS_COMPONENTS . '/' . ucfirst(strtolower($catalog_type));
+				$extension_path = EXTENSIONS_RESOURCES . '/' . ucfirst(strtolower($catalog_type));
 				$extension_name = $catalog_type;
 			}
 		}
 
 		if ($extension_path == false) {
 		} else {
-			/** ex. Component/Article/Configuration.xml */
+			/** ex. Resource/Article/Configuration.xml */
 			if (file_exists($extension_path . '/Configuration.xml')
 				&& strtolower($extension_name) == strtolower($model_name)
 			) {
 				return $extension_path . '/Configuration.xml';
 			}
-			/** ex. Component/Article/ContentTable.xml or Component/Article/DefaultTemplate.xml */
+			/** ex. Resource/Article/ContentTable.xml or Resource/Article/DefaultTemplate.xml */
 			if (file_exists($extension_path . '/' . $model_name_type . '.xml')
 			) {
 				return $extension_path . '/' . $model_name_type . '.xml';
 			}
 		}
 
-		/** 3. Primary Component (if not current extension) */
+		/** 3. Primary Resource (if not current extension) */
 		if (Services::Registry()->exists('RouteParameters')) {
 			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
 			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
@@ -491,14 +491,14 @@ Class ConfigurationService
 			) {
 			} else {
 
-				/** ex. Component/Article/Configuration.xml */
+				/** ex. Resource/Article/Configuration.xml */
 				if (file_exists($primary_extension_path . '/Configuration.xml')
 					&& strtolower($primary_extension_name) == strtolower($model_name)
 				) {
 					return $primary_extension_path . '/Configuration.xml';
 				}
 
-				/** ex. Component/Article/ContentTable.xml or Component/Article/DefaultTemplate.xml */
+				/** ex. Resource/Article/ContentTable.xml or Resource/Article/DefaultTemplate.xml */
 				if (file_exists($primary_extension_path . '/' . $model_name_type . '.xml')
 				) {
 					return $primary_extension_path . '/' . $model_name_type . '.xml';
@@ -527,13 +527,13 @@ Class ConfigurationService
 		}
 
 
-		/** 5. Any Component (in case of delete or using a component in a non-request position, etc.) */
-		$folders = Services::Filesystem()->folderFolders(EXTENSIONS_COMPONENTS, $filter = '',
+		/** 5. Any Resource (in case of delete or using a resource in a non-request position, etc.) */
+		$folders = Services::Filesystem()->folderFolders(EXTENSIONS_RESOURCES, $filter = '',
 			$recurse = false, $fullpath = false, $exclude = array('.git'));
 		foreach ($folders as $folder) {
 			if (strtolower($folder) == strtolower($model_name)) {
-				if (file_exists(EXTENSIONS_COMPONENTS . '/' . $folder . '/Configuration.xml')) {
-					return EXTENSIONS_COMPONENTS . '/' . $folder . '/Configuration.xml';
+				if (file_exists(EXTENSIONS_RESOURCES . '/' . $folder . '/Configuration.xml')) {
+					return EXTENSIONS_RESOURCES . '/' . $folder . '/Configuration.xml';
 				}
 			}
 		}
@@ -569,14 +569,14 @@ Class ConfigurationService
 			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
 			$extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
 
-			/** ex. Component/Article/GridMenuitem.xml */
+			/** ex. Resource/Article/GridMenuitem.xml */
 			if (file_exists($extension_path . '/' . $model_name_type . '.xml')
 			) {
 				return $extension_path . '/' . $model_name_type . '.xml';
 			}
 		}
 
-		/** 2. Primary Component (if not current extension) */
+		/** 2. Primary Resource (if not current extension) */
 		if (Services::Registry()->exists('RouteParameters')) {
 			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
 			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
@@ -584,7 +584,7 @@ Class ConfigurationService
 				|| $primary_extension_path == ''
 			) {
 			} else {
-				/** ex. Component/Article/GridMenuitem.xml */
+				/** ex. Resource/Article/GridMenuitem.xml */
 				if (file_exists($primary_extension_path . '/' . $model_name_type . '.xml')
 				) {
 					return $primary_extension_path . '/' . $model_name_type . '.xml';
@@ -602,7 +602,7 @@ Class ConfigurationService
 			return CONFIGURATION_FOLDER . '/Menuitemtype/' . $model_name . '.xml';
 		}
 
-		/** 5. Menuitem Configuration - default to Menuitems Component Configuration.xml file */
+		/** 5. Menuitem Configuration - default to Menuitems Resource Configuration.xml file */
 		return EXTENSIONS . '/' . ucfirst(strtolower($model_name)) . '/Configuration.xml';
 
 	}
@@ -639,7 +639,7 @@ Class ConfigurationService
 	 */
 	public static function inheritDefinition($registryName, $xml)
 	{
-		/** Inheritance: <extension type="Component" version="1.0" extends="Content"> */
+		/** Inheritance: <extension type="Resource" version="1.0" extends="Content"> */
 		$extends = false;
 		$type = '';
 		foreach ($xml->attributes() as $key => $value) {

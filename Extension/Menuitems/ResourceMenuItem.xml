@@ -1,0 +1,5 @@
+<extension type="Resource" version="1.0" extends="Content">
+<model
+        name="ResourceMenuItem"
+        catalog_type_id="2000">
+</model>

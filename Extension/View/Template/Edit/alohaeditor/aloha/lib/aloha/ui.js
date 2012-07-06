@@ -1,7 +1,7 @@
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php 
+* Contributors http://aloha-editor.org/contribution.php
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 define(
 ['aloha/core', 'util/class', 'aloha/jquery', 'aloha/floatingmenu', 'aloha/ext', 'aloha/console', 'i18n!aloha/nls/i18n'],
 function(Aloha, Class, jQuery, FloatingMenu, Ext, console, i18n) {
-	
-	
+
+
 	var
 //		$ = jQuery,
 //		Aloha = window.Aloha,
@@ -32,7 +32,7 @@ function(Aloha, Class, jQuery, FloatingMenu, Ext, console, i18n) {
 
 	// Ensure Namespace
 	Aloha.ui = Aloha.ui || {};
-	
+
 	// internationalize ext js message box buttons
 	Ext.MessageBox.buttonText.yes = i18n.t('yes');
 	Ext.MessageBox.buttonText.no = i18n.t('no');
@@ -100,7 +100,7 @@ Aloha.ui.Button = Class.extend({
 		 * Name for the button
 		 */
 		this.name = false;
-		
+
 		/**
 		 * CSS class for an icon on the button
 		 * @hide
@@ -171,7 +171,7 @@ Aloha.ui.Button = Class.extend({
 
 		GENTICS.Utils.applyProperties(this, properties);
 
-		// use icon class as a fallback for name		
+		// use icon class as a fallback for name
 		if (this.name === false) {
 			this.name = this.iconClass;
 		}
@@ -378,8 +378,8 @@ Aloha.ui.Button.idCounter = 0;
  * http://www.extjs.com/learn/Tutorial:Creating_new_UI_controls
  * @hide
  */
-Ext.ux.MultiSplitButton = Ext.extend(Ext.Component, {
-	initComponent: function() {
+Ext.ux.MultiSplitButton = Ext.extend(Ext.Resource, {
+	initResource: function() {
 		var me = this;
 		this.on('beforehide', function() {
 			me.closePanel();
@@ -422,12 +422,12 @@ Ext.ux.MultiSplitButton = Ext.extend(Ext.Component, {
 	 * configuration for a multisplit button has to be stored
 	 * within an array:
 	 *
-	 *		Aloha.settings.components.[MULTISPLITBUTTON-NAME] = [ 'item1', 'item2' ];
+	 *		Aloha.settings.resources.[MULTISPLITBUTTON-NAME] = [ 'item1', 'item2' ];
 	 *
 	 * An example for that would be:
 	 *
 	 *		// settings for phrasing element for the format plugin
-	 *		Aloha.settings.components.phrasing = [ 'h1', 'h2', 'h3', 'removeFormat' ];
+	 *		Aloha.settings.resources.phrasing = [ 'h1', 'h2', 'h3', 'removeFormat' ];
 	 *
 	 * if there is no config available, it will just use all items available
 	 * @return button items for this multisplit button
@@ -436,12 +436,12 @@ Ext.ux.MultiSplitButton = Ext.extend(Ext.Component, {
 		var that = this,
 			items = [],
 			i, length;
-		
-		if (Aloha.settings.components &&
-			Aloha.settings.components[this.name] &&
-			typeof Aloha.settings.components[this.name] === 'object') {
+
+		if (Aloha.settings.resources &&
+			Aloha.settings.resources[this.name] &&
+			typeof Aloha.settings.resources[this.name] === 'object') {
 			// iterate over all buttons in our config...
-			jQuery.each(Aloha.settings.components[this.name], function (idx, button) {
+			jQuery.each(Aloha.settings.resources[this.name], function (idx, button) {
 				for (i = 0, length = that.items.length; i < length; i++) {
 					if (that.items[i].name === button) {
 						// ... and find the appropriate internal button
@@ -473,7 +473,7 @@ Ext.ux.MultiSplitButton = Ext.extend(Ext.Component, {
 			items,
 			html = '<ul class="aloha-multisplit">';
 
-		items = this._getItems(); 
+		items = this._getItems();
 
 		// add a new button to the list for each configured item
 		for (i=0; i<items.length; i++) {
@@ -585,7 +585,7 @@ Ext.ux.MultiSplitButton = Ext.extend(Ext.Component, {
 	 * @hide
 	 */
 	setActiveDOMElement: function(el) {
-		// when the component (or one of its owners) is currently hidden, we need to set the active item later
+		// when the resource (or one of its owners) is currently hidden, we need to set the active item later
 		var ct = this, top;
 		while (typeof ct !== 'undefined') {
 			if (ct.hidden) {
@@ -828,7 +828,7 @@ Aloha.ui.MultiSplitButton = Class.extend({
  * @deprecated
  * This will be removed in one of the next version
  */
-Aloha.i18n = function(component, key, replacements) {
+Aloha.i18n = function(resource, key, replacements) {
 	console.deprecated ('Aloha', 'i18n() is deprecated. Use module "i18n!aloha/nls/i18n" instead.');
 	return key;
 };

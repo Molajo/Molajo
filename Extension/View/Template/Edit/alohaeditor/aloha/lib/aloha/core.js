@@ -1,7 +1,7 @@
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php 
+* Contributors http://aloha-editor.org/contribution.php
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ define(
 ],
 
 function ( jQuery, PluginManager ) {
-	
+
 
 	// Aloha Editor does not support Internet Explorer 6.  ExtJS style fixes for
 	// IE6 which are applied through the "ext-ie6" class cause visual bugs in
@@ -38,7 +38,7 @@ function ( jQuery, PluginManager ) {
 	//----------------------------------------
 	// Private variables
 	//----------------------------------------
-	
+
 	/**
 	 * Maps the names of plugins with their urls for easy assess in the
 	 * getPluginUrl method.  Hash table that will be populated through the
@@ -80,18 +80,18 @@ function ( jQuery, PluginManager ) {
 		 * @cfg {Object} object Aloha's settings
 		 */
 		settings: {},
-		
+
 		/**
 		 * defaults object, which will contain all Aloha defaults
 		 * @cfg {Object} object Aloha's settings
 		 */
 		defaults: {},
-		
+
 		/**
-		 * Namespace for ui components
+		 * Namespace for ui resources
 		 */
 		ui: {},
-		
+
 		/**
 		 * This represents the name of the users OS. Could be:
 		 * 'Mac', 'Linux', 'Win', 'Unix', 'Unknown'
@@ -122,7 +122,7 @@ function ( jQuery, PluginManager ) {
 		 * Initialize the initialization process
 		 */
 		init: function () {
-				
+
 			// merge defaults and settings and provide all in settings
 			Aloha.settings = jQuery.extendObjects( true, {}, Aloha.defaults, Aloha.settings );
 
@@ -132,7 +132,7 @@ function ( jQuery, PluginManager ) {
 			if (window.rangy) {
 				window.rangy.init();
 			}
-			
+
 			// Load & Initialise
 			Aloha.stage = 'loadPlugins';
 			Aloha.loadPlugins(function(){
@@ -212,7 +212,7 @@ function ( jQuery, PluginManager ) {
 
 				this.loadedPlugins = pluginNames;
 				this.requirePaths = paths;
-				
+
 				// Main Require.js loading call, which fetches all the plugins.
 				require(
 					{
@@ -314,7 +314,7 @@ function ( jQuery, PluginManager ) {
 			}).mouseup(function(e) {
 				Aloha.eventHandled = false;
 			});
-			
+
 			// Initialise the base path to the aloha files
 			Aloha.settings.base = Aloha.getAlohaUrl();
 
@@ -354,7 +354,7 @@ function ( jQuery, PluginManager ) {
 					supported = false;
 					Aloha.Log.log( 'enableObjectResizing is not supported.' );
 				}
-				
+
 				if ( supported ) {
 					document.execCommand( 'enableObjectResizing', false, false);
 					Aloha.Log.log( 'enableObjectResizing disabled.' );
@@ -378,11 +378,11 @@ function ( jQuery, PluginManager ) {
 		},
 
 		/**
-		 * Loads GUI components
+		 * Loads GUI resources
 		 * @return void
 		 */
 		initGui: function (next) {
-			
+
 			Aloha.RepositoryManager.init();
 
 			// activate registered editables
@@ -475,16 +475,16 @@ function ( jQuery, PluginManager ) {
 		/**
 		 * Logs a message to the console
 		 * @param level Level of the log ("error", "warn" or "info", "debug")
-		 * @param component Component that calls the log
+		 * @param resource Resource that calls the log
 		 * @param message log message
 		 * @return void
 		 * @hide
 		 */
-		log: function(level, component, message) {
+		log: function(level, resource, message) {
 			if (typeof Aloha.Log !== "undefined")
-				Aloha.Log.log(level, component, message);
+				Aloha.Log.log(level, resource, message);
 		},
-		
+
 		/**
 		 * Register the given editable
 		 * @param editable editable to register
@@ -545,11 +545,11 @@ function ( jQuery, PluginManager ) {
 			// aloha base path is defined by a script tag with 2 data attributes
 			var requireJs = jQuery('[data-aloha-plugins]'),
 				baseUrl = ( requireJs.length ) ? requireJs[0].src.replace( /\/?aloha.js$/ , '' ) : '';
-			
+
 			if ( typeof Aloha.settings.baseUrl === "string" ) {
 				baseUrl = Aloha.settings.baseUrl;
 			}
-			
+
 			return baseUrl;
 		},
 

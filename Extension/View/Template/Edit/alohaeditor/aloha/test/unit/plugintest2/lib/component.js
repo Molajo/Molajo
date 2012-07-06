@@ -1,14 +1,14 @@
 define(
-['plugintest1/componenttype'],
-function( componenttype ) {
+['plugintest1/resourcetype'],
+function( resourcetype ) {
     
  
-    var component = componenttype.extend({
+    var resource = resourcetype.extend({
         doOther: function() {
             return 'didOther';
         }
     });
-	
-    return new component();
+
+    return new resource();
  
 });

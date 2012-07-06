@@ -24,7 +24,7 @@
 <field name="item_wrap_view_css_id" type="char" null="1" default="" values=""/>
 <field name="item_wrap_view_css_class" type="char" null="1" default="" values=""/>
 <field name="item_model_name" type="char" null="1" default="" values=""/>
-<field name="item_model_type" type="char" null="1" default="" values="Table,Component,Module"/>
+<field name="item_model_type" type="char" null="1" default="" values="Table,Resource,Module"/>
 <field name="item_model_query_object" type="char" null="1" default="" values=""/>
 
 <field name="form_theme_id" type="integer" null="1" default="98" values=""/>
@@ -38,5 +38,5 @@
 <field name="form_wrap_view_css_id" type="char" null="1" default="" values=""/>
 <field name="form_wrap_view_css_class" type="char" null="1" default="" values=""/>
 <field name="form_model_name" type="char" null="1" default="" values=""/>
-<field name="form_model_type" type="char" null="1" default="" values="Table,Component,Module"/>
+<field name="form_model_type" type="char" null="1" default="" values="Table,Resource,Module"/>
 <field name="form_model_query_object" type="char" null="1" default="" values=""/>

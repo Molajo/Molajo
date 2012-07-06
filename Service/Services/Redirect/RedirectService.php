@@ -10,12 +10,12 @@ defined('MOLAJO') or die;
 
 use Molajo\Service\Services;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Resource\HttpFoundation\RedirectResponse;
 
 /**
  * Redirect
  *
- * http://api.symfony.com/2.0/Symfony/Component/HttpFoundation/RedirectResponse.html
+ * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/RedirectResponse.html
  *
  * @package   Molajo
  * @subpackage  Services
@@ -110,7 +110,7 @@ Class RedirectService
     /**
      * redirect
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Resource\HttpFoundation\RedirectResponse
      * @since  1.0
      */
     public function redirect($url = null, $code = null)

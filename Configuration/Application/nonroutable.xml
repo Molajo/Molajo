@@ -11,5 +11,5 @@
     <parameter name="end" filter="int"/>
     <parameter name="tag" filter="char"/>
     <parameter name="category" filter="char"/>
-    <parameter name="collection" filter="char"/>
+    <parameter name="group" filter="char"/>
 </list>

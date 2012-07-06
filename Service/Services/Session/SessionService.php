@@ -8,18 +8,18 @@ namespace Molajo\Service\Services\Session;
 
 use Molajo\Service\Services;
 
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeMemcachedSessionHandler;
+use Symfony\Resource\HttpFoundation\Session\Session;
+use Symfony\Resource\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Resource\HttpFoundation\Session\Storage\Handler\NativeMemcachedSessionHandler;
 
 defined('MOLAJO') or die;
 
 /**
  * Session
  *
- * http://symfony.com/doc/master/components/http_foundation/sessions.html
+ * http://symfony.com/doc/master/resources/http_foundation/sessions.html
  *
- * http://api.symfony.com/2.0/Symfony/Component/HttpFoundation/Session.html
+ * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Session.html
  *
  * @package   Molajo
  * @subpackage  Services
@@ -137,7 +137,7 @@ Class SessionService
 
 		$this->addClassesToCompile(array(
 			'Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener',
-			'Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface',
+			'Symfony\\Resource\\HttpFoundation\\SessionStorage\\SessionStorageInterface',
 			$container->getDefinition('session')->getClass(),
 		));
 

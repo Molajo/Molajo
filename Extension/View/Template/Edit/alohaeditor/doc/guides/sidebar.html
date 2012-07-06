@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -110,14 +110,14 @@
 </ul>
 
           </div>
-        
+
 <div class="warning"><p>This guide is currently a draft for the Aloha Editor jQuery Ui, which is supposed to be the next generation Ui for Aloha Editor. Your feedback is welcome!</p></div>
 <h3 id="sidebar-concept">1 Sidebar concept</h3>
-<p>The Sidebar provides to <strong>bars</strong> (left, right) and each bar may contain <strong>tabs</strong>. You may add ui components to tabs. There is only one instance of a the sidebar  and it changes its items depending on the acitvated editable.</p>
+<p>The Sidebar provides to <strong>bars</strong> (left, right) and each bar may contain <strong>tabs</strong>. You may add ui resources to tabs. There is only one instance of a the sidebar  and it changes its items depending on the acitvated editable.</p>
 <p><img src="images/toolbar.png" style="width:600px"></p>
 <h3 id="sidebar-integration">2 Sidebar integration</h3>
 <p>You may embed the toolbar in a given container in your site or let it float. If you don&#8217;t provide a container the toolbar will append a <tt>div</tt> element as last element of the documents body and position the toolbar as defined.</p>
-<p>The Sidebar provides <strong>tabs</strong>. You may define the name of your tabs as key.  The following example defines a toolbar with the 2 tabs <strong>attributes</strong> and <strong>comments</strong>. The name of the tabs is passed to <code>i18n</code> which translates them to the currently displayed language. The <strong>attributes</strong> tab has on component <strong>attributepanel</strong>. You may define the components that should be rendered by the group.</p>
+<p>The Sidebar provides <strong>tabs</strong>. You may define the name of your tabs as key.  The following example defines a toolbar with the 2 tabs <strong>attributes</strong> and <strong>comments</strong>. The name of the tabs is passed to <code>i18n</code> which translates them to the currently displayed language. The <strong>attributes</strong> tab has on resource <strong>attributepanel</strong>. You may define the resources that should be rendered by the group.</p>
 <div class="code_container">
 <pre class="brush: javascript; gutter: false; toolbar: false">
 
@@ -133,8 +133,8 @@ Aloha.settings.sidebar = {
 
 	Aloha.ui.toolbar.appendTo('#aloha-toolbar');
 </pre></div>
-<h3 id="component-configuration">3 Component configuration</h3>
-<p>You may define the name of your tabs and groups as key.  The following example defines a toolbar with the 3 tabs <strong>format</strong>, <strong>insert</strong> and <strong>link</strong>. The name of the tabs and groups is passed to <code>i18n</code> which translates them to the currently displayed language. The <strong>format</strong> tab has the two groups <strong>inline</strong> and <strong>paragraph</strong>. You may define the components that should be rendered by the group.</p>
+<h3 id="resource-configuration">3 Resource configuration</h3>
+<p>You may define the name of your tabs and groups as key.  The following example defines a toolbar with the 3 tabs <strong>format</strong>, <strong>insert</strong> and <strong>link</strong>. The name of the tabs and groups is passed to <code>i18n</code> which translates them to the currently displayed language. The <strong>format</strong> tab has the two groups <strong>inline</strong> and <strong>paragraph</strong>. You may define the resources that should be rendered by the group.</p>
 <div class="code_container">
 <pre class="brush: javascript; gutter: false; toolbar: false">
 
@@ -151,7 +151,7 @@ Aloha.settings.sidebar = {
     	},
     	link: {
     		link: [ 'editlink' ]
-    	} 
+    	}
     },
 	handle: {
 		top: '100px'
@@ -168,7 +168,7 @@ Aloha.settings.sidebar = {
           <ol class="chapters">
             <li><a href="#sidebar-concept"><p>Sidebar concept</p>
 </a></li><li><a href="#sidebar-integration"><p>Sidebar integration</p>
-</a></li><li><a href="#component-configuration"><p>Component configuration</p>
+</a></li><li><a href="#resource-configuration"><p>Resource configuration</p>
 </a></li><li><a href="#behavior-configuration"><p>Behavior configuration</p>
 </a></li>
           </ol>

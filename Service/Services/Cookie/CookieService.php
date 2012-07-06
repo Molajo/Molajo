@@ -8,14 +8,14 @@ namespace Molajo\Service\Services\Cookie;
 
 use Molajo\Service\Services;
 
-use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Resource\HttpFoundation\Cookie;
 
 defined('MOLAJO') or die;
 
 /**
  * Redirect
  *
- * http://api.symfony.com/2.0/Symfony/Component/HttpFoundation/Cookie.html
+ * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Cookie.html
  *
  * @package   Molajo
  * @subpackage  Services

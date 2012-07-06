@@ -1,0 +1,6 @@
+<extension type="Resource" version="1.0" extends="Categories">
+    <model
+            name="CategoryCollections"
+            catalog_type_id="3000">
+    </model>
+</extension>

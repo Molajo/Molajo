@@ -3,14 +3,14 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Aloha Editor Plugin API Test Suite</title>
-	
+
 	<!-- include qunit -->
 	<link rel="stylesheet" href="../vendor/qunit.css" type="text/css"/>
 	<script type="text/javascript" src="../vendor/jquery-1.6.1.js"></script>
 	<script type="text/javascript" src="../vendor/qunit.js"></script>
 	<script>
 
-	
+
 		var Aloha = {};
 		Aloha.settings = {
 			jQuery: $,
@@ -28,16 +28,16 @@
 			},
 			locale: 'de'
 		};
-		
+
 		// include testswarm inject script
 		var url = window.location.search;
-		url = decodeURIComponent( url.slice( url.indexOf("swarmURL=") + 9 ) );
+		url = decodeURIResource( url.slice( url.indexOf("swarmURL=") + 9 ) );
 		if ( url && url.indexOf("http") === 0 ) {
 			require(["http://testswarm.aloha-editor.org/js/inject.js?" + (new Date).getTime()], function() {});
 		}
-		
+
 	</script>
-	
+
 	<!-- include aloha -->
 	<script src="../../lib/aloha.js" data-aloha-plugins="custom1/plugintest1, custom2/plugintest2"></script>
 

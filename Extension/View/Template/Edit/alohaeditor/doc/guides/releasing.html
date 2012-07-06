@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -140,29 +140,29 @@
 <pre class="brush: plain; gutter: false; toolbar: false">
 
 [INFO] Scanning for projects...
-[INFO]                                                                         
+[INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building Aloha Editor 0.20.0-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
-[INFO] 
+[INFO]
 [INFO] --- maven-release-plugin:2.0:prepare (default-cli) @ alohaeditor ---
 [INFO] Verifying that there are no local modifications...
 [INFO] Executing: /bin/sh -c cd /home/release_prepare/alohaeditor-fork &amp;&amp; git status
 [INFO] Working directory: /home/release_prepare/alohaeditor-fork
 [INFO] Checking dependencies and plugins for snapshots ...
-What is the release version for &quot;Aloha Editor&quot;? (org.alohaeditor:alohaeditor) 0.20.0: : 
-What is SCM release tag or label for &quot;Aloha Editor&quot;? (org.alohaeditor:alohaeditor) alohaeditor-0.20.0: : 
-What is the new development version for &quot;Aloha Editor&quot;? (org.alohaeditor:alohaeditor) 0.20.1-SNAPSHOT: : 
+What is the release version for &quot;Aloha Editor&quot;? (org.alohaeditor:alohaeditor) 0.20.0: :
+What is SCM release tag or label for &quot;Aloha Editor&quot;? (org.alohaeditor:alohaeditor) alohaeditor-0.20.0: :
+What is the new development version for &quot;Aloha Editor&quot;? (org.alohaeditor:alohaeditor) 0.20.1-SNAPSHOT: :
 [INFO] Transforming 'Aloha Editor'...
 [INFO] Not generating release POMs
 [INFO] Executing goals 'clean verify'...
 [WARNING] Maven will be executed in interactive mode, but no input stream has been configured for this MavenInvoker instance.
 [INFO] [INFO] Scanning for projects...
-[INFO] [INFO]                                                                         
+[INFO] [INFO]
 [INFO] [INFO] ------------------------------------------------------------------------
 [INFO] [INFO] Building Aloha Editor 0.20.0
 [INFO] [INFO] ------------------------------------------------------------------------
-[INFO] [INFO] 
+[INFO] [INFO]
 [INFO] [INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ alohaeditor ---
 [INFO] [INFO] Deleting /home/release_prepare/alohaeditor-fork/target
 </pre></div><p>4. Test the created preview release in all supported browsers.</p>
@@ -183,7 +183,7 @@ What is the new development version for &quot;Aloha Editor&quot;? (org.alohaedit
 </pre></div><p>8. Update the dev branch</p>
 <div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
- 
+
   git checkout dev
   git pull hotfix-0.20.0
 </pre></div><p>9. Update the dev branch version to 0.21.0-dev-<span class="caps">SNAPSHOT</span></p>
@@ -195,7 +195,7 @@ What is the new development version for &quot;Aloha Editor&quot;? (org.alohaedit
 <p>1. Create a new hotfix branch from master</p>
 <div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-  
+
   git checkout -b hotfix-0.20.1 master
   git push origin hotfix-0.20.1
 </pre></div><p>2. Rename the old release/hotfix branch   git checkout release-0.20.0   git checkout -b release-0.20.0-closed   git branch -d release-0.20.0   git push upstream release-0.20.0-closed   git push upstream :release-0.20.0</p>

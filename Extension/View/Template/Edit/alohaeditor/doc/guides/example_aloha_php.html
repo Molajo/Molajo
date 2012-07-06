@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -109,7 +109,7 @@
 <p>You can view it here: [http://www.aloha-editor.com/demos/php-demo/aloha-php.php aloha-php.php]</p>
 
           </div>
-        
+
 <div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 
@@ -136,7 +136,7 @@ function initSession() {
 }
 
 /**
-* Transforms session values into a set of div's 
+* Transforms session values into a set of div's
 */
 function showContents() {
   foreach ($_SESSION as $key =&gt; $value) {
@@ -173,13 +173,13 @@ initSession();
 	GENTICS.Aloha.settings = {
 		&quot;i18n&quot;: {&quot;current&quot;: &quot;en&quot;},
 		&quot;ribbon&quot;: false,
-		&quot;plugins&quot;: { 
-			&quot;com.gentics.aloha.plugins.GCN&quot;: { 
-				&quot;enabled&quot;: false 
+		&quot;plugins&quot;: {
+			&quot;com.gentics.aloha.plugins.GCN&quot;: {
+				&quot;enabled&quot;: false
 			},
-		 	&quot;com.gentics.aloha.plugins.Format&quot;: { 
+		 	&quot;com.gentics.aloha.plugins.Format&quot;: {
 				config : [ 'b', 'i','u','del','sub','sup', 'p', 'title', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'removeFormat'],
-			} 
+			}
 	 	}
 	};
 
@@ -190,7 +190,7 @@ initSession();
 	});
 
 	GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, &quot;editableDeactivated&quot;, saveEditable);
- 
+
 &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -204,7 +204,7 @@ showContents();
 
       </div>
       <div id="subCol">
-        
+
       </div>
     </div>
   </div>

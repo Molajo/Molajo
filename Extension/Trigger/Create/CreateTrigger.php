@@ -63,7 +63,7 @@ class CreateTrigger extends ContentTrigger
 	protected function createExtension()
 	{
 		$sourceFolder = 'Samples';
-		$catalog_type = 'Component';
+		$catalog_type = 'Resource';
 		$catalog_type_id = $this->parameters['content_catalog_type_id'];
 
 		/** Determine Source Folder for files to copy */
@@ -108,7 +108,7 @@ class CreateTrigger extends ContentTrigger
 	public function onAfterDelete()
 	{
 		/** Determine Destination Folder for target location */
-		$destinationFolder = $this->getFolderToDelete('Component', $this->data->title);
+		$destinationFolder = $this->getFolderToDelete('Resource', $this->data->title);
 		if ($destinationFolder === false) {
 			return false;
 		}

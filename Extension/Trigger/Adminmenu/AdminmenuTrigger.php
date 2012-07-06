@@ -119,7 +119,7 @@ class AdminmenuTrigger extends ContentTrigger
 		// 1. Home
 		$menuArray[] = 'Adminnavigationbar';
 		$menuArray[] = 'Adminsectionmenu';
-		$menuArray[] = 'Admincomponentmenu';
+		$menuArray[] = 'Adminresourcemenu';
 		$menuArray[] = 'Adminitemmenu';
 
 		$i = 0;

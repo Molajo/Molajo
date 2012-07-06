@@ -228,8 +228,8 @@ Class Application
 	protected function route()
 	{
 //$results = Services::Install()->content();
-//$results = Services::Install()->testCreateExtension('Data Dictionary', 'Components');
-//$results = Services::Install()->testDeleteExtension('Test', 'Components');
+//$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
+//$results = Services::Install()->testDeleteExtension('Test', 'Resources');
 
 		Services::Debug()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
 
@@ -520,9 +520,9 @@ Class Application
 		} else {
 			define('EXTENSIONS', BASE_FOLDER . '/Molajo/Extension');
 		}
-		if (defined('EXTENSIONS_COMPONENTS')) {
+		if (defined('EXTENSIONS_RESOURCES')) {
 		} else {
-			define('EXTENSIONS_COMPONENTS', EXTENSIONS . '/Component');
+			define('EXTENSIONS_RESOURCES', EXTENSIONS . '/Resource');
 		}
 		if (defined('EXTENSIONS_LANGUAGES')) {
 		} else {
@@ -557,9 +557,9 @@ Class Application
 		} else {
 			define('EXTENSIONS_URL', BASE_URL . 'Molajo/Extension');
 		}
-		if (defined('EXTENSIONS_COMPONENTS_URL')) {
+		if (defined('EXTENSIONS_RESOURCES_URL')) {
 		} else {
-			define('EXTENSIONS_COMPONENTS_URL', BASE_URL . 'Molajo/Extension/Component');
+			define('EXTENSIONS_RESOURCES_URL', BASE_URL . 'Molajo/Extension/Resource');
 		}
 
 		if (defined('EXTENSIONS_MODULES_URL')) {

@@ -3,12 +3,12 @@ define(
 function() {
     
  
-    var componenttype = Class.extend({
+    var resourcetype = Class.extend({
         doSome: function() {
             return 'didSome';
         }
     });
  
-    return componenttype;
+    return resourcetype;
  
 });
