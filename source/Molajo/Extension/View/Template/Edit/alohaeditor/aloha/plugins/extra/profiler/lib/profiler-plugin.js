@@ -6,12 +6,12 @@
  *
  * Aloha Profiler
  * --------------
- * Provides a useful interface to profile some of Aloha components and their
+ * Provides a useful interface to profile some of Aloha resources and their
  * methods.
  *
  * Potentially process intensive methods:
- *		Aloha.Profiler.profileAlohaComponent('Markup.preProcessKeyStrokes')
- *		Aloha.Profiler.profileAlohaComponent('Selection._updateSelection')
+ *		Aloha.Profiler.profileAlohaResource('Markup.preProcessKeyStrokes')
+ *		Aloha.Profiler.profileAlohaResource('Selection._updateSelection')
  */
 
 window.define( [
@@ -29,7 +29,7 @@ window.define( [
              ContentHandlerManager, FloatingMenu, console ) {
 	// 'caller', 'callee', and 'arguments' properties may not be accessed on
 	// strict mode functions or the arguments objects for calls to them
-	// 
+	//
 
 	var jQuery = Aloha.jQuery,
 	    profiledFunctions = [],
@@ -120,7 +120,7 @@ window.define( [
 			content  : '' +
 				'<div id="aloha-devtool-profiler-container">' +
 					'<input id="aloha-devtool-profiler-input" ' +
-						'value="Aloha.Profiler.profileAlohaComponent(\'Markup.preProcessKeyStrokes\')" />' +
+						'value="Aloha.Profiler.profileAlohaResource(\'Markup.preProcessKeyStrokes\')" />' +
 					'<ul id="aloha-devtool-profiler-console"></ul>' +
 				'</div>',
 			onInit   : function() {
@@ -140,7 +140,7 @@ window.define( [
 		} );
 		sidebar.show().open();
 	};
-	
+
 	var PanelConsole = {
 		log: function() {
 			jQuery( '#aloha-devtool-profiler-console' )
@@ -161,25 +161,25 @@ window.define( [
 		loadedDependencies: Array.prototype.slice.call( arguments ),
 
 		/**
-		 * Provides a better interface to access various components of Aloha.
-		 * eg: Aloha.Profiler.profile(Aloha.Profiler.alohaComponents[ 'Markup' ], 'preProcessKeyStrokes')
+		 * Provides a better interface to access various resources of Aloha.
+		 * eg: Aloha.Profiler.profile(Aloha.Profiler.alohaResources[ 'Markup' ], 'preProcessKeyStrokes')
 		 */
-		alohaComponents: {},
-		
+		alohaResources: {},
+
 		panel: null,
 
 		/**
-		 * Initializes Profiler plugin by populating alohaComponents with all
+		 * Initializes Profiler plugin by populating alohaResources with all
 		 * arguments of our define function, mapping name, to object
 		 */
 		init: function() {
 			var j = argNames.length;
 			while ( --j >= 0 ) {
-				this.alohaComponents[ argNames[ j ] ] = args[ j ];
+				this.alohaResources[ argNames[ j ] ] = args[ j ];
 			}
-			
+
 			var that = this;
-			
+
 			Aloha.ready( function() {
 				if ( Aloha.Sidebar && Aloha.Sidebar.right ) {
 					that.panel = initSidebarPanel( Aloha.Sidebar.right );
@@ -192,14 +192,14 @@ window.define( [
 		},
 
 		/**
-		 * Shortcut to profile one of the Aloha components that was required by
+		 * Shortcut to profile one of the Aloha resources that was required by
 		 * Aloha Profiler.
 		 *
 		 * @param {String} path
 		 * @param {String} fnName
 		 */
-		profileAlohaComponent: function( path, fnName ) {
-			var parts = parseObjectPath( path, this.alohaComponents );
+		profileAlohaResource: function( path, fnName ) {
+			var parts = parseObjectPath( path, this.alohaResources );
 			return this.profile( parts.parentObj, fnName || parts.propName );
 		},
 

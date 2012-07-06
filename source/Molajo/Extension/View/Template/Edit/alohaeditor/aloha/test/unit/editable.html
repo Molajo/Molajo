@@ -17,11 +17,11 @@
 	<!-- include testswarm inject script -->
 	<script>
 
-		var 
+		var
 			require = Aloha._require,
 			define = Aloha.define,
 			url = window.location.search;
-		url = decodeURIComponent( url.slice( url.indexOf("swarmURL=") + 9 ) );
+		url = decodeURIResource( url.slice( url.indexOf("swarmURL=") + 9 ) );
 		if ( url && url.indexOf("http") === 0 ) {
 			require(["http://testswarm.aloha-editor.org/js/inject.js?" + (new Date).getTime()], function() {});
 		}
@@ -41,7 +41,7 @@
 	<h2 id="qunit-userAgent"></h2>
 	<ol id="qunit-tests"></ol>
 	<div id="qunit-fixture">
-	
+
 		<!-- References for plaintext tests -->
 		<div id="ref-plaintext">This is plain text</div>
 		<div id="ref-plaintext-start-enter"><br/>This is plain text</div>
@@ -97,51 +97,51 @@
 		<!-- References for List tests -->
 		<div id="ref-list"><ul><li>first</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-special1"><ul><li><b></b>word</li></ul></div>
-		
+
 		<div id="ref-list-firststart-enter"><ul><li></li><li>first</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firststart-dblenter"><ul><li></li><li></li><li>first</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firstmid-enter"><ul><li>fi</li><li>rst</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firstmid-dblenter"><ul><li>fi</li><li></li><li>rst</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firstend-enter"><ul><li>first</li><li></li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firstend-dblenter"><ul><li>first</li><li></li><li></li><li>second</li><li>third</li></ul></div>
-		
+
 		<div id="ref-list-secondstart-enter"><ul><li>first</li><li></li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-secondstart-dblenter"><ul><li>first</li><li></li><li></li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-secondmid-enter"><ul><li>first</li><li>sec</li><li>ond</li><li>third</li></ul></div>
 		<div id="ref-list-secondmid-dblenter"><ul><li>first</li><li>sec</li><li></li><li>ond</li><li>third</li></ul></div>
 		<div id="ref-list-secondend-enter"><ul><li>first</li><li>second</li><li></li><li>third</li></ul></div>
 		<div id="ref-list-secondend-dblenter"><ul><li>first</li><li>second</li><li></li><li></li><li>third</li></ul></div>
-		
+
 		<div id="ref-list-laststart-enter"><ul><li>first</li><li>second</li><li></li><li>third</li></ul></div>
 		<div id="ref-list-laststart-dblenter"><ul><li>first</li><li>second</li><li></li><li></li><li>third</li></ul></div>
 		<div id="ref-list-lastmid-enter"><ul><li>first</li><li>second</li><li>th</li><li>ird</li></ul></div>
 		<div id="ref-list-lastmid-dblenter"><ul><li>first</li><li>second</li><li>th</li><li></li><li>ird</li></ul></div>
 		<div id="ref-list-lastend-enter"><ul><li>first</li><li>second</li><li>third</li><li></li></ul></div>
 		<div id="ref-list-lastend-dblenter"><ul><li>first</li><li>second</li><li>third</li></ul><p></p></div>
-		
+
 		<div id="ref-list-firststart-shift-enter"><ul><li><br/>first</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firststart-shift-dblenter"><ul><li><br/><br/>first</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firstmid-shift-enter"><ul><li>fi<br/>rst</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firstmid-shift-dblenter"><ul><li>fi<br/><br/>rst</li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firstend-shift-enter"><ul><li>first<br/></li><li>second</li><li>third</li></ul></div>
 		<div id="ref-list-firstend-shift-dblenter"><ul><li>first<br/><br/></li><li>second</li><li>third</li></ul></div>
-		
+
 		<div id="ref-list-secondstart-shift-enter"><ul><li>first</li><li><br/>second</li><li>third</li></ul></div>
 		<div id="ref-list-secondstart-shift-dblenter"><ul><li>first</li><li><br/><br/>second</li><li>third</li></ul></div>
 		<div id="ref-list-secondmid-shift-enter"><ul><li>first</li><li>sec<br/>ond</li><li>third</li></ul></div>
 		<div id="ref-list-secondmid-shift-dblenter"><ul><li>first</li><li>sec<br/><br/>ond</li><li>third</li></ul></div>
 		<div id="ref-list-secondend-shift-enter"><ul><li>first</li><li>second<br/></li><li>third</li></ul></div>
 		<div id="ref-list-secondend-shift-dblenter"><ul><li>first</li><li>second<br/><br/></li><li>third</li></ul></div>
-		
+
 		<div id="ref-list-laststart-shift-enter"><ul><li>first</li><li>second</li><li><br/>third</li></ul></div>
 		<div id="ref-list-laststart-shift-dblenter"><ul><li>first</li><li>second</li><li><br/><br/>third</li></ul></div>
 		<div id="ref-list-lastmid-shift-enter"><ul><li>first</li><li>second</li><li>th<br/>ird</li></ul></div>
 		<div id="ref-list-lastmid-shift-dblenter"><ul><li>first</li><li>second</li><li>th<br/><br/>ird</li></ul></div>
 		<div id="ref-list-lastend-shift-enter"><ul><li>first</li><li>second</li><li>third<br/></li></ul></div>
 		<div id="ref-list-lastend-shift-dblenter"><ul><li>first</li><li>second</li><li>third<br/><br/></li></ul></div>
-		
+
 		<div id="ref-list-enter-emptyb"><ul><li><b></b></li><li>word</li></ul></div>
-		
+
 	</div>
 	<div id="edit" style="margin:20px; border:1px solid #000000;"></div>
 </body>

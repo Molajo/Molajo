@@ -492,8 +492,8 @@ Class ExtensionHelper
 	{
 		if ((int)$catalog_type_id == 0) {
 
-			if ($catalog_type == 'Component') {
-				return CATALOG_TYPE_EXTENSION_COMPONENT;
+			if ($catalog_type == 'Resource') {
+				return CATALOG_TYPE_EXTENSION_RESOURCE;
 
 			} elseif ($catalog_type == 'Language') {
 				return CATALOG_TYPE_EXTENSION_LANGUAGE;
@@ -519,8 +519,8 @@ Class ExtensionHelper
 
 		} else {
 
-			if ($catalog_type_id == CATALOG_TYPE_EXTENSION_COMPONENT) {
-				return 'Component';
+			if ($catalog_type_id == CATALOG_TYPE_EXTENSION_RESOURCE) {
+				return 'Resource';
 
 			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_LANGUAGE) {
 				return 'Language';

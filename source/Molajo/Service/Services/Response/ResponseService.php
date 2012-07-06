@@ -8,14 +8,14 @@ namespace Molajo\Service\Services\Response;
 
 use Molajo\Service\Services;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Resource\HttpFoundation\Response;
 
 defined('MOLAJO') or die;
 
 /**
  * Response
  *
- * http://api.symfony.com/2.0/Symfony/Component/HttpFoundation/Response.html
+ * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Response.html
  *
  * @package   Molajo
  * @subpackage  Services

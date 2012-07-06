@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -150,7 +150,7 @@ var value = Aloha.queryCommandValue( 'link' );
 <p>This simple example shows how you could implement a bold button.</p>
 <div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
- 
+
 &lt;html&gt;
 &lt;head&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;http://aloha-editor.org/builds/development/latest/src/css/aloha.css&quot; type=&quot;text/css&quot;&gt;
@@ -186,7 +186,7 @@ Aloha.ready( function() {
 	        button.css( 'background-color', 'yellow' );
 	        return;
 	    }
-	    button.css( 'background-color', 
+	    button.css( 'background-color',
 	            Aloha.queryCommandState( 'bold' ) ? 'lightgreen' : 'orange'
 	    );
 	}
@@ -231,7 +231,7 @@ if ( Aloha.getSelection().rangeCount &gt; 0 ) {
 &lt;script&gt;
 // Bind to Aloha Ready Event
 Aloha.ready( function() {
-var 
+var
 	range = Aloha.createRange(),
 	begin = jQuery( 'p' ),
 	end = jQuery( 'i' );

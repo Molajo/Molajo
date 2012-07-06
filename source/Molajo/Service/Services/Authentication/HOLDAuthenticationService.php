@@ -346,7 +346,7 @@ Class AuthenticationResponse
      * The End User's date of birth as YYYY-MM-DD. Any values whose representation uses
      * fewer than the specified number of digits should be zero-padded. The length of this
      * value MUST always be 10. If the End User user does not want to reveal any particular
-     * component of this value, it MUST be set to zero.
+     * resource of this value, it MUST be set to zero.
      *
      * For instance, if a End User wants to specify that his date of birth is in 1980, but
      * not the month or day, the value returned SHALL be "1980-00-00".

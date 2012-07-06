@@ -6,14 +6,14 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 $class = '';
-$component = '';
-$componentTitle = '';
+$resource = '';
+$resourceTitle = '';
 if (count(Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs')) > 0) {
 	foreach (Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs') as $crumb) {
-		if ($crumb->component == 1) {
-			$componentTitle = $crumb->title;
-			$component = $crumb->url;
-			if ($component == Services::Registry()->get('Parameters', 'full_page_url')) {
+		if ($crumb->resource == 1) {
+			$resourceTitle = $crumb->title;
+			$resource = $crumb->url;
+			if ($resource == Services::Registry()->get('Parameters', 'full_page_url')) {
 				$class = ' class="active" ';
 			}
 			break;
@@ -23,4 +23,4 @@ if (count(Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs')) > 0) {
 defined('MOLAJO') or die; ?>
 <dl class="sub-nav">
 	<dt><?php echo Services::Language()->translate('STATUS'); ?></dt>
-	<dd<?php echo $class; ?>><a href="<?php echo $component; ?>"><?php echo $componentTitle; ?></a></dd>
+	<dd<?php echo $class; ?>><a href="<?php echo $resource; ?>"><?php echo $resourceTitle; ?></a></dd>

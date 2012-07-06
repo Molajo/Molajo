@@ -17,7 +17,7 @@
 	<!-- include testswarm inject script -->
 	<script>
 		var url = window.location.search;
-		url = decodeURIComponent( url.slice( url.indexOf("swarmURL=") + 9 ) );
+		url = decodeURIResource( url.slice( url.indexOf("swarmURL=") + 9 ) );
 		if ( url && url.indexOf("http") === 0 ) {
 			require(["http://testswarm.aloha-editor.org/js/inject.js?" + (new Date).getTime()], function() {});
 		}
@@ -45,7 +45,7 @@
 		<div id="ref-remove-simple-across">This is bold text</div>
 		<div id="ref-remove-simple-out">This is <b>bo</b>ld text</div>
 		<div id="ref-remove-simple-after">This is <b>bold</b> text</div>
-		
+
 		<!-- Reference for removing markup in paragraph -->
 		<div id="ref-remove-para"><p>This is <b>bold</b> text</p></div>
 		<div id="ref-remove-para-before"><p>This is <b>bold</b> text</p></div>
@@ -54,12 +54,12 @@
 		<div id="ref-remove-para-across"><p>This is bold text</p></div>
 		<div id="ref-remove-para-out"><p>This is <b>bo</b>ld text</p></div>
 		<div id="ref-remove-para-after"><p>This is <b>bold</b> text</p></div>
-		
+
 		<!-- Reference for removing markup from multiple occurrances -->
 		<div id="ref-remove-multi">This is <b>bold</b> text with more <b>bold</b> text</div>
 		<div id="ref-remove-multi-across">This is bold text with more bold text</div>
 		<div id="ref-remove-multi-bold2bold">This is <b>bo</b>ld text with more bo<b>ld</b> text</div>
-		
+
 		<!-- Reference for removing markup from nested occurrances -->
 		<div id="ref-remove-nested">This is <b>bold <i>italic</i> text</b> for testing</div>
 		<div id="ref-remove-nested-inner-into">This is <b>bold ita<i>lic</i> text</b> for testing</div>

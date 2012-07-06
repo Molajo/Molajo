@@ -7,34 +7,34 @@
 define(
 ['aloha','aloha/plugin', 'aloha/floatingmenu', 'i18n!attributes/nls/i18n', 'i18n!aloha/nls/i18n', 'css!attributes/css/attributes.css'],
 function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
-	
+
 
 	var
 		jQuery = Aloha.jQuery,
 		$ = jQuery,
 		GENTICS = window.GENTICS,
 		Aloha = window.Aloha;
-	
+
     return Plugin.create('attributes', {
 		_constructor: function(){
 			this._super('attributes');
 		},
-		
+
 		// namespace prefix for this plugin
     // Pseudo-namespace prefix
 		ns : 'aloha-attributes',
 		uid  : 'attributes',
 		// namespaced classnames
 		nsClasses : {},
-    
-    
+
+
 		supplant : function(str, obj) {
 			return str.replace(/\{([a-z0-9\-\_]+)\}/ig, function (str, p1, offset, s) {
 				var replacement = obj[p1] || str;
 				return (typeof replacement == 'function') ? replacement() : replacement;
 			});
 		},
-		
+
 		/**
 		 * Wrapper to all the supplant method on a given string, taking the
 		 * nsClasses object as the associative array containing the replacement
@@ -46,9 +46,9 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 		renderTemplate : function(str) {
 			return (typeof str === 'string') ? this.supplant(str, this.nsClasses) : str;
 		},
-		
+
 		/**
-		 * Generates a selector string with this component's namepsace prefixed the
+		 * Generates a selector string with this resource's namepsace prefixed the
 		 * each classname
 		 *
 		 * Usage:
@@ -63,9 +63,9 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 			$.each(arguments, function () { strBldr.push('.' + (this == '' ? prx : prx + '-' + this)); });
 			return strBldr.join(' ').trim();
 		},
-		
+
 		/**
-		 * Generates s string with this component's namepsace prefixed the each
+		 * Generates s string with this resource's namepsace prefixed the each
 		 * classname
 		 *
 		 * Usage:
@@ -80,11 +80,11 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 			$.each(arguments, function () { strBldr.push(this == '' ? prx : prx + '-' + this); });
 			return strBldr.join(' ').trim();
 		},
-		
+
 		config: ['true'],
-		
+
 		//activeOn: 'a,span,div,p,q,blockquote,h1,h2,h3,h4,h5,h6,em,i,b',
-		
+
 		activeOn : function(effective) {
 			if (typeof this.settings.disabled === 'boolean' && this.settings.disabled) {
 				return false;
@@ -94,7 +94,7 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 			}
 			return false;
 		},
-				
+
 		/**
 		 * Initialize the plugin
 		 */
@@ -114,11 +114,11 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 			if ( typeof this.settings.activeOn !== 'undefined') {
 				this.activeOn = this.settings.activeOn;
 			}
-			Aloha.ready( function (ev, sidebars) { 
-				that.initSidebar(Aloha.Sidebar.right); 
+			Aloha.ready( function (ev, sidebars) {
+				that.initSidebar(Aloha.Sidebar.right);
 			});
 		},
-				
+
 		getSidebarContent: function() {
 			return this.renderTemplate(
 					'<div class="{container}">\
@@ -138,7 +138,7 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 					</div>'
 				);
 		},
-		
+
 		updateSidebarWithAttributes: function() {
 			var that = this;
 			var el = this.effective[0];
@@ -152,7 +152,7 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 			$container.find(this.nsSel('iteminput')).blur(function(){
 				var value = jQuery(this).val();
 				var name = jQuery(this).attr('data-attrname');
-				
+
 				if (typeof value == 'undefined' || value == '') {
 					jQuery(this).parents(that.nsSel('item')).remove();
 					pl.correchtHeight();
@@ -163,27 +163,27 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 			var elemheader = this.content.find('#' + this.nsClass('element'));
 			elemheader.html("Element: " + el.tagName);
 		},
-		
+
 		correctHeight: function() {
 			this.sidebar.correctHeight();
 		},
-		
+
 		initSidebar: function(sidebar) {
 			var pl = this;
 			pl.sidebar = sidebar;
 			var sidebarcontent = this.getSidebarContent();
 			sidebar.addPanel({
-                    
+
                     id         : pl.nsClass('sidebar-panel'),
                     title     : 'Attribute',
                     content     : '',
                     expanded : true,
                     activeOn : function(ef){return pl.activeOn(ef);},
-                    
+
                     onInit     : function () {
                         var that = this;
                         pl.content = this.setContent(sidebarcontent).content;
-                        
+
                         pl.content.find('#'+pl.nsClass('newattributebutton')).click(function () {
                             var name = jQuery('#'+pl.nsClass('newattributename')).val();
 							var wert = jQuery('#'+pl.nsClass('newattributewert')).val();
@@ -201,7 +201,7 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 							that.content.find(nsSel('input')).val(that.effective.attr('id'));
                         });*/
                     },
-                    
+
                     onActivate: function (effective) {
 						var that = this;
 						that.effective = effective;
@@ -210,7 +210,7 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore) {
 						pl.updateSidebarWithAttributes();
 						pl.correctHeight();
                     }
-                    
+
                 });
 		}
 	});

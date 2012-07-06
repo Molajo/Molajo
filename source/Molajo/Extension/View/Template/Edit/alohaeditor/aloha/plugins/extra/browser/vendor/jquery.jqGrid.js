@@ -1,14 +1,14 @@
-define(['aloha/jquery'], function(jQuery) { 
+define(['aloha/jquery'], function(jQuery) {
 	var $ = jQuery;
 
-/* 
-* jqGrid  4.0.0 - jQuery Grid 
-* Copyright (c) 2008, Tony Tomov, tony@trirand.com 
-* Dual licensed under the MIT and GPL licenses 
-* http://www.opensource.org/licenses/mit-license.php 
-* http://www.gnu.org/licenses/gpl-2.0.html 
-* Date:2011-04-09 
-* Modules: grid.base.js; jquery.fmatter.js; grid.custom.js; grid.common.js; grid.formedit.js; grid.filter.js; grid.inlinedit.js; grid.celledit.js; jqModal.js; jqDnR.js; grid.subgrid.js; grid.grouping.js; grid.treegrid.js; grid.import.js; JsonXml.js; grid.tbltogrid.js; grid.jqueryui.js; 
+/*
+* jqGrid  4.0.0 - jQuery Grid
+* Copyright (c) 2008, Tony Tomov, tony@trirand.com
+* Dual licensed under the MIT and GPL licenses
+* http://www.opensource.org/licenses/mit-license.php
+* http://www.gnu.org/licenses/gpl-2.0.html
+* Date:2011-04-09
+* Modules: grid.base.js; jquery.fmatter.js; grid.custom.js; grid.common.js; grid.formedit.js; grid.filter.js; grid.inlinedit.js; grid.celledit.js; jqModal.js; jqDnR.js; grid.subgrid.js; grid.grouping.js; grid.treegrid.js; grid.import.js; JsonXml.js; grid.tbltogrid.js; grid.jqueryui.js;
 */
 /*
  jqGrid  4.0  - jQuery Grid
@@ -449,7 +449,7 @@ c+g+d)+c+g:i.join(""))+"}"}else f+=typeof a==="string"?(b&&":")+'"'+a.replace(/\
 b=b.nextSibling}return a}};
 function tableToGrid(n,o){jQuery(n).each(function(){if(!this.grid){jQuery(this).width("99%");var a=jQuery(this).width(),d=jQuery("input[type=checkbox]:first",jQuery(this)),b=jQuery("input[type=radio]:first",jQuery(this));d=d.length>0;b=!d&&b.length>0;var l=d||b,c=[],g=[];jQuery("th",jQuery(this)).each(function(){if(c.length===0&&l){c.push({name:"__selection__",index:"__selection__",width:0,hidden:true});g.push("__selection__")}else{c.push({name:jQuery(this).attr("id")||jQuery.trim(jQuery.jgrid.stripHtml(jQuery(this).html())).split(" ").join("_"),
 index:jQuery(this).attr("id")||jQuery.trim(jQuery.jgrid.stripHtml(jQuery(this).html())).split(" ").join("_"),width:jQuery(this).width()||150});g.push(jQuery(this).html())}});var f=[],h=[],i=[];jQuery("tbody > tr",jQuery(this)).each(function(){var j={},e=0;jQuery("td",jQuery(this)).each(function(){if(e===0&&l){var k=jQuery("input",jQuery(this)),m=k.attr("value");h.push(m||f.length);k.attr("checked")&&i.push(m);j[c[e].name]=k.attr("value")}else j[c[e].name]=jQuery(this).html();e++});e>0&&f.push(j)});
-jQuery(this).empty();jQuery(this).addClass("scroll");jQuery(this).jqGrid(jQuery.extend({datatype:"local",width:a,colNames:g,colModel:c,multiselect:d},o||{}));for(a=0;a<f.length;a++){b=null;if(h.length>0)if((b=h[a])&&b.replace)b=encodeURIComponent(b).replace(/[.\-%]/g,"_");if(b===null)b=a+1;jQuery(this).jqGrid("addRowData",b,f[a])}for(a=0;a<i.length;a++)jQuery(this).jqGrid("setSelection",i[a])}})};
+jQuery(this).empty();jQuery(this).addClass("scroll");jQuery(this).jqGrid(jQuery.extend({datatype:"local",width:a,colNames:g,colModel:c,multiselect:d},o||{}));for(a=0;a<f.length;a++){b=null;if(h.length>0)if((b=h[a])&&b.replace)b=encodeURIResource(b).replace(/[.\-%]/g,"_");if(b===null)b=a+1;jQuery(this).jqGrid("addRowData",b,f[a])}for(a=0;a<i.length;a++)jQuery(this).jqGrid("setSelection",i[a])}})};
 (function(a){if(a.browser.msie&&a.browser.version==8)a.expr[":"].hidden=function(b){return b.offsetWidth===0||b.offsetHeight===0||b.style.display=="none"};a.jgrid._multiselect=false;if(a.ui)if(a.ui.multiselect){if(a.ui.multiselect.prototype._setSelected){var q=a.ui.multiselect.prototype._setSelected;a.ui.multiselect.prototype._setSelected=function(b,g){var c=q.call(this,b,g);if(g&&this.selectedList){var f=this.element;this.selectedList.find("li").each(function(){a(this).data("optionLink")&&a(this).data("optionLink").remove().appendTo(f)})}return c}}if(a.ui.multiselect.prototype.destroy)a.ui.multiselect.prototype.destroy=
 function(){this.element.show();this.container.remove();a.Widget===undefined?a.widget.prototype.destroy.apply(this,arguments):a.Widget.prototype.destroy.apply(this,arguments)};a.jgrid._multiselect=true}a.jgrid.extend({sortableColumns:function(b){return this.each(function(){function g(){c.p.disableClick=true}var c=this,f={tolerance:"pointer",axis:"x",scrollSensitivity:"1",items:">th:not(:has(#jqgh_cb,#jqgh_rn,#jqgh_subgrid),:hidden)",placeholder:{element:function(h){return a(document.createElement(h[0].nodeName)).addClass(h[0].className+
 " ui-sortable-placeholder ui-state-highlight").removeClass("ui-sortable-helper")[0]},update:function(h,j){j.height(h.currentItem.innerHeight()-parseInt(h.currentItem.css("paddingTop")||0,10)-parseInt(h.currentItem.css("paddingBottom")||0,10));j.width(h.currentItem.innerWidth()-parseInt(h.currentItem.css("paddingLeft")||0,10)-parseInt(h.currentItem.css("paddingRight")||0,10))}},update:function(h,j){var i=a(j.item).parent();i=a(">th",i);var m={};a.each(c.p.colModel,function(d){m[this.name]=d});var k=

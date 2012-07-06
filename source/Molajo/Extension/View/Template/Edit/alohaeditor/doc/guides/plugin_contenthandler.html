@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -112,7 +112,7 @@
 </ul>
 
           </div>
-        
+
 <div class="warning"><p>This guide is currently work-in-progress.</p></div>
 <h3 id="what-are-content-handlers">1 What are Content Handlers?</h3>
 <p><strong>Aloha Content Handlers</strong> (Content Handler) are used to sanitize content loaded or pasted in Aloha Editor.</p>
@@ -172,12 +172,12 @@
 	['aloha', 'aloha/jquery', 'aloha/contenthandlermanager'],
 	function(Aloha, jQuery, ContentHandlerManager) {
 		&quot;use strict&quot;;
-	
+
 		var MyContentHandler = ContentHandlerManager.createHandler({
 			handleContent: function( content ) {
-				
+
 				// do something with the content
-				
+
 				return content; // return as HTML text not jQuery/DOM object
 			}
 		});

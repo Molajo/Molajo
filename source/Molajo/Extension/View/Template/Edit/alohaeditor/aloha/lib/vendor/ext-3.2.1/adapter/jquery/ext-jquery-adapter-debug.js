@@ -1,7 +1,7 @@
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php 
+* Contributors http://aloha-editor.org/contribution.php
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -343,7 +343,7 @@ Company.data.CustomStore = function(config) { ... }
         urlEncode : function(o, pre){
             var empty,
                 buf = [],
-                e = encodeURIComponent;
+                e = encodeURIResource;
 
             Ext.iterate(o, function(key, item){
                 empty = Ext.isEmpty(item);
@@ -373,7 +373,7 @@ Ext.urlDecode("foo=1&bar=2&bar=3&bar=4", false); // returns {foo: "1", bar: ["2"
             }
             var obj = {},
                 pairs = string.split('&'),
-                d = decodeURIComponent,
+                d = decodeURIResource,
                 name,
                 value;
             Ext.each(pairs, function(pair) {
@@ -1218,10 +1218,10 @@ Ext.addBehaviors({
         /**
          * Copies a set of named properties fom the source object to the destination object.
          * <p>example:<pre><code>
-ImageComponent = Ext.extend(Ext.BoxComponent, {
-    initComponent: function() {
+ImageResource = Ext.extend(Ext.BoxResource, {
+    initResource: function() {
         this.autoEl = { tag: 'img' };
-        MyComponent.superclass.initComponent.apply(this, arguments);
+        MyResource.superclass.initResource.apply(this, arguments);
         this.initialBox = Ext.copyTo({}, this.initialConfig, 'x,y,width,height');
     }
 });
@@ -1247,10 +1247,10 @@ ImageComponent = Ext.extend(Ext.BoxComponent, {
         /**
          * Attempts to destroy any objects passed to it by removing all event listeners, removing them from the
          * DOM (if applicable) and calling their destroy functions (if available).  This method is primarily
-         * intended for arguments of type {@link Ext.Element} and {@link Ext.Component}, but any subclass of
-         * {@link Ext.util.Observable} can be passed in.  Any number of elements and/or components can be
+         * intended for arguments of type {@link Ext.Element} and {@link Ext.Resource}, but any subclass of
+         * {@link Ext.util.Observable} can be passed in.  Any number of elements and/or resources can be
          * passed into this function in a single call as separate arguments.
-         * @param {Mixed} arg1 An {@link Ext.Element}, {@link Ext.Component}, or an Array of either of these to destroy
+         * @param {Mixed} arg1 An {@link Ext.Element}, {@link Ext.Resource}, or an Array of either of these to destroy
          * @param {Mixed} arg2 (optional)
          * @param {Mixed} etc... (optional)
          */
@@ -1270,7 +1270,7 @@ ImageComponent = Ext.extend(Ext.BoxComponent, {
 
         /**
          * Attempts to destroy and then remove a set of named properties of the passed object.
-         * @param {Object} o The object (most likely a Component) who's properties you wish to destroy.
+         * @param {Object} o The object (most likely a Resource) who's properties you wish to destroy.
          * @param {Mixed} arg1 The name of the property to destroy and remove from the object.
          * @param {Mixed} etc... More property names to destroy and remove.
          */
@@ -1502,14 +1502,14 @@ Ext.zip(
         },
 
         /**
-         * This is shorthand reference to {@link Ext.ComponentMgr#get}.
-         * Looks up an existing {@link Ext.Component Component} by {@link Ext.Component#id id}
-         * @param {String} id The component {@link Ext.Component#id id}
-         * @return Ext.Component The Component, <tt>undefined</tt> if not found, or <tt>null</tt> if a
+         * This is shorthand reference to {@link Ext.ResourceMgr#get}.
+         * Looks up an existing {@link Ext.Resource Resource} by {@link Ext.Resource#id id}
+         * @param {String} id The resource {@link Ext.Resource#id id}
+         * @return Ext.Resource The Resource, <tt>undefined</tt> if not found, or <tt>null</tt> if a
          * Class was found.
         */
         getCmp : function(id){
-            return Ext.ComponentMgr.get(id);
+            return Ext.ResourceMgr.get(id);
         },
 
         /**
@@ -1737,7 +1737,7 @@ Ext.applyIf(Number.prototype, {
 // Start a simple clock task that updates a div once per second
 var updateClock = function(){
     Ext.fly('clock').update(new Date().format('g:i:s A'));
-} 
+}
 var task = {
     run: updateClock,
     interval: 1000 //1 second
@@ -1753,15 +1753,15 @@ Ext.TaskMgr.start({
 
  * </code></pre>
  * <p>See the {@link #start} method for details about how to configure a task object.</p>
- * Also see {@link Ext.util.DelayedTask}. 
- * 
+ * Also see {@link Ext.util.DelayedTask}.
+ *
  * @constructor
  * @param {Number} interval (optional) The minimum precision in milliseconds supported by this TaskRunner instance
  * (defaults to 10)
  */
 Ext.util.TaskRunner = function(interval){
     interval = interval || 10;
-    var tasks = [], 
+    var tasks = [],
     	removeQueue = [],
     	id = 0,
     	running = false,
@@ -1788,12 +1788,12 @@ Ext.util.TaskRunner = function(interval){
 	            t.onStop.apply(t.scope || t);
 	        }
 	    },
-	    
+
     	// private
     	runTasks = function(){
 	    	var rqLen = removeQueue.length,
-	    		now = new Date().getTime();	    			    		
-	    
+	    		now = new Date().getTime();
+
 	        if(rqLen > 0){
 	            for(var i = 0; i < rqLen; i++){
 	                tasks.remove(removeQueue[i]);
@@ -1803,7 +1803,7 @@ Ext.util.TaskRunner = function(interval){
 	                stopThread();
 	                return;
 	            }
-	        }	        
+	        }
 	        for(var i = 0, t, itime, rt, len = tasks.length; i < len; ++i){
 	            t = tasks[i];
 	            itime = now - t.taskRunTime;

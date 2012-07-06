@@ -377,9 +377,9 @@ Class DateService
 		$day_numbersOfWeek = array('S', 'M', 'T', 'W', 'T', 'F', 'S');
 		$firstDayOfMonth = mktime(0, 0, 0, $month, 1, $year);
 		$numberDays = date('t', $firstDayOfMonth);
-		$dateComponents = getdate($firstDayOfMonth);
-		$monthName = $dateComponents['month'];
-		$day_numberOfWeek = $dateComponents['wday'];
+		$dateResources = getdate($firstDayOfMonth);
+		$monthName = $dateResources['month'];
+		$day_numberOfWeek = $dateResources['wday'];
 
 		$calendar = "<table class='calendar'>";
 		$calendar .= "<caption>$monthName $year</caption>";

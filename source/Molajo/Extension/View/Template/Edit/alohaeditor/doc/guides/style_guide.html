@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -291,12 +291,12 @@ function(Observable) {
 define([],
 function() {
 	&quot;use strict&quot;;
-	
-	var component = Class.extend({
+
+	var resource = Class.extend({
 		// Class definition here
 	});
-	
-	return new component();
+
+	return new resource();
 });
 </pre></div><p>It will define a class and return a new instance that will be exported. Singletons are useful for global objects that have state.</p>
 <h3 id="requirejs-dependency-order">8 RequireJS Dependency Order</h3>

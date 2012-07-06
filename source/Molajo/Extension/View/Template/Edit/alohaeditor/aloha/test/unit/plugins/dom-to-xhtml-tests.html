@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Aloha Editor dom-to-xhtml Plugin Test Suite</title>
-	
+
 	<!-- include qunit -->
 	<link rel="stylesheet" href="../../vendor/qunit.css" type="text/css"/>
 	<script type="text/javascript" src="../../vendor/qunit.js"></script>
@@ -14,11 +14,11 @@
 		var Aloha = { jQuery: $ };
 	</script>
 	<script src="../../../lib/aloha.js" data-aloha-plugins="common/dom-to-xhtml"></script>
-	
+
 	<!-- include testswarm inject script -->
 	<script>
 		var url = window.location.search;
-		url = decodeURIComponent( url.slice( url.indexOf("swarmURL=") + 9 ) );
+		url = decodeURIResource( url.slice( url.indexOf("swarmURL=") + 9 ) );
 		if ( url && url.indexOf("http") === 0 ) {
 			require(["http://testswarm.aloha-editor.org/js/inject.js?" + (new Date).getTime()], function() {});
 		}

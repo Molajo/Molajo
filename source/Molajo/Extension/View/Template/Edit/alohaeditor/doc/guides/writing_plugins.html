@@ -71,7 +71,7 @@
       <dd><a href="ui.html">Aloha Editor Ui</a></dd>
       <dd><a href="toolbar.html">Aloha Editor toolbar</a></dd>
       <dd><a href="sidebar.html">Aloha Editor sidebar</a></dd>
-      <dd><a href="componenttypes.html">Aloha Editor UI API</a></dd>
+      <dd><a href="resourcetypes.html">Aloha Editor UI API</a></dd>
 </dl>
 <dl class="R">
     <dt>Plugins</dt>
@@ -246,9 +246,9 @@ define(
 ['core/plugin', 'css!myplugin/css/myplugin.css'],
 function(Plugin) {
     &quot;use strict&quot;;
-	
+
 	// Add this stage css is loaded
-	
+
     return Plugin.create('myplugin', {
         init: function() {
             // Executed on plugin initialization
@@ -276,14 +276,14 @@ function( Plugin ) {
     &quot;use strict&quot;;
 
     return Plugin.create('pluginA', {
-    	
+
     	dependencies: ['pluginB'],
 
         init: function() {
-        	
+
             // Executed on pluginA initialization
-        	// pluginB ist not available here 
-        
+        	// pluginB ist not available here
+
         	Aloha.require( 'pluginA/module', function( module ) {
 
         		// Use pluginB's module here

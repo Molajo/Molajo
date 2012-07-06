@@ -1,7 +1,7 @@
 // load testswarm agent
 (function() {
     var url = window.location.search;
-	url = decodeURIComponent( url.slice( url.indexOf("swarmURL=") + 9 ) );
+	url = decodeURIResource( url.slice( url.indexOf("swarmURL=") + 9 ) );
 	if ( !url || url.indexOf("http") !== 0 ) {
 		return;
 	}

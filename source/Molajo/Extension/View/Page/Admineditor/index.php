@@ -19,7 +19,7 @@ defined('MOLAJO') or die; ?>
 		<include:template name=Adminsectionmenu/>
 	</div>
 	<div class="nine columns">
-		<include:template name=Admincomponentmenu/>
+		<include:template name=Adminresourcemenu/>
 				<include:request/>
 	</div>
 </div>

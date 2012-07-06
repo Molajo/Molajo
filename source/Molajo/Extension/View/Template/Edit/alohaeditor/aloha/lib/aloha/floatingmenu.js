@@ -1,7 +1,7 @@
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php 
+* Contributors http://aloha-editor.org/contribution.php
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 define(
 ['aloha/core', 'aloha/jquery', 'aloha/ext', 'util/class', 'aloha/console', 'vendor/jquery.store'],
 function(Aloha, jQuery, Ext, Class, console) {
-	
+
 	var GENTICS = window.GENTICS;
 
 	/**
@@ -57,11 +57,11 @@ function(Aloha, jQuery, Ext, Class, console) {
 		},
 
 		/**
-		 * Get the EXT component representing the tab
-		 * @return EXT component (EXT.Panel)
+		 * Get the EXT resource representing the tab
+		 * @return EXT resource (EXT.Panel)
 		 * @hide
 		 */
-		getExtComponent: function () {
+		getExtResource: function () {
 			var that = this;
 
 			if (!this.extPanel) {
@@ -75,10 +75,10 @@ function(Aloha, jQuery, Ext, Class, console) {
 			}
 
 			jQuery.each(this.groups, function(index, group) {
-				// let each group generate its ext component and add them to
+				// let each group generate its ext resource and add them to
 				// the panel once.
 				if (!group.extButtonGroup) {
-					that.extPanel.getTopToolbar().add(group.getExtComponent());
+					that.extPanel.getTopToolbar().add(group.getExtResource());
 				}
 			});
 
@@ -144,11 +144,11 @@ function(Aloha, jQuery, Ext, Class, console) {
 		},
 
 		/**
-		 * Get the EXT component representing the group (Ext.ButtonGroup)
+		 * Get the EXT resource representing the group (Ext.ButtonGroup)
 		 * @return the Ext.ButtonGroup
 		 * @hide
 		 */
-		getExtComponent: function () {
+		getExtResource: function () {
 			var that = this, l,
 				items = [],
 				buttonCount = 0,
@@ -157,7 +157,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 
 
 			if (typeof this.extButtonGroup === 'undefined') {
-			
+
 				if (this.fields.length > 1) {
 					columnCount = 1;
 				}
@@ -242,17 +242,17 @@ function(Aloha, jQuery, Ext, Class, console) {
 				if (typeof button.button !== "undefined") {
 					var extButton = that.extButtonGroup.findById(button.button.id),
 					buttonVisible = button.button.isVisible() && button.scopeVisible;
-					
+
 					if (!extButton) {
 						return;
 					}
-				
+
 					if (buttonVisible && extButton.hidden) {
 						extButton.show();
 					} else if (!buttonVisible && extButton && !extButton.hidden) {
 						extButton.hide();
 					}
-				
+
 					groupVisible |= buttonVisible;
 				}
 			});
@@ -261,7 +261,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 			} else if (!groupVisible && !this.extButtonGroup.hidden) {
 				this.extButtonGroup.hide();
 			}
-		
+
 			return groupVisible;
 
 		}
@@ -414,10 +414,10 @@ function(Aloha, jQuery, Ext, Class, console) {
 
 		/**
 		 * Aloha.settings.floatingmenu.behaviour
-		 * 
+		 *
 		 * Is used to define the floating menu (fm) float behaviour.
 		 *
-		 * available: 
+		 * available:
 		 *  'float' (default) the fm will float next to the position where the caret is,
 		 *  'topalign' the fm is fixed above the contentEditable which is active,
 		 *  'append' the fm is appended to the defined 'element' element position (top/left)
@@ -429,7 +429,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 		 *
 		 * Is used to define the element where the floating menu is positioned when
 		 * Aloha.settings.floatingmenu.behaviour is set to 'append'
-		 * 
+		 *
 		 */
 		element: 'floatingmenu',
 
@@ -437,42 +437,42 @@ function(Aloha, jQuery, Ext, Class, console) {
 		 * topalign offset to be used for topalign behavior
 		 */
 		topalignOffset: 0,
-		
+
 		/**
 		 * topalign offset to be used for topalign behavior
 		 */
 		horizontalOffset: 0,
-		
+
 		/**
 		 * will only be hounoured when behaviour is set to 'topalign'. Adds a margin,
 		 * so the floating menu is not directly attached to the top of the page
 		 */
 		marginTop: 10,
-		
+
 		/**
 		 * Define whether the floating menu shall be draggable or not via Aloha.settings.floatingmanu.draggable
-		 * Default is: true 
+		 * Default is: true
 		 */
 		draggable: true,
-		
+
 		/**
 		 * Define whether the floating menu shall be pinned or not via Aloha.settings.floatingmanu.pin
-		 * Default is: false 
+		 * Default is: false
 		 */
 		pin: false,
-		
+
 		/**
 		 * A list of all buttons that have been added to the floatingmenu
 		 * This needs to be tracked, as adding buttons twice will break the fm
 		 */
 		buttonsAdded: [],
-		
+
 		/**
 		 * Will be initialized by checking Aloha.settings.toolbar, which will contain the config for
 		 * the floating menu. If there is no config, tabs and groups will be generated programmatically
 		 */
 		fromConfig: false,
-		
+
 		/**
 		 * hide a tab
 		*/
@@ -570,10 +570,10 @@ function(Aloha, jQuery, Ext, Class, console) {
 				}
 			});
 			Aloha.bind('aloha-ready', function() {
-				that.generateComponent();
+				that.generateResource();
 				that.initialized = true;
 			});
-			
+
 			if (typeof Aloha.settings.toolbar === 'object') {
 				this.fromConfig = true;
 			}
@@ -596,7 +596,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 		 * @hide
 		 */
 		panelBody: null,
-		
+
 		/**
 		 * The panels width
 		 * @hide
@@ -608,12 +608,12 @@ function(Aloha, jQuery, Ext, Class, console) {
 		 */
 		initTabsAndGroups: function () {
 			var that = this;
-			
+
 			// if there is no toolbar config tabs and groups have been initialized before
 			if (!this.fromConfig) {
 				return;
 			}
-			
+
 			jQuery.each(Aloha.settings.toolbar.tabs, function (tab, groups) {
 				// generate or retrieve tab
 				var tabObject = that.tabMap[tab];
@@ -623,7 +623,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 					that.tabs.push(tabObject);
 					that.tabMap[tab] = tabObject;
 				}
-				
+
 				// generate groups for current tab
 				jQuery.each(groups, function (group, buttons) {
 					var groupObject = tabObject.getGroup(group),
@@ -633,12 +633,12 @@ function(Aloha, jQuery, Ext, Class, console) {
 					jQuery.each(buttons, function (j, button) {
 						if (jQuery.inArray(button, that.buttonsAdded) !== -1) {
 							// buttons must not be added twice
-							console.warn('Skipping button {' + button + '}. A button can\'t be added ' + 
-								'to the floating menu twice. Config key: {Aloha.settings.toolbar.' + 
+							console.warn('Skipping button {' + button + '}. A button can\'t be added ' +
+								'to the floating menu twice. Config key: {Aloha.settings.toolbar.' +
 									tab + '.' + group + '}');
 									return;
 						}
-						
+
 						// now add the button to the group
 						for (i = 0; i < that.allButtons.length; i++) {
 							if (button === that.allButtons[i].button.name) {
@@ -654,10 +654,10 @@ function(Aloha, jQuery, Ext, Class, console) {
 		},
 
 		/**
-		 * Generate the rendered component for the floatingmenu
+		 * Generate the rendered resource for the floatingmenu
 		 * @hide
 		 */
-		generateComponent: function () {
+		generateResource: function () {
 			var that = this, pinTab;
 
 			// initialize tabs and groups first
@@ -669,12 +669,12 @@ function(Aloha, jQuery, Ext, Class, console) {
 				minWidth : 10
 			});
 
-			
-			
+
+
 			if (this.extTabPanel) {
-				// TODO dispose of the ext component
+				// TODO dispose of the ext resource
 			} else {
-				
+
 				// Enable or disable the drag functionality
 				var dragConfiguration = false;
 
@@ -689,7 +689,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 						},
 						endDrag : function(e) {
 							var top = (that.pinned) ? this.y - jQuery(document).scrollTop() : this.y;
-					
+
 							that.left = this.x;
 							that.top = top;
 
@@ -731,7 +731,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 									}
 								}
 								that.autoActivatedTab = undefined;
-						
+
 								// ok, this is kind of a hack: when the tab changes, we check all buttons for multisplitbuttons (which have the method setActiveDOMElement).
 								// if a DOM Element is queued to be set active, we try to do this now.
 								// the reason for this is that the active DOM element can only be set when the multisplit button is currently visible.
@@ -745,7 +745,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 										}
 									}
 								});
-						
+
 								// adapt the shadow
 								if (that.extTabPanel.isVisible()) {
 									that.extTabPanel.shadow.show();
@@ -756,20 +756,20 @@ function(Aloha, jQuery, Ext, Class, console) {
 					},
 					enableTabScroll : true
 				});
-		
-		
+
+
 			}
 
 			// add the tabs
 			jQuery.each(this.tabs, function(index, tab) {
-				// let each tab generate its ext component and add them to the panel
+				// let each tab generate its ext resource and add them to the panel
 				try {
 					if (!tab.extPanel) {
 						// if the tab itself was not generated, we do this and add it to the panel
-						that.extTabPanel.add(tab.getExtComponent());
+						that.extTabPanel.add(tab.getExtResource());
 					} else {
 						// otherwise, we will make sure that probably missing groups are generated, but don't add the tab to the menu (again)
-						tab.getExtComponent();
+						tab.getExtResource();
 					}
 				} catch(e) {
 					Aloha.Log.error(that,"Error while inserting tab: " + e);
@@ -885,7 +885,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 
 				// set the position so that it does not float on the first editable activation
 				this.floatTo( position );
-				
+
 				if ( this.pin ) {
 					this.togglePin( true );
 				}
@@ -896,7 +896,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 					}
 					that.floatTo( position );
 				});
-				
+
 		    } else if ( this.behaviour === 'topalign' ) {
 				// topalign will retain the user's pinned status
 				// TODO maybe the pin should be hidden in that case?
@@ -947,7 +947,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 						+ HORIZONTAL_PADDING ) - jQuery(window).width() );
 
 					if ( overhang > 0 ) {
-						editablePos.left -= overhang;	
+						editablePos.left -= overhang;
 					}
 
 					that.floatTo( editablePos );
@@ -1003,16 +1003,16 @@ function(Aloha, jQuery, Ext, Class, console) {
 		/**
 		 * toggles the pinned status of the floating menu
 		 * @method
-		 * @param {boolean} pinned set to true to activate pin, or set to false to deactivate pin. 
+		 * @param {boolean} pinned set to true to activate pin, or set to false to deactivate pin.
 		 *             leave undefined to toggle pin status automatically
 		 */
 		togglePin: function(pinned) {
 			var el = jQuery('.aloha-floatingmenu-pin');
-		       
+
 		    if (typeof pinned === 'boolean') {
 			this.pinned = !pinned;
 		    }
-		       
+
 			if (this.pinned) {
 				el.removeClass('aloha-floatingmenu-pinned');
 				this.top = this.obj.offset().top;
@@ -1079,11 +1079,11 @@ function(Aloha, jQuery, Ext, Class, console) {
 			var
 				scopeObject = this.scopes[scope],
 				buttonInfo, tabObject, groupObject;
-		
+
 			if (!button.name) {
 				console.warn('Added button with iconClass {' + button.iconClass + '} which has no property "name"');
 			}
-	
+
 			if (typeof scopeObject === 'undefined') {
 				Aloha.Log.error("Can't add button to given scope since the scope has not yet been initialized.", scope);
 				return false;
@@ -1116,9 +1116,9 @@ function(Aloha, jQuery, Ext, Class, console) {
 				groupObject.addButton(buttonInfo);
 			}
 
-			// finally, when the floatingmenu is already initialized, we need to create the ext component now
+			// finally, when the floatingmenu is already initialized, we need to create the ext resource now
 			if (this.initialized) {
-				this.generateComponent();
+				this.generateResource();
 			}
 		},
 
@@ -1143,7 +1143,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 				floatingMenuVisible = false,
 				showUserActivatedTab = false,
 				pos;
-			
+
 			// let the tabs layout themselves
 			jQuery.each(this.tabs, function(index, tab) {
 
@@ -1155,7 +1155,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 				// remember whether the tab is currently visible
 				var tabVisible = tab.visible;
 
-				// let each tab generate its ext component and add them to the panel
+				// let each tab generate its ext resource and add them to the panel
 				if (tab.doLayout()) {
 					// found a visible tab, so the floatingmenu needs to be visible as well
 					floatingMenuVisible = true;
@@ -1388,7 +1388,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 			if ( documentWidth - this.width < left ) {
 					left = documentWidth - this.width - GENTICS.Utils.Position.ScrollCorrection.left;
 			}
-			
+
 			return {
 				left : left,
 				top : top
@@ -1411,7 +1411,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 			    fmpos = this.obj.offset(),
 				lastLeft,
 				lastTop;
-			
+
 			if ( lastFloatingMenuPos.left === null ) {
 				lastLeft = fmpos.left;
 				lastTop = fmpos.top;
@@ -1494,22 +1494,22 @@ function(Aloha, jQuery, Ext, Class, console) {
 			}
 		}
 	});
-	
+
 	var menu =  new FloatingMenu();
 	menu.init();
-	
+
 	// set scope to empty if deactivated
 	Aloha.bind('aloha-editable-deactivated', function() {
 		menu.setScope('Aloha.empty');
 	});
-	
+
 	// set scope to empty if the user selectes a non contenteditable area
 	Aloha.bind('aloha-selection-changed', function() {
 		if ( !Aloha.Selection.isSelectionEditable() && !Aloha.Selection.isFloatingMenuVisible() ) {
 			menu.setScope('Aloha.empty');
 		}
 	});
-	
+
 	return menu;
 });
 

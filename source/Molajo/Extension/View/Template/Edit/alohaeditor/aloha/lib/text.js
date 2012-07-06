@@ -137,7 +137,7 @@
             get: get,
 
             /**
-             * Parses a resource name into its component parts. Resource names
+             * Parses a resource name into its resource parts. Resource names
              * look like: module/name.ext!strip, where the !strip part is
              * optional.
              * @param {String} name the resource name

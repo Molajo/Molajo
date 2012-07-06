@@ -406,7 +406,7 @@ Class RouteService
 	protected function getRouteParameters()
 	{
 		/**  Menu Item  */
-		if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_COMPONENT) {
+		if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
 			$response = Helpers::Content()->getMenuItemRoute();
 			if ($response === false) {
 				Services::Error()->set(500, 'Menu Item not found');

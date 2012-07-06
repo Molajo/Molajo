@@ -30,7 +30,7 @@ define( [
 	'aloha/console'
 ], function( Aloha, Class, jQuery, PluginManager, FloatingMenu, Selection,
 	         Markup, ContentHandlerManager, console ) {
-	
+
 
 	var unescape = window.unescape,
 	    GENTICS = window.GENTICS,
@@ -174,7 +174,7 @@ define( [
 			if ( typeof Aloha.settings.contentHandler.initEditable === 'undefined' ) {
 				Aloha.settings.contentHandler.initEditable = Aloha.defaults.contentHandler.initEditable;
 			}
-			
+
 			var content = me.obj.html();
 			content = ContentHandlerManager.handleContent( content, {
 				contenthandler: Aloha.settings.contentHandler.initEditable
@@ -698,8 +698,8 @@ define( [
 		getContents: function( asObject ) {
 			// Cloned nodes are problematic in IE7.  When trying to read/write
 			// to them, they can sometimes cause the browser to crash.
-			// The IE7 fix was moved to engine#copyAttributes() 
-			
+			// The IE7 fix was moved to engine#copyAttributes()
+
 			var clonedObj = this.obj.clone( false );
 			//var clonedObj = jQuery(this.obj[0].outerHTML);
 
@@ -752,7 +752,7 @@ define( [
 		 * combination of interactions are performed by the user during the
 		 * course of editing within an editable.
 		 * The smart content change event would therefore signal to any
-		 * component that is listening to this event, that content has been
+		 * resource that is listening to this event, that content has been
 		 * inserted into the editable that may need to be prococessed in a
 		 * special way
 		 * This is used for smart actions within the content/while editing.

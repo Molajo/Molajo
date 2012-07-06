@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sequence>
-    <include>request:component</include>
+    <include>request:resource</include>
     <include>formfield</include>
     <include>module</include>
     <include>tag</include>
-    <include>component</include>
+    <include>resource</include>
     <include>wrap</include>
     <include>template</include>
 </sequence>

@@ -456,7 +456,7 @@ Class ParseService
 		/** 1. process extension includers in order defined by includespage.xml and includesfinal */
 		foreach ($this->sequence as $sequence) {
 
-			/** 2. if necessary, split includer name and type (ex. request:component and defer:head) */
+			/** 2. if necessary, split includer name and type (ex. request:resource and defer:head) */
 			if (stripos($sequence, ':')) {
 				$includeName = substr($sequence, 0, strpos($sequence, ':'));
 				$includerType = substr($sequence, strpos($sequence, ':') + 1, 999);

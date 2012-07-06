@@ -62,7 +62,7 @@ Class InstallService
             $this->id = (string) $element->attributes()->id;
 
             switch ($this->type) {
-                case 'component':
+                case 'resource':
                     break;
 
                 case 'module':

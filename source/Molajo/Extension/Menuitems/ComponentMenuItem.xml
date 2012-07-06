@@ -1,5 +1,0 @@
-<extension type="Component" version="1.0" extends="Content">
-<model
-        name="ComponentMenuItem"
-        catalog_type_id="2000">
-</model>

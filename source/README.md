@@ -23,7 +23,7 @@ System requirements and instructions for how to install Molajo are located in th
 ## Where can I learn more about Molajo Extensions and Templating? ##
 
 There is more information about [**about extensions**](https://github.com/Molajo/Molajo/blob/core/extensions/README.md),
- [**Components**](https://github.com/Molajo/Molajo/blob/core/extensions/components/README.md),
+ [**Resources**](https://github.com/Molajo/Molajo/blob/core/extensions/Resources/README.md),
  [**Languages**](https://github.com/Molajo/Molajo/blob/core/extensions/languages/README.md),
  [**Views**](https://github.com/Molajo/Molajo/blob/core/extensions/View/README.md),
  [**Modules**](https://github.com/Molajo/Molajo/blob/core/extensions/modules/README.md),

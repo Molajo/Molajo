@@ -246,7 +246,7 @@ Class MailService
     {
         $permission = true;
 
-        /** Component (authorises any user) */
+        /** Resource (authorises any user) */
 
         /** User */
 

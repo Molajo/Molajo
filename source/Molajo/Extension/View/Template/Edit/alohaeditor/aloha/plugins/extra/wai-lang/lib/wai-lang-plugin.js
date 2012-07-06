@@ -15,7 +15,7 @@ define( [
 	'wai-lang/languages',
 	'css!wai-lang/css/wai-lang.css'
 ], function( Aloha, jQuery, Plugin, FloatingMenu, i18n, i18nCore ) {
-	
+
 
 	var WAI_LANG_CLASS = 'aloha-wai-lang',
 	    GENTICS = window.GENTICS,
@@ -41,7 +41,7 @@ define( [
 
 		/**
 		 * Initialize the plugin:
-		 * Initializes UI components, and binds their event listeners.
+		 * Initializes UI resources, and binds their event listeners.
 		 */
 		init: function() {
 			if ( this.settings.objectTypeFilter ) {
