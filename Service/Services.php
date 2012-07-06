@@ -31,7 +31,7 @@ Class Services
     protected static $instance;
 
     /**
-     * Stores messages locally until the Debug Service has been activated
+     * Stores messages locally until the Profiler Service has been activated
      *
      * @var    object
      * @since  1.0

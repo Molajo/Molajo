@@ -46,9 +46,9 @@ class AdmingridTrigger extends ContentTrigger
 		$this->table_registry_name = ucfirst(strtolower($this->parameters['model_name']))
 			. ucfirst(strtolower($this->parameters['model_type']));
 
-		if (Services::Registry()->get('Configuration', 'debug_output_queries_table_registry', 0) == 1) {
+		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 0) == 1) {
 
-			$debugMessage = 'AdmingridTrigger Model Type ' . $this->parameters['model_type']
+			$profiler_message = 'AdmingridTrigger Model Type ' . $this->parameters['model_type']
 				. ' Model Name ' . $this->parameters['model_name']
 				. ' Table Registry ' . $this->table_registry_name . ' contents follow:';
 
@@ -58,10 +58,10 @@ class AdmingridTrigger extends ContentTrigger
 			Services::Registry()->get($this->table_registry_name, '*');
 			echo '</pre><br /><br />';
 
-			$debugMessage .= ob_get_contents();
+			$profiler_message .= ob_get_contents();
 			ob_end_clean();
 
-			Services::Profiler()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
+			Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 		}
 
 		$this->setToolbar();

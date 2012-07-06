@@ -220,7 +220,7 @@ Class ConfigurationService
 		} else {
 
 			try {
-				$debug = 0;
+				$profiler = 0;
 				$controllerClass = 'Molajo\\Controller\\ReadController';
 				$m = new $controllerClass();
 				$results = $m->connect('Table', 'Applications');
@@ -247,8 +247,8 @@ Class ConfigurationService
 				$parameters = Services::Registry()->get('ApplicationsTableParameters');
 				foreach ($parameters as $key => $value) {
 					Services::Registry()->set('Configuration', $key, $value);
-					if (strtolower($key) == 'debug') {
-						$debug = $value;
+					if (strtolower($key) == 'profiler') {
+						$profiler = $value;
 					}
 				}
 
@@ -265,7 +265,7 @@ Class ConfigurationService
 
 		Services::Registry()->sort('Configuration');
 
-		if ((int)$debug == 1) {
+		if ((int)$profiler == 1) {
 			Services::Profiler()->initiate();
 		}
 

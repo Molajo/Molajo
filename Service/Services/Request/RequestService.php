@@ -6,7 +6,7 @@
  */
 namespace Molajo\Service\Services\Request;
 
-use Symfony\Resource\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 defined('MOLAJO') or die;
 
@@ -84,7 +84,7 @@ Class RequestService
 	public function __construct()
 	{
 		$this->request = new \stdClass();
-		$request_class = '\\Symfony\\Resource\\HttpFoundation\\Request';
+		$request_class = '\\Symfony\\Component\\HttpFoundation\\Request';
 		$connection = new $request_class();
 		$this->symfony_request = $connection->createFromGlobals();
 
@@ -96,7 +96,7 @@ Class RequestService
 	/**
 	 * get - retrieve the specified request item
 	 *
-	 * @param    $key
+	 * @param   $key
 	 *
 	 * @return  mixed
 	 * @since   1.0
@@ -129,7 +129,7 @@ Class RequestService
 	/**
 	 * Request values for port, scheme, host, method and base URL from Symfony2 HTTP Foundation
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function setRequest()
@@ -141,7 +141,7 @@ Class RequestService
 		/** http://localhost/molajo/index.php returns 'http' */
 		$this->set('is_secure', $this->symfony_request->isSecure());
 
-		/** http://localhost/moljao/index.php return http:://localhost (also non-standard port) */
+		/** http://localhost:99/molajo/index.php retursn http:://localhost:99 (non-standard port) */
 		$this->set('host', $this->symfony_request->headers->get('host'));
 
 		/** http://localhost/molajo/index.php returns '/molajo' */
@@ -153,8 +153,8 @@ Class RequestService
 		/** http://localhost/molajo/index.php returns 80 */
 		$this->set('port', $this->symfony_request->getPort());
 
-		/** http://localhost/moljao/index.php return http:://localhost */
-		/** http://localhost/moljao:88/index.php return http:://localhost:88 */
+		/** http://localhost/molajo/index.php return http:://localhost */
+		/** http://localhost/molajo:88/index.php return http:://localhost:88 */
 		$this->set('http_host', $this->symfony_request->getHttpHost());
 
 		/** http://localhost/molajo/index.php returns 80 */
@@ -164,12 +164,11 @@ Class RequestService
 		$this->set('uri', $this->symfony_request->getUri());
 
 		/** POST: Create GET: Read PUT: Update, DELETE: Delete */
-		/** Many browsers to not support PUT or DELETE, so $_SERVER['REQUEST_METHOD] is used  */
+		/** Many browsers do not support PUT or DELETE, $_SERVER['REQUEST_METHOD] supplements */
 		$this->set('method', $this->symfony_request->getMethod());
 
 		/** http://localhost/molajo/index.php returns 80 */
 		$this->set('port', $this->symfony_request->getPort());
-
 
 		$this->set('path_info', $this->symfony_request->getPathInfo());
 
@@ -191,11 +190,10 @@ Class RequestService
 		$this->set('query_parameters', $query_parameters);
 
 		/** http://localhost/molajo/index.php returns '/molajo/index.php' */
-		$this->set('base_url_path',
-			$this->get('http_host')
-				. $this->get('base_url')
+		$this->set('base_url_path', $this->get('http_host') . $this->get('base_url')
 		);
 
+		/** http://localhost/molajo/index.php returns 'http://molajo/index.php' */
 		$this->set('base_url_path_with_scheme',
 			$this->get('scheme')
 				. '://'
@@ -224,6 +222,8 @@ Class RequestService
 		$this->set('document_root', $this->symfony_request->server->get('DOCUMENT_ROOT'));
 
 		$this->set('entry_point', $this->symfony_request->server->get('SCRIPT_FILENAME'));
+
+		/** Language */
 
 		return true;
 	}

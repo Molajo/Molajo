@@ -71,18 +71,18 @@
             <field name="language_multilingual" type="binary" null="1" default="0" values="0,1"/>
             <field name="language_utc_offset" type="char" null="1" default="UTC" values=""/>
 
-            <field name="debug" type="boolean" null="1" default="0" values=""/>
-            <field name="debug_verbose" type="boolean" null="0" default="0" values=""/>
-            <field name="debug_start_with" type="text" null="0" default="Initialise"
+            <field name="profiler" type="boolean" null="1" default="0" values=""/>
+            <field name="profiler_verbose" type="boolean" null="0" default="0" values=""/>
+            <field name="profiler_start_with" type="text" null="0" default="Initialise"
                    values="Initialise,Route,Authorise,Execute,Response"/>
-            <field name="debug_end_with" type="text" null="0" default="Response"
+            <field name="profiler_end_with" type="text" null="0" default="Response"
                    values="Initialise,Route,Authorise,Execute,Response"/>
-            <field name="debug_output" type="text" null="0"
+            <field name="profiler_output" type="text" null="0"
                    default="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Triggers"
                    values="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Triggers"/>
-            <field name="debug_output_queries_table_registry" type="boolean" null="1" default="0" values=""/>
-            <field name="debug_output_queries_sql" type="boolean" null="1" default="1" values=""/>
-            <field name="debug_output_queries_query_results" type="boolean" null="1" default="0" values=""/>
+            <field name="profiler_output_queries_table_registry" type="boolean" null="1" default="0" values=""/>
+            <field name="profiler_output_queries_sql" type="boolean" null="1" default="1" values=""/>
+            <field name="profiler_output_queries_query_results" type="boolean" null="1" default="0" values=""/>
 
             <field name="head_template_view_id" type="integer" null="1" default="" values=""/>
             <field name="head_wrap_view_id" type="integer" null="1" default="" values=""/>

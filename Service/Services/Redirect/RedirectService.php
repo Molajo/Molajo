@@ -1,7 +1,7 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Redirect;
@@ -9,8 +9,7 @@ namespace Molajo\Service\Services\Redirect;
 defined('MOLAJO') or die;
 
 use Molajo\Service\Services;
-
-use Symfony\Resource\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Redirect
@@ -68,11 +67,9 @@ Class RedirectService
      * Set the Redirect URL and Code
      *
      * @param null $url
-     *
      * @param  $code
      *
      * @return mixed
-     *
      * @since  1.0
      */
     public function set($url = null, $code = 302)

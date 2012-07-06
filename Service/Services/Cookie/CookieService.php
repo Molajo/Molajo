@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\Cookie;
 
 use Molajo\Service\Services;
 
-use Symfony\Resource\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Cookie;
 
 defined('MOLAJO') or die;
 
