@@ -1,5 +1,0 @@
-<extension type="Menuitem" version="1.0" extends="Menuitem">
-<model
-        name="SeparatorMenuItem"
-        catalog_type_id="2300">
-</model>

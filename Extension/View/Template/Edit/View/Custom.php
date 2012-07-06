@@ -1,5 +1,6 @@
 <?php
 use Molajo\Service\Services;
+
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
@@ -8,7 +9,8 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die; ?>
 <form>
 	<dl class="tabs pill">
-		<dd class="active"><a href="<?php echo Services::Registry()->get('Parameters', 'full_page_url'); ?>#edit">Edit</a></dd>
+		<dd class="active"><a
+			href="<?php echo Services::Registry()->get('Parameters', 'full_page_url'); ?>#edit">Edit</a></dd>
 		<dd><a href="<?php echo Services::Registry()->get('Parameters', 'full_page_url'); ?>#options">Options</a></dd>
 		<dd><a href="<?php echo Services::Registry()->get('Parameters', 'full_page_url'); ?>#fields">Fields</a></dd>
 	</dl>

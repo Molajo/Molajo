@@ -74,7 +74,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$m->model->query->where($m->model->db->qn('a.name')
 			. ' = ' . $m->model->db->q($this->data->title));
 		$m->model->query->where($m->model->db->qn('a.catalog_type_id')
-			. ' = ' . (int) $this->data->catalog_type_id);
+			. ' = ' . (int)$this->data->catalog_type_id);
 
 		$item = $m->getData('item');
 
@@ -118,7 +118,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
 		$this->data->extension_id = $controller->execute();
 
-		if ($this->data->extension_id  === false) {
+		if ($this->data->extension_id === false) {
 			//error
 			return false;
 		}
@@ -146,7 +146,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		echo 'ID ' . $this->data->id . '<br />';
 		/** Extension Instance ID */
 		$id = $this->data->id;
-		if ((int) $id == 0) {
+		if ((int)$id == 0) {
 			return false;
 		}
 
@@ -165,7 +165,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 			//install failed
 			return false;
 		}
-echo 'results are true for site '.'<br />';
+		echo 'results are true for site ' . '<br />';
 
 		/** Application Extension Instances */
 		$controller = new CreateController();
@@ -182,7 +182,7 @@ echo 'results are true for site '.'<br />';
 			//install failed
 			return false;
 		}
-echo 'results are true for app '.'<br />';
+		echo 'results are true for app ' . '<br />';
 		/** Catalog */
 		$controller = new CreateController();
 
@@ -200,7 +200,7 @@ echo 'results are true for app '.'<br />';
 			//install failed
 			return false;
 		}
-echo 'results are true for catalog '.'<br />';
+		echo 'results are true for catalog ' . '<br />';
 		return true;
 	}
 
@@ -274,7 +274,8 @@ echo 'results are true for catalog '.'<br />';
 
 		/** Only Extension Instances */
 		if (isset($this->data->catalog_type_id)
-			&& ($this->data->catalog_type_id == 1050)) {
+			&& ($this->data->catalog_type_id == 1050)
+		) {
 		} else {
 			return true;
 		}
@@ -293,7 +294,7 @@ echo 'results are true for catalog '.'<br />';
 		$m->set('check_view_level_access', '0');
 
 		if (isset($this->parameters['content_catalog_type_id'])) {
-			$temp = (int) $this->parameters['content_catalog_type_id'];
+			$temp = (int)$this->parameters['content_catalog_type_id'];
 
 			$m->model->query->where($m->model->db->qn($primary_prefix)
 				. '.' . $m->model->db->qn('catalog_type_id')
@@ -314,28 +315,28 @@ echo 'results are true for catalog '.'<br />';
 		$m->connect();
 
 		$sql = 'DELETE FROM ' . $m->model->db->qn('#__application_extension_instances');
-		$sql .= ' WHERE ' . $m->model->db->qn('extension_instance_id') . ' = ' . (int) $this->data->id;
+		$sql .= ' WHERE ' . $m->model->db->qn('extension_instance_id') . ' = ' . (int)$this->data->id;
 		$m->model->db->setQuery($sql);
 		$m->model->db->execute();
 
 		$sql = 'DELETE FROM ' . $m->model->db->qn('#__site_extension_instances');
-		$sql .= ' WHERE ' . $m->model->db->qn('extension_instance_id') . ' = ' . (int) $this->data->id;
+		$sql .= ' WHERE ' . $m->model->db->qn('extension_instance_id') . ' = ' . (int)$this->data->id;
 		$m->model->db->setQuery($sql);
 		$m->model->db->execute();
 
 		$sql = 'DELETE FROM ' . $m->model->db->qn('#__group_permissions');
-		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->catalog_id;
+		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int)$this->data->catalog_id;
 		$m->model->db->setQuery($sql);
 		$m->model->db->execute();
 
 		$sql = 'DELETE FROM ' . $m->model->db->qn('#__view_group_permissions');
-		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->catalog_id;
+		$sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int)$this->data->catalog_id;
 		$m->model->db->setQuery($sql);
 		$m->model->db->execute();
 
 		/** Catalog has triggers for more deletions */
 		$controller = new DeleteController();
-echo 'Passing this catalog id in to Delete Controller ' . $this->data->catalog_id.'<br />';
+		echo 'Passing this catalog id in to Delete Controller ' . $this->data->catalog_id . '<br />';
 
 		$data = new \stdClass();
 		$data->model_name = ucfirst(strtolower('Catalog'));
@@ -376,7 +377,7 @@ echo 'Passing this catalog id in to Delete Controller ' . $this->data->catalog_i
 
 		$value = $m->getData('result');
 
-		if (empty($value) || (int) $value == 0) {
+		if (empty($value) || (int)$value == 0) {
 		} else {
 			/** do not delete - more instances remain */
 			return true;

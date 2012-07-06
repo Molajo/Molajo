@@ -1,0 +1,3 @@
+<extension type="Media" version="1.0" extends="Media">
+    <model name="MediaImages" catalog_type_id="50000"/>
+</extension>

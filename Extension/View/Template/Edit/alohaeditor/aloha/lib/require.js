@@ -5,8 +5,8 @@
  */
 /*jslint strict: false, plusplus: false */
 /*global window: false, navigator: false, document: false, importScripts: false,
-  jQuery: false, clearInterval: false, setInterval: false, self: false,
-  setTimeout: false, opera: false */
+ jQuery: false, clearInterval: false, setInterval: false, self: false,
+ setTimeout: false, opera: false */
 
 var requirejs, require, define;
 (function () {
@@ -22,14 +22,14 @@ var requirejs, require, define;
         apsp = ap.splice,
         isBrowser = !!(typeof window !== "undefined" && navigator && document),
         isWebWorker = !isBrowser && typeof importScripts !== "undefined",
-        //PS3 indicates loaded and complete, but need to wait for complete
-        //specifically. Sequence is "loading", "loaded", execution,
-        // then "complete". The UA check is unfortunate, but not sure how
-        //to feature test w/o causing perf issues.
+    //PS3 indicates loaded and complete, but need to wait for complete
+    //specifically. Sequence is "loading", "loaded", execution,
+    // then "complete". The UA check is unfortunate, but not sure how
+    //to feature test w/o causing perf issues.
         readyRegExp = isBrowser && navigator.platform === 'PLAYSTATION 3' ?
-                      /^complete$/ : /^(complete|loaded)$/,
+            /^complete$/ : /^(complete|loaded)$/,
         defContextName = "_",
-        //Oh the tragedy, detecting opera. See the usage of isOpera for reason.
+    //Oh the tragedy, detecting opera. See the usage of isOpera for reason.
         isOpera = typeof opera !== "undefined" && opera.toString() === "[object Opera]",
         reqWaitIdPrefix = "_r@@",
         empty = {},
@@ -93,7 +93,7 @@ var requirejs, require, define;
         var i, location, pkgObj;
 
         for (i = 0; (pkgObj = currentPackages[i]); i++) {
-            pkgObj = typeof pkgObj === "string" ? { name: pkgObj } : pkgObj;
+            pkgObj = typeof pkgObj === "string" ? { name:pkgObj } : pkgObj;
             location = pkgObj.location;
 
             //Add dir to the path, but avoid paths that start with a slash
@@ -106,15 +106,15 @@ var requirejs, require, define;
             //be passed in again, and config.pkgs is the internal transformed
             //state for all package configs.
             pkgs[pkgObj.name] = {
-                name: pkgObj.name,
-                location: location || pkgObj.name,
+                name:pkgObj.name,
+                location:location || pkgObj.name,
                 //Remove leading dot in main, so main paths are normalized,
                 //and remove any trailing .js, since different package
                 //envs have different conventions: some use a module name,
                 //some use a file name.
-                main: (pkgObj.main || "main")
-                      .replace(currDirRegExp, '')
-                      .replace(jsSuffixRegExp, '')
+                main:(pkgObj.main || "main")
+                    .replace(currDirRegExp, '')
+                    .replace(jsSuffixRegExp, '')
             };
         }
     }
@@ -171,17 +171,17 @@ var requirejs, require, define;
     function newContext(contextName) {
         var context, resume,
             config = {
-                waitSeconds: 7,
-                baseUrl: s.baseUrl || "./",
-                paths: {},
-                pkgs: {},
-                catchError: {}
+                waitSeconds:7,
+                baseUrl:s.baseUrl || "./",
+                paths:{},
+                pkgs:{},
+                catchError:{}
             },
             defQueue = [],
             specified = {
-                "require": true,
-                "exports": true,
-                "module": true
+                "require":true,
+                "exports":true,
+                "module":true
             },
             urlMap = {},
             defined = {},
@@ -343,12 +343,12 @@ var requirejs, require, define;
             }
 
             return {
-                prefix: prefix,
-                name: normalizedName,
-                parentMap: parentModuleMap,
-                url: url,
-                originalName: originalName,
-                fullName: prefix ? prefix + "!" + (normalizedName || '') : normalizedName
+                prefix:prefix,
+                name:normalizedName,
+                parentMap:parentModuleMap,
+                url:url,
+                originalName:originalName,
+                fullName:prefix ? prefix + "!" + (normalizedName || '') : normalizedName
             };
         }
 
@@ -409,12 +409,12 @@ var requirejs, require, define;
             var modRequire = makeContextModuleFunc(context.require, relModuleMap, enableBuildCallback);
 
             mixin(modRequire, {
-                nameToUrl: makeContextModuleFunc(context.nameToUrl, relModuleMap),
-                toUrl: makeContextModuleFunc(context.toUrl, relModuleMap),
-                defined: makeContextModuleFunc(context.requireDefined, relModuleMap),
-                specified: makeContextModuleFunc(context.requireSpecified, relModuleMap),
-                ready: req.ready,
-                isBrowser: req.isBrowser
+                nameToUrl:makeContextModuleFunc(context.nameToUrl, relModuleMap),
+                toUrl:makeContextModuleFunc(context.toUrl, relModuleMap),
+                defined:makeContextModuleFunc(context.requireDefined, relModuleMap),
+                specified:makeContextModuleFunc(context.requireSpecified, relModuleMap),
+                ready:req.ready,
+                isBrowser:req.isBrowser
             });
             //Something used by node.
             if (req.paths) {
@@ -512,13 +512,13 @@ var requirejs, require, define;
                 //all managerCallbacks to use a properly normalized module
                 //name.
                 (managerCallbacks[prefix] ||
-                (managerCallbacks[prefix] = [])).push({
-                    onDep: function (name, value) {
-                        if (name === prefix) {
-                            updateNormalizedNames(prefix);
+                    (managerCallbacks[prefix] = [])).push({
+                        onDep:function (name, value) {
+                            if (name === prefix) {
+                                updateNormalizedNames(prefix);
+                            }
                         }
-                    }
-                });
+                    });
 
                 queueDependency(makeModuleMap(prefix));
             }
@@ -590,13 +590,13 @@ var requirejs, require, define;
 
             if (err) {
                 errFile = (fullName ? makeModuleMap(fullName).url : '') ||
-                           err.fileName || err.sourceURL;
+                    err.fileName || err.sourceURL;
                 errModuleTree = err.moduleTree;
                 err = makeError('defineerror', 'Error evaluating ' +
-                                'module "' + fullName + '" at location "' +
-                                errFile + '":\n' +
-                                err + '\nfileName:' + errFile +
-                                '\nlineNumber: ' + (err.lineNumber || err.line), err);
+                    'module "' + fullName + '" at location "' +
+                    errFile + '":\n' +
+                    err + '\nfileName:' + errFile +
+                    '\nlineNumber: ' + (err.lineNumber || err.line), err);
                 err.moduleName = fullName;
                 err.moduleTree = errModuleTree;
                 return req.onError(err);
@@ -625,16 +625,16 @@ var requirejs, require, define;
                 manager = {
                     //Use a wait ID because some entries are anon
                     //async require calls.
-                    waitId: name || reqWaitIdPrefix + (waitIdCounter++),
-                    depCount: 0,
-                    depMax: 0,
-                    prefix: moduleMap.prefix,
-                    name: name,
-                    fullName: fullName,
-                    deps: {},
-                    depArray: depArray,
-                    callback: callback,
-                    onDep: function (depName, value) {
+                    waitId:name || reqWaitIdPrefix + (waitIdCounter++),
+                    depCount:0,
+                    depMax:0,
+                    prefix:moduleMap.prefix,
+                    name:name,
+                    fullName:fullName,
+                    deps:{},
+                    depArray:depArray,
+                    callback:callback,
+                    onDep:function (depName, value) {
                         if (!(depName in manager.deps)) {
                             manager.deps[depName] = value;
                             manager.depCount += 1;
@@ -653,7 +653,7 @@ var requirejs, require, define;
                 //not match the desired version number in the config.
                 if (fullName in defined || loaded[fullName] === true ||
                     (fullName === "jquery" && config.jQuery &&
-                     config.jQuery !== callback().fn.jquery)) {
+                        config.jQuery !== callback().fn.jquery)) {
                     return;
                 }
 
@@ -696,9 +696,9 @@ var requirejs, require, define;
                     } else if (depName === "module") {
                         //CommonJS module spec 1.1
                         manager.cjsModule = cjsMod = manager.deps[depName] = {
-                            id: name,
-                            uri: name ? context.nameToUrl(name, null, relModuleMap) : undefined,
-                            exports: defined[fullName]
+                            id:name,
+                            uri:name ? context.nameToUrl(name, null, relModuleMap) : undefined,
+                            exports:defined[fullName]
                         };
                         cjsMod.setExports = makeSetExports(cjsMod);
                     } else if (depName in defined && !(depName in waiting)) {
@@ -713,7 +713,7 @@ var requirejs, require, define;
 
                         //Register to get notification when dependency loads.
                         (managerCallbacks[depName] ||
-                        (managerCallbacks[depName] = [])).push(manager);
+                            (managerCallbacks[depName] = [])).push(manager);
 
                         uniques[depName] = true;
                     }
@@ -823,7 +823,7 @@ var requirejs, require, define;
          */
         function checkLoaded() {
             var waitInterval = config.waitSeconds * 1000,
-                //It is possible to disable the wait interval by using waitSeconds of 0.
+            //It is possible to disable the wait interval by using waitSeconds of 0.
                 expired = waitInterval && (context.startTime + waitInterval) < new Date().getTime(),
                 noLoads = "", hasLoadedProp = false, stillLoading = false, prop,
                 err, manager;
@@ -948,10 +948,10 @@ var requirejs, require, define;
                 }
 
                 execManager({
-                    prefix: dep.prefix,
-                    name: dep.name,
-                    fullName: dep.fullName,
-                    callback: function () {
+                    prefix:dep.prefix,
+                    name:dep.name,
+                    fullName:dep.fullName,
+                    callback:function () {
                         return ret;
                     }
                 });
@@ -1018,24 +1018,24 @@ var requirejs, require, define;
                     if (!pluginsQueue[pluginName]) {
                         pluginsQueue[pluginName] = [];
                         (managerCallbacks[pluginName] ||
-                        (managerCallbacks[pluginName] = [])).push({
-                            onDep: function (name, value) {
-                                if (name === pluginName) {
-                                    var i, oldModuleMap, ary = pluginsQueue[pluginName];
+                            (managerCallbacks[pluginName] = [])).push({
+                                onDep:function (name, value) {
+                                    if (name === pluginName) {
+                                        var i, oldModuleMap, ary = pluginsQueue[pluginName];
 
-                                    //Now update all queued plugin actions.
-                                    for (i = 0; i < ary.length; i++) {
-                                        oldModuleMap = ary[i];
-                                        //Update the moduleMap since the
-                                        //module name may be normalized
-                                        //differently now.
-                                        callPlugin(pluginName,
-                                                   makeModuleMap(oldModuleMap.originalName, oldModuleMap.parentMap));
+                                        //Now update all queued plugin actions.
+                                        for (i = 0; i < ary.length; i++) {
+                                            oldModuleMap = ary[i];
+                                            //Update the moduleMap since the
+                                            //module name may be normalized
+                                            //differently now.
+                                            callPlugin(pluginName,
+                                                makeModuleMap(oldModuleMap.originalName, oldModuleMap.parentMap));
+                                        }
+                                        delete pluginsQueue[pluginName];
                                     }
-                                    delete pluginsQueue[pluginName];
                                 }
-                            }
-                        });
+                            });
                     }
                     pluginsQueue[pluginName].push(dep);
                 }
@@ -1108,28 +1108,28 @@ var requirejs, require, define;
         //Define the context object. Many of these fields are on here
         //just to make debugging easier.
         context = {
-            contextName: contextName,
-            config: config,
-            defQueue: defQueue,
-            waiting: waiting,
-            waitCount: 0,
-            specified: specified,
-            loaded: loaded,
-            urlMap: urlMap,
-            scriptCount: 0,
-            urlFetched: {},
-            defined: defined,
-            paused: [],
-            pausedCount: 0,
-            plugins: plugins,
-            managerCallbacks: managerCallbacks,
-            makeModuleMap: makeModuleMap,
-            normalize: normalize,
+            contextName:contextName,
+            config:config,
+            defQueue:defQueue,
+            waiting:waiting,
+            waitCount:0,
+            specified:specified,
+            loaded:loaded,
+            urlMap:urlMap,
+            scriptCount:0,
+            urlFetched:{},
+            defined:defined,
+            paused:[],
+            pausedCount:0,
+            plugins:plugins,
+            managerCallbacks:managerCallbacks,
+            makeModuleMap:makeModuleMap,
+            normalize:normalize,
             /**
              * Set a configuration for the context.
              * @param {Object} cfg config object to integrate.
              */
-            configure: function (cfg) {
+            configure:function (cfg) {
                 var paths, prop, packages, pkgs, packagePaths, requireWait;
 
                 //Make sure the baseUrl ends in a slash.
@@ -1221,15 +1221,15 @@ var requirejs, require, define;
                 }
             },
 
-            requireDefined: function (moduleName, relModuleMap) {
+            requireDefined:function (moduleName, relModuleMap) {
                 return makeModuleMap(moduleName, relModuleMap).fullName in defined;
             },
 
-            requireSpecified: function (moduleName, relModuleMap) {
+            requireSpecified:function (moduleName, relModuleMap) {
                 return makeModuleMap(moduleName, relModuleMap).fullName in specified;
             },
 
-            require: function (deps, callback, relModuleMap) {
+            require:function (deps, callback, relModuleMap) {
                 var moduleName, fullName, moduleMap;
                 if (typeof deps === "string") {
                     //Synchronous access to one module. If require.get is
@@ -1251,9 +1251,9 @@ var requirejs, require, define;
 
                     if (!(fullName in defined)) {
                         return req.onError(makeError("notloaded", "Module name '" +
-                                    moduleMap.fullName +
-                                    "' has not been loaded yet for context: " +
-                                    contextName));
+                            moduleMap.fullName +
+                            "' has not been loaded yet for context: " +
+                            contextName));
                     }
                     return defined[fullName];
                 }
@@ -1278,14 +1278,14 @@ var requirejs, require, define;
              * Internal method to transfer globalQueue items to this context's
              * defQueue.
              */
-            takeGlobalQueue: function () {
+            takeGlobalQueue:function () {
                 //Push all the globalDefQueue items into the context's defQueue
                 if (globalDefQueue.length) {
                     //Array splice in the values since the context code has a
                     //local var ref to defQueue, so cannot just reassign the one
                     //on context.
                     apsp.apply(context.defQueue,
-                               [context.defQueue.length - 1, 0].concat(globalDefQueue));
+                        [context.defQueue.length - 1, 0].concat(globalDefQueue));
                     globalDefQueue = [];
                 }
             },
@@ -1296,7 +1296,7 @@ var requirejs, require, define;
              * load call.
              * @param {String} moduleName the name of the module to potentially complete.
              */
-            completeLoad: function (moduleName) {
+            completeLoad:function (moduleName) {
                 var args;
 
                 context.takeGlobalQueue();
@@ -1323,10 +1323,10 @@ var requirejs, require, define;
                     //A script that does not call define(), so just simulate
                     //the call for it. Special exception for jQuery dynamic load.
                     callDefMain([moduleName, [],
-                                moduleName === "jquery" && typeof jQuery !== "undefined" ?
-                                function () {
-                                    return jQuery;
-                                } : null]);
+                        moduleName === "jquery" && typeof jQuery !== "undefined" ?
+                            function () {
+                                return jQuery;
+                            } : null]);
                 }
 
                 //Mark the script as loaded. Note that this can be different from a
@@ -1359,7 +1359,7 @@ var requirejs, require, define;
              * *Requires* the use of a module name. It does not support using
              * plain URLs like nameToUrl.
              */
-            toUrl: function (moduleNamePlusExt, relModuleMap) {
+            toUrl:function (moduleNamePlusExt, relModuleMap) {
                 var index = moduleNamePlusExt.lastIndexOf("."),
                     ext = null;
 
@@ -1375,7 +1375,7 @@ var requirejs, require, define;
              * Converts a module name to a file path. Supports cases where
              * moduleName may actually be just an URL.
              */
-            nameToUrl: function (moduleName, ext, relModuleMap) {
+            nameToUrl:function (moduleName, ext, relModuleMap) {
                 var paths, pkgs, pkg, pkgPath, syms, i, parentModule, url,
                     config = context.config;
 
@@ -1423,8 +1423,8 @@ var requirejs, require, define;
                 }
 
                 return config.urlArgs ? url +
-                                        ((url.indexOf('?') === -1 ? '?' : '&') +
-                                         config.urlArgs) : url;
+                    ((url.indexOf('?') === -1 ? '?' : '&') +
+                        config.urlArgs) : url;
             }
         };
 
@@ -1474,7 +1474,7 @@ var requirejs, require, define;
         }
 
         context = contexts[contextName] ||
-                  (contexts[contextName] = newContext(contextName));
+            (contexts[contextName] = newContext(contextName));
 
         if (config) {
             context.configure(config);
@@ -1513,11 +1513,11 @@ var requirejs, require, define;
     //Used to filter out dependencies that are already paths.
     req.jsExtRegExp = /^\/|:|\?|\.js$/;
     s = req.s = {
-        contexts: contexts,
+        contexts:contexts,
         //Stores a list of URLs that should not get async script tag treatment.
-        skipAsync: {},
-        isPageLoaded: !isBrowser,
-        readyCalls: []
+        skipAsync:{},
+        isPageLoaded:!isBrowser,
+        readyCalls:[]
     };
 
     req.isAsync = req.isBrowser = isBrowser;
@@ -1659,9 +1659,9 @@ var requirejs, require, define;
     };
 
     define.amd = {
-        multiversion: true,
-        plugins: true,
-        jQuery: true
+        multiversion:true,
+        plugins:true,
+        jQuery:true
     };
 
     /**
@@ -1740,8 +1740,8 @@ var requirejs, require, define;
             //In the browser so use a script tag
             callback = callback || req.onScriptLoad;
             node = context && context.config && context.config.xhtml ?
-                    document.createElementNS("http://www.w3.org/1999/xhtml", "html:script") :
-                    document.createElement("script");
+                document.createElementNS("http://www.w3.org/1999/xhtml", "html:script") :
+                document.createElement("script");
             node.type = type || "text/javascript";
             node.charset = "utf-8";
             //Use async so Gecko does not block on executing the script if something
@@ -1833,7 +1833,7 @@ var requirejs, require, define;
                     //baseUrl.
                     src = dataMain.split('/');
                     mainScript = src.pop();
-                    subPath = src.length ? src.join('/')  + '/' : './';
+                    subPath = src.length ? src.join('/') + '/' : './';
 
                     //Set final config.
                     cfg.baseUrl = subPath;
@@ -1966,7 +1966,8 @@ var requirejs, require, define;
                             document.documentElement.doScroll("left");
                             req.pageLoaded();
                         }
-                    } catch (e) {}
+                    } catch (e) {
+                    }
                 }, 30);
             }
         }

@@ -1,3 +1,4 @@
+<trigger name="CatalogTypeId"/>
 <trigger name="Extensioninstance"/>
 <trigger name="Dateformats"/>
 <trigger name="Publishedstatus"/>

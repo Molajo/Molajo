@@ -12,7 +12,7 @@
 }
 
 .aloha-character-picker-overlay {
-	border-collapse:collapse;
+    border-collapse: collapse;
 }
 
 .aloha-character-picker-overlay td {
@@ -34,5 +34,5 @@
 }
 
 .x-btn button.aloha-button-characterpicker {
-    background: url( '../img/icon.png' );
+    background: url('../img/icon.png');
 }

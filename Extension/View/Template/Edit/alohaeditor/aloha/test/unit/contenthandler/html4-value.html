@@ -3,7 +3,15 @@ The following illegal example illustrates how one might create overlapping cells
 http://www.w3.org/TR/html4/struct/tables.html
 -->
 <TABLE border="1">
-<TR><TD>1 <TD>2 <TD>3
-<TR><TD>4 <TD rowspan="2">5 <TD>6
-<TR><TD colspan="2">7 <TD>9
+    <TR>
+        <TD>1
+        <TD>2
+        <TD>3
+            <TR>
+                <TD>4
+                <TD rowspan="2">5
+                <TD>6
+    <TR>
+        <TD colspan="2">7
+        <TD>9
 </TABLE>

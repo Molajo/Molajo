@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="DashboardMenutype" extends="Menuitem">
+<model name="DashboardMenutype" extends="MenuitemsResources">
     <customfields>
         <customfield name="parameters">
             <include name="ParametersDashboard"/>

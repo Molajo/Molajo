@@ -9,94 +9,94 @@
  * Provides a set of language codes and images
  */
 
-define( [ 'aloha', 'aloha/jquery', 'flag-icons/flag-icons-plugin' ],
-function( Aloha, jQuery, FlagIcons ) {
-	
+define([ 'aloha', 'aloha/jquery', 'flag-icons/flag-icons-plugin' ],
+    function (Aloha, jQuery, FlagIcons) {
 
-	return new ( Aloha.AbstractRepository.extend( {
 
-		/**
-		 * Set of language codes
-		 */
-		languageCodes: [],
+        return new ( Aloha.AbstractRepository.extend({
 
-		_constructor: function() {
-			this._super( 'wai-languages' );
-		},
+            /**
+             * Set of language codes
+             */
+            languageCodes:[],
 
-		/**
-		 * Initialize WAI Languages, load the language file and prepare the data.
-		 */
-		init: function() {
-			// Load the language codes
-			jQuery.ajax( {
-				url      : Aloha.getPluginUrl( 'wai-lang' ) + '/lib/language-codes.json',
-				dataType : 'json',
-				success  : jQuery.proxy( this.storeLanguageCodes, this ),
-				error    : this.errorHandler
-			} );
+            _constructor:function () {
+                this._super('wai-languages');
+            },
 
-		    this.repositoryName = 'WaiLanguages';
-		},
+            /**
+             * Initialize WAI Languages, load the language file and prepare the data.
+             */
+            init:function () {
+                // Load the language codes
+                jQuery.ajax({
+                    url:Aloha.getPluginUrl('wai-lang') + '/lib/language-codes.json',
+                    dataType:'json',
+                    success:jQuery.proxy(this.storeLanguageCodes, this),
+                    error:this.errorHandler
+                });
 
-		markObject: function( obj, item ) {
-			//copied from wai-lang-plugin makeVisible to avoid a circular dependency
-			// We do not need to add this class here since it already being
-			// done in the wai-lang plugin
-			// jQuery( obj ).addClass( 'aloha-wai-lang' );
-		},
+                this.repositoryName = 'WaiLanguages';
+            },
 
-		/**
-		 * This method will invoked if a error occurres while loading data via ajax
-		 */
-		errorHandler: function( text, error ) {
-			//TODO log error here
-		},
+            markObject:function (obj, item) {
+                //copied from wai-lang-plugin makeVisible to avoid a circular dependency
+                // We do not need to add this class here since it already being
+                // done in the wai-lang plugin
+                // jQuery( obj ).addClass( 'aloha-wai-lang' );
+            },
 
-		/**
-		 * Stores the retrieved language code data in this object
-		 */
-		storeLanguageCodes: function( data ) {
-			var that = this;
+            /**
+             * This method will invoked if a error occurres while loading data via ajax
+             */
+            errorHandler:function (text, error) {
+                //TODO log error here
+            },
 
-			// Transform loaded json into a set of repository documents
-			jQuery.each( data, function( key, value ) {
-				var el = value;
-				el.id = key;
-				el.repositoryId = that.repositoryId;
-				el.type = 'language';
-				el.url =  FlagIcons.path + '/img/flags/' + el.id + '.png';
-				// el.renditions.url = "img/flags/" + e.id + ".png";
-				// el.renditions.kind.thumbnail = true;
-				that.languageCodes.push( new Aloha.RepositoryDocument( el ) );
-			} );
-		},
+            /**
+             * Stores the retrieved language code data in this object
+             */
+            storeLanguageCodes:function (data) {
+                var that = this;
 
-		/**
-		 * Searches a repository for object items matching query if objectTypeFilter.
-		 * If none found it returns null.
-		 * Not supported: filter, orderBy, maxItems, skipcount, renditionFilter
-		 */
-		query: function( p, callback ) {
-			var query = new RegExp( '^' + p.queryString, 'i' ),
-			    i,
-			    d = [],
-			    matchesName,
-			    matchesType,
-			    currentElement;
+                // Transform loaded json into a set of repository documents
+                jQuery.each(data, function (key, value) {
+                    var el = value;
+                    el.id = key;
+                    el.repositoryId = that.repositoryId;
+                    el.type = 'language';
+                    el.url = FlagIcons.path + '/img/flags/' + el.id + '.png';
+                    // el.renditions.url = "img/flags/" + e.id + ".png";
+                    // el.renditions.kind.thumbnail = true;
+                    that.languageCodes.push(new Aloha.RepositoryDocument(el));
+                });
+            },
 
-			for ( i = 0; i < this.languageCodes.length; ++i ) {
-				currentElement = this.languageCodes[ i ];
-				matchesName = ( !p.queryString || currentElement.name.match( query )  || currentElement.nativeName.match( query ) );
-				matchesType = ( !p.objectTypeFilter || ( !p.objectTypeFilter.length ) || jQuery.inArray( currentElement.type, p.objectTypeFilter ) > -1 );
+            /**
+             * Searches a repository for object items matching query if objectTypeFilter.
+             * If none found it returns null.
+             * Not supported: filter, orderBy, maxItems, skipcount, renditionFilter
+             */
+            query:function (p, callback) {
+                var query = new RegExp('^' + p.queryString, 'i'),
+                    i,
+                    d = [],
+                    matchesName,
+                    matchesType,
+                    currentElement;
 
-				if ( matchesName && matchesType ) {
-					d.push( currentElement );
-				}
-			}
+                for (i = 0; i < this.languageCodes.length; ++i) {
+                    currentElement = this.languageCodes[ i ];
+                    matchesName = ( !p.queryString || currentElement.name.match(query) || currentElement.nativeName.match(query) );
+                    matchesType = ( !p.objectTypeFilter || ( !p.objectTypeFilter.length ) || jQuery.inArray(currentElement.type, p.objectTypeFilter) > -1 );
 
-			callback.call( this, d );
-		}
+                    if (matchesName && matchesType) {
+                        d.push(currentElement);
+                    }
+                }
 
-	} ) )();
-} );
+                callback.call(this, d);
+            }
+
+        }) )();
+    });

@@ -33,7 +33,8 @@ class PublishedstatusTrigger extends ContentTrigger
 	{
 
 		if (isset($this->parameters['action'])
-				&& $this->parameters['action'] == 'delete') {
+			&& $this->parameters['action'] == 'delete'
+		) {
 			return true;
 		}
 

@@ -7,8 +7,9 @@
  * Version: 1.2.1
  * Build date: 8 October 2011
  */
-define( 'aloha/rangy-core', [], function(){} );
-var rangy = (function() {
+define('aloha/rangy-core', [], function () {
+});
+var rangy = (function () {
 
 
     var OBJECT = "object", FUNCTION = "function", UNDEFINED = "undefined";
@@ -45,7 +46,7 @@ var rangy = (function() {
 
     // Creates a convenience function to save verbose repeated calls to tests functions
     function createMultiplePropertyTest(testFunc) {
-        return function(o, props) {
+        return function (o, props) {
             var i = props.length;
             while (i--) {
                 if (!testFunc(o, props[i])) {
@@ -66,27 +67,27 @@ var rangy = (function() {
     }
 
     var api = {
-        version: "1.2.1",
-        initialized: false,
-        supported: true,
+        version:"1.2.1",
+        initialized:false,
+        supported:true,
 
-        util: {
-            isHostMethod: isHostMethod,
-            isHostObject: isHostObject,
-            isHostProperty: isHostProperty,
-            areHostMethods: areHostMethods,
-            areHostObjects: areHostObjects,
-            areHostProperties: areHostProperties,
-            isTextRange: isTextRange
+        util:{
+            isHostMethod:isHostMethod,
+            isHostObject:isHostObject,
+            isHostProperty:isHostProperty,
+            areHostMethods:areHostMethods,
+            areHostObjects:areHostObjects,
+            areHostProperties:areHostProperties,
+            isTextRange:isTextRange
         },
 
-        features: {},
+        features:{},
 
-        modules: {},
-        config: {
-            alertOnWarn: false,
+        modules:{},
+        config:{
+            alertOnWarn:false,
             // Note: this was set to true, see issue https://github.com/alohaeditor/Aloha-Editor/issues/474
-            preferTextRange: true
+            preferTextRange:true
         }
     };
 
@@ -110,7 +111,7 @@ var rangy = (function() {
     api.warn = warn;
 
     if ({}.hasOwnProperty) {
-        api.util.extend = function(o, props) {
+        api.util.extend = function (o, props) {
             for (var i in props) {
                 if (props.hasOwnProperty(i)) {
                     o[i] = props[i];
@@ -157,8 +158,8 @@ var rangy = (function() {
 
         api.initialized = true;
         api.features = {
-            implementsDomRange: implementsDomRange,
-            implementsTextRange: implementsTextRange
+            implementsDomRange:implementsDomRange,
+            implementsTextRange:implementsTextRange
         };
 
         // Initialize modules and call init listeners
@@ -179,7 +180,7 @@ var rangy = (function() {
     api.init = init;
 
     // Execute listener immediately if already initialized
-    api.addInitListener = function(listener) {
+    api.addInitListener = function (listener) {
         if (api.initialized) {
             listener(api);
         } else {
@@ -189,7 +190,7 @@ var rangy = (function() {
 
     var createMissingNativeApiListeners = [];
 
-    api.addCreateMissingNativeApiListener = function(listener) {
+    api.addCreateMissingNativeApiListener = function (listener) {
         createMissingNativeApiListeners.push(listener);
     };
 
@@ -214,33 +215,33 @@ var rangy = (function() {
         this.supported = false;
     }
 
-    Module.prototype.fail = function(reason) {
+    Module.prototype.fail = function (reason) {
         this.initialized = true;
         this.supported = false;
 
         throw new Error("Module '" + this.name + "' failed to load: " + reason);
     };
 
-    Module.prototype.warn = function(msg) {
+    Module.prototype.warn = function (msg) {
         api.warn("Module " + this.name + ": " + msg);
     };
 
-    Module.prototype.createError = function(msg) {
+    Module.prototype.createError = function (msg) {
         return new Error("Error in Rangy " + this.name + " module: " + msg);
     };
 
-    api.createModule = function(name, initFunc) {
+    api.createModule = function (name, initFunc) {
         var module = new Module(name);
         api.modules[name] = module;
 
-        moduleInitializers.push(function(api) {
+        moduleInitializers.push(function (api) {
             initFunc(api, module);
             module.initialized = true;
             module.supported = true;
         });
     };
 
-    api.requireModules = function(modules) {
+    api.requireModules = function (modules) {
         for (var i = 0, len = modules.length, module, moduleName; i < len; ++i) {
             moduleName = modules[i];
             module = api.modules[moduleName];
@@ -259,7 +260,7 @@ var rangy = (function() {
 
     var docReady = false;
 
-    var loadHandler = function(e) {
+    var loadHandler = function (e) {
 
         if (!docReady) {
             docReady = true;
@@ -294,7 +295,7 @@ var rangy = (function() {
 
     return api;
 })();
-rangy.createModule("DomUtil", function(api, module) {
+rangy.createModule("DomUtil", function (api, module) {
 
     var UNDEF = "undefined";
     var util = api.util;
@@ -310,7 +311,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     var el = document.createElement("div");
     if (!util.areHostMethods(el, ["insertBefore", "appendChild", "cloneNode"] ||
-            !util.areHostObjects(el, ["previousSibling", "nextSibling", "childNodes", "parentNode"]))) {
+        !util.areHostObjects(el, ["previousSibling", "nextSibling", "childNodes", "parentNode"]))) {
         module.fail("Incomplete Element implementation");
     }
 
@@ -321,8 +322,8 @@ rangy.createModule("DomUtil", function(api, module) {
 
     var textNode = document.createTextNode("test");
     if (!util.areHostMethods(textNode, ["splitText", "deleteData", "insertData", "appendData", "cloneNode"] ||
-            !util.areHostObjects(el, ["previousSibling", "nextSibling", "childNodes", "parentNode"]) ||
-            !util.areHostProperties(textNode, ["data"]))) {
+        !util.areHostObjects(el, ["previousSibling", "nextSibling", "childNodes", "parentNode"]) ||
+        !util.areHostProperties(textNode, ["data"]))) {
         module.fail("Incomplete Text Node implementation");
     }
 
@@ -332,11 +333,11 @@ rangy.createModule("DomUtil", function(api, module) {
     // able to replicate it outside of the test. The bug is that indexOf returns -1 when called on an Array that
     // contains just the document as a single element and the value searched for is the document.
     var arrayContains = /*Array.prototype.indexOf ?
-        function(arr, val) {
-            return arr.indexOf(val) > -1;
-        }:*/
+     function(arr, val) {
+     return arr.indexOf(val) > -1;
+     }:*/
 
-        function(arr, val) {
+        function (arr, val) {
             var i = arr.length;
             while (i--) {
                 if (arr[i] === val) {
@@ -359,7 +360,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     function getNodeIndex(node) {
         var i = 0;
-        while( (node = node.previousSibling) ) {
+        while ((node = node.previousSibling)) {
             i++;
         }
         return i;
@@ -411,7 +412,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     function isCharacterDataNode(node) {
         var t = node.nodeType;
-        return t == 3 || t == 4 || t == 8 ; // Text, CDataSection or Comment
+        return t == 3 || t == 4 || t == 8; // Text, CDataSection or Comment
     }
 
     function insertAfter(node, precedingNode) {
@@ -484,57 +485,57 @@ rangy.createModule("DomUtil", function(api, module) {
 
     function getRootContainer(node) {
         var parent;
-        while ( (parent = node.parentNode) ) {
+        while ((parent = node.parentNode)) {
             node = parent;
         }
         return node;
     }
 
     /**
-	 * This is a very ugly workaround for an IE9 issue Before comparing DOM
-	 * elements "normalize" them. There are cases, where anchorNode and
-	 * focusNode in a nativeselection point to DOM elements with same
-	 * parentNode, same previousSibling and same nextSibling, but the nodes
-	 * themselves are not the same
-	 * If such nodes are compared in the comparePoints method, an error occurs.
-	 * To fix this, we move to the previousSibling/nextSibling/parentNode and back, to hopefully get
-	 * the "correct" node in the DOM
-	 * @param node node to fix
-	 * @return normalized node
-	 */
+     * This is a very ugly workaround for an IE9 issue Before comparing DOM
+     * elements "normalize" them. There are cases, where anchorNode and
+     * focusNode in a nativeselection point to DOM elements with same
+     * parentNode, same previousSibling and same nextSibling, but the nodes
+     * themselves are not the same
+     * If such nodes are compared in the comparePoints method, an error occurs.
+     * To fix this, we move to the previousSibling/nextSibling/parentNode and back, to hopefully get
+     * the "correct" node in the DOM
+     * @param node node to fix
+     * @return normalized node
+     */
     function fixNode(node) {
-    	if (!node) {
-    		return;
-    	}
-    	if (node.previousSibling) {
-    		return node.previousSibling.nextSibling;
-    	} else if (node.nextSibling) {
-    		return node.nextSibling.previousSibling;
-    	} else if (node.parentNode) {
-    		return node.parentNode.firstChild;
-    	} else {
-    		return node;
-    	}
+        if (!node) {
+            return;
+        }
+        if (node.previousSibling) {
+            return node.previousSibling.nextSibling;
+        } else if (node.nextSibling) {
+            return node.nextSibling.previousSibling;
+        } else if (node.parentNode) {
+            return node.parentNode.firstChild;
+        } else {
+            return node;
+        }
     }
 
     function comparePoints(nodeA, offsetA, nodeB, offsetB) {
-    	// fix the nodes before comparing them
-    	nodeA = fixNode(nodeA);
-    	nodeB = fixNode(nodeB);
+        // fix the nodes before comparing them
+        nodeA = fixNode(nodeA);
+        nodeB = fixNode(nodeB);
         // See http://www.w3.org/TR/DOM-Level-2-Traversal-Range/ranges.html#Level-2-Range-Comparing
         var nodeC, root, childA, childB, n;
         if (nodeA == nodeB) {
 
             // Case 1: nodes are the same
             return offsetA === offsetB ? 0 : (offsetA < offsetB) ? -1 : 1;
-        } else if ( (nodeC = getClosestAncestorIn(nodeB, nodeA, true)) ) {
+        } else if ((nodeC = getClosestAncestorIn(nodeB, nodeA, true))) {
 
             // Case 2: node C (container B or an ancestor) is a child node of A
             return offsetA <= getNodeIndex(nodeC) ? -1 : 1;
-        } else if ( (nodeC = getClosestAncestorIn(nodeA, nodeB, true)) ) {
+        } else if ((nodeC = getClosestAncestorIn(nodeA, nodeB, true))) {
 
             // Case 3: node C (container A or an ancestor) is a child node of B
-            return getNodeIndex(nodeC) < offsetB  ? -1 : 1;
+            return getNodeIndex(nodeC) < offsetB ? -1 : 1;
         } else {
 
             // Case 4: containers are siblings or descendants of siblings
@@ -563,7 +564,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     function fragmentFromNodeChildren(node) {
         var fragment = getDocument(node).createDocumentFragment(), child;
-        while ( (child = node.firstChild) ) {
+        while ((child = node.firstChild)) {
             fragment.appendChild(child);
         }
         return fragment;
@@ -592,13 +593,13 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     NodeIterator.prototype = {
-        _current: null,
+        _current:null,
 
-        hasNext: function() {
+        hasNext:function () {
             return !!this._next;
         },
 
-        next: function() {
+        next:function () {
             var n = this._current = this._next;
             var child, next;
             if (this._current) {
@@ -616,7 +617,7 @@ rangy.createModule("DomUtil", function(api, module) {
             return this._current;
         },
 
-        detach: function() {
+        detach:function () {
             this._current = this._next = this.root = null;
         }
     };
@@ -634,11 +635,11 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     DomPosition.prototype = {
-        equals: function(pos) {
+        equals:function (pos) {
             return this.node === pos.node & this.offset == pos.offset;
         },
 
-        inspect: function() {
+        inspect:function () {
             return "[DomPosition(" + inspectNode(this.node) + ":" + this.offset + ")]";
         }
     };
@@ -653,60 +654,61 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     DOMException.prototype = {
-        INDEX_SIZE_ERR: 1,
-        HIERARCHY_REQUEST_ERR: 3,
-        WRONG_DOCUMENT_ERR: 4,
-        NO_MODIFICATION_ALLOWED_ERR: 7,
-        NOT_FOUND_ERR: 8,
-        NOT_SUPPORTED_ERR: 9,
-        INVALID_STATE_ERR: 11
+        INDEX_SIZE_ERR:1,
+        HIERARCHY_REQUEST_ERR:3,
+        WRONG_DOCUMENT_ERR:4,
+        NO_MODIFICATION_ALLOWED_ERR:7,
+        NOT_FOUND_ERR:8,
+        NOT_SUPPORTED_ERR:9,
+        INVALID_STATE_ERR:11
     };
 
-    DOMException.prototype.toString = function() {
+    DOMException.prototype.toString = function () {
         return this.message;
     };
 
     api.dom = {
-        arrayContains: arrayContains,
-        isHtmlNamespace: isHtmlNamespace,
-        parentElement: parentElement,
-        getNodeIndex: getNodeIndex,
-        getNodeLength: getNodeLength,
-        getCommonAncestor: getCommonAncestor,
-        isAncestorOf: isAncestorOf,
-        getClosestAncestorIn: getClosestAncestorIn,
-        isCharacterDataNode: isCharacterDataNode,
-        insertAfter: insertAfter,
-        splitDataNode: splitDataNode,
-        getDocument: getDocument,
-        getWindow: getWindow,
-        getIframeWindow: getIframeWindow,
-        getIframeDocument: getIframeDocument,
-        getBody: getBody,
-        getRootContainer: getRootContainer,
-        comparePoints: comparePoints,
-        inspectNode: inspectNode,
-        fragmentFromNodeChildren: fragmentFromNodeChildren,
-        createIterator: createIterator,
-        DomPosition: DomPosition
+        arrayContains:arrayContains,
+        isHtmlNamespace:isHtmlNamespace,
+        parentElement:parentElement,
+        getNodeIndex:getNodeIndex,
+        getNodeLength:getNodeLength,
+        getCommonAncestor:getCommonAncestor,
+        isAncestorOf:isAncestorOf,
+        getClosestAncestorIn:getClosestAncestorIn,
+        isCharacterDataNode:isCharacterDataNode,
+        insertAfter:insertAfter,
+        splitDataNode:splitDataNode,
+        getDocument:getDocument,
+        getWindow:getWindow,
+        getIframeWindow:getIframeWindow,
+        getIframeDocument:getIframeDocument,
+        getBody:getBody,
+        getRootContainer:getRootContainer,
+        comparePoints:comparePoints,
+        inspectNode:inspectNode,
+        fragmentFromNodeChildren:fragmentFromNodeChildren,
+        createIterator:createIterator,
+        DomPosition:DomPosition
     };
 
     api.DOMException = DOMException;
-});rangy.createModule("DomRange", function(api, module) {
-    api.requireModules( ["DomUtil"] );
+});
+rangy.createModule("DomRange", function (api, module) {
+    api.requireModules(["DomUtil"]);
 
 
     var dom = api.dom;
     var DomPosition = dom.DomPosition;
     var DOMException = api.DOMException;
-    
+
     /*----------------------------------------------------------------------------------------------------------------*/
 
     // Utility functions
 
     function isNonTextPartiallySelected(node, range) {
         return (node.nodeType != 3) &&
-               (dom.isAncestorOf(node, range.startContainer, true) || dom.isAncestorOf(node, range.endContainer, true));
+            (dom.isAncestorOf(node, range.startContainer, true) || dom.isAncestorOf(node, range.endContainer, true));
     }
 
     function getRangeDocument(range) {
@@ -717,7 +719,7 @@ rangy.createModule("DomUtil", function(api, module) {
         var listeners = range._listeners[type];
         if (listeners) {
             for (var i = 0, len = listeners.length; i < len; ++i) {
-                listeners[i].call(range, {target: range, args: args});
+                listeners[i].call(range, {target:range, args:args});
             }
         }
     }
@@ -748,7 +750,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     function cloneSubtree(iterator) {
         var partiallySelected;
-        for (var node, frag = getRangeDocument(iterator.range).createDocumentFragment(), subIterator; node = iterator.next(); ) {
+        for (var node, frag = getRangeDocument(iterator.range).createDocumentFragment(), subIterator; node = iterator.next();) {
             partiallySelected = iterator.isPartiallySelectedSubtree();
 
             node = node.cloneNode(!partiallySelected);
@@ -768,8 +770,8 @@ rangy.createModule("DomUtil", function(api, module) {
 
     function iterateSubtree(rangeIterator, func, iteratorState) {
         var it, n;
-        iteratorState = iteratorState || { stop: false };
-        for (var node, subRangeIterator; node = rangeIterator.next(); ) {
+        iteratorState = iteratorState || { stop:false };
+        for (var node, subRangeIterator; node = rangeIterator.next();) {
             //log.debug("iterateSubtree, partially selected: " + rangeIterator.isPartiallySelectedSubtree(), nodeToString(node));
             if (rangeIterator.isPartiallySelectedSubtree()) {
                 // The node is partially selected by the Range, so we can use a new RangeIterator on the portion of the
@@ -789,7 +791,7 @@ rangy.createModule("DomUtil", function(api, module) {
                 // The whole node is selected, so we can use efficient DOM iteration to iterate over the node and its
                 // descendant
                 it = dom.createIterator(node);
-                while ( (n = it.next()) ) {
+                while ((n = it.next())) {
                     if (func(n) === false) {
                         iteratorState.stop = true;
                         return;
@@ -814,7 +816,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     function extractSubtree(iterator) {
 
-        for (var node, frag = getRangeDocument(iterator.range).createDocumentFragment(), subIterator; node = iterator.next(); ) {
+        for (var node, frag = getRangeDocument(iterator.range).createDocumentFragment(), subIterator; node = iterator.next();) {
 
 
             if (iterator.isPartiallySelectedSubtree()) {
@@ -842,7 +844,7 @@ rangy.createModule("DomUtil", function(api, module) {
         }
 
         var nodes = [];
-        iterateSubtree(new RangeIterator(range, false), function(node) {
+        iterateSubtree(new RangeIterator(range, false), function (node) {
             if ((!filterNodeTypes || regex.test(node.nodeType)) && (!filterExists || filter(node))) {
                 nodes.push(node);
             }
@@ -853,7 +855,7 @@ rangy.createModule("DomUtil", function(api, module) {
     function inspect(range) {
         var name = (typeof range.getName == "undefined") ? "Range" : range.getName();
         return "[" + name + "(" + dom.inspectNode(range.startContainer) + ":" + range.startOffset + ", " +
-                dom.inspectNode(range.endContainer) + ":" + range.endOffset + ")]";
+            dom.inspectNode(range.endContainer) + ":" + range.endOffset + ")]";
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -866,7 +868,6 @@ rangy.createModule("DomUtil", function(api, module) {
     function RangeIterator(range, clonePartiallySelectedTextNodes) {
         this.range = range;
         this.clonePartiallySelectedTextNodes = clonePartiallySelectedTextNodes;
-
 
 
         if (!range.collapsed) {
@@ -890,22 +891,22 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     RangeIterator.prototype = {
-        _current: null,
-        _next: null,
-        _first: null,
-        _last: null,
-        isSingleCharacterDataNode: false,
+        _current:null,
+        _next:null,
+        _first:null,
+        _last:null,
+        isSingleCharacterDataNode:false,
 
-        reset: function() {
+        reset:function () {
             this._current = null;
             this._next = this._first;
         },
 
-        hasNext: function() {
+        hasNext:function () {
             return !!this._next;
         },
 
-        next: function() {
+        next:function () {
             // Move to next node
             var current = this._current = this._next;
             if (current) {
@@ -927,7 +928,7 @@ rangy.createModule("DomUtil", function(api, module) {
             return current;
         },
 
-        remove: function() {
+        remove:function () {
             var current = this._current, start, end;
 
             if (dom.isCharacterDataNode(current) && (current === this.sc || current === this.ec)) {
@@ -946,12 +947,12 @@ rangy.createModule("DomUtil", function(api, module) {
         },
 
         // Checks if the current node is partially selected
-        isPartiallySelectedSubtree: function() {
+        isPartiallySelectedSubtree:function () {
             var current = this._current;
             return isNonTextPartiallySelected(current, this.range);
         },
 
-        getSubtreeIterator: function() {
+        getSubtreeIterator:function () {
             var subRange;
             if (this.isSingleCharacterDataNode) {
                 subRange = this.range.cloneRange();
@@ -975,7 +976,7 @@ rangy.createModule("DomUtil", function(api, module) {
             return new RangeIterator(subRange, this.clonePartiallySelectedTextNodes);
         },
 
-        detach: function(detachRange) {
+        detach:function (detachRange) {
             if (detachRange) {
                 this.range.detach();
             }
@@ -997,11 +998,11 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     RangeException.prototype = {
-        BAD_BOUNDARYPOINTS_ERR: 1,
-        INVALID_NODE_TYPE_ERR: 2
+        BAD_BOUNDARYPOINTS_ERR:1,
+        INVALID_NODE_TYPE_ERR:2
     };
 
-    RangeException.prototype.toString = function() {
+    RangeException.prototype.toString = function () {
         return this.message;
     };
 
@@ -1019,19 +1020,19 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     RangeNodeIterator.prototype = {
-        _current: null,
+        _current:null,
 
-        hasNext: function() {
+        hasNext:function () {
             return !!this._next;
         },
 
-        next: function() {
+        next:function () {
             this._current = this._next;
             this._next = this.nodes[ ++this._position ];
             return this._current;
         },
 
-        detach: function() {
+        detach:function () {
             this._current = this._next = this.nodes = null;
         }
     };
@@ -1043,7 +1044,7 @@ rangy.createModule("DomUtil", function(api, module) {
     var surroundNodeTypes = [1, 3, 4, 5, 7, 8];
 
     function createAncestorFinder(nodeTypes) {
-        return function(node, selfIsAncestor) {
+        return function (node, selfIsAncestor) {
             var t, n = selfIsAncestor ? node : node.parentNode;
             while (n) {
                 t = n.nodeType;
@@ -1057,9 +1058,9 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     var getRootContainer = dom.getRootContainer;
-    var getDocumentOrFragmentContainer = createAncestorFinder( [9, 11] );
+    var getDocumentOrFragmentContainer = createAncestorFinder([9, 11]);
     var getReadonlyAncestor = createAncestorFinder(readonlyNodeTypes);
-    var getDocTypeNotationEntityAncestor = createAncestorFinder( [6, 10, 12] );
+    var getDocTypeNotationEntityAncestor = createAncestorFinder([6, 10, 12]);
 
     function assertNoDocTypeNotationEntityAncestor(node, allowSelf) {
         if (getDocTypeNotationEntityAncestor(node, allowSelf)) {
@@ -1114,8 +1115,8 @@ rangy.createModule("DomUtil", function(api, module) {
     function assertRangeValid(range) {
         assertNotDetached(range);
         if (isOrphan(range.startContainer) || isOrphan(range.endContainer) ||
-                !isValidOffset(range.startContainer, range.startOffset) ||
-                !isValidOffset(range.endContainer, range.endOffset)) {
+            !isValidOffset(range.startContainer, range.startOffset) ||
+            !isValidOffset(range.endContainer, range.endOffset)) {
             throw new Error("Range error: Range is no longer valid after DOM mutation (" + range.inspect() + ")");
         }
     }
@@ -1140,7 +1141,7 @@ rangy.createModule("DomUtil", function(api, module) {
         // discussion and base code for this implementation at issue 67.
         // Spec: http://html5.org/specs/dom-parsing.html#extensions-to-the-range-interface
         // Thanks to Aleks Williams.
-        function(fragmentStr) {
+        function (fragmentStr) {
             // "Let node the context object's start's node."
             var node = this.startContainer;
             var doc = dom.getDocument(node);
@@ -1159,7 +1160,7 @@ rangy.createModule("DomUtil", function(api, module) {
             if (node.nodeType == 1) {
                 el = node;
 
-            // "Text, Comment: node's parentElement"
+                // "Text, Comment: node's parentElement"
             } else if (dom.isCharacterDataNode(node)) {
                 el = dom.parentElement(node);
             }
@@ -1169,12 +1170,12 @@ rangy.createModule("DomUtil", function(api, module) {
             // namespace"
             if (el === null || (
                 el.nodeName == "HTML"
-                && dom.isHtmlNamespace(dom.getDocument(el).documentElement)
-                && dom.isHtmlNamespace(el)
-            )) {
+                    && dom.isHtmlNamespace(dom.getDocument(el).documentElement)
+                    && dom.isHtmlNamespace(el)
+                )) {
 
-            // "let element be a new Element with "body" as its local name and the HTML
-            // namespace as its namespace.""
+                // "let element be a new Element with "body" as its local name and the HTML
+                // namespace as its namespace.""
                 el = doc.createElement("body");
             } else {
                 el = el.cloneNode(false);
@@ -1197,7 +1198,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
         // In this case, innerHTML cannot be trusted, so fall back to a simpler, non-conformant implementation that
         // previous versions of Rangy used (with the exception of using a body element rather than a div)
-        function(fragmentStr) {
+        function (fragmentStr) {
             assertNotDetached(this);
             var doc = getRangeDocument(this);
             var el = doc.createElement("body");
@@ -1214,14 +1215,15 @@ rangy.createModule("DomUtil", function(api, module) {
     var s2s = 0, s2e = 1, e2e = 2, e2s = 3;
     var n_b = 0, n_a = 1, n_b_a = 2, n_i = 3;
 
-    function RangePrototype() {}
+    function RangePrototype() {
+    }
 
     RangePrototype.prototype = {
-        attachListener: function(type, listener) {
+        attachListener:function (type, listener) {
             this._listeners[type].push(listener);
         },
 
-        compareBoundaryPoints: function(how, range) {
+        compareBoundaryPoints:function (how, range) {
             assertRangeValid(this);
             assertSameDocumentOrFragment(this.startContainer, range.startContainer);
 
@@ -1235,7 +1237,7 @@ rangy.createModule("DomUtil", function(api, module) {
             return dom.comparePoints(nodeA, offsetA, nodeB, offsetB);
         },
 
-        insertNode: function(node) {
+        insertNode:function (node) {
             assertRangeValid(this);
             assertValidNodeType(node, insertableNodeTypes);
             assertNodeNotReadOnly(this.startContainer);
@@ -1252,7 +1254,7 @@ rangy.createModule("DomUtil", function(api, module) {
             this.setStartBefore(firstNodeInserted);
         },
 
-        cloneContents: function() {
+        cloneContents:function () {
             assertRangeValid(this);
 
             var clone, frag;
@@ -1274,7 +1276,7 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         },
 
-        canSurroundContents: function() {
+        canSurroundContents:function () {
             assertRangeValid(this);
             assertNodeNotReadOnly(this.startContainer);
             assertNodeNotReadOnly(this.endContainer);
@@ -1283,12 +1285,12 @@ rangy.createModule("DomUtil", function(api, module) {
             // no non-text nodes.
             var iterator = new RangeIterator(this, true);
             var boundariesInvalid = (iterator._first && (isNonTextPartiallySelected(iterator._first, this)) ||
-                    (iterator._last && isNonTextPartiallySelected(iterator._last, this)));
+                (iterator._last && isNonTextPartiallySelected(iterator._last, this)));
             iterator.detach();
             return !boundariesInvalid;
         },
 
-        surroundContents: function(node) {
+        surroundContents:function (node) {
             assertValidNodeType(node, surroundNodeTypes);
 
             if (!this.canSurroundContents()) {
@@ -1312,7 +1314,7 @@ rangy.createModule("DomUtil", function(api, module) {
             this.selectNode(node);
         },
 
-        cloneRange: function() {
+        cloneRange:function () {
             assertRangeValid(this);
             var range = new Range(getRangeDocument(this));
             var i = rangeProperties.length, prop;
@@ -1323,7 +1325,7 @@ rangy.createModule("DomUtil", function(api, module) {
             return range;
         },
 
-        toString: function() {
+        toString:function () {
             assertRangeValid(this);
             var sc = this.startContainer;
             if (sc === this.endContainer && dom.isCharacterDataNode(sc)) {
@@ -1331,7 +1333,7 @@ rangy.createModule("DomUtil", function(api, module) {
             } else {
                 var textBits = [], iterator = new RangeIterator(this, true);
 
-                iterateSubtree(iterator, function(node) {
+                iterateSubtree(iterator, function (node) {
                     // Accept only text or CDATA nodes, not comments
 
                     if (node.nodeType == 3 || node.nodeType == 4) {
@@ -1346,7 +1348,7 @@ rangy.createModule("DomUtil", function(api, module) {
         // The methods below are all non-standard. The following batch were introduced by Mozilla but have since
         // been removed from Mozilla.
 
-        compareNode: function(node) {
+        compareNode:function (node) {
             assertRangeValid(this);
 
             var parent = node.parentNode;
@@ -1366,7 +1368,7 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         },
 
-        comparePoint: function(node, offset) {
+        comparePoint:function (node, offset) {
             assertRangeValid(this);
             assertNode(node, "HIERARCHY_REQUEST_ERR");
             assertSameDocumentOrFragment(node, this.startContainer);
@@ -1379,9 +1381,9 @@ rangy.createModule("DomUtil", function(api, module) {
             return 0;
         },
 
-        createContextualFragment: createContextualFragment,
+        createContextualFragment:createContextualFragment,
 
-        toHtml: function() {
+        toHtml:function () {
             assertRangeValid(this);
             var container = getRangeDocument(this).createElement("div");
             container.appendChild(this.cloneContents());
@@ -1390,7 +1392,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
         // touchingIsIntersecting determines whether this method considers a node that borders a range intersects
         // with it (as in WebKit) or not (as in Gecko pre-1.9, and the default)
-        intersectsNode: function(node, touchingIsIntersecting) {
+        intersectsNode:function (node, touchingIsIntersecting) {
             assertRangeValid(this);
             assertNode(node, "NOT_FOUND_ERR");
             if (dom.getDocument(node) !== getRangeDocument(this)) {
@@ -1407,19 +1409,19 @@ rangy.createModule("DomUtil", function(api, module) {
         },
 
 
-        isPointInRange: function(node, offset) {
+        isPointInRange:function (node, offset) {
             assertRangeValid(this);
             assertNode(node, "HIERARCHY_REQUEST_ERR");
             assertSameDocumentOrFragment(node, this.startContainer);
 
             return (dom.comparePoints(node, offset, this.startContainer, this.startOffset) >= 0) &&
-                   (dom.comparePoints(node, offset, this.endContainer, this.endOffset) <= 0);
+                (dom.comparePoints(node, offset, this.endContainer, this.endOffset) <= 0);
         },
 
         // The methods below are non-standard and invented by me.
 
         // Sharing a boundary start-to-end or end-to-start does not count as intersection.
-        intersectsRange: function(range, touchingIsIntersecting) {
+        intersectsRange:function (range, touchingIsIntersecting) {
             assertRangeValid(this);
 
             if (getRangeDocument(range) != getRangeDocument(this)) {
@@ -1432,7 +1434,7 @@ rangy.createModule("DomUtil", function(api, module) {
             return touchingIsIntersecting ? startComparison <= 0 && endComparison >= 0 : startComparison < 0 && endComparison > 0;
         },
 
-        intersection: function(range) {
+        intersection:function (range) {
             if (this.intersectsRange(range)) {
                 var startComparison = dom.comparePoints(this.startContainer, this.startOffset, range.startContainer, range.startOffset),
                     endComparison = dom.comparePoints(this.endContainer, this.endOffset, range.endContainer, range.endOffset);
@@ -1450,7 +1452,7 @@ rangy.createModule("DomUtil", function(api, module) {
             return null;
         },
 
-        union: function(range) {
+        union:function (range) {
             if (this.intersectsRange(range, true)) {
                 var unionRange = this.cloneRange();
                 if (dom.comparePoints(range.startContainer, range.startOffset, this.startContainer, this.startOffset) == -1) {
@@ -1465,7 +1467,7 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         },
 
-        containsNode: function(node, allowPartial) {
+        containsNode:function (node, allowPartial) {
             if (allowPartial) {
                 return this.intersectsNode(node, false);
             } else {
@@ -1473,15 +1475,15 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         },
 
-        containsNodeContents: function(node) {
+        containsNodeContents:function (node) {
             return this.comparePoint(node, 0) >= 0 && this.comparePoint(node, dom.getNodeLength(node)) <= 0;
         },
 
-        containsRange: function(range) {
+        containsRange:function (range) {
             return this.intersection(range).equals(range);
         },
 
-        containsNodeText: function(node) {
+        containsNodeText:function (node) {
             var nodeRange = this.cloneRange();
             nodeRange.selectNode(node);
             var textNodes = nodeRange.getNodes([3]);
@@ -1497,43 +1499,43 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         },
 
-        createNodeIterator: function(nodeTypes, filter) {
+        createNodeIterator:function (nodeTypes, filter) {
             assertRangeValid(this);
             return new RangeNodeIterator(this, nodeTypes, filter);
         },
 
-        getNodes: function(nodeTypes, filter) {
+        getNodes:function (nodeTypes, filter) {
             assertRangeValid(this);
             return getNodesInRange(this, nodeTypes, filter);
         },
 
-        getDocument: function() {
+        getDocument:function () {
             return getRangeDocument(this);
         },
 
-        collapseBefore: function(node) {
+        collapseBefore:function (node) {
             assertNotDetached(this);
 
             this.setEndBefore(node);
             this.collapse(false);
         },
 
-        collapseAfter: function(node) {
+        collapseAfter:function (node) {
             assertNotDetached(this);
 
             this.setStartAfter(node);
             this.collapse(true);
         },
 
-        getName: function() {
+        getName:function () {
             return "DomRange";
         },
 
-        equals: function(range) {
+        equals:function (range) {
             return Range.rangesEqual(this, range);
         },
 
-        inspect: function() {
+        inspect:function () {
             return inspect(this);
         }
     };
@@ -1556,7 +1558,7 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     function createRangeContentRemover(remover, boundaryUpdater) {
-        return function() {
+        return function () {
             assertRangeValid(this);
 
             var sc = this.startContainer, so = this.startOffset, root = this.commonAncestorContainer;
@@ -1590,7 +1592,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     function createPrototypeRange(constructor, boundaryUpdater, detacher) {
         function createBeforeAfterNodeSetter(isBefore, isStart) {
-            return function(node) {
+            return function (node) {
                 assertNotDetached(this);
                 assertValidNodeType(node, beforeAfterNodeTypes);
                 assertValidNodeType(getRootContainer(node), rootContainerNodeTypes);
@@ -1635,7 +1637,7 @@ rangy.createModule("DomUtil", function(api, module) {
         constructor.prototype = new RangePrototype();
 
         api.util.extend(constructor.prototype, {
-            setStart: function(node, offset) {
+            setStart:function (node, offset) {
                 assertNotDetached(this);
                 assertNoDocTypeNotationEntityAncestor(node, true);
                 assertValidOffset(node, offset);
@@ -1643,7 +1645,7 @@ rangy.createModule("DomUtil", function(api, module) {
                 setRangeStart(this, node, offset);
             },
 
-            setEnd: function(node, offset) {
+            setEnd:function (node, offset) {
                 assertNotDetached(this);
                 assertNoDocTypeNotationEntityAncestor(node, true);
                 assertValidOffset(node, offset);
@@ -1651,12 +1653,12 @@ rangy.createModule("DomUtil", function(api, module) {
                 setRangeEnd(this, node, offset);
             },
 
-            setStartBefore: createBeforeAfterNodeSetter(true, true),
-            setStartAfter: createBeforeAfterNodeSetter(false, true),
-            setEndBefore: createBeforeAfterNodeSetter(true, false),
-            setEndAfter: createBeforeAfterNodeSetter(false, false),
+            setStartBefore:createBeforeAfterNodeSetter(true, true),
+            setStartAfter:createBeforeAfterNodeSetter(false, true),
+            setEndBefore:createBeforeAfterNodeSetter(true, false),
+            setEndAfter:createBeforeAfterNodeSetter(false, false),
 
-            collapse: function(isStart) {
+            collapse:function (isStart) {
                 assertRangeValid(this);
                 if (isStart) {
                     boundaryUpdater(this, this.startContainer, this.startOffset, this.startContainer, this.startOffset);
@@ -1665,7 +1667,7 @@ rangy.createModule("DomUtil", function(api, module) {
                 }
             },
 
-            selectNodeContents: function(node) {
+            selectNodeContents:function (node) {
                 // This doesn't seem well specified: the spec talks only about selecting the node's contents, which
                 // could be taken to mean only its children. However, browsers implement this the same as selectNode for
                 // text nodes, so I shall do likewise
@@ -1675,7 +1677,7 @@ rangy.createModule("DomUtil", function(api, module) {
                 boundaryUpdater(this, node, 0, node, dom.getNodeLength(node));
             },
 
-            selectNode: function(node) {
+            selectNode:function (node) {
                 assertNotDetached(this);
                 assertNoDocTypeNotationEntityAncestor(node, false);
                 assertValidNodeType(node, beforeAfterNodeTypes);
@@ -1684,11 +1686,11 @@ rangy.createModule("DomUtil", function(api, module) {
                 boundaryUpdater(this, start.node, start.offset, end.node, end.offset);
             },
 
-            extractContents: createRangeContentRemover(extractSubtree, boundaryUpdater),
+            extractContents:createRangeContentRemover(extractSubtree, boundaryUpdater),
 
-            deleteContents: createRangeContentRemover(deleteSubtree, boundaryUpdater),
+            deleteContents:createRangeContentRemover(deleteSubtree, boundaryUpdater),
 
-            canSurroundContents: function() {
+            canSurroundContents:function () {
                 assertRangeValid(this);
                 assertNodeNotReadOnly(this.startContainer);
                 assertNodeNotReadOnly(this.endContainer);
@@ -1697,16 +1699,16 @@ rangy.createModule("DomUtil", function(api, module) {
                 // no non-text nodes.
                 var iterator = new RangeIterator(this, true);
                 var boundariesInvalid = (iterator._first && (isNonTextPartiallySelected(iterator._first, this)) ||
-                        (iterator._last && isNonTextPartiallySelected(iterator._last, this)));
+                    (iterator._last && isNonTextPartiallySelected(iterator._last, this)));
                 iterator.detach();
                 return !boundariesInvalid;
             },
 
-            detach: function() {
+            detach:function () {
                 detacher(this);
             },
 
-            splitBoundaries: function() {
+            splitBoundaries:function () {
                 assertRangeValid(this);
 
 
@@ -1733,12 +1735,12 @@ rangy.createModule("DomUtil", function(api, module) {
                 boundaryUpdater(this, sc, so, ec, eo);
             },
 
-            normalizeBoundaries: function() {
+            normalizeBoundaries:function () {
                 assertRangeValid(this);
 
                 var sc = this.startContainer, so = this.startOffset, ec = this.endContainer, eo = this.endOffset;
 
-                var mergeForward = function(node) {
+                var mergeForward = function (node) {
                     var sibling = node.nextSibling;
                     if (sibling && sibling.nodeType == node.nodeType) {
                         ec = node;
@@ -1748,7 +1750,7 @@ rangy.createModule("DomUtil", function(api, module) {
                     }
                 };
 
-                var mergeBackward = function(node) {
+                var mergeBackward = function (node) {
                     var sibling = node.previousSibling;
                     if (sibling && sibling.nodeType == node.nodeType) {
                         sc = node;
@@ -1808,7 +1810,7 @@ rangy.createModule("DomUtil", function(api, module) {
                 boundaryUpdater(this, sc, so, ec, eo);
             },
 
-            collapseToPoint: function(node, offset) {
+            collapseToPoint:function (node, offset) {
                 assertNotDetached(this);
 
                 assertNoDocTypeNotationEntityAncestor(node, true);
@@ -1840,7 +1842,7 @@ rangy.createModule("DomUtil", function(api, module) {
         range.endOffset = endOffset;
 
         updateCollapsedAndCommonAncestor(range);
-        dispatchEvent(range, "boundarychange", {startMoved: startMoved, endMoved: endMoved});
+        dispatchEvent(range, "boundarychange", {startMoved:startMoved, endMoved:endMoved});
     }
 
     function detach(range) {
@@ -1860,8 +1862,8 @@ rangy.createModule("DomUtil", function(api, module) {
         this.endContainer = doc;
         this.endOffset = 0;
         this._listeners = {
-            boundarychange: [],
-            detach: []
+            boundarychange:[],
+            detach:[]
         };
         updateCollapsedAndCommonAncestor(this);
     }
@@ -1876,17 +1878,18 @@ rangy.createModule("DomUtil", function(api, module) {
     Range.createPrototypeRange = createPrototypeRange;
     Range.inspect = inspect;
     Range.getRangeDocument = getRangeDocument;
-    Range.rangesEqual = function(r1, r2) {
+    Range.rangesEqual = function (r1, r2) {
         return r1.startContainer === r2.startContainer &&
-               r1.startOffset === r2.startOffset &&
-               r1.endContainer === r2.endContainer &&
-               r1.endOffset === r2.endOffset;
+            r1.startOffset === r2.startOffset &&
+            r1.endContainer === r2.endContainer &&
+            r1.endOffset === r2.endOffset;
     };
 
     api.DomRange = Range;
     api.RangeException = RangeException;
-});rangy.createModule("WrappedRange", function(api, module) {
-    api.requireModules( ["DomUtil", "DomRange"] );
+});
+rangy.createModule("WrappedRange", function (api, module) {
+    api.requireModules(["DomUtil", "DomRange"]);
 
     /**
      * @constructor
@@ -1897,22 +1900,21 @@ rangy.createModule("DomUtil", function(api, module) {
     var DomRange = api.DomRange;
 
 
-
     /*----------------------------------------------------------------------------------------------------------------*/
 
     /*
-    This is a workaround for a bug where IE returns the wrong container element from the TextRange's parentElement()
-    method. For example, in the following (where pipes denote the selection boundaries):
+     This is a workaround for a bug where IE returns the wrong container element from the TextRange's parentElement()
+     method. For example, in the following (where pipes denote the selection boundaries):
 
-    <ul id="ul"><li id="a">| a </li><li id="b"> b |</li></ul>
+     <ul id="ul"><li id="a">| a </li><li id="b"> b |</li></ul>
 
-    var range = document.selection.createRange();
-    alert(range.parentElement().id); // Should alert "ul" but alerts "b"
+     var range = document.selection.createRange();
+     alert(range.parentElement().id); // Should alert "ul" but alerts "b"
 
-    This method returns the common ancestor node of the following:
-    - the parentElement() of the textRange
-    - the parentElement() of the textRange after calling collapse(true)
-    - the parentElement() of the textRange after calling collapse(false)
+     This method returns the common ancestor node of the following:
+     - the parentElement() of the textRange
+     - the parentElement() of the textRange after calling collapse(true)
+     - the parentElement() of the textRange after calling collapse(false)
      */
     function getTextRangeContainerElement(textRange) {
         var parentEl = textRange.parentElement();
@@ -1951,7 +1953,6 @@ rangy.createModule("DomUtil", function(api, module) {
         }
 
 
-
         // Deal with nodes that cannot "contain rich HTML markup". In practice, this means form inputs, images and
         // similar. See http://msdn.microsoft.com/en-us/library/aa703950%28VS.85%29.aspx
         if (!containerElement.canHaveHTML) {
@@ -1967,8 +1968,8 @@ rangy.createModule("DomUtil", function(api, module) {
         do {
             containerElement.insertBefore(workingNode, workingNode.previousSibling);
             workingRange.moveToElementText(workingNode);
-        } while ( (comparison = workingRange.compareEndPoints(workingComparisonType, textRange)) > 0 &&
-                workingNode.previousSibling);
+        } while ((comparison = workingRange.compareEndPoints(workingComparisonType, textRange)) > 0 &&
+            workingNode.previousSibling);
 
         // We've now reached or gone past the boundary of the text range we're interested in
         // so have identified the node we want
@@ -1985,39 +1986,39 @@ rangy.createModule("DomUtil", function(api, module) {
 
             if (/[\r\n]/.test(boundaryNode.data)) {
                 /*
-                For the particular case of a boundary within a text node containing line breaks (within a <pre> element,
-                for example), we need a slightly complicated approach to get the boundary's offset in IE. The facts:
+                 For the particular case of a boundary within a text node containing line breaks (within a <pre> element,
+                 for example), we need a slightly complicated approach to get the boundary's offset in IE. The facts:
 
-                - Each line break is represented as \r in the text node's data/nodeValue properties
-                - Each line break is represented as \r\n in the TextRange's 'text' property
-                - The 'text' property of the TextRange does not contain trailing line breaks
+                 - Each line break is represented as \r in the text node's data/nodeValue properties
+                 - Each line break is represented as \r\n in the TextRange's 'text' property
+                 - The 'text' property of the TextRange does not contain trailing line breaks
 
-                To get round the problem presented by the final fact above, we can use the fact that TextRange's
-                moveStart() and moveEnd() methods return the actual number of characters moved, which is not necessarily
-                the same as the number of characters it was instructed to move. The simplest approach is to use this to
-                store the characters moved when moving both the start and end of the range to the start of the document
-                body and subtracting the start offset from the end offset (the "move-negative-gazillion" method).
-                However, this is extremely slow when the document is large and the range is near the end of it. Clearly
-                doing the mirror image (i.e. moving the range boundaries to the end of the document) has the same
-                problem.
+                 To get round the problem presented by the final fact above, we can use the fact that TextRange's
+                 moveStart() and moveEnd() methods return the actual number of characters moved, which is not necessarily
+                 the same as the number of characters it was instructed to move. The simplest approach is to use this to
+                 store the characters moved when moving both the start and end of the range to the start of the document
+                 body and subtracting the start offset from the end offset (the "move-negative-gazillion" method).
+                 However, this is extremely slow when the document is large and the range is near the end of it. Clearly
+                 doing the mirror image (i.e. moving the range boundaries to the end of the document) has the same
+                 problem.
 
-                Another approach that works is to use moveStart() to move the start boundary of the range up to the end
-                boundary one character at a time and incrementing a counter with the value returned by the moveStart()
-                call. However, the check for whether the start boundary has reached the end boundary is expensive, so
-                this method is slow (although unlike "move-negative-gazillion" is largely unaffected by the location of
-                the range within the document).
+                 Another approach that works is to use moveStart() to move the start boundary of the range up to the end
+                 boundary one character at a time and incrementing a counter with the value returned by the moveStart()
+                 call. However, the check for whether the start boundary has reached the end boundary is expensive, so
+                 this method is slow (although unlike "move-negative-gazillion" is largely unaffected by the location of
+                 the range within the document).
 
-                The method below is a hybrid of the two methods above. It uses the fact that a string containing the
-                TextRange's 'text' property with each \r\n converted to a single \r character cannot be longer than the
-                text of the TextRange, so the start of the range is moved that length initially and then a character at
-                a time to make up for any trailing line breaks not contained in the 'text' property. This has good
-                performance in most situations compared to the previous two methods.
-                */
+                 The method below is a hybrid of the two methods above. It uses the fact that a string containing the
+                 TextRange's 'text' property with each \r\n converted to a single \r character cannot be longer than the
+                 text of the TextRange, so the start of the range is moved that length initially and then a character at
+                 a time to make up for any trailing line breaks not contained in the 'text' property. This has good
+                 performance in most situations compared to the previous two methods.
+                 */
                 var tempRange = workingRange.duplicate();
                 var rangeLength = tempRange.text.replace(/\r\n/g, "\r").length;
 
                 offset = tempRange.moveStart("character", rangeLength);
-                while ( (comparison = tempRange.compareEndPoints("StartToEnd", tempRange)) == -1) {
+                while ((comparison = tempRange.compareEndPoints("StartToEnd", tempRange)) == -1) {
                     offset++;
                     tempRange.moveStart("character", 1);
                 }
@@ -2032,7 +2033,6 @@ rangy.createModule("DomUtil", function(api, module) {
             // a position within that, and likewise for a start boundary preceding a character data node
             previousNode = (isCollapsed || !isStart) && workingNode.previousSibling;
             nextNode = (isCollapsed || isStart) && workingNode.nextSibling;
-
 
 
             if (nextNode && dom.isCharacterDataNode(nextNode)) {
@@ -2104,7 +2104,7 @@ rangy.createModule("DomUtil", function(api, module) {
         // - Provide workarounds for specific browser bugs
         // - provide convenient extensions, which are inherited from Rangy's DomRange
 
-        (function() {
+        (function () {
             var rangeProto;
             var rangeProperties = DomRange.rangeProperties;
             var canSetRangeStartAfterEnd;
@@ -2117,7 +2117,7 @@ rangy.createModule("DomUtil", function(api, module) {
                 }
             }
 
-            function updateNativeRange(range, startContainer, startOffset, endContainer,endOffset) {
+            function updateNativeRange(range, startContainer, startOffset, endContainer, endOffset) {
                 var startMoved = (range.startContainer !== startContainer || range.startOffset != startOffset);
                 var endMoved = (range.endContainer !== endContainer || range.endOffset != endOffset);
 
@@ -2140,7 +2140,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
             var createBeforeAfterNodeSetter;
 
-            WrappedRange = function(range) {
+            WrappedRange = function (range) {
                 if (!range) {
                     throw new Error("Range must be specified");
                 }
@@ -2152,23 +2152,23 @@ rangy.createModule("DomUtil", function(api, module) {
 
             rangeProto = WrappedRange.prototype;
 
-            rangeProto.selectNode = function(node) {
+            rangeProto.selectNode = function (node) {
                 this.nativeRange.selectNode(node);
                 updateRangeProperties(this);
             };
 
-            rangeProto.deleteContents = function() {
+            rangeProto.deleteContents = function () {
                 this.nativeRange.deleteContents();
                 updateRangeProperties(this);
             };
 
-            rangeProto.extractContents = function() {
+            rangeProto.extractContents = function () {
                 var frag = this.nativeRange.extractContents();
                 updateRangeProperties(this);
                 return frag;
             };
 
-            rangeProto.cloneContents = function() {
+            rangeProto.cloneContents = function () {
                 return this.nativeRange.cloneContents();
             };
 
@@ -2176,32 +2176,32 @@ rangy.createModule("DomUtil", function(api, module) {
             // present in 3.6.8) that throws "Index or size is negative or greater than the allowed amount" for
             // insertNode in some circumstances, all browsers will have to use the Rangy's own implementation of
             // insertNode, which works but is almost certainly slower than the native implementation.
-/*
-            rangeProto.insertNode = function(node) {
-                this.nativeRange.insertNode(node);
-                updateRangeProperties(this);
-            };
-*/
+            /*
+             rangeProto.insertNode = function(node) {
+             this.nativeRange.insertNode(node);
+             updateRangeProperties(this);
+             };
+             */
 
-            rangeProto.surroundContents = function(node) {
+            rangeProto.surroundContents = function (node) {
                 this.nativeRange.surroundContents(node);
                 updateRangeProperties(this);
             };
 
-            rangeProto.collapse = function(isStart) {
+            rangeProto.collapse = function (isStart) {
                 this.nativeRange.collapse(isStart);
                 updateRangeProperties(this);
             };
 
-            rangeProto.cloneRange = function() {
+            rangeProto.cloneRange = function () {
                 return new WrappedRange(this.nativeRange.cloneRange());
             };
 
-            rangeProto.refresh = function() {
+            rangeProto.refresh = function () {
                 updateRangeProperties(this);
             };
 
-            rangeProto.toString = function() {
+            rangeProto.toString = function () {
                 return this.nativeRange.toString();
             };
 
@@ -2223,29 +2223,29 @@ rangy.createModule("DomUtil", function(api, module) {
                 range.setStart(testTextNode, 1);
                 canSetRangeStartAfterEnd = true;
 
-                rangeProto.setStart = function(node, offset) {
+                rangeProto.setStart = function (node, offset) {
                     this.nativeRange.setStart(node, offset);
                     updateRangeProperties(this);
                 };
 
-                rangeProto.setEnd = function(node, offset) {
+                rangeProto.setEnd = function (node, offset) {
                     this.nativeRange.setEnd(node, offset);
                     updateRangeProperties(this);
                 };
 
-                createBeforeAfterNodeSetter = function(name) {
-                    return function(node) {
+                createBeforeAfterNodeSetter = function (name) {
+                    return function (node) {
                         this.nativeRange[name](node);
                         updateRangeProperties(this);
                     };
                 };
 
-            } catch(ex) {
+            } catch (ex) {
 
 
                 canSetRangeStartAfterEnd = false;
 
-                rangeProto.setStart = function(node, offset) {
+                rangeProto.setStart = function (node, offset) {
                     try {
                         this.nativeRange.setStart(node, offset);
                     } catch (ex) {
@@ -2255,7 +2255,7 @@ rangy.createModule("DomUtil", function(api, module) {
                     updateRangeProperties(this);
                 };
 
-                rangeProto.setEnd = function(node, offset) {
+                rangeProto.setEnd = function (node, offset) {
                     try {
                         this.nativeRange.setEnd(node, offset);
                     } catch (ex) {
@@ -2265,8 +2265,8 @@ rangy.createModule("DomUtil", function(api, module) {
                     updateRangeProperties(this);
                 };
 
-                createBeforeAfterNodeSetter = function(name, oppositeName) {
-                    return function(node) {
+                createBeforeAfterNodeSetter = function (name, oppositeName) {
+                    return function (node) {
                         try {
                             this.nativeRange[name](node);
                         } catch (ex) {
@@ -2289,13 +2289,13 @@ rangy.createModule("DomUtil", function(api, module) {
             // the 0th character of the text node
             range.selectNodeContents(testTextNode);
             if (range.startContainer == testTextNode && range.endContainer == testTextNode &&
-                    range.startOffset == 0 && range.endOffset == testTextNode.length) {
-                rangeProto.selectNodeContents = function(node) {
+                range.startOffset == 0 && range.endOffset == testTextNode.length) {
+                rangeProto.selectNodeContents = function (node) {
                     this.nativeRange.selectNodeContents(node);
                     updateRangeProperties(this);
                 };
             } else {
-                rangeProto.selectNodeContents = function(node) {
+                rangeProto.selectNodeContents = function (node) {
                     this.setStart(node, 0);
                     this.setEnd(node, DomRange.getEndOffset(node));
                 };
@@ -2315,11 +2315,11 @@ rangy.createModule("DomUtil", function(api, module) {
             range2.setStart(testTextNode, 2);
 
             if (range.compareBoundaryPoints(range.START_TO_END, range2) == -1 &
-                    range.compareBoundaryPoints(range.END_TO_START, range2) == 1) {
+                range.compareBoundaryPoints(range.END_TO_START, range2) == 1) {
                 // This is the wrong way round, so correct for it
 
 
-                rangeProto.compareBoundaryPoints = function(type, range) {
+                rangeProto.compareBoundaryPoints = function (type, range) {
                     range = range.nativeRange || range;
                     if (type == range.START_TO_END) {
                         type = range.END_TO_START;
@@ -2329,7 +2329,7 @@ rangy.createModule("DomUtil", function(api, module) {
                     return this.nativeRange.compareBoundaryPoints(type, range);
                 };
             } else {
-                rangeProto.compareBoundaryPoints = function(type, range) {
+                rangeProto.compareBoundaryPoints = function (type, range) {
                     return this.nativeRange.compareBoundaryPoints(type, range.nativeRange || range);
                 };
             }
@@ -2338,7 +2338,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
             // Test for existence of createContextualFragment and delegate to it if it exists
             if (api.util.isHostMethod(range, "createContextualFragment")) {
-                rangeProto.createContextualFragment = function(fragmentStr) {
+                rangeProto.createContextualFragment = function (fragmentStr) {
                     return this.nativeRange.createContextualFragment(fragmentStr);
                 };
             }
@@ -2351,7 +2351,7 @@ rangy.createModule("DomUtil", function(api, module) {
             range2.detach();
         })();
 
-        api.createNativeRange = function(doc) {
+        api.createNativeRange = function (doc) {
             doc = doc || document;
             return doc.createRange();
         };
@@ -2359,14 +2359,14 @@ rangy.createModule("DomUtil", function(api, module) {
         // This is a wrapper around a TextRange, providing full DOM Range functionality using rangy's DomRange as a
         // prototype
 
-        WrappedRange = function(textRange) {
+        WrappedRange = function (textRange) {
             this.textRange = textRange;
             this.refresh();
         };
 
         WrappedRange.prototype = new DomRange(document);
 
-        WrappedRange.prototype.refresh = function() {
+        WrappedRange.prototype.refresh = function () {
             var start, end;
 
             // TextRange's parentElement() method cannot be trusted. getTextRangeContainerElement() works around that.
@@ -2387,22 +2387,23 @@ rangy.createModule("DomUtil", function(api, module) {
         DomRange.copyComparisonConstants(WrappedRange);
 
         // Add WrappedRange as the Range property of the global object to allow expression like Range.END_TO_END to work
-        var globalObj = (function() { return this; })();
+        var globalObj = (function () {
+            return this;
+        })();
         if (typeof globalObj.Range == "undefined") {
             globalObj.Range = WrappedRange;
         }
 
-        api.createNativeRange = function(doc) {
+        api.createNativeRange = function (doc) {
             doc = doc || document;
             return doc.body.createTextRange();
         };
     }
 
     if (api.features.implementsTextRange) {
-        WrappedRange.rangeToTextRange = function(range) {
+        WrappedRange.rangeToTextRange = function (range) {
             if (range.collapsed) {
                 var tr = createBoundaryTextRange(new DomPosition(range.startContainer, range.startOffset), true);
-
 
 
                 return tr;
@@ -2419,44 +2420,45 @@ rangy.createModule("DomUtil", function(api, module) {
         };
     }
 
-    WrappedRange.prototype.getName = function() {
+    WrappedRange.prototype.getName = function () {
         return "WrappedRange";
     };
 
     api.WrappedRange = WrappedRange;
 
-    api.createRange = function(doc) {
+    api.createRange = function (doc) {
         doc = doc || document;
         return new WrappedRange(api.createNativeRange(doc));
     };
 
-    api.createRangyRange = function(doc) {
+    api.createRangyRange = function (doc) {
         doc = doc || document;
         return new DomRange(doc);
     };
 
-    api.createIframeRange = function(iframeEl) {
+    api.createIframeRange = function (iframeEl) {
         return api.createRange(dom.getIframeDocument(iframeEl));
     };
 
-    api.createIframeRangyRange = function(iframeEl) {
+    api.createIframeRangyRange = function (iframeEl) {
         return api.createRangyRange(dom.getIframeDocument(iframeEl));
     };
 
-    api.addCreateMissingNativeApiListener(function(win) {
+    api.addCreateMissingNativeApiListener(function (win) {
         var doc = win.document;
         if (typeof doc.createRange == "undefined") {
-            doc.createRange = function() {
+            doc.createRange = function () {
                 return api.createRange(this);
             };
         }
         doc = win = null;
     });
-});rangy.createModule("WrappedSelection", function(api, module) {
+});
+rangy.createModule("WrappedSelection", function (api, module) {
     // This will create a selection object wrapper that follows the Selection object found in the WHATWG draft DOM Range
     // spec (http://html5.org/specs/dom-range.html)
 
-    api.requireModules( ["DomUtil", "DomRange", "WrappedRange"] );
+    api.requireModules(["DomUtil", "DomRange", "WrappedRange"]);
 
     api.config.checkSelectionRanges = true;
 
@@ -2471,7 +2473,6 @@ rangy.createModule("DomUtil", function(api, module) {
         getSelection,
         selectionIsCollapsed,
         CONTROL = "Control";
-
 
 
     function getWinSelection(winParam) {
@@ -2491,7 +2492,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     if (useDocumentSelection) {
         getSelection = getDocSelection;
-        api.isSelectionValid = function(winParam) {
+        api.isSelectionValid = function (winParam) {
             var doc = (winParam || window).document, nativeSel = doc.selection;
 
             // Check whether the selection TextRange is actually contained within the correct document
@@ -2499,7 +2500,7 @@ rangy.createModule("DomUtil", function(api, module) {
         };
     } else if (implementsWinGetSelection) {
         getSelection = getWinSelection;
-        api.isSelectionValid = function() {
+        api.isSelectionValid = function () {
             return true;
         };
     } else {
@@ -2514,7 +2515,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     // Obtaining a range from a selection
     var selectionHasAnchorAndFocus = util.areHostObjects(testSelection, ["anchorNode", "focusNode"] &&
-                                     util.areHostProperties(testSelection, ["anchorOffset", "focusOffset"]));
+        util.areHostProperties(testSelection, ["anchorOffset", "focusOffset"]));
     api.features.selectionHasAnchorAndFocus = selectionHasAnchorAndFocus;
 
     // Test for existence of native selection extend() method
@@ -2529,9 +2530,9 @@ rangy.createModule("DomUtil", function(api, module) {
     var collapsedNonEditableSelectionsSupported = true;
 
     if (util.areHostMethods(testSelection, ["addRange", "getRangeAt", "removeAllRanges"]) &&
-            typeof testSelection.rangeCount == "number" && api.features.implementsDomRange) {
+        typeof testSelection.rangeCount == "number" && api.features.implementsDomRange) {
 
-        (function() {
+        (function () {
             var iframe = document.createElement("iframe");
             body.appendChild(iframe);
 
@@ -2585,11 +2586,11 @@ rangy.createModule("DomUtil", function(api, module) {
 
     // Selection collapsedness
     if (selectionHasAnchorAndFocus) {
-        selectionIsCollapsed = function(sel) {
+        selectionIsCollapsed = function (sel) {
             return sel.anchorNode === sel.focusNode && sel.anchorOffset === sel.focusOffset;
         };
     } else {
-        selectionIsCollapsed = function(sel) {
+        selectionIsCollapsed = function (sel) {
             return sel.rangeCount ? sel.getRangeAt(sel.rangeCount - 1).collapsed : false;
         };
     }
@@ -2627,7 +2628,7 @@ rangy.createModule("DomUtil", function(api, module) {
                 nativeRange.setEnd(range.endContainer, range.endOffset);
                 nativeRange.setStart(range.startContainer, range.startOffset);
                 range._selectionNativeRange = nativeRange;
-                range.attachListener("detach", function() {
+                range.attachListener("detach", function () {
 
                     this._selectionNativeRange = null;
                 });
@@ -2724,16 +2725,16 @@ rangy.createModule("DomUtil", function(api, module) {
 
     var getSelectionRangeAt;
 
-    if (util.isHostMethod(testSelection,  "getRangeAt")) {
-        getSelectionRangeAt = function(sel, index) {
+    if (util.isHostMethod(testSelection, "getRangeAt")) {
+        getSelectionRangeAt = function (sel, index) {
             try {
                 return sel.getRangeAt(index);
-            } catch(ex) {
+            } catch (ex) {
                 return null;
             }
         };
     } else if (selectionHasAnchorAndFocus) {
-        getSelectionRangeAt = function(sel) {
+        getSelectionRangeAt = function (sel) {
             var doc = dom.getDocument(sel.anchorNode);
             var range = api.createRange(doc);
             range.setStart(sel.anchorNode, sel.anchorOffset);
@@ -2761,7 +2762,7 @@ rangy.createModule("DomUtil", function(api, module) {
         this.refresh();
     }
 
-    api.getSelection = function(win) {
+    api.getSelection = function (win) {
         win = win || window;
         var sel = win[windowPropertyName];
         var nativeSel = getSelection(win), docSel = implementsDocSelection ? getDocSelection(win) : null;
@@ -2776,7 +2777,7 @@ rangy.createModule("DomUtil", function(api, module) {
         return sel;
     };
 
-    api.getIframeSelection = function(iframeEl) {
+    api.getIframeSelection = function (iframeEl) {
         return api.getSelection(dom.getIframeWindow(iframeEl));
     };
 
@@ -2802,12 +2803,12 @@ rangy.createModule("DomUtil", function(api, module) {
 
     // Selecting a range
     if (!useDocumentSelection && selectionHasAnchorAndFocus && util.areHostMethods(testSelection, ["removeAllRanges", "addRange"])) {
-        selProto.removeAllRanges = function() {
+        selProto.removeAllRanges = function () {
             this.nativeSelection.removeAllRanges();
             updateEmptySelection(this);
         };
 
-        var addRangeBackwards = function(sel, range) {
+        var addRangeBackwards = function (sel, range) {
             var doc = DomRange.getRangeDocument(range);
             var endRange = api.createRange(doc);
             endRange.collapseToPoint(range.endContainer, range.endOffset);
@@ -2817,7 +2818,7 @@ rangy.createModule("DomUtil", function(api, module) {
         };
 
         if (selectionHasRangeCount) {
-            selProto.addRange = function(range, backwards) {
+            selProto.addRange = function (range, backwards) {
                 if (implementsControlRange && implementsDocSelection && this.docSelection.type == CONTROL) {
                     addRangeToControlSelection(this, range);
                 } else {
@@ -2859,7 +2860,7 @@ rangy.createModule("DomUtil", function(api, module) {
                 }
             };
         } else {
-            selProto.addRange = function(range, backwards) {
+            selProto.addRange = function (range, backwards) {
                 if (backwards && selectionHasExtend) {
                     addRangeBackwards(this, range);
                 } else {
@@ -2869,7 +2870,7 @@ rangy.createModule("DomUtil", function(api, module) {
             };
         }
 
-        selProto.setRanges = function(ranges) {
+        selProto.setRanges = function (ranges) {
             if (implementsControlRange && ranges.length > 1) {
                 createControlSelection(this, ranges);
             } else {
@@ -2880,9 +2881,9 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         };
     } else if (util.isHostMethod(testSelection, "empty") && util.isHostMethod(testRange, "select") &&
-               implementsControlRange && useDocumentSelection) {
+        implementsControlRange && useDocumentSelection) {
 
-        selProto.removeAllRanges = function() {
+        selProto.removeAllRanges = function () {
             // Added try/catch as fix for issue #21
             try {
                 this.docSelection.empty();
@@ -2906,11 +2907,12 @@ rangy.createModule("DomUtil", function(api, module) {
                         this.docSelection.empty();
                     }
                 }
-            } catch(ex) {}
+            } catch (ex) {
+            }
             updateEmptySelection(this);
         };
 
-        selProto.addRange = function(range) {
+        selProto.addRange = function (range) {
             if (this.docSelection.type == CONTROL) {
                 addRangeToControlSelection(this, range);
             } else {
@@ -2922,7 +2924,7 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         };
 
-        selProto.setRanges = function(ranges) {
+        selProto.setRanges = function (ranges) {
             this.removeAllRanges();
             var rangeCount = ranges.length;
             if (rangeCount > 1) {
@@ -2936,7 +2938,7 @@ rangy.createModule("DomUtil", function(api, module) {
         return false;
     }
 
-    selProto.getRangeAt = function(index) {
+    selProto.getRangeAt = function (index) {
         if (index < 0 || index >= this.rangeCount) {
             throw new DOMException("INDEX_SIZE_ERR");
         } else {
@@ -2947,7 +2949,7 @@ rangy.createModule("DomUtil", function(api, module) {
     var refreshSelection;
 
     if (useDocumentSelection) {
-        refreshSelection = function(sel) {
+        refreshSelection = function (sel) {
             var range;
             if (api.isSelectionValid(sel.win)) {
                 range = sel.docSelection.createRange();
@@ -2966,7 +2968,7 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         };
     } else if (util.isHostMethod(testSelection, "getRangeAt") && typeof testSelection.rangeCount == "number") {
-        refreshSelection = function(sel) {
+        refreshSelection = function (sel) {
             if (implementsControlRange && implementsDocSelection && sel.docSelection.type == CONTROL) {
                 updateControlSelection(sel);
             } else {
@@ -2983,7 +2985,7 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         };
     } else if (selectionHasAnchorAndFocus && typeof testSelection.isCollapsed == BOOLEAN && typeof testRange.collapsed == BOOLEAN && api.features.implementsDomRange) {
-        refreshSelection = function(sel) {
+        refreshSelection = function (sel) {
             var range, nativeSel = sel.nativeSelection;
             if (nativeSel.anchorNode) {
                 range = getSelectionRangeAt(nativeSel, 0);
@@ -3000,7 +3002,7 @@ rangy.createModule("DomUtil", function(api, module) {
         return false;
     }
 
-    selProto.refresh = function(checkForChanges) {
+    selProto.refresh = function (checkForChanges) {
         var oldRanges = checkForChanges ? this._ranges.slice(0) : null;
         refreshSelection(this);
         if (checkForChanges) {
@@ -3018,7 +3020,7 @@ rangy.createModule("DomUtil", function(api, module) {
     };
 
     // Removal of a single range
-    var removeRangeManually = function(sel, range) {
+    var removeRangeManually = function (sel, range) {
         var ranges = sel.getAllRanges(), removed = false;
         sel.removeAllRanges();
         for (var i = 0, len = ranges.length; i < len; ++i) {
@@ -3037,7 +3039,7 @@ rangy.createModule("DomUtil", function(api, module) {
     };
 
     if (implementsControlRange) {
-        selProto.removeRange = function(range) {
+        selProto.removeRange = function (range) {
             if (this.docSelection.type == CONTROL) {
                 var controlRange = this.docSelection.createRange();
                 var rangeElement = getSingleElementFromRange(range);
@@ -3064,7 +3066,7 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         };
     } else {
-        selProto.removeRange = function(range) {
+        selProto.removeRange = function (range) {
             removeRangeManually(this, range);
         };
     }
@@ -3072,7 +3074,7 @@ rangy.createModule("DomUtil", function(api, module) {
     // Detecting if a selection is backwards
     var selectionIsBackwards;
     if (!useDocumentSelection && selectionHasAnchorAndFocus && api.features.implementsDomRange) {
-        selectionIsBackwards = function(sel) {
+        selectionIsBackwards = function (sel) {
             var backwards = false;
             if (sel.anchorNode) {
                 backwards = (dom.comparePoints(sel.anchorNode, sel.anchorOffset, sel.focusNode, sel.focusOffset) == 1);
@@ -3080,18 +3082,18 @@ rangy.createModule("DomUtil", function(api, module) {
             return backwards;
         };
 
-        selProto.isBackwards = function() {
+        selProto.isBackwards = function () {
             return selectionIsBackwards(this);
         };
     } else {
-        selectionIsBackwards = selProto.isBackwards = function() {
+        selectionIsBackwards = selProto.isBackwards = function () {
             return false;
         };
     }
 
     // Selection text
     // This is conformant to the new WHATWG DOM Range draft spec but differs from WebKit and Mozilla's implementation
-    selProto.toString = function() {
+    selProto.toString = function () {
 
         var rangeTexts = [];
         for (var i = 0, len = this.rangeCount; i < len; ++i) {
@@ -3107,7 +3109,7 @@ rangy.createModule("DomUtil", function(api, module) {
     }
 
     // No current browsers conform fully to the HTML 5 draft spec for this method, so Rangy's own method is always used
-    selProto.collapse = function(node, offset) {
+    selProto.collapse = function (node, offset) {
         assertNodeInSameDocument(this, node);
         var range = api.createRange(dom.getDocument(node));
         range.collapseToPoint(node, offset);
@@ -3116,7 +3118,7 @@ rangy.createModule("DomUtil", function(api, module) {
         this.isCollapsed = true;
     };
 
-    selProto.collapseToStart = function() {
+    selProto.collapseToStart = function () {
         if (this.rangeCount) {
             var range = this._ranges[0];
             this.collapse(range.startContainer, range.startOffset);
@@ -3125,7 +3127,7 @@ rangy.createModule("DomUtil", function(api, module) {
         }
     };
 
-    selProto.collapseToEnd = function() {
+    selProto.collapseToEnd = function () {
         if (this.rangeCount) {
             var range = this._ranges[this.rangeCount - 1];
             this.collapse(range.endContainer, range.endOffset);
@@ -3136,7 +3138,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
     // The HTML 5 spec is very specific on how selectAllChildren should be implemented so the native implementation is
     // never used by Rangy.
-    selProto.selectAllChildren = function(node) {
+    selProto.selectAllChildren = function (node) {
         assertNodeInSameDocument(this, node);
         var range = api.createRange(dom.getDocument(node));
         range.selectNodeContents(node);
@@ -3144,7 +3146,7 @@ rangy.createModule("DomUtil", function(api, module) {
         this.addRange(range);
     };
 
-    selProto.deleteFromDocument = function() {
+    selProto.deleteFromDocument = function () {
         // Sepcial behaviour required for Control selections
         if (implementsControlRange && implementsDocSelection && this.docSelection.type == CONTROL) {
             var controlRange = this.docSelection.createRange();
@@ -3168,15 +3170,15 @@ rangy.createModule("DomUtil", function(api, module) {
     };
 
     // The following are non-standard extensions
-    selProto.getAllRanges = function() {
+    selProto.getAllRanges = function () {
         return this._ranges.slice(0);
     };
 
-    selProto.setSingleRange = function(range) {
-        this.setRanges( [range] );
+    selProto.setSingleRange = function (range) {
+        this.setRanges([range]);
     };
 
-    selProto.containsNode = function(node, allowPartial) {
+    selProto.containsNode = function (node, allowPartial) {
         for (var i = 0, len = this._ranges.length; i < len; ++i) {
             if (this._ranges[i].containsNode(node, allowPartial)) {
                 return true;
@@ -3185,7 +3187,7 @@ rangy.createModule("DomUtil", function(api, module) {
         return false;
     };
 
-    selProto.toHtml = function() {
+    selProto.toHtml = function () {
         var html = "";
         if (this.rangeCount) {
             var container = DomRange.getRangeDocument(this._ranges[0]).createElement("div");
@@ -3209,19 +3211,19 @@ rangy.createModule("DomUtil", function(api, module) {
             }
         }
         return "[" + name + "(Ranges: " + rangeInspects.join(", ") +
-                ")(anchor: " + anchor.inspect() + ", focus: " + focus.inspect() + "]";
+            ")(anchor: " + anchor.inspect() + ", focus: " + focus.inspect() + "]";
 
     }
 
-    selProto.getName = function() {
+    selProto.getName = function () {
         return "WrappedSelection";
     };
 
-    selProto.inspect = function() {
+    selProto.inspect = function () {
         return inspect(this);
     };
 
-    selProto.detach = function() {
+    selProto.detach = function () {
         this.win[windowPropertyName] = null;
         this.win = this.anchorNode = this.focusNode = null;
     };
@@ -3232,9 +3234,9 @@ rangy.createModule("DomUtil", function(api, module) {
 
     api.selectionPrototype = selProto;
 
-    api.addCreateMissingNativeApiListener(function(win) {
+    api.addCreateMissingNativeApiListener(function (win) {
         if (typeof win.getSelection == "undefined") {
-            win.getSelection = function() {
+            win.getSelection = function () {
                 return api.getSelection(this);
             };
         }

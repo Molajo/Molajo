@@ -4,9 +4,35 @@
 @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
 @license     GNU GPL v 2, or later and MIT, see License folder
 */
-ul.filter { list-style: none; margin-left: 5px; overflow: hidden; margin-top: 0;}
-ul.filter li { float: left; margin-bottom: 5px; margin-right: 5px; color: #999;}
-ul.filter li a { display: block; padding: 0 7px 4px; color: #555; }
-ul.filter li.current a, ul.filter li:hover a, ul.filter li a:focus { border-bottom: solid 2px #00a6fc; color: #141414; }
-ul.filter li.last-in-row { margin-right: 0; }
-ul.filter li span { font-size: 18px }
+ul.filter {
+    list-style: none;
+    margin-left: 5px;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+ul.filter li {
+    float: left;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    color: #999;
+}
+
+ul.filter li a {
+    display: block;
+    padding: 0 7px 4px;
+    color: #555;
+}
+
+ul.filter li.current a, ul.filter li:hover a, ul.filter li a:focus {
+    border-bottom: solid 2px #00a6fc;
+    color: #141414;
+}
+
+ul.filter li.last-in-row {
+    margin-right: 0;
+}
+
+ul.filter li span {
+    font-size: 18px
+}

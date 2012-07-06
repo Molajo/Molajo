@@ -25,14 +25,17 @@ if (strtolower($this->row->name) == 'apply') {
 } elseif (strtolower($this->row->name) == 'checkin') {
 	$element = '7';
 } elseif (strtolower($this->row->name) == 'copy'
-		|| strtolower($this->row->name) == 'saveascopy') {
+	|| strtolower($this->row->name) == 'saveascopy'
+) {
 	$element = '\'';
 } elseif (strtolower($this->row->name) == 'configure'
-	|| strtolower($this->row->name) == 'options') {
+	|| strtolower($this->row->name) == 'options'
+) {
 	$element = 'a';
 } elseif (strtolower($this->row->name) == 'create'
 	|| strtolower($this->row->name) == 'new'
-	|| strtolower($this->row->name) == 'saveandnew') {
+	|| strtolower($this->row->name) == 'saveandnew'
+) {
 	$element = 'z';
 } elseif (strtolower($this->row->name) == 'delete') {
 	$element = 'g';
@@ -40,7 +43,8 @@ if (strtolower($this->row->name) == 'apply') {
 } elseif (strtolower($this->row->name) == 'edit') {
 	$element = '[';
 } elseif (strtolower($this->row->name) == 'feature'
-	|| (strtolower($this->row->name) == 'unfeature')) {
+	|| (strtolower($this->row->name) == 'unfeature')
+) {
 	$element = 'c';
 } elseif (strtolower($this->row->name) == 'move') {
 	$element = 'u';
@@ -49,7 +53,8 @@ if (strtolower($this->row->name) == 'apply') {
 } elseif (strtolower($this->row->name) == 'orderup') {
 	$element = 'w';
 } elseif (strtolower($this->row->name) == 'publish'
-		|| strtolower($this->row->name) == 'unpublish') {
+	|| strtolower($this->row->name) == 'unpublish'
+) {
 	$element = '1';
 } elseif (strtolower($this->row->name) == 'reorder') {
 	$element = ';';
@@ -58,10 +63,12 @@ if (strtolower($this->row->name) == 'apply') {
 } elseif (strtolower($this->row->name) == 'spam') {
 	$element = '5';
 } elseif (strtolower($this->row->name) == 'sticky'
-		|| strtolower($this->row->name) == 'unsticky') {
+	|| strtolower($this->row->name) == 'unsticky'
+) {
 
 } elseif (strtolower($this->row->name) == 'trash'
-		|| strtolower($this->row->name) == 'untrash') {
+	|| strtolower($this->row->name) == 'untrash'
+) {
 	$element = 'y';
 }
 

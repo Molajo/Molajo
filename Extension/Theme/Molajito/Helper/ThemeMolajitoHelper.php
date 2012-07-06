@@ -16,22 +16,22 @@ use Molajo\Service\Services;
  */
 Class ThemeMolajitoHelper extends Mustache
 {
-    /**
-     * Parameters
-     *
-     * @var    object
-     * @since  1.0
-     */
-    public $parameters;
+	/**
+	 * Parameters
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	public $parameters;
 
-    /**
-     * loadMedia - automatically loaded in last step of Rendering process
-     * 	Method can be used to load external media, special metadata or links
-     *
-     * @since  1.0
-     */
-    public function loadMedia()
-    {
+	/**
+	 * loadMedia - automatically loaded in last step of Rendering process
+	 *     Method can be used to load external media, special metadata or links
+	 *
+	 * @since  1.0
+	 */
+	public function loadMedia()
+	{
 		/** Theme Folder */
 		$theme = Services::Registry()->get('Parameters', 'theme_path_node');
 
@@ -109,7 +109,7 @@ Class ThemeMolajitoHelper extends Mustache
 //        Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 10000);
 
 		return;
-    }
+	}
 
 	/**
 	 * items

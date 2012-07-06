@@ -9,6 +9,6 @@
 defined('MOLAJO') or die; ?>
 <include:head/>
 <include:template name=Adminheader/>
-<include:message/>
+	<include:message/>
 	<include:template name=Adminfooter/>
-<include:defer/>
+		<include:defer/>

@@ -5,8 +5,8 @@
  */
 /*jslint regexp: false, nomen: false, plusplus: false, strict: false */
 /*global require: false, XMLHttpRequest: false, ActiveXObject: false,
-  define: false, window: false, process: false, Packages: false,
-  java: false, location: false */
+ define: false, window: false, process: false, Packages: false,
+ java: false, location: false */
 
 (function () {
     var progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
@@ -32,8 +32,8 @@
                 xhr.send(null);
             };
         } else if (typeof process !== "undefined" &&
-                 process.versions &&
-                 !!process.versions.node) {
+            process.versions &&
+            !!process.versions.node) {
             //Using special require.nodeRequire, something added by r.js.
             fs = require.nodeRequire('fs');
 
@@ -81,9 +81,9 @@
         }
 
         text = {
-            version: '0.26.0',
+            version:'0.26.0',
 
-            strip: function (content) {
+            strip:function (content) {
                 //Strips <?xml ...?> declarations so that external SVG and XML
                 //documents can be added to a document without worry. Also, if the string
                 //is an HTML document, only the part inside the body tag is returned.
@@ -99,7 +99,7 @@
                 return content;
             },
 
-            jsEscape: function (content) {
+            jsEscape:function (content) {
                 return content.replace(/(['\\])/g, '\\$1')
                     .replace(/[\f]/g, "\\f")
                     .replace(/[\b]/g, "\\b")
@@ -108,7 +108,7 @@
                     .replace(/[\r]/g, "\\r");
             },
 
-            createXhr: function () {
+            createXhr:function () {
                 //Would love to dump the ActiveX crap in here. Need IE 6 to die first.
                 var xhr, i, progId;
                 if (typeof XMLHttpRequest !== "undefined") {
@@ -118,7 +118,8 @@
                         progId = progIds[i];
                         try {
                             xhr = new ActiveXObject(progId);
-                        } catch (e) {}
+                        } catch (e) {
+                        }
 
                         if (xhr) {
                             progIds = [progId];  // so faster next time
@@ -134,7 +135,7 @@
                 return xhr;
             },
 
-            get: get,
+            get:get,
 
             /**
              * Parses a resource name into its resource parts. Resource names
@@ -144,7 +145,7 @@
              * @returns {Object} with properties "moduleName", "ext" and "strip"
              * where strip is a boolean.
              */
-            parseName: function (name) {
+            parseName:function (name) {
                 var strip = false, index = name.indexOf("."),
                     modName = name.substring(0, index),
                     ext = name.substring(index + 1, name.length);
@@ -158,13 +159,13 @@
                 }
 
                 return {
-                    moduleName: modName,
-                    ext: ext,
-                    strip: strip
+                    moduleName:modName,
+                    ext:ext,
+                    strip:strip
                 };
             },
 
-            xdRegExp: /^((\w+)\:)?\/\/([^\/\\]+)/,
+            xdRegExp:/^((\w+)\:)?\/\/([^\/\\]+)/,
 
             /**
              * Is an URL on another domain. Only works for browser use, returns
@@ -174,7 +175,7 @@
              * @param {String} url
              * @returns Boolean
              */
-            canUseXhr: function (url, protocol, hostname, port) {
+            canUseXhr:function (url, protocol, hostname, port) {
                 var match = text.xdRegExp.exec(url),
                     uProtocol, uHostName, uPort;
                 if (!match) {
@@ -188,11 +189,11 @@
                 uHostName = uHostName[0];
 
                 return (!uProtocol || uProtocol === protocol) &&
-                       (!uHostName || uHostName === hostname) &&
-                       ((!uPort && !uHostName) || uPort === port);
+                    (!uHostName || uHostName === hostname) &&
+                    ((!uPort && !uHostName) || uPort === port);
             },
 
-            finishLoad: function (name, strip, content, onLoad, config) {
+            finishLoad:function (name, strip, content, onLoad, config) {
                 content = strip ? text.strip(content) : content;
                 if (config.isBuild && config.inlineText) {
                     buildMap[name] = content;
@@ -200,7 +201,7 @@
                 onLoad(content);
             },
 
-            load: function (name, req, onLoad, config) {
+            load:function (name, req, onLoad, config) {
                 //Name has format: some.module.filext!strip
                 //The strip part is optional.
                 //if strip is present, then that means only get the string contents
@@ -224,26 +225,26 @@
                     //!strip part to avoid file system issues.
                     req([nonStripName], function (content) {
                         text.finishLoad(parsed.moduleName + '.' + parsed.ext,
-                                        parsed.strip, content, onLoad, config);
+                            parsed.strip, content, onLoad, config);
                     });
                 }
             },
 
-            write: function (pluginName, moduleName, write, config) {
+            write:function (pluginName, moduleName, write, config) {
                 if (moduleName in buildMap) {
                     var content = text.jsEscape(buildMap[moduleName]);
-                    write("define('" + pluginName + "!" + moduleName  +
-                          "', function () { return '" + content + "';});\n");
+                    write("define('" + pluginName + "!" + moduleName +
+                        "', function () { return '" + content + "';});\n");
                 }
             },
 
-            writeFile: function (pluginName, moduleName, req, write, config) {
+            writeFile:function (pluginName, moduleName, req, write, config) {
                 var parsed = text.parseName(moduleName),
                     nonStripName = parsed.moduleName + '.' + parsed.ext,
-                    //Use a '.js' file name so that it indicates it is a
-                    //script that can be loaded across domains.
+                //Use a '.js' file name so that it indicates it is a
+                //script that can be loaded across domains.
                     fileName = req.toUrl(parsed.moduleName + '.' +
-                                         parsed.ext) + '.js';
+                        parsed.ext) + '.js';
 
                 //Leverage own load() method to load plugin value, but only
                 //write out values that do not have the strip argument,

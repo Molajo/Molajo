@@ -8,4 +8,5 @@ defined('MOLAJO') or die;
 $html5 = $this->row->html5;
 $end = $this->row->end;
 ?>
-	<link href="<?php echo $this->row->url; ?>" rel="<?php echo $this->row->relation; ?>"<?php echo $this->row->attributes; ?><?php echo $end; ?>
+	<link href="<?php echo $this->row->url; ?>"
+		  rel="<?php echo $this->row->relation; ?>"<?php echo $this->row->attributes; ?><?php echo $end; ?>

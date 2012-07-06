@@ -1,4 +1,4 @@
 define({
-	"de":true,
-	"en":true
+    "de":true,
+    "en":true
 });

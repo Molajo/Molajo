@@ -1,13 +1,13 @@
 var tests = {
-	defaultCommand: 'insertparagraph',
-	tests: [		        
+    defaultCommand:'insertparagraph',
+    tests:[
 //		{  	start: '[]foo',
 //			execResult: '<p><br></p><p>[]foo</p>'
 //		},
 //		{  	start: 'foo[bar]baz',
 //			execResult: '<p>foo</p><p>[]baz</p>'
 //		},
-//		
+//
 ////		{  	start: 'fo[o<table><tr><td>b]ar</table>',
 ////			execResult: 'fo[o<table><tr><td>b]ar</table>'
 ////		},
@@ -29,7 +29,7 @@ var tests = {
 ////		{  	start: '<table><tr><td>[foo]</table>',
 ////			execResult: '<table><tr><td>[foo]</table>'
 ////		},
-//		
+//
 //		{  	start: '<ol><li>[foo]<li>bar</ol>',
 //			execResult: '<ol><li><br></li>{}<br><li>bar</ol>'
 //		},
@@ -43,39 +43,39 @@ var tests = {
 //		{  	start: '<span>foo[]</span>',
 //			execResult: '<p><span>foo</span></p><p>{}<br></p>'
 //		},
-		{  	start: 'foo[]<br>',
-			execResult: '<p>foo</p><p>[]<br></p>'
-		},
-		{  	start: 'foo[]bar',
-			execResult: '<p>foo</p><p>[]bar</p>'
-		},
-		
-		{  	start: '<address>[]foo</address>',
-			execResult: '<address>[]foo</address>'
-		},
-		{  	start: '<address>foo[]</address>',
-			execResult: '<address>foo[]</address>'
-		},
-		{  	start: '<address>foo[]<br></address>',
-			execResult: '<address>foo[]<br></address>'
-		},
-		{  	start: '<address>foo[]bar</address>',
-			execResult: '<address>foo[]bar</address>'
-		},
-		
-		{  	start: '<div>[]foo</div>',
-			execResult: '<div><br></div><div>[]foo</div>'
-		},
-		{  	start: '<div>foo[]</div>',
-			execResult: '<div>foo</div><div>[]<br></div>'
-		},
-		{  	start: '<div>foo[]<br></div>',
-			execResult: '<div>foo</div><div>[]<br></div>'
-		},
-		{  	start: '<div>foo[]bar</div>',
-			execResult: '<div>foo[]bar</div>'
-		},
-		
+        {      start:'foo[]<br>',
+            execResult:'<p>foo</p><p>[]<br></p>'
+        },
+        {      start:'foo[]bar',
+            execResult:'<p>foo</p><p>[]bar</p>'
+        },
+
+        {      start:'<address>[]foo</address>',
+            execResult:'<address>[]foo</address>'
+        },
+        {      start:'<address>foo[]</address>',
+            execResult:'<address>foo[]</address>'
+        },
+        {      start:'<address>foo[]<br></address>',
+            execResult:'<address>foo[]<br></address>'
+        },
+        {      start:'<address>foo[]bar</address>',
+            execResult:'<address>foo[]bar</address>'
+        },
+
+        {      start:'<div>[]foo</div>',
+            execResult:'<div><br></div><div>[]foo</div>'
+        },
+        {      start:'<div>foo[]</div>',
+            execResult:'<div>foo</div><div>[]<br></div>'
+        },
+        {      start:'<div>foo[]<br></div>',
+            execResult:'<div>foo</div><div>[]<br></div>'
+        },
+        {      start:'<div>foo[]bar</div>',
+            execResult:'<div>foo[]bar</div>'
+        },
+
 //		{  	start: '<dl><dt>[]foo<dd>bar</dl>',
 //			execResult: '<dl><dt>[]foo<dd>bar</dl>'
 //		},
@@ -361,7 +361,7 @@ var tests = {
 //		{  	start: '<p>foo<span style=color:#aBcDeF>[bar</span><span style=color:#fEdCbA>baz]</span>quz',
 //			execResult: '<p>foo<span style=color:#aBcDeF>[bar</span><span style=color:#fEdCbA>baz]</span>quz'
 //		}
-		
-	]
+
+    ]
 }
 
