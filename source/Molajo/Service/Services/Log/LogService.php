@@ -85,7 +85,7 @@ Class LogService
         $this->priorities[] = LOG_TYPE_WARNING;
         $this->priorities[] = LOG_TYPE_NOTICE;
         $this->priorities[] = LOG_TYPE_INFO;
-        $this->priorities[] = LOG_TYPE_DEBUG;
+        $this->priorities[] = LOG_TYPE_PROFILER;
         $this->priorities[] = LOG_TYPE_ALL;
 
         /** Valid Loggers */
@@ -101,8 +101,8 @@ Class LogService
         $this->loggers[] = LOG_EMAIL_LOGGER;
         $this->loggers[] = LOG_CONSOLE_LOGGER;
 
-		if (Services::Registry()->get('DebugService', 'CurrentPhase') == START_INITIALISE) {
-			$response = Services::Profiler()->setDebugLogger();
+		if (Services::Registry()->get('ProfilerService', 'CurrentPhase') == START_INITIALISE) {
+			$response = Services::Profiler()->setProfilerLogger();
 			if ($response == false) {
 				Services::Profiler()->setConfigurationComplete();
 				return $this;

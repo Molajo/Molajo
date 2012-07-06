@@ -143,7 +143,7 @@ class Controller
 	 */
 	public function connect($model_type = 'Table', $model_name = null, $model_class = 'ReadModel')
 	{
-		$debugMessage = 'ReadController->connect '
+		$profiler_message = 'ReadController->connect '
 			. ' Type ' . $model_type
 			. ' Name ' . $model_name
 			. ' Class: ' . $model_class;
@@ -171,18 +171,18 @@ class Controller
 
 			if (Services::Registry()->exists($table_registry_name) == true) {
 				$this->table_registry_name = $table_registry_name;
-				$debugMessage .= ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
+				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
 
 			} else {
 				$this->table_registry_name = ConfigurationService::getFile($model_type, $model_name);
 
 				if ($this->table_registry_name == false) {
-					$debugMessage .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
-					Services::Profiler()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
+					$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
+					Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 					return false;
 				}
 
-				$debugMessage .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getFile. ';
+				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getFile. ';
 			}
 
 			/** Serialize Options */
@@ -217,15 +217,15 @@ class Controller
 			$this->get('model_count', 5);
 		}
 
-		if (Services::Registry()->get('Configuration', 'debug_output_queries_table_registry') == 0) {
+		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
 		} else {
 			ob_start();
 			Services::Registry()->get($this->table_registry_name, '*');
-			$debugMessage .= ob_get_contents();
+			$profiler_message .= ob_get_contents();
 			ob_end_clean();
 		}
 
-		Services::Profiler()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
+		Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\Model\\' . $model_class;

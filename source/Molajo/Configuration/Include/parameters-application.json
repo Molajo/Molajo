@@ -14,8 +14,8 @@
     "language_multilingual":"0",
     "language_utc_offset":"UTC",
 
-    "debug":"0",
-    "debug_log":"echo",
+    "profiler":"0",
+    "profiler_log":"echo",
 
     "head_template_view_id":"23",
     "head_wrap_view_id":"66",

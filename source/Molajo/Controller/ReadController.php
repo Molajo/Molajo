@@ -55,9 +55,9 @@ class ReadController extends Controller
 			/** Run Query */
 			$this->getData($this->get('model_query_object', 'item'));
 
-			if (Services::Registry()->get('Configuration', 'debug_output_queries_query_results', 0) == 1) {
+			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
 
-				$debug_message = 'ReadController->execute '
+				$profiler_message = 'ReadController->execute '
 					. ' <br />Includer: ' . $this->get('includer_type', '')
 					. ' <br />Model Type: ' . $this->get('model_type', '')
 					. ' <br />Model Type: ' . $this->get('model_type', '')
@@ -71,10 +71,10 @@ class ReadController extends Controller
 				echo '<pre>';
 				var_dump($this->query_results);
 				echo '</pre>';
-				$debug_message .= ob_get_contents();
+				$profiler_message .= ob_get_contents();
 				ob_end_clean();
 
-				Services::Profiler()->set('ReadController->onAfterReadEvent ' . $debug_message
+				Services::Profiler()->set('ReadController->onAfterReadEvent ' . $profiler_message
 					. ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE);
 			}
 		}
@@ -241,7 +241,7 @@ class ReadController extends Controller
 			$count
 		);
 
-		if (Services::Registry()->get('Configuration', 'debug_output_queries_sql', 0) == 1) {
+		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
 			Services::Profiler()->set('ReadController->getData SQL Query: <br /><br />'
 					. $this->model->query->__toString(),
 				LOG_OUTPUT_RENDERING, VERBOSE);
@@ -253,7 +253,7 @@ class ReadController extends Controller
 		/** Return result (single value) */
 		if ($query_object == 'result' || $query_object == 'distinct') {
 
-			if (Services::Registry()->get('Configuration', 'debug_output_queries_query_results', 0) == 1) {
+			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
 				$message = 'ReadController->getData Query Results <br /><br />';
 				ob_start();
 				echo '<pre>';
@@ -330,7 +330,7 @@ class ReadController extends Controller
 		/** Return List */
 		if ($query_object == 'list') {
 
-			if (Services::Registry()->get('Configuration', 'debug_output_queries_query_results', 0) == 1) {
+			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
 				$message = 'ReadController->getData Query Results <br /><br />';
 				ob_start();
 				echo '<pre>';

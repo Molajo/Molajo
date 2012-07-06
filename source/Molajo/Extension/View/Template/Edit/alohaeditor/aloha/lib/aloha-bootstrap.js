@@ -2,7 +2,7 @@
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ define('aloha/jquery',[], function() {
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ define('aloha/jquery',[], function() {
 */
 
 define('aloha/ext',[], function() {
-
+	
 	// Ext seems to have an onClick handler that uses
 	// QuickTips, but the handler doesn't initialize
 	// QuickTips and therefore causes an error.
@@ -63,8 +63,8 @@ define('aloha/ext',[], function() {
 	// integration, but if it's really a bug in Ext, then
 	// it's a good idea to always initialize QuickTips here.
 	Ext.QuickTips.init();
-
-	return Ext;
+	
+	return Ext; 
 });
 
 /*
@@ -235,7 +235,7 @@ if (!JSON) {
 }
 
 (function () {
-
+    
 
     function f(n) {
         // Format integers to have at least two digits.
@@ -1014,8 +1014,8 @@ $.store.serializers = {
 };
 
 
-	// We don't want to use window storage for ie7 with aloha because this causes massive issues when dealing with frames.
-	// Window.name will change the framename and this will cause links with target attribute to stop working properly.
+	// We don't want to use window storage for ie7 with aloha because this causes massive issues when dealing with frames. 
+	// Window.name will change the framename and this will cause links with target attribute to stop working properly. 
 	// We remove the windowName driver and add the void driver which won't store any information.
 	if ( $.browser.msie && $.browser.version  == "7.0" ) {
 		delete($.store.drivers.windowName);
@@ -1048,7 +1048,7 @@ $.store.serializers = {
 				}
 			};
 		$.store.drivers.voidDriver=voidDriver;
-	}
+	} 
 
 });
 
@@ -1753,7 +1753,7 @@ rangy.createModule("DomUtil", function(api, module) {
     var dom = api.dom;
     var DomPosition = dom.DomPosition;
     var DOMException = api.DOMException;
-
+    
     /*----------------------------------------------------------------------------------------------------------------*/
 
     // Utility functions
@@ -4302,7 +4302,7 @@ rangy.createModule("DomUtil", function(api, module) {
  */
 // Inspired by base2 and Prototype
 /*
- * MODIFICATIONS:
+ * MODIFICATIONS: 
  * * The name of the "constructor" method was changed from "init" to "_constructor"
  * * Mixin Support using https://gist.github.com/1006243
  * * Modified to be a require.js module
@@ -4310,7 +4310,7 @@ rangy.createModule("DomUtil", function(api, module) {
 define('util/class',[],
 function(){
   var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
-
+ 
   // The base Class implementation (does nothing)
   // with doing that Class is available in the global namespace.
   this.Class = function(){};
@@ -4369,11 +4369,11 @@ function(){
     Class.extend = arguments.callee;
 
     return Class;
-
+  
   };
 
   	return this.Class;
-
+  	
 });
 /*!
  * This file is part of Aloha Editor
@@ -4388,7 +4388,7 @@ define( 'util/lang', [], function(){} );
 
 // Start Closure
 (function(window, undefined) {
-
+	
 	var
 		jQuery = window.alohaQuery || window.jQuery, $ = jQuery,
 		GENTICS = window.GENTICS,
@@ -4456,17 +4456,17 @@ GENTICS.Utils.guid = function () {
  */
 
 define('aloha/ecma5shims',[], function(){
-
+  
 
   var shims = {
     // Function bind
     bind: function(owner){
       var obj = this.obj || this;
-      var native_method = Function.prototype.bind;
+      var native_method = Function.prototype.bind;          
       var args= Array.prototype.slice.call(arguments, 1);
 
       if(native_method){
-        return native_method.apply(obj, arguments);
+        return native_method.apply(obj, arguments); 
       }
       else{
         return function() {
@@ -4481,20 +4481,20 @@ define('aloha/ecma5shims',[], function(){
       var native_method = String.prototype.trim;
 
       if(native_method){
-        return native_method.call(obj);
+        return native_method.call(obj); 
       }
       else {
         return obj.replace(/^\s+/, '').replace(/\s+$/, '');
       }
     },
 
-    // Array methods
+    // Array methods 
     indexOf: function(find, i /*opt*/){
       var obj = this.obj || this;
-      var native_method = Array.prototype.indexOf;
+      var native_method = Array.prototype.indexOf;     
 
       if(native_method){
-        return native_method.call(obj, find, i);
+        return native_method.call(obj, find, i); 
       }
       else {
         if (i===undefined) i= 0;
@@ -4506,13 +4506,13 @@ define('aloha/ecma5shims',[], function(){
         return -1;
       }
     },
-
+    
     forEach: function(action, that /*opt*/){
       var obj = this.obj || this;
-      var native_method = Array.prototype.forEach;
+      var native_method = Array.prototype.forEach;          
 
       if(native_method){
-        return native_method.call(obj, action, that);
+        return native_method.call(obj, action, that); 
       }
       else {
         for (var i= 0, n = obj.length; i<n; i++)
@@ -4523,12 +4523,12 @@ define('aloha/ecma5shims',[], function(){
 
     map: function(mapper, that /*opt*/, chain /*opt */){
       var obj = this.obj || this;
-      var native_method = Array.prototype.map;
+      var native_method = Array.prototype.map; 
       var returnWrapper = (typeof arguments[arguments.length - 1] == "boolean") ? Array.prototype.pop.call(arguments) : false;
       var result = [];
 
       if(native_method){
-        result = native_method.call(obj, mapper, that);
+        result = native_method.call(obj, mapper, that); 
       }
       else {
         var other= new Array(obj.length);
@@ -4543,12 +4543,12 @@ define('aloha/ecma5shims',[], function(){
 
     filter: function(filterFunc, that /*opt*/, chain /*opt */){
       var obj = this.obj || this;
-      var native_method = Array.prototype.filter;
+      var native_method = Array.prototype.filter;         
       var returnWrapper = (typeof arguments[arguments.length - 1] == "boolean") ? Array.prototype.pop.call(arguments) : false;
       var result = [];
 
       if(native_method){
-       result = native_method.call(obj, filterFunc, that);
+       result = native_method.call(obj, filterFunc, that); 
       }
       else {
         var other= [], v;
@@ -4566,7 +4566,7 @@ define('aloha/ecma5shims',[], function(){
        var native_method = Array.prototype.every;
 
        if(native_method){
-         return native_method.call(obj, tester, that);
+         return native_method.call(obj, tester, that); 
        }
        else {
          for (var i= 0, n= obj.length; i<n; i++)
@@ -4578,10 +4578,10 @@ define('aloha/ecma5shims',[], function(){
 
     some: function(tester, that /*opt*/){
        var obj = this.obj || this;
-       var native_method = Array.prototype.some;
+       var native_method = Array.prototype.some;  
 
        if(native_method){
-         return native_method.call(obj, tester, that);
+         return native_method.call(obj, tester, that); 
        }
        else {
          for (var i= 0, n= obj.length; i<n; i++)
@@ -4595,37 +4595,37 @@ define('aloha/ecma5shims',[], function(){
     // TODO: raise an exception if the object is not an node
     hasAttribute: function(attr){
       var obj = this.obj || this;
-      var native_method = obj.hasAttribute;
+      var native_method = obj.hasAttribute;  
 
       if(native_method){
-        return obj.hasAttribute(attr);
+        return obj.hasAttribute(attr); 
       }
       else {
         return (typeof obj.attributes[attr] != "undefined")
-      }
+      }         
     }
 
   };
 
-  var $_ = function(obj) {
+  var $_ = function(obj) { 
     var wrapper = function() {};
     wrapper.prototype = shims;
 
     var wrapper_instance = new wrapper();
     wrapper_instance.obj = obj;
-    return wrapper_instance;
-  };
+    return wrapper_instance; 
+  }; 
 
   for (var shim in shims) {
     $_[shim] = shims[shim];
   }
-
+  
 
   // Node constants
   // http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-1841493061
   if(typeof Node != 'undefined'){
     $_.Node = Node;
-  }
+  }                
   else {
     $_.Node = {
       'ELEMENT_NODE' : 1,
@@ -4643,7 +4643,7 @@ define('aloha/ecma5shims',[], function(){
       //The two nodes are disconnected. Order between disconnected nodes is always implementation-specific.
       'DOCUMENT_POSITION_DISCONNECTED': 0x01,
       //The second node precedes the reference node.
-      'DOCUMENT_POSITION_PRECEDING': 0x02,
+      'DOCUMENT_POSITION_PRECEDING': 0x02, 
       //The node follows the reference node.
       'DOCUMENT_POSITION_FOLLOWING': 0x04,
       //The node contains the reference node. A node which contains is always preceding, too.
@@ -4652,41 +4652,41 @@ define('aloha/ecma5shims',[], function(){
       'DOCUMENT_POSITION_CONTAINED_BY': 0x10,
       //The determination of preceding versus following is implementation-specific.
       'DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC': 0x20
-    }
+    } 
   };
 
   // http://www.w3.org/TR/DOM-Level-3-Core/core.html#Node3-compareDocumentPosition
   // FIXME: Check if the DOMNode prototype can be set.
   $_.compareDocumentPosition = function(node1, node2) {
-
+      
     if ('compareDocumentPosition' in document.documentElement ) {
       return node1.compareDocumentPosition(node2);
-    }
-
+    } 
+    
     if (!("contains" in document.documentElement)) {
       throw 'compareDocumentPosition nor contains is not supported by this browser.';
     }
-
+    
     if (node1 == node2) return 0;
-
+    
     //if they don't have the same parent, there's a disconnect
     if (getRootParent(node1) != getRootParent(node2)) return 1;
-
+    
     //use this if both nodes have a sourceIndex (text nodes don't)
     if ("sourceIndex" in node1 && "sourceIndex" in node2) {
       return comparePosition(node1, node2);
     }
-
+    
     //document will definitely contain the other node
     if (node1 == document) return 20;
     else if (node2 == document) return 10;
-
+    
     //get sourceIndexes to use for both nodes
     var useNode1 = getUseNode(node1), useNode2 = getUseNode(node2);
-
+    
     //call this function again to get the result
     var result = comparePosition(useNode1, useNode2);
-
+    
     //clean up if needed
     if (node1 != useNode1) useNode1.parentNode.removeChild(useNode1);
     if (node2 != useNode2) useNode2.parentNode.removeChild(useNode2);
@@ -4726,7 +4726,7 @@ define('aloha/ecma5shims',[], function(){
 
   $_.getComputedStyle = function(node, style){
     if('getComputedStyle' in window) {
-      return window.getComputedStyle(node, style);
+      return window.getComputedStyle(node, style); 
     }
     else {
       if( node.currentStyle ) {
@@ -4735,14 +4735,14 @@ define('aloha/ecma5shims',[], function(){
       return null;
     }
   };
-
+     
   return $_;
 });
 
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -4765,8 +4765,8 @@ GENTICS.Utils = GENTICS.Utils || {};
 
 define('util/dom',['aloha/jquery', 'util/class', 'aloha/ecma5shims'],
 function(jQuery, Class, $_) {
-
-
+	
+	
 	var
 		GENTICS = window.GENTICS,
 //		Class = window.Class,
@@ -4787,7 +4787,7 @@ function(jQuery, Class, $_) {
     		//The two nodes are disconnected. Order between disconnected nodes is always implementation-specific.
     		'DOCUMENT_POSITION_DISCONNECTED': 0x01,
     		//The second node precedes the reference node.
-    		'DOCUMENT_POSITION_PRECEDING': 0x02,
+    		'DOCUMENT_POSITION_PRECEDING': 0x02, 
     		//The node follows the reference node.
     		'DOCUMENT_POSITION_FOLLOWING': 0x04,
     		//The node contains the reference node. A node which contains is always preceding, too.
@@ -4798,7 +4798,7 @@ function(jQuery, Class, $_) {
     		'DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC': 0x20
     	};
 
-
+	
 
 /**
  * @namespace GENTICS.Utils
@@ -5326,10 +5326,10 @@ var Dom = Class.extend({
 		if (root) {
 			// construct the range tree
 			rangeTree = rangeObject.getRangeTree(root);
-
+	
 			// remove the markup from the range tree
 			this.recursiveRemoveMarkup(rangeTree, markup);
-
+	
 			// cleanup DOM
 			this.doCleanup({'merge' : true, 'removeempty' : true}, rangeObject, root);
 		}
@@ -5451,9 +5451,9 @@ var Dom = Class.extend({
 
 					// remove this node
 					jQuery(this).remove();
-
+					
 				} else {
-
+					
 					// do the recursion step here
 					modifiedRange |= that.doCleanup(cleanup, rangeObject, this);
 
@@ -5492,7 +5492,7 @@ var Dom = Class.extend({
 							// set the flag for range modification
 							modifiedRange = true;
 						}
-
+										
 						// remove this text node
 						jQuery(this).remove();
 
@@ -5518,7 +5518,7 @@ var Dom = Class.extend({
 
 						// set the flag for range modification
 						modifiedRange = true;
-
+						
 					} else if (rangeObject.startContainer === prevNode.parentNode
 							&& rangeObject.startOffset === that.getIndexInParent(prevNode) + 1) {
 						// selection starts right between the previous and current text nodes (which will be merged)
@@ -5562,10 +5562,10 @@ var Dom = Class.extend({
 					// now append the contents of the current text node into the previous
 					prevNode.data += this.data;
 
-				// remove empty text nodes
+				// remove empty text nodes	
 				} else if ( this.nodeValue === '' && cleanup.removeempty ) {
 					// do nothing here.
-
+					
 				// remember it as the last text node if not empty
 				} else if ( !(this.nodeValue === '' && cleanup.removeempty) ) {
 					prevNode = this;
@@ -5757,7 +5757,7 @@ var Dom = Class.extend({
 		if (!searchleft && index < parent.childNodes.length) {
 			nextNode = parent.childNodes[index];
 		}
-
+		
 		//currentParent is not a number therefore it is sufficient to directly test for it with while(currentParent)
 		//otherwise there would be an error if the object is null
 		while (currentParent) {
@@ -6206,12 +6206,12 @@ var Dom = Class.extend({
 	 * @method
 	 */
 	setCursorAfter: function (domObject) {
-		var
+		var 
 			newRange = new GENTICS.Utils.RangeObject(),
 			index = this.getIndexInParent(domObject),
 			targetNode,
 			offset;
-
+		
 		// selection cannot be set between to TEXT_NODEs
 		// if domOject is a Text node set selection at last position in that node
 		if ( domObject.nodeType == 3) {
@@ -6226,16 +6226,16 @@ var Dom = Class.extend({
 			targetNode = domObject.parentNode;
 			offset = this.getIndexInParent(domObject) + 1;
 		}
-
+		
 		newRange.startContainer = newRange.endContainer = targetNode;
 		newRange.startOffset = newRange.endOffset = offset;
 
 		// select the range
 		newRange.select();
-
+		
 		return newRange;
 	},
-
+	
 	/**
 	 * Select a DOM node
 	 * will create a new range which spans the provided dom node and selects it afterwards
@@ -6264,7 +6264,7 @@ var Dom = Class.extend({
 		// select the range
 		newRange.select();
 	},
-
+	
 
 	/**
 	 * "An editing host is a node that is either an Element with a contenteditable
@@ -6320,7 +6320,7 @@ var Dom = Class.extend({
 	},
 
 	/**
-	 *
+	 * 
 	 * "Two nodes are in the same editing host if the editing host of the first is
 	 * non-null and the same as the editing host of the second."
 	 * @param node1 DOM object
@@ -6429,7 +6429,7 @@ return GENTICS.Utils.Dom;
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -6449,8 +6449,8 @@ return GENTICS.Utils.Dom;
 // Do not add dependencies that require depend on aloha/core
 define('aloha/pluginmanager',[ 'aloha/jquery', 'util/class' ],
 function( jQuery, Class ) {
-
-
+	
+	
 	/**
 	 * The Plugin Manager controls the lifecycle of all Aloha Plugins.
 	 *
@@ -6477,11 +6477,11 @@ function( jQuery, Class ) {
 
 			// Global to local settings
 			for ( pluginName in globalSettings ) {
-
+				
 				if ( globalSettings.hasOwnProperty( pluginName ) ) {
-
+					
 					plugin = this.plugins[pluginName] || false;
-
+					
 					if ( plugin ) {
 						plugin.settings = globalSettings[ pluginName ] || {};
 					}
@@ -6490,29 +6490,29 @@ function( jQuery, Class ) {
 
 			// Default: All loaded plugins are enabled
 			if ( !userPlugins.length ) {
-
+				
 				for ( pluginName in this.plugins ) {
-
+					
 					if ( this.plugins.hasOwnProperty( pluginName ) ) {
 						userPlugins.push( pluginName );
 					}
 				}
 			}
-
+			
 			// Enable Plugins specified by User
 			for ( i=0; i < userPlugins.length; ++i ) {
-
+				
 				pluginName = userPlugins[ i ];
 				plugin = this.plugins[ pluginName ]||false;
-
+				
 				if ( plugin ) {
-
+					
 					plugin.settings = plugin.settings || {};
-
+					
 					if ( typeof plugin.settings.enabled === 'undefined' ) {
 						plugin.settings.enabled = true;
 					}
-
+					
 					if ( plugin.settings.enabled ) {
 						if ( plugin.checkDependencies() ) {
 							plugin.init();
@@ -6520,7 +6520,7 @@ function( jQuery, Class ) {
 					}
 				}
 			}
-
+			
 			next();
 		},
 
@@ -6529,15 +6529,15 @@ function( jQuery, Class ) {
 		 * @param {Plugin} plugin plugin to register
 		 */
 		register: function( plugin ) {
-
+			
 			if ( !plugin.name ) {
 				throw new Error( 'Plugin does not have an name.' );
 			}
-
+			
 			if ( this.plugins[ plugin.name ]) {
 				throw new Error( 'Already registered the plugin "' + plugin.name  + '"!' );
 			}
-
+			
 			this.plugins[ plugin.name ] = plugin;
 		},
 
@@ -6568,13 +6568,13 @@ function( jQuery, Class ) {
 		toString: function() {
 			return 'pluginmanager';
 		}
-
+		
 	}))();
 });
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -6597,7 +6597,7 @@ define('aloha/core',[
 ],
 
 function ( jQuery, PluginManager ) {
-
+	
 
 	// Aloha Editor does not support Internet Explorer 6.  ExtJS style fixes for
 	// IE6 which are applied through the "ext-ie6" class cause visual bugs in
@@ -6609,7 +6609,7 @@ function ( jQuery, PluginManager ) {
 	//----------------------------------------
 	// Private variables
 	//----------------------------------------
-
+	
 	/**
 	 * Maps the names of plugins with their urls for easy assess in the
 	 * getPluginUrl method.  Hash table that will be populated through the
@@ -6651,18 +6651,18 @@ function ( jQuery, PluginManager ) {
 		 * @cfg {Object} object Aloha's settings
 		 */
 		settings: {},
-
+		
 		/**
 		 * defaults object, which will contain all Aloha defaults
 		 * @cfg {Object} object Aloha's settings
 		 */
 		defaults: {},
-
+		
 		/**
-		 * Namespace for ui resources
+		 * Namespace for ui components
 		 */
 		ui: {},
-
+		
 		/**
 		 * This represents the name of the users OS. Could be:
 		 * 'Mac', 'Linux', 'Win', 'Unix', 'Unknown'
@@ -6693,7 +6693,7 @@ function ( jQuery, PluginManager ) {
 		 * Initialize the initialization process
 		 */
 		init: function () {
-
+				
 			// merge defaults and settings and provide all in settings
 			Aloha.settings = jQuery.extendObjects( true, {}, Aloha.defaults, Aloha.settings );
 
@@ -6703,7 +6703,7 @@ function ( jQuery, PluginManager ) {
 			if (window.rangy) {
 				window.rangy.init();
 			}
-
+			
 			// Load & Initialise
 			Aloha.stage = 'loadPlugins';
 			Aloha.loadPlugins(function(){
@@ -6783,7 +6783,7 @@ function ( jQuery, PluginManager ) {
 
 				this.loadedPlugins = pluginNames;
 				this.requirePaths = paths;
-
+				
 				// Main Require.js loading call, which fetches all the plugins.
 				require(
 					{
@@ -6885,7 +6885,7 @@ function ( jQuery, PluginManager ) {
 			}).mouseup(function(e) {
 				Aloha.eventHandled = false;
 			});
-
+			
 			// Initialise the base path to the aloha files
 			Aloha.settings.base = Aloha.getAlohaUrl();
 
@@ -6925,7 +6925,7 @@ function ( jQuery, PluginManager ) {
 					supported = false;
 					Aloha.Log.log( 'enableObjectResizing is not supported.' );
 				}
-
+				
 				if ( supported ) {
 					document.execCommand( 'enableObjectResizing', false, false);
 					Aloha.Log.log( 'enableObjectResizing disabled.' );
@@ -6949,11 +6949,11 @@ function ( jQuery, PluginManager ) {
 		},
 
 		/**
-		 * Loads GUI resources
+		 * Loads GUI components
 		 * @return void
 		 */
 		initGui: function (next) {
-
+			
 			Aloha.RepositoryManager.init();
 
 			// activate registered editables
@@ -7046,16 +7046,16 @@ function ( jQuery, PluginManager ) {
 		/**
 		 * Logs a message to the console
 		 * @param level Level of the log ("error", "warn" or "info", "debug")
-		 * @param resource Resource that calls the log
+		 * @param component Component that calls the log
 		 * @param message log message
 		 * @return void
 		 * @hide
 		 */
-		log: function(level, resource, message) {
+		log: function(level, component, message) {
 			if (typeof Aloha.Log !== "undefined")
-				Aloha.Log.log(level, resource, message);
+				Aloha.Log.log(level, component, message);
 		},
-
+		
 		/**
 		 * Register the given editable
 		 * @param editable editable to register
@@ -7116,11 +7116,11 @@ function ( jQuery, PluginManager ) {
 			// aloha base path is defined by a script tag with 2 data attributes
 			var requireJs = jQuery('[data-aloha-plugins]'),
 				baseUrl = ( requireJs.length ) ? requireJs[0].src.replace( /\/?aloha.js$/ , '' ) : '';
-
+			
 			if ( typeof Aloha.settings.baseUrl === "string" ) {
 				baseUrl = Aloha.settings.baseUrl;
 			}
-
+			
 			return baseUrl;
 		},
 
@@ -7156,7 +7156,7 @@ function ( jQuery, PluginManager ) {
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -7175,8 +7175,8 @@ function ( jQuery, PluginManager ) {
 
 define('aloha/console',['aloha/core', 'util/class', 'aloha/jquery'],
 function(Aloha, Class, jQuery ) {
-
-
+	
+	
 	var
 //		$ = jQuery,
 //		Aloha = window.Aloha,
@@ -7196,7 +7196,7 @@ var alohaConsole = Class.extend({
 	 * @hide
 	 */
 	init: function() {
-
+		
 		// initialize the logging settings (if not present)
 		if (typeof Aloha.settings.logLevels === 'undefined' || !Aloha.settings.logLevels) {
 			Aloha.settings.logLevels = {'error' : true, 'warn' : true};
@@ -7217,13 +7217,13 @@ var alohaConsole = Class.extend({
 			Aloha.settings.logHistory.levels = {'error' : true, 'warn' : true};
 		}
 		this.flushLogHistory();
-
+		
 		Aloha.trigger('aloha-logger-ready');
 	},
 
 	/**
 	 * Log History as array of Message Objects. Every object has the properties
-	 * 'level', 'resource' and 'message'
+	 * 'level', 'component' and 'message'
 	 * @property
 	 * @type Array
 	 * @hide
@@ -7241,45 +7241,45 @@ var alohaConsole = Class.extend({
 	 * Logs a message to the console
 	 * @method
 	 * @param {String} level Level of the log ('error', 'warn' or 'info', 'debug')
-	 * @param {String} resource Resource that calls the log
+	 * @param {String} component Component that calls the log
 	 * @param {String} message log message
 	 */
-	log: function(level, resource, message) {
-
+	log: function(level, component, message) {
+		
 
 		// log ('Logging message');
-		if ( typeof resource === 'undefined' ) {
+		if ( typeof component === 'undefined' ) {
 			message = level;
 		}
-		if ( typeof resource !== 'string' && resource && resource.toString ) {
-			resource = resource.toString();
+		if ( typeof component !== 'string' && component && component.toString ) {
+			component = component.toString();
 		}
-
+		
 		// log ('warn', 'Warning message');
 		if ( typeof message === 'undefined' ) {
-			message = resource;
-			resource = undefined;
+			message = component;
+			component = undefined;
 		}
 
 		if (typeof level === 'undefined' || !level) {
 			level = 'log';
 		}
-
+		
 		level = level.toLowerCase();
-
+		
 		if ( typeof Aloha.settings.logLevels === "undefined" ) {
 			return;
 		}
-
+		
 		// now check whether the log level is activated
 		if ( !Aloha.settings.logLevels[ level ] ) {
 			return;
 		}
+		
+		component = component || "Unkown Aloha Component";
 
-		resource = resource || "Unkown Aloha Resource";
-
-		this.addToLogHistory({'level' : level, 'resource' : resource, 'message' : message, 'date' : new Date()});
-
+		this.addToLogHistory({'level' : level, 'component' : component, 'message' : message, 'date' : new Date()});
+		
 		switch (level) {
 		case 'error':
 			if (window.console && console.error) {
@@ -7287,32 +7287,32 @@ var alohaConsole = Class.extend({
 				// Using console.error rather than throwing an error is very
 				// problematic because we get not stack.
 				// We ought to consider doing the following:
-				// throw resource + ': ' + message;
-				if(!resource && !message) {
-					console.error("Error occured without message and resource");
+				// throw component + ': ' + message;
+				if(!component && !message) {
+					console.error("Error occured without message and component");
 				} else {
-					console.error(resource + ': ' + message);
+					console.error(component + ': ' + message);
 				}
 			}
 			break;
 		case 'warn':
 			if (window.console && console.warn) {
-				console.warn(resource + ': ' + message);
+				console.warn(component + ': ' + message);
 			}
 			break;
 		case 'info':
 			if (window.console && console.info) {
-				console.info(resource + ': ' + message);
+				console.info(component + ': ' + message);
 			}
 			break;
 		case 'debug':
 			if (window.console && console.log) {
-				console.log(resource + ' [' + level + ']: ' + message);
+				console.log(component + ' [' + level + ']: ' + message);
 			}
 			break;
 		default:
 			if (window.console && console.log) {
-				console.log(resource + ' [' + level + ']: ' + message);
+				console.log(component + ' [' + level + ']: ' + message);
 			}
 			break;
 		}
@@ -7321,55 +7321,55 @@ var alohaConsole = Class.extend({
 	/**
 	 * Log a message of log level 'error'
 	 * @method
-	 * @param {String} resource Resource that calls the log
+	 * @param {String} component Component that calls the log
 	 * @param {String} message log message
 	 */
-	error: function(resource, message) {
-		this.log('error', resource, message);
+	error: function(component, message) {
+		this.log('error', component, message);
 	},
 
 	/**
 	 * Log a message of log level 'warn'
 	 * @method
-	 * @param {String} resource Resource that calls the log
+	 * @param {String} component Component that calls the log
 	 * @param {String} message log message
 	 */
-	warn: function(resource, message) {
-		this.log('warn', resource, message);
+	warn: function(component, message) {
+		this.log('warn', component, message);
 	},
 
 	/**
 	 * Log a message of log level 'info'
 	 * @method
-	 * @param {String} resource Resource that calls the log
+	 * @param {String} component Component that calls the log
 	 * @param {String} message log message
 	 */
-	info: function(resource, message) {
-		this.log('info', resource, message);
+	info: function(component, message) {
+		this.log('info', component, message);
 	},
 
 	/**
 	 * Log a message of log level 'debug'
-	 * @param {String} resource Resource that calls the log
+	 * @param {String} component Component that calls the log
 	 * @param {String} message log message
 	 */
-	debug: function(resource, message) {
-		this.log('debug', resource, message);
+	debug: function(component, message) {
+		this.log('debug', component, message);
 	},
 
 	/**
 	 * Methods to mark function as deprecated for developers.
-	 * @param {String} resource String that calls the log
+	 * @param {String} component String that calls the log
 	 * @param {String} message log message
 	 */
-	deprecated: function(resource, message) {
-		this.log( 'warn', resource, message );
+	deprecated: function(component, message) {
+		this.log( 'warn', component, message );
 		// help the developer to locate the call.
 		 if ( Aloha.settings.logLevels[ 'deprecated' ] ) {
 			 throw new Error ( message );
 		 }
 	},
-
+	
 	/**
 	 * Check whether the given log level is currently enabled
 	 * @param {String} level
@@ -7417,7 +7417,7 @@ var alohaConsole = Class.extend({
 	 * @hide
 	 */
 	addToLogHistory: function(entry) {
-
+		
 		if ( !Aloha.settings.logHistory ) {
 			this.init();
 		}
@@ -7427,7 +7427,7 @@ var alohaConsole = Class.extend({
 		if ( Aloha.settings.logHistory.maxEntries <= 0
 				|| !Aloha.settings.logHistory.levels[ entry.level ]
 			) {
-
+			
 			return;
 		}
 
@@ -7436,9 +7436,9 @@ var alohaConsole = Class.extend({
 
 		// check whether the highWaterMark was reached, if so, fire an event
 		if ( !this.highWaterMarkReached ) {
-
+			
 			if ( this.logHistory.length >= Aloha.settings.logHistory.maxEntries * Aloha.settings.logHistory.highWaterMark / 100 ) {
-
+				
 				// fire the event
 				Aloha.trigger('aloha-log-full');
 				// set the flag (so we will not fire the event again until the logHistory is flushed)
@@ -7508,7 +7508,7 @@ GENTICS.Utils = GENTICS.Utils || {};
 
 define('util/range',['aloha/jquery', 'util/dom', 'util/class', 'aloha/console', 'aloha/rangy-core'],
 function(jQuery, Dom, Class, console) {
-
+	
 
 	var
 		GENTICS = window.GENTICS,
@@ -7606,7 +7606,7 @@ GENTICS.Utils.RangeObject = Class.extend({
 	 */
 	isCollapsed: function() {
 		return (
-			!this.endContainer ||
+			!this.endContainer || 
 			(this.startContainer === this.endContainer && this.startOffset === this.endOffset)
 		);
 	},
@@ -7653,7 +7653,7 @@ GENTICS.Utils.RangeObject = Class.extend({
 			limit = jQuery('body');
 		}
 
-
+		
 		if (container.nodeType == 3) {
 			parents = jQuery(container).parents();
 		} else {
@@ -7895,7 +7895,7 @@ GENTICS.Utils.RangeObject = Class.extend({
 	 */
 	update: function(event) {
 		console.debug('now updating rangeObject');
-
+		
 		this.initializeFromUserSelection(event);
 		this.updateCommonAncestorContainer();
 	},
@@ -8402,14 +8402,14 @@ GENTICS.Utils.RangeTree = Class.extend({
 	 */
 	children: []
 });
-
+	
 	return GENTICS.Utils.RangeObject;
 });
 
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -8427,7 +8427,7 @@ GENTICS.Utils.RangeTree = Class.extend({
 */
 define('aloha/floatingmenu',['aloha/core', 'aloha/jquery', 'aloha/ext', 'util/class', 'aloha/console', 'vendor/jquery.store'],
 function(Aloha, jQuery, Ext, Class, console) {
-
+	
 	var GENTICS = window.GENTICS;
 
 	/**
@@ -8464,11 +8464,11 @@ function(Aloha, jQuery, Ext, Class, console) {
 		},
 
 		/**
-		 * Get the EXT resource representing the tab
-		 * @return EXT resource (EXT.Panel)
+		 * Get the EXT component representing the tab
+		 * @return EXT component (EXT.Panel)
 		 * @hide
 		 */
-		getExtResource: function () {
+		getExtComponent: function () {
 			var that = this;
 
 			if (!this.extPanel) {
@@ -8482,10 +8482,10 @@ function(Aloha, jQuery, Ext, Class, console) {
 			}
 
 			jQuery.each(this.groups, function(index, group) {
-				// let each group generate its ext resource and add them to
+				// let each group generate its ext component and add them to
 				// the panel once.
 				if (!group.extButtonGroup) {
-					that.extPanel.getTopToolbar().add(group.getExtResource());
+					that.extPanel.getTopToolbar().add(group.getExtComponent());
 				}
 			});
 
@@ -8551,11 +8551,11 @@ function(Aloha, jQuery, Ext, Class, console) {
 		},
 
 		/**
-		 * Get the EXT resource representing the group (Ext.ButtonGroup)
+		 * Get the EXT component representing the group (Ext.ButtonGroup)
 		 * @return the Ext.ButtonGroup
 		 * @hide
 		 */
-		getExtResource: function () {
+		getExtComponent: function () {
 			var that = this, l,
 				items = [],
 				buttonCount = 0,
@@ -8564,7 +8564,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 
 
 			if (typeof this.extButtonGroup === 'undefined') {
-
+			
 				if (this.fields.length > 1) {
 					columnCount = 1;
 				}
@@ -8649,17 +8649,17 @@ function(Aloha, jQuery, Ext, Class, console) {
 				if (typeof button.button !== "undefined") {
 					var extButton = that.extButtonGroup.findById(button.button.id),
 					buttonVisible = button.button.isVisible() && button.scopeVisible;
-
+					
 					if (!extButton) {
 						return;
 					}
-
+				
 					if (buttonVisible && extButton.hidden) {
 						extButton.show();
 					} else if (!buttonVisible && extButton && !extButton.hidden) {
 						extButton.hide();
 					}
-
+				
 					groupVisible |= buttonVisible;
 				}
 			});
@@ -8668,7 +8668,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 			} else if (!groupVisible && !this.extButtonGroup.hidden) {
 				this.extButtonGroup.hide();
 			}
-
+		
 			return groupVisible;
 
 		}
@@ -8821,10 +8821,10 @@ function(Aloha, jQuery, Ext, Class, console) {
 
 		/**
 		 * Aloha.settings.floatingmenu.behaviour
-		 *
+		 * 
 		 * Is used to define the floating menu (fm) float behaviour.
 		 *
-		 * available:
+		 * available: 
 		 *  'float' (default) the fm will float next to the position where the caret is,
 		 *  'topalign' the fm is fixed above the contentEditable which is active,
 		 *  'append' the fm is appended to the defined 'element' element position (top/left)
@@ -8836,7 +8836,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 		 *
 		 * Is used to define the element where the floating menu is positioned when
 		 * Aloha.settings.floatingmenu.behaviour is set to 'append'
-		 *
+		 * 
 		 */
 		element: 'floatingmenu',
 
@@ -8844,42 +8844,42 @@ function(Aloha, jQuery, Ext, Class, console) {
 		 * topalign offset to be used for topalign behavior
 		 */
 		topalignOffset: 0,
-
+		
 		/**
 		 * topalign offset to be used for topalign behavior
 		 */
 		horizontalOffset: 0,
-
+		
 		/**
 		 * will only be hounoured when behaviour is set to 'topalign'. Adds a margin,
 		 * so the floating menu is not directly attached to the top of the page
 		 */
 		marginTop: 10,
-
+		
 		/**
 		 * Define whether the floating menu shall be draggable or not via Aloha.settings.floatingmanu.draggable
-		 * Default is: true
+		 * Default is: true 
 		 */
 		draggable: true,
-
+		
 		/**
 		 * Define whether the floating menu shall be pinned or not via Aloha.settings.floatingmanu.pin
-		 * Default is: false
+		 * Default is: false 
 		 */
 		pin: false,
-
+		
 		/**
 		 * A list of all buttons that have been added to the floatingmenu
 		 * This needs to be tracked, as adding buttons twice will break the fm
 		 */
 		buttonsAdded: [],
-
+		
 		/**
 		 * Will be initialized by checking Aloha.settings.toolbar, which will contain the config for
 		 * the floating menu. If there is no config, tabs and groups will be generated programmatically
 		 */
 		fromConfig: false,
-
+		
 		/**
 		 * hide a tab
 		*/
@@ -8977,10 +8977,10 @@ function(Aloha, jQuery, Ext, Class, console) {
 				}
 			});
 			Aloha.bind('aloha-ready', function() {
-				that.generateResource();
+				that.generateComponent();
 				that.initialized = true;
 			});
-
+			
 			if (typeof Aloha.settings.toolbar === 'object') {
 				this.fromConfig = true;
 			}
@@ -9003,7 +9003,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 		 * @hide
 		 */
 		panelBody: null,
-
+		
 		/**
 		 * The panels width
 		 * @hide
@@ -9015,12 +9015,12 @@ function(Aloha, jQuery, Ext, Class, console) {
 		 */
 		initTabsAndGroups: function () {
 			var that = this;
-
+			
 			// if there is no toolbar config tabs and groups have been initialized before
 			if (!this.fromConfig) {
 				return;
 			}
-
+			
 			jQuery.each(Aloha.settings.toolbar.tabs, function (tab, groups) {
 				// generate or retrieve tab
 				var tabObject = that.tabMap[tab];
@@ -9030,7 +9030,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 					that.tabs.push(tabObject);
 					that.tabMap[tab] = tabObject;
 				}
-
+				
 				// generate groups for current tab
 				jQuery.each(groups, function (group, buttons) {
 					var groupObject = tabObject.getGroup(group),
@@ -9040,12 +9040,12 @@ function(Aloha, jQuery, Ext, Class, console) {
 					jQuery.each(buttons, function (j, button) {
 						if (jQuery.inArray(button, that.buttonsAdded) !== -1) {
 							// buttons must not be added twice
-							console.warn('Skipping button {' + button + '}. A button can\'t be added ' +
-								'to the floating menu twice. Config key: {Aloha.settings.toolbar.' +
+							console.warn('Skipping button {' + button + '}. A button can\'t be added ' + 
+								'to the floating menu twice. Config key: {Aloha.settings.toolbar.' + 
 									tab + '.' + group + '}');
 									return;
 						}
-
+						
 						// now add the button to the group
 						for (i = 0; i < that.allButtons.length; i++) {
 							if (button === that.allButtons[i].button.name) {
@@ -9061,10 +9061,10 @@ function(Aloha, jQuery, Ext, Class, console) {
 		},
 
 		/**
-		 * Generate the rendered resource for the floatingmenu
+		 * Generate the rendered component for the floatingmenu
 		 * @hide
 		 */
-		generateResource: function () {
+		generateComponent: function () {
 			var that = this, pinTab;
 
 			// initialize tabs and groups first
@@ -9076,12 +9076,12 @@ function(Aloha, jQuery, Ext, Class, console) {
 				minWidth : 10
 			});
 
-
-
+			
+			
 			if (this.extTabPanel) {
-				// TODO dispose of the ext resource
+				// TODO dispose of the ext component
 			} else {
-
+				
 				// Enable or disable the drag functionality
 				var dragConfiguration = false;
 
@@ -9096,7 +9096,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 						},
 						endDrag : function(e) {
 							var top = (that.pinned) ? this.y - jQuery(document).scrollTop() : this.y;
-
+					
 							that.left = this.x;
 							that.top = top;
 
@@ -9138,7 +9138,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 									}
 								}
 								that.autoActivatedTab = undefined;
-
+						
 								// ok, this is kind of a hack: when the tab changes, we check all buttons for multisplitbuttons (which have the method setActiveDOMElement).
 								// if a DOM Element is queued to be set active, we try to do this now.
 								// the reason for this is that the active DOM element can only be set when the multisplit button is currently visible.
@@ -9152,7 +9152,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 										}
 									}
 								});
-
+						
 								// adapt the shadow
 								if (that.extTabPanel.isVisible()) {
 									that.extTabPanel.shadow.show();
@@ -9163,20 +9163,20 @@ function(Aloha, jQuery, Ext, Class, console) {
 					},
 					enableTabScroll : true
 				});
-
-
+		
+		
 			}
 
 			// add the tabs
 			jQuery.each(this.tabs, function(index, tab) {
-				// let each tab generate its ext resource and add them to the panel
+				// let each tab generate its ext component and add them to the panel
 				try {
 					if (!tab.extPanel) {
 						// if the tab itself was not generated, we do this and add it to the panel
-						that.extTabPanel.add(tab.getExtResource());
+						that.extTabPanel.add(tab.getExtComponent());
 					} else {
 						// otherwise, we will make sure that probably missing groups are generated, but don't add the tab to the menu (again)
-						tab.getExtResource();
+						tab.getExtComponent();
 					}
 				} catch(e) {
 					Aloha.Log.error(that,"Error while inserting tab: " + e);
@@ -9292,7 +9292,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 
 				// set the position so that it does not float on the first editable activation
 				this.floatTo( position );
-
+				
 				if ( this.pin ) {
 					this.togglePin( true );
 				}
@@ -9303,7 +9303,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 					}
 					that.floatTo( position );
 				});
-
+				
 		    } else if ( this.behaviour === 'topalign' ) {
 				// topalign will retain the user's pinned status
 				// TODO maybe the pin should be hidden in that case?
@@ -9354,7 +9354,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 						+ HORIZONTAL_PADDING ) - jQuery(window).width() );
 
 					if ( overhang > 0 ) {
-						editablePos.left -= overhang;
+						editablePos.left -= overhang;	
 					}
 
 					that.floatTo( editablePos );
@@ -9410,16 +9410,16 @@ function(Aloha, jQuery, Ext, Class, console) {
 		/**
 		 * toggles the pinned status of the floating menu
 		 * @method
-		 * @param {boolean} pinned set to true to activate pin, or set to false to deactivate pin.
+		 * @param {boolean} pinned set to true to activate pin, or set to false to deactivate pin. 
 		 *             leave undefined to toggle pin status automatically
 		 */
 		togglePin: function(pinned) {
 			var el = jQuery('.aloha-floatingmenu-pin');
-
+		       
 		    if (typeof pinned === 'boolean') {
 			this.pinned = !pinned;
 		    }
-
+		       
 			if (this.pinned) {
 				el.removeClass('aloha-floatingmenu-pinned');
 				this.top = this.obj.offset().top;
@@ -9486,11 +9486,11 @@ function(Aloha, jQuery, Ext, Class, console) {
 			var
 				scopeObject = this.scopes[scope],
 				buttonInfo, tabObject, groupObject;
-
+		
 			if (!button.name) {
 				console.warn('Added button with iconClass {' + button.iconClass + '} which has no property "name"');
 			}
-
+	
 			if (typeof scopeObject === 'undefined') {
 				Aloha.Log.error("Can't add button to given scope since the scope has not yet been initialized.", scope);
 				return false;
@@ -9523,9 +9523,9 @@ function(Aloha, jQuery, Ext, Class, console) {
 				groupObject.addButton(buttonInfo);
 			}
 
-			// finally, when the floatingmenu is already initialized, we need to create the ext resource now
+			// finally, when the floatingmenu is already initialized, we need to create the ext component now
 			if (this.initialized) {
-				this.generateResource();
+				this.generateComponent();
 			}
 		},
 
@@ -9550,7 +9550,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 				floatingMenuVisible = false,
 				showUserActivatedTab = false,
 				pos;
-
+			
 			// let the tabs layout themselves
 			jQuery.each(this.tabs, function(index, tab) {
 
@@ -9562,7 +9562,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 				// remember whether the tab is currently visible
 				var tabVisible = tab.visible;
 
-				// let each tab generate its ext resource and add them to the panel
+				// let each tab generate its ext component and add them to the panel
 				if (tab.doLayout()) {
 					// found a visible tab, so the floatingmenu needs to be visible as well
 					floatingMenuVisible = true;
@@ -9795,7 +9795,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 			if ( documentWidth - this.width < left ) {
 					left = documentWidth - this.width - GENTICS.Utils.Position.ScrollCorrection.left;
 			}
-
+			
 			return {
 				left : left,
 				top : top
@@ -9818,7 +9818,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 			    fmpos = this.obj.offset(),
 				lastLeft,
 				lastTop;
-
+			
 			if ( lastFloatingMenuPos.left === null ) {
 				lastLeft = fmpos.left;
 				lastTop = fmpos.top;
@@ -9901,22 +9901,22 @@ function(Aloha, jQuery, Ext, Class, console) {
 			}
 		}
 	});
-
+	
 	var menu =  new FloatingMenu();
 	menu.init();
-
+	
 	// set scope to empty if deactivated
 	Aloha.bind('aloha-editable-deactivated', function() {
 		menu.setScope('Aloha.empty');
 	});
-
+	
 	// set scope to empty if the user selectes a non contenteditable area
 	Aloha.bind('aloha-selection-changed', function() {
 		if ( !Aloha.Selection.isSelectionEditable() && !Aloha.Selection.isFloatingMenuVisible() ) {
 			menu.setScope('Aloha.empty');
 		}
 	});
-
+	
 	return menu;
 });
 
@@ -9924,7 +9924,7 @@ function(Aloha, jQuery, Ext, Class, console) {
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -10107,7 +10107,7 @@ function(Aloha, jQuery, FloatingMenu, Class, Range) {
 			this.preventSelectionChangedFlag = false;
 			return prevented;
 		},
-
+		
 		/**
 		 * Checks if the current rangeObject common ancector container is edtiable
 		 * @return {Boolean} true if current common ancestor is editable
@@ -10167,7 +10167,7 @@ function(Aloha, jQuery, FloatingMenu, Class, Range) {
 			}
 
 			this.rangeObject = range || new Aloha.Selection.SelectionRange( true );
-
+			
 			// Only execute the workaround when a valid rangeObject was provided
 			if ( typeof this.rangeObject !== "undefined" && typeof this.rangeObject.startContainer !== "undefined" && this.rangeObject.endContainer !== "undefined") {
 				// workaround for a nasty IE bug that allows the user to select text nodes inside areas with contenteditable "false"
@@ -10176,8 +10176,8 @@ function(Aloha, jQuery, FloatingMenu, Class, Range) {
 					Aloha.getSelection().removeAllRanges();
 					return true;
 				}
-			}
-
+			} 
+			
 			// find the CAC (Common Ancestor Container) and update the selection Tree
 			this.rangeObject.update();
 
@@ -10426,7 +10426,7 @@ function(Aloha, jQuery, FloatingMenu, Class, Range) {
 				parents = jQuery(domObj).parents(),
 				returnVal = false,
 				i = -1;
-
+			
 			// check if a comparison method was passed as parameter ...
 			if (typeof tagComparator !== 'undefined' && typeof tagComparator !== 'function') {
 				Aloha.Log.error(this,'parameter tagComparator is not a function');
@@ -10437,7 +10437,7 @@ function(Aloha, jQuery, FloatingMenu, Class, Range) {
 					return that.standardTextLevelSemanticsComparator(domobj, markupObject); // TODO should actually be this.getStandardTagComparator(markupObject)
 				};
 			}
-
+		
 			if (parents.length > 0) {
 				parents.each(function() {
 					// the limit object was reached (normally the Editable Element)
@@ -10498,7 +10498,7 @@ function(Aloha, jQuery, FloatingMenu, Class, Range) {
 			}
 			return false;
 		},
-
+		
 		/**
 		 * standard method, to compare a domobj and a jquery object for text level semantics (aka span elements, e.g. b, i, sup, span, ...).
 		 * is always used when no other tag comparator is passed as parameter
@@ -11218,7 +11218,7 @@ function(Aloha, jQuery, FloatingMenu, Class, Range) {
 		getTextNodeSibling: function(previousOrNext, commonAncestorContainer, currentTextNode) {
 			var textNodes = jQuery(commonAncestorContainer).textNodes(true),
 				newIndex, index;
-
+			
 			index = textNodes.index(currentTextNode);
 			if (index == -1) { // currentTextNode was not found
 				return false;
@@ -11361,7 +11361,7 @@ function(Aloha, jQuery, FloatingMenu, Class, Range) {
 			}
 			var nodeName = selectionTreeElement.domobj.nodeName.toLowerCase(),
 				markupName;
-
+			
 			nodeName = (nodeName == '#text') ? 'textNode' : nodeName;
 			markupName = markupObject[0].nodeName.toLowerCase();
 			// if nothing is defined for the markup, it's now allowed
@@ -11750,32 +11750,32 @@ function correctRange ( range ) {
 	 * @singleton
 	 */
 	var AlohaSelection = Class.extend({
-
+		
 		_constructor : function( nativeSelection ) {
-
+			
 			this._nativeSelection = nativeSelection;
 			this.ranges = [];
-
+			
 			// will remember if urged to not change the selection
 			this.preventChange = false;
-
+			
 		},
-
+		
 		/**
 		 * Returns the element that contains the start of the selection. Returns null if there's no selection.
 		 * @readonly
 		 * @type Node
 		 */
 		anchorNode: null,
-
+		
 		/**
-		 * Returns the offset of the start of the selection relative to the element that contains the start
+		 * Returns the offset of the start of the selection relative to the element that contains the start 
 		 * of the selection. Returns 0 if there's no selection.
 		 * @readonly
 		 * @type int
 		 */
 		anchorOffset: 0,
-
+		
 		/**
 		 * Returns the element that contains the end of the selection.
 		 * Returns null if there's no selection.
@@ -11783,29 +11783,29 @@ function correctRange ( range ) {
 		 * @type Node
 		 */
 		focusNode: null,
-
+		
 		/**
-		 * Returns the offset of the end of the selection relative to the element that contains the end
+		 * Returns the offset of the end of the selection relative to the element that contains the end 
 		 * of the selection. Returns 0 if there's no selection.
 		 * @readonly
 		 * @type int
 		 */
 		focusOffset: 0,
-
+		
 		/**
 		 * Returns true if there's no selection or if the selection is empty. Otherwise, returns false.
 		 * @readonly
 		 * @type boolean
 		 */
 		isCollapsed: false,
-
+		
 		/**
 		 * Returns the number of ranges in the selection.
 		 * @readonly
 		 * @type int
 		 */
 		rangeCount: 0,
-
+					
 		/**
 		 * Replaces the selection with an empty one at the given position.
 		 * @throws a WRONG_DOCUMENT_ERR exception if the given node is in a different document.
@@ -11816,7 +11816,7 @@ function correctRange ( range ) {
 		collapse: function ( parentNode, offset ) {
 			this._nativeSelection.collapse(  parentNode, offset );
 		},
-
+		
 		/**
 		 * Replaces the selection with an empty one at the position of the start of the current selection.
 		 * @throws an INVALID_STATE_ERR exception if there is no selection.
@@ -11825,22 +11825,22 @@ function correctRange ( range ) {
 		collapseToStart: function() {
 			throw "NOT_IMPLEMENTED";
 		},
-
-		/**
+		
+		/** 
 		 * @void
 		 */
 		extend: function ( parentNode, offset) {
-
+			
 		},
-
+		
 		/**
-		 * @param alter DOMString
-		 * @param direction DOMString
-		 * @param granularity DOMString
+		 * @param alter DOMString 
+		 * @param direction DOMString 
+		 * @param granularity DOMString 
 		 * @void
 		 */
 		modify: function ( alter, direction, granularity ) {
-
+			
 		},
 
 		/**
@@ -11851,7 +11851,7 @@ function correctRange ( range ) {
 		collapseToEnd: function() {
 			throw "NOT_IMPLEMENTED";
 		},
-
+		
 		/**
 		 * Replaces the selection with one that contains all the contents of the given element.
 		 * @throws a WRONG_DOCUMENT_ERR exception if the given node is in a different document.
@@ -11861,14 +11861,14 @@ function correctRange ( range ) {
 		selectAllChildren: function( parentNode ) {
 			throw "NOT_IMPLEMENTED";
 		},
-
+		
 		/**
 		 * Deletes the contents of the selection
 		 */
 		deleteFromDocument: function() {
 			throw "NOT_IMPLEMENTED";
 		},
-
+		
 		/**
 		 * NB!
 		 * We have serious problem in IE.
@@ -11876,13 +11876,13 @@ function correctRange ( range ) {
 		 * so even if we normalize it during getRangeAt, in IE, we will be
 		 * correcting the range to the "correct" place, but still not the place
 		 * where it was originally set.
-		 *
+		 * 
 		 * Returns the given range.
-		 * The getRangeAt(index) method returns the indexth range in the list.
+		 * The getRangeAt(index) method returns the indexth range in the list. 
 		 * NOTE: Aloha Editor only support 1 range! index can only be 0
-		 * @throws INDEX_SIZE_ERR DOM exception if index is less than zero or
+		 * @throws INDEX_SIZE_ERR DOM exception if index is less than zero or 
 		 * greater or equal to the value returned by the rangeCount.
-		 * @param index int
+		 * @param index int 
 		 * @return Range return the selected range from index
 		 */
 		getRangeAt: function ( index ) {
@@ -11892,20 +11892,20 @@ function correctRange ( range ) {
 			//}
 			//return this._ranges[index];
 		},
-
+		
 		/**
 		 * Adds the given range to the selection.
 		 * The addRange(range) method adds the given range Range object to the list of
-		 * selections, at the end (so the newly added range is the new last range).
-		 * NOTE: Aloha Editor only support 1 range! The added range will replace the
+		 * selections, at the end (so the newly added range is the new last range). 
+		 * NOTE: Aloha Editor only support 1 range! The added range will replace the 
 		 * range at index 0
 		 * see http://html5.org/specs/dom-range.html#selection note about addRange
 		 * @throws an INVALID_NODE_TYPE_ERR exception if the given Range has a boundary point
-		 * node that's not a Text or Element node, and an INVALID_MODIFICATION_ERR exception
+		 * node that's not a Text or Element node, and an INVALID_MODIFICATION_ERR exception 
 		 * if it has a boundary point node that doesn't descend from a Document.
 		 * @param range Range adds the range to the selection
 		 * @void
-		 */
+		 */ 
 		addRange: function( range ) {
 			// set readonly attributes
 			this._nativeSelection.addRange( range );
@@ -11917,10 +11917,10 @@ function correctRange ( range ) {
 			// make sure, the old Aloha selection will be updated (until all implementations use the new AlohaSelection)
 			Aloha.Selection.updateSelection();
 		},
-
+		
 		/**
 		 * Removes the given range from the selection, if the range was one of the ones in the selection.
-		 * NOTE: Aloha Editor only support 1 range! The added range will replace the
+		 * NOTE: Aloha Editor only support 1 range! The added range will replace the 
 		 * range at with index 0
 		 * @param range Range removes the range from the selection
 		 * @void
@@ -11928,7 +11928,7 @@ function correctRange ( range ) {
 		removeRange: function( range ) {
 			this._nativeSelection.removeRange();
 		},
-
+		
 		/**
 		 * Removes all the ranges in the selection.
 		 * @viod
@@ -11936,7 +11936,7 @@ function correctRange ( range ) {
 		removeAllRanges: function() {
 			this._nativeSelection.removeAllRanges();
 		},
-
+				
 		/**
 		 * prevents the next aloha-selection-changed event from
 		 * being triggered
@@ -11961,7 +11961,7 @@ function correctRange ( range ) {
 		 * Aloha, has no use otherwise Updates the rangeObject
 		 * according to the current user selection Method is
 		 * always called on selection change
-		 *
+		 * 
 		 * @param event
 		 *            jQuery browser event object
 		 * @return true when rangeObject was modified, false
@@ -11974,14 +11974,14 @@ function correctRange ( range ) {
 
 		/**
 		 * String representation
-		 *
+		 * 
 		 * @return "Aloha.Selection"
 		 * @hide
 		 */
 		toString: function() {
 			return 'Aloha.Selection';
 		},
-
+		
 		getRangeCount: function() {
 			return this._nativeSelection.rangeCount;
 		}
@@ -11998,11 +11998,11 @@ function correctRange ( range ) {
 	Aloha.getSelection = function( target ) {
 		var target = ( target !== document || target !== window ) ? window : target;
         // Aloha.Selection.refresh()
-		// implement Aloha Selection
+		// implement Aloha Selection 
 		// TODO cache
 		return new AlohaSelection( window.rangy.getSelection( target ) );
 	};
-
+	
 	/**
 	 * A wrapper for the function of the same name in the rangy core-depdency.
 	 * This function should be preferred as it hides the global rangy object.
@@ -12016,7 +12016,7 @@ function correctRange ( range ) {
 	Aloha.createRange = function(givenWindow) {
 		return window.rangy.createRange(givenWindow);
 	};
-
+	
 	var selection = new Selection();
 	Aloha.Selection = selection;
 
@@ -12091,7 +12091,7 @@ function nextVisibleNode( node ) {
 		// Skip over propping <br>s ...
 		if ( isBR( node.nextSibling ) &&
 			 node.nextSibling === node.parentNode.lastChild ) {
-			return nextVisibleNode( node.nextSibling );
+			return nextVisibleNode( node.nextSibling );	
 		}
 
 		// Skip over empty editable elements ...
@@ -12421,7 +12421,7 @@ Aloha.Markup = Class.extend( {
 				}
 			}
 		}
-
+		
 		if ( !sibling ) {
 			// True if keyCode denotes LEFT or UP arrow key, otherwise they
 			// keyCode is for RIGHT or DOWN in which this value will be false.
@@ -13283,7 +13283,7 @@ return Aloha.Markup;
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright � 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -13302,8 +13302,8 @@ return Aloha.Markup;
 
 define('aloha/observable',['aloha/jquery'],
 function(jQuery, undefined) {
-
-
+	
+	
 	var
 		$ = jQuery;
 
@@ -13398,7 +13398,7 @@ function(jQuery, undefined) {
  */
 define('aloha/registry',['aloha/jquery', 'aloha/observable'],
 function(jQuery, Observable) {
-
+	
 
 	return Class.extend(Observable, {
 
@@ -13427,15 +13427,15 @@ function(jQuery, Observable) {
 			delete this._entries[id];
 			this.trigger('unregister', oldEntry, id);
 		},
-
+		
 		get: function(id) {
 			return this._entries[id];
 		},
-
+		
 		has: function(id) {
 			return (this._entries[id] ? true : false);
 		},
-
+		
 		getEntries: function() {
 			// clone the entries so the user does not accidentally modify our _entries object.
 			return jQuery.extend({}, this._entries);
@@ -13450,7 +13450,7 @@ function(jQuery, Observable) {
  */
 define('aloha/contenthandlermanager',['aloha/jquery', 'aloha/registry'],
 function( jQuery, Registry ) {
-
+	
 
 	/**
 	 * Create an contentHandler from the given definition. Acts as a factory method
@@ -13461,7 +13461,7 @@ function( jQuery, Registry ) {
 	return new ( Registry.extend({
 
 		createHandler: function( definition ) {
-
+			
 			if ( typeof definition.handleContent != 'function' ) {
 				throw 'ContentHandler has no function handleContent().';
 			}
@@ -13471,10 +13471,10 @@ function( jQuery, Registry ) {
 					// Implement in subclass!
 				}
 			}, definition);
-
+			
 			return new AbstractContentHandler();
 		},
-
+		
 		handleContent: function ( content, options ) {
 			var handler,
 				handlers = this.getEntries();
@@ -13493,7 +13493,7 @@ function( jQuery, Registry ) {
 					if (jQuery.inArray( handler, options.contenthandler ) < 0 ) {
 						continue;
 					}
-
+					
 					if ( typeof handlers[handler].handleContent === 'function') {
 						content = handlers[handler].handleContent( content, options );
 					} else {
@@ -13538,7 +13538,7 @@ define('aloha/editable',[
 	'aloha/console'
 ], function( Aloha, Class, jQuery, PluginManager, FloatingMenu, Selection,
 	         Markup, ContentHandlerManager, console ) {
-
+	
 
 	var unescape = window.unescape,
 	    GENTICS = window.GENTICS,
@@ -13682,7 +13682,7 @@ define('aloha/editable',[
 			if ( typeof Aloha.settings.contentHandler.initEditable === 'undefined' ) {
 				Aloha.settings.contentHandler.initEditable = Aloha.defaults.contentHandler.initEditable;
 			}
-
+			
 			var content = me.obj.html();
 			content = ContentHandlerManager.handleContent( content, {
 				contenthandler: Aloha.settings.contentHandler.initEditable
@@ -14206,8 +14206,8 @@ define('aloha/editable',[
 		getContents: function( asObject ) {
 			// Cloned nodes are problematic in IE7.  When trying to read/write
 			// to them, they can sometimes cause the browser to crash.
-			// The IE7 fix was moved to engine#copyAttributes()
-
+			// The IE7 fix was moved to engine#copyAttributes() 
+			
 			var clonedObj = this.obj.clone( false );
 			//var clonedObj = jQuery(this.obj[0].outerHTML);
 
@@ -14260,7 +14260,7 @@ define('aloha/editable',[
 		 * combination of interactions are performed by the user during the
 		 * course of editing within an editable.
 		 * The smart content change event would therefore signal to any
-		 * resource that is listening to this event, that content has been
+		 * component that is listening to this event, that content has been
 		 * inserted into the editable that may need to be prococessed in a
 		 * special way
 		 * This is used for smart actions within the content/while editing.
@@ -14415,7 +14415,7 @@ define('aloha/editable',[
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -14434,8 +14434,8 @@ define('aloha/editable',[
 
 define('aloha/message',['aloha/core', 'util/class', 'aloha/jquery'],
 function( Aloha, Class, jQuery ) {
-
-
+	
+	
 	var
 //		Aloha = window.Aloha,
 //		Class = window.Class,
@@ -14504,7 +14504,7 @@ Aloha.MessageLine = Class.extend({
 		var messageline = '',
 			messagesLength = this.messages.length,
 			i;
-
+		
 		// dummy implementation to add a message
 		this.messages[messagesLength] = message;
 		while(messagesLength > 4) {
@@ -14530,7 +14530,7 @@ Aloha.MessageLine = new Aloha.MessageLine();
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -14549,8 +14549,8 @@ Aloha.MessageLine = new Aloha.MessageLine();
 
 define('aloha/plugin',['aloha/core', 'aloha/jquery', 'util/class', 'aloha/pluginmanager', 'aloha/console'],
 function(Aloha, jQuery, Class, PluginManager, console ) {
-
-
+	
+	
 	/**
 	 * Abstract Plugin Object
 	 * @namespace Aloha
@@ -14559,7 +14559,7 @@ function(Aloha, jQuery, Class, PluginManager, console ) {
 	 * @param {String} pluginPrefix unique plugin prefix
 	 */
 	var Plugin = Class.extend({
-
+		
 		name: null,
 
 		/**
@@ -14573,7 +14573,7 @@ function(Aloha, jQuery, Class, PluginManager, console ) {
 		 * @cfg {Object} settings the plugins settings stored in an object
 		 */
 		settings: {},
-
+		
 		/**
 		 * Names of other plugins which must be loaded in order for this plugin to
 		 * function.
@@ -14596,18 +14596,18 @@ function(Aloha, jQuery, Class, PluginManager, console ) {
 		 * @return true if dependencies satisfied, false otherwise
 		 */
 		checkDependencies: function() {
-			var
-				dependenciesSatisfied = true,
+			var 
+				dependenciesSatisfied = true, 
 				that = this;
-
+			
 			jQuery.each(this.dependencies, function() {
-
+				
 				if (!Aloha.isPluginLoaded(this)) {
 					dependenciesSatisfied = false;
 					console.error('plugin.' + that.name, 'Required plugin "' + this + '" not found.');
 				}
 			});
-
+			
 			return dependenciesSatisfied;
 		},
 
@@ -14707,7 +14707,7 @@ function(Aloha, jQuery, Class, PluginManager, console ) {
 										configObj[k] = selectorConfig[k];
 									} else if (typeof selectorConfig[k] === "object") {
 										configObj[k] = {};
-										configObj[k] = jQuery.extend(true, configObj[k], that.config[k], selectorConfig[k]);
+										configObj[k] = jQuery.extend(true, configObj[k], that.config[k], selectorConfig[k]);									
 									} else {
 										configObj[k] = selectorConfig[k];
 									}
@@ -14773,7 +14773,7 @@ function(Aloha, jQuery, Class, PluginManager, console ) {
 		toString: function() {
 			return this.name;
 		},
-
+		
 		/**
 		 * Log a plugin message to the logger
 		 * @param level log level
@@ -14787,19 +14787,19 @@ function(Aloha, jQuery, Class, PluginManager, console ) {
 			console.log(level, this, message);
 		}
 	});
-
+	
 	/**
 	 * Static method used as factory to create plugins.
-	 *
+	 * 
 	 * @param {String} pluginName name of the plugin
 	 * @param {Object} definition definition of the plugin, should have at least an "init" and "destroy" method.
 	 */
 	Plugin.create = function(pluginName, definition) {
-
+		
 		var pluginInstance = new ( Plugin.extend( definition ) )( pluginName );
 		pluginInstance.settings = jQuery.extendObjects( true, pluginInstance.defaults, Aloha.settings[pluginName] );
 		PluginManager.register( pluginInstance );
-
+		
 		return pluginInstance;
 	};
 
@@ -14808,7 +14808,7 @@ function(Aloha, jQuery, Class, PluginManager, console ) {
 
 define('aloha/engine',['aloha/ecma5shims', 'aloha/jquery'],
 function($_, jQuery) {
-
+	
 
 var htmlNamespace = "http://www.w3.org/1999/xhtml";
 
@@ -15424,7 +15424,7 @@ function myExecCommand(command, showUi, value, range) {
 
 		// always fix the range after the command is complete
 		setActiveRange(range);
-
+		
 		// "Return true."
 		return true;
 	}})(command, showUi, value));
@@ -15582,7 +15582,7 @@ function isProhibitedParagraphChild(node) {
 // resolved value "inline" or "inline-block" or "inline-table" or "none", or a
 // Document, or a DocumentFragment."
 function isBlockNode(node) {
-
+	
 	return node
 		&& ((node.nodeType == $_.Node.ELEMENT_NODE && $_( ["inline", "inline-block", "inline-table", "none"] ).indexOf($_.getComputedStyle(node).display) == -1)
 		|| node.nodeType == $_.Node.DOCUMENT_NODE
@@ -16002,18 +16002,18 @@ function isCollapsedBlockProp(node) {
 
 function setActiveRange( range ) {
 	var rangeObject = new window.GENTICS.Utils.RangeObject();
-
+	
 	rangeObject.startContainer = range.startContainer;
 	rangeObject.startOffset = range.startOffset;
 	rangeObject.endContainer = range.endContainer;
 	rangeObject.endOffset = range.endOffset;
-
+	
 	rangeObject.select();
 }
 
-// Please note: This method is deprecated and will be removed.
-// Every command should use the value and range parameter.
-//
+// Please note: This method is deprecated and will be removed. 
+// Every command should use the value and range parameter. 
+// 
 // "The active range is the first range in the Selection given by calling
 // getSelection() on the context object, or null if there is no such range."
 //
@@ -16198,7 +16198,7 @@ function movePreservingRanges(node, newParent, newIndex, range) {
 	}
 
 	// if we're off actual node boundaries this implies that the move was
-	// part of a deletion process (backspace). If that's the case we
+	// part of a deletion process (backspace). If that's the case we 
 	// attempt to fix this by restoring the range to the first index of
 	// the node that has been moved
 	if (boundaryPoints[0][1] > boundaryPoints[0][0].childNodes.length
@@ -16224,22 +16224,22 @@ function movePreservingRanges(node, newParent, newIndex, range) {
 
 /**
  * Copy all non empty attributes from an existing to a new element
- *
+ * 
  * @param {dom} element The source DOM element
  * @param {dom} newElement The new DOM element which will get the attributes of the source DOM element
  * @return void
  */
 function copyAttributes( element, newElement ) {
 
-	// This is an IE7 workaround. We identified three places that were connected
+	// This is an IE7 workaround. We identified three places that were connected 
 	// to the mysterious ie7 crash:
 	// 1. Add attribute to dom element (Initialization of jquery-ui sortable)
-	// 2. Access the jquery expando attribute. Just reading the name is
+	// 2. Access the jquery expando attribute. Just reading the name is 
 	//    sufficient to make the browser vulnerable for the crash (Press enter)
 	// 3. On editable blur the Aloha.editables[0].getContents(); gets invoked.
-	//    This invokation somehow crashes the ie7. We assume that the access of
-	//    shared expando attribute updates internal references which are not
-	//    correclty handled during clone();
+	//    This invokation somehow crashes the ie7. We assume that the access of 
+	//    shared expando attribute updates internal references which are not 
+	//    correclty handled during clone(); 
 	if ( jQuery.browser.msie && jQuery.browser.version >=7 && typeof element.attributes[jQuery.expando] !== 'undefined' ) {
 		jQuery(element).removeAttr(jQuery.expando);
 	}
@@ -16248,7 +16248,7 @@ function copyAttributes( element, newElement ) {
 		if ( typeof newElement.setAttributeNS === 'function' ) {
 			newElement.setAttributeNS( element.attributes[i].namespaceURI, element.attributes[i].name, element.attributes[i].value );
 		} else if ( element.attributes[i].specified ) {
-			// fixes https://github.com/alohaeditor/Aloha-Editor/issues/515
+			// fixes https://github.com/alohaeditor/Aloha-Editor/issues/515 
 			newElement.setAttribute( element.attributes[i].name, element.attributes[i].value );
 		}
 	}
@@ -16276,7 +16276,7 @@ function setTagName(element, newName, range) {
 
 	// "Copy all attributes of element to replacement element, in order."
 	copyAttributes( element,  replacementElement );
-
+	
 	// "While element has children, append the first child of element as the
 	// last child of replacement element, preserving ranges."
 	while (element.childNodes.length) {
@@ -17775,7 +17775,7 @@ function forceValue(node, command, newValue, range) {
 		}
 
 		// "If command is "foreColor", and new value is fully opaque with red,
-		// green, and blue resources in the range 0 to 255:"
+		// green, and blue components in the range 0 to 255:"
 		if (command == "forecolor" && parseSimpleColor(newValue)) {
 			// "Let new parent be the result of calling createElement("span")
 			// on the ownerDocument of node."
@@ -17938,10 +17938,10 @@ function forceValue(node, command, newValue, range) {
 //@{
 
 function setSelectionValue(command, newValue, range) {
-
+	
 	// Use current selected range if no range passed
 	range = range || getActiveRange();
-
+	
 	// "If there is no editable text node effectively contained in the active
 	// range:"
 	if (!$_( getAllEffectivelyContainedNodes(range) )
@@ -17950,7 +17950,7 @@ function setSelectionValue(command, newValue, range) {
 		// "If command has inline command activated values, set the state
 		// override to true if new value is among them and false if it's not."
 		if ("inlineCommandActivatedValues" in commands[command]) {
-			setStateOverride(command,
+			setStateOverride(command, 
       $_(commands[command].inlineCommandActivatedValues).indexOf(newValue) != -1,
       range);
 		}
@@ -18017,7 +18017,7 @@ function setSelectionValue(command, newValue, range) {
 		// here as well.  The active range will be temporarily in orphaned
 		// nodes, so calling getActiveRange() after splitText() but before
 		// fixing the range will throw an exception.
-		// TODO: check if this is still neccessary
+		// TODO: check if this is still neccessary 
 		var activeRange = range;
 		var newStart = [activeRange.startContainer, activeRange.startOffset];
 		var newEnd = [activeRange.endContainer, activeRange.endOffset];
@@ -18057,10 +18057,10 @@ function setSelectionValue(command, newValue, range) {
  * which is located one step right of the current caret position.
  * If an appropriate element is found it will be returned or
  * false otherwise
- *
+ * 
  * @param {element} node current node we're in
  * @param {number} offset current offset within that node
- *
+ * 
  * @return the dom node if found or false if no appropriate
  * element was found
  */
@@ -18088,7 +18088,7 @@ function getBlockAtNextPosition(node, offset) {
 	node.nextSibling.className.indexOf("aloha-table-wrapper") >= 0) {
 		return node.nextSibling;
 	}
-
+	
 	// since we got only ignorable whitespace here determine if
 	// our nodes parents next sibling is a table
 	if (node.parentNode &&
@@ -18120,10 +18120,10 @@ function getBlockAtNextPosition(node, offset) {
  * which is located right before the current position.
  * If an appropriate element is found, it will be returned or
  * false otherwise
- *
+ * 
  * @param {element} node current node
  * @param {offset} offset current offset
- *
+ * 
  * @return dom node of found or false if no appropriate
  * element was found
  */
@@ -18201,7 +18201,7 @@ commands.backcolor = {
 	}, standardInlineValueCommand: true, relevantCssProperty: "backgroundColor",
 	equivalentValues: function(val1, val2) {
 		// "Either both strings are valid CSS colors and have the same red,
-		// green, blue, and alpha resources, or neither string is a valid CSS
+		// green, blue, and alpha components, or neither string is a valid CSS
 		// color."
 		return normalizeColor(val1) === normalizeColor(val2);
 	}
@@ -18219,7 +18219,7 @@ commands.bold = {
 		} else {
 			setSelectionValue("bold", "bold", range);
 		}
-	},
+	}, 
 	inlineCommandActivatedValues: ["bold", "600", "700", "800", "900"],
 	relevantCssProperty: "fontWeight",
 	equivalentValues: function(val1, val2) {
@@ -18371,7 +18371,7 @@ commands.fontsize = {
 
 		// "Set the selection's value to value."
 		setSelectionValue("fontsize", value);
-	},
+	}, 
 	indeterm: function() {
 		// "True if among editable Text nodes that are effectively contained in
 		// the active range, there are two that have distinct effective command
@@ -18383,7 +18383,7 @@ commands.fontsize = {
 		}, true).filter(function(value, i, arr) {
 			return $_(arr.slice(0, i)).indexOf(value) == -1;
 		}).length >= 2;
-	},
+	}, 
 	value: function(range) {
 		// "Let pixel size be the effective command value of the first editable
 		// Text node that is effectively contained in the active range, or if
@@ -18488,7 +18488,7 @@ commands.forecolor = {
 	}, standardInlineValueCommand: true, relevantCssProperty: "color",
 	equivalentValues: function(val1, val2) {
 		// "Either both strings are valid CSS colors and have the same red,
-		// green, blue, and alpha resources, or neither string is a valid CSS
+		// green, blue, and alpha components, or neither string is a valid CSS
 		// color."
 		return normalizeColor(val1) === normalizeColor(val2);
 	}
@@ -18533,7 +18533,7 @@ commands.hilitecolor = {
 	}, standardInlineValueCommand: true, relevantCssProperty: "backgroundColor",
 	equivalentValues: function(val1, val2) {
 		// "Either both strings are valid CSS colors and have the same red,
-		// green, blue, and alpha resources, or neither string is a valid CSS
+		// green, blue, and alpha components, or neither string is a valid CSS
 		// color."
 		return normalizeColor(val1) === normalizeColor(val2);
 	}
@@ -19779,14 +19779,14 @@ function deleteContents() {
 
 	// "Let end block be the end node of range."
 	var endBlock = range.endContainer;
-
+	
 	// "While end block's parent is in the same editing host and end block is
 	// an inline node, set end block to its parent."
 	while (inSameEditingHost(endBlock, endBlock.parentNode)
 	&& isInlineNode(endBlock)) {
 		endBlock = endBlock.parentNode;
 	}
-
+	
 	// "If end block is neither a block node nor an editing host, or "span" is
 	// not an allowed child of end block, or end block is a td or th, set end
 	// block to null."
@@ -20835,7 +20835,7 @@ function toggleLists(tagName, range) {
 
 				// "Wrap children, with sibling criteria returning true for an
 				// HTML element with local name tag name and false otherwise."
-				wrap(children,
+				wrap(children, 
 					function(node) { return isHtmlElement(node, tagName) },
 					function() {return null },
 					range
@@ -21029,14 +21029,14 @@ function toggleLists(tagName, range) {
 						|| !isHtmlElement(sublist[0].parentNode.previousSibling, tagName)) {
 							return document.createElement(tagName);
 						}
-
+	
 						// "Let list be sublist's first member's parent's
 						// previousSibling."
 						var list = sublist[0].parentNode.previousSibling;
-
+	
 						// "Normalize sublists of list's lastChild."
 						normalizeSublists(list.lastChild, range);
-
+	
 						// "If list's lastChild is not an editable HTML element
 						// with local name tag name, call createElement(tag name)
 						// on the context object, and append the result as the last
@@ -21045,7 +21045,7 @@ function toggleLists(tagName, range) {
 						|| !isHtmlElement(list.lastChild, tagName)) {
 							list.appendChild(document.createElement(tagName));
 						}
-
+	
 						// "Return the last child of list."
 						return list.lastChild;
 					},
@@ -21063,7 +21063,7 @@ function toggleLists(tagName, range) {
 //@{
 
 function justifySelection(alignment, range) {
-
+	
 	// "Block-extend the active range, and let new range be the result."
 	var newRange = blockExtend(range);
 
@@ -21301,7 +21301,7 @@ commands["delete"] = {
 		}
 
 		// @iebug
-		// when inserting a special char via the plugin
+		// when inserting a special char via the plugin 
 		// there where problems deleting them again with backspace after insertation
 		// see https://github.com/alohaeditor/Aloha-Editor/issues/517
 		if (node.nodeType == $_.Node.TEXT_NODE
@@ -21812,7 +21812,7 @@ commands.formatblock = {
 //@{
 commands.forwarddelete = {
 	action: function(value, range) {
-
+	
 		// "If the active range is not collapsed, delete the contents of the
 		// active range and abort these steps."
 		if (!range.collapsed) {
@@ -21897,7 +21897,7 @@ commands.forwarddelete = {
 			delBlock.parentNode.removeChild(delBlock);
 			return;
 		}
-
+		
 		// "If node is a Text node and offset is not node's length:"
 		if (node.nodeType == $_.Node.TEXT_NODE
 		&& offset != getNodeLength(node)) {
@@ -22112,7 +22112,7 @@ commands.indent = {
 //@{
 commands.inserthorizontalrule = {
 	action: function(value, range) {
-
+		
 		// "While range's start offset is 0 and its start node's parent is not
 		// null, set range's start to (parent of start node, index of start
 		// node)."
@@ -22186,8 +22186,8 @@ commands.inserthorizontalrule = {
 //@{
 commands.inserthtml = {
 	action: function(value, range) {
-
-
+		
+		
 		// "Delete the contents of the active range."
 		deleteContents(range);
 
@@ -22251,7 +22251,7 @@ commands.inserthtml = {
 		for (var i = 0; i < descendants.length; i++) {
 			fixDisallowedAncestors(descendants[i], range);
 		}
-
+		
 		setActiveRange( range );
 	}
 };
@@ -22399,7 +22399,7 @@ commands.insertlinebreak = {
 			range.setStart(br.parentNode, 1 + getNodeIndex(br));
 			range.setEnd(br.parentNode, 1 + getNodeIndex(br));
 		}
-
+		
 		// IE7 is adding this styles: height: auto; min-height: 0px; max-height: none;
 		// with that there is the ugly "IE-editable-outline"
 		if (jQuery.browser.msie && jQuery.browser.version < 8) {
@@ -22527,7 +22527,7 @@ commands.insertparagraph = {
 				// "Call collapse(container, 0) on the context object's
 				// Selection."
 				// TODO: remove selection from command
-				Aloha.getSelection().collapse(container, 0);
+				Aloha.getSelection().collapse(container, 0); 
 				range.setStart(container, 0);
 				range.setEnd(container, 0);
 
@@ -23366,7 +23366,7 @@ return {
 /*!
 * CommandManager file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -23387,50 +23387,50 @@ define('aloha/command',[ 'aloha/core', 'aloha/registry', 'aloha/engine', 'util/d
 function( Aloha, Registry, Engine, Dom, ContentHandlerManager ) {
 
 //			Action: What the command does when executed via execCommand(). Every command defined
-//			in CommandManager specification has an action defined for it in the relevant section. For example,
-//			the bold command's action generally makes the current selection bold, or removes bold if
+//			in CommandManager specification has an action defined for it in the relevant section. For example, 
+//			the bold command's action generally makes the current selection bold, or removes bold if 
 //			the selection is already bold. An editing toolbar might provide buttons that execute the
 //			action for a command if clicked, or a script might run an action without user interaction
 //			to achieve some particular effect.
-//
+//			
 //			Indeterminate: A boolean value returned by queryCommandIndeterm(), depending on the
-//			current state of the document. Generally, a command that has a state defined will be
+//			current state of the document. Generally, a command that has a state defined will be 
 //			indeterminate if the state is true for part but not all of the current selection, and a
-//			command that has a value defined will be indeterminate if different parts of the
+//			command that has a value defined will be indeterminate if different parts of the 
 //			selection have different values. An editing toolbar might display a button or control
-//			in a special way if the command is indeterminate, like showing a "bold" button as
+//			in a special way if the command is indeterminate, like showing a "bold" button as 
 //			partially depressed, or leaving a font size selector blank instead of showing the font
 //			size of the current selection. As a rule, a command can only be indeterminate if its
 //			state is false, supposing it has a state.
-//
+//			
 //			State: A boolean value returned by queryCommandState(), depending on the current state
-//			of the document. The state of a command is true if it is already in effect, in some
+//			of the document. The state of a command is true if it is already in effect, in some 
 //			sense specific to the command. Most commands that have a state defined will take opposite
 //			actions depending on whether the state is true or false, such as making the selection
-//			bold if the state is false and removing bold if the state is true. Others will just
-//			have no effect if the state is true, like the justifyCenter command. Still others will
+//			bold if the state is false and removing bold if the state is true. Others will just 
+//			have no effect if the state is true, like the justifyCenter command. Still others will 
 //			have the same effect regardless, like the styleWithCss command. An editing toolbar might
 //			display a button or control differently depending on the state and indeterminacy of the
 //			command.
-//
-//			Value: A string returned by queryCommandValue(), depending on the current state of the
-//			document. A command usually has a value instead of a state if the property it modifies
-//			can take more than two different values, like the foreColor command. If the command is
-//			indeterminate, its value is generally based on the start of the selection. Otherwise,
-//			in most cases the value holds true for the entire selection, but see the justifyCenter
+//			
+//			Value: A string returned by queryCommandValue(), depending on the current state of the 
+//			document. A command usually has a value instead of a state if the property it modifies 
+//			can take more than two different values, like the foreColor command. If the command is 
+//			indeterminate, its value is generally based on the start of the selection. Otherwise, 
+//			in most cases the value holds true for the entire selection, but see the justifyCenter 
 //			command and its three companions for an exception. An editing toolbar might display the
 //			value of a command as selected in a drop-down or filled in in a text box, if the command
 //			isn't indeterminate.
-//
-//			Relevant CSS property: CommandManager is defined for certain inline formatting commands, and
-//			is used in algorithms specific to those commands. It is an implementation detail, and
-//			is not exposed to authors. If a command does not have a relevant CSS property
+//			
+//			Relevant CSS property: CommandManager is defined for certain inline formatting commands, and 
+//			is used in algorithms specific to those commands. It is an implementation detail, and 
+//			is not exposed to authors. If a command does not have a relevant CSS property 
 //			specified, it defaults to null.
 
 	var CommandManager = {
-
+			
 		execCommand: function( commandId, showUi, value, range ) {
-
+			
 			// Read current selection if not passed
 			if ( !range ) {
 				if ( !Aloha.getSelection().getRangeCount() ) {
@@ -23438,7 +23438,7 @@ function( Aloha, Registry, Engine, Dom, ContentHandlerManager ) {
 				}
 				range = Aloha.getSelection().getRangeAt( 0 );
 			}
-
+			
 			// For the insertHTML command we provide contenthandler API
 			if ( commandId == 'insertHTML' ) {
 				//if (typeof Aloha.settings.contentHandler.insertHtml === 'undefined') {
@@ -23469,8 +23469,8 @@ function( Aloha, Registry, Engine, Dom, ContentHandlerManager ) {
 
 			Aloha.trigger('aloha-command-executed', commandId);
 		},
-
-		// If command is available and not disabled or the active range is not null
+		
+		// If command is available and not disabled or the active range is not null 
 		// the command is enabled
 		queryCommandEnabled: function( commandId, range ) {
 
@@ -23497,7 +23497,7 @@ function( Aloha, Registry, Engine, Dom, ContentHandlerManager ) {
 			return Engine.queryCommandIndeterm( commandId, range );
 
 		},
-
+		
 		queryCommandState: function( commandId, range ) {
 
 			// Take current selection if not passed
@@ -23510,15 +23510,15 @@ function( Aloha, Registry, Engine, Dom, ContentHandlerManager ) {
 			return Engine.queryCommandState( commandId, range );
 
 		},
-
+		
 		// "When the queryCommandSupported(command) method on the HTMLDocument
 		// interface is invoked, the user agent must return true if command is
 		// supported, and false otherwise."
 		queryCommandSupported: function( commandId ) {
 
-			return Engine.queryCommandSupported( commandId );
+			return Engine.queryCommandSupported( commandId );		
 		},
-
+		
 		queryCommandValue: function( commandId, range ) {
 
 			// Take current selection if not passed
@@ -23534,32 +23534,32 @@ function( Aloha, Registry, Engine, Dom, ContentHandlerManager ) {
 		},
 		querySupportedCommands: function() {
 
-			var
+			var 
 				commands = [],
 				command;
-
+			
 			for ( command in Engine.commands ) {
 				commands.push( command );
 			}
 			return commands;
 		}
 	};
-
+	
 	// create an instance
 	CommandManager = new ( Registry.extend( CommandManager ) )();
-
+	
 	/**
 	 * Executes a registered command.
 	 * http://aryeh.name/spec/editing/editing.html#methods-of-the-htmldocument-interface
 	 * @method
 	 * @param command name of the command
 	 * @param showUI has no effect for Aloha Editor and is only here because in spec...
-	 * @param value depends on the used command and it impementation
-	 * @range optional a range on which the command will be executed if not specified
+	 * @param value depends on the used command and it impementation 
+	 * @range optional a range on which the command will be executed if not specified 
 	 * 		  the current selection will be used as range
 	 */
 	Aloha.execCommand = CommandManager.execCommand;
-
+	
 	/**
 	 * Check wheater the command in enabled.
 	 * If command is not supported, raise a NOT_SUPPORTED_ERR exception.
@@ -23567,19 +23567,19 @@ function( Aloha, Registry, Engine, Dom, ContentHandlerManager ) {
 	 * @return true if command is enabled, false otherwise.
 	 */
 	Aloha.queryCommandEnabled = CommandManager.queryCommandEnabled;
-
+	
 	/**
-	 * Check if the command has an indetermed state.
+	 * Check if the command has an indetermed state. 
 	 * If command is not supported, a NOT_SUPPORTED_ERR exception is thrown
 	 * If command has no indeterminacy, INVALID_ACCESS_ERR exception is thrown
 	 * If command is not enabled, return false.
 	 * @param command name of the command
-	 * @range optional a range on which the command will be executed if not specified
+	 * @range optional a range on which the command will be executed if not specified 
 	 * 		  the current selection will be used as range
 	 * @return true if command is indeterminate, otherwise false.
 	 */
 	Aloha.queryCommandIndeterm = CommandManager.queryCommandIndeterm;
-
+	
 	/**
 	 * Returns the state of a given command
 	 * If command is not supported, a NOT_SUPPORTED_ERR exception is thrown
@@ -23601,22 +23601,22 @@ function( Aloha, Registry, Engine, Dom, ContentHandlerManager ) {
 	 * Returns the Value of a given Command
 	 * If command is not supported, a NOT_SUPPORTED_ERR exception is thrown
 	 * If command is not enabled, returns an empty string
-	 * If command is "fontSize" and its value override is set, an integer
+	 * If command is "fontSize" and its value override is set, an integer 
 	 * number of pixels is returned as font size for the result.
 	 * If the value override for command is set, it returns that.
 	 * @return command's value.
 	 */
 	Aloha.queryCommandValue = CommandManager.queryCommandValue;
-
+	
 	Aloha.querySupportedCommands = CommandManager.querySupportedCommands;
-
+	
 	return CommandManager;
 });
 
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -23645,7 +23645,7 @@ function( jQuery ) {
 			if ( !jQuery.acceptData( elem ) ) {
 				return;
 			}
-
+			
 			var internalKey = jQuery.expando, getByName = typeof name === "string", thisCache,
 
 				// We have to handle DOM nodes and JS objects differently because IE6-7
@@ -23731,7 +23731,7 @@ function( jQuery ) {
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -23750,8 +23750,8 @@ function( jQuery ) {
 
 define('aloha/jquery.aloha',[ 'aloha/core', 'aloha/selection', 'aloha/jquery', 'aloha/console' ],
 function( Aloha, Selection, jQuery, console ) {
-
-
+	
+	
 	var
 //		$ = jQuery,
 //		Aloha = window.Aloha,
@@ -23811,9 +23811,9 @@ function( Aloha, Selection, jQuery, console ) {
 		if (jQuery.browser.msie && parseInt(jQuery.browser.version,10) == 7 ) {
 			ce = 'contentEditable';
 		}
-
+		
 		if (typeof b === 'undefined' ) {
-
+			
 			// For chrome use this specific attribute. The old ce will only
 			// return 'inherit' for nested elements of a contenteditable.
 			// The isContentEditable is a w3c standard compliant property which works in IE7,8,FF36+, Chrome 12+
@@ -23824,7 +23824,7 @@ function( Aloha, Selection, jQuery, console ) {
 			if (typeof $el[0].isContentEditable === 'undefined') {
 				console.warn('Could not determine whether the is editable or not. I assume it is.');
 				return true;
-			} else {
+			} else { 
 				return $el[0].isContentEditable;
 			}
 		} else if (b === '') {
@@ -23942,7 +23942,7 @@ function( Aloha, Selection, jQuery, console ) {
 					} catch (e) {}
 				}
 			}
-
+	
 	};
 
 
@@ -23965,7 +23965,7 @@ function( Aloha, Selection, jQuery, console ) {
 						}
 					}
 				};
-
+			
 			doSomething(this[0]);
 
 			return jQuery(ret);
@@ -24054,7 +24054,7 @@ function( Aloha, Selection, jQuery, console ) {
 	/**
 	 * check if a mixed var is empty or not
 	 * borrowed from http://phpjs.org/functions/empty:392 and a bit improved
-	 *
+	 * 
 	 * @param mixed_var
 	 * @return {boolean}
 	*/
@@ -24103,7 +24103,7 @@ function( Aloha, Selection, jQuery, console ) {
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -24131,8 +24131,8 @@ define('aloha/sidebar',[
 	'aloha/selection'
 	// 'aloha/plugin' // For when we plugify sidebar
 ], function ( Aloha, jQuery, Selection, Plugin ) {
-
-
+	
+	
 	var $ = jQuery;
 	var undefined = void 0;
 	// Pseudo-namespace prefix for Sidebar elements
@@ -24159,7 +24159,7 @@ define('aloha/sidebar',[
 			'panel-title-arrow'        : nsClass( 'panel-title-arrow' ),
 			'panel-title-text'         : nsClass( 'panel-title-text' )
 		};
-
+	
 	// Extend jQuery easing animations
 	if ( !jQuery.easing.easeOutExpo ) {
 		jQuery.extend(jQuery.easing, {
@@ -24176,11 +24176,11 @@ define('aloha/sidebar',[
 			}
 		});
 	}
-
+	
 	// ------------------------------------------------------------------------
 	// Local (helper) functions
 	// ------------------------------------------------------------------------
-
+	
 	/**
 	 * Simple templating
 	 *
@@ -24195,7 +24195,7 @@ define('aloha/sidebar',[
 			 return ( typeof replacement == 'function' ) ? replacement() : replacement;
 		 } );
 	};
-
+	
 	/**
 	 * Wrapper to call the supplant method on a given string, taking the
 	 * nsClasses object as the associative array containing the replacement
@@ -24207,7 +24207,7 @@ define('aloha/sidebar',[
 	function renderTemplate ( str ) {
 		return ( typeof str == 'string' ) ? supplant( str, nsClasses ) : str;
 	};
-
+	
 	/**
 	 * Generates a selector string with this plugins's namespace prefixed the
 	 * each classname
@@ -24226,7 +24226,7 @@ define('aloha/sidebar',[
 		} );
 		return jQuery.trim( strBldr.join( ' ' ) );
 	};
-
+	
 	/**
 	 * Generates a string with this plugins's namespace prefixed the each
 	 * classname
@@ -24245,14 +24245,14 @@ define('aloha/sidebar',[
 		} );
 		return jQuery.trim( strBldr.join(' ') );
 	};
-
+	
 	// ------------------------------------------------------------------------
 	// Sidebar constructor
 	// Only instance properties are to be defined here
 	// ------------------------------------------------------------------------
 	var Sidebar = function Sidebar ( opts ) {
 		var sidebar = this;
-
+		
 		this.id = nsClass( ++uid );
 		this.panels = {};
 		this.container = jQuery( renderTemplate(
@@ -24269,7 +24269,7 @@ define('aloha/sidebar',[
 		this.width = 300;
 		this.opened = false;
 		this.isOpen = false;
-
+		
 		this.settings = {
 			// We automatically set this to true when we are in IE, where rotating
 			// elements using filters causes undesirable rendering ugliness.
@@ -24279,7 +24279,7 @@ define('aloha/sidebar',[
 			rotateIcons : !jQuery.browser.msie,
 			overlayPage : true
 		};
-
+		
 		// Initialize after dom is ready
 		jQuery( function () {
 			if ( !( ( typeof Aloha.settings.sidebar != 'undefined' ) &&
@@ -24287,86 +24287,86 @@ define('aloha/sidebar',[
 				sidebar.init( opts );
 			}
 		} );
-
+		
 	};
-
+	
 	// ------------------------------------------------------------------------
 	// Sidebar prototype
 	// All properties to be shared across Sidebar instances can be placed in
 	// the prototype object
 	// ------------------------------------------------------------------------
 	jQuery.extend(Sidebar.prototype, {
-
+		
 		// Build as much of the sidebar as we can before appending it to DOM to
 		// minimize reflow.
 		init: function (opts) {
 			var that = this;
 			var panels;
-
+			
 			// Pluck panels list from opts
 			if (typeof opts == 'object') {
 				panels = opts.panels;
 				delete opts.panels;
 			}
-
+			
 			// Copy any implements, and overrides in opts to this Sidebar instance
 			jQuery.extend(this, opts);
-
+			
 			if (typeof panels == 'object') {
 				jQuery.each(panels, function () {
 					that.addPanel(this, true);
 				});
 			}
-
+			
 			var bar = this.container;
-
+			
 			if (this.position == 'right') {
 				bar.addClass(nsClass('right'));
 			}
-
+			
 			// Place the bar into the DOM
 			bar.hide()
 			   .appendTo(jQuery('body'))
 			   .click(function () {that.barClicked.apply(that, arguments);})
 			   .find(nsSel('panels')).width(this.width);
-
+			
 			// IE7 needs us to explicitly set the container width, since it is
 			// unable to determine it on its own
 			bar.width(this.width);
-
+			
 			this.width = bar.width();
-
+			
 			jQuery(window).resize(function () {
 				that.updateHeight();
 			});
-
+			
 			this.updateHeight();
 			this.roundCorners();
 			this.initToggler();
-
+			
 			this.container.css(this.position == 'right' ? 'marginRight' : 'marginLeft', -this.width);
-
+			
 			if (this.opened) {
 				this.open(0);
 			}
-
+			
 			this.toggleHandleIcon(this.isOpen);
-
+			
 			this.subscribeToEvents();
-
+			
 			jQuery(window).resize(function () {
 				that.correctHeight();
 			});
-
+			
 			this.correctHeight();
 		},
-
+		
 		show: function () {
 			this.container.css( 'display', 'block' );
 				//.animate({opacity: 1}, 1000);
 			return this;
 		},
-
+		
 		hide: function () {
 			this.container.css( 'display','none' );
 			//	.animate({opacity: 0}, 1000, function () {
@@ -24374,7 +24374,7 @@ define('aloha/sidebar',[
 			//	});
 			return this;
 		},
-
+		
 		/**
 		 * Determines the effective elements at the current selection.
 		 * Iterates through all panels and checks whether the panel should be
@@ -24384,7 +24384,7 @@ define('aloha/sidebar',[
 		 */
 		checkActivePanels: function( range ) {
 			var effective = [];
-
+			
 			if ( typeof range != 'undefined' &&
 					typeof range.markupEffectiveAtStart != 'undefined' ) {
 				var l = range.markupEffectiveAtStart.length;
@@ -24392,40 +24392,40 @@ define('aloha/sidebar',[
 					effective.push( jQuery( range.markupEffectiveAtStart[ i ] ) );
 				}
 			}
-
+			
 			var that = this;
-
+			
 			jQuery.each( this.panels, function () {
 				that.showActivePanel( this, effective );
 			} );
-
+			
 			this.correctHeight();
 		},
-
+		
 		subscribeToEvents: function () {
 			var that = this;
 			var $container = this.container;
-
+			
 			Aloha.bind( 'aloha-selection-changed', function( event, range ) {
 				that.checkActivePanels( range );
 			} );
-
+			
 			$container.mousedown( function( e ) {
 				e.originalEvent.stopSelectionUpdate = true;
 				Aloha.eventHandled = true;
 				//e.stopSelectionUpdate = true;
 			} );
-
+			
 			$container.mouseup( function ( e ) {
 				e.originalEvent.stopSelectionUpdate = true;
 				Aloha.eventHandled = false;
 			} );
-
-			Aloha.bind( 'aloha-editable-deactivated', function ( event, params ) {
+			
+			Aloha.bind( 'aloha-editable-deactivated', function ( event, params ) { 
 				that.checkActivePanels();
 			} );
 		},
-
+		
 		/**
 		 * Dynamically set appropriate heights for panels.
 		 * The height for each panel is determined by the amount of space that
@@ -24435,17 +24435,17 @@ define('aloha/sidebar',[
 		correctHeight: function () {
 			var height = this.container.find(nsSel('inner')).height() - (15 * 2);
 			var panels = [];
-
+			
 			jQuery.each(this.panels, function () {
 				if (this.isActive) {
 					panels.push(this);
 				}
 			});
-
+			
 			if (panels.length == 0) {
 				return;
 			}
-
+			
 			var remainingHeight = height - ((panels[0].title.outerHeight() + 10) * panels.length);
 			var panel;
 			var targetHeight;
@@ -24454,28 +24454,28 @@ define('aloha/sidebar',[
 			var undone;
 			var toadd = 0;
 			var math = Math; // Local reference for quicker lookup
-
+			
 			while (panels.length > 0 && remainingHeight > 0) {
 				remainingHeight += toadd;
-
+				
 				toadd = 0;
 				undone = [];
-
+				
 				for (var j = panels.length - 1; j >= 0; --j) {
 					panel = panels[j];
 					panelInner = panel.content.find(nsSel('panel-content-inner'));
-
+					
 					targetHeight = math.min(
 						panelInner.height('auto').height(),
 						math.floor(remainingHeight / (j + 1))
 					);
-
+					
 					panelInner.height(targetHeight);
-
+					
 					remainingHeight -= targetHeight;
-
+					
 					panelText = panelInner.find(nsSel('panel-content-inner-text'));
-
+					
 					if (panelText.height() > targetHeight) {
 						undone.push(panel);
 						toadd += targetHeight;
@@ -24486,16 +24486,16 @@ define('aloha/sidebar',[
 					} else {
 						panelInner.css('overflow-y', 'hidden');
 					}
-
+					
 					if (panel.expanded) {
 						panel.expand();
 					}
 				}
-
+				
 				panels = undone;
 			}
 		},
-
+		
 		/**
 		 * Checks whether this panel should be activated (ie: made visible) for
 		 * any of the elements specified in a given list of elements.
@@ -24510,13 +24510,13 @@ define('aloha/sidebar',[
 		 */
 		showActivePanel: function (panel, elements) {
 			elements.push(null);
-
+			
 			var j = elements.length;
 			var count = 0;
 			var li = panel.content.parent('li');
 			var activeOn = panel.activeOn;
 			var effective = jQuery();
-
+			
 			for (var i = 0; i < j; ++i) {
 				if (activeOn(elements[i])) {
 					++count;
@@ -24525,16 +24525,16 @@ define('aloha/sidebar',[
 					}
 				}
 			}
-
-			if (count) {
+			
+			if (count) { 
 				panel.activate(effective);
 			} else {
 				panel.deactivate();
 			}
-
+			
 			this.roundCorners();
 		},
-
+		
 		/**
 		 * Sets up the functionality, event listeners, and animation of the
 		 * sidebar handle
@@ -24546,7 +24546,7 @@ define('aloha/sidebar',[
 			var toggledClass = nsClass('toggled');
 			var bounceTimer;
 			var isRight = (this.position == 'right');
-
+			
 			if (this.opened) {
 				this.rotateHandleArrow(isRight ? 0 : 180, 0);
 			}
@@ -24565,9 +24565,9 @@ define('aloha/sidebar',[
 					if (bounceTimer) {
 						clearInterval(bounceTimer);
 					}
-
+					
 					icon.stop().css('marginLeft', 4);
-
+					
 					if (that.isOpen) {
 						jQuery(this).removeClass(toggledClass);
 						that.close();
@@ -24580,18 +24580,18 @@ define('aloha/sidebar',[
 				}).hover(
 					function () {
 						var flag = that.isOpen ? -1 : 1;
-
+						
 						if (bounceTimer) {
 							clearInterval(bounceTimer);
 						}
-
+						
 						icon.stop();
-
+						
 						jQuery(this).stop().animate(
 							isRight ? {marginLeft: '-=' + (flag * 5)} : {marginRight: '-=' + (flag * 5)},
 							200
 						);
-
+						
 						bounceTimer = setInterval(function () {
 							flag *= -1;
 							icon.animate(
@@ -24600,14 +24600,14 @@ define('aloha/sidebar',[
 							);
 						}, 300);
 					},
-
+					
 					function () {
 						if (bounceTimer) {
 							clearInterval(bounceTimer);
 						}
-
+						
 						icon.stop().css(isRight ? 'left' : 'right', 5);
-
+						
 						jQuery(this).stop().animate(
 							isRight ? {marginLeft: 0} : {marginRight: 0},
 							600, 'easeOutElastic'
@@ -24615,7 +24615,7 @@ define('aloha/sidebar',[
 					}
 				);
 		},
-
+		
 		/**
 		 * Rounds the top corners of the first visible panel, and the bottom
 		 * corners of the last visible panel elements in the panels ul list
@@ -24625,15 +24625,15 @@ define('aloha/sidebar',[
 			var lis = bar.find(nsSel('panels>li:not(', 'deactivated)'));
 			var topClass = nsClass('panel-top');
 			var bottomClass = nsClass('panel-bottom');
-
+			
 			bar.find(nsSel('panel-top,', 'panel-bottom'))
 			   .removeClass(topClass)
 			   .removeClass(bottomClass);
-
+			
 			lis.first().find(nsSel('panel-title')).addClass(topClass);
 			lis.last().find(nsSel('panel-content')).addClass(bottomClass);
 		},
-
+		
 		/**
 		 * Updates the height of the inner div of the sidebar. This is done
 		 * whenever the viewport is resized
@@ -24642,7 +24642,7 @@ define('aloha/sidebar',[
 			var h = jQuery(window).height();
 			this.container.height(h).find(nsSel('inner')).height(h);
 		},
-
+		
 		/**
 		 * Delegate all sidebar onclick events to the container.
 		 * Then use handleBarclick method until we bubble up to the first
@@ -24651,7 +24651,7 @@ define('aloha/sidebar',[
 		barClicked: function (ev) {
 			this.handleBarclick(jQuery(ev.target));
 		},
-
+		
 		/**
 		 * We handle all click events on the sidebar from here--dispatching
 		 * calls to which ever methods that should be invoked for the each
@@ -24670,20 +24670,20 @@ define('aloha/sidebar',[
 				this.handleBarclick(el.parent());
 			}
 		},
-
+		
 		getPanelById: function (id) {
 			return this.panels[id];
 		},
-
+		
 		getPanelByElement: function (el) {
 			var li = (el[0].tagName == 'LI') ? el : el.parent('li');
 			return this.getPanelById(li[0].id);
 		},
-
+		
 		togglePanel: function (el) {
 			this.getPanelByElement(el).toggle();
 		},
-
+		
 		/**
 		 * Animation to rotate the sidebar arrow
 		 *
@@ -24712,7 +24712,7 @@ define('aloha/sidebar',[
 				}
 			});
 		},
-
+		
 		/**
 		 * Sets the handle icon to the "i am opened, click me to close the
 		 * sidebar" state, or vice versa. The direction of the arrow depends
@@ -24745,12 +24745,12 @@ define('aloha/sidebar',[
 		 */
 		toggleHandleIcon: function (isOpen) {
 			var isPointingLeft = (this.position == 'right') ^ isOpen;
-
+			
 			if (this.settings.rotateIcons) {
 				this.rotateHandleIcon(isPointingLeft ? 180 : 0, 0);
 			} else {
 				var icon = this.container.find(nsSel('handle-icon'));
-
+				
 				if (isPointingLeft) {
 					icon.addClass(nsClass('handle-icon-left'));
 				} else {
@@ -24758,7 +24758,7 @@ define('aloha/sidebar',[
 				}
 			}
 		},
-
+		
 		/**
 		 * Slides the sidebar into view
 		 */
@@ -24766,33 +24766,33 @@ define('aloha/sidebar',[
 			if (this.isOpen) {
 				return this;
 			}
-
+			
 			var isRight = (this.position == 'right');
 			var anim = isRight ? {marginRight: 0} : {marginLeft: 0};
-
+			
 			this.toggleHandleIcon(true);
-
+			
 			this.container.animate(
 				anim,
 				(typeof duration == 'number' || typeof duration == 'string')
 					? duration : 500,
 				'easeOutExpo'
 			);
-
+			
 			if (!this.settings.overlayPage) {
 				jQuery('body').animate(
 					isRight ? {marginRight: '+=' + this.width} : {marginLeft: '+=' + this.width},
 					500, 'easeOutExpo'
 				);
 			}
-
+			
 			this.isOpen = true;
 
 			jQuery('body').trigger(nsClass('opened'), this);
-
+			
 			return this;
 		},
-
+		
 		/**
 		 * Slides that sidebar out of view
 		 */
@@ -24803,16 +24803,16 @@ define('aloha/sidebar',[
 
 			var isRight = (this.position == 'right');
 			var anim = isRight ? {marginRight: -this.width} : {marginLeft: -this.width};
-
+			
 			this.toggleHandleIcon(false);
-
+			
 			this.container.animate(
 				anim,
 				(typeof duration == 'number' || typeof duration == 'string')
 					? duration : 500,
 				'easeOutExpo'
 			);
-
+			
 			if (!this.settings.overlayPage) {
 				jQuery('body').animate(
 					isRight ? {marginRight: '-=' + this.width} : {marginLeft: '-=' + this.width},
@@ -24824,7 +24824,7 @@ define('aloha/sidebar',[
 
 			return this;
 		},
-
+		
 		/**
 		 * Activates the given panel and passes to it the given element as the
 		 * the effective that we want it to think activated it.
@@ -24838,16 +24838,16 @@ define('aloha/sidebar',[
 			if (typeof panel == 'string') {
 				panel = this.getPanelById(panel);
 			}
-
+			
 			if (panel){
 				panel.activate(element);
 			}
-
+			
 			this.roundCorners();
-
+			
 			return this;
 		},
-
+		
 		/**
 		 * Invokes the expand method for the given panel so that it expands its
 		 * height to display its contents
@@ -24860,14 +24860,14 @@ define('aloha/sidebar',[
 			if (typeof panel == 'string') {
 				panel = this.getPanelById(panel);
 			}
-
+			
 			if (panel){
 				panel.expand(callback);
 			}
-
+			
 			return this;
 		},
-
+		
 		/**
 		 * Collapses the panel contents by invoking the given panel's collapse
 		 * method.
@@ -24880,14 +24880,14 @@ define('aloha/sidebar',[
 			if (typeof panel == 'string') {
 				panel = this.getPanelById(panel);
 			}
-
+			
 			if (panel){
 				panel.collapse(callback);
 			}
-
+			
 			return this;
 		},
-
+		
 		/**
 		 * Adds a panel to this sidebar instance.
 		 * We try and build as much of the panel DOM as we can before inserting
@@ -24911,20 +24911,20 @@ define('aloha/sidebar',[
 				panel.sidebar = this;
 				panel = new Panel(panel);
 			}
-
+			
 			this.panels[panel.id] = panel;
-
+			
 			this.container.find(nsSel('panels')).append(panel.element);
-
+			
 			if (deferRounding !== true) {
 				this.roundCorners();
 			}
 			this.checkActivePanels(Selection.getRangeObject());
 			return panel;
 		}
-
+		
 	});
-
+	
 	// ------------------------------------------------------------------------
 	// Panel constructor
 	// ------------------------------------------------------------------------
@@ -24950,51 +24950,51 @@ define('aloha/sidebar',[
 		this.expanded = false;
 		this.effectiveElement = null;
 		this.isActive = true;
-
+		
 		this.init(opts);
 	};
-
+	
 	// ------------------------------------------------------------------------
 	// Panel prototype
 	// ------------------------------------------------------------------------
 	jQuery.extend(Panel.prototype, {
-
+		
 		init: function (opts) {
 			this.setTitle(opts.title)
 				.setContent(opts.content);
-
+			
 			delete opts.title;
 			delete opts.content;
-
+			
 			jQuery.extend(this, opts);
-
+			
 			if (!this.id) {
 				this.id = nsClass(++uid);
 			}
-
+			
 			var li = this.element =
 				jQuery('<li id="' +this.id + '">')
 					.append(this.title, this.content);
-
+			
 			if (this.expanded){
 				this.content.height('auto');
 			}
-
+			
 			this.toggleTitleIcon(this.expanded);
-
+			
 			this.coerceActiveOn();
-
+			
 			// Disable text selection on title element
 			this.title
 				.attr('unselectable', 'on')
 				.css('-moz-user-select', 'none')
 				.each(function() {this.onselectstart = function() {return false;};});
-
+			
 			if (typeof this.onInit == 'function') {
 				this.onInit.apply(this);
 			}
 		},
-
+		
 		/**
 		 * @param {Boolean} isExpanded - Whether or not the panel is in an
 		 *								 expanded state
@@ -25004,7 +25004,7 @@ define('aloha/sidebar',[
 				this.rotateTitleIcon(isExpanded ? 90 : 0);
 			} else {
 				var icon = this.title.find(nsSel('panel-title-arrow'));
-
+				
 				if (isExpanded) {
 					icon.addClass(nsClass('panel-title-arrow-down'));
 				} else {
@@ -25012,18 +25012,18 @@ define('aloha/sidebar',[
 				}
 			}
 		},
-
+		
 		/**
 		 * Normalizes the activeOn property into a predicate function
 		 */
 		coerceActiveOn: function () {
 			if (typeof this.activeOn != 'function') {
 				var activeOn = this.activeOn;
-
+				
 				this.activeOn = (function () {
 					var typeofActiveOn = typeof activeOn,
 						fn;
-
+					
 					if (typeofActiveOn == 'boolean') {
 						fn = function () {
 							return activeOn;
@@ -25041,12 +25041,12 @@ define('aloha/sidebar',[
 							return false;
 						};
 					}
-
+					
 					return fn;
 				})();
 			}
 		},
-
+		
 		/**
 		 * Activates (displays) this panel
 		 */
@@ -25058,7 +25058,7 @@ define('aloha/sidebar',[
 				this.onActivate.call(this, effective);
 			}
 		},
-
+		
 		/**
 		 * Hides this panel
 		 */
@@ -25067,7 +25067,7 @@ define('aloha/sidebar',[
 			this.content.parent('li').hide().addClass(nsClass('deactivated'));
 			this.effectiveElement = null;
 		},
-
+		
 		toggle: function () {
 			if (this.expanded) {
 				this.collapse();
@@ -25075,7 +25075,7 @@ define('aloha/sidebar',[
 				this.expand();
 			}
 		},
-
+		
 		/**
 		 * Displays the panel's contents
 		 */
@@ -25084,7 +25084,7 @@ define('aloha/sidebar',[
 			var el = this.content;
 			var old_h = el.height();
 			var new_h = el.height('auto').height();
-
+			
 			el.height(old_h).stop().animate(
 				{height: new_h}, 500, 'easeOutExpo',
 				function () {
@@ -25093,15 +25093,15 @@ define('aloha/sidebar',[
 					}
 				}
 			);
-
+			
 			this.element.removeClass('collapsed');
 			this.toggleTitleIcon(true);
-
+			
 			this.expanded = true;
-
+			
 			return this;
 		},
-
+		
 		/**
 		 * Hides the panel's contents--leaving only it's header
 		 */
@@ -25116,14 +25116,14 @@ define('aloha/sidebar',[
 					}
 				}
 			);
-
+			
 			this.toggleTitleIcon(false);
-
+			
 			this.expanded = false;
-
+			
 			return this;
 		},
-
+		
 		/**
 		 * May also be called by the Sidebar to update title of panel
 		 *
@@ -25133,7 +25133,7 @@ define('aloha/sidebar',[
 			this.title.find(nsSel('panel-title-text')).html(html);
 			return this;
 		},
-
+		
 		/**
 		 * May also be called by the Sidebar to update content of panel
 		 *
@@ -25144,11 +25144,11 @@ define('aloha/sidebar',[
 			if (!html || html == '') {
 				html = '&nbsp;';
 			}
-
+			
 			this.content.find(nsSel('panel-content-inner-text')).html(html);
 			return this;
 		},
-
+		
 		rotateTitleIcon: function (angle, duration) {
 			var arr = this.title.find(nsSel('panel-title-arrow'));
 			arr.animate({angle: angle}, {
@@ -25165,7 +25165,7 @@ define('aloha/sidebar',[
 				}
 			});
 		},
-
+		
 		/**
 		 * Walks up the ancestors chain for the given effective element, and
 		 * renders subpanels using the specified renderer function.
@@ -25183,9 +25183,9 @@ define('aloha/sidebar',[
 			var activeOn = this.activeOn;
 			var l;
 			var pathRev;
-
+			
 			while (el.length > 0 && !el.is('.aloha-editable')) {
-
+				
 				if (activeOn(el)) {
 					path.push('<span>' + el[0].tagName.toLowerCase() + '</span>');
 					l = path.length;
@@ -25204,44 +25204,44 @@ define('aloha/sidebar',[
 						}
 					));
 				}
-
+				
 				el = el.parent();
 			}
-
+			
 			this.setContent(content.join(''));
-
+			
 			jQuery('.aloha-sidebar-panel-parent-path').click(function () {
 				var c = jQuery(this).parent().find('.aloha-sidebar-panel-parent-content');
-
+				
 				if (c.hasClass('aloha-sidebar-opened')) {
 					c.hide().removeClass('aloha-sidebar-opened');
 				} else {
 					c.show().addClass('aloha-sidebar-opened');
 				}
 			});
-
+			
 			this.content.height('auto').find('.aloha-sidebar-panel-content-inner').height('auto');
 		}
-
+		
 	});
-
+	
 	var left = new Sidebar({
 		position : 'left',
 		width	 : 250 // TODO define in config
 	});
-
+	
 	var right = new Sidebar({
 		position : 'right',
 		width	 : 250 // TODO define in config
 	});
-
+	
 	Aloha.Sidebar = {
 		left  : left,
 		right : right
 	};
-
+	
 	return Aloha.Sidebar;
-
+	
 });
 
 /*!
@@ -25255,8 +25255,8 @@ GENTICS = window.GENTICS || {};
 GENTICS.Utils = GENTICS.Utils || {};
 define('util/position',['aloha/jquery'],
 function(jQuery) {
-
-
+	
+	
 	var
 		$ = jQuery,
 		GENTICS = window.GENTICS,
@@ -25429,7 +25429,7 @@ define('aloha/repositorymanager',[
 	'aloha/jquery',
 	'aloha/console'
 ], function( Aloha, Class, jQuery, console ) {
-
+	
 
 	/**
 	 * Repository Manager
@@ -25462,10 +25462,10 @@ define('aloha/repositorymanager',[
 			if ( Aloha.settings && Aloha.settings.repositories ) {
 				this.settings = Aloha.settings.repositories;
 			}
-
+			
 			// use the configured repository manger query timeout or 5 sec
 			this.settings.timeout = this.settings.timeout || 5000;
-
+			
 			for ( ; i < j; ++i ) {
 				repository = repositories[ i ];
 
@@ -26111,7 +26111,7 @@ define('aloha/repositorymanager',[
                             }
                             require.mixin(value, partBundle);
                         }
-
+						
 						// MODIFICATION FROM ALOHA START: add a t() function
 						value.t = function(key) {
 							if (this[key]) {
@@ -26154,7 +26154,7 @@ define('aloha/nls/i18n',{
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright � 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -26178,15 +26178,15 @@ define('aloha/ext-alohaproxy',[
 	'aloha/console',
 	'i18n!aloha/nls/i18n'
 ], function ( jQuery, Ext, RepositoryManager, console ) {
-
-
+	
+	
 	Ext.data.AlohaProxy = function () {
 		// Must define a dummy api with "read" action to satisfy
 		// Ext.data.Api#prepare *before* calling super
 		var api = {};
 		api[ Ext.data.Api.actions.read ] = true;
 		Ext.data.AlohaProxy.superclass.constructor.call( this, { api: api } );
-
+		
 		this.params = {
 			queryString      : null,
 			objectTypeFilter : null,
@@ -26199,14 +26199,14 @@ define('aloha/ext-alohaproxy',[
 			repositoryId     : null
 		};
 	};
-
+	
 	var i18n = Aloha.require( 'i18n!aloha/nls/i18n' );
-
+	
 	Ext.extend( Ext.data.AlohaProxy, Ext.data.DataProxy, {
-
+		
 		doRequest: function ( action, rs, params, reader, cb, scope, arg ) {
 			jQuery.extend( this.params, params );
-
+			
 			try {
 				RepositoryManager.query( this.params, function ( items ) {
 					cb.call( scope, reader.readRecords( items ), arg, true );
@@ -26214,34 +26214,34 @@ define('aloha/ext-alohaproxy',[
 			} catch ( ex ) {
 				console.error( 'Ext.data.AlohaProxy',
 					'An error occured while querying repositories.' );
-
+				
 				this.fireEvent( 'loadexception', this, null, arg, ex );
 				this.fireEvent( 'exception', this, 'response', action, arg, null, ex );
-
+				
 				return false;
 			}
 		},
-
+		
 		setObjectTypeFilter: function ( otFilter ) {
 			this.params.objectTypeFilter = otFilter;
 		},
-
+		
 		getObjectTypeFilter: function () {
 			return this.params.objectTypeFilter;
 		},
-
+		
 		setParams: function ( p ) {
 			jQuery.extend( this.params, p );
 		}
-
+		
 	} );
-
+	
 } );
 
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright � 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -26260,7 +26260,7 @@ define('aloha/ext-alohaproxy',[
 
 define('aloha/ext-alohareader',['aloha/ext'],
 function(Ext) {
-
+	
 
 Ext.data.AlohaObjectReader = function(meta, recordType) {
 	meta = {};
@@ -26291,7 +26291,7 @@ Ext.extend(Ext.data.AlohaObjectReader, Ext.data.JsonReader, {
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -26310,7 +26310,7 @@ Ext.extend(Ext.data.AlohaObjectReader, Ext.data.JsonReader, {
 
 define('aloha/ext-alohatreeloader',['aloha/ext', 'aloha/repositorymanager'],
 function(Ext, RepositoryManager) {
-
+	
 
 Ext.tree.AlohaTreeLoader = function(config) {
 	Ext.apply(this, config);
@@ -26368,7 +26368,7 @@ Ext.extend( Ext.tree.AlohaTreeLoader, Ext.tree.TreeLoader, {
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -26387,8 +26387,8 @@ Ext.extend( Ext.tree.AlohaTreeLoader, Ext.tree.TreeLoader, {
 
 define('aloha/ui',['aloha/core', 'util/class', 'aloha/jquery', 'aloha/floatingmenu', 'aloha/ext', 'aloha/console', 'i18n!aloha/nls/i18n'],
 function(Aloha, Class, jQuery, FloatingMenu, Ext, console, i18n) {
-
-
+	
+	
 	var
 //		$ = jQuery,
 //		Aloha = window.Aloha,
@@ -26398,7 +26398,7 @@ function(Aloha, Class, jQuery, FloatingMenu, Ext, console, i18n) {
 
 	// Ensure Namespace
 	Aloha.ui = Aloha.ui || {};
-
+	
 	// internationalize ext js message box buttons
 	Ext.MessageBox.buttonText.yes = i18n.t('yes');
 	Ext.MessageBox.buttonText.no = i18n.t('no');
@@ -26466,7 +26466,7 @@ Aloha.ui.Button = Class.extend({
 		 * Name for the button
 		 */
 		this.name = false;
-
+		
 		/**
 		 * CSS class for an icon on the button
 		 * @hide
@@ -26537,7 +26537,7 @@ Aloha.ui.Button = Class.extend({
 
 		GENTICS.Utils.applyProperties(this, properties);
 
-		// use icon class as a fallback for name
+		// use icon class as a fallback for name		
 		if (this.name === false) {
 			this.name = this.iconClass;
 		}
@@ -26744,8 +26744,8 @@ Aloha.ui.Button.idCounter = 0;
  * http://www.extjs.com/learn/Tutorial:Creating_new_UI_controls
  * @hide
  */
-Ext.ux.MultiSplitButton = Ext.extend(Ext.Resource, {
-	initResource: function() {
+Ext.ux.MultiSplitButton = Ext.extend(Ext.Component, {
+	initComponent: function() {
 		var me = this;
 		this.on('beforehide', function() {
 			me.closePanel();
@@ -26788,12 +26788,12 @@ Ext.ux.MultiSplitButton = Ext.extend(Ext.Resource, {
 	 * configuration for a multisplit button has to be stored
 	 * within an array:
 	 *
-	 *		Aloha.settings.resources.[MULTISPLITBUTTON-NAME] = [ 'item1', 'item2' ];
+	 *		Aloha.settings.components.[MULTISPLITBUTTON-NAME] = [ 'item1', 'item2' ];
 	 *
 	 * An example for that would be:
 	 *
 	 *		// settings for phrasing element for the format plugin
-	 *		Aloha.settings.resources.phrasing = [ 'h1', 'h2', 'h3', 'removeFormat' ];
+	 *		Aloha.settings.components.phrasing = [ 'h1', 'h2', 'h3', 'removeFormat' ];
 	 *
 	 * if there is no config available, it will just use all items available
 	 * @return button items for this multisplit button
@@ -26802,12 +26802,12 @@ Ext.ux.MultiSplitButton = Ext.extend(Ext.Resource, {
 		var that = this,
 			items = [],
 			i, length;
-
-		if (Aloha.settings.resources &&
-			Aloha.settings.resources[this.name] &&
-			typeof Aloha.settings.resources[this.name] === 'object') {
+		
+		if (Aloha.settings.components &&
+			Aloha.settings.components[this.name] &&
+			typeof Aloha.settings.components[this.name] === 'object') {
 			// iterate over all buttons in our config...
-			jQuery.each(Aloha.settings.resources[this.name], function (idx, button) {
+			jQuery.each(Aloha.settings.components[this.name], function (idx, button) {
 				for (i = 0, length = that.items.length; i < length; i++) {
 					if (that.items[i].name === button) {
 						// ... and find the appropriate internal button
@@ -26839,7 +26839,7 @@ Ext.ux.MultiSplitButton = Ext.extend(Ext.Resource, {
 			items,
 			html = '<ul class="aloha-multisplit">';
 
-		items = this._getItems();
+		items = this._getItems(); 
 
 		// add a new button to the list for each configured item
 		for (i=0; i<items.length; i++) {
@@ -26951,7 +26951,7 @@ Ext.ux.MultiSplitButton = Ext.extend(Ext.Resource, {
 	 * @hide
 	 */
 	setActiveDOMElement: function(el) {
-		// when the resource (or one of its owners) is currently hidden, we need to set the active item later
+		// when the component (or one of its owners) is currently hidden, we need to set the active item later
 		var ct = this, top;
 		while (typeof ct !== 'undefined') {
 			if (ct.hidden) {
@@ -27194,7 +27194,7 @@ Aloha.ui.MultiSplitButton = Class.extend({
  * @deprecated
  * This will be removed in one of the next version
  */
-Aloha.i18n = function(resource, key, replacements) {
+Aloha.i18n = function(component, key, replacements) {
 	console.deprecated ('Aloha', 'i18n() is deprecated. Use module "i18n!aloha/nls/i18n" instead.');
 	return key;
 };
@@ -27257,7 +27257,7 @@ return Aloha.ui;
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright © 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *//*
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -27279,7 +27279,7 @@ define('aloha/ui-attributefield',[ 'aloha/core', 'aloha/jquery', 'aloha/ext', 'i
   'aloha/ext-alohareader'
 ], function ( Aloha, jQuery, Ext, i18n, Ui, RepositoryManager, Selection ) {
 // TODO add parameter for UI class after refactoring UI to requirejs
-
+	
 
 var undefined = void 0;
 
@@ -27348,7 +27348,7 @@ Ext.ux.AlohaAttributeField = Ext.extend( Ext.form.ComboBox, {
 	},
 	finishEditing : function () {
 		var target = jQuery( this.getTargetObject() ), color;
-
+		
 		// Remove the highlighting and restore original color if was set before
 		if ( target ) {
 			if ( color = target.attr( 'data-original-background-color' ) ) {
@@ -27358,7 +27358,7 @@ Ext.ux.AlohaAttributeField = Ext.extend( Ext.form.ComboBox, {
 			}
 			jQuery( target ).removeAttr( 'data-original-background-color' );
 		}
-
+		
 		// Check whether the attribute was changed since the last focus event. Return early when the attribute was not changed.
 		if ( lastAttributeValue === target.attr( this.targetAttribute ) ) {
 			return;
@@ -27435,7 +27435,7 @@ Ext.ux.AlohaAttributeField = Ext.extend( Ext.form.ComboBox, {
 			// set background color to give visual feedback which link is modified
 			var	target = jQuery( this.getTargetObject() ),
 				s = target.css( 'background-color' );
-
+			
 			if ( this.getValue() === this.placeholder ) {
 				this.setValue( '' );
 				jQuery( this.wrap.dom.children[0] ).css( 'color', 'black' );
@@ -27474,7 +27474,7 @@ Ext.ux.AlohaAttributeField = Ext.extend( Ext.form.ComboBox, {
 	},
 	setItem: function ( item, displayField ) {
 		this.resourceItem = item;
-
+		
 		if ( item ) {
 			displayField = ( displayField ) ? displayField : this.displayField;
 			// TODO split display field by '.' and get corresponding attribute, because it could be a properties attribute.
@@ -27521,7 +27521,7 @@ Ext.ux.AlohaAttributeField = Ext.extend( Ext.form.ComboBox, {
 		this.targetObject = obj;
 	    this.targetAttribute = attr;
 	    this.setItem( null );
-
+	    
 	    if ( obj && attr ) {
 	    	lastAttributeValue = jQuery( obj ).attr( attr );
 	    }
@@ -27807,7 +27807,7 @@ Ui.AttributeField = Ui.Button.extend( {
 
 define('aloha/ui-browser',['aloha/ext', 'aloha/ui'],
 function(Ext, ui) {
-
+	
 
 	var
 //		$ = jQuery,
@@ -28002,7 +28002,7 @@ ui.Browser = Class.extend({
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -28021,8 +28021,8 @@ ui.Browser = Class.extend({
 
 define('aloha/repository',[ 'aloha/core', 'util/class', 'aloha/repositorymanager' ],
 function( Aloha, Class, RepositoryManager ) {
-
-
+	
+	
 //	var
 //		$ = jQuery,
 //		GENTICS = window.GENTICS,
@@ -28236,7 +28236,7 @@ var AbstractRepository = Class.extend({
 
 	// expose the AbstractRepository
 	Aloha.AbstractRepository = AbstractRepository;
-
+	
 	return AbstractRepository;
 });
 
@@ -28247,15 +28247,15 @@ var AbstractRepository = Class.extend({
  */
 define('aloha/repositoryobjects',[ 'aloha/core', 'util/class'],
 function( Aloha, Class ) {
-
-
+	
+	
 	var
 //		Aloha = window.Aloha,
 //		Class = window.Class,
 	GENTICS = window.GENTICS;
 
 	Aloha.RepositoryObject = function() {};
-
+	
 	/**
 	 * @namespace Aloha.Repository
 	 * @class Document
@@ -28297,11 +28297,11 @@ function( Aloha, Class ) {
 	 */
 	Aloha.RepositoryDocument = Class.extend({
 			_constructor: function (properties) {
-
+	
 				var p = properties;
-
+	
 				this.type = 'document';
-
+	
 				// Basic error checking for MUST attributes
 				if (!p.id ||
 					!p.name ||
@@ -28310,20 +28310,20 @@ function( Aloha, Class ) {
 	//				Aloha.Log.error(this, "No valid Aloha Object. Missing MUST property");
 					return;
 				}
-
+	
 				GENTICS.Utils.applyProperties(this, properties);
-
+	
 				this.baseType = 'document';
 			}
 	//		/**
 	//		 * Not implemented method to generate this JS API doc correctly.
 	//		 */
 	//		,empty = function() }
-
+	
 		});
-
-
-
+	
+	
+	
 	/**
 	 * @namespace Aloha.Repository
 	 * @class Folder
@@ -28357,13 +28357,13 @@ function( Aloha, Class ) {
 	 *
 	 */
 	Aloha.RepositoryFolder = Class.extend({
-
+		
 		_constructor: function(properties) {
-
+	
 			var p = properties;
-
+		
 			this.type = 'folder';
-
+		
 			// Basic error checking for MUST attributes
 			if (!p.id ||
 				!p.name ||
@@ -28372,24 +28372,24 @@ function( Aloha, Class ) {
 		//		Aloha.Log.error(this, "No valid Aloha Object. Missing MUST property");
 				return;
 			}
-
+		
 			GENTICS.Utils.applyProperties(this, properties);
-
+		
 			this.baseType = 'folder';
-
+			
 		}
 	//	/**
 	//	* Not implemented method to generate this JS API doc correctly.
 	//	*/
 	//	,empty = function() {};
-
+	
 	});
 });
 
 /*!
 * This file is part of Aloha Editor Project http://aloha-editor.org
 * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-* Contributors http://aloha-editor.org/contribution.php
+* Contributors http://aloha-editor.org/contribution.php 
 * Licensed unter the terms of http://www.aloha-editor.org/license.html
 *
 * Aloha Editor is free software: you can redistribute it and/or modify
@@ -28407,35 +28407,35 @@ function( Aloha, Class ) {
 */
 ( function () {
 	'use strict'
-
+	
 	// load jQuery with noConflict (true) to remove anyway from global namespace
 	// a user may add it by its own with var jQuery = $ = Aloha.jQuery;
-	var
+	var 
 	    jQuery = window.jQuery.noConflict( true ),
 	    deferredReady,
 	    alohaRequire;
-
+	
 	// Ensure Aloha settings namespace and default
 	window.Aloha = window.Aloha || {};
-
-	// reset defaults. Users should use settings.
+	
+	// reset defaults. Users should use settings. 
 	Aloha.defaults = {};
-
+	
 	// guarantee the settings namespace even if not set by user
 	Aloha.settings = Aloha.settings || {};
-
+	
 	// set jQuery to buildin of not otherwise set
 	// From here on Aloha.jQuery is always available
 	Aloha.jQuery = Aloha.settings.jQuery || Aloha.jQuery || jQuery || null;
-
+	
 	// Aloha define, require, preserve original require
 	Aloha._require = require;
 	Aloha.define = define;
-
+	
 	// Determins the base path of Aloha Editor which is supposed to be the path of aloha.js (this file)
 	Aloha.settings.baseUrl = Aloha.settings.baseUrl || getBaseUrl();
-
-	// aloha base path is defined by a script tag with the data attribute
+	
+	// aloha base path is defined by a script tag with the data attribute 
 	// data-aloha-plugins and the filename aloha.js
 	// no jQuery at this stage...
 	function getBaseUrl () {
@@ -28446,30 +28446,30 @@ function( Aloha, Class ) {
 		    i, j = scripts.length,
 		    regexAlohaJs = /\/aloha.js$/,
 		    regexJs = /[^\/]*\.js$/;
-
+		
 		for ( i = 0; i < j && ( script = scripts[ i ] ); ++i ) {
-			// take aloha.js or first ocurrency of data-aloha-plugins
+			// take aloha.js or first ocurrency of data-aloha-plugins 
 			// and script ends with .js
 			if ( regexAlohaJs.test( script.src ) ) {
 				baseUrl = script.src.replace( regexAlohaJs , '' );
 				break;
-			}
+			}            
 			if ( baseUrl === './' && script.getAttribute( 'data-aloha-plugins' )
 				&& regexJs.test(script.src ) ) {
 				baseUrl = script.src.replace( regexJs , '' );
 			}
 		}
-
+        
 		return baseUrl;
 	};
-
+	
 	// prepare the require config object and remember it
 	Aloha.settings.requireConfig = {
 		context: 'aloha',
 		baseUrl: Aloha.settings.baseUrl,
 		locale: Aloha.settings.locale
 	};
-
+	
 	// configure require and expose the Aloha.require function
 	alohaRequire = require.config( Aloha.settings.requireConfig );
 	Aloha.require = function ( callback ) {
@@ -28479,7 +28479,7 @@ function( Aloha, Class ) {
 		}
 		return alohaRequire.apply( this, arguments );
 	};
-
+	
 	// create promise for 'aloha-ready' when Aloha is not yet ready
 	// and fire later when 'aloha-ready' is triggered all other events bind
 	deferredReady = Aloha.jQuery.Deferred();
@@ -28493,10 +28493,10 @@ function( Aloha, Class ) {
 		} else {
 			Aloha.jQuery( Aloha, 'body' ).bind( type, fn );
 		}
-
+	
 		return this;
 	};
-
+	
 	Aloha.trigger = function ( type, data ) {
 		if ( type == 'aloha-ready' ) {
 			// resolve all deferred events on dom ready and delete local var
@@ -28505,12 +28505,12 @@ function( Aloha, Class ) {
 		Aloha.jQuery( Aloha, 'body' ).trigger( type, data );
 		return this;
 	};
-
+	
 	Aloha.ready = function ( fn ) {
 		this.bind( 'aloha-ready', fn );
 		return this;
 	};
-
+	
 	// Async Module Dependency error handling
 	// Aloha will intercept RequireJS errors in order to facilitate more
 	// flexible and more graceful degredation where possible
@@ -28519,7 +28519,7 @@ function( Aloha, Class ) {
 			var fatalTimeouts = [];
 			var failedModules = Aloha.jQuery.trim( err.requireModules )
 									 .split( ' ' );
-
+			
 			for ( var i = 0; i < failedModules.length; i++ ) {
 				switch ( err.requireType ) {
 				case 'timeout':
@@ -28545,13 +28545,13 @@ function( Aloha, Class ) {
 					origOnError.apply( {}, arguments );
 				}
 			}
-
+			
 			throw 'Aloha-Editor Exception: The following core file' +
 				( fatalTimeouts.length ? 's have' : ' has' ) +
 				' timed-out while loading: ' + fatalTimeouts.join( ', ' );
 		};
 	} )( require.onError );
-
+	
 } )();
 
 // define aloha object
@@ -28560,8 +28560,8 @@ define( 'aloha', [], function () {
 } );
 
 //load Aloha dependencies
-require(
-	Aloha.settings.requireConfig,
+require( 
+	Aloha.settings.requireConfig, 
 	[
 		'aloha/jquery',
 		'aloha/ext',
@@ -28570,7 +28570,7 @@ require(
 	function () {
 		// load Aloha core files
 		require(
-			Aloha.settings.requireConfig,
+			Aloha.settings.requireConfig, 
 			[
 				'vendor/jquery.json-2.2.min',
 				'vendor/jquery.store',

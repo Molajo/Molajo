@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
     <service>Registry</service>
-    <service>Debug</service>
+    <service>Profiler</service>
     <service>Error</service>
     <service>Version</service>
     <service>Client</service>

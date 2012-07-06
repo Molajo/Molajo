@@ -55,18 +55,18 @@ Class SiteConfiguration
 	public $smtppass = '';
 	public $smtphost = 'localhost';
 
-	/* Debug Logging */
-	public $debug_log = 'echo';
+	/* Profiler Logging */
+	public $profiler_log = 'echo';
 	/* Text */
-	public $debug_text_file = 'debug.php';
-	public $debug_text_file_path = 'SITE_LOGS_FOLDER';
-	public $debug_text_file_no_php = false;
+	public $profiler_text_file = 'profiler.php';
+	public $profiler_text_file_path = 'SITE_LOGS_FOLDER';
+	public $profiler_text_file_no_php = false;
 	/* Database */
-	public $debug_database_table = '#__log';
+	public $profiler_database_table = '#__log';
 	/* Messages */
-	public $debug_messages_namespace = 'debug';
+	public $profiler_messages_namespace = 'profiler';
 	/* Email */
-	public $debug_email_subject = 'Debug Messages';
-	public $debug_email_to = 'AmyStephen@gmail.com';
+	public $profiler_email_subject = 'Profiler Messages';
+	public $profiler_email_to = 'AmyStephen@gmail.com';
 
 }

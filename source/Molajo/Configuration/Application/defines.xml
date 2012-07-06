@@ -77,7 +77,7 @@
     <define name="LOG_TYPE_WARNING" value="16"/>
     <define name="LOG_TYPE_NOTICE" value="32"/>
     <define name="LOG_TYPE_INFO" value="64"/>
-    <define name="LOG_TYPE_DEBUG" value="128"/>
+    <define name="LOG_TYPE_PROFILER" value="128"/>
 
     <define name="LOG_OUTPUT_ACTIONS" value="Actions"/>
     <define name="LOG_OUTPUT_APPLICATION" value="Application"/>

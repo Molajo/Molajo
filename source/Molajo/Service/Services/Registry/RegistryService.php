@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
 /**
  * Registry
  *
- * Debugging support
+ * Profilerging support
  *
  * Services::Registry()->listRegistry();
  *   No parameter - returns an array of all registries by names
@@ -40,14 +40,14 @@ Class RegistryService
 	protected static $instance;
 
 	/**
-	 * The debug service is activated after the registry and therefore cannot be used
+	 * The profiler service is activated after the registry and therefore cannot be used
 	 * to log system activity immediately. Once Services::Profiler()->on = true this indicator
 	 * is set to true, existing registries are logged, and individual creates are logged
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $debug_available;
+	protected $profiler_available;
 
 	/**
 	 * Array containing registry keys
@@ -184,15 +184,15 @@ Class RegistryService
 		$this->registry[$namespace] = array();
 
 		/** Log it */
-		if ($this->exists('DebugService')) {
+		if ($this->exists('ProfilerService')) {
 		} else {
 
-			if (Services::Registry()->get('DebugService', 'on') === true) {
+			if (Services::Registry()->get('ProfilerService', 'on') === true) {
 
-				if ($this->debug_available === false) {
+				if ($this->profiler_available === false) {
 
-					$this->debug_available = true;
-					/* Catch up logging Registries created before Debug Service started */
+					$this->profiler_available = true;
+					/* Catch up logging Registries created before Profiler Service started */
 					foreach ($this->registryKeys as $ns) {
 						Services::Profiler()->set('Create Registry ' . $ns, 'Registry');
 					}
@@ -219,8 +219,8 @@ Class RegistryService
 	 * Returns a formatted dump of all registries:
 	 * echo Services::Registry()->get('Configuration', '*');
 	 *
-	 * Returns all entries that begin with debug:
-	 * echo Services::Registry()->get('Configuration', 'debug*');
+	 * Returns all entries that begin with Theme:
+	 * echo Services::Registry()->get('Configuration', 'theme*');
 	 *
 	 * @param string $namespace
 	 * @param string $key

@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\Response;
 
 use Molajo\Service\Services;
 
-use Symfony\Resource\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 defined('MOLAJO') or die;
 
