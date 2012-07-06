@@ -63,7 +63,7 @@ Class CatalogHelper
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($item) == 0 || (int)$item->id == 0 || (int)$item->routable == 0) {
 			Services::Registry()->set('Parameters', 'status_found', false);
-			Services::Debug()->set('CatalogHelper->getRouteCatalog 404 - Not Found '
+			Services::Profiler()->set('CatalogHelper->getRouteCatalog 404 - Not Found '
 					. ' Requested Catalog ID: ' . Services::Registry()->get('Parameters', 'request_catalog_id')
 					. ' Requested URL Query: ' . Services::Registry()->get('Parameters', 'request_url_query'),
 				LOG_OUTPUT_ROUTING, 0);
@@ -73,7 +73,7 @@ Class CatalogHelper
 		/** Redirect: routeRequest handles rerouting the request */
 		if ((int)$item->redirect_to_id == 0) {
 		} else {
-			Services::Debug()->set('CatalogHelper->getRouteCatalog Redirect to ID '
+			Services::Profiler()->set('CatalogHelper->getRouteCatalog Redirect to ID '
 				. (int)$item->redirect_to_id, LOG_OUTPUT_ROUTING, 0);
 			Services::Registry()->set('Parameters', 'redirect_to_id', (int)$item->redirect_to_id);
 			return false;
@@ -144,7 +144,7 @@ Class CatalogHelper
 		$m->set('id', (int)$catalog_id);
 		$m->set('use_special_joins', 1);
 
-		Services::Debug()->set('CatalogHelper->get '
+		Services::Profiler()->set('CatalogHelper->get '
 				. ' Request Catalog ID: ' . $catalog_id
 				. ' Request URL SEF: ' . $url_sef_request
 				. ' Request Source ID: ' . $source_id

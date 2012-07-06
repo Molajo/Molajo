@@ -4,20 +4,20 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Service\Services\Debug;
+namespace Molajo\Service\Services\Profiler;
 
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
 /**
- * Debug
+ * Profiler
  *
  * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */
-Class DebugService
+Class ProfilerService
 {
 	/**
 	 * Service Connection
@@ -36,13 +36,13 @@ Class DebugService
 	protected $on;
 
 	/**
-	 * Time the Debug Service was started
+	 * Time the Profiler Service was started
 	 *     used to calculate time between operations
 	 *
 	 * @var    float
 	 * @since  1.0
 	 */
-	protected $debug_started_time = 0.0;
+	protected $profiler_started_time = 0.0;
 
 	/**
 	 * Used to compare to current time to determine elapsed time between operations
@@ -61,7 +61,7 @@ Class DebugService
 	protected $previous_memory = 0.0;
 
 	/**
-	 * Options needed by the selected debug logger
+	 * Options needed by the selected profiler logger
 	 *
 	 * @var    object
 	 * @since  1.0
@@ -69,28 +69,28 @@ Class DebugService
 	protected $options;
 
 	/**
-	 * Types of debug output desired
+	 * Types of profiler output desired
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $debug_output_options = array();
+	protected $profiler_output_options = array();
 
 	/**
-	 * Begin debugging with this phase
+	 * Begin profilerging with this phase
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $debug_start_with;
+	protected $profiler_start_with;
 
 	/**
-	 * End debugging with this phase
+	 * End profilerging with this phase
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $debug_end_with;
+	protected $profiler_end_with;
 
 	/**
 	 * Verbose mode provides considerably more detail
@@ -137,9 +137,9 @@ Class DebugService
 	);
 
 	/**
-	 * Debug is started as a service, collecting entries internally until the Configuration and Log Services
+	 * Profiler is started as a service, collecting entries internally until the Configuration and Log Services
 	 *   have been activated, and have interacted with this service, completing the configuration process.
-	 *   Before that process is complete, debug entries are held to see if debug is activated, and
+	 *   Before that process is complete, profiler entries are held to see if profiler is activated, and
 	 *   if so, what log should be used. Once that information is available, the class then operates normally.
 	 *
 	 * @var array
@@ -148,7 +148,7 @@ Class DebugService
 	protected $configuration_complete = false;
 
 	/**
-	 * Hold debug output until Dependency Date Service is started
+	 * Hold profiler output until Dependency Date Service is started
 	 *
 	 * @var    object
 	 * @since  1.0
@@ -161,7 +161,7 @@ Class DebugService
 	 * @var   string
 	 * @since 1.0
 	 */
-	const log_type = 'debugservice';
+	const log_type = 'profilerservice';
 
 	/**
 	 * getInstance initiated by the Services Class
@@ -173,7 +173,7 @@ Class DebugService
 	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new DebugService();
+			self::$instance = new ProfilerService();
 		}
 
 		return self::$instance;
@@ -188,14 +188,14 @@ Class DebugService
 	public function __construct()
 	{
 		$this->current_phase = START_INITIALISE;
-		$this->debug_start_with = START_INITIALISE;
-		$this->debug_end_with = START_RESPONSE;
+		$this->profiler_start_with = START_INITIALISE;
+		$this->profiler_end_with = START_RESPONSE;
 
 		return $this;
 	}
 
 	/**
-	 * Sets debug message that is routed to the selected logger
+	 * Sets profiler message that is routed to the selected logger
 	 *
 	 * @param string  $message
 	 * @param string  $output_type Application,Authorisation,Queries,Rendering,Routing,Services,Triggers
@@ -207,17 +207,17 @@ Class DebugService
 	{
 		/** Exit if current phase not yet defined */
 		if (in_array($message, $this->phase_array_list)) {
-			Services::Registry()->set('DebugService', 'CurrentPhase', $message);
+			Services::Registry()->set('ProfilerService', 'CurrentPhase', $message);
 		}
 
-		$current_phase = Services::Registry()->get('DebugService', 'CurrentPhase');
+		$current_phase = Services::Registry()->get('ProfilerService', 'CurrentPhase');
 
 		if (in_array($current_phase, $this->phase_array_list)) {
 		} else {
 			return true;
 		}
 
-		/** 1. Is Debug on? */
+		/** 1. Is Profiler on? */
 		if ((int)$this->on == 0) {
 			if ((int)$this->configuration_complete == 0) {
 			} else {
@@ -234,15 +234,15 @@ Class DebugService
 		}
 
 		/** 3. Is there a start and end phase? And, does the current phase fall within the range? */
-		if ($this->phase_array[$current_phase] >= $this->phase_array[$this->debug_start_with]
-			&& $this->phase_array[$current_phase] <= $this->phase_array[$this->debug_end_with]
+		if ($this->phase_array[$current_phase] >= $this->phase_array[$this->profiler_start_with]
+			&& $this->phase_array[$current_phase] <= $this->phase_array[$this->profiler_end_with]
 		) {
 		} else {
 			return true;
 		}
 
-		/** 4. Do the Debug Output Types specified match the current Debug Output Type  */
-		if (in_array($output_type, $this->debug_output_options)
+		/** 4. Do the Profiler Output Types specified match the current Profiler Output Type  */
+		if (in_array($output_type, $this->profiler_output_options)
 			|| $output_type == ''
 		) {
 		} else {
@@ -250,13 +250,13 @@ Class DebugService
 		}
 
 		/** LOG IT */
-		$elapsed = $this->getMicrotimeFloat() - $this->debug_started_time;
+		$elapsed = $this->getMicrotimeFloat() - $this->profiler_started_time;
 
 		if (function_exists('memory_get_usage')) {
 			$memory = memory_get_usage(true) / 1048576;
 		}
 
-		$memory = $this->getMicrotimeFloat() - $this->debug_started_time;
+		$memory = $this->getMicrotimeFloat() - $this->profiler_started_time;
 
 		if ($memory > $this->previous_memory) {
 			$memory_difference = $memory - $this->previous_memory;
@@ -292,7 +292,7 @@ Class DebugService
 						$memory_difference,
 						$output_type . ': ' . trim($message)
 					),
-					LOG_TYPE_DEBUG,
+					LOG_TYPE_PROFILER,
 					self::log_type,
 					Services::Date()->getDate('now')
 				);
@@ -311,7 +311,7 @@ Class DebugService
 
 	/**
 	 * holdEntries until the Configuration, Log, and Date Services are running and all
-	 * information needed to process, or not process, debug entries is known.
+	 * information needed to process, or not process, profiler entries is known.
 	 *
 	 * @param  $elapsed
 	 * @param  $memory
@@ -333,7 +333,7 @@ Class DebugService
 				$memory_difference,
 				$message
 			),
-			'log_level' => LOG_TYPE_DEBUG,
+			'log_level' => LOG_TYPE_PROFILER,
 			'log_type' => self::log_type,
 			'entry_date' => date("Y-m-d") . ' ' . date("H:m:s")); // will not be set to timezone
 
@@ -343,7 +343,7 @@ Class DebugService
 	}
 
 	/**
-	 * Configuration invokes this method to initiate the debug service if so configured
+	 * Configuration invokes this method to initiate the profiler service if so configured
 	 *
 	 * @return  boolean
 	 * @since   1.0
@@ -352,34 +352,34 @@ Class DebugService
 	{
 		$this->hold_for_date_service_startup = array();
 
-		$this->setDebugOutputOptions();
+		$this->setProfilerOutputOptions();
 
-		$this->debug_started_time = $this->getMicrotimeFloat();
+		$this->profiler_started_time = $this->getMicrotimeFloat();
 
-		$results = $this->setDebugLogger();
+		$results = $this->setProfilerLogger();
 
 		if ($results == false) {
 			$this->on = 0;
 			return $this;
 		}
 
-		$this->debug_start_with = Services::Registry()->get('Configuration', 'debug_start_with', START_INITIALISE);
-		if (in_array($this->debug_start_with, $this->phase_array)) {
-			$this->debug_start_with = START_INITIALISE;
+		$this->profiler_start_with = Services::Registry()->get('Configuration', 'profiler_start_with', START_INITIALISE);
+		if (in_array($this->profiler_start_with, $this->phase_array)) {
+			$this->profiler_start_with = START_INITIALISE;
 		}
 
-		$this->debug_end_with = Services::Registry()->get('Configuration', 'debug_end_with', START_RESPONSE);
-		if (in_array($this->debug_end_with, $this->phase_array)) {
-			$this->debug_end_with = START_RESPONSE;
+		$this->profiler_end_with = Services::Registry()->get('Configuration', 'profiler_end_with', START_RESPONSE);
+		if (in_array($this->profiler_end_with, $this->phase_array)) {
+			$this->profiler_end_with = START_RESPONSE;
 		}
 
-		$this->verbose = (int)Services::Registry()->get('Configuration', 'debug_verbose', VERBOSE);
+		$this->verbose = (int)Services::Registry()->get('Configuration', 'profiler_verbose', VERBOSE);
 		if ($this->verbose == VERBOSE) {
 		} else {
 			$this->verbose = 0;
 		}
 
-		Services::Registry()->set('DebugService', 'CurrentPhase', START_INITIALISE);
+		Services::Registry()->set('ProfilerService', 'CurrentPhase', START_INITIALISE);
 
 		$this->set(START_INITIALISE, LOG_OUTPUT_APPLICATION);
 
@@ -387,12 +387,12 @@ Class DebugService
 	}
 
 	/**
-	 * setDebugOutputOptions - set options for debugging output specified in the configuration
+	 * setProfilerOutputOptions - set options for profilerging output specified in the configuration
 	 *
 	 * @return  Boolean
 	 * @since   1.0
 	 */
-	protected function setDebugOutputOptions()
+	protected function setProfilerOutputOptions()
 	{
 		$outputOptions = array(
 			LOG_OUTPUT_ACTIONS,
@@ -406,17 +406,17 @@ Class DebugService
 			LOG_OUTPUT_TRIGGERS
 		);
 
-		$temp = Services::Registry()->get('Configuration', 'debug_output');
+		$temp = Services::Registry()->get('Configuration', 'profiler_output');
 
 		if ($temp == '' || $temp == null) {
 			$temp = $outputOptions;
 		}
 
-		$this->debug_output_options = array();
+		$this->profiler_output_options = array();
 		$temp2 = explode(',', $temp);
 		foreach ($temp2 as $item) {
 			if (in_array($item, $outputOptions)) {
-				$this->debug_output_options[] = $item;
+				$this->profiler_output_options[] = $item;
 			}
 		}
 
@@ -424,12 +424,12 @@ Class DebugService
 	}
 
 	/**
-	 * setDebugLogger - establish connection to the selected debug logger and initiate Debugging
+	 * setProfilerLogger - establish connection to the selected profiler logger and initiate Profilerging
 	 *
 	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function setDebugLogger()
+	public function setProfilerLogger()
 	{
 		$this->on = 1;
 
@@ -442,27 +442,27 @@ Class DebugService
 			LOG_MESSAGES_LOGGER
 		);
 
-		$this->debug_options = array();
-		$this->debug_options['logger'] = Services::Registry()->get('Configuration', 'debug_log', LOG_ECHO_LOGGER);
+		$this->profiler_options = array();
+		$this->profiler_options['logger'] = Services::Registry()->get('Configuration', 'profiler_log', LOG_ECHO_LOGGER);
 
 		$results = false;
-		if (in_array($this->debug_options['logger'], $loggerOptions)) {
+		if (in_array($this->profiler_options['logger'], $loggerOptions)) {
 		} else {
-			$this->debug_options['logger'] = LOG_ECHO_LOGGER;
+			$this->profiler_options['logger'] = LOG_ECHO_LOGGER;
 		}
 
-		$results = $logMethod = 'set' . ucfirst(strtolower($this->debug_options['logger'])) . 'Logger';
+		$results = $logMethod = 'set' . ucfirst(strtolower($this->profiler_options['logger'])) . 'Logger';
 		$this->$logMethod();
 
 		if ($results == false) {
-			$this->debug_options = array();
-			$this->debug_options['logger'] = LOG_ECHO_LOGGER;
+			$this->profiler_options = array();
+			$this->profiler_options['logger'] = LOG_ECHO_LOGGER;
 		}
 
-		/** Establish log for activated debug option */
+		/** Establish log for activated profiler option */
 		$results = array();
-		$results['options'] = $this->debug_options;
-		$results['priority'] = LOG_TYPE_DEBUG;
+		$results['options'] = $this->profiler_options;
+		$results['priority'] = LOG_TYPE_PROFILER;
 		$results['types'] = self::log_type;
 
 		return $results;
@@ -489,12 +489,12 @@ Class DebugService
 	 */
 	protected function setEmailLogger()
 	{
-		$this->debug_options['mailer'] = Services::Mail();
+		$this->profiler_options['mailer'] = Services::Mail();
 
-		$this->debug_options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
-		$this->debug_options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
-		$this->debug_options['subject'] = Services::Registry()->get('Configuration', 'debug_email_subject', '');
-		$this->debug_options['to'] = Services::Registry()->get('Configuration', 'debug_email_to', '');
+		$this->profiler_options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
+		$this->profiler_options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
+		$this->profiler_options['subject'] = Services::Registry()->get('Configuration', 'profiler_email_subject', '');
+		$this->profiler_options['to'] = Services::Registry()->get('Configuration', 'profiler_email_to', '');
 
 		return true;
 	}
@@ -506,19 +506,19 @@ Class DebugService
 	 */
 	protected function setFormattedtextLogger()
 	{
-		$this->debug_options['text_file'] = Services::Registry()->get('Configuration', 'debug_text_file', 'debug.php');
+		$this->profiler_options['text_file'] = Services::Registry()->get('Configuration', 'profiler_text_file', 'profiler.php');
 
-		$temp = Services::Registry()->get('Configuration', 'debug_text_file_path', 'SITE_LOGS_FOLDER');
+		$temp = Services::Registry()->get('Configuration', 'profiler_text_file_path', 'SITE_LOGS_FOLDER');
 		if ($temp == 'SITE_LOGS_FOLDER' || $temp == '') {
-			$this->debug_options['text_file_path'] = SITE_LOGS_FOLDER;
+			$this->profiler_options['text_file_path'] = SITE_LOGS_FOLDER;
 
 		} else {
-			$this->debug_options['text_file_path'] = $temp;
+			$this->profiler_options['text_file_path'] = $temp;
 		}
 
-		if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . $this->debug_options['text_file'])) {
-			$this->debug_options['text_file_no_php']
-				= (int)Services::Registry()->get('Configuration', 'debug_text_file_no_php', false);
+		if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . $this->profiler_options['text_file'])) {
+			$this->profiler_options['text_file_no_php']
+				= (int)Services::Registry()->get('Configuration', 'profiler_text_file_no_php', false);
 
 		} else {
 			return false;
@@ -534,9 +534,9 @@ Class DebugService
 	 */
 	protected function setDatabaseLogger()
 	{
-		$this->debug_options['dbo'] = Services::JDatabase()->get('db');
-		$this->debug_options['db_table'] = Services::Registry()
-			->get('Configuration', 'debug_database_table', '#__log');
+		$this->profiler_options['dbo'] = Services::JDatabase()->get('db');
+		$this->profiler_options['db_table'] = Services::Registry()
+			->get('Configuration', 'profiler_database_table', '#__log');
 
 		return true;
 	}
@@ -548,8 +548,8 @@ Class DebugService
 	 */
 	protected function setMessagesLogger()
 	{
-		$this->debug_options['messages_namespace'] = Services::Registry()
-			->get('Configuration', 'debug_messages_namespace', 'debug');
+		$this->profiler_options['messages_namespace'] = Services::Registry()
+			->get('Configuration', 'profiler_messages_namespace', 'profiler');
 
 		return true;
 	}
@@ -561,8 +561,8 @@ Class DebugService
 	 */
 	protected function setFirephpLogger()
 	{
-		$this->debug_options['messages_namespace'] = Services::Registry()
-			->get('Configuration', 'debug_messages_namespace', 'debug');
+		$this->profiler_options['messages_namespace'] = Services::Registry()
+			->get('Configuration', 'profiler_messages_namespace', 'profiler');
 
 		return true;
 	}
@@ -574,8 +574,8 @@ Class DebugService
 	 */
 	protected function setEchoLogger()
 	{
-		$this->debug_options['line_separator'] = Services::Registry()
-			->get('Configuration', 'debug_line_separator', '<br />');
+		$this->profiler_options['line_separator'] = Services::Registry()
+			->get('Configuration', 'profiler_line_separator', '<br />');
 
 		return true;
 	}

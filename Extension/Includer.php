@@ -337,7 +337,7 @@ class Includer
 		$message .= Services::Registry()->get('Parameters', '*');
 		$message .= ob_get_contents();
 		ob_end_clean();
-		Services::Debug()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
+		Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
 
 		$controller = new ReadController();
 		$controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));

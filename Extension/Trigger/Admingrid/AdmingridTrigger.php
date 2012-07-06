@@ -61,7 +61,7 @@ class AdmingridTrigger extends ContentTrigger
 			$debugMessage .= ob_get_contents();
 			ob_end_clean();
 
-			Services::Debug()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
+			Services::Profiler()->set($debugMessage, LOG_OUTPUT_QUERIES, VERBOSE);
 		}
 
 		$this->setToolbar();

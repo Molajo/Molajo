@@ -139,7 +139,7 @@ Class Services
         }
 
         foreach ($this->message as $message) {
-            Services::Debug()->set($message, LOG_OUTPUT_SERVICES, VERBOSE);
+            Services::Profiler()->set($message, LOG_OUTPUT_SERVICES, VERBOSE);
         }
 
         return true;

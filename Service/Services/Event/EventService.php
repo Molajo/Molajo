@@ -85,13 +85,13 @@ Class EventService
 	 */
 	public function schedule($event, $arguments = array(), $selections = array())
 	{
-		Services::Debug()->set('EventService->schedule Initiated Event '
+		Services::Profiler()->set('EventService->schedule Initiated Event '
 			. $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		/** Does Event (with registration) exist? */
 		$exists = Services::Registry()->exists('Events', $event);
 		if ($exists == false) {
-			Services::Debug()->set('EventService->schedule Event: '
+			Services::Profiler()->set('EventService->schedule Event: '
 				. $event . ' does not exist', LOG_OUTPUT_TRIGGERS);
 			return $arguments;
 		}
@@ -99,7 +99,7 @@ Class EventService
 		/** Retrieve Event Registrations */
 		$registrations = Services::Registry()->get($event);
 		if (count($registrations) == 0) {
-			Services::Debug()->set('EventService->schedule Event ' . $event
+			Services::Profiler()->set('EventService->schedule Event ' . $event
 				. ' has no registrations, exiting', LOG_OUTPUT_TRIGGERS);
 			return $arguments;
 		}
@@ -148,7 +148,7 @@ Class EventService
 
 				} else {
 
-					Services::Debug()->set('EventService->schedule Event '
+					Services::Profiler()->set('EventService->schedule Event '
 							. $event . ' Class does not exist '
 							. $registrations[$triggerClass],
 						LOG_OUTPUT_TRIGGERS);
@@ -158,7 +158,7 @@ Class EventService
 				}
 
 			} else {
-				Services::Debug()->set('EventService->schedule Event '
+				Services::Profiler()->set('EventService->schedule Event '
 						. $event . ' No valid registrations for class '
 						. $triggerClass,
 					LOG_OUTPUT_TRIGGERS,
@@ -192,7 +192,7 @@ Class EventService
 
 		} catch (\Exception $e) {
 
-			Services::Debug()->set('EventService->schedule Event ' . $event
+			Services::Profiler()->set('EventService->schedule Event ' . $event
 				. ' Instantiating Class ' . $triggerClass . ' Failed', LOG_OUTPUT_TRIGGERS);
 
 			echo '<br />Could not Instantiate Trigger Class: ' . $triggerClass;
@@ -211,14 +211,14 @@ Class EventService
 		}
 
 		/** 3. Execute Trigger Class Method */
-		Services::Debug()->set('EventService->schedule Event ' . $event
+		Services::Profiler()->set('EventService->schedule Event ' . $event
 			. ' calling ' . $triggerClass . ' ' . $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$results = $connection->$event();
 
 		if ($results == false) {
 
-			Services::Debug()->set('EventService->schedule Event '
+			Services::Profiler()->set('EventService->schedule Event '
 					. $event . ' Trigger Class '
 					. $class
 					. ' Failed. ',
@@ -258,7 +258,7 @@ Class EventService
 	 */
 	public function register($trigger, $triggerPath, $event)
 	{
-		Services::Debug()->set('EventService->register '
+		Services::Profiler()->set('EventService->register '
 				. 'Trigger: ' . $trigger
 				. ' Class: ' . $triggerPath
 				. ' Event: ' . $event,
@@ -297,7 +297,7 @@ Class EventService
 	 */
 	protected function registerInstalledTriggers()
 	{
-		Services::Debug()->set('EventService->registerInstalledTriggers ', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		Services::Profiler()->set('EventService->registerInstalledTriggers ', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$triggers = Services::Filesystem()->folderFolders(EXTENSIONS_TRIGGERS);
 
