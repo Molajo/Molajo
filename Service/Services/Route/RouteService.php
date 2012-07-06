@@ -45,7 +45,7 @@ Class RouteService
 	}
 
 	/**
-	 * Using the PAGE_REQUEST constant:
+	 * Using the Application::Request()->get('requested_resource_for_route') constant:
 	 *
 	 *  - retrieve the catalog record
 	 *  - set registry values needed to fulfill the page request
@@ -76,7 +76,7 @@ Class RouteService
 		}
 
 		if (Services::Registry()->get('Override', 'url_request', false) == false) {
-			$path = PAGE_REQUEST;
+			$path = Application::Request()->get('requested_resource_for_route');
 
 		} else {
 			$path = Services::Registry()->get('Override', 'url_request');
@@ -230,7 +230,7 @@ Class RouteService
 	 * GET/articles - returns a list
 	 *
 	 * GET/articles/new - create a new article
-	 * POST/article - submit fields for creating a new record
+	 * POST/articles - submit fields for creating a new record
 	 *
 	 * GET/articles/1 - returns the record with 1 for a primary key
 	 * PUT/articles/1 - update the record with 1 for a primary key
@@ -252,57 +252,40 @@ Class RouteService
 	 */
 	protected function getResource()
 	{
-		$path = Services::Registry()->get('Parameters', 'request_url_query');
-	   echo PAGE_REQUEST.'<br />';
-
-		echo '<pre>';
+		/**echo '<pre>';
 		var_dump(Application::Request()->request);
-		echo '</pre>';
+		echo '</pre>'; */
 
-die;
-		echo Application::Request()->get('title');
-		//echo $server->parameters['accept_language'];
-		die;
-
-		echo '<pre>';
-		var_dump(Application::Request()->get('attributes'));
-		echo '</pre>';
-
-		echo '<pre>';
-		var_dump(Application::Request()->get('server'));
-		echo '</pre>';
-
-		echo '<pre>';
-		var_dump(Application::Request()->get('request'));
-		echo '</pre>';
-
-		echo '<pre>';
-		var_dump(Application::Request()->get('query'));
-		echo '</pre>';
-
-		echo '<pre>';
-		var_dump(Application::Request()->get('cookies'));
-		echo '</pre>';
-
-		die;
-
-		echo '<pre>';
-		var_dump($parms);
-		echo '</pre>';
-
-		die;
-
-		echo $_SERVER['REQUEST_METHOD'];
-		die;
+		Services::Registry()->set('Parameters', 'request_url_query',
+			Application::Request()->get('requested_resource_for_route'));
 
 		/** Defaults */
 		Services::Registry()->set('Parameters', 'request_non_route_parameters', '');
-		Services::Registry()->set('Parameters', 'request_action', 'display');
-		Services::Registry()->set('Parameters', 'request_action_authorisation', 'read');
-		Services::Registry()->set('Parameters', 'request_controller', 'read');
+
+		$method = Application::Request()->get('method');
+		if ($method == 'POST') {
+			$action = 'create';
+			$controller = 'create';
+
+		} elseif ($method == 'GET') {
+			$action = 'display';
+			$controller = 'read';
+
+		} elseif ($method == 'PUT') {
+			$action = 'update';
+			$controller = 'update';
+
+		} elseif ($method == 'DELETE') {
+			$action = 'delete';
+			$controller = 'delete';
+		}
+
+		Services::Registry()->set('Parameters', 'request_action', $action);
+		Services::Registry()->set('Parameters', 'request_action_authorisation', $controller);  //for now
+		Services::Registry()->set('Parameters', 'request_controller', $controller);
 
 		/** Retrieve ID */
-		$value = (int)Application::Request()->get('request')->get('id');
+		$value = (int)Application::Request()->get('id');
 		Services::Registry()->set('Parameters', 'request_catalog_id', $value);
 
 		/** URL Type */

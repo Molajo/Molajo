@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Trigger\Itemurl;
 
+use Molajo\Application;
 use Molajo\Service\Services;
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
@@ -78,20 +79,24 @@ class ItemurlTrigger extends ContentTrigger
 	 */
 	public function onAfterRoute()
 	{
+		echo '<pre>';
+		var_dump(Application::Request()->request);
+		echo '<pre />';
 
+		echo 'application base url ' . '<br />';
+		echo Application::Request()->get('base_url_path_for_application') . '<br />';
+
+		echo 'page url' . '<br />';
 		echo Services::Registry()->get('Parameters', 'page_url');
-
-		echo Services::Registry()->get('Parameters', 'catalog_url_request');
-
-		echo Services::Registry()->get('Configuration', 'application_base_url');
-		    die;
-		echo $path;
 		echo '<br />';
-		echo $url;
-		die;
+		echo 'catalog_url_request' . '<br />';
+		echo Services::Registry()->get('Parameters', 'catalog_url_request');
+		echo '<br />';
+		echo 'application_base_url' . '<br />';
+		echo Services::Registry()->get('Configuration', 'application_base_url');
+		echo '<br />';
 
-		Services::Registry()->set('Parameters', 'page_url', $path);
-
+  /**
 
 echo '<pre>';
 var_dump($this->parameters);
@@ -104,7 +109,7 @@ echo '</pre>';
 			$url .= '/' . $this->parameters['catalog_url_request'];
 			$connector = '&';
 		}
-
-		Services::Registry()->set('Trigger', 'full_page_url', $url);
+	 */
+	//	Services::Registry()->set('Trigger', 'full_page_url', $url);
 	}
 }

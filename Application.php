@@ -241,6 +241,8 @@ Class Application
 		) {
 			Services::Debug()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
 			$results = Services::Event()->schedule('onAfterRoute');
+			echo 'here';
+			die;
 			if (is_array($results)) {
 				$results = true;
 			}
@@ -452,7 +454,7 @@ Class Application
 		}
 
 		Services::Debug()
-			->set('Response exit '. (int) $results, LOG_OUTPUT_APPLICATION);
+			->set('Response exit ' . (int)$results, LOG_OUTPUT_APPLICATION);
 
 		return true;
 	}
@@ -657,7 +659,7 @@ Class Application
 			$sites = ConfigurationService::getFile('Application', 'Sites');
 
 			foreach ($sites->site as $single) {
-				if (strtolower((string) $single->site_base_url) == strtolower($site_base_url)) {
+				if (strtolower((string)$single->site_base_url) == strtolower($site_base_url)) {
 					define('SITE_BASE_URL', (string)$single->site_base_url);
 					define('SITE_BASE_PATH', BASE_FOLDER . (string)$single->site_base_folder);
 					define('SITE_ID', $single->id);
@@ -684,7 +686,6 @@ Class Application
 	 */
 	protected function setApplication()
 	{
-
 		/** ex. /molajo/administrator/index.php?option=login    */
 		$p1 = Application::Request()->get('path_info');
 		$t2 = Application::Request()->get('query_string');
@@ -705,10 +706,10 @@ Class Application
 			$applicationTest = $requestURI;
 		}
 
-		$pageRequest = '';
+		$requested_resource_for_route = '';
 
 		if (defined('APPLICATION')) {
-			/* to override - must also define PAGE_REQUEST */
+			/* to override - must also define Application::Request()->get('requested_resource_for_route') */
 		} else {
 
 			$apps = ConfigurationService::getFile('Application', 'Applications');
@@ -720,7 +721,7 @@ Class Application
 					define('APPLICATION', $app->name);
 					define('APPLICATION_URL_PATH', APPLICATION . '/');
 
-					$pageRequest = substr(
+					$requested_resource_for_route = substr(
 						$requestURI,
 						strlen(APPLICATION) + 1,
 						strlen($requestURI) - strlen(APPLICATION) + 1
@@ -733,22 +734,20 @@ Class Application
 			} else {
 				define('APPLICATION', $apps->default->name);
 				define('APPLICATION_URL_PATH', '');
-				$pageRequest = $requestURI;
+				$requested_resource_for_route = $requestURI;
 			}
 		}
 
 		/*  Page Request used in Application::Request                */
-		if (defined('PAGE_REQUEST')) {
-		} else {
-			if (strripos($pageRequest, '/') == (strlen($pageRequest) - 1)) {
-				$pageRequest = substr($pageRequest, 0, strripos($pageRequest, '/'));
-			}
-			define('PAGE_REQUEST', $pageRequest);
+		if (strripos($requested_resource_for_route, '/') == (strlen($requested_resource_for_route) - 1)) {
+			$requested_resource_for_route = substr($requested_resource_for_route, 0, strripos($requested_resource_for_route, '/'));
 		}
-	 ;
+
+		Application::Request()->set('requested_resource_for_route', $requested_resource_for_route);
+
 		Application::Request()->set(
 			'base_url_path_for_application',
-				Application::Request()->get('base_url_path_with_scheme')
+			Application::Request()->get('base_url_path_with_scheme')
 				. '/'
 				. APPLICATION_URL_PATH
 		);
@@ -777,8 +776,7 @@ Class Application
 		) {
 			return true;
 		}
-//todo - install -
-		/** Redirect to Installation Application */
+//todo - install		/** Redirect to Installation Application */
 		$redirect = BASE_URL . 'installation/';
 		header('Location: ' . $redirect);
 
@@ -804,7 +802,7 @@ Class Application
 				$redirectTo = (string)'https' .
 					substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
 					APPLICATION_URL_PATH .
-					'/' . PAGE_REQUEST;
+					'/' . Application::Request()->get('requested_resource_for_route');
 
 				Services::Redirect()
 					->set($redirectTo, 301);
