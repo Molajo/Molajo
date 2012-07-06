@@ -1,4 +1,4 @@
-<extension type="Menuitem" version="1.0" extends="Menuitems">
+<extension type="Menuitem" version="1.0" extends="Menuitem">
     <model
             name="MenuitemsLinks"
             catalog_type_id="2100">

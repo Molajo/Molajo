@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="View" group="Template" version="1.0" extends="ExtensionInstancesViewsTemplates">
+<extension type="Template" version="1.0" extends="ExtensionInstancesViewsTemplates">
     <name>VIEW_TEMPLATE_ARTICLE_NAME</name>
     <author>Amy Stephen</author>
-    <create_date>June 2012</create_date>
+    <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU GPL v 2, or later and MIT, see License folder</license>
     <author_email>AmyStephen@gmail.com</author_email>
