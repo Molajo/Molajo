@@ -1,40 +1,14 @@
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf8">
-    <style>
-        .KEYW {
-            color: #933;
-        }
-
-        .COMM {
-            color: #bbb;
-            font-style: italic;
-        }
-
-        .NUMB {
-            color: #393;
-        }
-
-        .STRN {
-            color: #393;
-        }
-
-        .REGX {
-            color: #339;
-        }
-
-        .line {
-            border-right: 1px dotted #666;
-            color: #666;
-            font-style: normal;
-        }
-    </style>
-</head>
-<body>
-<pre><span class='line'>  1</span> <span class="COMM">/*!
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/*!
 <span class='line'>  2</span> * This file is part of Aloha Editor Project http://aloha-editor.org
 <span class='line'>  3</span> * Copyright (c) 2010-2011 Gentics Software GmbH, aloha@gentics.com
-<span class='line'>  4</span> * Contributors http://aloha-editor.org/contribution.php
+<span class='line'>  4</span> * Contributors http://aloha-editor.org/contribution.php 
 <span class='line'>  5</span> * Licensed unter the terms of http://www.aloha-editor.org/license.html
 <span class='line'>  6</span> *
 <span class='line'>  7</span> * Aloha Editor is free software: you can redistribute it and/or modify
@@ -50,46 +24,19 @@
 <span class='line'> 17</span> * You should have received a copy of the GNU Affero General Public License
 <span class='line'> 18</span> * along with this program. If not, see &lt;http://www.gnu.org/licenses/>.
 <span class='line'> 19</span> */</span><span class="WHIT">
-<span class='line'> 20</span>
-<span class='line'> 21</span> </span><span class="COMM">// define jquery and ext modules. They need to be available in global namespace</span><span
-        class="WHIT">
-<span class='line'> 22</span> </span><span class="NAME">define</span><span class="PUNC">(</span><span class="STRN">'aloha/jquery'</span><span
-        class="PUNC">,</span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span
-        class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span
-        class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 23</span> </span><span class="WHIT">	</span><span class="COMM">// Work-around for http://bugs.jquery.com/ticket/9905</span><span
-        class="WHIT">
-<span class='line'> 24</span> </span><span class="WHIT">	</span><span class="COMM">// and https://github.com/alohaeditor/Aloha-Editor/issues/397</span><span
-        class="WHIT">
-<span class='line'> 25</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span
-        class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="PUNC">!</span><span
-        class="NAME">Aloha.jQuery.support.getSetAttribute</span><span class="WHIT"> </span><span
-        class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 26</span> </span><span class="WHIT">		</span><span class="PUNC">(</span><span
-        class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span
-        class="WHIT"> </span><span class="NAME">global</span><span class="WHIT"> </span><span class="PUNC">)</span><span
-        class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 27</span> </span><span class="WHIT">			</span><span
-        class="NAME">Aloha.jQuery.removeAttr</span><span class="WHIT"> </span><span class="PUNC">=</span><span
-        class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span
-        class="WHIT"> </span><span class="NAME">elem</span><span class="PUNC">,</span><span class="WHIT"> </span><span
-        class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span
-        class="PUNC">{</span><span class="WHIT">
-<span class='line'> 28</span> </span><span class="WHIT">				</span><span
-        class="NAME">elem.removeAttribute</span><span class="PUNC">(</span><span class="WHIT"> </span><span
-        class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">;</span><span
-        class="WHIT">
-<span class='line'> 29</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span
-        class="PUNC">;</span><span class="WHIT">
-<span class='line'> 30</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span
-        class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">Aloha</span><span class="WHIT"> </span><span
-        class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> 
+<span class='line'> 21</span> </span><span class="COMM">// define jquery and ext modules. They need to be available in global namespace</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="NAME">define</span><span class="PUNC">(</span><span class="STRN">'aloha/jquery'</span><span class="PUNC">,</span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">	</span><span class="COMM">// Work-around for http://bugs.jquery.com/ticket/9905</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">	</span><span class="COMM">// and https://github.com/alohaeditor/Aloha-Editor/issues/397</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">Aloha.jQuery.support.getSetAttribute</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">		</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">global</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">			</span><span class="NAME">Aloha.jQuery.removeAttr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">elem</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">				</span><span class="NAME">elem.removeAttribute</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">Aloha</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 31</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 32</span>
-<span class='line'> 33</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span
-        class="WHIT"> </span><span class="NAME">Aloha.jQuery</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 34</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span
-        class="PUNC">;</span><span class="WHIT">
-<span class='line'> 35</span> </span></pre>
-</body>
-</html>
+<span class='line'> 32</span> 
+<span class='line'> 33</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Aloha.jQuery</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 35</span> </span></pre></body></html>

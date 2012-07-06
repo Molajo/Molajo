@@ -10,49 +10,49 @@
  *
  */
 define(
-    ['aloha/jquery', 'aloha/observable'],
-    function (jQuery, Observable) {
+['aloha/jquery', 'aloha/observable'],
+function(jQuery, Observable) {
+	
 
+	return Class.extend(Observable, {
 
-        return Class.extend(Observable, {
+		_entries: null,
 
-            _entries:null,
+		_constructor: function() {
+			this._entries = {};
+		},
 
-            _constructor:function () {
-                this._entries = {};
-            },
+		/**
+		 * @event register
+		 * @param entry
+		 * @param id
+		 */
+		register: function(id, entry) {
+			this._entries[id] = entry;
+			this.trigger('register', entry, id);
+		},
 
-            /**
-             * @event register
-             * @param entry
-             * @param id
-             */
-            register:function (id, entry) {
-                this._entries[id] = entry;
-                this.trigger('register', entry, id);
-            },
-
-            /**
-             * @event unregister
-             * @param id
-             */
-            unregister:function (id) {
-                var oldEntry = this._entries[id];
-                delete this._entries[id];
-                this.trigger('unregister', oldEntry, id);
-            },
-
-            get:function (id) {
-                return this._entries[id];
-            },
-
-            has:function (id) {
-                return (this._entries[id] ? true : false);
-            },
-
-            getEntries:function () {
-                // clone the entries so the user does not accidentally modify our _entries object.
-                return jQuery.extend({}, this._entries);
-            }
-        });
-    });
+		/**
+		 * @event unregister
+		 * @param id
+		 */
+		unregister: function(id) {
+			var oldEntry = this._entries[id];
+			delete this._entries[id];
+			this.trigger('unregister', oldEntry, id);
+		},
+		
+		get: function(id) {
+			return this._entries[id];
+		},
+		
+		has: function(id) {
+			return (this._entries[id] ? true : false);
+		},
+		
+		getEntries: function() {
+			// clone the entries so the user does not accidentally modify our _entries object.
+			return jQuery.extend({}, this._entries);
+		}
+	});
+});

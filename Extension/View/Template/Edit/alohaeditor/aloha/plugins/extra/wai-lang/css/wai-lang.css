@@ -5,13 +5,8 @@
 * Licensed unter the terms of http://www.aloha-editor.com/license.html
 */
 
-button.aloha-button-wai-lang {
-    background: url(../img/button.png) no-repeat 0px 0px !important;
-}
-
-button.aloha-button-wai-lang-remove {
-    background: url(../img/remove-button.png) no-repeat 0px 0px !important;
-}
+button.aloha-button-wai-lang { background: url(../img/button.png) no-repeat 0px 0px !important; }
+button.aloha-button-wai-lang-remove { background: url(../img/remove-button.png) no-repeat 0px 0px !important; }
 
 /*
 .aloha-wai-lang {
@@ -22,15 +17,14 @@ button.aloha-button-wai-lang-remove {
 }*/
 
 .x-combo-list-item .img-item {
-    height: 18px;
+	height: 18px;
 }
-
 .x-combo-list-item img {
-    /* 16x11 */
-    margin: 3px 5px 0px 2px;
+	/* 16x11 */
+	margin: 3px 5px 0px 2px;
 }
 
 .x-combo-list-item .label-item {
-    display: inline;
-    font-weight: bold;
+	display: inline;
+	font-weight: bold;
 }

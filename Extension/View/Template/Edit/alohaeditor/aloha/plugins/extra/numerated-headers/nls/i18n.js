@@ -1,5 +1,5 @@
 define({
-    root:{ "button.numeratedHeaders.tooltip":"Toggle header numeration." },
-    "de":true,
-    "en":true
+	root: { "button.numeratedHeaders.tooltip": "Toggle header numeration." },
+	"de":true,
+	"en":true
 });

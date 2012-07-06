@@ -1,24 +1,24 @@
-(function ($) {
-    $.fn.vieSemanticAloha = function (options) {
-
+(function($){
+    $.fn.vieSemanticAloha = function(options) {
+        
         // Default settings
-        var opt = {
-            beforeEditing:null
+        var opt = { 
+                beforeEditing: null
         };
         $.extend(opt, options);
 
 
-        this.each(function () {
+        this.each(function() {
             var containerInstance = VIE.ContainerManager.getInstanceForContainer(jQuery(this));
             if (typeof containerInstance.editables === 'undefined') {
                 containerInstance.editables = {};
             }
-            VIE.ContainerManager.findContainerProperties(this, false).each(function () {
+            VIE.ContainerManager.findContainerProperties(this, false).each(function() {
                 var containerProperty = jQuery(this);
 
-                // Call the configured beforeEditing function that may modify
+                // Call the configured beforeEditing function that may modify 
                 // the content of the editable before editing is possible
-                if (opt.beforeEditing != null) {
+                if(opt.beforeEditing != null) {
                     opt.beforeEditing(containerProperty);
                 }
 
@@ -42,18 +42,18 @@ if (typeof VIE === 'undefined') {
 }
 
 VIE.AlohaEditable = {
-    refreshFromEditables:function (objectInstance) {
-        var modifiedProperties = {};
+    refreshFromEditables: function(objectInstance) {
+       var modifiedProperties = {};
 
         // Go through editables of the model instance
-        jQuery.each(objectInstance.editables, function (propertyName, editableInstance) {
+        jQuery.each(objectInstance.editables, function(propertyName, editableInstance) {
             if (!editableInstance.isModified()) {
                 // This editable hasn't been modified, skip
                 return true;
             }
 
             // Refresh possible RDFa objects from inside the editable
-            jQuery('[typeof][about]', editableInstance.obj).each(function () {
+            jQuery('[typeof][about]', editableInstance.obj).each(function() {
                 var childInstance = VIE.ContainerManager.getInstanceForContainer(jQuery(this));
             });
 
@@ -61,7 +61,8 @@ VIE.AlohaEditable = {
             modifiedProperties[propertyName] = editableInstance.getContents();
         });
 
-        if (jQuery.isEmptyObject(modifiedProperties)) {
+        if (jQuery.isEmptyObject(modifiedProperties))
+        {
             // No modified editables for this object, skip
             return false;
         }

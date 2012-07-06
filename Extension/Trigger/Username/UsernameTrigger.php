@@ -23,10 +23,7 @@ class UsernameTrigger extends ContentTrigger
 	/**
 	 * Pre-create processing
 	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onBeforeCreate()
@@ -37,10 +34,7 @@ class UsernameTrigger extends ContentTrigger
 	/**
 	 * Pre-update processing
 	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onBeforeUpdate()
@@ -51,10 +45,7 @@ class UsernameTrigger extends ContentTrigger
 	/**
 	 * Post-update processing
 	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onAfterUpdate()

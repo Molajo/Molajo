@@ -1,243 +1,241 @@
 /*!
- * Aloha Editor
- * Author & Copyright (c) 2010 Gentics Software GmbH
- * aloha-sales@gentics.com
- * Licensed unter the terms of http://www.aloha-editor.com/license.html
- */
+* Aloha Editor
+* Author & Copyright (c) 2010 Gentics Software GmbH
+* aloha-sales@gentics.com
+* Licensed unter the terms of http://www.aloha-editor.com/license.html
+*/
 define(
-    [
-        'aloha',
-        'aloha/jquery',
-        'aloha/plugin',
-        'aloha/floatingmenu',
-        'i18n!zemanta/nls/i18n',
-        'i18n!aloha/nls/i18n',
-        'aloha/console',
-        'css!zemanta/css/zemanta-widget-alohaeditor.css',
-    ],
-    function (Aloha, jQuery, Plugin, FloatingMenu, i18n, i18nCore, console) {
+[
+'aloha', 
+'aloha/jquery', 
+'aloha/plugin', 
+'aloha/floatingmenu', 
+'i18n!zemanta/nls/i18n', 
+'i18n!aloha/nls/i18n', 
+'aloha/console',
+'css!zemanta/css/zemanta-widget-alohaeditor.css', 
+],
+function(Aloha, jQuery, Plugin, FloatingMenu, i18n, i18nCore, console) {
+	
+
+	var
+		GENTICS = window.GENTICS,
+		active = false,
+		editableId = false,
+		settings = false;
+
+		// check for API key settings
+		if ( typeof Aloha.settings.plugins.zemanta === 'undefined' ) {
+			settings = {};
+		} else {
+			settings = Aloha.settings.plugins.zemanta;
+		}
+
+		if ( typeof settings.apiKey === 'undefined' ) {
+			Aloha.Log.warn( 'Plugin.Zemanta', 'Add your own Zemanta API Key (Aloha.settings.plugins.zemanta.apiKey). Register one here: http://developer.zemanta.com/apps/register/' );
+			settings.apiKey = '8n7tl9nikmdps2rhkpusihnt';
+		}
 
 
-        var
-            GENTICS = window.GENTICS,
-            active = false,
-            editableId = false,
-            settings = false;
+	/**
+	 * Zemanta API Key for SDK
+	*/
+	window.ZemantaGetAPIKey = function () {
+		return settings.apiKey || false;
+	}
 
-        // check for API key settings
-        if (typeof Aloha.settings.plugins.zemanta === 'undefined') {
-            settings = {};
-        } else {
-            settings = Aloha.settings.plugins.zemanta;
-        }
+	/**
+	 * register the plugin with unique name
+	 */
+	return Plugin.create('zemanta', {
+		/**
+		 * Configure the available languages
+		 */
+		languages: ['en'],
 
-        if (typeof settings.apiKey === 'undefined') {
-            Aloha.Log.warn('Plugin.Zemanta', 'Add your own Zemanta API Key (Aloha.settings.plugins.zemanta.apiKey). Register one here: http://developer.zemanta.com/apps/register/');
-            settings.apiKey = '8n7tl9nikmdps2rhkpusihnt';
-        }
+		/**
+		 * Initialize the plugin and set initialize flag on true
+		 */
+		init: function(){
+			// load Zemanta SDK
+			var staticDomain = 'http://static.zemanta.com/';
+			Aloha.require([
+				'css!' + staticDomain + 'core/zemanta-widget.css',
+				staticDomain + 'core/jquery.js',
+				staticDomain + 'core/jquery.zemanta.js'
+			]);
 
+			this._initButtons();
+			//this._initEvents();
+		},
 
-        /**
-         * Zemanta API Key for SDK
-         */
-        window.ZemantaGetAPIKey = function () {
-            return settings.apiKey || false;
-        }
+		_initButtons: function() {
+			var self = this;
 
-        /**
-         * register the plugin with unique name
-         */
-        return Plugin.create('zemanta', {
-            /**
-             * Configure the available languages
-             */
-            languages:['en'],
+			// zemanta button
+			FloatingMenu.createScope('Aloha.Zemanta', 'Aloha.continuoustext');
+			this.zemantaButton = new Aloha.ui.Button({
+				'name' : 'zemanta',
+				'iconClass' : 'aloha-button aloha-button-zemanta',
+				'size' : 'small',
+				'onclick' : function () { self.suggestions(); },
+				'tooltip' : i18n.t('button.zemanta.tooltip'),
+				'toggle' : true
+			});
 
-            /**
-             * Initialize the plugin and set initialize flag on true
-             */
-            init:function () {
-                // load Zemanta SDK
-                var staticDomain = 'http://static.zemanta.com/';
-                Aloha.require([
-                    'css!' + staticDomain + 'core/zemanta-widget.css',
-                    staticDomain + 'core/jquery.js',
-                    staticDomain + 'core/jquery.zemanta.js'
-                ]);
+			FloatingMenu.addButton(
+				'Aloha.continuoustext',
+				this.zemantaButton,
+				i18n.t('floatingmenu.tab.related'),
+				1
+			);
+		},
 
-                this._initButtons();
-                //this._initEvents();
-            },
+		_initEvents: function() {
+			var self = this;
+			// update suggestions with smart content change ...
+			Aloha.bind('aloha-editable-deactivated', function(event, rangeObject) {
+				// do something ... 
+			});
+		},
+		
+		suggestions: function() {
+			var self = this,
+				widget = document.createElement('div'),
+				tags = document.createElement('div'),
+				links = document.createElement('div'),
+				insertionSpaceId = false,
+				insertionSpace = false,
+				t0 = this.now();
 
-            _initButtons:function () {
-                var self = this;
+				this.editableId = Aloha.activeEditable.obj[0].id;
 
-                // zemanta button
-                FloatingMenu.createScope('Aloha.Zemanta', 'Aloha.continuoustext');
-                this.zemantaButton = new Aloha.ui.Button({
-                    'name':'zemanta',
-                    'iconClass':'aloha-button aloha-button-zemanta',
-                    'size':'small',
-                    'onclick':function () {
-                        self.suggestions();
-                    },
-                    'tooltip':i18n.t('button.zemanta.tooltip'),
-                    'toggle':true
-                });
+				if (this.active == true) {
+					// remove zemanta widgets (button click to activate/deactivate)
+					$('#zemanta-sidebar').remove();
+					$('#zemanta-suggested-tags').remove();
+					$('#zemanta-suggested-links').remove();
+					this.active = false;
+					return;
+				}
+				
+				if ( Aloha.activeEditable.getContents().length < 140 ) {
+					self.zemantaButton.setPressed(false);
+					
+					Aloha.showMessage( new Aloha.Message( {
+						title : i18n.t( 'Information' ),
+						text  : i18n.t( 'zemanta.message.shorttext' ),
+						type  : Aloha.Message.Type.ALERT
+					} ) );
+					return;
+				}
 
-                FloatingMenu.addButton(
-                    'Aloha.continuoustext',
-                    this.zemantaButton,
-                    i18n.t('floatingmenu.tab.related'),
-                    1
-                );
-            },
+				widget.setAttribute('id', 'zemanta-sidebar');
+				widget.innerHTML = '<div id="zemanta-message" class="zemanta">Loading Zemanta...</div><div id="zemanta-gallery" class="zemanta"></div><div id="zemanta-articles" class="zemanta"></div>';
 
-            _initEvents:function () {
-                var self = this;
-                // update suggestions with smart content change ...
-                Aloha.bind('aloha-editable-deactivated', function (event, rangeObject) {
-                    // do something ...
-                });
-            },
+				tags.setAttribute('id', 'zemanta-suggested-tags');
+				tags.innerHTML = '<div id="zemanta-tags" class="zemanta"><div id="zemanta-tags-div"><ul id="zemanta-tags-div-ul"><li class="zemanta-title">&laquo; Tags</li></ul><p class="zem-clear">&nbsp;</p></div></div>';
 
-            suggestions:function () {
-                var self = this,
-                    widget = document.createElement('div'),
-                    tags = document.createElement('div'),
-                    links = document.createElement('div'),
-                    insertionSpaceId = false,
-                    insertionSpace = false,
-                    t0 = this.now();
+				links.setAttribute('id', 'zemanta-suggested-links');
+				links.innerHTML = '<div id="zemanta-links"><ul id="zemanta-links-div-ul"><li class="zemanta-title"><span>Link recommendations will appear here</span> &laquo; Links</li></ul><p class="zem-clear">&nbsp;</p></div>';
 
-                this.editableId = Aloha.activeEditable.obj[0].id;
+				// if not set via settings insert the widgets below the current editable
+				insertionSpaceId = this.editableId;
+				if ( typeof this.settings.insertionSpaceId !== 'undefined' ) {
+					insertionSpaceId = this.settings.insertionSpaceId;
+				}
 
-                if (this.active == true) {
-                    // remove zemanta widgets (button click to activate/deactivate)
-                    $('#zemanta-sidebar').remove();
-                    $('#zemanta-suggested-tags').remove();
-                    $('#zemanta-suggested-links').remove();
-                    this.active = false;
-                    return;
-                }
+				// insert zemanta widgets after this dom object
+				// @nicetohave different IDs all available widgets and switch to insert before/after that tag
+				insertionSpace = document.getElementById(insertionSpaceId);
+				if ( !insertionSpace ) {
+					// fallback: if the dom object does not exist (from config) insert it after the current editable
+					insertionSpaceId = this.editableId;
+					insertionSpace = document.getElementById(insertionSpaceId);
+				}
 
-                if (Aloha.activeEditable.getContents().length < 140) {
-                    self.zemantaButton.setPressed(false);
+				if ( insertionSpace ) {
+					insertionSpace.parentNode.insertBefore(widget, insertionSpace.nextSibling);
+					insertionSpace.parentNode.insertBefore(links, insertionSpace.nextSibling);
+					insertionSpace.parentNode.insertBefore(tags, insertionSpace.nextSibling);
+				} else {
+					Aloha.Log.warn( 'Plugin.Zemanta', 'There was a problem inserting the Zemanta widgets.' );
+				}
 
-                    Aloha.showMessage(new Aloha.Message({
-                        title:i18n.t('Information'),
-                        text:i18n.t('zemanta.message.shorttext'),
-                        type:Aloha.Message.Type.ALERT
-                    }));
-                    return;
-                }
+			try {
+				$ = window.zQuery;
+				if (!$) {
+					throw 'Plugin.Zemanta: No zQuery available.';
+				}
+				if ($('#zemanta-message').html() === 'Loading...') {
+					$('#zemanta-message').html('Preparing...');
+				}
 
-                widget.setAttribute('id', 'zemanta-sidebar');
-                widget.innerHTML = '<div id="zemanta-message" class="zemanta">Loading Zemanta...</div><div id="zemanta-gallery" class="zemanta"></div><div id="zemanta-articles" class="zemanta"></div>';
+				this.waitForLoad();
+				this.active = true;
+			} catch ( er ) {
+				Aloha.Log.error( 'Plugin.Zemanta', er );
+			}
+		},
+		
+		/**
+		 * Get current timestamp
+		*/
+		now: function() {
+			return new Date().getTime();
+		},
 
-                tags.setAttribute('id', 'zemanta-suggested-tags');
-                tags.innerHTML = '<div id="zemanta-tags" class="zemanta"><div id="zemanta-tags-div"><ul id="zemanta-tags-div-ul"><li class="zemanta-title">&laquo; Tags</li></ul><p class="zem-clear">&nbsp;</p></div></div>';
+		setPlatform: function($, p) {
+			var editableId = Aloha.activeEditable.obj[0].id;
+			
+			return $.zextend(p, {
+				widget_version: 3,
+				platform: {
+					dnd_supported: true,
+					get_editor: function () {
+						var editor = {element: null, property: null, type: null, win: null};
 
-                links.setAttribute('id', 'zemanta-suggested-links');
-                links.innerHTML = '<div id="zemanta-links"><ul id="zemanta-links-div-ul"><li class="zemanta-title"><span>Link recommendations will appear here</span> &laquo; Links</li></ul><p class="zem-clear">&nbsp;</p></div>';
+						try {
+							editor = {
+								element: document.getElementById(editableId),
+								property: 'innerHTML', 
+								type: 'div',
+								win: null
+							}
+						} catch ( er ) {
+							Aloha.Log.error( 'Plugin.Zemanta.setPlatform', er );
+						}
+						return editor;
+					}
+				}
+			});
+		},
 
-                // if not set via settings insert the widgets below the current editable
-                insertionSpaceId = this.editableId;
-                if (typeof this.settings.insertionSpaceId !== 'undefined') {
-                    insertionSpaceId = this.settings.insertionSpaceId;
-                }
+		waitForLoad: function() {
+			var done = false, t0 = null;
 
-                // insert zemanta widgets after this dom object
-                // @nicetohave different IDs all available widgets and switch to insert before/after that tag
-                insertionSpace = document.getElementById(insertionSpaceId);
-                if (!insertionSpace) {
-                    // fallback: if the dom object does not exist (from config) insert it after the current editable
-                    insertionSpaceId = this.editableId;
-                    insertionSpace = document.getElementById(insertionSpaceId);
-                }
+			if (typeof $.zemanta === "undefined") {
+				$('#zemanta-message').html('Waiting...');
+				return;
+			}
 
-                if (insertionSpace) {
-                    insertionSpace.parentNode.insertBefore(widget, insertionSpace.nextSibling);
-                    insertionSpace.parentNode.insertBefore(links, insertionSpace.nextSibling);
-                    insertionSpace.parentNode.insertBefore(tags, insertionSpace.nextSibling);
-                } else {
-                    Aloha.Log.warn('Plugin.Zemanta', 'There was a problem inserting the Zemanta widgets.');
-                }
+			t0 = this.now();
+			$('#zemanta-message').html('Initializing...');
 
-                try {
-                    $ = window.zQuery;
-                    if (!$) {
-                        throw 'Plugin.Zemanta: No zQuery available.';
-                    }
-                    if ($('#zemanta-message').html() === 'Loading...') {
-                        $('#zemanta-message').html('Preparing...');
-                    }
+			try {
+				done = $.zemanta.initialize(this.setPlatform($, {
+					interface_type: "alohaeditor",
+					tags_target_id: "zemanta-tags"
+				}));
+			} catch ( er ) {
+				Aloha.Log.error( 'Plugin.Zemanta.waitForLoad', er );
+			}
 
-                    this.waitForLoad();
-                    this.active = true;
-                } catch (er) {
-                    Aloha.Log.error('Plugin.Zemanta', er);
-                }
-            },
-
-            /**
-             * Get current timestamp
-             */
-            now:function () {
-                return new Date().getTime();
-            },
-
-            setPlatform:function ($, p) {
-                var editableId = Aloha.activeEditable.obj[0].id;
-
-                return $.zextend(p, {
-                    widget_version:3,
-                    platform:{
-                        dnd_supported:true,
-                        get_editor:function () {
-                            var editor = {element:null, property:null, type:null, win:null};
-
-                            try {
-                                editor = {
-                                    element:document.getElementById(editableId),
-                                    property:'innerHTML',
-                                    type:'div',
-                                    win:null
-                                }
-                            } catch (er) {
-                                Aloha.Log.error('Plugin.Zemanta.setPlatform', er);
-                            }
-                            return editor;
-                        }
-                    }
-                });
-            },
-
-            waitForLoad:function () {
-                var done = false, t0 = null;
-
-                if (typeof $.zemanta === "undefined") {
-                    $('#zemanta-message').html('Waiting...');
-                    return;
-                }
-
-                t0 = this.now();
-                $('#zemanta-message').html('Initializing...');
-
-                try {
-                    done = $.zemanta.initialize(this.setPlatform($, {
-                        interface_type:"alohaeditor",
-                        tags_target_id:"zemanta-tags"
-                    }));
-                } catch (er) {
-                    Aloha.Log.error('Plugin.Zemanta.waitForLoad', er);
-                }
-
-                if (!done) {
-                    $('#zemanta-message').html('There was a problem initialising the editor.');
-                } else {
-                    $('#zemanta-control').remove(); // does not work via css
-                }
-            }
-        });
-    });
+			if ( !done ) {
+				$('#zemanta-message').html('There was a problem initialising the editor.');
+			} else {
+				$('#zemanta-control').remove(); // does not work via css
+			}
+		}
+	});
+});
