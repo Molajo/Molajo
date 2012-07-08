@@ -88,7 +88,7 @@ Class InstallService
 		$criteria_extension_instance_id = $extension_instance_id;
 		$catalog_type_id = 30000;
 		$criteria_catalog_type_id = $catalog_type_id;
-		$menu_extension_instance_id = 100;
+		$item_parent_menu_id = 100;
 		$parent_menuitem = 124;
 		$item_model_name = "Comments";
 
@@ -176,8 +176,8 @@ Class InstallService
 				} elseif ($key == 'criteria_catalog_type_id') {
 					$data->parameters[$key] = $criteria_catalog_type_id;
 
-				} elseif ($key == 'menu_extension_instance_id') {
-					$data->parameters[$key] = $menu_extension_instance_id;
+				} elseif ($key == 'item_parent_menu_id') {
+					$data->parameters[$key] = $item_parent_menu_id;
 
 				} elseif ($key == 'parent_menuitem') {
 					$data->parameters[$key] = $parent_menuitem;

@@ -176,33 +176,33 @@ Class TextService
 
 			$this->setWhereCriteria (
 				'catalog_type_id',
-				$parameters['filter_catalog_type_id'],
+				$parameters['criteria_catalog_type_id'],
 				$primary_prefix,
 				$m
 			);
 
 			$this->setWhereCriteria (
 				'status',
-				$parameters['filter_status'],
+				$parameters['criteria_status'],
 				$primary_prefix,
 				$m
 			);
 
 			$this->setWhereCriteria (
 				'extension_instance_id',
-				$parameters['filter_extension_instance_id'],
+				$parameters['criteria_extension_instance_id'],
 				$primary_prefix,
 				$m
 			);
 
 			/** Where: Menu ID */
 			$menu_id = null;
-			if (isset($parameters['menu_extension_catalog_type_id'])
-				&& (int)$parameters['menu_extension_catalog_type_id'] == 1300
+			if (isset($parameters['criteria_extension_catalog_type_id'])
+				&& (int)$parameters['criteria_extension_catalog_type_id'] == 1300
 			) {
 				$this->setWhereCriteria (
 					'menu_id',
-					$m->get('menu_extension_instance_id'),
+					$m->get('item_parent_menu_id'),
 					$primary_prefix,
 					$m
 				);

@@ -115,15 +115,15 @@ Views can be stored in the following locations within a Molajo website, as defin
 Priorities
 
 
-"criteria_asset_priority_site":"100",
-"criteria_asset_priority_application":"200",
-"criteria_asset_priority_user":"300",
-"criteria_asset_priority_extension":"400",
-"criteria_asset_priority_request":"500",
-"criteria_asset_priority_category":"600",
-"criteria_asset_priority_menu_item":"700",
-"criteria_asset_priority_source":"800",
-"criteria_asset_priority_theme":"900",
+"asset_priority_site":"100",
+"asset_priority_application":"200",
+"asset_priority_user":"300",
+"asset_priority_extension":"400",
+"asset_priority_request":"500",
+"asset_priority_category":"600",
+"asset_priority_menu_item":"700",
+"asset_priority_source":"800",
+"asset_priority_theme":"900",
 
 
 
@@ -265,15 +265,15 @@ To load files for a specific Resource Extension, Menu Item, or Resource Item (ex
 
 ### What priority is assigned various files? ###
 
-"criteria_asset_priority_site":"100",
-"criteria_asset_priority_application":"200",
-"criteria_asset_priority_user":"300",
-"criteria_asset_priority_extension":"400",
-"criteria_asset_priority_request":"500",
-"criteria_asset_priority_category":"600",
-"criteria_asset_priority_menu_item":"700",
-"criteria_asset_priority_source":"800",
-"criteria_asset_priority_theme":"900",
+"asset_priority_site":"100",
+"asset_priority_application":"200",
+"asset_priority_user":"300",
+"asset_priority_extension":"400",
+"asset_priority_request":"500",
+"asset_priority_category":"600",
+"asset_priority_menu_item":"700",
+"asset_priority_source":"800",
+"asset_priority_theme":"900",
 
 
 ### Does Molajo combine and minify CSS and JSS files? ###
@@ -376,21 +376,30 @@ To display the User's Full name:
 
 ### Query Results ###
 
-All rows
+All rows (can only be displayed in Custom.php)
 
-    <?php echo '<pre>'; var_dump($this->query_results); echo '</pre>';  ?>
+    <?php
+
+    echo '<pre>';
+        var_dump($this->query_results);
+    echo '</pre>';
+
+    ?>
 
 Single Row
 
-    <?php echo '<pre>'; var_dump($this->row); echo '</pre>';  ?>
+    <?php
+
+    echo '<pre>';
+        var_dump($this->row);
+    echo '</pre>';
+
+    ?>
 
 Specific Column
 
     <?php echo echo $this->row->title; ?>
 
-Pagination
-
-    <?php echo '<pre>'; var_dump($this->pagination); echo '</pre>';  ?>
 
 ---
 
@@ -424,23 +433,6 @@ Options:
 
 Date formats can be changed by overriding the language file.
 
----
-
-# SECTION XI. INTEGRATING OTHER EXTENSION OUTPUT WITHIN A View #
-
-1. How can I render the output for another Resource View within the View file?
-
-        $this->render ('resource-name', array('View' => 'value', 'criteria1' => 'value'));
-
-2. How can I render Module output within the View File?
-
-        $this->render ('module', 'module-name', array('parameter1' => 'value', 'parameter2' => 'value');
-
-3. How can I render a Module Position within the View File?
-
-        $this->render ('position', 'position-name', array('Wrap' => 'name-of-Wrap');
-
----
 
 # SECTION XII. WORKING WITH IMAGES #
 
@@ -473,9 +465,13 @@ Add this to your View or within your content.
 
 The MolajoView class handles View processing. Normal PHP are used in core View files.
 
-2. How can I use Twig to render Molajo output?
+2. Using Mustache for PHP with Molajo.
 
-3. How can I add <insert name of your favorite Theme System here> to render Molajo Output?
+3. Using Twig with Molajo
 
-Simply load the files needed within your resource entry point file and then use them in your View.
+4. Using Ajax with Molajo
+
+5. Using Mustache JS with Molajo
+
+6. Using <insert name of your favorite Theme System here> to render Molajo Output?
 

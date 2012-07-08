@@ -105,7 +105,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$m->model->db->setQuery($sql);
 		$m->model->db->execute();
 
-		$this->parameters['content_catalog_type_id'] = $m->model->db->insertid();
+		$this->parameters['criteria_content_catalog_type_id'] = $m->model->db->insertid();
 
 		/** Create a new Extension Node */
 		$data = new \stdClass();
@@ -293,8 +293,8 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		$m->set('use_special_joins', '0');
 		$m->set('check_view_level_access', '0');
 
-		if (isset($this->parameters['content_catalog_type_id'])) {
-			$temp = (int)$this->parameters['content_catalog_type_id'];
+		if (isset($this->parameters['criteria_content_catalog_type_id'])) {
+			$temp = (int)$this->parameters['criteria_content_catalog_type_id'];
 
 			$m->model->query->where($m->model->db->qn($primary_prefix)
 				. '.' . $m->model->db->qn('catalog_type_id')

@@ -10,4 +10,4 @@
 
 <field name="edit_columns" type="char" null="0"
        default="title,id,featured,start_publishing_datetime,language,ordering"
-       values=""/>
+      />

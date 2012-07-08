@@ -207,10 +207,10 @@ class Controller
 				Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0));
 			$this->set('process_triggers',
 				Services::Registry()->get($this->table_registry_name, 'process_triggers', 0));
-			$this->set('filter_catalog_type_id',
-				Services::Registry()->get($this->table_registry_name, 'filter_catalog_type_id', 0));
-			$this->set('filter_check_published_status',
-				Services::Registry()->get($this->table_registry_name, 'filter_check_published_status', 0));
+			$this->set('criteria_catalog_type_id',
+				Services::Registry()->get($this->table_registry_name, 'criteria_catalog_type_id', 0));
+			$this->set('criteria_published_status',
+				Services::Registry()->get($this->table_registry_name, 'criteria_published_status', 0));
 			$this->set('data_source',
 				Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
 			$this->get('model_offset', 0);

@@ -1,5 +1,5 @@
-<field name="gravatar" type="boolean" null="1" default="0" values="0,1"/>
-<field name="gravatar_size" type="integer" null="1" default="80" values=""/>
-<field name="gravatar_type" type="char" null="1" default="monsterid" values="404,mm,identicon,monsterid,wavatar"/>
-<field name="gravatar_rating" type="char" null="1" default="pg" values="g,pg,r,x"/>
-<field name="gravatar_image" type="integer" null="1" default="0" values="0,1"/>
+<field name="gravatar" type="boolean" null="0" default="0"/>
+<field name="gravatar_size" type="integer" null="0" default="80"/>
+<field name="gravatar_type" type="char" null="0" default="mm" values="404,mm,identicon,monsterid,wavatar"/>
+<field name="gravatar_rating" type="char" null="0" default="pg" values="g,pg,r,x"/>
+<field name="gravatar_image" type="integer" null="0" default="1"/>
