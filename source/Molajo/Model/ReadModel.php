@@ -147,7 +147,7 @@ class ReadModel extends Model
 	 */
 	public function useSpecialJoins($joins, $primary_prefix, $query_object)
 	{
-		$menu_extension_instance_id = (int)$this->get('menu_id', 0);
+		$menu_id = (int)$this->get('menu_id', 0);
 		$catalog_type_id = (int)$this->get('catalog_type_id', 0);
 
 		foreach ($joins as $join) {
@@ -202,7 +202,7 @@ class ReadModel extends Model
 						$whereLeft = SITE_ID;
 
 					} elseif ($to == 'MENU_ID') {
-						$whereLeft = (int)$menu_extension_instance_id;
+						$whereLeft = (int)$menu_id;
 
 					} elseif (is_numeric($to)) {
 						$whereLeft = (int)$to;
@@ -248,7 +248,7 @@ class ReadModel extends Model
 						$whereRight = SITE_ID;
 
 					} elseif ($with == 'MENU_ID') {
-						$whereLeft = (int)$menu_extension_instance_id;
+						$whereLeft = (int)$menu_id;
 
 					} elseif (is_numeric($with)) {
 						$whereRight = (int)$with;

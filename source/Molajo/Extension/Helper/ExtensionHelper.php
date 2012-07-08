@@ -105,14 +105,14 @@ Class ExtensionHelper
 	/**
 	 * Common query for all Extensions - Merges into Parameter Registry
 	 *
-	 * @param $extension_id
-	 * @param string $model_type
-	 * @param string $model_name
-	 * @param string $query_object
-	 * @param string $catalog_type_id
+	 * @param   $extension_id
+	 * @param   string $model_type
+	 * @param   string $model_name
+	 * @param   string $query_object
+	 * @param   string $catalog_type_id
 	 *
-	 * @return bool
-	 * @since  1.0
+	 * @return  bool
+	 * @since   1.0
 	 */
 	public function get(
 		$extension_id = 0, $model_type = 'Table', $model_name = 'ExtensionInstances',

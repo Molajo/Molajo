@@ -5,8 +5,8 @@
                 <field name="intro_text_image" type="file" null="0" default="1"/>
             </customfield>
             <customfield name="customfields">
-                <field name="anything_can_be_added" type="image" null="1" default="" values=""/>
-                <field name="or_overridden" type="image" null="1" default="" values=""/>
+                <field name="anything_can_be_added" type="image" null="1" default=""/>
+                <field name="or_overridden" type="image" null="1" default=""/>
             </customfield>
         </customfields>
     </model>

@@ -82,11 +82,11 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menuitem_modified_datetime', $item->modified_datetime);
 
 		/** Menu Extension */
-		Services::Registry()->set('Parameters', 'menu_extension_instance_id', (int)$item->extension_instances_id);
-		Services::Registry()->set('Parameters', 'menu_extension_title', $item->extension_instances_title);
+		Services::Registry()->set('Parameters', 'menu_id', (int)$item->extension_instances_id);
+		Services::Registry()->set('Parameters', 'menu_title', $item->extension_instances_title);
 		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
-		Services::Registry()->set('Parameters', 'menu_extension_name_path_node', $item->extensions_name);
-		Services::Registry()->set('Parameters', 'menu_extension_catalog_type_id',
+		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
+		Services::Registry()->set('Parameters', 'criteria_extension_catalog_type_id',
 			(int)$item->extension_instances_catalog_type_id);
 
 		/** Process each field namespace  */
@@ -165,11 +165,6 @@ Class ContentHelper
 			}
 			Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
 		}
-
-		/** Save the Trigger for Route */
-		Services::Registry()->set('Parameters', 'Triggers',
-			Services::Registry()->get($item->table_registry_name, 'triggers', array())
-		);
 
 		return true;
 	}

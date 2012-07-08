@@ -13,9 +13,13 @@
     <table>
         <fields>
             <field name="id" type="integer" null="0" default="0" identity="1"/>
+            <field name="type" type="char" null="0" default=" "/>
             <field name="title" type="char" null="0" default=" " unique="1"/>
             <field name="protected" type="boolean" null="0" default="0"/>
+            <field name="model_name" type="char" null="0" default=" " unique="1"/>
             <field name="source_table" type="char" null="0" default=" "/>
+            <field name="slug" type="char" null="0" default=" "/>
+            <field name="routable" type="char" null="0" default="0"/>
         </fields>
     </table>
 </model>

@@ -14,8 +14,8 @@
 
         <fields>
             <field name="id" type="catalog_id" null="0" default="" identity="1"/>
-            <field name="catalog_type_id" type="integer" null="0" default="" values=""/>
-            <field name="source_id" type="integer" null="0" default="" values=""/>
+            <field name="catalog_type_id" type="integer" null="0" default=""/>
+            <field name="source_id" type="integer" null="0" default=""/>
             <field name="routable" type="boolean" null="0" default="0"/>
             <field name="menuitem_type" type="char" null="0" default=" "/>
             <field name="sef_request" type="char" null="0" default=" "/>

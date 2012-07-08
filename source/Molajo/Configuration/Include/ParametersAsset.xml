@@ -1,9 +1,9 @@
-<field name="asset_priority_site" type="integer" null="1" default="100" values=""/>
-<field name="asset_priority_application" type="integer" null="1" default="200" values=""/>
-<field name="asset_priority_user" type="integer" null="1" default="300" values=""/>
-<field name="asset_priority_extension" type="integer" null="1" default="400" values=""/>
-<field name="asset_priority_request" type="integer" null="1" default="500" values=""/>
-<field name="asset_priority_category" type="integer" null="1" default="600" values=""/>
-<field name="asset_priority_menu_item" type="integer" null="1" default="700" values=""/>
-<field name="asset_priority_source" type="integer" null="1" default="800" values=""/>
-<field name="asset_priority_theme" type="integer" null="1" default="900" values=""/>
+<field name="asset_priority_site" type="integer" null="0" default="100"/>
+<field name="asset_priority_application" type="integer" null="0" default="200"/>
+<field name="asset_priority_user" type="integer" null="0" default="300"/>
+<field name="asset_priority_extension" type="integer" null="0" default="400"/>
+<field name="asset_priority_request" type="integer" null="0" default="500"/>
+<field name="asset_priority_category" type="integer" null="0" default="600"/>
+<field name="asset_priority_menu_item" type="integer" null="0" default="700"/>
+<field name="asset_priority_source" type="integer" null="0" default="800"/>
+<field name="asset_priority_theme" type="integer" null="0" default="900"/>

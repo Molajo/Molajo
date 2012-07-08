@@ -1,1 +1,1 @@
-<field name="mustache" type="binary" null="1" default="0" values="0,1"/>
+<field name="mustache" type="binary" null="0" default="0"/>

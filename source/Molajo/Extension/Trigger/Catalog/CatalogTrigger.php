@@ -36,7 +36,7 @@ class CatalogTrigger extends ContentTrigger
 		}
 
 		/** Catalog Activity: fields populated by Catalog Activity triggers */
-		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+		if (Services::Registry()->get('Configuration', 'log_user_activity_update', 1) == 1) {
 			$results = $this->logUserActivity($id, Services::Registry()->get('Actions', 'create'));
 			if ($results == false) {
 				return false;
@@ -61,7 +61,7 @@ class CatalogTrigger extends ContentTrigger
 	 */
 	public function onAfterUpdate()
 	{
-		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+		if (Services::Registry()->get('Configuration', 'log_user_activity_update', 1) == 1) {
 			$results = $this->logUserActivity($this->data->id,
 				Services::Registry()->get('Actions', 'delete'));
 			if ($results == false) {
@@ -129,7 +129,7 @@ class CatalogTrigger extends ContentTrigger
 	{
 		//how to get id - referential integrity?
 		/**
-		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+		if (Services::Registry()->get('Configuration', 'log_user_activity_update', 1) == 1) {
 		$this->logUserActivity($id, Services::Registry()->get('Actions', 'delete'));
 		}
 		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {

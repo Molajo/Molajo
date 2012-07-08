@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Trigger\ItemUserPermissions;
+namespace Molajo\Extension\Trigger\Itemuserpermissions;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class ItemUserPermissionsTrigger extends ContentTrigger
+class ItemuserpermissionsTrigger extends ContentTrigger
 {
 
 	/**

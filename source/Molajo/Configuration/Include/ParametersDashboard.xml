@@ -1,1 +1,1 @@
-<field name="dashboard" type="char" null="0" default="" values=""/>
+<field name="dashboard" type="char" null="0" default=""/>

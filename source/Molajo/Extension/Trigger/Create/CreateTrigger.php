@@ -64,7 +64,7 @@ class CreateTrigger extends ContentTrigger
 	{
 		$sourceFolder = 'Samples';
 		$catalog_type = 'Resource';
-		$catalog_type_id = $this->parameters['content_catalog_type_id'];
+		$catalog_type_id = $this->parameters['criteria_content_catalog_type_id'];
 
 		/** Determine Source Folder for files to copy */
 		$sourceFolder = $this->getSourceFolder($catalog_type, $sourceFolder);
@@ -437,7 +437,7 @@ class CreateTrigger extends ContentTrigger
 					$data->parameters[$key] = $this->data->title;
 
 					//todo get rid of one of these variables
-				} elseif ($key == 'content_catalog_type_id'
+				} elseif ($key == 'criteria_content_catalog_type_id'
 					|| $key == 'menuitem_source_catalog_type_id'
 				) {
 					$data->parameters[$key] = $this->data->catalog_type_id;

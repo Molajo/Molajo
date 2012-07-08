@@ -130,18 +130,8 @@ Class UrlService
 	{
 		$url = BASE_URL . APPLICATION_URL_PATH;
 
-		if ((int)Services::Registry()->get('Configuration', 'url_sef_rewrite', 0) == 1) {
-		} else {
-			$url .= 'index.php/';
-		}
-
 		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
-
 			$url .= $path;
-
-			if ((int)Services::Registry()->get('Configuration', 'url_sef_suffix', 0) == 1) {
-				$url .= '.html';
-			}
 
 		} else {
 			$url .= $path;

@@ -12,11 +12,11 @@
     <model name="Adminfooter">
         <customfields>
             <customfield name="parameters">
-                <field name="copyright_holder" type="char" null="0" default="Molajo" values=""/>
-                <field name="copyright_first_year" type="char" null="1" default="" values=""/>
-                <field name="link" type="char" null="1" default="http://Molajo.org" values=""/>
-                <field name="linked_text" type="char" null="0" default="Molajo" values=""/>
-                <field name="remaining_text" type="char" null="0" default=" is Free Software" values=""/>
+                <field name="copyright_holder" type="char" null="0" default="Molajo"/>
+                <field name="copyright_first_year" type="char" null="1" default=""/>
+                <field name="link" type="char" null="1" default="http://Molajo.org"/>
+                <field name="linked_text" type="char" null="0" default="Molajo"/>
+                <field name="remaining_text" type="char" null="0" default=" is Free Software"/>
             </customfield>
         </customfields>
     </model>
