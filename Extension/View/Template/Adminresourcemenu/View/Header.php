@@ -6,6 +6,7 @@ use Molajo\Service\Services;
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
+defined('MOLAJO') or die; ?>
 $class = '';
 $resource = '';
 $resourceTitle = '';
@@ -21,7 +22,7 @@ if (count(Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs')) > 0) {
 		}
 	}
 }
-defined('MOLAJO') or die; ?>
+?>
 <dl class="sub-nav">
 	<dt><?php echo Services::Language()->translate('STATUS'); ?></dt>
 	<dd<?php echo $class; ?>><a href="<?php echo $resource; ?>"><?php echo $resourceTitle; ?></a></dd>
