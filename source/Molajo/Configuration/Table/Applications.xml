@@ -93,7 +93,7 @@
             <field name="offline_theme_id" type="integer" null="0" default="99"/>
             <field name="offline_page_view_id" type="integer" null="0" default="57"/>
             <field name="offline" type="binary" null="0" default="1"/>
-            <field name="offline_message" type="char" null="0" default="This site is not available.<br /> Please check back again soon."/>
+            <field name="offline_message" type="char" null="0" default="This site is not available.&lt;br /&gt;> Please check back again soon."/>
 
             <field name="error_theme_id" type="integer" null="0" default="99"/>
             <field name="error_page_view_id" type="integer" null="0" default="56"/>

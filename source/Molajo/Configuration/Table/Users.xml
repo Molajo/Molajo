@@ -25,9 +25,8 @@
             <field name="email" type="email" null="0" default=""/>
             <field name="password" type="password" null="0" default=""/>
             <field name="block" type="boolean" null="0" default="0"/>
-            <field name="activation" type="boolean" null="0" default="0"/>
-            <field name="send_email" type="boolean" null="0" default="0"/>
             <field name="register_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+            <field name="activated_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
             <field name="last_visit_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
             <field name="customfields" type="customfield" null="1" default=""/>
             <field name="parameters" type="customfield" null="1" default=""/>

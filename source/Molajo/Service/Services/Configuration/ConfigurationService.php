@@ -429,6 +429,9 @@ Class ConfigurationService
 		if ($model_type == 'Language') {
 			return $model_name . '/' . 'Configuration.xml';
 		}
+		if ($model_name == 'Language') {
+			return EXTENSIONS . '/Language/Configuration.xml';
+		}
 
 		if ($model_type == 'Application') {
 			return CONFIGURATION_FOLDER . '/Application/' . $model_name . '.xml';

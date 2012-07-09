@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Resource" version="1.0" extends="Content">
+<extension type="Comments" version="1.0" extends="Content">
     <name>RESOURCE_COMMENTS_NAME</name>
     <author>Amy Stephen</author>
     <create_date>August 2012</create_date>
