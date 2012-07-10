@@ -1,9 +1,11 @@
+use molajo
+
 -- phpMyAdmin SQL Dump
 -- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 09, 2012 at 01:00 PM
+-- Generation Time: Jul 09, 2012 at 09:37 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.4.3
 
