@@ -278,6 +278,9 @@ Class ConfigurationService
 
 		if ((int)$cache == 1) {
 			Services::Cache()->startCache();
+			Services::Registry()->set('cache', true);
+		} else {
+			Services::Registry()->set('cache', false);
 		}
 
 		return $this;
@@ -334,21 +337,29 @@ Class ConfigurationService
 	 */
 	public static function getFile($model_type, $model_name)
 	{
-		echo '<br /><br /><br /><br /> IN GETFILE'. $model_type . ' ' . $model_name.'<br />';
 		/** Use existing registry values, if existing */
 		$registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
-
-		/** Return registry, if existing */
 		if ($registry == false) {
 		} else {
 			return $registry;
 		}
 
+		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
+		/** Or, use cache, if available */
+		//if (Services::Registry()->get('cache') == true) {
+
+		//	Services::Registry()->createRegistry($registryName);
+		//	if (Services::Cache()->exists(md5($registryName), 'registry')) {
+		//		Services::Registry()->createRegistry($registryName);
+		//		Services::Registry()->loadArray($registryName, Services::Cache()->get($registryName, 'registry'));
+		//		echo 'loading  '.$registry.' from cache<br />';
+		//		return $registry;
+		//	}
+		//}
+
 		/** Using application location structure, locate file */
 		$results = ConfigurationService::locateFile($model_type, $model_name);
-echo '<pre>';
-var_dump($results);
-echo '</pre>';
 
 		if (file_exists($results)) {
 			$path_and_file = $results;
@@ -374,8 +385,6 @@ echo '</pre>';
 		}
 
 		/** Create and Populate Registry */
-		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-
 		Services::Registry()->createRegistry($model_name);
 
 		/** Using Extends allows inheritance of another Model */
@@ -396,6 +405,11 @@ echo '</pre>';
 		/** Custom Fields use type "customfield" <field name="xyz" type="customfield"/> */
 		ConfigurationService::setSpecialFieldsRegistry(
 			$registryName, $xml, '', $path_and_file, $model_name);
+
+		/** Save in Cache */
+		//if (Services::Registry()->get('cache') == true) {
+		//	Services::Cache()->set(md5($registryName), Services::Registry()->getArray($registryName), 'registry');
+		//}
 
 		return $registryName;
 	}
@@ -552,6 +566,7 @@ echo '</pre>';
 		/** 5. Any Resource (in case of delete or using a resource in a non-request position, etc.) */
 		$folders = Services::Filesystem()->folderFolders(EXTENSIONS_RESOURCES, $filter = '',
 			$recurse = false, $fullpath = false, $exclude = array('.git'));
+
 		foreach ($folders as $folder) {
 			if (strtolower($folder) == strtolower($model_name)) {
 				if (file_exists(EXTENSIONS_RESOURCES . '/' . $folder . '/Configuration.xml')) {
