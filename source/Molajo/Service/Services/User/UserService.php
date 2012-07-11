@@ -37,7 +37,7 @@ Class UserService
 	 */
 	public static function getInstance($id = 0)
 	{
-		$id = 42;
+		$id = 1;
 		if (empty(self::$instances[$id])) {
 			$user = new UserService($id);
 			self::$instances[$id] = $user;

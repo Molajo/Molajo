@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Collection" extends="Menuitemresources">
+    <customfields>
+        <customfield name="parameters">
+            <field name="collection_toolbar_buttons" type="char" null="0"
+                   default="new,edit,publish,feature,archive,checkin,restore,delete,trash,options"
+                   values="new,edit,publish,feature,archive,checkin,restore,delete,trash,options"/>
+
+            <field name="collection_submenu_items" type="char" null="0"
+                   default="items,categories,drafts"
+                   values="items,categories,drafts"/>
+
+            <field name="collection_search" type="binary" null="1" default="1"/>
+            <field name="collection_lists" type="char" null="0" default="status"/>
+
+            <field name="collection_columns" type="char" null="0"
+                   default="title,id,featured,start_publishing_datetime,language,ordering"
+                    />
+
+            <field name="collection_criteria" type="char" null="0" default=" "/>
+
+            <field name="collection_ordering" type="char" null="0" default="a.title"/>
+
+            <field name="collection_pagination" type="boolean" null="0" default="1"/>
+            <field name="collection_offset" type="integer" null="0" default="0"/>
+            <field name="collection_count" type="integer" null="0" default="5"/>
+
+            <field name="collection_batch" type="boolean" null="0" default="0"/>
+            <include name="Customfieldscontent"/>
+        </customfield>
+    </customfields>
+</model>

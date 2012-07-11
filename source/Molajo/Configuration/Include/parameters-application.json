@@ -1,5 +1,45 @@
-{
-    "criteria_title":"Articles",
+{   "application_name":"Site 2",
+    "application_home_catalog_id":"139",
+    "application_logon_requirement":"1",
+
+    "url_sef":"1",
+    "url_unicode_slugs":"0",
+    "url_force_ssl":"0",
+
+    "language":"en-GB",
+    "language_direction":"ltr",
+    "language_multilingual":"0",
+    "language_utc_offset":"UTC",
+
+    "profiler":"1",
+    "profiler_verbose":"0",
+    "profiler_start_with":"Initialise",
+    "profiler_end_with":"Response",
+    "profiler_output":"Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Triggers",
+    "profiler_output_queries_table_registry":"0",
+    "profiler_output_queries_sql":"0",
+    "profiler_output_queries_query_results":"0",
+
+    "head_template_view_id":"1340",
+    "head_wrap_view_id":"2090",
+
+    "defer_template_view_id":"1240",
+    "defer_wrap_view_id":"2090",
+
+    "message_template_view_id":"1350",
+    "message_wrap_view_id":"2030",
+
+    "offline_theme_id":"9000",
+    "offline_page_view_id":"230",
+    "offline":"0",
+    "offline_message":"This site is not available.",
+
+    "error_theme_id":"9000",
+    "error_page_view_id":"230",
+    "error_404_message":"Page not found",
+    "error_403_message":"Not authorised",
+
+    "criteria_title":"Administrator Application",
     "criteria_display_view_on_no_results":"0",
     "criteria_snippet_length":"200",
     "criteria_status":"",
@@ -9,6 +49,53 @@
     "criteria_menuitem_extension_instance_id":"",
 
     "mustache":"0",
+
+    "menuitem_type":"",
+
+    "menuitem_source_id":" ",
+    "menuitem_source_catalog_type_id":" ",
+    "menuitem_extension_instance_id":" ",
+
+    "menuitem_theme_id":"9010",
+    "menuitem_page_view_id":"200",
+    "menuitem_page_view_css_id":"",
+    "menuitem_page_view_css_class":"",
+    "menuitem_template_view_id":"1030",
+    "menuitem_template_view_css_id":"",
+    "menuitem_template_view_css_class":"",
+    "menuitem_wrap_view_id":"2030",
+    "menuitem_wrap_view_css_id":"",
+    "menuitem_wrap_view_css_class":"",
+    "menuitem_model_name":"Content",
+    "menuitem_model_type":"Menuitem",
+    "menuitem_model_query_object":"List",
+
+    "list_theme_id":"9010",
+    "list_page_view_id":"220",
+    "list_page_view_css_id":"",
+    "list_page_view_css_class":"",
+    "list_template_view_id":"1050",
+    "list_template_view_css_id":"",
+    "list_template_view_css_class":"",
+    "list_wrap_view_id":"2030",
+    "list_wrap_view_css_id":"",
+    "list_wrap_view_css_class":"",
+    "list_model_name":"Content",
+    "list_model_type":"Table",
+    "list_model_query_object":"List",
+    "list_model_ordering":"start_publishing_datetime",
+    "list_model_direction":"DESC",
+    "list_model_offset":"0",
+    "list_model_count":"5",
+
+    "list_select_archived_content":"1",
+    "list_select_featured_content":"1",
+    "list_select_stickied_content":"1",
+    "list_select_published_date_begin":"",
+    "list_select_published_date_end":"",
+    "list_select_category_list":"0",
+    "list_select_tag_list":"0",
+    "list_select_author_list":"0",
 
     "parent_menuitem":"0",
     "item_parent_menu_id":"0",
@@ -23,7 +110,7 @@
     "item_wrap_view_id":"2030",
     "item_wrap_view_css_id":"",
     "item_wrap_view_css_class":"",
-    "item_model_name":"Articles",
+    "item_model_name":"Content",
     "item_model_type":"Table",
     "item_model_query_object":"Item",
 
@@ -37,7 +124,7 @@
     "form_wrap_view_id":"2030",
     "form_wrap_view_css_id":"",
     "form_wrap_view_css_class":"",
-    "form_model_name":"Articles",
+    "form_model_name":"Content",
     "form_model_type":"Table",
     "form_model_query_object":"Item",
 
@@ -53,8 +140,8 @@
     "enable_tweets":"1",
     "enable_ping":"1",
 
-    "cache":"0",
-    "cache_time":"15",
+    "cache":"1",
+    "cache_time":"5",
     "cache_handler":"file",
 
     "log_user_activity_create":"1",

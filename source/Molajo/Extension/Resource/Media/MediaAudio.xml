@@ -1,3 +1,3 @@
 <extension type="Media" version="1.0" extends="Media">
-    <model name="MediaAudio" catalog_type_id="53000"/>
+    <model name="Mediaaudio" catalog_type_id="53000"/>
 </extension>

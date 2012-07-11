@@ -189,7 +189,7 @@ Class Application
 		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
 
 		if ($results == true) {
-			Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('Application Schedule onAfterInitialise', LOG_OUTPUT_TRIGGERS);
 			$results = Services::Event()->schedule('onAfterInitialise');
 			if (is_array($results)) {
 				$results = true;
@@ -241,8 +241,6 @@ Class Application
 		) {
 			Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
 			$results = Services::Event()->schedule('onAfterRoute');
-			echo 'here';
-			die;
 			if (is_array($results)) {
 				$results = true;
 			}

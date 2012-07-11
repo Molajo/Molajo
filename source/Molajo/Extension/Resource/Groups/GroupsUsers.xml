@@ -1,5 +1,5 @@
 <extension type="Group" version="1.0" extends="Groups">
-    <model name="GroupsUsers" catalog_type_id="120"/>
+    <model name="Groupsusers" catalog_type_id="120"/>
         <customfields>
             <customfield name="parameters">
                 <field name="users_can_join" type="boolean" null="0" default="1"/>

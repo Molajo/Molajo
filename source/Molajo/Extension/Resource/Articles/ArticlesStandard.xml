@@ -1,5 +1,5 @@
 <extension type="Resource" version="1.0" extends="Articles">
-    <model name="ArticlesStandard" catalog_type_id="10000">
+    <model name="Articlesstandard" catalog_type_id="10000">
         <customfields>
             <customfield name="parameters">
                 <field name="intro_text_image" type="file" null="0" default="1"/>

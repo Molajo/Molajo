@@ -173,7 +173,7 @@ Class MenuService
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 
-		$results = $m->connect('Table', 'MenuitemNested');
+		$results = $m->connect('Table', 'MenuitemsNested');
 		if ($results == false) {
 			return false;
 		}

@@ -241,16 +241,23 @@ class ReadController extends Controller
 			$count
 		);
 
+		/** Cache */
+		$keyCache = md5($this->model->query->__toString());
+		if (Services::Cache()->exists($keyCache)) {
+			echo '<br />'.'IT WAS FOUND '.'<br />';
+			return Services::Cache()->get($keyCache);
+		}
+
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
 			Services::Profiler()->set('ReadController->getData SQL Query: <br /><br />'
-					. $this->model->query->__toString(),
-				LOG_OUTPUT_RENDERING, VERBOSE);
+				. $this->model->query->__toString(),
+				LOG_OUTPUT_RENDERING, 0);
 		}
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
 
-		/** Return result (single value) */
+		/** Result */
 		if ($query_object == 'result' || $query_object == 'distinct') {
 
 			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
@@ -261,7 +268,11 @@ class ReadController extends Controller
 				echo '</pre><br /><br />';
 				$message .= ob_get_contents();
 				ob_end_clean();
-				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
+				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, 0);
+			}
+
+			if ((int) Services::Registry()->get('cache', 0) == 1) {
+				Services::Cache()->set($keyCache, $query_results);
 			}
 
 			return $query_results;
@@ -270,6 +281,9 @@ class ReadController extends Controller
 		/** No results */
 		if (count($query_results) > 0) {
 		} else {
+			if ((int) Services::Registry()->get('cache', 0) == 1) {
+				Services::Cache()->set($keyCache, $query_results);
+			}
 			return false;
 		}
 
@@ -327,24 +341,31 @@ class ReadController extends Controller
 			$this->onAfterReadEvent();
 		}
 
-		/** Return List */
+		/** List */
 		if ($query_object == 'list') {
 
 			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
 				$message = 'ReadController->getData Query Results <br /><br />';
 				ob_start();
 				echo '<pre>';
-				var_dump($query_results);
+				var_dump($this->query_results);
 				echo '</pre><br /><br />';
 				$message .= ob_get_contents();
 				ob_end_clean();
 				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
 			}
 
-			return $this->query_results;
+			if ((int) Services::Registry()->get('cache', 0) == 1) {
+				Services::Cache()->set($keyCache, $this->query_results);
+			}
 		}
 
-		/** Return Item */
+		/** Item */
+
+		if ((int) Services::Registry()->get('cache', 0) == 1) {
+			Services::Cache()->set($keyCache, $this->query_results[0]);
+		}
+
 		return $this->query_results[0];
 	}
 

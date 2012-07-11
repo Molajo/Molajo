@@ -204,60 +204,6 @@ class ExtensioninstanceTrigger extends ContentTrigger
 		return true;
 	}
 
-	/**
-	 * Pre-read processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeRead()
-	{
-		return true;
-	}
-
-	/**
-	 * Post-read processing
-	 *
-	 * @return boolean
-	 * @since   1.0                                   ve
-	 */
-	public function onAfterRead()
-	{
-		return true;
-	}
-
-	/**
-	 * On after route
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterAuthorise()
-	{
-		return true;
-	}
-
-	/**
-	 * Pre-update processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		return true;
-	}
-
-	/**
-	 * Post-update processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		return true;
-	}
 
 	/**
 	 * onBeforeDelete -

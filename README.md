@@ -1,9 +1,8 @@
 Molajo
 ======
 
-Molajo is an application development platform written in PHP.  It is free and open source software,
-distributed under the GNU General Public License version 2 or later. For more information about the
-Molajo visit: http://Molajo.org/
+Molajo is a content management framework written in PHP. Molajo is dual licensed under the GNU General
+Public License version 2, or later, and MIT.
 
 # Molajo is pre-alpha, not ready for use #
 

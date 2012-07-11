@@ -79,37 +79,11 @@ class ItemurlTrigger extends ContentTrigger
 	 */
 	public function onAfterRoute()
 	{
-		echo '<pre>';
-		var_dump(Application::Request()->request);
-		echo '<pre />';
+		$url = Application::Request()->get('base_url_path_for_application') .
+			Application::Request()->get('requested_resource_for_route');
 
-		echo 'application base url ' . '<br />';
-		echo Application::Request()->get('base_url_path_for_application') . '<br />';
+		Services::Registry()->set('Parameters', 'full_page_url', $url);
 
-		echo 'page url' . '<br />';
-		echo Services::Registry()->get('Parameters', 'page_url');
-		echo '<br />';
-		echo 'catalog_url_request' . '<br />';
-		echo Services::Registry()->get('Parameters', 'catalog_url_request');
-		echo '<br />';
-		echo 'application_base_url' . '<br />';
-		echo Services::Registry()->get('Configuration', 'application_base_url');
-		echo '<br />';
-
-		/**
-
-		echo '<pre>';
-		var_dump($this->parameters);
-		echo '</pre>';
-
-		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
-		$url .= '/' . $this->parameters['page_url'];
-		$connector = '?';
-		} else {
-		$url .= '/' . $this->parameters['catalog_url_request'];
-		$connector = '&';
-		}
-		 */
-		//	Services::Registry()->set('Trigger', 'full_page_url', $url);
+		return true;
 	}
 }

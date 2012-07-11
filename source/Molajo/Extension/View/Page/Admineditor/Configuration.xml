@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="ViewPage" version="1.0" extends="ExtensionInstancesViewsPages">
+<extension type="ViewPage" version="1.0" extends="ExtensionInstancesviewspages">
     <name>VIEW_PAGE_ADMINEDITOR_NAME</name>
     <author>Amy Stephen</author>
     <create_date>August 2012</create_date>

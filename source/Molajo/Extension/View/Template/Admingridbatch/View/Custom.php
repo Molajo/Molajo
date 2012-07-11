@@ -23,7 +23,7 @@ $action = Services::Registry()->get('Parameters', 'full_page_url');
 	<li class="active" id="batchStatusTab">
 		<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
 			<p>Set the status of items selected above with the status specified below.
-				<include:template name=Formselect value=<?php echo 'gridbatch_status*'; ?>/>
+				<include:template name=Formselectlist value=<?php echo 'gridbatch_status*'; ?>/>
 				<input type="submit" class="submit button small" name="submit" id="action"
 					   value="Apply">
 			</p>
@@ -33,7 +33,7 @@ $action = Services::Registry()->get('Parameters', 'full_page_url');
 	<li id="batchCategoriesTab">
 		<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
 			<p>Associate (or disassociate) the items selected with the specified category(ies).
-				<include:template name=Formselect value=<?php echo 'gridbatch_categories*'; ?>/>
+				<include:template name=Formselectlist value=<?php echo 'gridbatch_categories*'; ?>/>
 				<input type="submit" class="submit button small" name="submit" id="batch-category-create"
 					   value="Add">
 				<input type="submit" class="submit button small" name="submit" id="batch-category-delete"
@@ -45,7 +45,7 @@ $action = Services::Registry()->get('Parameters', 'full_page_url');
 	<li id="batchTagsTab">
 		<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
 			<p>Associate (or disassociate) the items selected with the specified tags(s).
-				<include:template name=Formselect wrap=div wrap-class=filter
+				<include:template name=Formselectlist wrap=div wrap-class=filter
 								  value=<?php echo 'gridbatch_tags*'; ?>/>
 				<input type="text" name="tag" id="tag">
 				<input type="submit" class="submit button small" name="submit" id="batch-tag-create"
@@ -59,7 +59,7 @@ $action = Services::Registry()->get('Parameters', 'full_page_url');
 	<li id="batchPermissionsTab">
 		<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
 			<p>Associate (or disassociate) the items selected with the specified group(s) and permission(s).</p>
-			<include:template name=Formselect value=<?php echo 'gridbatch_groups*'; ?>/>
+			<include:template name=Formselectlist value=<?php echo 'gridbatch_groups*'; ?>/>
 			<ul class="permissions">
 				<li>
 					<label for="permission-create">

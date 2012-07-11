@@ -1,4 +1,4 @@
 <extension type="Category" version="1.0" extends="Categories">
-    <model name="CategoriesTags" catalog_type_id="3500"/>
+    <model name="Categoriestags" catalog_type_id="3500"/>
 </extension>
 

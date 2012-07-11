@@ -257,7 +257,8 @@ Class ConfigurationService
 				die;
 			}
 		}
-
+echo 'here';
+		die;
 		if (defined('APPLICATION_ID')) {
 		} else {
 			define('APPLICATION_ID', Services::Registry()->get('Configuration', 'application_id'));
@@ -323,6 +324,7 @@ Class ConfigurationService
 	 */
 	public static function getFile($model_type, $model_name)
 	{
+		echo '<br /><br /><br /><br /> IN GETFILE'. $model_type . ' ' . $model_name.'<br />';
 		/** Use existing registry values, if existing */
 		$registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
 
@@ -334,6 +336,9 @@ Class ConfigurationService
 
 		/** Using application location structure, locate file */
 		$results = ConfigurationService::locateFile($model_type, $model_name);
+echo '<pre>';
+var_dump($results);
+echo '</pre>';
 
 		if (file_exists($results)) {
 			$path_and_file = $results;
@@ -360,6 +365,7 @@ Class ConfigurationService
 
 		/** Create and Populate Registry */
 		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
 		Services::Registry()->createRegistry($model_name);
 
 		/** Using Extends allows inheritance of another Model */
@@ -450,7 +456,10 @@ Class ConfigurationService
 		}
 
 		/** 1. Menu Item */
-		if ($model_type == 'Menuitem') {
+		if ($model_type == 'Menuitem'
+			|| $model_name == 'Menuitem'
+			|| substr($model_name, 0, 8) == 'Menuitem'
+		) {
 			return ConfigurationService::locateFileMenuitem($model_type, $model_name);
 		}
 
@@ -595,18 +604,23 @@ Class ConfigurationService
 			}
 		}
 
-		/** 3. Override within Menuitem folder ex. GridMenuitem.xml */
-		if (file_exists(EXTENSIONS . '/Menuitems/' . $model_name_type . '.xml')) {
-			return EXTENSIONS . '/Menuitems/' . $model_name_type . '.xml';
+		/** 3. Ex Collection or Dashboard */
+		if (file_exists(EXTENSIONS . '/Menuitem/' . $model_name . '/Configuration.xml')) {
+			return EXTENSIONS . '/Menuitem/' . $model_name . '/Configuration.xml';
 		}
 
-		/** 4. Menuitem Core Configuration folder ex. Grid.xml */
-		if (file_exists(CONFIGURATION_FOLDER . '/Menuitemtype/' . $model_name . '.xml')) {
-			return CONFIGURATION_FOLDER . '/Menuitemtype/' . $model_name . '.xml';
+		/** 4. ex. Resource or Template */
+		if (file_exists(EXTENSIONS . '/Menuitemtype/' . $model_name . '.xml')) {
+			return EXTENSIONS . '/Menuitemtype/' . $model_name . '.xml';
 		}
 
-		/** 5. Menuitem Configuration - default to Menuitems Resource Configuration.xml file */
-		return EXTENSIONS . '/' . ucfirst(strtolower($model_name)) . '/Configuration.xml';
+		/** 4. ex. Resource or Template */
+		if (file_exists(CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml')) {
+			return CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
+		}
+
+		/** 5. Menuitem Default */
+		return EXTENSIONS . '/Menuitem/Configuration.xml';
 
 	}
 
