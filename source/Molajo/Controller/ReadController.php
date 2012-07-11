@@ -271,7 +271,7 @@ class ReadController extends Controller
 				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, 0);
 			}
 
-			if ((int) Services::Cache()->get('on', 0) == 1) {
+			if (Services::Registry()->get('cache') == true) {
 				Services::Cache()->set($keyCache, $query_results);
 			}
 
@@ -281,7 +281,7 @@ class ReadController extends Controller
 		/** No results */
 		if (count($query_results) > 0) {
 		} else {
-			if ((int) Services::Cache()->get('on', 0) == 1) {
+			if (Services::Registry()->get('cache') == true) {
 				Services::Cache()->set($keyCache, $query_results);
 			}
 			return false;
@@ -355,7 +355,7 @@ class ReadController extends Controller
 				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
 			}
 
-			if ((int) Services::Cache()->get('on', 0) == 1) {
+			if (Services::Registry()->get('cache') == true) {
 				Services::Cache()->set($keyCache, $this->query_results);
 			}
 
@@ -363,7 +363,7 @@ class ReadController extends Controller
 		}
 
 		/** Item */
-		if ((int) Services::Cache()->get('on', 0) == 1) {
+		if (Services::Registry()->get('cache') == true) {
 			Services::Cache()->set($keyCache, $this->query_results[0]);
 		}
 

@@ -209,6 +209,7 @@ Class ParseService
 		Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$parameters = Services::Registry()->getArray('RouteParameters');
+
 		$arguments = Services::Event()->schedule('onBeforeParse', array('parameters' => $parameters));
 		if ($arguments == false) {
 			Services::Profiler()->set('ParseService->process onBeforeParse failed', LOG_OUTPUT_TRIGGERS);
@@ -227,6 +228,8 @@ Class ParseService
 		}
 
 		$body = $this->renderLoop();
+		echo $body;
+		die;
 
 		/** Final Includers: Now, the theme, head, messages, and defer <includes /> run */
 		$this->sequence = $this->final;
