@@ -82,12 +82,23 @@ Class CacheService
 	 */
 	public function __construct()
 	{
+		$this->cache = false;
+		return $this;
+	}
+
+	/**
+	 * Start Cache - if so configured
+	 *
+	 * @since  1.0
+	 */
+	public function startCache()
+	{
 		if (Services::Registry()->get('Configuration', 'cache') == 0) {
 			$this->cache = false;
 			return false;
-		} else {
-			$this->cache = true;
 		}
+
+		$this->cache = true;
 
 		if (Services::Registry()->get('Configuration', 'cache_handler', 'file') == 'file') {
 			$this->cache_path = SITE_BASE_PATH . '/'
@@ -102,7 +113,6 @@ Class CacheService
 		}
 
 		Services::Registry()->createRegistry('Cachekeys');
-		echo 'in dsafdsfa';
 		$this->loadCacheKeys();
 
 		return $this;
@@ -156,7 +166,15 @@ Class CacheService
 	 */
 	public function get($key)
 	{
-		return unserialize(file_get_contents($this->cache_path . '/' . $key));
+		if ($key == 'on') {
+			return $this->cache;
+		}
+
+		if ($this->cache == true) {
+			return unserialize(file_get_contents($this->cache_path . '/' . $key));
+		}
+
+		return false;
 	}
 
 
@@ -168,15 +186,12 @@ Class CacheService
 	 */
 	public function loadCacheKeys()
 	{
-		echo $this->cache_path;
 		if (is_dir($this->cache_path)) {
-			echo 'yes';
 		} else {
-			echo 'no';
 			return false;
 		}
 
-		$files = Services::Cache()->folderFiles($this->cache_path);
+		$files = Services::Filesystem()->folderFiles($this->cache_path);
 		if (count($files) > 0
 			|| $files === false
 		) {

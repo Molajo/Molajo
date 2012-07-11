@@ -243,8 +243,8 @@ class ReadController extends Controller
 
 		/** Cache */
 		$keyCache = md5($this->model->query->__toString());
+
 		if (Services::Cache()->exists($keyCache)) {
-			echo '<br />'.'IT WAS FOUND '.'<br />';
 			return Services::Cache()->get($keyCache);
 		}
 
@@ -271,7 +271,7 @@ class ReadController extends Controller
 				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, 0);
 			}
 
-			if ((int) Services::Registry()->get('cache', 0) == 1) {
+			if ((int) Services::Cache()->get('on', 0) == 1) {
 				Services::Cache()->set($keyCache, $query_results);
 			}
 
@@ -281,7 +281,7 @@ class ReadController extends Controller
 		/** No results */
 		if (count($query_results) > 0) {
 		} else {
-			if ((int) Services::Registry()->get('cache', 0) == 1) {
+			if ((int) Services::Cache()->get('on', 0) == 1) {
 				Services::Cache()->set($keyCache, $query_results);
 			}
 			return false;
@@ -355,14 +355,15 @@ class ReadController extends Controller
 				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
 			}
 
-			if ((int) Services::Registry()->get('cache', 0) == 1) {
+			if ((int) Services::Cache()->get('on', 0) == 1) {
 				Services::Cache()->set($keyCache, $this->query_results);
 			}
+
+			return $this->query_results;
 		}
 
 		/** Item */
-
-		if ((int) Services::Registry()->get('cache', 0) == 1) {
+		if ((int) Services::Cache()->get('on', 0) == 1) {
 			Services::Cache()->set($keyCache, $this->query_results[0]);
 		}
 

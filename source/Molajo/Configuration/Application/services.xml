@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
     <service>Registry</service>
+    <service>Cache</service>
     <service>Profiler</service>
     <service>Error</service>
     <service>Version</service>
@@ -31,7 +32,6 @@
     <service>Password</service>
     <service>Authentication</service>
     <service>Search</service>
-    <service>Cache</service>
     <service>Install</service>
     <service>Menu</service>
 </services>

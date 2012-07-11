@@ -92,6 +92,7 @@ Class ConfigurationService
 	 */
 	public function getSite($configuration_file = null)
 	{
+
 		if ($configuration_file === null) {
 			$configuration_file = SITE_BASE_PATH . '/configuration.php';
 		}
@@ -118,7 +119,9 @@ Class ConfigurationService
 		/** Retrieve Sites Data from DB */
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
+
 		$results = $m->connect('Table', 'Sites');
+
 		if ($results == false) {
 			return false;
 		}
@@ -209,6 +212,7 @@ Class ConfigurationService
 	 */
 	protected function getApplication()
 	{
+
 		if (APPLICATION == 'installation') {
 
 			Services::Registry()->set('Configuration', 'application_id', 0);
@@ -250,6 +254,9 @@ Class ConfigurationService
 					if (strtolower($key) == 'profiler') {
 						$profiler = $value;
 					}
+					if (strtolower($key) == 'cache') {
+						$cache = $value;
+					}
 				}
 
 			} catch (\Exception $e) {
@@ -257,8 +264,7 @@ Class ConfigurationService
 				die;
 			}
 		}
-echo 'here';
-		die;
+
 		if (defined('APPLICATION_ID')) {
 		} else {
 			define('APPLICATION_ID', Services::Registry()->get('Configuration', 'application_id'));
@@ -268,6 +274,10 @@ echo 'here';
 
 		if ((int)$profiler == 1) {
 			Services::Profiler()->initiate();
+		}
+
+		if ((int)$cache == 1) {
+			Services::Cache()->startCache();
 		}
 
 		return $this;
