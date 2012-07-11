@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Dashboard" extends="Menuitemresources">
+    <customfields>
+        <customfield name="parameters">
+            <field name="dashboard" type="char" null="0" default=""/>
+            <include name="Customfieldscontent"/>
+        </customfield>
+    </customfields>
+</model>

@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>RESOURCE_CATEGORIES_DESCRIPTION</description>
-    <model name="Categories" catalog_type_id="3000,3500,3600"/>
+    <model name="Categories" catalog_type_id="3000,3200,3500,3600"/>
 </extension>

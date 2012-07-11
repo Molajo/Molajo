@@ -126,6 +126,7 @@ Class ExtensionHelper
 
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
+
 		$m->connect($model_type, $model_name);
 
 		if ((int)$extension_id == 0) {
@@ -239,7 +240,7 @@ Class ExtensionHelper
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 
-		$query_results = $m->connect();
+		$query_results = $m->connect('Table', 'Extensions');
 		if ($query_results == false) {
 			return false;
 		}

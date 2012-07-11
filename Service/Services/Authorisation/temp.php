@@ -28,7 +28,7 @@
 
 	/** Create Group Permissions Rows */
 
-/** Application */
+/** Application
 INSERT INTO `molajo_view_group_permissions` (view_group_id, catalog_id, action_id)
 
 SELECT b.view_group_id, c.id, c.id
@@ -40,3 +40,4 @@ WHERE a.`catalog_type_id` in (100, 120)
 		AND b.view_group_id = c.view_group_id
 			AND d.title = 'view' ;
 
+*/

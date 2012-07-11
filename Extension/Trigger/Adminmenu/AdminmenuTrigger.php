@@ -40,40 +40,6 @@ class AdminmenuTrigger extends ContentTrigger
 			return false;
 		}
 
-		/** URL */
-		$base = Services::Registry()->get('Configuration', 'application_base_url');
-
-		$field = $this->getField('catalog_url_sef_request');
-
-		var_dump($field);
-
-		$sef_url = $this->getFieldValue($field);
-
-		echo $sef_url;
-		echo 'diying in onAfterAuthorise';
-		die;
-
-
-		die;
-		if (Services::Registry()->get('Configuration', 'url_sef') == 1) {
-			echo 'in here';
-
-			$field = $this->getField('page_url');
-
-			echo '<pre>';
-			var_dump($field);
-
-			$fieldValue = $this->getFieldValue($field);
-
-
-			$url .= '/' . $fieldValue;
-		} else {
-			$url .= '/' . $this->getFieldValue('catalog_url_request');
-		}
-		echo $url;
-		die;
-		Services::Registry()->set('Parameters', 'full_page_url', $url);
-
 		/** Create Admin Menus, verifying ACL */
 		$this->setMenu();
 		$this->setPageTitle();

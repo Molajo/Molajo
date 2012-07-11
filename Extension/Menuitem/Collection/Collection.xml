@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model name="CollectionMenutype" extends="MenuitemResources">
-    <customfields>
-        <customfield name="parameters">
-            <include name="ParametersCollection"/>
-            <include name="CustomFieldsContent"/>
-        </customfield>
-    </customfields>
-</model>

@@ -208,7 +208,8 @@ Class ParseService
 		/** Before Event */
 		Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$arguments = Services::Event()->schedule('onBeforeParse');
+		$parameters = Services::Registry()->getArray('RouteParameters');
+		$arguments = Services::Event()->schedule('onBeforeParse', array('parameters' => $parameters));
 		if ($arguments == false) {
 			Services::Profiler()->set('ParseService->process onBeforeParse failed', LOG_OUTPUT_TRIGGERS);
 			return false;

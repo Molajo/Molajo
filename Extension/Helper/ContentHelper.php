@@ -309,11 +309,12 @@ Class ContentHelper
 				. ' Model Type: ' . $model_type
 				. ' Model Name: ' . $model_name
 				. ' Model Query: ' . $model_query_object,
-			LOG_OUTPUT_ROUTING, VERBOSE);
+		LOG_OUTPUT_ROUTING, VERBOSE);
 
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect($model_type, $model_name);
+
 		if ($results == false) {
 			return false;
 		}

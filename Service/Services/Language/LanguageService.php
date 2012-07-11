@@ -373,6 +373,10 @@ Class LanguageService
 
 		/** Determine if language requested is actually installed */
 		$languagesInstalled = Services::Registry()->get('Languages', 'installed');
+		if ($languagesInstalled == false
+			|| count($languagesInstalled) == 0) {
+			return false;
+		}
 
 		$id = 0;
 		foreach ($languagesInstalled as $installed) {

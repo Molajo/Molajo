@@ -137,6 +137,7 @@ Class CatalogHelper
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
+
 		if ($results == false) {
 			return false;
 		}
@@ -178,7 +179,6 @@ Class CatalogHelper
 	 */
 	public function getIDUsingSEFURL($url_sef_request)
 	{
-
 		$controllerClass = 'Molajo\\Controller\\ReadController';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
