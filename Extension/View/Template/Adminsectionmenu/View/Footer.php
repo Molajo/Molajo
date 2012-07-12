@@ -1,5 +1,4 @@
 <?php
-use Molajo\Service\Services;
 
 /**
  * @package    Molajo

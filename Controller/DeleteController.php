@@ -20,263 +20,266 @@ defined('MOLAJO') or die;
  */
 class DeleteController extends ReadController
 {
-	/**
-	 * Delete row and trigger other delete actions
-	 *
-	 * @return bool|object
-	 * @since  1.0
-	 */
-	public function delete()
-	{
-		/** tokens */
+    /**
+     * Delete row and trigger other delete actions
+     *
+     * @return bool|object
+     * @since  1.0
+     */
+    public function delete()
+    {
+        /** tokens */
 
-		if (isset($this->data->model_name)) {
-		} else {
-			return false;
-		}
+        if (isset($this->data->model_name)) {
+        } else {
+            return false;
+        }
 
-		$results = $this->getDeleteData();
-		if ($results === false) {
-			return false;
-		}
+        $results = $this->getDeleteData();
+        if ($results === false) {
+            return false;
+        }
 
-		$results = $this->verifyPermissions();
-		if ($results === false) {
-			//error
-			//return false (not yet)
-		}
+        $results = $this->verifyPermissions();
+        if ($results === false) {
+            //error
+            //return false (not yet)
+        }
 
-		parent::getTriggerList('delete');
+        parent::getTriggerList('delete');
 
-		$valid = $this->onBeforeDeleteEvent();
-		if ($valid === false) {
-			return false;
-			//error
-		}
+        $valid = $this->onBeforeDeleteEvent();
+        if ($valid === false) {
+            return false;
+            //error
+        }
 
-		if ($valid === true) {
+        if ($valid === true) {
 
-			$this->connect('Table', $this->data->model_name, 'DeleteModel');
-			$results = $this->model->delete($this->data, $this->table_registry_name);
+            $this->connect('Table', $this->data->model_name, 'DeleteModel');
+            $results = $this->model->delete($this->data, $this->table_registry_name);
 
-			if ($results === false) {
-			} else {
-				$this->data->id = $results;
-				$results = $this->onAfterDeleteEvent();
-				if ($results === false) {
-					return false;
-					//error
-				}
-				$results = $this->data->id;
-			}
-		}
+            if ($results === false) {
+            } else {
+                $this->data->id = $results;
+                $results = $this->onAfterDeleteEvent();
+                if ($results === false) {
+                    return false;
+                    //error
+                }
+                $results = $this->data->id;
+            }
+        }
 
-		/** redirect */
-		if ($valid === true) {
-			if ($this->get('redirect_on_success', '') == '') {
+        /** redirect */
+        if ($valid === true) {
+            if ($this->get('redirect_on_success', '') == '') {
 
-			} else {
-				Services::Redirect()->url
-					= Services::Url()->getURL($this->get('redirect_on_success'));
-				Services::Redirect()->code == 303;
-			}
+            } else {
+                Services::Redirect()->url
+                    = Services::Url()->getURL($this->get('redirect_on_success'));
+                Services::Redirect()->code == 303;
+            }
 
-		} else {
-			if ($this->get('redirect_on_failure', '') == '') {
+        } else {
+            if ($this->get('redirect_on_failure', '') == '') {
 
-			} else {
-				Services::Redirect()->url
-					= Services::Url()->getURL($this->get('redirect_on_failure'));
-				Services::Redirect()->code == 303;
-			}
-		}
+            } else {
+                Services::Redirect()->url
+                    = Services::Url()->getURL($this->get('redirect_on_failure'));
+                Services::Redirect()->code == 303;
+            }
+        }
 
-		return $results;
-	}
+        return $results;
+    }
 
-	/**
-	 * Retrieve data to be deleted
-	 *
-	 * @param string $connect
-	 *
-	 * @return bool|mixed
-	 * @since  1.0
-	 */
-	public function getDeleteData()
-	{
-		$hold_model_name = $this->data->model_name;
-		$this->connect('Table', $hold_model_name);
+    /**
+     * Retrieve data to be deleted
+     *
+     * @param string $connect
+     *
+     * @return bool|mixed
+     * @since  1.0
+     */
+    public function getDeleteData()
+    {
+        $hold_model_name = $this->data->model_name;
+        $this->connect('Table', $hold_model_name);
 
-		$this->set('use_special_joins', 0);
-		$name_key = $this->get('name_key');
-		$primary_key = $this->get('primary_key');
-		$primary_prefix = $this->get('primary_prefix', 'a');
+        $this->set('use_special_joins', 0);
+        $name_key = $this->get('name_key');
+        $primary_key = $this->get('primary_key');
+        $primary_prefix = $this->get('primary_prefix', 'a');
 
-		if (isset($this->data->$primary_key)) {
-			$this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($primary_key)
-				. ' = ' . $this->model->db->q($this->data->$primary_key));
+        if (isset($this->data->$primary_key)) {
+            $this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($primary_key)
+                . ' = ' . $this->model->db->q($this->data->$primary_key));
 
-		} elseif (isset($this->data->$name_key)) {
-			$this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($name_key)
-				. ' = ' . $this->model->db->q($this->data->$name_key));
+        } elseif (isset($this->data->$name_key)) {
+            $this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($name_key)
+                . ' = ' . $this->model->db->q($this->data->$name_key));
 
-		} else {
-			//only deletes single rows
-			return false;
-		}
+        } else {
+            //only deletes single rows
+            return false;
+        }
 
-		if (isset($this->data->catalog_type_id)) {
-			$this->model->query->where($this->model->db->qn($primary_prefix)
-				. '.' . $this->model->db->qn('catalog_type_id')
-				. ' = ' . $this->model->db->q($this->data->catalog_type_id));
-		}
+        if (isset($this->data->catalog_type_id)) {
+            $this->model->query->where($this->model->db->qn($primary_prefix)
+                . '.' . $this->model->db->qn('catalog_type_id')
+                . ' = ' . $this->model->db->q($this->data->catalog_type_id));
+        }
 
-		$item = $this->getData('item');
+        $item = $this->getData('item');
 //		echo '<br /><br /><br />';
 //		echo $this->model->query->__toString();
 //		echo '<br /><br /><br />';
 
-		if ($item === false) {
-			//error
-			return false;
-		}
+        if ($item === false) {
+            //error
+            return false;
+        }
 
-		$fields = Services::Registry()->get($this->table_registry_name, 'fields');
-		if (count($fields) == 0 || $fields === null) {
-			return false;
-		}
+        $fields = Services::Registry()->get($this->table_registry_name, 'fields');
+        if (count($fields) == 0 || $fields === null) {
+            return false;
+        }
 
-		$this->data = new \stdClass();
-		foreach ($fields as $f) {
-			foreach ($f as $key => $value) {
-				if ($key == 'name') {
-					if (isset($item->$value)) {
-						$this->data->$value = $item->$value;
-					} else {
-						$this->data->$value = null;
-					}
-				}
-			}
-		}
+        $this->data = new \stdClass();
+        foreach ($fields as $f) {
+            foreach ($f as $key => $value) {
+                if ($key == 'name') {
+                    if (isset($item->$value)) {
+                        $this->data->$value = $item->$value;
+                    } else {
+                        $this->data->$value = null;
+                    }
+                }
+            }
+        }
 
-		if (isset($item->catalog_id)) {
-			$this->data->catalog_id = $item->catalog_id;
-		}
-		$this->data->model_name = $hold_model_name;
+        if (isset($item->catalog_id)) {
+            $this->data->catalog_id = $item->catalog_id;
+        }
+        $this->data->model_name = $hold_model_name;
 
-		/** Process each field namespace  */
-		$customFieldTypes = Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups');
+        /** Process each field namespace  */
+        $customFieldTypes = Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups');
 
-		if (count($customFieldTypes) > 0) {
-			foreach ($customFieldTypes as $customFieldName) {
-				$customFieldName = ucfirst(strtolower($customFieldName));
-				Services::Registry()->merge($this->table_registry_name . $customFieldName, $customFieldName);
-				Services::Registry()->deleteRegistry($this->table_registry_name . $customFieldName);
-			}
-		}
-		return true;
-	}
+        if (count($customFieldTypes) > 0) {
+            foreach ($customFieldTypes as $customFieldName) {
+                $customFieldName = ucfirst(strtolower($customFieldName));
+                Services::Registry()->merge($this->table_registry_name . $customFieldName, $customFieldName);
+                Services::Registry()->deleteRegistry($this->table_registry_name . $customFieldName);
+            }
+        }
 
-	/**
-	 * verifyPermissions for Delete
-	 *
-	 * @return bool
-	 * @since  1.0
-	 */
-	protected function verifyPermissions()
-	{
-		//todo - figure out what joining isn't working, get catalog id
-		//$results = Services::Authorisation()->verifyTask('Delete', $this->data->catalog_id);
-		//if ($results === false) {
-		//error
-		//return false (not yet)
-		//}
+        return true;
+    }
 
-		return true;
-	}
+    /**
+     * verifyPermissions for Delete
+     *
+     * @return bool
+     * @since  1.0
+     */
+    protected function verifyPermissions()
+    {
+        //todo - figure out what joining isn't working, get catalog id
+        //$results = Services::Authorisation()->verifyTask('Delete', $this->data->catalog_id);
+        //if ($results === false) {
+        //error
+        //return false (not yet)
+        //}
 
-	/**
-	 * Schedule onBeforeDeleteEvent Event - could update model and data objects
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	protected function onBeforeDeleteEvent()
-	{
-		if (count($this->triggers) == 0
-			|| (int)$this->get('process_triggers') == 0
-		) {
-			return true;
-		}
+        return true;
+    }
 
-		$arguments = array(
-			'table_registry_name' => $this->table_registry_name,
-			'db' => $this->model->db,
-			'data' => $this->data,
-			'null_date' => $this->model->null_date,
-			'now' => $this->model->now,
-			'parameters' => $this->parameters,
-			'model_name' => $this->get('model_name')
-		);
+    /**
+     * Schedule onBeforeDeleteEvent Event - could update model and data objects
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    protected function onBeforeDeleteEvent()
+    {
+        if (count($this->triggers) == 0
+            || (int) $this->get('process_triggers') == 0
+        ) {
+            return true;
+        }
 
-		Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
+        $arguments = array(
+            'table_registry_name' => $this->table_registry_name,
+            'db' => $this->model->db,
+            'data' => $this->data,
+            'null_date' => $this->model->null_date,
+            'now' => $this->model->now,
+            'parameters' => $this->parameters,
+            'model_name' => $this->get('model_name')
+        );
 
-		$arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-		} else {
-			Services::Profiler()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
-			return false;
-		}
+        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
 
-		Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_TRIGGERS);
+        $arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
+        if ($trigger['success'] == true) {
+            $arguments = $trigger['arguments'];
+        } else {
+            Services::Profiler()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		/** Process results */
-		$this->parameters = $arguments['parameters'];
-		$this->data = $arguments['data'];
+            return false;
+        }
 
-		return true;
-	}
+        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_TRIGGERS);
 
-	/**
-	 * Schedule onAfterDeleteEvent Event
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	protected function onAfterDeleteEvent()
-	{
-		if (count($this->triggers) == 0
-			|| (int)$this->get('process_triggers') == 0
-		) {
-			return true;
-		}
+        /** Process results */
+        $this->parameters = $arguments['parameters'];
+        $this->data = $arguments['data'];
 
-		/** Schedule onAfterDelete Event */
-		$arguments = array(
-			'table_registry_name' => $this->table_registry_name,
-			'db' => $this->model->db,
-			'data' => $this->data,
-			'parameters' => $this->parameters,
-			'model_name' => $this->get('model_name')
-		);
+        return true;
+    }
 
-		Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
+    /**
+     * Schedule onAfterDeleteEvent Event
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    protected function onAfterDeleteEvent()
+    {
+        if (count($this->triggers) == 0
+            || (int) $this->get('process_triggers') == 0
+        ) {
+            return true;
+        }
 
-		$arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
-		if ($trigger['success'] == true) {
-			$arguments = $trigger['arguments'];
-		} else {
-			Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS);
-			return false;
-		}
+        /** Schedule onAfterDelete Event */
+        $arguments = array(
+            'table_registry_name' => $this->table_registry_name,
+            'db' => $this->model->db,
+            'data' => $this->data,
+            'parameters' => $this->parameters,
+            'model_name' => $this->get('model_name')
+        );
 
-		Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
 
-		/** Process results */
-		$this->parameters = $arguments['parameters'];
-		$this->data = $arguments['data'];
+        $arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
+        if ($trigger['success'] == true) {
+            $arguments = $trigger['arguments'];
+        } else {
+            Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS);
 
-		return true;
-	}
+            return false;
+        }
+
+        Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
+        /** Process results */
+        $this->parameters = $arguments['parameters'];
+        $this->data = $arguments['data'];
+
+        return true;
+    }
 }

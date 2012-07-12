@@ -20,58 +20,58 @@ defined('MOLAJO') or die;
  */
 class EmailTrigger extends ContentTrigger
 {
-	/**
-	 * After-read processing
-	 *
-	 * Retrieves Author Information for Item
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		$fields = $this->retrieveFieldsByType('email');
+    /**
+     * After-read processing
+     *
+     * Retrieves Author Information for Item
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        $fields = $this->retrieveFieldsByType('email');
 
-		if (is_array($fields) && count($fields) > 0) {
+        if (is_array($fields) && count($fields) > 0) {
 
-			/** @noinspection PhpWrongForeachArgumentTypeInspection */
-			foreach ($fields as $field) {
+            /** @noinspection PhpWrongForeachArgumentTypeInspection */
+            foreach ($fields as $field) {
 
-				$name = $field->name;
-				$new_name = $name . '_' . 'obfuscated';
+                $name = $field->name;
+                $new_name = $name . '_' . 'obfuscated';
 
-				/** Retrieves the actual field value from the 'normal' or special field */
-				$fieldValue = $this->getFieldValue($field);
+                /** Retrieves the actual field value from the 'normal' or special field */
+                $fieldValue = $this->getFieldValue($field);
 
-				if ($fieldValue == false) {
-				} else {
+                if ($fieldValue == false) {
+                } else {
 
-					$newFieldValue = Services::Url()->obfuscateEmail($fieldValue);
+                    $newFieldValue = Services::Url()->obfuscateEmail($fieldValue);
 
-					if ($newFieldValue == false) {
-					} else {
+                    if ($newFieldValue == false) {
+                    } else {
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$fieldValue = $this->saveField($field, $new_name, $newFieldValue);
-					}
-				}
-			}
-		}
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $fieldValue = $this->saveField($field, $new_name, $newFieldValue);
+                    }
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		return false;
-	}
+    /**
+     * Pre-update processing
+     *
+     * @param   $this->data
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeUpdate()
+    {
+        return false;
+    }
 }

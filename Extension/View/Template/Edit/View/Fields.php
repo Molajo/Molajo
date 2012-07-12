@@ -7,7 +7,7 @@
 
 defined('MOLAJO') or die; ?>
 <div class="row">
-	<div class="twelve columns">
+    <div class="twelve columns">
 
-	</div>
+    </div>
 </div>

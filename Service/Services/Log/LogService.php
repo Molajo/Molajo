@@ -101,15 +101,16 @@ Class LogService
         $this->loggers[] = LOG_EMAIL_LOGGER;
         $this->loggers[] = LOG_CONSOLE_LOGGER;
 
-		if (Services::Registry()->get('ProfilerService', 'CurrentPhase') == START_INITIALISE) {
-			$response = Services::Profiler()->setProfilerLogger();
-			if ($response == false) {
-				Services::Profiler()->setConfigurationComplete();
-				return $this;
-			}
-			$this->setLog($response['options'], $response['priority'], $response['types']);
-			Services::Profiler()->setConfigurationComplete();
-		}
+        if (Services::Registry()->get('ProfilerService', 'CurrentPhase') == START_INITIALISE) {
+            $response = Services::Profiler()->setProfilerLogger();
+            if ($response == false) {
+                Services::Profiler()->setConfigurationComplete();
+
+                return $this;
+            }
+            $this->setLog($response['options'], $response['priority'], $response['types']);
+            Services::Profiler()->setConfigurationComplete();
+        }
 
         return $this;
     }
@@ -117,9 +118,9 @@ Class LogService
     /**
      * Initiate a logging activity and define logging options
      *
-     * @param  array   $options  Configuration array
-     * @param  integer $priority Valid priority for log
-     * @param  array   $types    Valid types for log
+     * @param array   $options  Configuration array
+     * @param integer $priority Valid priority for log
+     * @param array   $types    Valid types for log
      *
      * $options array
      *
@@ -146,7 +147,7 @@ Class LogService
      * +++ Molajo custom loggers
      *
      * 4. Email
-	 *
+     *
      * $this->options['sender'] = array(
      * 	Services::Registry()->get('Configuration', 'mail_from'),
      * 	Services::Registry()->get('Configuration', 'mail_from_name')
@@ -156,7 +157,7 @@ Class LogService
      * $this->options['mailer'] = Services::Mail();
      *
      * 5. ChromePHP
-	 *
+     *
      * No addition $option[] values. However, this option requires using Google Chrome and installing this
      * Google Chrome extension: https://chrome.google.com/webstore/detail/noaneddfkdjfnfdakjjmocngnfkfehhd
      * and https://github.com/ccampbell/chromephp
@@ -172,8 +173,8 @@ Class LogService
             $class = 'Joomla\\log\\JLog';
             $class::addLogger($options, $priority, $types);
 
-			} catch (\Exception $e) {
-				throw new \RuntimeException('Unable to set Log: ' . $e->getMessage());
+            } catch (\Exception $e) {
+                throw new \RuntimeException('Unable to set Log: ' . $e->getMessage());
         }
 
         return true;
@@ -214,8 +215,8 @@ Class LogService
             $class = 'Joomla\\log\\JLog';
             $class::add($message, $priority, $type, $date);
         } catch (\Exception $e) {
-			throw new \RuntimeException('Log entry failed for ' . $message . 'Error: ' . $e->getMessage());
-		}
+            throw new \RuntimeException('Log entry failed for ' . $message . 'Error: ' . $e->getMessage());
+        }
 
         return true;
     }

@@ -7,7 +7,6 @@
 namespace Molajo\Extension\Trigger\Cache;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
-use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 

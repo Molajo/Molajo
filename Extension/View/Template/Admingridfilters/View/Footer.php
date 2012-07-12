@@ -6,7 +6,7 @@
  */
 defined('MOLAJO') or die; ?>
 <li>
-	<input type="text"/><input type="submit" class="submit button small" name="search" id="search" value="Search">
+    <input type="text"/><input type="submit" class="submit button small" name="search" id="search" value="Search">
 </li>
 </ul>
 </form>

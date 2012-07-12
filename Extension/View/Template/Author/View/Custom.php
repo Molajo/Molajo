@@ -13,10 +13,10 @@ defined('MOLAJO') or die;
 <h3><?php echo $this->query_results[0]->author_full_name; ?></h3>
 <?php if (trim($this->query_results[0]->author_twitter) == '') {
 } else {
-	?>
+    ?>
 <h4><a href="<?php echo $this->query_results[0]->author_twitter; ?>">
-	<?php echo Services::Language()->translate('Follow me on Twitter'); ?>
+    <?php echo Services::Language()->translate('Follow me on Twitter'); ?>
 </a></h4>
 <?php } ?>
 <h4><?php echo $this->query_results[0]->author_email_obfuscated; ?></h4>
-<?php echo $this->query_results[0]->author_about_me; ?>
+<?php echo $this->query_results[0]->author_about_me;

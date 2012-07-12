@@ -6,5 +6,5 @@
  */
 defined('MOLAJO') or die; ?>
 <ul class="pagination">
-	<li class="unavailable"><a href="">&laquo;</a></li>
+    <li class="unavailable"><a href="">&laquo;</a></li>
 

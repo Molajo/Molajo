@@ -77,9 +77,9 @@ Class ErrorService
 
         } else {
 
-			Services::Response()
+            Services::Response()
                 ->setStatusCode(500)
-				->send('500 Error');
+                ->send('500 Error');
 
             Services::Message()
                 ->set($message, MESSAGE_TYPE_ERROR, 500);

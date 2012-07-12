@@ -20,5 +20,4 @@ defined('MOLAJO') or die;
 class PasswordTrigger extends ContentTrigger
 {
 
-
 }

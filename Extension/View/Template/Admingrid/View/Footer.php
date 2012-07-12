@@ -12,9 +12,9 @@ $columnCount = Services::Registry()->get('Triggerdata', 'GridTableColumns');
 </tbody>
 <tfoot>
 <tr>
-	<td colspan="<?php echo ((int)$columnCount + 1); ?>">
-		<include:template name=Admingridpagination value=GridPagination/>
-	</td>
+    <td colspan="<?php echo ((int) $columnCount + 1); ?>">
+        <include:template name=Admingridpagination value=GridPagination/>
+    </td>
 </tr>
 </tfoot>
 </table>

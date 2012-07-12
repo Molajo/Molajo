@@ -20,14 +20,14 @@ defined('MOLAJO') or die;
 class CollectionTrigger extends ContentTrigger
 {
 
-	/**
-	 * Adds full_name to recordset containing first_name and last_name
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		return true;
-	}
+    /**
+     * Adds full_name to recordset containing first_name and last_name
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        return true;
+    }
 }

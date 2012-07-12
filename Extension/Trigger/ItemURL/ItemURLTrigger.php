@@ -22,68 +22,68 @@ defined('MOLAJO') or die;
 class ItemurlTrigger extends ContentTrigger
 {
 
-	/**
-	 * After-read processing
-	 *
-	 * Provides the Url for any catalog_id field in the recordset
-	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		$fields = $this->retrieveFieldsByType('catalog_id');
+    /**
+     * After-read processing
+     *
+     * Provides the Url for any catalog_id field in the recordset
+     *
+     * @param   $this->data
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        $fields = $this->retrieveFieldsByType('catalog_id');
 
-		if (is_array($fields) && count($fields) > 0) {
+        if (is_array($fields) && count($fields) > 0) {
 
-			foreach ($fields as $field) {
+            foreach ($fields as $field) {
 
-				if ($field->as_name == '') {
-					$name = $field->name;
-				} else {
-					$name = $field->as_name;
-				}
+                if ($field->as_name == '') {
+                    $name = $field->name;
+                } else {
+                    $name = $field->as_name;
+                }
 
-				$fieldValue = $this->getFieldValue($field);
+                $fieldValue = $this->getFieldValue($field);
 
-				if ($fieldValue == false) {
-				} else {
+                if ($fieldValue == false) {
+                } else {
 
-					$newFieldValue = Services::Url()->getUrl($fieldValue);
+                    $newFieldValue = Services::Url()->getUrl($fieldValue);
 
-					if ($newFieldValue == false) {
-					} else {
+                    if ($newFieldValue == false) {
+                    } else {
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$newFieldName = $name . '_' . 'url';
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $newFieldName = $name . '_' . 'url';
 
-						$fieldValue = $this->saveField($field, $newFieldName, $newFieldValue);
-					}
-				}
-			}
-		}
+                        $fieldValue = $this->saveField($field, $newFieldName, $newFieldValue);
+                    }
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Build the page url to be used in links
-	 *
-	 * page_url was set in Route and it contains any non-routable parameters that
-	 * were used. Non-routable parameters include such values as /edit, /new, /tag/value, etc
-	 *
-	 * These values are used in conjunction with the permanent URL for basic operations on that data
-	 */
-	public function onAfterRoute()
-	{
-		$url = Application::Request()->get('base_url_path_for_application') .
-			Application::Request()->get('requested_resource_for_route');
+    /**
+     * Build the page url to be used in links
+     *
+     * page_url was set in Route and it contains any non-routable parameters that
+     * were used. Non-routable parameters include such values as /edit, /new, /tag/value, etc
+     *
+     * These values are used in conjunction with the permanent URL for basic operations on that data
+     */
+    public function onAfterRoute()
+    {
+        $url = Application::Request()->get('base_url_path_for_application') .
+            Application::Request()->get('requested_resource_for_route');
 
-		Services::Registry()->set('Parameters', 'full_page_url', $url);
+        Services::Registry()->set('Parameters', 'full_page_url', $url);
 
-		return true;
-	}
+        return true;
+    }
 }

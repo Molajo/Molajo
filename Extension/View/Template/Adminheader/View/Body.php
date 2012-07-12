@@ -9,9 +9,9 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 $title = Services::Registry()->get('Triggerdata', 'AdminTitle');
 if ($title == '') {
-	$title = $this->row->criteria_title;
+    $title = $this->row->criteria_title;
 } else {
-	$title .= '-' . $this->row->criteria_title;
+    $title .= '-' . $this->row->criteria_title;
 }
 $homeURL = Services::Registry()->get('Configuration', 'application_base_url');
 ?>
