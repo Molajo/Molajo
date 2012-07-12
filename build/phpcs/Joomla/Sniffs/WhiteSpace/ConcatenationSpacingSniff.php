@@ -32,68 +32,60 @@
  */
 class Joomla_Sniffs_WhiteSpace_ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff
 {
-	/**
-	 * Returns an array of tokens this test wants to listen for.
-	 *
-	 * @return array
-	 */
-	public function register()
-	{
-		return array(T_STRING_CONCAT);
-	}//function
+    /**
+     * Returns an array of tokens this test wants to listen for.
+     *
+     * @return array
+     */
+    public function register()
+    {
+        return array(T_STRING_CONCAT);
+    }//function
 
-	/**
-	 * Processes this test, when one of its tokens is encountered.
-	 *
-	 * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-	 * @param integer $stackPtr The position of the current token in the
-	 *                                        stack passed in $tokens.
-	 *
-	 * @return void
-	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-	{
-		$tokens = $phpcsFile->getTokens();
+    /**
+     * Processes this test, when one of its tokens is encountered.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param integer              $stackPtr  The position of the current token in the
+     *                                        stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
 
-		if($tokens[($stackPtr + 1)]['code'] != T_WHITESPACE)
-		{
-			// space after
-			$message = 'Concat operator must be followed by one space';
-			$phpcsFile->addError($message, $stackPtr, 'Missing');
-		}
-		else
-		{
-			$found = strlen($tokens[($stackPtr + 1)]['content']);
+        if ($tokens[($stackPtr + 1)]['code'] != T_WHITESPACE) {
+            // space after
+            $message = 'Concat operator must be followed by one space';
+            $phpcsFile->addError($message, $stackPtr, 'Missing');
+        } else {
+            $found = strlen($tokens[($stackPtr + 1)]['content']);
 
-			if($found > 1)
-			{
-				$error = sprintf('Expected 1 space after concat operator; %s found', $found);
-				$phpcsFile->addError($error, $stackPtr, 'Too much');
-			}
-		}
+            if ($found > 1) {
+                $error = sprintf('Expected 1 space after concat operator; %s found', $found);
+                $phpcsFile->addError($error, $stackPtr, 'Too much');
+            }
+        }
 
-		if($tokens[($stackPtr - 1)]['code'] != T_WHITESPACE)
-		{
-			// space before
-			$message = 'Concat operator must be preceeded by one space';
-			$phpcsFile->addError($message, $stackPtr, 'Missing');
-		}
-		else
-		{
-			if(strpos($tokens[($stackPtr - 2)]['content'], $phpcsFile->eolChar) !== false
-			|| strpos($tokens[($stackPtr - 1)]['content'], $phpcsFile->eolChar) !== false)
-			{
-				// the dot is on a new line
-				return;
-			}
+        if ($tokens[($stackPtr - 1)]['code'] != T_WHITESPACE) {
+            // space before
+            $message = 'Concat operator must be preceeded by one space';
+            $phpcsFile->addError($message, $stackPtr, 'Missing');
+        } else {
+            if(strpos($tokens[($stackPtr - 2)]['content'], $phpcsFile->eolChar) !== false
+            || strpos($tokens[($stackPtr - 1)]['content'], $phpcsFile->eolChar) !== false)
+            {
+                // the dot is on a new line
+                return;
+            }
 
-			$found = strlen($tokens[($stackPtr - 1)]['content']);
+            $found = strlen($tokens[($stackPtr - 1)]['content']);
 
-			if($found > 1)
-			{
-				$error = sprintf('Expected 1 space before concat operator; %s found', $found);
-				$phpcsFile->addError($error, $stackPtr, 'Too much');
-			}
-		}
-	}//function
+            if ($found > 1) {
+                $error = sprintf('Expected 1 space before concat operator; %s found', $found);
+                $phpcsFile->addError($error, $stackPtr, 'Too much');
+            }
+        }
+    }//function
 }//class

@@ -31,7 +31,6 @@
 class Joomla_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_Sniff
 {
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -42,7 +41,6 @@ class Joomla_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer
         return PHP_CodeSniffer_Tokens::$scopeOpeners;
 
     }//end register()
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -106,6 +104,7 @@ class Joomla_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer
         if ($tokens[$lastContent]['line'] === $tokens[$scopeEnd]['line']) {
             $error = 'Closing brace must be on a line by itself';
             $phpcsFile->addError($error, $scopeEnd, 'Line');
+
             return;
         }
 
@@ -139,7 +138,5 @@ class Joomla_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer
 
     }//end process()
 
-
 }//end class
 
-?>

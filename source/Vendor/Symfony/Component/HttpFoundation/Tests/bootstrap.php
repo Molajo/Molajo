@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-spl_autoload_register(function ($class)
-{
-	if (ltrim('SessionHandlerInterface', '/') === $class) {
-		require_once __DIR__ . '/../Resources/stubs/SessionHandlerInterface.php';
-	}
+spl_autoload_register(function ($class) {
+    if (ltrim('SessionHandlerInterface', '/') === $class) {
+        require_once __DIR__ . '/../Resources/stubs/SessionHandlerInterface.php';
+    }
 
-	if (0 !== strpos(ltrim($class, '/'), 'Symfony\Component\HttpFoundation')) {
-		return;
-	}
+    if (0 !== strpos(ltrim($class, '/'), 'Symfony\Component\HttpFoundation')) {
+        return;
+    }
 
-	require_once __DIR__ . '/../' . substr(str_replace('\\', '/', $class), strlen('Symfony\Component\HttpFoundation')) . '.php';
+    require_once __DIR__ . '/../' . substr(str_replace('\\', '/', $class), strlen('Symfony\Component\HttpFoundation')) . '.php';
 });

@@ -20,45 +20,45 @@ defined('MOLAJO') or die;
 class LanguageTrigger extends ContentTrigger
 {
 
-	/**
-	 * Pre-create processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeCreate()
-	{
-		return true;
-	}
+    /**
+     * Pre-create processing
+     *
+     * @param   $this->data
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeCreate()
+    {
+        return true;
+    }
 
-	/**
-	 * Pre-update processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		return true;
-	}
+    /**
+     * Pre-update processing
+     *
+     * @param   $this->data
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeUpdate()
+    {
+        return true;
+    }
 
-	/**
-	 * Pre-delete processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeDelete()
-	{
-		return true;
-	}
+    /**
+     * Pre-delete processing
+     *
+     * @param   $this->data
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeDelete()
+    {
+        return true;
+    }
 }

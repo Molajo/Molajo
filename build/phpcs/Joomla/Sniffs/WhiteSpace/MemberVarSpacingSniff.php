@@ -14,8 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if(class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false)
-{
+if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
 }
 
@@ -53,7 +52,7 @@ class Joomla_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Sta
      * Processes the function tokens within the class.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param integer                  $stackPtr  The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */
@@ -64,20 +63,14 @@ class Joomla_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Sta
         // There needs to be 1 blank line before the var, not counting comments.
         $prevLineToken = null;
 
-        for($i = ($stackPtr); $i > 0; $i--)
-        {
-            if(in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true)
-            {
+        for ($i = ($stackPtr); $i > 0; $i--) {
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                 // Skip comments.
                 continue;
-            }
-            else if(strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false)
-            {
+            } elseif (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
                 // Not the end of the line.
                 continue;
-            }
-            else
-            {
+            } else {
                 // If this is a WHITESPACE token, and the token right before
                 // it is a DOC_COMMENT, then it is just the newline after the
                 // member var's comment, and can be skipped.
@@ -92,28 +85,21 @@ class Joomla_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Sta
             }
         }//for
 
-        if(is_null($prevLineToken) === true)
-        {
+        if (is_null($prevLineToken) === true) {
             // Never found the previous line, which means
             // there are 0 blank lines before the member var.
             $foundLines = 0;
-        }
-        else
-        {
+        } else {
             $prevContent = $phpcsFile->findPrevious(array(T_WHITESPACE, T_DOC_COMMENT), $prevLineToken, null, true);
 
-            if($tokens[$prevContent]['code'] == T_OPEN_CURLY_BRACKET)
-            {
+            if ($tokens[$prevContent]['code'] == T_OPEN_CURLY_BRACKET) {
                 $foundLines = 1;
-            }
-            else
-            {
+            } else {
                 $foundLines  = ($tokens[$prevLineToken]['line'] - $tokens[$prevContent]['line']);
             }
         }//end if
 
-        if($foundLines !== 1)
-        {
+        if ($foundLines !== 1) {
             $error = sprintf('Expected 1 blank line before member var; %s found'
             , $foundLines);
 
@@ -125,7 +111,7 @@ class Joomla_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Sta
      * Processes normal variables.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param integer                  $stackPtr  The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */
@@ -139,7 +125,7 @@ class Joomla_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Sta
      * Processes variables in double quoted strings.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param integer $stackPtr The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */

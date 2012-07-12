@@ -79,10 +79,10 @@ class Joomla_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_Cod
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
                     $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
                     if ($next == $closeBracket) {
-	                    $error = 'Closing parenthesis of a multi-line IF statement must be on the same line';
-	                    $phpcsFile->addError($error, $i, 'CloseBracketNewLine');
-	                    $i ++;
-	                    continue;
+                        $error = 'Closing parenthesis of a multi-line IF statement must be on the same line';
+                        $phpcsFile->addError($error, $i, 'CloseBracketNewLine');
+                        $i ++;
+                        continue;
                     }
                 }
 
@@ -130,4 +130,3 @@ class Joomla_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_Cod
 
 }//end class
 
-?>

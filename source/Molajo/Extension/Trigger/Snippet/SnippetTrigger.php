@@ -7,7 +7,6 @@
 namespace Molajo\Extension\Trigger\Snippet;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
-use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -21,41 +20,41 @@ defined('MOLAJO') or die;
 class SnippetTrigger extends ContentTrigger
 {
 
-	/**
-	 * Parses the Content Text into a snippet, stripped of HTML tags
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		$fields = $this->retrieveFieldsByType('text');
+    /**
+     * Parses the Content Text into a snippet, stripped of HTML tags
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        $fields = $this->retrieveFieldsByType('text');
 
-		$snippetLength = $this->get('criteria_snippet_length', 200);
+        $snippetLength = $this->get('criteria_snippet_length', 200);
 
-		if (is_array($fields) && count($fields) > 0) {
+        if (is_array($fields) && count($fields) > 0) {
 
-			foreach ($fields as $field) {
+            foreach ($fields as $field) {
 
-				$name = $field->name;
+                $name = $field->name;
 
-				$fieldValue = $this->getFieldValue($field);
+                $fieldValue = $this->getFieldValue($field);
 
-				if ($fieldValue == false) {
-				} else {
+                if ($fieldValue == false) {
+                } else {
 
-					$newField = substr(strip_tags($fieldValue), 0, $snippetLength);
+                    $newField = substr(strip_tags($fieldValue), 0, $snippetLength);
 
-					if ($newField == false) {
-					} else {
+                    if ($newField == false) {
+                    } else {
 
-						$newFieldName = $name . '_' . 'snippet';
-						$this->saveField($field, $newFieldName, $newField);
-					}
-				}
-			}
-		}
+                        $newFieldName = $name . '_' . 'snippet';
+                        $this->saveField($field, $newFieldName, $newField);
+                    }
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

@@ -133,7 +133,7 @@ class FilesystemService
 
         } else {
             Echo 'Invalid Filesystem Class: ';
-			//error
+            //error
             return false;
         }
 
@@ -144,7 +144,7 @@ class FilesystemService
         }
 
         echo 'Invalid Filesystem Method: ' . $name;
-		//throw error
+        //throw error
 
         return false;
     }

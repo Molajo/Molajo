@@ -47,16 +47,11 @@ class Joomla_Sniffs_Classes_InstantiateNewClassesSniff implements PHP_CodeSniffe
 
         $cnt = $stackPtr + 1;
 
-        do
-        {
-            if( ! isset($tokens[$cnt]))
-            {
+        do {
+            if ( ! isset($tokens[$cnt])) {
                 $running = false;
-            }
-            else
-            {
-                switch ($tokens[$cnt]['code'])
-                {
+            } else {
+                switch ($tokens[$cnt]['code']) {
                     case T_SEMICOLON:
                         $valid = true;
                         $running = false;
@@ -71,8 +66,7 @@ class Joomla_Sniffs_Classes_InstantiateNewClassesSniff implements PHP_CodeSniffe
                     case T_LNUMBER :
                     case T_CONSTANT_ENCAPSED_STRING :
                     case T_DOUBLE_QUOTED_STRING :
-                        if($started)
-                        {
+                        if ($started) {
                             $valid = true;
                             $running = false;
                         }
@@ -80,8 +74,7 @@ class Joomla_Sniffs_Classes_InstantiateNewClassesSniff implements PHP_CodeSniffe
                         break;
 
                     case T_CLOSE_PARENTHESIS :
-                        if( ! $started)
-                        {
+                        if ( ! $started) {
                             $valid = true;
                         }
 
@@ -94,11 +87,9 @@ class Joomla_Sniffs_Classes_InstantiateNewClassesSniff implements PHP_CodeSniffe
 
                 $cnt ++;
             }
-        }
-        while ($running == true);
+        } while ($running == true);
 
-        if( ! $valid)
-        {
+        if ( ! $valid) {
             $error = 'Instanciating new classes without parameters does not require brackets.';
             $phpcsFile->addError($error, $stackPtr, 'New class');
         }

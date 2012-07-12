@@ -15,36 +15,36 @@ use \Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RedirectResponseTest extends \PHPUnit_Framework_TestCase
 {
-	public function testGenerateMetaRedirect()
-	{
-		$response = new RedirectResponse('foo.bar');
+    public function testGenerateMetaRedirect()
+    {
+        $response = new RedirectResponse('foo.bar');
 
-		$this->assertEquals(1, preg_match(
-			'#<meta http-equiv="refresh" content="\d+;url=foo\.bar" />#',
-			preg_replace(array('/\s+/', '/\'/'), array(' ', '"'), $response->getContent())
-		));
-	}
+        $this->assertEquals(1, preg_match(
+            '#<meta http-equiv="refresh" content="\d+;url=foo\.bar" />#',
+            preg_replace(array('/\s+/', '/\'/'), array(' ', '"'), $response->getContent())
+        ));
+    }
 
-	public function testGenerateLocationHeader()
-	{
-		$response = new RedirectResponse('foo.bar');
+    public function testGenerateLocationHeader()
+    {
+        $response = new RedirectResponse('foo.bar');
 
-		$this->assertTrue($response->headers->has('Location'));
-		$this->assertEquals('foo.bar', $response->headers->get('Location'));
-	}
+        $this->assertTrue($response->headers->has('Location'));
+        $this->assertEquals('foo.bar', $response->headers->get('Location'));
+    }
 
-	public function testGetTargetUrl()
-	{
-		$response = new RedirectResponse('foo.bar');
+    public function testGetTargetUrl()
+    {
+        $response = new RedirectResponse('foo.bar');
 
-		$this->assertEquals('foo.bar', $response->getTargetUrl());
-	}
+        $this->assertEquals('foo.bar', $response->getTargetUrl());
+    }
 
-	public function testCreate()
-	{
-		$response = RedirectResponse::create('foo', 301);
+    public function testCreate()
+    {
+        $response = RedirectResponse::create('foo', 301);
 
-		$this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $response);
-		$this->assertEquals(301, $response->getStatusCode());
-	}
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $response);
+        $this->assertEquals(301, $response->getStatusCode());
+    }
 }

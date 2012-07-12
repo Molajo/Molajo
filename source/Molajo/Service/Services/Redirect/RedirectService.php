@@ -89,8 +89,8 @@ Class RedirectService
         }
 
         Services::Profiler()->set('Redirect Services Set URL: ' . $this->url
-			. ' Status Code: ' . $this->code, LOG_OUTPUT_APPLICATION
-		);
+            . ' Status Code: ' . $this->code, LOG_OUTPUT_APPLICATION
+        );
 
         return;
     }
@@ -103,16 +103,16 @@ Class RedirectService
      */
     public function redirect($url = null, $code = null)
     {
-		if ($url == null) {
-		} else {
-			$this->url = $url;
-		}
-		if ($code == null) {
-		} else {
-			$this->code = $code;
-		}
+        if ($url == null) {
+        } else {
+            $this->url = $url;
+        }
+        if ($code == null) {
+        } else {
+            $this->code = $code;
+        }
         Services::Profiler()->set('RedirectServices::redirect to: ' . $this->url
-			. ' Status Code: ' . $this->code, LOG_OUTPUT_APPLICATION);
+            . ' Status Code: ' . $this->code, LOG_OUTPUT_APPLICATION);
 
         return new RedirectResponse($this->url, $this->code);
     }

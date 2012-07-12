@@ -29,7 +29,6 @@
 class Joomla_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffer_Sniff
 {
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -40,7 +39,6 @@ class Joomla_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSnif
         return array(T_STRING);
 
     }//end register()
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -106,12 +104,12 @@ class Joomla_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSnif
     /**
      * Processes single-line calls.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
-     * @param int                  $stackPtr    The position of the current token
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token
      *                                          in the stack passed in $tokens.
-     * @param int                  $openBracket The position of the openning bracket
+     * @param int $openBracket The position of the openning bracket
      *                                          in the stack passed in $tokens.
-     * @param array                $tokens      The stack of tokens that make up
+     * @param array $tokens The stack of tokens that make up
      *                                          the file.
      *
      * @return void
@@ -147,12 +145,12 @@ class Joomla_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSnif
     /**
      * Processes multi-line calls.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
-     * @param int                  $stackPtr    The position of the current token
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token
      *                                          in the stack passed in $tokens.
-     * @param int                  $openBracket The position of the openning bracket
+     * @param int $openBracket The position of the openning bracket
      *                                          in the stack passed in $tokens.
-     * @param array                $tokens      The stack of tokens that make up
+     * @param array $tokens The stack of tokens that make up
      *                                          the file.
      *
      * @return void
@@ -252,6 +250,4 @@ class Joomla_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSnif
 
     }//end processMultiLineCall()
 
-
 }//end class
-?>

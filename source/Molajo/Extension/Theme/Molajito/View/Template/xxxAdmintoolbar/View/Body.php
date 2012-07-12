@@ -13,63 +13,63 @@ $class = 'last-in-row';
 $element = '';
 
 if (strtolower($this->row->name) == 'apply') {
-	$element = 'f';
-} else if (strtolower($this->row->name) == 'save') {
-	$element = '9';
+    $element = 'f';
+} elseif (strtolower($this->row->name) == 'save') {
+    $element = '9';
 } elseif (strtolower($this->row->name) == 'archive') {
-	$element = '\\';
+    $element = '\\';
 } elseif (strtolower($this->row->name) == 'unarchive') {
-	$element = ']';
+    $element = ']';
 } elseif (strtolower($this->row->name) == 'cancel') {
-	$element = ';';
+    $element = ';';
 } elseif (strtolower($this->row->name) == 'checkin') {
-	$element = '7';
+    $element = '7';
 } elseif (strtolower($this->row->name) == 'copy'
-	|| strtolower($this->row->name) == 'saveascopy'
+    || strtolower($this->row->name) == 'saveascopy'
 ) {
-	$element = '\'';
+    $element = '\'';
 } elseif (strtolower($this->row->name) == 'configure'
-	|| strtolower($this->row->name) == 'options'
+    || strtolower($this->row->name) == 'options'
 ) {
-	$element = 'a';
+    $element = 'a';
 } elseif (strtolower($this->row->name) == 'create'
-	|| strtolower($this->row->name) == 'new'
-	|| strtolower($this->row->name) == 'saveandnew'
+    || strtolower($this->row->name) == 'new'
+    || strtolower($this->row->name) == 'saveandnew'
 ) {
-	$element = 'z';
+    $element = 'z';
 } elseif (strtolower($this->row->name) == 'delete') {
-	$element = 'g';
+    $element = 'g';
 } elseif (strtolower($this->row->name) == 'display') {
 } elseif (strtolower($this->row->name) == 'edit') {
-	$element = '[';
+    $element = '[';
 } elseif (strtolower($this->row->name) == 'feature'
-	|| (strtolower($this->row->name) == 'unfeature')
+    || (strtolower($this->row->name) == 'unfeature')
 ) {
-	$element = 'c';
+    $element = 'c';
 } elseif (strtolower($this->row->name) == 'move') {
-	$element = 'u';
+    $element = 'u';
 } elseif (strtolower($this->row->name) == 'orderdown') {
-	$element = 'x';
+    $element = 'x';
 } elseif (strtolower($this->row->name) == 'orderup') {
-	$element = 'w';
+    $element = 'w';
 } elseif (strtolower($this->row->name) == 'publish'
-	|| strtolower($this->row->name) == 'unpublish'
+    || strtolower($this->row->name) == 'unpublish'
 ) {
-	$element = '1';
+    $element = '1';
 } elseif (strtolower($this->row->name) == 'reorder') {
-	$element = ';';
+    $element = ';';
 } elseif (strtolower($this->row->name) == 'restore') {
-	$element = 's';
+    $element = 's';
 } elseif (strtolower($this->row->name) == 'spam') {
-	$element = '5';
+    $element = '5';
 } elseif (strtolower($this->row->name) == 'sticky'
-	|| strtolower($this->row->name) == 'unsticky'
+    || strtolower($this->row->name) == 'unsticky'
 ) {
 
 } elseif (strtolower($this->row->name) == 'trash'
-	|| strtolower($this->row->name) == 'untrash'
+    || strtolower($this->row->name) == 'untrash'
 ) {
-	$element = 'y';
+    $element = 'y';
 }
 
 ?>

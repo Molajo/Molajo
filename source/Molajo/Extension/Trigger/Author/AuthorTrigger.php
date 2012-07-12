@@ -21,85 +21,86 @@ defined('MOLAJO') or die;
 class AuthorTrigger extends ContentTrigger
 {
 
-	/**
-	 * After-read processing
-	 *
-	 * Retrieves Author Information for Item
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		/** Retrieve created_by field definition */
-		$field = $this->getField('created_by');
-		if ($field == false) {
-			return true;
-		}
+    /**
+     * After-read processing
+     *
+     * Retrieves Author Information for Item
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        /** Retrieve created_by field definition */
+        $field = $this->getField('created_by');
+        if ($field == false) {
+            return true;
+        }
 
-		/** Retrieve the current value for created by field */
-		$fieldValue = $this->getFieldValue($field);
+        /** Retrieve the current value for created by field */
+        $fieldValue = $this->getFieldValue($field);
 
-		if ((int)$fieldValue == 0) {
-			return true;
-		}
+        if ((int) $fieldValue == 0) {
+            return true;
+        }
 
-		/** Author information already available */
-		if (Services::Registry()->exists('Trigger', 'Author' . $fieldValue)) {
+        /** Author information already available */
+        if (Services::Registry()->exists('Trigger', 'Author' . $fieldValue)) {
 
-			$item = Services::Registry()->get('Triggerdata', 'Author' . $fieldValue);
+            $item = Services::Registry()->get('Triggerdata', 'Author' . $fieldValue);
 
-			foreach ($item[0] as $key => $value) {
-				$new_field_name = $key;
-				$this->saveField($field, $new_field_name, $value);
-			}
-			return true;
-		}
+            foreach ($item[0] as $key => $value) {
+                $new_field_name = $key;
+                $this->saveField($field, $new_field_name, $value);
+            }
 
-		/** Using the created_by value, retrieve the Author Profile Data */
-		$controllerClass = 'Molajo\\Controller\\ReadController';
-		$m = new $controllerClass();
-		$results = $m->connect('Table', 'Users');
-		if ($results == false) {
-			return false;
-		}
+            return true;
+        }
 
-		$m->set('id', (int)$fieldValue);
-		$m->set('get_item_children', 0);
+        /** Using the created_by value, retrieve the Author Profile Data */
+        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $m = new $controllerClass();
+        $results = $m->connect('Table', 'Users');
+        if ($results == false) {
+            return false;
+        }
 
-		$item = $m->getData('item');
+        $m->set('id', (int) $fieldValue);
+        $m->set('get_item_children', 0);
 
-		if ($item == false || count($item) == 0) {
-			return false;
-		}
+        $item = $m->getData('item');
 
-		$authorArray = array();
-		$row = new \stdClass();
+        if ($item == false || count($item) == 0) {
+            return false;
+        }
 
-		/** Save each field */
-		foreach (get_object_vars($item) as $key => $value) {
+        $authorArray = array();
+        $row = new \stdClass();
 
-			if (substr($key, 0, strlen('item_')) == 'item_'
-				|| substr($key, 0, strlen('form_')) == 'form_'
-				|| substr($key, 0, strlen('list_')) == 'list_'
-				|| substr($key, 0, strlen('password')) == 'password'
-			) {
+        /** Save each field */
+        foreach (get_object_vars($item) as $key => $value) {
 
-			} else {
+            if (substr($key, 0, strlen('item_')) == 'item_'
+                || substr($key, 0, strlen('form_')) == 'form_'
+                || substr($key, 0, strlen('list_')) == 'list_'
+                || substr($key, 0, strlen('password')) == 'password'
+            ) {
 
-				$new_field_name = 'author' . '_' . $key;
-				$this->saveField($field, $new_field_name, $value);
+            } else {
 
-				$row->$new_field_name = $value;
-			}
+                $new_field_name = 'author' . '_' . $key;
+                $this->saveField($field, $new_field_name, $value);
 
-			$authorArray[] = $row;
-		}
+                $row->$new_field_name = $value;
+            }
 
-		/** Save Trigger Data */
-		Services::Registry()->set('Triggerdata', 'Author' . $fieldValue, $authorArray);
-		Services::Registry()->set('Triggerdata', 'Author', $authorArray);
+            $authorArray[] = $row;
+        }
 
-		return true;
-	}
+        /** Save Trigger Data */
+        Services::Registry()->set('Triggerdata', 'Author' . $fieldValue, $authorArray);
+        Services::Registry()->set('Triggerdata', 'Author', $authorArray);
+
+        return true;
+    }
 }

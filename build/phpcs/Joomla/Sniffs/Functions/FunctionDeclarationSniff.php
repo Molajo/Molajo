@@ -71,7 +71,7 @@ class Joomla_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffe
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
-     * @param array                $tokens    The stack of tokens that make up
+     * @param array $tokens The stack of tokens that make up
      *                                        the file.
      *
      * @return void
@@ -87,14 +87,13 @@ class Joomla_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffe
 
     }//end processSingleLineDeclaration()
 
-
     /**
      * Processes mutli-line declarations.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
-     * @param array                $tokens    The stack of tokens that make up
+     * @param array $tokens The stack of tokens that make up
      *                                        the file.
      *
      * @return void
@@ -121,8 +120,7 @@ class Joomla_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffe
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
         $lastLine     = $tokens[$openBracket]['line'];
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
-            if ($tokens[$i]['line'] !== $lastLine)
-            {
+            if ($tokens[$i]['line'] !== $lastLine) {
                 //-- elkuku: disabled
 //                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
 //                     // Closing brace needs to be indented to the same level
@@ -167,7 +165,7 @@ class Joomla_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffe
             $next = $tokens[($closeBracket + 1)];
             if ($next['code'] !== T_WHITESPACE) {
                 $length = 0;
-            } else if ($next['content'] === $phpcsFile->eolChar) {
+            } elseif ($next['content'] === $phpcsFile->eolChar) {
                 $length = -1;
             } else {
                 $length = strlen($next['content']);
@@ -188,6 +186,7 @@ class Joomla_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffe
 //                 }
 
                 $phpcsFile->addError($error, ($closeBracket + 1), $code, $data);
+
                 return;
             }
 
@@ -222,7 +221,5 @@ class Joomla_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffe
 
     }//end processMultiLineDeclaration()
 
-
 }//end class
 
-?>

@@ -18,4 +18,3 @@ $cropped = imagecreatetruecolor($w, $h);
 imagecopyresampled($cropped, $img, 0, 0, $x, $y, $w, $h, $w, $h);
 imagejpeg($cropped);
 imagedestroy($cropped);
-?>

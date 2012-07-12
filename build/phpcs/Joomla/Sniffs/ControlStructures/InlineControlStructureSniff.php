@@ -48,7 +48,6 @@ class Joomla_Sniffs_ControlStructures_InlineControlStructureSniff extends Generi
      */
     public $error = false;
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -67,7 +66,6 @@ class Joomla_Sniffs_ControlStructures_InlineControlStructureSniff extends Generi
                );
 
     }//end register()
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -115,7 +113,5 @@ class Joomla_Sniffs_ControlStructures_InlineControlStructureSniff extends Generi
 
     }//end process()
 
-
 }//end class
 
-?>

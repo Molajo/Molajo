@@ -65,7 +65,6 @@ class Joomla_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSni
      */
     protected $magicFunctions = array('autoload');
 
-
     /**
      * Constructs a Joomla_Sniffs_NamingConventions_ValidFunctionNameSniff.
      */
@@ -81,7 +80,7 @@ class Joomla_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSni
      * @param PHP_CodeSniffer_File $phpcsFile The file being processed.
      * @param int                  $stackPtr  The position where this token was
      *                                        found.
-     * @param int                  $currScope The position of the current scope.
+     * @param int $currScope The position of the current scope.
      *
      * @return void
      */
@@ -123,40 +122,42 @@ class Joomla_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSni
         $scope          = $methodProps['scope'];
         $scopeSpecified = $methodProps['scope_specified'];
 
-		// Detect if it is marked deprecated
-		$find = array(
-				 T_COMMENT,
-				 T_DOC_COMMENT,
-				 T_CLASS,
-				 T_FUNCTION,
-				 T_OPEN_TAG,
-				);
-		$tokens = $phpcsFile->getTokens();
-		$commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
-		if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_DOC_COMMENT) {
-			$commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1;
-			$comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+        // Detect if it is marked deprecated
+        $find = array(
+                 T_COMMENT,
+                 T_DOC_COMMENT,
+                 T_CLASS,
+                 T_FUNCTION,
+                 T_OPEN_TAG,
+                );
+        $tokens = $phpcsFile->getTokens();
+        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
+        if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_DOC_COMMENT) {
+            $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1;
+            $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
-			try {
-				$this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment, $phpcsFile);
-				$this->commentParser->parse();
-			} catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
-				$line = ($e->getLineWithinComment() + $commentStart);
-				$phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
-				return;
-			}
+            try {
+                $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment, $phpcsFile);
+                $this->commentParser->parse();
+            } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
+                $line = ($e->getLineWithinComment() + $commentStart);
+                $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
 
-			$deprecated = $this->commentParser->getDeprecated();
-			return !is_null($deprecated);
-		}
-		else {
-			 return false;
-		}
+                return;
+            }
+
+            $deprecated = $this->commentParser->getDeprecated();
+
+            return !is_null($deprecated);
+        } else {
+             return false;
+        }
 
         // If it's a private method, it must have an underscore on the front.
         if ($isPublic === false && $methodName{0} !== '_') {
             $error = 'Private method name "%s" must be prefixed with an underscore';
             $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $errorData);
+
             return;
         }
 
@@ -169,6 +170,7 @@ class Joomla_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSni
                      );
             // AJE Changed from error to warning.
             $phpcsFile->addWarning($error, $stackPtr, 'PublicUnderscore', $data);
+
             return;
         }
 
@@ -253,12 +255,14 @@ class Joomla_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSni
             if ($functionName{0} === '_') {
                 $error = 'Function name "%s" is invalid; only private methods should be prefixed with an underscore';
                 $phpcsFile->addError($error, $stackPtr, 'FunctionUnderscore', $errorData);
+
                 return;
             }
 
             if ($functionName{0} !== strtoupper($functionName{0})) {
                 $error = 'Function name "%s" is prefixed with a package name but does not begin with a capital letter';
                 $phpcsFile->addError($error, $stackPtr, 'FunctionNoCaptial', $errorData);
+
                 return;
             }
         }
@@ -267,6 +271,7 @@ class Joomla_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSni
         if (trim($camelCapsPart) === '') {
             $error = 'Function name "%s" is not valid; name appears incomplete';
             $phpcsFile->addError($error, $stackPtr, 'FunctionInvalid', $errorData);
+
             return;
         }
 
@@ -312,7 +317,5 @@ class Joomla_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSni
 
     }//end processTokenOutsideScope()
 
-
 }//end class
 
-?>

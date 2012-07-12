@@ -32,32 +32,30 @@ defined('JPATH_PLATFORM') or die;
  */
 class JLoggerChromephp extends JLogger
 {
-	/**
-	 * Method to add an entry to the log.
-	 *
-	 * @param   JLogEntry  $entry  The log entry object to add to the log.
-	 *
-	 * @return  void
-	 *
-	 * @since   12.1
-	 */
-	public function addEntry(JLogEntry $entry)
-	{
-		$message = $this->priorities[$entry->priority]
-			. ': '
-			. $entry->message
-			. (empty($entry->category) ? '' : ' [' . $entry->category . ']');
+    /**
+     * Method to add an entry to the log.
+     *
+     * @param JLogEntry $entry The log entry object to add to the log.
+     *
+     * @return void
+     *
+     * @since   12.1
+     */
+    public function addEntry(JLogEntry $entry)
+    {
+        $message = $this->priorities[$entry->priority]
+            . ': '
+            . $entry->message
+            . (empty($entry->category) ? '' : ' [' . $entry->category . ']');
 
-		if ($entry->priority == JLog::WARNING) {
-			$method = 'warn';
-		}
-		elseif ($entry->priority == JLog::ERROR) {
-			$method = 'error';
-		}
-		else {
-			$method = 'log';
-		}
+        if ($entry->priority == JLog::WARNING) {
+            $method = 'warn';
+        } elseif ($entry->priority == JLog::ERROR) {
+            $method = 'error';
+        } else {
+            $method = 'log';
+        }
 
-		ChromePhp::$method($message);
-	}
+        ChromePhp::$method($message);
+    }
 }

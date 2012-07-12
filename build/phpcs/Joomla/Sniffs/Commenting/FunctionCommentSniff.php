@@ -83,7 +83,6 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
      */
     protected $currentFile = null;
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -94,7 +93,6 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
         return array(T_FUNCTION);
 
     }//end register()
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -131,9 +129,11 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
         if ($code === T_COMMENT) {
             $error = 'You must use "/**" style comments for a function comment';
             $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
+
             return;
-        } else if ($code !== T_DOC_COMMENT) {
+        } elseif ($code !== T_DOC_COMMENT) {
             $phpcsFile->addError('Missing function doc comment', $stackPtr, 'Missing');
+
             return;
         }
 
@@ -147,6 +147,7 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
         $prevToken = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         if ($prevToken !== $commentEnd) {
             $phpcsFile->addError('Missing function doc comment', $stackPtr, 'Missing');
+
             return;
         }
 
@@ -168,6 +169,7 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
             // Is this the first open tag?
             if ($stackPtr === 0 || $phpcsFile->findPrevious(T_OPEN_TAG, ($prevToken - 1)) === false) {
                 $phpcsFile->addError('Missing function doc comment', $stackPtr, 'Missing');
+
                 return;
             }
         }
@@ -181,6 +183,7 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
             $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
+
             return;
         }
 
@@ -188,6 +191,7 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
         if (is_null($comment) === true) {
             $error = 'Function doc comment is empty';
             $phpcsFile->addError($error, $commentStart, 'Empty');
+
             return;
         }
 
@@ -236,7 +240,6 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
 
     }//end process()
 
-
     /**
      * Process any throw tags that this function comment has.
      *
@@ -264,7 +267,6 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
 
     }//end processThrows()
 
-
     /**
      * Process the return comment of this function comment.
      *
@@ -290,29 +292,25 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
             if ($this->commentParser->getReturn() === null) {
                 $error = 'Missing @return tag in function comment';
                 $this->currentFile->addError($error, $commentEnd, 'MissingReturn');
-            } else if (trim($this->commentParser->getReturn()->getRawContent()) === '') {
+            } elseif (trim($this->commentParser->getReturn()->getRawContent()) === '') {
                 $error    = '@return tag is empty in function comment';
                 $errorPos = ($commentStart + $this->commentParser->getReturn()->getLine());
                 $this->currentFile->addError($error, $errorPos, 'EmptyReturn');
             } else {
-            	if (substr_count($this->commentParser->getReturn()->getWhitespaceAfter(), $this->currentFile->eolChar) !== 2) {
-	                $error    = 'Return comment requires a blank newline after it';
-	                $errorPos = ($this->commentParser->getReturn()->getLine() + $commentStart);
-	                $this->currentFile->addError($error, $errorPos, 'SpacingAfterReturn');
-            	}
+                if (substr_count($this->commentParser->getReturn()->getWhitespaceAfter(), $this->currentFile->eolChar) !== 2) {
+                    $error    = 'Return comment requires a blank newline after it';
+                    $errorPos = ($this->commentParser->getReturn()->getLine() + $commentStart);
+                    $this->currentFile->addError($error, $errorPos, 'SpacingAfterReturn');
+                }
+            }
+        } else {
+            if ($this->commentParser->getReturn() != null) {
+                $error    = 'Constructor and destructor comments must not have a @return tag';
+                $errorPos = ($this->commentParser->getReturn()->getLine() + $commentStart);
+                $this->currentFile->addError($error, $errorPos, 'UselessReturn');
             }
         }
-        else
-        {
-        	if ($this->commentParser->getReturn() != null)
-        	{
-        		$error    = 'Constructor and destructor comments must not have a @return tag';
-        		$errorPos = ($this->commentParser->getReturn()->getLine() + $commentStart);
-        		$this->currentFile->addError($error, $errorPos, 'UselessReturn');
-        	}
-        }
     }//end processReturn()
-
 
     /**
      * Process the function parameter comments.
@@ -467,13 +465,13 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
 
             }//end foreach
 
-			// Joomla modification to 2 spaces.
+            // Joomla modification to 2 spaces.
             if ($spaceBeforeVar !== 2 && $spaceBeforeVar !== 10000 && $spaceBeforeComment !== 10000) {
                 $error = 'Expected 2 spaces after the longest type';
                 $this->currentFile->addError($error, $longestType, 'SpacingAfterLongType');
             }
 
-			// Joomla modification to 2 spaces.
+            // Joomla modification to 2 spaces.
             if ($spaceBeforeComment !== 2 && $spaceBeforeComment !== 10000) {
                 $error = 'Expected 2 spaces after the longest variable name';
                 $this->currentFile->addError($error, $longestVar, 'SpacingAfterLongName');
@@ -502,7 +500,5 @@ class Joomla_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_S
 
     }//end processParams()
 
-
 }//end class
 
-?>

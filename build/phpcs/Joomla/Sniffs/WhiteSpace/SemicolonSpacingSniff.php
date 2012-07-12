@@ -56,7 +56,7 @@ class Joomla_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param integer                  $stackPtr  The position of the current token
+     * @param integer              $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
      * @return void
@@ -67,8 +67,7 @@ class Joomla_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_
 
         $prevType = $tokens[($stackPtr - 1)]['code'];
 
-        if(in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true)
-        {
+        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
             $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 2), null, true);
             $expected = $tokens[$nonSpace]['content'].';';
             $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).';';

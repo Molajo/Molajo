@@ -10,4 +10,4 @@ defined('MOLAJO') or die;
 
 $action = Services::Registry()->get('Parameters', 'full_page_url'); ?>
 <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
-	<ul class="filter">
+    <ul class="filter">

@@ -21,14 +21,14 @@ $class = 'Molajo\\Application';
 
 /** Autoload, Namespaces and Overrides */
 if (file_exists(BASE_FOLDER . '/OverrideAutoload.php')) {
-	require_once BASE_FOLDER . '/OverrideAutoload.php';
+    require_once BASE_FOLDER . '/OverrideAutoload.php';
 } else {
-	require_once BASE_FOLDER . '/Autoload.php';
+    require_once BASE_FOLDER . '/Autoload.php';
 }
 
 /** Execute the application */
 $app = new $class ();
 $app->process(
-	$override_url_request, $override_catalog_id,
-	$override_sequenceXML, $override_finalXML
+    $override_url_request, $override_catalog_id,
+    $override_sequenceXML, $override_finalXML
 );

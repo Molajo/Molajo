@@ -45,7 +45,6 @@ class Joomla_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
                                    T_SWITCH,
                                   );
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -61,7 +60,6 @@ class Joomla_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
                );
 
     }//end register()
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -119,7 +117,7 @@ class Joomla_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
                 $error .= 'use "include_once" instead';
                 // AJE Change to warning.
                 $phpcsFile->addWarning($error, $stackPtr, 'UseIncludeOnce');
-            } else if ($tokenCode === T_REQUIRE) {
+            } elseif ($tokenCode === T_REQUIRE) {
                 $error  = 'File is being conditionally included; ';
                 $error .= 'use "include" instead';
                 // AJE Change to warning.
@@ -131,7 +129,7 @@ class Joomla_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
                 $error  = 'File is being unconditionally included; ';
                 $error .= 'use "require_once" instead';
                 $phpcsFile->addError($error, $stackPtr, 'UseRequireOnce');
-            } else if ($tokenCode === T_INCLUDE) {
+            } elseif ($tokenCode === T_INCLUDE) {
                 $error  = 'File is being unconditionally included; ';
                 $error .= 'use "require" instead';
                 $phpcsFile->addError($error, $stackPtr, 'UseRequire');
@@ -140,7 +138,5 @@ class Joomla_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 
     }//end process()
 
-
 }//end class
 
-?>

@@ -14,8 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if(class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false)
-{
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
 }
 
@@ -57,8 +56,8 @@ class Joomla_Sniffs_Classes_MethodScopeSniff extends PHP_CodeSniffer_Standards_A
      * Processes the function tokens within the class.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param integer                  $stackPtr  The position where the token was found.
-     * @param integer                  $currScope The current scope opener token.
+     * @param integer              $stackPtr  The position where the token was found.
+     * @param integer              $currScope The current scope opener token.
      *
      * @return void
      */
@@ -68,16 +67,14 @@ class Joomla_Sniffs_Classes_MethodScopeSniff extends PHP_CodeSniffer_Standards_A
 
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
-        if($methodName === null)
-        {
+        if ($methodName === null) {
             // Ignore closures.
             return;
         }
 
         $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
 
-        if(($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line']))
-        {
+        if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {
             $error = sprintf('No scope modifier specified for function "%s"'
             , $methodName);
 

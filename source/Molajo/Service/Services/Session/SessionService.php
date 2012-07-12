@@ -109,42 +109,41 @@ Class SessionService
         return $sessionStorage;
     }
 
+    /**
+     * Loads the session configuration.
+     *
+     * @param array            $config    A session configuration array
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     * @param XmlFileLoader    $loader    An XmlFileLoader instance
+     */
+    private function registerSessionConfiguration(array $config, ContainerBuilder $container, XmlFileLoader $loader)
+    {
+        $loader->load('session.xml');
 
-	/**
-	 * Loads the session configuration.
-	 *
-	 * @param array            $config    A session configuration array
-	 * @param ContainerBuilder $container A ContainerBuilder instance
-	 * @param XmlFileLoader    $loader    An XmlFileLoader instance
-	 */
-	private function registerSessionConfiguration(array $config, ContainerBuilder $container, XmlFileLoader $loader)
-	{
-		$loader->load('session.xml');
+        // session
+        $container->getDefinition('session_listener')->addArgument($config['auto_start']);
+        $container->setParameter('session.default_locale', $config['default_locale']);
 
-		// session
-		$container->getDefinition('session_listener')->addArgument($config['auto_start']);
-		$container->setParameter('session.default_locale', $config['default_locale']);
+        // session storage
+        $container->setAlias('session.storage', $config['storage_id']);
+        $options = array();
+        foreach (array('name', 'lifetime', 'path', 'domain', 'secure', 'httponly') as $key) {
+            if (isset($config[$key])) {
+                $options[$key] = $config[$key];
+            }
+        }
+        $container->setParameter('session.storage.options', $options);
 
-		// session storage
-		$container->setAlias('session.storage', $config['storage_id']);
-		$options = array();
-		foreach (array('name', 'lifetime', 'path', 'domain', 'secure', 'httponly') as $key) {
-			if (isset($config[$key])) {
-				$options[$key] = $config[$key];
-			}
-		}
-		$container->setParameter('session.storage.options', $options);
+        $this->addClassesToCompile(array(
+            'Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener',
+            'Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface',
+            $container->getDefinition('session')->getClass(),
+        ));
 
-		$this->addClassesToCompile(array(
-			'Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener',
-			'Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface',
-			$container->getDefinition('session')->getClass(),
-		));
-
-		if ($container->hasDefinition($config['storage_id'])) {
-			$this->addClassesToCompile(array(
-				$container->findDefinition('session.storage')->getClass(),
-			));
-		}
-	}
+        if ($container->hasDefinition($config['storage_id'])) {
+            $this->addClassesToCompile(array(
+                $container->findDefinition('session.storage')->getClass(),
+            ));
+        }
+    }
 }

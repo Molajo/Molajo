@@ -14,8 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if(class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false)
-{
+if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
 }
 
@@ -44,7 +43,7 @@ class Joomla_Sniffs_Classes_MemberVarScopeSniff extends PHP_CodeSniffer_Standard
      * Processes the function tokens within the class.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param integer                  $stackPtr  The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */
@@ -54,8 +53,7 @@ class Joomla_Sniffs_Classes_MemberVarScopeSniff extends PHP_CodeSniffer_Standard
 
         $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
 
-        if(($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line']))
-        {
+        if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {
             $error = sprintf('Scope modifier not specified for member variable "%s"'
             , $tokens[$stackPtr]['content']);
 
@@ -67,7 +65,7 @@ class Joomla_Sniffs_Classes_MemberVarScopeSniff extends PHP_CodeSniffer_Standard
      * Processes normal variables.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param integer                  $stackPtr  The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */
@@ -81,7 +79,7 @@ class Joomla_Sniffs_Classes_MemberVarScopeSniff extends PHP_CodeSniffer_Standard
      * Processes variables in double quoted strings.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param integer                  $stackPtr  The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */

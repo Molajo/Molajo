@@ -14,8 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if(class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false)
-{
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
 }
 
@@ -45,9 +44,9 @@ class Joomla_Sniffs_Classes_StaticThisUsageSniff extends PHP_CodeSniffer_Standar
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The current file being scanned.
-     * @param integer                  $stackPtr  The position of the current token in the
+     * @param integer              $stackPtr  The position of the current token in the
      *                                        stack passed in $tokens.
-     * @param integer                  $currScope A pointer to the start of the scope.
+     * @param integer $currScope A pointer to the start of the scope.
      *
      * @return void
      */
@@ -56,8 +55,7 @@ class Joomla_Sniffs_Classes_StaticThisUsageSniff extends PHP_CodeSniffer_Standar
         $tokens   = $phpcsFile->getTokens();
         $function = $tokens[($stackPtr + 2)];
 
-        if($function['code'] !== T_STRING)
-        {
+        if ($function['code'] !== T_STRING) {
             return;
         }
 
@@ -67,10 +65,8 @@ class Joomla_Sniffs_Classes_StaticThisUsageSniff extends PHP_CodeSniffer_Standar
 
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
-        if($methodProps['is_static'] === true)
-        {
-            if(isset($tokens[$stackPtr]['scope_closer']) === false)
-            {
+        if ($methodProps['is_static'] === true) {
+            if (isset($tokens[$stackPtr]['scope_closer']) === false) {
                 // There is no scope opener or closer, so the function
                 // must be abstract.
                 return;
@@ -81,8 +77,7 @@ class Joomla_Sniffs_Classes_StaticThisUsageSniff extends PHP_CodeSniffer_Standar
             while(($thisUsage = $phpcsFile->findNext(array(T_VARIABLE)
             , ($thisUsage + 1), $tokens[$stackPtr]['scope_closer'], false, '$this')) !== false)
             {
-                if($thisUsage === false)
-                {
+                if ($thisUsage === false) {
                     return;
                 }
 

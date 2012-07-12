@@ -42,7 +42,6 @@ class Joomla_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSniff
                                    'CSS',
                                   );
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -53,7 +52,6 @@ class Joomla_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSniff
         return array(T_WHITESPACE);
 
     }//end register()
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -81,7 +79,5 @@ class Joomla_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSniff
 
     }//end process()
 
-
 }//end class
 
-?>

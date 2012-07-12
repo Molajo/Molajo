@@ -32,7 +32,6 @@
 class Joomla_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -43,7 +42,6 @@ class Joomla_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_Code
         return array(T_ELSE);
 
     }//end register()
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -67,13 +65,11 @@ class Joomla_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_Code
         true
       );
 
-      if($tokens[$nextNonWhiteSpace]['code'] == T_IF)
-      {
+      if ($tokens[$nextNonWhiteSpace]['code'] == T_IF) {
         $error = 'Usage of ELSE IF is not allowed; use ELSEIF instead';
         $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
       }
 
     }//end process()
-
 
 }//end class

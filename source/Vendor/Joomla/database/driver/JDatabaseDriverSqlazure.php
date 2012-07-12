@@ -9,11 +9,8 @@
 
 namespace Joomla\database\driver;
 
-use Joomla\database\JDatabaseDriver;
 
-use Joomla\log\JLog;
 
-use Joomla\JText;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -27,11 +24,11 @@ defined('JPATH_PLATFORM') or die;
  */
 class JDatabaseDriverSqlazure extends JDatabaseDriverSqlsrv
 {
-	/**
-	 * The name of the database driver.
-	 *
-	 * @var    string
-	 * @since  12.1
-	 */
-	public $name = 'sqlzure';
+    /**
+     * The name of the database driver.
+     *
+     * @var    string
+     * @since  12.1
+     */
+    public $name = 'sqlzure';
 }

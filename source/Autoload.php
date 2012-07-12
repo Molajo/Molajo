@@ -9,11 +9,11 @@ defined('MOLAJO') or die;
 /** used in this script */
 if (defined('APPLICATIONS')) {
 } else {
-	define('APPLICATIONS', BASE_FOLDER . '/Molajo');
+    define('APPLICATIONS', BASE_FOLDER . '/Molajo');
 }
 if (defined('VENDOR')) {
 } else {
-	define('VENDOR', BASE_FOLDER . '/Vendor');
+    define('VENDOR', BASE_FOLDER . '/Vendor');
 }
 
 /** Use Symfony ClassLoader for Autoload */
@@ -51,21 +51,21 @@ $s->registerNamespace('Symfony\\Component\\HttpFoundation', VENDOR);
 $s->registerNamespace('Symfony\\Component\\HttpFoundation\\Session', VENDOR);
 if (interface_exists('SessionHandlerInterface')) {
 } else {
-	$s->registerPrefixFallback(VENDOR . '/Symfony/Component/HttpFoundation/Resources/stubs');
+    $s->registerPrefixFallback(VENDOR . '/Symfony/Component/HttpFoundation/Resources/stubs');
 }
 
 /** Joomla namespaces */
 if (defined('JPATH_SITE')) {
 } else {
-	define('JPATH_SITE', BASE_FOLDER);
+    define('JPATH_SITE', BASE_FOLDER);
 }
 if (defined('JPATH_PLATFORM')) {
 } else {
-	define('JPATH_PLATFORM', VENDOR . '/Joomla');
+    define('JPATH_PLATFORM', VENDOR . '/Joomla');
 }
 if (defined('JPATH_LIBRARIES')) {
 } else {
-	define('JPATH_LIBRARIES', VENDOR . '/Joomla');
+    define('JPATH_LIBRARIES', VENDOR . '/Joomla');
 }
 $s->registerNamespace('Joomla', VENDOR);
 $s->registerNamespace('Joomla\\client', VENDOR);
@@ -109,5 +109,5 @@ $s->registerNamespace('Simplepie', VENDOR);
 
 if (defined('HTMPURIFIER_FILTERS')) {
 } else {
-	define('HTMPURIFIER_FILTERS', VENDOR . '/HTMLPurifier/filters');
+    define('HTMPURIFIER_FILTERS', VENDOR . '/HTMLPurifier/filters');
 }

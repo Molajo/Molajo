@@ -123,7 +123,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                        ),
                 );
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -134,7 +133,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         return array(T_OPEN_TAG);
 
     }//end register()
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -189,14 +187,16 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$commentStart]['code'] === T_CLOSE_TAG) {
             // We are only interested if this is the first open tag.
             return;
-        } else if ($tokens[$commentStart]['code'] === T_COMMENT) {
+        } elseif ($tokens[$commentStart]['code'] === T_COMMENT) {
             $error = 'You must use "/**" style comments for a file comment';
             $phpcsFile->addError($error, $errorToken, 'WrongStyle');
+
             return;
-        } else if ($commentStart === false
+        } elseif ($commentStart === false
             || $tokens[$commentStart]['code'] !== T_DOC_COMMENT
         ) {
             $phpcsFile->addError('Missing file doc comment', $errorToken, 'Missing');
+
             return;
         } else {
 
@@ -246,6 +246,7 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         // The doc block is most likely a class comment.
                         $error = 'Missing file doc comment';
                         $phpcsFile->addError($error, $errorToken, 'Missing');
+
                         return;
                     }
                 }
@@ -263,6 +264,7 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
                 $line = ($e->getLineWithinComment() + $commentStart);
                 $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
+
                 return;
             }
 
@@ -270,6 +272,7 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (is_null($comment) === true) {
                 $error = 'File doc comment is empty';
                 $phpcsFile->addError($error, $commentStart, 'Empty');
+
                 return;
             }
 
@@ -321,7 +324,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }//end process()
 
-
 //    /**
 //     * Check that the PHP version is specified.
 //     *
@@ -339,7 +341,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 //        }
 //
 //    }//end processPHPVersion()
-
 
     /**
      * Processes each required or optional tag.
@@ -508,11 +509,10 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }//end processTags()
 
-
     /**
      * Get the indentation information of each tag.
      *
-     * @param string                                   $tagName    The name of the
+     * @param string $tagName The name of the
      *                                                             doc comment
      *                                                             element.
      * @param PHP_CodeSniffer_CommentParser_DocElement $tagElement The doc comment
@@ -526,7 +526,7 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($tagElement->getContent() !== '') {
                 return (strlen($tagName) + substr_count($tagElement->getWhitespaceBeforeContent(), ' '));
             }
-        } else if ($tagElement instanceof PHP_CodeSniffer_CommentParser_PairElement) {
+        } elseif ($tagElement instanceof PHP_CodeSniffer_CommentParser_PairElement) {
             if ($tagElement->getValue() !== '') {
                 return (strlen($tagName) + substr_count($tagElement->getWhitespaceBeforeValue(), ' '));
             }
@@ -535,7 +535,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         return 0;
 
     }//end getIndentation()
-
 
     /**
      * Process the category tag.
@@ -575,7 +574,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }//end processCategory()
 
-
     /**
      * Process the package tag.
      *
@@ -614,7 +612,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }//end processPackage()
 
-
     /**
      * Process the subpackage tag.
      *
@@ -652,7 +649,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
     }//end processSubpackage()
-
 
     /**
      * Process the author tag(s) that this header comment has.
@@ -693,7 +689,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
     }//end processAuthors()
-
 
     /**
      * Process the copyright tags.
@@ -736,7 +731,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }//end processCopyrights()
 
-
     /**
      * Process the license tag.
      *
@@ -758,7 +752,6 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }//end processLicense()
 
-
     /**
      * Process the version tag.
      *
@@ -775,7 +768,7 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (empty($content) === true) {
                 $error = 'Content missing for @version tag in file comment';
                 $this->currentFile->addError($error, $errorPos, 'EmptyVersion');
-            } else if (strstr($content, 'CVS:') === false
+            } elseif (strstr($content, 'CVS:') === false
                 && strstr($content, 'SVN:') === false
                 && strstr($content, 'Id:') === false
             ) {
@@ -787,7 +780,5 @@ class Joomla_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }//end processVersion()
 
-
 }//end class
 
-?>

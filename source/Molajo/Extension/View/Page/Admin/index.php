@@ -1,5 +1,4 @@
 <?php
-use Molajo\Service\Services;
 
 /**
  * @package     Molajo
@@ -11,16 +10,16 @@ defined('MOLAJO') or die; ?>
 <include:template name="Adminheader" wrap="div" wrap_class="row"/>
 <include:message wrap="div" wrap_class="row"/>
 <div class="row">
-	<nav class="one columns">
-		<include:template name=Adminnavigationbar/>
-	</nav>
-	<section class="eleven columns">
-		<include:request/>
-	</section>
+    <nav class="one columns">
+        <include:template name=Adminnavigationbar/>
+    </nav>
+    <section class="eleven columns">
+        <include:request/>
+    </section>
 </div>
 <div class="row">
-	<div class="twelve columns">
-		<include:template name=Adminfooter wrap=none/>
-	</div>
+    <div class="twelve columns">
+        <include:template name=Adminfooter wrap=none/>
+    </div>
 </div>
 <include:defer/>

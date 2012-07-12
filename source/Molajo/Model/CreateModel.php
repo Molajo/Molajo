@@ -19,146 +19,146 @@ defined('MOLAJO') or die;
  */
 class CreateModel extends Model
 {
-	/**
-	 * create - inserts a new row into a table
-	 *
-	 * @param  $data
-	 *
-	 * @return object
-	 * @since  1.0
-	 */
-	public function create($data, $table_registry_name)
-	{
-		$table_name = Services::Registry()->get($table_registry_name, 'table');
-		$primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
+    /**
+     * create - inserts a new row into a table
+     *
+     * @param  $data
+     *
+     * @return object
+     * @since  1.0
+     */
+    public function create($data, $table_registry_name)
+    {
+        $table_name = Services::Registry()->get($table_registry_name, 'table');
+        $primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
 
-		/** Prepare Data from Custom Field Groups */
-		$customfieldgroups = Services::Registry()->get(
-			$table_registry_name, 'customfieldgroups', array());
+        /** Prepare Data from Custom Field Groups */
+        $customfieldgroups = Services::Registry()->get(
+            $table_registry_name, 'customfieldgroups', array());
 
-		if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
+        if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
 
-			foreach ($customfieldgroups as $customFieldName) {
+            foreach ($customfieldgroups as $customFieldName) {
 
-				/** For this Custom Field Group (ex. Parameters, metadata, etc.) */
-				$customFieldName = strtolower($customFieldName);
+                /** For this Custom Field Group (ex. Parameters, metadata, etc.) */
+                $customFieldName = strtolower($customFieldName);
 
-				/** Retrieve Field Definitions from Registry (XML) */
-				$fields = Services::Registry()->get($table_registry_name, $customFieldName);
+                /** Retrieve Field Definitions from Registry (XML) */
+                $fields = Services::Registry()->get($table_registry_name, $customFieldName);
 
-				$temp = $data->$customFieldName;
+                $temp = $data->$customFieldName;
 
-				/** Shared processing  */
-				foreach ($fields as $field) {
+                /** Shared processing  */
+                foreach ($fields as $field) {
 
-					$name = $field['name'];
-					$type = $field['type'];
+                    $name = $field['name'];
+                    $type = $field['type'];
 
-					if (isset($field['identity'])) {
-						$identity = $field['identity'];
-					} else {
-						$identity = 0;
-					}
-					if ($identity == 1) {
-						$type = 'identity';
-					}
+                    if (isset($field['identity'])) {
+                        $identity = $field['identity'];
+                    } else {
+                        $identity = 0;
+                    }
+                    if ($identity == 1) {
+                        $type = 'identity';
+                    }
 
-					$value = $this->prepareFieldValues($type, $temp[$name]);
-					if ($value === false) {
-						$valid = false;
-						break;
-					}
+                    $value = $this->prepareFieldValues($type, $temp[$name]);
+                    if ($value === false) {
+                        $valid = false;
+                        break;
+                    }
 
-					/** data element for SQL insert */
-					$data->$customFieldName[$name] = $value;
-				}
-			}
-		}
+                    /** data element for SQL insert */
+                    $data->$customFieldName[$name] = $value;
+                }
+            }
+        }
 
-		/** Build Insert Statement */
-		$fields = Services::Registry()->get($table_registry_name, 'fields');
+        /** Build Insert Statement */
+        $fields = Services::Registry()->get($table_registry_name, 'fields');
 
-		$insertSQL = 'INSERT INTO ' . $this->db->qn($table_name) . ' ( ';
-		$valuesSQL = ' VALUES ( ';
+        $insertSQL = 'INSERT INTO ' . $this->db->qn($table_name) . ' ( ';
+        $valuesSQL = ' VALUES ( ';
 
-		$first = true;
+        $first = true;
 
-		foreach ($fields as $f) {
+        foreach ($fields as $f) {
 
-			if ($first === true) {
-				$first = false;
-			} else {
-				$insertSQL .= ', ';
-				$valuesSQL .= ', ';
-			}
+            if ($first === true) {
+                $first = false;
+            } else {
+                $insertSQL .= ', ';
+                $valuesSQL .= ', ';
+            }
 
-			$name = $f['name'];
-			$type = strtolower($f['type']);
+            $name = $f['name'];
+            $type = strtolower($f['type']);
 
-			$insertSQL .= $this->db->qn($name);
+            $insertSQL .= $this->db->qn($name);
 
-			$valuesSQL .= $this->prepareFieldValues($type, $data->$name);
+            $valuesSQL .= $this->prepareFieldValues($type, $data->$name);
 
-		}
+        }
 
-		$sql = $insertSQL . ') ' . $valuesSQL . ') ';
+        $sql = $insertSQL . ') ' . $valuesSQL . ') ';
 
-		$this->db->setQuery($sql);
-		$this->db->execute();
+        $this->db->setQuery($sql);
+        $this->db->execute();
 
-		$id = $this->db->insertid();
+        $id = $this->db->insertid();
 
-		return $id;
-	}
+        return $id;
+    }
 
-	/**
-	 * prepareFieldValues prepares the values of each data element for insert into the database
-	 *
-	 * @param $name
-	 * @param $type
-	 * @param int $identity
-	 * @param $data
-	 *
-	 * @return string - data element value
-	 * @since  1.0
-	 */
-	protected function prepareFieldValues($type, $input)
-	{
-		$value = '';
+    /**
+     * prepareFieldValues prepares the values of each data element for insert into the database
+     *
+     * @param $name
+     * @param $type
+     * @param int $identity
+     * @param $data
+     *
+     * @return string - data element value
+     * @since  1.0
+     */
+    protected function prepareFieldValues($type, $input)
+    {
+        $value = '';
 
-		if ($type == 'identity') {
-			$value = 'NULL';
+        if ($type == 'identity') {
+            $value = 'NULL';
 
-		} elseif ($input === null) {
-			$value = 'NULL';
+        } elseif ($input === null) {
+            $value = 'NULL';
 
-		} elseif ($type == 'integer'
-			|| $type == 'binary'
-			|| $type == 'catalog_id'
-			|| $type == 'boolean'
-		) {
+        } elseif ($type == 'integer'
+            || $type == 'binary'
+            || $type == 'catalog_id'
+            || $type == 'boolean'
+        ) {
 
-			$value = (int)$input;
+            $value = (int) $input;
 
-		} elseif ($type == 'char'
-			|| $type == 'datetime'
-			|| $type == 'url'
-			|| $type == 'email'
-			|| $type == 'text'
-			|| $type == 'ip_address'
-		) {
+        } elseif ($type == 'char'
+            || $type == 'datetime'
+            || $type == 'url'
+            || $type == 'email'
+            || $type == 'text'
+            || $type == 'ip_address'
+        ) {
 
-			$value = $this->db->q($input);
+            $value = $this->db->q($input);
 
-		} elseif ($type == 'password') {
+        } elseif ($type == 'password') {
 
-		} elseif ($type == 'customfield') {
-			$value = $this->db->q(json_encode($input));
+        } elseif ($type == 'customfield') {
+            $value = $this->db->q(json_encode($input));
 
-		} else {
-			echo 'UNKNOWN TYPE ' . $type . ' in CreateModel::prepareFieldValues <br />';
-		}
+        } else {
+            echo 'UNKNOWN TYPE ' . $type . ' in CreateModel::prepareFieldValues <br />';
+        }
 
-		return $value;
-	}
+        return $value;
+    }
 }

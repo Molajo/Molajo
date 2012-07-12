@@ -22,163 +22,163 @@ defined('JPATH_PLATFORM') or die;
  */
 class JDatabaseQuerySqlite extends JDatabaseQueryPdo implements JDatabaseQueryPreparable, JDatabaseQueryLimitable
 {
-	/**
-	 * @var integer
-	 * @since 12.1
-	 */
-	protected $limit;
+    /**
+     * @var integer
+     * @since 12.1
+     */
+    protected $limit;
 
-	/**
-	 * @var integer
-	 * @since 12.1
-	 */
-	protected $offset;
+    /**
+     * @var integer
+     * @since 12.1
+     */
+    protected $offset;
 
-	/**
-	 * @var mixed
-	 * @since 12.1
-	 */
-	protected $bounded = array();
+    /**
+     * @var mixed
+     * @since 12.1
+     */
+    protected $bounded = array();
 
-	/**
-	 * Method to add a variable to an internal $bounded array that
-	 * will later be bound to a prepared SQL statement at the time
-	 * of query execution. Also removes a variable that has been
-	 * bounded from the internal bounded array when the passed in value
-	 * is null.
-	 *
-	 * @param   string|integer  $key            The key that will be used in your SQL
-	 *                                          query to reference the value. Usually
-	 *                                          of the form ':key', but can also be an
-	 *                                          integer.
-	 * @param   mixed           $value          The value that will be bound.
-	 * @param   integer         $dataType       Constant corresponding to a SQL datatype.
-	 * @param   integer         $length         The length of the variable. Usually required
-	 *                                          for OUTPUT variables.
-	 * @param   array           $driverOptions  Optional driver options to be used.
-	 *
-	 * @return JDatabaseQuery
-	 *
-	 * @since 12.1
-	 */
-	public function bind($key = null, $value = null, $dataType = PDO::PARAM_STR, $length = 0, $driverOptions = array())
-	{
-		// Case 1: Empty Key (reset $bounded array)
-		if (empty($key)) {
-			$this->bounded = array();
-			return $this;
-		}
+    /**
+     * Method to add a variable to an internal $bounded array that
+     * will later be bound to a prepared SQL statement at the time
+     * of query execution. Also removes a variable that has been
+     * bounded from the internal bounded array when the passed in value
+     * is null.
+     *
+     * @param string|integer $key The key that will be used in your SQL
+     *                                          query to reference the value. Usually
+     *                                          of the form ':key', but can also be an
+     *                                          integer.
+     * @param mixed   $value    The value that will be bound.
+     * @param integer $dataType Constant corresponding to a SQL datatype.
+     * @param integer $length   The length of the variable. Usually required
+     *                                          for OUTPUT variables.
+     * @param array $driverOptions Optional driver options to be used.
+     *
+     * @return JDatabaseQuery
+     *
+     * @since 12.1
+     */
+    public function bind($key = null, $value = null, $dataType = PDO::PARAM_STR, $length = 0, $driverOptions = array())
+    {
+        // Case 1: Empty Key (reset $bounded array)
+        if (empty($key)) {
+            $this->bounded = array();
 
-		// Case 2: Key Provided, null value (unset key from $bounded array)
-		if (is_null($value)) {
-			if (isset($this->bounded[$key])) {
-				unset($this->bounded[$key]);
-			}
+            return $this;
+        }
 
-			return $this;
-		}
+        // Case 2: Key Provided, null value (unset key from $bounded array)
+        if (is_null($value)) {
+            if (isset($this->bounded[$key])) {
+                unset($this->bounded[$key]);
+            }
 
-		$obj = new \stdClass;
+            return $this;
+        }
 
-		$obj->value = &$value;
-		$obj->dataType = $dataType;
-		$obj->length = $length;
-		$obj->driverOptions = $driverOptions;
+        $obj = new \stdClass;
 
-		// Case 3: Simply add the Key/Value into the bounded array
-		$this->bounded[$key] = $obj;
+        $obj->value = &$value;
+        $obj->dataType = $dataType;
+        $obj->length = $length;
+        $obj->driverOptions = $driverOptions;
 
-		return $this;
-	}
+        // Case 3: Simply add the Key/Value into the bounded array
+        $this->bounded[$key] = $obj;
 
-	/**
-	 * Retrieves the internal $bounded array when key is null and
-	 * returns it by reference. If a key is provided then that
-	 * item is returned from the $bounded array if available.
-	 *
-	 * @param   mixed  $key  The bounded variable key to retrieve
-	 *
-	 * @return array|/stdClass
-	 *
-	 * @since 12.1
-	 */
-	public function &getBounded($key = null)
-	{
-		if (empty($key)) {
-			return $this->bounded;
-		}
-		else {
-			if (isset($this->bounded[$key])) {
-				return $this->bounded[$key];
-			}
-		}
-	}
+        return $this;
+    }
 
-	/**
-	 * Clear data from the query or a specific clause of the query.
-	 *
-	 * @param   string  $clause  Optionally, the name of the clause to clear, or nothing to clear the whole query.
-	 *
-	 * @return  JDatabaseQuery  Returns this object to allow chaining.
-	 *
-	 * @since   12.1
-	 */
-	public function clear($clause = null)
-	{
-		switch ($clause) {
-			case null:
-				$this->bounded = array();
-				break;
-		}
+    /**
+     * Retrieves the internal $bounded array when key is null and
+     * returns it by reference. If a key is provided then that
+     * item is returned from the $bounded array if available.
+     *
+     * @param mixed $key The bounded variable key to retrieve
+     *
+     * @return array|/stdClass
+     *
+     * @since 12.1
+     */
+    public function &getBounded($key = null)
+    {
+        if (empty($key)) {
+            return $this->bounded;
+        } else {
+            if (isset($this->bounded[$key])) {
+                return $this->bounded[$key];
+            }
+        }
+    }
 
-		parent::clear($clause);
+    /**
+     * Clear data from the query or a specific clause of the query.
+     *
+     * @param string $clause Optionally, the name of the clause to clear, or nothing to clear the whole query.
+     *
+     * @return JDatabaseQuery Returns this object to allow chaining.
+     *
+     * @since   12.1
+     */
+    public function clear($clause = null)
+    {
+        switch ($clause) {
+            case null:
+                $this->bounded = array();
+                break;
+        }
 
-		return $this;
-	}
+        parent::clear($clause);
 
-	/**
-	 * Method to modify a query already in string format with the needed
-	 * additions to make the query limited to a particular number of
-	 * results, or start at a particular offset. This method is used
-	 * automatically by the __toString() method if it detects that the
-	 * query implements the JDatabaseQueryLimitable interface.
-	 *
-	 * @param   string   $query   The query in string format
-	 * @param   integer  $limit   The limit for the result set
-	 * @param   integer  $offset  The offset for the result set
-	 *
-	 * @return  string
-	 *
-	 * @since   12.1
-	 */
-	public function processLimit($query, $limit, $offset = 0)
-	{
-		if ($limit > 0 || $offset > 0) {
-			$query .= ' LIMIT ' . $offset . ', ' . $limit;
-		}
+        return $this;
+    }
 
-		return $query;
-	}
+    /**
+     * Method to modify a query already in string format with the needed
+     * additions to make the query limited to a particular number of
+     * results, or start at a particular offset. This method is used
+     * automatically by the __toString() method if it detects that the
+     * query implements the JDatabaseQueryLimitable interface.
+     *
+     * @param string  $query  The query in string format
+     * @param integer $limit  The limit for the result set
+     * @param integer $offset The offset for the result set
+     *
+     * @return string
+     *
+     * @since   12.1
+     */
+    public function processLimit($query, $limit, $offset = 0)
+    {
+        if ($limit > 0 || $offset > 0) {
+            $query .= ' LIMIT ' . $offset . ', ' . $limit;
+        }
 
-	/**
-	 * Sets the offset and limit for the result set, if the database driver supports it.
-	 *
-	 * Usage:
-	 * $query->setLimit(100, 0); (retrieve 100 rows, starting at first record)
-	 * $query->setLimit(50, 50); (retrieve 50 rows, starting at 50th record)
-	 *
-	 * @param   integer  $limit   The limit for the result set
-	 * @param   integer  $offset  The offset for the result set
-	 *
-	 * @return  JDatabaseQuery  Returns this object to allow chaining.
-	 *
-	 * @since   12.1
-	 */
-	public function setLimit($limit = 0, $offset = 0)
-	{
-		$this->limit = (int)$limit;
-		$this->offset = (int)$offset;
+        return $query;
+    }
 
-		return $this;
-	}
+    /**
+     * Sets the offset and limit for the result set, if the database driver supports it.
+     *
+     * Usage:
+     * $query->setLimit(100, 0); (retrieve 100 rows, starting at first record)
+     * $query->setLimit(50, 50); (retrieve 50 rows, starting at 50th record)
+     *
+     * @param integer $limit  The limit for the result set
+     * @param integer $offset The offset for the result set
+     *
+     * @return JDatabaseQuery Returns this object to allow chaining.
+     *
+     * @since   12.1
+     */
+    public function setLimit($limit = 0, $offset = 0)
+    {
+        $this->limit = (int) $limit;
+        $this->offset = (int) $offset;
+
+        return $this;
+    }
 }

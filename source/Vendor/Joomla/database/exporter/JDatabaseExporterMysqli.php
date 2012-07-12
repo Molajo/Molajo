@@ -9,8 +9,6 @@
 
 namespace Joomla\database\exporter;
 
-use Joomla\database\JDatabaseExporter;
-use Joomla\database\driver\JDatabaseDriverMysql;
 use Joomla\database\driver\JDatabaseDriverMysqli;
 
 defined('JPATH_PLATFORM') or die;
@@ -24,42 +22,42 @@ defined('JPATH_PLATFORM') or die;
  */
 class JDatabaseExporterMysqli extends JDatabaseExporterMysql
 {
-	/**
-	 * Checks if all data and options are in order prior to exporting.
-	 *
-	 * @return  JDatabaseExporterMysqli  Method supports chaining.
-	 *
-	 * @since   11.1
-	 * @throws  \Exception if an error is encountered.
-	 */
-	public function check()
-	{
-		// Check if the db connector has been set.
-		if (!($this->db instanceof JDatabaseDriverMysqli)) {
-			throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
-		}
+    /**
+     * Checks if all data and options are in order prior to exporting.
+     *
+     * @return JDatabaseExporterMysqli Method supports chaining.
+     *
+     * @since   11.1
+     * @throws \Exception if an error is encountered.
+     */
+    public function check()
+    {
+        // Check if the db connector has been set.
+        if (!($this->db instanceof JDatabaseDriverMysqli)) {
+            throw new \Exception('JPLATFORM_ERROR_DATABASE_CONNECTOR_WRONG_TYPE');
+        }
 
-		// Check if the tables have been specified.
-		if (empty($this->from)) {
-			throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
-		}
+        // Check if the tables have been specified.
+        if (empty($this->from)) {
+            throw new \Exception('JPLATFORM_ERROR_NO_TABLES_SPECIFIED');
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Sets the database connector to use for exporting structure and/or data from MySQL.
-	 *
-	 * @param   JDatabaseDriverMysqli  $db  The database connector.
-	 *
-	 * @return  JDatabaseExporterMysqli  Method supports chaining.
-	 *
-	 * @since   11.1
-	 */
-	public function setDbo(JDatabaseDriverMysqli $db)
-	{
-		$this->db = $db;
+    /**
+     * Sets the database connector to use for exporting structure and/or data from MySQL.
+     *
+     * @param JDatabaseDriverMysqli $db The database connector.
+     *
+     * @return JDatabaseExporterMysqli Method supports chaining.
+     *
+     * @since   11.1
+     */
+    public function setDbo(JDatabaseDriverMysqli $db)
+    {
+        $this->db = $db;
 
-		return $this;
-	}
+        return $this;
+    }
 }

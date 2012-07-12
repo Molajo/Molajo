@@ -91,6 +91,7 @@ Class MailService
     public function __construct()
     {
         $this->registry = Services::Registry()->createRegistry('Mail');
+
         return $this;
     }
 

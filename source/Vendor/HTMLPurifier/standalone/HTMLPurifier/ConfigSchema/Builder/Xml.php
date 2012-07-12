@@ -7,103 +7,104 @@
 class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 {
 
-	protected $interchange;
-	private $namespace;
+    protected $interchange;
+    private $namespace;
 
-	protected function writeHTMLDiv($html)
-	{
-		$this->startElement('div');
+    protected function writeHTMLDiv($html)
+    {
+        $this->startElement('div');
 
-		$purifier = HTMLPurifier::getInstance();
-		$html = $purifier->purify($html);
-		$this->writeAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-		$this->writeRaw($html);
+        $purifier = HTMLPurifier::getInstance();
+        $html = $purifier->purify($html);
+        $this->writeAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
+        $this->writeRaw($html);
 
-		$this->endElement(); // div
-	}
+        $this->endElement(); // div
+    }
 
-	protected function export($var)
-	{
-		if ($var === array()) return 'array()';
-		return var_export($var, true);
-	}
+    protected function export($var)
+    {
+        if ($var === array()) return 'array()';
 
-	public function build($interchange)
-	{
-		// global access, only use as last resort
-		$this->interchange = $interchange;
+        return var_export($var, true);
+    }
 
-		$this->setIndent(true);
-		$this->startDocument('1.0', 'UTF-8');
-		$this->startElement('configdoc');
-		$this->writeElement('title', $interchange->name);
+    public function build($interchange)
+    {
+        // global access, only use as last resort
+        $this->interchange = $interchange;
 
-		foreach ($interchange->directives as $directive) {
-			$this->buildDirective($directive);
-		}
+        $this->setIndent(true);
+        $this->startDocument('1.0', 'UTF-8');
+        $this->startElement('configdoc');
+        $this->writeElement('title', $interchange->name);
 
-		if ($this->namespace) $this->endElement(); // namespace
+        foreach ($interchange->directives as $directive) {
+            $this->buildDirective($directive);
+        }
 
-		$this->endElement(); // configdoc
-		$this->flush();
-	}
+        if ($this->namespace) $this->endElement(); // namespace
 
-	public function buildDirective($directive)
-	{
+        $this->endElement(); // configdoc
+        $this->flush();
+    }
 
-		// Kludge, although I suppose having a notion of a "root namespace"
-		// certainly makes things look nicer when documentation is built.
-		// Depends on things being sorted.
-		if (!$this->namespace || $this->namespace !== $directive->id->getRootNamespace()) {
-			if ($this->namespace) $this->endElement(); // namespace
-			$this->namespace = $directive->id->getRootNamespace();
-			$this->startElement('namespace');
-			$this->writeAttribute('id', $this->namespace);
-			$this->writeElement('name', $this->namespace);
-		}
+    public function buildDirective($directive)
+    {
 
-		$this->startElement('directive');
-		$this->writeAttribute('id', $directive->id->toString());
+        // Kludge, although I suppose having a notion of a "root namespace"
+        // certainly makes things look nicer when documentation is built.
+        // Depends on things being sorted.
+        if (!$this->namespace || $this->namespace !== $directive->id->getRootNamespace()) {
+            if ($this->namespace) $this->endElement(); // namespace
+            $this->namespace = $directive->id->getRootNamespace();
+            $this->startElement('namespace');
+            $this->writeAttribute('id', $this->namespace);
+            $this->writeElement('name', $this->namespace);
+        }
 
-		$this->writeElement('name', $directive->id->getDirective());
+        $this->startElement('directive');
+        $this->writeAttribute('id', $directive->id->toString());
 
-		$this->startElement('aliases');
-		foreach ($directive->aliases as $alias) $this->writeElement('alias', $alias->toString());
-		$this->endElement(); // aliases
+        $this->writeElement('name', $directive->id->getDirective());
 
-		$this->startElement('constraints');
-		if ($directive->version) $this->writeElement('version', $directive->version);
-		$this->startElement('type');
-		if ($directive->typeAllowsNull) $this->writeAttribute('allow-null', 'yes');
-		$this->text($directive->type);
-		$this->endElement(); // type
-		if ($directive->allowed) {
-			$this->startElement('allowed');
-			foreach ($directive->allowed as $value => $x) $this->writeElement('value', $value);
-			$this->endElement(); // allowed
-		}
-		$this->writeElement('default', $this->export($directive->default));
-		$this->writeAttribute('xml:space', 'preserve');
-		if ($directive->external) {
-			$this->startElement('external');
-			foreach ($directive->external as $project) $this->writeElement('project', $project);
-			$this->endElement();
-		}
-		$this->endElement(); // constraints
+        $this->startElement('aliases');
+        foreach ($directive->aliases as $alias) $this->writeElement('alias', $alias->toString());
+        $this->endElement(); // aliases
 
-		if ($directive->deprecatedVersion) {
-			$this->startElement('deprecated');
-			$this->writeElement('version', $directive->deprecatedVersion);
-			$this->writeElement('use', $directive->deprecatedUse->toString());
-			$this->endElement(); // deprecated
-		}
+        $this->startElement('constraints');
+        if ($directive->version) $this->writeElement('version', $directive->version);
+        $this->startElement('type');
+        if ($directive->typeAllowsNull) $this->writeAttribute('allow-null', 'yes');
+        $this->text($directive->type);
+        $this->endElement(); // type
+        if ($directive->allowed) {
+            $this->startElement('allowed');
+            foreach ($directive->allowed as $value => $x) $this->writeElement('value', $value);
+            $this->endElement(); // allowed
+        }
+        $this->writeElement('default', $this->export($directive->default));
+        $this->writeAttribute('xml:space', 'preserve');
+        if ($directive->external) {
+            $this->startElement('external');
+            foreach ($directive->external as $project) $this->writeElement('project', $project);
+            $this->endElement();
+        }
+        $this->endElement(); // constraints
 
-		$this->startElement('description');
-		$this->writeHTMLDiv($directive->description);
-		$this->endElement(); // description
+        if ($directive->deprecatedVersion) {
+            $this->startElement('deprecated');
+            $this->writeElement('version', $directive->deprecatedVersion);
+            $this->writeElement('use', $directive->deprecatedUse->toString());
+            $this->endElement(); // deprecated
+        }
 
-		$this->endElement(); // directive
-	}
+        $this->startElement('description');
+        $this->writeHTMLDiv($directive->description);
+        $this->endElement(); // description
+
+        $this->endElement(); // directive
+    }
 
 }
 
