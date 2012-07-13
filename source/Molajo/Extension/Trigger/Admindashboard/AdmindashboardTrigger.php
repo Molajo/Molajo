@@ -26,7 +26,7 @@ class AdmindashboardTrigger extends ContentTrigger
      * @return void
      * @since   1.0
      */
-    public function onAfterAuthorise()
+    public function onBeforeParse()
     {
         /** Is this an Administrative Grid Request?  */
         if (strtolower($this->get('template_view_path_node')) == 'admindashboard') {

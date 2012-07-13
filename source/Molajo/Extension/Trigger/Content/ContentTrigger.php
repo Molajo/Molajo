@@ -438,10 +438,12 @@ class ContentTrigger extends Trigger
     /**
      * getFieldValue retrieves the actual field value from the 'normal' or special field
      *
-     * @return mixed
-     * @since  1.0
+	 * @param $field
+	 *
+	 * @return bool
+	 * @since  1.0
      */
-    public function getFieldValue($field)
+	public function getFieldValue($field)
     {
 
         if (isset($field->as_name)) {
@@ -500,7 +502,6 @@ class ContentTrigger extends Trigger
     /**
      * saveForeignKeyValue
      *
-     * @param $field
      * @param $new_field_name
      * @param $value
      *
@@ -574,7 +575,30 @@ class ContentTrigger extends Trigger
         return true;
     }
 
-    /**
+	/**
+	 * Before the Theme/Page are parsed
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeParse()
+	{
+		return true;
+	}
+
+	/**
+	 * After all document parsing has been accomplished and include tags replaced with rendered output
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterParse()
+	{
+		return true;
+	}
+
+
+	/**
      * Before the Query results are injected into the View
      *
      * @return boolean
@@ -586,10 +610,7 @@ class ContentTrigger extends Trigger
     }
 
     /**
-     * Pre-update processing
-     *
-     * @param   $this->data
-     * @param   $model
+     * Before update processing
      *
      * @return boolean
      * @since   1.0
@@ -600,10 +621,7 @@ class ContentTrigger extends Trigger
     }
 
     /**
-     * Post-update processing
-     *
-     * @param   $this->data
-     * @param   $model
+     * After update processing
      *
      * @return boolean
      * @since   1.0
@@ -616,9 +634,6 @@ class ContentTrigger extends Trigger
     /**
      * Pre-delete processing
      *
-     * @param   $this->data
-     * @param   $model
-     *
      * @return boolean
      * @since   1.0
      */
@@ -629,9 +644,6 @@ class ContentTrigger extends Trigger
 
     /**
      * Post-delete processing
-     *
-     * @param   $this->data
-     * @param   $model
      *
      * @return boolean
      * @since   1.0

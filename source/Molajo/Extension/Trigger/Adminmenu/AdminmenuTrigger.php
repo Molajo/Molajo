@@ -26,7 +26,7 @@ class AdminmenuTrigger extends ContentTrigger
      * @return boolean
      * @since   1.0
      */
-    public function onAfterAuthorise()
+    public function onBeforeParse()
     {
         /** Data Source Connection */
         $controllerClass = 'Molajo\\Controller\\ReadController';
