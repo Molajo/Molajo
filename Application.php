@@ -282,7 +282,7 @@ Class Application
 
         $results = Services::Authorisation()->verifyAction();
 
-        Services::Profiler()->set('Application Schedule onAfterAuthorise', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('Application Schedule onBeforeParse', LOG_OUTPUT_TRIGGERS);
 
         $results = Services::Event()->schedule('onAfterAuthorise');
         if (is_array($results)) {
@@ -320,6 +320,7 @@ Class Application
 
         if ($results == true) {
             Services::Profiler()->set('Application Schedule onAfterExecute', LOG_OUTPUT_TRIGGERS);
+
             $results = Services::Event()->schedule('onAfterExecute');
             if (is_array($results)) {
                 $results = true;
@@ -379,9 +380,6 @@ Class Application
             die;
         }
 
-        /** Save Route Parameters  move to after route */
-        Services::Registry()->copy('Parameters', 'RouteParameters');
-
         $this->rendered_output = Services::Parse()->process();
 
         return true;
@@ -431,12 +429,10 @@ Class Application
 
             Services::Profiler()
                 ->set('Response Code 200', LOG_OUTPUT_APPLICATION);
-echo $this->rendered_output;
-            die;
+
             $results = Services::Response()
                 ->setContent($this->rendered_output)
-                ->setStatusCode(200)
-                ->prepare(Application::Request()->get('request'))
+			    ->setStatusCode(200)
                 ->send();
 
         } else {
@@ -779,9 +775,7 @@ echo $this->rendered_output;
     protected function sslCheck()
     {
         Services::Registry()->get('ApplicationsParameters');
-        echo '<pre>';
-        var_dump(Application::Request()->request);
-        echo '</pre>';
+
         if ((int) Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
 
             if ((Application::Request()->get('connection')->isSecure() === true)) {

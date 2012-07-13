@@ -18,16 +18,14 @@ defined('MOLAJO') or die;
  */
 class AdmingridTrigger extends ContentTrigger
 {
-
     /**
      * Prepares data for the Administrator Grid  - position AdmingridTrigger last
      *
      * @return boolean
      * @since   1.0
      */
-    public function onAfterAuthorise()
+    public function onBeforeParse()
     {
-
         if (strtolower($this->get('template_view_path_node')) == 'admingrid') {
         } else {
             return true;
@@ -46,7 +44,7 @@ class AdmingridTrigger extends ContentTrigger
         $this->table_registry_name = ucfirst(strtolower($this->parameters['model_name']))
             . ucfirst(strtolower($this->parameters['model_type']));
 
-//		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 0) == 1) {
+		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 0) == 1) {
 
             $profiler_message = 'AdmingridTrigger Model Type ' . $this->parameters['model_type']
                 . ' Model Name ' . $this->parameters['model_name']
@@ -60,10 +58,9 @@ class AdmingridTrigger extends ContentTrigger
 
             $profiler_message .= ob_get_contents();
             ob_end_clean();
-echo $profiler_message.'<br />';
-        die;
-//			Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
-//		}
+
+			Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
+		}
 
         $this->setToolbar();
         $this->setFilter($connect, $connect->get('primary_prefix'));
@@ -82,7 +79,7 @@ echo $profiler_message.'<br />';
      */
     protected function setToolbar()
     {
-        $url = Services::Registry()->set('Parameters', 'full_page_url');
+        $url = Services::Registry()->get('Parameters', 'full_page_url');
 
         $grid_toolbar_buttons = explode(',', $this->get('grid_toolbar_buttons',
                 'new,edit,publish,feature,archive,checkin,restore,delete,trash,options')

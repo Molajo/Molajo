@@ -1,7 +1,7 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Parse;
@@ -167,6 +167,9 @@ Class ParseService
     {
         Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
+		/** OnBeforeParse Triggers */
+		$this->onBeforeParseEvent();
+
         /** Retrieve overrides */
         $overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
         $overrideIncludesFinalXML = Services::Registry()->get('Override', 'final_xml', false);
@@ -205,31 +208,19 @@ Class ParseService
             $this->exclude_until_final[] = $includeName;
         }
 
-        /** Before Event */
-        Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
-
-        $parameters = Services::Registry()->getArray('RouteParameters');
-
-        $arguments = Services::Event()->schedule('onBeforeParse', array('parameters' => $parameters));
-        if ($arguments == false) {
-            Services::Profiler()->set('ParseService->process onBeforeParse failed', LOG_OUTPUT_TRIGGERS);
-
-            return false;
-        }
-
-        Services::Profiler()->set('ParseService->process onBeforeParse succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
-
-        $this->final_indicator = false;
+		$this->final_indicator = false;
 
         /** Start parsing and processing page include for Theme */
         if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme not found');
-
             return false;
         }
 
-        $body = $this->renderLoop();
+		/** Save Route Parameters  move to after route */
+		Services::Registry()->copy('Parameters', 'RouteParameters');
+
+        $renderedOutput = $this->renderLoop();
 
         /** Final Includers: Now, the theme, head, messages, and defer <includes /> run */
         $this->sequence = $this->final;
@@ -237,7 +228,7 @@ Class ParseService
         /** initialize so it is no longer used to exclude this set of include values */
         $this->exclude_until_final = array();
 
-        /** Saved during class entry */
+        /** Saved from route */
         Services::Registry()->copy('RouteParameters', 'Parameters');
 
         /** theme: load template media and language files */
@@ -254,20 +245,13 @@ Class ParseService
 
         $this->final_indicator = true;
 
-        $body = $this->renderLoop($body);
+        $renderedOutput = $this->renderLoop($renderedOutput);
 
-        /** after rendering */
-        Services::Profiler()->set('ParseService->process scheduled onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        /** onAfterParse Trigger */
+		Services::Registry()->copy('RouteParameters', 'Parameters');
 
-        $results = Services::Event()->schedule('onAfterParse', $body);
-        if ($results == false) {
-            Services::Profiler()->set('ParseService->process onAfterParse failed', LOG_OUTPUT_TRIGGERS);
-            //throw error
-        }
-
-        Services::Profiler()->set('ParseService->process onAfterParse succeeded', LOG_OUTPUT_TRIGGERS, VERBOSE);
-
-        return $body;
+		$renderedOutput = $this->onAfterParseEvent($renderedOutput);
+        return $renderedOutput;
     }
 
     /**
@@ -275,13 +259,13 @@ Class ParseService
      *
      * Parse the Theme and Page View, and then rendered output, for <include:type statements
      *
-     * @return string $body  Rendered output for the Response Head and Body
+     * @return string $renderedOutput  Rendered output for the Response Head and Body
      * @since   1.0
      */
-    protected function renderLoop($body = null)
+    protected function renderLoop($renderedOutput = null)
     {
         /** initial run: start with theme and page */
-        if ($body == null) {
+        if ($renderedOutput == null) {
             $first = true;
 
             Services::Profiler()->set('ParseService->renderLoop include Theme:'
@@ -292,7 +276,7 @@ Class ParseService
 
             ob_start();
             require Services::Registry()->get('Parameters', 'theme_path_include');
-            $body = ob_get_contents();
+            $renderedOutput = ob_get_contents();
             ob_end_clean();
 
         } else {
@@ -313,7 +297,7 @@ Class ParseService
 
             /** Retrieve <include /> Statements in body */
             $this->include_request = array();
-            $this->parseIncludeRequests($body);
+            $this->parseIncludeRequests($renderedOutput);
 
             /** When no other <include /> statements are found, end recursive processing */
             if (count($this->include_request) == 0) {
@@ -321,7 +305,7 @@ Class ParseService
             }
 
             /** Render output for each discovered <include /> statement */
-            $body = $this->callIncluder($first, $body);
+            $renderedOutput = $this->callIncluder($first, $renderedOutput);
             $first = false;
 
             /**
@@ -335,7 +319,7 @@ Class ParseService
             continue;
         }
 
-        return $body;
+        return $renderedOutput;
     }
 
     /**
@@ -350,13 +334,13 @@ Class ParseService
      * @return array
      * @since   1.0
      */
-    protected function parseIncludeRequests($body)
+    protected function parseIncludeRequests($renderedOutput)
     {
         $matches = array();
         $this->include_request = array();
         $i = 0;
 
-        preg_match_all('#<include:(.*)\/>#iU', $body, $matches);
+        preg_match_all('#<include:(.*)\/>#iU', $renderedOutput, $matches);
 
         $skipped_final_include_type = false;
 
@@ -452,7 +436,7 @@ Class ParseService
      * @return string rendered output
      * @since   1.0
      */
-    protected function callIncluder($first = false, $body)
+    protected function callIncluder($first = false, $renderedOutput)
     {
         $replace = array();
         $with = array();
@@ -531,8 +515,144 @@ Class ParseService
         }
 
         /** 9. replace it */
-        $body = str_replace($replace, $with, $body);
+        $renderedOutput = str_replace($replace, $with, $renderedOutput);
 
-        return $body;
+        return $renderedOutput;
     }
+
+	/**
+	 * Schedule onBeforeParseEvent Event - could update parameter values
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	protected function onBeforeParseEvent()
+	{
+
+		Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
+		$model_name = Services::Registry()->get('Parameters', 'model_name');
+		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
+
+		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
+		$controllerClass = 'Molajo\\Controller\\ReadController';
+		$connect = new $controllerClass();
+
+		$results = $connect->connect($model_type, $model_name);
+		if ($results == false) {
+			return false;
+		}
+		$triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
+
+		if (count($triggers) == 0) {
+			return true;
+		}
+
+		$parameters = Services::Registry()->getArray('Parameters');
+
+		/** Schedule onBeforeParse Event */
+		$arguments = array(
+			'table_registry_name' => $table_registry_name,
+			'parameters' => $parameters,
+			'model_name' => $model_name,
+			'model_type' => $model_type
+		);
+
+		Services::Profiler()->set('ParseService->onBeforeParseEvent '
+				. $table_registry_name
+				. ' Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE
+		);
+
+		$arguments = Services::Event()->schedule('onBeforeParse', $arguments, $triggers);
+
+		if ($arguments == false) {
+			Services::Profiler()->set('ParseService->onBeforeParseEvent '
+					. $table_registry_name
+					. ' failure ', LOG_OUTPUT_TRIGGERS
+			);
+
+			return false;
+		}
+
+		Services::Profiler()->set('ParseService->onBeforeParseEvent '
+				. $table_registry_name
+				. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+		);
+
+		/** Process results */
+		Services::Registry()->delete('Parameters');
+		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+
+		return true;
+	}
+
+	/**
+	 * Schedule onAfterParseEvent Event - could update rendered output
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	protected function onAfterParseEvent($renderedOutput)
+	{
+		Services::Profiler()->set('ParseService->process Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
+		$model_name = Services::Registry()->get('Parameters', 'model_name');
+		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
+
+		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
+		$controllerClass = 'Molajo\\Controller\\ReadController';
+		$connect = new $controllerClass();
+
+		$results = $connect->connect($model_type, $model_name);
+		if ($results == false) {
+			return false;
+		}
+		$triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
+
+		if (count($triggers) == 0) {
+			return true;
+		}
+
+		$parameters = Services::Registry()->getArray('Parameters');
+
+		/** Schedule onAfterRead Event */
+		$arguments = array(
+			'table_registry_name' => $table_registry_name,
+			'parameters' => $parameters,
+			'model_name' => $model_name,
+			'model_type' => $model_type,
+			'rendered_output' => $renderedOutput
+		);
+
+		Services::Profiler()->set('ParseService->onAfterParseEvent '
+				. $table_registry_name
+				. ' Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE
+		);
+
+		$arguments = Services::Event()->schedule('onAfterParse', $arguments, $triggers);
+
+		if ($arguments == false) {
+			Services::Profiler()->set('ParseService->onAfterParseEvent '
+					. $table_registry_name
+					. ' failure ', LOG_OUTPUT_TRIGGERS
+			);
+
+			return false;
+		}
+
+		Services::Profiler()->set('ParseService->onAfterParseEvent '
+				. $table_registry_name
+				. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+		);
+
+		/** Process results */
+		Services::Registry()->delete('Parameters');
+		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+
+		$renderedOutput = $arguments['rendered_output'];
+
+		return $renderedOutput;
+	}
 }

@@ -56,7 +56,6 @@ Class RouteService
      */
     public function process()
     {
-
         /** Route Registry */
         Services::Registry()->createRegistry('Parameters');
         Services::Registry()->createRegistry('Metadata');
