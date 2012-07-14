@@ -557,7 +557,7 @@ Class RegistryService
      * @return Registry
      * @since   1.0
      */
-    public function delete($namespace, $key)
+    public function delete($namespace, $key = null)
     {
         $key = strtolower($key);
         $namespace = strtolower($namespace);
@@ -582,7 +582,7 @@ Class RegistryService
         $this->createRegistry($namespace);
 
         $searchfor = '';
-        if ($key == '*' || strpos($key, '*')) {
+        if ($key == '*' || strpos($key, '*') || $key == null) {
             $searchfor = substr($key, 0, strrpos($key, '*'));
             $exactMatch = false;
         } else {

@@ -9,7 +9,7 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 $action = Services::Registry()->get('Parameters', 'full_page_url');
-return;
+
 ?>
 
 <dl class="tabs contained">
@@ -24,7 +24,7 @@ return;
     <li class="active" id="batchStatusTab">
         <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
             <p>Set the status of items selected above with the status specified below.
-                <include:template name=Formselectlist value=<?php echo 'gridbatch_status*'; ?>/>
+                <include:template name=Formselectlist model=Triggerdata value=<?php echo 'listbatch_status*'; ?>/>
                 <input type="submit" class="submit button small" name="submit" id="action"
                        value="Apply">
             </p>
@@ -34,7 +34,7 @@ return;
     <li id="batchCategoriesTab">
         <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
             <p>Associate (or disassociate) the items selected with the specified category(ies).
-                <include:template name=Formselectlist value=<?php echo 'gridbatch_categories*'; ?>/>
+                <include:template name=Formselectlist model=Triggerdata value=<?php echo 'listbatch_categories*'; ?>/>
                 <input type="submit" class="submit button small" name="submit" id="batch-category-create"
                        value="Add">
                 <input type="submit" class="submit button small" name="submit" id="batch-category-delete"
@@ -46,8 +46,8 @@ return;
     <li id="batchTagsTab">
         <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
             <p>Associate (or disassociate) the items selected with the specified tags(s).
-                <include:template name=Formselectlist wrap=div wrap-class=filter
-                                  value=<?php echo 'gridbatch_tags*'; ?>/>
+                <include:template name=Formselectlist model=Triggerdata wrap=div wrap-class=filter
+                                  value=<?php echo 'listbatch_tags*'; ?>/>
                 <input type="text" name="tag" id="tag">
                 <input type="submit" class="submit button small" name="submit" id="batch-tag-create"
                        value="Add">
@@ -60,7 +60,7 @@ return;
     <li id="batchPermissionsTab">
         <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
             <p>Associate (or disassociate) the items selected with the specified group(s) and permission(s).</p>
-            <include:template name=Formselectlist value=<?php echo 'gridbatch_groups*'; ?>/>
+            <include:template name=Formselectlist model=Triggerdata value=<?php echo 'listbatch_groups*'; ?>/>
             <ul class="permissions">
                 <li>
                     <label for="permission-create">

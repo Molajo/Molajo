@@ -76,7 +76,10 @@ Class TemplateIncluder extends Includer
             $model_parameter = '';
         }
 
-        if (strtolower($model_name) == '' && strtolower($model_parameter) == '') {
+		if (substr(strtolower($model_parameter), 0, 4) == 'list') {
+			$model_name = 'triggerdata';
+
+		} elseif (strtolower($model_name) == '' && strtolower($model_parameter) == '') {
             $model_name = 'Dummy';
 
         } elseif (strtolower($this->type) == 'asset') {

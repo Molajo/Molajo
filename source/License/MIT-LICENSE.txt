@@ -1,7 +1,8 @@
-Molajo is Copyright (c) 2012 Amy Stephen and is dual licensed using both:
+Molajo is Copyright (c) 2012 Individual Code Contributors (see CONTRIBUTORS.txt) and is dual licensed using:
+
 1) GPL v 2, or later - see GPL-LICENSE.txt
 AND
-2) MIT (here)
+2) MIT
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -123,7 +123,7 @@ class ReadController extends Controller
     }
 
     /**
-     * Method to execute a model method which interacts with the data source and returns results
+     * Method to execute a model method and returns results
      *
      * @param string $query_object - result, item, list, distinct
      *
@@ -145,12 +145,6 @@ class ReadController extends Controller
             } else {
                 $model_parameter = $this->get('model_parameter');
             }
-
-            Services::Profiler()->set('ReadController->getData '
-                    . ' DBO: ' . $dbo
-                    . ' Query Object: ' . $query_object
-                    . ' Model Parameter: ' . $model_parameter,
-                LOG_OUTPUT_QUERIES, VERBOSE);
 
             if (strtolower($query_object) == 'getdummy') {
                 $this->query_results = array();
@@ -259,7 +253,7 @@ class ReadController extends Controller
         if ($query_object == 'result' || $query_object == 'distinct') {
 
             if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
-                $message = 'ReadController->getData Query Results <br /><br />';
+                $message = 'ReadController->getData Query Result <br /><br />';
                 ob_start();
                 echo '<pre>';
                 var_dump($query_results);

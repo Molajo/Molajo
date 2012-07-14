@@ -165,6 +165,7 @@ Class MenuService
      */
     public function getMenuBreadcrumbIds($current_menuitem_id)
     {
+
         if ($current_menuitem_id == 0) {
             return false;
         }

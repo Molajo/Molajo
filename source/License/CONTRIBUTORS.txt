@@ -1,10 +1,14 @@
 CONTRIBUTORS
 ============
 
-Molajo was written by Amy Stephen, Copyright (c) 2012, All Rights Reserved
+Molajo was created by Amy Stephen, Copyright (c) 2012, All Rights Reserved
 
-Libraries and other external code are contained within the Vendor folder where license information can be found.
+Code must be contributed using a dual license of GPL v. 2, or later and MIT, to be included within Molajo.
 
-Molajo code has also been contributed by these people:
+The names of code contributors are listed below. All contributors hold copyright for their individual contributions.
 
-...when this happens, those names will be listed here
+License information for libraries and other external code is contained within the Vendor folder.
+
+The list of Molajo code contributors follows:
+
+...names listed here, this should cross-reference to commits and pull requests - try to generate unique list from a commit log
