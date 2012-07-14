@@ -1,8 +1,8 @@
 <join model="Content"
       alias="current_menuitem"
       select=""
-      jointo="lft,rgt"
-      joinwith="&gt;=lft,&lt;=rgt"/>
+      jointo="lft,rgt,root"
+      joinwith="&gt;=lft,&lt;=rgt,root"/>
 <join model="Catalog"
       alias="catalog"
       select="id,sef_request"

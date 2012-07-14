@@ -28,6 +28,7 @@ class AdminmenuTrigger extends ContentTrigger
      */
     public function onBeforeParse()
     {
+
         /** Data Source Connection */
         $controllerClass = 'Molajo\\Controller\\ReadController';
         $connect = new $controllerClass();
@@ -65,10 +66,13 @@ class AdminmenuTrigger extends ContentTrigger
         } else {
             $item_id = Services::Registry()->get('Parameters', 'catalog_id');
         }
-
+echo $current_menuitem_id;
         /** Breadcrumbs */
-        $bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id, $item_id);
+        $bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id);
 
+echo '<pre>';
+var_dump($bread_crumbs);
+echo '</pre>';
         $activeCatalogID = array();
         foreach ($bread_crumbs as $item) {
             $activeCatalogID[] = $item->catalog_id;

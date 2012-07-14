@@ -210,7 +210,7 @@ class AdmingridTrigger extends ContentTrigger
      */
     protected function setPagination()
     {
-        $url = Services::Registry()->set('Parameters', 'full_page_url');
+        $url = Services::Registry()->get('Parameters', 'full_page_url');
         $connector = '';
         $query_results = array();
         $current = 0;
@@ -294,7 +294,7 @@ class AdmingridTrigger extends ContentTrigger
                     }
                     $query_results = Services::Text()->buildSelectlist($listname, $items, $multiple, $size);
 
-                    Services::Registry()->set('Triggerdata', 'gridbatch_' . $listname, $query_results);
+                    Services::Registry()->set('Triggerdata', 'listbatch_' . $listname, $query_results);
 
                     $row = new \stdClass();
                     $row->listname = $listname;
