@@ -8,13 +8,13 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 $checked = '';
-$rowCount = Services::Registry()->get('Triggerdata', 'GridTableRows'); ?>
+$rowCount = Services::Registry()->get('Triggerdata', 'AdminGridTableRows'); ?>
 <table class="responsive">
     <thead>
     <tr>
         <?php
         $count = 1;
-        $columnArray = Services::Registry()->get('Triggerdata', 'GridTableColumns');
+        $columnArray = Services::Registry()->get('Triggerdata', 'AdminGridTableColumns');
         foreach ($columnArray as $column) {
             $extraClass = '';
             if ($count == 1) {

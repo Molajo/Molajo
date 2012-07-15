@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
