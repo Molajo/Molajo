@@ -120,8 +120,11 @@ Class MenuService
 
         /** Execute query */
         $query_results = $m->getData('list');
+//		echo '<br /><br />';
+//		echo $m->model->query->__toString();
+//		echo '<br /><br />';
 
-        if ($query_results === false) {
+		if ($query_results === false) {
             return array();
         }
 
