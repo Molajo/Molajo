@@ -578,7 +578,7 @@ Class Application
 
         if (defined('SITES')) {
         } else {
-            define('SITES', BASE_FOLDER . '/site');
+            define('SITES', BASE_FOLDER . '/Molajo/Site');
         }
 
         /**
@@ -614,8 +614,9 @@ Class Application
     {
         if (defined('SITES')) {
         } else {
-            define('SITES', BASE_FOLDER . '/Site');
+            define('SITES', BASE_FOLDER . '/Molajo/Site');
         }
+
         if (defined('SITES_MEDIA_FOLDER')) {
         } else {
             define('SITES_MEDIA_FOLDER', SITES . '/media');

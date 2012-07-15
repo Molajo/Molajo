@@ -21,9 +21,9 @@ defined('MOLAJO') or die;
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Session.html
  *
- * @package   Molajo
+ * @package     Molajo
  * @subpackage  Services
- * @since           1.0
+ * @since       1.0
  */
 Class SessionService
 {
@@ -61,23 +61,31 @@ Class SessionService
 
     protected function __construct()
     {
+		return $this;
+
         $session = new Session();
         $session->start();
 
         // set and get session attributes
         $session->set('name', 'Drak');
-        $session->get('name');
+        echo $session->get('name');
+
+
+
 
         // set flash messages
         $session->getFlashBag()->add('notice', 'Profile updated');
 
         // retrieve messages
-        /*
+
+
+
+
         foreach ($session->getFlashBag()->get('notice', array()) as $message) {
         echo "<div class='flash-notice'>$message</div>";
-            die;
+
         }
-        */
+
     }
 
     /**

@@ -1,0 +1,10 @@
+Molajo will automatically load CSS and JS files placed into the following folders, as follows:
+
+1. System-wide CSS and JS in => media/system/css[js]/XYZ.css[js]
+2. Application-specific CSS and JS in => media/system/[application]/css[js]/XYZ.css[js]
+3. Extension specific CSS and JS in => media/system/[application]/[extension-name]/css[js]/XYZ.css[js]
+4. Catalog ID (for the page) specific CSS and JS in => media/site/[application]/[catalog_id]/css[js]/XYZ.css[js]
+5. Layout specific CSS and JS in => layouts/[layout-type]/[layout]/css[js]/XYZ.css[js]
+
+Note:
+1. Name Right-to-left CSS files with rtl_ prefix for Molajo to automatic load, when needed.

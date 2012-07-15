@@ -351,6 +351,8 @@ class Includer
             }
         }
 
+	//	echo Services::Registry()->get('Parameters', '*');
+
         $results = $controller->execute();
 
         return $results;

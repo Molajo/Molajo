@@ -40,6 +40,14 @@ Class EventService
      */
     protected $trigger_connection;
 
+	/**
+	 * Arguments
+	 *
+	 * @var   array of objects and values
+	 * @since 1.0
+	 */
+	protected $arguments;
+
     /**
      * @static
      * @return bool|object
@@ -132,6 +140,9 @@ Class EventService
             }
         }
 
+		/** Arguments can be changed by Triggers */
+		$this->arguments = $arguments;
+
         /** Process each selected trigger */
         foreach ($selections as $selection) {
 
@@ -141,8 +152,7 @@ Class EventService
 
                 if (method_exists($registrations[$triggerClass], $event)) {
 
-                    $results = $this->processTriggerClass(
-                        $registrations[$triggerClass], $event, $arguments);
+                    $results = $this->processTriggerClass($registrations[$triggerClass], $event);
 
                     if ($results == false) {
                         return false;
@@ -167,24 +177,23 @@ Class EventService
                     VERBOSE
                 );
 
-                return $arguments;
+                return $this->arguments;
             }
         }
 
-        return $arguments;
+        return $this->arguments;
     }
 
     /**
-     * processTriggerClass for Event given passed in arguments
+     * processTriggerClass for Event given $this->arguments
      *
      * @param $class
      * @param $event
-     * @param array $arguments
      *
      * @return array|bool
      * @since  1.0
      */
-    protected function processTriggerClass($class, $event, $arguments = array())
+    protected function processTriggerClass($class, $event)
     {
         /** 1. Instantiate Trigger Class */
         $triggerClass = $class;
@@ -199,14 +208,14 @@ Class EventService
 
             echo '<br />Could not Instantiate Trigger Class: ' . $triggerClass;
 
-            return array('success' => true, $arguments);
+            return true;
             //throw error
         }
 
         /** 2. Set Properties for Trigger Class */
-        if (count($arguments) > 0) {
+        if (count($this->arguments) > 0) {
 
-            foreach ($arguments as $propertyKey => $propertyValue) {
+            foreach ($this->arguments as $propertyKey => $propertyValue) {
                 $connection->set($propertyKey, $propertyValue);
             }
             $connection->setFields();
@@ -226,19 +235,19 @@ Class EventService
                     . ' Failed. ',
                 LOG_OUTPUT_TRIGGERS);
 
-            return array('success' => true, $arguments);
+            return true;
 
         } else {
 
             /** Retrieve Properties from Trigger Class to send back to Controller */
-            if (count($arguments) > 0) {
-                foreach ($arguments as $propertyKey => $propertyValue) {
-                    $arguments[$propertyKey] = $connection->get($propertyKey, $propertyValue);
+            if (count($this->arguments) > 0) {
+                foreach ($this->arguments as $propertyKey => $propertyValue) {
+					$this->arguments[$propertyKey] = $connection->get($propertyKey);
                 }
             }
         }
 
-        return array('success' => true, $arguments);
+        return true;
     }
 
     /**

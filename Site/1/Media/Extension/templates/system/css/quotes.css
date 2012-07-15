@@ -1,0 +1,70 @@
+/*
+@version     $id: quotes.css
+@package     Molajo
+@subpackage  Quotes
+@copyright   Copyright (C) 2010-2011 individual Molajo Contributors. All rights reserved. See http://molajo.org/copyright
+@license     GNU GPL v 2, or later and MIT, see License folder
+*/
+blockquote {
+    border-left: 1px dashed #999;
+    margin: 1em 2em;
+    padding-left: 1em
+}
+
+blockquote p:first-letter {
+    float: left;
+    font-family: "Monotype Corsiva", "Apple Chancery", fantasy;
+    font-size: 220%;
+    font-weight: 700;
+    margin: .2em .3em .1em 0
+}
+
+blockquote p:first-line {
+    font-variant: small-caps
+}
+
+blockquote p {
+    margin-left: 1em
+}
+
+#bq1, #bq2, #bq3, #bq4, #bqN {
+}
+
+.bqeven {
+}
+
+.bqodd {
+}
+
+cite {
+    font-size: 1.2em;
+    float: right;
+}
+
+#cite1, #cite2, #cite3, #cite4, #citeN {
+}
+
+.citeeven {
+}
+
+.citeodd {
+}
+
+span.blockquote {
+    background: transparent url(../images/gquote.gif) no-repeat;
+    border-top: 1px #CFCFCF solid;
+    float: right;
+    font-size: 150%;
+    margin-left: 1em;
+    padding: 10px 0 10px 50px;
+    width: 150px
+}
+
+#pq1, #pq2, #pq3, #pq4, #pqN {
+}
+
+.pqeven {
+}
+
+.pqodd {
+}

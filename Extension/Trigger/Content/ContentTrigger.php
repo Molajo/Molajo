@@ -28,6 +28,14 @@ class ContentTrigger extends Trigger
      */
     protected $table_registry_name;
 
+	/**
+	 * Model type
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $model_type;
+
     /**
      * Model name
      *
@@ -119,11 +127,12 @@ class ContentTrigger extends Trigger
      */
     public function get($key, $default = null)
     {
+
         $value = null;
 
         if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
             'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
-            'data', 'model_name', 'rendered_output'))
+            'data', 'model_type', 'model_name', 'rendered_output'))
         ) {
             $value = $this->$key;
 
@@ -153,7 +162,7 @@ class ContentTrigger extends Trigger
     {
         if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
             'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
-            'data', 'model_name', 'rendered_output'))
+			'data', 'model_type', 'model_name', 'rendered_output'))
         ) {
 
             $this->$key = $value;
