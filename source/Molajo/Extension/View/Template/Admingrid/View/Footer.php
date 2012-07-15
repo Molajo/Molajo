@@ -7,13 +7,13 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$columnCount = Services::Registry()->get('Triggerdata', 'GridTableColumns');
+$columnCount = Services::Registry()->get('Triggerdata', 'AdminGridTableColumns');
 ?>
 </tbody>
 <tfoot>
 <tr>
     <td colspan="<?php echo ((int) $columnCount + 1); ?>">
-        <include:template name=Admingridpagination value=GridPagination/>
+        <include:template name=Admingridpagination value=AdminGridPagination/>
     </td>
 </tr>
 </tfoot>

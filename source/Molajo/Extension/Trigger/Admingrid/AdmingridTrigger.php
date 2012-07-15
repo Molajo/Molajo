@@ -34,20 +34,23 @@ class AdmingridTrigger extends ContentTrigger
         $controllerClass = 'Molajo\\Controller\\ReadController';
         $connect = new $controllerClass();
 
-        $results = $connect->connect($this->parameters['model_type'], $this->parameters['model_name']);
+        $results = $connect->connect(
+			$this->get('model_type', 'Table'),
+			$this->get('model_name')
+		);
         if ($results == false) {
             return false;
         }
         $connect->set('get_customfields', 2);
         $connect->set('use_special_joins', 1);
 
-        $this->table_registry_name = ucfirst(strtolower($this->parameters['model_name']))
-            . ucfirst(strtolower($this->parameters['model_type']));
+        $this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
+            . ucfirst(strtolower($this->get('model_type', 'Table')));
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 0) == 1) {
 
-            $profiler_message = 'AdmingridTrigger Model Type ' . $this->parameters['model_type']
-                . ' Model Name ' . $this->parameters['model_name']
+            $profiler_message = 'AdmingridTrigger Model Type ' . $this->get('model_type')
+                . ' Model Name ' . $this->get('model_name')
                 . ' Table Registry ' . $this->table_registry_name . ' contents follow:';
 
             ob_start();
@@ -152,7 +155,7 @@ class AdmingridTrigger extends ContentTrigger
             }
         }
 
-        Services::Registry()->set('Triggerdata', 'GridFilters', $lists);
+        Services::Registry()->set('Triggerdata', 'AdminGridFilters', $lists);
 
         return true;
     }
@@ -172,7 +175,7 @@ class AdmingridTrigger extends ContentTrigger
         $grid_columns = explode(',', $this->get('grid_columns',
                 'title,created_by,start_publishing_datetime,ordering')
         );
-        Services::Registry()->set('Triggerdata', 'GridTableColumns', $grid_columns);
+        Services::Registry()->set('Triggerdata', 'AdminGridTableColumns', $grid_columns);
 
         $connect->model->query->where(
             $connect->model->db->qn($primary_prefix)
@@ -183,7 +186,7 @@ class AdmingridTrigger extends ContentTrigger
             $connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
 
         $ordering = $this->get('grid_ordering', 'start_publishing_datetime');
-        Services::Registry()->set('Triggerdata', 'GridTableOrdering', $ordering);
+        Services::Registry()->set('Triggerdata', 'AdminGridTableOrdering', $ordering);
         $connect->model->query->order($connect->model->db->qn($ordering));
 
         $connect->set('model_offset', 0);
@@ -195,9 +198,9 @@ class AdmingridTrigger extends ContentTrigger
         Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
         Services::Registry()->set('Parameters', 'model_type', 'dbo');
         Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
-        Services::Registry()->set('Parameters', 'model_parameter', 'GridQueryResults');
+        Services::Registry()->set('Parameters', 'model_parameter', 'AdminGridQueryResults');
 
-        Services::Registry()->set('Triggerdata', 'GridQueryResults', $query_results);
+        Services::Registry()->set('Triggerdata', 'AdminGridQueryResults', $query_results);
 
         return true;
     }
@@ -236,9 +239,9 @@ class AdmingridTrigger extends ContentTrigger
 
         $query_results[] = $row;
 
-        Services::Registry()->set('Triggerdata', 'GridPagination', $query_results);
-        Services::Registry()->set('Triggerdata', 'GridPaginationOffset', $this->get('grid_offset', 0));
-        Services::Registry()->set('Triggerdata', 'GridPaginationCount', $this->get('grid_count', 5));
+        Services::Registry()->set('Triggerdata', 'AdminGridPagination', $query_results);
+        Services::Registry()->set('Triggerdata', 'AdminGridPaginationOffset', $this->get('grid_offset', 0));
+        Services::Registry()->set('Triggerdata', 'AdminGridPaginationCount', $this->get('grid_count', 5));
 
         return true;
     }
@@ -303,7 +306,7 @@ class AdmingridTrigger extends ContentTrigger
             }
         }
 
-        Services::Registry()->set('Triggerdata', 'GridBatchFilters', $names_of_lists);
+        Services::Registry()->set('Triggerdata', 'AdminGridBatchFilters', $names_of_lists);
 
         return true;
     }
