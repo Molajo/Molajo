@@ -528,7 +528,6 @@ Class ParseService
 	 */
 	protected function onBeforeParseEvent()
 	{
-
 		Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$model_name = Services::Registry()->get('Parameters', 'model_name');
@@ -556,7 +555,8 @@ Class ParseService
 			'table_registry_name' => $table_registry_name,
 			'parameters' => $parameters,
 			'model_name' => $model_name,
-			'model_type' => $model_type
+			'model_type' => $model_type,
+			'data' => array()
 		);
 
 		Services::Profiler()->set('ParseService->onBeforeParseEvent '
@@ -623,7 +623,8 @@ Class ParseService
 			'parameters' => $parameters,
 			'model_name' => $model_name,
 			'model_type' => $model_type,
-			'rendered_output' => $renderedOutput
+			'rendered_output' => $renderedOutput,
+			'data' => array()
 		);
 
 		Services::Profiler()->set('ParseService->onAfterParseEvent '

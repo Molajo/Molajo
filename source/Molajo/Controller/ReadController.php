@@ -586,17 +586,18 @@ class ReadController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-//		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 
         $arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
         if ($arguments == false) {
-//			Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
             return false;
         }
 
-//		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
 
         $this->query_results = $arguments['data'];
+		$this->parameters = $arguments['parameters'];
 
         return true;
     }
@@ -611,32 +612,25 @@ class ReadController extends Controller
      */
     protected function onAfterViewRender($rendered_output)
     {
-        return $rendered_output;
-
-        if ((int) $this->get('process_triggers') == 0) {
-            return $rendered_output;
-        }
-
-        /** Process the entire query_results set */
         $arguments = array(
-            'table_registry_name' => $this->table_registry_name,
+ 			'table_registry_name' => $this->table_registry_name,
             'parameters' => $this->parameters,
-            'rendered_output' => $rendered_output,
+			'rendered_output' => $rendered_output,
             'model_name' => $this->get('model_name')
         );
 
-//		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 
         $arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
+
         if ($arguments == false) {
-//			Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
             return false;
         }
 
-//		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
 
-        $rendered_output = $arguments['rendered_output'];
-
+		$rendered_output = $arguments['rendered_output'];
         return $rendered_output;
     }
 }

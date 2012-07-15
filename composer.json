@@ -1,0 +1,41 @@
+{
+    "name": "molajo/molajo",
+    "type": "cmf",
+    "description": "Molajo Content Management Framework",
+    "keywords": ["cmf"],
+    "homepage": "http://molajo.org",
+    "license": "GPL v 2, or later, and MIT",
+    "authors": [
+        {
+            "name": "Amy Stephen",
+            "email": "AmyStephen@molajo.org"
+        },
+        {
+            "name": "Molajo Contributors",
+            "homepage": "https://github.com/Molajo/Molajo/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.4",
+        "symfony/http-foundation": ">=2.1 ",
+        "symfony/class-loader": ">=2.1",
+        "symfony/finder": ">=2.1",
+    },
+    "replace": {
+        "Molajo/Configuration": "self.version",
+        "Molajo/Controller": "self.version",
+        "Molajo/Extension": "self.version",
+        "Molajo/License": "self.version",
+        "Molajo/Model": "self.version",
+        "Molajo/Service": "self.version",
+        "Molajo/Site": "self.version",
+        "Molajo/Application": "self.version"
+    },
+    "autoload": {
+        "psr-0": {
+            "Molajo": "",
+            "SessionHandlerInterface": "source/Vendors/Symfony/Component/HttpFoundation/Resources/stubs"
+        }
+    },
+    "target-dir": "dev"
+}

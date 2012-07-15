@@ -1,0 +1,11 @@
+/*
+@package     Molajo
+@subpackage  CSS
+@copyright   Copyright (C) 2012 individual Molajo Contributors. All rights reserved.
+@license     GNU GPL v 2, or later and MIT, see License folder
+*/
+img.smiley-class {
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites>
-  <testsuite name="Unit" tests="1" assertions="0" failures="0" errors="0" time="0.001914">
-    <testsuite name="MolajoLoaderTest" file="/Users/amystephen/Sites/molajo/tests/suites/unit/MolajoLoaderTest.php" fullPackage="Joomla.UnitTest" package="Joomla.UnitTest" tests="1" assertions="0" failures="0" errors="0" time="0.001914">
-      <testcase name="testDiscover" class="MolajoLoaderTest" file="/Users/amystephen/Sites/molajo/tests/suites/unit/MolajoLoaderTest.php" line="49" assertions="0" time="0.001914"/>
-    </testsuite>
-  </testsuite>
-</testsuites>
