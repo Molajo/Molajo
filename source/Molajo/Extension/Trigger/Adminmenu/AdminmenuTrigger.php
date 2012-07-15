@@ -105,7 +105,7 @@ class AdminmenuTrigger extends ContentTrigger
                 break;
             }
         }
-
+/**
 		echo '<br />Adminnavigationbar <br />';
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Triggerdata','Adminnavigationbar'));
@@ -130,7 +130,7 @@ class AdminmenuTrigger extends ContentTrigger
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Triggerdata','AdminBreadcrumbs'));
 		echo '</pre>';
-		die;
+*/
 		return;
     }
 
