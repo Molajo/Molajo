@@ -9,5 +9,18 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>RESOURCE_CONTACTS_DESCRIPTION</description>
-    <model name="Contacts" catalog_type_id="20000"/>
+    <model name="Contacts" catalog_type_id="20000">
+        <customfields>
+            <customfield name="customfields">
+                <field name="contact_name" type="char" null="0" default=" "/>
+                <field name="userid" type="userid" null="0" default=" "/>
+                <field name="website" type="url" null="0" default=" "/>
+                <field name="image" type="file" null="0" default=" "/>
+                <field name="email_address" type="char" null="0" default=" "/>
+                <field name="mailing_address" type="char" null="0" default=" "/>
+                <field name="country" type="char" null="0" default=" "/>
+                <field name="phone_number" type="phone" null="0" default=" "/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

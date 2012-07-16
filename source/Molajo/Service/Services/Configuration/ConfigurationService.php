@@ -338,6 +338,7 @@ Class ConfigurationService
      */
     public static function getFile($model_type, $model_name)
     {
+
         /** Use existing registry values, if existing */
         $registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
         if ($registry == false) {
