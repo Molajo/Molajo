@@ -251,6 +251,8 @@ Class ParseService
 		Services::Registry()->copy('RouteParameters', 'Parameters');
 
 		$renderedOutput = $this->onAfterParseEvent($renderedOutput);
+		echo  $renderedOutput;
+		die;
         return $renderedOutput;
     }
 
@@ -583,6 +585,7 @@ Class ParseService
 		/** Process results */
 		Services::Registry()->delete('Parameters');
 		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+		Services::Registry()->sort('Parameters');
 
 		return true;
 	}
@@ -597,46 +600,23 @@ Class ParseService
 	{
 		Services::Profiler()->set('ParseService->process Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$model_name = Services::Registry()->get('Parameters', 'model_name');
-		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
-
-		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-
-		$controllerClass = 'Molajo\\Controller\\ReadController';
-		$connect = new $controllerClass();
-
-		$results = $connect->connect($model_type, $model_name);
-		if ($results == false) {
-			return false;
-		}
-		$triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
-
-		if (count($triggers) == 0) {
-			return true;
-		}
-
 		$parameters = Services::Registry()->getArray('Parameters');
 
 		/** Schedule onAfterRead Event */
 		$arguments = array(
-			'table_registry_name' => $table_registry_name,
 			'parameters' => $parameters,
-			'model_name' => $model_name,
-			'model_type' => $model_type,
-			'rendered_output' => $renderedOutput,
-			'data' => array()
+			'rendered_output' => $renderedOutput
 		);
 
 		Services::Profiler()->set('ParseService->onAfterParseEvent '
-				. $table_registry_name
 				. ' Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE
 		);
 
-		$arguments = Services::Event()->schedule('onAfterParse', $arguments, $triggers);
+		$arguments = Services::Event()->schedule('onAfterParse', $arguments);
 
 		if ($arguments == false) {
+
 			Services::Profiler()->set('ParseService->onAfterParseEvent '
-					. $table_registry_name
 					. ' failure ', LOG_OUTPUT_TRIGGERS
 			);
 
@@ -644,7 +624,6 @@ Class ParseService
 		}
 
 		Services::Profiler()->set('ParseService->onAfterParseEvent '
-				. $table_registry_name
 				. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
 		);
 

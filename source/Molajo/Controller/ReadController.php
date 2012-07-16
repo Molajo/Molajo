@@ -118,7 +118,6 @@ class ReadController extends Controller
         }
 
         /** Wrap template view results */
-
         return $this->wrapView($this->get('wrap_view_title'), $rendered_output);
     }
 
@@ -397,6 +396,7 @@ class ReadController extends Controller
         );
 
         $arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);
+
         if ($arguments == false) {
             Services::Profiler()->set('ReadController->onBeforeReadEvent '
                     . $this->table_registry_name
@@ -433,7 +433,7 @@ class ReadController extends Controller
             return true;
         }
 
-        /** Process each item, one at a time */
+		/** Process each item, one at a time */
         $items = $this->query_results;
         $this->query_results = array();
 
@@ -452,6 +452,7 @@ class ReadController extends Controller
             );
 
             $arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->triggers);
+
             if ($arguments == false) {
                 Services::Profiler()->set('ReadController->onAfterRead '
                         . $this->table_registry_name
@@ -466,7 +467,9 @@ class ReadController extends Controller
                     . ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
             );
 
-            $this->query_results[] = $arguments['data'];
+			$this->parameters = $arguments['parameters'];
+			$this->query_results[] = $arguments['data'];
+
         }
 
         return true;

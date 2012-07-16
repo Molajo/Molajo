@@ -45,7 +45,7 @@ class AuthorTrigger extends ContentTrigger
         }
 
         /** Author information already available */
-        if (Services::Registry()->exists('Trigger', 'Author' . $fieldValue)) {
+        if (Services::Registry()->exists('Triggerdata', 'Author' . $fieldValue)) {
 
             $item = Services::Registry()->get('Triggerdata', 'Author' . $fieldValue);
 

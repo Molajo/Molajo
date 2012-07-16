@@ -19,5 +19,14 @@ defined('MOLAJO') or die;
  */
 class CatalogtypeIdTrigger extends ContentTrigger
 {
-
+	/**
+	 * After-read processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		return true;
+	}
 }

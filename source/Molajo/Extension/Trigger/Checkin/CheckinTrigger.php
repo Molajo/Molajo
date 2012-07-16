@@ -33,7 +33,7 @@ class CheckinTrigger extends ContentTrigger
     {
         // make certain the correct person is in checkout
         // if so, checkin by zeroing otu that value and the date
-        return false;
+        return true;
     }
 
     /**

@@ -4,20 +4,20 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Trigger\Csrfprotection;
+namespace Molajo\Extension\Trigger\Csrftoken;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
 defined('MOLAJO') or die;
 
 /**
- * Csrfprotection
+ * Csrftoken
  *
  * @package     Molajo
  * @subpackage  Trigger
  * @since       1.0
  */
-class CsrfprotectionTrigger extends ContentTrigger
+class CsrftokenTrigger extends ContentTrigger
 {
 
 	/**
