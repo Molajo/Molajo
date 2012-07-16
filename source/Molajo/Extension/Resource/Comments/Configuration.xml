@@ -19,6 +19,7 @@
             <field name="visitor_name" type="char" null="0" default=" "/>
             <field name="email_address" type="char" null="0" default=" "/>
             <field name="website" type="url" null="0" default=" "/>
+            <field name="ip_address" type="ip_address" null="0" default=" "/>
         </customfield>
     </customfields>
 </extension>

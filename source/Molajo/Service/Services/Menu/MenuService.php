@@ -65,9 +65,8 @@ Class MenuService
      * @since   1.0
      */
     public function runMenuQuery(
-        $extension_instance_id, $start_lvl = 0, $end_lvl = 0, $parent_id = 0,
-        $active_catalog_ids = array())
-    {
+        $extension_instance_id, $start_lvl = 0, $end_lvl = 0, $parent_id = 0, $active_catalog_ids = array())
+	{
         if ($extension_instance_id == 0) {
             return false;
         }
@@ -120,9 +119,6 @@ Class MenuService
 
         /** Execute query */
         $query_results = $m->getData('list');
-//		echo '<br /><br />';
-//		echo $m->model->query->__toString();
-//		echo '<br /><br />';
 
 		if ($query_results === false) {
             return array();
@@ -145,7 +141,9 @@ Class MenuService
                     $item->url = Services::Url()->getApplicationURL('index.php?id=' . (int) $item->id);
                 }
 
-                if (trim($item->subtitle) == '') {
+                if ($item->subtitle == ''
+					|| $item->subtitle == null
+				) {
                     $item->link_text = $item->title;
                 } else {
                     $item->link_text = $item->subtitle;
@@ -192,6 +190,15 @@ Class MenuService
         /** Execute query */
         $query_results = $m->getData('list');
 
+		/**
+		echo '<br /><br />';
+		echo $m->model->query->__toString();
+		echo '<br /><br />';
+
+		echo '<pre>';
+		var_dump($query_results);
+		echo '</pre>';
+		*/
         /** Add in URL */
         foreach ($query_results as $item) {
 
@@ -201,29 +208,6 @@ Class MenuService
                 } else {
                     $item->url = Services::Url()->getApplicationURL('index.php?id=' . (int) $item->id);
                 }
-            }
-            if ($item->lvl == 1) {
-                $item->home = 1;
-                $item->section = 0;
-                $item->resource = 0;
-                $item->submenu = 0;
-
-            } elseif ($item->lvl == 2) {
-                $item->home = 0;
-                $item->section = 1;
-                $item->resource = 0;
-                $item->submenu = 0;
-
-            } elseif ($item->lvl == 3) {
-                $item->home = 0;
-                $item->section = 0;
-                $item->resource = 1;
-                $item->submenu = 0;
-            } else {
-                $item->home = 0;
-                $item->section = 0;
-                $item->resource = 0;
-                $item->submenu = 1;
             }
         }
 

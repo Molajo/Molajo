@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Extensioninstancesviewswraps"
+        catalog_type_id="1250"
+        extends="ExtensionInstances">
+    <customfields>
+        <customfield name="parameters">
+            <field name="wrap_view_css_id" type="char" null="1" default=""/>
+            <field name="wrap_view_css_class" type="char" null="1" default=""/>
+
+            <field name="model_name" type="char" null="1" default=""/>
+            <field name="model_type" type="char" null="1" default=""/>
+            <field name="model_query_object" type="char" null="1" default=""/>
+        </customfield>
+    </customfields>
+</model>
