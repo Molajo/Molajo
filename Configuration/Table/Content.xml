@@ -5,7 +5,7 @@
         primary_key="id"
         name_key="title"
         primary_prefix="a"
-        get_customfields="1"
+        get_customfields="2"
         get_item_children="0"
         use_special_joins="1"
         check_view_level_access="1"

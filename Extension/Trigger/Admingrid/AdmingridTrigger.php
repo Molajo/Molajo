@@ -48,8 +48,7 @@ class AdmingridTrigger extends ContentTrigger
         $this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
             . ucfirst(strtolower($this->get('model_type', 'Table')));
 
-
-		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 0) == 1) {
+		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 1) == 1) {
 
             $profiler_message = 'AdmingridTrigger Model Type ' . $this->get('model_type')
                 . ' Model Name ' . $this->get('model_name')
@@ -62,6 +61,8 @@ class AdmingridTrigger extends ContentTrigger
             echo '</pre><br /><br />';
 
             $profiler_message .= ob_get_contents();
+			echo $profiler_message;
+			die;
             ob_end_clean();
 
 			Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
