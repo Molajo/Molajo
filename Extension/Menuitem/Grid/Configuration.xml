@@ -26,6 +26,7 @@
             <field name="grid_count" type="integer" null="0" default="5"/>
 
             <field name="grid_batch" type="boolean" null="0" default="0"/>
+
             <include name="Customfieldscontent"/>
         </customfield>
     </customfields>

@@ -96,8 +96,9 @@ Class EventService
         Services::Profiler()->set('EventService->schedule Initiated Event '
             . $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-        /** Does Event (with registration) exist? */
+        /** Does Event (with registrations) exist? */
         $exists = Services::Registry()->exists('Events', $event);
+
         if ($exists == false) {
             Services::Profiler()->set('EventService->schedule Event: '
                 . $event . ' does not exist', LOG_OUTPUT_TRIGGERS);
@@ -106,7 +107,8 @@ Class EventService
         }
 
         /** Retrieve Event Registrations */
-        $registrations = Services::Registry()->get($event);
+        $registrations = Services::Registry()->getArray($event);
+
         if (count($registrations) == 0) {
             Services::Profiler()->set('EventService->schedule Event ' . $event
                 . ' has no registrations, exiting', LOG_OUTPUT_TRIGGERS);
@@ -176,8 +178,6 @@ Class EventService
                     LOG_OUTPUT_TRIGGERS,
                     VERBOSE
                 );
-
-                return $this->arguments;
             }
         }
 

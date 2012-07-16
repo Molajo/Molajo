@@ -19,18 +19,19 @@ class MockimageTrigger extends ContentTrigger
 {
 
     /**
-     * Replaces text with emotion images
+     * Adds mock images in text, where requested
      *
      * @return boolean
      * @since   1.0
      */
     public function onAfterRead()
     {
+
         $fields = $this->retrieveFieldsByType('text');
 
         if (is_array($fields) && count($fields) > 0) {
 
-            foreach ($fields as $field) {
+			foreach ($fields as $field) {
 
                 $name = $field->name;
 
@@ -120,7 +121,7 @@ class MockimageTrigger extends ContentTrigger
     /**
      * Add images to text
      *
-     * {image}250,250,box{/image}
+     * {mockimage}250,250,box{/mockimage}
      *
      * @param int $width
      * @param int $height

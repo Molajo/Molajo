@@ -33,7 +33,7 @@ class CheckoutTrigger extends ContentTrigger
         // verify user has rights to update
         // and that no one else has it updated
         // if so, check checkout date and user
-        return false;
+        return true;
     }
 
     /**
@@ -50,7 +50,7 @@ class CheckoutTrigger extends ContentTrigger
         // verify user has rights to delete
         // and that no one else has it checked out
         // if so, allow, else cancel
-        return false;
+        return true;
     }
 
     /**

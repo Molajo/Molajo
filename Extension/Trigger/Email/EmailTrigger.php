@@ -34,7 +34,6 @@ class EmailTrigger extends ContentTrigger
 
         if (is_array($fields) && count($fields) > 0) {
 
-            /** @noinspection PhpWrongForeachArgumentTypeInspection */
             foreach ($fields as $field) {
 
                 $name = $field->name;

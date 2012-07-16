@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
 class AdmingridTrigger extends ContentTrigger
 {
     /**
-     * Prepares data for the Administrator Grid  - position AdmingridTrigger last
+     * Prepares data for the Administrator Grid  - run AdmingridTrigger after AdminmenuTrigger
      *
      * @return boolean
      * @since   1.0
@@ -43,9 +43,11 @@ class AdmingridTrigger extends ContentTrigger
         }
         $connect->set('get_customfields', 2);
         $connect->set('use_special_joins', 1);
+		$connect->set('process_triggers', 1);
 
         $this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
             . ucfirst(strtolower($this->get('model_type', 'Table')));
+
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 0) == 1) {
 
@@ -190,15 +192,24 @@ class AdmingridTrigger extends ContentTrigger
         $connect->model->query->order($connect->model->db->qn($ordering));
 
         $connect->set('model_offset', 0);
-        $connect->set('model_offset', 0);
         $connect->set('model_count', 10);
 
         $query_results = $connect->getData('list');
+/**
+		echo '<pre><br /><br />';
+		var_dump($query_results);
+		echo '<br /><br /></pre>';
 
-        Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
-        Services::Registry()->set('Parameters', 'model_type', 'dbo');
-        Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
-        Services::Registry()->set('Parameters', 'model_parameter', 'AdminGridQueryResults');
+		echo '<br /><br />';
+		echo $connect->model->query->__toString();
+		echo '<br /><br />';
+*/
+		$this->set('model_name', 'Triggerdata');
+		$this->parameters['model_name'] = 'Triggerdata';
+		$this->set('model_type', 'dbo');
+		$this->parameters['model_type'] = 'dbo';
+		$this->set('model_query_object', 'getTriggerdata');
+		$this->set('model_parameter', 'AdminGridQueryResults');
 
         Services::Registry()->set('Triggerdata', 'AdminGridQueryResults', $query_results);
 

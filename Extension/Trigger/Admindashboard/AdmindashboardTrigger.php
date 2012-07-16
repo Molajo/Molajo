@@ -36,19 +36,4 @@ class AdmindashboardTrigger extends ContentTrigger
 
         return true;
     }
-
-    /**
-     * Create Grid Query and save results in Trigger registry
-     *
-     * @param   $connect
-     * @param   $primary_prefix
-     * @param   $table_name
-     *
-     * @return bool
-     * @since   1.0
-     */
-    protected function setGrid($connect, $primary_prefix, $table_name)
-    {
-
-    }
 }
