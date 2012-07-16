@@ -2,9 +2,9 @@
 <field name="extension_instance_id" type="integer" null="0" default="0" form="list" />
 <field name="catalog_type_id" type="integer" null="0" default="0"/>
 <field name="title" type="char" null="0" default=" "/>
-<field name="subtitle" type="char" null="1" default=" "/>
-<field name="path" type="char" null="1" default=" "/>
-<field name="alias" type="char" null="1" default=" "/>
+<field name="subtitle" type="text" null="0" default=" "/>
+<field name="path" type="char" null="0" default=" "/>
+<field name="alias" type="char" null="0" default=" "/>
 <field name="content_text" type="text" null="0" default=" "/>
 <field name="protected" type="boolean" null="0" default="0"/>
 <field name="featured" type="boolean" null="0" default="0"/>

@@ -77,7 +77,7 @@ class AdminmenuTrigger extends ContentTrigger
             $activeCatalogID[] = $item_id;
         }
 
-        Services::Registry()->set('Triggerdata', 'AdminBreadcrumbs', $bread_crumbs);
+        Services::Registry()->set('Triggerdata', 'Adminbreadcrumbs', $bread_crumbs);
 
         $menuArray = array();
 
@@ -85,7 +85,6 @@ class AdminmenuTrigger extends ContentTrigger
         $menuArray[] = 'Adminnavigationbar';
         $menuArray[] = 'Adminsectionmenu';
         $menuArray[] = 'Adminresourcemenu';
-        $menuArray[] = 'Adminitemmenu';
 
         $i = 0;
         foreach ($bread_crumbs as $item) {
@@ -101,7 +100,7 @@ class AdminmenuTrigger extends ContentTrigger
             Services::Registry()->set('Triggerdata', $menuArray[$i], $query_results);
 			$i++;
 
-            if ($i > 3) {
+            if ($i > count($menuArray) - 1) {
                 break;
             }
         }
@@ -121,14 +120,9 @@ class AdminmenuTrigger extends ContentTrigger
 		var_dump(Services::Registry()->get('Triggerdata','Adminresourcemenu'));
 		echo '</pre>';
 
-		echo '<br />Adminitemmenu <br />';
+		echo '<br />Adminbreadcrumbs <br />';
 		echo '<pre>';
-		var_dump(Services::Registry()->get('Triggerdata','Adminitemmenu'));
-		echo '</pre>';
-
-		echo '<br />AdminBreadcrumbs <br />';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Triggerdata','AdminBreadcrumbs'));
+		var_dump(Services::Registry()->get('Triggerdata','Adminbreadcrumbs'));
 		echo '</pre>';
 */
 		return;
@@ -144,7 +138,7 @@ class AdminmenuTrigger extends ContentTrigger
      */
     public function setPageTitle()
     {
-        $bread_crumbs = Services::Registry()->get('Triggerdata', 'AdminBreadcrumbs');
+        $bread_crumbs = Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs');
 
         $title = '';
         foreach ($bread_crumbs as $item) {

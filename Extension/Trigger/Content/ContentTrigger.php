@@ -454,6 +454,10 @@ class ContentTrigger extends Trigger
      */
 	public function getFieldValue($field)
     {
+		if (is_object($field)) {
+		} else {
+			return false;
+		}
 
         if (isset($field->as_name)) {
             if ($field->as_name == '') {
@@ -468,13 +472,11 @@ class ContentTrigger extends Trigger
         if (isset($this->data->$name)) {
             return $this->data->$name;
 
-        } elseif ($field->customfield == '') {
-            return false;
-
-        } elseif (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
-            return Services::Registry()->get($this->get('model_name') . $field->customfield, $name);
-
-        }
+        } elseif (isset($field->customfield)) {
+			if (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
+				return Services::Registry()->get($this->get('model_name') . $field->customfield, $name);
+			}
+		}
 
         return false;
     }

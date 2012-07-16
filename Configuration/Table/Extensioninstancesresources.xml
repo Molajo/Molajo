@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Extensioninstancesresources"
+        catalog_type_id="1050"
+        extends="ExtensionInstances">
+</model>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="ExtensionInstancesviewspages"
+        catalog_type_id="1150"
+        extends="ExtensionInstances">
+    <customfields>
+        <customfield name="parameters">
+            <field name="page_view_css_id" type="char" null="1" default=""/>
+            <field name="page_view_css_class" type="char" null="1" default=""/>
+        </customfield>
+    </customfields>
+</model>
