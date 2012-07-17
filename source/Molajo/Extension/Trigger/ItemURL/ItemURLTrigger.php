@@ -66,6 +66,41 @@ class ItemurlTrigger extends ContentTrigger
             }
         }
 
+		$fields = $this->retrieveFieldsByType('url');
+
+		if (is_array($fields) && count($fields) > 0) {
+
+			foreach ($fields as $field) {
+
+				if ($field->as_name == '') {
+					$name = $field->name;
+				} else {
+					$name = $field->as_name;
+				}
+
+				$fieldValue = $this->getFieldValue($field);
+
+				if ($fieldValue == false) {
+				} else {
+
+					if (substr($fieldValue, 0, 11) == '{sitemedia}') {
+						$newFieldValue = SITE_MEDIA_FOLDER . '/' . substr($fieldValue, 11, strlen($fieldValue) - 11);
+					} else {
+						$newFieldValue = $fieldValue;
+					}
+
+					if ($newFieldValue == false) {
+					} else {
+
+						/** Creates the new 'normal' or special field and populates the value */
+						$newFieldName = $name . '_' . 'url';
+
+						$fieldValue = $this->saveField($field, $newFieldName, $newFieldValue);
+					}
+				}
+			}
+		}
+
         return true;
     }
 

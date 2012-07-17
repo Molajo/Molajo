@@ -59,28 +59,28 @@ Services::Registry()->get('Parameters', '*');
 
 2. add an extension
 
-INSERT INTO `molajo`.`molajo_extensions` ( `id` , `extension_site_id` , `catalog_type_id` , `name`) VALUES ( NULL ,  '1',  '1200',  ' Search');
+INSERT INTO `molajo`.`molajo_extensions` ( `id` , `extension_site_id` , `catalog_type_id` , `name`) VALUES ( 1227 ,  '1',  '1200',  ' Csv');
 
 INSERT INTO `molajo`.`molajo_extension_instances` (`id`, `extension_id`, `catalog_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`, `metadata`, `language`, `translation_of_id`, `ordering`)
-select null, a.id, a.catalog_type_id, a.name, 'templates', '', '', '1', '0', '0', '1', '2011-11-11 11:11:11', '0000-00-00 00:00:00', '1', '0', '0', '2011-11-11 11:11:11', '0', '2011-11-11 11:11:11', '0', '0000-00-00 00:00:00', '0', '{}', '', NULL, 'en-GB', '0', '41'
+select 1227, a.id, a.catalog_type_id, a.name, 'templates', '', '', '1', '0', '0', '1', '2012-07-01 12:00:00', '0000-00-00 00:00:00', '1', '0', '0', '2012-07-01 12:00:00', '0', '2012-07-01 12:00:00', '0', '0000-00-00 00:00:00', '0', '{}', '', NULL, 'en-GB', '0', '41'
 from molajo_extensions a
-where id > 259
+where id = 1227
 
 INSERT INTO `molajo`.`molajo_site_extension_instances` (`extension_instance_id`, `site_id`)
 SELECT a.id, 1
 from molajo_extension_instances a
-where id > 259
+where id = 1227
 
 INSERT INTO `molajo`.`molajo_application_extension_instances` (`extension_instance_id`, `application_id`)
 SELECT a.id, b.id
 from molajo_extension_instances a,
 molajo_applications b
-where a.id > 259
+where a.id = 1227
 
 INSERT INTO `molajo`.`molajo_catalog` ( `id` , `catalog_type_id` , `source_id` , `routable` , `sef_request` , `redirect_to_id` , `view_group_id` , `primary_category_id` , `tinyurl` )
-SELECT NULL ,  a.catalog_type_id,  a.id,  '1',  'extensions/views/',  '0',  '1',  '0',  ''
+SELECT NULL ,  a.catalog_type_id,  a.id,  0, null,  '0',  '1',  '12',  ''
 from molajo_extension_instances a
-where a.id > 259
+where a.id = 1227
 
 
 3. remove an extension

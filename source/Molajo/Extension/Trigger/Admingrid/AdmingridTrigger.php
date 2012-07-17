@@ -61,9 +61,8 @@ class AdmingridTrigger extends ContentTrigger
             echo '</pre><br /><br />';
 
             $profiler_message .= ob_get_contents();
-			echo $profiler_message;
-			die;
             ob_end_clean();
+
 
 			Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 		}
@@ -175,16 +174,19 @@ class AdmingridTrigger extends ContentTrigger
      */
     protected function setGrid($connect, $primary_prefix, $table_name)
     {
+
         $grid_columns = explode(',', $this->get('grid_columns',
                 'title,created_by,start_publishing_datetime,ordering')
         );
         Services::Registry()->set('Triggerdata', 'AdminGridTableColumns', $grid_columns);
 
+		$list = $this->get('menuitem_source_catalog_type_id');
         $connect->model->query->where(
             $connect->model->db->qn($primary_prefix)
                 . '.' . $connect->model->db->qn('catalog_type_id')
-                . ' = ' . $this->get('menuitem_source_catalog_type_id')
+                . ' IN (' . $list . ')'
         );
+
         $connect->model->query->where(
             $connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
 

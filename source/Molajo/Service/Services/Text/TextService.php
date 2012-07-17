@@ -400,7 +400,34 @@ Class TextService
             $row->value = Services::Language()->translate('NOT_STICKIED');
             $query_results[] = $row;
 
-        } elseif (strtolower($list) == 'protected') {
+		} elseif (strtolower($list) == 'mediatypes') {
+			$row = new \stdClass();
+			$row->id = 50000;
+			$row->value = Services::Language()->translate('Images');
+			$query_results[] = $row;
+
+			$row = new \stdClass();
+			$row->id = 51000;
+			$row->value = Services::Language()->translate('Files');
+			$query_results[] = $row;
+
+			$row = new \stdClass();
+			$row->id = 52000;
+			$row->value = Services::Language()->translate('Video');
+			$query_results[] = $row;
+
+			$row = new \stdClass();
+			$row->id = 53000;
+			$row->value = Services::Language()->translate('Audio');
+			$query_results[] = $row;
+
+			$row = new \stdClass();
+			$row->id = 54000;
+			$row->value = Services::Language()->translate('Links');
+			$query_results[] = $row;
+
+
+		} elseif (strtolower($list) == 'protected') {
             $row = new \stdClass();
             $row->id = 1;
             $row->value = Services::Language()->translate('PROTECTED');
