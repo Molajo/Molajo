@@ -1,4 +1,6 @@
 {
+    "dashboard_section":"Home",
+
     "asset_priority_application":"200",
     "asset_priority_category":"600",
     "asset_priority_extension":"400",
@@ -14,14 +16,14 @@
     "cache_time":"15",
 
     "criteria_content_catalog_type_id":"",
-    "criteria_extension_instance_id":"2",
+    "criteria_extension_instance_id":"5",
     "criteria_display_view_on_no_results":"1",
     "criteria_snippet_length":"200",
-    "criteria_title":"Categories",
+    "criteria_title":"Dashboard",
 
     "filter_catalog_type_id":"3500",
     "filter_check_published_status":"1",
-    "filter_extension_instance_id":"2",
+    "filter_extension_instance_id":"5",
 
     "log_user_activity_create":"0",
     "log_user_activity_delete":"0",
@@ -29,8 +31,8 @@
     "log_user_activity_update":"0",
 
     "menu_extension_catalog_type_id":"",
-    "menuitem_extension_instance_id":"2",
-    "menuitem_model_name":"Categoriestags",
+    "menuitem_extension_instance_id":"5",
+    "menuitem_model_name":"Dashboard",
     "menuitem_model_type":"Table",
     "menuitem_model_query_object":"list",
     "menuitem_model_offset":"0",
@@ -44,9 +46,9 @@
     "menuitem_source_id":"0",
     "menuitem_template_view_css_class":"",
     "menuitem_template_view_css_id":"",
-    "menuitem_template_view_id":"1050",
+    "menuitem_template_view_id":"1030",
     "menuitem_theme_id":"9010",
-    "menuitem_type":"Grid",
+    "menuitem_type":"Dashboard",
     "menuitem_wrap_view_css_class":"",
     "menuitem_wrap_view_css_id":"",
     "menuitem_wrap_view_id":"2030",

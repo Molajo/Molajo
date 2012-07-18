@@ -2,7 +2,7 @@
 <model name="Dashboard" extends="Menuitemresources">
     <customfields>
         <customfield name="parameters">
-            <field name="dashboard" type="char" null="0" default=""/>
+            <field name="dashboard_section" type="char" null="0" default=""/>
             <include name="Customfieldscontent"/>
         </customfield>
     </customfields>
