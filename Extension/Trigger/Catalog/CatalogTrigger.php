@@ -102,7 +102,7 @@ class CatalogTrigger extends ContentTrigger
      */
     public function onBeforeDelete()
     {
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
         $m->connect();
 

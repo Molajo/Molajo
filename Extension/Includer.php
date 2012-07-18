@@ -8,7 +8,7 @@ namespace Molajo\Extension;
 
 use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
-use Molajo\Controller\ReadController;
+use Molajo\Controller\DisplayController;
 
 defined('MOLAJO') or die;
 
@@ -339,7 +339,7 @@ class Includer
         ob_end_clean();
         Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
 
-        $controller = new ReadController();
+        $controller = new DisplayController();
         $controller->set('id', (int) Services::Registry()->get('Parameters', 'source_id'));
 
         /** Set Parameters */

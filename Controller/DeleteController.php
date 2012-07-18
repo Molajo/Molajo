@@ -7,7 +7,7 @@
 namespace Molajo\Controller;
 
 use Molajo\Service\Services;
-use Molajo\Controller\ReadController;
+use Molajo\Controller\DisplayController;
 
 defined('MOLAJO') or die;
 
@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class DeleteController extends ReadController
+class DeleteController extends DisplayController
 {
     /**
      * Delete row and trigger other delete actions

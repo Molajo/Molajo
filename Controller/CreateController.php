@@ -381,7 +381,7 @@ class CreateController extends Controller
 
             if (isset($this->data->$name)) {
 
-                $controllerClass = 'Molajo\\Controller\\ReadController';
+                $controllerClass = 'Molajo\\Controller\\DisplayController';
                 $m = new $controllerClass();
                 $results = $m->connect('Table', $source_model);
                 if ($results == false) {
