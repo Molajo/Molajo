@@ -72,7 +72,7 @@ Class UserService
     protected function load()
     {
         /** Retrieve User Data  */
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'Users');
         if ($results == false) {

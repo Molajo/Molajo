@@ -41,7 +41,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
         /** Check ACL */
 
         /** Check if the Extension Instance already exists */
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
         $m->connect('Table', 'ExtensionInstances');
 
@@ -66,7 +66,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
         }
 
         /** Next, see if the Extension node exists */
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
         $m->connect('Table', 'Extensions');
 
@@ -91,7 +91,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
         //todo decide if another query is warranted for verifying existence of catalog type
 
         /** Create a new Catalog Type */
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
         $m->connect();
 
@@ -228,7 +228,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
         }
 
         /** Do not allow delete if there is content for this resource */
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
 
         $m->connect('Table', $this->data->title);
@@ -257,7 +257,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
         }
 
         /** Delete allowed - get rid of ACL info */
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
         $m->connect();
 
@@ -304,7 +304,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
      */
     public function onAfterDelete()
     {
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'ExtensionInstances');
         if ($results == false) {

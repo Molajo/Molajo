@@ -229,7 +229,7 @@ Class ContentHelper
                 . ' Model Query: ' . $model_query_object,
         	LOG_OUTPUT_ROUTING, VERBOSE);
 
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $m = new $controllerClass();
         $results = $m->connect($model_type, $model_name);
 

@@ -35,7 +35,7 @@ class AdminmenuTrigger extends ContentTrigger
 		}
 
         /** Data Source Connection */
-        $controllerClass = 'Molajo\\Controller\\ReadController';
+        $controllerClass = 'Molajo\\Controller\\DisplayController';
         $connect = new $controllerClass();
 
         $results = $connect->connect(

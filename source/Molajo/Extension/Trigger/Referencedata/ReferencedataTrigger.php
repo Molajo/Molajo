@@ -53,7 +53,7 @@ class ReferencedataTrigger extends ContentTrigger
 
                     $new_name = $field->name . '_value';
 
-                    $controllerClass = 'Molajo\\Controller\\ReadController';
+                    $controllerClass = 'Molajo\\Controller\\DisplayController';
                     $m = new $controllerClass();
                     $m->connect('Table', $fk->source_model);
 
