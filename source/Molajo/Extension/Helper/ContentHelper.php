@@ -147,6 +147,13 @@ Class ContentHelper
         Services::Registry()->set('Parameters', $type . '_model_query_object',
             Services::Registry()->get($parmName, 'menuitem_model_query_object'));
 
+		Services::Registry()->set('Parameters', 'model_offset',
+			Services::Registry()->get($parmName, 'menuitem_model_offset'));
+		Services::Registry()->set('Parameters', 'model_count',
+			Services::Registry()->get($parmName, 'menuitem_model_count'));
+		Services::Registry()->set('Parameters', 'model_use_pagination',
+			Services::Registry()->get($parmName, 'menuitem_model_use_pagination'));
+
         Services::Registry()->delete($parmName, 'menuitem_theme*');
         Services::Registry()->delete($parmName, 'menuitem_page*');
         Services::Registry()->delete($parmName, 'menuitem_template*');

@@ -5,10 +5,7 @@
     <parameter name="edit" filter="char"/>
     <parameter name="delete" filter="char"/>
     <parameter name="save" filter="char"/>
-    <parameter name="next" filter="int"/>
-    <parameter name="prev" filter="int"/>
-    <parameter name="start" filter="int"/>
-    <parameter name="end" filter="int"/>
+    <parameter name="offset" filter="int"/>
     <parameter name="tag" filter="char"/>
     <parameter name="category" filter="char"/>
     <parameter name="group" filter="char"/>

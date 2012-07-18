@@ -6,6 +6,7 @@
  */
 namespace Molajo\Extension\Trigger\Pagination;
 
+use Molajo\Service\Services;
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
 defined('MOLAJO') or die;
@@ -28,28 +29,87 @@ class PaginationTrigger extends ContentTrigger
      */
     public function onAfterRead()
     {
-		if ($start > $total - $limit) {
-			$start = max(0, (int) (ceil($total / $limit) - 1) * $limit);
+
+		if ($this->get('first') == true) {
+		} else {
+			return true;
 		}
-		 list_model_use_pagination
-		/** get pagination id **/
-        $store = $this->getStoreId('getPagination');
+/**
+		if ($this->get('model_use_pagination', 0) == 1) {
+		} else {
+			return true;
+		}
+*/
+		if ((int) $this->get('pagination_total') > 1) {
+		} else {
+			return true;
+		}
 
-        /** if available, load from cache **/
-        if (empty($this->cache[$store])) {
-        } else {
-            return $this->cache[$store];
-        }
+		if ((int) $this->get('model_count') > 0) {
+		} else {
+			$this->set('model_count', 5);
+		}
 
-        /** pagination object **/
-        $limit = (int) $this->getState('list.limit') - (int) $this->getState('list.links');
-//        $page = new JPagination($this->getTotal(), $this->getStart(), $limit);
-        $page = '';
-        /** load cache **/
-        $this->cache[$store] = $page;
+		if ((int) $this->get('model_offset') > 1) {
+		} else {
+			$this->set('model_offset', 0);
+		}
 
-        /** return from cache **/
+		if ($this->get('model_offset') + $this->get('model_count') >= $this->get('pagination_total')) {
+			return true;
+		}
 
-        return $this->cache[$store];
-    }
+		/** Next offset */
+		if ($this->get('model_offset') + $this->get('model_count') > $this->get('pagination_total')) {
+			$next_offset = 0;
+		} else {
+			$next_offset = $this->get('model_offset') + $this->get('model_count');
+		}
+
+		$current_offset = $this->get('model_offset');
+
+		/** Prev offset */
+		if ($this->get('model_offset') - $this->get('model_count') < 0) {
+			$prev_offset = null;
+		} else {
+			$prev_offset = $this->get('model_offset') - $this->get('model_count');
+		}
+
+		/** Pages */
+		$url = Services::Registry()->get('Parameters', 'full_page_url');
+
+		$connector = '/';
+		$query_results = array();
+		$offset = 0;
+
+		$iteration = round($this->get('pagination_total') / $this->get('model_count', 5), 0);
+
+		for ($i = 0; $i < $iteration; $i++) {
+
+			$row = new \stdClass();
+
+			$row->link = $url . $connector . 'offset=' . $offset;
+
+			if ($offset < $this->get('model_offset')) {
+				$row->class = ' page-prev';
+			} elseif ($offset == $this->get('model_offset')) {
+				$row->class = ' page-current';
+			} else {
+				$row->class = ' page-next';
+			}
+
+			$row->link_text = ' ' . (int) $i + 1;
+
+			$row->prev_link = $url . '/offset=' . $prev_offset;
+			$row->next_link = $url . '/offset=' . $next_offset;
+
+			$offset = $offset + $this->get('model_count');
+
+			$query_results[] = $row;
+		}
+
+		Services::Registry()->set('Triggerdata', 'AdminGridPagination', $query_results);
+
+		return true;
+	}
 }

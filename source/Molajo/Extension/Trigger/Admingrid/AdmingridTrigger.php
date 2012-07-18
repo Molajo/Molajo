@@ -70,7 +70,6 @@ class AdmingridTrigger extends ContentTrigger
         $this->setToolbar();
         $this->setFilter($connect, $connect->get('primary_prefix'));
         $this->setGrid($connect, $connect->get('primary_prefix'), $connect->get('table_name'));
-        $this->setPagination();
         $this->setBatch($connect, $connect->get('primary_prefix'));
 
         return true;
@@ -215,47 +214,6 @@ class AdmingridTrigger extends ContentTrigger
 		$this->set('model_parameter', 'AdminGridQueryResults');
 
         Services::Registry()->set('Triggerdata', 'AdminGridQueryResults', $query_results);
-
-        return true;
-    }
-
-    /**
-     * Create Pagination data and store in Trigger registry
-     *
-     * @return boolean
-     * @since  1.0
-     */
-    protected function setPagination()
-    {
-        $url = Services::Registry()->get('Parameters', 'full_page_url');
-        $connector = '';
-        $query_results = array();
-        $current = 0;
-
-        $row = new \stdClass();
-        $row->link = $url . $connector . '&start=' . $current + 5;
-        $row->class = ' page-prev';
-        $row->link_text = ' 1';
-
-        $query_results[] = $row;
-
-        $row = new \stdClass();
-        $row->link = $url . $connector . '&start=' . $current + 10;
-        $row->class = '';
-        $row->link_text = ' 2';
-
-        $query_results[] = $row;
-
-        $row = new \stdClass();
-        $row->link = $url . $connector . '&start=' . $current + 15;
-        $row->class = ' page-next';
-        $row->link_text = ' 3';
-
-        $query_results[] = $row;
-
-        Services::Registry()->set('Triggerdata', 'AdminGridPagination', $query_results);
-        Services::Registry()->set('Triggerdata', 'AdminGridPaginationOffset', $this->get('model_offset', 0));
-        Services::Registry()->set('Triggerdata', 'AdminGridPaginationCount', $this->get('model_count', 5));
 
         return true;
     }

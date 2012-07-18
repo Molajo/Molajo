@@ -440,6 +440,13 @@ class ReadController extends Controller
         $items = $this->query_results;
         $this->query_results = array();
 
+		$parameters = $this->parameters;
+
+		$this->parameters['model_offset'] = $model_offset;
+		$this->parameters['model_count'] = $model_count;
+		$this->parameters['pagination_total'] = $pagination_total;
+		$first = true;
+
         foreach ($items as $item) {
 
             $arguments = array(
@@ -447,9 +454,7 @@ class ReadController extends Controller
                 'parameters' => $this->parameters,
                 'data' => $item,
                 'model_name' => $this->get('model_name'),
-				'pagination_total' => $this->get('pagination_total'),
-				'model_offset' => $this->get('model_offset'),
-				'model_count' => $this->get('model_count')
+				'first' => $first
             );
 
             Services::Profiler()->set('ReadController->onAfterReadEvent '
@@ -475,7 +480,7 @@ class ReadController extends Controller
 
 			$this->parameters = $arguments['parameters'];
 			$this->query_results[] = $arguments['data'];
-
+			$first = false;
         }
 
         return true;
