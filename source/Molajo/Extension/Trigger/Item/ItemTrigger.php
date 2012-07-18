@@ -29,8 +29,6 @@ class ItemTrigger extends ContentTrigger
 	 */
 	public function onBeforeParse()
 	{
-	   Services::Registry()->get('Parameters');
-
 		if (Services::Registry()->exists('Parameters', 'menuitem_id')) {
 			if ((int) Services::Registry()->get('Parameters', 'menuitem_id') == 0) {
 			} else {

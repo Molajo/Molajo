@@ -1,12 +1,11 @@
 <?php
 /**
- * <include:template name=Author/>
+ *
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-var_dump($this->row);
 ?>
 <div class="row">
     <div class="twelve columns">
@@ -16,6 +15,6 @@ var_dump($this->row);
 
 <div class="row">
 	<div class="twelve columns">
-
+		<include:template name=Author/>
 	</div>
 </div>

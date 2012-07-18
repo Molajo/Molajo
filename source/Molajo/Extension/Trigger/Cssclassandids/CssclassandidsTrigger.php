@@ -18,75 +18,67 @@ defined('MOLAJO') or die;
 class CssclassandidsTrigger extends ContentTrigger
 {
 
-    /**
-     * Add CSS Class and ID to each row
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeViewRender()
-    {
+	/**
+	 * Add CSS Class and ID to each row
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeViewRender()
+	{
 
-        $count = count($this->data);
+		$count = count($this->data);
 
-        if ((int) $count == 0
-            || $this->data == false
-            || $this->data == null
-        ) {
-            return true;
-        }
+		if ((int)$count == 0
+			|| $this->data == false
+			|| $this->data == null
+		) {
+			return true;
+		}
 
 		$class = '';
 		$id = '';
 
-        $first = true;
-        foreach ($this->data as $item) {
 
-            if ($first) {
+		$class_field = $this->getField('css_class');
+		if ($class_field === false) {
+			$class_field_value = '';
+		} else {
+			$class_field_value = $this->getFieldValue($class_field);
+		}
 
-                $class = '';
+		$view_css_class = $this->parameters['template_view_css_class'];
+		$class .= ' ' . trim($class_field_value) . ' ' . trim($view_css_class);
 
-				$class_field = $this->getField('css_class');
-				if ($class_field === false) {
-					$class_field_value = '';
-				} else {
-					$class_field_value = $this->getFieldValue($class_field);
-				}
+		if (trim($class) == '') {
+			$class = '';
+		} else {
+			$class = ' class="' . htmlspecialchars(trim($class), ENT_NOQUOTES, 'UTF-8') . '"';
+		}
 
-				$view_css_class = $this->parameters['template_view_css_class'];
-				$class .= ' ' . trim($class_field_value) . ' ' . trim($view_css_class);
+		$id = '';
 
-                if (trim($class) == '') {
-                    $class = '';
-                } else {
-                    $class = ' class="' . htmlspecialchars(trim($class), ENT_NOQUOTES, 'UTF-8') . '"';
-                }
+		$id_field = $this->getField('css_id');
+		if ($id_field === false) {
+			$id_field_value = '';
+		} else {
+			$id_field_value = $this->getFieldValue($id_field);
+		}
 
-				$id = '';
+		$view_css_id = $this->parameters['template_view_css_id'];
 
-				$id_field = $this->getField('css_id');
-				if ($id_field === false) {
-					$id_field_value = '';
-				} else {
-					$id_field_value = $this->getFieldValue($id_field);
-				}
+		$id .= ' ' . trim($id_field_value) . ' ' . trim($view_css_id);
 
-				$view_css_id = $this->parameters['template_view_css_id'];
+		if (trim($id) == '') {
+			$id = '';
+		} else {
+			$id = ' id="' . htmlspecialchars(trim($id), ENT_NOQUOTES, 'UTF-8') . '"';
+		}
 
-				$id .= ' ' . trim($id_field_value) . ' ' . trim($view_css_id);
 
-				if (trim($id) == '') {
-					$id = '';
-				} else {
-					$id = ' id="' . htmlspecialchars(trim($id), ENT_NOQUOTES, 'UTF-8') . '"';
-				}
+		$this->data->css_class = $class;
+		$this->data->css_id = $id;
 
-			}
-
-			$item->css_class = $class;
-            $item->css_id = $id;
-        }
-
-        return true;
-    }
+		return true;
+	}
 }
