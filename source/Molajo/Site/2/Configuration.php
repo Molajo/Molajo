@@ -56,7 +56,7 @@ Class SiteConfiguration
     public $smtphost = 'localhost';
 
     /* Debug Logging */
-    public $profiler_log = 'echo';
+    public $profiler_log = 'profiler_log';
     /* Text */
     public $profiler_text_file = 'profiler.php';
     public $profiler_text_file_path = 'SITE_LOGS_FOLDER';

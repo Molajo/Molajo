@@ -29,4 +29,5 @@ defined('MOLAJO') or die; ?>
         <include:template name=Adminfooter/>
     </div>
 </div>
+<include:profiler/>
 <include:defer/>

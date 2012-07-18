@@ -19,3 +19,5 @@ There are many ways to learn more about Molajo, you can:
 * Follow Molajo on [Twitter](http://twitter.com/Molajo);
 * Review Molajo [development on Ohloh](https://www.ohloh.net/p/Molajo);
 * Discuss Molajo on [the Molajo Google Plus page](https://plus.google.com/b/112043507882364310541/).
+
+https://github.com/mojombo/semver

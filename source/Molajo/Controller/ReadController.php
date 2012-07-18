@@ -211,32 +211,31 @@ class ReadController extends Controller
             $this->onBeforeReadEvent();
         }
 
-        $offset = $this->get('model_offset', 0);
-        $count = $this->get('model_count', 0);
+        $model_offset = $this->get('model_offset', 0);
+        $model_count = $this->get('model_count', 0);
 
-        if ($offset == 0 && $count == 0) {
+        if ($model_offset == 0 && $model_count == 0) {
             if ($query_object == 'result') {
-                $offset = 0;
-                $count = 1;
+                $model_offset = 0;
+                $model_count = 1;
             } elseif ($query_object == 'distinct' || $query_object = 'getListdata') {
-                $offset = $this->get('model_offset', 0);
-                $count = $this->get('model_count', 9999);
+                $model_offset = $this->get('model_offset', 0);
+                $model_count = $this->get('model_count', 9999);
             } else {
-                $offset = $this->get('model_offset', 0);
-                $count = $this->get('model_count', 10);
+                $model_offset = $this->get('model_offset', 0);
+                $model_count = $this->get('model_count', 10);
             }
         }
 
-        $this->model->getQueryResults(
-            Services::Registry()->get($this->table_registry_name, 'Fields'),
+        $pagination_total = (int) $this->model->getQueryResults(
             $query_object,
-            $offset,
-            $count
+            $model_offset,
+            $model_count
         );
 
         /** Cache */
-        if (Services::Cache()->exists(md5($this->model->query->__toString()))) {
-            return Services::Cache()->get(md5($this->model->query->__toString()));
+        if (Services::Cache()->exists(md5($this->model->query->__toString() . ' ' . $model_offset . ' ' . $model_count))) {
+            return Services::Cache()->get(md5($this->model->query->__toString() . ' ' . $model_offset . ' ' . $model_count));
         }
 
         if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
@@ -330,10 +329,10 @@ class ReadController extends Controller
 
         /** Schedule onAfterRead Event */
         if (count($this->triggers) > 0) {
-            $this->onAfterReadEvent();
+            $this->onAfterReadEvent($pagination_total, $model_offset, $model_count);
         }
 
-        /** List */
+		/** List */
         if ($query_object == 'list') {
 
             if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
@@ -420,11 +419,15 @@ class ReadController extends Controller
 
     /**
      * Schedule onAfterRead Event - could update parameters and query_results objects
-     *
-     * @return bool
-     * @since   1.0
-     */
-    protected function onAfterReadEvent()
+	 *
+	 * @param   $pagination_total
+	 * @param   $model_offset
+	 * @param   $return_rowcount
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	protected function onAfterReadEvent($pagination_total, $model_offset, $model_count)
     {
         /** Prepare input */
         if (count($this->triggers) == 0
@@ -443,7 +446,10 @@ class ReadController extends Controller
                 'table_registry_name' => $this->table_registry_name,
                 'parameters' => $this->parameters,
                 'data' => $item,
-                'model_name' => $this->get('model_name')
+                'model_name' => $this->get('model_name'),
+				'pagination_total' => $this->get('pagination_total'),
+				'model_offset' => $this->get('model_offset'),
+				'model_count' => $this->get('model_count')
             );
 
             Services::Profiler()->set('ReadController->onAfterReadEvent '
@@ -589,15 +595,15 @@ class ReadController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
         if ($arguments == false) {
-			Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
             return false;
         }
 
-		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $this->query_results = $arguments['data'];
 		$this->parameters = $arguments['parameters'];
@@ -622,16 +628,16 @@ class ReadController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
 
         if ($arguments == false) {
-			Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+			Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
             return false;
         }
 
-		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS);
+		Services::Profiler()->set('ReadController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
 		$rendered_output = $arguments['rendered_output'];
         return $rendered_output;

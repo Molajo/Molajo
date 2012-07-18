@@ -1,8 +1,8 @@
 {
     "name": "molajo/molajo",
-    "type": "cmf",
+    "type": "Content Management Framework",
     "description": "Molajo Content Management Framework",
-    "keywords": ["cmf"],
+    "keywords": ["cmf", "framework","mvc"],
     "homepage": "http://molajo.org",
     "license": "GPL v 2, or later, and MIT",
     "authors": [

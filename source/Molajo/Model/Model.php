@@ -218,6 +218,19 @@ class Model
         return $this->db->getAssets($model_type);
     }
 
+	/**
+	 * retrieves Profiler Console messages
+	 *
+	 * @param null $model_type
+	 *
+	 * @return mixed Array or String or Null
+	 * @since   1.0
+	 */
+	public function getProfiler($model_type = null)
+	{
+		return $this->db->getProfiler();
+	}
+
     /**
      * filterInput
      *

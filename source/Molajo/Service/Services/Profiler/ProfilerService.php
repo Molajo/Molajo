@@ -233,7 +233,7 @@ Class ProfilerService
             }
         }
 
-        /** 3. Is there a start and end phase? And, does the current phase fall within the range? */
+        /** 3. Is there a start and end phase? If so, does the current phase fall within the range? */
         if ($this->phase_array[$current_phase] >= $this->phase_array[$this->profiler_start_with]
             && $this->phase_array[$current_phase] <= $this->phase_array[$this->profiler_end_with]
         ) {
@@ -425,7 +425,7 @@ Class ProfilerService
     }
 
     /**
-     * setProfilerLogger - establish connection to the selected profiler logger and initiate Profilerging
+     * setProfilerLogger - establish connection to the selected profiler logger and initiate Profiler
      *
      * @return mixed
      * @since   1.0
@@ -444,7 +444,7 @@ Class ProfilerService
         );
 
         $this->profiler_options = array();
-        $this->profiler_options['logger'] = Services::Registry()->get('Configuration', 'profiler_log', LOG_ECHO_LOGGER);
+        $this->profiler_options['logger'] = Services::Registry()->get('Configuration', 'profiler_log', LOG_CONSOLE_LOGGER);
 
         $results = false;
         if (in_array($this->profiler_options['logger'], $loggerOptions)) {
@@ -594,4 +594,80 @@ Class ProfilerService
 
         return ((float) $usec + (float) $sec);
     }
+
+	/**
+	 * get console log
+	 *
+	 * @return array console log entries
+	 *
+	 * @since   1.0
+	 */
+	public function get($option = null)
+	{
+		if ($option == 'db') {
+			return $this;
+
+		} elseif ($option == 'count') {
+			return Services::Log()->get($option);
+
+		} else {
+			return Services::Log()->get();
+		}
+
+	}
+
+	/**
+	 *     Dummy functions to pass service off as a DBO to interact with model
+	 */
+	public function getNullDate()
+	{
+		return $this;
+	}
+
+	public function getQuery()
+	{
+		return $this;
+	}
+
+	public function toSql()
+	{
+		return $this;
+	}
+
+	public function clear()
+	{
+		return $this;
+	}
+
+	/**
+	 * getProfiler
+	 *
+	 * @return array
+	 *
+	 * @since    1.0
+	 */
+	public function getProfiler()
+	{
+		$query_results = array();
+
+		$messages = $this->get();
+		if (count($messages) == 0) {
+			return array();
+		}
+
+		foreach ($messages as $message) {
+
+			$row = new \stdClass();
+
+			$row->date = $message['date'];
+			$row->priority = $message['priority'];
+			$row->type = $message['type'];
+			$row->message = $message['message'];
+
+			$query_results[] = $row;
+		}
+
+		return $query_results;
+	}
+
 }

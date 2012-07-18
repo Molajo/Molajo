@@ -131,7 +131,7 @@ Class MessageService
     }
 
     /**
-     * getData
+     * getMessages is called out of the ReadModel to simulate a database query for Messages
      *
      * @return array
      *
