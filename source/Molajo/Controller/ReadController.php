@@ -36,8 +36,18 @@ class ReadController extends Controller
         } elseif ($action == 'display') {
         }
          */
-
-        if ($this->get('model_name', '') == '') {
+/**
+  echo
+			' <br />Includer: ' . $this->get('includer_type', '')
+				. ' <br />Model Type: ' . $this->get('model_type', '')
+				. ' <br />Model Type: ' . $this->get('model_type', '')
+				. ' <br />Model Name: ' . $this->get('model_name', '')
+				. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
+				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
+				. ' <br />Template Path: ' . $this->get('template_view_path', '')
+				. ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
+*/
+		if ($this->get('model_name', '') == '') {
             $this->query_results = array();
 
         } else {
@@ -592,26 +602,36 @@ class ReadController extends Controller
             return true;
         }
 
-        /** Process the entire query_results set */
-        $arguments = array(
-            'table_registry_name' => $this->table_registry_name,
-            'parameters' => $this->parameters,
-            'data' => $this->query_results,
-            'model_name' => $this->get('model_name')
-        );
+		/** Process each item, one at a time */
+		$items = $this->query_results;
+		$this->query_results = array();
 
-		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+		$parameters = $this->parameters;
 
-        $arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
-        if ($arguments == false) {
+		foreach ($items as $item) {
+
+			/** Process the entire query_results set */
+			$arguments = array(
+				'table_registry_name' => $this->table_registry_name,
+				'parameters' => $this->parameters,
+				'data' => $this->query_results,
+				'model_name' => $this->get('model_name')
+			);
+
 			Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
-            return false;
-        }
 
-		Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+			$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
 
-        $this->query_results = $arguments['data'];
-		$this->parameters = $arguments['parameters'];
+			if ($arguments == false) {
+				Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+				return false;
+			}
+
+			Services::Profiler()->set('ReadController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
+			$this->parameters = $arguments['parameters'];
+			$this->query_results[] = $arguments['data'];
+		}
 
         return true;
     }

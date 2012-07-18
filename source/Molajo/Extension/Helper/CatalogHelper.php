@@ -76,6 +76,7 @@ Class CatalogHelper
         } else {
             Services::Profiler()->set('CatalogHelper->getRouteCatalog Redirect to ID '
                 . (int) $item->redirect_to_id, LOG_OUTPUT_ROUTING, 0);
+
             Services::Registry()->set('Parameters', 'redirect_to_id', (int) $item->redirect_to_id);
 
             return false;
@@ -84,12 +85,16 @@ Class CatalogHelper
         /** Route Registry */
         Services::Registry()->set('Parameters', 'catalog_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'catalog_type_id', (int) $item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'catalog_general_type', $item->b_type);
         Services::Registry()->set('Parameters', 'catalog_type', $item->b_title);
         Services::Registry()->set('Parameters', 'catalog_url_sef_request', $item->sef_request);
         Services::Registry()->set('Parameters', 'catalog_url_request', $item->catalog_url_request);
         Services::Registry()->set('Parameters', 'catalog_menuitem_type', $item->menuitem_type);
         Services::Registry()->set('Parameters', 'catalog_view_group_id', (int) $item->view_group_id);
         Services::Registry()->set('Parameters', 'catalog_category_id', (int) $item->primary_category_id);
+		Services::Registry()->set('Parameters', 'catalog_extension_instance_id', $item->b_extension_instance_id);
+		Services::Registry()->set('Parameters', 'catalog_model_name', $item->b_model_name);
+		Services::Registry()->set('Parameters', 'catalog_slug', $item->b_slug);
         Services::Registry()->set('Parameters', 'catalog_source_table', $item->b_source_table);
         Services::Registry()->set('Parameters', 'catalog_source_id', (int) $item->source_id);
         Services::Registry()->set('Parameters', 'catalog_tinyurl', (int) $item->tinyurl);

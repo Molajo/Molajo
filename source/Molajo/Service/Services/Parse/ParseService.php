@@ -168,7 +168,10 @@ Class ParseService
         Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
 		/** OnBeforeParse Triggers */
-		$this->onBeforeParseEvent();
+		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+		} else {
+			$this->onBeforeParseEvent();
+		}
 
         /** Retrieve overrides */
         $overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
@@ -248,11 +251,11 @@ Class ParseService
         $renderedOutput = $this->renderLoop($renderedOutput);
 
         /** onAfterParse Trigger */
-		Services::Registry()->copy('RouteParameters', 'Parameters');
-
-		$renderedOutput = $this->onAfterParseEvent($renderedOutput);
-		echo  $renderedOutput;
-		die;
+		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+		} else {
+			Services::Registry()->copy('RouteParameters', 'Parameters');
+			$renderedOutput = $this->onAfterParseEvent($renderedOutput);
+		}
         return $renderedOutput;
     }
 

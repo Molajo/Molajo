@@ -105,6 +105,10 @@ class DateformatsTrigger extends ContentTrigger
 
                 if ($fieldValue == false
                     || $fieldValue == '0000-00-00 00:00:00'
+					|| $fieldValue == ''
+					|| $fieldValue == null
+					|| substr($name, 0, 12) == 'list_select_'
+
                 ) {
 
                 } else {

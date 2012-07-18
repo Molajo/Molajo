@@ -94,8 +94,7 @@ Class RouteService
         if (Services::Registry()->get('Configuration', 'offline', 0) == 1) {
             Services::Error()->set(503);
             Services::Profiler()->set('Application::Route() Direct to Offline Mode', 'Route');
-
-            return true;
+            return false;
         }
 
         /** Identify Resource and sub-resource values */
@@ -150,7 +149,6 @@ Class RouteService
         $this->getRouteParameters();
 
         /**   Return to Application Object */
-
         return $this;
     }
 
@@ -408,37 +406,37 @@ Class RouteService
     {
         /**  Menu Item  */
         if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
+
             $response = Helpers::Content()->getMenuItemRoute();
             if ($response === false) {
                 Services::Error()->set(500, 'Menu Item not found');
             }
 
         } else {
+		;
             $id = Services::Registry()->get('Parameters', 'catalog_source_id');
 
             $model_type = 'Table';
-            $model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_type')));
-            $model_query_object = 'item';
+            $model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
 
-            /**  Content (with or without a menu item) */
-            $response = Helpers::Content()->getRouteContent(
-                $id, $model_type, $model_name, $model_query_object
-            );
+			if ((int) $id == 0) {
+				$model_query_object = 'list';
+			} else {
+            	$model_query_object = 'item';
+			}
+
+            $response = Helpers::Content()->getRouteContent($id, $model_type, $model_name, $model_query_object);
             if ($response === false) {
-                Services::Error()->set(500, 'Content Item not found');
+                Services::Error()->set(500, 'Content not found');
+				return false;
             }
-
-            /**  Category
-            if ((int) Services::Registry()->get('Parameters', 'catalog_category_id') == 0) {
-            } else {
-            Helpers::Content()->getRouteCategory();
-            }  */
         }
 
         /**  Extension */
-        if ((int) Services::Registry()->get('Parameters', 'extension_instance_id', 0) > 0) {
+        if ((int) Services::Registry()->get('Parameters', 'catalog_extension_instance_id', 0) > 0) {
+
             $response = Helpers::Extension()->getExtension(
-                Services::Registry()->get('Parameters', 'extension_instance_id'),
+                Services::Registry()->get('Parameters', 'catalog_extension_instance_id'),
                 'Table',
                 'ExtensionInstances'
             );

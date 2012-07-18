@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$action = Services::Registry()->get('Parameters', 'full_page_url');
+$action = Services::Registry()->get('Triggerdata', 'full_page_url');
 
 $class = 'alert-box';
 if ($this->row->type == MESSAGE_TYPE_SUCCESS) {

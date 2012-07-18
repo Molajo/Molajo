@@ -28,6 +28,12 @@ class AdminmenuTrigger extends ContentTrigger
      */
     public function onBeforeParse()
     {
+		/** Only used for the Administrator */
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
+
         /** Data Source Connection */
         $controllerClass = 'Molajo\\Controller\\ReadController';
         $connect = new $controllerClass();

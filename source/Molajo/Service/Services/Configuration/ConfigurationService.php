@@ -507,6 +507,7 @@ Class ConfigurationService
             }
         }
 
+
         if ($extension_path == false) {
         } else {
             /** ex. Resource/Article/Configuration.xml */

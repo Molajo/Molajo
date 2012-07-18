@@ -76,7 +76,7 @@ class PaginationTrigger extends ContentTrigger
 		}
 
 		/** Pages */
-		$url = Services::Registry()->get('Parameters', 'full_page_url');
+		$url = Services::Registry()->get('Triggerdata', 'full_page_url');
 
 		$connector = '/';
 		$query_results = array();

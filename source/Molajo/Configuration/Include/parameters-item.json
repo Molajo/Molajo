@@ -1,63 +1,14 @@
+
 {
-    "asset_priority_application":"200",
-    "asset_priority_category":"600",
-    "asset_priority_extension":"400",
-    "asset_priority_menu_item":"700",
-    "asset_priority_request":"500",
-    "asset_priority_site":"100",
-    "asset_priority_source":"800",
-    "asset_priority_theme":"900",
-    "asset_priority_user":"300",
+    "2":{
+        "criteria_display_view_on_no_results":"",
+        "criteria_snippet_length":"",
+        "criteria_extension_instance_id":"",
+        "criteria_catalog_type_id":"",
 
-    "cache":"1",
-    "cache_handler":"folder",
-    "cache_time":"15",
-
-    "criteria_content_catalog_type_id":"10000",
-    "criteria_extension_instance_id":"1",
-    "criteria_display_view_on_no_results":"1",
-    "criteria_snippet_length":"200",
-    "criteria_title":"Articles",
-
-    "filter_catalog_type_id":"10000",
-    "filter_check_published_status":"1",
-    "filter_extension_instance_id":"1",
-
-    "grid_batch":"1",
-    "grid_columns":"title,author_full_name,id,start_publishing_datetime_ccyymmdd,ordering",
-    "model_count":"5",
-    "grid_criteria":"",
-    "grid_lists":"author,status,title",
-    "model_offset":"0",
-    "grid_ordering":"start_publishing_datetime",
-    "model_use_pagination":"1",
-    "grid_search":"1",
-    "grid_submenu_items":"items,categories,drafts",
-    "grid_toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",
-
-    "log_user_activity_create":"0",
-    "log_user_activity_delete":"0",
-    "log_user_activity_read":"0",
-    "log_user_activity_update":"0",
-
-    "menu_extension_catalog_type_id":"",
-    "menuitem_extension_instance_id":"1",
-    "menuitem_model_name":"Articles",
-    "menuitem_model_type":"Table",
-    "menuitem_model_query_object":"list",
-    "menuitem_page_view_css_class":"",
-    "menuitem_page_view_css_id":"",
-    "menuitem_page_view_id":"220",
-    "menuitem_source_catalog_type_id":"10000",
-    "menuitem_source_id":"0",
-    "menuitem_template_view_css_class":"",
-    "menuitem_template_view_css_id":"",
-    "menuitem_template_view_id":"1050",
-    "menuitem_theme_id":"9010",
-    "menuitem_type":"Grid",
-    "menuitem_wrap_view_css_class":"",
-    "menuitem_wrap_view_css_id":"",
-    "menuitem_wrap_view_id":"2030",
-
-    "mustache":"0"
+        "cache":"",
+        "cache_time":"",
+        "cache_handler":""
+    }
 }
+

@@ -82,6 +82,7 @@ class CssclassandidsTrigger extends ContentTrigger
 				}
 
 			}
+
 			$item->css_class = $class;
             $item->css_id = $id;
         }

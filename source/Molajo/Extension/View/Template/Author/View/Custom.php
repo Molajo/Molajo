@@ -5,7 +5,10 @@
  * @license     GNU GPL v 2, or later and MIT, see License folder
  */
 use Molajo\Service\Services;
-
+echo '<pre>';
+var_dump($this->query_results);
+echo '</pre>';
+die;
 defined('MOLAJO') or die;
 /** Note: Used as custom with $this->query_results[0] to avoid looping for embedded view */
 ?>

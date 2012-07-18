@@ -1,12 +1,14 @@
+<trigger name="Itemurl"/>
 <trigger name="Adminmenu"/>
 <trigger name="Admindashboard"/>
 <trigger name="Admingrid"/>
+<trigger name="Item"/>
+<trigger name="List"/>
 <trigger name="Mockimage"/>
 <trigger name="Referencedata"/>
 <trigger name="Blockquote"/>
 <trigger name="Rownumber"/>
 <trigger name="Readmore"/>
-<trigger name="Itemurl"/>
 <trigger name="Author"/>
 <trigger name="Smilies"/>
 <trigger name="Email"/>
