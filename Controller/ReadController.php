@@ -35,10 +35,7 @@ class ReadController extends Controller
         } elseif ($action == 'edit') {
         } elseif ($action == 'display') {
         }
-         */
-/**
-  echo
-			' <br />Includer: ' . $this->get('includer_type', '')
+	echo		' <br /><br /><br /><br />Includer: ' . $this->get('includer_type', '')
 				. ' <br />Model Type: ' . $this->get('model_type', '')
 				. ' <br />Model Type: ' . $this->get('model_type', '')
 				. ' <br />Model Name: ' . $this->get('model_name', '')
@@ -614,7 +611,7 @@ class ReadController extends Controller
 			$arguments = array(
 				'table_registry_name' => $this->table_registry_name,
 				'parameters' => $this->parameters,
-				'data' => $this->query_results,
+				'data' => $item,
 				'model_name' => $this->get('model_name')
 			);
 

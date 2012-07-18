@@ -243,7 +243,6 @@ class Controller
 
         if ($dbo == false) {
             echo 'DBO for Table Registry: ' . $this->table_registry_name . ' could not be loaded. <br />';
-
             return false;
         }
 
@@ -274,7 +273,6 @@ class Controller
     {
         if ($query_object == 'result') {
             $this->triggers = array();
-
             return;
         }
 
@@ -299,5 +297,4 @@ class Controller
 
         return;
     }
-
 }

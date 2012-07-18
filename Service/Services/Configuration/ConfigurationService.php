@@ -186,8 +186,7 @@ Class ConfigurationService
         }
         if (defined('SITE_MEDIA_URL')) {
         } else {
-            define('SITE_MEDIA_URL', BASE_URL
-                . Services::Registry()->get('Configuration', 'media_url', BASE_URL . 'sites/' . SITE_ID . '/media'));
+            define('SITE_MEDIA_URL', BASE_URL . 'Molajo/Site/' . SITE_ID . '/' . Services::Registry()->get('Configuration', 'media_url'));
         }
 
         /** following must be within the web document folder */
