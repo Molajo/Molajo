@@ -6,6 +6,7 @@
  */
 namespace Molajo\Service\Services\Error;
 
+use Molajo\Extension\Helpers;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -52,20 +53,20 @@ Class ErrorService
      */
     public function set($code, $message = 'Internal server error')
     {
-        Services::Registry()->set('Request', 'error_status', true);
-        Services::Registry()->set('Request', 'mvc_controller', 'display');
-        Services::Registry()->set('Parameters', 'request_action', 'display');
-        Services::Registry()->set('Request', 'mvc_model', 'messages');
+        Services::Registry()->set('Parameters', 'error_status', true);
+
+		Services::Registry()->set('Parameters', 'request_action', 'Display');
+		Services::Registry()->set('Parameters', 'request_action_authorisation', 'read');  //for now
+		Services::Registry()->set('Parameters', 'request_controller', 'read');
 
         /** default error theme and page */
-        Services::Registry()->set('Request', 'theme_id',
+        Services::Registry()->set('Parameters', 'theme_id',
             Services::Registry()->get('Configuration', 'error_theme_id', 0)
         );
-        Services::Registry()->set('Request', 'page_view_id',
+        Services::Registry()->set('Parameters', 'page_view_id',
             Services::Registry()->get('Configuration', 'error_page_view_id', 0)
         );
 
-        /** set header status, message and override default theme/page, if needed */
         if ($code == 503) {
             $this->error503();
 
@@ -84,7 +85,13 @@ Class ErrorService
             Services::Message()
                 ->set($message, MESSAGE_TYPE_ERROR, 500);
         }
-    }
+
+		Services::Registry()->merge('Configuration', 'Parameters', true);
+
+		Helpers::Extension()->setThemePageView();
+
+		return true;
+	}
 
     /**
      * 503 Offline
@@ -107,11 +114,11 @@ Class ErrorService
             503
         );
 
-        Services::Registry()->set('Request', 'theme_id',
+        Services::Registry()->set('Parameters', 'theme_id',
             Services::Registry()->get('Configuration', 'offline_theme_id', 0)
         );
 
-        Services::Registry()->set('Request', 'page_view_id',
+        Services::Registry()->set('Parameters', 'page_view_id',
             Services::Registry()->get('Configuration', 'offline_page_view_id', 0)
         );
     }

@@ -26,6 +26,12 @@ class AdmingridTrigger extends ContentTrigger
      */
     public function onBeforeParse()
     {
+
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
+
         if (strtolower($this->get('template_view_path_node')) == 'admingrid') {
         } else {
             return true;
@@ -83,7 +89,7 @@ class AdmingridTrigger extends ContentTrigger
      */
     protected function setToolbar()
     {
-        $url = Services::Registry()->get('Parameters', 'full_page_url');
+        $url = Services::Registry()->get('Triggerdata', 'full_page_url');
 
         $grid_toolbar_buttons = explode(',', $this->get('grid_toolbar_buttons',
                 'new,edit,publish,feature,archive,checkin,restore,delete,trash,options')
@@ -173,10 +179,7 @@ class AdmingridTrigger extends ContentTrigger
      */
     protected function setGrid($connect, $primary_prefix, $table_name)
     {
-
-        $grid_columns = explode(',', $this->get('grid_columns',
-                'title,created_by,start_publishing_datetime,ordering')
-        );
+        $grid_columns = explode(',', $this->get('grid_columns', 'title,created_by,start_publishing_datetime,ordering'));
         Services::Registry()->set('Triggerdata', 'AdminGridTableColumns', $grid_columns);
 
 		$list = $this->get('menuitem_source_catalog_type_id');
@@ -186,8 +189,7 @@ class AdmingridTrigger extends ContentTrigger
                 . ' IN (' . $list . ')'
         );
 
-        $connect->model->query->where(
-            $connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
+        $connect->model->query->where($connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
 
         $ordering = $this->get('grid_ordering', 'start_publishing_datetime');
         Services::Registry()->set('Triggerdata', 'AdminGridTableOrdering', $ordering);
@@ -211,9 +213,9 @@ class AdmingridTrigger extends ContentTrigger
 		$this->set('model_type', 'dbo');
 		$this->parameters['model_type'] = 'dbo';
 		$this->set('model_query_object', 'getTriggerdata');
-		$this->set('model_parameter', 'AdminGridQueryResults');
+		$this->set('model_parameter', 'PrimaryRequestQueryResults');
 
-        Services::Registry()->set('Triggerdata', 'AdminGridQueryResults', $query_results);
+        Services::Registry()->set('Triggerdata', 'PrimaryRequestQueryResults', $query_results);
 
         return true;
     }

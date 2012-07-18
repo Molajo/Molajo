@@ -8,6 +8,6 @@ use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Parameters', 'full_page_url'); ?>
+$action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
     <ul class="filter">

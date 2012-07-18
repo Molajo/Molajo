@@ -91,7 +91,8 @@ Class Application
         }
 
         /** 4. Execute */
-        if ($results == true) {
+        if ($results == true
+			|| Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
             $results = $this->execute();
         }
 
@@ -240,6 +241,7 @@ Class Application
             && Services::Redirect()->url === null
             && (int) Services::Redirect()->code == 0
         ) {
+
             Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
             $results = Services::Event()->schedule('onAfterRoute');
             if (is_array($results)) {
@@ -247,9 +249,9 @@ Class Application
             }
         }
 
-        if ($results == false) {
+        if ($results == false
+			|| Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
             Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
-
             return false;
         }
 
@@ -373,7 +375,7 @@ Class Application
         if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))
             && file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))
         ) {
-        } else {
+		} else {
             Services::Error()->set(500, 'Theme and/or Page View Not found');
             echo 'Theme and/or Page View Not found - application stopped before parse. Parameters follow:';
             Services::Registry()->get('Parameters', '*');

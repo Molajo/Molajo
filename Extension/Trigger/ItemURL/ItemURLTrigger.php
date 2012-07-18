@@ -112,12 +112,12 @@ class ItemurlTrigger extends ContentTrigger
      *
      * These values are used in conjunction with the permanent URL for basic operations on that data
      */
-    public function onAfterRoute()
+    public function onBeforeParse()
     {
         $url = Application::Request()->get('base_url_path_for_application') .
             Application::Request()->get('requested_resource_for_route');
 
-        Services::Registry()->set('Parameters', 'full_page_url', $url);
+        Services::Registry()->set('Triggerdata', 'full_page_url', $url);
 
         return true;
     }

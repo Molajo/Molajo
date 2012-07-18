@@ -28,7 +28,11 @@ class AdmindashboardTrigger extends ContentTrigger
      */
     public function onBeforeParse()
     {
-        /** Is this an Administrative Grid Request?  */
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
+
         if (strtolower($this->get('template_view_path_node')) == 'admindashboard') {
         } else {
             return true;

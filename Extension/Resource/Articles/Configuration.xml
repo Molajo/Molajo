@@ -9,5 +9,15 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>RESOURCE_ARTICLES_DESCRIPTION</description>
-    <model name="Articles" catalog_type_id="10000,11000"/>
+    <model name="Articles" catalog_type_id="10000,11000">
+        <customfields>
+            <customfield name="parameters">
+                <field name="add_a_parameter" type="binary" null="0" default="1"/>
+            </customfield>
+            <customfield name="customfields">
+                <field name="anything_can_be_added" type="binary" null="0" default="0"/>
+                <field name="anything_can_be_overridden" type="binary" null="0" default="0"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

@@ -8,7 +8,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Parameters', 'full_page_url');
+$action = Services::Registry()->get('Triggerdata', 'full_page_url');
 ?>
 
 <h3>Effect 7: Accordion</h3>

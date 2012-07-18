@@ -31,7 +31,7 @@ Class ContentHelper
      * getInstance
      *
      * @static
-     * @return bool|object
+     * @return  bool|object
      * @since   1.0
      */
     public static function getInstance()
@@ -46,13 +46,8 @@ Class ContentHelper
     /**
      * Retrieves the Menu Item Route information
      *
-     * Various registries used to store data definitions. For example: ArticlesContent (and ArticlesCustomfieldsContent,
-     * ArticlesContentMetadata, ArticlesContentParameters), ArticlesResource (etc.)
-     *
-     * These registries are reused, not rebuilt
-     *
-     * @return boolean
-     * @since    1.0
+     * @return  boolean
+     * @since   1.0
      */
     public function getMenuItemRoute()
     {
@@ -64,8 +59,6 @@ Class ContentHelper
             Services::Registry()->get('Parameters', 'catalog_menuitem_type'),
             'item'
         );
-
-        /** 404  */
         if (count($item) == 0) {
             return Services::Registry()->set('Parameters', 'status_found', false);
         }
@@ -88,9 +81,6 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
         Services::Registry()->set('Parameters', 'criteria_extension_catalog_type_id',
             (int) $item->extension_instances_catalog_type_id);
-
-        /** Process each field namespace  */
-        $customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
 
         $parmName = $item->table_registry_name . 'Parameters';
 
@@ -162,27 +152,11 @@ Class ContentHelper
 
         Services::Registry()->copy($parmName, 'Parameters');
 
-        /** Remaining Parameters */
-        foreach ($customFieldTypes as $customFieldName) {
-            $customFieldName = ucfirst(strtolower($customFieldName));
-
-            if ($customFieldName == 'Parameters') {
-            } else {
-                Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
-            }
-            Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
-        }
-
         return true;
     }
 
     /**
      * Retrieve Route information for a specific Content Item
-     *
-     * Various registries used to store data definitions. For example: ArticlesContent (and ArticlesCustomfieldsContent,
-     * ArticlesContentMetadata, ArticlesContentParameters), ArticlesResource (etc.)
-     *
-     * These registries are reused, not rebuilt
      *
      * @return boolean
      * @since    1.0
@@ -191,22 +165,13 @@ Class ContentHelper
     {
         Services::Registry()->set('Query', 'Current', 'Content getRouteContent');
 
-        $item = $this->get(
-            $id, $model_type, $model_name, $model_query_object
-        );
-
-        /** Save Content in Trigger Registry */
-        Services::Registry()->set('Triggerdata', $item->table_registry_name . 'query_results', $item);
-
-        /** 404  */
+        $item = $this->get($id, $model_type, $model_name, $model_query_object);
         if (count($item) == 0) {
             return Services::Registry()->set('Parameters', 'status_found', false);
         }
 
-        /** Save in Trigger Registry for primary view */
-        Services::Registry()->set('Triggerdata', $item->table_registry_name . 'query_results', $item);
+        Services::Registry()->set('Triggerdata', 'PrimaryRequestQueryResults', array($item));
 
-        /** Route Registry */
         Services::Registry()->set('Parameters', 'content_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'content_title', $item->title);
         Services::Registry()->set('Parameters', 'content_translation_of_id', (int) $item->translation_of_id);
@@ -222,84 +187,30 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'extension_catalog_type_id',
             (int) $item->extension_instances_catalog_type_id);
 
-        /** Process each field namespace  */
-        $customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
+		$parmName = $item->table_registry_name . 'Parameters';
 
-        foreach ($customFieldTypes as $customFieldName) {
+		/** Content Extension and Source */
+		Services::Registry()->set('Parameters', 'extension_instance_id',
+			Services::Registry()->get($parmName, 'criteria_extension_instance_id'));
 
-            $customFieldName = ucfirst(strtolower($customFieldName));
-            Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
+		/** Theme, Page, Template and Wrap Views */
+		if ((int) $item->id > 0) {
+			if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
+				$type = 'item';
+			} else {
+				$type = 'form';
+			}
+		} else {
+			$type = 'list';
+		}
 
-            /** Save for primary view */
-            $array = Services::Registry()->getArray($item->table_registry_name . $customFieldName);
-            Services::Registry()->set('Triggerdata', $item->table_registry_name . $customFieldName, $array);
+	    Services::Registry()->copy($parmName, 'Parameters');
 
-            /** Delete */
-            Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
-        }
-
-        /** Save the Trigger for Route */
-        Services::Registry()->set('Parameters', 'Triggers',
-            Services::Registry()->get($item->table_registry_name, 'triggers', array())
-        );
-
-        return true;
+		return true;
     }
 
     /**
-     * Retrieve Route information for a specific Category
-     *
-     * Creates the following Registries (ex. Articles content) containing datasource information for this category.
-     *
-     * ContentCategories, ContentCategoriesCustomfields, ContentCategoriesMetadata, ContentCategoriesParameters
-     *
-     * Merges into Route and Parameters Registries
-     *
-     * @return boolean
-     * @since    1.0
-     */
-    public function getRouteCategory()
-    {
-        Services::Registry()->set('Query', 'Current', 'Content getRouteCategory');
-
-        $item = $this->get(
-            Services::Registry()->get('Parameters', 'catalog_category_id'),
-            'Table',
-            'Categories',
-            'item'
-        );
-
-        /** Save Content in Trigger Registry */
-        Services::Registry()->set('Triggerdata', 'RequestCategory' . 'query_results', $item);
-
-        /** Route Registry with Category Data */
-        Services::Registry()->set('Parameters', 'category_id', (int) $item->id);
-        Services::Registry()->set('Parameters', 'category_title', $item->title);
-        Services::Registry()->set('Parameters', 'category_translation_of_id', (int) $item->translation_of_id);
-        Services::Registry()->set('Parameters', 'category_language', $item->language);
-        Services::Registry()->set('Parameters', 'category_catalog_type_id', (int) $item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'category_catalog_type_title', $item->catalog_types_title);
-        Services::Registry()->set('Parameters', 'category_modified_datetime', $item->modified_datetime);
-
-        /** Process each field namespace  */
-        $customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
-
-        foreach ($customFieldTypes as $customFieldName) {
-            $customFieldName = ucfirst(strtolower($customFieldName));
-
-            /** Save for primary view */
-            $array = Services::Registry()->getArray($item->table_registry_name . $customFieldName);
-            Services::Registry()->set('RequestCategory', $customFieldName, $array);
-
-            Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
-            Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
-        }
-
-        return true;
-    }
-
-    /**
-     * Get data for content
+     * Get data for Menu Item or Item or List
      *
      * @param $id
      * @param $model_type
@@ -316,7 +227,7 @@ Class ContentHelper
                 . ' Model Type: ' . $model_type
                 . ' Model Name: ' . $model_name
                 . ' Model Query: ' . $model_query_object,
-        LOG_OUTPUT_ROUTING, VERBOSE);
+        	LOG_OUTPUT_ROUTING, VERBOSE);
 
         $controllerClass = 'Molajo\\Controller\\ReadController';
         $m = new $controllerClass();
@@ -328,6 +239,7 @@ Class ContentHelper
 
         $m->set('id', (int) $id);
         $m->set('process_triggers', 1);
+		$m->set('get_customfields', 2);
 
         $item = $m->getData($model_query_object);
 
