@@ -13,8 +13,10 @@
 <field name="list_model_query_object" type="char" null="0" default="List"/>
 <field name="list_model_ordering" type="char" null="0" default="start_publishing_datetime"/>
 <field name="list_model_direction" type="char" null="0" default="DESC"/>
+
 <field name="list_model_offset" type="integer" null="0" default="0"/>
 <field name="list_model_count" type="integer" null="0" default="5"/>
+<field name="list_model_use_pagination" type="binary" null="0" default="1"/>
 
 <field name="list_select_archived_content" type="binary" null="0" default="1"/>
 <field name="list_select_featured_content" type="binary" null="0" default="1"/>

@@ -212,12 +212,61 @@ Class LogService
 
         /** Log it */
         try {
-            $class = 'Joomla\\log\\JLog';
-            $class::add($message, $priority, $type, $date);
+			if ($type == 'console')  {
+				Services::Log()->set($message, $priority, $type, $date);
+
+			} else {
+				$class = 'Joomla\\log\\JLog';
+				$class::add($message, $priority, $type, $date);
+			}
         } catch (\Exception $e) {
             throw new \RuntimeException('Log entry failed for ' . $message . 'Error: ' . $e->getMessage());
         }
 
         return true;
     }
+
+	/**
+	 * set Entry
+	 *
+	 * @return array console log entries
+	 *
+	 * @param $message
+	 * @param $priority
+	 * @param $type
+	 * @param $date
+	 *
+	 * @return int|LogService
+	 * @since  1.0
+	 */
+	public function set($message, $priority, $type, $date)
+	{
+		if (Services::Registry()->exists('LogProfiler')) {
+		} else {
+			Services::Registry()->create('LogProfiler');
+		}
+
+		Services::Registry()->set('LogProfiler', array($message, $priority, $type, $date));
+	}
+
+	/**
+	 * get console log
+	 *
+	 * @return mixed| object, integer, array console log entries
+	 *
+	 * @since   1.0
+	 */
+	public function get($option = null)
+	{
+		if ($option == 'db') {
+			return $this;
+
+		} elseif ($option == 'count') {
+			$array = Services::Registry()->getArray('LogProfiler');
+			return count($array);
+
+		}
+
+		return Services::Registry()->getArray('LogProfiler');
+	}
 }

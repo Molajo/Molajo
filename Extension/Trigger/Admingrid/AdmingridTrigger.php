@@ -254,8 +254,8 @@ class AdmingridTrigger extends ContentTrigger
         $query_results[] = $row;
 
         Services::Registry()->set('Triggerdata', 'AdminGridPagination', $query_results);
-        Services::Registry()->set('Triggerdata', 'AdminGridPaginationOffset', $this->get('grid_offset', 0));
-        Services::Registry()->set('Triggerdata', 'AdminGridPaginationCount', $this->get('grid_count', 5));
+        Services::Registry()->set('Triggerdata', 'AdminGridPaginationOffset', $this->get('model_offset', 0));
+        Services::Registry()->set('Triggerdata', 'AdminGridPaginationCount', $this->get('model_count', 5));
 
         return true;
     }

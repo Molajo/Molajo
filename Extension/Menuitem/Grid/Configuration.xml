@@ -21,9 +21,14 @@
 
             <field name="grid_ordering" type="char" null="0" default="a.title"/>
 
-            <field name="grid_pagination" type="boolean" null="0" default="1"/>
-            <field name="grid_offset" type="integer" null="0" default="0"/>
-            <field name="grid_count" type="integer" null="0" default="5"/>
+            <field name="model_use_pagination" type="boolean" null="0" default="1"/>
+            <field name="model_offset" type="integer" null="0" default="0"/>
+            <field name="model_count" type="integer" null="0" default="5"/>
+
+
+            <field name="menuitem_model_offset" type="integer" null="0" default="0"/>
+            <field name="menuitem_model_count" type="integer" null="0" default="5"/>
+            <field name="menuitem_model_use_pagination" type="binary" null="0" default="1"/>
 
             <field name="grid_batch" type="boolean" null="0" default="0"/>
 

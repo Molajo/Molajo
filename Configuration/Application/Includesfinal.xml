@@ -3,6 +3,7 @@
     <include>asset:template</include>
     <include>metadata:template</include>
     <include>message</include>
+    <include>profiler</include>
     <include>head</include>
     <include>defer:head</include>
 </sequence>

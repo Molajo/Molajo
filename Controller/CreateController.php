@@ -439,16 +439,16 @@ class CreateController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
         if ($arguments == false) {
-            Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_TRIGGERS);
+            Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $this->parameters = $arguments['parameters'];
         $this->data = $arguments['data'];
@@ -479,16 +479,16 @@ class CreateController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
         if ($arguments == false) {
-            Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_TRIGGERS);
+            Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $this->parameters = $arguments['parameters'];
         $data = $arguments['data'];

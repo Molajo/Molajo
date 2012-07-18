@@ -51,7 +51,7 @@
         <customfield name="parameters">
 
             <field name="application_name" type="char" null="0" default="Molajo Application"/>
-            <field name="application_home_catalog_id" type="catalog_id" null="0" default="139"/>
+            <field name="application_home_catalog_id" type="catalog_id" null="0" default="423"/>
             <field name="application_logon_requirement" type="binary" null="0" default="1"/>
 
             <field name="log_user_activity_update" type="binary" null="0" default="1"/>
@@ -81,22 +81,24 @@
             <field name="profiler_output_queries_table_registry" type="boolean" null="0" default="0"/>
             <field name="profiler_output_queries_sql" type="boolean" null="0" default="1"/>
             <field name="profiler_output_queries_query_results" type="boolean" null="0" default="0"/>
+            <field name="profiler_console_template_view_id" type="integer" null="0" default="1385"/>
+            <field name="profiler_console_wrap_view_id" type="integer" null="0" default="2090"/>
 
-            <field name="head_template_view_id" type="integer" null="0" default="23"/>
-            <field name="head_wrap_view_id" type="integer" null="0" default="66"/>
-            <field name="defer_template_view_id" type="integer" null="0" default="265"/>
-            <field name="defer_wrap_view_id" type="integer" null="0" default="66"/>
+            <field name="head_template_view_id" type="integer" null="0" default="1340"/>
+            <field name="head_wrap_view_id" type="integer" null="0" default="2090"/>
+            <field name="defer_template_view_id" type="integer" null="0" default="1240"/>
+            <field name="defer_wrap_view_id" type="integer" null="0" default="2090"/>
 
-            <field name="message_template_view_id" type="integer" null="0" default="44"/>
-            <field name="message_wrap_view_id" type="integer" null="0" default="61"/>
+            <field name="message_template_view_id" type="integer" null="0" default="1350"/>
+            <field name="message_wrap_view_id" type="integer" null="0" default="2030"/>
 
-            <field name="offline_theme_id" type="integer" null="0" default="99"/>
-            <field name="offline_page_view_id" type="integer" null="0" default="57"/>
+            <field name="offline_theme_id" type="integer" null="0" default="9000"/>
+            <field name="offline_page_view_id" type="integer" null="0" default="260"/>
             <field name="offline" type="binary" null="0" default="1"/>
             <field name="offline_message" type="char" null="0" default="This site is not available.&lt;br /&gt;> Please check back again soon."/>
 
-            <field name="error_theme_id" type="integer" null="0" default="99"/>
-            <field name="error_page_view_id" type="integer" null="0" default="56"/>
+            <field name="error_theme_id" type="integer" null="0" default="9000"/>
+            <field name="error_page_view_id" type="integer" null="0" default="250"/>
             <field name="error_404_message" type="char" null="0" default="Page not found"/>
             <field name="error_403_message" type="char" null="0" default="Not authorised."/>
 

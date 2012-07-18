@@ -220,7 +220,7 @@ class DeleteController extends ReadController
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
         if ($trigger['success'] == true) {
@@ -231,7 +231,7 @@ class DeleteController extends ReadController
             return false;
         }
 
-        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         /** Process results */
         $this->parameters = $arguments['parameters'];
@@ -263,13 +263,13 @@ class DeleteController extends ReadController
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
         if ($trigger['success'] == true) {
             $arguments = $trigger['arguments'];
         } else {
-            Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS);
+            Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
             return false;
         }
