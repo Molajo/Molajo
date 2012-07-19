@@ -118,7 +118,7 @@ Class ConfigurationService
         }
 
         /** Retrieve Sites Data from DB */
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
 
         $results = $m->connect('Table', 'Sites');
@@ -225,7 +225,7 @@ Class ConfigurationService
 
             try {
                 $profiler = 0;
-                $controllerClass = 'Molajo\\Controller\\DisplayController';
+                $controllerClass = 'Molajo\\Controller\\Controller';
                 $m = new $controllerClass();
                 $results = $m->connect('Table', 'Applications');
                 if ($results == false) {
@@ -294,7 +294,7 @@ Class ConfigurationService
      */
     protected function getActions()
     {
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'Actions');
         if ($results == false) {
@@ -708,7 +708,7 @@ Class ConfigurationService
         if (Services::Registry()->exists($parentRegistryName) == true) {
         } else {
             //if not, load it.
-            $controllerClass = 'Molajo\\Controller\\DisplayController';
+            $controllerClass = 'Molajo\\Controller\\Controller';
             $m = new $controllerClass();
             $results = $m->connect('Table', $extends);
             if ($results == false) {
@@ -902,7 +902,7 @@ Class ConfigurationService
                 if (Services::Registry()->exists($joinRegistry) == true) {
                 } else {
                     //if not, load it.
-                    $controllerClass = 'Molajo\\Controller\\DisplayController';
+                    $controllerClass = 'Molajo\\Controller\\Controller';
                     $m = new $controllerClass();
                     $results = $m->connect('Table', $joinModel);
                 }

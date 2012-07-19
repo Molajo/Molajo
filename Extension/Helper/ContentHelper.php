@@ -204,6 +204,8 @@ Class ContentHelper
 			$type = 'list';
 		}
 
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
+			(int) $item->extension_instances_catalog_type_id);
 	    Services::Registry()->copy($parmName, 'Parameters');
 
 		return true;
@@ -229,7 +231,7 @@ Class ContentHelper
                 . ' Model Query: ' . $model_query_object,
         	LOG_OUTPUT_ROUTING, VERBOSE);
 
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $results = $m->connect($model_type, $model_name);
 

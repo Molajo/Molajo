@@ -43,13 +43,17 @@ class SnippetTrigger extends ContentTrigger
                 if ($fieldValue == false) {
                 } else {
 
-                    $newField = substr(strip_tags($fieldValue), 0, $snippetLength);
+                    $newFieldValue = substr(strip_tags($fieldValue), 0, $snippetLength);
+					if (trim($newFieldValue) == trim(strip_tags($fieldValue))) {
+					} else {
+						$newFieldValue .= '...';
+					}
 
-                    if ($newField == false) {
+                    if ($newFieldValue == false) {
                     } else {
 
                         $newFieldName = $name . '_' . 'snippet';
-                        $this->saveField(null, $newFieldName, $newField);
+                        $this->saveField(null, $newFieldName, $newFieldValue);
                     }
                 }
             }

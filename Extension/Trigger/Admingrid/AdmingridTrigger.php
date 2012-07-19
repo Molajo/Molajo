@@ -37,7 +37,7 @@ class AdmingridTrigger extends ContentTrigger
             return true;
         }
 
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $connect = new $controllerClass();
 
         $results = $connect->connect(

@@ -35,7 +35,7 @@ class AdminmenuTrigger extends ContentTrigger
 		}
 
         /** Data Source Connection */
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $connect = new $controllerClass();
 
         $results = $connect->connect(
@@ -62,7 +62,7 @@ class AdminmenuTrigger extends ContentTrigger
     protected function setMenu()
     {
         /** Detail rows are not defined as menu items but rather tied to a parent menuitem id */
-        $current_menuitem_id = Services::Registry()->get('Parameters', 'parent_menuitem', '0');
+        $current_menuitem_id = Services::Registry()->get('Parameters', 'parent_menuid', '0');
 
         /** Normal menu item is current */
         if ($current_menuitem_id == 0) {
@@ -90,7 +90,9 @@ class AdminmenuTrigger extends ContentTrigger
         // 1. Home
         $menuArray[] = 'Adminnavigationbar';
         $menuArray[] = 'Adminsectionmenu';
-        $menuArray[] = 'Adminresourcemenu';
+		if (count($bread_crumbs) > 2) {
+        	$menuArray[] = 'Adminresourcemenu';
+		}
 
         $i = 0;
         foreach ($bread_crumbs as $item) {

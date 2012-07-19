@@ -1,6 +1,5 @@
 
-<field name="item_parent_menu_id" type="integer" null="0" default="0"/>
-<field name="item_parent_menuitem" type="integer" null="0" default="0"/>
+<field name="parent_menuid" type="integer" null="0" default="0"/>
 
 <field name="item_theme_id" type="integer" null="0" default="98"/>
 <field name="item_page_view_id" type="integer" null="0" default="55"/>

@@ -499,19 +499,14 @@ class ContentTrigger extends Trigger
 			$name = $new_field_name;
 		}
 
-	    echo '<br />'.$name;
-
         if (isset($this->data->$name)) {
             $this->data->$name = $value;
-			echo ' 1 <br />';
 
 		} elseif (isset($this->parameters[$name])) {
 			$this->parameters[$name] = $value;
-			echo ' 2 <br />';
 
         } else {
 			$this->data->$new_field_name = $value;
-			echo ' 3 <br />';
         }
 
         return;

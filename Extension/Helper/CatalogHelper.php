@@ -141,7 +141,7 @@ Class CatalogHelper
             }
         }
 
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'Catalog');
 
@@ -186,7 +186,7 @@ Class CatalogHelper
      */
     public function getIDUsingSEFURL($url_sef_request)
     {
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'Catalog');
         if ($results == false) {
@@ -208,9 +208,9 @@ Class CatalogHelper
      * @return bool|mixed
      * @since  1.0
      */
-    public function getID($catalog_type_id, $source_id)
+    public function getID($catalog_type_id, $source_id = null)
     {
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'Catalog');
         if ($results == false) {
@@ -236,7 +236,7 @@ Class CatalogHelper
      */
     public function getRedirectURL($catalog_id)
     {
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'Catalog');
         if ($results == false) {
@@ -271,8 +271,9 @@ Class CatalogHelper
 
         if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
-            $controllerClass = 'Molajo\\Controller\\DisplayController';
+            $controllerClass = 'Molajo\\Controller\\Controller';
             $m = new $controllerClass();
+
             $results = $m->connect('Table', 'Catalog');
             if ($results == false) {
                 return false;
@@ -280,6 +281,9 @@ Class CatalogHelper
 
             $m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('sef_request'));
             $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('id') . ' = ' . (int) $catalog_id);
+			$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('redirect_to_id') . ' = ' . (int) 0);
+			$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('routable') . ' = ' . (int) 1);
+
             $url = $m->getData('result');
 
         } else {

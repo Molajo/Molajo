@@ -540,7 +540,7 @@ Class ParseService
 
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
-		$controllerClass = 'Molajo\\Controller\\DisplayController';
+		$controllerClass = 'Molajo\\Controller\\Controller';
 		$connect = new $controllerClass();
 
 		$results = $connect->connect($model_type, $model_name);

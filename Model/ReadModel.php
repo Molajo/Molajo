@@ -426,7 +426,7 @@ class ReadModel extends Model
             $name = (string) $child['name'];
             $name = ucfirst(strtolower($name));
 
-            $controllerClass = 'Molajo\\Controller\\DisplayController';
+            $controllerClass = 'Molajo\\Controller\\Controller';
             $m = new $controllerClass();
             $results = $m->connect('Table', $name);
             if ($results == false) {

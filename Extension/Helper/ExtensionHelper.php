@@ -124,7 +124,7 @@ Class ExtensionHelper
             $phase = LOG_OUTPUT_RENDERING;
         }
 
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
 
         $m->connect($model_type, $model_name);
@@ -183,7 +183,7 @@ Class ExtensionHelper
      */
     public function getInstanceID($catalog_type_id, $title)
     {
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $query_results = $m->connect('Table', 'ExtensionInstances');
         if ($query_results == false) {
@@ -211,7 +211,7 @@ Class ExtensionHelper
      */
     public function getInstanceTitle($extension_instance_id)
     {
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $query_results = $m->connect('Table', 'ExtensionInstances');
         if ($query_results == false) {
@@ -238,7 +238,7 @@ Class ExtensionHelper
      */
     public function getExtensionNode($extension_instance_id)
     {
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
 
         $query_results = $m->connect('Table', 'Extensions');

@@ -102,7 +102,7 @@ Class AuthorisationService
      */
     public function verifySiteApplication()
     {
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
 
         $results = $m->connect('Table', 'SiteApplications');
@@ -267,7 +267,7 @@ Class AuthorisationService
         /** check for permission */
         $action_id = 3;
 
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'GroupPermissions');
         if ($results == false) {
@@ -316,7 +316,7 @@ Class AuthorisationService
             return false;
         }
 
-        $controllerClass = 'Molajo\\Controller\\DisplayController';
+        $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
         $results = $m->connect('Table', 'UserApplications');
         if ($results == false) {

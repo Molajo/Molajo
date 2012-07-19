@@ -35,13 +35,18 @@ class ItemurlTrigger extends ContentTrigger
      */
     public function onAfterRead()
     {
-        $fields = $this->retrieveFieldsByType('catalog_id');
+		if (defined('ROUTE')) {
+		} else {
+			return true;
+		}
+
+		$fields = $this->retrieveFieldsByType('catalog_id');
 
         if (is_array($fields) && count($fields) > 0) {
 
             foreach ($fields as $field) {
 
-                if ($field->as_name == '') {
+				if ($field->as_name == '') {
                     $name = $field->name;
                 } else {
                     $name = $field->as_name;
@@ -49,12 +54,13 @@ class ItemurlTrigger extends ContentTrigger
 
                 $fieldValue = $this->getFieldValue($field);
 
-                if ($fieldValue == false) {
+                if ($fieldValue == false || $fieldValue == null) {
                 } else {
 
                     $newFieldValue = Services::Url()->getUrl($fieldValue);
 
-                    if ($newFieldValue == false) {
+                    if ($newFieldValue == false
+						|| $newFieldValue == null) {
                     } else {
 
                         /** Creates the new 'normal' or special field and populates the value */
