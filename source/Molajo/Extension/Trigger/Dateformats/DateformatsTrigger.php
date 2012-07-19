@@ -121,7 +121,7 @@ class DateformatsTrigger extends ContentTrigger
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_ccyymmdd';
-                        $this->saveField($field, $new_name, $newFieldValue);
+                        $this->saveField(null, $new_name, $newFieldValue);
                         $fieldValue = $newFieldValue;
                     }
 
@@ -133,7 +133,7 @@ class DateformatsTrigger extends ContentTrigger
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_n_days_ago';
-                        $this->saveField($field, $new_name, $newFieldValue);
+                        $this->saveField(null, $new_name, $newFieldValue);
                     }
 
                     /** Pretty Date */
@@ -144,7 +144,7 @@ class DateformatsTrigger extends ContentTrigger
 
                         /** Creates the new 'normal' or special field and populates the value */
                         $new_name = $name . '_pretty_date';
-                        $this->saveField($field, $new_name, $newFieldValue);
+                        $this->saveField(null, $new_name, $newFieldValue);
                     }
                 }
             }

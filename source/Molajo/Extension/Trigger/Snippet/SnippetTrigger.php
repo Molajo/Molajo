@@ -49,7 +49,7 @@ class SnippetTrigger extends ContentTrigger
                     } else {
 
                         $newFieldName = $name . '_' . 'snippet';
-                        $this->saveField($field, $newFieldName, $newField);
+                        $this->saveField(null, $newFieldName, $newField);
                     }
                 }
             }

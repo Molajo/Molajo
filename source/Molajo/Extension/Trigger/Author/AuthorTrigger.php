@@ -51,7 +51,7 @@ class AuthorTrigger extends ContentTrigger
 
             foreach ($item[0] as $key => $value) {
                 $new_field_name = $key;
-                $this->saveField($field, $new_field_name, $value);
+                $this->saveField(null, $new_field_name, $value);
             }
 
             return true;
@@ -89,7 +89,7 @@ class AuthorTrigger extends ContentTrigger
             } else {
 
                 $new_field_name = 'author' . '_' . $key;
-                $this->saveField($field, $new_field_name, $value);
+                $this->saveField(null, $new_field_name, $value);
 
                 $row->$new_field_name = $value;
             }
