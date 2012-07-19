@@ -36,9 +36,8 @@ class CssclassandidsTrigger extends ContentTrigger
 			return true;
 		}
 
+		/** class */
 		$class = '';
-		$id = '';
-
 
 		$class_field = $this->getField('css_class');
 		if ($class_field === false) {
@@ -48,6 +47,7 @@ class CssclassandidsTrigger extends ContentTrigger
 		}
 
 		$view_css_class = $this->parameters['template_view_css_class'];
+
 		$class .= ' ' . trim($class_field_value) . ' ' . trim($view_css_class);
 
 		if (trim($class) == '') {
@@ -56,6 +56,9 @@ class CssclassandidsTrigger extends ContentTrigger
 			$class = ' class="' . htmlspecialchars(trim($class), ENT_NOQUOTES, 'UTF-8') . '"';
 		}
 
+		$this->saveField(null, 'css_class', $class);
+
+		/** id */
 		$id = '';
 
 		$id_field = $this->getField('css_id');
@@ -75,9 +78,7 @@ class CssclassandidsTrigger extends ContentTrigger
 			$id = ' id="' . htmlspecialchars(trim($id), ENT_NOQUOTES, 'UTF-8') . '"';
 		}
 
-
-		$this->data->css_class = $class;
-		$this->data->css_id = $id;
+		$this->saveField(null, 'css_id', $id);
 
 		return true;
 	}

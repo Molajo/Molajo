@@ -128,7 +128,6 @@ class DisplayController extends Controller
         return $this->wrapView($this->get('wrap_view_title'), $rendered_output);
     }
 
-
     /**
      * wrapView
      *
@@ -239,14 +238,17 @@ class DisplayController extends Controller
 		$items = $this->query_results;
 		$this->query_results = array();
 
+		$this->parameters['row_count'] = 1;
+		$this->parameters['even_or_odd'] = 'odd';
+		$this->parameters['total_rows'] = count($items);
+
 		$parameters = $this->parameters;
 
 		foreach ($items as $item) {
 
-			/** Process the entire query_results set */
 			$arguments = array(
 				'table_registry_name' => $this->table_registry_name,
-				'parameters' => $this->parameters,
+				'parameters' => $parameters,
 				'data' => $item,
 				'model_name' => $this->get('model_name')
 			);
@@ -262,9 +264,18 @@ class DisplayController extends Controller
 
 			Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-			$this->parameters = $arguments['parameters'];
+			$parameters = $arguments['parameters'];
 			$this->query_results[] = $arguments['data'];
+
+			if ($this->parameters['even_or_odd'] == 'odd') {
+				$this->parameters['even_or_odd'] = 'even';
+			} else {
+				$this->parameters['even_or_odd'] = 'odd';
+			}
+			$this->parameters['row_count']++;
 		}
+
+		$this->parameters = $parameters;
 
         return true;
     }

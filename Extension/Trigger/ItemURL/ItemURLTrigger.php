@@ -60,7 +60,7 @@ class ItemurlTrigger extends ContentTrigger
                         /** Creates the new 'normal' or special field and populates the value */
                         $newFieldName = $name . '_' . 'url';
 
-                        $fieldValue = $this->saveField($field, $newFieldName, $newFieldValue);
+                        $fieldValue = $this->saveField(null, $newFieldName, $newFieldValue);
                     }
                 }
             }
@@ -95,7 +95,7 @@ class ItemurlTrigger extends ContentTrigger
 						/** Creates the new 'normal' or special field and populates the value */
 						$newFieldName = $name . '_' . 'url';
 
-						$fieldValue = $this->saveField($field, $newFieldName, $newFieldValue);
+						$fieldValue = $this->saveField(null, $newFieldName, $newFieldValue);
 					}
 				}
 			}

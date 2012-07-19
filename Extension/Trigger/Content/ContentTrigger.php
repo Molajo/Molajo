@@ -493,18 +493,25 @@ class ContentTrigger extends Trigger
      */
     public function saveField($field, $new_field_name, $value)
     {
-        $name = $field->name;
+        if (is_object($field)) {
+			$name = $field->name;
+		} else {
+			$name = $new_field_name;
+		}
 
-        /** Update existing field */
+	    echo '<br />'.$name;
+
         if (isset($this->data->$name)) {
-            $this->data->$new_field_name = $value;
+            $this->data->$name = $value;
+			echo ' 1 <br />';
 
-            /** Since there is no customfield, this must be a new query field */
-        } elseif ($field->customfield == '') {
-            $this->data->$new_field_name = $value;
+		} elseif (isset($this->parameters[$name])) {
+			$this->parameters[$name] = $value;
+			echo ' 2 <br />';
 
-        } elseif (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
-            Services::Registry()->set($this->get('model_name') . $field->customfield, $new_field_name);
+        } else {
+			$this->data->$new_field_name = $value;
+			echo ' 3 <br />';
         }
 
         return;

@@ -51,12 +51,12 @@ class ReadmoreTrigger extends ContentTrigger
                     } else {
 
                         $introductory_name = $name . '_' . 'introductory';
-                        $this->saveField($field, $introductory_name, $newFields[0]);
+                        $this->saveField(null, $introductory_name, $newFields[0]);
 
                         $fulltext_name = $name . '_' . 'fulltext';
-                        $this->saveField($field, $fulltext_name, $newFields[1]);
+                        $this->saveField(null, $fulltext_name, $newFields[1]);
 
-                        $this->saveField($field, $name, trim($newFields[0]) . ' ' . trim($newFields[1]));
+                        $this->saveField(null, $name, trim($newFields[0]) . ' ' . trim($newFields[1]));
                     }
                 }
             }

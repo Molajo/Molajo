@@ -62,7 +62,7 @@ class GravatarTrigger extends ContentTrigger
 
                 if ($results == false) {
                 } else {
-                    $fieldValue = $this->saveField($field, $new_name, $results);
+                    $fieldValue = $this->saveField(null, $new_name, $results);
                 }
             }
         }

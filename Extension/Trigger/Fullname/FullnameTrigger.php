@@ -51,7 +51,7 @@ class FullnameTrigger extends ContentTrigger
             } else {
 
                 /** Creates the new 'normal' or special field and populates the value */
-                $fieldValue = $this->saveField($first_name_field, 'full_name', $newFieldValue);
+                $fieldValue = $this->saveField(null, 'full_name', $newFieldValue);
             }
         }
 
