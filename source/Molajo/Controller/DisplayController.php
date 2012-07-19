@@ -81,8 +81,8 @@ class DisplayController extends Controller
                 $profiler_message .= ob_get_contents();
                 ob_end_clean();
 
-                Services::Profiler()->set('DisplayController->onAfterReadEvent ' . $profiler_message
-                    . ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE);
+                Services::Profiler()->set('Controller->onAfterExecute ' . $profiler_message,
+                    LOG_OUTPUT_TRIGGERS, VERBOSE);
             }
         }
 
@@ -233,6 +233,9 @@ class DisplayController extends Controller
         if ((int) $this->get('process_triggers') == 0) {
             return true;
         }
+		if (count($this->query_results) == 0) {
+			return true;
+		}
 
 		/** Process each item, one at a time */
 		$items = $this->query_results;

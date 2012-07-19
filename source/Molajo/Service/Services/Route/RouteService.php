@@ -404,6 +404,11 @@ Class RouteService
      */
     protected function getRouteParameters()
     {
+		if (defined('ROUTE')) {
+		} else {
+			define('ROUTE', true);
+		}
+
         /**  Menu Item  */
         if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
 

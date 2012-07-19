@@ -43,11 +43,7 @@ class ItemTrigger extends ContentTrigger
 				// request for item is handled by this method
 			}
 		}
-/**
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Triggerdata', 'PrimaryRequestQueryResults'));
-		echo '</pre>';
-*/
+
 		/** Sets primary request model to use the PrimaryRequestQueryResults (created in Route ContentHelper) */
 		$this->set('model_name', 'Triggerdata');
 		$this->parameters['model_name'] = 'Triggerdata';

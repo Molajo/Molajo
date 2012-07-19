@@ -580,11 +580,10 @@ class Controller
 		$items = $this->query_results;
 		$this->query_results = array();
 
-		$parameters = $this->parameters;
-
 		$this->parameters['model_offset'] = $model_offset;
 		$this->parameters['model_count'] = $model_count;
 		$this->parameters['pagination_total'] = $pagination_total;
+
 		$first = true;
 
 		foreach ($items as $item) {

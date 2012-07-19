@@ -20,7 +20,6 @@ defined('MOLAJO') or die;
  */
 class PaginationTrigger extends ContentTrigger
 {
-
     /**
      * After reading, calculate pagination data
      *
@@ -29,17 +28,30 @@ class PaginationTrigger extends ContentTrigger
      */
     public function onAfterRead()
     {
-
 		if ($this->get('first') == true) {
 		} else {
 			return true;
 		}
-/**
-		if ($this->get('model_use_pagination', 0) == 1) {
+
+		//todo: move model_use_pagination into model - work around for now - grab just read parameter
+		if (Services::Registry()->get('Parameters', 'model_use_pagination') == 1) {
 		} else {
 			return true;
 		}
-*/
+
+		echo '<pre>';
+		var_dump($this->parameters);
+		echo '</pre>';
+		die;
+	}
+
+	/**
+	 * Pagination for List Pages
+	 *
+	 * @return bool
+	 */
+	protected function listPagination()
+	{
 		if ((int) $this->get('pagination_total') > 1) {
 		} else {
 			return true;
