@@ -182,8 +182,6 @@ class CreateController extends Controller
                 $fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
 
                 /** Shared processing  */
-                echo 'going into processFieldGroups with ' . $customFieldName . '<br />';
-
                 $valid = $this->processFieldGroup($fields, $userHTMLFilter, $customFieldName);
 
                 if ($valid === true) {
@@ -274,7 +272,6 @@ class CreateController extends Controller
                 }
 
             } else {
-                echo '(before filter) Name ' . $name . ' Value ' . $inputArray[$name] . '<br />';
 
                 if (isset($inputArray[$name])) {
                     $value = $inputArray[$name];
@@ -442,9 +439,9 @@ class CreateController extends Controller
         Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
+
         if ($arguments == false) {
             Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
-
             return false;
         }
 
@@ -482,9 +479,9 @@ class CreateController extends Controller
         Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
+
         if ($arguments == false) {
             Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
-
             return false;
         }
 

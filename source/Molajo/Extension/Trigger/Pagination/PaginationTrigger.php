@@ -39,10 +39,14 @@ class PaginationTrigger extends ContentTrigger
 			return true;
 		}
 
-		echo '<pre>';
-		var_dump($this->parameters);
-		echo '</pre>';
-		die;
+		if (Services::Registry()->get('Parameters', 'catalog_source_id') == 0) {
+			$this->listPagination();
+		} else {
+			$this->listPagination();
+			//$this->itemPagination();
+		}
+
+		return true;
 	}
 
 	/**
@@ -123,5 +127,50 @@ class PaginationTrigger extends ContentTrigger
 		Services::Registry()->set('Triggerdata', 'AdminGridPagination', $query_results);
 
 		return true;
+	}
+
+
+	/**
+	 * Prev and Next Pagination for Item Pages
+	 *
+	 * @return bool
+	 */
+	protected function itemPagination()
+	{
+		$controllerClass = 'Molajo\\Controller\\Controller';
+		$connect = new $controllerClass();
+
+		$results = $connect->connect(
+			$this->get('model_type', 'Table'),
+			$this->get('model_name')
+		);
+		if ($results == false) {
+			return false;
+		}
+
+		$connect->set('get_customfields', 0);
+		$connect->set('use_special_joins', 0);
+		$connect->set('process_triggers', 0);
+		$connect->set('get_item_children', 0);
+
+		$connect->model->query->select($connect->model->db->qn('a')
+			. '.' . $connect->model->db->qn($connect->get('primary_key', 'id')));
+
+		$connect->model->query->select($connect->model->db->qn('a')
+			. '.' . $connect->model->db->qn($connect->get('name_key', 'title')));
+
+		$connect->model->query->where($connect->model->db->qn('a')
+			. '.' . $connect->model->db->qn($connect->get('primary_key', 'id')
+			. ' = ' . (int) $this->parameters['catalog_source_id']));
+
+//todo ordering
+		$item = $connect->getData('item');
+
+		$this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
+			. ucfirst(strtolower($this->get('model_type', 'Table')));
+
+		if ($item == false || count($item) == 0) {
+			return false;
+		}
 	}
 }

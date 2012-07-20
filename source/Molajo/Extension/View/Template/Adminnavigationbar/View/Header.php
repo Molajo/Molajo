@@ -6,4 +6,6 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<ul class="nav-section">
+<div class="row">
+	<div class="twelve columns">
+		<ul class="link-list right silver">

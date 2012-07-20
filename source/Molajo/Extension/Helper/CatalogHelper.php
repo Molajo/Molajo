@@ -152,15 +152,6 @@ Class CatalogHelper
         $m->set('id', (int) $catalog_id);
         $m->set('use_special_joins', 1);
 
-        Services::Profiler()->set('CatalogHelper->get '
-                . ' Request Catalog ID: ' . $catalog_id
-                . ' Request URL SEF: ' . $url_sef_request
-                . ' Request Source ID: ' . $source_id
-                . ' Request Catalog Type ID: ' . $catalog_type_id
-                . ' Model Type: ' . 'Table'
-                . ' Model Name: ' . 'Catalog',
-            LOG_OUTPUT_ROUTING, 0);
-
         $item = $m->getData('item');
 
         if (count($item) == 0) {

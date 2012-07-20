@@ -20,10 +20,12 @@ if ($first_year == null || $first_year == '') {
 } else {
     $ccDateSpan = $first_year . '-' . $current_year;
 }
+
+$homeURL = Services::Registry()->get('Configuration', 'application_base_url');
 ?>
 <p>
-    <?php echo '&#169;' . ' ' . $ccDateSpan . ' ' . $this->row->copyright_holder; ?>
-    <a href="<?php echo $this->row->link; ?>">
-        <?php echo $this->row->linked_text; ?> </a>
-    <?php echo ' ' . $this->row->remaining_text; ?>
+	<?php echo '&#169;' . ' ' . $ccDateSpan . ' ' . $this->row->copyright_holder; ?>
+	<a href="<?php echo $this->row->link; ?>">
+		<?php echo $this->row->linked_text; ?> </a>
+	<?php echo ' ' . $this->row->remaining_text; ?>
 </p>

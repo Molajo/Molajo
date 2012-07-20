@@ -9,7 +9,6 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 $action = Services::Registry()->get('Triggerdata', 'full_page_url');
-
 ?>
 
 <dl class="tabs contained">

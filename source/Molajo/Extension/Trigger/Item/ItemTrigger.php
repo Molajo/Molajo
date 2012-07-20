@@ -52,6 +52,48 @@ class ItemTrigger extends ContentTrigger
 		$this->set('model_query_object', 'getTriggerdata');
 		$this->set('model_parameter', 'PrimaryRequestQueryResults');
 
+		//$this->getComments();
+
+		return true;
+	}
+
+	/**
+	 * Grid Query: results stored in Trigger registry
+	 *
+	 * @param   $connect
+	 * @param   $primary_prefix
+	 * @param   $table_name
+	 *
+	 * @return bool
+	 * @since   1.0
+	 */
+	protected function getComments()
+	{
+		$controllerClass = 'Molajo\\Controller\\Controller';
+		$connect = new $controllerClass();
+		$results = $connect->connect('Table', 'Comments');
+		if ($results == false) {
+			return false;
+		}
+
+		$connect->model->query->where('a.root = '.$this->get('id'));
+		$connect->set('model_offset', 0);
+		$connect->set('model_count', 10);
+
+		$query_results = $connect->getData('list');
+
+		echo '<pre><br /><br />';
+		var_dump($query_results);
+		echo '<br /><br /></pre>';
+
+		echo '<br /><br />';
+		echo $connect->model->query->__toString();
+		echo '<br /><br />';
+
+		die;
+
+		Services::Registry()->set('Triggerdata', 'PrimaryRequestComments', $query_results);
+
 		return true;
 	}
 }

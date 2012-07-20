@@ -6,8 +6,11 @@
  * @license     GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<include:head/>
-<include:template name="Adminheader" wrap="div" wrap_class="row"/>
+<div class="row">
+	<div class="twelve columns">
+		<include:template name="Adminheader" wrap="div" wrap_class="row"/>
+	</div>
+</div>
 <include:message wrap="div" wrap_class="row"/>
 <div class="row">
     <nav class="one columns">
@@ -17,9 +20,3 @@ defined('MOLAJO') or die; ?>
         <include:request/>
     </section>
 </div>
-<div class="row">
-    <div class="twelve columns">
-        <include:template name=Adminfooter wrap=none/>
-    </div>
-</div>
-<include:defer/>

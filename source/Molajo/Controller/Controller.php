@@ -505,6 +505,43 @@ class Controller
 	}
 
 	/**
+	 * Get the list of potential triggers identified with this model (used to filter registered triggers)
+	 *
+	 * @param $query_object
+	 *
+	 * @return void
+	 * @since   1.0
+	 */
+	protected function getTriggerList($query_object)
+	{
+		if ($query_object == 'result') {
+			$this->triggers = array();
+			return;
+		}
+
+		if ((int) $this->get('process_triggers') == 1) {
+
+			$this->triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
+
+			if (is_array($this->triggers)) {
+			} else {
+				if ($this->triggers == '' || $this->triggers == false || $this->triggers == null) {
+					$this->triggers = array();
+				} else {
+					$temp = $this->triggers;
+					$this->triggers = array();
+					$this->triggers[] = $temp;
+				}
+			}
+
+		} else {
+			$this->triggers = array();
+		}
+
+		return;
+	}
+
+	/**
 	 * Schedule onBeforeRead Event - could update model and parameter objects
 	 *
 	 * @return boolean
@@ -624,41 +661,4 @@ class Controller
 
 		return true;
 	}
-
-	/**
-     * Get the list of potential triggers identified with this model (used to filter registered triggers)
-     *
-     * @param $query_object
-     *
-     * @return void
-     * @since   1.0
-     */
-    protected function getTriggerList($query_object)
-    {
-        if ($query_object == 'result') {
-            $this->triggers = array();
-            return;
-        }
-
-        if ((int) $this->get('process_triggers') == 1) {
-
-            $this->triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
-
-            if (is_array($this->triggers)) {
-            } else {
-                if ($this->triggers == '' || $this->triggers == false || $this->triggers == null) {
-                    $this->triggers = array();
-                } else {
-                    $temp = $this->triggers;
-                    $this->triggers = array();
-                    $this->triggers[] = $temp;
-                }
-            }
-
-        } else {
-            $this->triggers = array();
-        }
-
-        return;
-    }
 }
