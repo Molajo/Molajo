@@ -45,6 +45,12 @@ Class TemplateIncluder extends Includer
      */
     protected function setRenderCriteria()
     {
+/**		echo '<br />'.Services::Registry()->get('Parameters', 'template_view_path_node');
+	    if (Services::Registry()->get('Parameters', 'template_view_path_node') == 'Preferences') {
+			echo '<br/>BEFORE<br/>';
+			Services::Registry()->get('Parameters', '*');
+		}
+*/
         /**  Extension name set to the name of the template in the getAttributes method */
         $template_title = Services::Registry()->get('Parameters', 'extension_title');
 
@@ -128,7 +134,13 @@ Class TemplateIncluder extends Includer
             return false;
         }
 
-        return true;
+/**
+		if (Services::Registry()->get('Parameters', 'template_view_path_node') == 'Preferences') {
+			echo '<br/>BEFORE<br/>';
+			Services::Registry()->get('Parameters', '*');
+		}
+*/
+		return true;
     }
 
     /**

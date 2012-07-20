@@ -365,19 +365,17 @@ Class Application
      */
     protected function display()
     {
-//Services::Registry()->get('Parameters', '*');
-//Services::Message()->set('Test message', MESSAGE_TYPE_INFORMATION);
-//Services::Message()->set('Test message', MESSAGE_TYPE_SUCCESS);
-//Services::Message()->set('Test message', MESSAGE_TYPE_WARNING);
-//Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
-
-        /** Theme and Page must exist */
-        if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))
-            && file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))
-        ) {
+/**
+Services::Message()->set('Test message', MESSAGE_TYPE_INFORMATION);
+Services::Message()->set('Test message', MESSAGE_TYPE_SUCCESS);
+Services::Message()->set('Test message', MESSAGE_TYPE_WARNING);
+Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
+*/
+        /** Theme must exist */
+        if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include')) ) {
 		} else {
-            Services::Error()->set(500, 'Theme and/or Page View Not found');
-            echo 'Theme and/or Page View Not found - application stopped before parse. Parameters follow:';
+            Services::Error()->set(500, 'Theme Not found');
+            echo 'ThemeNot found - application stopped before parse. Parameters follow:';
             Services::Registry()->get('Parameters', '*');
             die;
         }

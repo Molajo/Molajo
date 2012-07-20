@@ -5,13 +5,29 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<h2>
-    <?php if (isset($this->row->title)) {
-    echo $this->row->title;
-}?>
-</h2>
-<?php
-if (isset($this->row->text)) {
-    echo $this->row->text;
-}
-
+<div class="row">
+	<div class="twelve columns">
+		<h4>
+			<?php echo $this->row->title; ?>
+		</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="nine columns">
+		<h3>
+			<?php echo $this->row->visitor_name; ?>
+		</h3>
+	</div>
+	<div class="three columns">
+		<h3>
+			<?php echo $this->row->start_publishing_datetime_ccyymmdd; ?>
+		</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="twelve columns">
+		<h3>
+			<?php echo $this->row->content_text; ?>
+		</h3>
+	</div>
+</div>

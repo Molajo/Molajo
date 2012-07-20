@@ -7,6 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
+$nowrap = '';
 $checked = '';
 $rowCount = Services::Registry()->get('Triggerdata', 'AdminGridTableRows'); ?>
 <table class="responsive">
@@ -19,6 +20,7 @@ $rowCount = Services::Registry()->get('Triggerdata', 'AdminGridTableRows'); ?>
             $extraClass = '';
             if ($count == 1) {
                 $extraClass .= 'first';
+				$nowrap = ' nowrap ';
             }
             if ($count == count($columnArray)) {
                 $extraClass .= 'last';
@@ -28,7 +30,7 @@ $rowCount = Services::Registry()->get('Triggerdata', 'AdminGridTableRows'); ?>
                 $extraClass = ' class="' . trim($extraClass) . '"';
             }
             ?>
-            <th<?php echo $extraClass; ?>><?php echo Services::Language()->translate('GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></th>
+            <th<?php echo $extraClass . ' ' .  $nowrap; ?>><?php echo Services::Language()->translate('GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></th>
             <?php
             $count++;
         } ?>

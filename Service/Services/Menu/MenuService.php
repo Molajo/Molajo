@@ -146,7 +146,8 @@ Class MenuService
 				) {
                     $item->link_text = $item->title;
                 } else {
-                    $item->link_text = $item->subtitle;
+					$item->link_text = $item->title;
+// $item->link_text = $item->subtitle;
                 }
 
                 $item->link = $item->url;

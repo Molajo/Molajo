@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Template" version="1.0" extends="Extensioninstancesviewstemplates">
+    <name>VIEW_TEMPLATE_PREFERENCES_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>AmyStephen@gmail.com</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_TEMPLATE_PREFERENCES_DESCRIPTION</description>
+    <model name="Preferences">
+        <customfields>
+            <customfield name="parameters">
+                <field name="criteria_display_view_on_no_results" type="binary" null="0" default="1"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

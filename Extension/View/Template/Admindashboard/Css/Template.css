@@ -1,0 +1,67 @@
+/* Link List */
+
+
+.column1 { width: 170px; float: left; padding-bottom: 100px; }
+.column2 {width: 500px; float: left; padding-bottom: 100px; }
+.column3 { width: 170px; float: left; padding-bottom: 100px; }
+
+.portlet { margin: 0 1em 1em 0; }
+.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+.portlet-header .ui-icon { float: right; }
+.portlet-content { padding: 0.4em; }
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+.portlet-content {
+    max-height:200px;
+    _height:expression(this.scrollHeight>199?"200px":"auto");
+    overflow:auto;
+    overflow-x:hidden;
+}
+.hidden{display: none}
+#header{margin-bottom: 5px; padding: 3px}
+#header div{float: left;}
+#menu2{float:left;}
+br.clear{clear:both;}
+
+/* Component containers
+----------------------------------*/
+.ui-widget .ui-widget { font-size: 1em; }
+.ui-widget-content { border: 1px solid #e9e9e9; }
+.ui-widget-header { border: 1px solid #222222; background: #2ba6cb; color: #FFF; }
+.ui-widget-header a { color: #FFF; }
+
+/* Interaction states
+----------------------------------*/
+.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #222222; background: #e9e9e9; font-weight: bold; }
+/* .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #2779aa; text-decoration: none; outline: none; } */
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #2ba6cb; background: #e9e9e9; }
+.ui-state-hover a, .ui-state-hover a:hover { color: #ffff99; text-decoration: none; outline: none; }
+.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #2ba6cb; background: #ffff99; font-weight: bold; color: #ffffff; outline: none; }
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #ffffff; outline: none; text-decoration: none; }
+
+/* Interaction Cues
+----------------------------------*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {border: 1px solid #222; background: #ffff99; color: #222222; }
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a { color: #2ba6cb; }
+.ui-state-error, .ui-widget-content .ui-state-error {border: 1px solid #c60f13; background: #c60f13; color: #ffffff; }
+.ui-state-error a, .ui-widget-content .ui-state-error a { color: #ffffff; }
+.ui-state-error-text, .ui-widget-content .ui-state-error-text { color: #ffffff; }
+.ui-state-disabled, .ui-widget-content .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
+.ui-priority-primary, .ui-widget-content .ui-priority-primary { font-weight: bold; }
+.ui-priority-secondary, .ui-widget-content .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
+
+/* Icons
+----------------------------------*/
+/* states and images (doubtful) */
+.ui-icon { width: 16px; height: 16px; background-image: url(Images/ui-icons_72a7cf_256x240.png); }
+.ui-widget-content .ui-icon {background-image: url(Images/ui-icons_72a7cf_256x240.png); }
+.ui-widget-header .ui-icon {background-image: url(Images/ui-icons_72a7cf_256x240.png); }
+.ui-state-default .ui-icon { background-image: url(Images/ui-icons_3d80b3_256x240.png); }
+.ui-state-active .ui-icon {background-image: url(Images/ui-icons_ffffff_256x240.png); }
+.ui-state-highlight .ui-icon {background-image: url(Images/ui-icons_2e83ff_256x240.png); }
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(Images/ui-icons_ffffff_256x240.png); }
+
+/* positioning */
+.ui-icon-plus { background-position: -16px -128px; }
+.ui-icon-minus { background-position: -48px -128px; }
+.ui-icon-close { background-position: -80px -128px; }
