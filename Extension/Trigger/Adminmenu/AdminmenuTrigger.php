@@ -42,6 +42,7 @@ class AdminmenuTrigger extends ContentTrigger
 			$this->get('model_type'),
 			$this->get('model_name')
         );
+
         if ($results == false) {
             return false;
         }

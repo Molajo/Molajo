@@ -6,7 +6,10 @@
  */
 defined('MOLAJO') or die; ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="two columns">
+        <include:template name=Adminsectionmenu/>
+    </div>
+    <div class="ten columns">
         <include:request/>
     </div>
 </div>
