@@ -1,4 +1,4 @@
-<link href="/source/Molajo/Extension/View/Template/Edit/alohaeditor/aloha/css/aloha.css" type="text/css"
+<link href="/source/Molajo/Extension/View/Template/Editeditor/alohaeditor/aloha/css/aloha.css" type="text/css"
       rel="stylesheet"/>
 
 <script>
@@ -16,7 +16,7 @@
     };
 </script>
 
-<script type="text/javascript" src="/source/Molajo/Extension/View/Template/Edit/alohaeditor/aloha/lib/aloha.js"
+<script type="text/javascript" src="/source/Molajo/Extension/View/Template/Editeditor/alohaeditor/aloha/lib/aloha.js"
         data-aloha-plugins="common/format,
                                     common/table,
                                     common/list,
