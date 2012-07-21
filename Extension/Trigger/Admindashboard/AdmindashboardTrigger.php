@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class AdmindashboardTrigger extends ContentTrigger
 {
-
     /**
      * Before-read processing
      *

@@ -4,6 +4,7 @@ use Molajo\Service\Services;
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
+ * <include:profiler/>
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
@@ -32,5 +33,4 @@ defined('MOLAJO') or die; ?>
 		<include:template name=Adminfooter wrap=none/>
 	</div>
 </div>
-<include:profiler/>
 <include:defer/>
