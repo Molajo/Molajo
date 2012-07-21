@@ -6,7 +6,7 @@
  */
 defined('MOLAJO') or die; ?>
 <div class="row">
-	<div class="twelve columns">
+	<div class="six columns">
 		<div id="container">
 			<div id="top">Preferences</div>
 			<div id="mid" style="display: none;">
@@ -14,5 +14,8 @@ defined('MOLAJO') or die; ?>
 			</div>
 			<div id="bottom"></div>
 		</div>
+	</div>
+	<div class="six columns">
+		<a href="#" class="button" data-reveal-id="myModal2">Click Me For A Modal</a>
 	</div>
 </div>

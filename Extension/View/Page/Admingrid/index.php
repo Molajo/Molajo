@@ -16,3 +16,4 @@ defined('MOLAJO') or die; ?>
 		<include:template name=Admingridbatch/>
     </div>
 </div>
+<include:template name=Modal/>
