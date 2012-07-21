@@ -4,6 +4,8 @@ http://ryanfait.com/
 */
 * { margin: 0; }
 html, body { height: 100%; }
-.stickywrapper { margin: 0 auto -100px; /* the bottom margin is the negative value of the footer's height */ min-height: 100%; height: auto !important; height: 100%; }
+.stickywrapper { margin-bottom: -260px; /* the bottom margin is the negative value of the footer's height */
+    min-height: 100%; height: auto !important; height: 100%; }
 .footer, .push { height: 100px; /* .push must be the same height as .footer */ }
-.footer { background: #262a30; color: #000; padding-top: 40px}
+.footer { background-color: #262a30; color: #222; padding-top: 20px}
+.main { padding-top: 20px}

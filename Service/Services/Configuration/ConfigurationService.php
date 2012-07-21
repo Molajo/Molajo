@@ -168,37 +168,38 @@ Class ConfigurationService
 
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
-            define('SITE_CACHE_FOLDER',
-            Services::Registry()->get('Configuration', 'cache_path', SITE_BASE_PATH . '/cache'));
+            define('SITE_CACHE_FOLDER', SITE_BASE_PATH
+				. '/' . Services::Registry()->get('Configuration', 'cache_path', 'cache'));
         }
-
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
-            define('SITE_LOGS_FOLDER', SITE_BASE_PATH . '/'
-                . Services::Registry()->get('Configuration', 'logs_path', SITE_BASE_PATH . '/logs'));
+
+            define('SITE_LOGS_FOLDER', SITE_BASE_PATH
+				. '/' . Services::Registry()->get('Configuration', 'logs_path', 'logs'));
         }
 
         /** following must be within the web document folder */
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
-            define('SITE_MEDIA_FOLDER', SITE_BASE_PATH . '/'
-                . Services::Registry()->get('Configuration', 'media_path', SITE_BASE_PATH . '/media'));
+            define('SITE_MEDIA_FOLDER', SITE_BASE_PATH
+				. '/' . Services::Registry()->get('Configuration', 'media_path', 'media'));
         }
         if (defined('SITE_MEDIA_URL')) {
         } else {
-            define('SITE_MEDIA_URL', BASE_URL . 'Molajo/Site/' . SITE_ID . '/' . Services::Registry()->get('Configuration', 'media_url'));
+            define('SITE_MEDIA_URL', SITE_BASE_URL_RESOURCES
+				. '/' . Services::Registry()->get('Configuration', 'media_url', 'media'));
         }
 
         /** following must be within the web document folder */
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
-            define('SITE_TEMP_FOLDER', SITE_BASE_PATH . '/'
-                . Services::Registry()->get('Configuration', 'temp_path', SITE_BASE_PATH . '/temp'));
+            define('SITE_TEMP_FOLDER', SITE_BASE_PATH
+				. '/' . Services::Registry()->get('Configuration', 'temp_path', SITE_BASE_PATH . '/temp'));
         }
         if (defined('SITE_TEMP_URL')) {
         } else {
-            define('SITE_TEMP_URL', BASE_URL
-                . Services::Registry()->get('Configuration', 'temp_url', BASE_URL . 'sites/' . SITE_ID . '/temp'));
+            define('SITE_TEMP_URL', SITE_BASE_URL_RESOURCES
+                . '/' . Services::Registry()->get('Configuration', 'temp_url', 'temp'));
         }
 
         return true;

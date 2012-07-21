@@ -14,18 +14,15 @@ defined('MOLAJO') or die; ?>
 		<include:template name=Adminheader/>
 	</div>
 </div>
-<div class="stickywrapper">
-	<div class="row">
-		<div class="twelve columns">
+<div class="row main stickywrapper">
+	<div class="twelve columns">
 		<?php if (file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))) {
 			include Services::Registry()->get('Parameters', 'page_view_path_include');
 		} ?>
-		</div>
 	</div>
-	<div class="row">
-		<div class="twelve columns">
-			<div class="push"></div>
-		</div>
+</div>
+<div class="row push">
+	<div class="twelve columns">
 	</div>
 </div>
 <div class="row footer">

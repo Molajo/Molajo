@@ -89,7 +89,7 @@ Class ThemeMolajitoHelper extends Mustache
          */
 
         /** jQuery CDN and fallback */
-//        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1);
+        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1);
 
         /** Modernizer */
 //        Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);

@@ -14,18 +14,20 @@ if ($title == '') {
 }
 $homeURL = Services::Registry()->get('Configuration', 'application_base_url');
 ?>
-<header>
-	<div class="row topmenu topmenu-text">
-		<div class="three columns">
-			<span>Molajo</span>
+<div class="row header">
+	<div class="twelve columns">
+		<div class="row topmenu topmenu-text">
+			<div class="three columns">
+				<span>Molajo</span>
+			</div>
+			<div class="nine columns">
+				<include:template name=Adminnavigationbar/>
+			</div>
 		</div>
-		<div class="nine columns">
-			<include:template name=Adminnavigationbar/>
+		<div class="row heading heading-text">
+			<div class="twelve columns">
+				<h1><?php echo $title; ?></h1>
+			</div>
 		</div>
 	</div>
-	<div class="row heading heading-text">
-		<div class="twelve columns">
-			<h1><?php echo $title; ?></h1>
-		</div>
-	</div>
-</header>
+</div>

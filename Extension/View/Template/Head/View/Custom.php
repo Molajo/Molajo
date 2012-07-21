@@ -14,6 +14,7 @@ if (trim($class) == '') {
 } else {
     $class = ' class="' . htmlspecialchars($class) . '"';
 }
+$class = ' class="' . htmlspecialchars('dashboard') . '"';
 $id = Services::Registry()->get('Parameters', 'page_view_css_id');
 if (trim($id) == '') {
 } else {
@@ -57,8 +58,6 @@ if ((int) $html5 == 1): ?>
                 <include:asset name=Assetscssdeclarations value=CssDeclarations/>
                     <include:asset name=Assetsjs value=Js/>
                         <include:asset name=Assetsjsdeclarations value=JsDeclarations/>
-                            <?php
-                            include __DIR__ . '/alohahead.php';
-                            ?>
+                            <?php  // include __DIR__ . '/alohahead.php'; ?>
 </head>
 <body<?php echo $id; ?><?php echo $class; ?>>
