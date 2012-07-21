@@ -3,9 +3,8 @@ Sticky Footer by Ryan Fait
 http://ryanfait.com/
 */
 * { margin: 0; }
-html, body { height: 100%; }
-.stickywrapper { margin-bottom: -260px; /* the bottom margin is the negative value of the footer's height */
-    min-height: 100%; height: auto !important; height: 100%; }
-.footer, .push { height: 100px; /* .push must be the same height as .footer */ }
-.footer { background-color: #262a30; color: #222; padding-top: 20px}
-.main { padding-top: 20px}
+html, body { height: 95%; }
+.wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -100px; }
+.footer, .push { height: 100px; }
+.footer { background-color: #262a30; color: #222}
+.main { padding-top: 30px}

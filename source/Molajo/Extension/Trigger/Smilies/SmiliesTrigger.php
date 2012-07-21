@@ -7,6 +7,7 @@
 namespace Molajo\Extension\Trigger\Smilies;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
+use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
@@ -110,13 +111,17 @@ class SmiliesTrigger extends ContentTrigger
             ':?:' => 'icon_question.gif',
         );
 
+		if (Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
+			$protocol =  'https://';
+		} else {
+			$protocol =  'http://';
+		}
+
         if (count($smile) > 0) {
             foreach ($smile as $key => $val) {
-                $text = str_ireplace($key,
-                    '<span><img src="' . SITE_MEDIA_URL . '/smilies/'
-                        . $val
-                        . '" alt="smiley" class="smiley-class" /></span>',
-                    $text);
+				$url = $protocol . SITE_MEDIA_URL . '/smilies/' . $val;
+				$smiley = '<span><img src="' . $url . '" alt="smiley" class="smiley-class" /></span>';
+                $text = str_ireplace($key, $smiley, $text);
             }
         }
 
