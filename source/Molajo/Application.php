@@ -624,15 +624,16 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
 
         if (defined('SITES_MEDIA_URL')) {
         } else {
-            define('SITES_MEDIA_URL', BASE_URL . 'site/media');
+            define('SITES_MEDIA_URL', BASE_URL . 'Molajo/Site/media');
         }
+
         if (defined('SITES_TEMP_FOLDER')) {
         } else {
             define('SITES_TEMP_FOLDER', SITES . '/temp');
         }
         if (defined('SITES_TEMP_URL')) {
         } else {
-            define('SITES_TEMP_URL', BASE_URL . 'site/temp');
+            define('SITES_TEMP_URL', BASE_URL . 'Molajo/Site/temp');
         }
 
         $site_base_url = Application::Request()->get('base_url_path');
@@ -646,6 +647,7 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
                 if (strtolower((string) $single->site_base_url) == strtolower($site_base_url)) {
                     define('SITE_BASE_URL', (string) $single->site_base_url);
                     define('SITE_BASE_PATH', BASE_FOLDER . (string) $single->site_base_folder);
+					define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string) $single->site_base_folder);
                     define('SITE_ID', $single->id);
                     break;
                 }

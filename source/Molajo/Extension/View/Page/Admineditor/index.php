@@ -7,7 +7,10 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <div class="row">
-	<div class="twelve columns">
+	<div class="two columns">
+		<include:template name=Adminsectionmenu/>
+	</div>
+	<div class="ten columns">
 		<dl class="tabs pill">
 			<dd class="active"><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#edit">Edit</a></dd>
 			<dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#options">Options</a></dd>

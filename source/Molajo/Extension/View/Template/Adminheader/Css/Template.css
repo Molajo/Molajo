@@ -1,5 +1,6 @@
 .topmenu { background: #262a30; padding-top: 1em; }
 .topmenu-text  { color: #ffffff; }
 .right { float: right; }
-.heading { background: #2ba6cb; padding-bottom: 2em; }
+.header { background: #2ba6cb; padding-bottom: 1em; }
 .heading-text { color: #FFF; }
+

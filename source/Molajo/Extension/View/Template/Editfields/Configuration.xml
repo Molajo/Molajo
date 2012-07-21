@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_EDITPARAMETERS_DESCRIPTION</description>
-    <model name="Editparameters"/>
+    <model name="Editfields"/>
 </extension>

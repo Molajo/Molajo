@@ -245,13 +245,12 @@ class DisplayController extends Controller
 		$this->parameters['even_or_odd'] = 'odd';
 		$this->parameters['total_rows'] = count($items);
 
-		$parameters = $this->parameters;
 
 		foreach ($items as $item) {
 
 			$arguments = array(
 				'table_registry_name' => $this->table_registry_name,
-				'parameters' => $parameters,
+				'parameters' => $this->parameters,
 				'data' => $item,
 				'model_name' => $this->get('model_name')
 			);
@@ -267,7 +266,7 @@ class DisplayController extends Controller
 
 			Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-			$parameters = $arguments['parameters'];
+			$this->parameters = $arguments['parameters'];
 			$this->query_results[] = $arguments['data'];
 
 			if ($this->parameters['even_or_odd'] == 'odd') {
@@ -277,8 +276,6 @@ class DisplayController extends Controller
 			}
 			$this->parameters['row_count']++;
 		}
-
-		$this->parameters = $parameters;
 
         return true;
     }
