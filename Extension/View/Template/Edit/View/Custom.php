@@ -7,29 +7,29 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 ?>
-<div class="row">
-	<div class="twelve columns">
-		<div class="row">
-			<div class="six columns">
-				<label>Title</label>
-				<input type="text" placeholder="Title"/>
-			</div>
-			<div class="six columns">
-				<label>Author</label>
-				<input type="text" placeholder="Author"/>
-			</div>
+<form>
+	<div class="row">
+		<div class="eight columns">
+			<dl class="tabs contained">
+				<dd class="active"><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#edit">Edit</a></dd>
+				<dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#options">Options</a></dd>
+				<dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#fields">Fields</a></dd>
+			</dl>
 		</div>
-		<include:template name=Editeditor/>
-		<div class="row">
-			<div class="six columns">
-				<label>Tags</label>
-				<input type="text" placeholder="Title"/>
-			</div>
-			<div class="six columns">
-				<label>Categories</label>
-				<input type="text" placeholder="Title"/>
-			</div>
+		<div class="four columns">
+			<include:template name=Editbuttons/>
 		</div>
+		<ul class="tabs-content contained">
+			<li class="active" id="editTab">
+				<include:template name=Edititem/>
+			</li>
+			<li id="optionsTab">
+				<include:template name=Editoptions/>
+			</li>
+			<li id="fieldsTab">
+				<include:template name=Editfields/>
+			</li>
+		</ul>
 	</div>
-</div>
+</form>
 

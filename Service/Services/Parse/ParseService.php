@@ -220,7 +220,7 @@ Class ParseService
             return false;
         }
 
-		/** Save Route Parameters  move to after route */
+		/** Save Route Parameters move to after route */
 		Services::Registry()->copy('Parameters', 'RouteParameters');
 
         $renderedOutput = $this->renderLoop();
@@ -476,6 +476,7 @@ Class ParseService
                     $replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
                     /** 6. initialize registry */
+					Services::Registry()->deleteRegistry('Parameters');
                     Services::Registry()->createRegistry('Parameters');
 
                     if ($includeName == 'request') {
@@ -514,7 +515,6 @@ Class ParseService
                     Services::Profiler()->set('ParseService->callIncluder rendered output ' .$output, LOG_OUTPUT_RENDERING, VERBOSE);
 
                     $with[] = $output;
-                    Services::Registry()->deleteRegistry('Parameters');
                 }
             }
         }

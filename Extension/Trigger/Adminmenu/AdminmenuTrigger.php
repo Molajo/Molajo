@@ -138,7 +138,7 @@ class AdminmenuTrigger extends ContentTrigger
     }
 
     /**
-     * Set the Title, given the Breadcrumb values
+     * Set the Page Title, given Breadcrumb values
      *
      * @param int $extension_instance_id - menu
      *
@@ -149,12 +149,9 @@ class AdminmenuTrigger extends ContentTrigger
     {
         $bread_crumbs = Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs');
 
-        $title = '';
-        foreach ($bread_crumbs as $item) {
-            $title = $item->title;
-        }
+        $title = $bread_crumbs[count($bread_crumbs) - 1]->title;
 
-        Services::Registry()->set('Triggerdata', 'AdminTitle', $title);
+        Services::Registry()->set('Triggerdata', 'PageTitle', $title);
 
         return $this;
     }

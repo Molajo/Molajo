@@ -6,7 +6,8 @@ use Molajo\Service\Services;
  * @license       GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$title = Services::Registry()->get('Triggerdata', 'AdminTitle');
+
+$title = Services::Registry()->get('Triggerdata', 'PageTitle');
 if ($title == '') {
 	$title = $this->row->criteria_title;
 } else {

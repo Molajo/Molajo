@@ -12,6 +12,7 @@ $class = 'last-in-row';
 
 $element = '';
 
+//todo - move into configuration
 if (strtolower($this->row->name) == 'apply') {
     $element = 'f';
 } elseif (strtolower($this->row->name) == 'save') {
@@ -73,5 +74,4 @@ if (strtolower($this->row->name) == 'apply') {
 }
 
 ?>
-<li class="toolbar"><a href="<?php echo $this->row->link; ?>"><span class="glyph general"><?php echo $element; ?></span></a>
-</li>
+<li class="toolbar"><a href="<?php echo $this->row->link; ?>"><span class="glyph general"><?php echo $element; ?></span></a></li>

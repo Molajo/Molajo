@@ -25,12 +25,12 @@ Class ThemeMolajitoHelper extends Mustache
     public $parameters;
 
     /**
-     * loadMedia - automatically loaded in last step of Rendering process
-     *     Method can be used to load external media, special metadata or links
+     * loadMedia - Method executed in Theme Rendering to load external media, special metadata or links
      *
-     * @since  1.0
+	 * @return  void
+     * @since   1.0
      */
-    public function loadMedia()
+	public function loadMedia()
     {
         /** Theme Folder */
         $theme = Services::Registry()->get('Parameters', 'theme_path_node');
@@ -90,21 +90,18 @@ Class ThemeMolajitoHelper extends Mustache
 
         /** jQuery CDN and fallback */
         Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1);
+        $url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'js/fallback/jquery-1.7.2.min.js';
+        $fallback = "
+        if (typeof jQuery == 'undefined') {
+            document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
+         }";
+        Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 10000);
 
-        /** Modernizer */
-//        Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);
+		/** Modernizer */
+		Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);
 
-        /** HTML5 Shiv */
-//		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 10000);
-
-//        $url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'js/fallback/jquery-1.7.2.min.js';
-
-//        $fallback = "
-//        if (typeof jQuery == 'undefined') {
-//            document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
-//         }";
-
-//        Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 10000);
+		/** HTML5 Shiv */
+		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 10000);
 
         return;
     }
