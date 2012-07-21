@@ -11,23 +11,6 @@ defined('MOLAJO') or die; ?>
 		<include:template name=Adminsectionmenu/>
 	</div>
 	<div class="ten columns">
-		<dl class="tabs contained">
-			<dd class="active"><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#edit">Edit</a></dd>
-			<dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#options">Options</a></dd>
-			<dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#fields">Fields</a></dd>
-		</dl>
-		<form>
-			<ul class="tabs-content contained">
-				<li class="active" id="editTab">
-					<include:request/>
-				</li>
-				<li id="optionsTab">
-					<include:template name=Editoptions/>
-				</li>
-				<li id="fieldsTab">
-					<include:template name=Editfields/>
-				</li>
-			</ul>
-		</form>
+		<include:request/>
 	</div>
 </div>

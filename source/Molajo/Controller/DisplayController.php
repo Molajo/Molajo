@@ -35,6 +35,7 @@ class DisplayController extends Controller
         } elseif ($action == 'edit') {
         } elseif ($action == 'display') {
         }
+
 	echo 		' <br /><br /><br /><br />Includer: ' . $this->get('includer_type', '')
 				. ' <br />Model Type: ' . $this->get('model_type', '')
 				. ' <br />Model Type: ' . $this->get('model_type', '')
@@ -43,7 +44,7 @@ class DisplayController extends Controller
 				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 				. ' <br />Template Path: ' . $this->get('template_view_path', '')
 				. ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
-		**/
+**/
 		if ($this->get('model_name', '') == '') {
             $this->query_results = array();
 
