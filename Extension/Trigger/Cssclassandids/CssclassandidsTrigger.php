@@ -48,7 +48,12 @@ class CssclassandidsTrigger extends ContentTrigger
 
 		$view_css_class = $this->parameters['template_view_css_class'];
 
-		$class .= ' ' . trim($class_field_value) . ' ' . trim($view_css_class);
+		$current = '';
+		if ((int) $this->getField('current', 0) == 1) {
+			$current = 'active';
+		}
+
+		$class .= ' ' . trim($class_field_value) . ' ' . trim($view_css_class) . ' ' . trim($current);
 
 		if (trim($class) == '') {
 			$class = '';
