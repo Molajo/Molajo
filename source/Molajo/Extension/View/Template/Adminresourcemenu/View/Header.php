@@ -8,6 +8,7 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 $class = '';
+$class = ' class="active" ';
 $resource = '';
 $resourceTitle = '';
 if (count(Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs')) > 0) {

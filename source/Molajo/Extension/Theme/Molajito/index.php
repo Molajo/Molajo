@@ -33,4 +33,5 @@ defined('MOLAJO') or die; ?>
 		<include:template name=Adminfooter wrap=none/>
 	</div>
 </footer>
+<include:template name=modal/>
 <include:defer/>

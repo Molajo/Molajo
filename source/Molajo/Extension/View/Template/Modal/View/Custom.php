@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 ?>
-<div id="myModal" class="reveal-modal">
+<div id="resourceOptions" class="reveal-modal">
 	<h2>Awesome. I have it.</h2>
 	<p class="lead">Your couch.  I it's mine.</p>
 	<p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>

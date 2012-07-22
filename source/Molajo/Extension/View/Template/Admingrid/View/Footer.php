@@ -10,11 +10,11 @@ defined('MOLAJO') or die;
 $columnCount = Services::Registry()->get('Triggerdata', 'AdminGridTableColumns');
 ?>
 </tbody>
-<tfoot>
-<tr>
-    <td colspan="<?php echo ((int) $columnCount + 1); ?>">
-        <include:template name=Admingridpagination value=AdminGridPagination/>
-    </td>
-</tr>
-</tfoot>
+	<tfoot>
+		<tr>
+			<td colspan="<?php echo ((int) $columnCount + 1); ?>">
+				<include:template name=Admingridpagination value=AdminGridPagination/>
+			</td>
+		</tr>
+	</tfoot>
 </table>

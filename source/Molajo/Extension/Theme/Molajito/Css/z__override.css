@@ -1,0 +1,12 @@
+/*
+@package     Molajo
+@copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+@license     GNU GPL v 2, or later and MIT, see License folder
+*/
+* { margin: 0; }
+html, body { height: 97%; }
+.wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -100px; }
+.footer, .push { height: 100px; }
+.footer { background-color: #262a30; color: #222}
+.main { padding-top: 30px}
+.row { width: 20000px; max-width: 100%; min-width: 768px; margin: 0 auto; }

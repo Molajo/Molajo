@@ -10,10 +10,7 @@ defined('MOLAJO') or die; ?>
         <include:template name=Adminsectionmenu/>
     </div>
     <div class="ten columns">
-        <include:template name=Adminresourcemenu/>
 		<include:template name=Preferences/>
         <include:request/>
-		<include:template name=Admingridbatch/>
     </div>
 </div>
-<include:template name=Modal/>
