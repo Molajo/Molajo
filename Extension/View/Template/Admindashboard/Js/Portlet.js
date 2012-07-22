@@ -13,9 +13,7 @@ $(document).ready(function () {
                     $(portlets).each(function() {
                         set_window_visibility(this);
                     });
-                    $(".column1").width(parseInt($('#c1-width').val()));
-                    $(".column2").width(parseInt($('#c2-width').val()));
-                    $(".column3").width(parseInt($('#c3-width').val()));
+
                     $(this).dialog('destroy');
                 },
                 "Cancel": function () {
@@ -43,36 +41,42 @@ $(document).ready(function () {
         $(portlets).each(function() {
             set_visible_check(this);
         });
-        $('#c1-width').val($(".column1").width());
-        $('#c2-width').val($(".column2").width());
-        $('#c3-width').val($(".column3").width());
     });
 });
 
 $(function() {
-    $( ".column1" ).sortable({
-        connectWith: ".column1, .column2, .column3"
+    $( ".portlet1" ).sortable({
+        connectWith: ".portlet2, .portlet3, .portlet4, .portlet5"
     });
-    $( ".column2" ).sortable({
-        connectWith: ".column1, .column2, .column3"
+    $( ".portlet2" ).sortable({
+        connectWith: ".portlet1, .portlet3, .portlet4, .portlet5"
     });
-    $( ".column3" ).sortable({
-        connectWith: ".column1, .column2, .column3"
+    $( ".portlet3" ).sortable({
+        connectWith: ".portlet1, .portlet2, .portlet4, .portlet5"
     });
+    $( ".portlet4" ).sortable({
+        connectWith: ".portlet1, .portlet2, .portlet3, .portlet5"
+    });
+    $( ".portlet5" ).sortable({
+        connectWith: ".portlet1, .portlet2, .portlet3, .portlet4"
+    });
+
     $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
         .find( ".portlet-header" )
         .addClass( "ui-widget-header ui-corner-all" )
-        .prepend( "<span  class='ui-icon ui-icon-closethick icon-close'></span><span class='ui-icon ui-icon-minusthick icon-vis'></span>")
+        .prepend( "<span  class='ui-icon ui-icon-close icon-close'></span><span class='ui-icon ui-icon-minus icon-vis'></span>")
         .end()
         .find( ".portlet-content" );
 
     $( ".icon-vis" ).click(function() {
-        $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+        $( this ).toggleClass( "ui-icon-minus" ).toggleClass( "ui-icon-plus" );
         $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
     });
+
     $( ".icon-close" ).click(function() {
         //$( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
         $( this ).parents( ".portlet:first" ).hide();
     });
-    $( ".column" ).disableSelection();
+
+    $( ".portlet" ).disableSelection();
 });

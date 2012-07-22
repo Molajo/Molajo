@@ -1,5 +1,5 @@
 $(document).ready(function() {
     $('#buttonForModal').click(function() {
-        $('#myModal').reveal();
+        $('#resourceOptions').reveal();
     });
 });
