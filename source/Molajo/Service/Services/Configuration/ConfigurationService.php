@@ -491,6 +491,13 @@ Class ConfigurationService
             return ConfigurationService::locateFileMenuitem($model_type, $model_name);
         }
 
+		/** 2. Listbox */
+		if ($model_type == 'Listbox'
+			|| substr($model_name, 0, 8) == 'Listbox'
+		) {
+			return ConfigurationService::locateFileListbox($model_type, $model_name);
+		}
+
         /** 2. Current Extension */
         $extension_path = false;
         $extension_name = '';
@@ -654,7 +661,60 @@ Class ConfigurationService
 
     }
 
-    /**
+
+	/**
+	 * locateFileListbox
+	 *
+	 * Usage:
+	 * Services::Configuration()->locateFileListbox('Menuitem', 'grid');
+	 *
+	 * @return mixed object or void
+	 * @since   1.0
+	 * @throws \RuntimeException
+	 */
+	public static function locateFileListbox($model_type, $model_name)
+	{
+		$model_type = trim(ucfirst(strtolower($model_type)));
+		$model_name = trim(ucfirst(strtolower($model_name)));
+		$model_name_type = $model_name . $model_type;
+
+		/** 1. Current Extension */
+		$extension_path = false;
+		$extension_name = '';
+		if (Services::Registry()->exists('Parameters', 'extension_path')) {
+			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
+			$extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
+
+			/** ex. Resource/Article/GridMenuitem.xml */
+			if (file_exists($extension_path . '/Listbox/' . $model_name_type . '.xml')
+			) {
+				return $extension_path . '/Listbox/' . $model_name_type . '.xml';
+			}
+		}
+
+		/** 2. Primary Resource (if not current extension) */
+		if (Services::Registry()->exists('RouteParameters')) {
+			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
+			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
+			if ($primary_extension_path == $extension_path
+				|| $primary_extension_path == ''
+			) {
+			} else {
+				/** ex. Resource/Article/GridMenuitem.xml */
+				if (file_exists($primary_extension_path . '/Listbox/' . $model_name_type . '.xml')
+				) {
+					return $primary_extension_path . '/Listbox/' . $model_name_type . '.xml';
+				}
+			}
+		}
+
+		/** 3. Listbox Default */
+		return CONFIGURATION_FOLDER . '/Listbox/' . $model_name . '.xml';
+
+	}
+
+
+	/**
      * Retrieves base Model Registry data and stores it to the datasource registry
      *
      * @static

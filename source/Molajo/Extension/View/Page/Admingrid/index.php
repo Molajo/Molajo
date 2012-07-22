@@ -1,4 +1,5 @@
 <?php
+use Molajo\Service\Services;
 /**
  * @package     Molajo
  * @copyright   2012 Amy Stephen. All rights reserved.
@@ -10,7 +11,29 @@ defined('MOLAJO') or die; ?>
         <include:template name=Adminsectionmenu/>
     </div>
     <div class="ten columns">
-		<include:template name=Preferences/>
-        <include:request/>
+		<div class="row">
+			<div class="twelve columns">
+				<div id="container-filters">
+					<div class="row">
+						<div class="nine columns">
+							<include:template name=Adminresourcemenu/>
+						</div>
+						<div class="one columns">
+							<div id="t-filters"><h5><a href="#"><?php echo Services::Language()->translate('Filters'); ?></a></h5></div>
+						</div>
+						<div class="one columns">
+							<div id="t-batch"><h5><a href="#"><?php echo Services::Language()->translate('Batch'); ?></a></h5></div>
+						</div>
+						<div class="one columns">
+							<div id="t-options"><h5><a href="#"><?php echo Services::Language()->translate('Options'); ?></a></h5></div>
+						</div>
+					</div>
+				</div>
+			<include:template name=Admingridfilters/>
+			<include:template name=Admingridbatch/>
+			<include:template name=Admingridoptions/>
+			</div>
+		</div>
+		<include:request/>
     </div>
 </div>

@@ -69,7 +69,6 @@ class AdmingridTrigger extends ContentTrigger
             $profiler_message .= ob_get_contents();
             ob_end_clean();
 
-
 			Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 		}
 

@@ -4,6 +4,4 @@
 @license     GNU GPL v 2, or later and MIT, see License folder
 */
 ul.permissions { list-style: none; margin: 0; padding: 0; border: none; }
-ul.permissions li { float: left; margin: 0; }
-ul.permissions li span { width: 100px }
-
+ul.permissions li { float: left; margin: 0; width: 125px}

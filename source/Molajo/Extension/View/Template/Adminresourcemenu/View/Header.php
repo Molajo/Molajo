@@ -16,9 +16,6 @@ if (count(Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs')) > 0) {
         if ($crumb->lvl == 3) {
             $resourceTitle = $crumb->title;
             $resource = $crumb->url;
-            if ($resource == Services::Registry()->get('Triggerdata', 'full_page_url')) {
-                $class = ' class="active" ';
-            }
             break;
         }
     }

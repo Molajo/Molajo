@@ -1,5 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <model
         name="Menus"
         process_triggers="1"
         data_source="Menu">
+    <table>
+        <triggers>
+            <trigger name="Cssclassandids"/>
+        </triggers>
+    </table>
 </model>

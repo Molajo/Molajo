@@ -131,8 +131,10 @@ Class MenuService
 
                 if (in_array($item->catalog_id, $active_catalog_ids)) {
                     $item->css_class = 'active';
+					$item->current = 1;
                 } else {
                     $item->css_class = '';
+					$item->current = 0;
                 }
 
                 if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
@@ -146,8 +148,7 @@ Class MenuService
 				) {
                     $item->link_text = $item->title;
                 } else {
-					$item->link_text = $item->title;
-// $item->link_text = $item->subtitle;
+					$item->link_text = $item->subtitle;
                 }
 
                 $item->link = $item->url;
@@ -167,7 +168,6 @@ Class MenuService
      */
     public function getMenuBreadcrumbIds($current_menuitem_id)
     {
-
         if ($current_menuitem_id == 0) {
             return false;
         }
@@ -211,7 +211,6 @@ Class MenuService
                 }
             }
         }
-
         return $query_results;
     }
 }
