@@ -1,4 +1,4 @@
-var portlets = ["feeds", "shopping", "news", "links", "images"];
+var widgets = ["feeds", "shopping", "news", "links", "images"];
 
 $(document).ready(function () {
     $('#menu2').click(function(event) {
@@ -10,7 +10,7 @@ $(document).ready(function () {
             buttons: {
                 "Save": function () {
 
-                    $(portlets).each(function() {
+                    $(widgets).each(function() {
                         set_window_visibility(this);
                     });
 
@@ -24,12 +24,12 @@ $(document).ready(function () {
     });
     function set_window_visibility(name){
         if($('#'+name+'-visible').is(':checked'))
-            $('#'+name+'-portlet').show();
+            $('#'+name+'-ui-widget').show();
         else
-            $('#'+name+'-portlet').hide();
+            $('#'+name+'-ui-widget').hide();
     }
     function set_visible_check(name){
-        if($('#'+name+'-portlet').is(":visible"))
+        if($('#'+name+'-ui-widget').is(":visible"))
             $('#'+name+'-visible').each(function(){ this.checked = true; });
         else
             $('#'+name+'-visible').attr("checked", false);
@@ -38,45 +38,45 @@ $(document).ready(function () {
 
     });
     $( "#window_dialog" ).bind( "dialogopen", function(event, ui) {
-        $(portlets).each(function() {
+        $(widgets).each(function() {
             set_visible_check(this);
         });
     });
 });
 
 $(function() {
-    $( ".portlet1" ).sortable({
-        connectWith: ".portlet2, .portlet3, .portlet4, .portlet5"
+    $( ".ui-widget1" ).sortable({
+        connectWith: ".ui-widget2, .ui-widget3, .ui-widget4, .ui-widget5"
     });
-    $( ".portlet2" ).sortable({
-        connectWith: ".portlet1, .portlet3, .portlet4, .portlet5"
+    $( ".ui-widget2" ).sortable({
+        connectWith: ".ui-widget1, .ui-widget3, .ui-widget4, .ui-widget5"
     });
-    $( ".portlet3" ).sortable({
-        connectWith: ".portlet1, .portlet2, .portlet4, .portlet5"
+    $( ".ui-widget3" ).sortable({
+        connectWith: ".ui-widget1, .ui-widget2, .ui-widget4, .ui-widget5"
     });
-    $( ".portlet4" ).sortable({
-        connectWith: ".portlet1, .portlet2, .portlet3, .portlet5"
+    $( ".ui-widget4" ).sortable({
+        connectWith: ".ui-widget1, .ui-widget2, .ui-widget3, .ui-widget5"
     });
-    $( ".portlet5" ).sortable({
-        connectWith: ".portlet1, .portlet2, .portlet3, .portlet4"
+    $( ".ui-widget5" ).sortable({
+        connectWith: ".ui-widget1, .ui-widget2, .ui-widget3, .ui-widget4"
     });
 
-    $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-        .find( ".portlet-header" )
+    $( ".ui-widget" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+        .find( ".ui-widget-header" )
         .addClass( "ui-widget-header ui-corner-all" )
         .prepend( "<span  class='ui-icon ui-icon-close icon-close'></span><span class='ui-icon ui-icon-minus icon-vis'></span>")
         .end()
-        .find( ".portlet-content" );
+        .find( ".ui-widget-content" );
 
     $( ".icon-vis" ).click(function() {
         $( this ).toggleClass( "ui-icon-minus" ).toggleClass( "ui-icon-plus" );
-        $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+        $( this ).parents( ".ui-widget:first" ).find( ".ui-widget-content" ).toggle();
     });
 
     $( ".icon-close" ).click(function() {
         //$( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-        $( this ).parents( ".portlet:first" ).hide();
+        $( this ).parents( ".ui-widget:first" ).hide();
     });
 
-    $( ".portlet" ).disableSelection();
+    $( ".ui-widget" ).disableSelection();
 });

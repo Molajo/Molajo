@@ -12,17 +12,17 @@ $action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 	<div class="row">
 		<div class="eight columns">
 			<dl class="tabs contained">
-				<dd><a href="<?php echo $action; ?>#viewContentypes" class="active"><?echo Services::Language()->translate('Content Types'); ?></a></dd>
+				<dd><a href="<?php echo $action; ?>#viewContenttypes" class="active"><?echo Services::Language()->translate('Content Types'); ?></a></dd>
 				<dd><a href="<?php echo $action; ?>#viewFilters"><?echo Services::Language()->translate('Filters'); ?></a></dd>
 				<dd><a href="<?php echo $action; ?>#viewColumns"><?echo Services::Language()->translate('Columns'); ?></a></dd>
 				<dd><a href="<?php echo $action; ?>#viewStatus"><?echo Services::Language()->translate('Status'); ?></a></dd>
 				<dd><a href="<?php echo $action; ?>#viewBatch"><?echo Services::Language()->translate('Batch'); ?></a></dd>
 			</dl>
 			<ul class="tabs-content contained">
-				<li class="active" id="viewContentypesTab">
+				<li id="viewContenttypesTab">
 					<?php include __DIR__ . '/' . 'Viewcontenttypes.php'; ?>
 				</li>
-				<li id="viewFiltersTab">
+				<li class="active" id="viewFiltersTab">
 					<?php include __DIR__ . '/' . 'Viewfilters.php'; ?>
 				</li>
 				<li id="viewColumnsTab">
