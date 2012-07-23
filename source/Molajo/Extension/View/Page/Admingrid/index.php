@@ -15,7 +15,7 @@ defined('MOLAJO') or die; ?>
 			<div class="twelve columns">
 				<div id="container-filters">
 					<div class="row">
-						<div class="nine columns">
+						<div class="eight columns">
 							<include:template name=Adminresourcemenu/>
 						</div>
 						<div class="one columns">
@@ -25,12 +25,16 @@ defined('MOLAJO') or die; ?>
 							<div id="t-batch"><h5><a href="#"><?php echo Services::Language()->translate('Batch'); ?></a></h5></div>
 						</div>
 						<div class="one columns">
+							<div id="t-view"><h5><a href="#"><?php echo Services::Language()->translate('View'); ?></a></h5></div>
+						</div>
+						<div class="one columns">
 							<div id="t-options"><h5><a href="#"><?php echo Services::Language()->translate('Options'); ?></a></h5></div>
 						</div>
 					</div>
 				</div>
 			<include:template name=Admingridfilters/>
 			<include:template name=Admingridbatch/>
+			<include:template name=Admingridview/>
 			<include:template name=Admingridoptions/>
 			</div>
 		</div>

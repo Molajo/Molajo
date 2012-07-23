@@ -7,6 +7,4 @@
  */
 defined('MOLAJO') or die;
 ?>
-<dd><a
-    href="<?php echo $this->row->link; ?>"<?php echo $this->row->css_id; ?><?php echo $this->row->css_class; ?>><?php echo $this->row->link_text; ?></a>
-</dd>
+<dd><a href="<?php echo $this->row->link; ?>"<?php echo $this->row->css_id; ?><?php echo $this->row->css_class; ?>><?php echo $this->row->link_text; ?></a></dd>

@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 $action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 <h4><?echo Services::Language()->translate('Collection Assignment'); ?></h4>
-<form action="<?php echo $action; ?>" method="get" name="Admingridbatchcollections" id="Admingridbatchcollections">
+<form action="<?php echo $action; ?>" method="get" name="Admingridviewcollections" id="Admingridviewcollections">
 	<p><?php echo Services::Language()->translate('Add or remove selected content from specified collection(s).'); ?></p>
 	<div class="row">
 		<div class="nine columns">

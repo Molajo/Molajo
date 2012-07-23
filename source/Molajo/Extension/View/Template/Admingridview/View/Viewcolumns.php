@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 $action = Services::Registry()->get('Triggerdata', 'full_page_url');
 ?>
 <h4><?echo Services::Language()->translate('Assign Permissions'); ?></h4>
-<form action="<?php echo $action; ?>" method="post" name="Admingridbatchpermissions" id="Admingridbatchpermissions">
+<form action="<?php echo $action; ?>" method="post" name="Admingridviewpermissions" id="Admingridviewpermissions">
 	<p><?php echo Services::Language()->translate('Permit or restrict specified groups and users for specified authorisation to selected content.'); ?></p>
 	<div class="row">
 		<div class="twelve columns">

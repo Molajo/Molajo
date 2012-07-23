@@ -232,23 +232,26 @@ class AdmingridTrigger extends ContentTrigger
     {
         $grid_list = array();
 
-        /** Add lists needed for Batch Updates */
-        if (in_array('Status', $grid_list)) {
-        } else {
-            $grid_list[] = 'Status';
-        }
-        if (in_array('Categories', $grid_list)) {
-        } else {
-            $grid_list[] = 'Categories';
-        }
-        if (in_array('Tags', $grid_list)) {
-        } else {
-            $grid_list[] = 'Tags';
-        }
-        if (in_array('Groups', $grid_list)) {
-        } else {
-            $grid_list[] = 'Groups';
-        }
+		if (in_array('Status', $grid_list)) {
+		} else {
+			$grid_list[] = 'Status';
+		}
+		if (in_array('Categories', $grid_list)) {
+		} else {
+			$grid_list[] = 'Categories';
+		}
+		if (in_array('Tags', $grid_list)) {
+		} else {
+			$grid_list[] = 'Tags';
+		}
+		if (in_array('Collections', $grid_list)) {
+		} else {
+			$grid_list[] = 'Collections';
+		}
+		if (in_array('Groups', $grid_list)) {
+		} else {
+			$grid_list[] = 'Groups';
+		}
 
         $names_of_lists = array();
 
