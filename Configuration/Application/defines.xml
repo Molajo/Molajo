@@ -2,6 +2,9 @@
 <defines>
     <define name="STOP_LOOP" value="100"/>
 
+    <define name="CRLF" value="\n"/>
+    <define name="TAB" value="\t"/>
+
     <define name="ACTION_LOGIN" value="login"/>
     <define name="ACTION_CREATE" value="create"/>
     <define name="ACTION_VIEW" value="view"/>

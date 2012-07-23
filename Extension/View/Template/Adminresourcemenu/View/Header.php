@@ -22,5 +22,5 @@ if (count(Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs')) > 0) {
 }
 ?>
 <dl class="sub-nav">
-    <dt><?php echo Services::Language()->translate('STATUS'); ?></dt>
+    <dt><?php echo Services::Language()->translate('Content Types'); ?></dt>
     <dd<?php echo $class; ?>><a href="<?php echo $resource; ?>"><?php echo $resourceTitle; ?></a></dd>

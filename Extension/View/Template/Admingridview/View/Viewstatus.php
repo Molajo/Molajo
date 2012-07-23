@@ -8,7 +8,7 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 $action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 <h4><?echo Services::Language()->translate('Set Status'); ?></h4>
-<form action="<?php echo $action; ?>" method="post" name="Admingridbatchstatus" id="Admingridbatchstatus">
+<form action="<?php echo $action; ?>" method="post" name="Admingridviewstatus" id="Admingridviewstatus">
 	<p><?php echo Services::Language()->translate('Change the status of selected items to the specified value.'); ?></p>
 	<div class="row">
 		<div class="three columns">

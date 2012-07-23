@@ -8,7 +8,7 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 $action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 <h4><?echo Services::Language()->translate('Tag'); ?></h4>
-<form action="<?php echo $action; ?>" method="post" name="Admingridbatchtags" id="Admingridbatchtags">
+<form action="<?php echo $action; ?>" method="post" name="Admingridviewtags" id="Admingridviewtags">
 	<p><?php echo Services::Language()
 		->translate('Add or remove selected content from specified tag(s). New tags entered as comma delimited text will be created.'); ?>
 	</p>
