@@ -1,30 +1,18 @@
 /* Link List */
-/* #000000 Header Background*/
+/* colors in Molajito Theme - z__override.css */
+/* brown 4D4D4D */
+/* blue 2ba6cb */
+/* odd dddddd */
+/* offwhite e9e9e9 */
 
-/*
-
-/*.portlet-content {
-    max-height:200px;
-    _height:expression(this.scrollHeight>199?"200px":"auto");
-    overflow:auto;
-    overflow-x:hidden;
-    .odd { background-color: #dddddd; }
-} */
 .hidden{display: none}
-.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
-.ui-sortable-placeholder * { visibility: hidden; }
-
-.portlet { margin: 2em 1em 1em 0; width: 100% }
-.portlet-header { margin: 0.3em; padding-bottom: 1px; padding-left: 0.2em; }
-.portlet-header .ui-icon { float: right; }
-.portlet-content { padding: 0.4em; }
 
 /* Component containers
 ----------------------------------*/
-.ui-widget .ui-widget { font-size: 1em; }
-.ui-widget-content { background: #e9e9e9; border: 1px solid #222222; }
-.ui-widget-header { border: 1px solid #222222; background: #dddddd; color: #222222; }
-.ui-widget-header a { color: #FFF; }
+.ui-widget { background-color: #e9e9e9; padding: 2px; border-left: solid 3px silver; margin: 2em }
+.ui-widget-content { background: #e9e9e9; margin: 2em;  }
+.ui-widget-header { color: #404040; margin: 2em; }
+.ui-widget-header .ui-icon { float: right; }
 
 /* Interaction states
 ----------------------------------*/
@@ -34,6 +22,10 @@
 .ui-state-hover a, .ui-state-hover a:hover { color: #ffff99; text-decoration: none; outline: none; }
 .ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #e9e9e9; background: #ffff99; font-weight: bold; color: #ffffff; outline: none; }
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #ffffff; outline: none; text-decoration: none; }
+
+/* Sortables */
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
 
 /* Interaction Cues
 ----------------------------------*/
@@ -61,3 +53,11 @@
 .ui-icon-plus { background-position: -16px -128px; }
 .ui-icon-minus { background-position: -48px -128px; }
 .ui-icon-close { background-position: -80px -128px; }
+
+/* Example Graph */
+.graph-line-bar{ width:100%; display:inline-block;}
+.graph-line-one{ height:90%; background-color: red; }
+.graph-line-two{ height:20%; background-color: green; }
+.graph-line-three{ height:40%; background-color: purple;}
+.graph-line-four{ height:70%; background-color: blue; }
+
