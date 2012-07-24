@@ -15,9 +15,9 @@ defined("MOLAJO") or die; ?>
 		<div id="window_dialog" class="hidden">
 			<fieldset>
 				<legend>Options</legend>
-					<input type="checkbox" id="feeds-visible"/><label>Articles List</label><br/>
-					<input type="checkbox" id="comments-visible"/><label>Recent Comments</label><br/>
-					<input type="checkbox" id="contacts-visible"/><label>Contacts</label><br/>
+					<input type="checkbox" id="feeds-visible"/><label>Unassigned Cost Objects</label><br/>
+					<input type="checkbox" id="comments-visible"/><label>Unassigned HR Codes</label><br/>
+					<input type="checkbox" id="contacts-visible"/><label>Unassigned SIS Codes</label><br/>
 					<input type="checkbox" id="links-visible"/><label>Links</label><br/>
 					<input type="checkbox" id="images-visible"/><label>Images</label><br/>
 					<input type="checkbox" id="tags-visible"/><label>Tags</label><br/>
@@ -34,24 +34,28 @@ defined("MOLAJO") or die; ?>
 
 				<div id="articles-ui-widget" class="ui-widget">
 					<div class="ui-widget-header">
-						<h4>Graph of Something</h4>
+						<h4>Unassigned Cost Objects</h4>
 					</div>
 					<div class="ui-widget-content">
 						<ul>
-							<li><a href="#">Snippet from Comment</a></li>
-							<li><a href="#">Snippet from Comment</a></li>
+							<li><a href="#">2-1-20-99-1234</a></li>
+							<li><a href="#">2-1-30-45-1111</a></li>
+							<li><a href="#">2-1-40-33-3589</a></li>
+							<li><a href="#">2-1-45-45-1258</a></li>
 						</ul>
 					</div>
 				</div>
 
 				<div id="comments-ui-widget" class="ui-widget">
 					<div class="ui-widget-header">
-						<h4>Recent Comments</h4>
+						<h4>Unassigned HR Codes</h4>
 					</div>
 					<div class="ui-widget-content">
 						<ul>
-							<li><a href="#">Snippet from Comment</a></li>
-							<li><a href="#">Snippet from Comment</a></li>
+							<li><a href="#">12345</a></li>
+							<li><a href="#">67891</a></li>
+							<li><a href="#">23456</a></li>
+							<li><a href="#">89178</a></li>
 						</ul>
 					</div>
 				</div>
@@ -87,7 +91,8 @@ defined("MOLAJO") or die; ?>
 						<h4>Recent Activity</h4>
 					</div>
 					<div class="ui-widget-content">
-
+						<li><a href="#">Person1 assigned Cost Object to Department B</a></li>
+						<li><a href="#">Person2 updated Data Cost Object to Department B</a></li>
 					</div>
 				</div>
 			</div>
