@@ -130,11 +130,12 @@ class ContentTrigger extends Trigger
 
         $value = null;
 
-        if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
+		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
             'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
             'data', 'model_type', 'model_name', 'rendered_output'))
+			&& (isset($this->$key))
         ) {
-            $value = $this->$key;
+           	$value = $this->$key;
 
         } else {
             if (isset($this->parameters[$key])) {
