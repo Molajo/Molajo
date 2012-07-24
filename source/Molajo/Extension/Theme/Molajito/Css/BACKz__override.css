@@ -7,7 +7,7 @@
 html, body { height: 96%; }
 .wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -160px; }
 .footer, .push { height: 100px; }
-.footer { background-color: #000; color: #fff}
+.footer { background-color: #4D4D4D; color: #fff}
 .main { padding-top: 30px}
 .row { width: 20000px; max-width: 100%; min-width: 768px; margin: 0 auto; }
 .odd { background-color: #dddddd; }

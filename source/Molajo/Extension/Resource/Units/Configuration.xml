@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Units" version="1.0" extends="Content">
+    <name>RESOURCE_UNITS_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>AmyStephen@gmail.com</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>RESOURCE_UNITS_DESCRIPTION</description>
+    <model name="Units" catalog_type_id="100010">
+        <customfields>
+            <customfield name="parameters">
+                <field name="add_a_parameter" type="binary" null="0" default="1"/>
+            </customfield>
+            <customfield name="customfields">
+                <field name="anything_can_be_added" type="binary" null="0" default="0"/>
+                <field name="anything_can_be_overridden" type="binary" null="0" default="0"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>
