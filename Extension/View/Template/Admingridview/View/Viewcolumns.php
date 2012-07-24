@@ -7,66 +7,40 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Triggerdata', 'full_page_url');
-?>
-<h4><?echo Services::Language()->translate('Assign Permissions'); ?></h4>
-<form action="<?php echo $action; ?>" method="post" name="Admingridviewpermissions" id="Admingridviewpermissions">
-	<p><?php echo Services::Language()->translate('Permit or restrict specified groups and users for specified authorisation to selected content.'); ?></p>
+$action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+
+<h4><?echo Services::Language()->translate('Columns'); ?></h4>
+<form action="<?php echo $action; ?>" method="get" name="Admingridviewcolumns" id="Admingridviewcolumns">
 	<div class="row">
-		<div class="twelve columns">
-			<ul class="permissions">
-				<li>
-					<label for="permission-create">
-						<input name="radio1" type="radio" value="2" id="permission-create">
-						<span class="custom radio"><?echo Services::Language()->translate('Create'); ?></span>
-					</label>
-				</li>
-				<li>
-					<label for="permission-read">
-						<input name="radio1" type="radio" value="3" checked id="permission-read">
-						<span class="custom radio"><?echo Services::Language()->translate('Read'); ?></span>
-					</label>
-				</li>
-				<li>
-					<label for="permission-update">
-						<input name="radio1" type="radio" value="4" id="permission-update">
-						<span class="custom radio"><?echo Services::Language()->translate('Update'); ?></span>
-					</label>
-				</li>
-				<li>
-					<label for="permission-publish">
-						<input name="radio1" type="radio" value="5" id="permission-publish">
-						<span class="custom radio"><?echo Services::Language()->translate('Publish'); ?></span>
-					</label>
-				</li>
-				<li>
-					<label for="permission-delete">
-						<input name="radio1" type="radio" value="6" id="permission-delete">
-						<span class="custom radio"><?echo Services::Language()->translate('Delete'); ?></span>
-					</label>
-				</li>
-				<li>
-					<label for="permission-all">
-						<input name="radio1" type="radio" value="7" id="permission-all">
-						<span class="custom radio"><?echo Services::Language()->translate('Administer'); ?></span>
-					</label>
-				</li>
-			</ul>
+		<div class="eight columns">
+			<h5>Add a Column to the View Grid</h5>
+			<p><?php echo Services::Language()->translate('Select the Column desired and press Add to display it on the Grid for this View.'); ?></p>
+			<select name="content_types" class="inputbox">
+				<option value="">No selection</option>
+				<option value="1">Column 1</option>
+				<option value="2">Column 2</option>
+				<option value="3">Column 3</option>
+				<option value="4">Column 4</option>
+				<option value="5">Column 5</option>
+				<option value="6">Column 6</option>
+			</select>
+		</div>
+		<div class="four columns">
+			<input type="submit" class="submit button small" name="submit" id="batch-collection-create" value="Add">
 		</div>
 	</div>
 	<div class="row">
-		<div class="nine columns">
-			<include:template name=Formselectlist model=Triggerdata value=<?php echo 'listbatch_groups*'; ?>/>
+		<div class="eight columns">
+			<h5>Remove a Column from View Column</h5>
+			<p><?php echo Services::Language()->translate('To remove a Column from displaying in the Column for this View, select it and press Remove.'); ?></p>
+			<select multiple show=5 name="content_types" class="inputbox">
+				<option selected value="1">Column 10</option>
+				<option selected value="2">Column 11</option>
+				<option selected value="3">Column 12</option>
+			</select>
 		</div>
-		<div class="three columns">
-			<input type="submit" class="submit button small" name="submit" id="batch-permission-create" value="Add">
-			<input type="submit" class="submit button small" name="submit" id="batch-permission-delete" value="Remove">
+		<div class="four columns">
+			<input type="submit" class="submit button small" name="submit" id="batch-collection-remove" value="Remove">
 		</div>
-	</div>
-	<div class="row">
-		<div class="nine columns">
-			<p class="small"><?php echo Services::Language()->translate('Note: use Options to configure permissions for all users to manage content they created.'); ?></p>
-		</div>
-		<div class="three columns">&nbsp;</div>
 	</div>
 </form>

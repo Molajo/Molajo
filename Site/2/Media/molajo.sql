@@ -1,11 +1,9 @@
-use molajo_unl;
-
 -- phpMyAdmin SQL Dump
 -- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 24, 2012 at 03:12 AM
+-- Generation Time: Jul 24, 2012 at 08:46 AM
 -- Server version: 5.5.20
 -- PHP Version: 5.4.3
 
