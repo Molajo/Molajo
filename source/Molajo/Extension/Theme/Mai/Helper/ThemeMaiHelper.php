@@ -14,7 +14,7 @@ use Molajo\Service\Services;
  *
  * @since       1.0
  */
-Class ThemeMAIHelper extends Mustache
+Class ThemeMaiHelper extends Mustache
 {
     /**
      * Parameters
