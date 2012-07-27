@@ -32,6 +32,8 @@ Class ThemeMaiHelper extends Mustache
      */
 	public function loadMedia()
     {
+        break;
+        
         /** Theme Folder */
         $theme = Services::Registry()->get('Parameters', 'theme_path_node');
 
@@ -138,7 +140,7 @@ Class ThemeMaiHelper extends Mustache
         $this->analytics();
 
         return Services::Url()->getGravatar(
-            $email = 'AmyStephen@gmail.com',
+            $email = 'BabsGosgens@gmail.com',
             $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
         );
     }
