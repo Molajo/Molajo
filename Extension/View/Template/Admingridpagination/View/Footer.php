@@ -10,3 +10,4 @@ defined('MOLAJO') or die;
 ?>
 	<li class="unavailable"><a href="<?php echo $this->row->next_link; ?>">&raquo;</a></li>
 </ul>
+<div id="testAjax"></div>

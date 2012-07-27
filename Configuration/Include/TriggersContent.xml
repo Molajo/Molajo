@@ -21,3 +21,4 @@
 <trigger name="Lists"/>
 <trigger name="Cssclassandids"/>
 <trigger name="Pagination"/>
+<trigger name="Ajax"/>
