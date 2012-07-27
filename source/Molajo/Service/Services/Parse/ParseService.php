@@ -173,7 +173,7 @@ Class ParseService
 			$this->onBeforeParseEvent();
 		}
 
-        /** Retrieve overrides */
+        /** Retrieve overrides (could be passed in and are set in the AjaxTrigger, too) */
         $overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
         $overrideIncludesFinalXML = Services::Registry()->get('Override', 'final_xml', false);
 
