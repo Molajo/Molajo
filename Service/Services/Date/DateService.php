@@ -87,15 +87,15 @@ Class DateService
         $day_number1dd = substr($date1, 8, 2);
         $day_number1ccyy = substr($date1, 0, 4);
 
-        $gregdate1 = gregoriantojd($day_number1mm, $day_number1dd, $day_number1ccyy);
+        $date1 = date_create("$day_number1mm/$day_number1dd/$day_number1ccyy");
 
         $day_number2mm = substr($date2, 5, 2);
         $day_number2dd = substr($date2, 8, 2);
         $day_number2ccyy = substr($date2, 0, 4);
 
-        $gregdate2 = gregoriantojd($day_number2mm, $day_number2dd, $day_number2ccyy);
+        $date2 = date_create("$day_number2mm/$day_number2dd/$day_number2ccyy");
 
-        return $gregdate2 - $gregdate1;
+        return date_diff($date2,$date1);
     }
 
     /**
