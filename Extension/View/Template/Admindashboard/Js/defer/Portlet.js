@@ -46,19 +46,7 @@ $(document).ready(function () {
 
 $(function() {
     $( ".ui-widget1" ).sortable({
-        connectWith: ".ui-widget2, .ui-widget3, .ui-widget4, .ui-widget5"
-    });
-    $( ".ui-widget2" ).sortable({
-        connectWith: ".ui-widget1, .ui-widget3, .ui-widget4, .ui-widget5"
-    });
-    $( ".ui-widget3" ).sortable({
-        connectWith: ".ui-widget1, .ui-widget2, .ui-widget4, .ui-widget5"
-    });
-    $( ".ui-widget4" ).sortable({
-        connectWith: ".ui-widget1, .ui-widget2, .ui-widget3, .ui-widget5"
-    });
-    $( ".ui-widget5" ).sortable({
-        connectWith: ".ui-widget1, .ui-widget2, .ui-widget3, .ui-widget4"
+        connectWith: ".ui-widget1"
     });
 
     $( ".ui-widget" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )

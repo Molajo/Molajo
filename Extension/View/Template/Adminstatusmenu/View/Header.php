@@ -9,18 +9,18 @@ defined('MOLAJO') or die;
 
 $class = '';
 $class = ' class="active" ';
-$resource = '';
-$resourceTitle = '';
+$status = '';
+$statusTitle = '';
 if (count(Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs')) > 0) {
     foreach (Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs') as $crumb) {
         if ($crumb->lvl == 3) {
-            $resourceTitle = $crumb->title;
-            $resource = $crumb->url;
+            $statusTitle = $crumb->title;
+            $status = $crumb->url;
             break;
         }
     }
 }
 ?>
 <dl class="sub-nav">
-    <dt><?php echo Services::Language()->translate('Content Types'); ?></dt>
-    <dd<?php echo $class; ?>><a href="<?php echo $resource; ?>"><?php echo $resourceTitle; ?></a></dd>
+    <dt><?php echo Services::Language()->translate('Status'); ?></dt>
+    <dd<?php echo $class; ?>><a href="<?php echo $status; ?>"><?php echo $statusTitle; ?></a></dd>

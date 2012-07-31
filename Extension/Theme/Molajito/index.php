@@ -19,8 +19,8 @@ defined('MOLAJO') or die; ?>
 			<div class="twelve columns">
 				<include:message/>
 				<?php if (file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))) {
-					include Services::Registry()->get('Parameters', 'page_view_path_include');
-				} ?>
+				include Services::Registry()->get('Parameters', 'page_view_path_include');
+			} ?>
 			</div>
 		</section>
 		<div class="row">
@@ -34,4 +34,4 @@ defined('MOLAJO') or die; ?>
 	</div>
 </footer>
 <include:template name=modal/>
-<include:defer/>
+	<include:defer/>

@@ -89,19 +89,22 @@ Class ThemeMolajitoHelper extends Mustache
          */
 
         /** jQuery CDN and fallback */
-        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1);
+        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1, 1);
         $url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'js/fallback/jquery-1.7.2.min.js';
         $fallback = "
         if (typeof jQuery == 'undefined') {
             document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
          }";
-        Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 10000);
+        Services::Asset()->addJSDeclarations($fallback, 100, 1, 'text/javascript');
+
+		/** jQueryUI CDN and fallback */
+		Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js', 1, 1);
 
 		/** Modernizer */
-		Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);
+		Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1, 10000);
 
 		/** HTML5 Shiv */
-		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 10000);
+		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 0, 1);
 
         return;
     }
@@ -167,7 +170,7 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
         ";
-        Services::Asset()->addJSDeclarations($analytics, 'text/javascript', 1);
+        Services::Asset()->addJSDeclarations($analytics, 100, 1, 'text/javascript');
     }
 
     /**

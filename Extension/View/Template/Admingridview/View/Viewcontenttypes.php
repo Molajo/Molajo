@@ -7,11 +7,11 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$pageURL = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 <div class="row">
 	<div class="twelve columns">
 	<h4><?echo Services::Language()->translate('Content Types'); ?></h4>
-	<form action="<?php echo $action; ?>" method="post" name="Admingridviewcontenttypes" id="Admingridviewcontenttypes">
+	<form action="<?php echo $pageURL; ?>" method="post" name="Admingridviewcontenttypes" id="Admingridviewcontenttypes">
 		<div class="row">
 			<div class="eight columns">
 			<p>

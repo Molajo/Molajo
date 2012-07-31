@@ -10,7 +10,7 @@ defined('MOLAJO') or die; ?>
 	<div class="row">
 		<nav role="navigation">
 			<include:template name=Adminsectionmenu/>
-			<include:template name=Adminresourcemenu/>
+			<include:template name=Adminstatusmenu/>
 <?php //include('_nav-dl.php') ?>
 		</nav>
 		<section role="main">
@@ -33,7 +33,7 @@ defined('MOLAJO') or die; ?>
 				<div id="container-filters">
 					<div class="row">
 						<div class="eight columns">
-							<include:template name=Adminresourcemenu/>
+							<include:template name=Adminstatusmenu/>
 						</div>
 						<div class="one columns">
 							<div id="t-filters"><h5><a href="#"><?php echo Services::Language()->translate('Filters'); ?></a></h5></div>

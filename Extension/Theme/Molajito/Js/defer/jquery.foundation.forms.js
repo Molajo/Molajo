@@ -21,9 +21,6 @@
    * @function hiddenFix
    */
   var hiddenFix = function() {
-    // We'll use this to temporarily store style properties.
-    var tmp = [],
-        hidden = null; // We'll use this to set hidden parent elements.
 
     return {
       /**
@@ -32,6 +29,13 @@
        * @method adjust
        * @param {jQuery Object} $child
        */
+
+      // We'll use this to temporarily store style properties.
+      tmp : [],
+
+      // We'll use this to set hidden parent elements.
+      hidden : null,
+
       adjust : function( $child ) {
         // Internal reference.
         var _self = this;
@@ -194,7 +198,7 @@
         //
         // Build our <li> elements.
         //
-        liHtml = $.map( $options, function( opt ) { return "<li>" + opt.value + "</li>"; } ).join( '' );
+        liHtml = $options.map( function() { return "<li>" + $( this ).html() + "</li>"; } ).get().join( '' );
         //
         // Append our <li> elements to the custom list (<ul>).
         //
@@ -218,7 +222,7 @@
         //
         // Create our list item <li> elements.
         //
-        liHtml = $.map( $options, function( opt ) { return "<li>" + opt.value + "</li>"; } ).join( '' );
+        liHtml = $options.map( function() { return "<li>" + $( this ).html() + "</li>"; } ).get().join( '' );
         //
         // Refresh the ul with options from the select in case the supplied markup doesn't match.
         // Clear what's currently in the <ul> element.
