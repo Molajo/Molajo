@@ -61,9 +61,9 @@ $(function() {
         connectWith: ".portlet1, .portlet2, .portlet3, .portlet4"
     });
 
-    $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+    $( ".portlet" ).addClass( "ui-portlet ui-portlet-content ui-helper-clearfix ui-corner-all" )
         .find( ".portlet-header" )
-        .addClass( "ui-widget-header ui-corner-all" )
+        .addClass( "ui-portlet-header ui-corner-all" )
         .prepend( "<span  class='ui-icon ui-icon-close icon-close'></span><span class='ui-icon ui-icon-minus icon-vis'></span>")
         .end()
         .find( ".portlet-content" );
