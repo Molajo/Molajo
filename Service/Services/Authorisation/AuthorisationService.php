@@ -291,7 +291,6 @@ Class AuthorisationService
             //       . ' Action: ' . $action
             //       . ' Action ID: ' . $action_id;
             //throwerrror
-
             return false;
         }
     }

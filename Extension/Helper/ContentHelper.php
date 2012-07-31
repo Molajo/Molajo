@@ -31,7 +31,7 @@ Class ContentHelper
      * getInstance
      *
      * @static
-     * @return  bool|object
+     * @return bool|object
      * @since   1.0
      */
     public static function getInstance()
@@ -46,7 +46,7 @@ Class ContentHelper
     /**
      * Retrieves the Menu Item Route information
      *
-     * @return  boolean
+     * @return boolean
      * @since   1.0
      */
     public function getMenuItemRoute()
@@ -137,12 +137,12 @@ Class ContentHelper
         Services::Registry()->set('Parameters', $type . '_model_query_object',
             Services::Registry()->get($parmName, 'menuitem_model_query_object'));
 
-		Services::Registry()->set('Parameters', 'model_offset',
-			Services::Registry()->get($parmName, 'menuitem_model_offset'));
-		Services::Registry()->set('Parameters', 'model_count',
-			Services::Registry()->get($parmName, 'menuitem_model_count'));
-		Services::Registry()->set('Parameters', 'model_use_pagination',
-			Services::Registry()->get($parmName, 'menuitem_model_use_pagination'));
+        Services::Registry()->set('Parameters', 'model_offset',
+            Services::Registry()->get($parmName, 'menuitem_model_offset'));
+        Services::Registry()->set('Parameters', 'model_count',
+            Services::Registry()->get($parmName, 'menuitem_model_count'));
+        Services::Registry()->set('Parameters', 'model_use_pagination',
+            Services::Registry()->get($parmName, 'menuitem_model_use_pagination'));
 
         Services::Registry()->delete($parmName, 'menuitem_theme*');
         Services::Registry()->delete($parmName, 'menuitem_page*');
@@ -187,28 +187,28 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'extension_catalog_type_id',
             (int) $item->extension_instances_catalog_type_id);
 
-		$parmName = $item->table_registry_name . 'Parameters';
+        $parmName = $item->table_registry_name . 'Parameters';
 
-		/** Content Extension and Source */
-		Services::Registry()->set('Parameters', 'extension_instance_id',
-			Services::Registry()->get($parmName, 'criteria_extension_instance_id'));
+        /** Content Extension and Source */
+        Services::Registry()->set('Parameters', 'extension_instance_id',
+            Services::Registry()->get($parmName, 'criteria_extension_instance_id'));
 
-		/** Theme, Page, Template and Wrap Views */
-		if ((int) $item->id > 0) {
-			if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
-				$type = 'item';
-			} else {
-				$type = 'form';
-			}
-		} else {
-			$type = 'list';
-		}
+        /** Theme, Page, Template and Wrap Views */
+        if ((int) $item->id > 0) {
+            if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
+                $type = 'item';
+            } else {
+                $type = 'form';
+            }
+        } else {
+            $type = 'list';
+        }
 
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
-			(int) $item->extension_instances_catalog_type_id);
-	    Services::Registry()->copy($parmName, 'Parameters');
+        Services::Registry()->set('Parameters', 'extension_catalog_type_id',
+            (int) $item->extension_instances_catalog_type_id);
+        Services::Registry()->copy($parmName, 'Parameters');
 
-		return true;
+        return true;
     }
 
     /**
@@ -229,7 +229,7 @@ Class ContentHelper
                 . ' Model Type: ' . $model_type
                 . ' Model Name: ' . $model_name
                 . ' Model Query: ' . $model_query_object,
-        	LOG_OUTPUT_ROUTING, VERBOSE);
+            LOG_OUTPUT_ROUTING, VERBOSE);
 
         $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
@@ -241,7 +241,7 @@ Class ContentHelper
 
         $m->set('id', (int) $id);
         $m->set('process_triggers', 1);
-		$m->set('get_customfields', 2);
+        $m->set('get_customfields', 2);
 
         $item = $m->getData($model_query_object);
 

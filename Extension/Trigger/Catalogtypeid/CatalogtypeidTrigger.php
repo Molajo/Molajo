@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Trigger\CatalogtypeId;
+namespace Molajo\Extension\Trigger\Catalogtypeid;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
@@ -17,16 +17,16 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class CatalogtypeIdTrigger extends ContentTrigger
+class CatalogtypeidTrigger extends ContentTrigger
 {
-	/**
-	 * After-read processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		return true;
-	}
+    /**
+     * After-read processing
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        return true;
+    }
 }

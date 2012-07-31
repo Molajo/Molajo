@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class CustomfieldsTrigger extends ContentTrigger
+class CustomFieldsTrigger extends ContentTrigger
 {
     /**
      * Pre-create processing

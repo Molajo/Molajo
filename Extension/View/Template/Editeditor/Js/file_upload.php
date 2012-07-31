@@ -8,8 +8,8 @@ die;
 copy($_FILES['file']['tmp_name'], SITES_MEDIA_URL.$_FILES['file']['name']);
 
 $array = array(
-	'filelink' => SITES_MEDIA_URL.$_FILES['file']['name'],
-	'filename' => $_FILES['file']['name']
+    'filelink' => SITES_MEDIA_URL.$_FILES['file']['name'],
+    'filename' => $_FILES['file']['name']
 );
 
 echo stripslashes(json_encode($array));

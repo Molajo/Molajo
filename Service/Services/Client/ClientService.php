@@ -72,15 +72,15 @@ Class ClientService
     {
         if (empty($_SERVER['HTTP_CLIENT_IP'])) {
 
-        	if (empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-				$ip_address = $_SERVER['REMOTE_ADDR'];
+            if (empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $ip_address = $_SERVER['REMOTE_ADDR'];
 
-			} else {
-            	$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			}
+            } else {
+                $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            }
 
         } else {
-			$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+            $ip_address = $_SERVER['HTTP_CLIENT_IP'];
         }
 
         Services::Registry()->set('Client', 'ip_address', $ip_address);
@@ -88,90 +88,90 @@ Class ClientService
         return $this;
     }
 
-	/**
-	 * 	isAjax - returns true for Ajax calls
-	 */
+    /**
+     * 	isAjax - returns true for Ajax calls
+     */
 
-	public function isAjax()
-	{
-		$ajax = 0;
+    public function isAjax()
+    {
+        $ajax = 0;
 
-		if(empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-		} else {
-			if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-				$ajax = 1;
-			}
-		}
+        if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+        } else {
+            if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                $ajax = 1;
+            }
+        }
 
-		Services::Registry()->set('Client', 'Ajax', $ajax);
+        Services::Registry()->set('Client', 'Ajax', $ajax);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
+    /**
      * get (very rough and not very reliable) client information
      *
      * - might be useful for very high-level guess about desktop versus mobile
      *   in those cases where it's critical to handle the payload or interface differently
      *
-     * @return  object
+     * @return object
      * @since   1.0
      */
     public function get_client()
     {
-	    $user_agent = '';
+        $user_agent = '';
 
-		if(empty($_SERVER['HTTP_USER_AGENT'])) {
-			$platform = 'unknown';
-			$desktop = 1;
-			$browser = 'unknown';
-			$browser_version = 'unknown';
+        if (empty($_SERVER['HTTP_USER_AGENT'])) {
+            $platform = 'unknown';
+            $desktop = 1;
+            $browser = 'unknown';
+            $browser_version = 'unknown';
 
-		} else {
-        	$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+        } else {
+            $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
-			/** Platform approximations */
-			if (preg_match('/linux/i', $user_agent)) {
-				$platform = 'linux';
+            /** Platform approximations */
+            if (preg_match('/linux/i', $user_agent)) {
+                $platform = 'linux';
 
-			} elseif (preg_match('/macintosh|mac os x/i', $user_agent)) {
-				$platform = 'mac';
+            } elseif (preg_match('/macintosh|mac os x/i', $user_agent)) {
+                $platform = 'mac';
 
-			} elseif (preg_match('/windows|win32/i', $user_agent)) {
-				$platform = 'windows';
+            } elseif (preg_match('/windows|win32/i', $user_agent)) {
+                $platform = 'windows';
 
-			} else {
-				$platform = 'unknown';
-			}
+            } else {
+                $platform = 'unknown';
+            }
 
-			Services::Registry()->set('Client', 'platform', $platform);
+            Services::Registry()->set('Client', 'platform', $platform);
 
-			/** Desktop approximation */
-			if ($platform == 'unknown') {
-				$desktop = 0;
-			} else {
-				$desktop = 1;
-			}
+            /** Desktop approximation */
+            if ($platform == 'unknown') {
+                $desktop = 0;
+            } else {
+                $desktop = 1;
+            }
 
-			Services::Registry()->set('Client', 'desktop', $desktop);
+            Services::Registry()->set('Client', 'desktop', $desktop);
 
-			/** Browser and Version Approximation */
-			$browsers = array('firefox', 'msie', 'opera', 'chrome', 'safari',
-				'mozilla', 'seamonkey',    'konqueror', 'netscape',
-				'gecko', 'navigator', 'mosaic', 'lynx', 'amaya',
-				'omniweb', 'avant', 'camino', 'flock', 'aol');
+            /** Browser and Version Approximation */
+            $browsers = array('firefox', 'msie', 'opera', 'chrome', 'safari',
+                'mozilla', 'seamonkey',    'konqueror', 'netscape',
+                'gecko', 'navigator', 'mosaic', 'lynx', 'amaya',
+                'omniweb', 'avant', 'camino', 'flock', 'aol');
 
-			$browser = '';
-			$browser_version = '';
-			foreach ($browsers as $browser) {
+            $browser = '';
+            $browser_version = '';
+            foreach ($browsers as $browser) {
 
-				if (preg_match("#($browser)[/ ]?([0-9.]*)#", $user_agent, $match)) {
-					$browser = $match[1] ;
-					$browser_version = $match[2] ;
-					break ;
-				}
-			}
-		}
+                if (preg_match("#($browser)[/ ]?([0-9.]*)#", $user_agent, $match)) {
+                    $browser = $match[1] ;
+                    $browser_version = $match[2] ;
+                    break ;
+                }
+            }
+        }
 
         Services::Registry()->set('Client', 'browser', $browser);
 

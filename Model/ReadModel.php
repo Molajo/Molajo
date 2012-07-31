@@ -279,14 +279,14 @@ class ReadModel extends Model
     /**
      * getQueryResults - Execute query and returns an associative array of data elements
      *
-	 * @param   $query_object
-	 * @param   int $offset
-	 * @param   int $count
-	 *
-	 * @return  int count of total rows for pagination
-	 * @since   1.0
-	 */
-	public function getQueryResults($query_object, $offset = 0, $count = 5)
+     * @param     $query_object
+     * @param int $offset
+     * @param int $count
+     *
+     * @return int count of total rows for pagination
+     * @since   1.0
+     */
+    public function getQueryResults($query_object, $offset = 0, $count = 5)
     {
         $this->db->setQuery($this->query->__toString(), $offset, $count);
 
@@ -296,16 +296,16 @@ class ReadModel extends Model
             $this->query_results = $this->db->loadObjectList();
         }
 
-		if ($count > count($this->query_results)) {
-			$total = count($this->query_results);
+        if ($count > count($this->query_results)) {
+            $total = count($this->query_results);
 
-		} else {
+        } else {
 
-			/** Get Total Rows that could have been returned for Pagination Calculations */
-			$this->db->setQuery($this->query->__toString(), 0, 99999);
-			$this->db->execute();
-			$total = $this->db->getNumRows();
-		}
+            /** Get Total Rows that could have been returned for Pagination Calculations */
+            $this->db->setQuery($this->query->__toString(), 0, 99999);
+            $this->db->execute();
+            $total = $this->db->getNumRows();
+        }
 
         return $total;
     }

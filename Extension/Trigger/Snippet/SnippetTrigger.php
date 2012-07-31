@@ -44,10 +44,10 @@ class SnippetTrigger extends ContentTrigger
                 } else {
 
                     $newFieldValue = substr(strip_tags($fieldValue), 0, $snippetLength);
-					if (trim($newFieldValue) == trim(strip_tags($fieldValue))) {
-					} else {
-						$newFieldValue .= '...';
-					}
+                    if (trim($newFieldValue) == trim(strip_tags($fieldValue))) {
+                    } else {
+                        $newFieldValue .= '...';
+                    }
 
                     if ($newFieldValue == false) {
                     } else {

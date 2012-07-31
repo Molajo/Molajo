@@ -66,7 +66,7 @@ Class MenuService
      */
     public function runMenuQuery(
         $extension_instance_id, $start_lvl = 0, $end_lvl = 0, $parent_id = 0, $active_catalog_ids = array())
-	{
+    {
         if ($extension_instance_id == 0) {
             return false;
         }
@@ -120,7 +120,7 @@ Class MenuService
         /** Execute query */
         $query_results = $m->getData('list');
 
-		if ($query_results === false) {
+        if ($query_results === false) {
             return array();
         }
 
@@ -131,10 +131,10 @@ Class MenuService
 
                 if (in_array($item->catalog_id, $active_catalog_ids)) {
                     $item->css_class = 'active';
-					$item->current = 1;
+                    $item->current = 1;
                 } else {
                     $item->css_class = '';
-					$item->current = 0;
+                    $item->current = 0;
                 }
 
                 if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
@@ -144,11 +144,11 @@ Class MenuService
                 }
 
                 if ($item->subtitle == ''
-					|| $item->subtitle == null
-				) {
+                    || $item->subtitle == null
+) {
                     $item->link_text = $item->title;
                 } else {
-					$item->link_text = $item->subtitle;
+                    $item->link_text = $item->subtitle;
                 }
 
                 $item->link = $item->url;
@@ -191,15 +191,15 @@ Class MenuService
         /** Execute query */
         $query_results = $m->getData('list');
 
-		/**
-		echo '<br /><br />';
-		echo $m->model->query->__toString();
-		echo '<br /><br />';
+        /**
+        echo '<br /><br />';
+        echo $m->model->query->__toString();
+        echo '<br /><br />';
 
-		echo '<pre>';
-		var_dump($query_results);
-		echo '</pre>';
-		*/
+        echo '<pre>';
+        var_dump($query_results);
+        echo '</pre>';
+        */
         /** Add in URL */
         foreach ($query_results as $item) {
 
@@ -211,6 +211,7 @@ Class MenuService
                 }
             }
         }
+
         return $query_results;
     }
 }

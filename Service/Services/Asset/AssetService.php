@@ -177,7 +177,7 @@ Class AssetService
                         $this->addCss($url_path . '/css/' . $file, $priority);
                     }
                 } elseif (strtolower(substr($file, 0, 4)) == 'hold') {
-				} else {
+                } else {
                     $this->addCss($url_path . '/css/' . $file, $priority);
                 }
             }
@@ -325,18 +325,18 @@ Class AssetService
 
         $files = Services::Filesystem()->folderFiles($file_path . $extra, '\.js$', false, false);
 
-		if (count($files) > 0) {
-			foreach ($files as $file) {
-				if (strtolower(substr($file, 0, 4)) == 'hold') {
-				} else {
-                	$this->addJs(
-						$url_path . $extra . '/' . $file,
-						$priority,
-						$defer,
-						'text/javascript',
-						0
-					);
-				}
+        if (count($files) > 0) {
+            foreach ($files as $file) {
+                if (strtolower(substr($file, 0, 4)) == 'hold') {
+                } else {
+                    $this->addJs(
+                        $url_path . $extra . '/' . $file,
+                        $priority,
+                        $defer,
+                        'text/javascript',
+                        0
+                    );
+                }
             }
         }
 
@@ -420,9 +420,9 @@ Class AssetService
      * Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
      *
      * @param string $content
-	 * @param string $priority
+     * @param string $priority
      * @param string $defer
-	 * @param string $mimetype
+     * @param string $mimetype
      *
      * @return object
      * @since  1.0

@@ -442,6 +442,7 @@ class CreateController extends Controller
 
         if ($arguments == false) {
             Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
             return false;
         }
 
@@ -482,6 +483,7 @@ class CreateController extends Controller
 
         if ($arguments == false) {
             Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
             return false;
         }
 

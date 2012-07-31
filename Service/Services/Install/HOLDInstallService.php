@@ -457,4 +457,3 @@ Class InstallService
         return Services::DB()->splitSql($sql);
     }
 }
-

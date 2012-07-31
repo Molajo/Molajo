@@ -7,27 +7,27 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <div id="m-options" style="display: none;">
-	<h3><?php echo Services::Language()->translate('Configuration Options'); ?></h3>
-	<ol>
-		<li><a href="#"
-			<?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
-			<?php echo Services::Language()->translate('Change Page Title'); ?></a></li>
+    <h3><?php echo Services::Language()->translate('Configuration Options'); ?></h3>
+    <ol>
+        <li><a href="#"
+            <?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
+            <?php echo Services::Language()->translate('Change Page Title'); ?></a></li>
 
-		<li><a href="#"
-			<?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
-			<?php echo Services::Language()->translate('Change Status Menu Items'); ?></a></li>
+        <li><a href="#"
+            <?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
+            <?php echo Services::Language()->translate('Change Status Menu Items'); ?></a></li>
 
-		<li><a href="#"
-			<?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
-			<?php echo Services::Language()->translate('Change List and/or Search Filters'); ?></a></li>
+        <li><a href="#"
+            <?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
+            <?php echo Services::Language()->translate('Change List and/or Search Filters'); ?></a></li>
 
-		<li><a href="#"
-			<?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
-			<?php echo Services::Language()->translate('Change List Columns'); ?></a></li>
+        <li><a href="#"
+            <?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
+            <?php echo Services::Language()->translate('Change List Columns'); ?></a></li>
 
-		<li><a href="#"
-			<?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
-			<?php echo Services::Language()->translate('Change List Length and Ordering'); ?></a></li>
-	</ol>
+        <li><a href="#"
+            <?php include __DIR__ . '/' . 'reveal-parameters.php'; ?>
+            <?php echo Services::Language()->translate('Change List Length and Ordering'); ?></a></li>
+    </ol>
 </div>
 <div id="b-options"></div>

@@ -169,32 +169,32 @@ Class ConfigurationService
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
             define('SITE_CACHE_FOLDER', SITE_BASE_PATH
-				. '/' . Services::Registry()->get('Configuration', 'cache_path', 'cache'));
+                . '/' . Services::Registry()->get('Configuration', 'cache_path', 'cache'));
         }
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
 
             define('SITE_LOGS_FOLDER', SITE_BASE_PATH
-				. '/' . Services::Registry()->get('Configuration', 'logs_path', 'logs'));
+                . '/' . Services::Registry()->get('Configuration', 'logs_path', 'logs'));
         }
 
         /** following must be within the web document folder */
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
             define('SITE_MEDIA_FOLDER', SITE_BASE_PATH
-				. '/' . Services::Registry()->get('Configuration', 'media_path', 'media'));
+                . '/' . Services::Registry()->get('Configuration', 'media_path', 'media'));
         }
         if (defined('SITE_MEDIA_URL')) {
         } else {
             define('SITE_MEDIA_URL', SITE_BASE_URL_RESOURCES
-				. '/' . Services::Registry()->get('Configuration', 'media_url', 'media'));
+                . '/' . Services::Registry()->get('Configuration', 'media_url', 'media'));
         }
 
         /** following must be within the web document folder */
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
             define('SITE_TEMP_FOLDER', SITE_BASE_PATH
-				. '/' . Services::Registry()->get('Configuration', 'temp_path', SITE_BASE_PATH . '/temp'));
+                . '/' . Services::Registry()->get('Configuration', 'temp_path', SITE_BASE_PATH . '/temp'));
         }
         if (defined('SITE_TEMP_URL')) {
         } else {
@@ -413,7 +413,6 @@ Class ConfigurationService
         //if (Services::Registry()->get('cache') == true) {
         //	Services::Cache()->set(md5($registryName), Services::Registry()->getArray($registryName), 'registry');
         //}
-
         return $registryName;
     }
 
@@ -491,12 +490,12 @@ Class ConfigurationService
             return ConfigurationService::locateFileMenuitem($model_type, $model_name);
         }
 
-		/** 2. Listbox */
-		if ($model_type == 'Listbox'
-			|| substr($model_name, 0, 8) == 'Listbox'
-		) {
-			return ConfigurationService::locateFileListbox($model_type, $model_name);
-		}
+        /** 2. Listbox */
+        if ($model_type == 'Listbox'
+            || substr($model_name, 0, 8) == 'Listbox'
+        ) {
+            return ConfigurationService::locateFileListbox($model_type, $model_name);
+        }
 
         /** 2. Current Extension */
         $extension_path = false;
@@ -513,7 +512,6 @@ Class ConfigurationService
                 $extension_name = $catalog_type;
             }
         }
-
 
         if ($extension_path == false) {
         } else {
@@ -536,7 +534,7 @@ Class ConfigurationService
             $primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
             if ($primary_extension_path == $extension_path
                 || $primary_extension_path == ''
-            ) {
+) {
             } else {
 
                 /** ex. Resource/Article/Configuration.xml */
@@ -558,7 +556,7 @@ Class ConfigurationService
         if ($model_type == 'Menuitem' || $model_type == 'Trigger'
             || $model_type == 'Theme' || $model_type == 'Page'
             || $model_type == 'Template' || $model_type == 'Wrap'
-        ) {
+) {
 
             if ($model_type == 'Page' || $model_type == 'Template' || $model_type == 'Wrap') {
                 $path_parameter = strtolower($model_type) . '_view_path';
@@ -630,7 +628,7 @@ Class ConfigurationService
             $primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
             if ($primary_extension_path == $extension_path
                 || $primary_extension_path == ''
-            ) {
+) {
             } else {
                 /** ex. Resource/Article/GridMenuitem.xml */
                 if (file_exists($primary_extension_path . '/' . $model_name_type . '.xml')
@@ -661,60 +659,59 @@ Class ConfigurationService
 
     }
 
+    /**
+     * locateFileListbox
+     *
+     * Usage:
+     * Services::Configuration()->locateFileListbox('Menuitem', 'grid');
+     *
+     * @return mixed object or void
+     * @since   1.0
+     * @throws \RuntimeException
+     */
+    public static function locateFileListbox($model_type, $model_name)
+    {
+        $model_type = trim(ucfirst(strtolower($model_type)));
+        $model_name = trim(ucfirst(strtolower($model_name)));
+        $model_name_type = $model_name . $model_type;
 
-	/**
-	 * locateFileListbox
-	 *
-	 * Usage:
-	 * Services::Configuration()->locateFileListbox('Menuitem', 'grid');
-	 *
-	 * @return mixed object or void
-	 * @since   1.0
-	 * @throws \RuntimeException
-	 */
-	public static function locateFileListbox($model_type, $model_name)
-	{
-		$model_type = trim(ucfirst(strtolower($model_type)));
-		$model_name = trim(ucfirst(strtolower($model_name)));
-		$model_name_type = $model_name . $model_type;
+        /** 1. Current Extension */
+        $extension_path = false;
+        $extension_name = '';
+        if (Services::Registry()->exists('Parameters', 'extension_path')) {
+            $extension_path = Services::Registry()->get('Parameters', 'extension_path');
+            $extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
 
-		/** 1. Current Extension */
-		$extension_path = false;
-		$extension_name = '';
-		if (Services::Registry()->exists('Parameters', 'extension_path')) {
-			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
-			$extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
+            /** ex. Resource/Article/GridMenuitem.xml */
+            if (file_exists($extension_path . '/Listbox/' . $model_name_type . '.xml')
+            ) {
+                return $extension_path . '/Listbox/' . $model_name_type . '.xml';
+            }
+        }
 
-			/** ex. Resource/Article/GridMenuitem.xml */
-			if (file_exists($extension_path . '/Listbox/' . $model_name_type . '.xml')
-			) {
-				return $extension_path . '/Listbox/' . $model_name_type . '.xml';
-			}
-		}
+        /** 2. Primary Resource (if not current extension) */
+        if (Services::Registry()->exists('RouteParameters')) {
+            $primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
+            $primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
+            if ($primary_extension_path == $extension_path
+                || $primary_extension_path == ''
+) {
+            } else {
+                /** ex. Resource/Article/GridMenuitem.xml */
+                if (file_exists($primary_extension_path . '/Listbox/' . $model_name_type . '.xml')
+                ) {
+                    return $primary_extension_path . '/Listbox/' . $model_name_type . '.xml';
+                }
+            }
+        }
 
-		/** 2. Primary Resource (if not current extension) */
-		if (Services::Registry()->exists('RouteParameters')) {
-			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
-			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
-			if ($primary_extension_path == $extension_path
-				|| $primary_extension_path == ''
-			) {
-			} else {
-				/** ex. Resource/Article/GridMenuitem.xml */
-				if (file_exists($primary_extension_path . '/Listbox/' . $model_name_type . '.xml')
-				) {
-					return $primary_extension_path . '/Listbox/' . $model_name_type . '.xml';
-				}
-			}
-		}
+        /** 3. Listbox Default */
 
-		/** 3. Listbox Default */
-		return CONFIGURATION_FOLDER . '/Listbox/' . $model_name . '.xml';
+        return CONFIGURATION_FOLDER . '/Listbox/' . $model_name . '.xml';
 
-	}
+    }
 
-
-	/**
+    /**
      * Retrieves base Model Registry data and stores it to the datasource registry
      *
      * @static

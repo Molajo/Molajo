@@ -7,5 +7,5 @@
 defined('MOLAJO') or die;
 ?>
 <li>
-	<a href="<?php echo $this->row->link; ?>"><?php echo $this->row->link_text; ?></a>
+    <a href="<?php echo $this->row->link; ?>"><?php echo $this->row->link_text; ?></a>
 </li>

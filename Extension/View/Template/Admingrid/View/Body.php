@@ -8,8 +8,8 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die; ?>
 <tr<?php echo $this->row->grid_row_class; ?>><?php
     $columnCount = 1;
-	$nowrap = ' nowrap ';
-	$first = 1;
+    $nowrap = ' nowrap ';
+    $first = 1;
     $columnArray = Services::Registry()->get('Triggerdata', 'AdminGridTableColumns');
     foreach ($columnArray as $column) {       ?>
 
@@ -23,12 +23,12 @@ defined('MOLAJO') or die; ?>
             } ?>
         </td><?php
 
-		if ($first == 1) {
-			$first = 0;
-			$nowrap = '';
-		}
+        if ($first == 1) {
+            $first = 0;
+            $nowrap = '';
+        }
 
-		$columnCount++;
+        $columnCount++;
     }
     ?>
     <td class="center last">

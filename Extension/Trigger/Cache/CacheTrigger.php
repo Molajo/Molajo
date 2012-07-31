@@ -19,14 +19,14 @@ defined('MOLAJO') or die;
  */
 class CacheTrigger extends ContentTrigger
 {
-	/**
-	 * After-create processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterCreate()
-	{
-		return true;
-	}
+    /**
+     * After-create processing
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterCreate()
+    {
+        return true;
+    }
 }

@@ -244,7 +244,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-        ) {
+) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -269,13 +269,13 @@ Class FilterService
         } elseif ($field_value == null
             || $field_value == ''
             || $field_value == 0
-        ) {
+) {
             $field_value = $default;
         }
 
         if ($field_value == null
             || $field_value == '0000-00-00 00:00:00'
-        ) {
+) {
 
         } else {
             $dd = substr($field_value, 8, 2);
@@ -297,7 +297,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-        ) {
+) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -337,7 +337,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-        ) {
+) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -375,7 +375,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-        ) {
+) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -413,7 +413,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-        ) {
+) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -459,7 +459,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-        ) {
+) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -496,7 +496,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-        ) {
+) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 

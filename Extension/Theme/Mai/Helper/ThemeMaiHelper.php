@@ -27,10 +27,10 @@ Class ThemeMAIHelper extends Mustache
     /**
      * loadMedia - Method executed in Theme Rendering to load external media, special metadata or links
      *
-	 * @return  void
+     * @return void
      * @since   1.0
      */
-	public function loadMedia()
+    public function loadMedia()
     {
         /** Theme Folder */
         $theme = Services::Registry()->get('Parameters', 'theme_path_node');
@@ -97,11 +97,11 @@ Class ThemeMAIHelper extends Mustache
          }";
         Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 10000);
 
-		/** Modernizer */
-		Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);
+        /** Modernizer */
+        Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000);
 
-		/** HTML5 Shiv */
-		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 10000);
+        /** HTML5 Shiv */
+        Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 10000);
 
         return;
     }

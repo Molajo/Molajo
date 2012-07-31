@@ -27,14 +27,14 @@ class EdititemTrigger extends ContentTrigger
     public function onBeforeParse()
     {
 
-		if (APPLICATION_ID == 2) {
-		} else {
-			return true;
-		}
+        if (APPLICATION_ID == 2) {
+        } else {
+            return true;
+        }
 
         if (strtolower($this->get('template_view_path_node')) == 'edit') {
-			echo 'yes';
-			die;
+            echo 'yes';
+            die;
         } else {
             return true;
         }
@@ -43,20 +43,20 @@ class EdititemTrigger extends ContentTrigger
         $connect = new $controllerClass();
 
         $results = $connect->connect(
-			$this->get('model_type', 'Table'),
-			$this->get('model_name')
-		);
+            $this->get('model_type', 'Table'),
+            $this->get('model_name')
+        );
         if ($results == false) {
             return false;
         }
         $connect->set('get_customfields', 2);
         $connect->set('use_special_joins', 1);
-		$connect->set('process_triggers', 1);
+        $connect->set('process_triggers', 1);
 
         $this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
             . ucfirst(strtolower($this->get('model_type', 'Table')));
 
-		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 1) == 1) {
 
             $profiler_message = 'EdititemTrigger Model Type ' . $this->get('model_type')
                 . ' Model Name ' . $this->get('model_name')
@@ -71,9 +71,8 @@ class EdititemTrigger extends ContentTrigger
             $profiler_message .= ob_get_contents();
             ob_end_clean();
 
-
-			Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
-		}
+            Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
+        }
 
         $this->setToolbar();
         $this->setFilter($connect, $connect->get('primary_prefix'));
@@ -184,7 +183,7 @@ class EdititemTrigger extends ContentTrigger
         $grid_columns = explode(',', $this->get('grid_columns', 'title,created_by,start_publishing_datetime,ordering'));
         Services::Registry()->set('Triggerdata', 'AdminGridTableColumns', $grid_columns);
 
-		$list = $this->get('menuitem_source_catalog_type_id');
+        $list = $this->get('menuitem_source_catalog_type_id');
         $connect->model->query->where(
             $connect->model->db->qn($primary_prefix)
                 . '.' . $connect->model->db->qn('catalog_type_id')
@@ -202,20 +201,20 @@ class EdititemTrigger extends ContentTrigger
 
         $query_results = $connect->getData('list');
 /**
-		echo '<pre><br /><br />';
-		var_dump($query_results);
-		echo '<br /><br /></pre>';
+        echo '<pre><br /><br />';
+        var_dump($query_results);
+        echo '<br /><br /></pre>';
 
-		echo '<br /><br />';
-		echo $connect->model->query->__toString();
-		echo '<br /><br />';
+        echo '<br /><br />';
+        echo $connect->model->query->__toString();
+        echo '<br /><br />';
 */
-		$this->set('model_name', 'Triggerdata');
-		$this->parameters['model_name'] = 'Triggerdata';
-		$this->set('model_type', 'dbo');
-		$this->parameters['model_type'] = 'dbo';
-		$this->set('model_query_object', 'getTriggerdata');
-		$this->set('model_parameter', 'PrimaryRequestQueryResults');
+        $this->set('model_name', 'Triggerdata');
+        $this->parameters['model_name'] = 'Triggerdata';
+        $this->set('model_type', 'dbo');
+        $this->parameters['model_type'] = 'dbo';
+        $this->set('model_query_object', 'getTriggerdata');
+        $this->set('model_parameter', 'PrimaryRequestQueryResults');
 
         Services::Registry()->set('Triggerdata', 'PrimaryRequestQueryResults', $query_results);
 

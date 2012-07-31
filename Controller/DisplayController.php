@@ -36,16 +36,16 @@ class DisplayController extends Controller
         } elseif ($action == 'display') {
         }
 
-	echo 		' <br /><br /><br /><br />Includer: ' . $this->get('includer_type', '')
-				. ' <br />Model Type: ' . $this->get('model_type', '')
-				. ' <br />Model Type: ' . $this->get('model_type', '')
-				. ' <br />Model Name: ' . $this->get('model_name', '')
-				. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
-				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
-				. ' <br />Template Path: ' . $this->get('template_view_path', '')
-				. ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
+    echo 		' <br /><br /><br /><br />Includer: ' . $this->get('includer_type', '')
+                . ' <br />Model Type: ' . $this->get('model_type', '')
+                . ' <br />Model Type: ' . $this->get('model_type', '')
+                . ' <br />Model Name: ' . $this->get('model_name', '')
+                . ' <br />Model Parameter: ' . $this->get('model_parameter', '')
+                . ' <br />Model Query Object: ' . $this->get('model_query_object', '')
+                . ' <br />Template Path: ' . $this->get('template_view_path', '')
+                . ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
 **/
-		if ($this->get('model_name', '') == '') {
+        if ($this->get('model_name', '') == '') {
             $this->query_results = array();
 
         } else {
@@ -126,6 +126,7 @@ class DisplayController extends Controller
         }
 
         /** Wrap template view results */
+
         return $this->wrapView($this->get('wrap_view_title'), $rendered_output);
     }
 
@@ -234,49 +235,49 @@ class DisplayController extends Controller
         if ((int) $this->get('process_triggers') == 0) {
             return true;
         }
-		if (count($this->query_results) == 0) {
-			return true;
-		}
+        if (count($this->query_results) == 0) {
+            return true;
+        }
 
-		/** Process each item, one at a time */
-		$items = $this->query_results;
-		$this->query_results = array();
+        /** Process each item, one at a time */
+        $items = $this->query_results;
+        $this->query_results = array();
 
-		$this->parameters['row_count'] = 1;
-		$this->parameters['even_or_odd'] = 'odd';
-		$this->parameters['total_rows'] = count($items);
+        $this->parameters['row_count'] = 1;
+        $this->parameters['even_or_odd'] = 'odd';
+        $this->parameters['total_rows'] = count($items);
 
+        foreach ($items as $item) {
 
-		foreach ($items as $item) {
+            $arguments = array(
+                'table_registry_name' => $this->table_registry_name,
+                'parameters' => $this->parameters,
+                'data' => $item,
+                'model_name' => $this->get('model_name')
+            );
 
-			$arguments = array(
-				'table_registry_name' => $this->table_registry_name,
-				'parameters' => $this->parameters,
-				'data' => $item,
-				'model_name' => $this->get('model_name')
-			);
+            Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-			Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            $arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
 
-			$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
+            if ($arguments == false) {
+                Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-			if ($arguments == false) {
-				Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
-				return false;
-			}
+                return false;
+            }
 
-			Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-			$this->parameters = $arguments['parameters'];
-			$this->query_results[] = $arguments['data'];
+            $this->parameters = $arguments['parameters'];
+            $this->query_results[] = $arguments['data'];
 
-			if ($this->parameters['even_or_odd'] == 'odd') {
-				$this->parameters['even_or_odd'] = 'even';
-			} else {
-				$this->parameters['even_or_odd'] = 'odd';
-			}
-			$this->parameters['row_count']++;
-		}
+            if ($this->parameters['even_or_odd'] == 'odd') {
+                $this->parameters['even_or_odd'] = 'even';
+            } else {
+                $this->parameters['even_or_odd'] = 'odd';
+            }
+            $this->parameters['row_count']++;
+        }
 
         return true;
     }
@@ -292,24 +293,26 @@ class DisplayController extends Controller
     protected function onAfterViewRender($rendered_output)
     {
         $arguments = array(
- 			'table_registry_name' => $this->table_registry_name,
+             'table_registry_name' => $this->table_registry_name,
             'parameters' => $this->parameters,
-			'rendered_output' => $rendered_output,
+            'rendered_output' => $rendered_output,
             'model_name' => $this->get('model_name')
         );
 
-		Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
 
         if ($arguments == false) {
-			Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
             return false;
         }
 
-		Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$rendered_output = $arguments['rendered_output'];
+        $rendered_output = $arguments['rendered_output'];
+
         return $rendered_output;
     }
 }

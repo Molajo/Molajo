@@ -94,6 +94,7 @@ Class RouteService
         if (Services::Registry()->get('Configuration', 'offline', 0) == 1) {
             Services::Error()->set(503);
             Services::Profiler()->set('Application::Route() Direct to Offline Mode', 'Route');
+
             return false;
         }
 
@@ -149,6 +150,7 @@ Class RouteService
         $this->getRouteParameters();
 
         /**   Return to Application Object */
+
         return $this;
     }
 
@@ -404,10 +406,10 @@ Class RouteService
      */
     protected function getRouteParameters()
     {
-		if (defined('ROUTE')) {
-		} else {
-			define('ROUTE', true);
-		}
+        if (defined('ROUTE')) {
+        } else {
+            define('ROUTE', true);
+        }
 
         /**  Menu Item  */
         if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
@@ -418,22 +420,23 @@ Class RouteService
             }
 
         } else {
-		;
+        ;
             $id = Services::Registry()->get('Parameters', 'catalog_source_id');
 
             $model_type = 'Table';
             $model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
 
-			if ((int) $id == 0) {
-				$model_query_object = 'list';
-			} else {
-            	$model_query_object = 'item';
-			}
+            if ((int) $id == 0) {
+                $model_query_object = 'list';
+            } else {
+                $model_query_object = 'item';
+            }
 
             $response = Helpers::Content()->getRouteContent($id, $model_type, $model_name, $model_query_object);
             if ($response === false) {
                 Services::Error()->set(500, 'Content not found');
-				return false;
+
+                return false;
             }
         }
 

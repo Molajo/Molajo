@@ -1,5 +1,4 @@
 <?php
-use Molajo\Service\Services;
 /**
  * @package     Molajo
  * @copyright   2012 Amy Stephen. All rights reserved.
@@ -7,44 +6,44 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <div class="row">
-	<div class="twelve columns">
-		<div class="row">
-			<div class="six columns">
-				<fieldset>
-					<legend>Publishing Options</legend>
+    <div class="twelve columns">
+        <div class="row">
+            <div class="six columns">
+                <fieldset>
+                    <legend>Publishing Options</legend>
 
-					<label>This is a label.</label>
-					<input type="text" placeholder="Standard Input"/>
+                    <label>This is a label.</label>
+                    <input type="text" placeholder="Standard Input"/>
 
-					<label>Address</label>
-					<input type="text"/>
-					<input type="text" class="six"/>
+                    <label>Address</label>
+                    <input type="text"/>
+                    <input type="text" class="six"/>
 
-					<label for="radio1">
-						<input name="radio1" type="radio" id="radio1"> Featured
-					</label>
+                    <label for="radio1">
+                        <input name="radio1" type="radio" id="radio1"> Featured
+                    </label>
 
-					<label for="radio2">
-						<input name="radio1" type="radio" id="radio2"> Not Featured
-					</label>
+                    <label for="radio2">
+                        <input name="radio1" type="radio" id="radio2"> Not Featured
+                    </label>
 
-				</fieldset>
-			</div>
-			<div class="six columns">
-				<fieldset>
+                </fieldset>
+            </div>
+            <div class="six columns">
+                <fieldset>
 
-					<legend>Categories and Tags</legend>
+                    <legend>Categories and Tags</legend>
 
-					<label>This is a label.</label>
-					<input type="text" placeholder="Standard Input"/>
+                    <label>This is a label.</label>
+                    <input type="text" placeholder="Standard Input"/>
 
-					<label>Address</label>
-					<input type="text"/>
-					<input type="text" class="six"/>
+                    <label>Address</label>
+                    <input type="text"/>
+                    <input type="text" class="six"/>
 
-				</fieldset>
+                </fieldset>
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>

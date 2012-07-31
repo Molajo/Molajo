@@ -40,13 +40,13 @@ Class EventService
      */
     protected $trigger_connection;
 
-	/**
-	 * Arguments
-	 *
-	 * @var   array of objects and values
-	 * @since 1.0
-	 */
-	protected $arguments;
+    /**
+     * Arguments
+     *
+     * @var   array of objects and values
+     * @since 1.0
+     */
+    protected $arguments;
 
     /**
      * @static
@@ -142,8 +142,8 @@ Class EventService
             }
         }
 
-		/** Arguments can be changed by Triggers */
-		$this->arguments = $arguments;
+        /** Arguments can be changed by Triggers */
+        $this->arguments = $arguments;
 
         /** Process each selected trigger */
         foreach ($selections as $selection) {
@@ -242,7 +242,7 @@ Class EventService
             /** Retrieve Properties from Trigger Class to send back to Controller */
             if (count($this->arguments) > 0) {
                 foreach ($this->arguments as $propertyKey => $propertyValue) {
-					$this->arguments[$propertyKey] = $connection->get($propertyKey);
+                    $this->arguments[$propertyKey] = $connection->get($propertyKey);
                 }
             }
         }

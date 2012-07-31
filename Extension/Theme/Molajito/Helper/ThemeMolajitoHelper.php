@@ -27,10 +27,10 @@ Class ThemeMolajitoHelper extends Mustache
     /**
      * loadMedia - Method executed in Theme Rendering to load external media, special metadata or links
      *
-	 * @return  void
+     * @return void
      * @since   1.0
      */
-	public function loadMedia()
+    public function loadMedia()
     {
         /** Theme Folder */
         $theme = Services::Registry()->get('Parameters', 'theme_path_node');
@@ -97,14 +97,14 @@ Class ThemeMolajitoHelper extends Mustache
          }";
         Services::Asset()->addJSDeclarations($fallback, 100, 1, 'text/javascript');
 
-		/** jQueryUI CDN and fallback */
-		Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js', 1, 1);
+        /** jQueryUI CDN and fallback */
+        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js', 1, 1);
 
-		/** Modernizer */
-		Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1, 10000);
+        /** Modernizer */
+        Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1, 10000);
 
-		/** HTML5 Shiv */
-		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 0, 1);
+        /** HTML5 Shiv */
+        Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 0, 1);
 
         return;
     }

@@ -102,10 +102,11 @@ Class UrlService
      */
     public function getURL($catalog_id)
     {
-		$url = Helpers::Catalog()->getURL($catalog_id);
-		if ($url == false || $url == null) {
-			return false;
-		}
+        $url = Helpers::Catalog()->getURL($catalog_id);
+        if ($url == false || $url == null) {
+            return false;
+        }
+
         return $this->getApplicationURL($url);
     }
 

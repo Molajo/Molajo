@@ -21,4 +21,3 @@ $action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
         </div>
     </div>
 </div>
-

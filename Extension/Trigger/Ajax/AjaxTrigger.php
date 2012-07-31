@@ -21,34 +21,34 @@ class AjaxTrigger extends ContentTrigger
 {
     /**
      * Identify Ajax Request (run last in onBeforeParse):
-	 *	Adapt the Parse Include File Parameters to only generate the Request
-	 * 	Adapt the Template and Wrap Parameters to generate consumable output
+     *	Adapt the Parse Include File Parameters to only generate the Request
+     * 	Adapt the Template and Wrap Parameters to generate consumable output
      *
      * @return void
      * @since   1.0
      */
     public function onBeforeParse()
     {
-		if (APPLICATION_ID == 2) {
-		} else {
-			return true;
-		}
+        if (APPLICATION_ID == 2) {
+        } else {
+            return true;
+        }
 
-		if (Services::Registry()->get('Client', 'Ajax') == 0) {
-			return true;
-		}
+        if (Services::Registry()->get('Client', 'Ajax') == 0) {
+            return true;
+        }
 
-		/** Template  */
-		Services::Registry()->set('Parameters', 'template_view_id', 1342);
-		Helpers::View()->get(1342, 'Template');
+        /** Template  */
+        Services::Registry()->set('Parameters', 'template_view_id', 1342);
+        Helpers::View()->get(1342, 'Template');
 
-		/** Wrap  */
-		Services::Registry()->set('Parameters', 'wrap_view_id', 2090);
-		Helpers::View()->get(2090, 'Wrap');
+        /** Wrap  */
+        Services::Registry()->set('Parameters', 'wrap_view_id', 2090);
+        Helpers::View()->get(2090, 'Wrap');
 
-		/** Ajax Parser */
-		Services::Registry()->set('Override', 'sequence_xml', 'Ajaxpage');
-		Services::Registry()->set('Override', 'final_xml', 'Ajaxfinal');
+        /** Ajax Parser */
+        Services::Registry()->set('Override', 'sequence_xml', 'Ajaxpage');
+        Services::Registry()->set('Override', 'final_xml', 'Ajaxfinal');
 
         return true;
     }

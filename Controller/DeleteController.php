@@ -192,7 +192,6 @@ class DeleteController extends Controller
         //error
         //return false (not yet)
         //}
-
         return true;
     }
 
@@ -225,6 +224,7 @@ class DeleteController extends Controller
         $arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
         if ($arguments == false) {
             Services::Profiler()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
             return false;
         }
 
@@ -265,6 +265,7 @@ class DeleteController extends Controller
         $arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
         if ($arguments == false) {
             Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+
             return false;
         }
 

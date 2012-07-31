@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class CommentTrigger extends ContentTrigger
+class CommentsTrigger extends ContentTrigger
 {
     /**
      * Pre-create processing

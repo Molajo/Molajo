@@ -167,11 +167,11 @@ Class ParseService
     {
         Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
-		/** OnBeforeParse Triggers */
-		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
-		} else {
-			$this->onBeforeParseEvent();
-		}
+        /** OnBeforeParse Triggers */
+        if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+        } else {
+            $this->onBeforeParseEvent();
+        }
 
         /** Retrieve overrides (could be passed in and are set in the AjaxTrigger, too) */
         $overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
@@ -211,17 +211,18 @@ Class ParseService
             $this->exclude_until_final[] = $includeName;
         }
 
-		$this->final_indicator = false;
+        $this->final_indicator = false;
 
         /** Start parsing and processing page include for Theme */
         if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme not found');
+
             return false;
         }
 
-		/** Save Route Parameters move to after route */
-		Services::Registry()->copy('Parameters', 'RouteParameters');
+        /** Save Route Parameters move to after route */
+        Services::Registry()->copy('Parameters', 'RouteParameters');
 
         $renderedOutput = $this->renderLoop();
 
@@ -251,11 +252,12 @@ Class ParseService
         $renderedOutput = $this->renderLoop($renderedOutput);
 
         /** onAfterParse Trigger */
-		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
-		} else {
-			Services::Registry()->copy('RouteParameters', 'Parameters');
-			$renderedOutput = $this->onAfterParseEvent($renderedOutput);
-		}
+        if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+        } else {
+            Services::Registry()->copy('RouteParameters', 'Parameters');
+            $renderedOutput = $this->onAfterParseEvent($renderedOutput);
+        }
+
         return $renderedOutput;
     }
 
@@ -476,7 +478,7 @@ Class ParseService
                     $replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
                     /** 6. initialize registry */
-					Services::Registry()->deleteRegistry('Parameters');
+                    Services::Registry()->deleteRegistry('Parameters');
                     Services::Registry()->createRegistry('Parameters');
 
                     if ($includeName == 'request') {
@@ -525,117 +527,117 @@ Class ParseService
         return $renderedOutput;
     }
 
-	/**
-	 * Schedule onBeforeParseEvent Event - could update parameter values
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	protected function onBeforeParseEvent()
-	{
-		Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+    /**
+     * Schedule onBeforeParseEvent Event - could update parameter values
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    protected function onBeforeParseEvent()
+    {
+        Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$model_name = Services::Registry()->get('Parameters', 'model_name');
-		$model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
+        $model_name = Services::Registry()->get('Parameters', 'model_name');
+        $model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
 
-		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+        $table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
-		$controllerClass = 'Molajo\\Controller\\Controller';
-		$connect = new $controllerClass();
+        $controllerClass = 'Molajo\\Controller\\Controller';
+        $connect = new $controllerClass();
 
-		$results = $connect->connect($model_type, $model_name);
-		if ($results == false) {
-			return false;
-		}
-		$triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
+        $results = $connect->connect($model_type, $model_name);
+        if ($results == false) {
+            return false;
+        }
+        $triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
 
-		if (count($triggers) == 0) {
-			return true;
-		}
+        if (count($triggers) == 0) {
+            return true;
+        }
 
-		$parameters = Services::Registry()->getArray('Parameters');
+        $parameters = Services::Registry()->getArray('Parameters');
 
-		/** Schedule onBeforeParse Event */
-		$arguments = array(
-			'table_registry_name' => $table_registry_name,
-			'parameters' => $parameters,
-			'model_name' => $model_name,
-			'model_type' => $model_type,
-			'data' => array()
-		);
+        /** Schedule onBeforeParse Event */
+        $arguments = array(
+            'table_registry_name' => $table_registry_name,
+            'parameters' => $parameters,
+            'model_name' => $model_name,
+            'model_type' => $model_type,
+            'data' => array()
+        );
 
-		Services::Profiler()->set('ParseService->onBeforeParseEvent '
-				. $table_registry_name
-				. ' Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE
-		);
+        Services::Profiler()->set('ParseService->onBeforeParseEvent '
+                . $table_registry_name
+                . ' Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE
+        );
 
-		$arguments = Services::Event()->schedule('onBeforeParse', $arguments, $triggers);
+        $arguments = Services::Event()->schedule('onBeforeParse', $arguments, $triggers);
 
-		if ($arguments == false) {
-			Services::Profiler()->set('ParseService->onBeforeParseEvent '
-					. $table_registry_name
-					. ' failure ', LOG_OUTPUT_TRIGGERS
-			);
+        if ($arguments == false) {
+            Services::Profiler()->set('ParseService->onBeforeParseEvent '
+                    . $table_registry_name
+                    . ' failure ', LOG_OUTPUT_TRIGGERS
+            );
 
-			return false;
-		}
+            return false;
+        }
 
-		Services::Profiler()->set('ParseService->onBeforeParseEvent '
-				. $table_registry_name
-				. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
-		);
+        Services::Profiler()->set('ParseService->onBeforeParseEvent '
+                . $table_registry_name
+                . ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+        );
 
-		/** Process results */
-		Services::Registry()->delete('Parameters');
-		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
-		Services::Registry()->sort('Parameters');
+        /** Process results */
+        Services::Registry()->delete('Parameters');
+        Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+        Services::Registry()->sort('Parameters');
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Schedule onAfterParseEvent Event - could update rendered output
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	protected function onAfterParseEvent($renderedOutput)
-	{
-		Services::Profiler()->set('ParseService->process Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+    /**
+     * Schedule onAfterParseEvent Event - could update rendered output
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    protected function onAfterParseEvent($renderedOutput)
+    {
+        Services::Profiler()->set('ParseService->process Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
 
-		$parameters = Services::Registry()->getArray('Parameters');
+        $parameters = Services::Registry()->getArray('Parameters');
 
-		/** Schedule onAfterRead Event */
-		$arguments = array(
-			'parameters' => $parameters,
-			'rendered_output' => $renderedOutput
-		);
+        /** Schedule onAfterRead Event */
+        $arguments = array(
+            'parameters' => $parameters,
+            'rendered_output' => $renderedOutput
+        );
 
-		Services::Profiler()->set('ParseService->onAfterParseEvent '
-				. ' Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE
-		);
+        Services::Profiler()->set('ParseService->onAfterParseEvent '
+                . ' Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE
+        );
 
-		$arguments = Services::Event()->schedule('onAfterParse', $arguments);
+        $arguments = Services::Event()->schedule('onAfterParse', $arguments);
 
-		if ($arguments == false) {
+        if ($arguments == false) {
 
-			Services::Profiler()->set('ParseService->onAfterParseEvent '
-					. ' failure ', LOG_OUTPUT_TRIGGERS
-			);
+            Services::Profiler()->set('ParseService->onAfterParseEvent '
+                    . ' failure ', LOG_OUTPUT_TRIGGERS
+            );
 
-			return false;
-		}
+            return false;
+        }
 
-		Services::Profiler()->set('ParseService->onAfterParseEvent '
-				. ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
-		);
+        Services::Profiler()->set('ParseService->onAfterParseEvent '
+                . ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+        );
 
-		/** Process results */
-		Services::Registry()->delete('Parameters');
-		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+        /** Process results */
+        Services::Registry()->delete('Parameters');
+        Services::Registry()->loadArray('Parameters', $arguments['parameters']);
 
-		$renderedOutput = $arguments['rendered_output'];
+        $renderedOutput = $arguments['rendered_output'];
 
-		return $renderedOutput;
-	}
+        return $renderedOutput;
+    }
 }

@@ -10,4 +10,3 @@ $class = ' class="' . $class . '"';
 ?>
 <li class="toolbar"><a
     href="<?php echo $this->row->link; ?>"<?php echo $class; ?>><span><?php echo $this->row->name; ?></span></a></li>
-

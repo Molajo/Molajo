@@ -254,7 +254,6 @@ Class MailService
         /** authorization event */
         //todo: what is the catalog id of a service?
         //$results = Services::Authorisation()->verifyTask('email', $catalog_id);
-
         return $permission;
     }
 

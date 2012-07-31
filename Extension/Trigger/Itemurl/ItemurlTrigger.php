@@ -35,18 +35,18 @@ class ItemurlTrigger extends ContentTrigger
      */
     public function onAfterRead()
     {
-		if (defined('ROUTE')) {
-		} else {
-			return true;
-		}
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
 
-		$fields = $this->retrieveFieldsByType('catalog_id');
+        $fields = $this->retrieveFieldsByType('catalog_id');
 
         if (is_array($fields) && count($fields) > 0) {
 
             foreach ($fields as $field) {
 
-				if ($field->as_name == '') {
+                if ($field->as_name == '') {
                     $name = $field->name;
                 } else {
                     $name = $field->as_name;
@@ -60,7 +60,7 @@ class ItemurlTrigger extends ContentTrigger
                     $newFieldValue = Services::Url()->getUrl($fieldValue);
 
                     if ($newFieldValue == false
-						|| $newFieldValue == null) {
+                        || $newFieldValue == null) {
                     } else {
 
                         /** Creates the new 'normal' or special field and populates the value */
@@ -72,40 +72,40 @@ class ItemurlTrigger extends ContentTrigger
             }
         }
 
-		$fields = $this->retrieveFieldsByType('url');
+        $fields = $this->retrieveFieldsByType('url');
 
-		if (is_array($fields) && count($fields) > 0) {
+        if (is_array($fields) && count($fields) > 0) {
 
-			foreach ($fields as $field) {
+            foreach ($fields as $field) {
 
-				if ($field->as_name == '') {
-					$name = $field->name;
-				} else {
-					$name = $field->as_name;
-				}
+                if ($field->as_name == '') {
+                    $name = $field->name;
+                } else {
+                    $name = $field->as_name;
+                }
 
-				$fieldValue = $this->getFieldValue($field);
+                $fieldValue = $this->getFieldValue($field);
 
-				if ($fieldValue == false) {
-				} else {
+                if ($fieldValue == false) {
+                } else {
 
-					if (substr($fieldValue, 0, 11) == '{sitemedia}') {
-						$newFieldValue = SITE_MEDIA_FOLDER . '/' . substr($fieldValue, 11, strlen($fieldValue) - 11);
-					} else {
-						$newFieldValue = $fieldValue;
-					}
+                    if (substr($fieldValue, 0, 11) == '{sitemedia}') {
+                        $newFieldValue = SITE_MEDIA_FOLDER . '/' . substr($fieldValue, 11, strlen($fieldValue) - 11);
+                    } else {
+                        $newFieldValue = $fieldValue;
+                    }
 
-					if ($newFieldValue == false) {
-					} else {
+                    if ($newFieldValue == false) {
+                    } else {
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$newFieldName = $name . '_' . 'url';
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $newFieldName = $name . '_' . 'url';
 
-						$fieldValue = $this->saveField(null, $newFieldName, $newFieldValue);
-					}
-				}
-			}
-		}
+                        $fieldValue = $this->saveField(null, $newFieldName, $newFieldValue);
+                    }
+                }
+            }
+        }
 
         return true;
     }

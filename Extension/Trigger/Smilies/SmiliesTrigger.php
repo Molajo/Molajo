@@ -111,16 +111,16 @@ class SmiliesTrigger extends ContentTrigger
             ':?:' => 'icon_question.gif',
         );
 
-		if (Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
-			$protocol =  'https://';
-		} else {
-			$protocol =  'http://';
-		}
+        if (Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
+            $protocol =  'https://';
+        } else {
+            $protocol =  'http://';
+        }
 
         if (count($smile) > 0) {
             foreach ($smile as $key => $val) {
-				$url = $protocol . SITE_MEDIA_URL . '/smilies/' . $val;
-				$smiley = '<span><img src="' . $url . '" alt="smiley" class="smiley-class" /></span>';
+                $url = $protocol . SITE_MEDIA_URL . '/smilies/' . $val;
+                $smiley = '<span><img src="' . $url . '" alt="smiley" class="smiley-class" /></span>';
                 $text = str_ireplace($key, $smiley, $text);
             }
         }
