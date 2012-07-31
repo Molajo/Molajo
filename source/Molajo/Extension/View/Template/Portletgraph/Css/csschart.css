@@ -16,7 +16,11 @@
     -webkit-animation-timing-function:ease-out;
 }
 
-#data-one { -webkit-animation-name:bar-one;     background-color: #adff2f; }
-#data-two { -webkit-animation-name:bar-two;     background-color: green;}
-#data-three { -webkit-animation-name:bar-three;     background-color: #8a2be2;}
-#data-four { -webkit-animation-name:bar-four;    background-color: #daa520; }
+#data-one, .portletgraph-one { -webkit-animation-name:bar; background-color: #00008b; color: #FFF; width: 60% }
+#data-two, .portletgraph-two { -webkit-animation-name:bar; background-color: #228b22; color: #FFF; width: 80% }
+#data-three, .portletgraph-three { -webkit-animation-name:bar; background-color: #8a2be2; color: #FFF; width: 64% }
+#data-four, .portletgraph-four { -webkit-animation-name:bar; background-color: #daa520; color: #FFF; width: 99% }
+
+.portletgraph { width: 95%; }
+
+
