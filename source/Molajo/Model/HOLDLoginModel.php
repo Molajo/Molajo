@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Model
  * @since       1.0
  */
-class LoginModel extends DisplayModel
+class HOLDLoginModel extends DisplayModel
 {
     /**
      * __construct

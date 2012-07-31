@@ -14,4 +14,3 @@ defined('MOLAJO') or die; ?>
 if (isset($this->row->text)) {
     echo $this->row->text;
 }
-

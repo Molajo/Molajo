@@ -7,6 +7,6 @@
  */
 defined('MOLAJO') or die;
 ?>
-		</ul>
-	</div>
+        </ul>
+    </div>
 </div>

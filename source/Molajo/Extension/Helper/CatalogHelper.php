@@ -85,16 +85,16 @@ Class CatalogHelper
         /** Route Registry */
         Services::Registry()->set('Parameters', 'catalog_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'catalog_type_id', (int) $item->catalog_type_id);
-		Services::Registry()->set('Parameters', 'catalog_general_type', $item->b_type);
+        Services::Registry()->set('Parameters', 'catalog_general_type', $item->b_type);
         Services::Registry()->set('Parameters', 'catalog_type', $item->b_title);
         Services::Registry()->set('Parameters', 'catalog_url_sef_request', $item->sef_request);
         Services::Registry()->set('Parameters', 'catalog_url_request', $item->catalog_url_request);
         Services::Registry()->set('Parameters', 'catalog_menuitem_type', $item->menuitem_type);
         Services::Registry()->set('Parameters', 'catalog_view_group_id', (int) $item->view_group_id);
         Services::Registry()->set('Parameters', 'catalog_category_id', (int) $item->primary_category_id);
-		Services::Registry()->set('Parameters', 'catalog_extension_instance_id', $item->b_extension_instance_id);
-		Services::Registry()->set('Parameters', 'catalog_model_name', $item->b_model_name);
-		Services::Registry()->set('Parameters', 'catalog_slug', $item->b_slug);
+        Services::Registry()->set('Parameters', 'catalog_extension_instance_id', $item->b_extension_instance_id);
+        Services::Registry()->set('Parameters', 'catalog_model_name', $item->b_model_name);
+        Services::Registry()->set('Parameters', 'catalog_slug', $item->b_slug);
         Services::Registry()->set('Parameters', 'catalog_source_table', $item->b_source_table);
         Services::Registry()->set('Parameters', 'catalog_source_id', (int) $item->source_id);
         Services::Registry()->set('Parameters', 'catalog_tinyurl', (int) $item->tinyurl);
@@ -272,8 +272,8 @@ Class CatalogHelper
 
             $m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('sef_request'));
             $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('id') . ' = ' . (int) $catalog_id);
-			$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('redirect_to_id') . ' = ' . (int) 0);
-			$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('routable') . ' = ' . (int) 1);
+            $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('redirect_to_id') . ' = ' . (int) 0);
+            $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('routable') . ' = ' . (int) 1);
 
             $url = $m->getData('result');
 

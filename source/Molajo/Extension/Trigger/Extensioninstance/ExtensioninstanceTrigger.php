@@ -33,7 +33,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
     {
         if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
             AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
-        ) {
+) {
         } else {
             return true;
         }
@@ -139,7 +139,7 @@ class ExtensioninstanceTrigger extends ContentTrigger
 
         if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
             AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
-        ) {
+) {
         } else {
             return true;
         }

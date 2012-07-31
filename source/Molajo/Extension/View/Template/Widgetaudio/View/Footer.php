@@ -52,7 +52,7 @@ Services::Assets()->addScriptDeclaration($js);
 /** head for individual mp3 **/
 $loader = "window.addEvent('domready', function() { "."\n";
 foreach ($list as $item) {
-	$loader .= 'AudioPlayer.embed("audioplayer' . $this->row->id . '", {soundFile: "'. $this->row->file_link . '"});'; ?>
+    $loader .= 'AudioPlayer.embed("audioplayer' . $this->row->id . '", {soundFile: "'. $this->row->file_link . '"});'; ?>
 <p id="audioplayer_<?php echo $this->id; ?>"><?php echo $this->audio_label; ?></p>
 <?php }
 $loader .= ' });';

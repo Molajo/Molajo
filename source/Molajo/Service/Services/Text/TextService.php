@@ -117,7 +117,7 @@ Class TextService
             return false;
         }
 
-		if ($m->get('data_source', 'JDatabase') == 'JDatabase') {
+        if ($m->get('data_source', 'JDatabase') == 'JDatabase') {
 
             $primary_prefix = $m->get('primary_prefix');
             $primary_key = $m->get('primary_key');
@@ -189,7 +189,7 @@ Class TextService
 
             $this->setWhereCriteria (
                 'extension_instance_id',
-				$m->get('criteria_extension_instance_id'),
+                $m->get('criteria_extension_instance_id'),
                 $primary_prefix,
                 $m
             );
@@ -214,50 +214,48 @@ Class TextService
             $query_object = 'getListdata';
         }
 
-		/** Where: Catalog Type ID */
-		$catalog_type_id = $m->get('criteria_catalog_type_id');
-		if ((int) $catalog_type_id > 0
-			|| strrpos($catalog_type_id, ',') > 0) {
-			$this->setWhereCriteria (
-				'catalog_type_id',
-				$catalog_type_id,
-				$primary_prefix,
-				$m
-			);
-		}
+        /** Where: Catalog Type ID */
+        $catalog_type_id = $m->get('criteria_catalog_type_id');
+        if ((int) $catalog_type_id > 0
+            || strrpos($catalog_type_id, ',') > 0) {
+            $this->setWhereCriteria (
+                'catalog_type_id',
+                $catalog_type_id,
+                $primary_prefix,
+                $m
+            );
+        }
 
         $offset = $m->set('model_offset', 0);
         $count = $m->set('model_count', 9999999);
 
         $query_results = $m->getData($query_object);
 
-
-		if ($filter == 'XYZ') {
-			echo '<br /><br /><br />';
-			echo Services::Registry()->get($filter . 'Listbox', '*');
-			echo $m->model->query->__toString();
-			echo '<pre>';
-			var_dump($query_results);
-			echo '</pre>';
-			echo '<br /><br /><br />';
-		}
-
+        if ($filter == 'XYZ') {
+            echo '<br /><br /><br />';
+            echo Services::Registry()->get($filter . 'Listbox', '*');
+            echo $m->model->query->__toString();
+            echo '<pre>';
+            var_dump($query_results);
+            echo '</pre>';
+            echo '<br /><br /><br />';
+        }
 
         return $query_results;
     }
 
-	/**
-	 * setWhereCriteria
-	 *
-	 * @param $field
-	 * @param $value
-	 * @param $alias
-	 * @param $connection
-	 *
-	 * @return void
-	 * @since  1.0
-	 */
-	protected function setWhereCriteria ($field, $value, $alias, $connection)
+    /**
+     * setWhereCriteria
+     *
+     * @param $field
+     * @param $value
+     * @param $alias
+     * @param $connection
+     *
+     * @return void
+     * @since  1.0
+     */
+    protected function setWhereCriteria ($field, $value, $alias, $connection)
     {
 
         if (strrpos($value, ',') > 0) {
@@ -274,7 +272,7 @@ Class TextService
                 );
         }
 
-		return;
+        return;
     }
 
     /**
@@ -425,34 +423,33 @@ Class TextService
             $row->value = Services::Language()->translate('NOT_STICKIED');
             $query_results[] = $row;
 
-		} elseif (strtolower($list) == 'mediatypes') {
-			$row = new \stdClass();
-			$row->id = 50000;
-			$row->value = Services::Language()->translate('Images');
-			$query_results[] = $row;
+        } elseif (strtolower($list) == 'mediatypes') {
+            $row = new \stdClass();
+            $row->id = 50000;
+            $row->value = Services::Language()->translate('Images');
+            $query_results[] = $row;
 
-			$row = new \stdClass();
-			$row->id = 51000;
-			$row->value = Services::Language()->translate('Files');
-			$query_results[] = $row;
+            $row = new \stdClass();
+            $row->id = 51000;
+            $row->value = Services::Language()->translate('Files');
+            $query_results[] = $row;
 
-			$row = new \stdClass();
-			$row->id = 52000;
-			$row->value = Services::Language()->translate('Video');
-			$query_results[] = $row;
+            $row = new \stdClass();
+            $row->id = 52000;
+            $row->value = Services::Language()->translate('Video');
+            $query_results[] = $row;
 
-			$row = new \stdClass();
-			$row->id = 53000;
-			$row->value = Services::Language()->translate('Audio');
-			$query_results[] = $row;
+            $row = new \stdClass();
+            $row->id = 53000;
+            $row->value = Services::Language()->translate('Audio');
+            $query_results[] = $row;
 
-			$row = new \stdClass();
-			$row->id = 54000;
-			$row->value = Services::Language()->translate('Links');
-			$query_results[] = $row;
+            $row = new \stdClass();
+            $row->id = 54000;
+            $row->value = Services::Language()->translate('Links');
+            $query_results[] = $row;
 
-
-		} elseif (strtolower($list) == 'protected') {
+        } elseif (strtolower($list) == 'protected') {
             $row = new \stdClass();
             $row->id = 1;
             $row->value = Services::Language()->translate('PROTECTED');
@@ -502,6 +499,7 @@ Class TextService
         }
 
         /** Return results to Model */
+
         return $query_results;
     }
 }

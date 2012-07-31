@@ -240,11 +240,9 @@ Class RegistryService
         }
 
         if ($namespace == '*') {
-
             return $this->listRegistry('*');
 
         } elseif ($key == null) {
-
             return $this->getRegistry($namespace);
 
         } elseif ($key == '*' || strpos($key, '*')) {

@@ -8,7 +8,6 @@ namespace Molajo\Extension\Trigger\Readmore;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 
-
 defined('MOLAJO') or die;
 
 /**

@@ -130,7 +130,7 @@ Class ImageService
             || $this->size == 3
             || $this->size == 4
             || $this->size == 5
-        ) {
+) {
         } else {
             $this->size = 0;
         }
@@ -138,7 +138,7 @@ Class ImageService
             || $this->type == 'portrait'
                 || $this->type == 'landscape'
                     || $this->type == 'auto'
-        ) {
+) {
         } else {
             $this->type = 'crop';
         }

@@ -2518,7 +2518,6 @@ class Twitter
         if ($geocode !== null) $parameters['geocode'] = (string) $geocode;
         if ($showUser === true) $parameters['show_user'] = 'true';
         if ($resultType !== null) $parameters['result_type'] = (string) $resultType;
-
         return (array) $this->doSearchCall('search.json', $parameters);
     }
 
@@ -2891,4 +2890,3 @@ class Twitter
 class TwitterException extends \Exception
 {
 }
-

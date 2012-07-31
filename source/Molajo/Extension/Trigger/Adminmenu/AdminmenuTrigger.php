@@ -29,19 +29,19 @@ class AdminmenuTrigger extends ContentTrigger
     public function onBeforeParse()
     {
 
-		/** Only used for the Administrator */
-		if (APPLICATION_ID == 2) {
-		} else {
-			return true;
-		}
+        /** Only used for the Administrator */
+        if (APPLICATION_ID == 2) {
+        } else {
+            return true;
+        }
 
         /** Data Source Connection */
         $controllerClass = 'Molajo\\Controller\\Controller';
         $connect = new $controllerClass();
 
         $results = $connect->connect(
-			$this->get('model_type'),
-			$this->get('model_name')
+            $this->get('model_type'),
+            $this->get('model_name')
         );
 
         if ($results == false) {
@@ -92,9 +92,9 @@ class AdminmenuTrigger extends ContentTrigger
         // 1. Home
         $menuArray[] = 'Adminnavigationbar';
         $menuArray[] = 'Adminsectionmenu';
-		if (count($bread_crumbs) > 2) {
-        	$menuArray[] = 'Adminstatusmenu';
-		}
+        if (count($bread_crumbs) > 2) {
+            $menuArray[] = 'Adminstatusmenu';
+        }
 
         $i = 0;
         foreach ($bread_crumbs as $item) {
@@ -108,34 +108,35 @@ class AdminmenuTrigger extends ContentTrigger
             );
 
             Services::Registry()->set('Triggerdata', $menuArray[$i], $query_results);
-			$i++;
+            $i++;
 
             if ($i > count($menuArray) - 1) {
                 break;
             }
         }
 /**
-		echo '<br />Adminnavigationbar <br />';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Triggerdata','Adminnavigationbar'));
-		echo '</pre>';
+        echo '<br />Adminnavigationbar <br />';
+        echo '<pre>';
+        var_dump(Services::Registry()->get('Triggerdata','Adminnavigationbar'));
+        echo '</pre>';
 
-		echo '<br />Adminsectionmenu <br />';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Triggerdata','Adminsectionmenu'));
-		echo '</pre>';
+        echo '<br />Adminsectionmenu <br />';
+        echo '<pre>';
+        var_dump(Services::Registry()->get('Triggerdata','Adminsectionmenu'));
+        echo '</pre>';
 
-		echo '<br />Adminstatusmenu <br />';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Triggerdata','Adminstatusmenu'));
-		echo '</pre>';
+        echo '<br />Adminstatusmenu <br />';
+        echo '<pre>';
+        var_dump(Services::Registry()->get('Triggerdata','Adminstatusmenu'));
+        echo '</pre>';
 
-		echo '<br />Adminbreadcrumbs <br />';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Triggerdata','Adminbreadcrumbs'));
-		echo '</pre>';
+        echo '<br />Adminbreadcrumbs <br />';
+        echo '<pre>';
+        var_dump(Services::Registry()->get('Triggerdata','Adminbreadcrumbs'));
+        echo '</pre>';
 */
-		return;
+
+        return;
     }
 
     /**

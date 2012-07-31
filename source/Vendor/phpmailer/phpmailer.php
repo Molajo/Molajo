@@ -38,7 +38,7 @@ namespace phpmailer;
 
 if (version_compare(PHP_VERSION, '5.0.0', '<')) exit("Sorry, this version of PHPMailer will only run on PHP version 5 or greater!\n");
 
-class PHPMailer
+class phpmailer
 {
 
     /////////////////////////////////////////////////
@@ -608,7 +608,6 @@ class PHPMailer
     {
         try {
             if (!$this->PreSend()) return false;
-
             return $this->PostSend();
         } catch (phpmailerException $e) {
             $this->SentMIMEMessage = '';
@@ -2660,4 +2659,3 @@ class phpmailerException extends \Exception
         return $errorMsg;
     }
 }
-

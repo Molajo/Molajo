@@ -5,5 +5,4 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-echo json_encode($this->query_results); ?>
-
+echo json_encode($this->query_results);

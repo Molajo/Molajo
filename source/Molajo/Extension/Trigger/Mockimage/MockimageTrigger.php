@@ -31,7 +31,7 @@ class MockimageTrigger extends ContentTrigger
 
         if (is_array($fields) && count($fields) > 0) {
 
-			foreach ($fields as $field) {
+            foreach ($fields as $field) {
 
                 $name = $field->name;
 

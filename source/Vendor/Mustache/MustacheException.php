@@ -6,8 +6,8 @@ namespace Mustache;
  *
  * @extends Exception
  */
-class MustacheException extends \Exception {
-
+class MustacheException extends \Exception
+{
     // An UNKNOWN_VARIABLE exception is thrown when a {{variable}} is not found
     // in the current context.
     const UNKNOWN_VARIABLE         = 0;

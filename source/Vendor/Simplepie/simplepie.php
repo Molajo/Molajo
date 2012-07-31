@@ -394,7 +394,7 @@ define('SIMPLEPIE_FILE_SOURCE_FILE_GET_CONTENTS', 16);
  *
  * @package SimplePie
  */
-class SimplePie
+class simplepie
 {
     /**
      * @var array Raw data
@@ -5789,7 +5789,6 @@ class SimplePie_Enclosure
 
         // Everything else
         else $embed .= '<a href="' . $this->get_link() . '" class="' . $altclass . '">' . $alt . '</a>';
-
         return $embed;
     }
 
@@ -11529,7 +11528,7 @@ class SimplePie_Content_Type_Sniffer
 
             if ($official === 'unknown/unknown'
                 || $official === 'application/unknown'
-            ) {
+) {
                 return $this->unknown();
             } elseif (substr($official, -4) === '+xml'
                 || $official === 'text/xml'
@@ -12747,4 +12746,3 @@ class SimplePie_Sanitize
         }
     }
 }
-

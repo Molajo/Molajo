@@ -45,4 +45,3 @@ function utf8_ucwords_callback($matches)
 
     return $leadingws . $ucword;
 }
-

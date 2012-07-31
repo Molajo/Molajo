@@ -20,7 +20,7 @@ $rowCount = Services::Registry()->get('Triggerdata', 'AdminGridTableRows'); ?>
             $extraClass = '';
             if ($count == 1) {
                 $extraClass .= 'first';
-				$nowrap = ' nowrap ';
+                $nowrap = ' nowrap ';
             }
             if ($count == count($columnArray)) {
                 $extraClass .= 'last';

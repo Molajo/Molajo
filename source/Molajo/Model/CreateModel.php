@@ -136,7 +136,7 @@ class CreateModel extends Model
             || $type == 'binary'
             || $type == 'catalog_id'
             || $type == 'boolean'
-        ) {
+) {
 
             $value = (int) $input;
 
@@ -146,7 +146,7 @@ class CreateModel extends Model
             || $type == 'email'
             || $type == 'text'
             || $type == 'ip_address'
-        ) {
+) {
 
             $value = $this->db->q($input);
 

@@ -1,5 +1,4 @@
 <?php
-use Molajo\Service\Services;
 
 /**
  * @package    Molajo
@@ -8,9 +7,9 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 ?>
-			<li class="unavailable"><a href="">&hellip;</a></li>
-			<li class="arrow"><a href="<?php echo $this->row->next_link; ?>">&raquo;</a></li>
-		</ul>
-	</div>
+            <li class="unavailable"><a href="">&hellip;</a></li>
+            <li class="arrow"><a href="<?php echo $this->row->next_link; ?>">&raquo;</a></li>
+        </ul>
+    </div>
 </div>
 <div id="testAjax"></div>

@@ -891,7 +891,6 @@ class HTMLPurifier_Bootstrap
             $file = str_replace('_', '/', $class) . '.php';
         }
         if (!file_exists(HTMLPURIFIER_PREFIX . '/' . $file)) return false;
-
         return $file;
     }
 
@@ -1477,7 +1476,6 @@ class HTMLPurifier_Config
         }
         if (is_string($config)) $ret->loadIni($config);
         elseif (is_array($config)) $ret->loadArray($config);
-
         return $ret;
     }
 
@@ -1785,7 +1783,6 @@ class HTMLPurifier_Config
                 } else {
                     $def->setup($this);
                     if ($def->optimized) $cache->add($def, $this);
-
                     return $def;
                 }
             }
@@ -2852,7 +2849,6 @@ class HTMLPurifier_DoctypeRegistry
         }
         // remove old aliases
         if (isset($this->aliases[$name])) unset($this->aliases[$name]);
-
         return $doctype;
     }
 
@@ -3792,7 +3788,6 @@ class HTMLPurifier_EntityParser
 
             // abort for special characters
             if (isset($this->_special_dec2str[$code])) return $entity;
-
             return HTMLPurifier_Encoder::unichr($code);
         } else {
             if (isset($this->_special_ent2dec[$matches[3]])) return $entity;
@@ -4262,7 +4257,7 @@ class HTMLPurifier_Generator
         for ($i = 0, $size = count($tokens); $i < $size; $i++) {
             if ($this->_scriptFix && $tokens[$i]->name === 'script'
                 && $i + 2 < $size && $tokens[$i + 2] instanceof HTMLPurifier_Token_End
-            ) {
+) {
                 // script special case
                 // the contents of the script block must be ONE token
                 // for this to work.
@@ -4440,7 +4435,6 @@ class HTMLPurifier_Generator
         // Workaround for APC bug on Mac Leopard reported by sidepodcast
         // http://htmlpurifier.org/phorum/read.php?3,4823,4846
         if ($quote === null) $quote = ENT_COMPAT;
-
         return htmlspecialchars($string, $quote, 'UTF-8');
     }
 
@@ -5025,7 +5019,6 @@ class HTMLPurifier_HTMLModule
         );
         // literal object $contents means direct child manipulation
         if (!is_string($contents)) $this->info[$element]->child = $contents;
-
         return $this->info[$element];
     }
 
@@ -5598,7 +5591,6 @@ class HTMLPurifier_IDAccumulator
     public function add($id)
     {
         if (isset($this->ids[$id])) return false;
-
         return $this->ids[$id] = true;
     }
 
@@ -5952,7 +5944,6 @@ class HTMLPurifier_Language
     {
         if (!$this->_loaded) $this->load();
         if (!isset($this->messages[$key])) return "[$key]";
-
         return $this->messages[$key];
     }
 
@@ -5966,7 +5957,6 @@ class HTMLPurifier_Language
     {
         if (!$this->_loaded) $this->load();
         if (!isset($this->errorNames[$int])) return "[Error: $int]";
-
         return $this->errorNames[$int];
     }
 
@@ -6301,7 +6291,6 @@ class HTMLPurifier_Length
         $n = substr($s, 0, $n_length);
         $unit = substr($s, $n_length);
         if ($unit === '') $unit = false;
-
         return new HTMLPurifier_Length($n, $unit);
     }
 
@@ -6330,7 +6319,6 @@ class HTMLPurifier_Length
     public function toString()
     {
         if (!$this->isValid()) return false;
-
         return $this->n . $this->unit;
     }
 
@@ -6356,7 +6344,6 @@ class HTMLPurifier_Length
     public function isValid()
     {
         if ($this->isValid === null) $this->isValid = $this->validate();
-
         return $this->isValid;
     }
 
@@ -7520,7 +7507,6 @@ class HTMLPurifier_URI
         $result .= $this->path;
         if (!is_null($this->query)) $result .= '?' . $this->query;
         if (!is_null($this->fragment)) $result .= '#' . $this->fragment;
-
         return $result;
     }
 
@@ -7538,7 +7524,6 @@ class HTMLPurifier_URI
         if ($this->host === null) return true;
         $uri_def = $config->getDefinition('URI');
         if ($uri_def->host === $this->host) return true;
-
         return false;
     }
 
@@ -8321,19 +8306,15 @@ class HTMLPurifier_VarParser
             case (self::ITEXT):
                 if (!is_string($var)) break;
                 if ($type == self::ISTRING || $type == self::ITEXT) $var = strtolower($var);
-
                 return $var;
             case (self::INT):
                 if (!is_int($var)) break;
-
                 return $var;
             case (self::FLOAT):
                 if (!is_float($var)) break;
-
                 return $var;
             case (self::BOOL):
                 if (!is_bool($var)) break;
-
                 return $var;
             case (self::LOOKUP):
             case (self::ALIST):
@@ -8400,7 +8381,6 @@ class HTMLPurifier_VarParser
             $lookup = array_flip(HTMLPurifier_VarParser::$types);
         }
         if (!isset($lookup[$type])) return 'unknown';
-
         return $lookup[$type];
     }
 
@@ -8662,7 +8642,6 @@ class HTMLPurifier_AttrDef_Integer extends HTMLPurifier_AttrDef
         if (!$this->zero && $integer == 0) return false;
         if (!$this->positive && $integer > 0) return false;
         if (!$this->negative && $integer < 0) return false;
-
         return $integer;
 
     }
@@ -8952,7 +8931,6 @@ class HTMLPurifier_AttrDef_CSS_AlphaValue extends HTMLPurifier_AttrDef_CSS_Numbe
         $float = (float) $result;
         if ($float < 0.0) $result = '0';
         if ($float > 1.0) $result = '1';
-
         return $result;
     }
 
@@ -9039,7 +9017,6 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
         }
 
         if (empty($ret)) return false;
-
         return implode(' ', $ret);
 
     }
@@ -9171,7 +9148,6 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
         elseif (count($measures)) $ret[] = array_shift($measures);
 
         if (empty($ret)) return false;
-
         return implode(' ', $ret);
 
     }
@@ -9361,7 +9337,6 @@ class HTMLPurifier_AttrDef_CSS_DenyElementDecorator extends HTMLPurifier_AttrDef
     {
         $token = $context->get('CurrentToken', true);
         if ($token && $token->name == $this->element) return false;
-
         return $this->def->validate($string, $config, $context);
     }
 }
@@ -9763,7 +9738,6 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
         }
         $final = rtrim($final, ', ');
         if ($final === '') return false;
-
         return $final;
     }
 
@@ -9786,7 +9760,6 @@ class HTMLPurifier_AttrDef_CSS_Ident extends HTMLPurifier_AttrDef
 
         $pattern = '/^(-?[A-Za-z_][A-Za-z_\-0-9]*)$/';
         if (!preg_match($pattern, $string)) return false;
-
         return $string;
 
     }
@@ -9830,7 +9803,6 @@ class HTMLPurifier_AttrDef_CSS_ImportantDecorator extends HTMLPurifier_AttrDef
         }
         $string = $this->def->validate($string, $config, $context);
         if ($this->allow && $is_important) $string .= ' !important';
-
         return $string;
     }
 }
@@ -9954,7 +9926,6 @@ class HTMLPurifier_AttrDef_CSS_ListStyle extends HTMLPurifier_AttrDef
         if ($caught['position']) $ret[] = $caught['position'];
 
         if (empty($ret)) return false;
-
         return implode(' ', $ret);
 
     }
@@ -10014,7 +9985,6 @@ class HTMLPurifier_AttrDef_CSS_Multiple extends HTMLPurifier_AttrDef
             }
         }
         if ($final === '') return false;
-
         return rtrim($final);
     }
 
@@ -10054,7 +10024,6 @@ class HTMLPurifier_AttrDef_CSS_Percentage extends HTMLPurifier_AttrDef
         $number = $this->number_def->validate($number, $config, $context);
 
         if ($number === false) return false;
-
         return "$number%";
 
     }
@@ -10092,7 +10061,6 @@ class HTMLPurifier_AttrDef_CSS_TextDecoration extends HTMLPurifier_AttrDef
         }
         $final = rtrim($final);
         if ($final === '') return false;
-
         return $final;
 
     }
@@ -10153,7 +10121,6 @@ class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
         // an innerHTML cycle, so a very unlucky query parameter could
         // then change the meaning of the URL.  Unfortunately, there's
         // not much we can do about that...
-
         return "url(\"$result\")";
 
     }
@@ -10177,7 +10144,6 @@ class HTMLPurifier_AttrDef_HTML_Bool extends HTMLPurifier_AttrDef
     public function validate($string, $config, $context)
     {
         if (empty($string)) return false;
-
         return $this->name;
     }
 
@@ -10208,7 +10174,6 @@ class HTMLPurifier_AttrDef_HTML_Nmtokens extends HTMLPurifier_AttrDef
         $tokens = $this->split($string, $config, $context);
         $tokens = $this->filter($tokens, $config, $context);
         if (empty($tokens)) return false;
-
         return implode(' ', $tokens);
 
     }
@@ -10306,7 +10271,6 @@ class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
         if ($length !== 3 && $length !== 6) return false;
         if (!ctype_xdigit($hex)) return false;
         if ($length === 3) $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
-
         return "#$hex";
 
     }
@@ -10330,7 +10294,6 @@ class HTMLPurifier_AttrDef_HTML_FrameTarget extends HTMLPurifier_AttrDef_Enum
     public function validate($string, $config, $context)
     {
         if ($this->valid_values === false) $this->valid_values = $config->get('Attr.AllowedFrameTargets');
-
         return parent::validate($string, $config, $context);
     }
 
@@ -10450,7 +10413,6 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
         // WARNING, above link WILL crash you if you're using Windows
 
         if ($this->max !== null && $int > $this->max) return (string) $this->max;
-
         return (string) $int;
 
     }
@@ -10498,7 +10460,6 @@ class HTMLPurifier_AttrDef_HTML_Length extends HTMLPurifier_AttrDef_HTML_Pixels
 
         if ($points < 0) return '0%';
         if ($points > 100) return '100%';
-
         return ((string) $points) . '%';
 
     }
@@ -10593,7 +10554,6 @@ class HTMLPurifier_AttrDef_HTML_MultiLength extends HTMLPurifier_AttrDef_HTML_Le
         if ($int < 0) return false;
         if ($int == 0) return '0';
         if ($int == 1) return '*';
-
         return ((string) $int) . '*';
 
     }
@@ -10654,7 +10614,6 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
             $ip = substr($string, 1, $length - 2);
             $valid = $this->ipv6->validate($ip, $config, $context);
             if ($valid === false) return false;
-
             return '[' . $valid . ']';
         }
 
@@ -11252,7 +11211,6 @@ class HTMLPurifier_AttrTransform_NameSync extends HTMLPurifier_AttrTransform
         $result = $this->idDef->validate($name, $config, $context);
         if ($result === false) unset($attr['name']);
         else $attr['name'] = $result;
-
         return $attr;
     }
 
@@ -11326,7 +11284,6 @@ class HTMLPurifier_AttrTransform_SafeObject extends HTMLPurifier_AttrTransform
     public function transform($attr, $config, $context)
     {
         if (!isset($attr['type'])) $attr['type'] = 'application/x-shockwave-flash';
-
         return $attr;
     }
 }
@@ -11458,7 +11415,6 @@ class HTMLPurifier_AttrTransform_Textarea extends HTMLPurifier_AttrTransform
         // Calculated from Firefox
         if (!isset($attr['cols'])) $attr['cols'] = '22';
         if (!isset($attr['rows'])) $attr['rows'] = '3';
-
         return $attr;
     }
 
@@ -11747,7 +11703,6 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
             return false;
         }
         if ($tokens_of_children == $result) return true;
-
         return $result;
     }
 }
@@ -11869,7 +11824,6 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
             return false;
         }
         if ($tokens_of_children == $result) return true;
-
         return $result;
     }
 }
@@ -11974,7 +11928,6 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
             if ($token instanceof HTMLPurifier_Token_End) $depth--;
         }
         if ($is_inline) $ret[] = $block_wrap_end;
-
         return $ret;
     }
 
@@ -12347,7 +12300,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends
         $file = $this->generateFilePath($config);
         if (file_exists($file)) return false;
         if (!$this->_prepareDir($config)) return false;
-
         return $this->_write($file, serialize($def), $config);
     }
 
@@ -12356,7 +12308,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends
         if (!$this->checkDefType($def)) return;
         $file = $this->generateFilePath($config);
         if (!$this->_prepareDir($config)) return false;
-
         return $this->_write($file, serialize($def), $config);
     }
 
@@ -12366,7 +12317,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends
         $file = $this->generateFilePath($config);
         if (!file_exists($file)) return false;
         if (!$this->_prepareDir($config)) return false;
-
         return $this->_write($file, serialize($def), $config);
     }
 
@@ -12374,7 +12324,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends
     {
         $file = $this->generateFilePath($config);
         if (!file_exists($file)) return false;
-
         return unserialize(file_get_contents($file));
     }
 
@@ -12382,7 +12331,6 @@ class HTMLPurifier_DefinitionCache_Serializer extends
     {
         $file = $this->generateFilePath($config);
         if (!file_exists($file)) return false;
-
         return unlink($file);
     }
 
@@ -12571,7 +12519,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Cleanup extends
     {
         $status = parent::add($def, $config);
         if (!$status) parent::cleanup($config);
-
         return $status;
     }
 
@@ -12579,7 +12526,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Cleanup extends
     {
         $status = parent::set($def, $config);
         if (!$status) parent::cleanup($config);
-
         return $status;
     }
 
@@ -12587,7 +12533,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Cleanup extends
     {
         $status = parent::replace($def, $config);
         if (!$status) parent::cleanup($config);
-
         return $status;
     }
 
@@ -12595,7 +12540,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Cleanup extends
     {
         $ret = parent::get($config);
         if (!$ret) parent::cleanup($config);
-
         return $ret;
     }
 
@@ -12623,7 +12567,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends
     {
         $status = parent::add($def, $config);
         if ($status) $this->definitions[$this->generateKey($config)] = $def;
-
         return $status;
     }
 
@@ -12631,7 +12574,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends
     {
         $status = parent::set($def, $config);
         if ($status) $this->definitions[$this->generateKey($config)] = $def;
-
         return $status;
     }
 
@@ -12639,7 +12581,6 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends
     {
         $status = parent::replace($def, $config);
         if ($status) $this->definitions[$this->generateKey($config)] = $def;
-
         return $status;
     }
 
@@ -14135,7 +14076,6 @@ class HTMLPurifier_HTMLModule_Tidy_Strict extends HTMLPurifier_HTMLModule_Tidy_X
     public function getChildDef($def)
     {
         if ($def->content_model_type != 'strictblockquote') return parent::getChildDef($def);
-
         return new HTMLPurifier_ChildDef_StrictBlockquote($def->content_model);
     }
 }
@@ -14337,7 +14277,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                 if ($this->backward($i, $prev)) {
                     if (
                         !$prev instanceof HTMLPurifier_Token_Text
-                    ) {
+) {
                         // State 3.1.1: ...</p>{p}<b>
                         //                        ---
 
@@ -14998,7 +14938,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         } elseif (
             // not-well tested: there may be other nodes we have to grab
             $node->nodeType !== XML_ELEMENT_NODE
-        ) {
+) {
             return false;
         }
 
@@ -15200,7 +15140,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $synchronize_interval && // synchronization is on
                     $cursor > 0 && // cursor is further than zero
                     $loops % $synchronize_interval === 0 // time to synchronize!
-                ) {
+) {
                     $current_line = 1 + $this->substrCount($html, $nl, 0, $cursor);
                 }
 
@@ -15466,7 +15406,6 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             $quoted_value = trim($quoted_value);
             if (!$key) {
                 if ($e) $e->send(E_ERROR, 'Lexer: Missing attribute key');
-
                 return array();
             }
             if (!$quoted_value) return array($key => '');
@@ -15489,7 +15428,6 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 }
             }
             if ($value === false) $value = '';
-
             return array($key => $this->parseData($value));
         }
 
@@ -15954,7 +15892,6 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 
         //####################################################################//
         // Return
-
         return $tokens;
 
     }
@@ -17031,7 +16968,6 @@ class HTMLPurifier_URIFilter_DisableExternalResources extends HTMLPurifier_URIFi
     public function filter(&$uri, $config, $context)
     {
         if (!$context->get('EmbeddedURI', true)) return true;
-
         return parent::filter($uri, $config, $context);
     }
 }
@@ -17151,7 +17087,6 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
         if (is_null($uri->userinfo)) $uri->userinfo = $this->base->userinfo;
         if (is_null($uri->host)) $uri->host = $this->base->host;
         if (is_null($uri->port)) $uri->port = $this->base->port;
-
         return true;
     }
 
@@ -17191,7 +17126,6 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
             $result[] = $stack[$i];
         }
         if ($is_folder) $result[] = '';
-
         return $result;
     }
 }
@@ -17588,11 +17522,9 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                 return $var;
             case self::INT :
                 if (is_string($var) && ctype_digit($var)) $var = (int) $var;
-
                 return $var;
             case self::FLOAT :
                 if ((is_string($var) && is_numeric($var)) || is_int($var)) $var = (float) $var;
-
                 return $var;
             case self::BOOL :
                 if (is_int($var) && ($var === 0 || $var === 1)) {
@@ -17698,4 +17630,3 @@ class HTMLPurifier_VarParser_Native extends HTMLPurifier_VarParser
     }
 
 }
-

@@ -61,7 +61,7 @@ Class SessionService
 
     protected function __construct()
     {
-		return $this;
+        return $this;
 
         $session = new Session();
         $session->start();
@@ -70,16 +70,10 @@ Class SessionService
         $session->set('name', 'Drak');
         echo $session->get('name');
 
-
-
-
         // set flash messages
         $session->getFlashBag()->add('notice', 'Profile updated');
 
         // retrieve messages
-
-
-
 
         foreach ($session->getFlashBag()->get('notice', array()) as $message) {
         echo "<div class='flash-notice'>$message</div>";

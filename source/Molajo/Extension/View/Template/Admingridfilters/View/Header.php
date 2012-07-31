@@ -9,6 +9,6 @@ defined('MOLAJO') or die;
 
 $action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 <div id="m-filters" style="display: none;">
-	<h3><?php echo Services::Language()->translate('Filter Content'); ?></h3>
-	<form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
-	<ul class="filter">
+    <h3><?php echo Services::Language()->translate('Filter Content'); ?></h3>
+    <form action="<?php echo $action; ?>" method="post" name="Admingridfilters">
+    <ul class="filter">

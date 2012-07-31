@@ -176,4 +176,3 @@ function isMobile()
 
     return FALSE;
 }
-

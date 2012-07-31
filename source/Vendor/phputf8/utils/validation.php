@@ -133,7 +133,6 @@ function utf8_is_valid($str)
                         // Codepoints outside the Unicode range are illegal
                         ($mUcs4 > 0x10FFFF)
                     ) {
-
                         return FALSE;
 
                     }
@@ -187,4 +186,3 @@ function utf8_compliant($str)
     // some valid sequences
     return (preg_match('/^.{1}/us', $str, $ar) == 1);
 }
-

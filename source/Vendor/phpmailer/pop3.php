@@ -56,7 +56,7 @@
  * @author Richard Davey
  */
 
-class POP3
+class pop3
 {
     /**
      * Default POP3 port
@@ -419,4 +419,3 @@ Rather than supress it with @fsockopen, let's capture it cleanly instead
 
     //  End of class
 }
-

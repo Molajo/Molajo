@@ -1,5 +1,4 @@
 <?php
-use Molajo\Service\Services;
 /**
  * @package     Molajo
  * @copyright   2012 Amy Stephen. All rights reserved.
@@ -8,28 +7,27 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 ?>
 <div class="row">
-	<div class="twelve columns">
-		<div class="row">
-			<div class="six columns">
-				<label>Title</label>
-				<input type="text" placeholder="Title"/>
-			</div>
-			<div class="six columns">
-				<label>Author</label>
-				<input type="text" placeholder="Author"/>
-			</div>
-		</div>
-		<include:template name=Editeditor/>
-		<div class="row">
-			<div class="six columns">
-				<label>Tags</label>
-				<input type="text" placeholder="Title"/>
-			</div>
-			<div class="six columns">
-				<label>Categories</label>
-				<input type="text" placeholder="Title"/>
-			</div>
-		</div>
-	</div>
+    <div class="twelve columns">
+        <div class="row">
+            <div class="six columns">
+                <label>Title</label>
+                <input type="text" placeholder="Title"/>
+            </div>
+            <div class="six columns">
+                <label>Author</label>
+                <input type="text" placeholder="Author"/>
+            </div>
+        </div>
+        <include:template name=Editeditor/>
+        <div class="row">
+            <div class="six columns">
+                <label>Tags</label>
+                <input type="text" placeholder="Title"/>
+            </div>
+            <div class="six columns">
+                <label>Categories</label>
+                <input type="text" placeholder="Title"/>
+            </div>
+        </div>
+    </div>
 </div>
-

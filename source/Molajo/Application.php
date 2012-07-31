@@ -92,7 +92,7 @@ Class Application
 
         /** 4. Execute */
         if ($results == true
-			|| Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+            || Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
             $results = $this->execute();
         }
 
@@ -250,8 +250,9 @@ Class Application
         }
 
         if ($results == false
-			|| Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+            || Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
             Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
+
             return false;
         }
 
@@ -373,7 +374,7 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
 */
         /** Theme must exist */
         if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include')) ) {
-		} else {
+        } else {
             Services::Error()->set(500, 'Theme Not found');
             echo 'ThemeNot found - application stopped before parse. Parameters follow:';
             Services::Registry()->get('Parameters', '*');
@@ -432,7 +433,7 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
 
             $results = Services::Response()
                 ->setContent($this->rendered_output)
-			    ->setStatusCode(200)
+                ->setStatusCode(200)
                 ->send();
 
         } else {
@@ -647,7 +648,7 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
                 if (strtolower((string) $single->site_base_url) == strtolower($site_base_url)) {
                     define('SITE_BASE_URL', (string) $single->site_base_url);
                     define('SITE_BASE_PATH', BASE_FOLDER . (string) $single->site_base_folder);
-					define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string) $single->site_base_folder);
+                    define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string) $single->site_base_folder);
                     define('SITE_ID', $single->id);
                     break;
                 }

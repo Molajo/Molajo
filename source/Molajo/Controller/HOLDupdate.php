@@ -24,7 +24,7 @@ defined('MOLAJO') or die;
  * @subpackage  Controller
  * @since       1.0
  */
-class CreateController extends Controller
+class HOLDupdate extends Controller
 {
     /**
      * cancelItem

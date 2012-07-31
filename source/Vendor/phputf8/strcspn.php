@@ -39,4 +39,3 @@ function utf8_strcspn($str, $mask, $start = NULL, $length = NULL)
     return 0;
 
 }
-

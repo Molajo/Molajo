@@ -98,7 +98,6 @@ class HTMLPurifier_Printer
     protected function row($name, $value)
     {
         if (is_bool($value)) $value = $value ? 'On' : 'Off';
-
         return
             $this->start('tr') . "\n" .
             $this->element('th', $name) . "\n" .

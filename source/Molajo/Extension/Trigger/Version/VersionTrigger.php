@@ -33,7 +33,7 @@ class VersionTrigger extends ContentTrigger
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue == false
             || $fieldValue == ''
-        ) {
+) {
             $newFieldValue = 1;
             $this->saveField($field, $name, $newFieldValue);
         }
@@ -43,7 +43,7 @@ class VersionTrigger extends ContentTrigger
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue == false
             || $fieldValue == ''
-        ) {
+) {
             $newFieldValue = 0;
             $this->saveField($field, $name, $newFieldValue);
         }
@@ -53,7 +53,7 @@ class VersionTrigger extends ContentTrigger
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue == false
             || $fieldValue == ''
-        ) {
+) {
             $newFieldValue = 0;
             $this->saveField($field, $name, $newFieldValue);
         }
@@ -74,7 +74,7 @@ class VersionTrigger extends ContentTrigger
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue == false
             || $fieldValue == ''
-        ) {
+) {
             $newFieldValue = 1 + 1;
             $this->saveField($field, $name, $newFieldValue);
         }
@@ -84,7 +84,7 @@ class VersionTrigger extends ContentTrigger
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue == false
             || $fieldValue == ''
-        ) {
+) {
             $newFieldValue = $this->data->status;
             $this->saveField($field, $name, $newFieldValue);
         }

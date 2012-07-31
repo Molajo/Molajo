@@ -72,7 +72,7 @@ Class MessageService
         if ($type == MESSAGE_TYPE_INFORMATION
             || $type == MESSAGE_TYPE_WARNING
             || $type == MESSAGE_TYPE_ERROR
-        ) {
+) {
         } else {
             $type = MESSAGE_TYPE_SUCCESS;
         }
