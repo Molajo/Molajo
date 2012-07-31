@@ -9,14 +9,14 @@ defined('MOLAJO') or die; ?>
     <h4>Graph</h4>
 </div>
 <div class="ui-portlet-content">
-	<dl style="width: 300px">
-		<dt>2008</dt>
-		<dd><div id="data-one" class="bar" style="width: 60%">60%</div></dd>
-		<dt>2009</dt>
-		<dd><div id="data-two" class="bar" style="width: 80%">80%</div></dd>
-		<dt>2010</dt>
-		<dd><div id="data-three" class="bar" style="width: 64%">64%</div></dd>
-		<dt>2011</dt>
-		<dd><div id="data-four" class="bar" style="width: 97%">97%</div></dd>
+	<dl class="portletgraph">
+		<dt><strong>2009</strong></dt>
+		<dd><div id="data-one" class="bar portletgraph-one">60%</div></dd>
+		<dt><strong>2010</strong></dt>
+		<dd><div id="data-two" class="bar portletgraph-two">80%</div></dd>
+		<dt><strong>2011</strong></dt>
+		<dd><div id="data-three" class="bar portletgraph-three">64%</div></dd>
+		<dt><strong>2012</strong></dt>
+		<dd><div id="data-four" class="bar portletgraph-four">97%</div></dd>
 	</dl>
 </div>
