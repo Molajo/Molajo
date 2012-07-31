@@ -6,7 +6,7 @@
  */
 defined('MOLAJO') or die; ?>
 <div class="ui-widget-header">
-    <h4>Title</h4>
+    <h4>Audio</h4>
 </div>
 <div class="ui-widget-content">
     <audio>

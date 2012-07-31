@@ -6,7 +6,10 @@
  */
 defined('MOLAJO') or die; ?>
 <div class="ui-widget-header">
-    <h4>Title</h4>
+    <h4>Video</h4>
 </div>
 <div class="ui-widget-content">
-    <ul>
+	<div class="video-container">
+		<iframe src="http://player.vimeo.com/video/6284199?title=0&byline=0&portrait=0" width="800" height="450" frameborder="0"></iframe>
+	</div>
+</div>
