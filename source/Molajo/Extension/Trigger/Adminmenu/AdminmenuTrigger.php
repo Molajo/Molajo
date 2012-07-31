@@ -28,6 +28,7 @@ class AdminmenuTrigger extends ContentTrigger
      */
     public function onBeforeParse()
     {
+
 		/** Only used for the Administrator */
 		if (APPLICATION_ID == 2) {
 		} else {
@@ -92,7 +93,7 @@ class AdminmenuTrigger extends ContentTrigger
         $menuArray[] = 'Adminnavigationbar';
         $menuArray[] = 'Adminsectionmenu';
 		if (count($bread_crumbs) > 2) {
-        	$menuArray[] = 'Adminresourcemenu';
+        	$menuArray[] = 'Adminstatusmenu';
 		}
 
         $i = 0;
@@ -124,9 +125,9 @@ class AdminmenuTrigger extends ContentTrigger
 		var_dump(Services::Registry()->get('Triggerdata','Adminsectionmenu'));
 		echo '</pre>';
 
-		echo '<br />Adminresourcemenu <br />';
+		echo '<br />Adminstatusmenu <br />';
 		echo '<pre>';
-		var_dump(Services::Registry()->get('Triggerdata','Adminresourcemenu'));
+		var_dump(Services::Registry()->get('Triggerdata','Adminstatusmenu'));
 		echo '</pre>';
 
 		echo '<br />Adminbreadcrumbs <br />';

@@ -6,6 +6,7 @@
  */
 defined("MOLAJO") or die; ?>
 <div class="row">
+
 	<div class="twelve columns">
 		<div id="header" class="ui-widget-header ui-corner-all ui-widget">
 			<div>Dashboard test</div>
@@ -26,105 +27,74 @@ defined("MOLAJO") or die; ?>
 	</div>
 </div>
 
-<div class="row">
-	<div class="twelve columns">
+<div class="row ui-widget1">
 
-		<div class="row">
-			<div class="four columns ui-widget1">
+	<include:template name=Widgetgallery wrap=div id=widget-gallery1 class=ui-widget,four,columns/>
 
-				<div id="articles-ui-widget" class="ui-widget">
-					<div class="ui-widget-header">
-						<h4>Unassigned Cost Objects</h4>
-					</div>
-					<div class="ui-widget-content">
-						<ul>
-							<li><a href="#">2-1-20-99-1234</a></li>
-							<li><a href="#">2-1-30-45-1111</a></li>
-							<li><a href="#">2-1-40-33-3589</a></li>
-							<li><a href="#">2-1-45-45-1258</a></li>
-						</ul>
-					</div>
-				</div>
+	<include:template name=Widgetlist wrap=div id=widget-list1 class=ui-widget,four,columns/>
 
-				<div id="comments-ui-widget" class="ui-widget">
-					<div class="ui-widget-header">
-						<h4>Unassigned HR Codes</h4>
-					</div>
-					<div class="ui-widget-content">
-						<ul>
-							<li><a href="#">12345</a></li>
-							<li><a href="#">67891</a></li>
-							<li><a href="#">23456</a></li>
-							<li><a href="#">89178</a></li>
-						</ul>
-					</div>
-				</div>
+	<include:template name=Widgettext wrap=div id=widget-text1 class=ui-widget,four,columns/>
 
-			</div>
+	<include:template name=Widgetaudio wrap=div id=widget-audio1 class=ui-widget,four,columns/>
 
-			<div class="eight columns ui-widget2">
-				<div id="media-ui-widget" class="ui-widget">
-					<div class="ui-widget-header">
-						<h4>Graph of Something</h4>
-					</div>
-					<div class="ui-widget-content">
-						<dl style="width: 300px">
-							<dt>2008</dt>
-							<dd><div id="data-one" class="bar" style="width: 60%">60%</div></dd>
-							<dt>2009</dt>
-							<dd><div id="data-two" class="bar" style="width: 80%">80%</div></dd>
-							<dt>2010</dt>
-							<dd><div id="data-three" class="bar" style="width: 64%">64%</div></dd>
-							<dt>2011</dt>
-							<dd><div id="data-four" class="bar" style="width: 97%">97%</div></dd>
-						</dl>
-					</div>
-				</div>
-			</div>
+	<include:template name=Widgetvideo wrap=div id=widget-video1 class=ui-widget,four,columns/>
 
+	<include:template name=Widgetmap wrap=div id=widget-map1 class=ui-widget,four,columns/>
+
+	<include:template name=Widgetgraph wrap=div id=widget-graph1 class=ui-widget,four,columns/>
+
+	<include:template name=Widgetquicklinks wrap=div id=widget-qucklinks1 class=ui-widget,four,columns/>
+
+	<div id="media-ui-widget" class="ui-widget four columns">
+		<div class="ui-widget-header">
+			<h4>Graph of Something</h4>
 		</div>
-
-		<div class="row">
-			<div class="four columns ui-widget3">
-				<div id="activity-ui-widget" class="ui-widget">
-					<div class="ui-widget-header">
-						<h4>Recent Activity</h4>
-					</div>
-					<div class="ui-widget-content">
-						<li><a href="#">Person1 assigned Cost Object to Department B</a></li>
-						<li><a href="#">Person2 updated Data Cost Object to Department B</a></li>
-					</div>
-				</div>
-			</div>
-
-			<div class="four columns ui-widget4">
-				<div id="ui-widget-online" class="ui-widget">
-					<div class="ui-widget-header">
-						<h4>Users Online</h4>
-					</div>
-					<div class="ui-widget-content">
-						<ul>
-							<li><a href="#">User 1</a></li>
-							<li><a href="#">User 2</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="four columns ui-widget5">
-				<div id="ui-widget-scheduled" class="ui-widget">
-					<div class="ui-widget-header">
-						<h4>Scheduled for Publication</h4>
-					</div>
-					<div class="ui-widget-content">
-						<ul>
-							<li><a href="#">Content 2</a></li>
-							<li><a href="#">Content 2</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
+		<div class="ui-widget-content">
+			<dl style="width: 300px">
+				<dt>2008</dt>
+				<dd><div id="data-one" class="bar" style="width: 60%">60%</div></dd>
+				<dt>2009</dt>
+				<dd><div id="data-two" class="bar" style="width: 80%">80%</div></dd>
+				<dt>2010</dt>
+				<dd><div id="data-three" class="bar" style="width: 64%">64%</div></dd>
+				<dt>2011</dt>
+				<dd><div id="data-four" class="bar" style="width: 97%">97%</div></dd>
+			</dl>
 		</div>
-
 	</div>
+
+	<div id="activity-ui-widget" class="ui-widget four columns">
+		<div class="ui-widget-header">
+			<h4>Recent Activity</h4>
+		</div>
+		<div class="ui-widget-content">
+			<li><a href="#">Person1 assigned Cost Object to Department B</a></li>
+			<li><a href="#">Person2 updated Data Cost Object to Department B</a></li>
+		</div>
+	</div>
+
+	<div id="ui-widget-online" class="ui-widget four columns">
+		<div class="ui-widget-header">
+			<h4>Users Online</h4>
+		</div>
+		<div class="ui-widget-content">
+			<ul>
+				<li><a href="#">User 1</a></li>
+				<li><a href="#">User 2</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="ui-widget-scheduled" class="ui-widget four columns">
+		<div class="ui-widget-header">
+			<h4>Scheduled for Publication</h4>
+		</div>
+		<div class="ui-widget-content">
+			<ul>
+				<li><a href="#">Content 2</a></li>
+				<li><a href="#">Content 2</a></li>
+			</ul>
+		</div>
+	</div>
+
 </div>

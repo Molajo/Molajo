@@ -8,4 +8,4 @@
 defined('MOLAJO') or die; ?>
 <div class="row">
 	<div class="twelve columns">
-		<ul class="link-list right silver">
+		<ul class="link-list right">

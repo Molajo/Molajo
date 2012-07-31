@@ -7,10 +7,10 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$pageURL = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 
 <h4><?echo Services::Language()->translate('Columns'); ?></h4>
-<form action="<?php echo $action; ?>" method="get" name="Admingridviewcolumns" id="Admingridviewcolumns">
+<form action="<?php echo $pageURL; ?>" method="get" name="Admingridviewcolumns" id="Admingridviewcolumns">
 	<div class="row">
 		<div class="eight columns">
 			<h5>Add a Column to the View Grid</h5>

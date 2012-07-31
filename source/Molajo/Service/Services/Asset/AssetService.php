@@ -176,7 +176,8 @@ Class AssetService
                     if (Services::Language()->get('direction') == 'rtl') {
                         $this->addCss($url_path . '/css/' . $file, $priority);
                     }
-                } else {
+                } elseif (strtolower(substr($file, 0, 4)) == 'hold') {
+				} else {
                     $this->addCss($url_path . '/css/' . $file, $priority);
                 }
             }
@@ -324,15 +325,18 @@ Class AssetService
 
         $files = Services::Filesystem()->folderFiles($file_path . $extra, '\.js$', false, false);
 
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                $this->addJs(
-                    $url_path . $extra . '/' . $file,
-                    $priority,
-                    $defer,
-                    'text/javascript',
-                    0
-                );
+		if (count($files) > 0) {
+			foreach ($files as $file) {
+				if (strtolower(substr($file, 0, 4)) == 'hold') {
+				} else {
+                	$this->addJs(
+						$url_path . $extra . '/' . $file,
+						$priority,
+						$defer,
+						'text/javascript',
+						0
+					);
+				}
             }
         }
 
@@ -343,7 +347,7 @@ Class AssetService
      * addJs - Adds a linked script to the page
      *
      * Usage:
-     * Services::Asset()->addJs('http://html5shim.googlecode.com/svn/trunk/html5.js', 1000);
+     * Services::Asset()->addJs('http://example.com/test.js', 1000, 1);
      *
      * @param string $url
      * @param int    $priority
@@ -416,13 +420,14 @@ Class AssetService
      * Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
      *
      * @param string $content
-     * @param string $mimetype
+	 * @param string $priority
      * @param string $defer
+	 * @param string $mimetype
      *
      * @return object
      * @since  1.0
      */
-    public function addJSDeclarations($content, $mimetype = 'text/javascript', $defer = 0, $priority = 500)
+    public function addJSDeclarations($content, $priority = 500, $defer = 0, $mimetype = 'text/javascript')
     {
         if ($defer == 1) {
             $js = Services::Registry()->get('Assets', 'JsDeclarationsDefer', array());
