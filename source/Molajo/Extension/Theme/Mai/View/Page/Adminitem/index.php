@@ -8,9 +8,13 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die; ?>
 <div class="row">
 	<div class="two columns">
+		<include:template name=Adminnavigationbar/>
 		<include:template name=Adminsectionmenu/>
 	</div>
 	<div class="ten columns">
 		<include:request/>
 	</div>
 </div>
+
+			<include:template name=Adminsectionmenu/>
+			<include:template name=Adminresourcemenu/>
