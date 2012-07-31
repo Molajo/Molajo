@@ -49,7 +49,7 @@ class DateformatsTrigger extends ContentTrigger
 
                 } elseif ($fieldValue == false
                     || $fieldValue == '0000-00-00 00:00:00'
-                ) {
+) {
 
                     $this->saveField($field, $name, $this->now);
 
@@ -105,9 +105,9 @@ class DateformatsTrigger extends ContentTrigger
 
                 if ($fieldValue == false
                     || $fieldValue == '0000-00-00 00:00:00'
-					|| $fieldValue == ''
-					|| $fieldValue == null
-					|| substr($name, 0, 12) == 'list_select_'
+                    || $fieldValue == ''
+                    || $fieldValue == null
+                    || substr($name, 0, 12) == 'list_select_'
 
                 ) {
 

@@ -55,9 +55,9 @@ Class ErrorService
     {
         Services::Registry()->set('Parameters', 'error_status', true);
 
-		Services::Registry()->set('Parameters', 'request_action', 'Display');
-		Services::Registry()->set('Parameters', 'request_action_authorisation', 'read');  //for now
-		Services::Registry()->set('Parameters', 'request_controller', 'read');
+        Services::Registry()->set('Parameters', 'request_action', 'Display');
+        Services::Registry()->set('Parameters', 'request_action_authorisation', 'read');  //for now
+        Services::Registry()->set('Parameters', 'request_controller', 'read');
 
         /** default error theme and page */
         Services::Registry()->set('Parameters', 'theme_id',
@@ -86,12 +86,12 @@ Class ErrorService
                 ->set($message, MESSAGE_TYPE_ERROR, 500);
         }
 
-		Services::Registry()->merge('Configuration', 'Parameters', true);
+        Services::Registry()->merge('Configuration', 'Parameters', true);
 
-		Helpers::Extension()->setThemePageView();
+        Helpers::Extension()->setThemePageView();
 
-		return true;
-	}
+        return true;
+    }
 
     /**
      * 503 Offline

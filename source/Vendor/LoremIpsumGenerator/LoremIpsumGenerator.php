@@ -224,7 +224,6 @@ class LoremIpsumGenerator
         echo $count .' '. $format .' '.$loremipsum.'<br />';
 
         if ($count <= 0)
-
             return '';
 
         switch ($format) {
@@ -422,7 +421,6 @@ class LoremIpsumGenerator
         $sentence[$count - 1] = $sentence[$count - 1] . '.';
 
         if ($count < 4)
-
             return $sentence;
 
         $commas = $this->numberOfCommas($count);

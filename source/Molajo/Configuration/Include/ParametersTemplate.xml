@@ -7,4 +7,3 @@
 <field name="model_type" type="char" null="0" default="dbo"/>
 <field name="model_query_object" type="char" null="0" default="dummy"/>
 <field name="model_parameter" type="char" null="0" default=" "/>
-

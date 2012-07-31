@@ -21,4 +21,3 @@ function utf8_strrev($str)
 
     return join('', array_reverse($ar[0]));
 }
-

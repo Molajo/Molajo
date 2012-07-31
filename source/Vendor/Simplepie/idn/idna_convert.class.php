@@ -676,7 +676,6 @@ class idna_convert
         $result[] = (int) $this->_vbase + ($sindex % $this->_ncount) / $this->_tcount;
         $T = intval($this->_tbase + $sindex % $this->_tcount);
         if ($T != $this->_tbase) $result[] = $T;
-
         return $result;
     }
 
@@ -1004,4 +1003,3 @@ class Net_IDNA_php4 extends idna_convert
         return $this->IC->set_parameters($option, $param);
     }
 }
-

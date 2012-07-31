@@ -145,7 +145,6 @@ class FilesystemService
 
         echo 'Invalid Filesystem Method: ' . $name;
         //throw error
-
         return false;
     }
 }

@@ -369,7 +369,7 @@ class plgSystemDebug extends JPlugin
 
         $log = $db->getLog();
 
-        if ( ! $log) {
+        if (! $log) {
             return;
         }
 

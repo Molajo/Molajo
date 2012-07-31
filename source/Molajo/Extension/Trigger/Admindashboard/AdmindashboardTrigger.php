@@ -28,31 +28,31 @@ class AdmindashboardTrigger extends ContentTrigger
      */
     public function onBeforeParse()
     {
-		if (APPLICATION_ID == 2) {
-		} else {
-			return true;
-		}
+        if (APPLICATION_ID == 2) {
+        } else {
+            return true;
+        }
 
         if (strtolower($this->get('template_view_path_node')) == 'admindashboard') {
         } else {
             return true;
         }
-		$query_results = array();
+        $query_results = array();
 
-		$this->set('model_name', 'Triggerdata');
-		$this->parameters['model_name'] = 'Triggerdata';
-		$this->set('model_type', 'dbo');
-		$this->parameters['model_type'] = 'dbo';
-		$this->set('model_query_object', 'getTriggerdata');
-		$this->set('model_parameter', 'PrimaryRequestQueryResults');
+        $this->set('model_name', 'Triggerdata');
+        $this->parameters['model_name'] = 'Triggerdata';
+        $this->set('model_type', 'dbo');
+        $this->parameters['model_type'] = 'dbo';
+        $this->set('model_query_object', 'getTriggerdata');
+        $this->set('model_parameter', 'PrimaryRequestQueryResults');
 
-		$query_results = array();
-		$row = new \stdClass();
-		$row->title = $this->parameters['dashboard_section'];
+        $query_results = array();
+        $row = new \stdClass();
+        $row->title = $this->parameters['dashboard_section'];
 
-		$query_results[] = $row;
+        $query_results[] = $row;
 
- 		Services::Registry()->set('Triggerdata', 'PrimaryRequestQueryResults', $query_results);
+         Services::Registry()->set('Triggerdata', 'PrimaryRequestQueryResults', $query_results);
 
         return true;
     }

@@ -1,5 +1,4 @@
 <?php
-use Molajo\Service\Services;
 
 /**
  * @package    Molajo
@@ -8,6 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 ?>
-<ul class="pagination">
-    <li class="unavailable"><a href="<?php echo $this->row->prev_link; ?>">&laquo;</a></li>
-
+<div class="row">
+    <div class="twelve columns">
+        <ul class="pagination">
+            <li class="arrow unavailable"><a href="<?php echo $this->row->prev_link; ?>">&laquo;</a></li>

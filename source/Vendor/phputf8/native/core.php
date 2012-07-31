@@ -177,7 +177,6 @@ function utf8_substr($str, $offset, $length = NULL)
     // handle trivial cases
     if ($length === 0) return '';
     if ($offset < 0 && $length < 0 && $length < $offset)
-
         return '';
 
     // normalise negative offsets (we could use a tail

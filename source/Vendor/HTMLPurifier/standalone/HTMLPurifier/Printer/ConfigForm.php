@@ -316,7 +316,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
             $type === HTMLPurifier_VarParser::ALIST ||
             $type === HTMLPurifier_VarParser::HASH ||
             $type === HTMLPurifier_VarParser::LOOKUP
-        ) {
+) {
             $attr['cols'] = $this->cols;
             $attr['rows'] = $this->rows;
             $ret .= $this->start('textarea', $attr);

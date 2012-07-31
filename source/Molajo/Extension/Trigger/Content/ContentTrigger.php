@@ -28,13 +28,13 @@ class ContentTrigger extends Trigger
      */
     protected $table_registry_name;
 
-	/**
-	 * Model type
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $model_type;
+    /**
+     * Model type
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $model_type;
 
     /**
      * Model name
@@ -130,12 +130,12 @@ class ContentTrigger extends Trigger
 
         $value = null;
 
-		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
+        if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
             'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
             'data', 'model_type', 'model_name', 'rendered_output'))
-			&& (isset($this->$key))
+            && (isset($this->$key))
         ) {
-           	$value = $this->$key;
+               $value = $this->$key;
 
         } else {
             if (isset($this->parameters[$key])) {
@@ -163,7 +163,7 @@ class ContentTrigger extends Trigger
     {
         if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
             'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
-			'data', 'model_type', 'model_name', 'rendered_output'))
+            'data', 'model_type', 'model_name', 'rendered_output'))
         ) {
 
             $this->$key = $value;
@@ -448,17 +448,17 @@ class ContentTrigger extends Trigger
     /**
      * getFieldValue retrieves the actual field value from the 'normal' or special field
      *
-	 * @param $field
-	 *
-	 * @return bool
-	 * @since  1.0
+     * @param $field
+     *
+     * @return bool
+     * @since  1.0
      */
-	public function getFieldValue($field)
+    public function getFieldValue($field)
     {
-		if (is_object($field)) {
-		} else {
-			return false;
-		}
+        if (is_object($field)) {
+        } else {
+            return false;
+        }
 
         if (isset($field->as_name)) {
             if ($field->as_name == '') {
@@ -474,10 +474,10 @@ class ContentTrigger extends Trigger
             return $this->data->$name;
 
         } elseif (isset($field->customfield)) {
-			if (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
-				return Services::Registry()->get($this->get('model_name') . $field->customfield, $name);
-			}
-		}
+            if (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
+                return Services::Registry()->get($this->get('model_name') . $field->customfield, $name);
+            }
+        }
 
         return false;
     }
@@ -495,19 +495,19 @@ class ContentTrigger extends Trigger
     public function saveField($field, $new_field_name, $value)
     {
         if (is_object($field)) {
-			$name = $field->name;
-		} else {
-			$name = $new_field_name;
-		}
+            $name = $field->name;
+        } else {
+            $name = $new_field_name;
+        }
 
         if (isset($this->data->$name)) {
             $this->data->$name = $value;
 
-		} elseif (isset($this->parameters[$name])) {
-			$this->parameters[$name] = $value;
+        } elseif (isset($this->parameters[$name])) {
+            $this->parameters[$name] = $value;
 
         } else {
-			$this->data->$new_field_name = $value;
+            $this->data->$new_field_name = $value;
         }
 
         return;
@@ -589,30 +589,29 @@ class ContentTrigger extends Trigger
         return true;
     }
 
-	/**
-	 * Before the Theme/Page are parsed
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeParse()
-	{
-		return true;
-	}
+    /**
+     * Before the Theme/Page are parsed
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeParse()
+    {
+        return true;
+    }
 
-	/**
-	 * After all document parsing has been accomplished and include tags replaced with rendered output
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterParse()
-	{
-		return true;
-	}
+    /**
+     * After all document parsing has been accomplished and include tags replaced with rendered output
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterParse()
+    {
+        return true;
+    }
 
-
-	/**
+    /**
      * Before the Query results are injected into the View
      *
      * @return boolean

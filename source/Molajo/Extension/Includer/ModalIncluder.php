@@ -46,10 +46,10 @@ Class ModalIncluder extends Includer
     protected function setRenderCriteria()
     {
 /**		echo '<br />'.Services::Registry()->get('Parameters', 'template_view_path_node');
-	    if (Services::Registry()->get('Parameters', 'template_view_path_node') == 'Preferences') {
-			echo '<br/>BEFORE<br/>';
-			Services::Registry()->get('Parameters', '*');
-		}
+        if (Services::Registry()->get('Parameters', 'template_view_path_node') == 'Preferences') {
+            echo '<br/>BEFORE<br/>';
+            Services::Registry()->get('Parameters', '*');
+        }
 */
         /**  Extension name set to the name of the template in the getAttributes method */
         $template_title = Services::Registry()->get('Parameters', 'extension_title');
@@ -82,10 +82,10 @@ Class ModalIncluder extends Includer
             $model_parameter = '';
         }
 
-		if (substr(strtolower($model_parameter), 0, 4) == 'list') {
-			$model_name = 'triggerdata';
+        if (substr(strtolower($model_parameter), 0, 4) == 'list') {
+            $model_name = 'triggerdata';
 
-		} elseif (strtolower($model_name) == '' && strtolower($model_parameter) == '') {
+        } elseif (strtolower($model_name) == '' && strtolower($model_parameter) == '') {
             $model_name = 'Dummy';
 
         } elseif (strtolower($this->type) == 'asset') {
@@ -135,12 +135,13 @@ Class ModalIncluder extends Includer
         }
 
 /**
-		if (Services::Registry()->get('Parameters', 'template_view_path_node') == 'Preferences') {
-			echo '<br/>BEFORE<br/>';
-			Services::Registry()->get('Parameters', '*');
-		}
+        if (Services::Registry()->get('Parameters', 'template_view_path_node') == 'Preferences') {
+            echo '<br/>BEFORE<br/>';
+            Services::Registry()->get('Parameters', '*');
+        }
 */
-		return true;
+
+        return true;
     }
 
     /**

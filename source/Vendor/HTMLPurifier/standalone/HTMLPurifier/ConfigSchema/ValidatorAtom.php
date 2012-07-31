@@ -22,28 +22,24 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
     public function assertIsString()
     {
         if (!is_string($this->contents)) $this->error('must be a string');
-
         return $this;
     }
 
     public function assertIsBool()
     {
         if (!is_bool($this->contents)) $this->error('must be a boolean');
-
         return $this;
     }
 
     public function assertIsArray()
     {
         if (!is_array($this->contents)) $this->error('must be an array');
-
         return $this;
     }
 
     public function assertNotNull()
     {
         if ($this->contents === null) $this->error('must not be null');
-
         return $this;
     }
 
@@ -51,14 +47,12 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
     {
         $this->assertIsString();
         if (!ctype_alnum($this->contents)) $this->error('must be alphanumeric');
-
         return $this;
     }
 
     public function assertNotEmpty()
     {
         if (empty($this->contents)) $this->error('must not be empty');
-
         return $this;
     }
 

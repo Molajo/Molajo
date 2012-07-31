@@ -7,3 +7,4 @@
  */
 defined('MOLAJO') or die; ?>
 </dl>
+<h3><a href="<?php echo APPLICATION_URL_PATH; ?>">Home</a></h3>

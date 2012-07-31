@@ -1,5 +1,4 @@
 <?php
-use Molajo\Service\Services;
 /**
  * @package     Molajo
  * @copyright   2012 Babs Gösgens. All rights reserved.

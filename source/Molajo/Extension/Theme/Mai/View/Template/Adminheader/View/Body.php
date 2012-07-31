@@ -11,9 +11,9 @@ $pageUri = $_SERVER['REQUEST_URI'];
 
 $title = Services::Registry()->get('Triggerdata', 'PageTitle');
 if ($title == '') {
-	$title = $this->row->criteria_title;
+    $title = $this->row->criteria_title;
 } else {
-	$title .= '-' . $this->row->criteria_title;
+    $title .= '-' . $this->row->criteria_title;
 }
 $homeURL = Services::Registry()->get('Configuration', 'application_base_url');
 $resourceURL = Services::Registry()->get('Triggerdata', 'full_page_url');

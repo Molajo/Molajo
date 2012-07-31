@@ -31,7 +31,7 @@ class CreateTrigger extends ContentTrigger
     {
         if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
             AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
-        ) {
+) {
         } else {
             return true;
         }
@@ -439,7 +439,7 @@ class CreateTrigger extends ContentTrigger
                     //todo get rid of one of these variables
                 } elseif ($key == 'criteria_content_catalog_type_id'
                     || $key == 'menuitem_source_catalog_type_id'
-                ) {
+) {
                     $data->parameters[$key] = $this->data->catalog_type_id;
 
                 } elseif ($key == 'menuitem_extension_instance_id') {
@@ -548,7 +548,6 @@ class CreateTrigger extends ContentTrigger
 //			//error copying source to destination
 //			return false;
 //		}
-
         return true;
     }
 

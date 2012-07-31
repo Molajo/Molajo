@@ -130,4 +130,3 @@ function utf8_strip_specials($string, $repl = '')
 {
     return preg_replace(utf8_specials_pattern(), $repl, $string);
 }
-

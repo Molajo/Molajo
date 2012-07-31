@@ -46,4 +46,3 @@ class NativeMemcachedSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('TESTING', ini_get('session.name'));
     }
 }
-

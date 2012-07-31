@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
 </div>
 
 <div class="row">
-	<div class="twelve columns">
-		<include:template name=Author/>
-	</div>
+    <div class="twelve columns">
+        <include:template name=Author/>
+    </div>
 </div>

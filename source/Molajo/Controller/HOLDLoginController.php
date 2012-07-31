@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage   Controller
  * @since        1.0
  */
-class LoginController extends Controller
+class HOLDLoginController extends Controller
 {
     /**
      * login
@@ -201,7 +201,6 @@ class LoginController extends Controller
 
         // Trigger onUserLoginFailure Event.
 //        Services::Event()->schedule('onUserLogoutFailure', array($parameters));
-
         return false;
     }
 }
