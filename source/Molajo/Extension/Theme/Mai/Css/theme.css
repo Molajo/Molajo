@@ -341,7 +341,7 @@ html body #focus:target [role="main"] {
 }
 
 /* line 42, ../../../../../../../../../../opt/local/lib/ruby/gems/1.8/gems/zurb-foundation-3.0.7/stylesheets/foundation/components/_grid.scss */
-.push-three, header[role="banner"] > div, [role="main"] {
+.push-three, header[role="banner"] > div, [role="main"], html body #focus:target nav[role="navigation"]:hover + [role="main"] {
   left: 16.667%;
 }
 
@@ -566,7 +566,7 @@ img {
   }
 
   /* line 67, ../../../../../../../../../../opt/local/lib/ruby/gems/1.8/gems/zurb-foundation-3.0.7/stylesheets/foundation/components/_grid.scss */
-  .push-two, .push-three, header[role="banner"] > div, [role="main"], .push-four, .push-five, .push-six, .push-seven, .push-eight, .push-nine, .push-ten, .push-eleven, .push-twelve, .push-thirteen, .push-fourteen, .push-fifteen, .push-sixteen {
+  .push-two, .push-three, header[role="banner"] > div, [role="main"], html body #focus:target nav[role="navigation"]:hover + [role="main"], .push-four, .push-five, .push-six, .push-seven, .push-eight, .push-nine, .push-ten, .push-eleven, .push-twelve, .push-thirteen, .push-fourteen, .push-fifteen, .push-sixteen {
     left: auto;
   }
 
@@ -4440,24 +4440,24 @@ nav[role="navigation"] a span {
 html body #focus:target nav[role="navigation"] a > span {
   display: none;
 }
-/* line 243, ../sass/_menu.scss */
+/* line 246, ../sass/_menu.scss */
 html body #focus:target nav[role="navigation"]:hover a > span {
   display: inline-block;
 }
-/* line 244, ../sass/_menu.scss */
+/* line 247, ../sass/_menu.scss */
 html body #focus:target nav[role="navigation"]:hover :target {
   display: block;
 }
-/* line 246, ../sass/_menu.scss */
+/* line 249, ../sass/_menu.scss */
 html body #focus:target nav[role="navigation"] ul {
   display: none;
 }
-/* line 251, ../sass/_menu.scss */
+/* line 254, ../sass/_menu.scss */
 html body #focus:target header[role="banner"] > div,
 html body #focus:target [role="main"] {
   left: 5.556%;
 }
-/* line 256, ../sass/_menu.scss */
+/* line 259, ../sass/_menu.scss */
 html body #focus:target #expander {
   display: none;
 }
