@@ -5,7 +5,20 @@
  * @license     GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<div class="row">
+
+	<nav role="navigation">
+		<include:template name=Adminnavigationbar/>
+	</nav>
+
+	<section role="main" id="focus">
+		<include:message/>
+
+		<a href="<?php echo $_baseUri ?>#focus" id="expander"><span>Expand working area</span></a>
+		<include:request/>
+	</section>
+
+
+<!-- <div class="row">
 	<div class="two columns">
 		<include:template name=Adminnavigationbar/>
 		<include:template name=Adminsectionmenu/>
@@ -13,7 +26,5 @@ defined('MOLAJO') or die; ?>
 	<div class="ten columns">
 		<include:request/>
 	</div>
-</div>
+</div> -->
 
-			<include:template name=Adminsectionmenu/>
-			<!--include:template name=Adminresourcemenu/-->
