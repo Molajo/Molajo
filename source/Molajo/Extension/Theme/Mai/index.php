@@ -19,10 +19,22 @@ $_baseUri = Services::Registry()->get('Triggerdata', 'full_page_url');
 <?php if (file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))) {
 	include Services::Registry()->get('Parameters', 'page_view_path_include');
 } ?>
-</div>
-<footer>
-</footer>
-<include:defer/>
+<?php // echo Services::Registry()->get('Parameters', 'page_view_path_include') ?>
+<?php // echo Services::Registry()->get('Parameters', 'template_view_path_include') ?>
 
-<!-- 			<include:template name=Adminnavigationbar/>
- -->
+<!-- <footer style="margin-top: 200px; z-index: 400; background: #efefef;">
+<h1>Adminnavigationbar</h1>
+<?php var_dump(Services::Registry()->get('Triggerdata','Adminnavigationbar'))?>
+
+<h1>Adminsectionmenu</h1>
+<?php var_dump(Services::Registry()->get('Triggerdata','Adminsectionmenu'))?>
+
+<h1>Adminstatusmenu</h1>
+<?php var_dump(Services::Registry()->get('Triggerdata','Adminstatusmenu'))?>
+
+<h1>Parameters</h1>
+<?php var_dump(Services::Registry()->get('Parameters', '*')) ?>
+</footer> -->
+
+</div>
+<include:defer/>

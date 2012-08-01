@@ -1,13 +1,11 @@
 jQuery(document).ready(function($){
 
-	// Level one menu logic
-	$(".level-one dt>a").click(function(e){
-		$(this).parent('dt').toggleClass('current');
-		alert('You clicked a level one link');
-		e.preventDefault();
+	$(".level-one dt").mouseover(function(){
+		var next = $(this).next();
+		if(next.children().length) {
+			$(this).addClass('current');
+			next.show();
+			next.siblings('dd').hide().prev('dt').removeClass('current');
+		}
 	});
-
-	// Level two menu logic
-	
-
 });
