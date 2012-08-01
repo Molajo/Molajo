@@ -22,19 +22,22 @@ $_baseUri = Services::Registry()->get('Triggerdata', 'full_page_url');
 <?php // echo Services::Registry()->get('Parameters', 'page_view_path_include') ?>
 <?php // echo Services::Registry()->get('Parameters', 'template_view_path_include') ?>
 
-<!-- <footer style="margin-top: 200px; z-index: 400; background: #efefef;">
+<footer style="margin-top: 200px; z-index: 400; background: #efefef;">
 <h1>Adminnavigationbar</h1>
-<?php var_dump(Services::Registry()->get('Triggerdata','Adminnavigationbar'))?>
+<?php //var_dump(Services::Registry()->get('Triggerdata','Adminnavigationbar'))?>
 
 <h1>Adminsectionmenu</h1>
-<?php var_dump(Services::Registry()->get('Triggerdata','Adminsectionmenu'))?>
+<?php //var_dump(Services::Registry()->get('Triggerdata','Adminsectionmenu'))?>
 
 <h1>Adminstatusmenu</h1>
-<?php var_dump(Services::Registry()->get('Triggerdata','Adminstatusmenu'))?>
+<?php //var_dump(Services::Registry()->get('Triggerdata','Adminstatusmenu'))?>
+
+<h1>Adminbreadcrumbs</h1>
+<?php var_dump(Services::Registry()->get('Triggerdata','Adminbreadcrumbs'));?>
 
 <h1>Parameters</h1>
-<?php var_dump(Services::Registry()->get('Parameters', '*')) ?>
-</footer> -->
+<?php //var_dump(Services::Registry()->get('Parameters', '*')) ?>
+</footer>
 
 </div>
 <include:defer/>

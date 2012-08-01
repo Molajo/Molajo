@@ -3038,7 +3038,7 @@ html, body {
 }
 
 /* line 29, ../sass/_molajo.scss */
-a[href="#expand"] {
+a#expander {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -3050,6 +3050,10 @@ a[href="#expand"] {
   color: #464646;
   display: inline-block;
   padding: 8px;
+}
+/* line 38, ../sass/_molajo.scss */
+a#expander span {
+  display: none;
 }
 
 /* Foundation Icons General */
@@ -3081,7 +3085,7 @@ a[href="#expand"] {
 
 /* CSS to style glyphs */
 /* line 40, ../sass/_icons.scss */
-.glyph, .icon, a[href="#expand"]:before, header[role="banner"] h1 i, nav[role="navigation"] i, a > i, .add:after {
+.glyph, .icon, a#expander:before, header[role="banner"] h1 i, nav[role="navigation"] i, a > i, .add:after {
   cursor: default;
   font-size: 16px;
   line-height: 1;
@@ -3089,23 +3093,23 @@ a[href="#expand"] {
 }
 
 /* line 41, ../sass/_icons.scss */
-.glyph.general, .general.icon, a.general[href="#expand"]:before, header[role="banner"] h1 i.general, header[role="banner"] nav .settings dt a > i, nav[role="navigation"] i, a > i, .add:after {
+.glyph.general, .general.icon, a.general#expander:before, header[role="banner"] h1 i.general, header[role="banner"] nav .settings dt a > i, nav[role="navigation"] i, a > i, .add:after {
   font-family: "FoundationIconsGeneral";
 }
 
 /* line 42, ../sass/_icons.scss */
-.glyph.enclosed, .enclosed.icon, a.enclosed[href="#expand"]:before, header[role="banner"] h1 i.enclosed, nav[role="navigation"] i.enclosed, a > i.enclosed, .enclosed.add:after {
+.glyph.enclosed, .enclosed.icon, a.enclosed#expander:before, header[role="banner"] h1 i.enclosed, nav[role="navigation"] i.enclosed, a > i.enclosed, .enclosed.add:after {
   font-family: "FoundationIconsGeneralEnclosed";
 }
 
 /* line 43, ../sass/_icons.scss */
-.glyph.social, .social.icon, a.social[href="#expand"]:before, header[role="banner"] h1 i.social, nav[role="navigation"] i.social, a > i.social, .social.add:after {
+.glyph.social, .social.icon, a.social#expander:before, header[role="banner"] h1 i.social, nav[role="navigation"] i.social, a > i.social, .social.add:after {
   font-family: "FoundationIconsSocial
 	";
 }
 
 /* line 47, ../sass/_icons.scss */
-a .glyph, a .icon, a a[href="#expand"]:before, a header[role="banner"] h1 i, header[role="banner"] h1 a i, a nav[role="navigation"] i, nav[role="navigation"] a i, a > i, a .add:after {
+a .glyph, a .icon, a a#expander:before, a header[role="banner"] h1 i, header[role="banner"] h1 a i, a nav[role="navigation"] i, nav[role="navigation"] a i, a > i, a .add:after {
   cursor: pointer;
 }
 
@@ -3123,63 +3127,63 @@ a .glyph, a .icon, a a[href="#expand"]:before, a header[role="banner"] h1 i, hea
 }
 
 /* line 65, ../sass/_icons.scss */
-.icon, a[href="#expand"]:before, header[role="banner"] h1 i {
+.icon, a#expander:before, header[role="banner"] h1 i {
   font-family: 'molajo';
   content: attr(data-icon);
 }
 
 /* line 70, ../sass/_icons.scss */
-.icon.fullscreen, a[href="#expand"]:before, header[role="banner"] h1 i.fullscreen {
+.icon.fullscreen, a#expander:before, header[role="banner"] h1 i.fullscreen {
   content: "\21";
 }
 
 /* line 71, ../sass/_icons.scss */
-.icon.molajo, a.molajo[href="#expand"]:before, header[role="banner"] h1 i.molajo {
+.icon.molajo, a.molajo#expander:before, header[role="banner"] h1 i.molajo {
   content: "\22";
 }
 
 /* line 72, ../sass/_icons.scss */
-.icon.crocs, a.crocs[href="#expand"]:before, header[role="banner"] h1 i.crocs {
+.icon.crocs, a.crocs#expander:before, header[role="banner"] h1 i.crocs {
   content: "\23";
 }
 
 /* line 73, ../sass/_icons.scss */
-.icon.crocs-large, a.crocs-large[href="#expand"]:before, header[role="banner"] h1 i.crocs-large {
+.icon.crocs-large, a.crocs-large#expander:before, header[role="banner"] h1 i.crocs-large {
   content: "\24";
 }
 
 /* line 75, ../sass/_icons.scss */
-.glyph.resources:before, .resources.icon:before, a.resources[href="#expand"]:before:before, header[role="banner"] h1 i.resources:before, nav[role="navigation"] i.resources:before, a > i.resources:before, .resources.add:before:after {
+.glyph.resources:before, .resources.icon:before, a.resources#expander:before:before, header[role="banner"] h1 i.resources:before, nav[role="navigation"] i.resources:before, a > i.resources:before, .resources.add:before:after {
   content: "j";
 }
 
 /* line 76, ../sass/_icons.scss */
-.glyph.collections:before, .collections.icon:before, a.collections[href="#expand"]:before:before, header[role="banner"] h1 i.collections:before, nav[role="navigation"] i.collections:before, a > i.collections:before, .collections.add:before:after {
+.glyph.collections:before, .collections.icon:before, a.collections#expander:before:before, header[role="banner"] h1 i.collections:before, nav[role="navigation"] i.collections:before, a > i.collections:before, .collections.add:before:after {
   content: "8";
 }
 
 /* line 77, ../sass/_icons.scss */
-.glyph.data-dictionary:before, .data-dictionary.icon:before, a.data-dictionary[href="#expand"]:before:before, header[role="banner"] h1 i.data-dictionary:before, nav[role="navigation"] i.data-dictionary:before, a > i.data-dictionary:before, .data-dictionary.add:before:after {
+.glyph.data-dictionary:before, .data-dictionary.icon:before, a.data-dictionary#expander:before:before, header[role="banner"] h1 i.data-dictionary:before, nav[role="navigation"] i.data-dictionary:before, a > i.data-dictionary:before, .data-dictionary.add:before:after {
   content: "3";
 }
 
 /* line 78, ../sass/_icons.scss */
-.glyph.hierarchies:before, .hierarchies.icon:before, a.hierarchies[href="#expand"]:before:before, header[role="banner"] h1 i.hierarchies:before, nav[role="navigation"] i.hierarchies:before, a > i.hierarchies:before, .hierarchies.add:before:after {
+.glyph.hierarchies:before, .hierarchies.icon:before, a.hierarchies#expander:before:before, header[role="banner"] h1 i.hierarchies:before, nav[role="navigation"] i.hierarchies:before, a > i.hierarchies:before, .hierarchies.add:before:after {
   content: "-";
 }
 
 /* line 79, ../sass/_icons.scss */
-.glyph.access:before, .access.icon:before, a.access[href="#expand"]:before:before, header[role="banner"] h1 i.access:before, nav[role="navigation"] i.access:before, a > i.access:before, .access.add:before:after {
+.glyph.access:before, .access.icon:before, a.access#expander:before:before, header[role="banner"] h1 i.access:before, nav[role="navigation"] i.access:before, a > i.access:before, .access.add:before:after {
   content: "o";
 }
 
 /* line 80, ../sass/_icons.scss */
-.glyph.build:before, .build.icon:before, a.build[href="#expand"]:before:before, header[role="banner"] h1 i.build:before, nav[role="navigation"] i.build:before, a > i.build:before, .build.add:before:after {
+.glyph.build:before, .build.icon:before, a.build#expander:before:before, header[role="banner"] h1 i.build:before, nav[role="navigation"] i.build:before, a > i.build:before, .build.add:before:after {
   content: "k";
 }
 
 /* line 81, ../sass/_icons.scss */
-.glyph.settings:before, .settings.icon:before, a.settings[href="#expand"]:before:before, header[role="banner"] h1 i.settings:before, nav[role="navigation"] i.settings:before, a > i.settings:before, .settings.add:before:after {
+.glyph.settings:before, .settings.icon:before, a.settings#expander:before:before, header[role="banner"] h1 i.settings:before, nav[role="navigation"] i.settings:before, a > i.settings:before, .settings.add:before:after {
   content: "a";
 }
 
@@ -3462,17 +3466,21 @@ nav[role="navigation"] i:before {
 nav[role="navigation"] ul {
   list-style-type: none;
 }
-/* line 102, ../sass/_menu.scss */
-nav[role="navigation"] .level-one dd {
+/* line 104, ../sass/_menu.scss */
+nav[role="navigation"] .level-one > dt + dd {
   display: none;
 }
-/* line 108, ../sass/_menu.scss */
+/* line 109, ../sass/_menu.scss */
+nav[role="navigation"] .level-one > dt.current + dd, nav[role="navigation"] .level-one > dt:target + dd {
+  display: block;
+}
+/* line 118, ../sass/_menu.scss */
 nav[role="navigation"] .level-one,
 nav[role="navigation"] .level-two,
 nav[role="navigation"] .level-three {
   position: relative;
 }
-/* line 110, ../sass/_menu.scss */
+/* line 120, ../sass/_menu.scss */
 nav[role="navigation"] .level-one dt, nav[role="navigation"] .level-one li,
 nav[role="navigation"] .level-two dt,
 nav[role="navigation"] .level-two li,
@@ -3480,36 +3488,36 @@ nav[role="navigation"] .level-three dt,
 nav[role="navigation"] .level-three li {
   position: relative;
 }
-/* line 115, ../sass/_menu.scss */
+/* line 125, ../sass/_menu.scss */
 nav[role="navigation"] .level-one ul a {
   padding-left: 42px;
 }
-/* line 121, ../sass/_menu.scss */
+/* line 131, ../sass/_menu.scss */
 nav[role="navigation"] .level-one a,
 nav[role="navigation"] .level-two a {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   white-space: nowrap;
 }
-/* line 128, ../sass/_menu.scss */
+/* line 138, ../sass/_menu.scss */
 nav[role="navigation"] .level-one {
   background: #004848;
 }
-/* line 130, ../sass/_menu.scss */
+/* line 140, ../sass/_menu.scss */
 nav[role="navigation"] .level-one > dt:first-child a,
 nav[role="navigation"] .level-one > li:first-child a {
   border-top: 0;
 }
-/* line 133, ../sass/_menu.scss */
+/* line 143, ../sass/_menu.scss */
 nav[role="navigation"] .level-one > :target > a + span, nav[role="navigation"] .level-one > .current > a + span {
   border-top-color: #003e3e;
   display: block;
 }
-/* line 136, ../sass/_menu.scss */
+/* line 146, ../sass/_menu.scss */
 nav[role="navigation"] .level-one > :target > a + span > span, nav[role="navigation"] .level-one > .current > a + span > span {
   border-top-color: #004848;
 }
-/* line 152, ../sass/_menu.scss */
+/* line 154, ../sass/_menu.scss */
 nav[role="navigation"] .level-two,
 nav[role="navigation"] .level-three {
   -webkit-transition: all 1s;
@@ -3519,47 +3527,47 @@ nav[role="navigation"] .level-three {
   background: #005d5d;
   margin-bottom: 0;
 }
-/* line 157, ../sass/_menu.scss */
+/* line 159, ../sass/_menu.scss */
 nav[role="navigation"] .level-two a + span,
 nav[role="navigation"] .level-three a + span {
   top: 0;
 }
-/* line 159, ../sass/_menu.scss */
+/* line 161, ../sass/_menu.scss */
 nav[role="navigation"] .level-two a + span > span,
 nav[role="navigation"] .level-three a + span > span {
   border-top-color: #005d5d;
 }
-/* line 163, ../sass/_menu.scss */
+/* line 165, ../sass/_menu.scss */
 nav[role="navigation"] .level-two:target,
 nav[role="navigation"] .level-three:target {
   display: block;
 }
-/* line 165, ../sass/_menu.scss */
+/* line 167, ../sass/_menu.scss */
 nav[role="navigation"] .level-two:target a + span,
 nav[role="navigation"] .level-three:target a + span {
   display: block;
 }
-/* line 169, ../sass/_menu.scss */
+/* line 171, ../sass/_menu.scss */
 nav[role="navigation"] .level-two :hover + :target li a + span,
 nav[role="navigation"] .level-three :hover + :target li a + span {
   border-top-color: #003e3e;
 }
-/* line 171, ../sass/_menu.scss */
+/* line 173, ../sass/_menu.scss */
 nav[role="navigation"] .level-two :hover + :target li a + span > span,
 nav[role="navigation"] .level-three :hover + :target li a + span > span {
   border-top-color: #004848;
 }
-/* line 175, ../sass/_menu.scss */
+/* line 177, ../sass/_menu.scss */
 nav[role="navigation"] .level-two :target li:hover a + span,
 nav[role="navigation"] .level-three :target li:hover a + span {
   border-top-color: #003939;
 }
-/* line 179, ../sass/_menu.scss */
+/* line 181, ../sass/_menu.scss */
 nav[role="navigation"] .level-three {
   display: none;
   background: #006767;
 }
-/* line 183, ../sass/_menu.scss */
+/* line 185, ../sass/_menu.scss */
 nav[role="navigation"] .level-three li a {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -3572,12 +3580,12 @@ nav[role="navigation"] .level-three li a {
   margin: 0 30px;
   padding: 4px 10px;
 }
-/* line 190, ../sass/_menu.scss */
+/* line 192, ../sass/_menu.scss */
 nav[role="navigation"] .level-three li a.add {
   background-color: #04a4a5;
   position: relative;
 }
-/* line 193, ../sass/_menu.scss */
+/* line 195, ../sass/_menu.scss */
 nav[role="navigation"] .level-three li a.add:after {
   font-size: 12px;
   font-size: 1.2rem;
@@ -3586,7 +3594,7 @@ nav[role="navigation"] .level-three li a.add:after {
   right: 8px;
   top: 4px;
 }
-/* line 200, ../sass/_menu.scss */
+/* line 202, ../sass/_menu.scss */
 nav[role="navigation"] .level-three li a.add:hover {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(60%, rgba(255, 255, 255, 0.2)));
   background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2) 60%);
@@ -3594,7 +3602,7 @@ nav[role="navigation"] .level-three li a.add:hover {
   background-image: -o-linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2) 60%);
   background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2) 60%);
 }
-/* line 204, ../sass/_menu.scss */
+/* line 206, ../sass/_menu.scss */
 nav[role="navigation"] .level-three li a:hover {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(4, 164, 165, 0)), color-stop(60%, rgba(4, 164, 165, 0.2)));
   background-image: -webkit-linear-gradient(rgba(4, 164, 165, 0), rgba(4, 164, 165, 0.2) 60%);
@@ -3602,19 +3610,19 @@ nav[role="navigation"] .level-three li a:hover {
   background-image: -o-linear-gradient(rgba(4, 164, 165, 0), rgba(4, 164, 165, 0.2) 60%);
   background-image: linear-gradient(rgba(4, 164, 165, 0), rgba(4, 164, 165, 0.2) 60%);
 }
-/* line 208, ../sass/_menu.scss */
+/* line 210, ../sass/_menu.scss */
 nav[role="navigation"] .level-three li {
   padding: 6px 0;
 }
-/* line 210, ../sass/_menu.scss */
+/* line 212, ../sass/_menu.scss */
 nav[role="navigation"] .level-three li:first-child {
   padding-top: 20px;
 }
-/* line 213, ../sass/_menu.scss */
+/* line 215, ../sass/_menu.scss */
 nav[role="navigation"] .level-three li:last-child {
   padding-bottom: 20px;
 }
-/* line 218, ../sass/_menu.scss */
+/* line 220, ../sass/_menu.scss */
 nav[role="navigation"] a {
   -webkit-transition-property: width, color;
   -moz-transition-property: width, color;
@@ -3628,12 +3636,12 @@ nav[role="navigation"] a {
   display: block;
   padding: 7px 8px;
 }
-/* line 224, ../sass/_menu.scss */
+/* line 226, ../sass/_menu.scss */
 nav[role="navigation"] a span {
   text-shadow: rgba(0, 0, 0, 0.2) 1px 1px 0;
 }
 
-/* line 230, ../sass/_menu.scss */
+/* line 232, ../sass/_menu.scss */
 [role="main"], footer {
   -webkit-transition-property: width;
   -moz-transition-property: width;
@@ -3653,68 +3661,99 @@ nav[role="navigation"] a span {
 #focus:target nav[role="navigation"] i {
   width: 100%;
 }
+/* line 249, ../sass/_menu.scss */
+#focus:target nav[role="navigation"] dd {
+  display: none;
+}
 /* line 253, ../sass/_menu.scss */
+#focus:target nav[role="navigation"]:hover dd {
+  display: block;
+}
+/* line 258, ../sass/_menu.scss */
 #focus:target nav[role="navigation"]:hover i {
   width: 40px;
 }
-/* line 261, ../sass/_menu.scss */
+/* line 266, ../sass/_menu.scss */
 #focus:target nav[role="navigation"]:hover a > span {
   display: inline-block;
 }
-/* line 262, ../sass/_menu.scss */
+/* line 267, ../sass/_menu.scss */
 #focus:target nav[role="navigation"]:hover :target {
   display: block;
 }
-/* line 264, ../sass/_menu.scss */
-#focus:target nav[role="navigation"] ul {
-  display: none;
-}
-/* line 269, ../sass/_menu.scss */
+/* line 271, ../sass/_menu.scss */
 #focus:target header[role="banner"] > div,
 #focus:target [role="main"] {
   left: 5.556%;
 }
-/* line 274, ../sass/_menu.scss */
+/* line 276, ../sass/_menu.scss */
 #focus:target #expander {
   display: none;
 }
 
 @media only screen and (max-width: 767px) {
-  /* line 280, ../sass/_menu.scss */
+  /* line 282, ../sass/_menu.scss */
   nav[role="navigation"] {
     height: auto;
+    margin-bottom: 20px;
     overflow: visible;
     padding: 0;
     position: relative;
     z-index: 100;
   }
-  /* line 286, ../sass/_menu.scss */
+  /* line 289, ../sass/_menu.scss */
   nav[role="navigation"] dl {
     width: 100%;
     text-align: center;
   }
-  /* line 290, ../sass/_menu.scss */
+  /* line 293, ../sass/_menu.scss */
   nav[role="navigation"] dt {
     display: inline;
   }
-  /* line 292, ../sass/_menu.scss */
+  /* line 295, ../sass/_menu.scss */
   nav[role="navigation"] dt > a {
     border: 0 !important;
     display: inline-block;
     height: 40px;
     text-align: center;
   }
-  /* line 298, ../sass/_menu.scss */
+  /* line 301, ../sass/_menu.scss */
   nav[role="navigation"] dt span {
     display: none;
   }
-  /* line 301, ../sass/_menu.scss */
+  /* line 304, ../sass/_menu.scss */
   nav[role="navigation"] dt + dd {
     text-align: left;
     left: 0;
     position: absolute;
     top: 40px;
     width: 100%;
+  }
+
+  /* line 315, ../sass/_menu.scss */
+  #focus:target nav[role="navigation"] i {
+    width: 20px;
+  }
+  /* line 318, ../sass/_menu.scss */
+  #focus:target nav[role="navigation"] dd {
+    display: none;
+  }
+  /* line 322, ../sass/_menu.scss */
+  #focus:target nav[role="navigation"]:hover dd {
+    display: block;
+  }
+  /* line 325, ../sass/_menu.scss */
+  #focus:target nav[role="navigation"]:hover i {
+    width: 20px;
+  }
+  /* line 328, ../sass/_menu.scss */
+  #focus:target nav[role="navigation"]:hover dt > a > span {
+    display: none;
+  }
+
+  /* line 332, ../sass/_menu.scss */
+  a#expander {
+    display: none;
   }
 }
 /*

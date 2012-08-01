@@ -9,8 +9,16 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 $_baseUri = Services::Registry()->get('Triggerdata', 'full_page_url');
+
+$_active = false;
+foreach (Services::Registry()->get('Triggerdata','Adminbreadcrumbs') as $breadcrumb) {
+	if($breadcrumb->url === $this->row->link) {
+		$_active = true;
+		break;
+	}
+}
 ?>
-<dt>
+<dt<?php if($_active): ?> class="current"<?php endif ?>>
 	<a href="<?php echo $this->row->link; ?>">
 		<i class="glyph <?php echo $this->row->catalog_sef_request; ?>"></i><span><?php echo $this->row->link_text; ?></span>
 	</a>
