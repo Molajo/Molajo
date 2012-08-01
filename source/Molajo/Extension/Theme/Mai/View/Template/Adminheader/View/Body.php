@@ -42,8 +42,8 @@ $resourceURL = Services::Registry()->get('Triggerdata', 'full_page_url');
 							<li><a href="<?php echo $_baseUri ?>#">Last Item</a></li>
 						</ul>
 					</dd
-					><dt class="last"><a href="<?php echo $_baseUri ?>#settings"><i>a</i><span>Settings</span></a></dt
-					><dd id="settings">
+					><dt class="last"><a href="<?php echo $_baseUri ?>#molajo-settings"><i>a</i><span>Settings</span></a></dt
+					><dd id="molajo-settings">
 						<a href="<?php echo $_baseUri ?>#" class="dismiss"><i>g</i><span>Close</span></a>
 						
 					Settings</dd>
