@@ -14,7 +14,7 @@ $_baseUri = Services::Registry()->get('Triggerdata', 'full_page_url');
 		<include:template name=Adminnavigationbar/>
 	</nav>
 
-	<section role="main" id="focus">
+	<section role="main">
 		<include:message/>
 
 		<a href="<?php echo $_baseUri ?>#focus" id="expander"><span>Expand working area</span></a>
