@@ -7,10 +7,17 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$pageUri = $_SERVER['REQUEST_URI'];
+$_baseUri = Services::Registry()->get('Triggerdata', 'full_page_url');
 ?>
 
-<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
-<a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#Filters"><?php echo Services::Language()->translate('Filters'); ?></a>
+	<nav role="navigation">
+		<include:template name=Adminnavigationbar/>
+	</nav>
 
-<include:request/>
+	<section role="main" id="focus">
+		<include:message/>
+
+		<a href="<?php echo $_baseUri ?>#focus" id="expander"><span>Expand working area</span></a>
+		<include:request/>
+	</section>
+

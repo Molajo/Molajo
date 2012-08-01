@@ -46,47 +46,51 @@ $numCols = count($columnArray);
                 </dd>
             </dl>
 
-<table class="responsive">
-    <thead>
-        <tr>
-            <?php
-            $count = 1;
-            foreach ($columnArray as $column) {
-                $extraClass = '';
-                if ($count == 1) {
-                    $extraClass .= 'first';
-                }
-                if ($count == count($columnArray)) {
-                    $extraClass .= 'last';
-                }
-                if ($extraClass == '') {
-                } else {
-                    $extraClass = ' class="' . trim($extraClass) . '"';
-                }
-                ?>
-                <th<?php echo $extraClass . ' ' .  $nowrap; ?>><?php echo Services::Language()->translate('GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></th>
-                <?php
-                $count++;
-            } ?>
-            <th width="1%">
-                <input type="checkbox" class="checkall"><?php echo Services::Language()->translate('GRID_CHECK_ALL'); ?>
-            </th>
-        </tr>
-        <tr id="batch-actions">
-            <th colspan="<?php echo $numCols + 1 ?>">
-                With selected: <select id="batch-options"><option>Enable</option><option>Disable</option><option>Archive</option><option>Delete</option><option value="more">More options...</option></select>
-                <a href="<?php echo $pageUri ?>#articles" class="dismiss"><i>g</i><span>Close</span></a>
-                <dl>
-                    <dt><a href="#"><?php echo Services::Language()->translate('Filters'); ?></a></dt>
-                    <dd><include:template name=Admingridfilters/></dd>
-                    <dt><a href="#"><?php echo Services::Language()->translate('Batch'); ?></a></dt>
-                    <dd><include:template name=Admingridbatch/></dd>
-                    <dt><a href="#"><?php echo Services::Language()->translate('View'); ?></a></dt>
-                    <dd><include:template name=Admingridview/></dd>
-                    <dt><a href="#"><?php echo Services::Language()->translate('Options'); ?></a></dt>
-                    <dd><include:template name=Admingridoptions/></dd>
-                </dl>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
+            <table class="responsive">
+                <thead>
+                    <tr>
+                        <?php
+                        $count = 1;
+                        foreach ($columnArray as $column) {
+                            $extraClass = '';
+                            if ($count == 1) {
+                                $extraClass .= 'first';
+                            }
+                            if ($count == count($columnArray)) {
+                                $extraClass .= 'last';
+                            }
+                            if ($extraClass == '') {
+                            } else {
+                                $extraClass = ' class="' . trim($extraClass) . '"';
+                            }
+                            ?>
+                            <th<?php echo $extraClass . ' ' .  $nowrap; ?>><?php echo Services::Language()->translate('GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></th>
+                            <?php
+                            $count++;
+                        } ?>
+                        <th>
+                            <input type="checkbox" class="checkall"><?php echo Services::Language()->translate('GRID_CHECK_ALL'); ?>
+                        </th>
+                    </tr>
+                    <tr id="batch-actions">
+                        <th colspan="<?php echo $numCols + 1 ?>">
+                            With selected: <select id="batch-options"><option>Enable</option><option>Disable</option><option>Archive</option><option>Delete</option><option value="more">More options...</option></select>
+                            <a href="<?php echo $pageUri ?>#articles" class="dismiss"><i>g</i><span>Close</span></a>
+                            <?php
+                            /*
+                             * Check markup syntax for these items, something's awry
+                            <dl>
+                                <dt><a href="#"><?php echo Services::Language()->translate('Filters'); ?></a></dt>
+                                <dd><include:template name=Admingridfilters/></dd>
+                                <dt><a href="#"><?php echo Services::Language()->translate('Batch'); ?></a></dt>
+                                <dd><include:template name=Admingridbatch/></dd>
+                                <dt><a href="#"><?php echo Services::Language()->translate('View'); ?></a></dt>
+                                <dd><include:template name=Admingridview/></dd>
+                                <dt><a href="#"><?php echo Services::Language()->translate('Options'); ?></a></dt>
+                                <dd><include:template name=Admingridoptions/></dd>
+                            </dl>
+                            */?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>

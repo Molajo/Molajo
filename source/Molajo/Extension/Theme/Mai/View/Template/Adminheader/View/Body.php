@@ -18,6 +18,7 @@ if ($title == '') {
 $homeURL = Services::Registry()->get('Configuration', 'application_base_url');
 $resourceURL = Services::Registry()->get('Triggerdata', 'full_page_url');
 ?>
+    <header role="banner">
 		<div>
 			<h1><a href="<?php echo $homeURL ?>"><span><strong>Molajo</strong> Admin Interface</span></a></h1>
 			<nav>
@@ -49,3 +50,4 @@ $resourceURL = Services::Registry()->get('Triggerdata', 'full_page_url');
 				</dl>
 			</nav>
 		</div>
+    </header>

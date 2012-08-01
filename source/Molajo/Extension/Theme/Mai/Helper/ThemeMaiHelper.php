@@ -32,8 +32,7 @@ Class ThemeMaiHelper extends Mustache
      */
     public function loadMedia()
     {
-        break;
-        
+    
         /** Theme Folder */
         $theme = Services::Registry()->get('Parameters', 'theme_path_node');
 
@@ -233,5 +232,18 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
         $attributes['id'] = $this->items['id'];
 
         return $rc->process($attributes);
+    }
+
+    /**
+     * baseUri
+     *
+     * Renders the page's current base URI
+     *
+     * @results  text
+     * @since    1.0
+     */
+    public function baseUri()
+    {
+        return Services::Registry()->get('Triggerdata', 'full_page_url');
     }
 }

@@ -8,9 +8,6 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 ?>
-<ul class="pagination">
-    
-
 <nav class="pagination">
 	<ul>
 	    <li>Page <input type="number" min="1" max="9" /> of 9 pages</li>
