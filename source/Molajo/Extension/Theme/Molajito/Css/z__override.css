@@ -11,3 +11,4 @@ html, body { height: 96%; }
 .main { padding-top: 30px}
 .row { width: 20000px; max-width: 100%; min-width: 768px; margin: 0 auto; }
 .odd { background-color: #dddddd; }
+img.portletimage { margin: 5px; padding: 5px; border: solid #708090 2px; }

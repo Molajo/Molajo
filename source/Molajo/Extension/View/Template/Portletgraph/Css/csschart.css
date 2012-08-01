@@ -1,0 +1,26 @@
+
+.bar {
+    margin-bottom: 10px;
+    color: #fff;
+    padding: 4px;
+    text-align: center;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ff7617), to(#ba550f));
+
+    -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,0.25)));
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-animation-name:bar;
+    -webkit-animation-duration:0.5s;
+    -webkit-animation-iteration-count:1;
+    -webkit-animation-timing-function:ease-out;
+}
+
+#data-one, .portletgraph-one { -webkit-animation-name:bar; background-color: #00008b; color: #FFF; width: 60% }
+#data-two, .portletgraph-two { -webkit-animation-name:bar; background-color: #228b22; color: #FFF; width: 80% }
+#data-three, .portletgraph-three { -webkit-animation-name:bar; background-color: #8a2be2; color: #FFF; width: 64% }
+#data-four, .portletgraph-four { -webkit-animation-name:bar; background-color: #daa520; color: #FFF; width: 99% }
+
+.portletgraph { width: 95%; }
+
+
