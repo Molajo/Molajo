@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
 
         <td<?php echo $this->row->css_class; ?>><?php
             if ($column == 'title') {
-                echo '<a href="' . $this->row->catalog_id_url . '">';
+                echo '<a href="' . $this->row->catalog_id_url . '/edit">';
             }
             echo $this->row->$column;
             if ($column == 'title') {
