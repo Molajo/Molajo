@@ -4462,30 +4462,38 @@ nav[role="navigation"] a span {
 #focus:target nav[role="navigation"] a > span {
   display: none;
 }
-/* line 246, ../sass/_menu.scss */
+/* line 237, ../sass/_menu.scss */
+#focus:target nav[role="navigation"] i {
+  width: 100%;
+}
+/* line 244, ../sass/_menu.scss */
+#focus:target nav[role="navigation"]:hover i {
+  width: 40px;
+}
+/* line 252, ../sass/_menu.scss */
 #focus:target nav[role="navigation"]:hover a > span {
   display: inline-block;
 }
-/* line 247, ../sass/_menu.scss */
+/* line 253, ../sass/_menu.scss */
 #focus:target nav[role="navigation"]:hover :target {
   display: block;
 }
-/* line 249, ../sass/_menu.scss */
+/* line 255, ../sass/_menu.scss */
 #focus:target nav[role="navigation"] ul {
   display: none;
 }
-/* line 254, ../sass/_menu.scss */
+/* line 260, ../sass/_menu.scss */
 #focus:target header[role="banner"] > div,
 #focus:target [role="main"] {
   left: 5.556%;
 }
-/* line 259, ../sass/_menu.scss */
+/* line 265, ../sass/_menu.scss */
 #focus:target #expander {
   display: none;
 }
 
 @media only screen and (max-width: 767px) {
-  /* line 265, ../sass/_menu.scss */
+  /* line 271, ../sass/_menu.scss */
   nav[role="navigation"] {
     height: auto;
     overflow: visible;
@@ -4493,32 +4501,32 @@ nav[role="navigation"] a span {
     position: relative;
     z-index: 100;
   }
-  /* line 271, ../sass/_menu.scss */
+  /* line 277, ../sass/_menu.scss */
   nav[role="navigation"] dl {
     width: 100%;
     text-align: center;
   }
-  /* line 275, ../sass/_menu.scss */
+  /* line 281, ../sass/_menu.scss */
   nav[role="navigation"] dt {
     display: inline;
   }
-  /* line 277, ../sass/_menu.scss */
+  /* line 283, ../sass/_menu.scss */
   nav[role="navigation"] dt > a {
     border: 0 !important;
     display: inline-block;
     height: 40px;
     text-align: center;
   }
-  /* line 283, ../sass/_menu.scss */
+  /* line 289, ../sass/_menu.scss */
   nav[role="navigation"] dt span {
     display: none;
   }
-  /* line 286, ../sass/_menu.scss */
+  /* line 292, ../sass/_menu.scss */
   nav[role="navigation"] dt + dd {
     display: none;
     text-align: left;
   }
-  /* line 291, ../sass/_menu.scss */
+  /* line 297, ../sass/_menu.scss */
   nav[role="navigation"] dt:target + dd {
     display: inline-block;
     left: 0;
