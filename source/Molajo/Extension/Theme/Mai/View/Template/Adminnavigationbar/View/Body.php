@@ -7,7 +7,7 @@
 defined('MOLAJO') or die;
 ?>
 <dt>
-	<a href="<?php echo $this->row->link; ?>">
+	<a href="<?php echo $this->row->link; ?>#<?php echo $this->row->catalog_sef_request; ?>">
 		<?php echo $this->row->class; ?>
 		<i data-icon="k"></i><span><?php echo $this->row->link_text; ?></span>
 	</a>

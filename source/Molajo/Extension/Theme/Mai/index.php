@@ -22,3 +22,7 @@ $_baseUri = Services::Registry()->get('Triggerdata', 'full_page_url');
 </div>
 <footer>
 </footer>
+<include:defer/>
+
+<!-- 			<include:template name=Adminnavigationbar/>
+ -->

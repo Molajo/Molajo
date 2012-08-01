@@ -20,7 +20,7 @@ $resourceURL = Services::Registry()->get('Triggerdata', 'full_page_url');
 ?>
     <header role="banner">
 		<div>
-			<h1><a href="<?php echo $homeURL ?>"><span><strong>Molajo</strong> Admin Interface</span></a></h1>
+			<h1><a href="<?php echo $homeURL ?>"><i>"</i><span><strong>Molajo</strong> Admin Interface</span></a></h1>
 			<nav>
 				<dl class="settings">
 					<dt><a href="<?php echo $_baseUri ?>#search"><i>=</i><span>Search</span></a></dt
