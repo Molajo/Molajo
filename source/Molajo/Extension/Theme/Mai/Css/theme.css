@@ -3971,6 +3971,41 @@ a .glyph, a .icon, a a[href="#expand"]:before, a header[role="banner"] h1 i, hea
   content: "\24";
 }
 
+/* line 75, ../sass/_icons.scss */
+.glyph.resources:before, .resources.icon:before, a.resources[href="#expand"]:before:before, header[role="banner"] h1 i.resources:before, nav[role="navigation"] i.resources:before, a > i.resources:before, .resources.add:before:after {
+  content: "j";
+}
+
+/* line 76, ../sass/_icons.scss */
+.glyph.collections:before, .collections.icon:before, a.collections[href="#expand"]:before:before, header[role="banner"] h1 i.collections:before, nav[role="navigation"] i.collections:before, a > i.collections:before, .collections.add:before:after {
+  content: "8";
+}
+
+/* line 77, ../sass/_icons.scss */
+.glyph.data-dictionary:before, .data-dictionary.icon:before, a.data-dictionary[href="#expand"]:before:before, header[role="banner"] h1 i.data-dictionary:before, nav[role="navigation"] i.data-dictionary:before, a > i.data-dictionary:before, .data-dictionary.add:before:after {
+  content: "3";
+}
+
+/* line 78, ../sass/_icons.scss */
+.glyph.hierarchies:before, .hierarchies.icon:before, a.hierarchies[href="#expand"]:before:before, header[role="banner"] h1 i.hierarchies:before, nav[role="navigation"] i.hierarchies:before, a > i.hierarchies:before, .hierarchies.add:before:after {
+  content: "-";
+}
+
+/* line 79, ../sass/_icons.scss */
+.glyph.access:before, .access.icon:before, a.access[href="#expand"]:before:before, header[role="banner"] h1 i.access:before, nav[role="navigation"] i.access:before, a > i.access:before, .access.add:before:after {
+  content: "o";
+}
+
+/* line 80, ../sass/_icons.scss */
+.glyph.build:before, .build.icon:before, a.build[href="#expand"]:before:before, header[role="banner"] h1 i.build:before, nav[role="navigation"] i.build:before, a > i.build:before, .build.add:before:after {
+  content: "k";
+}
+
+/* line 81, ../sass/_icons.scss */
+.glyph.settings:before, .settings.icon:before, a.settings[href="#expand"]:before:before, header[role="banner"] h1 i.settings:before, nav[role="navigation"] i.settings:before, a > i.settings:before, .settings.add:before:after {
+  content: "a";
+}
+
 /* line 1, ../sass/_header.scss */
 header[role="banner"] {
   background: #464646;

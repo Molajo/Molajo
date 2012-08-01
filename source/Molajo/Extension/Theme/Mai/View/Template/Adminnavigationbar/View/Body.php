@@ -12,8 +12,7 @@ $_baseUri = Services::Registry()->get('Triggerdata', 'full_page_url');
 ?>
 <dt id="<?php echo $this->row->catalog_sef_request; ?>">
 	<a href="<?php echo $_baseUri //$this->row->link; ?>#<?php echo $this->row->catalog_sef_request; ?>">
-		<?php echo $this->row->class; ?>
-		<i data-icon="k"></i><span><?php echo $this->row->link_text; ?></span>
+		<i class="glyph <?php echo $this->row->catalog_sef_request; ?>"></i><span><?php echo $this->row->link_text; ?></span>
 	</a>
 	<span><span></span></span>
 </dt>
