@@ -5,4 +5,15 @@
  * @license     GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<include:request/>
+
+	<nav role="navigation">
+		<include:template name=Adminnavigationbar/>
+	</nav>
+
+	<section role="main">
+		<include:message/>
+
+		<a href="<?php echo $_baseUri ?>#focus" id="expander"><span>Expand working area</span></a>
+		<include:request/>
+	</section>
+
