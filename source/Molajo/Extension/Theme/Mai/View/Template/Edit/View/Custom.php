@@ -10,12 +10,12 @@ defined('MOLAJO') or die;
 
 <form>
 
-    <dl class="tabs contained">
+    <dl class="contained tabs">
         <dd class="active"><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#edit">Edit</a></dd>
         <dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#options">Options</a></dd>
         <dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#fields">Fields</a></dd>
     </dl>
-    <ul class="tabs-content contained">
+    <ul class="contained tabs-content">
         <li class="active" id="editTab">
             <a href="<?php echo $this->query_results[0]->catalog_id_url ?>" class="button">Preview</a>
             <include:template name=Editbuttons/>
