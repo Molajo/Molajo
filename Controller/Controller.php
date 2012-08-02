@@ -93,7 +93,31 @@ class Controller
      */
     protected $triggers = array();
 
-    /**
+	/**
+	 * Pagination: Total of rows
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected $pagination_total;
+
+	/**
+	 * Pagination: Model offset
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected $model_offset;
+
+	/**
+	 * Pagination: Model count
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected $model_count;
+
+	/**
      * Get the current value (or default) of the specified Model property
      *
      * @param string $key     Property
@@ -265,7 +289,7 @@ class Controller
     /**
      * Method to execute a model method and returns results
      *
-     * @param string $query_object - result, item, list, distinct
+     * @param string $query_object - result, item, list, distinct (for listbox)
      *
      * @return mixed Depends on QueryObject selected
      *
@@ -274,34 +298,41 @@ class Controller
      */
     public function getData($query_object = 'list')
     {
+		/** 1. Initialisation */
+		$this->pagination_total = 0;
+		$this->model_offset = 0;
+		$this->model_count = 10;
+
         $dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
 
+		if ($dbo == 'JDatabase') {
+			if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
+			} else {
+				$query_object = 'list';
+			}
+			$this->prepareQuery($query_object);
+
+        } else {
+
+            $model_parameter = null;
+            if ($this->get('model_parameter') == '') {
+            } else {
+                $model_parameter = $this->get('model_parameter');
+            }
+		}
+
+		/** 2. Schedule onBeforeRead Event */
 		$this->getTriggerList($query_object);
 
 		if (count($this->triggers) > 0) {
 			$this->onBeforeReadEvent();
 		}
 
+		/** 3. Execute Query, results in $this->query_results */
 		if ($dbo == 'JDatabase') {
+			$this->runStandardQuery($query_object);
 
-			/** Only JDatabase queries follow */
-			if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
-			} else {
-				$query_object = 'list';
-			}
-
-			$this->getDataStandard($query_object = 'list');
-
-        } else {
-
-            $model_parameter = null;
-
-            if ($this->get('model_parameter') == '') {
-            } else {
-                $model_parameter = $this->get('model_parameter');
-            }
-
-
+		} else {
             if (strtolower($query_object) == 'getdummy') {
                 $this->query_results = array();
             } else {
@@ -309,7 +340,7 @@ class Controller
             }
         }
 
-		/** Schedule onAfterRead Event */
+		/** 4. Schedule onAfterRead Event */
 		if (count($this->triggers) > 0) {
 			$this->onAfterReadEvent(
 				$this->pagination_total,
@@ -318,7 +349,12 @@ class Controller
 			);
 		}
 
-		/** List */
+		/** 5. Non-standard DBO, Results and Distinct */
+		if ($query_object == 'result' || $query_object == 'distinct') {
+			return $this->query_results;
+		}
+
+		/** 6. List  */
 		if ($query_object == 'list') {
 
 			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
@@ -342,7 +378,7 @@ class Controller
 			return $this->query_results;
 		}
 
-		/** Item */
+		/** 7. Return Item */
 		if (Services::Registry()->get('cache') == true) {
 			Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results[0]);
 		}
@@ -351,10 +387,52 @@ class Controller
 
 	}
 
-	public function getDataStandard($query_object = 'list')
+	/**
+	 * Get the list of potential triggers identified with this model (used to filter registered triggers)
+	 *
+	 * @param $query_object
+	 *
+	 * @return void
+	 * @since   1.0
+	 */
+	protected function getTriggerList($query_object)
 	{
+		if ($query_object == 'result') {
+			$this->triggers = array();
+			return;
+		}
 
-        /** Base query */
+		if ((int) $this->get('process_triggers') == 1) {
+
+			$this->triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
+
+			if (is_array($this->triggers)) {
+			} else {
+				if ($this->triggers == '' || $this->triggers == false || $this->triggers == null) {
+					$this->triggers = array();
+				} else {
+					$temp = $this->triggers;
+					$this->triggers = array();
+					$this->triggers[] = $temp;
+				}
+			}
+
+		} else {
+			$this->triggers = array();
+		}
+
+		return;
+	}
+
+	/**
+	 * Prepare query object for standard dbo queries
+	 *
+	 * @param string $query_object
+	 * @return bool
+	 */
+	protected function prepareQuery($query_object = 'list')
+	{
+        /** 1. Base query */
         if ($query_object == 'item' || $query_object == 'result') {
             $id_key = (int) $this->get('id', 0);
             $name_key_value = (string) $this->get('name_key_value', '');
@@ -364,7 +442,7 @@ class Controller
             $name_key_value = '';
         }
 
-        /** Establishes the Field values (if not already set) and the primary from table */
+        /** 2. if not already set, fields and where for primary key */
         $this->model->setBaseQuery(
             Services::Registry()->get($this->table_registry_name, 'Fields'),
             $this->get('table_name'),
@@ -376,7 +454,7 @@ class Controller
             $query_object
         );
 
-        /** Passes query object to Authorisation Services to append ACL query elements */
+        /** 3. append ACL query elements */
         if ((int) $this->get('check_view_level_access') == 1) {
             $this->model->addACLCheck(
                 $this->get('primary_prefix'),
@@ -385,7 +463,7 @@ class Controller
             );
         }
 
-        /** Adds Select, From and Where query elements for Joins */
+		/** 4. model joins: select, from, and where */
         if ((int) $this->get('use_special_joins') == 1) {
             $joins = Services::Registry()->get($this->table_registry_name, 'Joins');
             if (count($joins) > 0) {
@@ -397,11 +475,18 @@ class Controller
             }
         }
 
-        /** Schedule onBeforeRead Event */
-        if (count($this->triggers) > 0) {
-            $this->onBeforeReadEvent();
-        }
+		return;
 
+	}
+
+	/**
+	 * Execute data retrieval query for standard requests
+	 *
+	 * @param string $query_object
+	 * @return bool
+	 */
+	protected function runStandardQuery($query_object = 'list')
+	{
         $this->model_offset = $this->get('model_offset', 0);
         $this->model_count = $this->get('model_count', 0);
 
@@ -409,9 +494,11 @@ class Controller
             if ($query_object == 'result') {
                 $this->model_offset = 0;
                 $this->model_count = 1;
+
             } elseif ($query_object == 'distinct' || $query_object = 'getListdata') {
                 $this->model_offset = $this->get('model_offset', 0);
                 $this->model_count = $this->get('model_count', 9999);
+
             } else {
                 $this->model_offset = $this->get('model_offset', 0);
                 $this->model_count = $this->get('model_count', 10);
@@ -419,10 +506,7 @@ class Controller
         }
 
         $this->pagination_total = (int) $this->model->getQueryResults(
-            $query_object,
-            $this->model_offset,
-            $this->model_count
-        );
+            $query_object, $this->model_offset, $this->model_count);
 
         /** Cache */
         if (Services::Cache()->exists(md5($this->model->query->__toString() . ' ' . $this->model_offset . ' ' . $this->model_count))) {
@@ -456,7 +540,9 @@ class Controller
                 Services::Cache()->set(md5($this->model->query->__toString()), $query_results);
             }
 
-            return $query_results;
+			$this->query_results = $query_results;
+
+            return;
         }
 
         /** No results */
@@ -522,44 +608,6 @@ class Controller
     }
 
     /**
-     * Get the list of potential triggers identified with this model (used to filter registered triggers)
-     *
-     * @param $query_object
-     *
-     * @return void
-     * @since   1.0
-     */
-    protected function getTriggerList($query_object)
-    {
-        if ($query_object == 'result') {
-            $this->triggers = array();
-
-            return;
-        }
-
-        if ((int) $this->get('process_triggers') == 1) {
-
-            $this->triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
-
-            if (is_array($this->triggers)) {
-            } else {
-                if ($this->triggers == '' || $this->triggers == false || $this->triggers == null) {
-                    $this->triggers = array();
-                } else {
-                    $temp = $this->triggers;
-                    $this->triggers = array();
-                    $this->triggers[] = $temp;
-                }
-            }
-
-        } else {
-            $this->triggers = array();
-        }
-
-        return;
-    }
-
-    /**
      * Schedule onBeforeRead Event - could update model and parameter objects
      *
      * @return boolean
@@ -615,14 +663,10 @@ class Controller
     /**
      * Schedule onAfterRead Event - could update parameters and query_results objects
      *
-     * @param   $this->pagination_total
-     * @param   $this->model_offset
-     * @param   $return_rowcount
-     *
      * @return bool
      * @since   1.0
      */
-    protected function onAfterReadEvent($this->pagination_total, $this->model_offset, $this->model_count)
+    protected function onAfterReadEvent()
     {
         /** Prepare input */
         if (count($this->triggers) == 0
