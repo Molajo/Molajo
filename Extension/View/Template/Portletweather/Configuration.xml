@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Template" version="1.0" extends="Extensioninstancesviewstemplates">
+    <name>VIEW_TEMPLATE_PORTLETWEATHER_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>AmyStephen@gmail.com</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_TEMPLATE_PORTLETWEATHER_DESCRIPTION</description>
+    <model name="Portletweather">
+        <table>
+            <triggers>
+                <trigger name="Weather"/>
+            </triggers>
+        </table>
+        <customfields>
+            <customfield name="parameters">
+                <field name="city" type="char" null="0" default=""/>
+                <field name="zip" type="char" null="0" default="10003"/>
+                <field name="country" type="char" null="0" default="US"/>
+                <field name="fahrenheit_or_celsius" type="char" null="0" default="F" values="C,F"/>
+                <field name="language" type="char" null="0" default="en"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

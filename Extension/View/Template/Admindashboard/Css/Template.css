@@ -54,10 +54,4 @@
 .ui-icon-minus { background-position: -48px -128px; }
 .ui-icon-close { background-position: -80px -128px; }
 
-/* Example Graph */
-.graph-line-bar{ width:100%; display:inline-block;}
-.graph-line-one{ height:90%; background-color: red; }
-.graph-line-two{ height:20%; background-color: green; }
-.graph-line-three{ height:40%; background-color: purple;}
-.graph-line-four{ height:70%; background-color: blue; }
 

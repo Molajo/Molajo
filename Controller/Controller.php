@@ -276,7 +276,22 @@ class Controller
     {
         $dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
 
-        if ($dbo == 'JDatabase') {
+		$this->getTriggerList($query_object);
+
+		if (count($this->triggers) > 0) {
+			$this->onBeforeReadEvent();
+		}
+
+		if ($dbo == 'JDatabase') {
+
+			/** Only JDatabase queries follow */
+			if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
+			} else {
+				$query_object = 'list';
+			}
+
+			$this->getDataStandard($query_object = 'list');
+
         } else {
 
             $model_parameter = null;
@@ -286,23 +301,58 @@ class Controller
                 $model_parameter = $this->get('model_parameter');
             }
 
+
             if (strtolower($query_object) == 'getdummy') {
                 $this->query_results = array();
             } else {
                 $this->query_results = $this->model->$query_object($model_parameter);
             }
-
-            return $this->query_results;
         }
 
-        /** Only JDatabase queries follow */
-        if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
-        } else {
-            $query_object = 'list';
-        }
+		/** Schedule onAfterRead Event */
+		if (count($this->triggers) > 0) {
+			$this->onAfterReadEvent(
+				$this->pagination_total,
+				$this->model_offset,
+				$this->model_count
+			);
+		}
 
-        /** Retrieve list of potential $this->triggers for this model (result type does not use events) */
-        $this->getTriggerList($query_object);
+		/** List */
+		if ($query_object == 'list') {
+
+			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
+				$message = 'DisplayController->getData Query Results <br /><br />';
+
+				ob_start();
+				echo '<pre>';
+				var_dump($this->query_results);
+				echo '</pre><br /><br />';
+
+				$message .= ob_get_contents();
+				ob_end_clean();
+
+				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
+			}
+
+			if (Services::Registry()->get('cache') == true) {
+				Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results);
+			}
+
+			return $this->query_results;
+		}
+
+		/** Item */
+		if (Services::Registry()->get('cache') == true) {
+			Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results[0]);
+		}
+
+		return $this->query_results[0];
+
+	}
+
+	public function getDataStandard($query_object = 'list')
+	{
 
         /** Base query */
         if ($query_object == 'item' || $query_object == 'result') {
@@ -352,31 +402,31 @@ class Controller
             $this->onBeforeReadEvent();
         }
 
-        $model_offset = $this->get('model_offset', 0);
-        $model_count = $this->get('model_count', 0);
+        $this->model_offset = $this->get('model_offset', 0);
+        $this->model_count = $this->get('model_count', 0);
 
-        if ($model_offset == 0 && $model_count == 0) {
+        if ($this->model_offset == 0 && $this->model_count == 0) {
             if ($query_object == 'result') {
-                $model_offset = 0;
-                $model_count = 1;
+                $this->model_offset = 0;
+                $this->model_count = 1;
             } elseif ($query_object == 'distinct' || $query_object = 'getListdata') {
-                $model_offset = $this->get('model_offset', 0);
-                $model_count = $this->get('model_count', 9999);
+                $this->model_offset = $this->get('model_offset', 0);
+                $this->model_count = $this->get('model_count', 9999);
             } else {
-                $model_offset = $this->get('model_offset', 0);
-                $model_count = $this->get('model_count', 10);
+                $this->model_offset = $this->get('model_offset', 0);
+                $this->model_count = $this->get('model_count', 10);
             }
         }
 
-        $pagination_total = (int) $this->model->getQueryResults(
+        $this->pagination_total = (int) $this->model->getQueryResults(
             $query_object,
-            $model_offset,
-            $model_count
+            $this->model_offset,
+            $this->model_count
         );
 
         /** Cache */
-        if (Services::Cache()->exists(md5($this->model->query->__toString() . ' ' . $model_offset . ' ' . $model_count))) {
-            return Services::Cache()->get(md5($this->model->query->__toString() . ' ' . $model_offset . ' ' . $model_count));
+        if (Services::Cache()->exists(md5($this->model->query->__toString() . ' ' . $this->model_offset . ' ' . $this->model_count))) {
+            return Services::Cache()->get(md5($this->model->query->__toString() . ' ' . $this->model_offset . ' ' . $this->model_count));
         }
 
         if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
@@ -468,41 +518,7 @@ class Controller
 
         $this->query_results = $q;
 
-        /** Schedule onAfterRead Event */
-        if (count($this->triggers) > 0) {
-            $this->onAfterReadEvent($pagination_total, $model_offset, $model_count);
-        }
-
-        /** List */
-        if ($query_object == 'list') {
-
-            if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
-                $message = 'DisplayController->getData Query Results <br /><br />';
-
-                ob_start();
-                echo '<pre>';
-                var_dump($this->query_results);
-                echo '</pre><br /><br />';
-
-                $message .= ob_get_contents();
-                ob_end_clean();
-
-                Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
-            }
-
-            if (Services::Registry()->get('cache') == true) {
-                Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results);
-            }
-
-            return $this->query_results;
-        }
-
-        /** Item */
-        if (Services::Registry()->get('cache') == true) {
-            Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results[0]);
-        }
-
-        return $this->query_results[0];
+		return;
     }
 
     /**
@@ -599,14 +615,14 @@ class Controller
     /**
      * Schedule onAfterRead Event - could update parameters and query_results objects
      *
-     * @param   $pagination_total
-     * @param   $model_offset
+     * @param   $this->pagination_total
+     * @param   $this->model_offset
      * @param   $return_rowcount
      *
      * @return bool
      * @since   1.0
      */
-    protected function onAfterReadEvent($pagination_total, $model_offset, $model_count)
+    protected function onAfterReadEvent($this->pagination_total, $this->model_offset, $this->model_count)
     {
         /** Prepare input */
         if (count($this->triggers) == 0
@@ -619,9 +635,9 @@ class Controller
         $items = $this->query_results;
         $this->query_results = array();
 
-        $this->parameters['model_offset'] = $model_offset;
-        $this->parameters['model_count'] = $model_count;
-        $this->parameters['pagination_total'] = $pagination_total;
+        $this->parameters['model_offset'] = $this->model_offset;
+        $this->parameters['model_count'] = $this->model_count;
+        $this->parameters['pagination_total'] = $this->pagination_total;
 
         $first = true;
 

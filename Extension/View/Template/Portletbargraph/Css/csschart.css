@@ -16,11 +16,11 @@
     -webkit-animation-timing-function:ease-out;
 }
 
-#data-one, .portletgraph-one { -webkit-animation-name:bar; background-color: #00008b; color: #FFF; width: 60% }
-#data-two, .portletgraph-two { -webkit-animation-name:bar; background-color: #228b22; color: #FFF; width: 80% }
-#data-three, .portletgraph-three { -webkit-animation-name:bar; background-color: #8a2be2; color: #FFF; width: 64% }
-#data-four, .portletgraph-four { -webkit-animation-name:bar; background-color: #daa520; color: #FFF; width: 99% }
+#data-one, .portletbargraph-one { -webkit-animation-name:bar; background-color: #00008b; color: #FFF; width: 60% }
+#data-two, .portletbargraph-two { -webkit-animation-name:bar; background-color: #228b22; color: #FFF; width: 80% }
+#data-three, .portletbargraph-three { -webkit-animation-name:bar; background-color: #8a2be2; color: #FFF; width: 64% }
+#data-four, .portletbargraph-four { -webkit-animation-name:bar; background-color: #daa520; color: #FFF; width: 99% }
 
-.portletgraph { width: 95%; }
+.portletbargraph { width: 95%; }
 
 

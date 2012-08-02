@@ -6,17 +6,17 @@
  */
 defined('MOLAJO') or die; ?>
 <div class="ui-portlet-header">
-    <h4>Graph</h4>
+    <h4>Bar Graph</h4>
 </div>
 <div class="ui-portlet-content">
-	<dl class="portletgraph">
+	<dl class="portletbargraph">
 		<dt><strong>2009</strong></dt>
-		<dd><div id="data-one" class="bar portletgraph-one">60%</div></dd>
+		<dd><div id="data-one" class="bar portletbargraph-one">60%</div></dd>
 		<dt><strong>2010</strong></dt>
-		<dd><div id="data-two" class="bar portletgraph-two">80%</div></dd>
+		<dd><div id="data-two" class="bar portletbargraph-two">80%</div></dd>
 		<dt><strong>2011</strong></dt>
-		<dd><div id="data-three" class="bar portletgraph-three">64%</div></dd>
+		<dd><div id="data-three" class="bar portletbargraph-three">64%</div></dd>
 		<dt><strong>2012</strong></dt>
-		<dd><div id="data-four" class="bar portletgraph-four">97%</div></dd>
+		<dd><div id="data-four" class="bar portletbargraph-four">97%</div></dd>
 	</dl>
 </div>

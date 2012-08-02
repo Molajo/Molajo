@@ -1,0 +1,260 @@
+.example-1 .pie-chart-piece:nth-child(1) { /* First pie piece */
+    left:0;
+    -webkit-transform:rotate(0deg);
+    -moz-transform:rotate(0deg);
+    -o-transform:rotate(0deg);
+    transform:rotate(0deg);
+}
+
+.example-1 .pie-chart-piece:nth-child(2) { /* Second pie piece */
+    bottom:-17.33333333333333%;
+    left:   6.66666666666667%;
+    -webkit-transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    transform:rotate(-45deg);
+}
+
+.example-1 .pie-chart-piece:nth-child(2) p { /* Repositioning the second pie piece's text */
+    -webkit-transform:rotate(45deg); /* Will always offset the rotation of the piece it is in */
+    -moz-transform:rotate(45deg);
+    -o-transform:rotate(45deg);
+    transform:rotate(45deg);
+}
+.example-1 .pie-chart-piece:nth-child(3) { /* Third pie piece */
+    bottom:-18.66666666666667%;
+    right:   8.33333333333333%;
+    -webkit-transform:rotate(-135deg);
+    -moz-transform:rotate(-135deg);
+    -o-transform:rotate(-135deg);
+    transform:rotate(-135deg);
+}
+
+
+
+
+/*************************************************\
+ * Change the default colours
+\*************************************************/
+/* You can add more colours by extending the children:
+ * .pie-chart-piece:nth-child(4), .pie-chart-piece:nth-child(5), etc. */
+
+.pie-chart-piece:nth-child(1) {
+    background:#A8BCFF;
+}
+
+.pie-chart-piece:nth-child(2) {
+    background:#7A99FF;
+}
+
+.pie-chart-piece:nth-child(3) {
+    background:#547CFF;
+}
+
+.pie-chart-piece:nth-last-child(2),.pie-chart-end-quarter {
+    background:#2658FF !important;
+}
+/*************************************************/
+
+
+
+
+
+/*************************************************\
+ * Scalability
+\*************************************************/
+.pie-chart-pan {
+    height:300px; /* height and width must match */
+    width:300px;
+}
+
+.pie-chart-cover { /* If you change the dimensions of .pie-chart-pan,you will have to adjust these */
+    border:10px solid #FFF;
+    left:-5px; /* Will be about approximately half of the border width */
+    top:-5px; /* Will be about approximately half of the border width */
+}
+
+.pie-chart-piece p {
+    line-height:150px; /* Half of .pie-chart-pan height */
+}
+
+.pie-chart-half {
+    border-bottom-left-radius:150px; /* Half of .pie-chart-pan height */
+    border-top-left-radius:150px; /* Half of .pie-chart-pan height */
+}
+/*************************************************/
+
+
+
+
+/*************************************************\
+ * DO NOT TOUCH BELOW CODE
+\*************************************************/
+
+/** WARNING:
+ * Only advanced CSS users should adjust the following information.
+ * If you do not know what you are doing,you will break it.
+ */
+
+.pie-chart:before { /* Transluscent black background */
+    content:" ";
+    background:rgba(0,0,0,0.25);
+    border-radius:100%;
+    display:block;
+    height:106%;
+    margin:-3% 0 0 -3%;
+    position:absolute;
+    width:106%;
+}
+
+.pie-chart {
+    font:16pt Arial,sans-serif !important;
+    -webkit-font-smoothing:antialiased;
+    font-smooth:always;
+    margin:1em;
+    position:relative;
+    text-shadow:0 1px rgba(255,255,255,0.4),
+    0 -1px rgba(0,0,0,0.2);
+}
+
+.pie-chart p {
+    margin:0;
+    padding:0;
+    word-wrap:break-word;
+}
+
+.pie-chart-pan {
+    border-radius:100%;
+    position:relative;
+}
+
+.pie-chart-cover {
+    border-radius:100%;
+    height:96.66666666666667%;
+    position:absolute;
+    width:96.66666666666667%;
+}
+.pie-chart:not(.flat) .pie-chart-cover {
+    background:-moz-radial-gradient(
+        center,
+        ellipse cover,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.2) 100%
+    );
+    background:-webkit-gradient(
+        radial,
+        center center,
+        0px,
+        center center,
+        100%,
+        color-stop(0%,rgba(0,0,0,0)),
+        color-stop(100%,rgba(0,0,0,0.2))
+    );
+    background:-webkit-radial-gradient(
+        center,
+        ellipse cover,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.2) 100%
+    );
+    background:-o-radial-gradient(
+        center,
+        ellipse cover,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.2) 100%
+    );
+    background:radial-gradient(
+        center,
+        ellipse cover,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.2) 100%
+    );
+}
+
+.pie-chart-whole,.pie-chart-half,.pie-chart-quarter,.pie-chart-end-quarter {
+    position:absolute;
+    text-align:right;
+    -webkit-transform-origin:50% 50%;
+    -moz-transform-origin:50% 50%;
+    -o-transform-origin:50% 50%;
+    transform-origin:50% 50%;
+    width:50%;
+}
+
+.pie-chart-whole {
+    border-radius:100%;
+    height:100%;
+    text-align:center !important;
+    width:100% !important;
+}
+
+.pie-chart-half {
+    height:100%;
+}
+
+.pie-chart-quarter {
+    border-top-left-radius:100%;
+    height:50%;
+}
+
+/* Must include if not ending with 180* or a whole pie */
+/* Sits at the right hand, top corner of the pie chart to mask uneven endings */
+.pie-chart-end-quarter {
+    border-top-right-radius:100%;
+    height:50%;
+    right:0;
+    text-align:left !important;
+    top:0;
+}
+
+/* Percents and inner text */
+.pie-chart-piece p {
+    color:rgba(0,0,0,0.7);
+    display:block;
+    font-size:1.5em;
+    font-family:'Trebuchet MS',Arial,sans-serif;
+    padding:0 0.3em;
+}
+
+/* Labels */
+.pie-chart-label { /* Label goes beneath the pie chart */
+    color:rgba(0,0,0,0.7);
+    bottom:-15%;
+    font-size:1.2em !important;
+    padding:2em 0 0 0;
+    position:absolute;
+    text-align:center;
+    width:100%;
+}
+
+.pie-chart-center-label { /* Label goes across the center of the pie chart */
+    color:#FFF;
+    font-size:1.5em;
+    position:absolute;
+    text-align:center;
+    top:33.3333333333%;
+    width:80%;
+    padding:0 10%;
+}
+
+/* Half the size of a normal pie chart */
+.smaller-pie {
+    height:150px !important;
+    width:150px !important;
+    font-size: 0.8em !important;
+}
+
+.smaller-pie .pie-chart-pan {
+    height:150px;
+    width:150px;
+}
+
+.smaller-pie p {
+    line-height:75px !important;
+}
+
+
+.smaller-pie .pie-chart-cover {
+    border:5px solid #FFF;
+    left:-2.5px;
+    top:-2.5px;
+}

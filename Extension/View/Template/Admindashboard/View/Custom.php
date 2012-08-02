@@ -28,30 +28,34 @@ defined("MOLAJO") or die; ?>
 
 <div wrap_class="row">
 	<div wrap_class="twelve columns">
-		<div wrap_class="row ui-portlet1">
-			<include:template name=Portletgallery wrap=div wrap_id=portlet1 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portletlist wrap=div wrap_id=portlet2 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portlettext wrap=div wrap_id=portlet3 wrap_class=ui-portlet,four,columns/>
+		<div wrap_class="row sortable-portlet1">
+			<include:template name=Portletgallery wrap=div wrap_id=portlet1 wrap_class=portlet,four,columns/>
+			<include:template name=Portletlist wrap=div wrap_id=portlet2 wrap_class=portlet,four,columns/>
+			<include:template name=Portlettext wrap=div wrap_id=portlet3 wrap_class=portlet,four,columns/>
 		</div>
-		<div wrap_class="row ui-portlet2">
-			<include:template name=Portletaudio wrap=div wrap_id=portlet4 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portletvideo wrap=div wrap_id=portlet5 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portletmap wrap=div wrap_id=portlet6 wrap_class=ui-portlet,four,columns/>
+		<br />
+		<div wrap_class="row sortable-portlet2">
+			<include:template name=Portletfeed wrap=div wrap_id=portlet4 wrap_class=portlet,four,columns/>
+			<include:template name=Portletvideo wrap=div wrap_id=portlet5 wrap_class=portlet,four,columns/>
+			<include:template name=Portletmap wrap=div wrap_id=portlet6 wrap_class=portlet,four,columns/>
 		</div>
-		<div wrap_class="row ui-portlet3">
-			<include:template name=Portletgraph wrap=div wrap_id=portlet7 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portletquicklinks wrap=div wrap_id=portlet8 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portletsysteminfo wrap=div wrap_id=portlet9 wrap_class=ui-portlet,four,columns/>
+		<br />
+		<div wrap_class="row sortable-portlet3">
+			<include:template name=Portletbargraph wrap=div wrap_id=portlet7 wrap_class=portlet,four,columns/>
+			<include:template name=Portletquicklinks wrap=div wrap_id=portlet8 wrap_class=portlet,four,columns/>
+			<include:template name=Portletsysteminfo wrap=div wrap_id=portlet9 wrap_class=portlet,four,columns/>
 		</div>
-		<div wrap_class="row ui-portlet4">
-			<include:template name=Portletgallery wrap=div wrap_id=portlet10 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portletlist wrap=div wrap_id=portlet11 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portlettext wrap=div wrap_id=portlet12 wrap_class=ui-portlet,four,columns/>
+		<br />
+		<div wrap_class="row sortable-portlet4">
+			<include:template name=Portletgallery wrap=div wrap_id=portlet10 wrap_class=portlet,four,columns/>
+			<include:template name=Portletweather wrap=div wrap_id=portlet11 wrap_class=portlet,four,columns/>
+			<include:template name=Portlettext wrap=div wrap_id=portlet12 wrap_class=portlet,four,columns/>
 		</div>
-		<div wrap_class="row ui-portlet5">
-			<include:template name=Portletaudio wrap=div wrap_id=portlet13 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portletvideo wrap=div wrap_id=portlet14 wrap_class=ui-portlet,four,columns/>
-			<include:template name=Portletmap wrap=div wrap_id=portlet15 wrap_class=ui-portlet,four,columns/>
+		<br />
+		<div wrap_class="row sortable-portlet5">
+			<include:template name=Portletaudio wrap=div wrap_id=portlet13 wrap_class=portlet,four,columns/>
+			<include:template name=Portletvideo wrap=div wrap_id=portlet14 wrap_class=portlet,four,columns/>
+			<include:template name=Portletmap wrap=div wrap_id=portlet15 wrap_class=portlet,four,columns/>
 		</div>
 	</div>
 </div>
