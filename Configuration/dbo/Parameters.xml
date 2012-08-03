@@ -1,5 +1,5 @@
 <model
         name="Parameters"
-        process_triggers="0"
+        process_triggers="1"
         data_source="Registry">
 </model>

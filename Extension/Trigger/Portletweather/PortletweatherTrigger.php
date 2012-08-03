@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Trigger\Weather;
+namespace Molajo\Extension\Trigger\Portletweather;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 use Molajo\Service\Services;
@@ -12,19 +12,19 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Weather
+ * Portletweather
  *
  * @package     Molajo
  * @subpackage  Trigger
  * @since       1.0
  */
-class WeatherTrigger extends ContentTrigger
+class PortletweatherTrigger extends ContentTrigger
 {
 
 	/**
 	 * After-read processing
 	 *
-	 * Retrieves Weather via Google API
+	 * Retrieves Portletweather via Google API
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -82,7 +82,7 @@ class WeatherTrigger extends ContentTrigger
 			$row->icon = str_replace($icons_google, $icons_local,
 				$api->weather->current_conditions->icon->attributes()->data);
 
-			$row->title = Services::Language()->translate('Weather for ') . $row->city;
+			$row->title = Services::Language()->translate('Portletweather for ') . $row->city;
 
 			$row->forecast_day_of_week = $weather->day_of_week->attributes()->data;
 			$row->forecast_low_temperature = $weather->low->attributes()->data;

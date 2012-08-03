@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Trigger\Adminmenu;
+namespace Molajo\Extension\Trigger\Administrator;
 
 use Molajo\Extension\Trigger\Content\ContentTrigger;
 use Molajo\Service\Services;
@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Trigger
  * @since       1.0
  */
-class AdminmenuTrigger extends ContentTrigger
+class AdministratorTrigger extends ContentTrigger
 {
     /**
      * Prepares Administrator Menus

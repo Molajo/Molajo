@@ -20,7 +20,6 @@ defined('MOLAJO') or die;
  */
 class Controller
 {
-
     /**
      * User object, custom fields and parameters
      *
@@ -62,15 +61,13 @@ class Controller
     /**
      * Set of rows returned from a query
      *
-     * Public as it is passed into triggered events
-     *
      * @var    array()
      * @since  1.0
      */
     protected $query_results = array();
 
     /**
-     * Single item from the $query_results
+     * Single set of $query_results
      *
      * @var    object
      * @since  1.0
@@ -78,7 +75,9 @@ class Controller
     protected $row;
 
     /**
-     * Public as it is passed into triggered events
+     * Used to build Create, Update, Delete data structures
+	 *
+	 * Public as it is passed into triggered events
      *
      * @var    array
      * @since  1.0
@@ -120,10 +119,10 @@ class Controller
 	/**
      * Get the current value (or default) of the specified Model property
      *
-     * @param string $key     Property
-     * @param mixed  $default Value
+     * @param   string $key
+     * @param   mixed  $default
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function get($key, $default = null)
@@ -140,10 +139,10 @@ class Controller
     /**
      * Set the value of a Model property
      *
-     * @param string $key   Property
-     * @param mixed  $value Value
+     * @param   string $key
+     * @param   mixed  $value
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function set($key, $value = null)
@@ -168,8 +167,8 @@ class Controller
     public function connect($model_type = 'Table', $model_name = null, $model_class = 'ReadModel')
     {
         $profiler_message = 'DisplayController->connect '
-            . ' Type ' . $model_type
-            . ' Name ' . $model_name
+            . ' Type: ' . $model_type
+            . ' Name: ' . $model_name
             . ' Class: ' . $model_class;
 
         if ($model_name == null) {
@@ -321,9 +320,27 @@ class Controller
             }
 		}
 
-		/** 2. Schedule onBeforeRead Event */
 		$this->getTriggerList($query_object);
 
+		$profiler_message =
+			' <br />Model Type: ' . $this->get('model_type', '')
+			. ' <br />Model Name: ' . $this->get('model_name', '')
+			. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
+			. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
+			. ' <br />Process Triggers: ' . (int) $this->get('process_triggers');
+
+		//if ($this->get('model_name') == 'Parameters') {
+			echo '<br />' . $profiler_message . '<br />';
+
+		//}
+
+		if ($this->get('model_name') == 'Parameters') {
+			echo '<pre>';
+			var_dump($this->triggers);
+			echo '</pre>';
+		}
+
+		/** 2. Schedule onBeforeRead Event */
 		if (count($this->triggers) > 0) {
 			$this->onBeforeReadEvent();
 		}
@@ -339,9 +356,22 @@ class Controller
                 $this->query_results = $this->model->$query_object($model_parameter);
             }
         }
+		if ($this->get('model_name') == 'Parameters') {
+			echo '<pre>';
+			var_dump($this->query_results);
+			echo '</pre>';
+
+		}
 
 		/** 4. Schedule onAfterRead Event */
 		if (count($this->triggers) > 0) {
+
+
+			if ($this->get('model_name') == 'Parameters') {
+				echo Services::Registry()->get('Parameters', '*');
+
+			}
+
 			$this->onAfterReadEvent(
 				$this->pagination_total,
 				$this->model_offset,
@@ -349,12 +379,18 @@ class Controller
 			);
 		}
 
-		/** 5. Non-standard DBO, Results and Distinct */
+		/** 5. Return Non-standard DBO */
+		if ($dbo == 'JDatabase') {
+		} else {
+			return $this->query_results;
+		}
+
+		/** 6. Return Result and Distinct */
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $this->query_results;
 		}
 
-		/** 6. List  */
+		/** 7. Return List  */
 		if ($query_object == 'list') {
 
 			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
@@ -378,7 +414,7 @@ class Controller
 			return $this->query_results;
 		}
 
-		/** 7. Return Item */
+		/** 8. Return Item */
 		if (Services::Registry()->get('cache') == true) {
 			Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results[0]);
 		}
@@ -403,19 +439,13 @@ class Controller
 		}
 
 		if ((int) $this->get('process_triggers') == 1) {
-
-			$this->triggers = Services::Registry()->get($this->table_registry_name, 'triggers', array());
-
-			if (is_array($this->triggers)) {
-			} else {
-				if ($this->triggers == '' || $this->triggers == false || $this->triggers == null) {
-					$this->triggers = array();
-				} else {
-					$temp = $this->triggers;
-					$this->triggers = array();
-					$this->triggers[] = $temp;
-				}
+			$temp = Services::Registry()->get($this->table_registry_name, 'triggers', array());
+			if (is_array($temp)) {
+				$this->triggers = $temp;
 			}
+
+			$this->triggers[] = Services::Registry()->get('Parameters', 'template_view_path_node');
+			$this->triggers[] = APPLICATION;
 
 		} else {
 			$this->triggers = array();
@@ -476,14 +506,13 @@ class Controller
         }
 
 		return;
-
 	}
 
 	/**
 	 * Execute data retrieval query for standard requests
 	 *
-	 * @param string $query_object
-	 * @return bool
+	 * @param   string $query_object
+	 * @return  bool
 	 */
 	protected function runStandardQuery($query_object = 'list')
 	{
@@ -671,6 +700,7 @@ class Controller
         /** Prepare input */
         if (count($this->triggers) == 0
             || (int) $this->get('process_triggers') == 0
+			|| count ($this->query_results) == 0
         ) {
             return true;
         }
@@ -684,6 +714,7 @@ class Controller
         $this->parameters['pagination_total'] = $this->pagination_total;
 
         $first = true;
+
 
         foreach ($items as $item) {
 

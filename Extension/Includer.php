@@ -177,9 +177,7 @@ class Includer
                 Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
                 /** Wrap */
-            } elseif ($name == 'wrap' || $name == 'wrap_view_title'
-                || $name == 'wrap_view' || $name == 'wrap_view'
-) {
+            } elseif ($name == 'wrap' || $name == 'wrap_view_title' || $name == 'wrap_view' || $name == 'wrap_view') {
                 $wrap_id = Helpers::Extension()
                     ->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, $value);
 
@@ -188,14 +186,10 @@ class Includer
                     Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_id);
                 }
 
-            } elseif ($name == 'wrap_view_css_id' || $name == 'wrap_css_id'
-                || $name == 'wrap_id'
-) {
+            } elseif ($name == 'wrap_view_css_id' || $name == 'wrap_css_id' || $name == 'wrap_id') {
                 Services::Registry()->set('Parameters', 'wrap_view_css_id', $value);
 
-            } elseif ($name == 'wrap_view_css_class' || $name == 'wrap_css_class'
-                || $name == 'wrap_class'
-) {
+            } elseif ($name == 'wrap_view_css_class' || $name == 'wrap_css_class' || $name == 'wrap_class') {
                 Services::Registry()->set('Parameters', 'wrap_view_css_class', str_replace(',', ' ', $value));
 
                 /** Model */

@@ -1,7 +1,4 @@
 <trigger name="Itemurl"/>
-<trigger name="Adminmenu"/>
-<trigger name="Admindashboard"/>
-<trigger name="Admingrid"/>
 <trigger name="Item"/>
 <trigger name="List"/>
 <trigger name="Mockimage"/>
