@@ -3,7 +3,7 @@
  * @package    Molajo
  * @subpackage  Controller
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Controller;
 
