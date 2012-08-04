@@ -42,9 +42,6 @@ class PortletweatherTrigger extends ContentTrigger
 		$fahrenheit_or_celsius = $this->parameters['fahrenheit_or_celsius'];
 		$language = $this->parameters['language'];
 
-		$icons_google = '/ig/images/weather/';
-		$icons_local = 'Images/';
-
 		if ($city == '') {
 			$station = $zip . '-' . $country;
 		} else {
@@ -66,47 +63,45 @@ class PortletweatherTrigger extends ContentTrigger
 		$row->now_condition = $api->weather->current_conditions->condition->attributes()->data;
 
 		if ($fahrenheit_or_celsius == 'c') {
-			$row->now_temp = $api->weather->current_conditions->temp_c->attributes()->data;
+			$append = ' °C';
 		} else {
-			$row->now_temp = $api->weather->current_conditions->temp_f->attributes()->data;
+			$append = ' °F';
 		}
-
+		$row->now_temp = $api->weather->current_conditions->temp_c->attributes()->data . $append;
 		$row->now_humidity = $api->weather->current_conditions->humidity->attributes()->data;
 		$row->now_wind_condition = $api->weather->current_conditions->wind_condition->attributes()->data;
-		$row->now_icon = str_replace($icons_google, $icons_local,
-			$api->weather->current_conditions->icon->attributes()->data);
-
+		$row->now_icon = 'http://www.google.com' . $api->weather->current_conditions->icon->attributes()->data;
 		$row->title = Services::Language()->translate('Weather for ') . $city;
 
-		$i = 1;
+		$i = 0;
 		foreach ($api->weather->forecast_conditions as $weather) {
 
 			if ($i == 0) {
 				$row->day1_forecast_day_of_week = $weather->day_of_week->attributes()->data;
-				$row->day1_forecast_low_temperature = $weather->low->attributes()->data;
-				$row->day1_forecast_high_temperature = $weather->high->attributes()->data;
-				$row->day1_forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
+				$row->day1_forecast_low_temperature = $weather->low->attributes()->data . $append;
+				$row->day1_forecast_high_temperature = $weather->high->attributes()->data . $append;
+				$row->day1_forecast_icon = 'http://www.google.com' . $weather->icon->attributes()->data;
 				$row->day1_forecast_condition = $weather->condition->attributes()->data;
 
 			} elseif ($i == 1) {
 				$row->day2_forecast_day_of_week = $weather->day_of_week->attributes()->data;
-				$row->day2_forecast_low_temperature = $weather->low->attributes()->data;
-				$row->day2_forecast_high_temperature = $weather->high->attributes()->data;
-				$row->day2_forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
+				$row->day2_forecast_low_temperature = $weather->low->attributes()->data . $append;
+				$row->day2_forecast_high_temperature = $weather->high->attributes()->data . $append;
+				$row->day2_forecast_icon = 'http://www.google.com' . $weather->icon->attributes()->data;
 				$row->day2_forecast_condition = $weather->condition->attributes()->data;
 
 			} elseif ($i == 2) {
 				$row->day3_forecast_day_of_week = $weather->day_of_week->attributes()->data;
-				$row->day3_forecast_low_temperature = $weather->low->attributes()->data;
-				$row->day3_forecast_high_temperature = $weather->high->attributes()->data;
-				$row->day3_forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
+				$row->day3_forecast_low_temperature = $weather->low->attributes()->data . $append;
+				$row->day3_forecast_high_temperature = $weather->high->attributes()->data . $append;
+				$row->day3_forecast_icon = 'http://www.google.com' . $weather->icon->attributes()->data;
 				$row->day3_forecast_condition = $weather->condition->attributes()->data;
 
 			} elseif ($i == 3) {
 				$row->day4_forecast_day_of_week = $weather->day_of_week->attributes()->data;
 				$row->day4_forecast_low_temperature = $weather->low->attributes()->data;
 				$row->day4_forecast_high_temperature = $weather->high->attributes()->data;
-				$row->day4_forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
+				$row->day4_forecast_icon = 'http://www.google.com' . $weather->icon->attributes()->data;
 				$row->day4_forecast_condition = $weather->condition->attributes()->data;
 			}
 

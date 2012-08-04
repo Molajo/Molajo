@@ -1,4 +1,5 @@
 <?php
+use Molajo\Service\Services;
 /**
  *
  * @package    Molajo
@@ -9,57 +10,87 @@ defined('MOLAJO') or die;  ?>
 
 <div class="weather-wrapper">
 
-  <div class="weather current">
-    <div class="location">Trzcianka</div>
-    <div class="weather-icon float-left">
-      <img src="http://www.google.com/ig/images/weather/sunny.gif" alt="Bezchmurnie" title="Bezchmurnie"  />
+	<div class="row">
+		<div class="twelve columns">
+		  <div class="weather current">
+			<div class="location"><?php echo $this->row->city; ?></div>
+			<div class="weather-icon float-left">
+			  <img src="<?php echo $this->row->now_icon; ?>" alt="<?php echo $this->row->now_condition; ?>" title="<?php echo $this->row->now_condition; ?>"  />
+			</div>
+			<div class="weather-info forecast-info float-left">
+			  <b><?php echo Services::Language()->translate('Today'); ?></b><br/>
+			  <div class="temp"><?php echo $this->row->now_temp; ?></div>
+			  <div class="condition"><?php echo $this->row->now_condition; ?></div>
+			  <div class="wind"><?php echo $this->row->now_wind_condition; ?></div>
+			</div>
+		  </div>
+		</div>
 	</div>
-    <div class="weather-info forecast-info float-left">
-      <b>Teraz</b><br/>
-      <div class="temp">19°C</div>
-      <div class="condition">Bezchmurnie</div>
-      <div class="wind">Wiatr: płn. z szybkością 3 km/h</div>
-    </div>
-    <div class="clear-block"></div>
-  </div>
 
-  <div class="separator">
-	Prognoza pogody
-  </div>
+	<div class="row">
+		<div class="twelve columns">
+			<b><?php echo Services::Language()->translate('Forecast'); ?></b><br/>
+	 	</div>
+  	</div>
 
-  <div class="weather forecast forecast-1">
-  	<div class="weather-icon float-left">
-    	<img src="http://www.google.com/ig/images/weather/thunderstorm.gif" alt="Burza z gwałtowną ulewą" title="Burza z gwałtowną ulewą"  />
+	<div class="row">
+		<div class="twelve columns">
+			<div class="weather forecast forecast-1">
+				<div class="weather-icon float-left">
+					<img src="<?php echo $this->row->day1_forecast_icon; ?>" alt="<?php echo $this->row->day1_forecast_day_of_week; ?>" title="<?php echo $this->row->day1_forecast_day_of_week; ?>"  />
+				</div>
+				<div class="weather-info forecast-info float-left">
+					<b><?php echo $this->row->day1_forecast_day_of_week; ?></b><br/>
+					<?php echo $this->row->day1_forecast_low_temperature; ?> | <?php echo $this->row->day1_forecast_high_temperature; ?><br/>
+					<?php echo $this->row->day1_forecast_condition; ?>
+				</div>
+			</div>
+		</div>
 	</div>
-    <div class="weather-info forecast-info float-left">
-	    <b>Dziś</b><br/>
-        26°C | 16°C<br/>
-        Burza z gwałtowną ulewą
+
+	<div class="row">
+		<div class="twelve columns">
+			<div class="weather forecast forecast-2">
+				<div class="weather-icon float-left">
+					<img src="<?php echo $this->row->day2_forecast_icon; ?>" alt="<?php echo $this->row->day2_forecast_day_of_week; ?>" title="<?php echo $this->row->day2_forecast_day_of_week; ?>"  />
+				</div>
+				<div class="weather-info forecast-info float-left">
+					<b><?php echo $this->row->day2_forecast_day_of_week; ?></b><br/>
+					<?php echo $this->row->day2_forecast_low_temperature; ?> | <?php echo $this->row->day2_forecast_high_temperature; ?><br/>
+					<?php echo $this->row->day2_forecast_condition; ?>
+				</div>
+			</div>
+		</div>
 	</div>
-      <div class="clear-block"></div>
-    </div>
 
-    <div class="weather forecast forecast-2">
-      <div class="weather-icon float-left">
-        <img src="http://www.google.com/ig/images/weather/fog.gif" alt="Mgła" title="Mgła"  />
-	  </div>
-      <div class="weather-info forecast-info float-left">
-        <b>Sob.</b><br/>
-        28°C | 18°C<br/>
-        Mgła
-	  </div>
-      <div class="clear-block"></div>
-    </div>
+	<div class="row">
+		<div class="twelve columns">
+			<div class="weather forecast forecast-3">
+				<div class="weather-icon float-left">
+					<img src="<?php echo $this->row->day3_forecast_icon; ?>" alt="<?php echo $this->row->day3_forecast_day_of_week; ?>" title="<?php echo $this->row->day3_forecast_day_of_week; ?>"  />
+				</div>
+				<div class="weather-info forecast-info float-left">
+					<b><?php echo $this->row->day3_forecast_day_of_week; ?></b><br/>
+					<?php echo $this->row->day3_forecast_low_temperature; ?> | <?php echo $this->row->day3_forecast_high_temperature; ?><br/>
+					<?php echo $this->row->day3_forecast_condition; ?>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<div class="weather forecast forecast-3">
-      <div class="weather-icon float-left">
-        <img src="http://www.google.com/ig/images/weather/mostly_sunny.gif" alt="Możliwe przejaśnienia" title="Możliwe przejaśnienia"  />
-	  </div>
-      <div class="weather-info forecast-info float-left">
-        <b>Niedz.</b><br/>
-        30°C | 19°C<br/>
-        Możliwe przejaśnienia
-	  </div>
-      <div class="clear-block"></div>
-    </div>
+	<div class="row">
+		<div class="twelve columns">
+			<div class="weather forecast forecast-4">
+				<div class="weather-icon float-left">
+					<img src="<?php echo $this->row->day4_forecast_icon; ?>" alt="<?php echo $this->row->day4_forecast_day_of_week; ?>" title="<?php echo $this->row->day4_forecast_day_of_week; ?>"  />
+				</div>
+				<div class="weather-info forecast-info float-left">
+					<b><?php echo $this->row->day4_forecast_day_of_week; ?></b><br/>
+					<?php echo $this->row->day4_forecast_low_temperature; ?> | <?php echo $this->row->day4_forecast_high_temperature; ?><br/>
+					<?php echo $this->row->day4_forecast_condition; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
