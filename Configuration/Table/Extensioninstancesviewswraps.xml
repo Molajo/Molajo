@@ -5,12 +5,12 @@
         extends="ExtensionInstances">
     <customfields>
         <customfield name="parameters">
-            <field name="wrap_view_css_id" type="char" null="1" default=""/>
-            <field name="wrap_view_css_class" type="char" null="1" default=""/>
+            <field name="wrap_view_css_id" type="char" null="0" default=" "/>
+            <field name="wrap_view_css_class" type="char" null="0" default=" "/>
 
-            <field name="model_name" type="char" null="1" default=""/>
-            <field name="model_type" type="char" null="1" default=""/>
-            <field name="model_query_object" type="char" null="1" default=""/>
+            <field name="model_name" type="char" null="0" default=" "/>
+            <field name="model_type" type="char" null="0" default=" "/>
+            <field name="model_query_object" type="char" null="0" default=" "/>
         </customfield>
     </customfields>
 </model>

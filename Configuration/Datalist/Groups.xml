@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="GroupsListbox"
+        name="GroupsDatalist"
         table="#__content"
         primary_key="id"
         name_key="title"
@@ -11,7 +11,7 @@
         check_view_level_access="0"
         process_triggers="0"
         criteria_published_status="1"
-        criteria_catalog_type_id="130"
+        criteria_catalog_type_id="100,110,120"
         data_source="JDatabase">
     <table>
         <fields>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="DataelementsListbox"
+        name="DataelementsDatalist"
         table="#__content"
         primary_key="id"
         name_key="title"

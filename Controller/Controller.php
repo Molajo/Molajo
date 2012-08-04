@@ -329,17 +329,6 @@ class Controller
 			. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 			. ' <br />Process Triggers: ' . (int) $this->get('process_triggers');
 
-		//if ($this->get('model_name') == 'Parameters') {
-			echo '<br />' . $profiler_message . '<br />';
-
-		//}
-
-		if ($this->get('model_name') == 'Parameters') {
-			echo '<pre>';
-			var_dump($this->triggers);
-			echo '</pre>';
-		}
-
 		/** 2. Schedule onBeforeRead Event */
 		if (count($this->triggers) > 0) {
 			$this->onBeforeReadEvent();
@@ -356,22 +345,9 @@ class Controller
                 $this->query_results = $this->model->$query_object($model_parameter);
             }
         }
-		if ($this->get('model_name') == 'Parameters') {
-			echo '<pre>';
-			var_dump($this->query_results);
-			echo '</pre>';
-
-		}
 
 		/** 4. Schedule onAfterRead Event */
 		if (count($this->triggers) > 0) {
-
-
-			if ($this->get('model_name') == 'Parameters') {
-				echo Services::Registry()->get('Parameters', '*');
-
-			}
-
 			$this->onAfterReadEvent(
 				$this->pagination_total,
 				$this->model_offset,

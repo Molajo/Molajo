@@ -43,7 +43,7 @@ class PortletweatherTrigger extends ContentTrigger
 		$language = $this->parameters['language'];
 
 		$icons_google = '/ig/images/weather/';
-		$icons_local = __DIR__ . '/Images/';
+		$icons_local = 'Images/';
 
 		if ($city == '') {
 			$station = $zip . '-' . $country;
@@ -57,44 +57,63 @@ class PortletweatherTrigger extends ContentTrigger
 			)
 		);
 
-		$query_results = array();
+		$row = new \stdClass();
+
+		$row->city = $api->weather->forecast_information->city->attributes()->data;
+		$row->postal_code = $api->weather->forecast_information->postal_code->attributes()->data;
+		$row->forecast_date = $api->weather->forecast_information->forecast_date->attributes()->data;
+		$row->current_date_time = $api->weather->forecast_information->current_date_time->attributes()->data;
+		$row->now_condition = $api->weather->current_conditions->condition->attributes()->data;
+
+		if ($fahrenheit_or_celsius == 'c') {
+			$row->now_temp = $api->weather->current_conditions->temp_c->attributes()->data;
+		} else {
+			$row->now_temp = $api->weather->current_conditions->temp_f->attributes()->data;
+		}
+
+		$row->now_humidity = $api->weather->current_conditions->humidity->attributes()->data;
+		$row->now_wind_condition = $api->weather->current_conditions->wind_condition->attributes()->data;
+		$row->now_icon = str_replace($icons_google, $icons_local,
+			$api->weather->current_conditions->icon->attributes()->data);
+
+		$row->title = Services::Language()->translate('Weather for ') . $city;
 
 		$i = 1;
 		foreach ($api->weather->forecast_conditions as $weather) {
 
-			$row = new \stdClass();
+			if ($i == 0) {
+				$row->day1_forecast_day_of_week = $weather->day_of_week->attributes()->data;
+				$row->day1_forecast_low_temperature = $weather->low->attributes()->data;
+				$row->day1_forecast_high_temperature = $weather->high->attributes()->data;
+				$row->day1_forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
+				$row->day1_forecast_condition = $weather->condition->attributes()->data;
 
-			$row->city = $api->weather->forecast_information->city->attributes()->data;
-			$row->postal_code = $api->weather->forecast_information->postal_code->attributes()->data;
-			$row->forecast_date = $api->weather->forecast_information->forecast_date->attributes()->data;
-			$row->current_date_time = $api->weather->forecast_information->current_date_time->attributes()->data;
+			} elseif ($i == 1) {
+				$row->day2_forecast_day_of_week = $weather->day_of_week->attributes()->data;
+				$row->day2_forecast_low_temperature = $weather->low->attributes()->data;
+				$row->day2_forecast_high_temperature = $weather->high->attributes()->data;
+				$row->day2_forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
+				$row->day2_forecast_condition = $weather->condition->attributes()->data;
 
-			$row->now_condition = $api->weather->current_conditions->condition->attributes()->data;
+			} elseif ($i == 2) {
+				$row->day3_forecast_day_of_week = $weather->day_of_week->attributes()->data;
+				$row->day3_forecast_low_temperature = $weather->low->attributes()->data;
+				$row->day3_forecast_high_temperature = $weather->high->attributes()->data;
+				$row->day3_forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
+				$row->day3_forecast_condition = $weather->condition->attributes()->data;
 
-			if ($fahrenheit_or_celsius == 'c') {
-				$row->now_temp = $api->weather->current_conditions->temp_c->attributes()->data;
-			} else {
-				$row->now_temp = $api->weather->current_conditions->temp_f->attributes()->data;
+			} elseif ($i == 3) {
+				$row->day4_forecast_day_of_week = $weather->day_of_week->attributes()->data;
+				$row->day4_forecast_low_temperature = $weather->low->attributes()->data;
+				$row->day4_forecast_high_temperature = $weather->high->attributes()->data;
+				$row->day4_forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
+				$row->day4_forecast_condition = $weather->condition->attributes()->data;
 			}
 
-			$row->humidity = $api->weather->current_conditions->humidity->attributes()->data;
-			$row->wind_condition = $api->weather->current_conditions->wind_condition->attributes()->data;
-			$row->icon = str_replace($icons_google, $icons_local,
-				$api->weather->current_conditions->icon->attributes()->data);
-
-			$row->title = Services::Language()->translate('Portletweather for ') . $row->city;
-
-			$row->forecast_day_of_week = $weather->day_of_week->attributes()->data;
-			$row->forecast_low_temperature = $weather->low->attributes()->data;
-			$row->forecast_high_temperature = $weather->high->attributes()->data;
-			$row->forecast_icon = str_replace($icons_google, $icons_local, $weather->icon->attributes()->data);
-			$row->forecast_condition = $weather->condition->attributes()->data;
-
-			$query_results[] = $row;
 			$i++;
 		}
 
-		$this->data = $query_results;
+		$this->data = $row;
 
 		return true;
 	}

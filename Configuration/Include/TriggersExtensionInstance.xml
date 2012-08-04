@@ -1,5 +1,3 @@
-<trigger name="Adminmenu"/>
-<trigger name="Admindashboard"/>
 <trigger name="Catalogtypeid"/>
 <trigger name="Extensioninstance"/>
 <trigger name="Dateformats"/>

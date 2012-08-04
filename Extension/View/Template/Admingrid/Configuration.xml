@@ -9,11 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ADMINGRID_DESCRIPTION</description>
-    <model name="Admingrid">
-        <table>
-            <triggers>
-                <trigger name="Admingrid"/>
-            </triggers>
-        </table>
-    </model>
+    <model name="Admingrid"/>
 </extension>

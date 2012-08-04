@@ -112,7 +112,7 @@ Class TextService
     {
         $controllerClass = 'Molajo\\Controller\\Controller';
         $m = new $controllerClass();
-        $results = $m->connect('Listbox', $filter);
+        $results = $m->connect('Datalist', $filter);
         if ($results == false) {
             return false;
         }
@@ -127,7 +127,7 @@ Class TextService
             $m->model->set('model_count', 999999);
 
             /** Select */
-            $fields = Services::Registry()->get($filter . 'Listbox', 'Fields');
+            $fields = Services::Registry()->get($filter . 'Datalist', 'Fields');
 
             $first = true;
 
@@ -233,7 +233,7 @@ Class TextService
 
         if ($filter == 'XYZ') {
             echo '<br /><br /><br />';
-            echo Services::Registry()->get($filter . 'Listbox', '*');
+            echo Services::Registry()->get($filter . 'Datalist', '*');
             echo $m->model->query->__toString();
             echo '<pre>';
             var_dump($query_results);

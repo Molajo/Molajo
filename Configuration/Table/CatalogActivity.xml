@@ -13,14 +13,14 @@
 
     <table>
         <fields>
-            <field name="id" type="integer" null="1" default="" identity="1"/>
+            <field name="id" type="integer" null="0" default=" " identity="1"/>
             <field name="catalog_id" type="catalog_id" null="0" default=""/>
             <field name="user_id" type="integer" null="0" default="0"/>
             <field name="action_id" type="integer" null="0" default=""/>
-            <field name="rating" type="integer" null="1" default=""/>
+            <field name="rating" type="integer" null="0" default=" "/>
             <field name="activity_datetime" type="datetime" null="0" default=""/>
             <field name="ip_address" type="ip_address" null="0" default=""/>
-            <field name="customfields" type="customfield" null="1" default=""/>
+            <field name="customfields" type="customfield" null="0" default=" "/>
         </fields>
 
         <triggers>

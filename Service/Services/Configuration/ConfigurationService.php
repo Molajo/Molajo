@@ -61,9 +61,7 @@ Class ConfigurationService
     public function __construct($configuration_file = null)
     {
         /** Initialize list of valid field attributes */
-        self::$valid_field_attributes = array('name', 'as_name', 'alias', 'default',
-            'file',	'form', 'identity', 'length', 'minimum', 'maximum', 'null',
-            'required', 'shape', 'size', 'table', 'type', 'unique', 'values');
+		$this->getFieldProperties();
 
         /** Retrieve Site Data */
         $this->getSite($configuration_file);
@@ -82,7 +80,70 @@ Class ConfigurationService
         return $this;
     }
 
-    /**
+	/**
+	 * Retrieve valid field properties: datatype, attribute, and datalist
+	 *
+	 * @return object
+	 * @throws \Exception
+	 * @since   1.0
+	 */
+	public function getFieldProperties()
+	{
+		/** 1. Initialize Registry */
+		Services::Registry()->createRegistry('Fields');
+
+		/** 2. Verify File Exists */
+		if (file_exists(CONFIGURATION_FOLDER . '/Application/Fields.xml')) {
+		} else {
+			//throw error
+		}
+		$xml = simplexml_load_string(file_get_contents(CONFIGURATION_FOLDER . '/Application/Fields.xml'));
+
+		/** 3. Load Valid Field Datatypes */
+		if (isset($xml->datatypes->datatype)) {
+		} else {
+			//throw error
+		}
+		$datatypes = $xml->datatypes->datatype;
+		$datatypeArray = array();
+		foreach ($datatypes as $datatype) {
+			$datatypeArray[] = (string) $datatype;
+		}
+
+		Services::Registry()->set('Fields', 'Datatypes', $datatypeArray);
+
+		/** 4. Load Valid Field Properties */
+		if (isset($xml->attributes->attribute)) {
+		} else {
+			//throw error
+		}
+		$attributes = $xml->attributes->attribute;
+		$attributeArray = array();
+		foreach ($attributes as $attribute) {
+			$attributeArray[] = (string) $attribute;
+		}
+
+		Services::Registry()->set('Fields', 'Attributes', $attributeArray);
+		self::$valid_field_attributes = $attributeArray;
+
+		/** 5. Load Valid Datalists */
+		$datalistsArray = array();
+		$dirRead = dir(CONFIGURATION_FOLDER . '/Datalist');
+		$path = $dirRead->path;
+		while (false !== ($entry = $dirRead->read())) {
+			if (is_dir($path . '/' . $entry)) {
+			} else {
+				$datalistsArray[] = substr($entry, 0, strlen($entry) - 4);
+			}
+		}
+		$dirRead->close();
+
+		Services::Registry()->set('Fields', 'Datalists', $datalistsArray);
+
+		return;
+	}
+
+	/**
      * Retrieve site configuration object from ini file
      *
      * @param string $configuration_file optional
@@ -474,7 +535,7 @@ Class ConfigurationService
         }
 
         /** Validate Model Types */
-        $array = explode(',', 'Table,Dbo,Listbox,Menuitem,Theme,Page,Template,Wrap,Trigger');
+        $array = explode(',', 'Table,Dbo,Datalist,Menuitem,Theme,Page,Template,Wrap,Trigger');
         if (in_array($model_type, $array)) {
         } else {
             echo 'Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
@@ -490,11 +551,11 @@ Class ConfigurationService
             return ConfigurationService::locateFileMenuitem($model_type, $model_name);
         }
 
-        /** 2. Listbox */
-        if ($model_type == 'Listbox'
-            || substr($model_name, 0, 8) == 'Listbox'
+        /** 2. Datalist */
+        if ($model_type == 'Datalist'
+            || substr($model_name, 0, 8) == 'Datalist'
         ) {
-            return ConfigurationService::locateFileListbox($model_type, $model_name);
+            return ConfigurationService::locateFileDatalist($model_type, $model_name);
         }
 
         /** 2. Current Extension */
@@ -556,7 +617,7 @@ Class ConfigurationService
         if ($model_type == 'Menuitem' || $model_type == 'Trigger'
             || $model_type == 'Theme' || $model_type == 'Page'
             || $model_type == 'Template' || $model_type == 'Wrap'
-) {
+		) {
 
             if ($model_type == 'Page' || $model_type == 'Template' || $model_type == 'Wrap') {
                 $path_parameter = strtolower($model_type) . '_view_path';
@@ -660,16 +721,16 @@ Class ConfigurationService
     }
 
     /**
-     * locateFileListbox
+     * locateFileDatalist
      *
      * Usage:
-     * Services::Configuration()->locateFileListbox('Menuitem', 'grid');
+     * Services::Configuration()->locateFileDatalist('Menuitem', 'grid');
      *
      * @return mixed object or void
      * @since   1.0
      * @throws \RuntimeException
      */
-    public static function locateFileListbox($model_type, $model_name)
+    public static function locateFileDatalist($model_type, $model_name)
     {
         $model_type = trim(ucfirst(strtolower($model_type)));
         $model_name = trim(ucfirst(strtolower($model_name)));
@@ -683,9 +744,9 @@ Class ConfigurationService
             $extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
 
             /** ex. Resource/Article/GridMenuitem.xml */
-            if (file_exists($extension_path . '/Listbox/' . $model_name_type . '.xml')
+            if (file_exists($extension_path . '/Datalist/' . $model_name_type . '.xml')
             ) {
-                return $extension_path . '/Listbox/' . $model_name_type . '.xml';
+                return $extension_path . '/Datalist/' . $model_name_type . '.xml';
             }
         }
 
@@ -698,16 +759,16 @@ Class ConfigurationService
 ) {
             } else {
                 /** ex. Resource/Article/GridMenuitem.xml */
-                if (file_exists($primary_extension_path . '/Listbox/' . $model_name_type . '.xml')
+                if (file_exists($primary_extension_path . '/Datalist/' . $model_name_type . '.xml')
                 ) {
-                    return $primary_extension_path . '/Listbox/' . $model_name_type . '.xml';
+                    return $primary_extension_path . '/Datalist/' . $model_name_type . '.xml';
                 }
             }
         }
 
-        /** 3. Listbox Default */
+        /** 3. Datalist Default */
 
-        return CONFIGURATION_FOLDER . '/Listbox/' . $model_name . '.xml';
+        return CONFIGURATION_FOLDER . '/Datalist/' . $model_name . '.xml';
 
     }
 

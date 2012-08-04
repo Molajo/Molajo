@@ -9,7 +9,7 @@
             <field name="session_id" type="char" null="0" default=""/>
             <field name="application_id" type="integer" null="0" default=""/>
             <field name="session_time" type="char" null="0" default=""/>
-            <field name="data" type="text" null="1" default=""/>
+            <field name="data" type="text" null="0" default=" "/>
             <field name="user_id" type="integer" null="0" default=""/>
         </fields>
         <foreignkeys>
