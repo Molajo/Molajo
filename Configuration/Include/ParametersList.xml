@@ -8,6 +8,8 @@
 <field name="list_wrap_view_id" type="integer" null="0" default="66"/>
 <field name="list_wrap_view_css_id" type="char" null="0" default=" "/>
 <field name="list_wrap_view_css_class" type="char" null="0" default=" "/>
+<field name="list_wrap_view_role" type="char" null="0" default=" "/>
+<field name="list_wrap_view_property" type="char" null="0" default=" "/>
 <field name="list_model_name" type="char" null="0" default="Content"/>
 <field name="list_model_type" type="char" null="0" default="Table"/>
 <field name="list_model_query_object" type="char" null="0" default="List"/>

@@ -7,6 +7,6 @@
 defined('MOLAJO') or die;
 ?>
 <div class="ui-portlet-header">
-   <h4><?php echo $this->row->title; ?></h4>
+   <h4><?php echo $this->row->city; ?></h4>
 </div>
 <div class='ui-portlet-content'>

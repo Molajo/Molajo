@@ -13,7 +13,6 @@ defined('MOLAJO') or die;  ?>
 	<div class="row">
 		<div class="twelve columns">
 		  <div class="weather current">
-			<div class="location"><?php echo $this->row->city; ?></div>
 			<div class="weather-icon float-left">
 			  <img src="<?php echo $this->row->now_icon; ?>" alt="<?php echo $this->row->now_condition; ?>" title="<?php echo $this->row->now_condition; ?>"  />
 			</div>

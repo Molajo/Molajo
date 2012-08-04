@@ -9,6 +9,5 @@ defined('MOLAJO') or die; ?>
     <h4>Text</h4>
 </div>
 <div class="ui-portlet-content">
-    <strong>Title</strong>
 	<p>Cupcake ipsum dolor. Sit amet bear claw I love tiramisu liquorice halvah applicake jelly. Sweet roll liquorice macaroon powder cheesecake tiramisu.</p>
 </div>
