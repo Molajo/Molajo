@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Triggerdata', 'full_page_url');
+$action = Services::Registry()->get('Plugindata', 'full_page_url');
 ?>
 <h4><?echo Services::Language()->translate('Assign Permissions'); ?></h4>
 <form action="<?php echo $action; ?>" method="post" name="Admingridbatchpermissions" id="Admingridbatchpermissions">
@@ -56,7 +56,7 @@ $action = Services::Registry()->get('Triggerdata', 'full_page_url');
     </div>
     <div class="row">
         <div class="nine columns">
-            <include:template name=Formselectlist model=Triggerdata value=<?php echo 'listbatch_groups*'; ?>/>
+            <include:template name=Formselectlist model=Plugindata value=<?php echo 'listbatch_groups*'; ?>/>
         </div>
         <div class="three columns">
             <input type="submit" class="submit button small" name="submit" id="batch-permission-create" value="Add">

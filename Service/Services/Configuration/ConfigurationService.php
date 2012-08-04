@@ -349,7 +349,7 @@ Class ConfigurationService
     }
 
     /**
-     * Get action ids and values to load into registry (to save a read on various triggers)
+     * Get action ids and values to load into registry (to save a read on various plugins)
      *
      * @return boolean
      * @since   1.0
@@ -535,7 +535,7 @@ Class ConfigurationService
         }
 
         /** Validate Model Types */
-        $array = explode(',', 'Table,Dbo,Datalist,Menuitem,Theme,Page,Template,Wrap,Trigger');
+        $array = explode(',', 'Table,Dbo,Datalist,Menuitem,Theme,Page,Template,Wrap,Plugin');
         if (in_array($model_type, $array)) {
         } else {
             echo 'Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
@@ -614,7 +614,7 @@ Class ConfigurationService
         }
 
         /** 4. The Manifest for the model type/name itself */
-        if ($model_type == 'Menuitem' || $model_type == 'Trigger'
+        if ($model_type == 'Menuitem' || $model_type == 'Plugin'
             || $model_type == 'Theme' || $model_type == 'Page'
             || $model_type == 'Template' || $model_type == 'Wrap'
 		) {
@@ -842,7 +842,7 @@ Class ConfigurationService
     }
 
     /**
-     * Processes Table attributes: fields, joins, foreign keys, children and triggers
+     * Processes Table attributes: fields, joins, foreign keys, children and plugins
      *
      * @static
      * @param $registryName
@@ -894,7 +894,7 @@ Class ConfigurationService
             $registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
         );
 
-        $xmlArray = ConfigurationService::setTableTriggersRegistry(
+        $xmlArray = ConfigurationService::setTablePluginsRegistry(
             $registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
         );
 
@@ -1178,7 +1178,7 @@ Class ConfigurationService
     }
 
     /**
-     * setTableTriggersRegistry
+     * setTablePluginsRegistry
      *
      * @static
      * @param $registryName
@@ -1189,12 +1189,12 @@ Class ConfigurationService
      * @return array
      * @since  1.0
      */
-    public static function setTableTriggersRegistry(
+    public static function setTablePluginsRegistry(
         $registryName, $xml, $xml_string, $path_and_file, $model_name)
     {
         $include = '';
-        if (isset($xml->table->triggers->include['name'])) {
-            $include = (string) $xml->table->triggers->include['name'];
+        if (isset($xml->table->plugins->include['name'])) {
+            $include = (string) $xml->table->plugins->include['name'];
         }
 
         if ($include == '') {
@@ -1211,15 +1211,15 @@ Class ConfigurationService
             $xml = simplexml_load_string($xml_string);
         }
 
-        if (isset($xml->table->triggers->trigger)) {
-            $triggers = $xml->table->triggers->trigger;
-            $triggersArray = array();
-            foreach ($triggers as $trigger) {
-                $t = get_object_vars($trigger);
+        if (isset($xml->table->plugins->plugin)) {
+            $plugins = $xml->table->plugins->plugin;
+            $pluginsArray = array();
+            foreach ($plugins as $plugin) {
+                $t = get_object_vars($plugin);
                 $tAttr = ($t["@attributes"]);
-                $triggersArray[] = $tAttr['name'];
+                $pluginsArray[] = $tAttr['name'];
             }
-            Services::Registry()->set($registryName, 'triggers', $triggersArray);
+            Services::Registry()->set($registryName, 'plugins', $pluginsArray);
         }
 
         return array($xml, $xml_string);

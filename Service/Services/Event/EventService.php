@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * To list all Events:
  * Services::Registry()->get('Events', '*');
  *
- * To see what Triggers fire for a specific event:
+ * To see what Plugins fire for a specific event:
  * Services::Registry()->get('onbeforeread', '*');
  *
  * @package     Molajo
@@ -33,12 +33,12 @@ Class EventService
     protected static $instance;
 
     /**
-     * Registered triggers
+     * Registered plugins
      *
      * @var   object
      * @since 1.0
      */
-    protected $trigger_connection;
+    protected $plugin_connection;
 
     /**
      * Arguments
@@ -72,13 +72,13 @@ Class EventService
     {
         Services::Registry()->createRegistry('Events');
 
-        $this->registerInstalledTriggers();
+        $this->registerInstalledPlugins();
     }
 
     /**
      * application and controller schedule events with the event manager
      *
-     * the event manager then fires off triggers which have registered for the event
+     * the event manager then fires off plugins which have registered for the event
      *
      * Usage:
      * Services::Event()->schedule('onAfterDelete', $arguments, $selections);
@@ -94,14 +94,14 @@ Class EventService
     public function schedule($event, $arguments = array(), $selections = array())
     {
         Services::Profiler()->set('EventService->schedule Initiated Event '
-            . $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
+            . $event, LOG_OUTPUT_PLUGINS, VERBOSE);
 
         /** Does Event (with registrations) exist? */
         $exists = Services::Registry()->exists('Events', $event);
 
         if ($exists == false) {
             Services::Profiler()->set('EventService->schedule Event: '
-                . $event . ' does not exist', LOG_OUTPUT_TRIGGERS);
+                . $event . ' does not exist', LOG_OUTPUT_PLUGINS);
 
             return $arguments;
         }
@@ -111,12 +111,12 @@ Class EventService
 
         if (count($registrations) == 0) {
             Services::Profiler()->set('EventService->schedule Event ' . $event
-                . ' has no registrations, exiting', LOG_OUTPUT_TRIGGERS);
+                . ' has no registrations, exiting', LOG_OUTPUT_PLUGINS);
 
             return $arguments;
         }
 
-        /** Filter for specified triggers (Query triggers) or use all triggers registered for event */
+        /** Filter for specified plugins (Query plugins) or use all plugins registered for event */
         if (is_array($selections)) {
 
         } else {
@@ -136,25 +136,25 @@ Class EventService
             $selections = array();
             if (count($registrations) > 0) {
                 foreach ($registrations as $key => $value) {
-                    $temp = substr($key, 0, strlen($key) - strlen('Trigger'));
+                    $temp = substr($key, 0, strlen($key) - strlen('Plugin'));
                     $selections[] = $temp;
                 }
             }
         }
 
-        /** Arguments can be changed by Triggers */
+        /** Arguments can be changed by Plugins */
         $this->arguments = $arguments;
 
-        /** Process each selected trigger */
+        /** Process each selected plugin */
         foreach ($selections as $selection) {
 
-            $triggerClass = strtolower($selection) . 'trigger';
+            $pluginClass = strtolower($selection) . 'plugin';
 
-            if (isset($registrations[$triggerClass])) {
+            if (isset($registrations[$pluginClass])) {
 
-                if (method_exists($registrations[$triggerClass], $event)) {
+                if (method_exists($registrations[$pluginClass], $event)) {
 
-                    $results = $this->processTriggerClass($registrations[$triggerClass], $event);
+                    $results = $this->processPluginClass($registrations[$pluginClass], $event);
 
                     if ($results == false) {
                         return false;
@@ -164,8 +164,8 @@ Class EventService
 
                     Services::Profiler()->set('EventService->schedule Event '
                             . $event . ' Class does not exist '
-                            . $registrations[$triggerClass],
-                        LOG_OUTPUT_TRIGGERS);
+                            . $registrations[$pluginClass],
+                        LOG_OUTPUT_PLUGINS);
 
                     return false;
                     //throw error
@@ -174,8 +174,8 @@ Class EventService
             } else {
                 Services::Profiler()->set('EventService->schedule Event '
                         . $event . ' No valid registrations for class '
-                        . $triggerClass,
-                    LOG_OUTPUT_TRIGGERS,
+                        . $pluginClass,
+                    LOG_OUTPUT_PLUGINS,
                     VERBOSE
                 );
             }
@@ -185,7 +185,7 @@ Class EventService
     }
 
     /**
-     * processTriggerClass for Event given $this->arguments
+     * processPluginClass for Event given $this->arguments
      *
      * @param $class
      * @param $event
@@ -193,26 +193,26 @@ Class EventService
      * @return array|bool
      * @since  1.0
      */
-    protected function processTriggerClass($class, $event)
+    protected function processPluginClass($class, $event)
     {
-        /** 1. Instantiate Trigger Class */
-        $triggerClass = $class;
+        /** 1. Instantiate Plugin Class */
+        $pluginClass = $class;
 
         try {
-            $connection = new $triggerClass();
+            $connection = new $pluginClass();
 
         } catch (\Exception $e) {
 
             Services::Profiler()->set('EventService->schedule Event ' . $event
-                . ' Instantiating Class ' . $triggerClass . ' Failed', LOG_OUTPUT_TRIGGERS);
+                . ' Instantiating Class ' . $pluginClass . ' Failed', LOG_OUTPUT_PLUGINS);
 
-            echo '<br />Could not Instantiate Trigger Class: ' . $triggerClass;
+            echo '<br />Could not Instantiate Plugin Class: ' . $pluginClass;
 
             return true;
             //throw error
         }
 
-        /** 2. Set Properties for Trigger Class */
+        /** 2. Set Properties for Plugin Class */
         if (count($this->arguments) > 0) {
 
             foreach ($this->arguments as $propertyKey => $propertyValue) {
@@ -221,25 +221,25 @@ Class EventService
             $connection->setFields();
         }
 
-        /** 3. Execute Trigger Class Method */
+        /** 3. Execute Plugin Class Method */
         Services::Profiler()->set('EventService->schedule Event ' . $event
-            . ' calling ' . $triggerClass . ' ' . $event, LOG_OUTPUT_TRIGGERS, VERBOSE);
+            . ' calling ' . $pluginClass . ' ' . $event, LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $results = $connection->$event();
 
         if ($results == false) {
 
             Services::Profiler()->set('EventService->schedule Event '
-                    . $event . ' Trigger Class '
+                    . $event . ' Plugin Class '
                     . $class
                     . ' Failed. ',
-                LOG_OUTPUT_TRIGGERS);
+                LOG_OUTPUT_PLUGINS);
 
             return true;
 
         } else {
 
-            /** Retrieve Properties from Trigger Class to send back to Controller */
+            /** Retrieve Properties from Plugin Class to send back to Controller */
             if (count($this->arguments) > 0) {
                 foreach ($this->arguments as $propertyKey => $propertyValue) {
                     $this->arguments[$propertyKey] = $connection->get($propertyKey);
@@ -251,29 +251,29 @@ Class EventService
     }
 
     /**
-     * Triggers register for events. When the event is scheduled, the trigger will be executed.
+     * Plugins register for events. When the event is scheduled, the plugin will be executed.
      *
-     * Installed triggers are registered during Application startup process.
-     * Other triggers can be created and dynamically registered using this method.
-     * Triggers can be overridden by registering after the installed triggers.
+     * Installed plugins are registered during Application startup process.
+     * Other plugins can be created and dynamically registered using this method.
+     * Plugins can be overridden by registering after the installed plugins.
      *
      * Usage:
      * Services::Event()->register(
-     *   'AliasTrigger',
-     *   'Molajo\\Extension\\Trigger\\Alias\\AliasTrigger',
+     *   'AliasPlugin',
+     *   'Molajo\\Extension\\Plugin\\Alias\\AliasPlugin',
      *   'OnBeforeUpdate'
      * );
      *
      * @return object
      * @since   1.0
      */
-    public function register($trigger, $triggerPath, $event)
+    public function register($plugin, $pluginPath, $event)
     {
         Services::Profiler()->set('EventService->register '
-                . 'Trigger: ' . $trigger
-                . ' Class: ' . $triggerPath
+                . 'Plugin: ' . $plugin
+                . ' Class: ' . $pluginPath
                 . ' Event: ' . $event,
-            LOG_OUTPUT_TRIGGERS,
+            LOG_OUTPUT_PLUGINS,
             VERBOSE
         );
 
@@ -292,7 +292,7 @@ Class EventService
         }
 
         /** Register the event (can be used to override installed events) */
-        Services::Registry()->set($event, $trigger, $triggerPath);
+        Services::Registry()->set($event, $plugin, $pluginPath);
 
         /** Update Event Totals */
         Services::Registry()->set('Events', $event, $count);
@@ -301,28 +301,28 @@ Class EventService
     }
 
     /**
-     * Automatically registers all Triggers in the Extension Trigger folder
+     * Automatically registers all Plugins in the Extension Plugin folder
      *
      * @return object
      * @since   1.0
      */
-    protected function registerInstalledTriggers()
+    protected function registerInstalledPlugins()
     {
-        Services::Profiler()->set('EventService->registerInstalledTriggers ', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('EventService->registerInstalledPlugins ', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $triggers = Services::Filesystem()->folderFolders(EXTENSIONS_TRIGGERS);
+        $plugins = Services::Filesystem()->folderFolders(EXTENSIONS_PLUGINS);
 
         /** Load Parent Classes first */
-        $triggerClass = 'Molajo\\Extension\\Trigger\\Trigger\\Trigger';
-        $temp = new $triggerClass ();
+        $pluginClass = 'Molajo\\Extension\\Plugin\\Plugin\\Plugin';
+        $temp = new $pluginClass ();
 
-        $triggerClass = 'Molajo\\Extension\\Trigger\\Content\\ContentTrigger';
-        $temp = new $triggerClass ();
+        $pluginClass = 'Molajo\\Extension\\Plugin\\Content\\ContentPlugin';
+        $temp = new $pluginClass ();
 
-        foreach ($triggers as $folder) {
+        foreach ($plugins as $folder) {
 
             /** class name */
-            if ($folder == 'Trigger'
+            if ($folder == 'Plugin'
                 || $folder == 'Content'
                 || substr(strtolower($folder), 0, 4) == 'hold'
             ) {
@@ -337,9 +337,9 @@ Class EventService
     }
 
     /**
-     * Instantiate the trigger class, register it for event(s), and save the path and name
+     * Instantiate the plugin class, register it for event(s), and save the path and name
      *
-     * @param  $folder location of the trigger
+     * @param  $folder location of the plugin
      *
      * @return object
      * @since  1.0
@@ -349,19 +349,19 @@ Class EventService
         $try = true;
         $connection = '';
 
-        $trigger = $folder . 'Trigger';
-        $triggerClass = 'Molajo\\Extension\\Trigger\\' . $folder . '\\' . $trigger;
+        $plugin = $folder . 'Plugin';
+        $pluginClass = 'Molajo\\Extension\\Plugin\\' . $folder . '\\' . $plugin;
 
-        /** Retrieve all Event Methods in the Trigger */
-        $events = get_class_methods($triggerClass);
+        /** Retrieve all Event Methods in the Plugin */
+        $events = get_class_methods($pluginClass);
 
         if (count($events) > 0) {
             foreach ($events as $event) {
                 if (substr($event, 0, 2) == 'on') {
-                    $reflectionMethod = new \ReflectionMethod(new $triggerClass, $event);
+                    $reflectionMethod = new \ReflectionMethod(new $pluginClass, $event);
                     $results = $reflectionMethod->getDeclaringClass();
-                    if ($results->name == $triggerClass) {
-                        $this->register($trigger, $triggerClass, $event);
+                    if ($results->name == $pluginClass) {
+                        $this->register($plugin, $pluginClass, $event);
                     }
                 }
             }

@@ -103,7 +103,7 @@ Class TextService
     }
 
     /**
-     * getList retrieves values called from listsTrigger
+     * getList retrieves values called from listsPlugin
      *
      * @return boolean
      * @since   1.0

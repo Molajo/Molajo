@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  *
  */
 defined('MOLAJO') or die;
-$url = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$url = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 <div class="row">
     <div class="two columns hide-for-small">
         <include:template name=Dummy/>

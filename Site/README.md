@@ -49,7 +49,7 @@ Resources, Models, and Molajo's automatic Create, Read, Update, and Delete (CRUD
 
 RESTful URL
 
-7. Defining Processing using Controllers, Events, Triggers, and Services
+7. Defining Processing using Controllers, Events, Plugins, and Services
 
 8. Configure Rendering: Themes, Models and Views
 

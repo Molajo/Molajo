@@ -190,7 +190,7 @@ Class Application
         Services::Registry()->set('Override', 'final_xml', $override_final_xml);
 
         if ($results == true) {
-            Services::Profiler()->set('Application Schedule onAfterInitialise', LOG_OUTPUT_TRIGGERS);
+            Services::Profiler()->set('Application Schedule onAfterInitialise', LOG_OUTPUT_PLUGINS);
             $results = Services::Event()->schedule('onAfterInitialise');
             if (is_array($results)) {
                 $results = true;
@@ -242,7 +242,7 @@ Class Application
             && (int) Services::Redirect()->code == 0
         ) {
 
-            Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_TRIGGERS);
+            Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_PLUGINS);
             $results = Services::Event()->schedule('onAfterRoute');
             if (is_array($results)) {
                 $results = true;
@@ -285,7 +285,7 @@ Class Application
 
         $results = Services::Authorisation()->verifyAction();
 
-        Services::Profiler()->set('Application Schedule onBeforeParse', LOG_OUTPUT_TRIGGERS);
+        Services::Profiler()->set('Application Schedule onBeforeParse', LOG_OUTPUT_PLUGINS);
 
         $results = Services::Event()->schedule('onAfterAuthorise');
         if (is_array($results)) {
@@ -322,7 +322,7 @@ Class Application
         }
 
         if ($results == true) {
-            Services::Profiler()->set('Application Schedule onAfterExecute', LOG_OUTPUT_TRIGGERS);
+            Services::Profiler()->set('Application Schedule onAfterExecute', LOG_OUTPUT_PLUGINS);
 
             $results = Services::Event()->schedule('onAfterExecute');
             if (is_array($results)) {
@@ -447,7 +447,7 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
         }
 
         if ($results == true) {
-            Services::Profiler()->set('Application Schedule onAfterResponse', LOG_OUTPUT_TRIGGERS);
+            Services::Profiler()->set('Application Schedule onAfterResponse', LOG_OUTPUT_PLUGINS);
             $results = Services::Event()->schedule('onAfterResponse');
             if (is_array($results)) {
                 $results = true;
@@ -541,9 +541,9 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
         } else {
             define('EXTENSIONS_THEMES', EXTENSIONS . '/Theme');
         }
-        if (defined('EXTENSIONS_TRIGGERS')) {
+        if (defined('EXTENSIONS_PLUGINS')) {
         } else {
-            define('EXTENSIONS_TRIGGERS', EXTENSIONS . '/Trigger');
+            define('EXTENSIONS_PLUGINS', EXTENSIONS . '/Plugin');
         }
         if (defined('EXTENSIONS_VIEWS')) {
         } else {
@@ -563,9 +563,9 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
         } else {
             define('EXTENSIONS_THEMES_URL', BASE_URL . 'Molajo/Extension/Theme');
         }
-        if (defined('EXTENSIONS_TRIGGERS_URL')) {
+        if (defined('EXTENSIONS_PLUGINS_URL')) {
         } else {
-            define('EXTENSIONS_TRIGGERS_URL', BASE_URL . 'Molajo/Extension/Trigger');
+            define('EXTENSIONS_PLUGINS_URL', BASE_URL . 'Molajo/Extension/Plugin');
         }
         if (defined('EXTENSIONS_VIEWS_URL')) {
         } else {

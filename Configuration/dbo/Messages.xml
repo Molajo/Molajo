@@ -1,5 +1,5 @@
 <model
         name="Messages"
-        process_triggers="1"
+        process_plugins="1"
         data_source="Message">
 </model>

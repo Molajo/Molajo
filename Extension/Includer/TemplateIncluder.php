@@ -83,7 +83,7 @@ Class TemplateIncluder extends Includer
         }
 
         if (substr(strtolower($model_parameter), 0, 4) == 'list') {
-            $model_name = 'triggerdata';
+            $model_name = 'plugindata';
 
         } elseif (strtolower($model_name) == '' && strtolower($model_parameter) == '') {
             $model_name = 'Dummy';
@@ -95,7 +95,7 @@ Class TemplateIncluder extends Includer
             $model_name = 'Metadata';
 
         } elseif (strtolower($this->type) == 'template' && $model_name == '') {
-            $model_name = 'triggerdata';
+            $model_name = 'plugindata';
         }
         Services::Registry()->set('Parameters', 'model_name', $model_name);
 

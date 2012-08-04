@@ -6,7 +6,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$pageURL = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$pageURL = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 <div class="row">
     <div class="twelve columns">
         <div id="m-batch" style="display: none;">

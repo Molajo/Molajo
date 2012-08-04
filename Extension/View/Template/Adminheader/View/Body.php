@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$title = Services::Registry()->get('Triggerdata', 'PageTitle');
+$title = Services::Registry()->get('Plugindata', 'PageTitle');
 if ($title == '') {
     $title = $this->row->criteria_title;
 } else {

@@ -191,7 +191,7 @@ Class ExtensionHelper
             return false;
         }
 
-        $m->set('process_triggers', 0);
+        $m->set('process_plugins', 0);
 
         $m->model->query->select($m->model->db->qn('a.id'));
         $m->model->query->where($m->model->db->qn('a.title') . ' = ' . $m->model->db->q($title));
@@ -219,7 +219,7 @@ Class ExtensionHelper
             return false;
         }
 
-        $m->set('process_triggers', 0);
+        $m->set('process_plugins', 0);
 
         $m->model->query->select($m->model->db->qn('a.title'));
         $m->model->query->where($m->model->db->qn('a.id') . ' = ' . (int) $extension_instance_id);
@@ -247,7 +247,7 @@ Class ExtensionHelper
             return false;
         }
 
-        $m->set('process_triggers', 0);
+        $m->set('process_plugins', 0);
 
         $m->model->query->select($m->model->db->qn('a.name'));
 
@@ -504,8 +504,8 @@ Class ExtensionHelper
             } elseif ($catalog_type == 'Theme') {
                 return CATALOG_TYPE_EXTENSION_THEME;
 
-            } elseif ($catalog_type == 'Trigger') {
-                return CATALOG_TYPE_EXTENSION_TRIGGER;
+            } elseif ($catalog_type == 'Plugin') {
+                return CATALOG_TYPE_EXTENSION_PLUGIN;
 
             } elseif ($catalog_type == 'Page') {
                 return CATALOG_TYPE_EXTENSION_PAGE_VIEW;
@@ -528,8 +528,8 @@ Class ExtensionHelper
             } elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
                 return 'Theme';
 
-            } elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TRIGGER) {
-                return 'Trigger';
+            } elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_PLUGIN) {
+                return 'Plugin';
 
             } elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
                 return 'Page';

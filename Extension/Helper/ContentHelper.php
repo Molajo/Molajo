@@ -170,7 +170,7 @@ Class ContentHelper
             return Services::Registry()->set('Parameters', 'status_found', false);
         }
 
-        Services::Registry()->set('Triggerdata', 'PrimaryRequestQueryResults', array($item));
+        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', array($item));
 
         Services::Registry()->set('Parameters', 'content_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'content_title', $item->title);
@@ -240,7 +240,7 @@ Class ContentHelper
         }
 
         $m->set('id', (int) $id);
-        $m->set('process_triggers', 1);
+        $m->set('process_plugins', 1);
         $m->set('get_customfields', 2);
 
         $item = $m->getData($model_query_object);

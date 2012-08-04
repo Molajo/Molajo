@@ -6,6 +6,6 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$bread_crumbs = Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs'); ?>
+$bread_crumbs = Services::Registry()->get('Plugindata', 'Adminbreadcrumbs'); ?>
 <h3><?php echo $bread_crumbs[1]->title; ?></h3>
 <dl class="nice vertical tabs">

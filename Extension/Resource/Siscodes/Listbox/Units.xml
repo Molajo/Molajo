@@ -9,7 +9,7 @@
         get_item_children="0"
         use_special_joins="1"
         check_view_level_access="0"
-        process_triggers="0"
+        process_plugins="0"
         criteria_published_status="1"
         criteria_extension_instance_id="13"
         criteria_catalog_type_id="100013"
@@ -41,8 +41,8 @@
                   jointo="extension_instance_id,site_id"
                   joinwith="extension_instances.id,SITE_ID"/>
         </joins>
-        <triggers>
-            <trigger name="Publishedstatus"/>
-        </triggers>
+        <plugins>
+            <plugin name="Publishedstatus"/>
+        </plugins>
     </table>
 </model>

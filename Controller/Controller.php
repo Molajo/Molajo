@@ -31,7 +31,7 @@ class Controller
     /**
      * Stores various extension-specific key/value pairs
      *
-     * Public as it is passed into triggered events
+     * Public as it is passed into plugined events
      *
      * @var    array
      * @since  1.0
@@ -41,7 +41,7 @@ class Controller
     /**
      * Model Instance
      *
-     * Public as it is passed into triggered events
+     * Public as it is passed into plugined events
      *
      * @var    object
      * @since  1.0
@@ -51,7 +51,7 @@ class Controller
     /**
      * Registry containing Table Configuration from XML
      *
-     * Public as it is passed into triggered events
+     * Public as it is passed into plugined events
      *
      * @var    string
      * @since  1.0
@@ -77,7 +77,7 @@ class Controller
     /**
      * Used to build Create, Update, Delete data structures
 	 *
-	 * Public as it is passed into triggered events
+	 * Public as it is passed into plugined events
      *
      * @var    array
      * @since  1.0
@@ -85,12 +85,12 @@ class Controller
     public $data = array();
 
     /**
-     * Triggers specified in the table registry for the model
+     * Plugins specified in the table registry for the model
      *
      * @var    array
      * @since  1.0
      */
-    protected $triggers = array();
+    protected $plugins = array();
 
 	/**
 	 * Pagination: Total of rows
@@ -184,7 +184,7 @@ class Controller
             $this->set('get_item_children', 0);
             $this->set('use_special_joins', 0);
             $this->set('check_view_level_access', 0);
-            $this->set('process_triggers', 0);
+            $this->set('process_plugins', 0);
             $this->get('model_offset', 0);
             $this->get('model_count', 5);
 
@@ -229,8 +229,8 @@ class Controller
                 Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0));
             $this->set('check_view_level_access',
                 Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0));
-            $this->set('process_triggers',
-                Services::Registry()->get($this->table_registry_name, 'process_triggers', 0));
+            $this->set('process_plugins',
+                Services::Registry()->get($this->table_registry_name, 'process_plugins', 0));
             $this->set('criteria_catalog_type_id',
                 Services::Registry()->get($this->table_registry_name, 'criteria_catalog_type_id', 0));
             $this->set('criteria_published_status',
@@ -320,17 +320,17 @@ class Controller
             }
 		}
 
-		$this->getTriggerList($query_object);
+		$this->getPluginList($query_object);
 
 		$profiler_message =
 			' <br />Model Type: ' . $this->get('model_type', '')
 			. ' <br />Model Name: ' . $this->get('model_name', '')
 			. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
 			. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
-			. ' <br />Process Triggers: ' . (int) $this->get('process_triggers');
+			. ' <br />Process Plugins: ' . (int) $this->get('process_plugins');
 
 		/** 2. Schedule onBeforeRead Event */
-		if (count($this->triggers) > 0) {
+		if (count($this->plugins) > 0) {
 			$this->onBeforeReadEvent();
 		}
 
@@ -347,7 +347,7 @@ class Controller
         }
 
 		/** 4. Schedule onAfterRead Event */
-		if (count($this->triggers) > 0) {
+		if (count($this->plugins) > 0) {
 			$this->onAfterReadEvent(
 				$this->pagination_total,
 				$this->model_offset,
@@ -400,31 +400,31 @@ class Controller
 	}
 
 	/**
-	 * Get the list of potential triggers identified with this model (used to filter registered triggers)
+	 * Get the list of potential plugins identified with this model (used to filter registered plugins)
 	 *
 	 * @param $query_object
 	 *
 	 * @return void
 	 * @since   1.0
 	 */
-	protected function getTriggerList($query_object)
+	protected function getPluginList($query_object)
 	{
 		if ($query_object == 'result') {
-			$this->triggers = array();
+			$this->plugins = array();
 			return;
 		}
 
-		if ((int) $this->get('process_triggers') == 1) {
-			$temp = Services::Registry()->get($this->table_registry_name, 'triggers', array());
+		if ((int) $this->get('process_plugins') == 1) {
+			$temp = Services::Registry()->get($this->table_registry_name, 'plugins', array());
 			if (is_array($temp)) {
-				$this->triggers = $temp;
+				$this->plugins = $temp;
 			}
 
-			$this->triggers[] = Services::Registry()->get('Parameters', 'template_view_path_node');
-			$this->triggers[] = APPLICATION;
+			$this->plugins[] = Services::Registry()->get('Parameters', 'template_view_path_node');
+			$this->plugins[] = APPLICATION;
 
 		} else {
-			$this->triggers = array();
+			$this->plugins = array();
 		}
 
 		return;
@@ -620,8 +620,8 @@ class Controller
      */
     protected function onBeforeReadEvent()
     {
-        if (count($this->triggers) == 0
-            || (int) $this->get('process_triggers') == 0
+        if (count($this->plugins) == 0
+            || (int) $this->get('process_plugins') == 0
         ) {
             return true;
         }
@@ -639,15 +639,15 @@ class Controller
 
         Services::Profiler()->set('DisplayController->onBeforeReadEvent '
                 . $this->table_registry_name
-                . ' Schedules onBeforeRead', LOG_OUTPUT_TRIGGERS, VERBOSE
+                . ' Schedules onBeforeRead', LOG_OUTPUT_PLUGINS, VERBOSE
         );
 
-        $arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->triggers);
+        $arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->plugins);
 
         if ($arguments == false) {
             Services::Profiler()->set('DisplayController->onBeforeReadEvent '
                     . $this->table_registry_name
-                    . ' failure ', LOG_OUTPUT_TRIGGERS
+                    . ' failure ', LOG_OUTPUT_PLUGINS
             );
 
             return false;
@@ -655,7 +655,7 @@ class Controller
 
         Services::Profiler()->set('DisplayController->onBeforeReadEvent '
                 . $this->table_registry_name
-                . ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+                . ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
         );
 
         /** Process results */
@@ -674,8 +674,8 @@ class Controller
     protected function onAfterReadEvent()
     {
         /** Prepare input */
-        if (count($this->triggers) == 0
-            || (int) $this->get('process_triggers') == 0
+        if (count($this->plugins) == 0
+            || (int) $this->get('process_plugins') == 0
 			|| count ($this->query_results) == 0
         ) {
             return true;
@@ -704,15 +704,15 @@ class Controller
 
             Services::Profiler()->set('DisplayController->onAfterReadEvent '
                     . $this->table_registry_name
-                    . ' Schedules onAfterRead', LOG_OUTPUT_TRIGGERS, VERBOSE
+                    . ' Schedules onAfterRead', LOG_OUTPUT_PLUGINS, VERBOSE
             );
 
-            $arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->triggers);
+            $arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->plugins);
 
             if ($arguments == false) {
                 Services::Profiler()->set('DisplayController->onAfterRead '
                         . $this->table_registry_name
-                        . ' failure ', LOG_OUTPUT_TRIGGERS
+                        . ' failure ', LOG_OUTPUT_PLUGINS
                 );
 
                 return false;
@@ -720,7 +720,7 @@ class Controller
 
             Services::Profiler()->set('DisplayController->onAfterReadEvent '
                     . $this->table_registry_name
-                    . ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+                    . ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
             );
 
             $this->parameters = $arguments['parameters'];

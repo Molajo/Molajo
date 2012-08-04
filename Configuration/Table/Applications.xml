@@ -9,7 +9,7 @@
         get_item_children="0"
         use_special_joins="0"
         check_view_level_access="0"
-        process_triggers="0"
+        process_plugins="0"
         catalog_type_id="50"
         data_source="JDatabase">
 
@@ -37,12 +37,12 @@
             <child name="ApplicationExtensionInstances" join="application_id"/>
         </children>
 
-        <triggers>
-            <trigger name="Application"/>
-            <trigger name="Customfields"/>
-            <trigger name="Metadata"/>
-            <trigger name="Parameters"/>
-        </triggers>
+        <plugins>
+            <plugin name="Application"/>
+            <plugin name="Customfields"/>
+            <plugin name="Metadata"/>
+            <plugin name="Parameters"/>
+        </plugins>
 
     </table>
 
@@ -76,8 +76,8 @@
             <field name="profiler_end_with" type="text" null="0" default="Response"
                    values="Initialise,Route,Authorise,Execute,Response"/>
             <field name="profiler_output" type="text" null="0"
-                   default="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Triggers"
-                   values="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Triggers"/>
+                   default="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Plugins"
+                   values="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Plugins"/>
             <field name="profiler_output_queries_table_registry" type="boolean" null="0" default="0"/>
             <field name="profiler_output_queries_sql" type="boolean" null="0" default="1"/>
             <field name="profiler_output_queries_query_results" type="boolean" null="0" default="0"/>

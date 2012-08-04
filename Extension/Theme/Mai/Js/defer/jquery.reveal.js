@@ -56,7 +56,7 @@
                 var openModals = $(".reveal-modal.open");
                 if (openModals.length === 1) {
                     modalQueued = true;
-                    $(".reveal-modal.open").trigger("reveal:close");
+                    $(".reveal-modal.open").plugin("reveal:close");
                 }
             }
 
@@ -72,7 +72,7 @@
                             "top":$(document).scrollTop() + topMeasure + 'px',
                             "opacity":1
                         }, options.animationSpeed, function () {
-                            modal.trigger('reveal:opened');
+                            modal.plugin('reveal:opened');
                         });
 
                     }
@@ -82,14 +82,14 @@
                         modal.delay(options.animationSpeed / 2).animate({
                             "opacity":1
                         }, options.animationSpeed, function () {
-                            modal.trigger('reveal:opened');
+                            modal.plugin('reveal:opened');
                         });
 
                     }
                     if (options.animation === "none") {
                         modal.css({'visibility':'visible', 'display':'block', 'top':$(document).scrollTop() + topMeasure});
                         modalBg.css({"display":"block"});
-                        modal.trigger('reveal:opened');
+                        modal.plugin('reveal:opened');
                     }
                 }
             }
@@ -109,10 +109,10 @@
                         });
                         if (!modalQueued) {
                             modalBg.delay(options.animationSpeed).fadeOut(options.animationSpeed, function () {
-                                modal.trigger('reveal:closed');
+                                modal.plugin('reveal:closed');
                             });
                         } else {
-                            modal.trigger('reveal:closed');
+                            modal.plugin('reveal:closed');
                         }
                         modalQueued = false;
                     }
@@ -124,10 +124,10 @@
                         });
                         if (!modalQueued) {
                             modalBg.delay(options.animationSpeed).fadeOut(options.animationSpeed, function () {
-                                modal.trigger('reveal:closed');
+                                modal.plugin('reveal:closed');
                             });
                         } else {
-                            modal.trigger('reveal:closed');
+                            modal.plugin('reveal:closed');
                         }
                     }
                     if (options.animation === "none") {
@@ -135,7 +135,7 @@
                         if (!modalQueued) {
                             modalBg.css({'display':'none'});
                         }
-                        modal.trigger('reveal:closed');
+                        modal.plugin('reveal:closed');
                     }
                 }
             }
@@ -156,22 +156,22 @@
             modal.bind('reveal:close.reveal', options.close);
             modal.bind('reveal:closed.reveal', options.closed);
 
-            modal.trigger('reveal:open');
+            modal.plugin('reveal:open');
 
             closeButton = $('.' + options.dismissModalClass).bind('click.reveal', function () {
-                modal.trigger('reveal:close');
+                modal.plugin('reveal:close');
             });
 
             if (options.closeOnBackgroundClick) {
                 modalBg.css({"cursor":"pointer"});
                 modalBg.bind('click.reveal', function () {
-                    modal.trigger('reveal:close');
+                    modal.plugin('reveal:close');
                 });
             }
 
             $('body').bind('keyup.reveal', function (event) {
                 if (event.which === 27) { // 27 is the keycode for the Escape key
-                    modal.trigger('reveal:close');
+                    modal.plugin('reveal:close');
                 }
             });
         });

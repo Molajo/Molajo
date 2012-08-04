@@ -231,7 +231,7 @@
 
       if (this.$timer.is(':hidden')) {
         this.clock = setInterval(function () {
-          self.$element.trigger('orbit.next');
+          self.$element.plugin('orbit.next');
         }, this.options.advanceSpeed);
       } else {
         this.timerRunning = true;
@@ -256,7 +256,7 @@
         this.$rotator.removeClass('move');
         this.$mask.removeClass('move');
         this.degrees = 0;
-        this.$element.trigger('orbit.next');
+        this.$element.plugin('orbit.next');
       }
     },
 
@@ -379,7 +379,7 @@
           self.rotateTimer(true);
           self.startClock();
         }
-        self.$element.trigger('orbit.prev');
+        self.$element.plugin('orbit.prev');
       });
 
       this.$wrapper.find('.right').click(function () {
@@ -388,7 +388,7 @@
           self.rotateTimer(true);
           self.startClock();
         }
-        self.$element.trigger('orbit.next');
+        self.$element.plugin('orbit.next');
       });
     },
 
@@ -422,7 +422,7 @@
           self.rotateTimer(true);
           self.startClock();
         }
-        self.$element.trigger('orbit.goto', [$li.data('index')])
+        self.$element.plugin('orbit.goto', [$li.data('index')])
       });
     },
 

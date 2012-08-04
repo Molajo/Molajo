@@ -256,8 +256,8 @@ class HOLDupdate extends Controller
         }
 
         /** Model: Get Form **/
-        /** Model Trigger_Event: contentPrepareData **/
-        /** Model Trigger_Event: contentPrepareForm **/
+        /** Model Plugin_Event: contentPrepareData **/
+        /** Model Plugin_Event: contentPrepareForm **/
         /** Molajo_Note: Forms are named with the concatenated values of option, EditView, view, action, id, datakey separated by '.' **/
         $form = $this->model->getForm($data, false);
         if ($form === false) {
@@ -294,9 +294,9 @@ class HOLDupdate extends Controller
         Services::User()
             ->setUserState(JRequest::getInt('datakey'), $validData);
 
-        /** Trigger_Event: onContentValidateForm **/
+        /** Plugin_Event: onContentValidateForm **/
         /** Molajo_Note: onContentValidateForm is a new event that follows the primary source validation **/
-        $results = $this->dispatcher->trigger('onContentValidateForm', array($form, $validData));
+        $results = $this->dispatcher->plugin('onContentValidateForm', array($form, $validData));
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -323,8 +323,8 @@ class HOLDupdate extends Controller
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        /** Trigger_Event: onContentBeforeSave **/
-        $results = $this->dispatcher->trigger('onContentBeforeSave', array($context, $validData, $this->isNew));
+        /** Plugin_Event: onContentBeforeSave **/
+        $results = $this->dispatcher->plugin('onContentBeforeSave', array($context, $validData, $this->isNew));
         if (in_array(false, $results, true)) {
             $this->setError($this->dispatcher->getError());
 
@@ -344,7 +344,7 @@ class HOLDupdate extends Controller
 
         /** Event: onContentSaveForm **/
         /** Molajo_Note: New Event onContentSaveForm follows primary content save to keep data insync **/
-        $results = $this->dispatcher->trigger('onContentSaveForm', array($form, $validData));
+        $results = $this->dispatcher->plugin('onContentSaveForm', array($form, $validData));
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -352,11 +352,11 @@ class HOLDupdate extends Controller
         /** clear session data **/
         Services::User()->setUserState(JRequest::getInt('datakey'), null);
 
-        /** Molajo_Note: Testing added to ensure status change before onContentChangeState event is triggered  **/
+        /** Molajo_Note: Testing added to ensure status change before onContentChangeState event is plugined  **/
         if ($this->existing_status == $validData->status || $this->isNew) {
         } else {
             /** Event: onContentChangeState **/
-            $this->dispatcher->trigger('onContentChangeState', array($context, $this->get('id'), $validData->status));
+            $this->dispatcher->plugin('onContentChangeState', array($context, $this->get('id'), $validData->status));
         }
 
         /** Version_History: maintain count **/
@@ -365,8 +365,8 @@ class HOLDupdate extends Controller
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        /** Trigger_Event: onContentAfterSave **/
-        $this->dispatcher->trigger('onContentAfterSave', array($context, $validData, $this->isNew));
+        /** Plugin_Event: onContentAfterSave **/
+        $this->dispatcher->plugin('onContentAfterSave', array($context, $validData, $this->isNew));
 
         /** Model: postSaveHook **/
         $this->postSaveHook($this->model, $validData);
@@ -426,7 +426,7 @@ class HOLDupdate extends Controller
         }
 
         /** Delete_Event: onContentBeforeDelete **/
-        $results = $this->dispatcher->trigger('onContentBeforeDelete', array($context, $this->model));
+        $results = $this->dispatcher->plugin('onContentBeforeDelete', array($context, $this->model));
         if (in_array(false, $results, true)) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -444,7 +444,7 @@ class HOLDupdate extends Controller
         }
 
         /** Delete_Event: onContentAfterDelete **/
-        $results = $this->dispatcher->trigger('onContentAfterDelete', array($context, $this->model));
+        $results = $this->dispatcher->plugin('onContentAfterDelete', array($context, $this->model));
         if (in_array(false, $results, true)) {
             return $this->redirectClass->setSuccessIndicator(false);
         }

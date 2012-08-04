@@ -149,7 +149,7 @@ jQuery(document).ready(function ($) {
             input.checked = ((input.checked) ? false : true);
             $element.toggleClass('checked');
 
-            $input.trigger('change');
+            $input.plugin('change');
         }
     }
 
@@ -164,7 +164,7 @@ jQuery(document).ready(function ($) {
             input.checked = ((input.checked) ? false : true);
             $element.toggleClass('checked');
 
-            $input.trigger('change');
+            $input.plugin('change');
         }
     }
 
@@ -255,6 +255,6 @@ jQuery(document).ready(function ($) {
         });
         $select[0].selectedIndex = selectedIndex;
 
-        $select.trigger('change');
+        $select.plugin('change');
     });
 })(jQuery);

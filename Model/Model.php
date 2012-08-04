@@ -163,20 +163,20 @@ class Model
     }
 
     /**
-     * retrieves result (single element) from Trigger Registry
+     * retrieves result (single element) from Plugin Registry
      *
      * @param null $model_type
      *
      * @return mixed Array or String or Null
      * @since   1.0
      */
-    public function getTriggerdata($model_type = null)
+    public function getPlugindata($model_type = null)
     {
         if ($model_type == '*' || strpos($model_type, '*')) {
-            return $this->db->getData('Triggerdata', $model_type, false);
+            return $this->db->getData('Plugindata', $model_type, false);
         }
 
-        return $this->db->getData('Triggerdata', $model_type, true);
+        return $this->db->getData('Plugindata', $model_type, true);
     }
 
     /**

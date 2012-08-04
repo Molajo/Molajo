@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$pageURL = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$pageURL = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 <h4><?echo Services::Language()->translate('Filters'); ?></h4>
 <form action="<?php echo $pageURL; ?>" method="get" name="Admingridviewcollections" id="Admingridviewcollections">
     <div class="row">

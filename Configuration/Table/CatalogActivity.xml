@@ -8,7 +8,7 @@
         get_item_children="0"
         use_special_joins="0"
         check_view_level_access="0"
-        process_triggers="1"
+        process_plugins="1"
         data_source="JDatabase">
 
     <table>
@@ -23,10 +23,10 @@
             <field name="customfields" type="customfield" null="0" default=" "/>
         </fields>
 
-        <triggers>
-            <trigger name="Dateformats"/>
-            <trigger name="Ipaddress"/>
-        </triggers>
+        <plugins>
+            <plugin name="Dateformats"/>
+            <plugin name="Ipaddress"/>
+        </plugins>
 
         <foreignkeys>
             <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>

@@ -71,9 +71,9 @@ Class WrapIncluder extends Includer
         /* Set other model parameters: model_parameter is set in Attributes */
         $value = Services::Registry()->get('Parameters', 'model_parameter', '');
 
-        Services::Registry()->set('Parameters', 'model_name', 'Triggerdata');
+        Services::Registry()->set('Parameters', 'model_name', 'Plugindata');
         Services::Registry()->set('Parameters', 'model_type', 'dbo');
-        Services::Registry()->set('Parameters', 'model_query_object', 'getTriggerdata');
+        Services::Registry()->set('Parameters', 'model_query_object', 'getPlugindata');
 
         /** Cleanup */
         Services::Registry()->delete('Parameters', 'item*');

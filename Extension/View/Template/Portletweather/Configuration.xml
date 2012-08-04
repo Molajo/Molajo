@@ -11,9 +11,9 @@
     <description>VIEW_TEMPLATE_PORTLETWEATHER_DESCRIPTION</description>
     <model name="Portletweather">
         <table>
-            <triggers>
-                <trigger name="Weather"/>
-            </triggers>
+            <plugins>
+                <plugin name="Weather"/>
+            </plugins>
         </table>
         <customfields>
             <customfield name="parameters">

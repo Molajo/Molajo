@@ -11,8 +11,8 @@ $class = '';
 $class = ' class="active" ';
 $status = '';
 $statusTitle = '';
-if (count(Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs')) > 0) {
-    foreach (Services::Registry()->get('Triggerdata', 'Adminbreadcrumbs') as $crumb) {
+if (count(Services::Registry()->get('Plugindata', 'Adminbreadcrumbs')) > 0) {
+    foreach (Services::Registry()->get('Plugindata', 'Adminbreadcrumbs') as $crumb) {
         if ($crumb->lvl == 3) {
             $statusTitle = $crumb->title;
             $status = $crumb->url;

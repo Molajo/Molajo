@@ -7,13 +7,13 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$action = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 <h4><?echo Services::Language()->translate('Collection Assignment'); ?></h4>
 <form action="<?php echo $action; ?>" method="get" name="Admingridbatchcollections" id="Admingridbatchcollections">
     <p><?php echo Services::Language()->translate('Add or remove selected content from specified collection(s).'); ?></p>
     <div class="row">
         <div class="nine columns">
-            <include:template name=Formselectlist model=Triggerdata value=<?php echo 'listbatch_collections*'; ?>/>
+            <include:template name=Formselectlist model=Plugindata value=<?php echo 'listbatch_collections*'; ?>/>
         </div>
         <div class="three columns">
             <input type="submit" class="submit button small" name="submit" id="batch-collection-create" value="Add">

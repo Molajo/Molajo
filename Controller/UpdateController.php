@@ -357,17 +357,17 @@ class UpdateController extends Controller
             }
         }
 
-        /** Molajo_Note: Testing added to ensure state change before onContentChangeState event is triggered  **/
+        /** Molajo_Note: Testing added to ensure state change before onContentChangeState event is plugined  **/
         if ($previous == $newValue || $this->isNew) {
         } else {
             /** Event: onContentChangeState **/
-            $this->dispatcher->trigger('onContentChangeState', array($context, $this->mvc['id'], $validData->state));
+            $this->dispatcher->plugin('onContentChangeState', array($context, $this->mvc['id'], $validData->state));
         }
 
         if ($column == 'state') {
             if ($newValue) {
                 $event = 'onContentChange' . ucfirst(strtolower($column));
-                $this->dispatcher->trigger($event, array($context, $this->mvc['id'], $newValue));
+                $this->dispatcher->plugin($event, array($context, $this->mvc['id'], $newValue));
             }
         }
 

@@ -59,7 +59,7 @@ Class RouteService
         /** Route Registry */
         Services::Registry()->createRegistry('Parameters');
         Services::Registry()->createRegistry('Metadata');
-        Services::Registry()->deleteRegistry('Trigger');
+        Services::Registry()->deleteRegistry('Plugin');
 
         Services::Registry()->set('Parameters', 'status_found', '');
         Services::Registry()->set('Parameters', 'status_authorised', '');

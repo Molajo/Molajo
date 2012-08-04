@@ -51,7 +51,7 @@ class CreateController extends Controller
             //return false (not yet)
         }
 
-        parent::getTriggerList('create');
+        parent::getPluginList('create');
 
         $valid = $this->onBeforeCreateEvent();
         if ($valid === false) {
@@ -394,7 +394,7 @@ class CreateController extends Controller
                 $m->set('get_item_children', 0);
                 $m->set('use_special_joins', 0);
                 $m->set('check_view_level_access', 0);
-                $m->set('process_triggers', 0);
+                $m->set('process_plugins', 0);
 
                 $value = $m->getData('result');
 
@@ -420,8 +420,8 @@ class CreateController extends Controller
      */
     protected function onBeforeCreateEvent()
     {
-        if (count($this->triggers) == 0
-            || (int) $this->get('process_triggers') == 0
+        if (count($this->plugins) == 0
+            || (int) $this->get('process_plugins') == 0
         ) {
             return true;
         }
@@ -436,17 +436,17 @@ class CreateController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->triggers);
+        $arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->plugins);
 
         if ($arguments == false) {
-            Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $this->parameters = $arguments['parameters'];
         $this->data = $arguments['data'];
@@ -462,8 +462,8 @@ class CreateController extends Controller
      */
     protected function onAfterCreateEvent($data)
     {
-        if (count($this->triggers) == 0
-            || (int) $this->get('process_triggers') == 0
+        if (count($this->plugins) == 0
+            || (int) $this->get('process_plugins') == 0
         ) {
             return true;
         }
@@ -477,17 +477,17 @@ class CreateController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->triggers);
+        $arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->plugins);
 
         if ($arguments == false) {
-            Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $this->parameters = $arguments['parameters'];
         $data = $arguments['data'];

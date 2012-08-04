@@ -9,13 +9,13 @@ defined('MOLAJO') or die;
 
 $nowrap = '';
 $checked = '';
-$rowCount = Services::Registry()->get('Triggerdata', 'AdminGridTableRows'); ?>
+$rowCount = Services::Registry()->get('Plugindata', 'AdminGridTableRows'); ?>
 <table class="responsive">
     <thead>
     <tr>
         <?php
         $count = 1;
-        $columnArray = Services::Registry()->get('Triggerdata', 'AdminGridTableColumns');
+        $columnArray = Services::Registry()->get('Plugindata', 'AdminGridTableColumns');
         foreach ($columnArray as $column) {
             $extraClass = '';
             if ($count == 1) {

@@ -6,7 +6,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$pageURL = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$pageURL = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 <div id="m-view" style="display: none;">
     <h3><?php echo Services::Language()->translate('View Options'); ?></h3>
     <div class="row">

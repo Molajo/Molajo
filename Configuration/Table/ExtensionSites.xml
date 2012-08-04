@@ -18,10 +18,10 @@
         <children>
             <child name="Extensions" join="site_id"/>
         </children>
-        <triggers>
-            <trigger name="Customfields"/>
-            <trigger name="Metadata"/>
-            <trigger name="Parameters"/>
-        </triggers>
+        <plugins>
+            <plugin name="Customfields"/>
+            <plugin name="Metadata"/>
+            <plugin name="Parameters"/>
+        </plugins>
     </table>
 </model>

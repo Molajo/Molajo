@@ -198,7 +198,7 @@ Class ProfilerService
      * Sets profiler message that is routed to the selected logger
      *
      * @param string $message
-     * @param string $output_type Application,Authorisation,Queries,Rendering,Routing,Services,Triggers
+     * @param string $output_type Application,Authorisation,Queries,Rendering,Routing,Services,Plugins
      *
      * @return boolean
      * @since   1.0
@@ -404,7 +404,7 @@ Class ProfilerService
             LOG_OUTPUT_RENDERING,
             LOG_OUTPUT_ROUTING,
             LOG_OUTPUT_SERVICES,
-            LOG_OUTPUT_TRIGGERS
+            LOG_OUTPUT_PLUGINS
         );
 
         $temp = Services::Registry()->get('Configuration', 'profiler_output');

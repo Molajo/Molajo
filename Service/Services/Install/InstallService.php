@@ -67,7 +67,7 @@ Class InstallService
         $m->set('get_item_children', 0);
         $m->set('use_special_joins', 0);
         $m->set('check_view_level_access', 1);
-        $m->set('process_triggers', 0);
+        $m->set('process_plugins', 0);
 
         $name_key = $m->get('name_key');
         $primary_key = $m->get('primary_key');
@@ -226,12 +226,12 @@ Class InstallService
                 }
             }
 
-            /** Create Catalog for Item (it will trigger more) */
+            /** Create Catalog for Item (it will plugin more) */
             $controller = new CreateController();
             $controller->data = $data;
             $id = $controller->execute();
 
-            /** Create Catalog for Item (it will trigger more) */
+            /** Create Catalog for Item (it will plugin more) */
             $controller2 = new CreateController();
 
             $data2 = new \stdClass();
@@ -265,7 +265,7 @@ Class InstallService
     public function catalog()
     {
 
-        /** Create Catalog for Menu Item (it will trigger more) */
+        /** Create Catalog for Menu Item (it will plugin more) */
         $controller = new CreateController();
 
         $data2 = new \stdClass();
@@ -344,18 +344,18 @@ Class InstallService
     }
 
     /**
-     * testTrigger
+     * testPlugin
      *
      * @return bool
      */
-    public function testTrigger()
+    public function testPlugin()
     {
 
         $controller = new CreateController();
         $table_registry_name = 'ArticlesTable';
 
-        $triggers = array();
-        $triggers[] = 'Create';
+        $plugins = array();
+        $plugins[] = 'Create';
 
         $query_results = array();
         $data = new \stdClass();
@@ -376,9 +376,9 @@ Class InstallService
             'model_name' => 'Articles'
         );
 
-        $arguments = Services::Event()->schedule('onAfterCreate', $arguments, $triggers);
-        if ($trigger['success'] == true) {
-            $arguments = $trigger['arguments'];
+        $arguments = Services::Event()->schedule('onAfterCreate', $arguments, $plugins);
+        if ($plugin['success'] == true) {
+            $arguments = $plugin['arguments'];
         } else {
 
             var_dump($arguments);

@@ -21,7 +21,7 @@ defined('MOLAJO') or die;
 class DeleteController extends Controller
 {
     /**
-     * Delete row and trigger other delete actions
+     * Delete row and plugin other delete actions
      *
      * @return bool|object
      * @since  1.0
@@ -46,7 +46,7 @@ class DeleteController extends Controller
             //return false (not yet)
         }
 
-        parent::getTriggerList('delete');
+        parent::getPluginList('delete');
 
         $valid = $this->onBeforeDeleteEvent();
         if ($valid === false) {
@@ -203,8 +203,8 @@ class DeleteController extends Controller
      */
     protected function onBeforeDeleteEvent()
     {
-        if (count($this->triggers) == 0
-            || (int) $this->get('process_triggers') == 0
+        if (count($this->plugins) == 0
+            || (int) $this->get('process_plugins') == 0
         ) {
             return true;
         }
@@ -219,16 +219,16 @@ class DeleteController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->triggers);
+        $arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->plugins);
         if ($arguments == false) {
-            Services::Profiler()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         /** Process results */
         $this->parameters = $arguments['parameters'];
@@ -245,8 +245,8 @@ class DeleteController extends Controller
      */
     protected function onAfterDeleteEvent()
     {
-        if (count($this->triggers) == 0
-            || (int) $this->get('process_triggers') == 0
+        if (count($this->plugins) == 0
+            || (int) $this->get('process_plugins') == 0
         ) {
             return true;
         }
@@ -260,16 +260,16 @@ class DeleteController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->triggers);
+        $arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->plugins);
         if ($arguments == false) {
-            Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         /** Process results */
         $this->parameters = $arguments['parameters'];

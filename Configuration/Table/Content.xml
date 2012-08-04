@@ -9,7 +9,7 @@
         get_item_children="0"
         use_special_joins="1"
         check_view_level_access="1"
-        process_triggers="1"
+        process_plugins="1"
         data_source="JDatabase">
     <table>
         <fields>
@@ -24,9 +24,9 @@
         <children>
             <include name="ChildrenContent"/>
         </children>
-        <triggers>
-            <include name="TriggersContent"/>
-        </triggers>
+        <plugins>
+            <include name="PluginsContent"/>
+        </plugins>
     </table>
 
     <customfields>

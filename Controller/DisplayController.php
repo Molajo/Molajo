@@ -83,7 +83,7 @@ class DisplayController extends Controller
                 ob_end_clean();
 
                 Services::Profiler()->set('Controller->onAfterExecute ' . $profiler_message,
-                    LOG_OUTPUT_TRIGGERS, VERBOSE);
+                    LOG_OUTPUT_PLUGINS, VERBOSE);
             }
         }
 
@@ -106,7 +106,7 @@ class DisplayController extends Controller
             $this->view_path = $this->get('template_view_path');
             $this->view_path_url = $this->get('template_view_path_url');
 
-            /** Trigger Pre-View Render Event */
+            /** Plugin Pre-View Render Event */
             $this->onBeforeViewRender();
 
             /**
@@ -121,7 +121,7 @@ class DisplayController extends Controller
             /** Render View */
             $rendered_output = $this->renderView();
 
-            /** Trigger After-View Render Event */
+            /** Plugin After-View Render Event */
             $rendered_output = $this->onAfterViewRender($rendered_output);
         }
 
@@ -177,7 +177,7 @@ class DisplayController extends Controller
     protected function renderView()
     {
 //todo think about empty queryresults processing when parameter set to true (custom and footer?)
-//todo think about the result, item, and list processing - get dbo's in shape, triggers
+//todo think about the result, item, and list processing - get dbo's in shape, plugins
 //todo when close to done - do encoding - bring in filters - how?
 
         /** start collecting output */
@@ -232,7 +232,7 @@ class DisplayController extends Controller
      */
     protected function onBeforeViewRender()
     {
-        if ((int) $this->get('process_triggers') == 0) {
+        if ((int) $this->get('process_plugins') == 0) {
             return true;
         }
         if (count($this->query_results) == 0) {
@@ -256,17 +256,17 @@ class DisplayController extends Controller
                 'model_name' => $this->get('model_name')
             );
 
-            Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
             $arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
 
             if ($arguments == false) {
-                Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+                Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
                 return false;
             }
 
-            Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
             $this->parameters = $arguments['parameters'];
             $this->query_results[] = $arguments['data'];
@@ -299,17 +299,17 @@ class DisplayController extends Controller
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
 
         if ($arguments == false) {
-            Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+            Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $rendered_output = $arguments['rendered_output'];
 

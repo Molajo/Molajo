@@ -1,7 +1,0 @@
-<trigger name="Catalogtypeid"/>
-<trigger name="Extensioninstance"/>
-<trigger name="Dateformats"/>
-<trigger name="Publishedstatus"/>
-<trigger name="Version"/>
-<trigger name="Ordering"/>
-<trigger name="Create"/>

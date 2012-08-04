@@ -15,7 +15,7 @@
     "profiler_verbose":"0",
     "profiler_start_with":"Initialise",
     "profiler_end_with":"Response",
-    "profiler_output":"Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Triggers",
+    "profiler_output":"Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Plugins",
     "profiler_output_queries_table_registry":"0",
     "profiler_output_queries_sql":"0",
     "profiler_output_queries_query_results":"0",

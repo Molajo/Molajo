@@ -1,5 +1,5 @@
 <model
         name="Profiler"
-        process_triggers="1"
+        process_plugins="1"
         data_source="Profiler">
 </model>

@@ -11,9 +11,9 @@
         "wrap_view_css_id":"",
         "wrap_view_css_class":"",
 
-        "model_name":"Triggerdata",
+        "model_name":"Plugindata",
         "model_type":"dbo",
-        "model_query_object":"getTriggerdata",
+        "model_query_object":"getPlugindata",
         "model_parameter":"Adminnavigationbar",
 
         "cache":"",

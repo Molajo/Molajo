@@ -167,13 +167,13 @@ Class ParseService
     {
         Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
-        /** OnBeforeParse Triggers */
+        /** OnBeforeParse Plugins */
         if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
         } else {
             $this->onBeforeParseEvent();
         }
 
-        /** Retrieve overrides (could be passed in and are set in the AjaxTrigger, too) */
+        /** Retrieve overrides (could be passed in and are set in the AjaxPlugin, too) */
         $overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
         $overrideIncludesFinalXML = Services::Registry()->get('Override', 'final_xml', false);
 
@@ -251,7 +251,7 @@ Class ParseService
 
         $renderedOutput = $this->renderLoop($renderedOutput);
 
-        /** onAfterParse Trigger */
+        /** onAfterParse Plugin */
         if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
         } else {
             Services::Registry()->copy('RouteParameters', 'Parameters');
@@ -535,7 +535,7 @@ Class ParseService
      */
     protected function onBeforeParseEvent()
     {
-        Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $model_name = Services::Registry()->get('Parameters', 'model_name');
         $model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
@@ -549,9 +549,9 @@ Class ParseService
         if ($results == false) {
             return false;
         }
-        $triggers = Services::Registry()->get($table_registry_name, 'triggers', array());
+        $plugins = Services::Registry()->get($table_registry_name, 'plugins', array());
 
-        if (count($triggers) == 0) {
+        if (count($plugins) == 0) {
             return true;
         }
 
@@ -568,15 +568,15 @@ Class ParseService
 
         Services::Profiler()->set('ParseService->onBeforeParseEvent '
                 . $table_registry_name
-                . ' Schedules onBeforeParse', LOG_OUTPUT_TRIGGERS, VERBOSE
+                . ' Schedules onBeforeParse', LOG_OUTPUT_PLUGINS, VERBOSE
         );
 
-        $arguments = Services::Event()->schedule('onBeforeParse', $arguments, $triggers);
+        $arguments = Services::Event()->schedule('onBeforeParse', $arguments, $plugins);
 
         if ($arguments == false) {
             Services::Profiler()->set('ParseService->onBeforeParseEvent '
                     . $table_registry_name
-                    . ' failure ', LOG_OUTPUT_TRIGGERS
+                    . ' failure ', LOG_OUTPUT_PLUGINS
             );
 
             return false;
@@ -584,7 +584,7 @@ Class ParseService
 
         Services::Profiler()->set('ParseService->onBeforeParseEvent '
                 . $table_registry_name
-                . ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+                . ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
         );
 
         /** Process results */
@@ -603,7 +603,7 @@ Class ParseService
      */
     protected function onAfterParseEvent($renderedOutput)
     {
-        Services::Profiler()->set('ParseService->process Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE);
+        Services::Profiler()->set('ParseService->process Schedules onAfterParse', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray('Parameters');
 
@@ -614,7 +614,7 @@ Class ParseService
         );
 
         Services::Profiler()->set('ParseService->onAfterParseEvent '
-                . ' Schedules onAfterParse', LOG_OUTPUT_TRIGGERS, VERBOSE
+                . ' Schedules onAfterParse', LOG_OUTPUT_PLUGINS, VERBOSE
         );
 
         $arguments = Services::Event()->schedule('onAfterParse', $arguments);
@@ -622,14 +622,14 @@ Class ParseService
         if ($arguments == false) {
 
             Services::Profiler()->set('ParseService->onAfterParseEvent '
-                    . ' failure ', LOG_OUTPUT_TRIGGERS
+                    . ' failure ', LOG_OUTPUT_PLUGINS
             );
 
             return false;
         }
 
         Services::Profiler()->set('ParseService->onAfterParseEvent '
-                . ' successful ', LOG_OUTPUT_TRIGGERS, VERBOSE
+                . ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
         );
 
         /** Process results */

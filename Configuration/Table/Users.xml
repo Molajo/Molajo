@@ -9,7 +9,7 @@
         get_item_children="1"
         use_special_joins="0"
         check_view_level_access="0"
-        process_triggers="1"
+        process_plugins="1"
         catalog_type_id="500"
         data_source="JDatabase">
 
@@ -44,17 +44,17 @@
             <child name="UserViewGroups" join="user_id"/>
         </children>
 
-        <triggers>
-            <trigger name="Email"/>
-            <trigger name="Password"/>
-            <trigger name="Username"/>
-            <trigger name="Fullname"/>
-            <trigger name="Gravatar"/>
-            <trigger name="Smilies"/>
-            <trigger name="Snippet"/>
-            <trigger name="Readmore"/>
-            <trigger name="Dateformats"/>
-        </triggers>
+        <plugins>
+            <plugin name="Email"/>
+            <plugin name="Password"/>
+            <plugin name="Username"/>
+            <plugin name="Fullname"/>
+            <plugin name="Gravatar"/>
+            <plugin name="Smilies"/>
+            <plugin name="Snippet"/>
+            <plugin name="Readmore"/>
+            <plugin name="Dateformats"/>
+        </plugins>
     </table>
     <customfields>
 

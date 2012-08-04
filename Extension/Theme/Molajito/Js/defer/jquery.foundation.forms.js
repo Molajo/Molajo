@@ -7,7 +7,7 @@
 */
 
 (function( $ ){
-  
+
   /**
    * Helper object used to quickly adjust all hidden parent element's, display and visibility properties.
    * This is currently used for the custom drop downs. When the dropdowns are contained within a reveal modal
@@ -39,25 +39,25 @@
       adjust : function( $child ) {
         // Internal reference.
         var _self = this;
-        
+
         // Set all hidden parent elements, including this element.
         _self.hidden = $child.parents().andSelf().filter( ":hidden" );
-        
+
         // Loop through all hidden elements.
         _self.hidden.each( function() {
-          
+
           // Cache the element.
           var $elem = $( this );
-          
+
           // Store the style attribute.
           // Undefined if element doesn't have a style attribute.
           _self.tmp.push( $elem.attr( 'style' ) );
-          
+
           // Set the element's display property to block,
           // but ensure it's visibility is hidden.
           $elem.css( { 'visibility' : 'hidden', 'display' : 'block' } );
         });
-      
+
       }, // end adjust
 
       /**
@@ -96,7 +96,7 @@
 
   jQuery.foundation = jQuery.foundation || {};
   jQuery.foundation.customForms = jQuery.foundation.customForms || {};
-  
+
   $.foundation.customForms.appendCustomMarkup = function ( options ) {
 
     var defaults = {
@@ -207,7 +207,7 @@
         // Insert the the currently selected list item before all other elements.
         // Then, find the element and assign it to $currentSelect.
         //
-        
+
         $currentSelect = $customSelect.prepend( '<a href="#" class="current">' + $selectedOption.html() + '</a>' ).find( ".current" );
         //
         // Add the custom select element after the <select> element.
@@ -260,7 +260,7 @@
           if ($currentSelect) {
             $currentSelect.html( this.value );
           }
-          
+
         }
 
       });
@@ -370,7 +370,7 @@
         input.checked = ((input.checked) ? false : true);
         $element.toggleClass('checked');
 
-        $input.trigger('change');
+        $input.plugin('change');
     }
   };
 
@@ -385,7 +385,7 @@
       input.checked = ((input.checked) ? false : true);
       $element.toggleClass('checked');
 
-      $input.trigger('change');
+      $input.plugin('change');
     }
   };
 
@@ -476,10 +476,10 @@
     });
     $select[0].selectedIndex = selectedIndex;
 
-    $select.trigger('change');
-  });  
-  
-  
+    $select.plugin('change');
+  });
+
+
   $.fn.foundationCustomForms = $.foundation.customForms.appendCustomMarkup;
 
 })( jQuery );
