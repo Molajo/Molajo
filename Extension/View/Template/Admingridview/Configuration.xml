@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="Template" version="1.0" extends="Extensioninstancesviewstemplates">
     <name>VIEW_TEMPLATE_ADMINGRIDVIEW_NAME</name>
-    <author>Amy Stephen</author>
+    <author>Molajo Team</author>
     <create_date>August 2012</create_date>
-    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
     <license>GNU GPL v 2, or later and MIT, see License folder</license>
-    <author_email>AmyStephen@gmail.com</author_email>
+    <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ADMINGRIDVIEW_DESCRIPTION</description>

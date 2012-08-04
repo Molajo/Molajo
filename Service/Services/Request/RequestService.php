@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
+ * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Request;
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  *
  * @url http://symfony.com/doc/current/resources/http_foundation.html#accessing-request-data
  *
- * @package   Molajo
+ * @package    Molajo
  * @subpackage  Services
  * @since       1.0
  */

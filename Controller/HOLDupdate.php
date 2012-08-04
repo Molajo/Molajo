@@ -1,9 +1,9 @@
 <?php
 /**
- * @package   Molajo
+ * @package    Molajo
  * @subpackage  Controller
- * @copyright 2012 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Controller;
 
@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
  *
  * Called from the Multiple Controller for batch (copy, move) and delete
  *
- * @package   Molajo
+ * @package    Molajo
  * @subpackage  Controller
  * @since       1.0
  */

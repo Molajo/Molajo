@@ -1,6 +1,6 @@
 .float-left { float: left; }
 .clear { clear:both; }
-.weather-wrapper { margin: 0; }
+.weather-wrapper { margin: 0; width: 100%}
 .weather-wrapper .weather { margin-bottom: 10px; }
 .weather-wrapper .current { margin-bottom: 0px; }
 .weather-wrapper .location , .weather-wrapper .separator { font-size: 1.3em; font-weight: bold; padding-bottom: 6px; margin-bottom: 12px; border-bottom: 1px solid #acacac; }
@@ -12,3 +12,4 @@
 .weather-wrapper .weather .weather-info .temp , .weather-wrapper .weather .weather-info .condition { font-weight: bold; }
 .weather-wrapper .weather .weather-info .temp { font-size: 2em; }
 .weather-wrapper .weather .weather-info .wind { font-size: 0.8em; line-height: 1.5em; margin-bottom: 1em; }
+.weather { clear: both; width: 100%; }

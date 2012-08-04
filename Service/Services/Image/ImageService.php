@@ -1,7 +1,7 @@
 <?php
 /**
- * @package   Molajo
- * @copyright 2012 Amy Stephen. All rights reserved.
+ * @package    Molajo
+ * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Image;
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 /**
  * Image
  *
- * @package   Molajo
+ * @package    Molajo
  * @subpackage  Service
  * @since       1.0
  */
