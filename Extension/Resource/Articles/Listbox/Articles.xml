@@ -12,7 +12,7 @@
         process_plugins="0"
         criteria_published_status="1"
         criteria_extension_instance_id="2"
-        criteria_catalog_type_id="10000,11000"
+        criteria_catalog_type_id="10000"
         data_source="JDatabase">
     <table>
         <fields>

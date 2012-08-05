@@ -1,4 +1,5 @@
 <?php
+use Molajo\Service\Services;
 /**
  * @package    Molajo
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
@@ -6,14 +7,6 @@
  */
 defined('MOLAJO') or die; ?>
 <div class="ui-portlet-header">
-    <h4>List</h4>
+    <h4><?php echo Services::Registry()->get('Parameters', 'criteria_title'); ?></h4>
 </div>
 <div class="ui-portlet-content">
-    <ul>
-		<li><a href="#">Item 1</a></li>
-		<li><a href="#">Item 2</a></li>
-		<li><a href="#">Item 3</a></li>
-		<li><a href="#">Item 4</a></li>
-		<li><a href="#">Item 5</a></li>
-	</ul>
-</div>

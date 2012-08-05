@@ -276,7 +276,34 @@ class ReadModel extends Model
         return $this;
     }
 
-    /**
+	/**
+	 * Add Model Criteria to Query
+	 *
+	 * @param  $catalog_type_id
+	 * @param  $extension_instance_id
+	 * @param  $primary_prefix
+	 *
+	 * @return  ReadModel
+	 * @since   1.0
+	 */
+	public function setModelCriteria($catalog_type_id, $extension_instance_id, $primary_prefix)
+	{
+		if ((int) $catalog_type_id == 0) {
+		} else {
+			$this->query->where($this->db->qn($primary_prefix . '.' . 'catalog_type_id')
+				. ' = ' . (int) $catalog_type_id);
+		}
+
+		if ((int) $extension_instance_id == 0) {
+		} else {
+			$this->query->where($this->db->qn($primary_prefix . '.' . 'extension_instance_id')
+				. ' = ' . (int) $extension_instance_id);
+		}
+
+		return $this;
+	}
+
+	/**
      * getQueryResults - Execute query and returns an associative array of data elements
      *
      * @param     $query_object

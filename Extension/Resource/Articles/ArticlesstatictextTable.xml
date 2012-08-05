@@ -1,3 +1,0 @@
-<extension type="Resource" version="1.0" extends="Articles">
-    <model name="ArticlesstatictextTable" catalog_type_id="11000"/>
-</extension>

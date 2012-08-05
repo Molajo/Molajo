@@ -233,7 +233,9 @@ class Controller
                 Services::Registry()->get($this->table_registry_name, 'process_plugins', 0));
             $this->set('criteria_catalog_type_id',
                 Services::Registry()->get($this->table_registry_name, 'criteria_catalog_type_id', 0));
-            $this->set('criteria_published_status',
+			$this->set('criteria_extension_instance_id',
+				Services::Registry()->get($this->table_registry_name, 'criteria_extension_instance_id', 0));
+			$this->set('criteria_published_status',
                 Services::Registry()->get($this->table_registry_name, 'criteria_published_status', 0));
             $this->set('data_source',
                 Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
@@ -301,6 +303,8 @@ class Controller
 		$this->pagination_total = 0;
 		$this->model_offset = 0;
 		$this->model_count = 10;
+
+		$model_parameter = '';
 
         $dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
 
@@ -480,6 +484,13 @@ class Controller
                 );
             }
         }
+
+		/** 5. Model Values */
+		$this->model->setModelCriteria(
+			$this->get('criteria_catalog_type_id'),
+			$this->get('criteria_extension_instance_id'),
+			$this->get('primary_prefix')
+		);
 
 		return;
 	}
@@ -728,6 +739,38 @@ class Controller
             $first = false;
         }
 
-        return true;
-    }
+		/** onAfterReadall - Passes the entire query_results through the plugin */
+		$arguments = array(
+			'table_registry_name' => $this->table_registry_name,
+			'parameters' => $this->parameters,
+			'data' => $this->query_results,
+			'model_name' => $this->get('model_name')
+		);
+
+		Services::Profiler()->set('DisplayController->onAfterReadEventAll '
+				. $this->table_registry_name
+				. ' Schedules onAfterReadall', LOG_OUTPUT_PLUGINS, VERBOSE
+		);
+
+		$arguments = Services::Event()->schedule('onAfterReadall', $arguments, $this->plugins);
+
+		if ($arguments == false) {
+			Services::Profiler()->set('DisplayController->onAfterReadall '
+					. $this->table_registry_name
+					. ' failure ', LOG_OUTPUT_PLUGINS
+			);
+
+			return false;
+		}
+
+		Services::Profiler()->set('DisplayController->onAfterReadEventAll '
+				. $this->table_registry_name
+				. ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
+		);
+
+		$this->parameters = $arguments['parameters'];
+		$this->query_results = $arguments['data'];
+
+		return true;
+	}
 }

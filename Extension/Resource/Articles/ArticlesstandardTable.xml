@@ -1,3 +1,0 @@
-<extension type="Resource" version="1.0" extends="Articles">
-    <model name="ArticlesstandardTable" catalog_type_id="10000"/>
-</extension>

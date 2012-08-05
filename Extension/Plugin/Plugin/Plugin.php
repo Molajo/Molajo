@@ -74,6 +74,17 @@ class Plugin
         return true;
     }
 
+	/**
+	 * Post-read processing - all rows at one time from query_results
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterReadall()
+	{
+		return true;
+	}
+
     /**
      * Pre-update processing
      *

@@ -75,7 +75,7 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'menuitem_modified_datetime', $item->modified_datetime);
 
         /** Menu Extension */
-        Services::Registry()->set('Parameters', 'menu_id', (int) $item->extension_instances_id);
+        Services::Registry()->set('Parameters', 'menu_id', (int) $item->extension_instance_id);
         Services::Registry()->set('Parameters', 'menu_title', $item->extension_instances_title);
         Services::Registry()->set('Parameters', 'menu_extension_id', (int) $item->extensions_id);
         Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
@@ -180,7 +180,7 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'content_catalog_type_title', $item->catalog_types_title);
         Services::Registry()->set('Parameters', 'content_modified_datetime', $item->modified_datetime);
 
-        Services::Registry()->set('Parameters', 'extension_instance_id', (int) $item->extension_instances_id);
+        Services::Registry()->set('Parameters', 'extension_instance_id', (int) $item->extension_instance_id);
         Services::Registry()->set('Parameters', 'extension_title', $item->extension_instances_title);
         Services::Registry()->set('Parameters', 'extension_id', (int) $item->extensions_id);
         Services::Registry()->set('Parameters', 'extension_name_path_node', $item->extensions_name);

@@ -9,5 +9,22 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_PORTLETLIST_DESCRIPTION</description>
-    <model name="Portletlist"/>
+    <model name="Portletlist">
+        <customfields>
+            <customfield name="parameters">
+                <field name="criteria_model_name" type="char" null="0" default="Articles"/>
+                <field name="criteria_model_type" type="char" null="0" default="Table"/>
+                <field name="criteria_status_list" type="char" null="0" default="1,2" values="-10,-5,-2,-1,0,1,2"/>
+                <field name="criteria_ordering" type="char" null="0" default="New" values="Featured,Popular,Ordering,Stickied,New"/>
+                <field name="criteria_count" type="integer" null="0" default="5"/>
+                <field name="criteria_get_customfields" type="integer" null="0" default="2"/>
+                <field name="criteria_use_special_joins" type="boolean" null="0" default="1"/>
+                <field name="criteria_process_plugins" type="boolean" null="0" default="1"/>
+                <field name="display_snippet" type="boolean" null="0" default="1"/>
+                <field name="display_author_name" type="boolean" null="0" default="1"/>
+                <field name="display_published_date" type="boolean" null="0" default="1"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>
+
