@@ -285,7 +285,7 @@ Class Application
 
         $results = Services::Authorisation()->verifyAction();
 
-        Services::Profiler()->set('Application Schedule onBeforeParse', LOG_OUTPUT_PLUGINS);
+        Services::Profiler()->set('Application Schedule onAfterAuthorise', LOG_OUTPUT_PLUGINS);
 
         $results = Services::Event()->schedule('onAfterAuthorise');
         if (is_array($results)) {

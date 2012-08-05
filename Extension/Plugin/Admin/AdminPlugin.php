@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Plugin\Administrator;
+namespace Molajo\Extension\Plugin\Admin;
 
 use Molajo\Extension\Plugin\Content\ContentPlugin;
 use Molajo\Service\Services;
@@ -16,10 +16,10 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class AdministratorPlugin extends ContentPlugin
+class AdminPlugin extends ContentPlugin
 {
     /**
-     * Prepares Administrator Menus
+     * Prepares Admin Menus
      *
      * Run this LAST
      *
@@ -29,7 +29,7 @@ class AdministratorPlugin extends ContentPlugin
     public function onBeforeParse()
     {
 
-        /** Only used for the Administrator */
+        /** Only used for the Admin */
         if (APPLICATION_ID == 2) {
         } else {
             return true;

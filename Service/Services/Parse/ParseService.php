@@ -549,11 +549,14 @@ Class ParseService
         if ($results == false) {
             return false;
         }
-        $plugins = Services::Registry()->get($table_registry_name, 'plugins', array());
 
+        $plugins = Services::Registry()->get($table_registry_name, 'plugins', array());
         if (count($plugins) == 0) {
-            return true;
+            $plugins = array();
         }
+
+		$plugins[] = Services::Registry()->get('Parameters', 'template_view_path_node');
+		$plugins[] = APPLICATION;
 
         $parameters = Services::Registry()->getArray('Parameters');
 
