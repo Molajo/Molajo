@@ -22,21 +22,23 @@ $(document).ready(function () {
             }
         });
     });
+
     function set_window_visibility(name){
         if($('#'+name+'-visible').is(':checked'))
             $('#'+name+'-portlet').show();
         else
             $('#'+name+'-portlet').hide();
     }
+
     function set_visible_check(name){
         if($('#'+name+'-portlet').is(":visible"))
             $('#'+name+'-visible').each(function(){ this.checked = true; });
         else
             $('#'+name+'-visible').attr("checked", false);
     }
-    $( "#settings_dialog" ).bind( "dialogopen", function(event, ui) {
 
-    });
+    $( "#settings_dialog" ).bind( "dialogopen", function(event, ui) { });
+
     $( "#window_dialog" ).bind( "dialogopen", function(event, ui) {
         $(portlets).each(function() {
             set_visible_check(this);
@@ -45,21 +47,7 @@ $(document).ready(function () {
 });
 
 $(function() {
-    $( ".portlet1" ).sortable({
-        connectWith: ".portlet2, .portlet3, .portlet4, .portlet5"
-    });
-    $( ".portlet2" ).sortable({
-        connectWith: ".portlet1, .portlet3, .portlet4, .portlet5"
-    });
-    $( ".portlet3" ).sortable({
-        connectWith: ".portlet1, .portlet2, .portlet4, .portlet5"
-    });
-    $( ".portlet4" ).sortable({
-        connectWith: ".portlet1, .portlet2, .portlet3, .portlet5"
-    });
-    $( ".portlet5" ).sortable({
-        connectWith: ".portlet1, .portlet2, .portlet3, .portlet4"
-    });
+    $( ".sortable" ).sortable({});
 
     $( ".portlet" ).addClass( "ui-portlet ui-portlet-content ui-helper-clearfix ui-corner-all" )
         .find( ".portlet-header" )
@@ -74,7 +62,6 @@ $(function() {
     });
 
     $( ".icon-close" ).click(function() {
-        //$( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
         $( this ).parents( ".portlet:first" ).hide();
     });
 

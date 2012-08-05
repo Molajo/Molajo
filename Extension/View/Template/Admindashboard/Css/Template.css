@@ -9,7 +9,7 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-portlet { background-color: #e9e9e9; padding: 2px; border-left: solid 3px silver; margin: 2em }
+.ui-portlet { background-color: #e9e9e9; padding: 2px; border-left: solid 3px silver; margin: 2em; width: 50% }
 .ui-portlet-content { background: #e9e9e9; margin: 2em;  }
 .ui-portlet-header { color: #404040; margin: 2em; }
 .ui-portlet-header .ui-icon { float: right; }
@@ -24,7 +24,7 @@
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #ffffff; outline: none; text-decoration: none; }
 
 /* Sortables */
-.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder { border: 5px dotted gray; visibility: visible !important; height: 100px !important; background-color: #ffff99; width: 100%}
 .ui-sortable-placeholder * { visibility: hidden; }
 
 /* Interaction Cues
@@ -53,5 +53,7 @@
 .ui-icon-plus { background-position: -16px -128px; }
 .ui-icon-minus { background-position: -48px -128px; }
 .ui-icon-close { background-position: -80px -128px; }
+
+.portlet { float:left; clear: right; width: 44%; padding:3px}
 
 

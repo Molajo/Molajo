@@ -5,9 +5,7 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<div class="map-wrapper" xmlns="http://www.w3.org/1999/html">
-	<div class="map-container">
-		<?php echo $this->row->criteria_iframe; ?>
-	</div>
+<div class="ui-portlet-header">
+	<h4>Map</h4>
 </div>
-
+<div class="ui-portlet-content">
