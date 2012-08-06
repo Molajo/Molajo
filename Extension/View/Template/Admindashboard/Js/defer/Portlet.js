@@ -49,15 +49,15 @@ $(document).ready(function () {
 $(function() {
     $( ".sortable" ).sortable({});
 
-    $( ".portlet" ).addClass( "ui-portlet ui-portlet-content ui-helper-clearfix ui-corner-all" )
+    $( ".portlet" ).addClass( "portlet portlet-content ui-helper-clearfix ui-corner-all" )
         .find( ".portlet-header" )
-        .addClass( "ui-portlet-header ui-corner-all" )
-        .prepend( "<span  class='ui-icon ui-icon-close icon-close'></span><span class='ui-icon ui-icon-minus icon-vis'></span>")
+        .addClass( "portlet-header ui-corner-all" )
+        .prepend( "<span  class='icon icon-close icon-close'></span><span class='icon icon-minus icon-vis'></span>")
         .end()
         .find( ".portlet-content" );
 
     $( ".icon-vis" ).click(function() {
-        $( this ).toggleClass( "ui-icon-minus" ).toggleClass( "ui-icon-plus" );
+        $( this ).toggleClass( "icon-minus" ).toggleClass( "icon-plus" );
         $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
     });
 

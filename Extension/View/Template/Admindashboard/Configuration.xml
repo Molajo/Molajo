@@ -8,6 +8,12 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>VIEW_TEMPLATE_DASHBOARD_DESCRIPTION</description>
-    <model name="Admindashboard"/>
+    <description>VIEW_TEMPLATE_DASHBOARD_DESCRIPTION</description>>
+    <model name="Admindashboard">
+        <customfields>
+            <customfield name="parameters">
+                <field name="portlet_options" type="char" null="0" default=""/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

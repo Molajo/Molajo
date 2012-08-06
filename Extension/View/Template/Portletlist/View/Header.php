@@ -6,7 +6,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<div class="ui-portlet-header">
+<div class="portlet-header">
     <h4><?php echo Services::Registry()->get('Parameters', 'criteria_title'); ?></h4>
 </div>
-<div class="ui-portlet-content">
+<div class="portlet-content">

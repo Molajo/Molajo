@@ -1,0 +1,68 @@
+{   "criteria_title":"Resources Dashboard",
+    "criteria_display_view_on_no_results":"1",
+    "criteria_snippet_length":"100",
+    "criteria_status":"",
+    "criteria_content_catalog_type_id":"",
+    "criteria_menuitem_catalog_type_id":"",
+    "criteria_content_extension_instance_id":"",
+    "criteria_menuitem_extension_instance_id":"",
+
+    "portlet_options":"Portletgallery,Portletlist,Portletcustom,Portletfeed,Portletvideo,Portletmap,Portletbargraph,Portletquicklinks,Portletsysteminfo,Portletgallery,Portletweather,Portletaudio",
+
+    "mustache":"0",
+
+    "menuitem_type":"Dashboard",
+
+    "menuitem_source_id":" ",
+    "menuitem_source_catalog_type_id":" ",
+    "menuitem_extension_instance_id":" ",
+
+    "menuitem_theme_id":"9010",
+    "menuitem_page_view_id":"200",
+    "menuitem_page_view_css_id":"",
+    "menuitem_page_view_css_class":"",
+    "menuitem_template_view_id":"1030",
+    "menuitem_template_view_css_id":"",
+    "menuitem_template_view_css_class":"",
+    "menuitem_wrap_view_id":"2030",
+    "menuitem_wrap_view_css_id":"",
+    "menuitem_wrap_view_css_class":"",
+    "menuitem_wrap_view_role":"",
+    "menuitem_wrap_view_property":"",
+    "menuitem_model_name":"Parameters",
+    "menuitem_model_type":"dbo",
+    "menuitem_model_query_object":"list",
+    "menuitem_model_parameter":"",
+
+    "menuitem_model_offset":"",
+    "menuitem_model_count":"",
+    "menuitem_model_use_pagination":"",
+
+    "image_xsmall":"50",
+    "image_small":"75",
+    "image_medium":"150",
+    "image_large":"300",
+    "image_xlarge":"500",
+    "image_folder":"Images",
+    "image_thumb_folder":"Thumbs",
+
+    "gravatar":"1",
+    "gravatar_size":"50",
+    "gravatar_type":"mm",
+    "gravatar_rating":"pg",
+    "gravatar_image":"1",
+
+    "asset_priority_site":"100",
+    "asset_priority_application":"200",
+    "asset_priority_user":"300",
+    "asset_priority_extension":"400",
+    "asset_priority_request":"500",
+    "asset_priority_category":"600",
+    "asset_priority_menu_item":"700",
+    "asset_priority_source":"800",
+    "asset_priority_theme":"900",
+
+    "cache":"1",
+    "cache_time":"5",
+    "cache_handler":"file"
+}

@@ -5,10 +5,10 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<div class="ui-portlet-header">
+<div class="portlet-header">
     <h4>Bar Graph</h4>
 </div>
-<div class="ui-portlet-content">
+<div class="portlet-content">
 	<dl class="portletbargraph">
 		<dt><strong>2009</strong></dt>
 		<dd><div id="data-one" class="bar portletbargraph-one">60%</div></dd>
