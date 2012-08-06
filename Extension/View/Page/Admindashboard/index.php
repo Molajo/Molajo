@@ -28,11 +28,8 @@ $url = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 								<include:template name=formselectlist wrap=div wrap_class=filter value=list_portlets*/>
 							</li>
 							<li>
-								<input type="text"/>
-							</li>
-							<li>
-
-  +								<input type="submit" class="submit button small" name="add" id="add" value="Add">
+								<include:template name=formbutton size="small" name=add id=add value=Add/>
+  								<input type="submit" class="submit button small" name="add" id="add" value="Add">
 							</li>
 						</ul>
 					</form>

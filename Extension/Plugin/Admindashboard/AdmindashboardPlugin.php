@@ -67,6 +67,58 @@ class AdmindashboardPlugin extends ContentPlugin
 
 		Services::Registry()->set('Plugindata', 'PortletOptions', $portletIncludes);
 
+		$this->setOptions();
+
         return true;
     }
+
+
+	/**
+	 * Create Toolbar Registry based on Authorized Access
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	protected function setDashboardPermissions()
+	{
+	}
+
+	/**
+	 * Options: creates a list of Portlets available for this Dashboard
+	 *
+	 * @param   $connect
+	 * @param   $primary_prefix
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	protected function setOptions()
+	{
+
+		$list = Services::Text()->getList('Portlets', $this->parameters);
+		var_dump($list);
+
+		if (count($list) == 0 || $list == false) {
+			//throw exception
+		}
+
+		$query_results = array();
+
+		foreach ($list as $item) {
+
+			$row = new \stdClass();
+			$row->id = $item->id;
+			$row->value = Services::Language()->translate(
+				ucfirst(strtolower(substr($item->value, 7, strlen($item->value))))
+			);
+			$row->selected = '';
+			$row->multiple = '';
+			$row->listname = 'Portlets';
+
+			$query_results[] = $row;
+		}
+		Services::Registry()->set('Plugindata', 'list_portlets', $query_results);
+
+		return true;
+	}
 }
