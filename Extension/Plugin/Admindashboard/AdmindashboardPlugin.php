@@ -37,22 +37,35 @@ class AdmindashboardPlugin extends ContentPlugin
         } else {
             return true;
         }
-        $query_results = array();
 
-        $this->set('model_name', 'Plugindata');
-        $this->parameters['model_name'] = 'Plugindata';
-        $this->set('model_type', 'dbo');
-        $this->parameters['model_type'] = 'dbo';
-        $this->set('model_query_object', 'getPlugindata');
-        $this->set('model_parameter', 'PrimaryRequestQueryResults');
+		$portletOptions = Services::Registry()->get('Parameters', 'dashboard');
 
-        $query_results = array();
-        $row = new \stdClass();
-        $row->title = $this->parameters['dashboard_section'];
+		if (trim($portletOptions) == '') {
+			return true;
+		}
 
-        $query_results[] = $row;
+		$portletOptionsArray = explode(',', $portletOptions);
 
-         Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $query_results);
+		if (count($portletOptionsArray) == 0
+			|| $portletOptionsArray == false) {
+			return true;
+		}
+
+		$i = 1;
+		$portletIncludes = '';
+		foreach ($portletOptionsArray as $portlet) {
+
+			$portletIncludes .= '<include:template name='
+				. ucfirst(strtolower(trim($portlet)))
+				. ' wrap=section wrap_id=portlet'
+				. $i
+				. ' wrap_class=portlet/>'
+				. chr(13);
+
+			$i++;
+		}
+
+		Services::Registry()->set('Plugindata', 'PortletOptions', $portletIncludes);
 
         return true;
     }

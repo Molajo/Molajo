@@ -144,13 +144,14 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'model_use_pagination',
             Services::Registry()->get($parmName, 'menuitem_model_use_pagination'));
 
-        Services::Registry()->delete($parmName, 'menuitem_theme*');
+		Services::Registry()->delete($parmName, 'menuitem_theme*');
         Services::Registry()->delete($parmName, 'menuitem_page*');
         Services::Registry()->delete($parmName, 'menuitem_template*');
         Services::Registry()->delete($parmName, 'menuitem_wrap*');
         Services::Registry()->delete($parmName, 'menuitem_model*');
 
         Services::Registry()->copy($parmName, 'Parameters');
+		Services::Registry()->sort('Parameters');
 
         return true;
     }
