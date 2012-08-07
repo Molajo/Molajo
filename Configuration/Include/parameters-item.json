@@ -57,8 +57,8 @@
     "cache_handler":"file",
 
     "log_user_activity_create":"1",
-    "log_user_activity_read":"1",
-    "log_user_activity_update":"1",
+    "log_user_view_activity":"1",
+    "log_user_update_activity":"1",
     "log_user_activity_delete":"1",
 
     "log_catalog_update_activity":"1",

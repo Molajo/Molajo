@@ -431,7 +431,7 @@ Class AuthorisationService
      */
     public function setHTMLFilter()
     {
-        $groups = Services::Registry()->get('Configuration', 'disable_filter_for_groups');
+        $groups = Services::Registry()->get('Configuration', 'user_disable_filter_for_groups');
         $groupArray = explode(',', $groups);
         $userGroups = Services::Registry()->get('User', 'groups');
 

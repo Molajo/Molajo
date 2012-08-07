@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model
-        name="FeaturedDatalist"
-        data_source="Text">
+<model name="Featured">
+    <table>
+        <values>
+            <value id="1" value="Featured"/>
+            <value id="0" value="Not Featured"/>
+        </values>
+    </table>
 </model>

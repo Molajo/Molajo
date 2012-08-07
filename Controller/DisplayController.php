@@ -285,7 +285,7 @@ class DisplayController extends Controller
     /**
      * Schedule onAfterViewRender Event - can update rendered results
      *
-     * Position where mustache and Twig can process on rendered results
+     * Position where other rendering engines, like Mustache and Twig can process rendered results
      *
      * @return bool
      * @since   1.0

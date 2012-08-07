@@ -120,7 +120,7 @@ Class JDatabaseService
             throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
         }
 
-        $this->db->debug($site->jdatabase_debug);
+        $this->db->debug(0);
 
         $date = null;
         $dateFromJDate = new JDate($date ? $date : 'now');

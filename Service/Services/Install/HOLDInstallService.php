@@ -247,9 +247,9 @@ Class InstallService
 
         // Set the target path if not given
         if (!$target) {
-            $target = $config->get('temp_path') . '/' . self::getFilenameFromURL($url);
+            $target = $config->get('system_temp_folder') . '/' . self::getFilenameFromURL($url);
         } else {
-            $target = $config->get('temp_path') . '/' . basename($target);
+            $target = $config->get('system_temp_folder') . '/' . basename($target);
         }
 
         // Initialise contents buffer
@@ -436,9 +436,9 @@ Class InstallService
         // Is the package file a valid file?
         if (is_file($package)) {
             Services::Filesystem()->fileDelete($package);
-        } elseif (is_file(JPath::clean($config->get('temp_path') . '/' . $package))) {
+        } elseif (is_file(JPath::clean($config->get('system_temp_folder') . '/' . $package))) {
             // It might also be just a base filename
-            Services::Filesystem()->fileDelete(JPath::clean($config->get('temp_path') . '/' . $package));
+            Services::Filesystem()->fileDelete(JPath::clean($config->get('system_temp_folder') . '/' . $package));
         }
     }
 

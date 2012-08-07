@@ -7,3 +7,6 @@
 <field name="asset_priority_menu_item" type="integer" null="0" default="700"/>
 <field name="asset_priority_source" type="integer" null="0" default="800"/>
 <field name="asset_priority_theme" type="integer" null="0" default="900"/>
+
+<field name="asset_minify_css" type="binary" null="0" default="1"/>
+<field name="asset_minify_js" type="binary" null="0" default="1"/>

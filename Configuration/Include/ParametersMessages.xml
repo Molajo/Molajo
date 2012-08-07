@@ -1,0 +1,4 @@
+<field name="language" type="char" null="0" default="en-GB"/>
+<field name="language_direction" type="char" null="0" default="ltr" values="ltr,rtl"/>
+<field name="language_multilingual" type="binary" null="0" default="0"/>
+<field name="language_utc_offset" type="char" null="0" default="UTC"/>

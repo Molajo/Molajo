@@ -43,7 +43,7 @@
             <include name="ParametersMenuItem"/>
             <include name="ParametersImage"/>
             <include name="ParametersGravatar"/>
-            <include name="ParametersAsset"/>
+            <include name="ParametersAssets"/>
             <include name="ParametersCache"/>
         </customfield>
     </customfields>

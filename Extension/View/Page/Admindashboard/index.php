@@ -7,8 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 $url = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
-<div class="row">
-    <include:template name=Adminsectionmenu wrap=nav wrap_view_css_class=two,columns/>
+    <include:template name=Adminsectionmenu wrap=nav wrap_view_css_class=navsection role=/>
     <div class="ten columns">
 		<div class="row">
 			<div class="eleven columns">&nbsp;</div>
@@ -38,5 +37,3 @@ $url = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 			</div>
 		</div>
         <include:request/>
-    </div>
-</div>

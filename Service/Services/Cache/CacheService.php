@@ -41,7 +41,7 @@ Class CacheService
      * @var    string
      * @since  1.0
      */
-    protected $cache_path = '';
+    protected $system_cache_folder = '';
 
     /**
      * Cache Handler
@@ -103,8 +103,8 @@ Class CacheService
         $this->cache = true;
 
         if (Services::Registry()->get('Configuration', 'cache_handler', 'file') == 'file') {
-            $this->cache_path = SITE_BASE_PATH . '/'
-                . Services::Registry()->get('Configuration', 'cache_path');
+            $this->system_cache_folder = SITE_BASE_PATH . '/'
+                . Services::Registry()->get('Configuration', 'system_cache_folder');
         } else {
             return false;
         }
@@ -151,7 +151,7 @@ Class CacheService
      */
     public function set($key, $value)
     {
-        file_put_contents($this->cache_path . '/' . $key, serialize($value));
+        file_put_contents($this->system_cache_folder . '/' . $key, serialize($value));
 
         Services::Registry()->set('Cachekeys', $key);
 
@@ -173,7 +173,7 @@ Class CacheService
         }
 
         if ($this->cache == true) {
-            return unserialize(file_get_contents($this->cache_path . '/' . $key));
+            return unserialize(file_get_contents($this->system_cache_folder . '/' . $key));
         }
 
         return false;
@@ -187,12 +187,12 @@ Class CacheService
      */
     public function loadCacheKeys()
     {
-        if (is_dir($this->cache_path)) {
+        if (is_dir($this->system_cache_folder)) {
         } else {
             return false;
         }
 
-        $files = Services::Filesystem()->folderFiles($this->cache_path);
+        $files = Services::Filesystem()->folderFiles($this->system_cache_folder);
         if (count($files) > 0
             || $files === false
         ) {
@@ -221,14 +221,14 @@ Class CacheService
     public function checkExpired($key)
     {
 
-        if (file_exists($this->cache_path . '/' . $key)) {
+        if (file_exists($this->system_cache_folder . '/' . $key)) {
         } else {
             $this->delete($key);
 
             return false;
         }
 
-        if (filemtime($this->cache_path . '/' . $key) < (time() - $this->cache_time)) {
+        if (filemtime($this->system_cache_folder . '/' . $key) < (time() - $this->cache_time)) {
             return true;
         }
 
@@ -245,8 +245,8 @@ Class CacheService
      */
     public function delete($key)
     {
-        if (file_exists($this->cache_path . '/' . $key)) {
-            unlink($this->cache_path . '/' . $key);
+        if (file_exists($this->system_cache_folder . '/' . $key)) {
+            unlink($this->system_cache_folder . '/' . $key);
         }
 
         Services::Registry()->delete('Cachekeys', $key);

@@ -4,6 +4,6 @@
 <include name="ParametersItem"/>
 <include name="ParametersCache"/>
 <include name="ParametersLog"/>
-<include name="ParametersAsset"/>
+<include name="ParametersAssets"/>
 <include name="ParametersImage"/>
 <include name="ParametersGravatar"/>

@@ -493,8 +493,8 @@ Class ProfilerService
     {
         $this->profiler_options['mailer'] = Services::Mail();
 
-        $this->profiler_options['reply_to'] = Services::Registry()->get('Configuration', 'mail_reply_to', '');
-        $this->profiler_options['from'] = Services::Registry()->get('Configuration', 'mail_from', '');
+        $this->profiler_options['reply_to'] = Services::Registry()->get('Configuration', 'mailer_mail_reply_to', '');
+        $this->profiler_options['from'] = Services::Registry()->get('Configuration', 'mailer_mail_from', '');
         $this->profiler_options['subject'] = Services::Registry()->get('Configuration', 'profiler_email_subject', '');
         $this->profiler_options['to'] = Services::Registry()->get('Configuration', 'profiler_email_to', '');
 

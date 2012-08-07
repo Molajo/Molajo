@@ -100,7 +100,7 @@ Class SessionService
      */
     public function setSessionStorageData()
     {
-        $save_path = Services::Registry()->get('Configuration', 'cache_path', SITE_BASE_PATH . '/cache');
+        $save_path = Services::Registry()->get('Configuration', 'system_cache_folder', SITE_BASE_PATH . '/cache');
         $options = array();
         $options['cookie_lifetime'] = Services::Registry()->get('Configuration', 'lifetime', 15);
         $options['cookie_domain'] = $cookie_domain = Services::Registry()->get('Configuration', 'cookie_domain', '');

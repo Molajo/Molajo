@@ -207,66 +207,6 @@ Class ConfigurationService
     }
 
     /**
-     * Establish media, cache, log, etc., locations for site for application use
-     *
-     * Called out of the Configurations Class construct - paths needed in startup process for other services
-     *
-     * @return mixed
-     * @since  1.0
-     */
-    public function setSitePaths()
-    {
-        /** Base URLs for Site and Application */
-        Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
-        $path = Services::Registry()->get('Configuration', 'application_path', '');
-        Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
-
-        if (defined('SITE_NAME')) {
-        } else {
-            define('SITE_NAME',
-            Services::Registry()->get('Configuration', 'site_name', SITE_ID));
-        }
-
-        if (defined('SITE_CACHE_FOLDER')) {
-        } else {
-            define('SITE_CACHE_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'cache_path', 'cache'));
-        }
-        if (defined('SITE_LOGS_FOLDER')) {
-        } else {
-
-            define('SITE_LOGS_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'logs_path', 'logs'));
-        }
-
-        /** following must be within the web document folder */
-        if (defined('SITE_MEDIA_FOLDER')) {
-        } else {
-            define('SITE_MEDIA_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'media_path', 'media'));
-        }
-        if (defined('SITE_MEDIA_URL')) {
-        } else {
-            define('SITE_MEDIA_URL', SITE_BASE_URL_RESOURCES
-                . '/' . Services::Registry()->get('Configuration', 'media_url', 'media'));
-        }
-
-        /** following must be within the web document folder */
-        if (defined('SITE_TEMP_FOLDER')) {
-        } else {
-            define('SITE_TEMP_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'temp_path', SITE_BASE_PATH . '/temp'));
-        }
-        if (defined('SITE_TEMP_URL')) {
-        } else {
-            define('SITE_TEMP_URL', SITE_BASE_URL_RESOURCES
-                . '/' . Services::Registry()->get('Configuration', 'temp_url', 'temp'));
-        }
-
-        return true;
-    }
-
-    /**
      * Get the application data and store it in the registry, combine with site data for configuration
      *
      * @return boolean
@@ -348,7 +288,67 @@ Class ConfigurationService
         return $this;
     }
 
-    /**
+	/**
+	 * Establish media, cache, log, etc., locations for site for application use
+	 *
+	 * Called out of the Configurations Class construct - paths needed in startup process for other services
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	public function setSitePaths()
+	{
+		/** Base URLs for Site and Application */
+		Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
+		$path = Services::Registry()->get('Configuration', 'application_path', '');
+		Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
+
+		if (defined('SITE_NAME')) {
+		} else {
+			define('SITE_NAME',
+			Services::Registry()->get('Configuration', 'site_name', SITE_ID));
+		}
+
+		if (defined('SITE_CACHE_FOLDER')) {
+		} else {
+			define('SITE_CACHE_FOLDER', SITE_BASE_PATH
+				. '/' . Services::Registry()->get('Configuration', 'system_cache_folder', 'cache'));
+		}
+		if (defined('SITE_LOGS_FOLDER')) {
+		} else {
+
+			define('SITE_LOGS_FOLDER', SITE_BASE_PATH
+				. '/' . Services::Registry()->get('Configuration', 'system_logs_folder', 'logs'));
+		}
+
+		/** following must be within the web document folder */
+		if (defined('SITE_MEDIA_FOLDER')) {
+		} else {
+			define('SITE_MEDIA_FOLDER', SITE_BASE_PATH
+				. '/' . Services::Registry()->get('Configuration', 'system_media_folder', 'media'));
+		}
+		if (defined('SITE_MEDIA_URL')) {
+		} else {
+			define('SITE_MEDIA_URL', SITE_BASE_URL_RESOURCES
+				. '/' . Services::Registry()->get('Configuration', 'system_media_url', 'media'));
+		}
+
+		/** following must be within the web document folder */
+		if (defined('SITE_TEMP_FOLDER')) {
+		} else {
+			define('SITE_TEMP_FOLDER', SITE_BASE_PATH
+				. '/' . Services::Registry()->get('Configuration', 'system_temp_folder', SITE_BASE_PATH . '/temp'));
+		}
+		if (defined('SITE_TEMP_URL')) {
+		} else {
+			define('SITE_TEMP_URL', SITE_BASE_URL_RESOURCES
+				. '/' . Services::Registry()->get('Configuration', 'system_temp_url', 'temp'));
+		}
+
+		return true;
+	}
+
+	/**
      * Get action ids and values to load into registry (to save a read on various plugins)
      *
      * @return boolean

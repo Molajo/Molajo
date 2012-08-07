@@ -1,7 +1,4 @@
-<field name="log_user_activity_create" type="binary" null="0" default="1"/>
-<field name="log_user_activity_read" type="binary" null="0" default="1"/>
-<field name="log_user_activity_update" type="binary" null="0" default="1"/>
-<field name="log_user_activity_delete" type="binary" null="0" default="1"/>
-
+<field name="log_user_update_activity" type="binary" null="0" default="1"/>
+<field name="log_user_view_activity" type="binary" null="0" default="0"/>
 <field name="log_catalog_update_activity" type="binary" null="0" default="1"/>
-<field name="log_catalog_view_activity" type="binary" null="0" default="1"/>
+<field name="log_catalog_view_activity" type="binary" null="0" default="0"/>

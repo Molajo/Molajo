@@ -199,7 +199,7 @@ Class ImageService
         }
 
         /** retrieve image folder for original images */
-        $images = Services::Registry()->get('Configuration', 'media_path', 'media/images');
+        $images = Services::Registry()->get('Configuration', 'system_media_folder', 'media/images');
 
         /** folders */
         if (Services::Filesystem()->folderExists(SITE_BASE_PATH . '/' . $images)) {

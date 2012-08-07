@@ -17,14 +17,14 @@ defined('MOLAJO') or die;
  *
  * Example usage:
  *
- * Services::Mail()->set('to', 'AmyStephen@gmail.com,Amy Stephen');
- * Services::Mail()->set('from', 'AmyStephen@gmail.ORG,ORG Stephen');
- * Services::Mail()->set('reply_to', 'Person@example.com,Person A');
- * Services::Mail()->set('cc', 'AmyStephen@gmail.cc,CC Stephen');
- * Services::Mail()->set('bcc', 'AmyStephen@gmail.bcc,BCC Stephen');
+ * Services::Mail()->set('to', 'person@example.com,Fname Lname');
+ * Services::Mail()->set('from', 'person@example.com,Fname Lname');
+ * Services::Mail()->set('reply_to', 'person@example.com,FName LName');
+ * Services::Mail()->set('cc', 'person@example.com,FName LName');
+ * Services::Mail()->set('bcc', 'person@example.com,FName LName');
  * Services::Mail()->set('subject', 'Welcome to our Site');
  * Services::Mail()->set('body', '<h2>Stuff goes here</h2>') ;
- * Services::Mail()->set('mode', 'html') ;
+ * Services::Mail()->set('mailer_html_or_text', 'html') ;
  * Services::Mail()->set('attachment', SITE_MEDIA_FOLDER.'/molajo.sql') ;
  * Services::Mail()->send();
  *
@@ -57,7 +57,7 @@ Class MailService
     protected $mailInstance;
 
     /**
-     *     Error Count
+     * Error Count
      *
      * @var   integer
      * @since 1.0
@@ -81,8 +81,6 @@ Class MailService
     }
 
     /**
-     * __construct
-     *
      * Class constructor.
      *
      * @return boolean
@@ -174,7 +172,7 @@ Class MailService
     public function send()
     {
         /** Email disabled */
-        if (Services::Registry()->get('Configuration', 'disable_sending', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'mailer_disable_sending', 0) == 1) {
             return true;
         }
 
@@ -186,13 +184,13 @@ Class MailService
         }
 
         /** For development only deliver to values */
-        $only_deliver_to = Services::Registry()->get('Configuration', 'only_deliver_to', '');
+        $mailer_only_deliver_to = Services::Registry()->get('Configuration', 'mailer_only_deliver_to', '');
 
-        if (trim($only_deliver_to) == '') {
+        if (trim($mailer_only_deliver_to) == '') {
         } else {
-            $this->set('reply_to', $only_deliver_to);
-            $this->set('from', $only_deliver_to);
-            $this->set('to', $only_deliver_to);
+            $this->set('reply_to', $mailer_only_deliver_to);
+            $this->set('from', $mailer_only_deliver_to);
+            $this->set('to', $mailer_only_deliver_to);
             $this->set('cc', '');
             $this->set('bcc', '');
         }
@@ -205,13 +203,13 @@ Class MailService
         $this->processInput();
 
         /** Type of email */
-        switch (Services::Registry()->get('Configuration', 'mailer')) {
+        switch (Services::Registry()->get('Configuration', 'mailer_transport')) {
 
             case 'smtp':
-                $this->mailInstance->smtpauth = Services::Registry()->get('Configuration', 'smtpauth');
+                $this->mailInstance->mailer_smtpauth = Services::Registry()->get('Configuration', 'mailer_smtpauth');
                 $this->mailInstance->smtphost = Services::Registry()->get('Configuration', 'smtphost');
-                $this->mailInstance->smtpuser = Services::Registry()->get('Configuration', 'smtpuser');
-                $this->mailInstance->smtppass = Services::Registry()->get('Configuration', 'smtppass');
+                $this->mailInstance->mailer_smtpuser = Services::Registry()->get('Configuration', 'mailer_smtpuser');
+                $this->mailInstance->mailer_mailer_smtphost = Services::Registry()->get('Configuration', 'mailer_mailer_smtphost');
                 $this->mailInstance->smtpsecure = Services::Registry()->get('Configuration', 'smtpsecure');
                 $this->mailInstance->smtpport = Services::Registry()->get('Configuration', 'smtpport');
 
@@ -219,7 +217,7 @@ Class MailService
                 break;
 
             case 'sendmail':
-                $this->mailInstance->smtpauth = Services::Registry()->get('Configuration', 'sendmail_path');
+                $this->mailInstance->mailer_smtpauth = Services::Registry()->get('Configuration', 'sendmail_path');
 
                 $this->mailInstance->IsSendmail();
                 break;
@@ -282,14 +280,14 @@ Class MailService
         $this->mailInstance->set('Subject', $value);
 
         /** Body */
-        if ($this->get('mode', 'text') == 'html') {
-            $mode = 'text';
+        if ($this->get('mailer_html_or_text', 'text') == 'html') {
+            $mailer_html_or_text = 'text';
         } else {
-            $mode = 'char';
+            $mailer_html_or_text = 'char';
         }
-        $value = $this->filterInput('body', $value = $this->get('body'), $mode);
+        $value = $this->filterInput('body', $value = $this->get('body'), $mailer_html_or_text);
         $this->mailInstance->set('Body', $value);
-        if ($mode == 'html') {
+        if ($mailer_html_or_text == 'html') {
             $this->mailInstance->IsHTML(true);
         }
 

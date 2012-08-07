@@ -29,7 +29,7 @@ class UseractivityPlugin extends ContentPlugin
      */
     public function onAfterRead()
     {
-        if ($this->get('criteria_log_user_activity_read', 0) == 1) {
+        if ($this->get('criteria_log_user_view_activity', 0) == 1) {
             return $this->setUserActivityLog();
         }
 
@@ -59,7 +59,7 @@ class UseractivityPlugin extends ContentPlugin
      */
     public function onAfterUpdate()
     {
-        if ($this->get('criteria_log_user_activity_update', 0) == 1) {
+        if ($this->get('criteria_log_user_update_activity', 0) == 1) {
             return $this->setUserActivityLog();
         }
 
