@@ -1,0 +1,239 @@
+header[role="banner"] {
+
+	background: $txtColor;
+	border-bottom: 1px solid darken($txtColor, 6);
+	color: $offwhite;
+	position: relative;
+
+	// Make sure dropdowns overlap left menu
+	z-index: 200;
+
+	>div {
+		height: $navBarHeight;
+		@include transition();
+		@include transition-property(width);
+	}
+
+	h1, nav { display: inline;}
+	h1 {
+		@include font-size(18);
+		line-height: $navBarHeight;
+		margin: 0;
+		text-transform: lowercase;
+		a {
+			color: inherit;
+			min-width: $navBarHeight + 2px;
+		}
+		i {
+			@include font-size(28);
+			@extend .icon;
+			color: $white;
+			font-style: normal;
+			line-height: $navBarHeight + 2px;
+			padding: 0 8px;
+			position: absolute;
+			text-align: center;
+			width: 26px;
+			&+span {
+				padding-left: $navBarHeight + 2px;
+			}
+		}
+	}
+	form[role="search"] {
+		fieldset {
+			display: inline;
+			padding: 8px 0 0;
+			border: 0;
+		}
+		input[type="search"] {
+			background: $offwhite;
+		}
+	}
+	nav {
+		background: inherit;
+		float: right;
+		height: $navBarHeight;
+		.settings {
+			width: 100%;
+			right: 0;
+			text-align: right;
+			border-left: 1px solid rgba(0,0,0,.3);
+			>li {
+				background: inherit;
+				border-left: 1px solid rgba(255,255,255,.3);
+				border-right: 1px solid rgba(0,0,0,.3);
+				display: inline-block;
+				vertical-align: middle;
+				&:hover, &:active { background: darken($txtColor, 6); }
+				>a {
+					display: inline-block;
+					color: inherit;
+					height: $navBarHeight;
+					line-height: $navBarHeight;
+					min-width: $navBarHeight;
+					text-align: center;
+					vertical-align: middle;
+					>i {
+						display: inline-block;
+						font-style: normal;
+						height: inherit;
+						width: inherit;
+						@extend .glyph.general;
+					}
+					>span {
+						display: none;
+					}
+				}
+				&.last {
+					border-right: 0;
+				}
+				&.user {
+					>a {
+						padding: 0;
+						text-align: left;
+						>img {
+							display: inline;
+							height: $navBarHeight;
+							vertical-align: middle;
+							width: $navBarHeight;
+
+							// Find out why the img is pushed down by 2 px
+							margin-top: -2px;
+						}
+						>span {
+							display: inline;
+							padding: 0 10px;
+						}
+					}
+				}
+				&.config {
+					&:hover, &:active { background: darken($mainColor, 6); }
+				}
+			}
+		}
+	}
+}
+@media only screen and (max-width: $screenSmall - 1) {
+	header[role="banner"] {
+		display: block;
+		h1 {
+			span {
+				display: none;
+			}
+		}
+	}
+}
+
+// settings
+[id^="application-"].reveal-modal {
+	background: $mainColor;
+	color: $white;
+	left: 0;
+	margin: 0;
+	min-height: 100%;
+	position: absolute;
+	top: $navBarHeight + 1px;
+	width: 100% !important;
+	z-index: 300;
+	.close-reveal-modal {
+		color: $white;
+		&:hover {
+			color: #aaa;
+		}
+	}
+
+	// .reveal-modal-header {
+	// 	// @extend .bleed;
+	// 	background: darken($mainColor, 10);
+	// 	margin: -30px -30px 30px;
+	// 	padding: 30px;
+	// 	h1 {
+	// 		@extend .embossed-up;
+	// 		@include font-size(28);
+	// 		color: $mainColor;
+	// 		font-weight: 700;
+	// 		line-height: 100%;
+	// 	}
+	// 	h2 {
+	// 		@extend .embossed-up;
+	// 		@include font-size(16);
+	// 		color: darken($mainColor, 30);
+	// 		font-weight: 500;
+	// 	}
+	// }
+
+	.tabs {
+		@include border-top-radius(3px);
+		border-bottom: darken($mainColor, 10);
+		margin: 20px 0 0;
+		dd {
+			border: 0; // Reset
+			border-bottom: 3px solid transparent;
+			a {
+				color: $white;
+			}
+			&.active {
+				border-color: darken($mainColor, 10);
+				a {
+					background: darken($mainColor, 3);
+					border-color: darken($mainColor, 2);
+					color: $white;
+				}
+			}
+		}
+	}
+	.tabs-content {
+		>li {
+			ul.accordion {
+				border: 0;
+				li {
+					border: 0;
+					.title {
+						@include font-size(14);
+						color: $txtColor;
+						padding: 5px 20px;
+						border-width: 1px 0;
+						border-top: 1px solid rgba(255,255,255,.3);
+						border-bottom: 1px solid rgba(0,0,0,.3);
+						line-height: $navBarHeight;
+						&:first-child {
+							border-top: darken($mainColor, 10);
+						}
+					}
+					.content {
+						background: transparent;
+						color: $txtColor;
+					}
+					&.active {
+						border: 0;
+						.title {
+							background: rgba(0,0,0,.2);
+							color: $white;
+							font-weight: 700;
+							&:after {
+								border-top-color: $white;
+							}
+						}
+						.content {
+							background: darken($white, 5%);
+							border: 0;
+						}
+					}
+					h6 {
+						color: #999;
+					}
+				}
+			}
+		}
+	}
+}
+@media only screen and (max-width: $screenSmall - 1) {
+	header[role="banner"] {
+		display: block;
+		h1 {
+			span {
+				display: none;
+			}
+		}
+	}
+}

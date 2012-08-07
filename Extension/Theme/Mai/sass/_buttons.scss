@@ -1,0 +1,40 @@
+.form-helper {
+	// @extend .button;
+	// @extend .radius;
+	// @extend .button.secondary;
+	// @extend .tiny;
+	// color: $white;
+	float: right;
+	// height: (ms(0) + ($formSpacing * 1.5));
+	padding: 0;
+	// position: relative;
+	// width: (ms(0) + ($formSpacing * 1.5));
+	small {
+		display: none;
+	}
+	i {
+		@extend .glyph;
+		@extend .glyph.general;
+		font-style: normal;
+		left: 0;
+		// position: absolute;
+		// height: (ms(0) + ($formSpacing * 1.5));
+		line-height: .6*((ms(0) + ($formSpacing * 1.5)));
+		// text-align: center;
+		// top: 0;
+		// width: (ms(0) + ($formSpacing * 1.5));
+	}
+	&:hover {
+	}
+}
+
+.button.active {
+	&:after {
+		@include font-size(12);
+		@extend .glyph;
+		@extend .glyph.general;
+		content: "\00A0\0066";
+		position: absolute;
+		top: 0;
+	}
+}

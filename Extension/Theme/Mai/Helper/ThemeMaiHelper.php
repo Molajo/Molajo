@@ -1,8 +1,8 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Extension\Theme\Molajito\Helper;
 
@@ -14,7 +14,7 @@ use Molajo\Service\Services;
  *
  * @since       1.0
  */
-Class ThemeMAIHelper extends Mustache
+Class ThemeMaiHelper extends Mustache
 {
     /**
      * Parameters
@@ -32,6 +32,7 @@ Class ThemeMAIHelper extends Mustache
      */
     public function loadMedia()
     {
+    
         /** Theme Folder */
         $theme = Services::Registry()->get('Parameters', 'theme_path_node');
 
@@ -138,7 +139,7 @@ Class ThemeMAIHelper extends Mustache
         $this->analytics();
 
         return Services::Url()->getGravatar(
-            $email = 'AmyStephen@gmail.com',
+            $email = 'BabsGosgens@gmail.com',
             $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array()
         );
     }
@@ -231,5 +232,18 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
         $attributes['id'] = $this->items['id'];
 
         return $rc->process($attributes);
+    }
+
+    /**
+     * baseUri
+     *
+     * Renders the page's current base URI
+     *
+     * @results  text
+     * @since    1.0
+     */
+    public function baseUri()
+    {
+        return Services::Registry()->get('Triggerdata', 'full_page_url');
     }
 }

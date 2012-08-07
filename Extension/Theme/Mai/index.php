@@ -9,11 +9,7 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die; ?>
 <include:head/>
 
-    <header role="banner" class="row">
-    <include:template name=Adminheader/>
-    </header>
-
-    <div class="row">
+    <div class="row" id="focus">
     <?php if (file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))) {
         include Services::Registry()->get('Parameters', 'page_view_path_include');
     } ?>
