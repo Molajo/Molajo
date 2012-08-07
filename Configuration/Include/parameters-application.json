@@ -40,11 +40,6 @@
     "cookie_domain":"0",
     "cookie_path":"",
 
-    "log_user_update_activity":"1",
-    "log_user_view_activity":"0",
-    "log_catalog_update_activity":"1",
-    "log_catalog_view_activity":"0",
-
     "user_disable_filter_for_groups":"",
     "user_default_editor":"none",
     "user_default_view_access_level":"",
@@ -53,20 +48,31 @@
     "user_new_user_require_unique_email_address":"",
     "user_allow_email_address_for_username":"",
 
+    "log_user_update_activity":"1",
+    "log_user_view_activity":"0",
+    "log_catalog_update_activity":"1",
+    "log_catalog_view_activity":"0",
+
     "gravatar":"1",
     "gravatar_size":"50",
     "gravatar_type":"mm",
     "gravatar_rating":"pg",
     "gravatar_image":"1",
 
-    "criteria_title":"UNL Integrated Data System",
+    "criteria_title":"Molajo",
     "criteria_display_view_on_no_results":"0",
-    "criteria_snippet_length":"200",
-    "criteria_status":"",
-    "criteria_content_catalog_type_id":"",
-    "criteria_menuitem_catalog_type_id":"",
-    "criteria_content_extension_instance_id":"",
-    "criteria_menuitem_extension_instance_id":"",
+    "criteria_snippet_length":"150",
+    "criteria_status":"1,2",
+    "criteria_catalog_type_id":"",
+    "criteria_extension_instance_id":"",
+
+    "image_xsmall":"50,50",
+    "image_small":"75,75",
+    "image_medium":"150,150",
+    "image_large":"350,200",
+    "image_xlarge":"500,350",
+    "image_folder":"Images",
+    "image_thumb_folder":"Thumbs",
 
     "head_template_view_id":"1340",
     "head_wrap_view_id":"2090",
@@ -75,6 +81,22 @@
     "defer_template_view_id":"1240",
     "defer_wrap_view_id":"2090",
     "defer_enable_use":"1",
+
+    "asset_css_combine_and_minify":"1",
+    "asset_js_combine_and_minify":"1",
+    "asset_use_extension_css":"1",
+    "asset_use_extension_js":"1",
+
+    "asset_priority_site":"100",
+    "asset_priority_application":"200",
+    "asset_priority_user":"300",
+    "asset_priority_extension":"400",
+    "asset_priority_request":"500",
+    "asset_priority_primary_category":"600",
+    "asset_priority_menuitem":"700",
+    "asset_priority_list":"700",
+    "asset_priority_item":"800",
+    "asset_priority_theme":"900",
 
     "message_template_view_id":"1350",
     "message_wrap_view_id":"2030",
@@ -178,26 +200,8 @@
     "enable_notifications":"1",
     "enable_tweets":"1",
     "enable_ping":"1",
-
-    "asset_priority_site":"100",
-    "asset_priority_application":"200",
-    "asset_priority_user":"300",
-    "asset_priority_extension":"400",
-    "asset_priority_request":"500",
-    "asset_priority_category":"600",
-    "asset_priority_menu_item":"700",
-    "asset_priority_source":"800",
-    "asset_priority_theme":"900",
-
-    "image_xsmall":"50",
-    "image_small":"75",
-    "image_medium":"150",
-    "image_large":"300",
-    "image_xlarge":"500",
-    "image_folder":"Images",
-    "image_thumb_folder":"Thumbs",
-
     "default_captcha":"none",
+
 <field name="default_captcha" type="char" null="0" default="ltr" values="ltr,rtl"/>
 
 "profiler":"0",

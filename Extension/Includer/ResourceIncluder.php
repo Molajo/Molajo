@@ -123,16 +123,16 @@ class ResourceIncluder extends Includer
     {
         /** Primary Category */
         $this->loadMediaPlus('/category' . Services::Registry()->get('Parameters', 'catalog_category_id'),
-            Services::Registry()->get('Parameters', 'asset_priority_category', 700));
+            Services::Registry()->get('Parameters', 'asset_priority_primary_category', 700));
 
         /** Menu Item */
         $this->loadMediaPlus('/menuitem' . Services::Registry()->get('Parameters', 'menu_item_id'),
-            Services::Registry()->get('Parameters', 'asset_priority_menu_item', 800));
+            Services::Registry()->get('Parameters', 'asset_priority_menuitem', 800));
 
         /** Source */
         $this->loadMediaPlus('/source/' . Services::Registry()->get('Parameters', 'extension_title')
                 . Services::Registry()->get('Parameters', 'content_id'),
-            Services::Registry()->get('Parameters', 'asset_priority_source', 900));
+            Services::Registry()->get('Parameters', 'asset_priority_item', 900));
 
         /** Resource */
         $this->loadMediaPlus('/resource/' . Services::Registry()->get('Parameters', 'extension_title'),

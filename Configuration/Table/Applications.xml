@@ -51,19 +51,20 @@
             <include name="ParametersSessions"/>
             <include name="ParametersCache"/>
             <include name="ParametersCookie"/>
-            <include name="ParametersLog"/>
 
             <include name="ParametersUserdefaults"/>
+            <include name="ParametersLog"/>
             <include name="ParametersGravatar"/>
 
             <include name="ParametersCommon"/>
+            <include name="ParametersImage"/>
+            <include name="ParametersAssetdefaults"/>
             <include name="ParametersAssets"/>
-            <include name="ParametersDocument"/>
+            <include name="ParametersViewdefaults"/>
             <include name="ParametersMessages"/>
             <include name="ParametersMenuitem"/>
             <include name="ParametersList"/>
             <include name="ParametersItem"/>
-            <include name="ParametersImage"/>
 
             <include name="ParametersProfiler"/>
         </customfield>

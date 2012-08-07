@@ -1,0 +1,27 @@
+<field name="profiler" type="boolean" null="0" default="0"/>
+<field name="profiler_error_reporting" type="integer" null="0" default="0"/>
+<field name="profiler_verbose" type="boolean" null="0" default="0"/>
+<field name="profiler_start_with" type="text" null="0" default="Initialise"
+       values="Initialise,Route,Authorise,Execute,Response"/>
+<field name="profiler_end_with" type="text" null="0" default="Response"
+       values="Initialise,Route,Authorise,Execute,Response"/>
+<field name="profiler_output" type="text" null="0"
+       default="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Plugins"
+       values="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Plugins"/>
+<field name="profiler_output_queries_table_registry" type="boolean" null="0" default="0"/>
+<field name="profiler_output_queries_sql" type="boolean" null="0" default="1"/>
+<field name="profiler_output_queries_query_results" type="boolean" null="0" default="0"/>
+<field name="profiler_console_template_view_id" type="integer" null="0" default="1385"/>
+<field name="profiler_console_wrap_view_id" type="integer" null="0" default="2090"/>
+
+<field name="profiler_log" type="char" null="0" default="profiler_log"/>
+
+<field name="profiler_text_file" type="char" null="0" default="profiler.php"/>
+<field name="profiler_text_file_path" type="char" null="0" default="SITE_LOGS_FOLDER"/>
+<field name="profiler_text_file_no_php" type="char" null="0" default="0"/>
+
+<field name="profiler_database_table" type="char" null="0" default="#__log"/>
+
+<field name="profiler_messages_namespace" type="char" null="0" default="profiler"/>
+<field name="profiler_email_subject" type="char" null="0" default="Debug Messages"/>
+<field name="profiler_email_to" type="char" null="0" default="AmyStephen@gmail.com"/>

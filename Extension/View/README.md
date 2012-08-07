@@ -120,9 +120,9 @@ Priorities
 "asset_priority_user":"300",
 "asset_priority_extension":"400",
 "asset_priority_request":"500",
-"asset_priority_category":"600",
-"asset_priority_menu_item":"700",
-"asset_priority_source":"800",
+"asset_priority_primary_category":"600",
+"asset_priority_menuitem":"700",
+"asset_priority_item":"800",
 "asset_priority_theme":"900",
 
 
@@ -270,9 +270,9 @@ To load files for a specific Resource Extension, Menu Item, or Resource Item (ex
 "asset_priority_user":"300",
 "asset_priority_extension":"400",
 "asset_priority_request":"500",
-"asset_priority_category":"600",
-"asset_priority_menu_item":"700",
-"asset_priority_source":"800",
+"asset_priority_primary_category":"600",
+"asset_priority_menuitem":"700",
+"asset_priority_item":"800",
 "asset_priority_theme":"900",
 
 

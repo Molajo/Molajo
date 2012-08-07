@@ -3,6 +3,4 @@
 <field name="criteria_snippet_length" type="integer" null="0" default="200"/>
 <field name="criteria_status" type="integer" null="0" default=" "/>
 <field name="criteria_catalog_type_id" type="integer" null="0" default=" "/>
-<field name="criteria_menuitem_catalog_type_id" type="integer" null="0" default=" "/>
 <field name="criteria_extension_instance_id" type="integer" null="0" default=" "/>
-<field name="criteria_menuitem_extension_instance_id" type="integer" null="0" default=" "/>
