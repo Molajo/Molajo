@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Profilerlogger">
+    <table>
+        <values>
+            <value id="console" value="Console"/>
+            <value id="database" value="Database"/>
+            <value id="echo" value="Echo"/>
+            <value id="email" value="Email"/>
+            <value id="formattedtext" value="Text"/>
+            <value id="messages" value="Messages"/>
+        </values>
+    </table>
+</model>

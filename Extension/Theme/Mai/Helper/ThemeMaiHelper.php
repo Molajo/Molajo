@@ -6,7 +6,6 @@
  */
 namespace Molajo\Extension\Theme\Molajito\Helper;
 
-use Mustache\Mustache;
 use Molajo\Service\Services;
 
 /**
@@ -14,7 +13,7 @@ use Molajo\Service\Services;
  *
  * @since       1.0
  */
-Class ThemeMaiHelper extends Mustache
+Class ThemeMaiHelper
 {
     /**
      * Parameters
@@ -32,7 +31,7 @@ Class ThemeMaiHelper extends Mustache
      */
     public function loadMedia()
     {
-    
+
         /** Theme Folder */
         $theme = Services::Registry()->get('Parameters', 'theme_path_node');
 

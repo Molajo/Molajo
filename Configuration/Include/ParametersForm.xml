@@ -25,3 +25,4 @@
 <field name="enable_notifications" type="binary" null="0" default="0"/>
 <field name="enable_tweets" type="binary" null="0" default="0"/>
 <field name="enable_ping" type="binary" null="0" default="0"/>
+<field name="enable_captcha_option" type="char" null="0" default="ltr" values="ltr,rtl"/>

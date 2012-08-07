@@ -93,6 +93,7 @@
     <define name="LOG_OUTPUT_ROUTING" value="Routing"/>
     <define name="LOG_OUTPUT_SERVICES" value="Services"/>
     <define name="LOG_OUTPUT_PLUGINS" value="Plugins"/>
+
     <define name="VERBOSE" value="1"/>
 
     <define name="LOG_FORMATTEDTEXT_LOGGER" value="formattedtext"/>

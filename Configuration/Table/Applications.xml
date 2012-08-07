@@ -45,26 +45,26 @@
     <customfields>
         <customfield name="parameters">
 
-            <include name="ParametersAppdefaults"/>
+            <include name="ParametersApplicationDefaults"/>
             <include name="ParametersMail"/>
             <include name="ParametersUrls"/>
             <include name="ParametersSessions"/>
             <include name="ParametersCache"/>
             <include name="ParametersCookie"/>
 
-            <include name="ParametersUserdefaults"/>
+            <include name="ParametersUserDefaults"/>
             <include name="ParametersLog"/>
             <include name="ParametersGravatar"/>
 
             <include name="ParametersCommon"/>
             <include name="ParametersImage"/>
-            <include name="ParametersAssetdefaults"/>
+            <include name="ParametersAssetDefaults"/>
             <include name="ParametersAssets"/>
-            <include name="ParametersViewdefaults"/>
-            <include name="ParametersMessages"/>
+            <include name="ParametersErrorPages"/>
             <include name="ParametersMenuitem"/>
             <include name="ParametersList"/>
             <include name="ParametersItem"/>
+            <include name="ParametersForm"/>
 
             <include name="ParametersProfiler"/>
         </customfield>

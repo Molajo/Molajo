@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Profilerphase">
+    <table>
+        <values>
+            <value id="Initialise" value="Initialise"/>
+            <value id="Route" value="Route"/>
+            <value id="Authorisation" value="Authorisation"/>
+            <value id="Execute" value="Execute"/>
+            <value id="Response" value="Response"/>
+        </values>
+    </table>
+</model>
