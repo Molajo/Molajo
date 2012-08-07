@@ -1,0 +1,338 @@
+/* To Do:
+ * Swap level two and three a styling
+ */
+
+.debug {
+	nav[role="navigation"] * {
+		display: block;
+	}
+}
+
+// Force menu over full height
+body {
+	min-height: 100%;
+	height: auto !important;
+}
+// @media only screen and (min-width: $screenSmall) {
+// 	[role="banner"]+div {
+// 		height: 100%;
+// 		padding-top: $navBarHeight + 1px;
+// 		margin-top: -($navBarHeight + 1px);
+// 		nav[role="navigation"] {
+// 			@include single-box-shadow(rgba(0,0,0,.4), -2px, 1px, 2px, 0, true);
+// 			&:before {
+// 				margin-top: $navBarHeight;
+// 			}
+// 			dl dd {
+// 				background: darken($mainColor, 4);
+// 				@include single-box-shadow(rgba(0,0,0,.4), -2px, 0, 2px, 0, true);
+// 			}
+// 		}
+// 	}
+// }
+nav[role="navigation"] {
+
+	@extend .column;
+	@extend .#{convert-number-to-word($defaultMenuWidth)}; 
+
+	@include transition-property(width);
+	@include transition();
+
+	background: $mainColor;
+	color: $white;
+	height: 100%;
+	left: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	top: $navBarHeight + 1px;
+
+	// Temp, user config needs to move here
+	// padding-top: $navBarHeight + 1px;
+
+	&+div {
+		
+	}
+	a {
+		position: relative;
+		&+span {
+			@include cssTriangle(11px, darken($mainColor, 6), top);
+			@include transition-property(color);
+			@include transition();
+			display: none;
+			left: 9px;
+			position: absolute;
+			z-index: 10;
+			>span {
+				@include cssTriangle(10px, darken($mainColor, 0), top);
+				@include transition-property(color);
+				@include transition();
+				left: -10px;
+				position: absolute;
+				top: -12px;
+			}
+		}
+		&:hover {
+			background: darken($mainColor, 6);
+			&+span {
+				>span {
+					border-top-color: darken($mainColor, 6);
+				}
+			}
+		}
+	}
+	
+	ul,
+	dl { margin: 0;}
+	i {
+		@extend .glyph;
+		@extend .glyph.general;
+		@include font-size(18);
+		@include text-shadow(-1px, -1px, 1px, 0, $black);
+		display: inline-block;
+		font-style: normal;
+		width: 26px;
+		margin-right: 8px;
+		text-align: center;
+		&:before {
+			content: attr(data-icon);
+		}
+	}
+
+	ul { list-style-type: none; }
+
+	// Hide level-two items
+	.level-one {
+		>dt {
+			&+dd {
+				display: none;
+			}
+			&.current,
+			&:target {
+				&+dd {
+					display: block;
+				}
+			}
+		}
+	}
+
+	.level-one,
+	.level-two,
+	.level-three {
+		position: relative;
+		dt, li {
+			position: relative;
+		}
+	}
+
+	.level-one ul a {
+		padding-left: 42px;
+	}
+
+	.level-one, 
+	.level-two {
+		a {
+			border-bottom: 1px solid rgba(0,0,0,.3);
+			border-top: 1px solid rgba(255,255,255,.3);
+			white-space: nowrap;
+		}
+	}
+
+	.level-one {
+		>dt:first-child a,
+		>li:first-child a { border-top: 0; }
+		background: darken($mainColor, 6);
+		>:target, >.current {
+			>a+span { 
+				border-top-color: darken($mainColor, 8);
+				display: block;
+				>span {
+					border-top-color: darken($mainColor, 6);
+				}
+			}
+		}
+	}
+
+	.level-two,
+	.level-three {
+		@include transition();
+		background: darken($mainColor, 2);
+		// display: none;
+		margin-bottom: 0;
+		a+span {
+			top: 0;
+			>span {
+				border-top-color: darken($mainColor, 2);
+			}
+		}
+		&:target {
+			display: block;
+			a+span {
+				display: block;
+			}
+		}
+		:hover+:target li a+span {
+				border-top-color: darken($mainColor, 8);
+			>span {
+				border-top-color: darken($mainColor, 6);
+			}
+		}
+		:target li:hover a+span {
+			border-top-color: darken($mainColor, 9);
+		}
+	}
+	.level-three {
+		display: none;
+		background: $mainColor;
+
+		li a {
+			@include border-radius(3px);
+			border: 0;
+			background-color: darken($mainColor, 6);
+			display: block;
+			margin: 0 (0.75*($navBarHeight));
+			padding: 0.1*($navBarHeight) 0.25*($navBarHeight);
+			&.add {
+				background-color: $secondaryColor;
+				position: relative;
+				&:after {
+					@include font-size(12);
+					color: darken($mainColor, 6);
+					position: absolute;
+					right: 8px;
+					top: 4px;
+				}
+				&:hover {
+					@include buttonBackgroundHover($white);
+				}
+			}
+			&:hover {
+				@include buttonBackgroundHover($secondaryColor);
+			}
+		}
+		li {
+			padding: 0.15*($navBarHeight) 0;
+			&:first-child {
+				padding-top: 0.5*($navBarHeight);
+			}
+			&:last-child {
+				padding-bottom: 0.5*($navBarHeight);
+			}
+		}
+	}
+	a {
+		@include transition-property(width, color);
+		@include transition();
+		color: $white;
+		display: block;
+		padding: 7px 8px;
+		span {
+			@include text-shadow(rgba($black, 0.2) 1px 1px 0);
+		}
+	}
+}
+
+[role="main"], footer {
+
+	@extend .column;
+	@extend .#{convert-number-to-word($defaultContentWidth)};
+	@extend .push-#{convert-number-to-word($defaultMenuWidth)};
+
+	@include transition-property(width);
+	@include transition();
+}
+
+#focus:target {
+	nav[role="navigation"] {
+		@extend .#{convert-number-to-word($focusMenuWidth)};
+		a>span { display: none; }
+		i {
+			width: 100%;
+		}
+		dd {
+			display: none;
+		}
+		&:hover {
+			dd {
+				display: block;
+			}
+			@extend .#{convert-number-to-word($defaultMenuWidth)};
+
+			i {
+				width: $navBarHeight;
+			}
+			+[role="main"] { 
+				@extend .#{convert-number-to-word($defaultContentWidth)};
+				@extend .push-#{convert-number-to-word($defaultMenuWidth)};
+			}
+
+			a>span { display: inline-block; }
+			:target { display: block; }
+		}
+	}
+	header[role="banner"]>div,
+	[role="main"] {
+		@extend .#{convert-number-to-word($focusContentWidth)};
+		@extend .push-#{convert-number-to-word($focusMenuWidth)};
+		left: 5.556%;
+	}
+	#expander {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: $screenSmall - 1px) {
+	nav[role="navigation"] {
+		height: auto;
+		overflow: visible;
+		padding: 0;
+		position: relative;
+		z-index: 100;
+		top: 0;
+		dl {
+			width: 100%;
+			text-align: center;
+		}
+		dt {
+			display: inline;
+			>a {
+				border: 0 !important;
+				display: inline-block;
+				height: $navBarHeight;
+				text-align: center;
+			}
+			span {
+				display: none;
+			}
+			+dd {
+				text-align: left;
+				left: 0;
+				position: absolute;
+				top: $navBarHeight;
+				width: 100%;
+			}
+		}
+	}
+	#focus:target {
+		nav[role="navigation"] {
+			i {
+				width: 20px;
+			}
+			dd {
+				display: none;
+			}
+			&:hover {
+				dd {
+					display: block;
+				}
+				i {
+					width: 20px;
+				}
+				dt>a>span { display: none; }
+			}
+		}
+	}
+	a#expander {
+		display: none;
+	}
+}
