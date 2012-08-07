@@ -6,7 +6,6 @@
  */
 namespace Molajo\Extension\Theme\Molajito\Helper;
 
-use Mustache\Mustache;
 use Molajo\Service\Services;
 
 /**
@@ -14,7 +13,7 @@ use Molajo\Service\Services;
  *
  * @since       1.0
  */
-Class ThemeMolajitoHelper extends Mustache
+Class ThemeMolajitoHelper
 {
     /**
      * Parameters
@@ -109,23 +108,6 @@ Class ThemeMolajitoHelper extends Mustache
         return;
     }
 
-    /**
-     * items
-     *
-     * Returns a single row of information to mustache
-     * around the {# item } {/ item } controlbreak
-     *
-     * tracks row number in #this->rows so that resultset can be exploited
-     *
-     * @return ArrayIterator
-     * @since  1.0
-     */
-    public function items()
-    {
-        $this->rows++;
-
-        return new \ArrayIterator($this->data);
-    }
 
     /**
      * gravatar

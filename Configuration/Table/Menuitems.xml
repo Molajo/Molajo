@@ -39,7 +39,6 @@
         </customfield>
         <customfield name="parameters">
             <include name="ParametersCommon"/>
-            <include name="ParametersMustache"/>
             <include name="ParametersMenuItem"/>
             <include name="ParametersImage"/>
             <include name="ParametersGravatar"/>

@@ -64,11 +64,8 @@
             <include name="ParametersList"/>
             <include name="ParametersItem"/>
             <include name="ParametersImage"/>
-            <include name="ParametersMustache"/>
 
-            //developer
             <include name="ParametersProfiler"/>
-
         </customfield>
         <customfield name="metadata">
             <include name="Metadata"/>
