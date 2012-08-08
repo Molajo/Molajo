@@ -7,16 +7,16 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$pageURL = Services::Registry()->get('Triggerdata', 'full_page_url');
+$pageURL = Services::Registry()->get('Plugindata', 'full_page_url');
 
-$title = Services::Registry()->get('Triggerdata', 'PageTitle');
+$title = Services::Registry()->get('Plugindata', 'PageTitle');
 if ($title == '') {
     $title = $this->row->criteria_title;
 } else {
     $title .= '-' . $this->row->criteria_title;
 }
 $homeURL = Services::Registry()->get('Configuration', 'application_base_url');
-$pageURL = Services::Registry()->get('Triggerdata', 'full_page_url');
+$pageURL = Services::Registry()->get('Plugindata', 'full_page_url');
 ?>
     <header role="banner">
 		<div>
