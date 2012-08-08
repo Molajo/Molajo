@@ -6,7 +6,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$action = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 <h4><?echo Services::Language()->translate('Tag'); ?></h4>
 <form action="<?php echo $action; ?>" method="post" name="Admingridbatchtags" id="Admingridbatchtags">
 	<p><?php echo Services::Language()
@@ -15,7 +15,7 @@ $action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
 	<div class="row">
 		<div class="nine columns">
 			<input type="text" name="tag" id="tag"><br />
-			<include:template name=Formselectlist model=Triggerdata value=<?php echo 'listbatch_tags*'; ?>/>
+			<include:template name=Formselectlist model=Plugindata value=<?php echo 'listbatch_tags*'; ?>/>
 		</div>
 		<div class="three columns">
 			<input type="submit" class="submit button small" name="submit" id="batch-tag-create" value="Add">

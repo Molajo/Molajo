@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
     $columnCount = 1;
 	$nowrap = ' nowrap ';
 	$first = 1;
-    $columnArray = Services::Registry()->get('Triggerdata', 'AdminGridTableColumns');
+    $columnArray = Services::Registry()->get('Plugindata', 'AdminGridTableColumns');
     foreach ($columnArray as $column) {       ?>
 
         <td<?php echo $this->row->css_class; ?>><?php

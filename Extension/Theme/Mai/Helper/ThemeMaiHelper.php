@@ -243,6 +243,6 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
      */
     public function baseUri()
     {
-        return Services::Registry()->get('Triggerdata', 'full_page_url');
+        return Services::Registry()->get('Plugindata', 'full_page_url');
     }
 }

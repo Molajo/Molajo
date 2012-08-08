@@ -6,7 +6,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$action = Services::Registry()->get('Triggerdata', 'full_page_url'); ?>
+$action = Services::Registry()->get('Plugindata', 'full_page_url'); ?>
 <div id="m-batch" style="display: none;">
 	<h3><?php echo Services::Language()->translate('Batch Changes'); ?></h3>
 	<div class="row">

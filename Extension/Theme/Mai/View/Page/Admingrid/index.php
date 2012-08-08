@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$_baseUri = Services::Registry()->get('Triggerdata', 'full_page_url');
+$_baseUri = Services::Registry()->get('Plugindata', 'full_page_url');
 ?>
     <include:template name=Adminheader/>
 

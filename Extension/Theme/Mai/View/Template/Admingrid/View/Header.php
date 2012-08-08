@@ -7,12 +7,12 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$pageURL = Services::Registry()->get('Triggerdata', 'full_page_url');
+$pageURL = Services::Registry()->get('Plugindata', 'full_page_url');
 
 $nowrap = '';
 $checked = '';
-$rowCount = Services::Registry()->get('Triggerdata', 'AdminGridTableRows');
-$columnArray = Services::Registry()->get('Triggerdata', 'AdminGridTableColumns');
+$rowCount = Services::Registry()->get('Plugindata', 'AdminGridTableRows');
+$columnArray = Services::Registry()->get('Plugindata', 'AdminGridTableColumns');
 $numCols = count($columnArray);
 ?>
 

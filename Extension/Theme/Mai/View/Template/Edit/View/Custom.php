@@ -11,9 +11,9 @@ defined('MOLAJO') or die;
 <form>
 
     <dl class="contained tabs">
-        <dd class="active"><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#edit">Edit</a></dd>
-        <dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#options">Options</a></dd>
-        <dd><a href="<?php echo Services::Registry()->get('Triggerdata', 'full_page_url'); ?>#fields">Fields</a></dd>
+        <dd class="active"><a href="<?php echo Services::Registry()->get('Plugindata', 'full_page_url'); ?>#edit">Edit</a></dd>
+        <dd><a href="<?php echo Services::Registry()->get('Plugindata', 'full_page_url'); ?>#options">Options</a></dd>
+        <dd><a href="<?php echo Services::Registry()->get('Plugindata', 'full_page_url'); ?>#fields">Fields</a></dd>
     </dl>
     <ul class="contained tabs-content">
         <li class="active" id="editTab">
