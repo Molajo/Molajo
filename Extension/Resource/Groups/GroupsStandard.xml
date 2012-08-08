@@ -1,3 +1,0 @@
-<extension type="Group" version="1.0" extends="Groups">
-    <model name="Groupsstandard" catalog_type_id="110"/>
-</extension>

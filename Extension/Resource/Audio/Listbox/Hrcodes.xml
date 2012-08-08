@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="ArticlesDatalist"
+        name="AudioDatalist"
         table="#__content"
         primary_key="id"
         name_key="title"
@@ -10,9 +10,9 @@
         use_special_joins="1"
         check_view_level_access="0"
         process_plugins="0"
-        criteria_published_status="1,2"
-        criteria_extension_instance_id="1"
-        criteria_catalog_type_id="10000"
+        criteria_published_status="1"
+        criteria_extension_instance_id="9"
+        criteria_catalog_type_id="100012"
         data_source="JDatabase">
     <table>
         <fields>

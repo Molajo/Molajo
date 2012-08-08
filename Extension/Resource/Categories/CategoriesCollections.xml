@@ -1,3 +1,0 @@
-<extension type="Category" version="1.0" extends="Categories">
-    <model name="Categoriescollections" catalog_type_id="3600"/>
-</extension>
