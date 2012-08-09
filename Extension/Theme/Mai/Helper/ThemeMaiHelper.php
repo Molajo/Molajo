@@ -4,7 +4,7 @@
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Extension\Theme\Molajito\Helper;
+namespace Molajo\Extension\Theme\Mai\Helper;
 
 use Molajo\Service\Services;
 
@@ -89,7 +89,7 @@ Class ThemeMaiHelper
          */
 
         /** jQuery CDN and fallback */
-        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1);
+        Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1, 1);
         $url = EXTENSIONS_THEMES_URL . '/' . $theme  . '/' . 'js/fallback/jquery-1.7.2.min.js';
         $fallback = "
         if (typeof jQuery == 'undefined') {

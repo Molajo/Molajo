@@ -19,11 +19,7 @@ $pageURL = Services::Registry()->get('Plugindata', 'full_page_url');
 	<div role="main">
 	<section>
 		<include:message/>
-
-		<a href="<?php echo $_baseUri ?>#focus" id="expander"><span>Expand working area</span></a>
-		
-
-
+		<include:request/>
 	</section>
 
 	</div>
