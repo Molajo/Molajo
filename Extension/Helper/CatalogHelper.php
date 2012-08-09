@@ -82,6 +82,7 @@ Class CatalogHelper
             return false;
         }
 
+
         /** Route Registry */
         Services::Registry()->set('Parameters', 'catalog_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'catalog_type_id', (int) $item->catalog_type_id);
@@ -100,7 +101,7 @@ Class CatalogHelper
         Services::Registry()->set('Parameters', 'catalog_tinyurl', (int) $item->tinyurl);
 
         /** home */
-        if ((int) Services::Registry()->get('Parameters', 'request_catalog_id')
+        if ((int) Services::Registry()->get('Parameters', 'catalog_id')
             == Services::Registry()->get('Configuration', 'application_home_catalog_id')
         ) {
             Services::Registry()->set('Parameters', 'catalog_home', true);

@@ -886,6 +886,10 @@ Class ConfigurationService
             $registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
         );
 
+		$xmlArray = ConfigurationService::setCriteriaWhereRegistry(
+			$registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
+		);
+
         $xmlArray = ConfigurationService::setTableForeignKeysRegistry(
             $registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
         );
@@ -1067,8 +1071,65 @@ Class ConfigurationService
         return array($xml, $xml_string);
     }
 
+	/**
+	 * setCriteriaWhereRegistry
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $xml
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return array
+	 * @since  1.0
+	 */
+	public static function setTableForeignKeysRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+	{
+		$include = '';
+		if (isset($xml->table->foreignkeys->include['name'])) {
+			$include = (string) $xml->table->foreignkeys->include['name'];
+		}
+		if ($include == '') {
+		} else {
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+
+			$replace_this = '<include name="' . $include . '"/>';
+
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $model_name, $replace_this, $xml_string
+			);
+			$xml = simplexml_load_string($xml_string);
+		}
+
+		if (isset($xml->table->foreignkeys->foreignkey)) {
+
+			$fks = $xml->table->foreignkeys->foreignkey;
+			$fkArray = array();
+
+			foreach ($fks as $fk) {
+
+				$attributes = get_object_vars($fk);
+				$fkAttributes = ($attributes["@attributes"]);
+				$fkAttributesArray = array();
+
+				$fkAttributesArray['name'] = $fkAttributes['name'];
+				$fkAttributesArray['source_id'] = $fkAttributes['source_id'];
+				$fkAttributesArray['source_model'] = $fkAttributes['source_model'];
+				$fkAttributesArray['required'] = $fkAttributes['required'];
+
+				$fkArray[] = $fkAttributesArray;
+			}
+			Services::Registry()->set($registryName, 'foreignkeys', $fkArray);
+		}
+
+		return array($xml, $xml_string);
+	}
+
     /**
-     * setTableForeignKeysRegistry
+     * setCriteriaWhereRegistry
      *
      * @static
      * @param $registryName
@@ -1079,13 +1140,14 @@ Class ConfigurationService
      * @return array
      * @since  1.0
      */
-    public static function setTableForeignKeysRegistry(
+    public static function setCriteriaWhereRegistry(
         $registryName, $xml, $xml_string, $path_and_file, $model_name)
     {
         $include = '';
-        if (isset($xml->table->foreignkeys->include['name'])) {
-            $include = (string) $xml->table->foreignkeys->include['name'];
+        if (isset($xml->table->criteria->include['name'])) {
+            $include = (string) $xml->table->criteria->include['name'];
         }
+
         if ($include == '') {
         } else {
             if ($xml_string == '') {
@@ -1100,26 +1162,28 @@ Class ConfigurationService
             $xml = simplexml_load_string($xml_string);
         }
 
-        if (isset($xml->table->foreignkeys->foreignkey)) {
+		$whereArray = array();
 
-            $fks = $xml->table->foreignkeys->foreignkey;
-            $fkArray = array();
+        if (isset($xml->table->criteria->where)) {
 
-            foreach ($fks as $fk) {
+            $criteria = $xml->table->criteria->where;
+			$criteriaArray = array();
 
-                $attributes = get_object_vars($fk);
-                $fkAttributes = ($attributes["@attributes"]);
-                $fkAttributesArray = array();
+            foreach ($criteria as $where) {
 
-                $fkAttributesArray['name'] = $fkAttributes['name'];
-                $fkAttributesArray['source_id'] = $fkAttributes['source_id'];
-                $fkAttributesArray['source_model'] = $fkAttributes['source_model'];
-                $fkAttributesArray['required'] = $fkAttributes['required'];
+                $attributes = get_object_vars($where);
+                $whereAttributes = ($attributes["@attributes"]);
+                $whereAttributesArray = array();
 
-                $fkArray[] = $fkAttributesArray;
+                $whereAttributesArray['name'] = $whereAttributes['name'];
+                $whereAttributesArray['connector'] = $whereAttributes['connector'];
+                $whereAttributesArray['value'] = $whereAttributes['value'];
+
+                $whereArray[] = $whereAttributesArray;
             }
-            Services::Registry()->set($registryName, 'foreignkeys', $fkArray);
         }
+
+		Services::Registry()->set($registryName, 'Criteria', $whereArray);
 
         return array($xml, $xml_string);
     }

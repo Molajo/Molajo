@@ -33,13 +33,14 @@ class ReadModel extends Model
      * @param  $name_key
      * @param  $name_key_value
      * @param  $query_object - item, list, result
+	 * @param  $criteria_array
      *
      * @return ReadModel
      * @since  1.0
      */
     public function setBaseQuery($columns, $table_name, $primary_prefix,
                                  $primary_key, $id, $name_key, $name_key_value,
-                                 $query_object)
+                                 $query_object, $criteria_array = array())
     {
         if ($this->query->select == null) {
 
@@ -93,6 +94,18 @@ class ReadModel extends Model
                     . ' = ' . $this->db->q($name_key_value));
             }
         }
+
+
+		if (is_array($criteria_array)
+			&& count($criteria_array) > 0) {
+
+			foreach ($criteria_array as $item) {
+
+				$this->query->where($this->db->qn($item['name'])
+					. ' ' . $item['connector'] . ' '
+					. $this->db->q($item['value']));
+			}
+		}
 
         return $this;
     }

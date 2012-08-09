@@ -461,7 +461,8 @@ class Controller
             $id_key,
             $this->get('name_key'),
             $name_key_value,
-            $query_object
+            $query_object,
+			Services::Registry()->get($this->table_registry_name, 'Criteria')
         );
 
         /** 3. append ACL query elements */

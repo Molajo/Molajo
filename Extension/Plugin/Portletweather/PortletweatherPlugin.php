@@ -48,11 +48,14 @@ class PortletweatherPlugin extends ContentPlugin
 			$station = $city;
 		}
 
-		$api = simplexml_load_string(
-			utf8_encode(
-				file_get_contents('http://www.google.com/ig/api?weather=' . $station . '&hl=' . $language)
-			)
-		);
+		try {
+			$results = file_get_contents('http://www.google.com/ig/api?weather=' . $station . '&hl=' . $language);
+
+		} catch (\Exception $e) {
+			throw new \RuntimeException($e->getMessage());
+		}
+
+		$api = simplexml_load_string(utf8_encode($results));
 
 		$row = new \stdClass();
 

@@ -119,7 +119,7 @@ Class RouteService
             return false;
         }
 
-        /** URL Change Redirect from Catalog */
+		/** URL Change Redirect from Catalog */
         if ((int) Services::Registry()->get('Parameters', 'redirect_to_id', 0) == 0) {
         } else {
             Services::Response()->redirect(
@@ -165,7 +165,7 @@ Class RouteService
      */
     protected function checkHome($path = '')
     {
-        if (strlen($path) == 0) {
+        if (strlen($path) == 0 || trim($path) == '') {
             return true;
 
         } else {
@@ -268,10 +268,6 @@ Class RouteService
             $action = 'create';
             $controller = 'create';
 
-        } elseif ($method == 'GET') {
-            $action = 'display';
-            $controller = 'read';
-
         } elseif ($method == 'PUT') {
             $action = 'update';
             $controller = 'update';
@@ -279,7 +275,11 @@ Class RouteService
         } elseif ($method == 'DELETE') {
             $action = 'delete';
             $controller = 'delete';
-        }
+
+		} else {
+			$action = 'display';
+			$controller = 'read';
+		}
 
         Services::Registry()->set('Parameters', 'request_action', $action);
         Services::Registry()->set('Parameters', 'request_action_authorisation', $controller);  //for now
@@ -289,7 +289,7 @@ Class RouteService
         $value = (int) Application::Request()->get('id');
         Services::Registry()->set('Parameters', 'request_catalog_id', $value);
 
-        /** URL Type */
+		/** URL Type */
         $sef = Services::Registry()->get('Parameters', 'sef_url', 1);
         if ($sef == 1) {
             $this->getResourceSEF();
@@ -327,9 +327,7 @@ Class RouteService
             $testKey = substr($path, strrpos($path, '/') + 1, strlen($path) - strrpos($path, '/'));
             $testPath = substr($path, 0, strrpos($path, '/'));
         }
-        if ($testKey == '') {
-            return true;
-        }
+
 
         $action = '';
         $path = '';
@@ -338,25 +336,22 @@ Class RouteService
 
         $list = Services::Configuration()->getFile('Application', 'Actions');
 
-        foreach ($list->action as $item) {
+		if (count($list) > 0) {
+			foreach ($list->action as $item) {
 
-            $key = (string) $item['name'];
+				$key = (string) $item['name'];
 
-            if ($key == $testKey) {
-                $action = $key;
-                $path = $testPath;
-                $authorisation = (string) $item['authorisation'];
-                $controller = (string) $item['controller'];
-                break;
-            }
-        }
+				if ($key == $testKey) {
+					$action = $key;
+					$path = $testPath;
+					$authorisation = (string) $item['authorisation'];
+					$controller = (string) $item['controller'];
+					break;
+				}
+			}
+		}
 
-        if ($action == '') {
-            //defaults are fine;
-            return true;
-        }
-
-        /** Update Path and store Non-routable parameters for Extension Use */
+        /** Update Path and store Non-routable parameters or defaults for Extension Use */
         Services::Registry()->set('Parameters', 'request_url_query', $path);
         Services::Registry()->set('Parameters', 'request_non_route_parameters', $action);
 
@@ -410,10 +405,10 @@ Class RouteService
         } else {
             define('ROUTE', true);
         }
+		echo Services::Registry()->get('Parameters', '*');
 
-        /**  Menu Item  */
+		/**  Menu Item  */
         if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
-
             $response = Helpers::Content()->getMenuItemRoute();
             if ($response === false) {
                 Services::Error()->set(500, 'Menu Item not found');

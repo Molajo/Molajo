@@ -35,11 +35,13 @@
                   jointo="extension_instance_id,site_id"
                   joinwith="id,SITE_ID"/>
         </joins>
+
         <criteria>
-            <where field="extensions.name"
+            <where name="extensions.name"
                   connector="like"
                   value="Portlet%"/>
         </criteria>
+
         <plugins>
             <plugin name="Publishedstatus"/>
         </plugins>

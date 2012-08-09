@@ -96,7 +96,6 @@ class AdmindashboardPlugin extends ContentPlugin
 	{
 
 		$list = Services::Text()->getList('Portlets', $this->parameters);
-		var_dump($list);
 
 		if (count($list) == 0 || $list == false) {
 			//throw exception

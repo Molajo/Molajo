@@ -32,6 +32,12 @@
                   joinwith="catalog_type_id"/>
         </joins>
 
+        <criteria>
+            <where name="a.routable"
+                   connector="="
+                   value="1"/>
+        </criteria>
+
         <children>
             <child name="CatalogActivity" join="catalog_id"/>
             <child name="CatalogCategories" join="catalog_id"/>
