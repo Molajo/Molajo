@@ -150,7 +150,6 @@ Class RouteService
         $this->getRouteParameters();
 
         /**   Return to Application Object */
-
         return $this;
     }
 
@@ -405,7 +404,6 @@ Class RouteService
         } else {
             define('ROUTE', true);
         }
-		echo Services::Registry()->get('Parameters', '*');
 
 		/**  Menu Item  */
         if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
@@ -415,7 +413,7 @@ Class RouteService
             }
 
         } else {
-        ;
+
             $id = Services::Registry()->get('Parameters', 'catalog_source_id');
 
             $model_type = 'Table';
@@ -452,7 +450,6 @@ Class RouteService
         Services::Registry()->merge('Configuration', 'Parameters', true);
 
         Helpers::Extension()->setThemePageView();
-
         Helpers::Extension()->setTemplateWrapModel();
 
         Services::Registry()->delete('Parameters', 'item*');

@@ -82,7 +82,6 @@ Class CatalogHelper
             return false;
         }
 
-
         /** Route Registry */
         Services::Registry()->set('Parameters', 'catalog_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'catalog_type_id', (int) $item->catalog_type_id);

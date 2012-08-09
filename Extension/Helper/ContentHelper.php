@@ -59,9 +59,7 @@ Class ContentHelper
             Services::Registry()->get('Parameters', 'catalog_menuitem_type'),
             'item'
         );
-		echo '<pre>';
-		var_dump($item);
-		die;
+
         if (count($item) == 0) {
             return Services::Registry()->set('Parameters', 'status_found', false);
         }
@@ -155,6 +153,7 @@ Class ContentHelper
 
         Services::Registry()->copy($parmName, 'Parameters');
 		Services::Registry()->sort('Parameters');
+
 
         return true;
     }

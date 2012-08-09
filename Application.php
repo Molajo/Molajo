@@ -241,7 +241,6 @@ Class Application
             && Services::Redirect()->url === null
             && (int) Services::Redirect()->code == 0
         ) {
-
             Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_PLUGINS);
             $results = Services::Event()->schedule('onAfterRoute');
             if (is_array($results)) {
@@ -252,7 +251,6 @@ Class Application
         if ($results == false
             || Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
             Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
-
             return false;
         }
 
@@ -314,6 +312,9 @@ Class Application
         Services::Profiler()->set(START_EXECUTE, LOG_OUTPUT_APPLICATION);
 
         $action = Services::Registry()->get('Parameters', 'request_action', 'display');
+		if (trim($action) == '') {
+			$action = 'display';
+		}
 
         if ($action == 'display' || $action == 'edit' || $action == 'add') {
             $results = $this->display();
