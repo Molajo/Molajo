@@ -97,12 +97,10 @@ Class RouteService
 
             return false;
         }
-		Services::Registry()->get('Parameters', '*');
 
         /** Identify Resource and sub-resource values */
         $continue = $this->getResource();
-Services::Registry()->get('Parameters', '*');
-		die;
+
         if ($continue == false) {
             Services::Profiler()->set('Route getResource() Failed', 'Route');
 
@@ -258,9 +256,6 @@ Services::Registry()->get('Parameters', '*');
         var_dump(Application::Request()->request);
         echo '</pre>'; */
 
-        Services::Registry()->set('Parameters', 'request_url_query',
-            Application::Request()->get('requested_resource_for_route'));
-
         /** Defaults */
         Services::Registry()->set('Parameters', 'request_non_route_parameters', '');
 
@@ -293,7 +288,7 @@ Services::Registry()->get('Parameters', '*');
 		/** URL Type */
         $sef = Services::Registry()->get('Parameters', 'sef_url', 1);
         if ($sef == 1) {
-            $this->getResourceSEF();
+			$this->getResourceSEF();
         } else {
             $this->getResourceParameters();
         }
@@ -320,6 +315,9 @@ Services::Registry()->get('Parameters', '*');
      */
     protected function getResourceSEF()
     {
+		return true;
+
+		//todo - extract non route  parameter and values (tag/1,2,3 and date/2012-12 and author/amystephen
         $path = Services::Registry()->get('Parameters', 'request_url_query');
 
         $testKey = '';
@@ -327,8 +325,9 @@ Services::Registry()->get('Parameters', '*');
         if (strrpos($path, '/') > 0) {
             $testKey = substr($path, strrpos($path, '/') + 1, strlen($path) - strrpos($path, '/'));
             $testPath = substr($path, 0, strrpos($path, '/'));
-        }
-
+        } else {
+			$testPath = $path;
+		}
 
         $action = '';
         $path = '';
@@ -350,6 +349,8 @@ Services::Registry()->get('Parameters', '*');
 					break;
 				}
 			}
+		} else {
+			$path = $testPath . '/' . $testKey;
 		}
 
         /** Update Path and store Non-routable parameters or defaults for Extension Use */

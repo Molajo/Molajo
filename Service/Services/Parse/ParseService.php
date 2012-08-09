@@ -247,7 +247,6 @@ Class ParseService
             // ERROR
         }
 
-        $this->final_indicator = true;
 
         $renderedOutput = $this->renderLoop($renderedOutput);
 
