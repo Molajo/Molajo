@@ -55,6 +55,11 @@ class PortletweatherPlugin extends ContentPlugin
 			throw new \RuntimeException($e->getMessage());
 		}
 
+		if ($results == false) {
+			$this->data = array();
+			return true;
+		}
+
 		$api = simplexml_load_string(utf8_encode($results));
 
 		$row = new \stdClass();

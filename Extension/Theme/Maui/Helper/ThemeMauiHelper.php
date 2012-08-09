@@ -97,13 +97,13 @@ Class ThemeMauiHelper
 		Services::Asset()->addJSDeclarations($fallback, 100, 1, 'text/javascript');
 
 		/** jQueryUI CDN and fallback */
-		Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js', 1, 1);
+		Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js', 2, 1);
 
 		/** Modernizer */
-		Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 1, 10000);
+		Services::Asset()->addJs('http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js', 10000, 0);
 
 		/** HTML5 Shiv */
-		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 0, 1);
+		Services::Asset()->addJs('http://html5shiv.googlecode.com/svn/trunk/html5.js', 1, 0);
 
 		return;
 	}
