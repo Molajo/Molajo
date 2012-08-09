@@ -1,5 +1,7 @@
 <?php
 use Molajo\Service\Services;
+Services::Registry()->get('Parameters', '*');
+die;
 /**
  * @package    Molajo
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.

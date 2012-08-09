@@ -97,10 +97,12 @@ Class RouteService
 
             return false;
         }
+		Services::Registry()->get('Parameters', '*');
 
         /** Identify Resource and sub-resource values */
         $continue = $this->getResource();
-
+Services::Registry()->get('Parameters', '*');
+		die;
         if ($continue == false) {
             Services::Profiler()->set('Route getResource() Failed', 'Route');
 

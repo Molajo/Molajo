@@ -55,11 +55,15 @@ Class CatalogHelper
         /** Retrieve the query results */
         Services::Registry()->set('Query', 'Current', 'Catalog getRouteCatalog');
 
+		Services::Registry()->get('Parameters', '*');
+
         $item = $this->get(
             Services::Registry()->get('Parameters', 'request_catalog_id'),
             Services::Registry()->get('Parameters', 'request_url_query')
         );
-
+echo '<pre>';
+var_dump($item);
+		die;
         /** 404: routeRequest handles redirecting to error page */
         if (count($item) == 0 || (int) $item->id == 0 || (int) $item->routable == 0) {
             Services::Registry()->set('Parameters', 'status_found', false);
