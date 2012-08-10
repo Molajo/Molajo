@@ -1,3 +1,0 @@
-<extension type="Media" version="1.0" extends="Media">
-    <model name="Mediaaudio" catalog_type_id="53000"/>
-</extension>

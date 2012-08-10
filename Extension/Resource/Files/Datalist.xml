@@ -1,0 +1,7 @@
+<datalist name="Files" extends="Content">
+    <model
+            name="Files"
+            criteria_catalog_type_id="51000"
+            criteria_extension_instance_id="6"
+            />
+</datalist>

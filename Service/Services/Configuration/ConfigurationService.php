@@ -138,6 +138,24 @@ Class ConfigurationService
 		}
 		$dirRead->close();
 
+		/** 6. Load Datalists from Resources */
+
+		$dirRead = dir(EXTENSIONS . '/Resource');
+		$path = $dirRead->path;
+		while (false !== ($entry = $dirRead->read())) {
+			if (is_dir($path . '/' . $entry)) {
+				if (substr($entry, 0, 1) == '.') {
+				} else {
+					$datalistsArray[] = $entry;
+				}
+			}
+		}
+		$dirRead->close();
+
+		/** Sort and unique */
+		sort($datalistsArray);
+		$datalistsArray = array_unique($datalistsArray);
+
 		Services::Registry()->set('Fields', 'Datalists', $datalistsArray);
 
 		return;

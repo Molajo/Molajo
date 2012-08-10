@@ -94,7 +94,7 @@ Class ThemeMauiHelper
         if (typeof jQuery == 'undefined') {
             document.write(unescape(" . '"' . "%3Cscript src='" . $url . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));
          }";
-		Services::Asset()->addJSDeclarations($fallback, 100, 1, 'text/javascript');
+		Services::Asset()->addJSDeclarations($fallback, 1, 1, 'text/javascript');
 
 		/** jQueryUI CDN and fallback */
 		Services::Asset()->addJs('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js', 2, 1);

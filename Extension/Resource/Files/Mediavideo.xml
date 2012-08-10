@@ -1,3 +1,0 @@
-<extension type="Media" version="1.0" extends="Media">
-    <model name="Mediavideo" catalog_type_id="52000"/>
-</extension>

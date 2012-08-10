@@ -1,10 +1,20 @@
 {   "application_name":"Site 2 Administrator",
     "application_home_catalog_id":"322",
     "application_logon_requirement":"1",
+    "application_google_analytics_code":"xxxx",
+
+    "grid_toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",
+    "grid_submenu_items":"items,categories,drafts",
+    "grid_search":"1",
+    "grid_lists":"status",
+    "grid_columns":"title,id,featured,start_publishing_datetime,language,ordering",
+    "grid_batch":"",
+
     "language":"en-GB",
     "language_direction":"ltr",
     "language_multilingual":"0",
     "language_utc_offset":"UTC",
+
     "system_cache_folder":"cache",
     "system_logs_folder":"logs",
     "system_temp_folder":"temp",
@@ -117,7 +127,7 @@
     "menuitem_source_catalog_type_id":" ",
     "menuitem_extension_instance_id":" ",
 
-    "menuitem_theme_id":"9050",
+    "menuitem_theme_id":"9020",
     "menuitem_page_view_id":"205",
     "menuitem_page_view_css_id":"",
     "menuitem_page_view_css_class":"",
@@ -131,7 +141,7 @@
     "menuitem_model_type":"dbo",
     "menuitem_model_query_object":"getParameters",
 
-    "list_theme_id":"9050",
+    "list_theme_id":"9020",
     "list_page_view_id":"220",
     "list_page_view_css_id":"",
     "list_page_view_css_class":"",
@@ -159,7 +169,7 @@
     "list_select_author_list":"0",
 
     "item_parent_menu_id":"0",
-    "item_theme_id":"9050",
+    "item_theme_id":"9020",
     "item_page_view_id":"200",
     "item_page_view_css_id":"",
     "item_page_view_css_class":"",
@@ -173,7 +183,7 @@
     "item_model_type":"Table",
     "item_model_query_object":"Item",
 
-    "form_theme_id":"9050",
+    "form_theme_id":"9020",
     "form_page_view_id":"210",
     "form_page_view_css_id":"",
     "form_page_view_css_class":"",
@@ -200,14 +210,14 @@
     "enable_ping":"1",
     "enable_captcha_option":"0",
 
-    "profiler_error_reporting":"0",
-    "profiler_verbose":"0",
+    "profiler_error_reporting":"1",
+    "profiler_verbose":"1",
     "profiler_start_with":"Initialise",
     "profiler_end_with":"Response",
     "profiler_output":"Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Plugins",
-    "profiler_output_queries_table_registry":"0",
-    "profiler_output_queries_sql":"0",
-    "profiler_output_queries_query_results":"0",
+    "profiler_output_queries_table_registry":"1",
+    "profiler_output_queries_sql":"1",
+    "profiler_output_queries_query_results":"1",
     "profiler_console_template_view_id":"1385",
     "profiler_console_wrap_view_id":"2090",
 

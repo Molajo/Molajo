@@ -1,3 +1,0 @@
-<extension type="Media" version="1.0" extends="Media">
-    <model name="Medialinks" catalog_type_id="54000"/>
-</extension>

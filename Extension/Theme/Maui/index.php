@@ -1,6 +1,5 @@
 <?php
 use Molajo\Service\Services;
-
 /**
  * @package    Molajo
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
@@ -18,5 +17,5 @@ defined('MOLAJO') or die; ?>
 	<include:wrap wrap_class=push-body-wrappper/>
 </section>
 <include:template name=Adminfooter wrap=footer role=footer/>
-<include:defer/>
 <include:template name=modal/>
+<include:defer/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Hierarchies" version="1.0" extends="Content">
-    <name>RESOURCE_HIERARCHIES_NAME</name>
+<extension type="Video" version="1.0" extends="Media">
+    <name>RESOURCE_VIDEO_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,8 +8,8 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>RESOURCE_DATAELEMENTS_DESCRIPTION</description>
-    <model name="Hierarchies" catalog_type_id="100014">
+    <description>RESOURCE_VIDEO_DESCRIPTION</description>
+    <model name="Video" catalog_type_id="52000">
         <customfields>
             <customfield name="parameters">
                 <field name="add_a_parameter" type="binary" null="0" default="1"/>

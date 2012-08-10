@@ -26,8 +26,8 @@ class GoogleanalyticsPlugin extends ContentPlugin
      */
     public function onBeforeParse() {
 
-		$account = Services::Registry()->get('Parameters', 'Googleanalytics');
-		$account = 'xyz';
+		$account = Services::Registry()->get('Configuration', 'application_google_analytics_code');
+
         if (trim($account) == '') {
             return true;
         }

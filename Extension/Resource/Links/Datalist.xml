@@ -1,0 +1,7 @@
+<datalist name="Links" extends="Content">
+    <model
+            name="Links"
+            criteria_catalog_type_id="54000"
+            criteria_extension_instance_id="9"
+            />
+</datalist>

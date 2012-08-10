@@ -24,9 +24,11 @@
             <field name="parameters" type="customfield" null="0" default=""/>
             <field name="metadata" type="customfield" null="0" default=""/>
         </fields>
+
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
         </foreignkeys>
+
         <children>
             <child name="SiteApplications" join="application_id"/>
             <child name="ApplicationExtensionInstances" join="application_id"/>
@@ -34,6 +36,7 @@
             <child name="Sessions" join="application_id"/>
             <child name="ApplicationExtensionInstances" join="application_id"/>
         </children>
+
         <plugins>
             <plugin name="Application"/>
             <plugin name="Customfields"/>
@@ -46,6 +49,7 @@
         <customfield name="parameters">
 
             <include name="ParametersApplicationDefaults"/>
+            <include name="ParametersGrid"/>
             <include name="ParametersMail"/>
             <include name="ParametersUrls"/>
             <include name="ParametersSessions"/>

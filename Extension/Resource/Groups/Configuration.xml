@@ -19,8 +19,7 @@
             <customfield name="customfields">
                 <field name="group_web_address" type="url" null="0" default=" "/>
                 <field name="group_email_address" type="email_address" null="0" default=" "/>
-                <field name="group_owner" type="user_id" null="0" default="42"/>
-                <field name="private_to_group_members" type="boolean" null="0" default="1"/>
+                <field name="group_owner" type="user_id" null="0" default="1"/>
                 <field name="group_collection_category_id" type="category_id" null="0" default="1"/>
             </customfield>
         </customfields>

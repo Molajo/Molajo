@@ -1,6 +1,7 @@
 <field name="application_name" type="char" null="0" default="Molajo Application"/>
 <field name="application_home_catalog_id" type="catalog_id" null="0" default="423"/>
 <field name="application_logon_requirement" type="binary" null="0" default="1"/>
+<field name="application_google_analytics_code" type="char" null="0" default=" "/>
 
 <field name="language" type="char" null="0" default="en-GB"/>
 <field name="language_direction" type="char" null="0" default="ltr" values="ltr,rtl"/>

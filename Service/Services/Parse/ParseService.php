@@ -536,48 +536,22 @@ Class ParseService
     {
         Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $model_name = Services::Registry()->get('Parameters', 'model_name');
-        $model_type = Services::Registry()->get('Parameters', 'model_type', 'Table');
-
-        $table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-
-        $controllerClass = 'Molajo\\Controller\\Controller';
-        $connect = new $controllerClass();
-
-        $results = $connect->connect($model_type, $model_name);
-        if ($results == false) {
-            return false;
-        }
-
-        $plugins = Services::Registry()->get($table_registry_name, 'plugins', array());
-        if (count($plugins) == 0) {
-            $plugins = array();
-        }
-
-		$plugins[] = Services::Registry()->get('Parameters', 'template_view_path_node');
-		$plugins[] = APPLICATION;
-
         $parameters = Services::Registry()->getArray('Parameters');
 
         /** Schedule onBeforeParse Event */
         $arguments = array(
-            'table_registry_name' => $table_registry_name,
-            'parameters' => $parameters,
-            'model_name' => $model_name,
-            'model_type' => $model_type,
+            'parameters' => Services::Registry()->getArray('Parameters'),
             'data' => array()
         );
 
         Services::Profiler()->set('ParseService->onBeforeParseEvent '
-                . $table_registry_name
                 . ' Schedules onBeforeParse', LOG_OUTPUT_PLUGINS, VERBOSE
         );
-
+		$plugins = array();
         $arguments = Services::Event()->schedule('onBeforeParse', $arguments, $plugins);
 
         if ($arguments == false) {
             Services::Profiler()->set('ParseService->onBeforeParseEvent '
-                    . $table_registry_name
                     . ' failure ', LOG_OUTPUT_PLUGINS
             );
 
@@ -585,7 +559,6 @@ Class ParseService
         }
 
         Services::Profiler()->set('ParseService->onBeforeParseEvent '
-                . $table_registry_name
                 . ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
         );
 
@@ -622,11 +595,9 @@ Class ParseService
         $arguments = Services::Event()->schedule('onAfterParse', $arguments);
 
         if ($arguments == false) {
-
             Services::Profiler()->set('ParseService->onAfterParseEvent '
                     . ' failure ', LOG_OUTPUT_PLUGINS
             );
-
             return false;
         }
 
