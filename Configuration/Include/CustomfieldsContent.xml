@@ -1,6 +1,0 @@
-<field name="tags" type="char" null="0" default=" "/>
-<field name="categories" type="char" null="0" default=" "/>
-<field name="author_notes" type="char" null="0" default=" " length="500"/>
-<field name="visitor_name" type="char" null="0" default=" "/>
-<field name="email_address" type="char" null="0" default=" "/>
-<field name="website" type="url" null="0" default=" "/>

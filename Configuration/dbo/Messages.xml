@@ -1,5 +1,0 @@
-<model
-        name="Messages"
-        process_plugins="1"
-        data_source="Message">
-</model>

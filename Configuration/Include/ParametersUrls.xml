@@ -1,3 +1,0 @@
-<field name="url_sef" type="binary" null="0" default="1"/>
-<field name="url_unicode_slugs" type="binary" null="0" default="0"/>
-<field name="url_force_ssl" type="binary" null="0" default="0"/>

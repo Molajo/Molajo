@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model name="Stickied">
-    <table>
-        <values>
-            <value id="1" value="Stickied"/>
-            <value id="0" value="Not Stickied"/>
-        </values>
-    </table>
-</model>

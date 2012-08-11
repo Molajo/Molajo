@@ -1,7 +1,0 @@
-<datalist name="Articles" extends="Content">
-    <model
-            name="Articles"
-            criteria_catalog_type_id="10000"
-            criteria_extension_instance_id="1"
-            />
-</datalist>

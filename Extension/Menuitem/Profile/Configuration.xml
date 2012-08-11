@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model name="Profile" extends="Menuitemresources">
-    <customfields>
-        <customfield name="parameters">
-            <include name="Parameterscollection"/>
-            <include name="Customfieldscontent"/>
-        </customfield>
-    </customfields>
-</model>

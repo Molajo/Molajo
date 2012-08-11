@@ -1,8 +1,0 @@
-<field name="user_disable_filter_for_groups" type="char" null="0" default=" "/>
-<field name="user_default_editor" type="char" null="0" default="none"/>
-<field name="user_default_view_access_level" type="binary" null="0" default="0"/>
-<field name="user_new_user_require_administrator_approval" type="binary" null="0" default="0"/>
-<field name="user_new_user_require_email_validation" type="binary" null="0" default="0"/>
-<field name="user_new_user_require_unique_email_address" type="email" null="0" default="0"/>
-<field name="user_allow_email_address_for_username" type="binary" null="0" default="0"/>
-
