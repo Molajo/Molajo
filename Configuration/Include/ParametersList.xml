@@ -1,30 +1,24 @@
-<field name="list_theme_id" type="integer" null="0" default="98"/>
-<field name="list_page_view_id" type="integer" null="0" default="55"/>
+<field name="list_theme_id" type="integer" null="0" default="9020"/>
+
+<field name="list_page_view_id" type="integer" null="0" default="220"/>
 <field name="list_page_view_css_id" type="char" null="0" default=" "/>
 <field name="list_page_view_css_class" type="char" null="0" default=" "/>
-<field name="list_template_view_id" type="integer" null="0" default="33"/>
+
+<field name="list_template_view_id" type="integer" null="0" default="1050"/>
 <field name="list_template_view_css_id" type="char" null="0" default=" "/>
 <field name="list_template_view_css_class" type="char" null="0" default=" "/>
-<field name="list_wrap_view_id" type="integer" null="0" default="66"/>
+
+<field name="list_wrap_view_id" type="integer" null="0" default="2100"/>
 <field name="list_wrap_view_css_id" type="char" null="0" default=" "/>
 <field name="list_wrap_view_css_class" type="char" null="0" default=" "/>
 <field name="list_wrap_view_role" type="char" null="0" default=" "/>
 <field name="list_wrap_view_property" type="char" null="0" default=" "/>
+
 <field name="list_model_name" type="char" null="0" default="Content"/>
 <field name="list_model_type" type="char" null="0" default="Table"/>
 <field name="list_model_query_object" type="char" null="0" default="List"/>
 <field name="list_model_ordering" type="char" null="0" default="start_publishing_datetime"/>
 <field name="list_model_direction" type="char" null="0" default="DESC"/>
-
 <field name="list_model_offset" type="integer" null="0" default="0"/>
 <field name="list_model_count" type="integer" null="0" default="5"/>
 <field name="list_model_use_pagination" type="binary" null="0" default="1"/>
-
-<field name="list_select_archived_content" type="binary" null="0" default="1"/>
-<field name="list_select_featured_content" type="binary" null="0" default="1"/>
-<field name="list_select_stickied_content" type="binary" null="0" default="1"/>
-<field name="list_select_published_date_begin" type="datetime" null="0" default=" "/>
-<field name="list_select_published_date_end" type="datetime" null="0" default=" "/>
-<field name="list_select_category_list" type="char" null="0" default=" "/>
-<field name="list_select_tag_list" type="char" null="0" default=" "/>
-<field name="list_select_author_list" type="char" null="0" default=" "/>

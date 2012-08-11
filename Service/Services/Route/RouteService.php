@@ -226,19 +226,22 @@ Class RouteService
      * However, adding method="PUT" or method="DELETE" within the form works
      *
      * Routing - operate on the collection
+	 *
+	 * GET /people/1
      *
-     * GET/articles - returns a list
-     *
-     * GET/articles/new - create a new article
-     * POST/articles - submit fields for creating a new record
-     *
-     * GET/articles/1 - returns the record with 1 for a primary key
-     * PUT/articles/1 - update the record with 1 for a primary key
-     * DELETE/articles/1 - delete the record with 1 for a primary key
+     * GET /articles - list
+     * GET /articles/new - form for new article
+	 * GET /articles/1/edit - form for edit article 1
+	 *
+     * POST /articles - create new article
+	 * PUT /articles/1,3,4 - update articles 1,3,4
+     * PUT /articles/1 - update article record 1
+     * DELETE /articles/1 - delete the record with 1 for a primary key
      *
      * To compensate for browser limitations
-     * POST/articles/1?_method=DELETE
-     * POST/articles/1?_method=PUT
+	 *
+     * POST /articles/1?_method=DELETE
+     * POST /articles/1?_method=PUT
      *
      * Follow a relationship:
      * GET /articles/1/comments
@@ -408,59 +411,44 @@ Class RouteService
             define('ROUTE', true);
         }
 
-		/**  Menu Item  */
-        if (Services::Registry()->get('Parameters', 'catalog_type_id') == CATALOG_TYPE_MENU_ITEM_RESOURCE) {
-            $response = Helpers::Content()->getMenuItemRoute();
-            if ($response === false) {
-                Services::Error()->set(500, 'Menu Item not found');
-            }
+	  	$catalog_type_id = Services::Registry()->get('Parameters', 'catalog_type_id');
+		$id = Services::Registry()->get('Parameters', 'catalog_source_id');
+		$table = Services::Registry()->get('Parameters', 'catalog_source_table');
+		$catalog_menuitem_type = Services::Registry()->get('Parameters', 'catalog_menuitem_type');
 
-        } else {
+		$type = '';
 
-            $id = Services::Registry()->get('Parameters', 'catalog_source_id');
+		if ((int) $id > 0
+			&& (int) $catalog_type_id == 1050
+			&& trim($table) == '#__extension_instances') {
 
-            $model_type = 'Table';
-            $model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
+			$model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
+			$response = Helpers::Content()->getListRoute($id, 'Table', $model_name, 'Item');
+			if ($response === false) {
+				Services::Error()->set(500, 'Extension not found');
+			}
 
-            if ((int) $id == 0) {
-                $model_query_object = 'list';
-            } else {
-                $model_query_object = 'item';
-            }
+		} elseif ((int) $id > 0
+			&& $catalog_menuitem_type == '') {
 
-            $response = Helpers::Content()->getRouteContent($id, $model_type, $model_name, $model_query_object);
-            if ($response === false) {
-                Services::Error()->set(500, 'Content not found');
+			$model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
+			$response = Helpers::Content()->getRouteItem($id, 'Table', $model_name, 'Item');
+			if ($response === false) {
+				Services::Error()->set(500, 'Content not found');
+				return false;
+			}
 
-                return false;
-            }
-        }
+		} elseif ($catalog_menuitem_type > '') {
 
-        /**  Extension */
-        if ((int) Services::Registry()->get('Parameters', 'catalog_extension_instance_id', 0) > 0) {
+			$response = Helpers::Content()->getRouteTemplateView();
+			if ($response === false) {
+				Services::Error()->set(500, 'Menu Item not found');
+			}
 
-            $response = Helpers::Extension()->getExtension(
-                Services::Registry()->get('Parameters', 'catalog_extension_instance_id'),
-                'Table',
-                'ExtensionInstances'
-            );
-            if ($response === false) {
-                Services::Error()->set(500, 'Extension not found');
-            }
-        }
-
-        /**  Merge in matching Configuration data  */
-        Services::Registry()->merge('Configuration', 'Parameters', true);
-
-        Helpers::Extension()->setThemePageView();
-        Helpers::Extension()->setTemplateWrapModel();
-
-        Services::Registry()->delete('Parameters', 'item*');
-        Services::Registry()->delete('Parameters', 'list*');
-        Services::Registry()->delete('Parameters', 'form*');
-
-        Services::Registry()->sort('Parameters');
-        Services::Registry()->sort('Metadata');
+		} else {
+			Services::Error()->set(500, 'Content not found');
+			return false;
+		}
 
         return true;
     }

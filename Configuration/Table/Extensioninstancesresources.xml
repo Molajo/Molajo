@@ -3,4 +3,18 @@
         name="Extensioninstancesresources"
         catalog_type_id="1050"
         extends="ExtensionInstances">
+    <table>
+        <joins>
+            <join model="Extensions"
+                  alias="content_catalog_type_extension"
+                  select="id,name"
+                  jointo="id"
+                  joinwith="extension_id"/>
+            <join model="CatalogTypes"
+                  alias="content_catalog_types"
+                  select="id,type,title,extension_instance_id,model_name,primary_category_id,source_table,slug,routable"
+                  jointo="model_name"
+                  joinwith="content_catalog_type_extension.name"/>
+        </joins>
+    </table>
 </model>

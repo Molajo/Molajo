@@ -151,8 +151,9 @@ Class CatalogHelper
 
         $m->set('id', (int) $catalog_id);
         $m->set('use_special_joins', 1);
+		$m->set('process_plugins', 0);
 
-        $item = $m->getData('item');
+		$item = $m->getData('item');
 
         if (count($item) == 0) {
             return array();

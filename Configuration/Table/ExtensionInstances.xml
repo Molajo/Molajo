@@ -32,13 +32,15 @@
             <include name="Metadata"/>
         </customfield>
         <customfield name="parameters">
+            <include name="ParametersGrid"/>
+            <include name="ParametersCache"/>
+            <include name="ParametersGravatar"/>
             <include name="ParametersCommon"/>
+            <include name="ParametersImage"/>
             <include name="ParametersAssets"/>
             <include name="ParametersList"/>
             <include name="ParametersItem"/>
-            <include name="ParametersLog"/>
-            <include name="ParametersCommon"/>
-            <include name="ParametersCache"/>
+            <include name="ParametersForm"/>
         </customfield>
     </customfields>
 </model>
