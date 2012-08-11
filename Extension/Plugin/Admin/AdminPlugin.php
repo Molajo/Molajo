@@ -28,7 +28,6 @@ class AdminPlugin extends ContentPlugin
      */
     public function onBeforeParse()
     {
-
         /** Only used for the Admin */
         if (APPLICATION_ID == 2) {
         } else {
@@ -39,21 +38,50 @@ class AdminPlugin extends ContentPlugin
         $controllerClass = 'Molajo\\Controller\\Controller';
         $connect = new $controllerClass();
 
-        $results = $connect->connect(
-            $this->get('model_type'),
-            $this->get('model_name')
-        );
-
+        $results = $connect->connect($this->get('model_type'), $this->get('model_name'));
         if ($results == false) {
             return false;
         }
 
-        /** Create Admin Menus, verifying ACL */
+		$this->setBreadcrumbs();
+
         $this->setMenu();
+
         $this->setPageTitle();
 
         return true;
     }
+
+	/**
+	 * Set breadcrumbs
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	protected function setBreadcrumbs()
+	{
+		$current_menuitem_id = Services::Registry()->get('Parameters', 'parent_menuid', '0');
+
+		if ($current_menuitem_id == 0) {
+			$current_menuitem_id = Services::Registry()->get('Parameters', 'catalog_source_id');
+			$item_id = 0;
+		} else {
+			$item_id = Services::Registry()->get('Parameters', 'catalog_id');
+		}
+
+		/** Breadcrumbs */
+		$bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id);
+
+		$activeCatalogID = array();
+		foreach ($bread_crumbs as $item) {
+			$activeCatalogID[] = $item->catalog_id;
+		}
+		if ($item_id > 0) {
+			$activeCatalogID[] = $item_id;
+		}
+
+		Services::Registry()->set('Plugindata', 'Adminbreadcrumbs', $bread_crumbs);
+	}
 
     /**
      * Retrieve an array of values that represent the active menuitem ids for a specific menu
@@ -63,30 +91,6 @@ class AdminPlugin extends ContentPlugin
      */
     protected function setMenu()
     {
-        /** Detail rows are not defined as menu items but rather tied to a parent menuitem id */
-        $current_menuitem_id = Services::Registry()->get('Parameters', 'parent_menuid', '0');
-
-        /** Normal menu item is current */
-        if ($current_menuitem_id == 0) {
-            $current_menuitem_id = Services::Registry()->get('Parameters', 'catalog_source_id');
-            $item_id = 0;
-        } else {
-            $item_id = Services::Registry()->get('Parameters', 'catalog_id');
-        }
-
-        /** Breadcrumbs */
-        $bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id);
-
-        $activeCatalogID = array();
-        foreach ($bread_crumbs as $item) {
-            $activeCatalogID[] = $item->catalog_id;
-        }
-        if ($item_id > 0) {
-            $activeCatalogID[] = $item_id;
-        }
-
-        Services::Registry()->set('Plugindata', 'Adminbreadcrumbs', $bread_crumbs);
-
         $menuArray = array();
 
         // 1. Home

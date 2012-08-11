@@ -50,6 +50,7 @@
 
             <include name="ParametersApplicationDefaults"/>
             <include name="ParametersGrid"/>
+            <include name="ParametersDashboard"/>
             <include name="ParametersMail"/>
             <include name="ParametersUrls"/>
             <include name="ParametersSessions"/>

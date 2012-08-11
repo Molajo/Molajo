@@ -1,4 +1,7 @@
-{   "grid_toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",
+{
+    "1":{},
+    "2":{
+    "grid_toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",
     "grid_submenu_items":"items,categories,drafts",
     "grid_search":"1",
     "grid_lists":"status",
@@ -107,4 +110,5 @@
     "enable_tweets":"1",
     "enable_ping":"1",
     "enable_captcha_option":"0"
+    }
 }

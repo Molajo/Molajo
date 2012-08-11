@@ -245,7 +245,6 @@ Class ContentHelper
 	 */
 	protected function getParameters($type, $parmName)
 	{
-
 		/** Save the type... */
 		Services::Registry()->set('Parameters', 'parameter_type', $type);
 
@@ -308,7 +307,6 @@ Class ContentHelper
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
-
 		/** Remove standard patterns no longer needed */
 		Services::Registry()->delete('Parameters', 'list*');
 		Services::Registry()->delete('Parameters', 'item*');
@@ -316,7 +314,6 @@ Class ContentHelper
 		Services::Registry()->delete('Parameters', 'menuitem*');
 
 		Services::Registry()->get('Parameters', '*');
-		die;
 
 		return true;
 	}
