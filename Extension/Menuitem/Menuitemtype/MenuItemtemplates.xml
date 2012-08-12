@@ -1,3 +1,0 @@
-<extension type="Menuitem" version="1.0" extends="Menuitem">
-    <model name="Menuitemtemplates" catalog_type_id="2200"/>
-</extension>

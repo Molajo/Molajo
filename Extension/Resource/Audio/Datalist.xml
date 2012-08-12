@@ -1,7 +1,0 @@
-<datalist name="Audio" extends="Media">
-    <model
-            name="Audio"
-            criteria_catalog_type_id="53000"
-            criteria_extension_instance_id="2"
-            />
-</datalist>
