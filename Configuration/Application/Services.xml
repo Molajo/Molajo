@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<services>
+    <service>Registry</service>
+    <service>Cache</service>
+    <service>Profiler</service>
+    <service>Error</service>
+    <service>Version</service>
+    <service>Client</service>
+    <service>Url</service>
+    <service>Text</service>
+    <service>Mail</service>
+    <service>Filesystem</service>
+    <service>Message</service>
+    <service>JDatabase</service>
+    <service>Configuration</service>
+    <service>Log</service>
+    <service>Event</service>
+    <service>Route</service>
+    <service>Cookie</service>
+    <service>Session</service>
+    <service>Response</service>
+    <service>Redirect</service>
+    <service>Language</service>
+    <service>Date</service>
+    <service>Asset</service>
+    <service>User</service>
+    <service>Authorisation</service>
+    <service>Metadata</service>
+    <service>Image</service>
+    <service>Filter</service>
+    <service>Parse</service>
+    <service>Password</service>
+    <service>Authentication</service>
+    <service>Search</service>
+    <service>Install</service>
+    <service>Menu</service>
+</services>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Media" version="1.0" extends="Content">
+    <name>RESOURCE_MEDIA_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>RESOURCE_MEDIA_DESCRIPTION</description>
+    <model name="Media" catalog_type_id="50000,51000,52000,53000,54000">
+        <customfields>
+            <customfield name="customfields">
+                <field name="file_type" type="char" null="0" default=" "/>
+                <field name="dimensions" type="char" null="0" default=" "/>
+                <field name="file_url" type="url" null="0" default=" "/>
+                <field name="caption" type="char" null="0" default=" "/>
+                <field name="credits" type="char" null="0" default=" "/>
+                <field name="license" type="char" null="0" default=" "/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

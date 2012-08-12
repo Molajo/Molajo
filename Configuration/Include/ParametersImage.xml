@@ -1,0 +1,7 @@
+<field name="image_xsmall" type="char" null="0" default="50,50"/>
+<field name="image_small" type="char" null="0" default="75,75"/>
+<field name="image_medium" type="char" null="0" default="150,150"/>
+<field name="image_large" type="char" null="0" default="300,300"/>
+<field name="image_xlarge" type="char" null="0" default="500,350"/>
+<field name="image_folder" type="folder" null="0" default="Images"/>
+<field name="image_thumb_folder" type="folder" null="0" default="Thumbs"/>

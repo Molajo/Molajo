@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Resource" version="1.0" extends="Content">
+    <name>RESOURCE_SAMPLES_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>RESOURCE_SAMPLES_DESCRIPTION</description>
+    <model name="Samples" catalog_type_id="xxxxx">
+        <customfields>
+            <customfield name="parameters">
+                <field name="tags" type="tags" null="0" default="1"/>
+            </customfield>
+            <customfield name="customfields">
+                <field name="intro_text_image" type="file" null="0" default="1"/>
+                <field name="full_text_image" type="file" null="0" default="1"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

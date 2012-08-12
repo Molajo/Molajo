@@ -1,0 +1,4 @@
+<include name="ParametersCommon"/>
+<include name="ParametersImage"/>
+<include name="ParametersAssets"/>
+<include name="ParametersCache"/>

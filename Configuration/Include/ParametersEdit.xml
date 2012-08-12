@@ -1,0 +1,13 @@
+<field name="edit_toolbar_buttons_new" type="char" null="0"
+       default="new,edit,publish,feature,archive,checkin,restore,delete,trash,options"
+       values="apply,archive,delete,display,feature,publish,restore,spam,sticky,trash,
+       unfeature,unpublished,unsticky,saveandclose,saveandnew,saveascopy,close,help"/>
+
+<field name="edit_toolbar_buttons_edit" type="char" null="0"
+       default="apply,delete,display,feature,publish,saveandclose,saveascopy,close"
+       values="apply,archive,delete,display,feature,publish,restore,spam,sticky,trash,
+       unfeature,unpublished,unsticky,saveandclose,saveandnew,saveascopy,close,help"/>
+
+<field name="edit_columns" type="char" null="0"
+       default="title,id,featured,start_publishing_datetime,language,ordering"
+      />

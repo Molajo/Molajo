@@ -1,0 +1,7 @@
+<datalist name="Categories" extends="Content">
+    <model
+            name="Categories"
+            criteria_catalog_type_id="3000"
+            criteria_extension_instance_id="3"
+            />
+</datalist>

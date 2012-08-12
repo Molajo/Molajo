@@ -1,0 +1,6 @@
+<field name="title" type="char" null="0" default=" "/>
+<field name="description" type="char" null="0" default=" "/>
+<field name="keywords" type="char" null="0" default=" "/>
+<field name="robots" type="char" null="0" default="follow,index"/>
+<field name="author" type="char" null="0" default=" "/>
+<field name="content_rights" type="char" null="0" default=" "/>

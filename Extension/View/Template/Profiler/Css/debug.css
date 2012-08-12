@@ -1,0 +1,8 @@
+/*
+@package     Molajo
+@subpackage  CSS
+@copyright   Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.
+@license     GNU GPL v 2, or later and MIT, see License folder
+*/
+#accordion div{height:0;overflow:hidden;-webkit-transition:height 600ms ease}
+#accordion div:target{height:110px}

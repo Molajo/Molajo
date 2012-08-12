@@ -1,0 +1,2 @@
+<field name="dashboard_section" type="char" null="0" default=" "/>
+<field name="dashboard_portlet" type="char" null="0" default=" "/>

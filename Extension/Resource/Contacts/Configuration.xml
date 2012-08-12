@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Contact" version="1.0" extends="Content">
+    <name>RESOURCE_CONTACTS_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>RESOURCE_CONTACTS_DESCRIPTION</description>
+    <model name="Contacts" catalog_type_id="20000">
+        <customfields>
+            <customfield name="customfields">
+                <field name="contact_name" type="char" null="0" default=" "/>
+                <field name="userid" type="userid" null="0" default=" "/>
+                <field name="website" type="url" null="0" default=" "/>
+                <field name="image" type="file" null="0" default=" "/>
+                <field name="email_address" type="char" null="0" default=" "/>
+                <field name="mailing_address" type="char" null="0" default=" "/>
+                <field name="country" type="char" null="0" default=" "/>
+                <field name="phone_number" type="phone" null="0" default=" "/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

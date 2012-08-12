@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Protected">
+    <table>
+        <values>
+            <value id="1" value="Protected"/>
+            <value id="0" value="Not Protected"/>
+        </values>
+    </table>
+</model>

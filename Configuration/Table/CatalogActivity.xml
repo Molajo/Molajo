@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="CatalogActivity"
+        table="#__catalog_activity"
+        primary_key="id"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="0"
+        check_view_level_access="0"
+        process_plugins="1"
+        data_source="JDatabase">
+
+    <table>
+        <fields>
+            <field name="id" type="integer" null="0" default=" " identity="1"/>
+            <field name="catalog_id" type="catalog_id" null="0" default=""/>
+            <field name="user_id" type="integer" null="0" default="0"/>
+            <field name="action_id" type="integer" null="0" default=""/>
+            <field name="rating" type="integer" null="0" default=" "/>
+            <field name="activity_datetime" type="datetime" null="0" default=""/>
+            <field name="ip_address" type="ip_address" null="0" default=""/>
+            <field name="customfields" type="customfield" null="0" default=" "/>
+        </fields>
+
+        <plugins>
+            <plugin name="Dateformats"/>
+            <plugin name="Ipaddress"/>
+        </plugins>
+
+        <foreignkeys>
+            <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+            <foreignkey name="user_id" source_id="id" source_model="Users" required="0"/>
+            <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>
+        </foreignkeys>
+    </table>
+</model>

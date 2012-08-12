@@ -1,0 +1,3 @@
+<field name="cache" type="binary" null="0" default="0"/>
+<field name="cache_time" type="integer" null="0" default="15"/>
+<field name="cache_handler" type="char" null="0" default="file"/>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defines>
+    <define name="STOP_LOOP" value="100"/>
+
+    <define name="CRLF" value="\n"/>
+    <define name="TAB" value="\t"/>
+
+    <define name="ACTION_LOGIN" value="login"/>
+    <define name="ACTION_CREATE" value="create"/>
+    <define name="ACTION_VIEW" value="view"/>
+    <define name="ACTION_EDIT" value="edit"/>
+    <define name="ACTION_PUBLISH" value="publish"/>
+    <define name="ACTION_DELETE" value="delete"/>
+    <define name="ACTION_ADMIN" value="admin"/>
+
+    <define name="CATALOG_TYPE_BASE_BEGIN" value="0"/>
+    <define name="CATALOG_TYPE_BASE_CORE" value="1"/>
+    <define name="CATALOG_TYPE_BASE_SITE" value="10"/>
+    <define name="CATALOG_TYPE_BASE_APPLICATION" value="50"/>
+    <define name="CATALOG_TYPE_BASE_END" value="99"/>
+
+    <define name="CATALOG_TYPE_GROUP_BEGIN" value="100"/>
+    <define name="CATALOG_TYPE_GROUP_SYSTEM" value="110"/>
+    <define name="CATALOG_TYPE_GROUP_USER" value="120"/>
+    <define name="CATALOG_TYPE_GROUP_NORMAL" value="130"/>
+    <define name="CATALOG_TYPE_GROUP_FRIEND" value="140"/>
+    <define name="CATALOG_TYPE_GROUP_END" value="199"/>
+
+    <define name="CATALOG_TYPE_USER_BEGIN" value="500"/>
+    <define name="CATALOG_TYPE_USER" value="500"/>
+    <define name="CATALOG_TYPE_USER_END" value="599"/>
+
+    <define name="CATALOG_TYPE_EXTENSION_BEGIN" value="1000"/>
+    <define name="CATALOG_TYPE_EXTENSION_RESOURCE" value="1050"/>
+    <define name="CATALOG_TYPE_EXTENSION_LANGUAGE" value="1100"/>
+    <define name="CATALOG_TYPE_EXTENSION_PAGE_VIEW" value="1150"/>
+    <define name="CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW" value="1200"/>
+    <define name="CATALOG_TYPE_EXTENSION_WRAP_VIEW" value="1250"/>
+    <define name="CATALOG_TYPE_EXTENSION_MENU" value="1300"/>
+    <define name="CATALOG_TYPE_EXTENSION_SERVICE" value="1425"/>
+    <define name="CATALOG_TYPE_EXTENSION_PLUGIN" value="1450"/>
+    <define name="CATALOG_TYPE_EXTENSION_THEME" value="1500"/>
+    <define name="CATALOG_TYPE_EXTENSION_END" value="1999"/>
+
+    <define name="CATALOG_TYPE_MENU_ITEM_BEGIN" value="2000"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_LINK" value="2100"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_TEMPLATE_VIEW" value="2200"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_SEPARATOR" value="2300"/>
+    <define name="CATALOG_TYPE_MENU_ITEM_END" value="2999"/>
+
+    <define name="CATALOG_TYPE_CATEGORY_BEGIN" value="3000"/>
+    <define name="CATALOG_TYPE_CATEGORY_SYSTEM" value="3100"/>
+    <define name="CATALOG_TYPE_CATEGORY_COLLECTIONS" value="3200"/>
+    <define name="CATALOG_TYPE_CATEGORY_LIST" value="3300"/>
+    <define name="CATALOG_TYPE_CATEGORY_TAG" value="3400"/>
+    <define name="CATALOG_TYPE_CATEGORY_FRIEND" value="3500"/>
+    <define name="CATALOG_TYPE_CATEGORY_END" value="3999"/>
+
+    <define name="STATUS_ARCHIVED" value="2"/>
+    <define name="STATUS_PUBLISHED" value="1"/>
+    <define name="STATUS_UNPUBLISHED" value="0"/>
+    <define name="STATUS_TRASHED" value="-1"/>
+    <define name="STATUS_SPAMMED" value="-2"/>
+    <define name="STATUS_DRAFT" value="-5"/>
+    <define name="STATUS_VERSION" value="-10"/>
+
+    <define name="MESSAGE_TYPE_SUCCESS" value="success"/>
+    <define name="MESSAGE_TYPE_INFORMATION" value="information"/>
+    <define name="MESSAGE_TYPE_WARNING" value="warning"/>
+    <define name="MESSAGE_TYPE_ERROR" value="error"/>
+
+    <define name="SYSTEM_GROUP_PUBLIC" value="1"/>
+    <define name="SYSTEM_GROUP_GUEST" value="2"/>
+    <define name="SYSTEM_GROUP_REGISTERED" value="3"/>
+    <define name="SYSTEM_GROUP_ADMINISTRATOR" value="4"/>
+
+    <define name="LOG_TYPE_ALL" value="30719"/>
+    <define name="LOG_TYPE_EMERGENCY" value="1"/>
+    <define name="LOG_TYPE_ALERT" value="2"/>
+    <define name="LOG_TYPE_CRITICAL" value="4"/>
+    <define name="LOG_TYPE_ERROR" value="8"/>
+    <define name="LOG_TYPE_WARNING" value="16"/>
+    <define name="LOG_TYPE_NOTICE" value="32"/>
+    <define name="LOG_TYPE_INFO" value="64"/>
+    <define name="LOG_TYPE_PROFILER" value="128"/>
+
+    <define name="LOG_OUTPUT_ACTIONS" value="Actions"/>
+    <define name="LOG_OUTPUT_APPLICATION" value="Application"/>
+    <define name="LOG_OUTPUT_AUTHORISATION" value="Authorisation"/>
+    <define name="LOG_OUTPUT_QUERIES" value="Queries"/>
+    <define name="LOG_OUTPUT_REGISTRY" value="Registry"/>
+    <define name="LOG_OUTPUT_RENDERING" value="Rendering"/>
+    <define name="LOG_OUTPUT_ROUTING" value="Routing"/>
+    <define name="LOG_OUTPUT_SERVICES" value="Services"/>
+    <define name="LOG_OUTPUT_PLUGINS" value="Plugins"/>
+
+    <define name="VERBOSE" value="1"/>
+
+    <define name="LOG_FORMATTEDTEXT_LOGGER" value="formattedtext"/>
+    <define name="LOG_ECHO_LOGGER" value="echo"/>
+    <define name="LOG_DATABASE_LOGGER" value="database"/>
+    <define name="LOG_MESSAGES_LOGGER" value="messages"/>
+    <define name="LOG_EMAIL_LOGGER" value="email"/>
+    <define name="LOG_CONSOLE_LOGGER" value="console"/>
+
+    <define name="START_INITIALISE" value="Initialise"/>
+    <define name="START_ROUTING" value="Routing"/>
+    <define name="START_AUTHORISATION" value="Authorisation"/>
+    <define name="START_EXECUTE" value="Execute"/>
+    <define name="START_RESPONSE" value="Response"/>
+
+    <define name="AUTHENTICATE_STATUS_SUCCESS" value="1"/>
+    <define name="AUTHENTICATE_STATUS_CANCEL" value="2"/>
+    <define name="AUTHENTICATE_STATUS_FAILURE" value="4"/>
+
+</defines>

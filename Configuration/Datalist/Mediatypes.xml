@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Mediatypes">
+    <table>
+        <values>
+            <value id="50000" value="Images"/>
+            <value id="51000" value="Files"/>
+            <value id="52000" value="Video"/>
+            <value id="53000" value="Audio"/>
+            <value id="54000" value="Links"/>
+        </values>
+    </table>
+</model>

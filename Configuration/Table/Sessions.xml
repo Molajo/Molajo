@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Sessions"
+        table="#__group_view_groups"
+        primary_key="id"
+        data_source="JDatabase">
+    <table>
+        <fields>
+            <field name="session_id" type="char" null="0" default=""/>
+            <field name="application_id" type="integer" null="0" default=""/>
+            <field name="session_time" type="char" null="0" default=""/>
+            <field name="data" type="text" null="0" default=" "/>
+            <field name="user_id" type="integer" null="0" default=""/>
+        </fields>
+        <foreignkeys>
+            <foreignkey name="user_id" source_id="id" source_model="UsersModel" required="1"/>
+            <foreignkey name="application_id" source_id="id" source_model="ApplicationsModel" required="1"/>
+        </foreignkeys>
+    </table>
+</model>

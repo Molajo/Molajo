@@ -1,0 +1,5 @@
+<model
+        name="Parameters"
+        process_plugins="1"
+        data_source="Registry">
+</model>

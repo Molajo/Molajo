@@ -1,0 +1,5 @@
+<model
+        name="Wraps"
+        process_plugins="0"
+        data_source="Dummy">
+</model>

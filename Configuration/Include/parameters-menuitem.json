@@ -1,0 +1,66 @@
+{
+    "1":{},
+    "2":{
+
+        "dashboard_section":"Molajo Administrator",
+        "dashboard":"Portletgallery,Portletlist,Portletcustom,Portletfeed,Portletvideo,Portletmap,Portletbargraph,Portletquicklinks,Portletsysteminfo,Portletgallery,Portletweather,Portletaudio",
+
+        "cache":"0",
+        "cache_time":"5",
+        "cache_handler":"file",
+
+        "gravatar":"1",
+        "gravatar_size":"50",
+        "gravatar_type":"mm",
+        "gravatar_rating":"pg",
+        "gravatar_image":"1",
+
+        "criteria_title":"Molajo",
+        "criteria_display_view_on_no_results":"0",
+        "criteria_snippet_length":"150",
+        "criteria_status":"1,2",
+        "criteria_catalog_type_id":"",
+        "criteria_extension_instance_id":"",
+
+        "image_xsmall":"50,50",
+        "image_small":"75,75",
+        "image_medium":"150,150",
+        "image_large":"350,200",
+        "image_xlarge":"500,350",
+        "image_folder":"Images",
+        "image_thumb_folder":"Thumbs",
+
+        "asset_priority_site":"100",
+        "asset_priority_application":"200",
+        "asset_priority_user":"300",
+        "asset_priority_extension":"400",
+        "asset_priority_request":"500",
+        "asset_priority_primary_category":"600",
+        "asset_priority_menuitem":"700",
+        "asset_priority_list":"700",
+        "asset_priority_item":"800",
+        "asset_priority_theme":"900",
+
+        "menuitem_type":"",
+
+        "menuitem_source_id":"",
+        "menuitem_source_catalog_type_id":"",
+        "menuitem_extension_instance_id":"",
+
+        "menuitem_theme_id":"9020",
+        "menuitem_page_view_id":"205",
+        "menuitem_page_view_css_id":"",
+        "menuitem_page_view_css_class":"",
+        "menuitem_template_view_id":"1030",
+        "menuitem_template_view_css_id":"",
+        "menuitem_template_view_css_class":"",
+        "menuitem_wrap_view_id":"2100",
+        "menuitem_wrap_view_css_id":"",
+        "menuitem_wrap_view_css_class":"",
+        "menuitem_wrap_view_role":"",
+        "menuitem_wrap_view_property":"",
+        "menuitem_model_name":"Parameters",
+        "menuitem_model_type":"dbo",
+        "menuitem_model_query_object":"getParameters"
+    }
+}

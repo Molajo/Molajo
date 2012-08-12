@@ -1,0 +1,16 @@
+<field name="application_name" type="char" null="0" default="Molajo Application"/>
+<field name="application_home_catalog_id" type="catalog_id" null="0" default="423"/>
+<field name="application_logon_requirement" type="binary" null="0" default="1"/>
+<field name="application_google_analytics_code" type="char" null="0" default=" "/>
+
+<field name="language" type="char" null="0" default="en-GB"/>
+<field name="language_direction" type="char" null="0" default="ltr" values="ltr,rtl"/>
+<field name="language_multilingual" type="binary" null="0" default="0"/>
+<field name="language_utc_offset" type="char" null="0" default="UTC"/>
+
+<field name="system_cache_folder" type="char" null="0" default="cache"/>
+<field name="system_logs_folder" type="char" null="0" default="logs"/>
+<field name="system_temp_folder" type="char" null="0" default="temp"/>
+<field name="system_temp_url" type="char" null="0" default="temp"/>
+<field name="system_media_folder" type="char" null="0" default="media"/>
+<field name="system_media_url" type="char" null="0" default="media"/>

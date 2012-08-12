@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Users"
+        table="#__users"
+        primary_key="id"
+        name_key="username"
+        primary_prefix="a"
+        get_customfields="2"
+        get_item_children="1"
+        use_special_joins="0"
+        check_view_level_access="0"
+        process_plugins="1"
+        catalog_type_id="500"
+        data_source="JDatabase">
+
+    <table>
+        <fields>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
+            <field name="catalog_type_id" type="integer" null="0" default="500" values="500"/>
+            <field name="username" type="char" null="0" default="" unique="1"/>
+            <field name="first_name" type="char" null="0" default=""/>
+            <field name="last_name" type="char" null="0" default=""/>
+            <field name="full_name" type="char" null="0" default=""/>
+            <field name="content_text" type="text" null="0" default=" "/>
+            <field name="email" type="email" null="0" default=""/>
+            <field name="password" type="password" null="0" default=""/>
+            <field name="block" type="boolean" null="0" default="0"/>
+            <field name="register_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+            <field name="activation_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+            <field name="last_visit_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+            <field name="customfields" type="customfield" null="0" default=" "/>
+            <field name="parameters" type="customfield" null="0" default=" "/>
+            <field name="metadata" type="customfield" null="0" default=" "/>
+        </fields>
+
+        <foreignkeys>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+        </foreignkeys>
+
+        <children>
+            <child name="UserActivity" join="user_id"/>
+            <child name="UserApplications" join="user_id"/>
+            <child name="UserGroups" join="user_id"/>
+            <child name="UserViewGroups" join="user_id"/>
+        </children>
+
+        <plugins>
+            <plugin name="Email"/>
+            <plugin name="Password"/>
+            <plugin name="Username"/>
+            <plugin name="Fullname"/>
+            <plugin name="Gravatar"/>
+            <plugin name="Smilies"/>
+            <plugin name="Snippet"/>
+            <plugin name="Readmore"/>
+            <plugin name="Dateformats"/>
+        </plugins>
+    </table>
+    <customfields>
+
+        <customfield name="parameters">
+            <field name="display_gravatar" type="boolean" null="0" default="0"/>
+            <field name="display_birthdate" type="boolean" null="0" default="0"/>
+            <field name="display_email" type="boolean" null="0" default="0"/>
+
+            <field name="item_theme_id" type="integer" null="0" default=" "/>
+            <field name="item_page_view_id" type="integer" null="0" default=" "/>
+            <field name="item_page_view_css_id" type="char" null="0" default=" "/>
+            <field name="item_page_view_css_class" type="char" null="0" default=" "/>
+
+            <field name="form_theme_id" type="integer" null="0" default=" "/>
+            <field name="form_page_view_id" type="integer" null="0" default=" "/>
+            <field name="form_page_view_css_id" type="char" null="0" default=" "/>
+            <field name="form_page_view_css_class" type="char" null="0" default=" "/>
+
+            <field name="list_theme_id" type="integer" null="0" default=" "/>
+            <field name="list_page_view_id" type="integer" null="0" default=" "/>
+            <field name="list_page_view_css_id" type="char" null="0" default=" "/>
+            <field name="list_page_view_css_class" type="char" null="0" default=" "/>
+        </customfield>
+
+        <customfield name="customfields">
+            <field name="gender" type="char" null="0" default=" " values="M,F"/>
+            <field name="about_me" type="text" null="0" default=" "/>
+            <field name="twitter" type="url" null="0" default=" "/>
+            <field name="editor" type="integer" null="0" default="1"/>
+            <field name="language" type="char" null="0" default="en-GB" values="en-GB"/>
+            <field name="date_of_birth" type="datetime" null="0" default=" "/>
+            <field name="personal_email" type="email" null="0" default=""/>
+        </customfield>
+
+        <customfield name="metadata">
+            <include name="Metadata"/>
+        </customfield>
+
+    </customfields>
+</model>

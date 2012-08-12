@@ -1,0 +1,2 @@
+<field name="cookie_domain" type="binary" null="0" default="0"/>
+<field name="cookie_path" type="char" null="0" default=" "/>

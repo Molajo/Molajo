@@ -1,0 +1,15 @@
+.float-left { float: left; }
+.clear { clear:both; }
+.weather-wrapper { margin: 0; width: 100%}
+.weather-wrapper .weather { margin-bottom: 10px; }
+.weather-wrapper .current { margin-bottom: 0px; }
+.weather-wrapper .location , .weather-wrapper .separator { font-size: 1.3em; font-weight: bold; padding-bottom: 6px; margin-bottom: 12px; border-bottom: 1px solid #acacac; }
+.weather-wrapper .location { padding-top: 6px; }
+.weather-wrapper .separator { margin-top: 12px; font-size: 1em; }
+.weather-wrapper .weather .weather-icon  { padding: 6px 10px 12px 0; margin-left: 0px; }
+.weather-wrapper .weather .weather-icon .spacer { width: 40px; height: 40px; }
+.weather-wrapper .weather .weather-info { width: 130px; border-left: 1px solid #c9c9c6; padding-left: 10px; margin-right: 0px; }
+.weather-wrapper .weather .weather-info .temp , .weather-wrapper .weather .weather-info .condition { font-weight: bold; }
+.weather-wrapper .weather .weather-info .temp { font-size: 2em; }
+.weather-wrapper .weather .weather-info .wind { font-size: 0.8em; line-height: 1.5em; margin-bottom: 1em; }
+.weather { clear: both; width: 100%; }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Pages"
+        table="#__extension_instances"
+        primary_key="id"
+        name_key="title"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="1"
+        check_view_level_access="0"
+        process_plugins="0"
+        criteria_catalog_type_id="1150"
+        criteria_published_status="1"
+        data_source="JDatabase">
+    <table>
+        <fields>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
+            <field name="title" type="char" null="0" default="" unique="1"/>
+        </fields>
+        >
+        <joins>
+            <join model="Extensions"
+                  alias="extensions"
+                  select=""
+                  jointo="id"
+                  joinwith="extension_id"/>
+            <join model="ApplicationExtensionInstances"
+                  alias="application_extension_instances"
+                  select=""
+                  jointo="extension_instance_id,application_id"
+                  joinwith="id,APPLICATION_ID"/>
+            <join model="SiteExtensionInstances"
+                  alias="site_extension_instances"
+                  select=""
+                  jointo="extension_instance_id,site_id"
+                  joinwith="id,SITE_ID"/>
+        </joins>
+        <plugins>
+            <plugin name="Publishedstatus"/>
+        </plugins>
+
+    </table>
+</model>
