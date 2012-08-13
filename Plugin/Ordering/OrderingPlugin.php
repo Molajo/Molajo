@@ -48,7 +48,7 @@ class OrderingPlugin extends ContentPlugin
 			|| (int)$fieldValue == 0
 		) {
 
-			$controllerClass = 'Molajo\\Controller\\Controller';
+			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
 			$results = $m->connect($this->get('model_type'), $this->get('model_name'));
 			if ($results == false) {

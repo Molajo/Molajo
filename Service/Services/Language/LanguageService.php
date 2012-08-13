@@ -7,7 +7,7 @@
 namespace Molajo\Service\Services\Language;
 
 use Molajo\Service\Services;
-use Molajo\Extension\Helper\ExtensionHelper;
+use Molajo\Helper\ExtensionHelper;
 
 defined('MOLAJO') or die;
 
@@ -122,15 +122,12 @@ Class LanguageService
 			$language = Services::Registry()->get('Languages', 'Current');
 		}
 
-		return Services::Registry()->get(
-			$language,
-			$property,
-			$default
-		);
+		return Services::Registry()->get($language, $property, $default);
 	}
 
 	/**
-	 * Loads the requested language file (as specified by path). If not successful, loads default language.
+	 * Loads the requested language file (as specified by path).
+	 * If not successful, loads default language.
 	 *
 	 * @param string $path
 	 *

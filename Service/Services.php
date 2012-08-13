@@ -188,5 +188,7 @@ Class Services
 			Services::Registry()->set('Service', $key, true);
 		}
 
+		echo $this->message[$i] . '<br />';
+
 	}
 }

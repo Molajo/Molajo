@@ -110,7 +110,7 @@ Class TextService
 	 */
 	public function getList($filter, $parameters)
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Datalist', $filter);
 		if ($results == false) {

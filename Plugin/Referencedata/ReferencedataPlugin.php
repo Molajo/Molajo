@@ -53,7 +53,7 @@ class ReferencedataPlugin extends ContentPlugin
 
 					$new_name = $field->name . '_value';
 
-					$controllerClass = 'Molajo\\Controller\\Controller';
+					$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 					$m = new $controllerClass();
 					$m->connect('Table', $fk->source_model);
 

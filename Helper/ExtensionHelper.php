@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license   GNU General Public License version 2 or later; see LICENSE
  */
-namespace Molajo\Extension\Helper;
+namespace Molajo\Helper;
 
 use Molajo\Service\Services;
 use Molajo\Helpers;
@@ -125,7 +125,7 @@ Class ExtensionHelper
 			$phase = LOG_OUTPUT_RENDERING;
 		}
 
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
 		$m->connect($model_type, $model_name);
@@ -184,7 +184,7 @@ Class ExtensionHelper
 	 */
 	public function getInstanceID($catalog_type_id, $title)
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$query_results = $m->connect('Table', 'ExtensionInstances');
 		if ($query_results == false) {
@@ -212,7 +212,7 @@ Class ExtensionHelper
 	 */
 	public function getInstanceTitle($extension_instance_id)
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$query_results = $m->connect('Table', 'ExtensionInstances');
 		if ($query_results == false) {
@@ -239,7 +239,7 @@ Class ExtensionHelper
 	 */
 	public function getExtensionNode($extension_instance_id)
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
 		$query_results = $m->connect('Table', 'Extensions');

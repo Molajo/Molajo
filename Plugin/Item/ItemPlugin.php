@@ -68,7 +68,7 @@ class ItemPlugin extends ContentPlugin
 	 */
 	protected function getComments()
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 		$results = $connect->connect('Table', 'Comments');
 		if ($results == false) {

@@ -254,7 +254,7 @@ class Controller
 		Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 
 		/* 2. Instantiate Model Class */
-		$modelClass = 'Molajo\\Model\\' . $model_class;
+		$modelClass = 'Molajo\\MVC\\Model\\' . $model_class;
 
 		try {
 			$this->model = new $modelClass();

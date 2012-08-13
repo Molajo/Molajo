@@ -102,7 +102,7 @@ class CatalogPlugin extends ContentPlugin
 	 */
 	public function onBeforeDelete()
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$m->connect();
 

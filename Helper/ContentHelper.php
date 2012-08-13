@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Helper;
+namespace Molajo\Helper;
 
 use Molajo\Helpers;
 use Molajo\Service\Services;
@@ -212,7 +212,7 @@ Class ContentHelper
 				. ' Model Query: ' . $model_query_object,
 			LOG_OUTPUT_ROUTING, VERBOSE);
 
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect($model_type, $model_name);
 		if ($results == false) {

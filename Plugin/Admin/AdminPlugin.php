@@ -35,7 +35,7 @@ class AdminPlugin extends ContentPlugin
 		}
 
 		/** Data Source Connection */
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 
 		$results = $connect->connect($this->get('model_type'), $this->get('model_name'));

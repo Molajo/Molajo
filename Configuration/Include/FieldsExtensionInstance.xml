@@ -1,5 +1,5 @@
 <field name="id" type="integer" null="0" default=" " identity="1" form="hidden"/>
-<field name="extension_instance_id" type="integer" null="0" default="0" form="list"/>
+<field name="extension_id" type="integer" null="0" default="0" form="list"/>
 <field name="catalog_type_id" type="integer" null="0" default="model" form="hidden"/>
 <field name="title" type="char" null="0" default=" " width="50"/>
 <field name="subtitle" type="text" null="0" default=" "/>

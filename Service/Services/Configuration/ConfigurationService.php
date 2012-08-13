@@ -187,7 +187,6 @@ Class ConfigurationService
 
 		if (class_exists($configuration_class)) {
 			$siteData = new $configuration_class();
-
 		} else {
 			throw new \Exception('Fatal error - Configuration Class does not exist', 100);
 		}
@@ -197,11 +196,10 @@ Class ConfigurationService
 		}
 
 		/** Retrieve Sites Data from DB */
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'Sites');
-
 		if ($results == false) {
 			return false;
 		}
@@ -245,7 +243,7 @@ Class ConfigurationService
 
 			try {
 				$profiler = 0;
-				$controllerClass = 'Molajo\\Controller\\Controller';
+				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 				$m = new $controllerClass();
 				$results = $m->connect('Table', 'Applications');
 				if ($results == false) {
@@ -374,7 +372,7 @@ Class ConfigurationService
 	 */
 	protected function getActions()
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Actions');
 		if ($results == false) {
@@ -845,7 +843,7 @@ Class ConfigurationService
 		if (Services::Registry()->exists($parentRegistryName) == true) {
 		} else {
 			//if not, load it.
-			$controllerClass = 'Molajo\\Controller\\Controller';
+			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
 			$results = $m->connect('Table', $extends);
 			if ($results == false) {
@@ -1043,7 +1041,7 @@ Class ConfigurationService
 				if (Services::Registry()->exists($joinRegistry) == true) {
 				} else {
 					//if not, load it.
-					$controllerClass = 'Molajo\\Controller\\Controller';
+					$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 					$m = new $controllerClass();
 					$results = $m->connect('Table', $joinModel);
 				}

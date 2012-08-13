@@ -80,7 +80,7 @@ class PortletlistPlugin extends ContentPlugin
 		$process_plugins = $this->parameters['criteria_process_plugins'];
 
 		/** Retrieve Data */
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 		$results = $connect->connect($model_type, $model_name);
 		if ($results == false) {

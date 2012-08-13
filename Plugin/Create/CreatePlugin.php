@@ -353,7 +353,7 @@ class CreatePlugin extends ContentPlugin
 	 */
 	protected function cloneGridMenuItem()
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$m->connect('Menuitem', 'Grid');
 		$table_registry_name = 'GridMenuitem';

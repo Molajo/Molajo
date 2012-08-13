@@ -136,7 +136,7 @@ class PaginationPlugin extends ContentPlugin
 	 */
 	protected function itemPagination()
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 
 		$results = $connect->connect(

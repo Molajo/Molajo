@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Helper;
+namespace Molajo\Helper;
 
 use Molajo\Application;
 use Molajo\Service\Services;
@@ -141,8 +141,9 @@ Class CatalogHelper
 			}
 		}
 
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
+
 		$results = $m->connect('Table', 'Catalog');
 
 		if ($results == false) {
@@ -178,7 +179,7 @@ Class CatalogHelper
 	 */
 	public function getIDUsingSEFURL($url_sef_request)
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
@@ -202,7 +203,7 @@ Class CatalogHelper
 	 */
 	public function getID($catalog_type_id, $source_id = null)
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
@@ -228,7 +229,7 @@ Class CatalogHelper
 	 */
 	public function getRedirectURL($catalog_id)
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
 		if ($results == false) {
@@ -263,7 +264,7 @@ Class CatalogHelper
 
 		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
-			$controllerClass = 'Molajo\\Controller\\Controller';
+			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
 
 			$results = $m->connect('Table', 'Catalog');

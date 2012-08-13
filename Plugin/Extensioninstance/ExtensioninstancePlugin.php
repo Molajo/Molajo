@@ -41,7 +41,7 @@ class ExtensioninstancePlugin extends ContentPlugin
 		/** Check ACL */
 
 		/** Check if the Extension Instance already exists */
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$m->connect('Table', 'ExtensionInstances');
 
@@ -66,7 +66,7 @@ class ExtensioninstancePlugin extends ContentPlugin
 		}
 
 		/** Next, see if the Extension node exists */
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$m->connect('Table', 'Extensions');
 
@@ -91,7 +91,7 @@ class ExtensioninstancePlugin extends ContentPlugin
 		//todo decide if another query is warranted for verifying existence of catalog type
 
 		/** Create a new Catalog Type */
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$m->connect();
 
@@ -228,7 +228,7 @@ class ExtensioninstancePlugin extends ContentPlugin
 		}
 
 		/** Do not allow delete if there is content for this resource */
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
 		$m->connect('Table', $this->data->title);
@@ -257,7 +257,7 @@ class ExtensioninstancePlugin extends ContentPlugin
 		}
 
 		/** Delete allowed - get rid of ACL info */
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$m->connect();
 
@@ -304,7 +304,7 @@ class ExtensioninstancePlugin extends ContentPlugin
 	 */
 	public function onAfterDelete()
 	{
-		$controllerClass = 'Molajo\\Controller\\Controller';
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'ExtensionInstances');
 		if ($results == false) {
