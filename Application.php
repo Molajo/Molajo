@@ -79,8 +79,7 @@ Class Application
 		/** 1. Initialise */
 		$results = $this->initialise($override_url_request, $override_catalog_id,
 			$override_sequence_xml, $override_final_xml);
-		echo 'yabba dabba do!';
-		die;
+
 		/** 2. Route */
 		if ($results == true) {
 			$results = $this->route();

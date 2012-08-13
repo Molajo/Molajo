@@ -145,6 +145,10 @@ Class ThemeHelper
 			return EXTENSIONS_THEMES . '/' . ucfirst(strtolower($node));
 		}
 
+		if (file_exists(CORE_THEMES . '/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+			return CORE_THEMES . '/' . ucfirst(strtolower($node));
+		}
+
 		return false;
 	}
 
@@ -160,6 +164,10 @@ Class ThemeHelper
 	{
 		if (file_exists(EXTENSIONS_THEMES . '/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
 			return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($node));
+		}
+
+		if (file_exists(CORE_THEMES . '/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+			return CORE_THEMES_URL . '/' . ucfirst(strtolower($node));
 		}
 
 		return false;

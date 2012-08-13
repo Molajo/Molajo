@@ -187,8 +187,5 @@ Class Services
 			$this->message[$i] = ' ' . $key . ' started successfully. ';
 			Services::Registry()->set('Service', $key, true);
 		}
-
-		echo $this->message[$i] . '<br />';
-
 	}
 }
