@@ -20,25 +20,25 @@ defined('MOLAJO') or die;
 class LogoutPlugin extends Plugin
 {
 
-    /**
-     * Before Authenticating the Logout Process
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeLogout()
-    {
-        return false;
-    }
+	/**
+	 * Before Authenticating the Logout Process
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeLogout()
+	{
+		return false;
+	}
 
-    /**
-     * After Authenticating the Logout Process
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterLogout()
-    {
-        return false;
-    }
+	/**
+	 * After Authenticating the Logout Process
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterLogout()
+	{
+		return false;
+	}
 }

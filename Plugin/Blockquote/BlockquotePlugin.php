@@ -19,90 +19,90 @@ defined('MOLAJO') or die;
  */
 class BlockquotePlugin extends ContentPlugin
 {
-    /**
-     * Blockquote extraction and formatting
-     *
-     * {blockquote}{cite:xYZ}*.*{/blockquote}
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
+	/**
+	 * Blockquote extraction and formatting
+	 *
+	 * {blockquote}{cite:xYZ}*.*{/blockquote}
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
 
-        $fields = $this->retrieveFieldsByType('text');
+		$fields = $this->retrieveFieldsByType('text');
 
-        if (is_array($fields) && count($fields) > 0) {
+		if (is_array($fields) && count($fields) > 0) {
 
-            foreach ($fields as $field) {
+			foreach ($fields as $field) {
 
-                /** retrieve each text field */
-                $name = $field->name;
-                $fieldValue = $this->getFieldValue($field);
+				/** retrieve each text field */
+				$name = $field->name;
+				$fieldValue = $this->getFieldValue($field);
 
-                if ($fieldValue == false) {
-                } else {
+				if ($fieldValue == false) {
+				} else {
 
-                    $results = $this->blockquote($fieldValue);
+					$results = $this->blockquote($fieldValue);
 
-                    if ($results == false || $results == '') {
-                    } else {
-                        /** Replace existing text */
-                        $fieldValue = $results;
-                        $this->saveField($field, $name, $fieldValue);
-                    }
-                }
-            }
-        }
+					if ($results == false || $results == '') {
+					} else {
+						/** Replace existing text */
+						$fieldValue = $results;
+						$this->saveField($field, $name, $fieldValue);
+					}
+				}
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * blockquote - searches for and returns blockquote
-     *
-     * @param  $text
-     *
-     * @return array
-     * @since   1.0
-     */
-    protected function blockquote($text)
-    {
-        $pattern = '/{blockquote}(.*){\/blockquote}/';
+	/**
+	 * blockquote - searches for and returns blockquote
+	 *
+	 * @param  $text
+	 *
+	 * @return array
+	 * @since   1.0
+	 */
+	protected function blockquote($text)
+	{
+		$pattern = '/{blockquote}(.*){\/blockquote}/';
 
-        preg_match_all($pattern, $text, $matches);
+		preg_match_all($pattern, $text, $matches);
 
-        $replaceThis = array();
-        $withThis = array();
+		$replaceThis = array();
+		$withThis = array();
 
-        if (count($matches) == 0) {
+		if (count($matches) == 0) {
 
-        } else {
+		} else {
 
-            $i = 0;
-            foreach ($matches[1] as $match) {
+			$i = 0;
+			foreach ($matches[1] as $match) {
 
-                $replaceThis[] = $matches[0][$i];
+				$replaceThis[] = $matches[0][$i];
 
-                $blockquote = strip_tags($match);
+				$blockquote = strip_tags($match);
 
-                if (trim($blockquote) == '') {
-                } else {
-                    $cite = '';
-                    if (substr($blockquote, 0, 6) == '{cite:') {
-                        $blockquote = substr($blockquote, 6, strlen($blockquote) - 6);
-                        $cite = substr($blockquote, 0, strpos($blockquote, '}'));
-                        $blockquote = substr($blockquote, strlen($cite) + 1, 9999);
-                        $cite = '<cite>' . $cite . '</cite>';
-                    }
-                    $withThis[] = '<blockquote>' . $blockquote . $cite . '</blockquote>';
-                }
-                $i++;
-            }
-        }
+				if (trim($blockquote) == '') {
+				} else {
+					$cite = '';
+					if (substr($blockquote, 0, 6) == '{cite:') {
+						$blockquote = substr($blockquote, 6, strlen($blockquote) - 6);
+						$cite = substr($blockquote, 0, strpos($blockquote, '}'));
+						$blockquote = substr($blockquote, strlen($cite) + 1, 9999);
+						$cite = '<cite>' . $cite . '</cite>';
+					}
+					$withThis[] = '<blockquote>' . $blockquote . $cite . '</blockquote>';
+				}
+				$i++;
+			}
+		}
 
-        $text = str_replace($replaceThis, $withThis, $text);
+		$text = str_replace($replaceThis, $withThis, $text);
 
-        return $text;
-    }
+		return $text;
+	}
 }

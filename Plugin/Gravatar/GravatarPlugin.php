@@ -21,52 +21,52 @@ defined('MOLAJO') or die;
 class GravatarPlugin extends ContentPlugin
 {
 
-    /**
-     * After-read processing
-     *
-     * Retrieves Author Information for Item
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        $fields = $this->retrieveFieldsByType('email');
+	/**
+	 * After-read processing
+	 *
+	 * Retrieves Author Information for Item
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		$fields = $this->retrieveFieldsByType('email');
 
-        if (is_array($fields) && count($fields) > 0) {
+		if (is_array($fields) && count($fields) > 0) {
 
-            if ($this->get('gravatar', 1) == 1) {
-                $size = $this->get('gravatar_size', 80);
-                $type = $this->get('gravatar_type', 'mm');
-                $rating = $this->get('gravatar_rating', 'pg');
-                $image = $this->get('gravatar_image', 0);
+			if ($this->get('gravatar', 1) == 1) {
+				$size = $this->get('gravatar_size', 80);
+				$type = $this->get('gravatar_type', 'mm');
+				$rating = $this->get('gravatar_rating', 'pg');
+				$image = $this->get('gravatar_image', 0);
 
-            } else {
-                return true;
-            }
+			} else {
+				return true;
+			}
 
-            /** @noinspection PhpWrongForeachArgumentTypeInspection */
-            foreach ($fields as $field) {
+			/** @noinspection PhpWrongForeachArgumentTypeInspection */
+			foreach ($fields as $field) {
 
-                $name = $field->name;
-                $new_name = $name . '_' . 'gravatar';
+				$name = $field->name;
+				$new_name = $name . '_' . 'gravatar';
 
-                /** Retrieves the actual field value from the 'normal' or special field */
-                $fieldValue = $this->getFieldValue($field);
+				/** Retrieves the actual field value from the 'normal' or special field */
+				$fieldValue = $this->getFieldValue($field);
 
-                if ($fieldValue == false) {
-                    return true;
-                } else {
-                    $results = Services::Url()->getGravatar($fieldValue, $size, $type, $rating, $image);
-                }
+				if ($fieldValue == false) {
+					return true;
+				} else {
+					$results = Services::Url()->getGravatar($fieldValue, $size, $type, $rating, $image);
+				}
 
-                if ($results == false) {
-                } else {
-                    $fieldValue = $this->saveField(null, $new_name, $results);
-                }
-            }
-        }
+				if ($results == false) {
+				} else {
+					$fieldValue = $this->saveField(null, $new_name, $results);
+				}
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

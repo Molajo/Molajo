@@ -22,29 +22,29 @@ defined('MOLAJO') or die;
  */
 Class ContentHelper
 {
-    /**
-     * Static instance
-     *
-     * @var     object
-     * @since   1.0
-     */
-    protected static $instance;
+	/**
+	 * Static instance
+	 *
+	 * @var     object
+	 * @since   1.0
+	 */
+	protected static $instance;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new ContentHelper();
-        }
+	/**
+	 * getInstance
+	 *
+	 * @static
+	 * @return bool|object
+	 * @since   1.0
+	 */
+	public static function getInstance()
+	{
+		if (empty(self::$instance)) {
+			self::$instance = new ContentHelper();
+		}
 
-        return self::$instance;
-    }
+		return self::$instance;
+	}
 
 	/**
 	 * Retrieves List Route information
@@ -67,22 +67,22 @@ Class ContentHelper
 		}
 
 		/** Route Registry */
-		Services::Registry()->set('Parameters', 'extension_instance_id', (int) $item->id);
+		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$item->id);
 		Services::Registry()->set('Parameters', 'extension_title', $item->title);
-		Services::Registry()->set('Parameters', 'extension_translation_of_id', (int) $item->translation_of_id);
+		Services::Registry()->set('Parameters', 'extension_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', 'extension_language', $item->language);
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int) $item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$item->catalog_type_id);
 		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->content_catalog_types_title);
 		Services::Registry()->set('Parameters', 'extension_modified_datetime', $item->modified_datetime);
 
 		/** Content Extension and Source */
 		Services::Registry()->set('Parameters', 'catalog_type_id', $item->content_catalog_types_id);
-		Services::Registry()->set('Parameters', 'content_type', (int) $item->content_catalog_types_type);
+		Services::Registry()->set('Parameters', 'content_type', (int)$item->content_catalog_types_type);
 		Services::Registry()->set('Parameters', 'primary_category_id', $item->content_catalog_types_primary_category_id);
-		Services::Registry()->set('Parameters', 'source_table', (int) $item->content_catalog_types_source_table);
+		Services::Registry()->set('Parameters', 'source_table', (int)$item->content_catalog_types_source_table);
 		Services::Registry()->set('Parameters', 'source_id', 0);
-		Services::Registry()->set('Parameters', 'source_slug', (int) $item->content_catalog_types_slug);
-		Services::Registry()->set('Parameters', 'source_routable', (int) $item->content_catalog_types_routable);
+		Services::Registry()->set('Parameters', 'source_slug', (int)$item->content_catalog_types_slug);
+		Services::Registry()->set('Parameters', 'source_routable', (int)$item->content_catalog_types_routable);
 
 		/** Set Parameters */
 		$this->getParameters('list', $item->table_registry_name . 'Parameters');
@@ -90,63 +90,63 @@ Class ContentHelper
 		return true;
 	}
 
-    /**
-     * Retrieve Route information for a specific Content Item or Form
-     *
-     * @return boolean
-     * @since    1.0
-     */
-    public function getRouteItem($id, $model_type, $model_name, $model_query_object)
-    {
-        Services::Registry()->set('Query', 'Current', 'Content getRouteItem');
+	/**
+	 * Retrieve Route information for a specific Content Item or Form
+	 *
+	 * @return boolean
+	 * @since    1.0
+	 */
+	public function getRouteItem($id, $model_type, $model_name, $model_query_object)
+	{
+		Services::Registry()->set('Query', 'Current', 'Content getRouteItem');
 
-        $item = $this->get($id, $model_type, $model_name, $model_query_object);
-        if (count($item) == 0) {
-            return Services::Registry()->set('Parameters', 'status_found', false);
-        }
+		$item = $this->get($id, $model_type, $model_name, $model_query_object);
+		if (count($item) == 0) {
+			return Services::Registry()->set('Parameters', 'status_found', false);
+		}
 
-        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', array($item));
+		Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', array($item));
 
-        Services::Registry()->set('Parameters', 'content_id', (int) $item->id);
-        Services::Registry()->set('Parameters', 'content_title', $item->title);
-        Services::Registry()->set('Parameters', 'content_translation_of_id', (int) $item->translation_of_id);
-        Services::Registry()->set('Parameters', 'content_language', $item->language);
-        Services::Registry()->set('Parameters', 'content_catalog_type_id', (int) $item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'content_catalog_type_title', $item->catalog_types_title);
-        Services::Registry()->set('Parameters', 'content_modified_datetime', $item->modified_datetime);
+		Services::Registry()->set('Parameters', 'content_id', (int)$item->id);
+		Services::Registry()->set('Parameters', 'content_title', $item->title);
+		Services::Registry()->set('Parameters', 'content_translation_of_id', (int)$item->translation_of_id);
+		Services::Registry()->set('Parameters', 'content_language', $item->language);
+		Services::Registry()->set('Parameters', 'content_catalog_type_id', (int)$item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'content_catalog_type_title', $item->catalog_types_title);
+		Services::Registry()->set('Parameters', 'content_modified_datetime', $item->modified_datetime);
 
-        Services::Registry()->set('Parameters', 'extension_instance_id', (int) $item->extension_instance_id);
-        Services::Registry()->set('Parameters', 'extension_title', $item->extension_instances_title);
-        Services::Registry()->set('Parameters', 'extension_id', (int) $item->extensions_id);
-        Services::Registry()->set('Parameters', 'extension_name_path_node', $item->extensions_name);
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id',
-            (int) $item->extension_instances_catalog_type_id);
+		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$item->extension_instance_id);
+		Services::Registry()->set('Parameters', 'extension_title', $item->extension_instances_title);
+		Services::Registry()->set('Parameters', 'extension_id', (int)$item->extensions_id);
+		Services::Registry()->set('Parameters', 'extension_name_path_node', $item->extensions_name);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
+			(int)$item->extension_instances_catalog_type_id);
 
-        $parmName = $item->table_registry_name . 'Parameters';
+		$parmName = $item->table_registry_name . 'Parameters';
 
 		//item_parent_menu_id
 
-        /** Content Extension and Source */
-        Services::Registry()->set('Parameters', 'extension_instance_id',
-            Services::Registry()->get($parmName, 'criteria_extension_instance_id'));
+		/** Content Extension and Source */
+		Services::Registry()->set('Parameters', 'extension_instance_id',
+			Services::Registry()->get($parmName, 'criteria_extension_instance_id'));
 
-        /** Theme, Page, Template and Wrap Views */
+		/** Theme, Page, Template and Wrap Views */
 		if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
 			$type = 'item';
 		} else {
 			$type = 'form';
 		}
 
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id',
-            (int) $item->extension_instances_catalog_type_id);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
+			(int)$item->extension_instances_catalog_type_id);
 
 		Services::Registry()->set('Parameters', 'parent_menu_id',
 			Services::Registry()->get($parmName, 'item_parent_menu_id'));
 
 		$this->getParameters($type, $parmName);
 
-        return true;
-    }
+		return true;
+	}
 
 	/**
 	 * Retrieves the Menu Item Route information
@@ -170,20 +170,20 @@ Class ContentHelper
 		}
 
 		/** Route Registry */
-		Services::Registry()->set('Parameters', 'menuitem_id', (int) $item->id);
-		Services::Registry()->set('Parameters', 'menuitem_lvl', (int) $item->lvl);
+		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
+		Services::Registry()->set('Parameters', 'menuitem_lvl', (int)$item->lvl);
 		Services::Registry()->set('Parameters', 'menuitem_title', $item->title);
 		Services::Registry()->set('Parameters', 'menuitem_parent_id', $item->parent_id);
-		Services::Registry()->set('Parameters', 'menuitem_translation_of_id', (int) $item->translation_of_id);
+		Services::Registry()->set('Parameters', 'menuitem_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', 'menuitem_language', $item->language);
-		Services::Registry()->set('Parameters', 'menuitem_catalog_type_id', (int) $item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'menuitem_catalog_type_id', (int)$item->catalog_type_id);
 		Services::Registry()->set('Parameters', 'menuitem_catalog_type_title', $item->catalog_types_title);
 		Services::Registry()->set('Parameters', 'menuitem_modified_datetime', $item->modified_datetime);
 
 		/** Menu Extension */
-		Services::Registry()->set('Parameters', 'menu_id', (int) $item->extension_instance_id);
+		Services::Registry()->set('Parameters', 'menu_id', (int)$item->extension_instance_id);
 		Services::Registry()->set('Parameters', 'menu_title', $item->extension_instances_title);
-		Services::Registry()->set('Parameters', 'menu_extension_id', (int) $item->extensions_id);
+		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
 		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
 		$parmName = $item->table_registry_name . 'Parameters';
@@ -193,46 +193,46 @@ Class ContentHelper
 	}
 
 	/**
-     * Get data for Menu Item or Item or List
-     *
-     * @param $id
-     * @param $model_type
-     * @param $model_name
-     * @param $model_query_object
-     *
-     * @return array An object containing an array of data
-     * @since   1.0
-     */
-    public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $model_query_object = 'list')
-    {
-        Services::Profiler()->set('ContentHelper->get '
-                . ' ID: ' . $id
-                . ' Model Type: ' . $model_type
-                . ' Model Name: ' . $model_name
-                . ' Model Query: ' . $model_query_object,
-            LOG_OUTPUT_ROUTING, VERBOSE);
+	 * Get data for Menu Item or Item or List
+	 *
+	 * @param $id
+	 * @param $model_type
+	 * @param $model_name
+	 * @param $model_query_object
+	 *
+	 * @return array An object containing an array of data
+	 * @since   1.0
+	 */
+	public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $model_query_object = 'list')
+	{
+		Services::Profiler()->set('ContentHelper->get '
+				. ' ID: ' . $id
+				. ' Model Type: ' . $model_type
+				. ' Model Name: ' . $model_name
+				. ' Model Query: ' . $model_query_object,
+			LOG_OUTPUT_ROUTING, VERBOSE);
 
-        $controllerClass = 'Molajo\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect($model_type, $model_name);
-        if ($results == false) {
-            return false;
-        }
+		$controllerClass = 'Molajo\\Controller\\Controller';
+		$m = new $controllerClass();
+		$results = $m->connect($model_type, $model_name);
+		if ($results == false) {
+			return false;
+		}
 
-        $m->set('id', (int) $id);
-        $m->set('process_plugins', 0);
-        $m->set('get_customfields', 1);
+		$m->set('id', (int)$id);
+		$m->set('process_plugins', 0);
+		$m->set('get_customfields', 1);
 
-        $item = $m->getData($model_query_object);
-        if (count($item) == 0) {
-            return array();
-        }
+		$item = $m->getData($model_query_object);
+		if (count($item) == 0) {
+			return array();
+		}
 
 		$item->table_registry_name = $m->table_registry_name;
 		$item->model_name = $m->get('model_name');
 
-        return $item;
-    }
+		return $item;
+	}
 
 	/**
 	 * Retrieves the appropriate values and populates Parameters Registry

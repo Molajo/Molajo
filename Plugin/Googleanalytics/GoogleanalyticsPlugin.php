@@ -18,19 +18,20 @@ defined('MOLAJO') or die;
  */
 class GoogleanalyticsPlugin extends ContentPlugin
 {
-    /**
-     * Insert Google Analytics
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeParse() {
+	/**
+	 * Insert Google Analytics
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeParse()
+	{
 
 		$account = Services::Registry()->get('Configuration', 'application_google_analytics_code');
 
-        if (trim($account) == '') {
-            return true;
-        }
+		if (trim($account) == '') {
+			return true;
+		}
 
 		$js = "var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '" . $account . "']);
@@ -44,6 +45,6 @@ class GoogleanalyticsPlugin extends ContentPlugin
 
 		Services::Asset()->addJSDeclarations($js, 100, 1, 'text/javascript');
 
-        return true;
-    }
+		return true;
+	}
 }

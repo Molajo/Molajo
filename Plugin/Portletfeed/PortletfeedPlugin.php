@@ -41,7 +41,7 @@ class PortletfeedPlugin extends ContentPlugin
 		}
 
 		$count = $this->parameters['criteria_count'];
-		if ((int) $count == 0) {
+		if ((int)$count == 0) {
 			$count = 5;
 		}
 
@@ -50,7 +50,7 @@ class PortletfeedPlugin extends ContentPlugin
 
 		$feed = array();
 		foreach ($rss->getElementsByTagName('item') as $node) {
-			$item = array (
+			$item = array(
 				'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
 				'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
 				'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
@@ -61,7 +61,7 @@ class PortletfeedPlugin extends ContentPlugin
 
 		$query_results = array();
 
-		for ($x=0;  $x < $count; $x++) {
+		for ($x = 0; $x < $count; $x++) {
 			$row = new \stdClass();
 
 			$row->title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);

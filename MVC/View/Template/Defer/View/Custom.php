@@ -7,6 +7,6 @@
 
 defined('MOLAJO') or die; ?>
 <include:asset name=Assetsjs value=JsDefer/>
-<include:asset name=Assetsjsdeclarations value=JsDeclarationsDefer/>
-</body>
-</html>
+	<include:asset name=Assetsjsdeclarations value=JsDeclarationsDefer/>
+		</body>
+		</html>

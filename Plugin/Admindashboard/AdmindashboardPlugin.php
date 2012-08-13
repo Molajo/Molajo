@@ -18,25 +18,25 @@ defined('MOLAJO') or die;
  */
 class AdmindashboardPlugin extends ContentPlugin
 {
-    /**
-     * Before-read processing
-     *
-     * Prepares data for the Administrator Grid  - position AdmindashboardPlugin last
-     *
-     * @return void
-     * @since   1.0
-     */
-    public function onBeforeParse()
-    {
-        if (APPLICATION_ID == 2) {
-        } else {
-            return true;
-        }
+	/**
+	 * Before-read processing
+	 *
+	 * Prepares data for the Administrator Grid  - position AdmindashboardPlugin last
+	 *
+	 * @return void
+	 * @since   1.0
+	 */
+	public function onBeforeParse()
+	{
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
 
-        if (strtolower($this->get('template_view_path_node')) == 'admindashboard') {
-        } else {
-            return true;
-        }
+		if (strtolower($this->get('template_view_path_node')) == 'admindashboard') {
+		} else {
+			return true;
+		}
 
 		$portletOptions = Services::Registry()->get('Parameters', 'dashboard');
 
@@ -47,7 +47,8 @@ class AdmindashboardPlugin extends ContentPlugin
 		$portletOptionsArray = explode(',', $portletOptions);
 
 		if (count($portletOptionsArray) == 0
-			|| $portletOptionsArray == false) {
+			|| $portletOptionsArray == false
+		) {
 			return true;
 		}
 
@@ -69,8 +70,8 @@ class AdmindashboardPlugin extends ContentPlugin
 
 		$this->setOptions();
 
-        return true;
-    }
+		return true;
+	}
 
 
 	/**

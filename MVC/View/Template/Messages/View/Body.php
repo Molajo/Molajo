@@ -11,25 +11,25 @@ $action = Services::Registry()->get('Plugindata', 'full_page_url');
 
 $class = 'alert-box';
 if ($this->row->type == MESSAGE_TYPE_SUCCESS) {
-    $heading = Services::Language()->translate('Success');
-    $class .= ' success';
+	$heading = Services::Language()->translate('Success');
+	$class .= ' success';
 
 } elseif ($this->row->type == MESSAGE_TYPE_WARNING) {
-    $heading = Services::Language()->translate('Warning');
-    $class .= ' warning';
+	$heading = Services::Language()->translate('Warning');
+	$class .= ' warning';
 
 } elseif ($this->row->type == MESSAGE_TYPE_ERROR) {
-    $heading = Services::Language()->translate('Error');
-    $class .= ' alert';
+	$heading = Services::Language()->translate('Error');
+	$class .= ' alert';
 
 } else {
 // defaults MESSAGE_TYPE_INFORMATION
-    $heading = Services::Language()->translate('Information');
-    $class .= ' secondary';
+	$heading = Services::Language()->translate('Information');
+	$class .= ' secondary';
 }
 ?>
 <div class="<?php echo $class; ?>">
-    <?php echo $this->row->message; ?>
-    <a class="close" href="<?php echo $action; ?>">&times;</a>
-    <h4 class="alert-heading"><?php echo $heading; ?></h4>
+	<?php echo $this->row->message; ?>
+	<a class="close" href="<?php echo $action; ?>">&times;</a>
+	<h4 class="alert-heading"><?php echo $heading; ?></h4>
 </div>

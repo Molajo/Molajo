@@ -19,14 +19,14 @@ defined('MOLAJO') or die;
  */
 class CatalogtypeidPlugin extends ContentPlugin
 {
-    /**
-     * After-read processing
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        return true;
-    }
+	/**
+	 * After-read processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		return true;
+	}
 }

@@ -38,8 +38,8 @@
 
         <criteria>
             <where name="extensions.name"
-                  connector="like"
-                  value="Portlet%"/>
+                   connector="like"
+                   value="Portlet%"/>
         </criteria>
 
         <plugins>

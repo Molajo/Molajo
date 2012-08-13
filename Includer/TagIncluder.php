@@ -19,24 +19,24 @@ defined('MOLAJO') or die;
  */
 Class TagIncluder extends Includer
 {
-    /**
-     * process
-     *
-     * @return mixed
-     * @since   1.0
-     */
-    public function __construct($name = null, $type = null)
-    {
-        return 'still need to do Tag Includer';
-    }
+	/**
+	 * process
+	 *
+	 * @return mixed
+	 * @since   1.0
+	 */
+	public function __construct($name = null, $type = null)
+	{
+		return 'still need to do Tag Includer';
+	}
 
-    public function render($tag)
-    {
+	public function render($tag)
+	{
 
-        foreach (x::y($tag) as $item) {
-            $buffer .= $includer->etc($thing;
-        }
+		foreach (x::y($tag) as $item) {
+			$buffer .= $includer->etc($thing;
+		}
 
-        return $buffer;
-    }
+		return $buffer;
+	}
 }

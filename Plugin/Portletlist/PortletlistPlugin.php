@@ -50,7 +50,7 @@ class PortletlistPlugin extends ContentPlugin
 		$ordering = $this->parameters['criteria_ordering'];
 
 		if ($ordering == 'Popular') {
-			$ordering = 'a.ordering';	//todo: hits
+			$ordering = 'a.ordering'; //todo: hits
 			$direction = 'ASC';
 
 		} elseif ($ordering == 'Ordering') {
@@ -71,7 +71,7 @@ class PortletlistPlugin extends ContentPlugin
 		}
 
 		$count = $this->parameters['criteria_count'];
-		if ((int) $count == 0) {
+		if ((int)$count == 0) {
 			$count = 5;
 		}
 
@@ -90,14 +90,14 @@ class PortletlistPlugin extends ContentPlugin
 		$connect->set('get_customfields', $get_customfields);
 		$connect->set('use_special_joins', $use_special_joins);
 		$connect->set('process_plugins', $process_plugins);
-	    $prefix = $connect->get('primary_prefix', 'a');
+		$prefix = $connect->get('primary_prefix', 'a');
 
 		if ($criteria_status_list == '') {
 		} else {
 			$connect->model->query->where($connect->model->db->qn($prefix . '.' . 'status')
-				. ' IN (' . $criteria_status_list .')');
+				. ' IN (' . $criteria_status_list . ')');
 		}
-		$connect->model->query->order($connect->model->db->qn($ordering). ' ' . $direction);
+		$connect->model->query->order($connect->model->db->qn($ordering) . ' ' . $direction);
 
 		$connect->set('model_offset', 0);
 		$connect->set('model_count', $count);

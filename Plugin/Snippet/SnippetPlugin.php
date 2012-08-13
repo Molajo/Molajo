@@ -20,45 +20,45 @@ defined('MOLAJO') or die;
 class SnippetPlugin extends ContentPlugin
 {
 
-    /**
-     * Parses the Content Text into a snippet, stripped of HTML tags
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        $fields = $this->retrieveFieldsByType('text');
+	/**
+	 * Parses the Content Text into a snippet, stripped of HTML tags
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		$fields = $this->retrieveFieldsByType('text');
 
-        $snippetLength = $this->get('criteria_snippet_length', 200);
+		$snippetLength = $this->get('criteria_snippet_length', 200);
 
-        if (is_array($fields) && count($fields) > 0) {
+		if (is_array($fields) && count($fields) > 0) {
 
-            foreach ($fields as $field) {
+			foreach ($fields as $field) {
 
-                $name = $field->name;
+				$name = $field->name;
 
-                $fieldValue = $this->getFieldValue($field);
+				$fieldValue = $this->getFieldValue($field);
 
-                if ($fieldValue == false) {
-                } else {
+				if ($fieldValue == false) {
+				} else {
 
-                    $newFieldValue = substr(strip_tags($fieldValue), 0, $snippetLength);
-                    if (trim($newFieldValue) == trim(strip_tags($fieldValue))) {
-                    } else {
-                        $newFieldValue .= '...';
-                    }
+					$newFieldValue = substr(strip_tags($fieldValue), 0, $snippetLength);
+					if (trim($newFieldValue) == trim(strip_tags($fieldValue))) {
+					} else {
+						$newFieldValue .= '...';
+					}
 
-                    if ($newFieldValue == false) {
-                    } else {
+					if ($newFieldValue == false) {
+					} else {
 
-                        $newFieldName = $name . '_' . 'snippet';
-                        $this->saveField(null, $newFieldName, $newFieldValue);
-                    }
-                }
-            }
-        }
+						$newFieldName = $name . '_' . 'snippet';
+						$this->saveField(null, $newFieldName, $newFieldValue);
+					}
+				}
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

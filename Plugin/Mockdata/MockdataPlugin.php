@@ -18,41 +18,41 @@ defined('MOLAJO') or die;
 class MockdataPlugin extends ContentPlugin
 {
 
-    /**
-     * Creates text, adds images, video, smilies, assigns created_by
-     *
-     * {image}250,250,box{/image}
-     * {blockquote}{cite:xYZ}*.*{/blockquote}
-     * <iframe.+?src="(.+?)".+?<\/iframe>
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRead()
-    {
-        $fields = $this->retrieveFieldsByType('text');
+	/**
+	 * Creates text, adds images, video, smilies, assigns created_by
+	 *
+	 * {image}250,250,box{/image}
+	 * {blockquote}{cite:xYZ}*.*{/blockquote}
+	 * <iframe.+?src="(.+?)".+?<\/iframe>
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRead()
+	{
+		$fields = $this->retrieveFieldsByType('text');
 
-        if (is_array($fields) && count($fields) > 0) {
+		if (is_array($fields) && count($fields) > 0) {
 
-            foreach ($fields as $field) {
+			foreach ($fields as $field) {
 
-                $name = $field->name;
+				$name = $field->name;
 
-                $fieldValue = $this->getFieldValue($field);
+				$fieldValue = $this->getFieldValue($field);
 
-                if ($fieldValue == false) {
-                } else {
-                    $value = $this->search($fieldValue);
+				if ($fieldValue == false) {
+				} else {
+					$value = $this->search($fieldValue);
 
-                    if ($value == false) {
-                    } else {
-                        $this->saveField($field, $name, $value);
-                    }
-                }
+					if ($value == false) {
+					} else {
+						$this->saveField($field, $name, $value);
+					}
+				}
 
-            }
-        }
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

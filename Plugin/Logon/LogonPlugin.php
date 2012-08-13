@@ -19,25 +19,25 @@ defined('MOLAJO') or die;
  */
 class LogonPlugin extends Plugin
 {
-    /**
-     * Before Authenticating the Logon Process
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeLogon()
-    {
-        return false;
-    }
+	/**
+	 * Before Authenticating the Logon Process
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeLogon()
+	{
+		return false;
+	}
 
-    /**
-     * After Authenticating the Logon Process
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterLogon()
-    {
-        return false;
-    }
+	/**
+	 * After Authenticating the Logon Process
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterLogon()
+	{
+		return false;
+	}
 }

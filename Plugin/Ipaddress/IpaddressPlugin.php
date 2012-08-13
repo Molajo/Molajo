@@ -20,34 +20,34 @@ defined('MOLAJO') or die;
  */
 class IpaddressPlugin extends ContentPlugin
 {
-    /**
-     * Pre-create processing
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeCreate()
-    {
-        $fields = $this->retrieveFieldsByType('ip_address');
+	/**
+	 * Pre-create processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeCreate()
+	{
+		$fields = $this->retrieveFieldsByType('ip_address');
 
-        if (is_array($fields) && count($fields) > 0) {
-            foreach ($fields as $field) {
-                $this->saveField($field, $field->name, Services::Registry()->get('Client', 'ip_address', ''));
-            }
-        }
+		if (is_array($fields) && count($fields) > 0) {
+			foreach ($fields as $field) {
+				$this->saveField($field, $field->name, Services::Registry()->get('Client', 'ip_address', ''));
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * Pre-update processing
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeUpdate()
-    {
-        // No updates allowed for activity
-        return true;
-    }
+	/**
+	 * Pre-update processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeUpdate()
+	{
+		// No updates allowed for activity
+		return true;
+	}
 }

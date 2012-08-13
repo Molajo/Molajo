@@ -18,39 +18,39 @@ defined('MOLAJO') or die;
  */
 class AdminPlugin extends ContentPlugin
 {
-    /**
-     * Prepares Admin Menus
-     *
-     * Run this LAST
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onBeforeParse()
-    {
-        /** Only used for the Admin */
-        if (APPLICATION_ID == 2) {
-        } else {
-            return true;
-        }
+	/**
+	 * Prepares Admin Menus
+	 *
+	 * Run this LAST
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeParse()
+	{
+		/** Only used for the Admin */
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
 
-        /** Data Source Connection */
-        $controllerClass = 'Molajo\\Controller\\Controller';
-        $connect = new $controllerClass();
+		/** Data Source Connection */
+		$controllerClass = 'Molajo\\Controller\\Controller';
+		$connect = new $controllerClass();
 
-        $results = $connect->connect($this->get('model_type'), $this->get('model_name'));
-        if ($results == false) {
-            return false;
-        }
+		$results = $connect->connect($this->get('model_type'), $this->get('model_name'));
+		if ($results == false) {
+			return false;
+		}
 
 		$this->setBreadcrumbs();
 
-        $this->setMenu();
+		$this->setMenu();
 
-        $this->setPageTitle();
+		$this->setPageTitle();
 
-        return true;
-    }
+		return true;
+	}
 
 	/**
 	 * Set breadcrumbs
@@ -83,82 +83,82 @@ class AdminPlugin extends ContentPlugin
 		Services::Registry()->set('Plugindata', 'Adminbreadcrumbs', $bread_crumbs);
 	}
 
-    /**
-     * Retrieve an array of values that represent the active menuitem ids for a specific menu
-     *
-     * @return void
-     * @since  1.0
-     */
-    protected function setMenu()
-    {
-        $menuArray = array();
+	/**
+	 * Retrieve an array of values that represent the active menuitem ids for a specific menu
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	protected function setMenu()
+	{
+		$menuArray = array();
 
-        // 1. Home
-        $menuArray[] = 'Adminnavigationbar';
-        $menuArray[] = 'Adminsectionmenu';
-        if (count($bread_crumbs) > 2) {
-            $menuArray[] = 'Adminstatusmenu';
-        }
+		// 1. Home
+		$menuArray[] = 'Adminnavigationbar';
+		$menuArray[] = 'Adminsectionmenu';
+		if (count($bread_crumbs) > 2) {
+			$menuArray[] = 'Adminstatusmenu';
+		}
 
-        $i = 0;
-        foreach ($bread_crumbs as $item) {
+		$i = 0;
+		foreach ($bread_crumbs as $item) {
 
-            $extension_instance_id = $item->extension_instance_id;
-            $lvl = $item->lvl + 1;
-            $parent_id = $item->id;
+			$extension_instance_id = $item->extension_instance_id;
+			$lvl = $item->lvl + 1;
+			$parent_id = $item->id;
 
-            $query_results = Services::Menu()->runMenuQuery(
-                $extension_instance_id, $lvl, $lvl, $parent_id, $activeCatalogID
-            );
+			$query_results = Services::Menu()->runMenuQuery(
+				$extension_instance_id, $lvl, $lvl, $parent_id, $activeCatalogID
+			);
 
-            Services::Registry()->set('Plugindata', $menuArray[$i], $query_results);
-            $i++;
+			Services::Registry()->set('Plugindata', $menuArray[$i], $query_results);
+			$i++;
 
-            if ($i > count($menuArray) - 1) {
-                break;
-            }
-        }
-/**
-        echo '<br />Adminnavigationbar <br />';
-        echo '<pre>';
-        var_dump(Services::Registry()->get('Plugindata','Adminnavigationbar'));
-        echo '</pre>';
+			if ($i > count($menuArray) - 1) {
+				break;
+			}
+		}
+		/**
+		echo '<br />Adminnavigationbar <br />';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Plugindata','Adminnavigationbar'));
+		echo '</pre>';
 
-        echo '<br />Adminsectionmenu <br />';
-        echo '<pre>';
-        var_dump(Services::Registry()->get('Plugindata','Adminsectionmenu'));
-        echo '</pre>';
+		echo '<br />Adminsectionmenu <br />';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Plugindata','Adminsectionmenu'));
+		echo '</pre>';
 
-        echo '<br />Adminstatusmenu <br />';
-        echo '<pre>';
-        var_dump(Services::Registry()->get('Plugindata','Adminstatusmenu'));
-        echo '</pre>';
+		echo '<br />Adminstatusmenu <br />';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Plugindata','Adminstatusmenu'));
+		echo '</pre>';
 
-        echo '<br />Adminbreadcrumbs <br />';
-        echo '<pre>';
-        var_dump(Services::Registry()->get('Plugindata','Adminbreadcrumbs'));
-        echo '</pre>';
-*/
+		echo '<br />Adminbreadcrumbs <br />';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Plugindata','Adminbreadcrumbs'));
+		echo '</pre>';
+		 */
 
-        return;
-    }
+		return;
+	}
 
-    /**
-     * Set the Page Title, given Breadcrumb values
-     *
-     * @param int $extension_instance_id - menu
-     *
-     * @return object
-     * @since   1.0
-     */
-    public function setPageTitle()
-    {
-        $bread_crumbs = Services::Registry()->get('Plugindata', 'Adminbreadcrumbs');
+	/**
+	 * Set the Page Title, given Breadcrumb values
+	 *
+	 * @param int $extension_instance_id - menu
+	 *
+	 * @return object
+	 * @since   1.0
+	 */
+	public function setPageTitle()
+	{
+		$bread_crumbs = Services::Registry()->get('Plugindata', 'Adminbreadcrumbs');
 
-        $title = $bread_crumbs[count($bread_crumbs) - 1]->title;
+		$title = $bread_crumbs[count($bread_crumbs) - 1]->title;
 
-        Services::Registry()->set('Plugindata', 'PageTitle', $title);
+		Services::Registry()->set('Plugindata', 'PageTitle', $title);
 
-        return $this;
-    }
+		return $this;
+	}
 }

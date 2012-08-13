@@ -26,61 +26,61 @@ defined('MOLAJO') or die;
 class ApplicationPlugin extends Plugin
 {
 
-    /**
-     * Runs before Route and after Services and Helpers have been instantiated
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterInitialise()
-    {
-        return true;
-    }
+	/**
+	 * Runs before Route and after Services and Helpers have been instantiated
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterInitialise()
+	{
+		return true;
+	}
 
-    /**
-     * Fires after Route has run - Parameters contain all instruction
-     *
-     * Services::Registry('Parameters', '*') lists all available
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterRoute()
-    {
-        return true;
-    }
+	/**
+	 * Fires after Route has run - Parameters contain all instruction
+	 *
+	 * Services::Registry('Parameters', '*') lists all available
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRoute()
+	{
+		return true;
+	}
 
-    /**
-     * Follows Authorise and can used to override a failed authorisation or a successful one
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterAuthorise()
-    {
-        return true;
-    }
+	/**
+	 * Follows Authorise and can used to override a failed authorisation or a successful one
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterAuthorise()
+	{
+		return true;
+	}
 
-    /**
-     * Event fires after execute for both display and non-display task
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterExecute()
-    {
-        return true;
-    }
+	/**
+	 * Event fires after execute for both display and non-display task
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterExecute()
+	{
+		return true;
+	}
 
-    /**
-     * Plugin that fires after all views are rendered
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterResponse()
-    {
-        return true;
-    }
+	/**
+	 * Plugin that fires after all views are rendered
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterResponse()
+	{
+		return true;
+	}
 
 }
