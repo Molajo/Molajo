@@ -1,11 +1,16 @@
 <?php
 use Molajo\Service\Services;
 
-//todo create offline without db interaction
 /**
- * @package     Molajo
- * @copyright   2012 Individual Molajo Contributors. All rights reserved.
- * @license     GNU GPL v 2, or later and MIT, see License folder
+ * @package    Molajo
+ * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @license    GNU GPL v 2, or later and MIT, see License folder
+ * <include:profiler/>
  */
-defined('MOLAJO') or die;
-include Services::Registry()->get('Parameters', 'page_view_path_include');
+defined('MOLAJO') or die; ?>
+<include:head/>
+<?php if (file_exists(Services::Registry()->get('Parameters', 'page_view_path_include'))) {
+		include Services::Registry()->get('Parameters', 'page_view_path_include');
+} ?>
+<include:defer/>
+
