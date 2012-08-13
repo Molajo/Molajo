@@ -5,9 +5,9 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Install;
-use Molajo\Controller\Controller;
-use Molajo\Controller\CreateController;
-use Molajo\Controller\DeleteController;
+use Molajo\MVC\Controller\Controller;
+use Molajo\MVC\Controller\CreateController;
+use Molajo\MVC\Controller\DeleteController;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;

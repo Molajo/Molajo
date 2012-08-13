@@ -4,10 +4,10 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Plugin\Item;
+namespace Molajo\Plugin\Item;
 
 use Molajo\Service\Services;
-use Molajo\Extension\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Content\ContentPlugin;
 
 defined('MOLAJO') or die;
 

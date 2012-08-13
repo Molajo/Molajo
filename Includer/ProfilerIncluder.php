@@ -6,7 +6,7 @@
  */
 namespace Molajo\Extension\Includer;
 
-use Molajo\Extension\Helpers;
+use Molajo\Helpers;
 use Molajo\Service\Services;
 use Molajo\Extension\Includer;
 

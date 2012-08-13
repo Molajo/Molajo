@@ -8,7 +8,7 @@ namespace Molajo;
 
 use Molajo\Service\Services\Request\RequestService;
 use Molajo\Service\Services\Configuration\ConfigurationService;
-use Molajo\Extension\Helpers;
+use Molajo\Helpers;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;

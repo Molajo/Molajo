@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\Route;
 
 use Molajo\Application;
 use Molajo\Service\Services;
-use Molajo\Extension\Helpers;
+use Molajo\Helpers;
 
 defined('MOLAJO') or die;
 

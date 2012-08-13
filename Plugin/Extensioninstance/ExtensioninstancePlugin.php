@@ -4,12 +4,12 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Plugin\Extensioninstance;
+namespace Molajo\Plugin\Extensioninstance;
 
-use Molajo\Extension\Plugin\Content\ContentPlugin;
-use Molajo\Controller;
-use Molajo\Controller\CreateController;
-use Molajo\Controller\DeleteController;
+use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\MVC\Controller;
+use Molajo\MVC\Controller\CreateController;
+use Molajo\MVC\Controller\DeleteController;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;

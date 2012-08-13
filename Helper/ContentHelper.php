@@ -6,7 +6,7 @@
  */
 namespace Molajo\Extension\Helper;
 
-use Molajo\Extension\Helpers;
+use Molajo\Helpers;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
