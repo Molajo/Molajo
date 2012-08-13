@@ -92,8 +92,11 @@ Class Services
         $this->message = array();
 
         /** start services in this sequence */
+echo CONFIGURATION_FOLDER . '/Application/services.xml';
         $services = simplexml_load_file(CONFIGURATION_FOLDER . '/Application/services.xml');
-
+echo '<pre>';
+var_dump($services);
+		die;
         foreach ($services->service as $item) {
             $connectionSucceeded = true;
             $connection = '';

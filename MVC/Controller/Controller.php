@@ -278,7 +278,7 @@ class Controller
         $this->model->set('table_registry_name', $this->table_registry_name);
 
         if ($dbo == 'JDatabase') {
-            $dateClass = 'Joomla\\date\\JDate';
+            $dateClass = 'JPlatform\\date\\JDate';
             $dateFromJDate = new $dateClass('now');
             $now = $dateFromJDate->toSql(false, Services::$dbo()->get('db'));
             $this->model->set('now', $now);

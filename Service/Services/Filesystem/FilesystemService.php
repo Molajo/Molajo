@@ -120,15 +120,15 @@ class FilesystemService
     {
 
         if (strtolower(substr($name, 0, 4)) == 'file') {
-            $class = 'Joomla\\filesystem\\JFile';
+            $class = 'JPlatform\\filesystem\\JFile';
             $method = substr($name, 4, strlen($name) - 4);
 
         } elseif (strtolower(substr($name, 0, 6)) == 'folder') {
-            $class = 'Joomla\\filesystem\\JFolder';
+            $class = 'JPlatform\\filesystem\\JFolder';
             $method = substr($name, 6, strlen($name) - 6);
 
         } elseif (strtolower(substr($name, 0, 4)) == 'path') {
-            $class = 'Joomla\\filesystem\\JPath';
+            $class = 'JPlatform\\filesystem\\JPath';
             $method = substr($name, 4, strlen($name) - 4);
 
         } else {

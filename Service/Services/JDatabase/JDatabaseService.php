@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\JDatabase;
 
 use Molajo\Service\Services;
 
-use Joomla\date\JDate;
+use JPlatform\date\JDate;
 
 defined('MOLAJO') or die;
 
@@ -107,7 +107,7 @@ Class JDatabaseService
         $this->name = $site->jdatabase_dbtype;
 
         /** connect */
-        $class = 'Joomla\\database\\driver\\JDatabaseDriver' . ucfirst(strtolower($this->options['driver']));
+        $class = 'JPlatform\\database\\driver\\JDatabaseDriver' . ucfirst(strtolower($this->options['driver']));
         if (class_exists($class)) {
         } else {
             throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $this->options['driver']));
@@ -145,14 +145,14 @@ Class JDatabaseService
     /**
      * Get the current query object for the current database connection
      *
-     * @return Joomla\database\query\JDatabaseQuery
+     * @return JPlatform\database\query\JDatabaseQuery
      *
      * @since   1.0
      * @throws \RuntimeException
      */
     public function getQuery()
     {
-        $class = 'Joomla\\database\\query\\JDatabaseQuery' . ucfirst(strtolower($this->name));
+        $class = 'JPlatform\\database\\query\\JDatabaseQuery' . ucfirst(strtolower($this->name));
         if (class_exists($class)) {
         } else {
             throw new \RuntimeException('Database Query class not found');
@@ -164,14 +164,14 @@ Class JDatabaseService
     /**
      * Get an exporter object for the current database connection.
      *
-     * @return Joomla\database\exporter\JDatabaseExporter Exporter object.
+     * @return JPlatform\database\exporter\JDatabaseExporter Exporter object.
      *
      * @since   12.1
      * @throws \RuntimeException
      */
     public function getExporter()
     {
-        $c = 'Joomla\\database\\exporter\\JDatabaseExporter' . ucfirst(strtolower($this->name));
+        $c = 'JPlatform\\database\\exporter\\JDatabaseExporter' . ucfirst(strtolower($this->name));
         if (class_exists($c)) {
         } else {
             throw new \RuntimeException('Database Query class not found');
@@ -186,14 +186,14 @@ Class JDatabaseService
     /**
      * Get an importer object for the current database connection.
      *
-     * @return Joomla\database\importer\JDatabaseImporter Importer object.
+     * @return JPlatform\database\importer\JDatabaseImporter Importer object.
      *
      * @since   12.1
      * @throws \RuntimeException
      */
     public function getImporter()
     {
-        $c = 'Joomla\\database\\importer\\JDatabaseImporter' . ucfirst(strtolower($this->name));
+        $c = 'JPlatform\\database\\importer\\JDatabaseImporter' . ucfirst(strtolower($this->name));
         if (class_exists($c)) {
         } else {
             throw new \RuntimeException('Database Query class not found');
@@ -211,14 +211,14 @@ Class JDatabaseService
      * @param string $column Iterator key, optional
      * @param string $class  Class of object returned
      *
-     * @return Joomla\database\iterator\JDatabaseIterator A new database iterator.
+     * @return JPlatform\database\iterator\JDatabaseIterator A new database iterator.
      *
      * @since   12.1
      * @throws \RuntimeException
      */
     public function getIterator($column = null, $class = 'stdClass')
     {
-        $c = 'Joomla\\database\\iterator\\JDatabaseIterator' . ucfirst(strtolower($this->name));
+        $c = 'JPlatform\\database\\iterator\\JDatabaseIterator' . ucfirst(strtolower($this->name));
         if (class_exists($c)) {
         } else {
             throw new \RuntimeException(sprintf('class *%s* is not defined', $c));

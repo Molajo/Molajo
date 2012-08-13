@@ -170,7 +170,7 @@ Class LogService
     public function setLog($options = array(), $priority = LOG_TYPE_ALL, $types = array())
     {
         try {
-            $class = 'Joomla\\log\\JLog';
+            $class = 'JPlatform\\log\\JLog';
             $class::addLogger($options, $priority, $types);
 
             } catch (\Exception $e) {
@@ -216,7 +216,7 @@ Class LogService
                 Services::Log()->set($message, $priority, $type, $date);
 
             } else {
-                $class = 'Joomla\\log\\JLog';
+                $class = 'JPlatform\\log\\JLog';
                 $class::add($message, $priority, $type, $date);
             }
         } catch (\Exception $e) {

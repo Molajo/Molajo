@@ -490,7 +490,7 @@ Class DateService
         $class = str_replace('-', '_', $locale) . 'Date';
         if (class_exists($class)) {
         } else {
-            $class = 'Joomla\\date\\JDate';
+            $class = 'JPlatform\\date\\JDate';
         }
 
         return new $class($time, $tzOffset);
