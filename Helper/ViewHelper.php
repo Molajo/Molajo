@@ -170,6 +170,7 @@ Class ViewHelper
             return EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node));
         }
 
+
         return false;
     }
 

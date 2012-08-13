@@ -260,7 +260,7 @@ Class EventService
      * Usage:
      * Services::Event()->register(
      *   'AliasPlugin',
-     *   'Molajo\\Extension\\Plugin\\Alias\\AliasPlugin',
+     *   'Molajo\\Plugin\\Alias\\AliasPlugin',
      *   'OnBeforeUpdate'
      * );
      *
@@ -310,13 +310,13 @@ Class EventService
     {
         Services::Profiler()->set('EventService->registerInstalledPlugins ', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $plugins = Services::Filesystem()->folderFolders(EXTENSIONS_PLUGINS);
+        $plugins = Services::Filesystem()->folderFolders(MOLAJO_FOLDER . '/' . 'Plugin');
 
         /** Load Parent Classes first */
-        $pluginClass = 'Molajo\\Extension\\Plugin\\Plugin\\Plugin';
+        $pluginClass = 'Molajo\\Plugin\\Plugin\\Plugin';
         $temp = new $pluginClass ();
 
-        $pluginClass = 'Molajo\\Extension\\Plugin\\Content\\ContentPlugin';
+        $pluginClass = 'Molajo\\Plugin\\Content\\ContentPlugin';
         $temp = new $pluginClass ();
 
         foreach ($plugins as $folder) {
@@ -350,7 +350,7 @@ Class EventService
         $connection = '';
 
         $plugin = $folder . 'Plugin';
-        $pluginClass = 'Molajo\\Extension\\Plugin\\' . $folder . '\\' . $plugin;
+        $pluginClass = 'Molajo\\Plugin\\' . $folder . '\\' . $plugin;
 
         /** Retrieve all Event Methods in the Plugin */
         $events = get_class_methods($pluginClass);

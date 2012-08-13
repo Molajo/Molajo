@@ -79,7 +79,8 @@ Class Application
         /** 1. Initialise */
         $results = $this->initialise($override_url_request, $override_catalog_id,
             $override_sequence_xml, $override_final_xml);
-
+		echo 'yabba dabba do!';
+		die;
         /** 2. Route */
         if ($results == true) {
             $results = $this->route();
@@ -134,7 +135,8 @@ Class Application
         if ($results == false) {
             return false;
         }
-
+		echo 'yabba dabba do!';
+		die;
         /** Site determination and paths */
         $results = $this->setSite();
         if ($results == false) {
@@ -505,46 +507,35 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
     protected function setDefines()
     {
 
-//todo: now that namespaces are used, how much of this is really needed?
-
-        /** Override Hint */
+        /** Override */
         if (file_exists(BASE_FOLDER . '/defines.php')) {
-            /** @noinspection PhpIncludeInspection */
             include_once BASE_FOLDER . '/defines.php';
         }
 
         if (defined('CONFIGURATION_FOLDER')) {
         } else {
-            define('CONFIGURATION_FOLDER', BASE_FOLDER . '/Molajo/Configuration');
+            define('CONFIGURATION_FOLDER', MOLAJO_FOLDER . '/Configuration');
         }
 
         if (defined('EXTENSIONS')) {
         } else {
-            define('EXTENSIONS', BASE_FOLDER . '/Molajo/Extension');
+            define('EXTENSIONS', BASE_FOLDER . '/Extension');
         }
-        if (defined('EXTENSIONS_RESOURCES')) {
-        } else {
-            define('EXTENSIONS_RESOURCES', EXTENSIONS . '/Resource');
-        }
-        if (defined('EXTENSIONS_LANGUAGES')) {
-        } else {
-            define('EXTENSIONS_LANGUAGES', EXTENSIONS . '/Language');
-        }
-        if (defined('EXTENSIONS_HELPERS')) {
-        } else {
-            define('EXTENSIONS_HELPERS', EXTENSIONS . '/Helper');
-        }
+		if (defined('EXTENSIONS_LANGUAGES')) {
+		} else {
+			define('EXTENSIONS_LANGUAGES', EXTENSIONS . '/Language');
+		}
         if (defined('EXTENSIONS_MENUITEMS')) {
         } else {
-            define('EXTENSIONS_MENUITEMS', EXTENSIONS . '/Menuitems');
+            define('EXTENSIONS_MENUITEMS', EXTENSIONS . '/Menuitem');
         }
+		if (defined('EXTENSIONS_RESOURCES')) {
+		} else {
+			define('EXTENSIONS_RESOURCES', EXTENSIONS . '/Resource');
+		}
         if (defined('EXTENSIONS_THEMES')) {
         } else {
             define('EXTENSIONS_THEMES', EXTENSIONS . '/Theme');
-        }
-        if (defined('EXTENSIONS_PLUGINS')) {
-        } else {
-            define('EXTENSIONS_PLUGINS', EXTENSIONS . '/Plugin');
         }
         if (defined('EXTENSIONS_VIEWS')) {
         } else {
@@ -553,34 +544,43 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
 
         if (defined('EXTENSIONS_URL')) {
         } else {
-            define('EXTENSIONS_URL', BASE_URL . 'Molajo/Extension');
+            define('EXTENSIONS_URL', BASE_URL . 'Extension');
         }
-        if (defined('EXTENSIONS_RESOURCES_URL')) {
-        } else {
-            define('EXTENSIONS_RESOURCES_URL', BASE_URL . 'Molajo/Extension/Resource');
-        }
-
         if (defined('EXTENSIONS_THEMES_URL')) {
         } else {
-            define('EXTENSIONS_THEMES_URL', BASE_URL . 'Molajo/Extension/Theme');
-        }
-        if (defined('EXTENSIONS_PLUGINS_URL')) {
-        } else {
-            define('EXTENSIONS_PLUGINS_URL', BASE_URL . 'Molajo/Extension/Plugin');
+            define('EXTENSIONS_THEMES_URL', BASE_URL . 'Extension/Theme');
         }
         if (defined('EXTENSIONS_VIEWS_URL')) {
         } else {
-            define('EXTENSIONS_VIEWS_URL', BASE_URL . 'Molajo/Extension/View');
+            define('EXTENSIONS_VIEWS_URL', BASE_URL . 'Extension/View');
         }
 
-        if (defined('SERVICES')) {
+		if (defined('SERVICES')) {
         } else {
-            define('SERVICES', APPLICATIONS . '/Service');
+            define('SERVICES', MOLAJO_FOLDER . '/Service');
         }
+		if (defined('CORE_THEMES')) {
+		} else {
+			define('CORE_THEMES', MOLAJO_FOLDER . '/Theme');
+		}
+		if (defined('CORE_VIEWS')) {
+		} else {
+			define('CORE_VIEWS', MOLAJO_FOLDER . '/View');
+		}
 
-        if (defined('SITES')) {
+		if (defined('CORE_THEMES_URL')) {
+		} else {
+			define('CORE_THEMES_URL', BASE_URL . 'Vendor/Molajo/Theme');
+		}
+		if (defined('CORE_VIEWS_URL')) {
+		} else {
+			define('CORE_VIEWS_URL', BASE_URL . 'Vendor/Molajo/View');
+		}
+
+
+		if (defined('SITES')) {
         } else {
-            define('SITES', BASE_FOLDER . '/Molajo/Site');
+            define('SITES', BASE_FOLDER . '/Site');
         }
 
         /**
@@ -616,7 +616,7 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
     {
         if (defined('SITES')) {
         } else {
-            define('SITES', BASE_FOLDER . '/Molajo/Site');
+            define('SITES', BASE_FOLDER . '/Site');
         }
 
         if (defined('SITES_MEDIA_FOLDER')) {
@@ -626,16 +626,7 @@ Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
 
         if (defined('SITES_MEDIA_URL')) {
         } else {
-            define('SITES_MEDIA_URL', BASE_URL . 'Molajo/Site/media');
-        }
-
-        if (defined('SITES_TEMP_FOLDER')) {
-        } else {
-            define('SITES_TEMP_FOLDER', SITES . '/temp');
-        }
-        if (defined('SITES_TEMP_URL')) {
-        } else {
-            define('SITES_TEMP_URL', BASE_URL . 'Molajo/Site/temp');
+            define('SITES_MEDIA_URL', BASE_URL . 'Site/media');
         }
 
         $site_base_url = Application::Request()->get('base_url_path');

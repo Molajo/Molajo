@@ -145,7 +145,7 @@ Class JDatabaseService
     /**
      * Get the current query object for the current database connection
      *
-     * @return JPlatform\database\query\JDatabaseQuery
+     * @return JPlatform\database\JDatabaseQuery
      *
      * @since   1.0
      * @throws \RuntimeException
@@ -164,7 +164,7 @@ Class JDatabaseService
     /**
      * Get an exporter object for the current database connection.
      *
-     * @return JPlatform\database\exporter\JDatabaseExporter Exporter object.
+     * @return JPlatform\database\JDatabaseExporter Exporter object.
      *
      * @since   12.1
      * @throws \RuntimeException
@@ -186,7 +186,7 @@ Class JDatabaseService
     /**
      * Get an importer object for the current database connection.
      *
-     * @return JPlatform\database\importer\JDatabaseImporter Importer object.
+     * @return JPlatform\database\JDatabaseImporter Importer object.
      *
      * @since   12.1
      * @throws \RuntimeException
@@ -211,7 +211,7 @@ Class JDatabaseService
      * @param string $column Iterator key, optional
      * @param string $class  Class of object returned
      *
-     * @return JPlatform\database\iterator\JDatabaseIterator A new database iterator.
+     * @return JPlatform\database\JDatabaseIterator A new database iterator.
      *
      * @since   12.1
      * @throws \RuntimeException

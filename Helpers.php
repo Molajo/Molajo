@@ -110,7 +110,7 @@ Class Helpers
      */
     public function connect()
     {
-        $helpers = Services::Filesystem()->folderFiles(EXTENSIONS_HELPERS);
+        $helpers = Services::Filesystem()->folderFiles(MOLAJO_FOLDER . '/' . 'Helper');
 
         foreach ($helpers as $filename) {
             $try = true;
@@ -120,7 +120,7 @@ Class Helpers
                 break;
             }
             $entry = substr($filename, 0, strlen($filename) - 4);
-            $helperClass = 'Molajo\\Extension\\Helper\\' . $entry;
+            $helperClass = 'Molajo\\Helper\\' . $entry;
 
             $helperMethod = 'getInstance';
 
