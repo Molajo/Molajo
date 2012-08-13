@@ -565,7 +565,7 @@ Class Application
 		}
 		if (defined('CORE_VIEWS')) {
 		} else {
-			define('CORE_VIEWS', MOLAJO_FOLDER . '/View');
+			define('CORE_VIEWS', MOLAJO_FOLDER . '/MVC/View');
 		}
 
 		if (defined('CORE_THEMES_URL')) {
@@ -574,7 +574,7 @@ Class Application
 		}
 		if (defined('CORE_VIEWS_URL')) {
 		} else {
-			define('CORE_VIEWS_URL', BASE_URL . 'Vendor/Molajo/View');
+			define('CORE_VIEWS_URL', BASE_URL . 'Vendor/Molajo/MVC/View');
 		}
 
 
