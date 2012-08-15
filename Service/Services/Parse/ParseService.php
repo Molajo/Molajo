@@ -223,8 +223,7 @@ Class ParseService
 
 		/** Save Route Parameters move to after route */
 		Services::Registry()->copy('Parameters', 'RouteParameters');
-		Services::Registry()->get('Parameters', '*');
-		die;
+
 		$renderedOutput = $this->renderLoop();
 
 		/** Final Includers: Now, the theme, head, messages, and defer <includes /> run */
@@ -249,8 +248,7 @@ Class ParseService
 		}
 
 		$renderedOutput = $this->renderLoop($renderedOutput);
-		echo $renderedOutput;
-		die;
+
 		/** onAfterParse Plugin */
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
 		} else {
@@ -497,7 +495,6 @@ Class ParseService
 					/** 7. call the includer class */
 					$class = 'Molajo\\Includer\\';
 					$class .= ucfirst($includerType) . 'Includer';
-
 					if (class_exists($class)) {
 						$rc = new $class ($includerType, $includeName);
 

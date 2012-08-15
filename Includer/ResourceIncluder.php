@@ -4,11 +4,11 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Extension\Includer;
+namespace Molajo\Includer;
 
 use Molajo\Helpers;
 use Molajo\Service\Services;
-use Molajo\Extension\Includer;
+use Molajo\Includer;
 
 defined('MOLAJO') or die;
 
@@ -28,7 +28,6 @@ class ResourceIncluder extends Includer
 	public function __construct($name = null, $type = null)
 	{
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_RESOURCE);
-
 		return parent::__construct($name, $type);
 	}
 
