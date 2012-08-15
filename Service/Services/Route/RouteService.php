@@ -418,6 +418,7 @@ Class RouteService
 
 		$type = '';
 
+		/** List */
 		if ((int)$id > 0
 			&& (int)$catalog_type_id == 1050
 			&& trim($table) == '#__extension_instances'
@@ -429,6 +430,7 @@ Class RouteService
 				Services::Error()->set(500, 'Extension not found');
 			}
 
+		/** Item */
 		} elseif ((int)$id > 0
 			&& $catalog_menuitem_type == ''
 		) {
@@ -440,6 +442,7 @@ Class RouteService
 				return false;
 			}
 
+		/** Template Menu item */
 		} elseif ($catalog_menuitem_type > '') {
 
 			$response = Helpers::Content()->getRouteTemplateView();
@@ -451,7 +454,7 @@ Class RouteService
 			Services::Error()->set(500, 'Content not found');
 			return false;
 		}
-
+		//Services::Registry()->get('Parameters', '*');
 		return true;
 	}
 }

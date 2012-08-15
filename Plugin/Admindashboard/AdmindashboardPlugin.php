@@ -38,6 +38,12 @@ class AdmindashboardPlugin extends ContentPlugin
 			return true;
 		}
 
+		/** Not authorised and not found */
+		if ($this->get('model_type') == ''
+			|| $this->get('model_name') == '') {
+			return true;
+		}
+
 		$portletOptions = Services::Registry()->get('Parameters', 'dashboard');
 
 		if (trim($portletOptions) == '') {

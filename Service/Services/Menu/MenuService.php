@@ -191,7 +191,6 @@ Class MenuService
 		/** Execute query */
 		$query_results = $m->getData('list');
 
-		/**
 		echo '<br /><br />';
 		echo $m->model->query->__toString();
 		echo '<br /><br />';
@@ -199,7 +198,7 @@ Class MenuService
 		echo '<pre>';
 		var_dump($query_results);
 		echo '</pre>';
-		 */
+
 		/** Add in URL */
 		foreach ($query_results as $item) {
 

@@ -34,6 +34,19 @@ class AdminPlugin extends ContentPlugin
 			return true;
 		}
 
+		/** Not authorised and not found */
+		if ($this->get('model_type') == '' || $this->get('model_name') == '') {
+			return true;
+		}
+
+		$current_menuitem_id = (int) Services::Registry()->get('Parameters', 'menuitem_id');
+		if ((int) $current_menuitem_id == 0) {
+			$current_menuitem_id = (int) Services::Registry()->get('Parameters', 'parent_menuid');
+		}
+		if ((int) $current_menuitem_id == 0) {
+			return true;
+		}
+
 		/** Data Source Connection */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
@@ -43,7 +56,7 @@ class AdminPlugin extends ContentPlugin
 			return false;
 		}
 
-		$this->setBreadcrumbs();
+		$this->setBreadcrumbs($current_menuitem_id);
 
 		$this->setMenu();
 
@@ -58,26 +71,16 @@ class AdminPlugin extends ContentPlugin
 	 * @return void
 	 * @since  1.0
 	 */
-	protected function setBreadcrumbs()
+	protected function setBreadcrumbs($current_menuitem_id)
 	{
-		$current_menuitem_id = Services::Registry()->get('Parameters', 'parent_menuid', '0');
-
-		if ($current_menuitem_id == 0) {
-			$current_menuitem_id = Services::Registry()->get('Parameters', 'catalog_source_id');
-			$item_id = 0;
-		} else {
-			$item_id = Services::Registry()->get('Parameters', 'catalog_id');
-		}
-
 		/** Breadcrumbs */
 		$bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id);
-
+echo '<pre>';
+var_dump($bread_crumbs);
+		die;
 		$activeCatalogID = array();
 		foreach ($bread_crumbs as $item) {
 			$activeCatalogID[] = $item->catalog_id;
-		}
-		if ($item_id > 0) {
-			$activeCatalogID[] = $item_id;
 		}
 
 		Services::Registry()->set('Plugindata', 'Adminbreadcrumbs', $bread_crumbs);
@@ -92,6 +95,7 @@ class AdminPlugin extends ContentPlugin
 	protected function setMenu()
 	{
 		$menuArray = array();
+		$bread_crumbs = Services::Registry()->get('Plugindata', 'Adminbreadcrumbs');
 
 		// 1. Home
 		$menuArray[] = 'Adminnavigationbar';

@@ -27,6 +27,12 @@ class GoogleanalyticsPlugin extends ContentPlugin
 	public function onBeforeParse()
 	{
 
+		/** Not authorised and not found */
+		if ($this->get('model_type') == ''
+			|| $this->get('model_name') == '') {
+			return true;
+		}
+
 		$account = Services::Registry()->get('Configuration', 'application_google_analytics_code');
 
 		if (trim($account) == '') {

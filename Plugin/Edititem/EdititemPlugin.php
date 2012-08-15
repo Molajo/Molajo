@@ -33,9 +33,13 @@ class EdititemPlugin extends ContentPlugin
 		}
 
 		if (strtolower($this->get('template_view_path_node')) == 'edit') {
-			echo 'yes';
-			die;
 		} else {
+			return true;
+		}
+
+		/** Not authorised and not found */
+		if ($this->get('model_type') == ''
+			|| $this->get('model_name') == '') {
 			return true;
 		}
 

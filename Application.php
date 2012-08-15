@@ -97,6 +97,7 @@ Class Application
 			$results = $this->execute();
 		}
 
+
 		/** 5. Response */
 		if ($results == true) {
 			$results = $this->response();
@@ -374,12 +375,13 @@ Class Application
 		Services::Message()->set('Test message', MESSAGE_TYPE_SUCCESS);
 		Services::Message()->set('Test message', MESSAGE_TYPE_WARNING);
 		Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
-		 */
-		/** Theme must exist */
+		*/
+
+		/** Theme must be found to proceed */
 		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
 		} else {
 			Services::Error()->set(500, 'Theme Not found');
-			echo 'Theme not found - application stopped before parse. Parameters follow:';
+			echo 'Theme nott found - application stopped before parse. Parameters follow:';
 			Services::Registry()->get('Parameters', '*');
 			die;
 		}

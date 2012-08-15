@@ -188,7 +188,6 @@ Class ContentHelper
 
 		$parmName = $item->table_registry_name . 'Parameters';
 
-
 		return true;
 	}
 
@@ -245,6 +244,9 @@ Class ContentHelper
 	 */
 	protected function getParameters($type, $parmName)
 	{
+		/** Menuitem ID */
+		$hold_menuitem_id = (int) Services::Registry()->get($parmName, 'menuitem_id');
+
 		/** Save the type... */
 		Services::Registry()->set('Parameters', 'parameter_type', $type);
 
@@ -313,7 +315,10 @@ Class ContentHelper
 		Services::Registry()->delete('Parameters', 'form*');
 		Services::Registry()->delete('Parameters', 'menuitem*');
 
-		Services::Registry()->get('Parameters', '*');
+		/* Store saved values */
+		Services::Registry()->set('Parameters', 'menuitem_id', $hold_menuitem_id);
+
+Services::Registry()->get('Parameters', '*');
 
 		return true;
 	}

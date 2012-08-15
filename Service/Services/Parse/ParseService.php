@@ -213,7 +213,7 @@ Class ParseService
 
 		$this->final_indicator = false;
 
-		/** Start parsing and processing page include for Theme */
+		/** Using file_exists or is_file with git submodule returns false */
 		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
 		} else {
 			Services::Error()->set(500, 'Theme not found');
@@ -223,7 +223,8 @@ Class ParseService
 
 		/** Save Route Parameters move to after route */
 		Services::Registry()->copy('Parameters', 'RouteParameters');
-
+		Services::Registry()->get('Parameters', '*');
+		die;
 		$renderedOutput = $this->renderLoop();
 
 		/** Final Includers: Now, the theme, head, messages, and defer <includes /> run */
@@ -236,7 +237,7 @@ Class ParseService
 		Services::Registry()->copy('RouteParameters', 'Parameters');
 
 		/** theme: load template media and language files */
-		$class = 'Molajo\\Extension\\Includer\\ThemeIncluder';
+		$class = 'Molajo\\Includer\\ThemeIncluder';
 
 		if (class_exists($class)) {
 			$rc = new $class ('theme');
@@ -247,9 +248,9 @@ Class ParseService
 			// ERROR
 		}
 
-
 		$renderedOutput = $this->renderLoop($renderedOutput);
-
+		echo $renderedOutput;
+		die;
 		/** onAfterParse Plugin */
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
 		} else {
@@ -272,13 +273,17 @@ Class ParseService
 	{
 		/** initial run: start with theme and page */
 		if ($renderedOutput == null) {
+
 			$first = true;
 
-			Services::Profiler()->set('ParseService->renderLoop include Theme:'
+			Services::Profiler()->set(
+				'ParseService->renderLoop include Theme:'
 					. Services::Registry()->get('Parameters', 'theme_path_include')
 					. ' which includes Page: '
 					. Services::Registry()->get('Parameters', 'page_view_path_include'),
-				LOG_OUTPUT_RENDERING, VERBOSE);
+				LOG_OUTPUT_RENDERING,
+				VERBOSE
+			);
 
 			ob_start();
 			require Services::Registry()->get('Parameters', 'theme_path_include');
@@ -291,7 +296,9 @@ Class ParseService
 			$first = false;
 			$final = true;
 			Services::Profiler()->set('ParseService->renderLoop Final Run ',
-				LOG_OUTPUT_RENDERING, VERBOSE);
+				LOG_OUTPUT_RENDERING,
+				VERBOSE
+			);
 		}
 
 		/** process all input for include: statements  */
@@ -488,15 +495,15 @@ Class ParseService
 					}
 
 					/** 7. call the includer class */
-					$class = 'Molajo\\Extension\\Includer\\';
+					$class = 'Molajo\\Includer\\';
 					$class .= ucfirst($includerType) . 'Includer';
 
 					if (class_exists($class)) {
 						$rc = new $class ($includerType, $includeName);
 
 					} else {
-						Services::Profiler()->set('ParseService->callIncluder failed instantiating class '
-							. $class, LOG_OUTPUT_RENDERING);
+						Services::Profiler()->set('ParseService->callIncluder failed instantiating class ' . $class,
+							LOG_OUTPUT_RENDERING);
 						// ERROR
 					}
 
@@ -509,7 +516,10 @@ Class ParseService
 					$includeDisplay = ob_get_contents();
 					ob_end_clean();
 
-					Services::Profiler()->set($includeDisplay, LOG_OUTPUT_RENDERING, VERBOSE);
+					Services::Profiler()->set($includeDisplay,
+						LOG_OUTPUT_RENDERING,
+						VERBOSE
+					);
 
 					$output = trim($rc->process($attributes));
 
@@ -529,14 +539,16 @@ Class ParseService
 	/**
 	 * Schedule onBeforeParseEvent Event - could update parameter values
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function onBeforeParseEvent()
 	{
-		Services::Profiler()->set('ParseService->process Schedules onBeforeParse', LOG_OUTPUT_PLUGINS, VERBOSE);
-
-		$parameters = Services::Registry()->getArray('Parameters');
+		Services::Profiler()->set(
+			'ParseService->process Schedules onBeforeParse',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
 
 		/** Schedule onBeforeParse Event */
 		$arguments = array(
@@ -544,22 +556,26 @@ Class ParseService
 			'data' => array()
 		);
 
-		Services::Profiler()->set('ParseService->onBeforeParseEvent '
-				. ' Schedules onBeforeParse', LOG_OUTPUT_PLUGINS, VERBOSE
+		Services::Profiler()->set(
+			'ParseService->onBeforeParseEvent ' . ' Schedules onBeforeParse',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
 		);
-		$plugins = array();
-		$arguments = Services::Event()->schedule('onBeforeParse', $arguments, $plugins);
+
+		$arguments = Services::Event()->schedule('onBeforeParse', $arguments);
 
 		if ($arguments == false) {
-			Services::Profiler()->set('ParseService->onBeforeParseEvent '
-					. ' failure ', LOG_OUTPUT_PLUGINS
+			Services::Profiler()->set('ParseService->onBeforeParseEvent ' . ' failure ',
+				LOG_OUTPUT_PLUGINS
 			);
 
 			return false;
 		}
 
-		Services::Profiler()->set('ParseService->onBeforeParseEvent '
-				. ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
+		Services::Profiler()->set(
+			'ParseService->onBeforeParseEvent ' . ' successful ',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
 		);
 
 		/** Process results */
@@ -578,7 +594,10 @@ Class ParseService
 	 */
 	protected function onAfterParseEvent($renderedOutput)
 	{
-		Services::Profiler()->set('ParseService->process Schedules onAfterParse', LOG_OUTPUT_PLUGINS, VERBOSE);
+		Services::Profiler()->set('ParseService->process Schedules onAfterParse',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
 
 		$parameters = Services::Registry()->getArray('Parameters');
 
@@ -588,21 +607,22 @@ Class ParseService
 			'rendered_output' => $renderedOutput
 		);
 
-		Services::Profiler()->set('ParseService->onAfterParseEvent '
-				. ' Schedules onAfterParse', LOG_OUTPUT_PLUGINS, VERBOSE
+		Services::Profiler()->set('ParseService->onAfterParseEvent ' . ' Schedules onAfterParse',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
 		);
 
 		$arguments = Services::Event()->schedule('onAfterParse', $arguments);
-
 		if ($arguments == false) {
-			Services::Profiler()->set('ParseService->onAfterParseEvent '
-					. ' failure ', LOG_OUTPUT_PLUGINS
+			Services::Profiler()->set('ParseService->onAfterParseEvent ' . ' failure ',
+				LOG_OUTPUT_PLUGINS
 			);
 			return false;
 		}
 
-		Services::Profiler()->set('ParseService->onAfterParseEvent '
-				. ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
+		Services::Profiler()->set('ParseService->onAfterParseEvent ' . ' successful ',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
 		);
 
 		/** Process results */

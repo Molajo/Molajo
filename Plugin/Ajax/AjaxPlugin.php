@@ -34,7 +34,7 @@ class AjaxPlugin extends ContentPlugin
 			return true;
 		}
 
-		if (Services::Registry()->get('Client', 'Ajax') == 0) {
+		if ((int) Services::Registry()->get('Client', 'Ajax') == 0) {
 			return true;
 		}
 

@@ -195,8 +195,6 @@ Class AuthorisationService
 		/** 403: verifyTask handles redirecting to error page */
 		if (in_array(Services::Registry()->get('Parameters', 'catalog_view_group_id'),
 			Services::Registry()->get('User', 'ViewGroups'))
-			&& in_array(Services::Registry()->get('Parameters', 'extension_view_group_id'),
-				Services::Registry()->get('User', 'ViewGroups'))
 		) {
 			Services::Registry()->set('Parameters', 'status_authorised', true);
 

@@ -338,8 +338,8 @@ class Controller
 			$this->onBeforeReadEvent();
 		}
 
-//		echo $this->model->query->__toString();
-//		echo '<br /><br /><br />';
+echo $this->model->query->__toString();
+echo '<br /><br /><br />';
 
 		/** 3. Execute Query, results in $this->query_results */
 		if ($dbo == 'JDatabase') {

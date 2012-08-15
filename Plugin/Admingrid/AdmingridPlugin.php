@@ -37,6 +37,12 @@ class AdmingridPlugin extends ContentPlugin
 			return true;
 		}
 
+		/** Not authorised and not found */
+		if ($this->get('model_type') == ''
+			|| $this->get('model_name') == '') {
+			return true;
+		}
+
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 

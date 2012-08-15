@@ -1,3 +1,5 @@
+<field name="menuitem_id" type="integer" null="0" default="0"/>
+
 <field name="list_theme_id" type="integer" null="0" default="9020"/>
 
 <field name="list_page_view_id" type="integer" null="0" default="220"/>
