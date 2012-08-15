@@ -133,16 +133,7 @@ Class UrlService
 	 */
 	public function getApplicationURL($path = '')
 	{
-		$url = BASE_URL . APPLICATION_URL_PATH;
-
-		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
-			$url .= $path;
-
-		} else {
-			$url .= $path;
-		}
-
-		return $url;
+		return BASE_URL . APPLICATION_URL_PATH . $path;
 	}
 
 	/**

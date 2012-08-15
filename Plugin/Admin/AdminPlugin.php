@@ -6,6 +6,7 @@
  */
 namespace Molajo\Plugin\Admin;
 
+use Molajo\Application;
 use Molajo\Plugin\Content\ContentPlugin;
 use Molajo\Service\Services;
 
@@ -40,12 +41,15 @@ class AdminPlugin extends ContentPlugin
 		}
 
 		$current_menuitem_id = (int) Services::Registry()->get('Parameters', 'menuitem_id');
+
 		if ((int) $current_menuitem_id == 0) {
 			$current_menuitem_id = (int) Services::Registry()->get('Parameters', 'parent_menuid');
 		}
 		if ((int) $current_menuitem_id == 0) {
 			return true;
 		}
+
+		$this->pageURL();
 
 		/** Data Source Connection */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
@@ -58,9 +62,27 @@ class AdminPlugin extends ContentPlugin
 
 		$this->setBreadcrumbs($current_menuitem_id);
 
-		$this->setMenu();
+		$this->setMenu($current_menuitem_id);
 
 		$this->setPageTitle();
+
+		return true;
+	}
+
+	/**
+	 * Build the page url to be used in links
+	 *
+	 * page_url was set in Route and it contains any non-routable parameters that
+	 * were used. Non-routable parameters include such values as /edit, /new, /tag/value, etc
+	 *
+	 * These values are used in conjunction with the permanent URL for basic operations on that data
+	 */
+	protected function pageURL()
+	{
+		$url = Application::Request()->get('base_url_path_for_application') .
+			Application::Request()->get('requested_resource_for_route');
+
+		Services::Registry()->set('Plugindata', 'full_page_url', $url);
 
 		return true;
 	}
@@ -73,16 +95,7 @@ class AdminPlugin extends ContentPlugin
 	 */
 	protected function setBreadcrumbs($current_menuitem_id)
 	{
-		/** Breadcrumbs */
 		$bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id);
-echo '<pre>';
-var_dump($bread_crumbs);
-		die;
-		$activeCatalogID = array();
-		foreach ($bread_crumbs as $item) {
-			$activeCatalogID[] = $item->catalog_id;
-		}
-
 		Services::Registry()->set('Plugindata', 'Adminbreadcrumbs', $bread_crumbs);
 	}
 
@@ -92,12 +105,12 @@ var_dump($bread_crumbs);
 	 * @return void
 	 * @since  1.0
 	 */
-	protected function setMenu()
+	protected function setMenu($current_menu_item = 0)
 	{
-		$menuArray = array();
 		$bread_crumbs = Services::Registry()->get('Plugindata', 'Adminbreadcrumbs');
 
-		// 1. Home
+		$menuArray = array();
+		$menuArray[] = 'Adminhome';
 		$menuArray[] = 'Adminnavigationbar';
 		$menuArray[] = 'Adminsectionmenu';
 		if (count($bread_crumbs) > 2) {
@@ -105,24 +118,37 @@ var_dump($bread_crumbs);
 		}
 
 		$i = 0;
-		foreach ($bread_crumbs as $item) {
+		foreach ($bread_crumbs as $level) {
 
-			$extension_instance_id = $item->extension_instance_id;
-			$lvl = $item->lvl + 1;
-			$parent_id = $item->id;
+			$menu_id = $level->extension_id;
+			$parent_id = $level->parent_id;
 
-			$query_results = Services::Menu()->runMenuQuery(
-				$extension_instance_id, $lvl, $lvl, $parent_id, $activeCatalogID
-			);
+			if ($i == 0) {
+				$query_results = Services::Menu()->get($menu_id, $current_menu_item);
+				Services::Registry()->set('Plugindata', 'Adminmenu', $query_results);
+				$level = 0;
+			}
 
-			Services::Registry()->set('Plugindata', $menuArray[$i], $query_results);
+			$list = array();
+			foreach ($query_results as $menu_items) {
+				if ((int) $parent_id == (int) $menu_items->parent_id) {
+					$list[] = $menu_items;
+				}
+			}
+			Services::Registry()->set('Plugindata', $menuArray[$i], $list);
+
 			$i++;
-
 			if ($i > count($menuArray) - 1) {
 				break;
 			}
 		}
-		/**
+
+/**
+		echo '<br />Adminhome <br />';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Plugindata','Adminhome'));
+		echo '</pre>';
+
 		echo '<br />Adminnavigationbar <br />';
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Plugindata','Adminnavigationbar'));
@@ -142,8 +168,12 @@ var_dump($bread_crumbs);
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Plugindata','Adminbreadcrumbs'));
 		echo '</pre>';
-		 */
 
+		echo '<br />Adminmenu <br />';
+		echo '<pre>';
+		var_dump(Services::Registry()->get('Plugindata','Adminmenu'));
+		echo '</pre>';
+*/
 		return;
 	}
 

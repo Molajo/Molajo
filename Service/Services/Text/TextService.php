@@ -112,142 +112,139 @@ Class TextService
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
+
 		$results = $m->connect('Datalist', $filter);
 		if ($results == false) {
 			return false;
 		}
 
-		if ($m->get('data_source', 'JDatabase') == 'JDatabase') {
+		$values = Services::Registry()->get('StatusDatalist', 'values');
+		if (is_array($values) && count($values) > 0) {
+			$query_results = $values;
 
-			$primary_prefix = $m->get('primary_prefix');
-			$primary_key = $m->get('primary_key');
-			$name_key = $m->get('name_key');
+		} else {
+			$query_results = $this->getQueryResults($m, $filter, $parameters);
+		}
 
-			$m->model->set('model_offset', 0);
-			$m->model->set('model_count', 999999);
+		return $query_results;
+	}
 
-			/** Select */
-			$fields = Services::Registry()->get($filter . 'Datalist', 'Fields');
+	/**
+	 * getQueryResults for list
+	 *
+	 * @param   $m
+	 * @param   $filter
+	 * @param   $parameters
+	 *
+	 * @return  object
+	 * @since   1.0
+	 */
+	protected function getQueryResults($m, $filter, $parameters)
+	{
+		$primary_prefix = $m->get('primary_prefix');
+		$primary_key = $m->get('primary_key');
+		$name_key = $m->get('name_key');
 
-			$first = true;
+		$m->model->set('model_offset', 0);
+		$m->model->set('model_count', 999999);
 
-			if (count($fields) < 2) {
+		/** Select */
+		$fields = Services::Registry()->get($filter . 'Datalist', 'Fields');
 
-				$m->model->query->select('DISTINCT '
-					. $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id');
-				$m->model->query->select($m->model->db->qn($primary_prefix
-					. '.' . $name_key) . ' as value');
-				$m->model->query->order($m->model->db->qn($primary_prefix
-					. '.' . $name_key) . ' ASC');
+		$first = true;
 
-			} else {
+		if (count($fields) < 2) {
 
-				$ordering = '';
+			$m->model->query->select('DISTINCT '
+				. $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id');
+			$m->model->query->select($m->model->db->qn($primary_prefix
+				. '.' . $name_key) . ' as value');
+			$m->model->query->order($m->model->db->qn($primary_prefix
+				. '.' . $name_key) . ' ASC');
 
-				foreach ($fields as $field) {
+		} else {
 
-					if (isset($field['alias'])) {
-						$alias = $field['alias'];
-					} else {
-						$alias = $primary_prefix;
-					}
+			$ordering = '';
+			foreach ($fields as $field) {
 
-					$name = $field['name'];
-
-					if ($first) {
-						$first = false;
-						$as = 'id';
-						$distinct = 'DISTINCT';
-					} else {
-						$as = 'value';
-						$distinct = '';
-						$ordering = $alias . '.' . $name;
-					}
-
-					$m->model->query->select($distinct . ' ' . $m->model->db->qn($alias . '.' . $name) . ' as ' . $as);
+				if (isset($field['alias'])) {
+					$alias = $field['alias'];
+				} else {
+					$alias = $primary_prefix;
 				}
 
-				$m->model->query->order($m->model->db->qn($ordering) . ' ASC');
+				$name = $field['name'];
+
+				if ($first) {
+					$first = false;
+					$as = 'id';
+					$distinct = 'DISTINCT';
+				} else {
+					$as = 'value';
+					$distinct = '';
+					$ordering = $alias . '.' . $name;
+				}
+
+				$m->model->query->select($distinct . ' ' . $m->model->db->qn($alias . '.' . $name) . ' as ' . $as);
 			}
 
-			/** Where */
-			//todo -- loop thru all parameters that start with filter*
+			$m->model->query->order($m->model->db->qn($ordering) . ' ASC');
+		}
 
-			if (strtolower($parameters['template_view_path_node']) == 'admindashboard') {
-				$m->model->query->where($m->model->db->qn('extensions.name')
-					. ' LIKE ' . $m->model->db->q('Portlet%'));
-			}
+		/** Where */
+		if (strtolower($parameters['template_view_path_node']) == 'admindashboard') {
+			$m->model->query->where($m->model->db->qn('extensions.name')
+				. ' LIKE ' . $m->model->db->q('Portlet%'));
+		}
 
-			$this->setWhereCriteria(
-				'catalog_type_id',
-				$parameters['criteria_catalog_type_id'],
+		$this->setWhereCriteria('catalog_type_id',
+			$parameters['criteria_catalog_type_id'],
+			$primary_prefix,
+			$m
+		);
+
+		$this->setWhereCriteria('status',
+			$parameters['criteria_status'],
+			$primary_prefix,
+			$m
+		);
+
+		$this->setWhereCriteria('extension_instance_id',
+			$m->get('criteria_extension_instance_id'),
+			$primary_prefix,
+			$m
+		);
+
+		$menu_id = null;
+		if (isset($parameters['criteria_catalog_type_id'])
+			&& (int)$parameters['criteria_catalog_type_id'] == 1300
+		) {
+			$this->setWhereCriteria('menu_id',
+				$m->get('item_parent_menu_id'),
 				$primary_prefix,
 				$m
 			);
+		}  else {
 
-			$this->setWhereCriteria(
-				'status',
-				$parameters['criteria_status'],
-				$primary_prefix,
-				$m
-			);
-
-			$this->setWhereCriteria(
-				'extension_instance_id',
-				$m->get('criteria_extension_instance_id'),
-				$primary_prefix,
-				$m
-			);
-
-			/** Where: Menu ID */
-			$menu_id = null;
-			if (isset($parameters['criteria_extension_catalog_type_id'])
-				&& (int)$parameters['criteria_extension_catalog_type_id'] == 1300
+			$catalog_type_id = $m->get('criteria_catalog_type_id');
+			if ((int)$catalog_type_id > 0
+				|| strrpos($catalog_type_id, ',') > 0
 			) {
 				$this->setWhereCriteria(
-					'menu_id',
-					$m->get('item_parent_menu_id'),
+					'catalog_type_id',
+					$catalog_type_id,
 					$primary_prefix,
 					$m
 				);
 			}
-
-			$query_object = 'distinct';
-
-		} else {
-			$m->set('model_parameter', $filter);
-			$query_object = 'getListdata';
 		}
 
-		/** Where: Catalog Type ID */
-		$catalog_type_id = $m->get('criteria_catalog_type_id');
-		if ((int)$catalog_type_id > 0
-			|| strrpos($catalog_type_id, ',') > 0
-		) {
-			$this->setWhereCriteria(
-				'catalog_type_id',
-				$catalog_type_id,
-				$primary_prefix,
-				$m
-			);
-		}
+		$query_object = 'distinct';
 
 		$offset = $m->set('model_offset', 0);
 		$count = $m->set('model_count', 9999999);
 
-		$query_results = $m->getData($query_object);
-
-		if ($filter == 'XYZ') {
-			echo '<br /><br /><br />';
-			echo Services::Registry()->get($filter . 'Datalist', '*');
-			echo $m->model->query->__toString();
-			echo '<pre>';
-			var_dump($query_results);
-			echo '</pre>';
-			echo '<br /><br /><br />';
-		}
-
-		return $query_results;
+		return $m->getData($query_object);
 	}
 
 	/**

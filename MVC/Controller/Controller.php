@@ -337,10 +337,10 @@ class Controller
 		if (count($this->plugins) > 0) {
 			$this->onBeforeReadEvent();
 		}
-
+/**
 echo $this->model->query->__toString();
 echo '<br /><br /><br />';
-
+*/
 		/** 3. Execute Query, results in $this->query_results */
 		if ($dbo == 'JDatabase') {
 			$this->runStandardQuery($query_object);
@@ -515,7 +515,7 @@ echo '<br /><br /><br />';
 				$this->model_offset = 0;
 				$this->model_count = 1;
 
-			} elseif ($query_object == 'distinct' || $query_object = 'getListdata') {
+			} elseif ($query_object == 'distinct') {
 				$this->model_offset = $this->get('model_offset', 0);
 				$this->model_count = $this->get('model_count', 9999);
 

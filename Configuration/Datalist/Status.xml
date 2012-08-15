@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Status">
+<model name="StatusDatalist">
     <table>
         <values>
             <value id="2" value="Archived"/>

@@ -26,7 +26,6 @@ class AdmingridPlugin extends ContentPlugin
 	 */
 	public function onBeforeParse()
 	{
-
 		if (APPLICATION_ID == 2) {
 		} else {
 			return true;
@@ -38,21 +37,18 @@ class AdmingridPlugin extends ContentPlugin
 		}
 
 		/** Not authorised and not found */
-		if ($this->get('model_type') == ''
-			|| $this->get('model_name') == '') {
+		if ($this->get('model_type') == '' || $this->get('model_name') == '') {
 			return true;
 		}
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 
-		$results = $connect->connect(
-			$this->get('model_type', 'Table'),
-			$this->get('model_name')
-		);
+		$results = $connect->connect($this->get('model_type', 'Table'), $this->get('model_name'));
 		if ($results == false) {
 			return false;
 		}
+
 		$connect->set('get_customfields', 2);
 		$connect->set('use_special_joins', 1);
 		$connect->set('process_plugins', 1);
@@ -79,8 +75,11 @@ class AdmingridPlugin extends ContentPlugin
 		}
 
 		$this->setToolbar();
+
 		$this->setFilter($connect, $connect->get('primary_prefix'));
-		$this->setGrid($connect, $connect->get('primary_prefix'), $connect->get('table_name'));
+
+		$this->setGrid($connect, $connect->get('primary_prefix'));
+
 		$this->setBatch($connect, $connect->get('primary_prefix'));
 
 		return true;
@@ -101,19 +100,24 @@ class AdmingridPlugin extends ContentPlugin
 		);
 
 		$permissions = Services::Authorisation()
-			->verifyTaskList($grid_toolbar_buttons, $this->get('extension_catalog_id')
+			->verifyTaskList($grid_toolbar_buttons, $this->get('catalog_id')
 		);
 
 		$query_results = array();
-
 		foreach ($grid_toolbar_buttons as $buttonname) {
 
 			if ($permissions[$buttonname] == true) {
-
 				$row = new \stdClass();
-				$row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($buttonname) . '_BUTTON'));
+				$row->name = Services::Language()->translate(
+					strtoupper('TASK_' . strtoupper($buttonname) . '_BUTTON')
+				);
 				$row->action = $buttonname;
-				$row->link = $url . '&action=' . $row->action;
+
+				if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+					$row->link = $url . '/' . $row->action;
+				} else {
+					$row->link = $url . '&action=' . $row->action;
+				}
 
 				$query_results[] = $row;
 			}
@@ -123,7 +127,12 @@ class AdmingridPlugin extends ContentPlugin
 			$row = new \stdClass();
 			$row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
 			$row->action = 'search';
-			$row->link = $url . '&action=search';
+
+			if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+				$row->link = $url . '/' . $row->action;
+			} else {
+				$row->link = $url . '&action=' . $row->action;
+			}
 
 			$query_results[] = $row;
 		}
@@ -166,7 +175,6 @@ class AdmingridPlugin extends ContentPlugin
 				}
 			}
 		}
-
 		Services::Registry()->set('Plugindata', 'AdminGridFilters', $lists);
 
 		return true;
@@ -182,12 +190,13 @@ class AdmingridPlugin extends ContentPlugin
 	 * @return bool
 	 * @since   1.0
 	 */
-	protected function setGrid($connect, $primary_prefix, $table_name)
+	protected function setGrid($connect, $primary_prefix)
 	{
 		$grid_columns = explode(',', $this->get('grid_columns', 'title,created_by,start_publishing_datetime,ordering'));
 		Services::Registry()->set('Plugindata', 'AdminGridTableColumns', $grid_columns);
 
-		$list = $this->get('menuitem_source_catalog_type_id');
+		$list = $this->get('catalog_type_id');
+
 		$connect->model->query->where(
 			$connect->model->db->qn($primary_prefix)
 				. '.' . $connect->model->db->qn('catalog_type_id')
@@ -204,7 +213,7 @@ class AdmingridPlugin extends ContentPlugin
 		$connect->set('model_count', 10);
 
 		$query_results = $connect->getData('list');
-		/**
+/**
 		echo '<pre><br /><br />';
 		var_dump($query_results);
 		echo '<br /><br /></pre>';
@@ -212,7 +221,7 @@ class AdmingridPlugin extends ContentPlugin
 		echo '<br /><br />';
 		echo $connect->model->query->__toString();
 		echo '<br /><br />';
-		 */
+*/
 		$this->set('model_name', 'Plugindata');
 		$this->parameters['model_name'] = 'Plugindata';
 		$this->set('model_type', 'dbo');

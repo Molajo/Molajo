@@ -180,19 +180,6 @@ class Model
 	}
 
 	/**
-	 * retrieves lists of non-table based data from Text Service DB
-	 *
-	 * @param null $model_type
-	 *
-	 * @return mixed Array or String or Null
-	 * @since   1.0
-	 */
-	public function getListdata($model_type = null)
-	{
-		return $this->db->getData($model_type);
-	}
-
-	/**
 	 * retrieves head and metadata from Metadata registry
 	 *
 	 * @param null $model_type

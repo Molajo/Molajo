@@ -918,6 +918,9 @@ Class ConfigurationService
 			$registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
 		);
 
+		$xmlArray = ConfigurationService::setTableValuesRegistry(
+			$registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
+		);
 		return $xmlArray;
 	}
 
@@ -1300,6 +1303,62 @@ Class ConfigurationService
 				$pluginsArray[] = $tAttr['name'];
 			}
 			Services::Registry()->set($registryName, 'plugins', $pluginsArray);
+		}
+
+		return array($xml, $xml_string);
+	}
+
+	/**
+	 * setTableValuesRegistry
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $xml
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return array
+	 * @since  1.0
+	 */
+	public static function setTableValuesRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+	{
+		$include = '';
+		if (isset($xml->table->values->include['name'])) {
+			$include = (string)$xml->table->values->include['name'];
+		}
+
+		if ($include == '') {
+		} else {
+			if ($xml_string == '') {
+				$xml_string = file_get_contents($path_and_file);
+			}
+
+			$replace_this = '<include name="' . $include . '"/>';
+
+			$xml_string = ConfigurationService::replaceIncludeStatement(
+				$include, $model_name, $replace_this, $xml_string
+			);
+			$xml = simplexml_load_string($xml_string);
+		}
+
+		$valuesArray = array();
+
+		if (isset($xml->table->values->value)) {
+			$values = $xml->table->values->value;
+			$valuesArray = array();
+			foreach ($values as $value) {
+				$t = get_object_vars($value);
+				$tXXX = ($t["@attributes"]);
+
+				$temp = new \stdClass();
+
+				$temp->id = $tXXX['id'];
+				$temp->value = $tXXX['value'];
+
+				$valuesArray[] = $temp;
+			}
+			Services::Registry()->set($registryName, 'values', $valuesArray);
 		}
 
 		return array($xml, $xml_string);

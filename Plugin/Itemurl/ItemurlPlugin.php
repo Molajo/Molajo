@@ -6,7 +6,6 @@
  */
 namespace Molajo\Plugin\Itemurl;
 
-use Molajo\Application;
 use Molajo\Service\Services;
 use Molajo\Plugin\Content\ContentPlugin;
 
@@ -107,24 +106,6 @@ class ItemurlPlugin extends ContentPlugin
 				}
 			}
 		}
-
-		return true;
-	}
-
-	/**
-	 * Build the page url to be used in links
-	 *
-	 * page_url was set in Route and it contains any non-routable parameters that
-	 * were used. Non-routable parameters include such values as /edit, /new, /tag/value, etc
-	 *
-	 * These values are used in conjunction with the permanent URL for basic operations on that data
-	 */
-	public function onBeforeParse()
-	{
-		$url = Application::Request()->get('base_url_path_for_application') .
-			Application::Request()->get('requested_resource_for_route');
-
-		Services::Registry()->set('Plugindata', 'full_page_url', $url);
 
 		return true;
 	}
