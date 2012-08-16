@@ -11,12 +11,12 @@ use Molajo\Includer;
 defined('MOLAJO') or die;
 
 /**
- * Form Field
+ * User Interface Includer
  *
  * @package     Molajo
  * @subpackage  Includer
  * @since       1.0
  */
-class FormfieldIncluder extends Includer
+class UIIncluder extends Includer
 {
 }
