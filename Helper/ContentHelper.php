@@ -100,7 +100,7 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getRouteItem');
 
-		$item = $this->get($id, $model_type, $model_name, $model_query_object);
+		$item = $this->get($id, $model_type, $model_name, 'item');
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
 		}
@@ -143,7 +143,7 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'parent_menu_id',
 			Services::Registry()->get($parmName, 'item_parent_menu_id'));
 
-		$this->setParameters($type, $parmName);
+		$this->setParameters($type, $item->table_registry_name . 'Parameters');
 
 		return true;
 	}

@@ -453,7 +453,7 @@ Class RouteService
 			Services::Error()->set(500, 'Content not found');
 			return false;
 		}
-Services::Registry()->get('Parameters', '*');
+
 		return true;
 	}
 }

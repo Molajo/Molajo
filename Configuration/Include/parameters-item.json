@@ -1,5 +1,5 @@
 {
-    "criteria_title":"Comments",
+    "criteria_title":"Articles",
     "criteria_display_view_on_no_results":"0",
     "criteria_snippet_length":"200",
     "criteria_status":"",
@@ -12,21 +12,21 @@
 
     "parent_menuid":"2110",
 
-    "item_theme_id":"9010",
-    "item_page_view_id":"220",
+    "item_theme_id":"9020",
+    "item_page_view_id":"225",
     "item_page_view_css_id":"",
     "item_page_view_css_class":"",
-    "item_template_view_id":"1210",
+    "item_template_view_id":"1230",
     "item_template_view_css_id":"",
     "item_template_view_css_class":"",
-    "item_wrap_view_id":"2030",
+    "item_wrap_view_id":"2000",
     "item_wrap_view_css_id":"",
     "item_wrap_view_css_class":"",
-    "item_model_name":"Comments",
+    "item_model_name":"Articles",
     "item_model_type":"Table",
     "item_model_query_object":"Item",
 
-    "form_theme_id":"9010",
+    "form_theme_id":"9020",
     "form_page_view_id":"210",
     "form_page_view_css_id":"",
     "form_page_view_css_class":"",
@@ -36,7 +36,7 @@
     "form_wrap_view_id":"2030",
     "form_wrap_view_css_id":"",
     "form_wrap_view_css_class":"",
-    "form_model_name":"Comments",
+    "form_model_name":"Articles",
     "form_model_type":"Table",
     "form_model_query_object":"Item",
 
