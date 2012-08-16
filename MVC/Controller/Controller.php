@@ -337,10 +337,7 @@ class Controller
 		if (count($this->plugins) > 0) {
 			$this->onBeforeReadEvent();
 		}
-/**
-echo $this->model->query->__toString();
-echo '<br /><br /><br />';
-*/
+
 		/** 3. Execute Query, results in $this->query_results */
 		if ($dbo == 'JDatabase') {
 			$this->runStandardQuery($query_object);

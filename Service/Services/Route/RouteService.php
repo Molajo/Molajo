@@ -444,7 +444,6 @@ Class RouteService
 
 		/** Template Menu item */
 		} elseif ($catalog_menuitem_type > '') {
-
 			$response = Helpers::Content()->getRouteTemplateView();
 			if ($response === false) {
 				Services::Error()->set(500, 'Menu Item not found');
@@ -454,7 +453,7 @@ Class RouteService
 			Services::Error()->set(500, 'Content not found');
 			return false;
 		}
-		//Services::Registry()->get('Parameters', '*');
+Services::Registry()->get('Parameters', '*');
 		return true;
 	}
 }

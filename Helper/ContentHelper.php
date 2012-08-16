@@ -85,7 +85,7 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'source_routable', (int)$item->content_catalog_types_routable);
 
 		/** Set Parameters */
-		$this->getParameters('list', $item->table_registry_name . 'Parameters');
+		$this->setParameters('list', $item->table_registry_name . 'Parameters');
 
 		return true;
 	}
@@ -143,7 +143,7 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'parent_menu_id',
 			Services::Registry()->get($parmName, 'item_parent_menu_id'));
 
-		$this->getParameters($type, $parmName);
+		$this->setParameters($type, $parmName);
 
 		return true;
 	}
@@ -186,7 +186,7 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
 		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
-		$parmName = $item->table_registry_name . 'Parameters';
+		$this->setParameters('menuitem', $item->table_registry_name . 'Parameters');
 
 		return true;
 	}
@@ -242,7 +242,7 @@ Class ContentHelper
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function getParameters($type, $parmName)
+	protected function setParameters($type, $parmName)
 	{
 		/** Menuitem ID */
 		$hold_menuitem_id = (int) Services::Registry()->get($parmName, 'menuitem_id');
@@ -317,8 +317,6 @@ Class ContentHelper
 
 		/* Store saved values */
 		Services::Registry()->set('Parameters', 'menuitem_id', $hold_menuitem_id);
-
-//Services::Registry()->get('Parameters', '*');
 
 		return true;
 	}
