@@ -125,6 +125,10 @@ Class Application
 			die('Your host needs to use PHP 5.3 or higher to run Molajo.');
 		}
 
+		/** Use this error for ALL (E_ALL) errors */
+//		$exceptionHandler = 'Molajo//Exceptions';
+//		set_error_handler($exceptionHandler, E_ALL);
+
 		/** HTTP class */
 		$results = $this->setBaseURL();
 		if ($results == false) {

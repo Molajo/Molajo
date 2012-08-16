@@ -181,8 +181,8 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menuitem_modified_datetime', $item->modified_datetime);
 
 		/** Menu Extension */
-		Services::Registry()->set('Parameters', 'menu_id', (int)$item->extension_instance_id);
-		Services::Registry()->set('Parameters', 'menu_title', $item->extension_instances_title);
+		Services::Registry()->set('Parameters', 'menu_id', (int)$item->extension_id);
+		Services::Registry()->set('Parameters', 'menu_title', $item->extensions_name);
 		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
 		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
