@@ -22,30 +22,31 @@ class UiIncluder extends Includer
 {
 
 	/**
-	 * process - render include statement for template configured for UI Object
+	 * process - render include statement for configured UI Library
 	 *
-	 * @param   $attributes <include:ui attr1=x attr2=y attr3=z ... />
+	 * @param   $attributes
 	 *
-	 * @return mixed 		<include:template attr1=x attr2=y attr3=z ... />
+	 * @return mixed
 	 * @since   1.0
 	 */
 	public function process($attributes = array())
 	{
-		/** Retrieve Attributes from the include statement */
 		$this->attributes = $attributes;
 		parent::getAttributes();
 
-		/** Retrieve Configuration option for User Interface Template */
-		$name = Services::Registry()->get('Configuration', 'ui-template-' . $this->name);
-		if (trim($name) == '' || $name === null) {
-			$name = 'ui-' . $this->name;
+		$includer = '<include:template';
+
+		foreach ($this->attributes as $key => $value) {
+			if ($key == 'name') {
+				$temp = Services::Registry()->get('Configuration', 'Ui-' . $value);
+				if (trim($temp) == '' || $temp === null) {
+					$value = 'Ui-' . $value . '-foundation ';
+				}
+			}
+			$includer .= ' ' . trim($key) . '=' . trim($value);
 		}
+		$includer .= '/>';
 
-		/** Create Include Template Statement and return as rendered output */
-		return '<include:template '
-			. ' name=' . $this->name
-			. explode(' ', $this->attributes)
-			. '/>';
-
+		return $includer;
 	}
 }

@@ -73,8 +73,10 @@
 
             <include name="ParametersProfiler"/>
         </customfield>
+
         <customfield name="metadata">
             <include name="Metadata"/>
         </customfield>
+
     </customfields>
 </model>

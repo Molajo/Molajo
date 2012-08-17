@@ -74,7 +74,7 @@ class ContentPlugin extends Plugin
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $query_results;
+	protected $data;
 
 	/**
 	 * null_date
@@ -130,9 +130,19 @@ class ContentPlugin extends Plugin
 
 		$value = null;
 
-		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
-			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
-			'data', 'model_type', 'model_name', 'rendered_output'))
+		if (in_array($key,
+			array('table_registry_name',
+				'model_type',
+				'model_name',
+				'parameters',
+				'query',
+				'db',
+				'data',
+				'null_date',
+				'now',
+				'fields',
+				'customfieldgroups',
+				'rendered_output'))
 			&& (isset($this->$key))
 		) {
 			$value = $this->$key;
@@ -161,9 +171,18 @@ class ContentPlugin extends Plugin
 	 */
 	public function set($key, $value = null)
 	{
-		if (in_array($key, array('table_registry_name', 'query', 'db', 'parameters',
-			'query_results', 'null_date', 'now', 'fields', 'customfieldgroups',
-			'data', 'model_type', 'model_name', 'rendered_output'))
+		if (in_array($key, array('table_registry_name',
+			'model_type',
+			'model_name',
+			'parameters',
+			'query',
+			'db',
+			'data',
+			'null_date',
+			'now',
+			'fields',
+			'customfieldgroups',
+			'rendered_output'))
 		) {
 
 			$this->$key = $value;
@@ -176,8 +195,6 @@ class ContentPlugin extends Plugin
 
 	/**
 	 * Unload fields for plugin use
-	 *
-	 * Note: List of field attributes also defined in ConfigurationService
 	 *
 	 * @return mixed
 	 * @since  1.0
@@ -234,6 +251,8 @@ class ContentPlugin extends Plugin
 	 */
 	public function processFieldType($type, $fields)
 	{
+		$datatypeArray = Services::Registry()->set('Fields', 'Datatypes');
+
 		foreach ($fields as $key => $value) {
 
 			$row = new \stdClass();
@@ -362,7 +381,6 @@ class ContentPlugin extends Plugin
 			}
 
 			if ($type == '') {
-				//regular field
 				$row->customfield = '';
 				$row->foreignkey = 0;
 
@@ -372,7 +390,6 @@ class ContentPlugin extends Plugin
 				$row->type = $type;
 
 			} else {
-				/** Customfield */
 				$row->customfield = $type;
 				$row->foreignkey = 0;
 			}
