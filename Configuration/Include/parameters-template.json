@@ -22,7 +22,9 @@
         "model_query_object":"getParameters",
         "model_parameter":"",
 
-        "link":"",
-        "link_title":""
+        "button_type":"",
+        "button_size":"",
+        "button_shape":"",
+        "button_array":""
     }
 }
