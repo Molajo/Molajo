@@ -32,6 +32,9 @@ class FoundationPlugin extends ContentPlugin
 		} elseif (strtolower($this->get('template_view_path_node')) == 'ui-button-group-foundation') {
 			$this->button_group();
 
+		} elseif (strtolower($this->get('template_view_path_node')) == 'ui-button-dropdown-foundation') {
+			$this->button_dropdown();
+
 		} else {
 			return true;
 		}
@@ -40,7 +43,7 @@ class FoundationPlugin extends ContentPlugin
 	}
 
 	/**
-	 * Add CSS Class to each row for Button Options
+	 * Foundation Buttons
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -64,7 +67,7 @@ class FoundationPlugin extends ContentPlugin
 	}
 
 	/**
-	 * Add CSS Class to each row for Button Options
+	 * Foundation Button Group and Button Bar
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -86,8 +89,51 @@ class FoundationPlugin extends ContentPlugin
 
 		$this->saveField(null, 'button_group_class', $button_group_class);
 
+		$button_array = $this->getButtons($this->data->button_group_array);
+		$this->saveField(null, 'button_group_array', $button_array);
+
+		return true;
+	}
+
+	/**
+	 * Foundation Dropdown buttons
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function button_dropdown()
+	{
+		$button_type = $this->data->button_dropdown_type;
+		$button_size = $this->data->button_dropdown_size;
+		$button_shape = $this->data->button_dropdown_shape;
+		$button_class = str_replace(',', ' ', $this->data->button_dropdown_class);
+
+		$button_dropdown_class = trim($button_type);
+		$button_dropdown_class = trim($button_dropdown_class) . ' ' . trim($button_shape);
+		$button_dropdown_class = trim($button_dropdown_class) . ' ' . trim($button_size);
+		$button_dropdown_class = trim($button_dropdown_class) . ' ' . trim($button_class);
+		$button_dropdown_class = trim($button_dropdown_class) . ' ' . 'button';
+
+		$button_dropdown_class = ' class="' . htmlspecialchars(trim($button_dropdown_class), ENT_NOQUOTES, 'UTF-8') . '"';
+
+		$this->saveField(null, 'button_dropdown_class', $button_dropdown_class);
+
+		$button_array = $this->getButtons($this->data->button_group_array);
+		$this->saveField(null, 'button_group_array', $button_array);
+
+		return true;
+	}
+
+	/**
+	 * Get individual buttons
+	 *
+	 * @param $buttons
+	 * @return array
+	 */
+	public function getButtons($buttons)
+	{
 		$button_array = array();
-		$temp = explode('{{', $this->data->button_group_array);
+		$temp = explode('{{', $buttons);
 		foreach ($temp as $set) {
 			$set = str_replace(',', ' ', $set);
 			$set = str_replace(':', '=', $set);
@@ -97,9 +143,6 @@ class FoundationPlugin extends ContentPlugin
 				$button_array[] = trim($set);
 			}
 		}
-
-		$this->saveField(null, 'button_group_array', $button_array);
-
-		return true;
+		return $button_array;
 	}
 }
