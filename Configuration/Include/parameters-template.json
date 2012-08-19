@@ -1,7 +1,30 @@
 {
-    "1":{},
-    "2":{
+    "1":{
 
+        "cache":"0",
+        "cache_time":"5",
+        "cache_handler":"file",
+
+        "criteria_title":"",
+        "criteria_display_view_on_no_results":"",
+        "criteria_snippet_length":"",
+
+        "template_view_id":"",
+        "template_view_css_id":"",
+        "template_view_css_class":"",
+
+        "wrap_view_id":"",
+        "wrap_view_css_id":"",
+        "wrap_view_css_class":"",
+        "wrap_view_role":"",
+        "wrap_view_property":"",
+
+        "model_name":"",
+        "model_type":"",
+        "model_query_object":"",
+        "model_parameter":""
+    },
+    "2":{
         "cache":"0",
         "cache_time":"5",
         "cache_handler":"file",

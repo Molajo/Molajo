@@ -129,7 +129,7 @@ Class MetadataService
 			/** Title */
 			$title = Services::Registry()->get('Metadata', 'title', '');
 			if (trim($title) == '') {
-				$title = Services::Registry()->get('Configuration', 'title', 'Molajo');
+				$title = Services::Registry()->get('Configuration', 'site_name');
 			}
 			$row->title = Services::Filter()->escape_text($title);
 
@@ -177,27 +177,23 @@ Class MetadataService
 
 				foreach ($metadata as $name => $content) {
 
-					if ($content == '') {
+					$row = new \stdClass();
+
+					$row->name = Services::Filter()->escape_text($name);
+
+					if (is_array($content)) {
+						$row->content = Services::Filter()->escape_text($content[0]);
+						$row->label = $content[1];
 					} else {
-						$row = new \stdClass();
-
-						/** Metadata */
-						$row->name = Services::Filter()->escape_text($name);
-
-						if (is_array($content)) {
-							$row->content = Services::Filter()->escape_text($content[0]);
-							$row->label = $content[1];
-						} else {
-							$row->content = Services::Filter()->escape_text($content);
-							$row->label = 'name';
-						}
-
-						/** HTML5 */
-						$row->html5 = $html5;
-						$row->end = $end;
-
-						$query_results[] = $row;
+						$row->content = Services::Filter()->escape_text($content);
+						$row->label = 'name';
 					}
+
+					/** HTML5 */
+					$row->html5 = $html5;
+					$row->end = $end;
+
+					$query_results[] = $row;
 				}
 			}
 		} else {

@@ -99,8 +99,7 @@ Class TemplateIncluder extends Includer
 			$wrap_title = Services::Registry()->get('Parameters', 'wrap_view_path_node', '');
 			if ($wrap_title == '') {
 				Services::Registry()->set('Parameters', 'wrap_view_id',
-					Helpers::Extension()
-						->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'None'));
+					Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'None'));
 			}
 		}
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');
@@ -109,9 +108,6 @@ Class TemplateIncluder extends Includer
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
 		/* Set other model parameters: model_parameter is set in Attributes */
-
-		$model_parameter = Services::Registry()->get('Parameters', 'model_parameter', '');
-
 		Services::Registry()->set('Parameters', 'model_type', 'dbo');
 		Services::Registry()->set('Parameters', 'model_query_object', 'get' . strtolower(ucfirst($model_name)));
 
