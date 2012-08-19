@@ -78,6 +78,7 @@ class Includer
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Request*');
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Theme*');
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Page*');
+		Services::Registry()->copy('RouteParameters', 'Parameters', 'Ui*');
 
 		return;
 	}

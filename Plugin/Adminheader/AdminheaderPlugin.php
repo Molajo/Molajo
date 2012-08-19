@@ -31,17 +31,17 @@ class AdminheaderPlugin extends ContentPlugin
 			return true;
 		}
 
-		$title = Services::Registry()->get('Plugindata', 'PageTitle');
+		$title = '<strong>Molajo</strong> '. Services::Language()->translate('Administrator');
 
-		$parameter_title = $this->parameters['criteria_title'];
+		$subtitle = Services::Registry()->get('Plugindata', 'PageTitle');
 
-		if ($parameter_title == '') {
-			$title = $parameter_title;
-		} else {
-			$title .= '-' . $parameter_title;
+		if (trim($subtitle) == '') {
+			$subtitle = $this->parameters['criteria_title'];
 		}
-		if (trim($title) == '-') {
-			$title = '<strong>Molajo</strong> '. Services::Language()->translate('Administrator');
+
+		if (trim($subtitle) == '') {
+		} else {
+			$title .= ' - ' . $subtitle;
 		}
 		$this->saveField(null, 'header_title', $title);
 

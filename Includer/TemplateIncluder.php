@@ -48,8 +48,12 @@ Class TemplateIncluder extends Includer
 		/**  Extension name set to the name of the template in the getAttributes method */
 		$template_title = Services::Registry()->get('Parameters', 'extension_title');
 
+		if ((int)$template_title == 0) {
 		$template_id = Helpers::Extension()
 			->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+		} else {
+			$template_id = (int) $template_title;
+		}
 
 		if ((int)$template_id == 0) {
 		} else {

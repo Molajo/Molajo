@@ -37,15 +37,16 @@ class UiIncluder extends Includer
 		$includer = '<include:template';
 
 		foreach ($this->attributes as $key => $value) {
+
+			$useValue = $value;
+
 			if ($key == 'name') {
-				$temp = Services::Registry()->get('Configuration', 'Ui-' . $value);
-				if (trim($temp) == '' || $temp === null) {
-					$value = 'Ui-' . $value . '-foundation ';
-				} else {
-					$value = 'Ui-' . $value . '-' . strtolower($temp);
+				$useValue = Services::Registry()->get('Parameters', 'Ui-' .$value);
+				if ((int) $useValue == 0) {
+					$useValue = Services::Registry()->get('Configuration', 'Ui-' .$value);
 				}
 			}
-			$includer .= ' ' . trim($key) . '=' . trim($value);
+			$includer .= ' ' . trim($key) . '=' . trim($useValue);
 		}
 		$includer .= '/>';
 

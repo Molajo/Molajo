@@ -7,7 +7,6 @@
         <customfield name="parameters">
             <include name="ParametersTemplate"/>
             <include name="ParametersWrap"/>
-            <include name="ParametersUIobjects"/>
         </customfield>
     </customfields>
 </model>

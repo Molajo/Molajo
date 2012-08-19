@@ -318,6 +318,8 @@ Class ContentHelper
 		/* Store saved values */
 		Services::Registry()->set('Parameters', 'menuitem_id', $hold_menuitem_id);
 
+		Services::Registry()->sort('Parameters', '*');
+
 		return true;
 	}
 }
