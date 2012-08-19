@@ -34,13 +34,13 @@ else :
 	$headerClass = ' class="' . $headerClass . '"';
 endif;
 
-$headerRole = trim(Services::Registry()->get('Parameters', 'wrap_view_css_role', ''));
+$headerRole = trim(Services::Registry()->get('Parameters', 'wrap_view_role', ''));
 if ($headerRole == '') :
 else :
 	$headerRole = ' role="' . $headerRole . '"';
 endif;
 
-$headerProperty = trim(Services::Registry()->get('Parameters', 'wrap_view_css_property', ''));
+$headerProperty = trim(Services::Registry()->get('Parameters', 'wrap_view_property', ''));
 if ($headerProperty == '') :
 else :
 	$headerProperty = ' property="' . $headerProperty . '"';
