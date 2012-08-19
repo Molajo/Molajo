@@ -7,5 +7,5 @@
 defined('MOLAJO') or die; ?>
 <include:asset name=Assetsjs/>
 <include:asset name=Assetsjsdeclarations/>
-</body>
+	</body>
 </html>

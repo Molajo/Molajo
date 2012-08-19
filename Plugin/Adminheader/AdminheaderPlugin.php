@@ -32,15 +32,20 @@ class AdminheaderPlugin extends ContentPlugin
 		}
 
 		$title = Services::Registry()->get('Plugindata', 'PageTitle');
-		if ($title == '') {
-			$title = $this->row->criteria_title;
+
+		$parameter_title = $this->parameters['criteria_title'];
+
+		if ($parameter_title == '') {
+			$title = $parameter_title;
 		} else {
-			$title .= '-' . $this->row->criteria_title;
+			$title .= '-' . $parameter_title;
 		}
-		$this->saveField(null, 'title', $title);
+		if (trim($title) == '-') {
+			$title = '<strong>Molajo</strong> '. Services::Language()->translate('Administrator');
+		}
+		$this->saveField(null, 'header_title', $title);
 
 		$homeURL = Services::Registry()->get('Configuration', 'application_base_url');
-
 		$this->saveField(null, 'home_url', $homeURL);
 
 		return true;

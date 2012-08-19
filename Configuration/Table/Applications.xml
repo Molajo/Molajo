@@ -49,6 +49,7 @@
         <customfield name="parameters">
 
             <include name="ParametersApplicationDefaults"/>
+            <include name="ParametersUIobjects"/>
             <include name="ParametersGrid"/>
             <include name="ParametersDashboard"/>
             <include name="ParametersMail"/>

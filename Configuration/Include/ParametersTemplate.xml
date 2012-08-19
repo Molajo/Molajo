@@ -1,4 +1,3 @@
 <field name="template_view_id" type="char" null="0" default=" "/>
 <field name="template_view_css_id" type="char" null="0" default=" "/>
 <field name="template_view_css_class" type="char" null="0" default=" "/>
-<field name="value" type="char" null="0" default=" "/>
