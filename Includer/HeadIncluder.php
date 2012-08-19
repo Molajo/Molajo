@@ -55,10 +55,18 @@ Class HeadIncluder extends Includer
 					Services::Registry()->get('Configuration', 'defer_wrap_view_id'));
 			}
 
-			Services::Registry()->set('Parameters', 'model_name', 'Metadata');
+			if ($this->name = 'Assetjs') {
+				Services::Registry()->set('Parameters', 'model_name', 'Assets');
+				Services::Registry()->set('Parameters', 'model_parameter', 'JsDefer');
+			}
+			if ($this->name = 'Assetsjsdeclarations') {
+				Services::Registry()->set('Parameters', 'model_name', 'Assets');
+				Services::Registry()->set('Parameters', 'model_parameter', 'JsDeclarationsDefer');
+			}
+
 			Services::Registry()->set('Parameters', 'model_type', 'dbo');
-			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
-			Services::Registry()->set('Parameters', 'model_parameter', 'defer');
+			Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
+
 
 		} else {
 			if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {

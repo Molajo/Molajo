@@ -202,6 +202,9 @@ class Includer
 
 			} elseif ($name == 'model_parameter' || $name == 'parameter' || $name == 'value') {
 				Services::Registry()->set('Parameters', 'model_parameter', $value);
+				if ($name == 'value') {
+					Services::Registry()->get('Parameters', 'model_parameter');
+				}
 
 			} elseif ($name == 'model_query_object' || $name == 'query_object') {
 				Services::Registry()->set('Parameters', 'model_query_object', $value);

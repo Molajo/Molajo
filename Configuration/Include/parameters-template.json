@@ -43,9 +43,9 @@
         "wrap_view_role":"",
         "wrap_view_property":"",
 
-        "model_name":"",
-        "model_type":"",
-        "model_query_object":"",
+        "model_name":"Parameters",
+        "model_type":"dbo",
+        "model_query_object":"getParameters",
         "model_parameter":""
     }
 }

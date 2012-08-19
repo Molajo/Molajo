@@ -663,7 +663,7 @@ Class FilterService
 		$config = HTMLPurifier\HTMLPurifier_Config::createDefault();
 		//var_dump($config);
 
-		if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1) {
+		if ((int)Services::Registry()->get('Parameters', 'html5', 1) == 1) {
 			$config->set('HTML.Doctype', 'HTML 4.01 Transitional');
 			//not supported $config->set('HTML.Doctype', 'HTML5');
 		} else {

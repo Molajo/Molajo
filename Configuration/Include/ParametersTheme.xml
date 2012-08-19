@@ -2,4 +2,3 @@
 <include name="ParametersImage"/>
 <include name="ParametersAssets"/>
 <include name="ParametersCache"/>
-<field name="value" type="char" null="0" default=" "/>
