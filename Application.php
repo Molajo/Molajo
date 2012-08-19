@@ -374,18 +374,17 @@ Class Application
 	 */
 	protected function display()
 	{
-		/**
-		Services::Message()->set('Test message', MESSAGE_TYPE_INFORMATION);
-		Services::Message()->set('Test message', MESSAGE_TYPE_SUCCESS);
-		Services::Message()->set('Test message', MESSAGE_TYPE_WARNING);
-		Services::Message()->set('Test message', MESSAGE_TYPE_ERROR);
-		*/
+
+Services::Message()->set('Test message for information', MESSAGE_TYPE_INFORMATION);
+Services::Message()->set('Test message for success', MESSAGE_TYPE_SUCCESS);
+Services::Message()->set('Test message for warning', MESSAGE_TYPE_WARNING);
+Services::Message()->set('Test message for error', MESSAGE_TYPE_ERROR);
 
 		/** Theme must be found to proceed */
 		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
 		} else {
 			Services::Error()->set(500, 'Theme Not found');
-			echo 'Theme nott found - application stopped before parse. Parameters follow:';
+			echo 'Theme not found - application stopped before parse. Parameters follow:';
 			Services::Registry()->get('Parameters', '*');
 			die;
 		}

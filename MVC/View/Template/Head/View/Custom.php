@@ -10,12 +10,14 @@ defined('MOLAJO') or die;
 
 $class = Services::Registry()->get('Parameters', 'page_view_css_class');
 if (trim($class) == '') {
+	$class = '';
 } else {
 	$class = ' class="' . htmlspecialchars($class) . '"';
 }
 
 $id = Services::Registry()->get('Parameters', 'page_view_css_id');
 if (trim($id) == '') {
+	$id = '';
 } else {
 	$id = ' id="' . htmlspecialchars($id) . '"';
 }

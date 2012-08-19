@@ -41,6 +41,8 @@ class UiIncluder extends Includer
 				$temp = Services::Registry()->get('Configuration', 'Ui-' . $value);
 				if (trim($temp) == '' || $temp === null) {
 					$value = 'Ui-' . $value . '-foundation ';
+				} else {
+					$value = 'Ui-' . $value . '-' . strtolower($temp);
 				}
 			}
 			$includer .= ' ' . trim($key) . '=' . trim($value);
