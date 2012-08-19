@@ -1,3 +1,4 @@
+<field name="wrap_view_id" type="char" null="0" default=" "/>
 <field name="wrap_view_css_id" type="char" null="0" default=" "/>
 <field name="wrap_view_css_class" type="char" null="0" default=" "/>
 <field name="wrap_view_role" type="char" null="0" default=" "/>

@@ -151,6 +151,8 @@ Class ExtensionHelper
 		}
 
 		$query_results = $m->getData($query_object);
+
+
 		if ($query_results == false || $query_results == null) {
 
 			echo 'Extension ID ' . $extension_id . '<br />';
@@ -158,6 +160,10 @@ Class ExtensionHelper
 			echo 'Model Name ' . $model_name . '<br />';
 			echo 'Query Object ' . $query_object . '<br />';
 			echo 'Catalog Type ID ' . $catalog_type_id . '<br />';
+
+			echo '<br />';
+			echo $m->model->query->__toString();
+			echo '<br />';
 
 			return false;
 		}

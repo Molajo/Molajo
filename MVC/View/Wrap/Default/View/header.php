@@ -39,8 +39,14 @@ if ($headerRole == '') :
 else :
 	$headerRole = ' role="' . $headerRole . '"';
 endif;
+
+$headerProperty = trim(Services::Registry()->get('Parameters', 'wrap_view_css_property', ''));
+if ($headerProperty == '') :
+else :
+	$headerProperty = ' property="' . $headerProperty . '"';
+endif;
 ?>
-<<?php echo trim($headerType . $headerId . $headerClass . $headerRole); ?>>
+<<?php echo trim($headerType . $headerId . $headerClass . $headerRole . $headerProperty); ?>>
 <?php
 $headingLevel = Services::Registry()->get('Parameters', 'wrap_view_header_level', 3);
 if ((int)Services::Registry()->get('Parameters', 'criteria_html5', 1) == 1):

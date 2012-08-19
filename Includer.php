@@ -165,17 +165,13 @@ class Includer
 					Services::Registry()->set('Parameters', 'template_view_id', $template_id);
 				}
 
-			} elseif ($name == 'template_view_css_id' || $name == 'template_css_id'
-				|| $name == 'template_id'
-			) {
+			} elseif ($name == 'template_view_css_id' || $name == 'template_css_id' || $name == 'template_id') {
 				Services::Registry()->set('Parameters', 'template_view_css_id', $value);
 
-			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class'
-				|| $name == 'template_class'
-			) {
+			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class' || $name == 'template_class' ) {
 				Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
-				/** Wrap */
+			/** Wrap */
 			} elseif ($name == 'wrap' || $name == 'wrap_view_title' || $name == 'wrap_view' || $name == 'wrap_view') {
 				$wrap_id = Helpers::Extension()
 					->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, $value);
@@ -191,12 +187,24 @@ class Includer
 			} elseif ($name == 'wrap_view_css_class' || $name == 'wrap_css_class' || $name == 'wrap_class') {
 				Services::Registry()->set('Parameters', 'wrap_view_css_class', str_replace(',', ' ', $value));
 
-				/** Model */
-			} elseif ($name == 'value') {
+			} elseif ($name == 'wrap_view_role' || $name == 'wrap_role' || $name = 'role') {
+				Services::Registry()->set('Parameters', 'wrap_view_role', str_replace(',', ' ', $value));
+
+			} elseif ($name == 'wrap_view_property' || $name == 'wrap_property' || $name = 'property') {
+				Services::Registry()->set('Parameters', 'wrap_view_property', str_replace(',', ' ', $value));
+
+			/** Model */
+			} elseif ($name == 'model_name') {
+				Services::Registry()->set('Parameters', 'model_name', $value);
+
+			} elseif ($name == 'model_type') {
+				Services::Registry()->set('Parameters', 'model_type', $value);
+
+			} elseif ($name == 'model_parameter' || $name == 'parameter' || $name == 'value') {
 				Services::Registry()->set('Parameters', 'model_parameter', $value);
 
-			} elseif ($name == 'model_name' || $name == 'model_type' || $name == 'model_query_object') {
-				Services::Registry()->set('Parameters', $name, $value);
+			} elseif ($name == 'model_query_object' || $name == 'query_object') {
+				Services::Registry()->set('Parameters', 'model_query_object', $value);
 
 			} else {
 				/** For security reasons, other parameters must override and match defined parameter values */
@@ -323,7 +331,7 @@ class Includer
 	{
 		Services::Registry()->sort('Parameters');
 
-		$message = 'Includer->invokeMVC ' . 'Name ' . $this->name . ' Type: ' . $this->type;
+		$message = 'Includer->invokeMVC ' . 'Name ' . $this->name . ' Type: ' . $this->type . ' Template: ' . Services::Registry()->get('Parameters', 'template_view_title');
 		$message .= ' Parameters:<br />';
 
 		ob_start();
@@ -345,8 +353,13 @@ class Includer
 			}
 		}
 
+echo '<br /><br /><br />NEXT<br />';
+echo $message;
+echo '<br /><br /><br />';
+
 		$results = $controller->execute();
 
 		return $results;
 	}
 }
+

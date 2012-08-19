@@ -813,22 +813,22 @@ Services::Registry()->get('Parameters', '*');
 
 INSERT INTO `molajo_extensions`
 (`id`, `extension_site_id`, `catalog_type_id`, `name`, `sub_title`, `language`, `translation_of_id`, `ordering`)
-VALUES ( 10380 ,  '1',  '1200',  'Ui-elements-panel', 'Template', '', 0, 10380);
+VALUES ( 7010 ,  '1',  '1200',  'Ui-navigation-navbar-molajito', 'Template', '', 0, 1);
 
 INSERT INTO `molajo_extension_instances` (`id`, `extension_id`, `catalog_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`, `metadata`, `language`, `translation_of_id`, `ordering`)
 SELECT a.id, a.id, a.catalog_type_id, a.name, 'Menu', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 24
 FROM molajo_extensions a
-WHERE id = 10380;
+WHERE id = 7010;
 
 INSERT INTO  `molajo_site_extension_instances` (  `site_id` ,  `extension_instance_id` )
 SELECT a.id, b.id
 FROM molajo_sites a, molajo_extension_instances b
-WHERE b.id = 10380;
+WHERE b.id = 7010;
 
 INSERT INTO  `molajo_application_extension_instances` (  `application_id` ,  `extension_instance_id` )
 SELECT a.id, b.id
 FROM molajo_applications a, molajo_extension_instances b
-WHERE b.id = 10380;
+WHERE b.id = 7010;
 
 INSERT INTO molajo_catalog
 SELECT NULL, a.catalog_type_id, a.id, b.routable,
@@ -836,7 +836,7 @@ SELECT NULL, a.catalog_type_id, a.id, b.routable,
 1 as view_group_id, b.primary_category_id, '' as tinyurl
 from molajo_extension_instances a,
 molajo_catalog_types b
-where a.id = 10380
+where a.id = 7010
 and a.catalog_type_id = b.id;
 
 2. sample data
@@ -858,17 +858,15 @@ AND  `a`.`catalog_type_id` = '11000'
 
 3. remove an extension
 
-delete from `molajo_site_extension_instances` WHERE `extension_instance_id` IN (15);
+delete from `molajo_site_extension_instances` WHERE `extension_instance_id` IN (9010, 9050);
 
-delete from `molajo_application_extension_instances` WHERE `extension_instance_id` IN (15);
+delete from `molajo_application_extension_instances` WHERE `extension_instance_id` IN (9010, 9050);
 
-delete from `molajo_catalog_activity` WHERE `catalog_id` IN (647);
+delete from `molajo_catalog` WHERE `source_id` IN (9010, 9020) AND catalog_type_id = 1500;
 
-delete from `molajo_catalog` WHERE `source_id` IN (15) and `catalog_type_id` = 1200;
+delete from `molajo_extension_instances` WHERE `id` IN (9010, 9050);
 
-delete from `molajo_extension_instances` WHERE `id` IN (15);
-
-delete from `molajo_extensions` WHERE `id` IN (15);
+delete from `molajo_extensions` WHERE `id` IN (9010, 9050);
 
 4. rebuild security
 

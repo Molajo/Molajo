@@ -10,21 +10,19 @@
         "criteria_display_view_on_no_results":"",
         "criteria_snippet_length":"",
 
+        "template_view_id":"",
         "template_view_css_id":"",
         "template_view_css_class":"",
 
         "wrap_view_id":"",
         "wrap_view_css_id":"",
         "wrap_view_css_class":"",
+        "wrap_view_role":"",
+        "wrap_view_property":"",
 
-        "model_name":"Parameters",
-        "model_type":"dbo",
-        "model_query_object":"getParameters",
-        "model_parameter":"",
-
-        "button_type":"",
-        "button_size":"",
-        "button_shape":"",
-        "button_array":""
+        "model_name":"",
+        "model_type":"",
+        "model_query_object":"",
+        "model_parameter":""
     }
 }

@@ -251,7 +251,6 @@ class ContentPlugin extends Plugin
 	 */
 	public function processFieldType($type, $fields)
 	{
-		$datatypeArray = Services::Registry()->set('Fields', 'Datatypes');
 
 		foreach ($fields as $key => $value) {
 
@@ -442,6 +441,15 @@ class ContentPlugin extends Plugin
 	 */
 	public function getField($name)
 	{
+		if ($this->parameters['model_type'] == 'dbo') {
+			if (isset($this->data->$name)) {
+				$field = new \stdClass();
+				$field->name = $name;
+				return $field;
+			}
+			return false;
+		}
+
 		foreach ($this->fields as $field) {
 
 			if ((int)$field->foreignkey = 0) {
@@ -472,6 +480,15 @@ class ContentPlugin extends Plugin
 	 */
 	public function getFieldValue($field)
 	{
+		if ($this->parameters['model_type'] == 'dbo') {
+			$name = $field->name;
+			if (isset($this->data->$name)) {
+				return $this->data->$name;
+			} else {
+				return false;
+			}
+		}
+
 		if (is_object($field)) {
 		} else {
 			return false;
@@ -524,6 +541,10 @@ class ContentPlugin extends Plugin
 			$this->parameters[$name] = $value;
 
 		} else {
+			if (is_object($this->data)) {
+			} else {
+				$this->data = new \stdClass();
+			}
 			$this->data->$new_field_name = $value;
 		}
 

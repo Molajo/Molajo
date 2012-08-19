@@ -143,7 +143,7 @@ class AdminPlugin extends ContentPlugin
 			}
 		}
 
-/**
+
 		echo '<br />Adminhome <br />';
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Plugindata','Adminhome'));
@@ -173,7 +173,7 @@ class AdminPlugin extends ContentPlugin
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Plugindata','Adminmenu'));
 		echo '</pre>';
-*/
+
 		return;
 	}
 

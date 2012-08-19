@@ -2,3 +2,5 @@
 <include name="ParametersImage"/>
 <include name="ParametersAssets"/>
 <include name="ParametersCache"/>
+<field name="page_view_css_id" type="char" null="0" default=" "/>
+<field name="page_view_css_class" type="char" null="0" default=" "/>
