@@ -30,7 +30,6 @@ class PublishedstatusPlugin extends ContentPlugin
 	 */
 	public function onBeforeRead()
 	{
-
 		if (isset($this->parameters['action'])
 			&& $this->parameters['action'] == 'delete'
 		) {

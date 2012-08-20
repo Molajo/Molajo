@@ -6,7 +6,7 @@
         "cache_handler":"file",
 
         "criteria_title":"",
-        "criteria_display_view_on_no_results":"",
+        "criteria_display_view_on_no_results":"1",
         "criteria_snippet_length":"",
 
         "template_view_id":"",
@@ -19,10 +19,10 @@
         "wrap_view_role":"",
         "wrap_view_property":"",
 
-        "model_name":"",
-        "model_type":"",
-        "model_query_object":"",
-        "model_parameter":""
+        "model_name":"Plugindata",
+        "model_type":"dbo",
+        "model_query_object":"getPlugindata",
+        "model_parameter":"jsdeclarations"
     },
     "2":{
         "cache":"0",
@@ -30,7 +30,7 @@
         "cache_handler":"file",
 
         "criteria_title":"",
-        "criteria_display_view_on_no_results":"",
+        "criteria_display_view_on_no_results":"1",
         "criteria_snippet_length":"",
 
         "template_view_id":"",
@@ -43,9 +43,11 @@
         "wrap_view_role":"",
         "wrap_view_property":"",
 
-        "model_name":"Parameters",
+        "model_name":"Plugindata",
         "model_type":"dbo",
-        "model_query_object":"getParameters",
-        "model_parameter":""
+        "model_query_object":"getPlugindata",
+        "model_parameter":"jsdeclarations"
     }
 }
+js
+jsdeclarations

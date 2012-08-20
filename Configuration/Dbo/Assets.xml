@@ -1,5 +1,5 @@
 <model
         name="Assets"
-        process_plugins="0"
+        process_plugins="1"
         data_source="Asset">
 </model>

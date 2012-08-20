@@ -9,5 +9,14 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ASSETSJSDECLARATIONS_DESCRIPTIONS</description>
-    <model name="Assetsjsdeclarations"/>
+    <model name="Assetsjsdeclarations">
+        <customfields>
+            <customfield name="parameters">
+                <field name="model_name" type="char" null="0" default="Plugindata"/>
+                <field name="model_type" type="char" null="0" default="dbo"/>
+                <field name="model_query_object" type="char" null="0" default="getPlugindata"/>
+                <field name="model_parameter" type="char" null="0" default="jsdeclarations"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

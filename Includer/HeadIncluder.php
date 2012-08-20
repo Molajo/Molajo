@@ -43,6 +43,8 @@ Class HeadIncluder extends Includer
 	{
 		Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
+		Services::Registry()->set('Parameters', 'model_type', 'dbo');
+
 		if ($this->type == 'defer') {
 
 			if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
@@ -55,19 +57,6 @@ Class HeadIncluder extends Includer
 					Services::Registry()->get('Configuration', 'defer_wrap_view_id'));
 			}
 
-			if ($this->name = 'Assetjs') {
-				Services::Registry()->set('Parameters', 'model_name', 'Assets');
-				Services::Registry()->set('Parameters', 'model_parameter', 'JsDefer');
-			}
-			if ($this->name = 'Assetsjsdeclarations') {
-				Services::Registry()->set('Parameters', 'model_name', 'Assets');
-				Services::Registry()->set('Parameters', 'model_parameter', 'JsDeclarationsDefer');
-			}
-
-			Services::Registry()->set('Parameters', 'model_type', 'dbo');
-			Services::Registry()->set('Parameters', 'model_query_object', 'getAssets');
-
-
 		} else {
 			if ((int)Services::Registry()->get('Parameters', 'template_view_id', 0) == 0) {
 				Services::Registry()->set('Parameters', 'template_view_id',
@@ -77,10 +66,6 @@ Class HeadIncluder extends Includer
 				Services::Registry()->set('Parameters', 'wrap_view_id',
 					Services::Registry()->get('Configuration', 'head_wrap_view_id'));
 			}
-			Services::Registry()->set('Parameters', 'model_name', 'Metadata');
-			Services::Registry()->set('Parameters', 'model_type', 'dbo');
-			Services::Registry()->set('Parameters', 'model_query_object', 'getMetadata');
-			Services::Registry()->set('Parameters', 'model_parameter', 'head');
 		}
 
 		parent::setRenderCriteria();

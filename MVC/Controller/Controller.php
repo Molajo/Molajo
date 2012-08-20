@@ -308,20 +308,20 @@ class Controller
 
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
 
-		if ($dbo == 'JDatabase') {
-			if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
-			} else {
-				$query_object = 'list';
-			}
-			$this->prepareQuery($query_object);
-
+		$model_parameter = null;
+		if ($this->get('model_parameter') == '') {
 		} else {
-
-			$model_parameter = null;
-			if ($this->get('model_parameter') == '') {
-			} else {
-				$model_parameter = $this->get('model_parameter');
+			$model_parameter = $this->get('model_parameter');
+		}
+		if ($this->get('model_parameter') == '') {
+			if ($dbo == 'JDatabase') {
+				if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
+				} else {
+					$query_object = 'list';
+				}
+				$this->prepareQuery($query_object);
 			}
+
 		}
 
 		$this->getPluginList($query_object);
@@ -343,13 +343,15 @@ class Controller
 			$this->runStandardQuery($query_object);
 
 		} else {
-			if (strtolower($query_object) == 'getdummy') {
+
+			if (strtolower($this->get('model_name')) == 'dummy') {
 				$this->query_results = array();
 
 			} else {
 				if (trim($model_parameter) == '') {
 					$model_parameter = null;
 				}
+
 				$this->query_results = $this->model->$query_object($model_parameter);
 			}
 		}
@@ -679,8 +681,12 @@ class Controller
 		);
 
 		/** Process results */
-		$this->model->query = $arguments['query'];
-		$this->parameters = $arguments['parameters'];
+		if (isset($arguments['query'])) {
+			$this->model->query = $arguments['query'];
+		}
+		if (isset($arguments['parameters'])) {
+			$this->parameters = $arguments['parameters'];
+		}
 
 		return true;
 	}
