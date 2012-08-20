@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class DeferPlugin extends ContentPlugin
 {
-
 	/**
 	 * Prepares data for the JS links and Declarations for the Head
 	 *
@@ -47,12 +46,11 @@ class DeferPlugin extends ContentPlugin
 		/** JS Declarations */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
-		$connect->set('model_parameter', 'JsDeclarationsDefer');
 		$results = $connect->connect('dbo', 'Assets');
 		if ($results == false) {
 			return false;
 		}
-
+		$connect->set('model_parameter', 'JsDeclarationsDefer');
 		$query_results = $connect->getData('getAssets');
 
 		Services::Registry()->set('Plugindata', 'jsdeclarationsdefer', $query_results);

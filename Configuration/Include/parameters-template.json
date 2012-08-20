@@ -19,10 +19,10 @@
         "wrap_view_role":"",
         "wrap_view_property":"",
 
-        "model_name":"Plugindata",
+        "model_name":"Parameters",
         "model_type":"dbo",
-        "model_query_object":"getPlugindata",
-        "model_parameter":"jsdeclarations"
+        "model_query_object":"getParameters",
+        "model_parameter":""
     },
     "2":{
         "cache":"0",
@@ -43,11 +43,9 @@
         "wrap_view_role":"",
         "wrap_view_property":"",
 
-        "model_name":"Plugindata",
+        "model_name":"Parameters",
         "model_type":"dbo",
-        "model_query_object":"getPlugindata",
-        "model_parameter":"jsdeclarations"
+        "model_query_object":"getParameters",
+        "model_parameter":""
     }
 }
-js
-jsdeclarations
