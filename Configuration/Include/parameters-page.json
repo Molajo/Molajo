@@ -1,0 +1,43 @@
+{
+    "1":{
+
+        "cache":"0",
+        "cache_time":"5",
+        "cache_handler":"file",
+
+        "criteria_title":"",
+        "criteria_display_view_on_no_results":"",
+        "criteria_snippet_length":"",
+        "criteria_extension_instance_id":"",
+        "criteria_catalog_type_id":"",
+
+        "page_view_id":"",
+        "page_view_css_id":"expand",
+        "page_view_css_class":"debuggg",
+
+        "model_name":"Parameters",
+        "model_type":"dbo",
+        "model_query_object":"getParameters",
+        "model_parameter":""
+    },
+    "2":{
+        "cache":"0",
+        "cache_time":"5",
+        "cache_handler":"file",
+
+        "criteria_title":"",
+        "criteria_display_view_on_no_results":"",
+        "criteria_snippet_length":"",
+        "criteria_extension_instance_id":"",
+        "criteria_catalog_type_id":"",
+
+        "page_view_id":"",
+        "page_view_css_id":"expand",
+        "page_view_css_class":"debuggg",
+
+        "model_name":"Parameters",
+        "model_type":"dbo",
+        "model_query_object":"getParameters",
+        "model_parameter":""
+    }
+}

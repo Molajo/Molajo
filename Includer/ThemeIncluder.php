@@ -100,7 +100,7 @@ Class ThemeIncluder extends Includer
 			Services::Registry()->get('Parameters', 'asset_priority_user', 300));
 
 		/** Load custom Theme Helper Media, if exists */
-		$helperClass = 'Molajo\\Extension\\Theme\\'
+		$helperClass = 'Extension\\Theme\\'
 			. ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . '\\Helper\\'
 			. 'Theme' . ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . 'Helper';
 
@@ -117,17 +117,17 @@ Class ThemeIncluder extends Includer
 		$url_path = Services::Registry()->get('Parameters', 'theme_path_url');
 
 		Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-		$js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-		$js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+		Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+		Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
 		/** Page */
 		$priority = Services::Registry()->get('Parameters', 'asset_priority_theme', 600);
 		$file_path = Services::Registry()->get('Parameters', 'page_view_path');
 		$url_path = Services::Registry()->get('Parameters', 'page_view_path_url');
 
-		$css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-		$js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-		$js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+		Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+		Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+		Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
 		/** Site Favicon */
 		Services::Asset()->addLink(

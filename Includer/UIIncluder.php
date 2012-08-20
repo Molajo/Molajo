@@ -32,6 +32,7 @@ class UiIncluder extends Includer
 	public function process($attributes = array())
 	{
 		$this->attributes = $attributes;
+
 		parent::getAttributes();
 
 		$includer = '<include:template';
