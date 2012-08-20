@@ -94,7 +94,7 @@ class EdititemPlugin extends ContentPlugin
 	 */
 	protected function setToolbar()
 	{
-		$url = Services::Registry()->get('Plugindata', 'full_page_url');
+		$url = Services::Registry()->get('Plugindata', 'page_url');
 
 		$grid_toolbar_buttons = explode(',', $this->get('grid_toolbar_buttons',
 				'new,edit,publish,feature,archive,checkin,restore,delete,trash,options')

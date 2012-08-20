@@ -49,7 +49,7 @@ class AdminPlugin extends ContentPlugin
 			return true;
 		}
 
-		$this->pageURL();
+		$this->urls();
 
 		/** Data Source Connection */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
@@ -70,19 +70,20 @@ class AdminPlugin extends ContentPlugin
 	}
 
 	/**
-	 * Build the page url to be used in links
+	 * Build the home and page url to be used in links
 	 *
-	 * page_url was set in Route and it contains any non-routable parameters that
-	 * were used. Non-routable parameters include such values as /edit, /new, /tag/value, etc
-	 *
-	 * These values are used in conjunction with the permanent URL for basic operations on that data
+	 * @return  bool
+	 * @since   1.0
 	 */
-	protected function pageURL()
+	protected function urls()
 	{
 		$url = Application::Request()->get('base_url_path_for_application') .
 			Application::Request()->get('requested_resource_for_route');
 
-		Services::Registry()->set('Plugindata', 'full_page_url', $url);
+		Services::Registry()->set('Plugindata', 'page_url', $url);
+
+		$url = Services::Registry()->get('Configuration', 'application_base_url');
+		Services::Registry()->set('Plugindata', 'home_url', $url);
 
 		return true;
 	}
@@ -178,20 +179,29 @@ class AdminPlugin extends ContentPlugin
 	}
 
 	/**
-	 * Set the Page Title, given Breadcrumb values
-	 *
-	 * @param int $extension_instance_id - menu
+	 * Set the Header and Page Titles
 	 *
 	 * @return object
 	 * @since   1.0
 	 */
 	public function setPageTitle()
 	{
+		$title = '<strong>Molajo</strong> '. Services::Language()->translate('Administrator');
+
 		$bread_crumbs = Services::Registry()->get('Plugindata', 'Adminbreadcrumbs');
+		$subtitle = $bread_crumbs[count($bread_crumbs) - 1]->title;
+		if (trim($subtitle) == '') {
+			$subtitle = $this->parameters['criteria_title'];
+		}
 
-		$title = $bread_crumbs[count($bread_crumbs) - 1]->title;
+		if (trim($subtitle) == '') {
+		} else {
+			$title .= ' - ' . $subtitle;
+		}
 
-		Services::Registry()->set('Plugindata', 'PageTitle', $title);
+		Services::Registry()->set('Plugindata', 'HeaderTitle', $title);
+
+		Services::Registry()->set('Plugindata', 'PageTitle', $subtitle);
 
 		return $this;
 	}

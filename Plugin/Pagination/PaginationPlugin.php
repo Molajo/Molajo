@@ -92,7 +92,7 @@ class PaginationPlugin extends ContentPlugin
 		}
 
 		/** Pages */
-		$url = Services::Registry()->get('Plugindata', 'full_page_url');
+		$url = Services::Registry()->get('Plugindata', 'page_url');
 
 		$connector = '/';
 		$query_results = array();
