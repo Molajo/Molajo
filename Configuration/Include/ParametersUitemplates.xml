@@ -1,4 +1,4 @@
-<field name="ui-button-normal" type="templates" null="0" default="10100"/>
+<field name="ui-button" type="templates" null="0" default="10100"/>
 <field name="ui-button-group" type="templates" null="0" default="10110"/>
 <field name="ui-button-dropdown" type="templates" null="0" default="10120"/>
 

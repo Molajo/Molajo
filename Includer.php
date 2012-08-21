@@ -188,10 +188,10 @@ class Includer
 			} elseif ($name == 'wrap_view_css_class' || $name == 'wrap_css_class' || $name == 'wrap_class') {
 				Services::Registry()->set('Parameters', 'wrap_view_css_class', str_replace(',', ' ', $value));
 
-			} elseif ($name == 'wrap_view_role' || $name == 'wrap_role' || $name = 'role') {
+			} elseif ($name == 'wrap_view_role' || $name == 'wrap_role' || $name == 'role') {
 				Services::Registry()->set('Parameters', 'wrap_view_role', str_replace(',', ' ', $value));
 
-			} elseif ($name == 'wrap_view_property' || $name == 'wrap_property' || $name = 'property') {
+			} elseif ($name == 'wrap_view_property' || $name == 'wrap_property' || $name == 'property') {
 				Services::Registry()->set('Parameters', 'wrap_view_property', str_replace(',', ' ', $value));
 
 			/** Model */

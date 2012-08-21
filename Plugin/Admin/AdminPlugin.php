@@ -113,7 +113,7 @@ class AdminPlugin extends ContentPlugin
 		$menuArray = array();
 		$menuArray[] = 'Adminhome';
 		$menuArray[] = 'Adminnavigationbar';
-		$menuArray[] = 'Adminsectionmenu';
+		$menuArray[] = 'Adminapplicationmenu';
 		if (count($bread_crumbs) > 2) {
 			$menuArray[] = 'Adminstatusmenu';
 		}
@@ -155,9 +155,9 @@ class AdminPlugin extends ContentPlugin
 		var_dump(Services::Registry()->get('Plugindata','Adminnavigationbar'));
 		echo '</pre>';
 
-		echo '<br />Adminsectionmenu <br />';
+		echo '<br />Adminapplicationmenu <br />';
 		echo '<pre>';
-		var_dump(Services::Registry()->get('Plugindata','Adminsectionmenu'));
+		var_dump(Services::Registry()->get('Plugindata','Adminapplicationmenu'));
 		echo '</pre>';
 
 		echo '<br />Adminstatusmenu <br />';

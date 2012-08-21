@@ -90,6 +90,7 @@ class FoundationPlugin extends ContentPlugin
 		$this->saveField(null, 'button_group_class', $button_group_class);
 
 		$button_array = $this->getButtons($this->data->button_group_array);
+
 		$this->saveField(null, 'button_group_array', $button_array);
 
 		return true;
