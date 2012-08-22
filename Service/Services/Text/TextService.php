@@ -5,8 +5,6 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Text;
-
-use LoremIpsumGenerator\LoremIpsumGenerator;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -91,6 +89,7 @@ Class TextService
 	public function getPlaceHolderText($paragraph_word_count, $paragraph_count, $format,
 									   $start_with_lorem_ipsum)
 	{
+		/**
 		$generator = new LoremIpsumGenerator($paragraph_word_count);
 
 		return ucfirst(
@@ -100,6 +99,7 @@ Class TextService
 				$start_with_lorem_ipsum
 			)
 		);
+		 */
 	}
 
 	/**

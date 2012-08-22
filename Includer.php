@@ -357,10 +357,17 @@ class Includer
 			}
 		}
 /**
-echo '<br /><br /><br />NEXT<br />';
-echo $message;
-echo '<br /><br /><br />';
-*/
+if  (Services::Registry()->get('Parameters', 'template_view_title') == 'Formselectlist') {
+	echo '<br /><br /><br />NEXT<br />';
+	echo $message;
+
+	echo '<pre>';
+	var_dump($this->attributes);
+	echo '</pre>';
+
+	echo '<br /><br /><br />';
+}
+ */
 		$results = $controller->execute();
 
 		return $results;
