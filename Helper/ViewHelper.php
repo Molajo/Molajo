@@ -90,9 +90,9 @@ Class ViewHelper
 		if (count($item) == 0 || $item == false) {
 			return false;
 		}
-echo '<br/>' . $type . '<pre>';
-var_dump($item);
-		echo '<pre>';
+//echo '<br/>' . $type . '<pre>';
+//var_dump($item);
+//		echo '<pre>';
 		Services::Registry()->set('Parameters', $type . '_view_title', $item->title);
 		Services::Registry()->set('Parameters', $type . '_view_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', $type . '_view_language', $item->language);
