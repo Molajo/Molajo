@@ -86,12 +86,29 @@ class FoundationPlugin extends ContentPlugin
 		$button_group_class = trim($button_group_class) . ' ' . 'button-group';
 
 		$button_group_class = ' class="' . htmlspecialchars(trim($button_group_class), ENT_NOQUOTES, 'UTF-8') . '"';
-
 		$this->saveField(null, 'button_group_class', $button_group_class);
 
 		$button_array = $this->getButtons($this->data->button_group_array);
-
 		$this->saveField(null, 'button_group_array', $button_array);
+
+		if ((int) $this->data->button_title_unescape == 0) {
+		} else {
+			$this->data->button_title = str_replace(
+				'&nbsp;',
+				' ',
+				htmlspecialchars_decode($this->data->button_title)
+			);
+		}
+
+		if ((int) $this->data->button_title_unescape == 0) {
+			$buttonLinkExtra = $this->data->button_link_extra;
+		} else {
+			$this->data->button_link_extra = str_replace(
+				'&nbsp;',
+				' ',
+				htmlspecialchars_decode($this->data->button_link_extra)
+			);
+		}
 
 		return true;
 	}
@@ -134,11 +151,13 @@ class FoundationPlugin extends ContentPlugin
 	public function getButtons($buttons)
 	{
 		$button_array = array();
-		$temp = explode('{{', $buttons);
+		$temp = explode('}}', $buttons);
+
 		foreach ($temp as $set) {
 			$set = str_replace(',', ' ', $set);
 			$set = str_replace(':', '=', $set);
-			$set = str_replace('}}', '', $set);
+			$set = str_replace('{{', '', $set);
+			$set = str_replace('http=', 'http:', $set);
 			if (trim($set) == '') {
 			} else {
 				$button_array[] = trim($set);
