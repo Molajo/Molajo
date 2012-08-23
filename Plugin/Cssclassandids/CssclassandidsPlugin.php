@@ -48,12 +48,14 @@ class CssclassandidsPlugin extends ContentPlugin
 
 		$view_css_class = $this->parameters['template_view_css_class'];
 
-		$current = '';
-		if ((int)$this->getField('current', 0) == 1) {
-			$current = 'active';
+		$current_field = $this->getField('current');
+		if ($current_field === false) {
+			$current_field_value = '';
+		} else {
+			$current_field_value = $this->getFieldValue($current_field);
 		}
 
-		$class .= ' ' . trim($class_field_value) . ' ' . trim($view_css_class) . ' ' . trim($current);
+		$class .= ' ' . trim($class_field_value) . ' ' . trim($view_css_class) . ' ' . trim($current_field_value);
 
 		if (trim($class) == '') {
 			$class = '';

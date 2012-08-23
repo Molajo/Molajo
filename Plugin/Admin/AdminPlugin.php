@@ -114,7 +114,6 @@ class AdminPlugin extends ContentPlugin
 		$menuArray[] = 'Adminhome';
 		$menuArray[] = 'Adminnavigationbar';
 		$menuArray[] = 'Adminasectionmenu';
-		$statusMenuBase = '';
 
 		$i = 0;
 		foreach ($bread_crumbs as $level) {
@@ -132,9 +131,6 @@ class AdminPlugin extends ContentPlugin
 			foreach ($query_results as $menu_items) {
 				if ((int) $parent_id == (int) $menu_items->parent_id) {
 					$list[] = $menu_items;
-					if ($i == 2 && (int) $menu_items->current == '1') {
-						$statusMenuBase = $menu_items;
-					}
 				}
 			}
 
@@ -144,11 +140,6 @@ class AdminPlugin extends ContentPlugin
 			if ($i > count($menuArray) - 1) {
 				break;
 			}
-		}
-
-		if ($statusMenuBase == '') {
-		} else {
-			$this->getStatusMenu($statusMenuBase);
 		}
 
 		/**
@@ -167,11 +158,6 @@ class AdminPlugin extends ContentPlugin
 		var_dump(Services::Registry()->get('Plugindata','Adminasectionmenu'));
 		echo '</pre>';
 
-		echo '<br />Adminstatusmenu <br />';
-		echo '<pre>';
-		var_dump(Services::Registry()->get('Plugindata','Adminstatusmenu'));
-		echo '</pre>';
-
 		echo '<br />Adminbreadcrumbs <br />';
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Plugindata','Adminbreadcrumbs'));
@@ -182,30 +168,6 @@ class AdminPlugin extends ContentPlugin
 		var_dump(Services::Registry()->get('Plugindata','Adminapplicationmenu'));
 		echo '</pre>';
 		*/
-
-		return;
-	}
-
-	/**
-	 * getStatusMenu for this Resource
-	 *
-	 * @param   $item
-	 * @return  void
-	 */
-	protected function getStatusMenu($statusMenuBase)
-	{
-		$statusMenu = array();
-
-		$item = new \stdClass();
-
-		$item = $statusMenuBase;
-		$item->url .= '/status/published';
-		$item->link_text = 'Published';
-		$item->link .= '/status/published';
-
-		$statusMenu[] = $item;
-
-		Services::Registry()->set('Plugindata', 'Adminstatusmenu', $statusMenu);
 
 		return;
 	}
