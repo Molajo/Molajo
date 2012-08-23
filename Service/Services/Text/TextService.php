@@ -112,13 +112,13 @@ Class TextService
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
-
 		$results = $m->connect('Datalist', $filter);
 		if ($results == false) {
 			return false;
 		}
 
-		$values = Services::Registry()->get('StatusDatalist', 'values');
+		$values = Services::Registry()->get($filter . 'Datalist', 'values');
+
 		if (is_array($values) && count($values) > 0) {
 			$query_results = $values;
 

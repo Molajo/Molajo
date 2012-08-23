@@ -50,6 +50,7 @@ class FoundationPlugin extends ContentPlugin
 	 */
 	public function button_general()
 	{
+
 		$button_type = $this->data->button_type;
 		$button_size = $this->data->button_size;
 		$button_shape = $this->data->button_shape;
@@ -74,6 +75,7 @@ class FoundationPlugin extends ContentPlugin
 	 */
 	public function button_group()
 	{
+
 		$button_type = $this->data->button_group_type;
 		$button_size = $this->data->button_group_size;
 		$button_shape = $this->data->button_group_shape;
@@ -90,25 +92,6 @@ class FoundationPlugin extends ContentPlugin
 
 		$button_array = $this->getButtons($this->data->button_group_array);
 		$this->saveField(null, 'button_group_array', $button_array);
-
-		if ((int) $this->data->button_title_unescape == 0) {
-		} else {
-			$this->data->button_title = str_replace(
-				'&nbsp;',
-				' ',
-				htmlspecialchars_decode($this->data->button_title)
-			);
-		}
-
-		if ((int) $this->data->button_title_unescape == 0) {
-			$buttonLinkExtra = $this->data->button_link_extra;
-		} else {
-			$this->data->button_link_extra = str_replace(
-				'&nbsp;',
-				' ',
-				htmlspecialchars_decode($this->data->button_link_extra)
-			);
-		}
 
 		return true;
 	}

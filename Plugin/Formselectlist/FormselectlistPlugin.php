@@ -29,13 +29,14 @@ class FormselectlistPlugin extends ContentPlugin
 	 */
 	public function onAfterReadall()
 	{
-
 		$datalist = Services::Registry()->get('Parameters', 'datalist');
+
 		if ($datalist == false || trim($datalist) == '') {
 			return true;
 		}
 
 		$items = Services::Text()->getList($datalist, $this->parameters);
+
 		if ($items == false) {
 			return true;
 		}
