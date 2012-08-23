@@ -113,10 +113,8 @@ class AdminPlugin extends ContentPlugin
 		$menuArray = array();
 		$menuArray[] = 'Adminhome';
 		$menuArray[] = 'Adminnavigationbar';
-		$menuArray[] = 'Adminapplicationmenu';
-		if (count($bread_crumbs) > 2) {
-			$menuArray[] = 'Adminstatusmenu';
-		}
+		$menuArray[] = 'Adminasectionmenu';
+		$statusMenuBase = '';
 
 		$i = 0;
 		foreach ($bread_crumbs as $level) {
@@ -126,7 +124,7 @@ class AdminPlugin extends ContentPlugin
 
 			if ($i == 0) {
 				$query_results = Services::Menu()->get($menu_id, $current_menu_item);
-				Services::Registry()->set('Plugindata', 'Adminmenu', $query_results);
+				Services::Registry()->set('Plugindata', 'Adminapplicationmenu', $query_results);
 				$level = 0;
 			}
 
@@ -134,8 +132,12 @@ class AdminPlugin extends ContentPlugin
 			foreach ($query_results as $menu_items) {
 				if ((int) $parent_id == (int) $menu_items->parent_id) {
 					$list[] = $menu_items;
+					if ($i == 2 && (int) $menu_items->current == '1') {
+						$statusMenuBase = $menu_items;
+					}
 				}
 			}
+
 			Services::Registry()->set('Plugindata', $menuArray[$i], $list);
 
 			$i++;
@@ -144,7 +146,12 @@ class AdminPlugin extends ContentPlugin
 			}
 		}
 
-/**
+		if ($statusMenuBase == '') {
+		} else {
+			$this->getStatusMenu($statusMenuBase);
+		}
+
+		/**
 		echo '<br />Adminhome <br />';
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Plugindata','Adminhome'));
@@ -155,9 +162,9 @@ class AdminPlugin extends ContentPlugin
 		var_dump(Services::Registry()->get('Plugindata','Adminnavigationbar'));
 		echo '</pre>';
 
-		echo '<br />Adminapplicationmenu <br />';
+		echo '<br />Adminasectionmenu <br />';
 		echo '<pre>';
-		var_dump(Services::Registry()->get('Plugindata','Adminapplicationmenu'));
+		var_dump(Services::Registry()->get('Plugindata','Adminasectionmenu'));
 		echo '</pre>';
 
 		echo '<br />Adminstatusmenu <br />';
@@ -170,11 +177,36 @@ class AdminPlugin extends ContentPlugin
 		var_dump(Services::Registry()->get('Plugindata','Adminbreadcrumbs'));
 		echo '</pre>';
 
-		echo '<br />Adminmenu <br />';
+		echo '<br />Adminapplicationmenu <br />';
 		echo '<pre>';
-		var_dump(Services::Registry()->get('Plugindata','Adminmenu'));
+		var_dump(Services::Registry()->get('Plugindata','Adminapplicationmenu'));
 		echo '</pre>';
-*/
+		*/
+
+		return;
+	}
+
+	/**
+	 * getStatusMenu for this Resource
+	 *
+	 * @param   $item
+	 * @return  void
+	 */
+	protected function getStatusMenu($statusMenuBase)
+	{
+		$statusMenu = array();
+
+		$item = new \stdClass();
+
+		$item = $statusMenuBase;
+		$item->url .= '/status/published';
+		$item->link_text = 'Published';
+		$item->link .= '/status/published';
+
+		$statusMenu[] = $item;
+
+		Services::Registry()->set('Plugindata', 'Adminstatusmenu', $statusMenu);
+
 		return;
 	}
 

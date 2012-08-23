@@ -131,6 +131,7 @@ Class MenuService
 		$m->model->query->select($m->model->db->qn('a.alias'));
 		$m->model->query->select($m->model->db->qn('a.root'));
 		$m->model->query->select($m->model->db->qn('a.parent_id'));
+		$m->model->query->select($m->model->db->qn('a.lvl'));
 		$m->model->query->select($m->model->db->qn('a.lft'));
 		$m->model->query->select($m->model->db->qn('a.rgt'));
 		$m->model->query->select($m->model->db->qn('a.home'));
