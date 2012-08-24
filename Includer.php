@@ -357,7 +357,7 @@ class Includer
 			}
 		}
 
-if  (Services::Registry()->get('Parameters', 'template_view_title') == 'Formselectlist') {
+if  (Services::Registry()->get('Parameters', 'template_view_title') == 'xyz') {
 	echo '<br /><br /><br />NEXT<br />';
 	echo $message;
 

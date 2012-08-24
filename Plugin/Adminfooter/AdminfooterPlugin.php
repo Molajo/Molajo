@@ -62,7 +62,7 @@ class AdminfooterPlugin extends ContentPlugin
 		}
 
 		$copyright_statement = '&#169;' . ' ' . $ccDateSpan . ' ' . $copyright_holder;
-		$this->saveField(null, 'copyright_statement', $copyright_statement);
+		$this->saveField(null, Services::Language()->translate('copyright_statement'), $copyright_statement);
 
 		return true;
 	}

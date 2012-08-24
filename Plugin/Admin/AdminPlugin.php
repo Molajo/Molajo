@@ -42,7 +42,9 @@ class AdminPlugin extends ContentPlugin
 
 		$current_menuitem_id = (int) Services::Registry()->get('Parameters', 'menuitem_id');
 
+		$item_indicator = 0;
 		if ((int) $current_menuitem_id == 0) {
+			$item_indicator = 1;
 			$current_menuitem_id = (int) Services::Registry()->get('Parameters', 'parent_menuid');
 		}
 		if ((int) $current_menuitem_id == 0) {
@@ -64,7 +66,7 @@ class AdminPlugin extends ContentPlugin
 
 		$this->setMenu($current_menuitem_id);
 
-		$this->setPageTitle();
+		$this->setPageTitle($item_indicator);
 
 		return true;
 	}
@@ -142,7 +144,7 @@ class AdminPlugin extends ContentPlugin
 			}
 		}
 
-		/**
+/**
 		echo '<br />Adminhome <br />';
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Plugindata','Adminhome'));
@@ -167,9 +169,9 @@ class AdminPlugin extends ContentPlugin
 		echo '<pre>';
 		var_dump(Services::Registry()->get('Plugindata','Adminapplicationmenu'));
 		echo '</pre>';
-		*/
-
+*/
 		return;
+
 	}
 
 	/**
@@ -178,12 +180,16 @@ class AdminPlugin extends ContentPlugin
 	 * @return object
 	 * @since   1.0
 	 */
-	public function setPageTitle()
+	protected function setPageTitle($item_indicator = 0)
 	{
 		$title = '<strong>Molajo</strong> '. Services::Language()->translate('Administrator');
 
-		$bread_crumbs = Services::Registry()->get('Plugindata', 'Adminbreadcrumbs');
-		$subtitle = $bread_crumbs[count($bread_crumbs) - 1]->title;
+		if ((int) $item_indicator == 0) {
+			$bread_crumbs = Services::Registry()->get('Plugindata', 'Adminbreadcrumbs');
+			$subtitle = $bread_crumbs[count($bread_crumbs) - 1]->title;
+		} else {
+			$subtitle = '';
+		}
 		if (trim($subtitle) == '') {
 			$subtitle = $this->parameters['criteria_title'];
 		}

@@ -91,6 +91,7 @@ Class ViewHelper
 			return false;
 		}
 
+		//todo - figure out why
 		if (isset($item->listname)) {
 			return true;
 		}
