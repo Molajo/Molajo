@@ -4,17 +4,17 @@
 <field name="menuitem_source_catalog_type_id" type="integer" null="1" default=" "/>
 <field name="menuitem_extension_instance_id" type="char" null="1" default=" "/>
 
-<field name="menuitem_theme_id" type="integer" null="1" default="98"/>
+<field name="menuitem_theme_id" type="integer" null="1" default=" "/>
 
-<field name="menuitem_page_view_id" type="integer" null="1" default="122"/>
+<field name="menuitem_page_view_id" type="integer" null="1" default=" "/>
 <field name="menuitem_page_view_css_id" type="char" null="1" default=" "/>
 <field name="menuitem_page_view_css_class" type="char" null="1" default=" "/>
 
-<field name="menuitem_template_view_id" type="integer" null="1" default="33"/>
+<field name="menuitem_template_view_id" type="integer" null="1" default=" "/>
 <field name="menuitem_template_view_css_id" type="char" null="1" default=" "/>
 <field name="menuitem_template_view_css_class" type="char" null="1" default=" "/>
 
-<field name="menuitem_wrap_view_id" type="integer" null="1" default="61"/>
+<field name="menuitem_wrap_view_id" type="integer" null="1" default=" "/>
 <field name="menuitem_wrap_view_css_id" type="char" null="1" default=" "/>
 <field name="menuitem_wrap_view_css_class" type="char" null="1" default=" "/>
 <field name="menuitem_wrap_view_role" type="char" null="0" default=" "/>

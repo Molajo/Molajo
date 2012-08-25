@@ -1,5 +1,5 @@
 <plugin name="Itemurl"/>
-<plugin name="Item"/>
+<plugin name="Detailitem"/>
 <plugin name="List"/>
 <plugin name="Mockimage"/>
 <plugin name="Referencedata"/>

@@ -103,9 +103,9 @@ Class CatalogHelper
 		if ((int)Services::Registry()->get('Parameters', 'catalog_id')
 			== Services::Registry()->get('Configuration', 'application_home_catalog_id')
 		) {
-			Services::Registry()->set('Parameters', 'catalog_home', true);
+			Services::Registry()->set('Parameters', 'catalog_home', 1);
 		} else {
-			Services::Registry()->set('Parameters', 'catalog_home', false);
+			Services::Registry()->set('Parameters', 'catalog_home', 0);
 		}
 
 		return true;
@@ -145,7 +145,6 @@ Class CatalogHelper
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'Catalog');
-
 		if ($results == false) {
 			return false;
 		}
