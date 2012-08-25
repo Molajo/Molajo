@@ -45,8 +45,9 @@ class AdminPlugin extends ContentPlugin
 		$item_indicator = 0;
 		if ((int) $current_menuitem_id == 0) {
 			$item_indicator = 1;
-			$current_menuitem_id = (int) Services::Registry()->get('Parameters', 'parent_menuid');
+			$current_menuitem_id = (int) Services::Registry()->get('Parameters', 'parent_menu_id');
 		}
+
 		if ((int) $current_menuitem_id == 0) {
 			return true;
 		}
