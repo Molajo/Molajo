@@ -257,6 +257,7 @@ Class ConfigurationService
 				$profiler = 0;
 				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 				$m = new $controllerClass();
+
 				$results = $m->connect('System', 'Applications');
 				if ($results == false) {
 					return false;
@@ -265,6 +266,12 @@ Class ConfigurationService
 				$m->set('name_key_value', APPLICATION);
 
 				$item = $m->getData('item');
+
+				Services::Registry()->get('ApplicationsSystem', '*');
+
+				echo '<pre>';
+				var_dump($item);
+				echo '</pre>';
 
 				if ($item === false) {
 					throw new \RuntimeException ('Application getApplication() query problem');
@@ -278,12 +285,19 @@ Class ConfigurationService
 				Services::Registry()->set('Configuration', 'application_description', $item->description);
 
 				/** Combine Application and Site Parameters into Configuration */
-				$parameters = Services::Registry()->get('ApplicationsTableParameters');
+				$parameters = $item->parameters;
+				echo '<pre>';
+				var_dump($parameters);
+				echo '</pre>';
+				die;
 				foreach ($parameters as $key => $value) {
+					echo $key.' '.$value.'<br />';
 					Services::Registry()->set('Configuration', $key, $value);
+
 					if (strtolower($key) == 'profiler') {
 						$profiler = $value;
 					}
+
 					if (strtolower($key) == 'cache') {
 						$cache = $value;
 					}
@@ -302,6 +316,8 @@ Class ConfigurationService
 
 		Services::Registry()->sort('Configuration');
 
+		Services::Registry()->get('*');
+		die;
 		if ((int)$profiler == 1) {
 			Services::Profiler()->initiate();
 		}

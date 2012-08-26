@@ -232,11 +232,11 @@ class Controller
 			$this->set('process_plugins',
 				Services::Registry()->get($this->table_registry_name, 'process_plugins', 0));
 			$this->set('criteria_catalog_type_id',
-				Services::Registry()->get($this->table_registry_name, 'criteria_catalog_type_id', 0));
+				Services::Registry()->get($this->table_registry_name, 'catalog_type_id', 0));
 			$this->set('criteria_extension_instance_id',
-				Services::Registry()->get($this->table_registry_name, 'criteria_extension_instance_id', 0));
+				Services::Registry()->get($this->table_registry_name, 'extension_instance_id', 0));
 			$this->set('criteria_published_status',
-				Services::Registry()->get($this->table_registry_name, 'criteria_published_status', 0));
+				Services::Registry()->get($this->table_registry_name, 'published_status', 0));
 			$this->set('data_source',
 				Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
 			$this->get('model_offset', 0);
@@ -332,6 +332,7 @@ class Controller
 				. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
 				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins');
+		echo $profiler_message;
 
 		/** 2. Schedule onBeforeRead Event */
 		if (count($this->plugins) > 0) {
@@ -375,7 +376,7 @@ class Controller
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $this->query_results;
 		}
-//		echo '<br />'.$this->model->query->__toString().'<br />';
+
 		/** 7. Return List  */
 		if ($query_object == 'list') {
 
