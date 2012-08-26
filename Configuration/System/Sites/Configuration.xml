@@ -20,15 +20,23 @@
             use_special_joins="0"
             check_view_level_access="0"
             process_plugins="0"
-            criteria_published_status="0"
             catalog_type_id="10"
-            extension_instance_id="50"
             data_source="JDatabase">
         <table>
             <fields>
                 <field name="id" type="integer" null="1" default="0" identity="1"/>
+                <field name="catalog_type_id" type="integer" null="0" default="10" values="10"/>
                 <field name="name" type="char" null="0" default="" unique="1"/>
+                <field name="path" type="char" null="0" default=""/>
+                <field name="base_url" type="url" null="0" default=""/>
+                <field name="description" type="text" null="0" default=" "/>
             </fields>
+            <foreignkeys>
+                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            </foreignkeys>
+            <plugins>
+                <plugin name="Sites"/>
+            </plugins>
         </table>
     </model>
 </extension>

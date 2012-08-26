@@ -139,8 +139,20 @@ Class ConfigurationService
 		$dirRead->close();
 
 		/** 6. Load Datalists from Resources */
-
 		$dirRead = dir(EXTENSIONS . '/Resource');
+		$path = $dirRead->path;
+		while (false !== ($entry = $dirRead->read())) {
+			if (is_dir($path . '/' . $entry)) {
+				if (substr($entry, 0, 1) == '.') {
+				} else {
+					$datalistsArray[] = $entry;
+				}
+			}
+		}
+		$dirRead->close();
+
+		/** 7. Load Datalists from System */
+		$dirRead = dir(CONFIGURATION_FOLDER . '/System');
 		$path = $dirRead->path;
 		while (false !== ($entry = $dirRead->read())) {
 			if (is_dir($path . '/' . $entry)) {
@@ -199,7 +211,7 @@ Class ConfigurationService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
-		$results = $m->connect('Table', 'Sites');
+		$results = $m->connect('System', 'Sites');
 		if ($results == false) {
 			return false;
 		}
@@ -245,7 +257,7 @@ Class ConfigurationService
 				$profiler = 0;
 				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 				$m = new $controllerClass();
-				$results = $m->connect('Table', 'Applications');
+				$results = $m->connect('System', 'Applications');
 				if ($results == false) {
 					return false;
 				}
@@ -415,9 +427,11 @@ Class ConfigurationService
 	 */
 	public static function getFile($model_type, $model_name)
 	{
-		 echo $model_type.'-'.$model_name.'<br />';
+		echo $model_type.'-'.$model_name.'<br />';
+
 		/** Use existing registry values, if existing */
 		$registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
+		$registry = false;
 		if ($registry == false) {
 		} else {
 			return $registry;
@@ -456,7 +470,7 @@ Class ConfigurationService
 			$xml = simplexml_load_file($path_and_file);
 
 		} catch (\Exception $e) {
-			throw new \RuntimeException ('Failure reading XML File: ' . $path_and_file . ' ' . $e->getMessage());
+			throw new \RuntimeException ('Failure reading File: ' . $path_and_file . ' ' . $e->getMessage());
 		}
 
 		/** now process it. */
@@ -510,6 +524,12 @@ Class ConfigurationService
 		}
 
 		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
+		if (class_exists('Services')) {
+		} else {
+			return false;
+		}
+
 		$exists = Services::Registry()->exists($registryName);
 
 		if ($exists === true) {
@@ -535,15 +555,22 @@ Class ConfigurationService
 		$model_name = trim(ucfirst(strtolower($model_name)));
 		$model_name_type = $model_name . $model_type;
 
+		/**
 		if ($model_type == 'Language') {
 			return $model_name . '/' . 'Configuration.xml';
 		}
 		if ($model_name == 'Language') {
 			return EXTENSIONS . '/Language/Configuration.xml';
 		}
+		**/
 
 		if ($model_type == 'Application') {
 			return CONFIGURATION_FOLDER . '/Application/' . $model_name . '.xml';
+		}
+
+		if ($model_type == 'System') {
+			echo CONFIGURATION_FOLDER . '/System/' . $model_name . '/Configuration.xml';
+			return CONFIGURATION_FOLDER . '/System/' . $model_name . '/Configuration.xml';
 		}
 
 		if ($model_type == 'Dbo') {
@@ -836,16 +863,32 @@ Class ConfigurationService
 			return;
 		}
 
-		/** Can only inherit a Table definition */
+		/** Extract the model_type */
+		if (strtolower(substr($extends, strlen($extends) - strlen('resource'), strlen('resource'))) == 'resource') {
+			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen('resource'))));
+			$extends_model_type = 'Resource';
+
+		} elseif (strtolower(substr($extends, strlen($extends) - strlen('system'), strlen('system'))) == 'system') {
+			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen('system'))));
+			$extends_model_type = 'System';
+
+		} elseif (strtolower(substr($extends, strlen($extends) - strlen('table'), strlen('table'))) == 'table') {
+			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen('table'))));
+			$extends_model_type = 'Table';
+
+		} else {
+			$extends_model_name = ucfirst(strtolower($extends));
+			$extends_model_type = 'Table';
+		}
 		$parentRegistryName = strtolower($extends . 'Table');
 
 		/** Load the file and build registry - IF - the registry is not already loaded */
 		if (Services::Registry()->exists($parentRegistryName) == true) {
 		} else {
-			//if not, load it.
+			/** if not, load it. */
 			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
-			$results = $m->connect('Table', $extends);
+			$results = $m->connect($extends_model_type, $extends_model_name);
 			if ($results == false) {
 				return false;
 			}

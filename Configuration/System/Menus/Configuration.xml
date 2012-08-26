@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Menu" version="1.0" extends="ExtensionInstancesviewspages">
+<extension type="System" version="1.0" extends="ExtensionInstancesTable">
     <name>SYSTEM_MENUS_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -11,6 +11,23 @@
     <description>SYSTEM_MENUS_DESCRIPTION</description>
     <model
             name="Menus"
-            catalog_type_id="1050"
-            extension_instance_id="80"/>
+            catalog_type_id="1300"
+            extension_instance_id="8"
+            extends="ExtensionInstances">
+        <table>
+            <joins>
+                <join model="Extensions"
+                      alias="content_catalog_type_extension"
+                      select="id,name"
+                      jointo="id"
+                      joinwith="extension_id"/>
+                <join model="CatalogTypes"
+                      alias="content_catalog_types"
+                      select="id,type,title,extension_instance_id,model_name,primary_category_id,source_table,slug,routable"
+                      jointo="model_name"
+                      joinwith="content_catalog_type_extension.name"/>
+            </joins>
+        </table>
+    </model>
+
 </extension>

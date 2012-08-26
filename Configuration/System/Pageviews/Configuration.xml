@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Pageview" version="1.0" extends="ExtensionInstancesviewspages">
+<extension type="System" version="1.0" extends="ExtensionInstances">
     <name>SYSTEM_PAGEVIEWS_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -12,5 +12,12 @@
     <model
             name="Pageviews"
             catalog_type_id="1150"
-            extension_instance_id="20"/>
+            extension_instance_id="20"
+            extends="ExtensionInstances">
+        <customfields>
+            <customfield name="parameters">
+                <include name="ParametersPage"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

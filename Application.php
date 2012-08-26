@@ -633,7 +633,7 @@ Class Application
 		if (defined('SITE_BASE_URL')) {
 		} else {
 
-			$sites = ConfigurationService::getFile('System', 'Sites');
+			$sites = ConfigurationService::getFile('Application', 'Sites');
 
 			foreach ($sites->site as $single) {
 				if (strtolower((string)$single->site_base_url) == strtolower($site_base_url)) {
@@ -690,7 +690,7 @@ Class Application
 			/* to override - must also define Application::Request()->get('requested_resource_for_route') */
 		} else {
 
-			$apps = ConfigurationService::getFile('System', 'Applications');
+			$apps = ConfigurationService::getFile('Application', 'Applications');
 
 			foreach ($apps->application as $app) {
 

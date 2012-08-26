@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Theme" version="1.0" extends="ExtensionInstancesviewspages">
+<extension type="Theme" version="1.0" extends="ExtensionInstances">
     <name>SYSTEM_THEMES_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -11,6 +11,12 @@
     <description>SYSTEM_THEMES_DESCRIPTION</description>
     <model
             name="Themes"
-            catalog_type_id="1500"
-            extension_instance_id="16"/>
+            catalog_type_id="1050"
+            extension_instance_id="16">
+        <customfields>
+            <customfield name="parameters">
+                <include name="ParametersTheme"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

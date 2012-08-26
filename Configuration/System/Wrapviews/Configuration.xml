@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Wrapview" version="1.0" extends="ExtensionInstancesviewspages">
+<extension type="System" version="1.0" extends="ExtensioninstancesTable">
     <name>SYSTEM_WRAPVIEWS_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -12,5 +12,11 @@
     <model
             name="Wrapviews"
             catalog_type_id="1250"
-            extension_instance_id="24"/>
+            extension_instance_id="24">
+        <customfields>
+            <customfield name="parameters">
+                <include name="ParametersWrap"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>
