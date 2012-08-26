@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Menu" version="1.0" extends="ExtensionInstancesviewspages">
+    <name>SYSTEM_MENUS_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>SYSTEM_MENUS_DESCRIPTION</description>
+    <model
+            name="Menus"
+            catalog_type_id="1050"
+            extension_instance_id="80"/>
+</extension>

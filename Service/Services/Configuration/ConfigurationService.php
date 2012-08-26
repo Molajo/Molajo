@@ -415,7 +415,7 @@ Class ConfigurationService
 	 */
 	public static function getFile($model_type, $model_name)
 	{
-
+		 echo $model_type.'-'.$model_name.'<br />';
 		/** Use existing registry values, if existing */
 		$registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
 		if ($registry == false) {

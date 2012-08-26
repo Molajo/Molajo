@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Site" version="1.0">
+    <name>SYSTEM_SITES_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>SYSTEM_SITES_DESCRIPTION</description>
+    <model
+            name="Sites"
+            table="#__sites"
+            primary_key="id"
+            name_key="name"
+            primary_prefix="a"
+            get_customfields="0"
+            get_item_children="0"
+            use_special_joins="0"
+            check_view_level_access="0"
+            process_plugins="0"
+            criteria_published_status="0"
+            catalog_type_id="10"
+            extension_instance_id="50"
+            data_source="JDatabase">
+        <table>
+            <fields>
+                <field name="id" type="integer" null="1" default="0" identity="1"/>
+                <field name="name" type="char" null="0" default="" unique="1"/>
+            </fields>
+        </table>
+    </model>
+</extension>

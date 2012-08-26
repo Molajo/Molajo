@@ -1,0 +1,7 @@
+<datalist name="Applications" extends="Content">
+    <model
+            name="Applications"
+            catalog_type_id="60"
+            extension_instance_id="50"
+            />
+</datalist>

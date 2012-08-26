@@ -1,0 +1,7 @@
+<datalist name="Templateviews" extends="Content">
+    <model
+            name="Templateviews"
+            catalog_type_id="1200"
+            extension_instance_id="22"
+            />
+</datalist>

@@ -1,0 +1,7 @@
+<datalist name="Pageviews" extends="Content">
+    <model
+            name="Pageviews"
+            catalog_type_id="1150"
+            extension_instance_id="1"
+            />
+</datalist>

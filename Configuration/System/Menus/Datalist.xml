@@ -1,0 +1,7 @@
+<datalist name="Menus" extends="Content">
+    <model
+            name="Menus"
+            catalog_type_id="1050"
+            extension_instance_id="80"
+            />
+</datalist>
