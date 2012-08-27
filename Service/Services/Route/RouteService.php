@@ -415,16 +415,15 @@ Class RouteService
 		$id = Services::Registry()->get('Parameters', 'catalog_source_id');
 		$table = Services::Registry()->get('Parameters', 'catalog_source_table');
 		$catalog_menuitem_type = Services::Registry()->get('Parameters', 'catalog_menuitem_type');
+		$model_type = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_type')));
 		$model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
-
-		$type = '';
 
 		/** List */
 		if ((int)$id > 0
 			&& (int)$catalog_type_id == 1050
 			&& trim($table) == '#__extension_instances'
 		) {
-			$response = Helpers::Content()->getListRoute($id, 'Table', $model_name, 'Item');
+			$response = Helpers::Content()->getListRoute($id, $model_type, $model_name);
 			if ($response === false) {
 				Services::Error()->set(500, 'Extension not found');
 			}
@@ -434,7 +433,7 @@ Class RouteService
 			&& trim($catalog_menuitem_type) == ''
 		) {
 
-			$response = Helpers::Content()->getRouteItem($id, 'Table', $model_name, 'Item');
+			$response = Helpers::Content()->getRouteItem($id, $model_type, $model_name);
 			if ($response === false) {
 				Services::Error()->set(500, 'Content not found');
 				return false;

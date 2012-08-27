@@ -20,7 +20,7 @@
             <field name="ip_address" type="ip_address" null="0" default=""/>
         </fields>
         <joins>
-            <join model="Users"
+            <join model="User"
                   alias="useractivity_to_users"
                   select="username,first_name,last_name"
                   jointo="id"

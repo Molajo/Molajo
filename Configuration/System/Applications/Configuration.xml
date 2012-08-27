@@ -15,7 +15,7 @@
             primary_key="id"
             name_key="name"
             primary_prefix="a"
-            get_customfields="2"
+            get_customfields="1"
             get_item_children="0"
             use_special_joins="0"
             check_view_level_access="0"
@@ -56,8 +56,10 @@
         </table>
 
         <customfields>
+            <customfield name="metadata">
+                <include name="Metadata"/>
+            </customfield>
             <customfield name="parameters">
-
                 <include name="ParametersApplicationDefaults"/>
                 <include name="ParametersUitemplates"/>
                 <include name="ParametersGrid"/>
@@ -67,11 +69,9 @@
                 <include name="ParametersSessions"/>
                 <include name="ParametersCache"/>
                 <include name="ParametersCookie"/>
-
                 <include name="ParametersUserDefaults"/>
                 <include name="ParametersLog"/>
                 <include name="ParametersGravatar"/>
-
                 <include name="ParametersCommon"/>
                 <include name="ParametersImage"/>
                 <include name="ParametersAssetDefaults"/>
@@ -81,14 +81,8 @@
                 <include name="ParametersList"/>
                 <include name="ParametersItem"/>
                 <include name="ParametersForm"/>
-
                 <include name="ParametersProfiler"/>
             </customfield>
-
-            <customfield name="metadata">
-                <include name="Metadata"/>
-            </customfield>
-
         </customfields>
     </model>
 </extension>

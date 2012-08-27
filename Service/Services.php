@@ -182,12 +182,10 @@ Class Services
 		$i = count($this->message);
 
 		if ($value == null || $connectionSucceeded == false) {
-			echo '<br />' . $key . ' Failed <br />';
-				$this->message[$i] = ' ' . $key . ' FAILED' . $value;
+			$this->message[$i] = ' ' . $key . ' FAILED' . $value;
 			Services::Registry()->set('Service', $key, false);
 
 		} else {
-			echo '<br />' . $key . ' Successfuly <br />';
 			$this->service_connection[$key] = $value;
 			$this->message[$i] = ' ' . $key . ' started successfully. ';
 			Services::Registry()->set('Service', $key, true);

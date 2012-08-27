@@ -376,7 +376,7 @@ class Controller
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $this->query_results;
 		}
-
+//		echo '<br />'.$this->model->query->__toString().'<br />';
 		/** 7. Return List  */
 		if ($query_object == 'list') {
 

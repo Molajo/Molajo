@@ -266,13 +266,6 @@ Class ConfigurationService
 				$m->set('name_key_value', APPLICATION);
 
 				$item = $m->getData('item');
-
-				Services::Registry()->get('ApplicationsSystem', '*');
-
-				echo '<pre>';
-				var_dump($item);
-				echo '</pre>';
-
 				if ($item === false) {
 					throw new \RuntimeException ('Application getApplication() query problem');
 				}
@@ -285,19 +278,13 @@ Class ConfigurationService
 				Services::Registry()->set('Configuration', 'application_description', $item->description);
 
 				/** Combine Application and Site Parameters into Configuration */
-				$parameters = $item->parameters;
-				echo '<pre>';
-				var_dump($parameters);
-				echo '</pre>';
-				die;
-				foreach ($parameters as $key => $value) {
-					echo $key.' '.$value.'<br />';
-					Services::Registry()->set('Configuration', $key, $value);
+				$parameters = Services::Registry()->getArray('ApplicationsSystemParameters');
 
+				foreach ($parameters as $key => $value) {
+					Services::Registry()->set('Configuration', $key, $value);
 					if (strtolower($key) == 'profiler') {
 						$profiler = $value;
 					}
-
 					if (strtolower($key) == 'cache') {
 						$cache = $value;
 					}
@@ -316,8 +303,6 @@ Class ConfigurationService
 
 		Services::Registry()->sort('Configuration');
 
-		Services::Registry()->get('*');
-		die;
 		if ((int)$profiler == 1) {
 			Services::Profiler()->initiate();
 		}
@@ -514,7 +499,7 @@ Class ConfigurationService
 
 		/** Custom Fields use type "customfield" <field name="xyz" type="customfield"/> */
 		ConfigurationService::setSpecialFieldsRegistry(
-			$registryName, $xml, '', $path_and_file, $model_name);
+			$registryName, $xml, $path_and_file, $model_name);
 
 		/** Save in Cache */
 		//if (Services::Registry()->get('cache') == true) {
@@ -571,14 +556,9 @@ Class ConfigurationService
 		$model_name = trim(ucfirst(strtolower($model_name)));
 		$model_name_type = $model_name . $model_type;
 
-		/**
-		if ($model_type == 'Language') {
-			return $model_name . '/' . 'Configuration.xml';
-		}
-		if ($model_name == 'Language') {
+		if ($model_type == 'Extension' && $model_name == 'Language') {
 			return EXTENSIONS . '/Language/Configuration.xml';
 		}
-		**/
 
 		if ($model_type == 'Application') {
 			return CONFIGURATION_FOLDER . '/Application/' . $model_name . '.xml';
@@ -946,7 +926,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
+				$include, $replace_this, $xml_string
 			);
 
 			$xml = simplexml_load_string($xml_string);
@@ -1012,7 +992,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
+				$include, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -1075,7 +1055,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
+				$include, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -1177,7 +1157,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
+				$include, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -1235,7 +1215,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
+				$include, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -1293,7 +1273,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
+				$include, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -1348,7 +1328,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
+				$include, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -1396,7 +1376,7 @@ Class ConfigurationService
 			$replace_this = '<include name="' . $include . '"/>';
 
 			$xml_string = ConfigurationService::replaceIncludeStatement(
-				$include, $model_name, $replace_this, $xml_string
+				$include, $replace_this, $xml_string
 			);
 			$xml = simplexml_load_string($xml_string);
 		}
@@ -1435,50 +1415,37 @@ Class ConfigurationService
 	 * @return mixed
 	 */
 	public static function setSpecialFieldsRegistry(
-		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+		$registryName, $xml, $path_and_file, $model_name)
 	{
 
-		$fieldTypes = 0;
+		if (isset($xml->customfields->customfield)) {
+		} else {
+			return;
+		}
 
-		while ($fieldTypes < 99) {
+		$xml_string = file_get_contents($path_and_file);
 
-			/** Process one field type at a time ex. parameters, metadata, customfield */
-			if (isset($xml->customfields->customfield[$fieldTypes])) {
+		foreach ($xml->customfields->customfield as $customfield) {
+			$customfieldName = (string) $customfield['name'];
 
-			} else {
-				$fieldTypes = 9999;
-				break;
-			}
+			if (isset($customfield->include)) {
+				foreach ($customfield->include as $includeXML) {
 
-			$done = false;
-			while ($done == false) {
-
-				/** Process one include code statement at a time per fieldtype */
-				if (isset($xml->customfields->customfield[$fieldTypes]->include['name'])) {
-					$include = (string)$xml->customfields->customfield[$fieldTypes]->include['name'];
-
-					if ($xml_string == '') {
-						$xml_string = file_get_contents($path_and_file);
-					}
-
+					$include = (string)$includeXML['name'];
 					$replace_this = '<include name="' . $include . '"/>';
 
 					$xml_string = ConfigurationService::replaceIncludeStatement(
-						$include, $model_name, $replace_this, $xml_string
-					);
+						$include, $replace_this, $xml_string);
 
 					$xml = simplexml_load_string($xml_string);
-				} else {
-					$done = true;
 				}
 			}
-			$fieldTypes++;
 		}
 
 		/** Now that all include code has been retrieved, process custom fields */
-		if (isset($xml->customfields)) {
+		if (isset($xml->model->customfields)) {
 			ConfigurationService::getCustomFields(
-				$xml->customfields,
+				$xml->model->customfields,
 				$model_name,
 				$registryName
 			);
@@ -1614,14 +1581,13 @@ Class ConfigurationService
 	 *
 	 * @static
 	 * @param $include
-	 * @param $model_name
 	 * @param $replace_this
 	 * @param $xml_string
 	 * @return mixed
 	 * @throws \RuntimeException
 	 */
 	public static function replaceIncludeStatement(
-		$include, $model_name, $replace_this, $xml_string)
+		$include, $replace_this, $xml_string)
 	{
 		$path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
 

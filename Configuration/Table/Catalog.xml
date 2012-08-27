@@ -27,7 +27,7 @@
 
         <joins>
             <join model="CatalogTypes" alias="b"
-                  select="type,title,source_table,extension_instance_id,model_name,primary_category_id,slug"
+                  select="title,source_table,extension_instance_id,model_type,model_name,primary_category_id,slug"
                   jointo="id"
                   joinwith="catalog_type_id"/>
         </joins>

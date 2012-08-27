@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Users" version="1.0" extends="User">
-    <name>RESOURCE_USERS_NAME</name>
+<extension type="System" version="1.0" extends="ExtensionInstancesTable">
+    <name>SYSTEM_USERS_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,6 +8,11 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>RESOURCE_USERS_DESCRIPTION</description>
-    <model name="Users" catalog_type_id="500"/>
+    <description>SYSTEM_MENUS_DESCRIPTION</description>
+    <model
+            name="Users"
+            catalog_type_id="500"
+            extension_instance_id="12"
+            extends="ExtensionInstances"/>
 </extension>
+

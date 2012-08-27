@@ -64,9 +64,8 @@ class ReadModel extends Model
 					$this->query->select($this->db->qn($primary_prefix) . '.' . '*');
 
 				} else {
-
 					foreach ($columns as $column) {
-						if ($first == true && $query_object == 'distinct') {
+						if ($first == true && strtolower(trim($query_object)) == 'distinct') {
 							$first = false;
 							$this->query->select('DISTINCT ' . $this->db->qn($primary_prefix . '.' . $column['name']));
 						} else {
@@ -82,7 +81,6 @@ class ReadModel extends Model
 		}
 
 		if ($this->query->where == null) {
-
 			if ((int)$id > 0) {
 				$this->query->where($this->db->qn($primary_prefix . '.' . $primary_key)
 					. ' = ' . $this->db->q($id));
@@ -96,12 +94,8 @@ class ReadModel extends Model
 		}
 
 
-		if (is_array($criteria_array)
-			&& count($criteria_array) > 0
-		) {
-
+		if (is_array($criteria_array) && count($criteria_array) > 0) {
 			foreach ($criteria_array as $item) {
-
 				$this->query->where($this->db->qn($item['name'])
 					. ' ' . $item['connector'] . ' '
 					. $this->db->q($item['value']));

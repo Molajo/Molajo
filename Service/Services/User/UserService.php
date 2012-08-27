@@ -74,7 +74,7 @@ Class UserService
 		/** Retrieve User Data  */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
-		$results = $m->connect('Table', 'Users');
+		$results = $m->connect('Table', 'User');
 		if ($results == false) {
 			return false;
 		}
@@ -161,10 +161,7 @@ Class UserService
 		Services::Registry()->set('User', 'Groups', $groups);
 		Services::Registry()->set('User', 'ViewGroups', $viewGroups);
 		Services::Registry()->set('User', 'Activity', $activity);
-
-		Services::Registry()->rename('UsersParameters', 'UserParameters');
-		Services::Registry()->rename('UsersMetadata', 'UserMetadata');
-		/**
+/**
 		echo 'User<br />';
 		Services::Registry()->get('User', '*');
 
@@ -174,7 +171,7 @@ Class UserService
 		echo '<br />User Metadata<br />';
 		Services::Registry()->get('UserMetadata', '*');
 		die;
-		 */
+*/
 
 		return $this;
 	}

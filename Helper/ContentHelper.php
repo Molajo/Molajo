@@ -57,11 +57,11 @@ Class ContentHelper
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function getListRoute($id, $model_type, $model_name, $model_query_object)
+	public function getListRoute($id, $model_type, $model_name)
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getListRoute');
 
-		$item = $this->get($id, $model_type, $model_name, 'item');
+		$item = $this->get($id, $model_type, $model_name);
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
 		}
@@ -96,11 +96,11 @@ Class ContentHelper
 	 * @return boolean
 	 * @since    1.0
 	 */
-	public function getRouteItem($id, $model_type, $model_name, $model_query_object)
+	public function getRouteItem($id, $model_type, $model_name)
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getRouteItem');
 
-		$item = $this->get($id, $model_type, $model_name, 'item');
+		$item = $this->get($id, $model_type, $model_name);
 
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
@@ -159,9 +159,7 @@ Class ContentHelper
 
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
-			'Menuitem',
-			Services::Registry()->get('Parameters', 'catalog_menuitem_type'),
-			'item'
+			'Menuitem'
 		);
 
 		if (count($item) == 0) {
@@ -201,18 +199,17 @@ Class ContentHelper
 	 * @return array An object containing an array of data
 	 * @since   1.0
 	 */
-	public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $model_query_object = 'list')
+	public function get($id = 0, $model_type = 'Table', $model_name = 'Content')
 	{
 		Services::Profiler()->set('ContentHelper->get '
 				. ' ID: ' . $id
 				. ' Model Type: ' . $model_type
-				. ' Model Name: ' . $model_name
-				. ' Model Query: ' . $model_query_object,
+				. ' Model Name: ' . $model_name,
 			LOG_OUTPUT_ROUTING, VERBOSE);
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
-
+echo $model_type.' '.$model_name;
 		$results = $m->connect($model_type, $model_name);
 		if ($results == false) {
 			return false;
@@ -222,7 +219,7 @@ Class ContentHelper
 		$m->set('process_plugins', 0);
 		$m->set('get_customfields', 1);
 
-		$item = $m->getData($model_query_object);
+		$item = $m->getData('item');
 		if (count($item) == 0) {
 			return array();
 		}

@@ -392,7 +392,7 @@ Class LanguageService
 
 		/** During System Initialization Helper is not loaded yet, instantiate here */
 		$helper = new ExtensionHelper();
-		$item = $helper->get($id, 'Table', 'Language', 'item');
+		$item = $helper->get($id, 'Extension', 'Language', 'item');
 		if ($item == false) {
 			return false;
 		}
@@ -400,7 +400,7 @@ Class LanguageService
 		Services::Registry()->createRegistry($language);
 		Services::Registry()->set($language, 'id', $id);
 
-		$parameters = Services::Registry()->get('LanguageTableParameters');
+		$parameters = Services::Registry()->get('LanguageExtensionParameters');
 		foreach ($parameters as $key => $value) {
 			Services::Registry()->set($language, $key, $value);
 		}
@@ -429,7 +429,7 @@ Class LanguageService
 	{
 		/** During System Initialization Helper is not loaded yet, instantiate here */
 		$helper = new ExtensionHelper();
-		$installed = $helper->get(0, 'Table', 'Language', 'list', 1100);
+		$installed = $helper->get(0, 'Extension', 'Language', 'list', 1100);
 
 		if ($installed == false || count($installed) < 1) {
 			return false;
