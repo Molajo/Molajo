@@ -81,7 +81,7 @@ Class ConfigurationService
 	}
 
 	/**
-	 * Retrieve valid field properties: datatype, attribute, and datalist
+	 * Retrieve valid field properties: modeltype, datatype, attribute, and datalist
 	 *
 	 * @return object
 	 * @throws \Exception
@@ -99,7 +99,20 @@ Class ConfigurationService
 		}
 		$xml = simplexml_load_string(file_get_contents(CONFIGURATION_FOLDER . '/Application/Fields.xml'));
 
-		/** 3. Load Valid Field Datatypes */
+		/** 3. Load Valid Modeltypes */
+		if (isset($xml->modeltypes->modeltype)) {
+		} else {
+			//throw error
+		}
+		$modeltypes = $xml->modeltypes->modeltype;
+		$modeltypeArray = array();
+		foreach ($modeltypes as $modeltype) {
+			$modeltypeArray[] = (string)$modeltype;
+		}
+
+		Services::Registry()->set('Fields', 'Modeltypes', $modeltypeArray);
+
+		/** 4. Load Valid Field Datatypes */
 		if (isset($xml->datatypes->datatype)) {
 		} else {
 			//throw error
@@ -112,7 +125,7 @@ Class ConfigurationService
 
 		Services::Registry()->set('Fields', 'Datatypes', $datatypeArray);
 
-		/** 4. Load Valid Field Properties */
+		/** 5. Load Valid Field Properties */
 		if (isset($xml->attributes->attribute)) {
 		} else {
 			//throw error
@@ -126,7 +139,7 @@ Class ConfigurationService
 		Services::Registry()->set('Fields', 'Attributes', $attributeArray);
 		self::$valid_field_attributes = $attributeArray;
 
-		/** 5. Load Valid Datalists */
+		/** 6. Load Valid Datalists */
 		$datalistsArray = array();
 		$dirRead = dir(CONFIGURATION_FOLDER . '/Datalist');
 		$path = $dirRead->path;
@@ -138,7 +151,7 @@ Class ConfigurationService
 		}
 		$dirRead->close();
 
-		/** 6. Load Datalists from Resources */
+		/** 7. Load Datalists from Resources */
 		$dirRead = dir(EXTENSIONS . '/Resource');
 		$path = $dirRead->path;
 		while (false !== ($entry = $dirRead->read())) {
@@ -151,7 +164,7 @@ Class ConfigurationService
 		}
 		$dirRead->close();
 
-		/** 7. Load Datalists from System */
+		/** 8. Load Datalists from System */
 		$dirRead = dir(CONFIGURATION_FOLDER . '/System');
 		$path = $dirRead->path;
 		while (false !== ($entry = $dirRead->read())) {
@@ -559,16 +572,6 @@ Class ConfigurationService
 		$model_name_type = $model_name . $model_type;
 		$path = '';
 
-		$array = explode(
-			',',
-			'Application,Datalist,Dbo,Language,Menuitem,Resource,Theme,Page,Template,Wrap,Service,System,Table,Plugin'
-		);
-		if (in_array($model_type, $array)) {
-		} else {
-			echo '<br />Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
-			return false;
-		}
-
 		/** 2. Single location */
 		if (in_array($model_type, array('Application', 'Dbo', 'System', 'Language', 'Service', 'Resource'))) {
 			if (in_array($model_type, array('Application', 'Dbo'))) {
@@ -592,6 +595,13 @@ Class ConfigurationService
 		}
 
 		/** 3. Overrides */
+		$modelArray = Services::Registry()->get('Fields', 'Modeltypes');
+		if (in_array($model_type, $modelArray)) {
+		} else {
+			echo '<br />Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
+			return false;
+		}
+
 		$extension_path = false;
 		if (Services::Registry()->exists('Parameters', 'extension_path')) {
 			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
@@ -607,7 +617,7 @@ Class ConfigurationService
 			$theme_path = Services::Registry()->get('Parameters', 'theme_path');
 		}
 
-		if (in_array($model_type, array('Datalist', 'Menuitem', 'Table'))) {
+		if (in_array($model_type, array('Datalist', 'Table'))) {
 			if ($extension_path === false) {
 			} else {
 				$path = $extension_path . '/' . $model_type . '/' . $model_name . '.xml';
@@ -622,7 +632,20 @@ Class ConfigurationService
 					return $path;
 				}
 			}
+
+			$path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '.xml';
+			if (file_exists($path)) {
+				return $path;
+			}
+
 			$path = CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+			if (file_exists($path)) {
+				return $path;
+			}
+		}
+
+		if ($model_type == 'Menuitem') {
+			$path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
 			if (file_exists($path)) {
 				return $path;
 			}
@@ -724,7 +747,7 @@ Class ConfigurationService
 	 */
 	public static function inheritDefinition($registryName, $xml)
 	{
-		/** Inheritance: <model name="XYZ" version="1.0" extends="ThisTable"/> */
+		/** Inheritance: <model name="XYZ" extends="ThisTable"/> */
 		$extends = false;
 		$type = '';
 		foreach ($xml->attributes() as $key => $value) {
@@ -740,23 +763,21 @@ Class ConfigurationService
 			return;
 		}
 
-		/** Extract the model_type */
-		if (strtolower(substr($extends, strlen($extends) - strlen('resources'), strlen('resources'))) == 'resources') {
-			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen('resources'))));
-			$extends_model_type = 'Resources';
+		$modelArray = Services::Registry()->set('Fields', 'Modeltypes');
+		$extends_model_name = '';
+		$extends_model_type = '';
+		foreach ($modelArray as $modeltype) {
+			if (strtolower(substr($extends, strlen($extends) - strlen($modeltype), strlen($modeltype))) == $modeltype) {
+				$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen($modeltype))));
+				$extends_model_type = $modeltype;
+			}
+		}
 
-		} elseif (strtolower(substr($extends, strlen($extends) - strlen('system'), strlen('system'))) == 'system') {
-			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen('system'))));
-			$extends_model_type = 'System';
-
-		} elseif (strtolower(substr($extends, strlen($extends) - strlen('table'), strlen('table'))) == 'table') {
-			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen('table'))));
-			$extends_model_type = 'Table';
-
-		} else {
+		if ($extends_model_name == '') {
 			$extends_model_name = ucfirst(strtolower($extends));
 			$extends_model_type = 'Table';
 		}
+
 		$parentRegistryName = $extends_model_name . $extends_model_type;
 
 		/** Load the file and build registry - IF - the registry is not already loaded */

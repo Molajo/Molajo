@@ -25,6 +25,22 @@
         <datatype>zip</datatype>
         <datatype>video</datatype>
     </datatypes>
+    <modeltypes>
+        <modeltype>Application</modeltype>
+        <modeltype>Datalist</modeltype>
+        <modeltype>Dbo</modeltype>
+        <modeltype>Language</modeltype>
+        <modeltype>Menuitem</modeltype>
+        <modeltype>Page</modeltype>
+        <modeltype>Plugin</modeltype>
+        <modeltype>Resource</modeltype>
+        <modeltype>Service</modeltype>
+        <modeltype>System</modeltype>
+        <modeltype>Table</modeltype>
+        <modeltype>Template</modeltype>
+        <modeltype>Theme</modeltype>
+        <modeltype>Wrap</modeltype>
+    </modeltypes>
     <attributes>
         <attribute>autocomplete</attribute>
         <attribute>autofocus</attribute>

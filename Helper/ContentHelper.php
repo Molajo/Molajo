@@ -157,9 +157,12 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getRouteTemplateView');
 
+		Services::Registry()->sort('Parameters');
+
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
-			'Menuitem'
+			'Menuitem',
+			Services::Registry()->get('Parameters', 'catalog_menuitem_type')
 		);
 
 		if (count($item) == 0) {
