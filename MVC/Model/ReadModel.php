@@ -301,13 +301,13 @@ class ReadModel extends Model
 			$this->query->where($this->db->qn($primary_prefix . '.' . 'catalog_type_id')
 				. ' = ' . (int)$catalog_type_id);
 		}
-
+/**
 		if ((int)$extension_instance_id == 0) {
 		} else {
 			$this->query->where($this->db->qn($primary_prefix . '.' . 'extension_instance_id')
 				. ' = ' . (int)$extension_instance_id);
 		}
-
+*/
 		return $this;
 	}
 
