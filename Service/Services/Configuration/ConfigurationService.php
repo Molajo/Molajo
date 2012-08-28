@@ -258,7 +258,7 @@ Class ConfigurationService
 				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 				$m = new $controllerClass();
 
-				$results = $m->connect('System', 'Applications');
+				$results = $m->connect('Table', 'Application');
 				if ($results == false) {
 					return false;
 				}
@@ -278,10 +278,11 @@ Class ConfigurationService
 				Services::Registry()->set('Configuration', 'application_description', $item->description);
 
 				/** Combine Application and Site Parameters into Configuration */
-				$parameters = Services::Registry()->getArray('ApplicationsSystemParameters');
-
+				$parameters = Services::Registry()->getArray('ApplicationTableParameters');
 				foreach ($parameters as $key => $value) {
+
 					Services::Registry()->set('Configuration', $key, $value);
+
 					if (strtolower($key) == 'profiler') {
 						$profiler = $value;
 					}
@@ -307,7 +308,7 @@ Class ConfigurationService
 			Services::Profiler()->initiate();
 		}
 
-		if ((int)$cache == 1) {
+		if ((int)$cache == 1 && class_exists(Services)) {
 			Services::Cache()->startCache();
 			Services::Registry()->set('cache', true);
 		} else {
@@ -428,11 +429,8 @@ Class ConfigurationService
 	 */
 	public static function getFile($model_type, $model_name)
 	{
-		echo $model_type.'-'.$model_name.'<br />';
-
 		/** Use existing registry values, if existing */
 		$registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
-		$registry = false;
 		if ($registry == false) {
 		} else {
 			return $registry;
@@ -565,7 +563,6 @@ Class ConfigurationService
 		}
 
 		if ($model_type == 'System') {
-			echo CONFIGURATION_FOLDER . '/System/' . $model_name . '/Configuration.xml';
 			return CONFIGURATION_FOLDER . '/System/' . $model_name . '/Configuration.xml';
 		}
 
@@ -574,10 +571,10 @@ Class ConfigurationService
 		}
 
 		/** Validate Model Types */
-		$array = explode(',', 'Table,Dbo,Datalist,Menuitem,Theme,Page,Template,Wrap,Plugin');
+		$array = explode(',', 'Resources,Table,Dbo,Datalist,Menuitem,Theme,Page,Template,Wrap,Plugin');
 		if (in_array($model_type, $array)) {
 		} else {
-			echo 'Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
+			echo '<br />Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
 
 			return false;
 		}
@@ -622,8 +619,7 @@ Class ConfigurationService
 				return $extension_path . '/Configuration.xml';
 			}
 			/** ex. Resource/Article/ContentTable.xml or Resource/Article/DefaultTemplate.xml */
-			if (file_exists($extension_path . '/' . $model_name_type . '.xml')
-			) {
+			if (file_exists($extension_path . '/' . $model_name_type . '.xml')) {
 				return $extension_path . '/' . $model_name_type . '.xml';
 			}
 		}
@@ -843,7 +839,7 @@ Class ConfigurationService
 	 */
 	public static function inheritDefinition($registryName, $xml)
 	{
-		/** Inheritance: <extension type="Resource" version="1.0" extends="Content"> */
+		/** Inheritance: <extension type="Resource" version="1.0" extends="ContentTable"> */
 		$extends = false;
 		$type = '';
 		foreach ($xml->attributes() as $key => $value) {
@@ -860,23 +856,23 @@ Class ConfigurationService
 		}
 
 		/** Extract the model_type */
-		if (strtolower(substr($extends, strlen($extends) - strlen('resource'), strlen('resource'))) == 'resource') {
-			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen('resource'))));
-			$extends_model_type = 'Resource';
+		if (strtolower(substr($extends, strlen($extends) - strlen('resources'), strlen('resources'))) == 'resources') {
+			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen('resources'))));
+			$extends_model_type = 'Resources';
 
 		} elseif (strtolower(substr($extends, strlen($extends) - strlen('system'), strlen('system'))) == 'system') {
-			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen('system'))));
+			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen('system'))));
 			$extends_model_type = 'System';
 
 		} elseif (strtolower(substr($extends, strlen($extends) - strlen('table'), strlen('table'))) == 'table') {
-			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen('table'))));
+			$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen('table'))));
 			$extends_model_type = 'Table';
 
 		} else {
 			$extends_model_name = ucfirst(strtolower($extends));
 			$extends_model_type = 'Table';
 		}
-		$parentRegistryName = strtolower($extends . 'Table');
+		$parentRegistryName = $extends_model_name . $extends_model_type;
 
 		/** Load the file and build registry - IF - the registry is not already loaded */
 		if (Services::Registry()->exists($parentRegistryName) == true) {
@@ -892,6 +888,11 @@ Class ConfigurationService
 
 		/** Copy parent to child for start - will be overwritten for child definitions */
 		Services::Registry()->copy($parentRegistryName, $registryName);
+
+		if ($registryName == 'ArticlesResources') {
+			Services::Registry()->get($registryName, '*');
+			Services::Registry()->get($registryName . 'Parameters', '*');
+		}
 
 		return;
 	}
@@ -1417,7 +1418,6 @@ Class ConfigurationService
 	public static function setSpecialFieldsRegistry(
 		$registryName, $xml, $path_and_file, $model_name)
 	{
-
 		if (isset($xml->customfields->customfield)) {
 		} else {
 			return;
@@ -1425,27 +1425,34 @@ Class ConfigurationService
 
 		$xml_string = file_get_contents($path_and_file);
 
-		foreach ($xml->customfields->customfield as $customfield) {
-			$customfieldName = (string) $customfield['name'];
+		for ($i = 0; $i <  count($xml->customfields->customfield); $i++) {
 
-			if (isset($customfield->include)) {
-				foreach ($customfield->include as $includeXML) {
+			if (isset($xml->customfields->customfield[$i]->include)) {
 
-					$include = (string)$includeXML['name'];
+				$doit = 1;
+				while($doit == 1) {
+
+					$include = (string)$xml->customfields->customfield[$i]->include['name'];
+
 					$replace_this = '<include name="' . $include . '"/>';
 
 					$xml_string = ConfigurationService::replaceIncludeStatement(
 						$include, $replace_this, $xml_string);
 
 					$xml = simplexml_load_string($xml_string);
+
+					if (isset($xml->customfields->customfield[$i]->include)) {
+					} else {
+						$doit = 0;
+					}
 				}
 			}
 		}
 
 		/** Now that all include code has been retrieved, process custom fields */
-		if (isset($xml->model->customfields)) {
+		if (isset($xml->customfields)) {
 			ConfigurationService::getCustomFields(
-				$xml->model->customfields,
+				$xml->customfields,
 				$model_name,
 				$registryName
 			);
@@ -1469,7 +1476,6 @@ Class ConfigurationService
 	public static function getCustomFields(
 		$xml, $model_name, $registryName)
 	{
-
 		$i = 0;
 		$continue = true;
 		$customFieldsArray = array();
@@ -1478,6 +1484,7 @@ Class ConfigurationService
 
 			if (isset($xml->customfield[$i]->field)) {
 				$customfield = $xml->customfield[$i];
+
 			} else {
 				$continue = false;
 				break;
@@ -1492,7 +1499,9 @@ Class ConfigurationService
 
 			/** Load inherited definitions */
 			$inherit = Services::Registry()->get($registryName, $name, array());
+
 			$inheritFields = array();
+
 			if (count($inherit) > 0) {
 				foreach ($inherit as $row) {
 					foreach ($row as $field => $fieldvalue) {
@@ -1518,15 +1527,13 @@ Class ConfigurationService
 
 					if (in_array($key2, self::$valid_field_attributes)) {
 					} else {
-						echo 'Field attribute not known ' . $key2 . ':' . $value2
-							. ' for ' . $model_name . '<br />';
+						echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $model_name . '<br />';
 					}
 
 					if ($key2 == 'name') {
 						if (in_array($value2, $inheritFields)) {
 							$doNotInheritFields[] = $value2;
 						}
-
 					}
 					$fieldAttributesArray[$key2] = $value2;
 				}

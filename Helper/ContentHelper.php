@@ -209,7 +209,7 @@ Class ContentHelper
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
-echo $model_type.' '.$model_name;
+
 		$results = $m->connect($model_type, $model_name);
 		if ($results == false) {
 			return false;
@@ -224,8 +224,11 @@ echo $model_type.' '.$model_name;
 			return array();
 		}
 
+		echo '<pre>';
+		var_dump($item);
+		echo '</pre>';
+
 		$item->table_registry_name = $m->table_registry_name;
-		$item->model_name = $m->get('model_name');
 
 		return $item;
 	}
@@ -383,6 +386,7 @@ echo $model_type.' '.$model_name;
 		Services::Registry()->set('Parameters', 'menuitem_id', $hold_menuitem_id);
 
 //Services::Registry()->get('Parameters', '*');
+//		die;
 
 		return true;
 	}
