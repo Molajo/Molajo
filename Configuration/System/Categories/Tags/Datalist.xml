@@ -1,7 +1,0 @@
-<datalist name="Tags" extends="Category">
-    <model
-            name="Tags"
-            catalog_type_id="3500"
-            extension_instance_id="3"
-            />
-</datalist>

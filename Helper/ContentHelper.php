@@ -385,7 +385,7 @@ Class ContentHelper
 		/* Store saved values */
 		Services::Registry()->set('Parameters', 'menuitem_id', $hold_menuitem_id);
 
-//Services::Registry()->get('Parameters', '*');
+Services::Registry()->get('Parameters', '*');
 //		die;
 
 		return true;
