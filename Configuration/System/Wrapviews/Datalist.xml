@@ -1,7 +1,8 @@
-<datalist name="Wrapviews" extends="Content">
+<datalist name="Wrapviews">
     <model
             name="Wrapviews"
             catalog_type_id="1150"
             extension_instance_id="1"
+            extends="ExtensionInstancesTable"
             />
 </datalist>

@@ -1,7 +1,8 @@
-<datalist name="Languages" extends="Extensioninstances">
+<datalist name="Languages">
     <model
             name="Languages"
             catalog_type_id="60"
             extension_instance_id="50"
+            extends="ExtensioninstancesTable"
             />
 </datalist>

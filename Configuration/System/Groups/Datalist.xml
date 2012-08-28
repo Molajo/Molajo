@@ -1,7 +1,8 @@
-<datalist name="Groups" extends="Content">
+<datalist name="Groups">
     <model
             name="Groups"
             catalog_type_id="100"
             extension_instance_id="7"
+            extends="Content"
             />
 </datalist>

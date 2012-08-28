@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="System" version="1.0" extends="ExtensioninstancesTable">
+<extension type="System" version="1.0">
     <name>SYSTEM_THEMES_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -12,7 +12,8 @@
     <model
             name="Themes"
             catalog_type_id="1500"
-            extension_instance_id="16">
+            extension_instance_id="16"
+            extends="ExtensioninstancesTable">
         <customfields>
             <customfield name="parameters">
                 <include name="ParametersTheme"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Plugin" version="1.0" extends="PluginsSystem">
+<extension type="Plugin" version="1.0">
     <name>EMAIL_PLUGIN_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>EMAIL_PLUGIN_DESCRIPTION</description>
-    <model name="Email"/>
+    <model name="Email" extends="PluginsSystem"/>
 </extension>

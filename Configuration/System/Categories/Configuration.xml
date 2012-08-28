@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="System" version="1.0" extends="Content">
+<extension type="System" version="1.0">
     <name>SYSTEM_CATEGORIES_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -12,5 +12,6 @@
     <model
         name="Categories"
         catalog_type_id="3000"
-        extension_instance_id="3"/>
+        extension_instance_id="3"
+        extends="ContentTable"/>
 </extension>

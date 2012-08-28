@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Resource" version="1.0" extends="Content">
+<extension type="Resource" version="1.0"" extends="Content">
     <name>RESOURCE_SAMPLES_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -12,11 +12,11 @@
     <model name="Samples" catalog_type_id="xxxxx">
         <customfields>
             <customfield name="parameters">
-                <field name="tags" type="tags" null="0" default="1"/>
+                <field name="tags" type="tags" null="0" default="1" extends="PluginsSystem"/>
             </customfield>
             <customfield name="customfields">
-                <field name="intro_text_image" type="file" null="0" default="1"/>
-                <field name="full_text_image" type="file" null="0" default="1"/>
+                <field name="intro_text_image" type="file" null="0" default="1" extends="PluginsSystem"/>
+                <field name="full_text_image" type="file" null="0" default="1" extends="PluginsSystem"/>
             </customfield>
         </customfields>
     </model>

@@ -1,7 +1,8 @@
-<datalist name="Themes" extends="Content">
+<datalist name="Themes">
     <model
             name="Themes"
             catalog_type_id="1500"
             extension_instance_id="16"
+            extends="ExtensionInstancesTable"
             />
 </datalist>

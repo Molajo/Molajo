@@ -1,7 +1,8 @@
-<datalist name="Pageviews" extends="Content">
+<datalist name="Pageviews">
     <model
             name="Pageviews"
             catalog_type_id="1150"
             extension_instance_id="1"
+            extends="ExtensionInstancesTable"
             />
 </datalist>

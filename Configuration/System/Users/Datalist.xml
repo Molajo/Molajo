@@ -1,7 +1,8 @@
-<datalist name="Users" extends="User">
+<datalist name="Users">
     <model
             name="Users"
             catalog_type_id="500"
             extension_instance_id="12"
+            extends="UserTable"
             />
 </datalist>

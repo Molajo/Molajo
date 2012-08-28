@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Template" version="1.0" extends="TemplateviewsSystem">
+<extension type="Template" version="1.0">
     <name>VIEW_TEMPLATE_ARTICLE_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ARTICLE_DESCRIPTION</description>
-    <model name="Article"/>
+    <model name="Article" extends="TemplateviewsSystem"/>
 </extension>

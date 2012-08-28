@@ -1,7 +1,8 @@
-<datalist name="Sites" extends="Content">
+<datalist name="Sites">
     <model
             name="Sites"
             catalog_type_id="10"
             extension_instance_id="50"
+            extends="SitesTable"
             />
 </datalist>

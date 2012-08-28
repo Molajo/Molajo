@@ -1,4 +1,4 @@
-<datalist name="Applications" extends="Content">
+<datalist name="Applications">
     <model
             name="Applications"
             catalog_type_id="60"
