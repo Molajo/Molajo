@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Service" version="1.0" extends="Extensioninstancesservices">
+<extension type="Service" version="1.0" extends="ServicesSystem">
     <name>SERVICE_LOG_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>

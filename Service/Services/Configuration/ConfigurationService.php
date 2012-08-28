@@ -211,7 +211,7 @@ Class ConfigurationService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
-		$results = $m->connect('System', 'Sites');
+		$results = $m->connect('Table', 'Site');
 		if ($results == false) {
 			return false;
 		}
