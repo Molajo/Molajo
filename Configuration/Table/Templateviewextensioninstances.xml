@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Templateviewextensioninstances"
+        catalog_type_id="1200"
+        extension_instance_id="22"
+        extends="ExtensionInstances">
+    <customfields>
+        <customfield name="parameters">
+            <include name="ParametersTemplate"/>
+        </customfield>
+    </customfields>
+</model>

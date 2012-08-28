@@ -117,7 +117,7 @@ Class MenuService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
-		$results = $m->connect('Table', 'Menuitem');
+		$results = $m->connect('Table', 'Menuitems');
 		if ($results == false) {
 			return false;
 		}

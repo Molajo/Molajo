@@ -105,7 +105,7 @@ Class AuthorisationService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
-		$results = $m->connect('Table', 'SiteApplications');
+		$results = $m->connect('Table', 'Siteapplications');
 		if ($results == false) {
 			return false;
 		}
@@ -267,7 +267,7 @@ Class AuthorisationService
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
-		$results = $m->connect('Table', 'GroupPermissions');
+		$results = $m->connect('Table', 'Grouppermissions');
 		if ($results == false) {
 			return false;
 		}
@@ -315,7 +315,7 @@ Class AuthorisationService
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
-		$results = $m->connect('Table', 'UserApplications');
+		$results = $m->connect('Table', 'Userapplications');
 		if ($results == false) {
 			return false;
 		}

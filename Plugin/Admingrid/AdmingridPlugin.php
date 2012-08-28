@@ -44,7 +44,7 @@ class AdmingridPlugin extends ContentPlugin
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 
-		$results = $connect->connect($this->get('model_type', 'Table'), $this->get('model_name'));
+		$results = $connect->connect($this->get('model_type'), $this->get('model_name'));
 		if ($results == false) {
 			return false;
 		}
@@ -54,7 +54,7 @@ class AdmingridPlugin extends ContentPlugin
 		$connect->set('process_plugins', 1);
 
 		$this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
-			. ucfirst(strtolower($this->get('model_type', 'Table')));
+			. ucfirst(strtolower($this->get('model_type')));
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 1) == 1) {
 

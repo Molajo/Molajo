@@ -310,7 +310,7 @@ Class InstallService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
-		$m->connect('CatalogTypes', 'Table');
+		$m->connect('Catalogtypes', 'Table');
 
 		$primary_prefix = $m->get('primary_prefix', 'a');
 

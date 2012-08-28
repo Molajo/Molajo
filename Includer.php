@@ -356,18 +356,13 @@ class Includer
 				$controller->set($key, $value);
 			}
 		}
-
-if  (Services::Registry()->get('Parameters', 'template_view_title') == 'xyz') {
+/**
+if  (Services::Registry()->get('Parameters', 'template_view_title') == 'Head') {
 	echo '<br /><br /><br />NEXT<br />';
 	echo $message;
-
-	echo '<pre>';
-	var_dump($this->attributes);
-	echo '</pre>';
-
 	echo '<br /><br /><br />';
 }
-
+*/
 		$results = $controller->execute();
 
 		return $results;

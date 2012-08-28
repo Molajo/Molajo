@@ -190,8 +190,7 @@ class Controller
 
 		} else {
 
-			$table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
-
+			$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 			if (Services::Registry()->exists($table_registry_name) == true) {
 				$this->table_registry_name = $table_registry_name;
 				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
@@ -204,6 +203,13 @@ class Controller
 					Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 
 					return false;
+				}
+				echo 'Table Registry: ' .$this->table_registry_name.'<br />';
+				if ($this->table_registry_name == 'HeadTemplate') {
+					Services::Registry()->get($this->table_registry_name, '*');
+				}
+				if ($this->table_registry_name == 'HeadSystem') {
+					Services::Registry()->get($this->table_registry_name, '*');
 				}
 
 				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getFile. ';

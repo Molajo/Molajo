@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Pageviewextensioninstances"
+        catalog_type_id="1150"
+        extension_id="20"
+        extends="ExtensioninstancesTable">
+    <customfields>
+        <customfield name="parameters">
+            <include name="ParametersPage"/>
+        </customfield>
+    </customfields>
+</model>

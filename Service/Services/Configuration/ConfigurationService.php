@@ -420,7 +420,7 @@ Class ConfigurationService
 	 *
 	 * @static
 	 * @param $model_name
-	 * @param string $model_type - Application, Table, Module, Theme, Page, Template, Wrap
+	 * @param string $model_type - Application, Table or Language*, Menuitem*, Resource, Theme, Page, Template, Wrap
 	 *
 	 * @return object $xml
 	 * @since  1.0
@@ -439,16 +439,18 @@ Class ConfigurationService
 		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
 		/** Or, use cache, if available */
-		//if (Services::Registry()->get('cache') == true) {
+		if (class_exists(' Molajo\\Service\\Services\\RegistryService')) {
+			if (Services::Registry()->get('Parameters', 'cache') == 1) {
 
-		//	Services::Registry()->createRegistry($registryName);
-		//	if (Services::Cache()->exists(md5($registryName), 'registry')) {
-		//		Services::Registry()->createRegistry($registryName);
-		//		Services::Registry()->loadArray($registryName, Services::Cache()->get($registryName, 'registry'));
-		//		echo 'loading  '.$registry.' from cache<br />';
-		//		return $registry;
-		//	}
-		//}
+				Services::Registry()->createRegistry($registryName);
+				if (Services::Cache()->exists(md5($registryName), 'registry')) {
+					Services::Registry()->createRegistry($registryName);
+					Services::Registry()->loadArray($registryName, Services::Cache()->get($registryName, 'registry'));
+					echo 'loading  ' . $registry . ' from cache<br />';
+					return $registry;
+				}
+			}
+		}
 
 		/** Using application location structure, locate file */
 		$results = ConfigurationService::locateFile($model_type, $model_name);
@@ -483,7 +485,7 @@ Class ConfigurationService
 		/** Using Extends allows inheritance of another Model */
 		ConfigurationService::inheritDefinition($registryName, $xml);
 
-		/** Extensions are within an <extension></extension> group */
+		/** Get Model */
 		if (isset($xml->model)) {
 			$xml = $xml->model;
 		}
@@ -500,7 +502,7 @@ Class ConfigurationService
 			$registryName, $xml, $path_and_file, $model_name);
 
 		/** Save in Cache */
-		//if (Services::Registry()->get('cache') == true) {
+		//if (Services::Registry()->get('Parameters', 'cache') == 1) {
 		//	Services::Cache()->set(md5($registryName), Services::Registry()->getArray($registryName), 'registry');
 		//}
 
@@ -551,261 +553,143 @@ Class ConfigurationService
 	 */
 	public static function locateFile($model_type, $model_name)
 	{
+		/** 1. Initialization */
 		$model_type = trim(ucfirst(strtolower($model_type)));
 		$model_name = trim(ucfirst(strtolower($model_name)));
 		$model_name_type = $model_name . $model_type;
+		$path = '';
 
-		if ($model_type == 'Extension' && $model_name == 'Language') {
-			return EXTENSIONS . '/Language/Configuration.xml';
-		}
-
-		if ($model_type == 'Application') {
-			return CONFIGURATION_FOLDER . '/Application/' . $model_name . '.xml';
-		}
-
-		if ($model_type == 'System') {
-			return CONFIGURATION_FOLDER . '/System/' . $model_name . '/Configuration.xml';
-		}
-
-		if ($model_type == 'Dbo') {
-			return CONFIGURATION_FOLDER . '/Dbo/' . $model_name . '.xml';
-		}
-
-		/** Validate Model Types */
-		$array = explode(',', 'Resources,Table,Dbo,Datalist,Menuitem,Theme,Page,Template,Wrap,Plugin');
+		$array = explode(
+			',',
+			'Application,Datalist,Dbo,Language,Menuitem,Resource,Theme,Page,Template,Wrap,Service,System,Table,Plugin'
+		);
 		if (in_array($model_type, $array)) {
 		} else {
 			echo '<br />Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
-
 			return false;
 		}
 
-		/** 1. Menu Item */
-		if ($model_type == 'Menuitem'
-			|| $model_name == 'Menuitem'
-			|| substr($model_name, 0, 8) == 'Menuitem'
-		) {
-			return ConfigurationService::locateFileMenuitem($model_type, $model_name);
+		/** 2. Single location */
+		if (in_array($model_type, array('Application', 'Dbo', 'System', 'Language', 'Service', 'Resource'))) {
+			if (in_array($model_type, array('Application', 'Dbo'))) {
+				$path = CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+			}
+			if ($model_type == 'System') {
+				$path = CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+			}
+			if ($model_type == 'Language') {
+				$path = EXTENSIONS . '/Language/' . $model_name . '/Configuration.xml';
+			}
+			if ($model_type == 'Service') {
+				$path = MOLAJO_FOLDER . '/Service/Services/' . $model_name . '/Configuration.xml';
+			}
+			if ($model_type == 'Resource') {
+				$path = EXTENSIONS . '/Resource/' . $model_name . '/Configuration.xml';
+			}
+			if (file_exists($path)) {
+				return $path;
+			}
 		}
 
-		/** 2. Datalist */
-		if ($model_type == 'Datalist'
-			|| substr($model_name, 0, 8) == 'Datalist'
-		) {
-			return ConfigurationService::locateFileDatalist($model_type, $model_name);
-		}
-
-		/** 2. Current Extension */
+		/** 3. Overrides */
 		$extension_path = false;
-		$extension_name = '';
 		if (Services::Registry()->exists('Parameters', 'extension_path')) {
 			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
-			$extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
-
-		} else {
-			/** Extension path not available until after the first content read - use Catalog data */
-			if (Services::Registry()->exists('Parameters', 'catalog_type')) {
-				$catalog_type = Services::Registry()->get('Parameters', 'catalog_type');
-				$extension_path = EXTENSIONS_RESOURCES . '/' . ucfirst(strtolower($catalog_type));
-				$extension_name = $catalog_type;
-			}
 		}
 
-		if ($extension_path == false) {
-		} else {
-			/** ex. Resource/Article/Configuration.xml */
-			if (file_exists($extension_path . '/Configuration.xml')
-				&& strtolower($extension_name) == strtolower($model_name)
-			) {
-				return $extension_path . '/Configuration.xml';
-			}
-			/** ex. Resource/Article/ContentTable.xml or Resource/Article/DefaultTemplate.xml */
-			if (file_exists($extension_path . '/' . $model_name_type . '.xml')) {
-				return $extension_path . '/' . $model_name_type . '.xml';
-			}
-		}
-
-		/** 3. Primary Resource (if not current extension) */
+		$primary_extension_path = false;
 		if (Services::Registry()->exists('RouteParameters')) {
 			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
-			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
-			if ($primary_extension_path == $extension_path
-				|| $primary_extension_path == ''
-			) {
+		}
+
+		$theme_path = false;
+		if (Services::Registry()->exists('Parameters', 'theme_path')) {
+			$theme_path = Services::Registry()->get('Parameters', 'theme_path');
+		}
+
+		if (in_array($model_type, array('Datalist', 'Menuitem', 'Table'))) {
+			if ($extension_path === false) {
 			} else {
-
-				/** ex. Resource/Article/Configuration.xml */
-				if (file_exists($primary_extension_path . '/Configuration.xml')
-					&& strtolower($primary_extension_name) == strtolower($model_name)
-				) {
-					return $primary_extension_path . '/Configuration.xml';
-				}
-
-				/** ex. Resource/Article/ContentTable.xml or Resource/Article/DefaultTemplate.xml */
-				if (file_exists($primary_extension_path . '/' . $model_name_type . '.xml')
-				) {
-					return $primary_extension_path . '/' . $model_name_type . '.xml';
+				$path = $extension_path . '/' . $model_type . '/' . $model_name . '.xml';
+				if (file_exists($path)) {
+					return $path;
 				}
 			}
-		}
-
-		/** 4. The Manifest for the model type/name itself */
-		if ($model_type == 'Menuitem' || $model_type == 'Plugin'
-			|| $model_type == 'Theme' || $model_type == 'Page'
-			|| $model_type == 'Template' || $model_type == 'Wrap'
-		) {
-
-			if ($model_type == 'Page' || $model_type == 'Template' || $model_type == 'Wrap') {
-				$path_parameter = strtolower($model_type) . '_view_path';
+			if ($primary_extension_path === false) {
 			} else {
-				$path_parameter = strtolower($model_type) . '_path';
-			}
-
-			if (Services::Registry()->exists('Parameters', $path_parameter)) {
-				$extension_path = Services::Registry()->get('Parameters', $path_parameter);
-				if (file_exists($extension_path . '/' . 'Configuration.xml')) {
-					return $extension_path . '/' . 'Configuration.xml';
+				$path = $primary_extension_path . '/' . $model_type . '/' . $model_name . '.xml';
+				if (file_exists($path)) {
+					return $path;
 				}
 			}
-		}
-
-		/** 5. Any Resource (in case of delete or using a resource in a non-request position, etc.) */
-		$folders = Services::Filesystem()->folderFolders(EXTENSIONS_RESOURCES, $filter = '',
-			$recurse = false, $fullpath = false, $exclude = array('.git'));
-
-		foreach ($folders as $folder) {
-			if (strtolower($folder) == strtolower($model_name)) {
-				if (file_exists(EXTENSIONS_RESOURCES . '/' . $folder . '/Configuration.xml')) {
-					return EXTENSIONS_RESOURCES . '/' . $folder . '/Configuration.xml';
-				}
+			$path = CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+			if (file_exists($path)) {
+				return $path;
 			}
 		}
 
-		/** 6. Application Configuration folder is the last */
-		if (file_exists(CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml')) {
-			return CONFIGURATION_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
-		}
-
-		return false;
-	}
-
-	/**
-	 * locateFileMenuitem uses override and default locations to find the file requested
-	 *
-	 * Usage:
-	 * Services::Configuration()->locateFileMenuitem('Menuitem', 'grid');
-	 *
-	 * @return mixed object or void
-	 * @since   1.0
-	 * @throws \RuntimeException
-	 */
-	public static function locateFileMenuitem($model_type, $model_name)
-	{
-		$model_type = trim(ucfirst(strtolower($model_type)));
-		$model_name = trim(ucfirst(strtolower($model_name)));
-		$model_name_type = $model_name . $model_type;
-
-		/** 1. Current Extension */
-		$extension_path = false;
-		$extension_name = '';
-		if (Services::Registry()->exists('Parameters', 'extension_path')) {
-			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
-			$extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
-
-			/** ex. Resource/Article/GridMenuitem.xml */
-			if (file_exists($extension_path . '/' . $model_name_type . '.xml')
-			) {
-				return $extension_path . '/' . $model_name_type . '.xml';
+		/** 4. Look first in Distro, then Core */
+		if ($model_type == 'Theme') {
+			$path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+			if (file_exists($path)) {
+				return $path;
+			}
+			$path = MOLAJO_FOLDER . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+			if (file_exists($path)) {
+				return $path;
 			}
 		}
 
-		/** 2. Primary Resource (if not current extension) */
-		if (Services::Registry()->exists('RouteParameters')) {
-			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
-			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
-			if ($primary_extension_path == $extension_path
-				|| $primary_extension_path == ''
-			) {
+		/** 5. Look in Theme, Primary Resource, Distro, then Core */
+		if (in_array($model_type, array('Page', 'Template', 'Wrap'))) {
+			if ($theme_path === false) {
 			} else {
-				/** ex. Resource/Article/GridMenuitem.xml */
-				if (file_exists($primary_extension_path . '/' . $model_name_type . '.xml')
-				) {
-					return $primary_extension_path . '/' . $model_name_type . '.xml';
+				$path = $theme_path . '/View/' . $model_type . '/' . $model_name . '/Configuration.xml';
+				if (file_exists($path)) {
+					return $path;
 				}
 			}
-		}
-
-		/** 3. Ex Collection or Dashboard */
-		if (file_exists(EXTENSIONS . '/Menuitem/' . $model_name . '/Configuration.xml')) {
-			return EXTENSIONS . '/Menuitem/' . $model_name . '/Configuration.xml';
-		}
-
-		/** 4. ex. Resource or Template */
-		if (file_exists(EXTENSIONS . '/Menuitemtype/' . $model_name . '.xml')) {
-			return EXTENSIONS . '/Menuitemtype/' . $model_name . '.xml';
-		}
-
-		/** 4. ex. Resource or Template */
-		if (file_exists(CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml')) {
-			return CONFIGURATION_FOLDER . '/Table/' . $model_name . '.xml';
-		}
-
-		/** 5. Menuitem Default */
-
-		return EXTENSIONS . '/Menuitem/Configuration.xml';
-
-	}
-
-	/**
-	 * locateFileDatalist
-	 *
-	 * Usage:
-	 * Services::Configuration()->locateFileDatalist('Menuitem', 'grid');
-	 *
-	 * @return mixed object or void
-	 * @since   1.0
-	 * @throws \RuntimeException
-	 */
-	public static function locateFileDatalist($model_type, $model_name)
-	{
-		$model_type = trim(ucfirst(strtolower($model_type)));
-		$model_name = trim(ucfirst(strtolower($model_name)));
-		$model_name_type = $model_name . $model_type;
-
-		/** 1. Current Extension */
-		$extension_path = false;
-		$extension_name = '';
-		if (Services::Registry()->exists('Parameters', 'extension_path')) {
-			$extension_path = Services::Registry()->get('Parameters', 'extension_path');
-			$extension_name = Services::Registry()->get('Parameters', 'extension_name_path_node');
-
-			/** ex. Resource/Article/GridMenuitem.xml */
-			if (file_exists($extension_path . '/Datalist/' . $model_name_type . '.xml')
-			) {
-				return $extension_path . '/Datalist/' . $model_name_type . '.xml';
-			}
-		}
-
-		/** 2. Primary Resource (if not current extension) */
-		if (Services::Registry()->exists('RouteParameters')) {
-			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
-			$primary_extension_name = Services::Registry()->get('RouteParameters', 'extension_name_path_node');
-			if ($primary_extension_path == $extension_path
-				|| $primary_extension_path == ''
-			) {
+			if ($primary_extension_path === false) {
 			} else {
-				/** ex. Resource/Article/GridMenuitem.xml */
-				if (file_exists($primary_extension_path . '/Datalist/' . $model_name_type . '.xml')
-				) {
-					return $primary_extension_path . '/Datalist/' . $model_name_type . '.xml';
+				$path = $primary_extension_path . '/View/' . $model_type . '/' . $model_name . '/Configuration.xml';
+				if (file_exists($path)) {
+					return $path;
 				}
+			}
+
+			$path = EXTENSIONS . '/View/' . $model_type . '/' . $model_name . '/Configuration.xml';
+			if (file_exists($path)) {
+				return $path;
+			}
+
+			$path = MOLAJO_FOLDER . '/MVC/View/' . $model_type . '/' . $model_name . '/Configuration.xml';
+			if (file_exists($path)) {
+				return $path;
 			}
 		}
 
-		/** 3. Datalist Default */
+		/** 6. Look in Extension, Distro, then Core */
+		if ($model_type == 'Plugin') {
+			if ($extension_path === false) {
+			} else {
+				$path = $extension_path . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+				if (file_exists($path)) {
+					return $path;
+				}
+			}
 
-		return CONFIGURATION_FOLDER . '/Datalist/' . $model_name . '.xml';
+			$path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+			if (file_exists($path)) {
+				return $path;
+			}
 
+			$path = MOLAJO_FOLDER . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+			if (file_exists($path)) {
+				return $path;
+			}
+		}
+
+		throw new \RuntimeException('File not found for Model Type: ' . $model_type . ' Name: ' . $model_name);
 	}
 
 	/**
@@ -840,7 +724,7 @@ Class ConfigurationService
 	 */
 	public static function inheritDefinition($registryName, $xml)
 	{
-		/** Inheritance: <extension type="Resource" version="1.0" extends="ContentTable"> */
+		/** Inheritance: <model name="XYZ" version="1.0" extends="ThisTable"/> */
 		$extends = false;
 		$type = '';
 		foreach ($xml->attributes() as $key => $value) {
@@ -1421,12 +1305,12 @@ Class ConfigurationService
 
 		$xml_string = file_get_contents($path_and_file);
 
-		for ($i = 0; $i <  count($xml->customfields->customfield); $i++) {
+		for ($i = 0; $i < count($xml->customfields->customfield); $i++) {
 
 			if (isset($xml->customfields->customfield[$i]->include)) {
 
 				$doit = 1;
-				while($doit == 1) {
+				while ($doit == 1) {
 
 					$include = (string)$xml->customfields->customfield[$i]->include['name'];
 
