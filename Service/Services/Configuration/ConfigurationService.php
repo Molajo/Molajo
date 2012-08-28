@@ -503,6 +503,7 @@ Class ConfigurationService
 		//if (Services::Registry()->get('cache') == true) {
 		//	Services::Cache()->set(md5($registryName), Services::Registry()->getArray($registryName), 'registry');
 		//}
+
 		return $registryName;
 	}
 
@@ -888,11 +889,6 @@ Class ConfigurationService
 
 		/** Copy parent to child for start - will be overwritten for child definitions */
 		Services::Registry()->copy($parentRegistryName, $registryName);
-
-		if ($registryName == 'ArticlesResources') {
-			Services::Registry()->get($registryName, '*');
-			Services::Registry()->get($registryName . 'Parameters', '*');
-		}
 
 		return;
 	}

@@ -224,10 +224,6 @@ Class ContentHelper
 			return array();
 		}
 
-		echo '<pre>';
-		var_dump($item);
-		echo '</pre>';
-
 		$item->table_registry_name = $m->table_registry_name;
 
 		return $item;
@@ -385,7 +381,7 @@ Class ContentHelper
 		/* Store saved values */
 		Services::Registry()->set('Parameters', 'menuitem_id', $hold_menuitem_id);
 
-Services::Registry()->get('Parameters', '*');
+// Services::Registry()->get('Parameters', '*');
 //		die;
 
 		return true;

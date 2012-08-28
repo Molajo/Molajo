@@ -321,7 +321,6 @@ class Controller
 				}
 				$this->prepareQuery($query_object);
 			}
-
 		}
 
 		$this->getPluginList($query_object);
@@ -375,7 +374,9 @@ class Controller
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $this->query_results;
 		}
+
 //		echo '<br />'.$this->model->query->__toString().'<br />';
+
 		/** 7. Return List  */
 		if ($query_object == 'list') {
 
@@ -535,7 +536,7 @@ class Controller
 		$this->pagination_total = (int)$this->model->getQueryResults(
 			$query_object, $this->model_offset, $this->model_count);
 
-echo '<br /><br />' . $this->model->query->__toString() . '<br /><br />';
+//echo '<br /><br />' . $this->model->query->__toString() . '<br /><br />';
 
 		/** Cache */
 		if (Services::Cache()->exists(md5($this->model->query->__toString() . ' ' . $this->model_offset . ' ' . $this->model_count))) {
@@ -550,9 +551,9 @@ echo '<br /><br />' . $this->model->query->__toString() . '<br /><br />';
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
-		echo '<pre>';
-		var_dump($query_results);
-		echo '</pre><br /><br />';
+//echo '<pre>';
+//var_dump($query_results);
+//echo '</pre><br /><br />';
 
 		/** Result */
 		if ($query_object == 'result' || $query_object == 'distinct') {
