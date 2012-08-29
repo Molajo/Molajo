@@ -375,12 +375,13 @@ class Includer
 				$controller->set($key, $value);
 			}
 		}
-
+/**
 //if  (Services::Registry()->get('Parameters', 'template_view_title') == 'Head') {
 	echo '<br /><br /><br />NEXT<br />';
 	echo $message;
 	echo '<br /><br /><br />';
 //}
+ */
  		$results = $controller->execute();
 
 		return $results;
