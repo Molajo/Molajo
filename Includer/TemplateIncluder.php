@@ -45,88 +45,37 @@ Class TemplateIncluder extends Includer
 	 */
 	protected function setRenderCriteria()
 	{
-		/**  Extension name set to the name of the template in the getAttributes method */
+		/**  Template */
+		$template_id = 0;
 		$template_title = Services::Registry()->get('Parameters', 'extension_title');
 
-		if ((int)$template_title == 0) {
-		$template_id = Helpers::Extension()
-			->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+		if (trim($template_title) == '') {
 		} else {
-			$template_id = (int) $template_title;
+			$template_id = Helpers::Extension()
+				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+		}
+
+		if ((int) $template_id == 0) {
+			$template_id = Services::Registry()->get('Parameters', 'template_view_id');
+		}
+
+		if ((int) $template_id == 0) {
+			$template_title = Services::Registry()->get('Parameters', 'template_view_path_node');
+		}
+
+		if (trim($template_title) == '' || (int) $template_id > 0) {
+		} else {
+			$template_id = Helpers::Extension()
+				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
 		}
 
 		if ((int)$template_id == 0) {
-		} else {
-			Services::Registry()->set('Parameters', 'template_view_id', $template_id);
+			 $template_id = Helpers::View()->getDefault('Template');
 		}
 
-		/** Standard parameters (overwrite extension title with Template */
-		Services::Registry()->set('Parameters', 'extension_title', 'Template');
+		Services::Registry()->set('Parameters', 'template_view_id', $template_id);
 
-		/** Template  */
-		$results = Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
-		if ($results == false) {
-			echo $template_title . 'Template was not found. Will be ignored. <br />';
-
-			return false;
-		}
-
-		$model_name = trim(Services::Registry()->get('Parameters', 'model_name', ''));
-		if ($model_name === null) {
-			$model_name = '';
-		}
-		$model_parameter = Services::Registry()->get('Parameters', 'model_parameter', '');
-		if ($model_parameter === null) {
-			$model_parameter = '';
-		}
-
-		if (substr(strtolower($model_parameter), 0, 4) == 'list') {
-			$model_name = 'plugindata';
-
-		} elseif (strtolower($model_name) == '' && strtolower($model_parameter) == '') {
-			$model_name = 'Dummy';
-
-		} elseif (strtolower($this->type) == 'asset') {
-			$model_name = 'Assets';
-
-		} elseif (strtolower($this->type) == 'metadata') {
-			$model_name = 'Metadata';
-
-		} elseif (strtolower($this->type) == 'template' && $model_name == '') {
-			$model_name = 'plugindata';
-		}
-		Services::Registry()->set('Parameters', 'model_name', $model_name);
-
-		/** Wrap  */
-		$wrap_id = (int)Services::Registry()->get('Parameters', 'wrap_view_id');
-		if ((int)$wrap_id == 0) {
-			$wrap_title = Services::Registry()->get('Parameters', 'wrap_view_path_node', '');
-			if ($wrap_title == '') {
-				Services::Registry()->set('Parameters', 'wrap_view_id',
-					Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'None'));
-			}
-		}
-		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');
-
-		/** Merge Configuration in */
-		Services::Registry()->merge('Configuration', 'Parameters', true);
-
-		/* Set other model parameters: model_parameter is set in Attributes */
-		Services::Registry()->set('Parameters', 'model_type', 'dbo');
-		Services::Registry()->set('Parameters', 'model_query_object', 'get' . strtolower(ucfirst($model_name)));
-
-		/** Cleanup */
-		Services::Registry()->delete('Parameters', 'item*');
-		Services::Registry()->delete('Parameters', 'list*');
-		Services::Registry()->delete('Parameters', 'form*');
-
-		/** Sort */
-		Services::Registry()->sort('Parameters');
-
-		/** Was a View selected? */
-		if (Services::Registry()->get('Parameters', 'template_view_title', '') == '') {
-			return false;
-		}
+		parent::setRenderCriteria();
 
 		return true;
 	}

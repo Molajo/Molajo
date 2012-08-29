@@ -10,9 +10,10 @@
 <field name="form_wrap_view_css_class" type="char" null="0" default=" "/>
 <field name="form_wrap_view_role" type="char" null="0" default=" "/>
 <field name="form_wrap_view_property" type="char" null="0" default=" "/>
-<field name="form_model_name" type="char" null="0" default="Content"/>
-<field name="form_model_type" type="char" null="0" default="Table"/>
+<field name="form_model_name" type="char" null="0" default=""/>
+<field name="form_model_type" type="char" null="0" default=" "/>
 <field name="form_model_query_object" type="char" null="0" default="Item"/>
+<field name="form_model_parameter" type="char" null="0" default=" "/>
 
 <field name="enable_draft_save" type="binary" null="0" default="0"/>
 <field name="enable_version_history" type="binary" null="0" default="0"/>

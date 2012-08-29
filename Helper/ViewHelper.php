@@ -54,7 +54,6 @@ Class ViewHelper
 	 */
 	public function get($id = 0, $type)
 	{
-		$type = ucfirst(strtolower($type));
 		if ($type == 'Page' || $type == 'Template' || $type == 'Wrap') {
 		} else {
 			return false;
@@ -106,18 +105,59 @@ Class ViewHelper
 
 		Services::Registry()->set('Parameters', $type . '_view_table_registry_name', $item->table_registry_name);
 
-		/** Merge in each custom field namespace  */
-		$customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
+		$this->setParameters('template', $item->table_registry_name . 'Parameters');
+		$this->setParameters('wrap', $item->table_registry_name . 'Parameters');
+		$this->setParameters('model', $item->table_registry_name . 'Parameters');
 
-		if (count($customFieldTypes) > 0) {
-			foreach ($customFieldTypes as $customFieldName) {
-				$customFieldName = ucfirst(strtolower($customFieldName));
-				Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
-				Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
-			}
+		/** Copy remaining */
+		Services::Registry()->copy($item->table_registry_name . 'Parameters', 'Parameters');
+
+		return true;
+	}
+
+	/**
+	 * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
+	 *
+	 * @param   $requestTypeNamespace
+	 * @param   $parameterNamespace
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	public function setParameters($requestTypeNamespace, $parameterNamespace)
+	{
+		/** 1. Parameters from Query */
+		$newParameters = Services::Registry()->get($parameterNamespace, $requestTypeNamespace . '*');
+		if (is_array($newParameters) && count($newParameters) > 0) {
+			$this->processParameterSet($newParameters, $requestTypeNamespace);
+		}
+
+		/** 2. Application defaults */
+		$applicationDefaults = Services::Registry()->get('Configuration', $requestTypeNamespace . '*');
+		if (count($applicationDefaults) > 0) {
+			$this->processParameterSet($applicationDefaults, $requestTypeNamespace);
 		}
 
 		return true;
+	}
+
+	/**
+	 * processParameterSet iterates a new parameter set to determine whether or not it should be applied
+	 *
+	 * @param $parameterSet
+	 * @param $requestTypeNamespace
+	 */
+	protected function processParameterSet($parameterSet, $requestTypeNamespace)
+	{
+		foreach ($parameterSet as $key => $value) {
+			$existing = Services::Registry()->get('Parameters', substr($key, strlen($requestTypeNamespace) + 1, 9999));
+			if ($existing === 0 || trim($existing) == '' || $existing == null) {
+				if ($value === 0 || trim($value) == '' || $value == null) {
+				} else {
+					Services::Registry()->set('Parameters', substr($key, strlen($requestTypeNamespace) + 1, 9999), $value);
+				}
+			}
+		}
 	}
 
 	/**
@@ -129,14 +169,12 @@ Class ViewHelper
 	public function getDefault($type)
 	{
 		if ($type == 'Page') {
-			$catalog_type_id = CATALOG_TYPE_EXTENSION_PAGE_VIEW;
+			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_PAGE_VIEW, 'Default');
 		} elseif ($type == 'Template') {
-			$catalog_type_id = CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW;
+			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'Default');
 		} else {
-			$catalog_type_id = CATALOG_TYPE_EXTENSION_WRAP_VIEW;
+			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'None');
 		}
-
-		return Helpers::Extension()->getInstanceID($catalog_type_id, 'Default');
 	}
 
 	/**

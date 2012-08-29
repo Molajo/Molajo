@@ -129,7 +129,6 @@ Class ExtensionHelper
 		$m = new $controllerClass();
 
 		$m->connect($model_type, $model_name);
-
 		if ((int)$extension_id == 0) {
 		} else {
 			$m->set('id', (int)$extension_id);
@@ -152,7 +151,6 @@ Class ExtensionHelper
 
 		$query_results = $m->getData($query_object);
 
-
 		if ($query_results == false || $query_results == null) {
 
 			echo 'Extension ID ' . $extension_id . '<br />';
@@ -164,6 +162,10 @@ Class ExtensionHelper
 			echo '<br />';
 			echo $m->model->query->__toString();
 			echo '<br />';
+
+			echo '<pre>';
+			var_dump($query_results);
+			echo '</pre>';
 
 			return false;
 		}
@@ -192,6 +194,7 @@ Class ExtensionHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
+
 		$query_results = $m->connect('Table', 'ExtensionInstances');
 		if ($query_results == false) {
 			return false;
@@ -203,9 +206,7 @@ Class ExtensionHelper
 		$m->model->query->where($m->model->db->qn('a.title') . ' = ' . $m->model->db->q($title));
 		$m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int)$catalog_type_id);
 
-		$value = $m->getData('result');
-
-		return $value;
+		return $m->getData('result');
 	}
 
 	/**
@@ -292,7 +293,6 @@ Class ExtensionHelper
 
 		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
 			return Helpers::View()->getPath($node, 'Wrap');
-
 		}
 
 		$type = Helpers::Extension()->getType($catalog_type_id);

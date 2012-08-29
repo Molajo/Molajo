@@ -109,6 +109,9 @@ class Includer
 
 		/** initialises and populates the MVC request */
 		$results = $this->setRenderCriteria();
+		if ($results == false) {
+			return false;
+		}
 
 		/** language must be there before the extension runs */
 		$this->loadLanguage();
@@ -160,7 +163,6 @@ class Includer
 			) {
 				$template_id = Helpers::Extension()
 					->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
-
 				if ((int)$template_id == 0) {
 				} else {
 					Services::Registry()->set('Parameters', 'template_view_id', $template_id);
@@ -246,8 +248,25 @@ class Includer
 		/** Template  */
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
 
-		/** Wrap  */
-		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');
+		/** Wrap */
+		$wrap_id = 0;
+		$wrap_title = Services::Registry()->get('Parameters', 'wrap_view_path_node');
+
+		if (trim($wrap_title) == '') {
+			$wrap_id = Services::Registry()->get('Parameters', 'wrap_id');
+		}
+
+		if (trim($wrap_title) == '' && (int) $wrap_id == 0) {
+			Services::Registry()->set('Parameters', 'wrap_view_path_node', 'None');
+		}
+
+		$wrap_title = Services::Registry()->get('Parameters', 'wrap_view_path_node');
+
+		Services::Registry()->set('Parameters', 'wrap_view_path_node', $wrap_title);
+		Services::Registry()->set('Parameters', 'wrap_view_path',
+			Helpers::View()->getPath($wrap_title, 'Wrap'));
+		Services::Registry()->set('Parameters', 'wrap_view_path_url',
+			Helpers::View()->getPathURL($wrap_title, 'Wrap'));
 
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'list*');
@@ -356,14 +375,13 @@ class Includer
 				$controller->set($key, $value);
 			}
 		}
-/**
-if  (Services::Registry()->get('Parameters', 'template_view_title') == 'Head') {
+
+//if  (Services::Registry()->get('Parameters', 'template_view_title') == 'Head') {
 	echo '<br /><br /><br />NEXT<br />';
 	echo $message;
 	echo '<br /><br /><br />';
-}
-*/
-		$results = $controller->execute();
+//}
+ 		$results = $controller->execute();
 
 		return $results;
 	}

@@ -17,8 +17,6 @@ defined('MOLAJO') or die;
 /**
  * Registry
  *
- * Profilerging support
- *
  * Services::Registry()->listRegistry();
  *   No parameter - returns an array of all registries by names
  *   * - Formatted <pre>var_dump</pre> of results
@@ -263,9 +261,14 @@ Class RegistryService
 					}
 				}
 			}
-			echo '<pre>';
-			var_dump($selected);
-			echo '</pre>';
+
+			if ($key == '*') {
+				echo '<pre>';
+				var_dump($selected);
+				echo '</pre>';
+			} else {
+				return $selected;
+			}
 
 			return true;
 		}

@@ -171,12 +171,12 @@ class Controller
 			. ' Name: ' . $model_name
 			. ' Class: ' . $model_class;
 
-		if ($model_name == null) {
+		if ($model_name == null || trim($model_name) == '') {
 			$this->table_registry_name = null;
 
 			$this->set('model_type', $model_type);
 			$this->set('model_name', '');
-			$this->set('table_name', '#__content');
+			$this->set('table_name', '');
 			$this->set('primary_key', 'id');
 			$this->set('name_key', 'title');
 			$this->set('primary_prefix', 'a');
@@ -196,6 +196,12 @@ class Controller
 				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
 
 			} else {
+				if (trim($model_type) == '' && trim($model_name) == '') {
+					echo 'BOTH ARE SPACE';
+					echo '<pre>';
+					var_dump($this);
+					echo '</pre>';
+				}
 				$this->table_registry_name = ConfigurationService::getFile($model_type, $model_name);
 
 				if ($this->table_registry_name == false) {
@@ -372,9 +378,9 @@ class Controller
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $this->query_results;
 		}
-
-//		echo '<br />'.$this->model->query->__toString().'<br />';
-
+/**
+		echo '<br />'.$this->model->query->__toString().'<br />';
+*/
 		/** 7. Return List  */
 		if ($query_object == 'list') {
 
@@ -403,7 +409,7 @@ class Controller
 		if (Services::Registry()->get('cache') == true) {
 			Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results[0]);
 		}
-/*
+/**
 		echo '<pre>';
 		var_dump($this->query_results);
 		echo '</pre><br /><br />';

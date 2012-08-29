@@ -12,6 +12,7 @@
 <field name="item_wrap_view_css_class" type="char" null="0" default=" "/>
 <field name="item_wrap_view_role" type="char" null="0" default=" "/>
 <field name="item_wrap_view_property" type="char" null="0" default=" "/>
-<field name="item_model_name" type="char" null="0" default="Content"/>
-<field name="item_model_type" type="char" null="0" default="Table"/>
+<field name="item_model_name" type="char" null="0" default=""/>
+<field name="item_model_type" type="char" null="0" default=" "/>
 <field name="item_model_query_object" type="char" null="0" default="Item"/>
+<field name="item_model_parameter" type="char" null="0" default=" "/>

@@ -123,26 +123,32 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
 			(int)$item->extension_instances_catalog_type_id);
 
-		$parmName = $item->table_registry_name . 'Parameters';
+		$parameterNamespace = $item->table_registry_name . 'Parameters';
 
 		/** Content Extension and Source */
 		Services::Registry()->set('Parameters', 'extension_instance_id',
-			Services::Registry()->get($parmName, 'criteria_extension_instance_id'));
+			Services::Registry()->get($parameterNamespace, 'criteria_extension_instance_id'));
 
 		/** Theme, Page, Template and Wrap Views */
 		if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
-			$type = 'item';
+			$requestTypeNamespace = 'item';
 		} else {
-			$type = 'form';
+			$requestTypeNamespace = 'form';
 		}
 
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
 			(int)$item->extension_instances_catalog_type_id);
 
 		Services::Registry()->set('Parameters', 'parent_menu_id',
-			Services::Registry()->get($parmName, 'item_parent_menu_id'));
+			Services::Registry()->get($parameterNamespace, 'item_parent_menu_id'));
 
-		$this->setParameters($type, $item->table_registry_name . 'Parameters');
+		$this->getResourceParameters((int)$item->extension_instance_id);
+
+		$this->setParameters(
+			$requestTypeNamespace,
+			$item->table_registry_name . 'Parameters',
+			'ResourcesSystemParameters'
+		);
 
 		return true;
 	}
@@ -233,137 +239,71 @@ Class ContentHelper
 	}
 
 	/**
-	 * Retrieves the appropriate values and populates Parameters Registry
+	 * Get Parameters for Resource
 	 *
-	 * @param   $type
-	 * @param   $parmName
+	 * @param  $id
+	 *
+	 * @return  array  An object containing an array of data
+	 * @since   1.0
+	 */
+	protected function getResourceParameters($id = 0)
+	{
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$m = new $controllerClass();
+
+		$m->set('id', (int)$id);
+		$m->set('process_plugins', 0);
+		$m->set('get_customfields', 1);
+
+		$results = $m->connect('System', 'Resources');
+		if ($results == false) {
+			return false;
+		}
+
+		$item = $m->getData('item');
+		if (count($item) == 0) {
+			return array();
+		}
+
+		return $item;
+	}
+
+	/**
+	 * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
+	 *
+	 * @param   $requestTypeNamespace
+	 * @param   $parameterNamespace
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	protected function setParameters($type, $parmName)
+	public function setParameters($requestTypeNamespace, $parameterNamespace, $resourceNamespace = '')
 	{
-		/** Menuitem ID */
-		$hold_menuitem_id = (int) Services::Registry()->get($parmName, 'menuitem_id');
+		Services::Registry()->set('Parameters', 'parameter_type', $requestTypeNamespace);
 
-		/** Save the type... */
-		Services::Registry()->set('Parameters', 'parameter_type', $type);
-
-		/** Theme */
-		$theme_id = Services::Registry()->get($parmName, $type . '_theme_id');
-		if ((int) $theme_id == 0) {
-			$theme_id = Services::Registry()->get('Configuration', $type . '_theme_id');
+		/** 1. Parameters from Request Query */
+		$newParameters = Services::Registry()->get($parameterNamespace, $requestTypeNamespace . '*');
+		if (is_array($newParameters) && count($newParameters) > 0) {
+			$this->processParameterSet($newParameters, $requestTypeNamespace);
 		}
-		Services::Registry()->set('Parameters', 'theme_id', (int) $theme_id);
 
-		/** Page */
-		$page_view_id = Services::Registry()->get($parmName, $type . '_page_view_id');
-		if ((int) $page_view_id == 0) {
-			$page_view_id = Services::Registry()->get('Configuration', $type . '_page_view_id');
+		/** 2. Resource defaults */
+		if ($resourceNamespace == '') {
+		} else {
+			$resourceParameters = Services::Registry()->get($resourceNamespace, $requestTypeNamespace . '*');
+			if (is_array($resourceParameters) && count($resourceParameters) > 0) {
+				$this->processParameterSet($newParameters, $requestTypeNamespace);
+			}
 		}
-		Services::Registry()->set('Parameters', 'page_view_id', (int) $page_view_id);
 
-		$page_view_css_id = Services::Registry()->get($parmName, $type . '_page_view_css_id');
-		if (trim($page_view_css_id) == '') {
-			$page_view_css_id = Services::Registry()->get('Configuration', $type . '_page_view_css_id');
+		/** 3. Application defaults */
+		$applicationDefaults = Services::Registry()->get('Configuration', $requestTypeNamespace . '*');
+		if (count($applicationDefaults) > 0) {
+			$this->processParameterSet($applicationDefaults, $requestTypeNamespace);
 		}
-		Services::Registry()->set('Parameters', 'page_view_css_id', $page_view_css_id);
-
-		$page_view_css_class = Services::Registry()->get($parmName, $type . '_page_view_css_clss');
-		if (trim($page_view_css_class) == '') {
-			$page_view_css_class = Services::Registry()->get('Configuration', $type . '_page_view_css_class');
-		}
-		Services::Registry()->set('Parameters', 'page_view_css_class', $page_view_css_class);
-
-		/** Template */
-		$template_view_id = Services::Registry()->get($parmName, $type . '_template_view_id');
-		if ((int) $template_view_id == 0) {
-			$template_view_id = Services::Registry()->get('Configuration', $type . '_template_view_id');
-		}
-		Services::Registry()->set('Parameters', 'template_view_id', (int) $template_view_id);
-
-		$template_view_css_id = Services::Registry()->get($parmName, $type . '_template_view_css_id');
-		if (trim($template_view_css_id) == '') {
-			$template_view_css_id = Services::Registry()->get('Configuration', $type . '_template_view_css_id');
-		}
-		Services::Registry()->set('Parameters', 'template_view_css_id', $template_view_css_id);
-
-		$template_view_css_class = Services::Registry()->get($parmName, $type . '_template_view_css_clss');
-		if (trim($template_view_css_class) == '') {
-			$template_view_css_class = Services::Registry()->get('Configuration', $type . '_template_view_css_class');
-		}
-		Services::Registry()->set('Parameters', 'template_view_css_class', $template_view_css_class);
-
-		/** Wrap */
-		$wrap_view_id = Services::Registry()->get($parmName, $type . '_wrap_view_id');
-		if ((int) $wrap_view_id == 0) {
-			$wrap_view_id = Services::Registry()->get('Configuration', $type . '_wrap_view_id');
-		}
-		Services::Registry()->set('Parameters', 'wrap_view_id', (int) $wrap_view_id);
-
-		$wrap_view_css_id = Services::Registry()->get($parmName, $type . '_wrap_view_css_id');
-		if (trim($wrap_view_css_id) == '') {
-			$wrap_view_css_id = Services::Registry()->get('Configuration', $type . '_wrap_view_css_id');
-		}
-		Services::Registry()->set('Parameters', 'wrap_view_css_id', $wrap_view_css_id);
-
-		$wrap_view_css_class = Services::Registry()->get($parmName, $type . '_wrap_view_css_class');
-		if (trim($wrap_view_css_class) == '') {
-			$wrap_view_css_class = Services::Registry()->get('Configuration', $type . '_wrap_view_css_class');
-		}
-		Services::Registry()->set('Parameters', 'wrap_view_css_class', $wrap_view_css_class);
-
-		$wrap_view_role = Services::Registry()->get($parmName, $type . '_wrap_view_role');
-		if ($wrap_view_role = 0) {
-			$wrap_view_role = Services::Registry()->get('Configuration', $type . '_wrap_view_role');
-		}
-		Services::Registry()->set('Parameters', 'wrap_view_role', $wrap_view_role);
-
-		$wrap_view_property = Services::Registry()->get($parmName, $type . '_wrap_view_property');
-		if (trim($wrap_view_property) == '') {
-			$wrap_view_property = Services::Registry()->get('Configuration', $type . '_wrap_view_property');
-		}
-		Services::Registry()->set('Parameters', 'wrap_view_property', $wrap_view_property);
-
-		/** Model */
-		$model_name = Services::Registry()->get($parmName, $type . '_model_name');
-		if (trim($model_name) == '') {
-			$model_name = Services::Registry()->get('Configuration', $type . '_model_name');
-		}
-		Services::Registry()->set('Parameters', 'model_name', $model_name);
-
-		$model_type = Services::Registry()->get($parmName, $type . '_model_type');
-		if (trim($model_type) == '') {
-			$model_type = Services::Registry()->get('Configuration', $type . '_model_type');
-		}
-		Services::Registry()->set('Parameters', 'model_type', $model_type);
-
-		$model_query_object = Services::Registry()->get($parmName, $type . '_model_query_object');
-		if (trim($model_query_object) == '') {
-			$model_query_object = Services::Registry()->get('Configuration', $type . '_model_query_object');
-		}
-		Services::Registry()->set('Parameters', 'model_query_object', $model_query_object);
-
-		$model_offset = Services::Registry()->get($parmName, $type . '_model_offset');
-		if ((int) $model_offset == 0) {
-			$model_model_offset = Services::Registry()->get('Configuration', $type . '_model_offset');
-		}
-		Services::Registry()->set('Parameters', 'model_offset', (int) $model_offset);
-
-		$model_count = Services::Registry()->get($parmName, $type . '_model_count');
-		if ((int) $model_count == 0) {
-			$model_count = Services::Registry()->get('Configuration', $type . '_model_count');
-		}
-		Services::Registry()->set('Parameters', 'model_count', (int) $model_count);
-
-		$model_use_pagination = Services::Registry()->get($parmName, $type . '_model_use_pagination');
-		if ((int) $model_use_pagination == 0) {
-			$model_use_pagination = Services::Registry()->get('Configuration', $type . '_model_use_pagination');
-		}
-		Services::Registry()->set('Parameters', 'model_use_pagination', (int) $model_use_pagination);
 
 		/** Copy remaining */
-		Services::Registry()->copy($parmName, 'Parameters');
+		Services::Registry()->copy($parameterNamespace, 'Parameters');
 
 		/**  Merge in matching Configuration data  */
 		Services::Registry()->merge('Configuration', 'Parameters', true);
@@ -381,12 +321,25 @@ Class ContentHelper
 		Services::Registry()->delete('Parameters', 'form*');
 		Services::Registry()->delete('Parameters', 'menuitem*');
 
-		/* Store saved values */
-		Services::Registry()->set('Parameters', 'menuitem_id', $hold_menuitem_id);
-
-// Services::Registry()->get('Parameters', '*');
-//		die;
-
 		return true;
+	}
+
+	/**
+	 * processParameterSet iterates a new parameter set to determine whether or not it should be applied
+	 *
+	 * @param $parameterSet
+	 * @param $requestTypeNamespace
+	 */
+	protected function processParameterSet($parameterSet, $requestTypeNamespace)
+	{
+		foreach ($parameterSet as $key => $value) {
+			$existing = Services::Registry()->get('Parameters', substr($key, strlen($requestTypeNamespace) + 1, 9999));
+			if ($existing === 0 || trim($existing) == '' || $existing == null) {
+				if ($value === 0 || trim($value) == '' || $value == null) {
+				} else {
+					Services::Registry()->set('Parameters', substr($key, strlen($requestTypeNamespace) + 1, 9999), $value);
+				}
+			}
+		}
 	}
 }

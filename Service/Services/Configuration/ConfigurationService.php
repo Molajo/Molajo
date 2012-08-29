@@ -442,7 +442,6 @@ Class ConfigurationService
 	 */
 	public static function getFile($model_type, $model_name)
 	{
-		/** Use existing registry values, if existing */
 		$registry = ConfigurationService::checkRegistryExists($model_type, $model_name);
 		if ($registry == false) {
 		} else {
@@ -599,6 +598,8 @@ Class ConfigurationService
 		if (in_array($model_type, $modeltypeArray)) {
 		} else {
 			echo '<br />Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
+			echo '<br />Also sent in was Model Name' .$model_name;
+			die;
 			return false;
 		}
 
