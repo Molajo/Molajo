@@ -13,7 +13,7 @@
             name="Templateviews"
             catalog_type_id="1200"
             extension_instance_id="22"
-            extends="ExtensioninstancesTable">
+            extends="TemplateviewsTable">
         <customfields>
             <customfield name="parameters">
                 <include name="ParametersTemplate"/>

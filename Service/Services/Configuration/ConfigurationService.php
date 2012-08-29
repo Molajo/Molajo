@@ -495,13 +495,13 @@ Class ConfigurationService
 		/** Create and Populate Registry */
 		Services::Registry()->createRegistry($model_name);
 
-		/** Using Extends allows inheritance of another Model */
-		ConfigurationService::inheritDefinition($registryName, $xml);
-
 		/** Get Model */
 		if (isset($xml->model)) {
 			$xml = $xml->model;
 		}
+
+		/** Using Extends allows inheritance of another Model */
+		ConfigurationService::inheritDefinition($registryName, $xml);
 
 		/** Set Model Properties */
 		ConfigurationService::setModelRegistry($registryName, $xml);
@@ -595,8 +595,8 @@ Class ConfigurationService
 		}
 
 		/** 3. Overrides */
-		$modelArray = Services::Registry()->get('Fields', 'Modeltypes');
-		if (in_array($model_type, $modelArray)) {
+		$modeltypeArray = Services::Registry()->get('Fields', 'Modeltypes');
+		if (in_array($model_type, $modeltypeArray)) {
 		} else {
 			echo '<br />Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
 			return false;
@@ -763,13 +763,17 @@ Class ConfigurationService
 			return;
 		}
 
-		$modelArray = Services::Registry()->set('Fields', 'Modeltypes');
+		$modelArray = Services::Registry()->get('Fields', 'Modeltypes');
 		$extends_model_name = '';
 		$extends_model_type = '';
 		foreach ($modelArray as $modeltype) {
-			if (strtolower(substr($extends, strlen($extends) - strlen($modeltype), strlen($modeltype))) == $modeltype) {
+			if (ucfirst(strtolower(substr($extends, strlen($extends) - strlen($modeltype), strlen($modeltype)))) == $modeltype) {
 				$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen($modeltype))));
 				$extends_model_type = $modeltype;
+
+				echo 'Type : '. $extends_model_type . ' Name ' . $extends_model_name . '<br />';
+
+				break;
 			}
 		}
 
@@ -779,6 +783,8 @@ Class ConfigurationService
 		}
 
 		$parentRegistryName = $extends_model_name . $extends_model_type;
+
+		echo 'Parent registry ' . $parentRegistryName . '<br />';
 
 		/** Load the file and build registry - IF - the registry is not already loaded */
 		if (Services::Registry()->exists($parentRegistryName) == true) {

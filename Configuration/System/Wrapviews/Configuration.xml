@@ -13,7 +13,7 @@
             name="Wrapviews"
             catalog_type_id="1250"
             extension_instance_id="24"
-            extends="ExtensioninstancesTable">
+            extends="WrapviewsTable">
         <customfields>
             <customfield name="parameters">
                 <include name="ParametersWrap"/>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="Templateviewextensioninstances"
+        name="Templateviews"
         catalog_type_id="1200"
         extension_instance_id="22"
-        extends="ExtensionInstances">
+        extends="ExtensionInstancesTable">
     <customfields>
         <customfield name="parameters">
             <include name="ParametersTemplate"/>
