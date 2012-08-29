@@ -204,14 +204,6 @@ class Controller
 
 					return false;
 				}
-				echo 'Table Registry: ' .$this->table_registry_name.'<br />';
-				if ($this->table_registry_name == 'HeadTemplate') {
-					Services::Registry()->get($this->table_registry_name, '*');
-				}
-				if ($this->table_registry_name == 'HeadSystem') {
-					Services::Registry()->get($this->table_registry_name, '*');
-				}
-
 				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getFile. ';
 			}
 

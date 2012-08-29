@@ -770,9 +770,6 @@ Class ConfigurationService
 			if (ucfirst(strtolower(substr($extends, strlen($extends) - strlen($modeltype), strlen($modeltype)))) == $modeltype) {
 				$extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen($modeltype))));
 				$extends_model_type = $modeltype;
-
-				echo 'Type : '. $extends_model_type . ' Name ' . $extends_model_name . '<br />';
-
 				break;
 			}
 		}
@@ -783,8 +780,6 @@ Class ConfigurationService
 		}
 
 		$parentRegistryName = $extends_model_name . $extends_model_type;
-
-		echo 'Parent registry ' . $parentRegistryName . '<br />';
 
 		/** Load the file and build registry - IF - the registry is not already loaded */
 		if (Services::Registry()->exists($parentRegistryName) == true) {

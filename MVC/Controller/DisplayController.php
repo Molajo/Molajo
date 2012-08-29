@@ -68,7 +68,6 @@ class DisplayController extends Controller
 				$profiler_message = 'DisplayController->execute '
 					. ' <br />Includer: ' . $this->get('includer_type', '')
 					. ' <br />Model Type: ' . $this->get('model_type', '')
-					. ' <br />Model Type: ' . $this->get('model_type', '')
 					. ' <br />Model Name: ' . $this->get('model_name', '')
 					. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
 					. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
