@@ -269,7 +269,16 @@ class Includer
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
 		/** Save wrap info */
-		$wrapParameters = Services::Registry()->get('Parameters', 'wrap*');
+		$wrapParameters = array();
+		$temp = Services::Registry()->get('Parameters', 'wrap*');
+		if (is_array($temp) && count($temp) > 0) {
+			foreach ($temp as $key => $value) {
+				if ($value === 0 || trim($value) == '' || $value === null) {
+				} else {
+					$wrapParameters[$key] = $value;
+				}
+			}
+		}
 
 		/** Template  */
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
@@ -277,10 +286,7 @@ class Includer
 		/** Merge Wrap info in */
 		if (is_array($wrapParameters) && count($wrapParameters) > 0) {
 			foreach ($wrapParameters as $key => $value) {
-				if ($value === 0 || trim($value) == '' || $value == null) {
-				} else {
-					Services::Registry()->set('Parameters', $key, $value);
-				}
+				Services::Registry()->set('Parameters', $key, $value);
 			}
 		}
 
@@ -288,27 +294,26 @@ class Includer
 		$wrap_view_id = 0;
 		$wrap_view_title = Services::Registry()->get('Parameters', 'wrap_view_path_node');
 
-		if (trim($wrap_view_title) == '') {
+		if ($wrap_view_title === null) {
 			$wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id');
-			if ($wrap_view_id === 0) {
+			if ((int) $wrap_view_id === 0) {
 			} else {
 				Services::Registry()->set('Parameters', 'wrap_view_path_node',
 					Helpers::Extension()->getExtensionNode((int)$wrap_view_id));
+				$wrap_view_title = Services::Registry()->get('Parameters', 'wrap_view_path_node');
 			}
 		}
 
-		if (trim($wrap_view_title) == '' && $wrap_view_id === 0) {
-			Services::Registry()->set('Parameters', 'wrap_view_path_node', 'None');
+		if ($wrap_view_title === null) {
+			$wrap_view_title = 'None';
 		}
 
-		$wrap_title = Services::Registry()->get('Parameters', 'wrap_view_path_node');
-
-		Services::Registry()->set('Parameters', 'wrap_view_path_node', $wrap_title);
-		Services::Registry()->set('Parameters', 'wrap_view_title', $wrap_title);
+		Services::Registry()->set('Parameters', 'wrap_view_path_node', $wrap_view_title);
+		Services::Registry()->set('Parameters', 'wrap_view_title', $wrap_view_title);
 		Services::Registry()->set('Parameters', 'wrap_view_path',
-			Helpers::View()->getPath($wrap_title, 'Wrap'));
+			Helpers::View()->getPath($wrap_view_title, 'Wrap'));
 		Services::Registry()->set('Parameters', 'wrap_view_path_url',
-			Helpers::View()->getPathURL($wrap_title, 'Wrap'));
+			Helpers::View()->getPathURL($wrap_view_title, 'Wrap'));
 
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'list*');
@@ -334,7 +339,6 @@ class Includer
 	 */
 	protected function loadLanguage()
 	{
-
 		Helpers::Extension()->loadLanguage(
 			Services::Registry()->get('Parameters', 'extension_path')
 		);
@@ -428,7 +432,7 @@ class Includer
 	echo $message;
 	echo '<br /><br /><br />';
 //}
- */
+*/
  		$results = $controller->execute();
 
 		return $results;
