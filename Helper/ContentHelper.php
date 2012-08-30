@@ -130,6 +130,10 @@ Class ContentHelper
 			Services::Registry()->get($parameterNamespace, 'criteria_extension_instance_id'));
 
 		/** Theme, Page, Template and Wrap Views */
+		$editCheck = Services::Registry()->get('Parameters', 'catalog_url_sef_request');
+		if (substr($editCheck, strlen($editCheck) - 4, 4) == 'edit') {
+			Services::Registry()->set('Parameters', 'request_action', 'edit');
+		}
 		if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
 			$requestTypeNamespace = 'item';
 		} else {
