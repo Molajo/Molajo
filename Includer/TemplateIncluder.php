@@ -47,7 +47,7 @@ Class TemplateIncluder extends Includer
 	{
 		/**  Template */
 		$template_id = 0;
-		$template_title = Services::Registry()->get('Parameters', 'extension_title');
+		$template_title = Services::Registry()->get('Parameters', 'template_view_path_node');
 
 		if (trim($template_title) == '') {
 		} else {
@@ -59,12 +59,9 @@ Class TemplateIncluder extends Includer
 			$template_id = Services::Registry()->get('Parameters', 'template_view_id');
 		}
 
-		if ((int) $template_id == 0) {
-			$template_title = Services::Registry()->get('Parameters', 'template_view_path_node');
-		}
-
 		if (trim($template_title) == '' || (int) $template_id > 0) {
 		} else {
+			Services::Registry()->set('Parameters', 'template_view_path_node', $template_title);
 			$template_id = Helpers::Extension()
 				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
 		}
@@ -75,9 +72,7 @@ Class TemplateIncluder extends Includer
 
 		Services::Registry()->set('Parameters', 'template_view_id', $template_id);
 
-		parent::setRenderCriteria();
-
-		return true;
+		return parent::setRenderCriteria();
 	}
 
 	/**

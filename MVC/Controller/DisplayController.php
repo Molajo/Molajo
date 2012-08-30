@@ -125,7 +125,7 @@ class DisplayController extends Controller
 		}
 
 		/** Wrap template view results */
-		return $this->wrapView($this->get('wrap_view_title'), $rendered_output);
+		return $this->wrapView($this->get('wrap_view_path_node'), $rendered_output);
 	}
 
 	/**

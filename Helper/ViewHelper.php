@@ -105,9 +105,16 @@ Class ViewHelper
 
 		Services::Registry()->set('Parameters', $type . '_view_table_registry_name', $item->table_registry_name);
 
-		$this->setParameters('template', $item->table_registry_name . 'Parameters');
-		$this->setParameters('wrap', $item->table_registry_name . 'Parameters');
-		$this->setParameters('model', $item->table_registry_name . 'Parameters');
+		if ($type == 'Page') {
+			$this->setParameters('page', $item->table_registry_name . 'Parameters');
+
+		} elseif ($type == 'Template') {
+			$this->setParameters('template', $item->table_registry_name . 'Parameters');
+			$this->setParameters('model', $item->table_registry_name . 'Parameters');
+
+		} else {
+			$this->setParameters('wrap', $item->table_registry_name . 'Parameters');
+		}
 
 		/** Copy remaining */
 		Services::Registry()->copy($item->table_registry_name . 'Parameters', 'Parameters');
@@ -256,7 +263,7 @@ Class ViewHelper
 		}
 
 		/** 4. View */
-		if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+		if (file_exists(CORE_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
 			return CORE_VIEWS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
 		}
 

@@ -151,7 +151,21 @@ class Includer
 
 			/** Name used by includer for extension */
 			if ($name == 'name' || $name == 'title') {
+				$value = ucfirst(strtolower(trim($value)));
 				Services::Registry()->set('Parameters', 'extension_title', $value);
+
+				$value = ucfirst(strtolower(trim($value)));
+
+				if ($this->name == 'template') {
+					$template_id = Helpers::Extension()
+						->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
+
+					if ((int)$template_id == 0) {
+					} else {
+						Services::Registry()->set('Parameters', 'template_view_id', $template_id);
+						Services::Registry()->get('Parameters', 'template_view_path_node', $value);
+					}
+				}
 
 				/** Used to extract a list of extensions for inclusion */
 			} elseif ($name == 'tag') {
@@ -161,11 +175,15 @@ class Includer
 			} elseif ($name == 'template' || $name == 'template_view_title'
 				|| $name == 'template_view' || $name == 'template_view'
 			) {
+				$value = ucfirst(strtolower(trim($value)));
+
 				$template_id = Helpers::Extension()
 					->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
+
 				if ((int)$template_id == 0) {
 				} else {
 					Services::Registry()->set('Parameters', 'template_view_id', $template_id);
+					Services::Registry()->get('Parameters', 'template_view_path_node', $value);
 				}
 
 			} elseif ($name == 'template_view_css_id' || $name == 'template_css_id' || $name == 'template_id') {
@@ -175,12 +193,16 @@ class Includer
 				Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
 			/** Wrap */
-			} elseif ($name == 'wrap' || $name == 'wrap_view_title' || $name == 'wrap_view' || $name == 'wrap_view') {
+			} elseif ($name == 'wrap' || $name == 'wrap_view_title' || $name == 'wrap_view' || $name == 'wrap_title') {
+
+				$value = ucfirst(strtolower(trim($value)));
+
 				$wrap_id = Helpers::Extension()
 					->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, $value);
 
 				if ((int)$wrap_id == 0) {
 				} else {
+					Services::Registry()->set('Parameters', 'wrap_view_path_node', $value);
 					Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_id);
 				}
 
@@ -243,10 +265,8 @@ class Includer
 	 */
 	protected function setRenderCriteria()
 	{
-		Services::Registry()->merge('Configuration', 'Parameters', true);
 
-		/** Template  */
-		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
+		Services::Registry()->merge('Configuration', 'Parameters', true);
 
 		/** Wrap */
 		$wrap_id = 0;
@@ -256,13 +276,31 @@ class Includer
 			$wrap_id = Services::Registry()->get('Parameters', 'wrap_id');
 		}
 
-		if (trim($wrap_title) == '' && (int) $wrap_id == 0) {
+		/** Save wrap info */
+		$wrapParameters = Services::Registry()->get('Parameters', 'wrap*');
+
+		/** Template  */
+		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
+
+		/** Merge Wrap info in */
+		if (is_array($wrapParameters) && count($wrapParameters) > 0) {
+			foreach ($wrapParameters as $key => $value) {
+				if ($value === 0 || trim($value) == '' || $value == null) {
+				} else {
+					Services::Registry()->set('Parameters', $key, $value);
+				}
+			}
+		}
+
+		/** Default Wrap if needed */
+		if (trim($wrap_title) == '' && $wrap_id === 0) {
 			Services::Registry()->set('Parameters', 'wrap_view_path_node', 'None');
 		}
 
 		$wrap_title = Services::Registry()->get('Parameters', 'wrap_view_path_node');
 
 		Services::Registry()->set('Parameters', 'wrap_view_path_node', $wrap_title);
+		Services::Registry()->set('Parameters', 'wrap_view_title', $wrap_title);
 		Services::Registry()->set('Parameters', 'wrap_view_path',
 			Helpers::View()->getPath($wrap_title, 'Wrap'));
 		Services::Registry()->set('Parameters', 'wrap_view_path_url',
@@ -273,7 +311,12 @@ class Includer
 		Services::Registry()->delete('Parameters', 'form*');
 
 		Services::Registry()->sort('Parameters');
-
+/***
+		if (Services::Registry()->get('Parameters', 'template_view_path_node') == 'Adminfooter') {
+			Services::Registry()->get('Parameters', '*');
+			die;
+		}
+*/
 		return true;
 	}
 
@@ -381,7 +424,7 @@ class Includer
 	echo $message;
 	echo '<br /><br /><br />';
 //}
- */
+*/
  		$results = $controller->execute();
 
 		return $results;
