@@ -151,22 +151,26 @@ class Includer
 
 			/** Name used by includer for extension */
 			if ($name == 'name' || $name == 'title') {
-				$value = ucfirst(strtolower(trim($value)));
-				Services::Registry()->set('Parameters', 'extension_title', $value);
-
-				$value = ucfirst(strtolower(trim($value)));
 
 				if ($this->name == 'template') {
-					$template_id = Helpers::Extension()
-						->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
 
-					if ((int)$template_id == 0) {
+					if ((int) $value > 0) {
+						$template_id = (int) $value;
+						$template_title = Helpers::Extension()->getExtensionNode($template_id);
 					} else {
-						Services::Registry()->set('Parameters', 'template_view_id', $template_id);
-						Services::Registry()->get('Parameters', 'template_view_path_node', $value);
+						$template_title = ucfirst(strtolower(trim($value)));
+						$template_id = Helpers::Extension()
+							->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
 					}
-				}
 
+					Services::Registry()->set('Parameters', 'template_view_id', $template_id);
+					Services::Registry()->set('Parameters', 'template_view_path_node', $template_title);
+					Services::Registry()->set('Parameters', 'extension_title', $template_title);
+
+				} else {
+					$value = ucfirst(strtolower(trim($value)));
+					Services::Registry()->set('Parameters', 'extension_title', $value);
+				}
 				/** Used to extract a list of extensions for inclusion */
 			} elseif ($name == 'tag') {
 				$this->tag = $value;

@@ -49,13 +49,6 @@ Class TemplateIncluder extends Includer
 		$template_id = 0;
 		$template_title = Services::Registry()->get('Parameters', 'template_view_path_node');
 
-		if ((int) $template_title > 0) {
-			$template_id = (int) $template_title;
-			Services::Registry()->set('Parameters', 'template_view_id', $template_id);
-			Services::Registry()->set('Parameters', 'template_view_path_node', '');
-			$template_title = '';
-		}
-
 		if (trim($template_title) == '') {
 		} else {
 			$template_id = Helpers::Extension()
