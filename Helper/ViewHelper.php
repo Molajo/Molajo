@@ -177,8 +177,10 @@ Class ViewHelper
 	{
 		if ($type == 'Page') {
 			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_PAGE_VIEW, 'Default');
+
 		} elseif ($type == 'Template') {
 			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'Default');
+
 		} else {
 			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'None');
 		}
