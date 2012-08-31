@@ -98,9 +98,10 @@ class AdminpagetitlePlugin extends ContentPlugin
 
 		} elseif ($page_type == 'list') {
 			return $this->setListButtons();
+
 		}
 
-		return false;
+		return $this->setDashboardButtons();
 	}
 
 	/**
@@ -312,6 +313,63 @@ class AdminpagetitlePlugin extends ContentPlugin
 
 		$buttons[] = '{{' . trim($buttonArray) . '}}';
 
+
+		return $buttons;
+	}
+
+	/**
+	 * Create Dashboard Page Buttons
+	 *
+	 * @return array
+	 */
+	protected function setDashboardButtons()
+	{
+
+		$buttons = array();
+
+		/** Button 1: Add Portlet */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Add Portlet'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonIcon = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
+		$linkURL = '/admin/' . Services::Registry()->get('Parameters', 'catalog_slug');
+		$buttonArray = 'button_title:'
+			. trim($buttonTitle)
+			. ','
+			. 'button_type:primary,'
+			. 'button_link:'
+			. $linkURL
+			. ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
+
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
+
+		/** Button 2: Edit Resource */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Edit Dashboard'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
+		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
+		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$buttonArray = 'button_title:'
+			. $buttonTitle
+			. ','
+			. 'button_type:primary,'
+			. 'button_link:'
+			. $linkURL
+			. ','
+			. 'button_link_extra:'
+			. $buttonLinkExtra
+			. ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
+
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
 
 		return $buttons;
 	}

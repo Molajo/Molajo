@@ -420,8 +420,8 @@ Class RouteService
 
 		/** List */
 		if ((int)$id > 0
-			&& (int)$catalog_type_id == 1050
-			&& trim($table) == '#__extension_instances'
+			&& (int)$catalog_type_id == CATALOG_TYPE_EXTENSION_RESOURCE
+			&& strtolower(trim($catalog_menuitem_type)) == 'list'
 		) {
 			$response = Helpers::Content()->getListRoute($id, $model_type, $model_name);
 			if ($response === false) {
@@ -430,7 +430,8 @@ Class RouteService
 
 		/** Item */
 		} elseif ((int)$id > 0
-			&& trim($catalog_menuitem_type) == ''
+			&& (strtolower(trim($catalog_menuitem_type)) == 'item'
+				|| strtolower(trim($catalog_menuitem_type)) == 'form')
 		) {
 
 			$response = Helpers::Content()->getRouteItem($id, $model_type, $model_name);

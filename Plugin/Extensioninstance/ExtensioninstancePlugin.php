@@ -221,7 +221,7 @@ class ExtensioninstancePlugin extends ContentPlugin
 
 		/** Only Extension Instances */
 		if (isset($this->data->catalog_type_id)
-			&& ($this->data->catalog_type_id == 1050)
+			&& ($this->data->catalog_type_id == CATALOG_TYPE_EXTENSION_RESOURCE)
 		) {
 		} else {
 			return true;

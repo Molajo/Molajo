@@ -44,6 +44,7 @@ class AdmindashboardPlugin extends ContentPlugin
 			return true;
 		}
 
+		Services::Registry()->set('Parameters', 'dashboard', 'Portletgallery,Portletlist,Portletcustom,Portletfeed,Portletvideo,Portletmap,Portletbargraph,Portletquicklinks,Portletsysteminfo,Portletgallery,Portletweather,Portletaudio');
 		$portletOptions = Services::Registry()->get('Parameters', 'dashboard');
 
 		if (trim($portletOptions) == '') {
