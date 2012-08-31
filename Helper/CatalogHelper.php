@@ -107,7 +107,7 @@ Class CatalogHelper
 		} else {
 			Services::Registry()->set('Parameters', 'catalog_home', 0);
 		}
-
+		Services::Registry()->get('Parameters', '*');
 		return true;
 	}
 

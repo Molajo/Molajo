@@ -1,0 +1,3 @@
+<field name="options_basic" type="char" null="0" default="criteria*,image*,gravatar*"/>
+<field name="options_advanced" type="char" null="0" default="cache*"/>
+<field name="options_build" type="char" null="0" default="assets*,item*,form*,enable*"/>

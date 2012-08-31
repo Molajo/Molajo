@@ -61,6 +61,7 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getListRoute');
 
+		echo $id . ' ' . $model_type .  ' ' . $model_name . '<br />';
 		$item = $this->get($id, $model_type, $model_name);
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
@@ -142,9 +143,6 @@ Class ContentHelper
 
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
 			(int)$item->extension_instances_catalog_type_id);
-
-		Services::Registry()->set('Parameters', 'parent_menu_id',
-			Services::Registry()->get($parameterNamespace, 'item_parent_menu_id'));
 
 		$this->getResourceParameters((int)$item->extension_instance_id);
 

@@ -2,12 +2,20 @@
        default="new,edit,publish,feature,archive,checkin,restore,delete,trash,options"
        values="apply,archive,delete,display,feature,publish,restore,spam,sticky,trash,
        unfeature,unpublished,unsticky,saveandclose,saveandnew,saveascopy,close,help"/>
-
 <field name="edit_toolbar_buttons_edit" type="char" null="0"
        default="apply,delete,display,feature,publish,saveandclose,saveascopy,close"
        values="apply,archive,delete,display,feature,publish,restore,spam,sticky,trash,
        unfeature,unpublished,unsticky,saveandclose,saveandnew,saveascopy,close,help"/>
-
-<field name="edit_columns" type="char" null="0"
-       default="title,id,featured,start_publishing_datetime,language,ordering"
+<field name="edit_editor_fields" type="char" null="0"
+       default="title,subtitle,alias,content_text,created_by,language"
         />
+<field name="edit_publish_fields" type="char" null="0"
+       default="featured,stickied,status,start_publishing_datetime,stop_publishing_datetime,created_datetime,ordering"
+        />
+<field name="edit_revisions_fields" type="char" null="0"
+       default="version,modified_datetime,modified_by"
+        />
+<field name="edit_metadata_fields" type="char" null="0"
+       default="title,description,keywords,robots,author,content_rights"
+        />
+<field name="edit_custom_fields" type="char" null="0" default="" />

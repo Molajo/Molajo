@@ -124,46 +124,40 @@ class AdminpagetitlePlugin extends ContentPlugin
 
 		$buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		/** Button 2: Revisions */
+		/** Button 2: Edit Button */
 		$buttonTitle = str_replace(
 			' ',
 			'&nbsp;',
-			htmlentities(Services::Language()->translate('Revisions'), ENT_COMPAT, 'UTF-8')
+			htmlentities(Services::Language()->translate('Edit'), ENT_COMPAT, 'UTF-8')
 		);
-		$buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
-		$buttonIcon = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
-		$linkURL = $linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$buttonIcon = htmlentities('icon-edit', ENT_COMPAT, 'UTF-8');
+		$linkURL = Services::Registry()->get('Plugindata', 'page_url') . '/edit';
 		$buttonArray = 'button_title:'
-			. $buttonTitle
-			. ','
-			. 'button_type:secondary,'
-			. 'button_link:' .
-			$linkURL . ','
-			. 'button_link_extra:'
-			. $buttonLinkExtra . ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
-
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
-
-		/** Button 3: Options */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Options'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
-		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
-		$buttonArray = 'button_title:'
-			. $buttonTitle
+			. trim($buttonTitle)
 			. ','
 			. 'button_type:secondary,'
 			. 'button_link:'
 			. $linkURL
 			. ','
-			. 'button_link_extra:'
-			. $buttonLinkExtra
+			. 'button_icon_prepend:'
+			. $buttonIcon;
+
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
+
+		/** Button 3: Delete Button */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Delete'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonIcon = htmlentities('icon-trash', ENT_COMPAT, 'UTF-8');
+		$linkURL = Services::Registry()->get('Plugindata', 'page_url') . '/delete';
+		$buttonArray = 'button_title:'
+			. trim($buttonTitle)
+			. ','
+			. 'button_type:alert,'
+			. 'button_link:'
+			. $linkURL
 			. ','
 			. 'button_icon_prepend:'
 			. $buttonIcon;

@@ -36,40 +36,6 @@ class ItemPlugin extends ContentPlugin
 			return true;
 		}
 
-		/** Edit Button */
-		$buttonTitle  = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities('Edit', ENT_COMPAT, 'UTF-8')
-		);
-
-		$buttonArray  = 'button_id:enable'
-			. ',button_tag:button'
-			. ',button_icon_prepend:icon-edit,'
-			. 'button_title:' . $buttonTitle
-			. ',' . 'button_type:secondary,'
-			. ',' . 'button_link:' . Services::Registry()->get('Plugindata', 'page_url')
-			. '/edit';
-
-		$this->saveField(null, 'edit_button', '{{' . trim($buttonArray) . '}}');
-
-		/** Delete Button */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities('Delete', ENT_COMPAT, 'UTF-8')
-		);
-		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
-
-		$buttonArray = 'button_tag:button'
-			. ',button_icon_prepend:icon-trash'
-			. ',button_title:' . $buttonTitle
-			. ',' . 'button_type:alert,'
-			. ',' . 'button_link:' . Services::Registry()->get('Plugindata', 'page_url')
-			. '/delete';
-
-		$this->saveField(null, 'delete_button', '{{' . trim($buttonArray) . '}}');
-
 		return true;
 	}
 }
