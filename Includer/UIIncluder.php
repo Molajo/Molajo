@@ -20,7 +20,6 @@ defined('MOLAJO') or die;
  */
 class UiIncluder extends Includer
 {
-
 	/**
 	 * process - render include statement for configured UI Library
 	 *

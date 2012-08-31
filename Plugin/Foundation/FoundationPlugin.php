@@ -21,7 +21,7 @@ class FoundationPlugin extends ContentPlugin
 	/**
 	 * Prepares data for the Foundation UI Views
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function onBeforeViewRender()
@@ -48,9 +48,8 @@ class FoundationPlugin extends ContentPlugin
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function button_general()
+	protected function button_general()
 	{
-
 		$button_type = $this->data->button_type;
 		$button_size = $this->data->button_size;
 		$button_shape = $this->data->button_shape;
@@ -73,7 +72,7 @@ class FoundationPlugin extends ContentPlugin
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function button_group()
+	protected function button_group()
 	{
 
 		$button_type = $this->data->button_group_type;
@@ -102,7 +101,7 @@ class FoundationPlugin extends ContentPlugin
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function button_dropdown()
+	protected function button_dropdown()
 	{
 		$button_type = $this->data->button_dropdown_type;
 		$button_size = $this->data->button_dropdown_size;
@@ -131,7 +130,7 @@ class FoundationPlugin extends ContentPlugin
 	 * @param $buttons
 	 * @return array
 	 */
-	public function getButtons($buttons)
+	protected function getButtons($buttons)
 	{
 		$button_array = array();
 		$temp = explode('}}', $buttons);

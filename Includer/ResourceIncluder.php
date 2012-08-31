@@ -94,7 +94,7 @@ class ResourceIncluder extends Includer
 	{
 		/** Include and Parameter Registries are already loaded for Primary Resource */
 		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
-			return;
+			return true;
 		}
 
 		Services::Registry()->merge('Configuration', 'Parameters', true);
@@ -107,7 +107,7 @@ class ResourceIncluder extends Includer
 
 		Services::Registry()->sort('Parameters');
 
-		return;
+		return true;
 	}
 
 	/**

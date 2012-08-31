@@ -147,6 +147,7 @@ class Includer
 		}
 
 		//todo filter input appropriately
+		//todo case statements
 		foreach ($this->attributes as $name => $value) {
 
 			/** Name used by includer for extension */
@@ -269,17 +270,43 @@ class Includer
 	 */
 	protected function setRenderCriteria()
 	{
+		/**  Template */
+		$template_id = 0;
+		$template_title = Services::Registry()->get('Parameters', 'template_view_path_node');
+
+		if (trim($template_title) == '') {
+		} else {
+			$template_id = Helpers::Extension()
+				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+		}
+
+		if ((int) $template_id == 0) {
+			$template_id = Services::Registry()->get('Parameters', 'template_view_id');
+		}
+
+		if (trim($template_title) == '' || (int) $template_id > 0) {
+		} else {
+			Services::Registry()->set('Parameters', 'template_view_path_node', $template_title);
+			$template_id = Helpers::Extension()
+				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+		}
+
+		if ((int)$template_id == 0) {
+			$template_id = Helpers::View()->getDefault('Template');
+		}
+
+		Services::Registry()->set('Parameters', 'template_view_id', $template_id);
 
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
-		/** Save wrap info */
-		$wrapParameters = array();
-		$temp = Services::Registry()->get('Parameters', 'wrap*');
+		/** Save existing parameters */
+		$savedParameters = array();
+		$temp = Services::Registry()->getArray('Parameters');
 		if (is_array($temp) && count($temp) > 0) {
 			foreach ($temp as $key => $value) {
 				if ($value === 0 || trim($value) == '' || $value === null) {
 				} else {
-					$wrapParameters[$key] = $value;
+					$savedParameters[$key] = $value;
 				}
 			}
 		}
@@ -287,9 +314,9 @@ class Includer
 		/** Template  */
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
 
-		/** Merge Wrap info in */
-		if (is_array($wrapParameters) && count($wrapParameters) > 0) {
-			foreach ($wrapParameters as $key => $value) {
+		/** Merge Parameter info in */
+		if (is_array($savedParameters) && count($savedParameters) > 0) {
+			foreach ($savedParameters as $key => $value) {
 				Services::Registry()->set('Parameters', $key, $value);
 			}
 		}

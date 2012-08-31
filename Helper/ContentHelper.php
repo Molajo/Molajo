@@ -135,9 +135,9 @@ Class ContentHelper
 			Services::Registry()->set('Parameters', 'request_action', 'edit');
 		}
 		if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
-			$requestTypeNamespace = 'item';
+			$pageTypeNamespace = 'item';
 		} else {
-			$requestTypeNamespace = 'form';
+			$pageTypeNamespace = 'form';
 		}
 
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
@@ -149,7 +149,7 @@ Class ContentHelper
 		$this->getResourceParameters((int)$item->extension_instance_id);
 
 		$this->setParameters(
-			$requestTypeNamespace,
+			$pageTypeNamespace,
 			$item->table_registry_name . 'Parameters',
 			'ResourcesSystemParameters'
 		);
@@ -275,35 +275,35 @@ Class ContentHelper
 	/**
 	 * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
 	 *
-	 * @param   $requestTypeNamespace
+	 * @param   $pageTypeNamespace
 	 * @param   $parameterNamespace
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	public function setParameters($requestTypeNamespace, $parameterNamespace, $resourceNamespace = '')
+	public function setParameters($pageTypeNamespace, $parameterNamespace, $resourceNamespace = '')
 	{
-		Services::Registry()->set('Parameters', 'parameter_type', $requestTypeNamespace);
+		Services::Registry()->set('Parameters', 'page_type', $pageTypeNamespace);
 
 		/** 1. Parameters from Request Query */
-		$newParameters = Services::Registry()->get($parameterNamespace, $requestTypeNamespace . '*');
+		$newParameters = Services::Registry()->get($parameterNamespace, $pageTypeNamespace . '*');
 		if (is_array($newParameters) && count($newParameters) > 0) {
-			$this->processParameterSet($newParameters, $requestTypeNamespace);
+			$this->processParameterSet($newParameters, $pageTypeNamespace);
 		}
 
 		/** 2. Resource defaults */
 		if ($resourceNamespace == '') {
 		} else {
-			$resourceParameters = Services::Registry()->get($resourceNamespace, $requestTypeNamespace . '*');
+			$resourceParameters = Services::Registry()->get($resourceNamespace, $pageTypeNamespace . '*');
 			if (is_array($resourceParameters) && count($resourceParameters) > 0) {
-				$this->processParameterSet($newParameters, $requestTypeNamespace);
+				$this->processParameterSet($newParameters, $pageTypeNamespace);
 			}
 		}
 
 		/** 3. Application defaults */
-		$applicationDefaults = Services::Registry()->get('Configuration', $requestTypeNamespace . '*');
+		$applicationDefaults = Services::Registry()->get('Configuration', $pageTypeNamespace . '*');
 		if (count($applicationDefaults) > 0) {
-			$this->processParameterSet($applicationDefaults, $requestTypeNamespace);
+			$this->processParameterSet($applicationDefaults, $pageTypeNamespace);
 		}
 
 		/** Copy remaining */
@@ -332,16 +332,16 @@ Class ContentHelper
 	 * processParameterSet iterates a new parameter set to determine whether or not it should be applied
 	 *
 	 * @param $parameterSet
-	 * @param $requestTypeNamespace
+	 * @param $pageTypeNamespace
 	 */
-	protected function processParameterSet($parameterSet, $requestTypeNamespace)
+	protected function processParameterSet($parameterSet, $pageTypeNamespace)
 	{
 		foreach ($parameterSet as $key => $value) {
-			$existing = Services::Registry()->get('Parameters', substr($key, strlen($requestTypeNamespace) + 1, 9999));
+			$existing = Services::Registry()->get('Parameters', substr($key, strlen($pageTypeNamespace) + 1, 9999));
 			if ($existing === 0 || trim($existing) == '' || $existing == null) {
 				if ($value === 0 || trim($value) == '' || $value == null) {
 				} else {
-					Services::Registry()->set('Parameters', substr($key, strlen($requestTypeNamespace) + 1, 9999), $value);
+					Services::Registry()->set('Parameters', substr($key, strlen($pageTypeNamespace) + 1, 9999), $value);
 				}
 			}
 		}

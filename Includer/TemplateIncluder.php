@@ -38,44 +38,6 @@ Class TemplateIncluder extends Includer
 	}
 
 	/**
-	 * setRenderCriteria - Retrieve default values, if not provided by extension
-	 *
-	 * @return bool
-	 * @since   1.0
-	 */
-	protected function setRenderCriteria()
-	{
-		/**  Template */
-		$template_id = 0;
-		$template_title = Services::Registry()->get('Parameters', 'template_view_path_node');
-
-		if (trim($template_title) == '') {
-		} else {
-			$template_id = Helpers::Extension()
-				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
-		}
-
-		if ((int) $template_id == 0) {
-			$template_id = Services::Registry()->get('Parameters', 'template_view_id');
-		}
-
-		if (trim($template_title) == '' || (int) $template_id > 0) {
-		} else {
-			Services::Registry()->set('Parameters', 'template_view_path_node', $template_title);
-			$template_id = Helpers::Extension()
-				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
-		}
-
-		if ((int)$template_id == 0) {
-			 $template_id = Helpers::View()->getDefault('Template');
-		}
-
-		Services::Registry()->set('Parameters', 'template_view_id', $template_id);
-
-		return parent::setRenderCriteria();
-	}
-
-	/**
 	 * Loads Media CSS and JS files for Template and Template Views
 	 *
 	 * @return object

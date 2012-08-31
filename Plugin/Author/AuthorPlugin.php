@@ -60,7 +60,7 @@ class AuthorPlugin extends ContentPlugin
 		/** Using the created_by value, retrieve the Author Profile Data */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
-		$results = $m->connect('Table', 'Users');
+		$results = $m->connect('System', 'Users');
 		if ($results == false) {
 			return false;
 		}
