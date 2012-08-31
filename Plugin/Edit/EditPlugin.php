@@ -31,7 +31,7 @@ class EditPlugin extends ContentPlugin
 			return true;
 		}
 
-		if (strtolower($this->get('template_view_path_node')) == 'item') {
+		if (strtolower($this->get('template_view_path_node')) == 'edit') {
 		} else {
 			return true;
 		}

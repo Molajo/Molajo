@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
 class ItemPlugin extends ContentPlugin
 {
 	/**
-	 * Prepares Page Title and Buttons for Rendering
+	 * Prepares Buttons for Item Type Page
 	 *
 	 * @return  void
 	 * @since   1.0

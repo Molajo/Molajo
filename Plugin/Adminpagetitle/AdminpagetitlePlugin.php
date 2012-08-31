@@ -59,7 +59,7 @@ class AdminpagetitlePlugin extends ContentPlugin
 		$row->button_count = $buttonCount;
 		$row->button_array = '';
 
-		if ($buttonCount == 0) {
+		if ($buttonCount === 0) {
 			$row->button_array = null;
 		} else {
 			foreach ($buttonArray as $button) {
@@ -83,77 +83,171 @@ class AdminpagetitlePlugin extends ContentPlugin
 	protected function setButtonArray($page_type)
 	{
 
+		if ($page_type == 'item') {
+			return $this->setItemButtons();
+
+		} elseif ($page_type == 'form') {
+			return $this->setEditButtons();
+		}
+
+		return false;
+	}
+
+	/**
+	 * Create Item Buttons
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	protected function setItemButtons()
+	{
+
 		$buttons = array();
 
-		/** Item */
-		if ($page_type == 'item') {
+		/** Button 1: Back to Grid */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonIcon = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
+		$linkURL = '/admin/' . Services::Registry()->get('Parameters', 'catalog_slug');
+		$buttonArray = 'button_title:'
+			. trim($buttonTitle)
+			. ','
+			. 'button_type:secondary,'
+			. 'button_link:'
+			. $linkURL
+			. ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
 
-			/** Button 1: Back to Grid */
-			$buttonTitle = str_replace(
-				' ',
-				'&nbsp;',
-				htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
-			);
-			$buttonIcon = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
-			$linkURL = '/admin/' . Services::Registry()->get('Parameters', 'catalog_slug');
-			$buttonArray = 'button_title:'
-				. trim($buttonTitle)
-				. ','
-				. 'button_type:secondary,'
-				. 'button_link:'
-				. $linkURL
-				. ','
-				. 'button_icon_prepend:'
-				. $buttonIcon;
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
 
-			$buttons[] = '{{' . trim($buttonArray) . '}}';
+		/** Button 2: Revisions */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Revisions'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
+		$buttonIcon = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
+		$linkURL = $linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$buttonArray = 'button_title:'
+			. $buttonTitle
+			. ','
+			. 'button_type:secondary,'
+			. 'button_link:' .
+			$linkURL . ','
+			. 'button_link_extra:'
+			. $buttonLinkExtra . ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
 
-			/** Button 2: Revisions */
-			$buttonTitle = str_replace(
-				' ',
-				'&nbsp;',
-				htmlentities(Services::Language()->translate('Revisions'), ENT_COMPAT, 'UTF-8')
-			);
-			$buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
-			$buttonIcon = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
-			$linkURL = $linkURL = Services::Registry()->get('Plugindata', 'page_url');
-			$buttonArray = 'button_title:'
-				. $buttonTitle
-				. ','
-				. 'button_type:secondary,'
-				. 'button_link:' .
-				$linkURL . ','
-				. 'button_link_extra:'
-				. $buttonLinkExtra . ','
-				. 'button_icon_prepend:'
-				. $buttonIcon;
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
 
-			$buttons[] = '{{' . trim($buttonArray) . '}}';
+		/** Button 3: Options */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Options'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
+		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
+		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$buttonArray = 'button_title:'
+			. $buttonTitle
+			. ','
+			. 'button_type:secondary,'
+			. 'button_link:'
+			. $linkURL
+			. ','
+			. 'button_link_extra:'
+			. $buttonLinkExtra
+			. ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
 
-			/** Button 3: Options */
-			$buttonTitle = str_replace(
-				' ',
-				'&nbsp;',
-				htmlentities(Services::Language()->translate('Options'), ENT_COMPAT, 'UTF-8')
-			);
-			$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
-			$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-			$linkURL = Services::Registry()->get('Plugindata', 'page_url');
-			$buttonArray = 'button_title:'
-				. $buttonTitle
-				. ','
-				. 'button_type:secondary,'
-				. 'button_link:'
-				. $linkURL
-				. ','
-				. 'button_link_extra:'
-				. $buttonLinkExtra
-				. ','
-				. 'button_icon_prepend:'
-				. $buttonIcon;
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
 
-			$buttons[] = '{{' . trim($buttonArray) . '}}';
-		}
+		return $buttons;
+	}
+
+	/**
+	 * Create Edit Buttons
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	protected function setEditButtons()
+	{
+		$buttons = array();
+
+		/** Button 1: Back to Grid */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonIcon = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
+		$linkURL = '/admin/' . Services::Registry()->get('Parameters', 'catalog_slug');
+		$buttonArray = 'button_title:'
+			. trim($buttonTitle)
+			. ','
+			. 'button_type:secondary,'
+			. 'button_link:'
+			. $linkURL
+			. ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
+
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
+
+		/** Button 2: Revisions */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Revisions'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
+		$buttonIcon = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
+		$linkURL = $linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$buttonArray = 'button_title:'
+			. $buttonTitle
+			. ','
+			. 'button_type:secondary,'
+			. 'button_link:' .
+			$linkURL . ','
+			. 'button_link_extra:'
+			. $buttonLinkExtra . ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
+
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
+
+		/** Button 3: Options */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Options'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
+		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
+		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$buttonArray = 'button_title:'
+			. $buttonTitle
+			. ','
+			. 'button_type:secondary,'
+			. 'button_link:'
+			. $linkURL
+			. ','
+			. 'button_link_extra:'
+			. $buttonLinkExtra
+			. ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
+
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
 
 		return $buttons;
 	}
