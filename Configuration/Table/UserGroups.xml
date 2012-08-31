@@ -14,7 +14,7 @@
             <field name="group_id" type="integer" null="0" default=""/>
         </fields>
         <foreignkeys>
-            <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+            <foreignkey name="user_id" source_id="id" source_model="User" required="1"/>
             <foreignkey name="group_id" source_id="id" source_model="Content" required="1"/>
         </foreignkeys>
     </table>

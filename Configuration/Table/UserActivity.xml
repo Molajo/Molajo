@@ -47,7 +47,7 @@
             <plugin name="Ipaddress"/>
         </plugins>
         <foreignkeys>
-            <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+            <foreignkey name="user_id" source_id="id" source_model="User" required="1"/>
             <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>
             <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
         </foreignkeys>

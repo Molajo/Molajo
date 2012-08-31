@@ -61,7 +61,6 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getListRoute');
 
-		echo $id . ' ' . $model_type .  ' ' . $model_name . '<br />';
 		$item = $this->get($id, $model_type, $model_name);
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
@@ -178,7 +177,6 @@ Class ContentHelper
 		}
 
 		/** Route Registry */
-		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
 		Services::Registry()->set('Parameters', 'menuitem_lvl', (int)$item->lvl);
 		Services::Registry()->set('Parameters', 'menuitem_title', $item->title);
 		Services::Registry()->set('Parameters', 'menuitem_parent_id', $item->parent_id);
@@ -194,7 +192,16 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
 		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
-		$this->setParameters('menuitem', $item->table_registry_name . 'Parameters');
+		//todo remove hack
+		if (Services::Registry()->get('Parameters', 'catalog_menuitem_type') == 'grid') {
+			$type = 'list';
+		} else {
+			$type = 'menuitem';
+		}
+		$this->setParameters($type, $item->table_registry_name . 'Parameters');
+
+		/** Must be after parameters */
+		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
 
 		return true;
 	}

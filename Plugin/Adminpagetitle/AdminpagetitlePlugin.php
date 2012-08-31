@@ -37,6 +37,9 @@ class AdminpagetitlePlugin extends ContentPlugin
 		}
 
 		/** Standard Headings */
+		//todo remove hack
+		Services::Registry()->set('RouteParameters', 'extension_title', 'Articles');
+
 		$resource = Services::Registry()->get('RouteParameters', 'extension_title');
 		$page_type = Services::Registry()->get('RouteParameters', 'page_type');
 		$request_action = Services::Registry()->get('RouteParameters', 'request_action');
@@ -48,7 +51,12 @@ class AdminpagetitlePlugin extends ContentPlugin
 
 		/** Create Buttons for Page Type */
 		$buttonArray = $this->setButtonArray($page_type);
-		$buttonCount = count($buttonArray);
+
+		if ($buttonArray === false) {
+			$buttonCount = 0;
+		} else {
+			$buttonCount = count($buttonArray);
+		}
 
 		/** Build Query Results for View */
 		$query_results = array();
@@ -82,12 +90,14 @@ class AdminpagetitlePlugin extends ContentPlugin
 	 */
 	protected function setButtonArray($page_type)
 	{
-
 		if ($page_type == 'item') {
 			return $this->setItemButtons();
 
 		} elseif ($page_type == 'form') {
 			return $this->setEditButtons();
+
+		} elseif ($page_type == 'list') {
+			return $this->setListButtons();
 		}
 
 		return false;
@@ -242,6 +252,66 @@ class AdminpagetitlePlugin extends ContentPlugin
 			. $buttonIcon;
 
 		$buttons[] = '{{' . trim($buttonArray) . '}}';
+
+		return $buttons;
+	}
+
+	/**
+	 * Create List Buttons
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	protected function setListButtons()
+	{
+		$buttons = array();
+
+		/** Button 1: Add Item */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Add Item'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonLinkExtra = htmlentities('data-reveal-id:resource-options', ENT_COMPAT, 'UTF-8');
+		$buttonIcon = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
+		$linkURL = $linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$buttonArray = 'button_title:'
+			. $buttonTitle
+			. ','
+			. 'button_type:primary,'
+			. 'button_link:' .
+			$linkURL . ','
+			. 'button_link_extra:'
+			. $buttonLinkExtra . ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
+
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
+
+		/** Button 2: Edit Resource */
+		$buttonTitle = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(Services::Language()->translate('Edit Resource'), ENT_COMPAT, 'UTF-8')
+		);
+		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
+		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
+		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$buttonArray = 'button_title:'
+			. $buttonTitle
+			. ','
+			. 'button_type:primary,'
+			. 'button_link:'
+			. $linkURL
+			. ','
+			. 'button_link_extra:'
+			. $buttonLinkExtra
+			. ','
+			. 'button_icon_prepend:'
+			. $buttonIcon;
+
+		$buttons[] = '{{' . trim($buttonArray) . '}}';
+
 
 		return $buttons;
 	}

@@ -30,7 +30,7 @@
 
         <foreignkeys>
             <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
-            <foreignkey name="user_id" source_id="id" source_model="Users" required="0"/>
+            <foreignkey name="user_id" source_id="id" source_model="User" required="0"/>
             <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>
         </foreignkeys>
     </table>

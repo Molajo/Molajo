@@ -14,7 +14,7 @@
             <field name="application_id" type="integer" null="0" default=""/>
         </fields>
         <foreignkeys>
-            <foreignkey name="user_id" source_id="id" source_model="Users" required="1"/>
+            <foreignkey name="user_id" source_id="id" source_model="User" required="1"/>
             <foreignkey name="application_id" source_id="id" source_model="Applications" required="1"/>
         </foreignkeys>
     </table>

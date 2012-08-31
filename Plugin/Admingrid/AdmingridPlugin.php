@@ -37,6 +37,10 @@ class AdmingridPlugin extends ContentPlugin
 		}
 
 		/** Not authorised and not found */
+		//todo fix hack
+		$this->set('model_type', 'Resource');
+		$this->set('model_name', 'Articles');
+
 		if ($this->get('model_type') == '' || $this->get('model_name') == '') {
 			return true;
 		}
@@ -53,8 +57,21 @@ class AdmingridPlugin extends ContentPlugin
 		$connect->set('use_special_joins', 1);
 		$connect->set('process_plugins', 1);
 
+		//todo remove hack
+		$connect->set('catalog_type_id', 10000);
+		$connect->set('extension_instance_id', 1);
+		$connect->set('criteria_catalog_type_id', 10000);
+		$connect->set('criteria_extension_instance_id', 1);
+
+		Services::Registry()->set('Parameters', 'catalog_type_id', 1000);
+		Services::Registry()->set('Parameters', 'criteria_catalog_type_id', 1000);
+
+		Services::Registry()->set('Parameters', 'extension_instance_id', 1);
+		Services::Registry()->set('Parameters', 'criteria_extension_instance_id', 1);
+
 		$this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
 			. ucfirst(strtolower($this->get('model_type')));
+//Services::Registry()->get($this->table_registry_name, '*');
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry', 1) == 1) {
 
@@ -195,7 +212,7 @@ class AdmingridPlugin extends ContentPlugin
 		$grid_columns = explode(',', $this->get('grid_columns', 'title,created_by,start_publishing_datetime,ordering'));
 		Services::Registry()->set('Plugindata', 'AdminGridTableColumns', $grid_columns);
 
-		$list = $this->get('catalog_type_id');
+		$list = 10000; // $this->get('catalog_type_id');
 
 		$connect->model->query->where(
 			$connect->model->db->qn($primary_prefix)
