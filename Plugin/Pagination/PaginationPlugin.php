@@ -39,23 +39,23 @@ class PaginationPlugin extends ContentPlugin
 			return true;
 		}
 
-		if (Services::Registry()->get('Parameters', 'catalog_source_id') == 0) {
-			$this->listPagination();
-		} else {
-			$this->listPagination();
-			//$this->itemPagination();
-		}
-
 		return true;
 	}
 
 	/**
 	 * Pagination for List Pages
 	 *
+	 * $prev_class = " unavailable";
+	$next_class = " unavailable";
+	 *
 	 * @return bool
 	 */
 	protected function listPagination()
 	{
+
+		echo '<pre>';
+		var_dump($this);
+		echo '</pre>';
 		if ((int)$this->get('pagination_total') > 1) {
 		} else {
 			return true;
@@ -104,20 +104,22 @@ class PaginationPlugin extends ContentPlugin
 
 			$row = new \stdClass();
 
-			$row->link = $url . $connector . 'offset=' . $offset;
+			$row->link = $url . $connector . 'page/' . $offset + 1;
 
 			if ($offset < $this->get('model_offset')) {
 				$row->class = ' page-prev';
+
 			} elseif ($offset == $this->get('model_offset')) {
-				$row->class = ' page-current';
+				$row->class = ' current';
+
 			} else {
 				$row->class = ' page-next';
 			}
 
 			$row->link_text = ' ' . (int)$i + 1;
 
-			$row->prev_link = $url . '/offset=' . $prev_offset;
-			$row->next_link = $url . '/offset=' . $next_offset;
+			$row->prev_link = $url . '/page/' . $prev_offset + 1;
+			$row->next_link = $url . '/page/' . $next_offset + 1;
 
 			$offset = $offset + $this->get('model_count');
 
