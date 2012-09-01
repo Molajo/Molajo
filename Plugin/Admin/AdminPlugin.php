@@ -85,7 +85,7 @@ class AdminPlugin extends ContentPlugin
 
 		Services::Registry()->set('Plugindata', 'page_url', $url);
 
-		Services::Asset()->addLink($url, $relation = 'canonical', $relation_type = 'rel');
+		Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
 
 		$url = Services::Registry()->get('Configuration', 'application_base_url');
 		Services::Registry()->set('Plugindata', 'home_url', $url);

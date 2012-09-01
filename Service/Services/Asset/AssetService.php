@@ -105,6 +105,9 @@ Class AssetService
 	 */
 	public function addLink($url, $relation, $relation_type = 'rel', $attributes = array(), $priority = 500)
 	{
+		if (trim($url) == '') {
+			return $this;
+		}
 		$links = Services::Registry()->get('Assets', 'Links', array());
 
 		$row = new \stdClass();
@@ -127,21 +130,23 @@ Class AssetService
 					. '"';
 			}
 		}
-		$row->url = $url;
+		$row->priority = $priority;
 
-		$links[] = $priority;
+		$links[] = $row;
 
 		Services::Registry()->set('Assets', 'Links', $links);
 
 		/** Order priorities for later use in rendered links in head */
-		$priorities = Services::Registry()->get('Assets', 'LinksPriorities', array());
+		$priorities = Services::Registry()->get('Assets', 'LinksPriorities');
 
-		if (in_array($priority, $priorities)) {
+		if (count($priorities) > 0) {
+			if (in_array($priority, $priorities)) {
+			} else {
+				$priorities[] = $priority;
+			}
 		} else {
 			$priorities[] = $priority;
 		}
-
-		sort($priorities);
 
 		Services::Registry()->set('Assets', 'LinksPriorities', $priorities);
 
@@ -501,7 +506,6 @@ Class AssetService
 	 */
 	public function setPriority($type, $url, $priority)
 	{
-
 		$rows = Services::Registry()->get('Assets', $type);
 		if (is_array($rows) && count($rows) > 0) {
 		} else {
@@ -536,6 +540,7 @@ Class AssetService
 			}
 
 			sort($priorities);
+
 			Services::Registry()->set('Assets', $priorityType, $priorities);
 		}
 
@@ -557,7 +562,6 @@ Class AssetService
 	 */
 	public function remove($type, $url)
 	{
-
 		$rows = Services::Registry()->get('Assets', $type);
 		if (is_array($rows) && count($rows) > 0) {
 		} else {
@@ -642,10 +646,10 @@ Class AssetService
 	 */
 	public function getAssets($type)
 	{
-
 		$priorityType = $type . 'Priorities';
 
 		$rows = Services::Registry()->get('Assets', $type);
+
 		if (is_array($rows) && count($rows) > 0) {
 		} else {
 			return array();
