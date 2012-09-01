@@ -48,7 +48,8 @@ if ((int)$html5 == 1): ?>
     <meta http-equiv="Content-Type"
 		  content="<?php echo $this->row->mimetype; ?>; charset=utf-8"<?php echo $end; ?>
     <?php endif; ?>
-<include:asset name=Assetslinks/><include:metadata name=Metadata/>
+<include:asset name=Assetslinks/>
+	<include:metadata name=Metadata/>
 	<include:asset name=Assetscss/>
 <include:asset name=Assetscssdeclarations/>
     <include:asset name=Assetsjs/>

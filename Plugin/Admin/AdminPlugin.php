@@ -127,7 +127,7 @@ class AdminPlugin extends ContentPlugin
 			$parent_id = $level->parent_id;
 
 			if ($i == 0) {
-				$query_results = Services::Menu()->get($menu_id, $current_menu_item);
+				$query_results = Services::Menu()->get($menu_id, $current_menu_item, $bread_crumbs);
 				Services::Registry()->set('Plugindata', 'Adminapplicationmenu', $query_results);
 				$level = 0;
 			}

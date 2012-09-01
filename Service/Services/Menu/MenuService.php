@@ -112,7 +112,7 @@ Class MenuService
 	 * @return array|bool
 	 * @since   1.0
 	 */
-	public function get($menu_id, $current_menu_item = 0)
+	public function get($menu_id, $current_menu_item = 0, $bread_crumbs = array())
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
@@ -154,12 +154,22 @@ Class MenuService
 			$item->menu_id = $item->extension_id;
 
 			if ($item->id == $current_menu_item && (int)$current_menu_item > 0) {
-				$item->css_class = 'active';
+				$item->css_class = 'current';
 				$item->current = 1;
 			} else {
 				$item->css_class = '';
 				$item->current = 0;
 			}
+
+			$item->active = 0;
+			foreach ($bread_crumbs as $crumb) {
+				if ($item->id == $crumb->id) {
+					$item->css_class .= ' active';
+					$item->active = 1;
+				}
+			}
+
+			$item->css_class = trim($item->css_class);
 
 			if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 				$item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
