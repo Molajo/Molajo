@@ -41,9 +41,13 @@ class UiIncluder extends Includer
 			$useValue = $value;
 
 			if ($key == 'name') {
-				$useValue = Services::Registry()->get('Parameters', 'Ui-' .$value);
+
+				$find = 'ui-' . trim($value);
+
+				$useValue = Services::Registry()->get('Configuration', $find);
+
 				if ((int) $useValue == 0) {
-					$useValue = Services::Registry()->get('Configuration', 'Ui-' .$value);
+					$useValue = Services::Registry()->get('Configuration', $find);
 				}
 			}
 			$includer .= ' ' . trim($key) . '=' . trim($useValue);
