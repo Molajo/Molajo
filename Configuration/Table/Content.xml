@@ -10,6 +10,7 @@
         use_special_joins="1"
         check_view_level_access="1"
         process_plugins="1"
+        use_pagination="1"
         data_source="JDatabase">
 
     <table>

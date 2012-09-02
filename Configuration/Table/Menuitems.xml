@@ -2,6 +2,7 @@
 <model
         name="Menuitems"
         catalog_type_id="1300"
+        use_pagination="1"
         extends="ExtensionInstances">
     <customfields>
         <customfield name="parameters">

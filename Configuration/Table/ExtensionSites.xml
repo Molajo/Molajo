@@ -4,6 +4,7 @@
         table="#__extension_sites"
         primary_key="id"
         name_key="name"
+        use_pagination="1"
         data_source="JDatabase">
     <table>
         <fields>

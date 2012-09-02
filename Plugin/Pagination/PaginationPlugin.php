@@ -26,107 +26,129 @@ class PaginationPlugin extends ContentPlugin
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function onAfterRead()
+	public function onAfterReadall()
 	{
-		if ($this->get('first') == true) {
+		if ((int)$this->get('use_pagination') > 0) {
 		} else {
 			return true;
 		}
 
-		//todo: move model_use_pagination into model - work around for now - grab just read parameter
-		if (Services::Registry()->get('Parameters', 'model_use_pagination') == 1) {
-		} else {
-			return true;
-		}
+		/** initialise */
+		$url = Services::Registry()->get('Plugindata', 'page_url');
+		$query_results = array();
 
-		return true;
-	}
-
-	/**
-	 * Pagination for List Pages
-	 *
-	 * $prev_class = " unavailable";
-	$next_class = " unavailable";
-	 *
-	 * @return bool
-	 */
-	protected function listPagination()
-	{
-
-		echo '<pre>';
-		var_dump($this);
-		echo '</pre>';
+		/** pagination_total: number of items */
 		if ((int)$this->get('pagination_total') > 1) {
 		} else {
 			return true;
 		}
 
+		/** model_count: max number of rows to display per page */
 		if ((int)$this->get('model_count') > 0) {
 		} else {
 			$this->set('model_count', 5);
 		}
 
+		/** model_offset: offset of 0 means skip 0 rows, then start with row 1 */
 		if ((int)$this->get('model_offset') > 1) {
 		} else {
 			$this->set('model_offset', 0);
 		}
 
-		if ($this->get('model_offset') + $this->get('model_count') >= $this->get('pagination_total')) {
-			return true;
+		/** current_page */
+		$current_page = ($this->get('model_offset') / $this->get('model_count')) + 1;
+		if ($this->get('model_offset') % $this->get('model_count')) {
+			$current_page++;
 		}
 
-		/** Next offset */
-		if ($this->get('model_offset') + $this->get('model_count') > $this->get('pagination_total')) {
-			$next_offset = 0;
+		/** previous page */
+		if ((int) $current_page > 1) {
+			$previous_page = (int) $current_page - 1;
+			$prev_link = $url . '/page/' . (int) $previous_page;
 		} else {
-			$next_offset = $this->get('model_offset') + $this->get('model_count');
+			$previous_page = 0;
+			$prev_link = '';
 		}
 
-		$current_offset = $this->get('model_offset');
+		/** total pages */
+		$total_pages = (int)$this->get('pagination_total') / (int) $this->get('model_count');
 
-		/** Prev offset */
-		if ($this->get('model_offset') - $this->get('model_count') < 0) {
-			$prev_offset = null;
+		if ((int)$this->get('pagination_total') % $this->get('model_count') > 0) {
+			$total_pages++;
+		}
+
+		/** next page */
+		if ((int) $total_pages > (int) $current_page) {
+			$next_page = $current_page + 1;
+			$next_link = $url . '/page/' . $next_page;
 		} else {
-			$prev_offset = $this->get('model_offset') - $this->get('model_count');
+			$next_page = 0;
+			$next_link = '';
 		}
 
-		/** Pages */
-		$url = Services::Registry()->get('Plugindata', 'page_url');
+		/** first and last pages */
+		$first_page = 1;
+		$first_link = $url . '/page/' . 1;
 
-		$connector = '/';
+		$last_page = (int) $total_pages;
+		$last_link = $url . '/page/' . (int) $total_pages;
+
+		/** Paging */
+		$row = new \stdClass();
+
+		$row->total_items = (int)$this->get('pagination_total');
+		$row->total_items_per_page = (int)$this->get('model_count');
+
+		$row->first_page = $first_page;
+		$row->first_link = $first_link;
+
+		$row->previous_page = $previous_page;
+		$row->prev_link = $prev_link;
+
+		$row->next_page = $next_page;
+		$row->next_link = $next_link;
+
+		$row->last_page = $last_page;
+		$row->last_link = $last_link;
+
+		$query_results[] = $row;
+
+		Services::Registry()->set('Plugindata', 'Paging', $query_results);
+
+		/** Paging */
 		$query_results = array();
-		$offset = 0;
-
-		$iteration = round($this->get('pagination_total') / $this->get('model_count', 5), 0);
-
-		for ($i = 0; $i < $iteration; $i++) {
+		for ($i = 1; $i < $total_pages; $i++) {
 
 			$row = new \stdClass();
 
-			$row->link = $url . $connector . 'page/' . $offset + 1;
+			$row->total_items = (int)$this->get('pagination_total');
+			$row->total_items_per_page = (int)$this->get('model_count');
 
-			if ($offset < $this->get('model_offset')) {
-				$row->class = ' page-prev';
+			$row->first_page = $first_page;
+			$row->first_link = $first_link;
 
-			} elseif ($offset == $this->get('model_offset')) {
-				$row->class = ' current';
+			$row->previous_page = $previous_page;
+			$row->prev_link = $prev_link;
 
+			if ($i == $current_page) {
+				$row->current = 1;
 			} else {
-				$row->class = ' page-next';
+				$row->current = 0;
 			}
 
-			$row->link_text = ' ' . (int)$i + 1;
+			$row->link = $url . '/page/' . $i;
+			$row->link_text = ' ' . (int) $i;
 
-			$row->prev_link = $url . '/page/' . $prev_offset + 1;
-			$row->next_link = $url . '/page/' . $next_offset + 1;
+			$row->next_page = $next_page;
+			$row->next_link = $next_link;
 
-			$offset = $offset + $this->get('model_count');
+			$row->last_page = $last_page;
+			$row->last_link = $last_link;
 
 			$query_results[] = $row;
 		}
 
-		Services::Registry()->set('Plugindata', 'AdminGridPagination', $query_results);
+		Services::Registry()->set('Plugindata', 'Pagination', $query_results);
 
 		return true;
 	}

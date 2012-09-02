@@ -224,6 +224,12 @@ class Includer
 				Services::Registry()->set('Parameters', 'wrap_view_property', str_replace(',', ' ', $value));
 
 			/** Model */
+			} elseif ($name == 'datalist') {
+				Services::Registry()->set('Parameters', 'datalist', $value);
+				Services::Registry()->set('Parameters', 'model_type', 'dbo');
+				Services::Registry()->set('Parameters', 'model_name', 'Parameters');
+				Services::Registry()->set('Parameters', 'model_query_object', 'getParameters');
+
 			} elseif ($name == 'model_name') {
 				Services::Registry()->set('Parameters', 'model_name', $value);
 
@@ -457,13 +463,7 @@ class Includer
 				$controller->set($key, $value);
 			}
 		}
-/**
-//if  (Services::Registry()->get('Parameters', 'template_view_title') == 'Head') {
-	echo '<br /><br /><br />NEXT<br />';
-	echo $message;
-	echo '<br /><br /><br />';
-//}
-*/
+
  		$results = $controller->execute();
 
 		return $results;

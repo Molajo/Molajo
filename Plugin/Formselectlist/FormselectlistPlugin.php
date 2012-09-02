@@ -20,15 +20,14 @@ class FormselectlistPlugin extends ContentPlugin
 {
 
 	/**
-	 * Before-read processing
-	 *
-	 * Prepares the filter selections for the Grid Query
+	 * Prepares listbox contents
 	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
 	public function onAfterReadall()
 	{
+
 		$datalist = Services::Registry()->get('Parameters', 'datalist');
 
 		if ($datalist == false || trim($datalist) == '') {

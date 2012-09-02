@@ -3,6 +3,7 @@
         name="Pageviews"
         catalog_type_id="1150"
         extension_id="20"
+        use_pagination="1"
         extends="ExtensioninstancesTable">
     <customfields>
         <customfield name="parameters">

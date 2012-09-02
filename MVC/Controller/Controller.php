@@ -186,6 +186,7 @@ class Controller
 			$this->set('check_view_level_access', 0);
 			$this->set('process_plugins', 0);
 			$this->get('model_offset', 0);
+			$this->set('use_pagination', 0);
 			$this->get('model_count', 5);
 
 		} else {
@@ -241,6 +242,8 @@ class Controller
 				Services::Registry()->get($this->table_registry_name, 'extension_instance_id', 0));
 			$this->set('criteria_published_status',
 				Services::Registry()->get($this->table_registry_name, 'published_status', 0));
+			$this->set('use_pagination',
+				Services::Registry()->get($this->table_registry_name, 'use_pagination', 1));
 			$this->set('data_source',
 				Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
 			$this->get('model_offset', 0);
