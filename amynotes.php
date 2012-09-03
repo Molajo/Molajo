@@ -150,7 +150,7 @@ INSERT INTO `molajo_extensions` (`id`, `extension_site_id`, `catalog_type_id`, `
 	(1290, 1, 1200, 'Editmetadata'),
 	(1300, 1, 1200, 'Editparameters'),
 	(1310, 1, 1200, 'Errors'),
-	(1320, 1, 1200, 'Formselectlist'),
+	(1320, 1, 1200, 'form-select-list'),
 	(1330, 1, 1200, 'Gallery'),
 	(1335, 1, 1200, 'Groups'),
 	(1340, 1, 1200, 'Head'),
@@ -310,7 +310,7 @@ INSERT INTO `molajo_extension_instances` (`id`, `extension_id`, `catalog_type_id
 	(1290, 1290, 1200, 'Editmetadata', 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 32),
 	(1300, 1300, 1200, 'Editparameters', 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 33),
 	(1310, 1310, 1200, 'Errors', 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 34),
-	(1320, 1320, 1200, 'Formselectlist', 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 35),
+	(1320, 1320, 1200, 'form-select-list', 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 35),
 	(1330, 1330, 1200, 'Gallery', 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 36),
 	(1335, 1335, 1200, 'Groups', 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 37),
 	(1340, 1340, 1200, 'Head', 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 38),
@@ -813,22 +813,22 @@ Services::Registry()->get('Parameters', '*');
 
 INSERT INTO `molajo_extensions`
 (`id`, `extension_site_id`, `catalog_type_id`, `name`, `sub_title`, `language`, `translation_of_id`, `ordering`)
-VALUES ( 7015 ,  '1',  '1200',  'Ui-navigation-pagination-molajito', 'Template', '', 0, 1);
+VALUES ( 6181 ,  '1',  '1450',  'Form-select-list', 'Plugin', '', 0, 1);
 
 INSERT INTO `molajo_extension_instances` (`id`, `extension_id`, `catalog_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `customfields`, `parameters`, `metadata`, `language`, `translation_of_id`, `ordering`)
 SELECT a.id, a.id, a.catalog_type_id, a.name, 'Template', '', '', 1, 0, 0, 1, '2012-07-01 12:00:00', '0000-00-00 00:00:00', 1, 0, 0, '2012-07-01 12:00:00', 0, '2012-07-01 12:00:00', 0, '0000-00-00 00:00:00', 0, '{}', '\r\n{\r\n    "1":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    },\r\n        \r\n    "2":{\r\n        "criteria_display_view_on_no_results":"",\r\n        "criteria_snippet_length":"",\r\n        "criteria_extension_instance_id":"",\r\n        "criteria_catalog_type_id":"",\r\n\r\n        "cache":"",\r\n        "cache_time":"",\r\n        "cache_handler":""\r\n    }\r\n}', NULL, 'en-GB', 0, 24
 FROM molajo_extensions a
-WHERE id = 7015;
+WHERE id = 6181;
 
 INSERT INTO  `molajo_site_extension_instances` (  `site_id` ,  `extension_instance_id` )
 SELECT a.id, b.id
 FROM molajo_sites a, molajo_extension_instances b
-WHERE b.id = 7015;
+WHERE b.id = 6181;
 
 INSERT INTO  `molajo_application_extension_instances` (  `application_id` ,  `extension_instance_id` )
 SELECT a.id, b.id
 FROM molajo_applications a, molajo_extension_instances b
-WHERE b.id = 7015;
+WHERE b.id = 6181;
 
 INSERT INTO molajo_catalog
 SELECT NULL, a.catalog_type_id, a.id, b.routable,
@@ -836,7 +836,7 @@ SELECT NULL, a.catalog_type_id, a.id, b.routable,
 1 as view_group_id, b.primary_category_id, '' as tinyurl
 from molajo_extension_instances a,
 molajo_catalog_types b
-where a.id = 7015
+where a.id = 6181
 and a.catalog_type_id = b.id;
 
 2. sample data

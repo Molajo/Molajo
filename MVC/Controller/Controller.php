@@ -442,7 +442,8 @@ class Controller
 				$this->plugins = $temp;
 			}
 
-			$this->plugins[] = Services::Registry()->get('Parameters', 'template_view_path_node');
+			$temp = Services::Registry()->get('Parameters', 'template_view_path_node');
+			$this->plugins[] = str_replace('-', '', $temp);
 			$this->plugins[] = APPLICATION;
 
 		} else {

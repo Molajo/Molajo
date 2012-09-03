@@ -246,7 +246,7 @@ class Includer
 				Services::Registry()->set('Parameters', 'model_query_object', $value);
 
 			} else {
-				/** For security reasons, other parameters must override and match defined parameter values */
+				/** Todo: For security reasons, other parameters must override and match defined parameter values */
 				Services::Registry()->set('Parameters', $name, $value);
 			}
 		}
@@ -276,6 +276,7 @@ class Includer
 	 */
 	protected function setRenderCriteria()
 	{
+
 		/**  Template */
 		$template_id = 0;
 		$template_title = Services::Registry()->get('Parameters', 'template_view_path_node');
@@ -320,7 +321,7 @@ class Includer
 		/** Template  */
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
 
-		/** Merge Parameter info in */
+		/** Merge Parameters in (Pre-wrap) */
 		if (is_array($savedParameters) && count($savedParameters) > 0) {
 			foreach ($savedParameters as $key => $value) {
 				Services::Registry()->set('Parameters', $key, $value);
@@ -357,6 +358,14 @@ class Includer
 		Services::Registry()->delete('Parameters', 'form*');
 
 		Services::Registry()->sort('Parameters');
+
+
+		/** Merge Parameters in (Post-wrap) */
+		if (is_array($savedParameters) && count($savedParameters) > 0) {
+			foreach ($savedParameters as $key => $value) {
+				Services::Registry()->set('Parameters', $key, $value);
+			}
+		}
 
 		if (Services::Registry()->get('Parameters', 'template_view_id') == 0) {
 			return false;
