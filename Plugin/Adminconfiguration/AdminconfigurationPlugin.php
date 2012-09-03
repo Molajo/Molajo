@@ -79,40 +79,42 @@ class AdminconfigurationPlugin extends ContentPlugin
 	 */
 	protected function setTabArray()
 	{
+		//"configuration_array":"{{Basic,basic}}{{Parameters,parameters}}{{Fields,fields}}"
 		$tabs = array();
 
-		/** Tab 1: Basic */
-		$tabTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Basic Options'), ENT_COMPAT, 'UTF-8')
-		);
-		$tabLink = 'basic';
-		$tabIncludeName = 'adminconfiguration-basic';
+		$configuration = $this->get('configuration_array');
+		$configurationArray = array();
+		$temp = explode('}}', $configuration);
 
-		$tabs[] = $this->createTabEntry($tabTitle, $tabLink, $tabIncludeName);
+		foreach ($temp as $set) {
+			$set = str_replace(',', ' ', $set);
+			$set = str_replace(':', '=', $set);
+			$set = str_replace('{{', '', $set);
+			$set = str_replace('http=', 'http:', $set);
+			if (trim($set) == '') {
+			} else {
+				$configurationArray[] = trim($set);
+			}
+		}
 
-		/** Tab 2: Parameters */
-		$tabTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Parameters'), ENT_COMPAT, 'UTF-8')
-		);
-		$tabLink = 'parameters';
-		$tabIncludeName = 'adminconfiguration-parameters';
+		foreach ($configurationArray as $config) {
 
-		$tabs[] = $this->createTabEntry($tabTitle, $tabLink, $tabIncludeName);
+			$split = explode(' ', $config);
 
-		/** Tab 3: Fields */
-		$tabTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Fields'), ENT_COMPAT, 'UTF-8')
-		);
-		$tabLink = 'fields';
-		$tabIncludeName = 'adminconfiguration-fields';
+			$tabTitle = str_replace(
+				' ',
+				'&nbsp;',
+				htmlentities(Services::Language()->translate(
+					$split[0]
+				), ENT_COMPAT, 'UTF-8')
+			);
+			$tabLink = $split[1];
 
-		$tabs[] = $this->createTabEntry($tabTitle, $tabLink, $tabIncludeName);
+			$tabIncludeName = 'adminconfiguration-' . $split[1];
+
+			$tabs[] = $this->createTabEntry($tabTitle, $tabLink, $tabIncludeName);
+
+		}
 
 		return $tabs;
 	}
