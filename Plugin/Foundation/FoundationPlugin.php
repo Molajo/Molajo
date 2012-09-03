@@ -35,6 +35,9 @@ class FoundationPlugin extends ContentPlugin
 		} elseif (strtolower($this->get('template_view_path_node')) == 'ui-button-dropdown-foundation') {
 			$this->button_dropdown();
 
+		} elseif (strtolower($this->get('template_view_path_node')) == 'ui-navigation-tab-foundation') {
+			$this->tab();
+
 		} else {
 			return true;
 		}
@@ -146,5 +149,67 @@ class FoundationPlugin extends ContentPlugin
 			}
 		}
 		return $button_array;
+	}
+
+	/**
+	 * Foundation Tab Group
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	protected function tab()
+	{
+		$tab_class = str_replace(',', ' ', $this->data->tab_class);
+
+		$tab_class = 'tabs ' . trim($tab_class);
+
+		$tab_class = ' class="' . htmlspecialchars(trim($tab_class), ENT_NOQUOTES, 'UTF-8') . '"';
+		$this->saveField(null, 'tab_class', $tab_class);
+
+		$tab_array = $this->getTabs($this->data->tab_array);
+		$this->saveField(null, 'tab_array', $tab_array);
+
+		return true;
+	}
+
+	/**
+	 * Get tab sections
+	 *
+	 * @param $tabs
+	 * @return array
+	 */
+	protected function getTabs($tabs)
+	{
+		$tab_array = array();
+		$temp_array = array();
+		$temp = explode('}}', $tabs);
+
+		foreach ($temp as $set) {
+			$set = str_replace(',', ' ', $set);
+			$set = str_replace(':', '=', $set);
+			$set = str_replace('{{', '', $set);
+			$set = str_replace('http=', 'http:', $set);
+			if (trim($set) == '') {
+			} else {
+				$temp_array[] = trim($set);
+			}
+		}
+
+		foreach ($temp_array as $set) {
+
+			$fields = explode(' ', $set);
+			foreach ($fields as $field) {
+				$temp = explode('=', $field);
+				$pairs[$temp[0]] = $temp[1];
+			}
+
+			$row = new \stdClass();
+			foreach ($pairs as $key=>$value) {
+				$row->$key = $value;
+			}
+			$tab_array[] = $row;
+		}
+
+		return $tab_array;
 	}
 }

@@ -357,12 +357,11 @@ class Includer
 		Services::Registry()->delete('Parameters', 'form*');
 
 		Services::Registry()->sort('Parameters');
-/***
-		if (Services::Registry()->get('Parameters', 'template_view_path_node') == 'Adminfooter') {
-			Services::Registry()->get('Parameters', '*');
-			die;
+
+		if (Services::Registry()->get('Parameters', 'template_view_id') == 0) {
+			return false;
 		}
-*/
+
 		return true;
 	}
 

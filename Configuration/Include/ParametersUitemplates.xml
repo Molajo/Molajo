@@ -4,12 +4,14 @@
 
 <field name="ui-navigation-navbar" type="templates" null="0" default="0"/>
 <field name="ui-navigation-verticalnav" type="templates" null="0" default="0"/>
+<field name="ui-navigation-administrator" type="templates" null="0" default="0"/>
 <field name="ui-navigation-sidenav" type="templates" null="0" default="0"/>
 <field name="ui-navigation-subnav" type="templates" null="0" default="0"/>
 <field name="ui-navigation-breadcrumbs" type="templates" null="0" default="0"/>
 <field name="ui-navigation-pagination" type="integer" null="0" default="0"/>
 <field name="ui-navigation-pager" type="templates" null="0" default="0"/>
-<field name="ui-navigation-tabs" type="templates" null="0" default="0"/>
+<field name="ui-navigation-tab-group" type="templates" null="0" default="0"/>
+<field name="ui-navigation-tab" type="templates" null="0" default="0"/>
 <field name="ui-navigation-linklist" type="templates" null="0" default="0"/>
 
 <field name="ui-elements-labels" type="templates" null="0" default="0"/>
@@ -20,4 +22,6 @@
 <field name="ui-elements-modal" type="templates" null="0" default="0"/>
 <field name="ui-elements-alerts" type="templates" null="0" default="0"/>
 <field name="ui-elements-carousel" type="templates" null="0" default="0"/>
-<field name="ui-elements-pael" type="templates" null="0" default="0"/>
+<field name="ui-elements-panel" type="templates" null="0" default="0"/>
+
+<field name="ui-tab-group-class" type="char" null="0" default=" "/>
