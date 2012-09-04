@@ -192,19 +192,8 @@ Class TextService
 		}
 
 		/** Where */
-		if (strtolower($parameters['template_view_path_node']) == 'admindashboard') {
-			$m->model->query->where($m->model->db->qn('extensions.name')
-				. ' LIKE ' . $m->model->db->q('Portlet%'));
-		}
-
 		$this->setWhereCriteria('catalog_type_id',
 			$parameters['criteria_catalog_type_id'],
-			$primary_prefix,
-			$m
-		);
-
-		$this->setWhereCriteria('status',
-			$parameters['criteria_status'],
 			$primary_prefix,
 			$m
 		);
