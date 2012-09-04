@@ -33,7 +33,6 @@
             <include name="Metadata"/>
         </customfield>
         <customfield name="parameters">
-            <include name="ParametersGrid"/>
             <include name="ParametersCache"/>
             <include name="ParametersGravatar"/>
             <include name="ParametersCommon"/>

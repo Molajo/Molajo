@@ -157,11 +157,11 @@ Class ViewHelper
 	protected function processParameterSet($parameterSet, $requestTypeNamespace)
 	{
 		foreach ($parameterSet as $key => $value) {
-			$existing = Services::Registry()->get('Parameters', substr($key, strlen($requestTypeNamespace) + 1, 9999));
+			$existing = Services::Registry()->get('Parameters', $key);
 			if ($existing === 0 || trim($existing) == '' || $existing == null) {
 				if ($value === 0 || trim($value) == '' || $value == null) {
 				} else {
-					Services::Registry()->set('Parameters', substr($key, strlen($requestTypeNamespace) + 1, 9999), $value);
+					Services::Registry()->set('Parameters', $key, $value);
 				}
 			}
 		}

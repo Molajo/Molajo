@@ -164,8 +164,6 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Query', 'Current', 'Content getRouteTemplateView');
 
-		Services::Registry()->sort('Parameters');
-
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
 			'Menuitem',
@@ -198,6 +196,7 @@ Class ContentHelper
 		} else {
 			$type = 'menuitem';
 		}
+
 		$this->setParameters($type, $item->table_registry_name . 'Parameters');
 
 		/** Must be after parameters */
@@ -317,9 +316,28 @@ Class ContentHelper
 		/**  Merge in matching Configuration data  */
 		Services::Registry()->merge('Configuration', 'Parameters', true);
 
+		/** Save existing parameters */
+		$savedParameters = array();
+		$temp = Services::Registry()->getArray('Parameters');
+		if (is_array($temp) && count($temp) > 0) {
+			foreach ($temp as $key => $value) {
+				if ($value === 0 || trim($value) == '' || $value === null) {
+				} else {
+					$savedParameters[$key] = $value;
+				}
+			}
+		}
+
 		/** Set Theme, Page, Template nad Wrap */
 		Helpers::Extension()->setThemePageView();
 		Helpers::Extension()->setTemplateWrapModel();
+
+		/** Merge Parameters in (Pre-wrap) */
+		if (is_array($savedParameters) && count($savedParameters) > 0) {
+			foreach ($savedParameters as $key => $value) {
+				Services::Registry()->set('Parameters', $key, $value);
+			}
+		}
 
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
@@ -329,6 +347,8 @@ Class ContentHelper
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'form*');
 		Services::Registry()->delete('Parameters', 'menuitem*');
+
+		Services::Registry()->sort('Parameters');
 
 		return true;
 	}

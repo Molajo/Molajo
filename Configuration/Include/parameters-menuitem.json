@@ -61,6 +61,9 @@
         "menuitem_wrap_view_property":"",
         "menuitem_model_name":"Parameters",
         "menuitem_model_type":"dbo",
-        "menuitem_model_query_object":"getParameters"
+        "menuitem_model_parameter":"",
+        "menuitem_model_offset":"0",
+        "menuitem_model_count":"0",
+        "menuitem_model_use_pagination":"1"
     }
 }

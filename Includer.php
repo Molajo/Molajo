@@ -471,6 +471,7 @@ class Includer
 				$controller->set($key, $value);
 			}
 		}
+//echo '<br />INCLUDER <br />' .  Services::Registry()->get('Parameters', 'template_view_path');
 
  		$results = $controller->execute();
 
