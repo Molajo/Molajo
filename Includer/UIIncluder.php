@@ -42,7 +42,7 @@ class UiIncluder extends Includer
 
 			if ($key == 'name') {
 
-				$find = 'ui-' . trim($value);
+				$find = 'ui' . trim($value);
 
 				$useValue = Services::Registry()->get('Configuration', $find);
 
