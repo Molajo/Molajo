@@ -83,6 +83,7 @@ Class ViewHelper
 		Services::Registry()->set('Parameters', $type . '_view_path_include',
 			$this->getPath($node, $type) . '/index.php');
 		Services::Registry()->set('Parameters', $type . '_view_path_url', $this->getPathURL($node, $type));
+		Services::Registry()->set('Parameters', $type . '_view_namespace', $this->getNamespace($node, $type));
 
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($id, $type, $node);
@@ -267,6 +268,48 @@ Class ViewHelper
 		/** 4. View */
 		if (file_exists(CORE_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
 			return CORE_VIEWS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
+		}
+
+		return '';
+	}
+
+	/**
+	 * getNamespace - Return Namespace for selected View
+	 *
+	 * @param bool $node
+	 * @param $type
+	 *
+	 * @return bool|string
+	 * @since  1.0
+	 */
+	public function getNamespace($node = false, $type)
+	{
+		$type = ucfirst(strtolower($type));
+		if ($type == 'Page' || $type == 'Template' || $type == 'Wrap') {
+		} else {
+			return false;
+		}
+
+		$plus = 'View\\' . $type . '\\' . ucfirst(strtolower($node));
+
+		/** 1. Theme */
+		if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Configuration.xml')) {
+			return 'Extension\\Theme\\' . Services::Registry()->get('Parameters', 'theme_path_node') . '\\' . $plus;
+		}
+
+		/** 2. Resource */
+		if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Configuration.xml')) {
+			return 'Extension\\Resource\\' . Services::Registry()->get('Parameters', 'extension_title') . '\\' . $plus;
+		}
+
+		/** 3. Extension View */
+		if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+			return 'Extension\\' . $plus;
+		}
+
+		/** 4. Platform View */
+		if (file_exists(CORE_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+			return 'Molajo\\' . $plus;
 		}
 
 		return '';

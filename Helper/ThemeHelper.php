@@ -66,6 +66,7 @@ Class ThemeHelper
 		Services::Registry()->set('Parameters', 'theme_path_node', $node);
 
 		Services::Registry()->set('Parameters', 'theme_path', $this->getPath($node));
+		Services::Registry()->set('Parameters', 'theme_namespace', $this->getNamespace($node));
 		Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($node) . '/index.php');
 		Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
 		Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
@@ -94,6 +95,7 @@ Class ThemeHelper
 			Services::Registry()->set('Parameters', 'theme_path_node', $node);
 
 			Services::Registry()->set('Parameters', 'theme_path', $this->getPath($node));
+			Services::Registry()->set('Parameters', 'theme_namespace', $this->getNamespace($node));
 			Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($node) . '/index.php');
 			Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
 			Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
@@ -168,6 +170,27 @@ Class ThemeHelper
 
 		if (file_exists(CORE_THEMES . '/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
 			return CORE_THEMES_URL . '/' . ucfirst(strtolower($node));
+		}
+
+		return false;
+	}
+
+	/**
+	 * getNamespace - Return path for selected Theme
+	 *
+	 * @param   $node
+	 *
+	 * @return bool|string
+	 * @since   1.0
+	 */
+	public function getNamespace($node)
+	{
+		if (file_exists(EXTENSIONS_THEMES . '/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+			return 'Extension\\Theme\\' . ucfirst(strtolower($node));
+		}
+
+		if (file_exists(CORE_THEMES . '/' . ucfirst(strtolower($node)) . '/' . 'index.php')) {
+			return 'Molajo\\Theme\\' . ucfirst(strtolower($node));
 		}
 
 		return false;

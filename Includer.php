@@ -126,6 +126,7 @@ class Includer
 		} else {
 			$this->loadMedia();
 			$this->loadViewMedia();
+			$this->loadPlugins();
 		}
 
 		return $rendered_output;
@@ -155,8 +156,8 @@ class Includer
 
 				if ($this->name == 'template') {
 
-					if ((int) $value > 0) {
-						$template_id = (int) $value;
+					if ((int)$value > 0) {
+						$template_id = (int)$value;
 						$template_title = Helpers::Extension()->getExtensionNode($template_id);
 					} else {
 						$template_title = ucfirst(strtolower(trim($value)));
@@ -194,10 +195,10 @@ class Includer
 			} elseif ($name == 'template_view_css_id' || $name == 'template_css_id' || $name == 'template_id') {
 				Services::Registry()->set('Parameters', 'template_view_css_id', $value);
 
-			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class' || $name == 'template_class' ) {
+			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class' || $name == 'template_class') {
 				Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
-			/** Wrap */
+				/** Wrap */
 			} elseif ($name == 'wrap' || $name == 'wrap_view_title' || $name == 'wrap_view' || $name == 'wrap_title') {
 
 				$value = ucfirst(strtolower(trim($value)));
@@ -223,7 +224,7 @@ class Includer
 			} elseif ($name == 'wrap_view_property' || $name == 'wrap_property' || $name == 'property') {
 				Services::Registry()->set('Parameters', 'wrap_view_property', str_replace(',', ' ', $value));
 
-			/** Model */
+				/** Model */
 			} elseif ($name == 'datalist') {
 				Services::Registry()->set('Parameters', 'datalist', $value);
 				Services::Registry()->set('Parameters', 'model_type', 'dbo');
@@ -287,11 +288,11 @@ class Includer
 				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
 		}
 
-		if ((int) $template_id == 0) {
+		if ((int)$template_id == 0) {
 			$template_id = Services::Registry()->get('Parameters', 'template_view_id');
 		}
 
-		if (trim($template_title) == '' || (int) $template_id > 0) {
+		if (trim($template_title) == '' || (int)$template_id > 0) {
 		} else {
 			Services::Registry()->set('Parameters', 'template_view_path_node', $template_title);
 			$template_id = Helpers::Extension()
@@ -334,7 +335,7 @@ class Includer
 
 		if ($wrap_view_title === null) {
 			$wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id');
-			if ((int) $wrap_view_id === 0) {
+			if ((int)$wrap_view_id === 0) {
 			} else {
 				Services::Registry()->set('Parameters', 'wrap_view_path_node',
 					Helpers::Extension()->getExtensionNode((int)$wrap_view_id));
@@ -352,6 +353,8 @@ class Includer
 			Helpers::View()->getPath($wrap_view_title, 'Wrap'));
 		Services::Registry()->set('Parameters', 'wrap_view_path_url',
 			Helpers::View()->getPathURL($wrap_view_title, 'Wrap'));
+		Services::Registry()->set('Parameters', 'wrap_view_namespace',
+			Helpers::View()->getNamespace($wrap_view_title, 'Wrap'));
 
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'list*');
@@ -395,6 +398,60 @@ class Includer
 		);
 
 		return;
+	}
+
+	/**
+	 * 	loadPlugins overrides (or initially loads) Plugins from the Template and/or Wrap View folders
+	 *
+	 *  @return  void
+	 *  @since   1.0
+	 */
+	protected function loadPlugins()
+	{
+		$templatePlugins = Services::Filesystem()->folderFolders(
+			Services::Registry()->get('Parameters', 'template_view_path') . '/' . 'Plugin'
+		);
+
+		if (count($templatePlugins) == 0 || $templatePlugins === false) {
+		} else {
+			$this->processPlugins(
+				$templatePlugins,
+				Services::Registry()->get('Parameters', 'template_view_namespace')
+			);
+		}
+
+		$wrapPlugins = Services::Filesystem()->folderFolders(
+			Services::Registry()->get('Parameters', 'wrap_view_path') . '/' . 'Plugin'
+		);
+
+		if (count($wrapPlugins) == 0 || $wrapPlugins === false) {
+		} else {
+			$this->processPlugins(
+				$wrapPlugins,
+				Services::Registry()->get('Parameters', 'wrap_view_namespace')
+			);
+		}
+
+		return;
+	}
+
+	/**
+	 * processPlugins for Theme, Page, and Request Extension (overrides Core and Plugin folder)
+	 *
+	 * @param  $plugins array of folder names
+	 * @param  $path
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	protected function processPlugins($plugins, $path)
+	{
+		foreach ($plugins as $folder) {
+			Services::Event()->process_events(
+				$folder . 'Plugin',
+				$path . '\\Plugin\\' . $folder . '\\' . $folder . 'Plugin'
+			);
+		}
 	}
 
 	/**
@@ -473,7 +530,7 @@ class Includer
 		}
 //echo '<br />INCLUDER <br />' .  Services::Registry()->get('Parameters', 'template_view_path');
 
- 		$results = $controller->execute();
+		$results = $controller->execute();
 
 		return $results;
 	}

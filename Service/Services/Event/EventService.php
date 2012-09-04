@@ -317,7 +317,7 @@ Class EventService
 	 * @return object
 	 * @since  1.0
 	 */
-	protected function process_events($pluginName, $pluginClass)
+	public function process_events($pluginName, $pluginClass)
 	{
 		/** Retrieve all Event Methods in the Plugin */
 		$events = get_class_methods($pluginClass);

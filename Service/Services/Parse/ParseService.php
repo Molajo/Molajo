@@ -221,6 +221,31 @@ Class ParseService
 			return false;
 		}
 
+		/** Load Theme, Page, and Request Extension Plugins */
+		$themePlugins = Services::Filesystem()->folderFolders(
+			Services::Registry()->get('Parameters', 'theme_path') . '/' . 'Plugin'
+		);
+
+		if (count($themePlugins) == 0 || $themePlugins === false) {
+		} else {
+			$this->processPlugins(
+				$themePlugins,
+				Services::Registry()->get('Parameters', 'theme_namespace')
+			);
+		}
+
+		$pagePlugins = Services::Filesystem()->folderFolders(
+			Services::Registry()->get('Parameters', 'page_view_path') . '/' . 'Plugin'
+		);
+
+		if (count($pagePlugins) == 0 || $pagePlugins === false) {
+		} else {
+			$this->processPlugins(
+				$pagePlugins,
+				Services::Registry()->get('Parameters', 'page_view_namespace')
+			);
+		}
+
 		/** Save Route Parameters move to after route */
 		Services::Registry()->copy('Parameters', 'RouteParameters');
 
@@ -257,6 +282,29 @@ Class ParseService
 		}
 
 		return $renderedOutput;
+	}
+
+	/**
+	 * processPlugins for Theme, Page, and Request Extension (overrides Core and Plugin folder)
+	 *
+	 * @param  $plugins array of folder names
+	 * @param  $path
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	protected function processPlugins($plugins, $path)
+	{
+		foreach ($plugins as $folder) {
+
+//			echo $folder . 'Plugin' . '<br />';
+//			echo $path . '\\Plugin\\' . $folder . '\\' . $folder . 'Plugin' . '<br /> ';
+
+			Services::Event()->process_events(
+				$folder . 'Plugin',
+				$path . '\\Plugin\\' . $folder . '\\' . $folder . 'Plugin'
+			);
+		}
 	}
 
 	/**

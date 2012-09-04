@@ -330,6 +330,32 @@ Class ExtensionHelper
 	}
 
 	/**
+	 * getNamespace - Return path for selected View
+	 *
+	 * @param   $node
+	 *
+	 * @return bool|string
+	 * @since   1.0
+	 */
+	public function getNamespace($catalog_type_id, $node)
+	{
+		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+			echo 'yes';
+			die;
+			return Helpers::View()->getNamespace($node, 'Page');
+
+		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+			return Helpers::View()->getNamespace($node, 'Template');
+
+		} else {
+			return Helpers::View()->getNamespace($node, 'Wrap');
+
+		}
+
+		return false;
+	}
+
+	/**
 	 * loadLanguage
 	 *
 	 * Loads Language Files for Extension
