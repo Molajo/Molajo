@@ -155,7 +155,6 @@ Class EventService
 				if (method_exists($registrations[$pluginClass], $event)) {
 
 					$results = $this->processPluginClass($registrations[$pluginClass], $event);
-
 					if ($results == false) {
 						return false;
 					}
@@ -251,7 +250,97 @@ Class EventService
 	}
 
 	/**
+	 * Automatically registers all Plugins in the Extension Plugin folder
+	 *
+	 * @return object
+	 * @since   1.0
+	 */
+	protected function registerInstalledPlugins()
+	{
+		Services::Profiler()->set('EventService->registerInstalledPlugins ', LOG_OUTPUT_PLUGINS, VERBOSE);
+
+		$plugins = Services::Filesystem()->folderFolders(MOLAJO_FOLDER . '/' . 'Plugin');
+
+		/** Load Parent Classes first */
+		$pluginClass = 'Molajo\\Plugin\\Plugin\\Plugin';
+		$temp = new $pluginClass ();
+
+		$pluginClass = 'Molajo\\Plugin\\Content\\ContentPlugin';
+		$temp = new $pluginClass ();
+
+		foreach ($plugins as $folder) {
+
+			/** class name */
+			if ($folder == 'Plugin'
+				|| $folder == 'Content'
+				|| substr(strtolower($folder), 0, 4) == 'hold'
+			) {
+
+			} else {
+
+				$pluginName = $folder . 'Plugin';
+				$pluginClass = 'Molajo\\Plugin\\' . $folder . '\\' . $pluginName;
+
+				$this->process_events($pluginName, $pluginClass);
+			}
+		}
+
+		/** Plugins at this level overlay previous */
+		$plugins = Services::Filesystem()->folderFolders(EXTENSIONS . '/' . 'Plugin');
+
+		foreach ($plugins as $folder) {
+
+			/** class name */
+			if ($folder == 'Plugin'
+				|| $folder == 'Content'
+				|| substr(strtolower($folder), 0, 4) == 'hold'
+			) {
+
+			} else {
+
+				$pluginName = $folder . 'Plugin';
+				$pluginClass = 'Extension\\Plugin\\' . $folder . '\\' . $pluginName;
+
+				$this->process_events($pluginName, $pluginClass);
+			}
+		}
+
+
+		return $this;
+	}
+
+	/**
+	 * Instantiate the plugin class, register it for event(s), and save the path and name
+	 *
+	 * @param  $folder location of the plugin
+	 *
+	 * @return object
+	 * @since  1.0
+	 */
+	protected function process_events($pluginName, $pluginClass)
+	{
+		/** Retrieve all Event Methods in the Plugin */
+		$events = get_class_methods($pluginClass);
+
+		if (count($events) > 0) {
+			foreach ($events as $event) {
+				if (substr($event, 0, 2) == 'on') {
+					$reflectionMethod = new \ReflectionMethod(new $pluginClass, $event);
+					$results = $reflectionMethod->getDeclaringClass();
+					if ($results->name == $pluginClass) {
+						$this->register($pluginName, $pluginClass, $event);
+					}
+				}
+			}
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Plugins register for events. When the event is scheduled, the plugin will be executed.
+	 *
+	 * The last plugin to register is the one that will be invoked.
 	 *
 	 * Installed plugins are registered during Application startup process.
 	 * Other plugins can be created and dynamically registered using this method.
@@ -281,91 +370,18 @@ Class EventService
 		$exists = Services::Registry()->exists('Events', $event);
 
 		/** Retrieve number of registrations or register new event */
-		if ($exists == true) {
-			$count = Services::Registry()->get('Events', $event, 0);
+		if ($exists === true) {
+			$count = Services::Registry()->get('Events', $event);
 			$count++;
 
 		} else {
-			$exists = Services::Registry()->set('Events', $event, 0);
 			Services::Registry()->createRegistry($event);
 			$count = 1;
 		}
 
 		/** Register the event (can be used to override installed events) */
-		Services::Registry()->set($event, $plugin, $pluginPath);
-
-		/** Update Event Totals */
 		Services::Registry()->set('Events', $event, $count);
-
-		return $this;
-	}
-
-	/**
-	 * Automatically registers all Plugins in the Extension Plugin folder
-	 *
-	 * @return object
-	 * @since   1.0
-	 */
-	protected function registerInstalledPlugins()
-	{
-		Services::Profiler()->set('EventService->registerInstalledPlugins ', LOG_OUTPUT_PLUGINS, VERBOSE);
-
-		$plugins = Services::Filesystem()->folderFolders(MOLAJO_FOLDER . '/' . 'Plugin');
-
-		/** Load Parent Classes first */
-		$pluginClass = 'Molajo\\Plugin\\Plugin\\Plugin';
-		$temp = new $pluginClass ();
-
-		$pluginClass = 'Molajo\\Plugin\\Content\\ContentPlugin';
-		$temp = new $pluginClass ();
-
-		foreach ($plugins as $folder) {
-
-			/** class name */
-			if ($folder == 'Plugin'
-				|| $folder == 'Content'
-				|| substr(strtolower($folder), 0, 4) == 'hold'
-			) {
-
-			} else {
-
-				$this->process_events($folder);
-			}
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Instantiate the plugin class, register it for event(s), and save the path and name
-	 *
-	 * @param  $folder location of the plugin
-	 *
-	 * @return object
-	 * @since  1.0
-	 */
-	protected function process_events($folder)
-	{
-		$try = true;
-		$connection = '';
-
-		$plugin = $folder . 'Plugin';
-		$pluginClass = 'Molajo\\Plugin\\' . $folder . '\\' . $plugin;
-
-		/** Retrieve all Event Methods in the Plugin */
-		$events = get_class_methods($pluginClass);
-
-		if (count($events) > 0) {
-			foreach ($events as $event) {
-				if (substr($event, 0, 2) == 'on') {
-					$reflectionMethod = new \ReflectionMethod(new $pluginClass, $event);
-					$results = $reflectionMethod->getDeclaringClass();
-					if ($results->name == $pluginClass) {
-						$this->register($plugin, $pluginClass, $event);
-					}
-				}
-			}
-		}
+		Services::Registry()->set($event, $plugin, $pluginPath);
 
 		return $this;
 	}
