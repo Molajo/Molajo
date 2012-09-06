@@ -167,10 +167,17 @@ Class ParseService
 	{
 		Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
-		/** OnBeforeParse Plugins */
-		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
-		} else {
-			$this->onBeforeParseEvent();
+		/** theme: run onBeforeParse Method */
+		$themeHelper = Services::Registry()->get('Parameters', 'theme_namespace')
+			. '\\Helper\\Theme'
+			. Services::Registry()->get('Parameters', 'theme_path_node')
+			. 'Helper';
+
+		if (class_exists($themeHelper)) {
+			$th = new $themeHelper ();
+			if (method_exists($th, 'onBeforeParse')) {
+				$results = $th->onBeforeParse();
+			}
 		}
 
 		/** Retrieve overrides (could be passed in and are set in the AjaxPlugin, too) */
@@ -246,6 +253,12 @@ Class ParseService
 			);
 		}
 
+		/** OnBeforeParse Plugins */
+		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+		} else {
+			$this->onBeforeParseEvent();
+		}
+
 		/** Save Route Parameters move to after route */
 		Services::Registry()->copy('Parameters', 'RouteParameters');
 
@@ -266,10 +279,8 @@ Class ParseService
 		if (class_exists($class)) {
 			$rc = new $class ('theme');
 			$results = $rc->process();
-
 		} else {
-			echo 'failed include = ' . 'IncluderTheme' . '<br />';
-			// ERROR
+			// fail
 		}
 
 		$renderedOutput = $this->renderLoop($renderedOutput);

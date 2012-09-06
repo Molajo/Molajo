@@ -3,7 +3,7 @@
     "2":{
 
         "dashboard_section":"Molajo Administrator",
-        "dashboard":"Portletgallery,Portletlist,Portletcustom,Portletfeed,Portletvideo,Portletmap,Portletbargraph,Portletquicklinks,Portletsysteminfo,Portletgallery,Portletweather,Portletaudio",
+        "dashboard":"Gallery,List,Custom,Feed,Video,Map,Bargraph,Quicklinks,Systeminfo,Gallery,Weather,Portletaudio",
 
         "cache":"0",
         "cache_time":"5",

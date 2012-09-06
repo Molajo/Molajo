@@ -37,9 +37,9 @@
         </joins>
 
         <criteria>
-            <where name="extensions.name"
-                   connector="like"
-                   value="Portlet%"/>
+            <where name="extensions.sub_title"
+                   connector="="
+                   value="Portlet"/>
         </criteria>
 
         <plugins>
