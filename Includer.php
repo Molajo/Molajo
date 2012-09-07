@@ -113,8 +113,9 @@ class Includer
 			return false;
 		}
 
-		/** language must be there before the extension runs */
+		/** load resources required before extension runs */
 		$this->loadLanguage();
+		$this->loadPlugins();
 
 		/** instantiate MVC and render output */
 		$rendered_output = $this->invokeMVC();
@@ -126,7 +127,6 @@ class Includer
 		} else {
 			$this->loadMedia();
 			$this->loadViewMedia();
-			$this->loadPlugins();
 		}
 
 		return $rendered_output;
@@ -326,8 +326,6 @@ class Includer
 		}
 
 		Services::Registry()->merge('RouteParameters', 'Parameters', false);
-
-		Services::Registry()->merge('Configuration', 'Parameters', false);
 
 		/** Template  */
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
