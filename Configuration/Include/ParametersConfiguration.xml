@@ -1,0 +1,11 @@
+<field name="configuration_tab_class" type="char" null="0" default=" "/>
+<field name="configuration_tab_link_namespace" type="char" null="0" default=" "/>
+<field name="configuration_tab_array" type="char" null="0" default=" "/>
+<field name="configuration_tab" type="char" null="0" default=" "/>
+<field name="configuration_tab_fields" type="char" null="0" default=" "/>
+<field name="configuration_tab_metadata" type="char" null="0" default=" "/>
+<field name="configuration_tab_basic" type="char" null="0" default=" "/>
+<field name="configuration_tab_advanced" type="char" null="0" default=" "/>
+<field name="configuration_tab_grid" type="char" null="0" default=" "/>
+<field name="configuration_tab_editor" type="char" null="0" default=" "/>
+<field name="configuration_tab_views" type="char" null="0" default=" "/>

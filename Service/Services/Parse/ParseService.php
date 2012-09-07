@@ -167,19 +167,6 @@ Class ParseService
 	{
 		Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
-		/** theme: run onBeforeParse Method */
-		$themeHelper = Services::Registry()->get('Parameters', 'theme_namespace')
-			. '\\Helper\\Theme'
-			. Services::Registry()->get('Parameters', 'theme_path_node')
-			. 'Helper';
-
-		if (class_exists($themeHelper)) {
-			$th = new $themeHelper ();
-			if (method_exists($th, 'onBeforeParse')) {
-				$results = $th->onBeforeParse();
-			}
-		}
-
 		/** Retrieve overrides (could be passed in and are set in the AjaxPlugin, too) */
 		$overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
 		$overrideIncludesFinalXML = Services::Registry()->get('Override', 'final_xml', false);
@@ -253,13 +240,16 @@ Class ParseService
 			);
 		}
 
+		//todo load resource plugins
+
 		/** OnBeforeParse Plugins */
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
 		} else {
 			$this->onBeforeParseEvent();
 		}
 
-		/** Save Route Parameters move to after route */
+		/** Save Route Parameters */
+		Services::Registry()->createRegistry('RouteParameters');
 		Services::Registry()->copy('Parameters', 'RouteParameters');
 
 		$renderedOutput = $this->renderLoop();
@@ -271,6 +261,8 @@ Class ParseService
 		$this->exclude_until_final = array();
 
 		/** Saved from route */
+		Services::Registry()->delete('Parameters');
+		Services::Registry()->createRegistry('Parameters');
 		Services::Registry()->copy('RouteParameters', 'Parameters');
 
 		/** theme: load template media and language files */
@@ -288,6 +280,8 @@ Class ParseService
 		/** onAfterParse Plugin */
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
 		} else {
+			Services::Registry()->delete('Parameters');
+			Services::Registry()->createRegistry('Parameters');
 			Services::Registry()->copy('RouteParameters', 'Parameters');
 			$renderedOutput = $this->onAfterParseEvent($renderedOutput);
 		}

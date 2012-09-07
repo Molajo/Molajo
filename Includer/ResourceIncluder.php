@@ -90,7 +90,7 @@ class ResourceIncluder extends Includer
 	 * @return bool
 	 * @since   1.0
 	 */
-	public function setRenderCriteria()
+	public function DELETEsetRenderCriteria()
 	{
 		/** Include and Parameter Registries are already loaded for Primary Resource */
 		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {

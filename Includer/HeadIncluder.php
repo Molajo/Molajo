@@ -6,6 +6,7 @@
  */
 namespace Molajo\Includer;
 
+use Molajo\Helpers;
 use Molajo\Service\Services;
 use Molajo\Includer;
 
@@ -68,7 +69,52 @@ Class HeadIncluder extends Includer
 			}
 		}
 
-		parent::setRenderCriteria();
+		/** Save existing parameters */
+		$savedParameters = array();
+		$temp = Services::Registry()->getArray('Parameters');
+
+		if (is_array($temp) && count($temp) > 0) {
+			foreach ($temp as $key => $value) {
+				if (is_array($value)) {
+					$savedParameters[$key] = $value;
+
+				} elseif ($value === 0 || trim($value) == '' || $value === null) {
+
+				} else {
+					$savedParameters[$key] = $value;
+				}
+			}
+		}
+
+		/** Template  */
+		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
+
+		/** Merge Parameters in (Pre-wrap) */
+		if (is_array($savedParameters) && count($savedParameters) > 0) {
+			foreach ($savedParameters as $key => $value) {
+				Services::Registry()->set('Parameters', $key, $value);
+			}
+		}
+		/** Default Wrap if needed */
+		$wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id');
+		Services::Registry()->set('Parameters', 'wrap_view_path_node',
+					Helpers::Extension()->getExtensionNode((int)$wrap_view_id));
+		$wrap_view_title = Services::Registry()->get('Parameters', 'wrap_view_path_node');
+
+		Services::Registry()->set('Parameters', 'wrap_view_title', $wrap_view_title);
+		Services::Registry()->set('Parameters', 'wrap_view_path',
+			Helpers::View()->getPath($wrap_view_title, 'Wrap'));
+		Services::Registry()->set('Parameters', 'wrap_view_path_url',
+			Helpers::View()->getPathURL($wrap_view_title, 'Wrap'));
+		Services::Registry()->set('Parameters', 'wrap_view_namespace',
+			Helpers::View()->getNamespace($wrap_view_title, 'Wrap'));
+
+		Services::Registry()->delete('Parameters', 'item*');
+		Services::Registry()->delete('Parameters', 'list*');
+		Services::Registry()->delete('Parameters', 'form*');
+		Services::Registry()->delete('Parameters', 'menuitem');
+
+		Services::Registry()->sort('Parameters');
 
 		return true;
 	}

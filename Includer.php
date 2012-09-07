@@ -277,7 +277,6 @@ class Includer
 	 */
 	protected function setRenderCriteria()
 	{
-
 		/**  Template */
 		$template_id = 0;
 		$template_title = Services::Registry()->get('Parameters', 'template_view_path_node');
@@ -305,19 +304,30 @@ class Includer
 
 		Services::Registry()->set('Parameters', 'template_view_id', $template_id);
 
-		Services::Registry()->merge('Configuration', 'Parameters', true);
+		if ((int)Services::Registry()->get('Parameters', 'wrap_view_id', 0) == 0) {
+			Services::Registry()->set('Parameters', 'wrap_view_path_node', 'None');
+		}
 
 		/** Save existing parameters */
 		$savedParameters = array();
 		$temp = Services::Registry()->getArray('Parameters');
+
 		if (is_array($temp) && count($temp) > 0) {
 			foreach ($temp as $key => $value) {
-				if ($value === 0 || trim($value) == '' || $value === null) {
+				if (is_array($value)) {
+					$savedParameters[$key] = $value;
+
+				} elseif ($value === 0 || trim($value) == '' || $value === null) {
+
 				} else {
 					$savedParameters[$key] = $value;
 				}
 			}
 		}
+
+		Services::Registry()->merge('RouteParameters', 'Parameters', false);
+
+		Services::Registry()->merge('Configuration', 'Parameters', false);
 
 		/** Template  */
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
@@ -359,9 +369,9 @@ class Includer
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'list*');
 		Services::Registry()->delete('Parameters', 'form*');
+		Services::Registry()->delete('Parameters', 'menuitem');
 
 		Services::Registry()->sort('Parameters');
-
 
 		/** Merge Parameters in (Post-wrap) */
 		if (is_array($savedParameters) && count($savedParameters) > 0) {
@@ -529,7 +539,7 @@ class Includer
 			}
 		}
 //echo '<br />INCLUDER:: ' .  Services::Registry()->get('Parameters', 'template_view_path');
-
+//echo '<br />' . $message;
 		$results = $controller->execute();
 
 		return $results;

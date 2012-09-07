@@ -191,16 +191,20 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
 		//todo remove hack
-		if (Services::Registry()->get('Parameters', 'catalog_menuitem_type') == 'grid') {
-			$type = 'list';
-		} else {
-			$type = 'menuitem';
-		}
+//		if (Services::Registry()->get('Parameters', 'catalog_menuitem_type') == 'grid') {
+//			$type = 'list';
+//		} else {
+//			$type = 'menuitem';
+//		}
 
-		$this->setParameters($type, $item->table_registry_name . 'Parameters');
+		$this->setParameters('menuitem', $item->table_registry_name . 'Parameters');
 
-		/** Must be after parameters */
+		/** Must be after parameters so as to not strip off menuitem */
 		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
+		Services::Registry()->set('Parameters', 'menuitem_type',
+			Services::Registry()->get('Parameters', 'catalog_menuitem_type'));
+
+		Services::Registry()->sort('Parameters');
 
 		return true;
 	}

@@ -49,9 +49,10 @@ if ((int)$html5 == 1): ?>
 		  content="<?php echo $this->row->mimetype; ?>; charset=utf-8"<?php echo $end; ?>
     <?php endif; ?>
 <include:asset name=Assetslinks/>
-	<include:metadata name=Metadata/>
-	<include:asset name=Assetscss/>
+<include:metadata name=Metadata/>
+<include:asset name=Assetscss/>
 <include:asset name=Assetscssdeclarations/>
-    <include:asset name=Assetsjs/>
-<include:asset name=Assetsjsdeclarations/></head>
+<include:asset name=Assetsjs/>
+<include:asset name=Assetsjsdeclarations/>
+</head>
 <body<?php echo $id; ?><?php echo $class; ?>>

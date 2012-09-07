@@ -45,7 +45,7 @@ Class WrapIncluder extends Includer
 	 * @return bool
 	 * @since   1.0
 	 */
-	protected function setRenderCriteria()
+	protected function DELETEsetRenderCriteria()
 	{
 		/** For wrap type - extension name is was set to the name of the wrap in the getAttributes method */
 		$wrap_title = Services::Registry()->get('Parameters', 'extension_title');

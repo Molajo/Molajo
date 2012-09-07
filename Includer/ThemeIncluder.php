@@ -99,18 +99,6 @@ Class ThemeIncluder extends Includer
 		$this->loadMediaPlus('/user' . Services::Registry()->get('User', 'id'),
 			Services::Registry()->get('Parameters', 'asset_priority_user', 300));
 
-		/** Load custom Theme Helper Media, if exists */
-		$helperClass = 'Extension\\Theme\\'
-			. ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . '\\Helper\\'
-			. 'Theme' . ucfirst(Services::Registry()->get('Parameters', 'theme_path_node')) . 'Helper';
-
-		if (class_exists($helperClass)) {
-			$load = new $helperClass();
-			if (method_exists($load, 'loadMedia')) {
-				$load->loadMedia();
-			}
-		}
-
 		/** Theme */
 		$priority = Services::Registry()->get('Parameters', 'asset_priority_theme', 600);
 		$file_path = Services::Registry()->get('Parameters', 'theme_path');
