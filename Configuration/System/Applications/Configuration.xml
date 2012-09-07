@@ -12,5 +12,6 @@
     <model
             name="Applications"
             catalog_type_id="50"
-            extension_instance_id="60"/>
+            extension_instance_id="60"
+            extends="ApplicationTable"/>
 </extension>

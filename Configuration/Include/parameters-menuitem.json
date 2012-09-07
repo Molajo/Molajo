@@ -1,11 +1,15 @@
+criteria_title
+catalog_type_id
+extension_instance_id
+menuitem_model_name
 {
     "1":{},
     "2":{
-        "grid_toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",
+        "grid_toolbar_buttons":"new,edit,publish,feature,status,archive,checkin,restore,delete,trash,options",
         "grid_submenu_items":"items,categories,drafts",
         "grid_search":"1",
         "grid_lists":"author,status,title",
-        "grid_columns":"title,author_full_name,id,start_publishing_datetime_ccyymmdd,ordering",
+        "grid_columns":"title,author_full_name,status,featured,id,start_publishing_datetime_ccyymmdd,ordering",
         "grid_status":"2,1,0,-1,-2,-5,-10",
         "grid_batch":"1",
 
@@ -31,12 +35,12 @@
         "gravatar_rating":"pg",
         "gravatar_image":"1",
 
-        "criteria_title":"Resources",
+        "criteria_title":"Applications",
         "criteria_display_view_on_no_results":"0",
         "criteria_snippet_length":"150",
         "criteria_status":"1,2",
-        "criteria_catalog_type_id":"",
-        "criteria_extension_instance_id":"",
+        "criteria_catalog_type_id":"60",
+        "criteria_extension_instance_id":"50",
 
         "image_xsmall":"50,50",
         "image_small":"75,75",
@@ -57,11 +61,11 @@
         "asset_priority_item":"800",
         "asset_priority_theme":"900",
 
-        "menuitem_type":"Dashboard",
+        "menuitem_type":"Grid",
 
         "menuitem_source_id":"",
-        "menuitem_source_catalog_type_id":"10000",
-        "menuitem_extension_instance_id":"1",
+        "menuitem_source_catalog_type_id":"60",
+        "menuitem_extension_instance_id":"50",
 
         "menuitem_theme_id":"9020",
         "menuitem_page_view_id":"220",
@@ -75,8 +79,8 @@
         "menuitem_wrap_view_css_class":"",
         "menuitem_wrap_view_role":"",
         "menuitem_wrap_view_property":"",
-        "menuitem_model_name":"Articles",
-        "menuitem_model_type":"Resource",
+        "menuitem_model_name":"Applications",
+        "menuitem_model_type":"System",
         "menuitem_model_query_object":"list",
         "menuitem_model_parameter":"",
         "menuitem_model_offset":"0",
