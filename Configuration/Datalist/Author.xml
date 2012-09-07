@@ -19,7 +19,7 @@
             <field alias="users" name="username" type="integer" null="1" default="0" identity="1"/>
         </fields>
         <joins>
-            <join model="Users"
+            <join model="User"
                   alias="users"
                   select=""
                   jointo="id"
