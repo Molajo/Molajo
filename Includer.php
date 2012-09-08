@@ -516,6 +516,7 @@ class Includer
 		Services::Registry()->sort('Parameters');
 
 		$message = 'Includer->invokeMVC ' . 'Name ' . $this->name . ' Type: ' . $this->type . ' Template: ' . Services::Registry()->get('Parameters', 'template_view_title');
+
 		$message .= ' Parameters:<br />';
 
 		ob_start();
