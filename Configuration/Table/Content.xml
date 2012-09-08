@@ -27,6 +27,7 @@
             <include name="ChildrenContent"/>
         </children>
         <plugins>
+            <include name="PluginsAdmin"/>
             <include name="PluginsContent"/>
         </plugins>
     </table>

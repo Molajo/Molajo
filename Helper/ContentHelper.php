@@ -346,12 +346,12 @@ Class ContentHelper
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
-		/** Remove standard patterns no longer needed */
+		/** Remove standard patterns no longer needed -- need for configuration views
 		Services::Registry()->delete('Parameters', 'list*');
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'form*');
 		Services::Registry()->delete('Parameters', 'menuitem*');
-
+		 */
 		Services::Registry()->sort('Parameters');
 
 		return true;

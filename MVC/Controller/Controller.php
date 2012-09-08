@@ -671,7 +671,8 @@ class Controller
 			'null_date' => $this->model->null_date,
 			'now' => $this->model->now,
 			'parameters' => $this->parameters,
-			'model_name' => $this->get('model_name')
+			'model_name' => $this->get('model_name'),
+			'model_type' => $this->get('model_type')
 		);
 
 		Services::Profiler()->set('DisplayController->onBeforeReadEvent '

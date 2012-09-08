@@ -25,6 +25,7 @@
             <include name="ChildrenExtensionInstance"/>
         </children>
         <plugins>
+            <include name="PluginsAdmin"/>
             <include name="PluginsExtensionInstance"/>
         </plugins>
     </table>
