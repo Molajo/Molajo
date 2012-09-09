@@ -12,8 +12,8 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="group_id" type="integer" null="0" default=""/>
-            <field name="view_group_id" type="integer" null="0" default=""/>
+            <include field="group_id"/>
+            <include field="view_group_id"/>
         </fields>
         <foreignkeys>
             <foreignkey name="group_id" source_id="id" source_model="Content" required="1"/>

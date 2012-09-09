@@ -12,9 +12,9 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="id" type="integer" null="0" default="" identity="1"/>
-            <field name="title" type="char" null="0" default="" unique="1"/>
-            <field name="protected" type="boolean" null="0"/>
+            <include field="id"/>
+            <include field="title"/>
+            <include field="protected"/>
         </fields>
     </table>
 </model>

@@ -2,7 +2,7 @@
        type="integer"
        null="0"
        default="0"
-       datalist="Resources"
+       datalist="ExtensionInstances"
        locked="1"
-       display="extensions_name"
+       display="name"
         />

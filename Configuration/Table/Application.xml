@@ -16,14 +16,14 @@
 
     <table>
         <fields>
-            <field name="id" type="integer" null="0" default="0" identity="1"/>
-            <field name="catalog_type_id" type="integer" null="0" default="50" values="50"/>
-            <field name="name" type="char" null="0" default="" unique="1"/>
-            <field name="path" type="char" null="0" default=""/>
-            <field name="description" type="text" null="0" default=""/>
-            <field name="customfields" type="customfield" null="0" default=""/>
-            <field name="parameters" type="customfield" null="0" default=""/>
-            <field name="metadata" type="customfield" null="0" default=""/>
+            <include field="id"/>
+            <include field="catalog_type_id"/>
+            <include field="name"/>
+            <include field="path"/>
+            <include field="description"/>
+            <include field="customfields"/>
+            <include field="parameters"/>
+            <include field="metadata"/>
         </fields>
 
         <foreignkeys>

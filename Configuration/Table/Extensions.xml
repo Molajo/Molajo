@@ -12,16 +12,17 @@
         process_plugins="0"
         use_pagination="1"
         data_source="JDatabase">
+
     <table>
         <fields>
-            <field name="id" type="integer" null="0" default=" " identity="1"/>
-            <field name="extension_site_id" type="integer" null="0" default="1"/>
-            <field name="catalog_type_id" type="integer" null="0" default=""/>
-            <field name="name" type="char" null="0" default=""/>
-            <field name="subtitle" type="char" null="0" default=" "/>
-            <field name="language" type="char" null="0" default=" "/>
-            <field name="translation_of_id" type="integer" null="0" default="0"/>
-            <field name="ordering" type="integer" null="0" default="0"/>
+            <field name="id" type="integer" null="0" default=" " hidden="1" identity="1"/>
+            <include field="extension_site_id"/>
+            <include field="catalog_type_id"/>
+            <include field="name"/>
+            <include field="subtitle"/>
+            <include field="language"/>
+            <include field="translation_of_id"/>
+            <include field="ordering"/>
         </fields>
         <foreignkeys>
             <foreignkey name="extension_site_id" source_id="id" source_model="ExtensionSites" required="1"/>

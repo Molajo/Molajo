@@ -15,12 +15,12 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="id" type="integer" null="1" default="0" identity="1"/>
-            <field name="catalog_type_id" type="integer" null="0" default="10" values="10"/>
-            <field name="name" type="char" null="0" default="" unique="1"/>
-            <field name="path" type="char" null="0" default=""/>
-            <field name="base_url" type="url" null="0" default=""/>
-            <field name="description" type="text" null="0" default=" "/>
+            <include field="id"/>
+            <include field="catalog_type_id"/>
+            <include field="name"/>
+            <include field="path"/>
+            <include field="base_url"/>
+            <include field="description"/>
         </fields>
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>

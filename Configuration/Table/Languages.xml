@@ -13,6 +13,7 @@
         category_type_id="1100"
         use_pagination="1"
         data_source="JDatabase">
+
     <table>
         <fields>
             <include name="FieldsExtensionInstance"/>

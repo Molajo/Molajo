@@ -5,6 +5,7 @@
         extension_id="20"
         use_pagination="1"
         extends="ExtensioninstancesTable">
+
     <customfields>
         <customfield name="parameters">
             <include name="ParametersPage"/>

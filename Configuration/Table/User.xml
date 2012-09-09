@@ -16,21 +16,21 @@
     <table>
         <fields>
             <field name="id" type="integer" null="1" default="0" identity="1"/>
-            <field name="catalog_type_id" type="integer" null="0" default="500" values="500"/>
-            <field name="username" type="char" null="0" default="" unique="1"/>
-            <field name="first_name" type="char" null="0" default=""/>
-            <field name="last_name" type="char" null="0" default=""/>
-            <field name="full_name" type="char" null="0" default=""/>
-            <field name="content_text" type="text" null="0" default=" "/>
-            <field name="email" type="email" null="0" default=""/>
-            <field name="password" type="password" null="0" default=""/>
-            <field name="block" type="boolean" null="0" default="0"/>
-            <field name="register_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-            <field name="activation_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-            <field name="last_visit_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-            <field name="customfields" type="customfield" null="0" default=" "/>
-            <field name="parameters" type="customfield" null="0" default=" "/>
-            <field name="metadata" type="customfield" null="0" default=" "/>
+            <field name="catalog_type_id"/>
+            <field name="username"/>
+            <field name="first_name"/>
+            <field name="last_name"/>
+            <field name="full_name"/>
+            <field name="content_text"/>
+            <field name="email"/>
+            <field name="password"/>
+            <field name="block"/>
+            <field name="register_datetime"/>
+            <field name="activation_datetime"/>
+            <field name="last_visit_datetime"/>
+            <field name="customfields"/>
+            <field name="parameters"/>
+            <field name="metadata"/>
         </fields>
 
         <foreignkeys>
@@ -86,7 +86,7 @@
             <field name="editor" type="integer" null="0" default="1"/>
             <field name="language" type="char" null="0" default="en-GB" values="en-GB"/>
             <field name="date_of_birth" type="datetime" null="0" default=" "/>
-            <field name="personal_email" type="email" null="0" default=""/>
+            <field name="secondary_email" type="email" null="0" default=""/>
         </customfield>
 
         <customfield name="metadata">

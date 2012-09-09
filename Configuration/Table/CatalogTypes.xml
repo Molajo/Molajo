@@ -13,16 +13,16 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <field name="id" type="integer" null="0" default="0" identity="1"/>
-            <field name="type" type="char" null="0" default=" "/>
-            <field name="title" type="char" null="0" default=" " unique="1"/>
-            <field name="extension_instance_id" type="integer" null="0" default="0"/>
-            <field name="protected" type="boolean" null="0" default="0"/>
-            <field name="model_name" type="char" null="0" default=" " unique="1"/>
-            <field name="primary_category_id" type="integer" null="0" default="0"/>
-            <field name="source_table" type="char" null="0" default=" "/>
-            <field name="slug" type="char" null="0" default=" "/>
-            <field name="routable" type="char" null="0" default="0"/>
+            <include field="id"/>
+            <include field="type"/>
+            <include field="title"/>
+            <include field="extension_instance_id"/>
+            <include field="protected"/>
+            <include field="model_name"/>
+            <include field="primary_category_id"/>
+            <include field="source_table"/>
+            <include field="slug"/>
+            <include field="routable"/>
         </fields>
     </table>
 </model>

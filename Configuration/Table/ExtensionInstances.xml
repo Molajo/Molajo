@@ -11,6 +11,7 @@
         process_plugins="1"
         use_pagination="1"
         data_source="JDatabase">
+
     <table>
         <fields>
             <include name="FieldsExtensionInstance"/>
@@ -29,6 +30,7 @@
             <include name="PluginsExtensionInstance"/>
         </plugins>
     </table>
+
     <customfields>
         <customfield name="metadata">
             <include name="Metadata"/>
