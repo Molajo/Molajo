@@ -1,0 +1,6 @@
+<field name="ordering"
+       type="integer"
+       null="0"
+       default="0"
+        />
+

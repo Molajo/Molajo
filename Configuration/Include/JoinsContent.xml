@@ -28,3 +28,8 @@
       select=""
       jointo="extension_instance_id,site_id"
       joinwith="extension_instance_id,SITE_ID"/>
+<join model="User"
+      alias="modified_by"
+      select="full_name"
+      jointo="id"
+      joinwith="modified_by"/>

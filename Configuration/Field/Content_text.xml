@@ -1,0 +1,5 @@
+<field name="content_text"
+       type="text"
+       null="0"
+       default=" "
+        />

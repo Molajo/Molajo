@@ -1,0 +1,6 @@
+<field name="checked_out_datetime"
+       type="datetime"
+       null="0"
+       locked="1"
+       default="0000-00-00 00:00:00"
+        />

@@ -47,15 +47,20 @@
         <attribute>name</attribute>
         <attribute>as_name</attribute>
         <attribute>alias</attribute>
+        <attribute>datalist</attribute>
+        <attribute>display</attribute>
         <attribute>default</attribute>
+        <attribute>editable</attribute>
         <attribute>file</attribute>
         <attribute>form</attribute>
         <attribute>height</attribute>
+        <attribute>hidden</attribute>
         <attribute>id</attribute>
         <attribute>identity</attribute>
         <attribute>list</attribute>
         <attribute>length</attribute>
         <attribute>label</attribute>
+        <attribute>locked</attribute>
         <attribute>minimum</attribute>
         <attribute>maximum</attribute>
         <attribute>null</attribute>
@@ -65,7 +70,10 @@
         <attribute>shape</attribute>
         <attribute>size</attribute>
         <attribute>table</attribute>
+        <attribute>template</attribute>
+        <attribute>tooltip</attribute>
         <attribute>type</attribute>
+        <attribute>ui</attribute>
         <attribute>unique</attribute>
         <attribute>values</attribute>
         <attribute>width</attribute>

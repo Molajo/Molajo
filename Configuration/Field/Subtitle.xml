@@ -1,0 +1,7 @@
+<field name="subtitle"
+       type="text"
+       null="0"
+       default=" "
+       width="50"
+        />
+

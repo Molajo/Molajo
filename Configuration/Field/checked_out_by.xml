@@ -1,0 +1,6 @@
+<field name="checked_out_by"
+       type="integer"
+       locked="1"
+       null="0"
+       default="0"
+        />

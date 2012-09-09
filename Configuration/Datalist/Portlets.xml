@@ -12,6 +12,7 @@
         process_plugins="0"
         criteria_catalog_type_id="1200"
         criteria_published_status="1"
+        todo="add tag for portlets"
         data_source="JDatabase">
     <table>
         <fields>

@@ -901,6 +901,10 @@ Class ConfigurationService
 			$xml = simplexml_load_string($xml_string);
 		}
 
+		$xmlArray = ConfigurationService::setFieldsRegistry(
+			$registryName, $xml, $xml_string, $path_and_file, $model_name
+		);
+
 		if (isset($xml->table->fields->field)) {
 
 			$fields = $xml->table->fields->field;
@@ -924,6 +928,56 @@ Class ConfigurationService
 			}
 
 			Services::Registry()->set($registryName, 'fields', $fieldArray);
+		}
+
+		return array($xml, $xml_string);
+	}
+
+	/**
+	 * setFieldsRegistry
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $xml
+	 * @param $xml_string
+	 * @param $path_and_file
+	 * @param $model_name
+	 * @return array
+	 */
+	public static function setFieldsRegistry(
+		$registryName, $xml, $xml_string, $path_and_file, $model_name)
+	{
+		$done = 0;
+		while ($done == 0) {
+			$hold_xml = $xml;
+
+			$include = '';
+
+			if (isset($xml->table->fields->include['field'])) {
+				$include = (string)$xml->table->fields->include['field'];
+			}
+			if ($include == '') {
+			} else {
+
+				if ($xml_string == '') {
+					$xml_string = file_get_contents($path_and_file);
+				}
+
+				$replace_this = '<include field="' . $include . '"/>';
+
+				$include_location = CONFIGURATION_FOLDER . '/Field/' . ucfirst(strtolower($include)) . '.xml';
+
+				$xml_string = ConfigurationService::replaceIncludeStatement(
+					$include, $replace_this, $xml_string, $include_location
+				);
+
+				$xml = simplexml_load_string($xml_string);
+			}
+
+			if ($hold_xml == $xml) {
+				$done = 1;
+				break;
+			}
 		}
 
 		return array($xml, $xml_string);
@@ -1497,13 +1551,15 @@ Class ConfigurationService
 	 * @throws \RuntimeException
 	 */
 	public static function replaceIncludeStatement(
-		$include, $replace_this, $xml_string)
+		$include, $replace_this, $xml_string, $path_and_file = '')
 	{
-		$path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
+		if ($path_and_file == '') {
+			$path_and_file = CONFIGURATION_FOLDER . '/include/' . $include . '.xml';
+		}
 
 		if (file_exists($path_and_file)) {
 		} else {
-			throw new \RuntimeException('Include file not found: ' . $path_and_file);
+			throw new \RuntimeException('Include file not found: ' .  $path_and_file);
 		}
 
 		try {

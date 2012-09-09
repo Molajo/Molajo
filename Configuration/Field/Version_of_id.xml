@@ -1,0 +1,7 @@
+<field name="version_of_id"
+       type="integer"
+       null="0"
+       locked="1"
+       default="0"
+        />
+

@@ -1,0 +1,6 @@
+<field name="featured"
+       type="boolean"
+       null="0"
+       default="0"
+       ui="toggle"
+        />
