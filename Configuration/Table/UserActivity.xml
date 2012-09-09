@@ -11,14 +11,16 @@
         process_plugins="1"
         data_source="JDatabase">
     <table>
+
         <fields>
             <field name="id" type="integer" null="0" default="" identity="1"/>
-            <field name="user_id" type="integer" null="0" default=""/>
-            <field name="action_id" type="integer" null="0" default=""/>
-            <field name="catalog_id" type="catalog_id" null="0" default=""/>
-            <field name="activity_datetime" type="datetime" null="0" default=""/>
-            <field name="ip_address" type="ip_address" null="0" default=""/>
+            <field name="user_id"/>
+            <field name="action_id"/>
+            <field name="catalog_id"/>
+            <field name="activity_datetime"/>
+            <field name="ip_address"/>
         </fields>
+
         <joins>
             <join model="User"
                   alias="useractivity_to_users"
@@ -41,11 +43,13 @@
                   jointo="id"
                   joinwith="useractivity_to_catalog.catalog_type_id"/>
         </joins>
+
         <plugins>
             <plugin name="Action"/>
             <plugin name="Dateformats"/>
             <plugin name="Ipaddress"/>
         </plugins>
+
         <foreignkeys>
             <foreignkey name="user_id" source_id="id" source_model="User" required="1"/>
             <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>

@@ -7,9 +7,9 @@
     <table>
         <fields>
             <field name="id" type="integer" null="0" default="" identity="1"/>
-            <field name="view_group_id" type="integer" null="0" default=""/>
-            <field name="catalog_id" type="catalog_id" null="0" default=""/>
-            <field name="action_id" type="integer" null="0" default=""/>
+            <field name="view_group_id"/>
+            <field name="catalog_id"/>
+            <field name="action_id"/>
         </fields>
         <foreignkeys>
             <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
