@@ -1,0 +1,1 @@
+<field name="mailer_mail_from" type="char" null="0" default=" "/>

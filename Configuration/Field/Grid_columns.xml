@@ -1,0 +1,2 @@
+<field name="grid_columns" type="char" null="0"
+       default="title,id,featured,start_publishing_datetime,language,ordering"/>

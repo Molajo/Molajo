@@ -1,0 +1,1 @@
+<field name="system_logs_folder" type="char" null="0" default="logs"/>

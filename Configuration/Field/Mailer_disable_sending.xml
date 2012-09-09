@@ -1,0 +1,1 @@
+<field name="mailer_disable_sending" type="integer" null="0" default="0"/>

@@ -1,27 +1,27 @@
-<field name="uibutton" type="templates" null="0" default="0"/>
-<field name="uibuttongroup" type="templates" null="0" default="0"/>
-<field name="uibuttondropdown" type="templates" null="0" default="0"/>
+<field name="uibutton"/>
+<field name="uibuttongroup"/>
+<field name="uibuttondropdown"/>
 
-<field name="uinavigationnavbar" type="templates" null="0" default="0"/>
-<field name="uinavigationverticalnav" type="templates" null="0" default="0"/>
-<field name="uinavigationadministrator" type="templates" null="0" default="0"/>
-<field name="uinavigationsidenav" type="templates" null="0" default="0"/>
-<field name="uinavigationsubnav" type="templates" null="0" default="0"/>
-<field name="uinavigationbreadcrumbs" type="templates" null="0" default="0"/>
-<field name="uinavigationpagination" type="integer" null="0" default="0"/>
-<field name="uinavigationpager" type="templates" null="0" default="0"/>
-<field name="uinavigationtabgroup" type="templates" null="0" default="0"/>
-<field name="uinavigationtab" type="templates" null="0" default="0"/>
-<field name="uinavigationlinklist" type="templates" null="0" default="0"/>
+<field name="uinavigationnavbar"/>
+<field name="uinavigationverticalnav"/>
+<field name="uinavigationadministrator"/>
+<field name="uinavigationsidenav"/>
+<field name="uinavigationsubnav"/>
+<field name="uinavigationbreadcrumbs"/>
+<field name="uinavigationpagination"/>
+<field name="uinavigationpager"/>
+<field name="uinavigationtabgroup"/>
+<field name="uinavigationtab"/>
+<field name="uinavigationlinklist"/>
 
-<field name="uielementslabels" type="templates" null="0" default="0"/>
-<field name="uielementstooltips" type="templates" null="0" default="0"/>
-<field name="uielementsaccordion" type="templates" null="0" default="0"/>
-<field name="uielementspanel" type="templates" null="0" default="0"/>
-<field name="uielementsprogress" type="templates" null="0" default="0"/>
-<field name="uielementsmodal" type="templates" null="0" default="0"/>
-<field name="uielementsalerts" type="templates" null="0" default="0"/>
-<field name="uielementscarousel" type="templates" null="0" default="0"/>
-<field name="uielementspanel" type="templates" null="0" default="0"/>
+<field name="uielementslabels"/>
+<field name="uielementstooltips"/>
+<field name="uielementsaccordion"/>
+<field name="uielementspanel"/>
+<field name="uielementsprogress"/>
+<field name="uielementsmodal"/>
+<field name="uielementsalerts"/>
+<field name="uielementscarousel"/>
+<field name="uielementspanel"/>
 
-<field name="uitabgroupclass" type="char" null="0" default=" "/>
+<field name="uitabgroupclass"/>

@@ -1,4 +1,8 @@
-{   "application_name":"Site 2 Administrator",
+{
+
+    "INCLUDE_01":"ParametersApplicationDefaults",
+
+    "application_name":"Site 2 Administrator",
     "application_home_catalog_id":"662",
     "application_logon_requirement":"1",
     "application_google_analytics_code":"xxxx",
@@ -15,6 +19,8 @@
     "system_temp_url":"temp",
     "system_media_folder":"media",
     "system_media_url":"media",
+
+    "INCLUDE_02":"ParametersUitemplates",
 
     "Uibutton":"10100",
     "Uibuttongroup":"10110",
@@ -39,6 +45,8 @@
     "Uielements-carousel":"10370",
     "Uielements-pane":"10380",
 
+    "INCLUDE_03":"ParametersGrid",
+
     "grid_toolbar_buttons":"new,edit,publish,feature,archive,checkin,restore,delete,trash,options",
     "grid_submenu_items":"items,categories,drafts",
     "grid_search":"1",
@@ -47,8 +55,12 @@
     "grid_status":"2,1,0,-1,-2,-5,-10",
     "grid_batch":"1",
 
+    "INCLUDE_04":"ParametersDashboard",
+
     "dashboard_section":"",
     "dashboard_portlets":"",
+
+    "INCLUDE_04":"ParametersMail",
 
     "mailer_transport":"mail",
     "mailer_html_or_text":"text",
@@ -59,8 +71,8 @@
     "mailer_send_mail":"/usr/sbin/mailer_send_mail",
     "mailer_smtpauth":"0",
     "mailer_smtpuser":"",
-    "mailer_smtppass":"",
     "mailer_smtphost":"localhost",
+    "mailer_smtppass":"",
     "mailer_smtpsecure":"none",
     "mailer_smtpport":"25",
 
