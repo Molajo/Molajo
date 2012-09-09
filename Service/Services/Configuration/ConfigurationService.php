@@ -230,7 +230,6 @@ Class ConfigurationService
 		}
 
 		$m->set('id', (int)SITE_ID);
-
 		$item = $m->getData('item');
 
 		if ($item === false) {
@@ -864,6 +863,7 @@ Class ConfigurationService
 		$xmlArray = ConfigurationService::setTableValuesRegistry(
 			$registryName, $xmlArray[0], $xmlArray[1], $path_and_file, $model_name
 		);
+
 		return $xmlArray;
 	}
 
@@ -886,11 +886,17 @@ Class ConfigurationService
 		if (isset($xml->table->fields->include['name'])) {
 			$include = (string)$xml->table->fields->include['name'];
 		}
+
 		if ($include == '') {
 		} else {
 
-			if ($xml_string == '') {
+			if (file_exists($path_and_file)) {
 				$xml_string = file_get_contents($path_and_file);
+
+			} else {
+				echo 'Include file not found: ' .  $path_and_file;
+				die;
+				throw new \RuntimeException('Include file not found: ' .  $include_location);
 			}
 
 			$replace_this = '<include name="' . $include . '"/>';
@@ -904,6 +910,9 @@ Class ConfigurationService
 		$xmlArray = ConfigurationService::setFieldsRegistry(
 			$registryName, $xml, $xml_string, $path_and_file, $model_name
 		);
+
+		$xml = $xmlArray[0];
+		$xml_string = $xmlArray[1];
 
 		if (isset($xml->table->fields->field)) {
 
@@ -966,6 +975,13 @@ Class ConfigurationService
 				$replace_this = '<include field="' . $include . '"/>';
 
 				$include_location = CONFIGURATION_FOLDER . '/Field/' . ucfirst(strtolower($include)) . '.xml';
+
+				if (file_exists($include_location)) {
+				} else {
+					echo 'Include file not found: ' .  $include_location;
+					die;
+					throw new \RuntimeException('Include file not found: ' .  $include_location);
+				}
 
 				$xml_string = ConfigurationService::replaceIncludeStatement(
 					$include, $replace_this, $xml_string, $include_location
@@ -1382,25 +1398,63 @@ Class ConfigurationService
 
 		$xml_string = file_get_contents($path_and_file);
 
-		for ($i = 0; $i < count($xml->customfields->customfield); $i++) {
+		if (isset($xml->customfields->customfield)) {
 
-			if (isset($xml->customfields->customfield[$i]->include)) {
+			for ($i = 0; $i < count($xml->customfields->customfield); $i++) {
 
-				$doit = 1;
-				while ($doit == 1) {
+				if (isset($xml->customfields->customfield[$i]->include['field'])) {
 
-					$include = (string)$xml->customfields->customfield[$i]->include['name'];
+					$doit = 1;
+					while ($doit == 1) {
 
-					$replace_this = '<include name="' . $include . '"/>';
+						$include = (string)$xml->customfields->customfield[$i]->include['field'];
 
-					$xml_string = ConfigurationService::replaceIncludeStatement(
-						$include, $replace_this, $xml_string);
+						$include_location = CONFIGURATION_FOLDER . '/Field/' . ucfirst(strtolower($include)) . '.xml';
 
-					$xml = simplexml_load_string($xml_string);
+						if (file_exists($include_location)) {
+						} else {
+							echo 'Include file not found: ' .  $include_location;
+							die;
+							throw new \RuntimeException('Include file not found: ' .  $include_location);
+						}
 
-					if (isset($xml->customfields->customfield[$i]->include)) {
-					} else {
-						$doit = 0;
+						$replace_this = '<include field="' . $include . '"/>';
+
+						$xml_string = ConfigurationService::replaceIncludeStatement(
+							$include, $replace_this, $xml_string, $include_location);
+
+						$xml = simplexml_load_string($xml_string);
+
+						if (isset($xml->customfields->customfield[$i]->include)) {
+						} else {
+							$doit = 0;
+						}
+					}
+
+				}
+
+				if (isset($xml->customfields->customfield[$i]->include['name'])) {
+
+					$doit = 1;
+					while ($doit == 1) {
+
+						$include = (string)$xml->customfields->customfield[$i]->include['name'];
+
+						$replace_this = '<include name="' . $include . '"/>';
+
+						if (trim($include) == '') {
+							$doit = 0;
+						} else {
+							$xml_string = ConfigurationService::replaceIncludeStatement(
+								$include, $replace_this, $xml_string);
+
+							$xml = simplexml_load_string($xml_string);
+
+							if (isset($xml->customfields->customfield[$i]->include)) {
+							} else {
+								$doit = 0;
+							}
+						}
 					}
 				}
 			}

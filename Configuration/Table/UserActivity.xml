@@ -14,11 +14,11 @@
 
         <fields>
             <field name="id" type="integer" null="0" default="" identity="1"/>
-            <field name="user_id"/>
-            <field name="action_id"/>
-            <field name="catalog_id"/>
-            <field name="activity_datetime"/>
-            <field name="ip_address"/>
+            <include field="user_id"/>
+            <include field="action_id"/>
+            <include field="catalog_id"/>
+            <include field="activity_datetime"/>
+            <include field="ip_address"/>
         </fields>
 
         <joins>

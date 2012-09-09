@@ -413,11 +413,11 @@ class Controller
 		if (Services::Registry()->get('cache') == true) {
 			Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results[0]);
 		}
-/**
-		echo '<pre>';
-		var_dump($this->query_results);
-		echo '</pre><br /><br />';
-*/
+
+//echo '<pre>';
+//var_dump($this->query_results);
+//echo '</pre><br /><br />';
+
 		return $this->query_results[0];
 
 	}

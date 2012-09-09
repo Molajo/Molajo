@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="Sites"
+        name="Site"
         table="#__sites"
         primary_key="id"
         name_key="name"
@@ -13,14 +13,15 @@
         catalog_type_id="10"
         use_pagination="1"
         data_source="JDatabase">
+
     <table>
         <fields>
-            <include field="id"/>
-            <include field="catalog_type_id"/>
-            <include field="name"/>
-            <include field="path"/>
-            <include field="base_url"/>
-            <include field="description"/>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
+            <field name="catalog_type_id" type="integer" null="0" default="model" datalist="CatalogType" locked="0" display="catalog_types_title"/>
+            <field name="name" type="char" null="0" unique="1" default=" " width="50"/>
+            <field name="path" type="char" null="0" default=" " width="50" locked="0" />
+            <field name="base_url" type="url" null="0" default=""/>
+            <field name="description" type="text" null="0" default=" "/>
         </fields>
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>

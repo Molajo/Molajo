@@ -16,7 +16,7 @@
 
     <table>
         <fields>
-            <include field="id"/>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
             <include field="catalog_type_id"/>
             <include field="name"/>
             <include field="path"/>
@@ -48,8 +48,14 @@
 
     <customfields>
         <customfield name="metadata">
-            <include name="Metadata"/>
+            <include field="title"/>
+            <include field="description"/>
+            <include field="keywords"/>
+            <include field="robots"/>
+            <include field="author"/>
+            <include field="content_rights"/>
         </customfield>
+
         <customfield name="parameters">
             <include name="ParametersApplicationDefaults"/>
             <include name="ParametersUitemplates"/>

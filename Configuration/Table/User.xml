@@ -7,7 +7,7 @@
         primary_prefix="a"
         get_customfields="2"
         get_item_children="1"
-        use_special_joins="1"
+        use_special_joins="0"
         check_view_level_access="0"
         process_plugins="1"
         catalog_type_id="500"
@@ -16,21 +16,21 @@
     <table>
         <fields>
             <field name="id" type="integer" null="1" default="0" identity="1"/>
-            <field name="catalog_type_id"/>
-            <field name="username"/>
-            <field name="first_name"/>
-            <field name="last_name"/>
-            <field name="full_name"/>
-            <field name="content_text"/>
-            <field name="email"/>
-            <field name="password"/>
-            <field name="block"/>
-            <field name="register_datetime"/>
-            <field name="activation_datetime"/>
-            <field name="last_visit_datetime"/>
-            <field name="customfields"/>
-            <field name="parameters"/>
-            <field name="metadata"/>
+            <include field="catalog_type_id"/>
+            <include field="username"/>
+            <include field="first_name"/>
+            <include field="last_name"/>
+            <include field="full_name"/>
+            <include field="content_text"/>
+            <include field="email"/>
+            <include field="password"/>
+            <include field="block"/>
+            <include field="register_datetime"/>
+            <include field="activation_datetime"/>
+            <include field="last_visit_datetime"/>
+            <include field="customfields"/>
+            <include field="parameters"/>
+            <include field="metadata"/>
         </fields>
 
         <foreignkeys>
@@ -38,10 +38,10 @@
         </foreignkeys>
 
         <children>
-            <child name="UserActivity" join="user_id"/>
-            <child name="UserApplications" join="user_id"/>
-            <child name="UserGroups" join="user_id"/>
-            <child name="UserViewGroups" join="user_id"/>
+            <child name="Useractivity" join="user_id"/>
+            <child name="Userapplications" join="user_id"/>
+            <child name="Usergroups" join="user_id"/>
+            <child name="Userviewgroups" join="user_id"/>
         </children>
 
         <plugins>
@@ -59,23 +59,28 @@
     <customfields>
 
         <customfield name="parameters">
-            <field name="display_gravatar"/>
-            <field name="display_birthdate"/>
-            <field name="display_email"/>
-            <field name="theme_id"/>
+            <include field="display_gravatar"/>
+            <include field="display_birthdate"/>
+            <include field="display_email"/>
+            <include field="theme_id"/>
         </customfield>
 
         <customfield name="customfields">
-            <field name="gender"/>
-            <field name="about_me"/>
-            <field name="editor"/>
-            <field name="language"/>
-            <field name="date_of_birth"/>
-            <field name="secondary_email"/>
+            <include field="gender"/>
+            <include field="about_me"/>
+            <include field="editor"/>
+            <include field="language"/>
+            <include field="date_of_birth"/>
+            <include field="secondary_email"/>
         </customfield>
 
         <customfield name="metadata">
-            <include name="Metadata"/>
+            <include field="title"/>
+            <include field="description"/>
+            <include field="keywords"/>
+            <include field="robots"/>
+            <include field="author"/>
+            <include field="content_rights"/>
         </customfield>
 
     </customfields>
