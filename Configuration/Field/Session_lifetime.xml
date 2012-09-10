@@ -1,0 +1,1 @@
+<field name="session_lifetime" type="integer" null="0" default="15"/>

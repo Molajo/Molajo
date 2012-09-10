@@ -1,0 +1,1 @@
+<field name="cache_handler" type="char" null="0" default="file"/>

@@ -203,7 +203,7 @@ class Controller
 					var_dump($this);
 					echo '</pre>';
 				}
-				$this->table_registry_name = ConfigurationService::getFile($model_type, $model_name);
+				$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
 
 				if ($this->table_registry_name == false) {
 					$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
@@ -211,7 +211,7 @@ class Controller
 
 					return false;
 				}
-				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getFile. ';
+				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getModel. ';
 			}
 
 			/** Serialize Options */

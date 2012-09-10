@@ -238,7 +238,7 @@
     "form_model_name":"",
     "form_model_type":"",
     "form_model_query_object":"",
-    "fpr,_model_parameter":"",
+    "form_model_parameter":"",
 
     "enable_draft_save":"1",
     "enable_version_history":"1",

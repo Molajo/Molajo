@@ -1,2 +1,2 @@
-<field name="session_lifetime" type="integer" null="0" default="15"/>
-<field name="session_handler" type="char" null="0" default="file"/>
+<include field="session_lifetime"/>
+<include field="session_handler"/>

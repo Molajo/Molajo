@@ -1,6 +1,6 @@
-<field name="criteria_title" type="char" null="0" default=" "/>
-<field name="criteria_display_view_on_no_results" type="binary" null="0" default="1"/>
-<field name="criteria_snippet_length" type="integer" null="0" default="200"/>
-<field name="criteria_status" type="integer" null="0" default=" "/>
-<field name="criteria_catalog_type_id" type="integer" null="0" default=" "/>
-<field name="criteria_extension_instance_id" type="integer" null="0" default=" "/>
+<include field="criteria_title"/>
+<include field="criteria_display_view_on_no_results"/>
+<include field="criteria_snippet_length"/>
+<include field="criteria_status"/>
+<include field="criteria_catalog_type_id"/>
+<include field="criteria_extension_instance_id"/>

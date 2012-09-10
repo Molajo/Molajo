@@ -1,17 +1,17 @@
-<field name="application_name"/>
-<field name="application_home_catalog_id"/>
-<field name="application_logon_requirement"/>
-<field name="application_google_analytics_code"/>
-<field name="html5"/>
+<include field="application_name"/>
+<include field="application_home_catalog_id"/>
+<include field="application_logon_requirement"/>
+<include field="application_google_analytics_code"/>
+<include field="html5"/>
 
-<field name="language"/>
-<field name="language_direction"/>
-<field name="language_multilingual"/>
-<field name="language_utc_offset"/>
+<include field="language"/>
+<include field="language_direction"/>
+<include field="language_multilingual"/>
+<include field="language_utc_offset"/>
 
-<field name="system_cache_folder"/>
-<field name="system_logs_folder"/>
-<field name="system_temp_folder"/>
-<field name="system_temp_url"/>
-<field name="system_media_folder"/>
-<field name="system_media_url"/>
+<include field="system_cache_folder"/>
+<include field="system_logs_folder"/>
+<include field="system_temp_folder"/>
+<include field="system_temp_url"/>
+<include field="system_media_folder"/>
+<include field="system_media_url"/>
