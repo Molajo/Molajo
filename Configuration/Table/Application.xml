@@ -57,24 +57,7 @@
         </customfield>
 
         <customfield name="parameters">
-            <include field="application_name"/>
-            <include field="application_home_catalog_id"/>
-            <include field="application_logon_requirement"/>
-            <include field="application_google_analytics_code"/>
-            <include field="html5"/>
-
-            <include field="language"/>
-            <include field="language_direction"/>
-            <include field="language_multilingual"/>
-            <include field="language_utc_offset"/>
-
-            <include field="system_cache_folder"/>
-            <include field="system_logs_folder"/>
-            <include field="system_temp_folder"/>
-            <include field="system_temp_url"/>
-            <include field="system_media_folder"/>
-            <include field="system_media_url"/>
-
+            <include name="ParametersApplicationDefaults"/>
             <include name="ParametersUitemplates"/>
             <include name="ParametersGrid"/>
             <include name="ParametersDashboard"/>

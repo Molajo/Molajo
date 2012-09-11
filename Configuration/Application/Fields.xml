@@ -68,7 +68,9 @@
         <attribute>placeholder</attribute>
         <attribute>required</attribute>
         <attribute>shape</attribute>
-        <attribute>size</attribute>
+        <attribute>shape</attribute>
+        <attribute>source_id</attribute>
+        <attribute>source_model</attribute>
         <attribute>table</attribute>
         <attribute>template</attribute>
         <attribute>tooltip</attribute>
@@ -77,6 +79,26 @@
         <attribute>unique</attribute>
         <attribute>values</attribute>
         <attribute>width</attribute>
+
+        <attribute>for-foreignkey-below</attribute>
+        <attribute>name</attribute>
+        <attribute>source_id</attribute>
+        <attribute>source_model</attribute>
+        <attribute>required</attribute>
+
+        <attribute>for-join-below</attribute>
+        <attribute>model</attribute>
+        <attribute>select</attribute>
+        <attribute>jointo</attribute>
+        <attribute>joinwith</attribute>
+
+        <attribute>for-children-below</attribute>
+        <attribute>join</attribute>
+
+        <attribute>for-criteria-below</attribute>
+        <attribute>connector</attribute>
+        <attribute>value</attribute>
+
     </attributes>
     <datalists>
         <datalist></datalist>

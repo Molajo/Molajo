@@ -145,35 +145,30 @@ Class ConfigurationService
 		$xml_string = ConfigurationService::getIncludeCode($xml_string);
 
 		$xml = simplexml_load_string($xml_string);
-
 		if (isset($xml->model)) {
 			$xml = $xml->model;
 		} else {
 			// FAIL
 		}
-		echo '<pre>';
-		var_dump($xml);
-		echo '</pre>';
 
-		Services::Registry()->createRegistry($model_name);
+		Services::Registry()->createRegistry($registryName);
 
-		$xml = ConfigurationService::inheritDefinition($registryName, $xml);
+		ConfigurationService::inheritDefinition($registryName, $xml);
 
-		$xml = ConfigurationService::setModelRegistry($registryName, $xml);
+		ConfigurationService::setModelRegistry($registryName, $xml);
 
-		$xml = ConfigurationService::setTableFieldsRegistry($registryName, $xml);
+		$attributes = array();
+		$attributes[] = array('fields', 'field');
+		$attributes[] = array('joins', 'join');
+		$attributes[] = array('foreignkeys', 'foreignkey');
+		$attributes[] = array('criteria', 'where');
+		$attributes[] = array('children', 'child');
+		$attributes[] = array('plugins', 'plugin');
+		$attributes[] = array('values', 'value');
 
-		$xml = ConfigurationService::setTableJoinsRegistry($registryName, $xml);
-
-		$xml = ConfigurationService::setCriteriaWhereRegistry($registryName, $xml);
-
-		$xml = ConfigurationService::setTableForeignKeysRegistry($registryName, $xml);
-
-		$xml = ConfigurationService::setTableChildrenRegistry($registryName, $xml);
-
-		$xml = ConfigurationService::setTablePluginsRegistry($registryName, $xml);
-
-		$xml = ConfigurationService::setTableValuesRegistry($registryName, $xml);
+		for ($i = 0; $i < count($attributes); $i++) {
+			ConfigurationService::setElementsRegistry($registryName, $xml, $attributes[$i][0], $attributes[$i][1]);
+		}
 
 		if (isset($xml->customfields)) {
 			ConfigurationService::getCustomFields($xml->customfields, $model_name, $registryName);
@@ -193,16 +188,13 @@ Class ConfigurationService
 	protected static function readXMLFile($path_and_file)
 	{
 		if (file_exists($path_and_file)) {
-
 		} else {
 			echo 'Error in ConfigurationService. File not found for ' . $path_and_file;
-
 			return false;
 			//throw new \RuntimeException('File not found: ' . $path_and_file);
 		}
 
 		try {
-
 			return file_get_contents($path_and_file);
 
 		} catch (\Exception $e) {
@@ -247,6 +239,7 @@ Class ConfigurationService
 				$path = EXTENSIONS . '/Resource/' . $model_name . '/Configuration.xml';
 			}
 			if (file_exists($path)) {
+				echo $path.'<br />';
 				return $path;
 			}
 		}
@@ -408,10 +401,19 @@ Class ConfigurationService
 	}
 
 
+	/**
+	 * getIncludeCode parses the xml string over and over
+	 * until all file and field include statements have been processed
+	 *
+	 * @static
+	 * @param $xml_string
+	 *
+	 * @return mixed
+	 * @throws \RuntimeException
+	 * @since  1.0
+	 */
 	public static function getIncludeCode($xml_string)
 	{
-		//$replace_this = '<include name="' . $include . '"/>';
-
 		if (trim($xml_string) == '') {
 			return $xml_string;
 		}
@@ -427,6 +429,10 @@ Class ConfigurationService
 			if (count($matches[1]) == 0) {
 				break;
 			}
+			echo '<pre><br />';
+			var_dump($matches);
+			echo '</pre><br />';
+
 
 			$i = 0;
 			foreach ($matches[1] as $match) {
@@ -469,9 +475,11 @@ Class ConfigurationService
 	 * Retrieves base Model Registry data and stores it to the datasource registry
 	 *
 	 * @static
-	 * @param  $registryName
-	 * @param  $xml
-	 * @return mixed
+	 * @param   $registryName
+	 * @param   $xml
+	 *
+	 * @return  boolean
+	 * @since   1.0
 	 */
 	public static function setModelRegistry($registryName, $xml)
 	{
@@ -482,317 +490,157 @@ Class ConfigurationService
 		Services::Registry()->set($registryName, 'model_name',
 			Services::Registry()->get($registryName, 'name'));
 
-		return;
+		return true;
 	}
 
 	/**
-	 * setTableFieldsRegistry
+	 * setElementsRegistry
 	 *
 	 * @static
-	 * @param  $registryName
-	 * @param  $xml
+	 * @param   $registryName
+	 * @param   $xml
 	 *
-	 * @return  array
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public static function setTableFieldsRegistry($registryName, $xml)
+	public static function setElementsRegistry($registryName, $xml, $plural, $singular)
 	{
-		if (isset($xml->table->fields->field)) {
+		if (isset($xml->table->$plural->$singular)) {
 		} else {
-			return $xml;
+			return true;
 		}
 
-		$fields = $xml->table->fields->field;
-		$fieldArray = array();
+		$set = $xml->table->$plural->$singular;
+		$itemArray = array();
 
-		foreach ($fields as $field) {
+		foreach ($set as $item) {
 
-			$attributes = get_object_vars($field);
-			$fieldAttributes = ($attributes["@attributes"]);
-			$fieldAttributesArray = array();
+			$attributes = get_object_vars($item);
 
-			foreach ($fieldAttributes as $key => $value) {
+			$itemAttributes = ($attributes["@attributes"]);
+			$itemAttributesArray = array();
+
+			foreach ($itemAttributes as $key => $value) {
 
 				if (in_array($key, self::$valid_field_attributes)) {
 				} else {
-					echo 'Field attribute not known ' . $key . ' for ' . $registryName . '<br />';
+					echo $singular . ' Attribute not known ' . $key . ' for ' . $registryName . '<br />';
 				}
-				$fieldAttributesArray[$key] = $value;
+
+				switch ($plural) {
+					case 'fields':
+						$itemAttributesArray[$key] = $value;
+						break;
+
+					case 'joins':
+						$itemAttributesArray[$key] = $value;
+						break;
+
+					case 'foreignkeys':  //name, source_id, source_model and required
+						$itemAttributesArray[$key] = $value;      //done
+						break;
+
+					case 'criteria':     //name, connector, value
+						$itemAttributesArray[] = $value;
+						break;
+
+					case 'children':   // name and join
+						$itemAttributesArray[] = $value;
+						break;
+
+					case 'plugins':      //name
+						$itemAttributesArray[] = $value;
+						break;
+
+					case 'values':     //id value
+						$itemAttributesArray[] = $value;
+
+						$values = $value;
+						$valuesArray = array();
+						foreach ($values as $value) {
+							$t = get_object_vars($value);
+							$tXXX = ($t["@attributes"]);
+
+							$temp = new \stdClass();
+
+							$temp->id = $tXXX['id'];
+							$temp->value = $tXXX['value'];
+
+							$valuesArray[] = $temp;
+						}
+						Services::Registry()->set($registryName, 'values', $valuesArray);
+						break;
+				}
+
+
 			}
-			$fieldArray[] = $fieldAttributesArray;
+			$itemArray[] = $itemAttributesArray;
 		}
 
-		Services::Registry()->set($registryName, 'fields', $fieldArray);
 
-		return $xml;
-	}
 
-	/**
-	 * setTableJoinsRegistry
-	 *
-	 * @static
-	 * @param $registryName
-	 * @param $xml
-	 * @param $xml_string
-	 * @param $path_and_file
-	 * @param $model_name
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	public static function setTableJoinsRegistry(
-		$registryName, $xml)
-	{
+		if ($plural == 'joins') {
 
-		if (isset($xml->table->joins->join)) {
-			$jXML = $xml->table->joins->join;
+			echo '<pre>';
+			var_dump($itemArray);
+			echo '</pre>';
 
-			$join_fields_select = array();
+			//if (isset($itemArray['model']))
+			$joinModel = $itemArray['model'];
 
-			$jArray = array();
-			foreach ($jXML as $joinItem) {
+			$joinFields = array();
 
-				$joinVars = get_object_vars($joinItem);
-				$joinAttributes = ($joinVars["@attributes"]);
-				$joinAttributesArray = array();
+			/** Load Registry for Table Joined too -- so that field attributes can be used */
+			$joinRegistry = strtolower($joinModel . 'Table');
 
-				$joinModel = (string)$joinAttributes['model'];
+			/** Load the file and build registry - IF - the registry is not already loaded */
+			if (Services::Registry()->exists($joinRegistry) == true) {
+			} else {
+				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+				$m = new $controllerClass();
+				$results = $m->connect('Table', $joinModel);
+			}
 
-				$joinFields = array();
+			/** Load inherited definitions */
+			$tempFields = Services::Registry()->get($joinRegistry, 'fields', array());
+			$table = Services::Registry()->get($joinRegistry, 'table');
+			$joinAttributesArray['table'] = $table;
 
-				/** Load Registry for Table Joined too -- so that field attributes can be used */
-				$joinRegistry = strtolower($joinModel . 'Table');
+			$alias = (string)$itemArray['alias'];
+			if (trim($alias) == '') {
+				$alias = substr($table, 3, strlen($table));
+			}
+			$joinAttributesArray['alias'] = trim($alias);
 
-				/** Load the file and build registry - IF - the registry is not already loaded */
-				if (Services::Registry()->exists($joinRegistry) == true) {
-				} else {
-					//if not, load it.
-					$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-					$m = new $controllerClass();
-					$results = $m->connect('Table', $joinModel);
-				}
+			$select = (string)$itemArray['select'];
+			$joinAttributesArray['select'] = $select;
+			$selectArray = explode(',', $select);
 
-				/** Load inherited definitions */
-				$tempFields = Services::Registry()->get($joinRegistry, 'fields', array());
-				$table = Services::Registry()->get($joinRegistry, 'table');
-				$joinAttributesArray['table'] = $table;
+			foreach ($selectArray as $x) {
 
-				$alias = (string)$joinAttributes['alias'];
-				if (trim($alias) == '') {
-					$alias = substr($table, 3, strlen($table));
-				}
-				$joinAttributesArray['alias'] = trim($alias);
-
-				$select = (string)$joinAttributes['select'];
-				$joinAttributesArray['select'] = $select;
-				$selectArray = explode(',', $select);
-
-				foreach ($selectArray as $x) {
-
-					foreach ($tempFields as $t) {
-						if ($t['name'] == $x) {
-							$t['as_name'] = trim($alias) . '_' . trim($x);
-							$t['alias'] = $alias;
-							$t['table'] = $table;
-							$join_fields_select[] = $t;
-						}
+				foreach ($tempFields as $t) {
+					if ($t['name'] == $x) {
+						$t['as_name'] = trim($alias) . '_' . trim($x);
+						$t['alias'] = $alias;
+						$t['table'] = $table;
+						$join_fields_select[] = $t;
 					}
 				}
-
-				$joinAttributesArray['jointo'] = (string)$joinAttributes['jointo'];
-				$joinAttributesArray['joinwith'] = (string)$joinAttributes['joinwith'];
-
-				$jArray[] = $joinAttributesArray;
 			}
 
-			Services::Registry()->set($registryName, 'Joins', $jArray);
+			$itemAttributesArray['jointo'] = (string)$itemAttributes['jointo'];
+			$itemAttributesArray['joinwith'] = (string)$itemAttributes['joinwith'];
 
-			Services::Registry()->set($registryName, 'JoinFields', $join_fields_select);
+			$jArray[] = $itemAttributesArray;
 		}
 
-		return $xml;
-	}
+		Services::Registry()->set($registryName, $plural, $itemArray);
 
-	/**
-	 * setCriteriaWhereRegistry
-	 *
-	 * @static
-	 * @param $registryName
-	 * @param $xml
-	 * @param $xml_string
-	 * @param $path_and_file
-	 * @param $model_name
-	 * @return array
-	 * @since  1.0
-	 */
-	public static function setTableForeignKeysRegistry(
-		$registryName, $xml)
-	{
+//		echo '<pre>';
+//		Services::Registry()->get($registryName, $plural);
+//		echo '</pre>';
 
-		if (isset($xml->table->foreignkeys->foreignkey)) {
-
-			$fks = $xml->table->foreignkeys->foreignkey;
-			$fkArray = array();
-
-			foreach ($fks as $fk) {
-
-				$attributes = get_object_vars($fk);
-				$fkAttributes = ($attributes["@attributes"]);
-				$fkAttributesArray = array();
-
-				$fkAttributesArray['name'] = $fkAttributes['name'];
-				$fkAttributesArray['source_id'] = $fkAttributes['source_id'];
-				$fkAttributesArray['source_model'] = $fkAttributes['source_model'];
-				$fkAttributesArray['required'] = $fkAttributes['required'];
-
-				$fkArray[] = $fkAttributesArray;
-			}
-			Services::Registry()->set($registryName, 'foreignkeys', $fkArray);
-		}
-
-		return $xml;
-	}
-
-	/**
-	 * setCriteriaWhereRegistry
-	 *
-	 * @static
-	 * @param $registryName
-	 * @param $xml
-	 * @param $xml_string
-	 * @param $path_and_file
-	 * @param $model_name
-	 * @return array
-	 * @since  1.0
-	 */
-	public static function setCriteriaWhereRegistry(
-		$registryName, $xml)
-	{
-
-		$whereArray = array();
-
-		if (isset($xml->table->criteria->where)) {
-
-			$criteria = $xml->table->criteria->where;
-			$criteriaArray = array();
-
-			foreach ($criteria as $where) {
-
-				$attributes = get_object_vars($where);
-				$whereAttributes = ($attributes["@attributes"]);
-				$whereAttributesArray = array();
-
-				$whereAttributesArray['name'] = $whereAttributes['name'];
-				$whereAttributesArray['connector'] = $whereAttributes['connector'];
-				$whereAttributesArray['value'] = $whereAttributes['value'];
-
-				$whereArray[] = $whereAttributesArray;
-			}
-		}
-
-		Services::Registry()->set($registryName, 'Criteria', $whereArray);
-
-		return $xml;
-	}
-
-	/**
-	 * setTableChildrenRegistry
-	 *
-	 * @static
-	 * @param  $registryName
-	 * @param  $xml
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	public static function setTableChildrenRegistry($registryName, $xml)
-	{
-		if (isset($xml->table->children->child)) {
-		} else {
-			return $xml;
-		}
-
-		$cs = $xml->table->children->child;
-		$csArray = array();
-		foreach ($cs as $c) {
-
-			$chVars = get_object_vars($c);
-			$chAttributes = ($chVars["@attributes"]);
-			$chkAttributesArray = array();
-
-			$chkAttributesArray['name'] = $chAttributes['name'];
-			$chkAttributesArray['join'] = $chAttributes['join'];
-
-			$csArray[] = $chkAttributesArray;
-		}
-		Services::Registry()->set($registryName, 'children', $csArray);
-
-
-		return $xml;
-	}
-
-	/**
-	 * setTablePluginsRegistry
-	 *
-	 * @static
-	 * @param $registryName
-	 * @param $xml
-	 * @param $xml_string
-	 * @param $path_and_file
-	 * @param $model_name
-	 * @return array
-	 * @since  1.0
-	 */
-	public static function setTablePluginsRegistry(
-		$registryName, $xml, $xml_string, $path_and_file, $model_name)
-	{
-
-		if (isset($xml->table->plugins->plugin)) {
-			$plugins = $xml->table->plugins->plugin;
-			$pluginsArray = array();
-			foreach ($plugins as $plugin) {
-				$t = get_object_vars($plugin);
-				$tAttr = ($t["@attributes"]);
-				$pluginsArray[] = $tAttr['name'];
-			}
-			Services::Registry()->set($registryName, 'plugins', $pluginsArray);
-		}
-
-		return array($xml, $xml_string);
-	}
-
-	/**
-	 * setTableValuesRegistry
-	 *
-	 * @static
-	 * @param $registryName
-	 * @param $xml
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	public static function setTableValuesRegistry($registryName, $xml)
-	{
-		$valuesArray = array();
-
-		if (isset($xml->table->values->value)) {
-			$values = $xml->table->values->value;
-			$valuesArray = array();
-			foreach ($values as $value) {
-				$t = get_object_vars($value);
-				$tXXX = ($t["@attributes"]);
-
-				$temp = new \stdClass();
-
-				$temp->id = $tXXX['id'];
-				$temp->value = $tXXX['value'];
-
-				$valuesArray[] = $temp;
-			}
-			Services::Registry()->set($registryName, 'values', $valuesArray);
-		}
-
-		return $xml;
+		return true;
 	}
 
 	/**
@@ -918,7 +766,7 @@ Class ConfigurationService
 	}
 
 	/**
-	 * Inheritance checking and setup
+	 * Inheritance checking and setup  <model name="XYZ" extends="ThisTable"/>
 	 *
 	 * @static
 	 * @param  $registryName
@@ -929,23 +777,19 @@ Class ConfigurationService
 	 */
 	public static function inheritDefinition($registryName, $xml)
 	{
-		/** Inheritance: <model name="XYZ" extends="ThisTable"/> */
 		$extends = false;
-		$type = '';
+
 		foreach ($xml->attributes() as $key => $value) {
 			if ($key == 'extends') {
 				$extends = (string)$value;
-			} elseif ($key == 'type') {
-				$type = (string)$value;
 			}
 		}
-
-		/** No Inheritance */
-		if ($extends == false) {
+		if ($extends === false) {
 			return;
 		}
 
 		$modelArray = Services::Registry()->get('Fields', 'Modeltypes');
+
 		$extends_model_name = '';
 		$extends_model_type = '';
 		foreach ($modelArray as $modeltype) {
@@ -966,7 +810,7 @@ Class ConfigurationService
 		/** Load the file and build registry - IF - the registry is not already loaded */
 		if (Services::Registry()->exists($parentRegistryName) == true) {
 		} else {
-			/** if not, load it. */
+
 			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
 			$results = $m->connect($extends_model_type, $extends_model_name);
@@ -975,7 +819,7 @@ Class ConfigurationService
 			}
 		}
 
-		/** Copy parent to child for start - will be overwritten for child definitions */
+		/** Begin with inherited model */
 		Services::Registry()->copy($parentRegistryName, $registryName);
 
 		return;
