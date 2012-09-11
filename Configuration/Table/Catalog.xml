@@ -14,7 +14,7 @@
     <table>
 
         <fields>
-            <include field="id"/>
+            <field name="id" type="integer" null="1" default="0" identity="1"/>
             <include field="catalog_type_id"/>
             <include field="source_id"/>
             <include field="routable"/>

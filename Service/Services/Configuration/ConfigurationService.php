@@ -239,7 +239,6 @@ Class ConfigurationService
 				$path = EXTENSIONS . '/Resource/' . $model_name . '/Configuration.xml';
 			}
 			if (file_exists($path)) {
-				echo $path.'<br />';
 				return $path;
 			}
 		}
@@ -400,10 +399,8 @@ Class ConfigurationService
 		throw new \RuntimeException('File not found for Model Type: ' . $model_type . ' Name: ' . $model_name);
 	}
 
-
 	/**
-	 * getIncludeCode parses the xml string over and over
-	 * until all file and field include statements have been processed
+	 * getIncludeCode parses the xml string repeatedly until all include statements have been processed
 	 *
 	 * @static
 	 * @param $xml_string
@@ -429,10 +426,6 @@ Class ConfigurationService
 			if (count($matches[1]) == 0) {
 				break;
 			}
-			echo '<pre><br />';
-			var_dump($matches);
-			echo '</pre><br />';
-
 
 			$i = 0;
 			foreach ($matches[1] as $match) {
@@ -532,27 +525,27 @@ Class ConfigurationService
 						$itemAttributesArray[$key] = $value;
 						break;
 
-					case 'joins':
+					case 'joins': //model, alias, select, joinwith, jointo
 						$itemAttributesArray[$key] = $value;
 						break;
 
-					case 'foreignkeys':  //name, source_id, source_model and required
-						$itemAttributesArray[$key] = $value;      //done
+					case 'foreignkeys': //name, source_id, source_model and required
+						$itemAttributesArray[$key] = $value; //done
 						break;
 
-					case 'criteria':     //name, connector, value
+					case 'criteria': //name, connector, value
 						$itemAttributesArray[] = $value;
 						break;
 
-					case 'children':   // name and join
+					case 'children': // name and join
 						$itemAttributesArray[] = $value;
 						break;
 
-					case 'plugins':      //name
+					case 'plugins': //name
 						$itemAttributesArray[] = $value;
 						break;
 
-					case 'values':     //id value
+					case 'values': //id value
 						$itemAttributesArray[] = $value;
 
 						$values = $value;
@@ -577,70 +570,106 @@ Class ConfigurationService
 			$itemArray[] = $itemAttributesArray;
 		}
 
-
-
 		if ($plural == 'joins') {
+			$joins = array();
+			$selects = array();
 
+			echo ' PRIOR TO LOOP <br />';
 			echo '<pre>';
 			var_dump($itemArray);
 			echo '</pre>';
 
-			//if (isset($itemArray['model']))
-			$joinModel = $itemArray['model'];
+			for ($i = 0; $i < count($itemArray); $i++) {
 
-			$joinFields = array();
+				echo ' in loop <br />';
+				echo '<pre>';
+				var_dump($itemArray[$i]);
+				echo '</pre>';
 
-			/** Load Registry for Table Joined too -- so that field attributes can be used */
-			$joinRegistry = strtolower($joinModel . 'Table');
-
-			/** Load the file and build registry - IF - the registry is not already loaded */
-			if (Services::Registry()->exists($joinRegistry) == true) {
-			} else {
-				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-				$m = new $controllerClass();
-				$results = $m->connect('Table', $joinModel);
+				$temp = ConfigurationService::setJoinFields($itemArray[$i]);
+				$joins[] = $temp[0];
+				$selects[] = $temp[1];
 			}
+			echo '<pre>After loop';
+			var_dump($joins);
+			echo '</pre>';
 
-			/** Load inherited definitions */
-			$tempFields = Services::Registry()->get($joinRegistry, 'fields', array());
-			$table = Services::Registry()->get($joinRegistry, 'table');
-			$joinAttributesArray['table'] = $table;
+			echo '<pre>';
+			var_dump($selects);
+			echo '</pre>';
 
-			$alias = (string)$itemArray['alias'];
-			if (trim($alias) == '') {
-				$alias = substr($table, 3, strlen($table));
-			}
-			$joinAttributesArray['alias'] = trim($alias);
+			die;
+		} else {
 
-			$select = (string)$itemArray['select'];
-			$joinAttributesArray['select'] = $select;
-			$selectArray = explode(',', $select);
-
-			foreach ($selectArray as $x) {
-
-				foreach ($tempFields as $t) {
-					if ($t['name'] == $x) {
-						$t['as_name'] = trim($alias) . '_' . trim($x);
-						$t['alias'] = $alias;
-						$t['table'] = $table;
-						$join_fields_select[] = $t;
-					}
-				}
-			}
-
-			$itemAttributesArray['jointo'] = (string)$itemAttributes['jointo'];
-			$itemAttributesArray['joinwith'] = (string)$itemAttributes['joinwith'];
-
-			$jArray[] = $itemAttributesArray;
+			Services::Registry()->set($registryName, $plural, $itemArray);
 		}
-
-		Services::Registry()->set($registryName, $plural, $itemArray);
-
 //		echo '<pre>';
 //		Services::Registry()->get($registryName, $plural);
 //		echo '</pre>';
 
 		return true;
+	}
+
+	/**
+	 * setJoinFields - processes one set of join field definitions, updating the registry
+	 *
+	 * @static
+	 * @param  $itemArray
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	protected static function setJoinFields($modelJoinArray)
+	{
+
+		$joinArray = array();
+		$joinSelectArray = array();
+
+		$joinModel = ucfirst(strtolower($modelJoinArray['model']));
+		$joinRegistry = $joinModel . 'Table';
+
+		if (Services::Registry()->exists($joinRegistry) === false) {
+			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+			$connect = new $controllerClass();
+
+			$results = $connect->connect('Table', $joinModel);
+			if ($results === false) {
+				echo $joinRegistry;
+				die;
+				return false;
+			}
+		}
+		    echo 'after connect ' . $joinRegistry . '<br />';
+		$fields = Services::Registry()->get($joinRegistry, 'fields');
+
+		$table = Services::Registry()->get($joinRegistry, 'table');
+
+		$joinArray['table'] = $table;
+
+		$alias = (string)$modelJoinArray['alias'];
+		if (trim($alias) == '') {
+			$alias = substr($table, 3, strlen($table));
+		}
+		$joinArray['alias'] = trim($alias);
+
+		$select = (string)$modelJoinArray['select'];
+		$joinArray['select'] = $select;
+
+		$selectArray = explode(',', $select);
+		foreach ($selectArray as $s) {
+			foreach ($fields as $joinSelectArray) {
+				if ($joinSelectArray['name'] == $s) {
+					$joinSelectArray['as_name'] = trim($alias) . '_' . trim($s);
+					$joinSelectArray['alias'] = $alias;
+					$joinSelectArray['table'] = $table;
+				}
+			}
+		}
+
+		$joinArray['jointo'] = (string)$modelJoinArray['jointo'];
+		$joinArray['joinwith'] = (string)$modelJoinArray['joinwith'];
+		die;
+		return array($joinArray, $fields);
 	}
 
 	/**
@@ -1039,7 +1068,7 @@ Class ConfigurationService
 				/** Combine Application and Site Parameters into Configuration */
 				$parameters = Services::Registry()->getArray('ApplicationTableParameters');
 				foreach ($parameters as $key => $value) {
-					echo $key . ' ' . $value . '<br />';
+
 					Services::Registry()->set('Configuration', $key, $value);
 
 					if (strtolower($key) == 'profiler') {

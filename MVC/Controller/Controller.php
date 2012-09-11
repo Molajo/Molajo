@@ -170,6 +170,9 @@ class Controller
 			. ' Type: ' . $model_type
 			. ' Name: ' . $model_name
 			. ' Class: ' . $model_class;
+echo '<br />';
+echo $profiler_message;
+echo '<br />';
 
 		if ($model_name == null || trim($model_name) == '') {
 			$this->table_registry_name = null;
@@ -192,7 +195,8 @@ class Controller
 		} else {
 
 			$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-			if (Services::Registry()->exists($table_registry_name) == true) {
+			echo $table_registry_name  .'<br />';
+			if (Services::Registry()->exists($table_registry_name) === true) {
 				$this->table_registry_name = $table_registry_name;
 				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
 
@@ -203,9 +207,11 @@ class Controller
 					var_dump($this);
 					echo '</pre>';
 				}
-				$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
+				echo $model_type. ' ' . $model_name . '<br />';
 
-				if ($this->table_registry_name == false) {
+				$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
+echo $this->table_registry_name  .'<br />';
+				if ($this->table_registry_name === false) {
 					$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
 					Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 
