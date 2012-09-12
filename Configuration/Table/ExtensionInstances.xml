@@ -28,6 +28,7 @@
         <plugins>
             <include name="PluginsAdmin"/>
             <include name="PluginsExtensionInstance"/>
+            <include name="PluginsContent"/>
         </plugins>
     </table>
 

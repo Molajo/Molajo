@@ -199,9 +199,13 @@ Class ConfigurationService
 
 		$xml_string = ConfigurationService::readXMLFile($path_and_file);
 
-		$xml_string = ConfigurationService::getIncludeCode($xml_string);
-
-		$xml = simplexml_load_string($xml_string);
+		$results = ConfigurationService::getIncludeCode($xml_string);
+//if ($model_name == 'Articles') {
+//	echo '<br/>END';
+//	echo $xml_string;
+//	echo '<br/>';
+//}
+		$xml = simplexml_load_string($results);
 		if (isset($xml->model)) {
 			$xml = $xml->model;
 		} else {
@@ -477,8 +481,7 @@ Class ConfigurationService
 			return $xml_string;
 		}
 
-		$replaceThis = array();
-		$withThis = array();
+		$include = '';
 		$pattern = '/<include (.*)="(.*)"\/>/';
 
 		$done = false;
@@ -490,9 +493,12 @@ Class ConfigurationService
 			}
 
 			$i = 0;
+			$replaceThis = '';
+			$withThis = '';
+
 			foreach ($matches[1] as $match) {
 
-				$replaceThis[] = $matches[0][$i];
+				$replaceThis = $matches[0][$i];
 
 				$include = $matches[2][$i];
 
@@ -508,19 +514,29 @@ Class ConfigurationService
 				}
 
 				try {
-					$withThis[] = file_get_contents($path_and_file);
+					$withThis = file_get_contents($path_and_file);
 
 				} catch (\Exception $e) {
+
 					throw new \RuntimeException (
 						'Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage()
 					);
 				}
+//if ($include == 'PluginsContent') {
+//	echo '<br/>BEFORE';
+//	echo $xml_string;
+//	echo '<br/>';
+//}
 
+				$xml_string = str_replace($replaceThis, $withThis, $xml_string);
+
+//if ($include == 'PluginsContent') {
+//	echo '<br/>AFTER';
+//	echo $xml_string;
+//	echo '<br/>';
+//}
 				$i++;
 			}
-
-			$text = str_replace($replaceThis, $withThis, $xml_string);
-			$xml_string = $text;
 		}
 
 		return $xml_string;
@@ -587,6 +603,15 @@ Class ConfigurationService
 				$itemAttributesArray[$key] = $value;
 			}
 
+//echo $registryName . '<br />';
+//			if ($registryName == 'ArticlesResource') {
+//				echo $registryName. '  ' . $plural . '<br />';
+//				echo '<pre>';
+//				var_dump($itemAttributesArray);
+//				echo '</pre>';
+//				die;
+///			}
+
 			if ($plural == 'plugins') {
 				$itemArray = $itemAttributesArray;
 			} else {
@@ -636,16 +661,8 @@ Class ConfigurationService
 		} else {
 			Services::Registry()->set($registryName, $plural, $itemArray);
 		}
-/**
-if ($plural == 'plugins') {
-		echo $registryName. '  ' . $plural . '<br />';
-		echo '<pre>';
-		var_dump(Services::Registry()->get($registryName, $plural));
-		echo '</pre>';
-	die;
-}
- */
-		return true;
+
+ 		return true;
 	}
 
 	/**
