@@ -1,35 +1,35 @@
 <field name="id" type="integer" null="0" default=" " identity="1" form="hidden"/>
-<field name="extension_id" type="integer" null="0" default="0" form="list"/>
-<field name="catalog_type_id" type="integer" null="0" default="model" form="hidden"/>
-<field name="title" type="char" null="0" default=" " width="50"/>
-<field name="subtitle" type="text" null="0" default=" "/>
-<field name="path" type="char" null="0" default=" "/>
-<field name="alias" type="char" null="0" default=" "/>
-<field name="content_text" type="text" null="0" default=" "/>
-<field name="protected" type="boolean" null="0" default="0"/>
-<field name="featured" type="boolean" null="0" default="0"/>
-<field name="stickied" type="boolean" null="0" default="0"/>
-<field name="status" type="integer" null="0" default="0"/>
-<field name="start_publishing_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-<field name="stop_publishing_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-<field name="version" type="integer" null="0" default="1"/>
-<field name="version_of_id" type="integer" null="0" default="0"/>
-<field name="status_prior_to_version" type="integer" null="0" default="0"/>
-<field name="created_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-<field name="created_by" type="integer" null="0" default="0"/>
-<field name="modified_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-<field name="modified_by" type="integer" null="0" default="0"/>
-<field name="checked_out_datetime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-<field name="checked_out_by" type="integer" null="0" default="0"/>
-<field name="root" type="integer" null="0" default="0"/>
-<field name="parent_id" type="integer" null="0" default="0"/>
-<field name="lft" type="integer" null="0" default="0"/>
-<field name="rgt" type="integer" null="0" default="0"/>
-<field name="lvl" type="integer" null="0" default="0"/>
-<field name="home" type="integer" null="0" default="0"/>
-<field name="customfields" type="customfield"/>
-<field name="parameters" type="customfield"/>
-<field name="metadata" type="customfield"/>
-<field name="language" type="char" null="0" default=" "/>
-<field name="translation_of_id" type="integer" null="0" default="0"/>
-<field name="ordering" type="integer" null="0" default="0"/>
+<include field="extension_id"/>
+<include field="catalog_type_id"/>
+<include field="title"/>
+<include field="subtitle"/>
+<include field="path"/>
+<include field="alias"/>
+<include field="content_text"/>
+<include field="protected"/>
+<include field="featured"/>
+<include field="stickied"/>
+<include field="status"/>
+<include field="start_publishing_datetime"/>
+<include field="stop_publishing_datetime"/>
+<include field="version"/>
+<include field="version_of_id"/>
+<include field="status_prior_to_version"/>
+<include field="created_datetime"/>
+<include field="created_by"/>
+<include field="modified_datetime"/>
+<include field="modified_by"/>
+<include field="checked_out_datetime"/>
+<include field="checked_out_by"/>
+<include field="root"/>
+<include field="parent_id"/>
+<include field="lft"/>
+<include field="rgt"/>
+<include field="lvl"/>
+<include field="home"/>
+<include field="customfields"/>
+<include field="parameters"/>
+<include field="metadata"/>
+<include field="language"/>
+<include field="translation_of_id"/>
+<include field="ordering"/>

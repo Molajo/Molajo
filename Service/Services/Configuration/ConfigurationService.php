@@ -28,6 +28,15 @@ Class ConfigurationService
 	 */
 	protected static $instance;
 
+
+	/**
+	 * Valid Query Attributes
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected static $valid_queryelements_attributes;
+
 	/**
 	 * Valid Field Attributes
 	 *
@@ -35,6 +44,54 @@ Class ConfigurationService
 	 * @since  1.0
 	 */
 	protected static $valid_field_attributes;
+
+	/**
+	 * Valid Join Attributes
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected static $valid_join_attributes;
+
+	/**
+	 * Valid Foreignkey Attributes
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected static $valid_foreignkey_attributes;
+
+	/**
+	 * Valid Criteria Attributes
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected static $valid_criteria_attributes;
+
+	/**
+	 * Valid Children Attributes
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected static $valid_children_attributes;
+
+	/**
+	 * Valid Plugin Attributes
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected static $valid_plugin_attributes;
+
+	/**
+	 * Valid Value Attributes
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	protected static $valid_value_attributes;
 
 	/**
 	 * getInstance
@@ -157,17 +214,19 @@ Class ConfigurationService
 
 		ConfigurationService::setModelRegistry($registryName, $xml);
 
-		$attributes = array();
-		$attributes[] = array('fields', 'field');
-		$attributes[] = array('joins', 'join');
-		$attributes[] = array('foreignkeys', 'foreignkey');
-		$attributes[] = array('criteria', 'where');
-		$attributes[] = array('children', 'child');
-		$attributes[] = array('plugins', 'plugin');
-		$attributes[] = array('values', 'value');
+		$attr = array();
+		foreach (self::$valid_field_attributes as $type) {
+			$attr[] = array('fields', 'field', self::$valid_field_attributes);
+			$attr[] = array('joins', 'join', self::$valid_join_attributes);
+			$attr[] = array('foreignkeys', 'foreignkey', self::$valid_foreignkey_attributes);
+			$attr[] = array('criteria', 'where', self::$valid_criteria_attributes);
+			$attr[] = array('children', 'child', self::$valid_children_attributes);
+			$attr[] = array('plugins', 'plugin', self::$valid_plugin_attributes);
+			$attr[] = array('values', 'value', self::$valid_value_attributes);
+		}
 
-		for ($i = 0; $i < count($attributes); $i++) {
-			ConfigurationService::setElementsRegistry($registryName, $xml, $attributes[$i][0], $attributes[$i][1]);
+		for ($i = 0; $i < count($attr); $i++) {
+			ConfigurationService::setElementsRegistry($registryName, $xml, $attr[$i][0], $attr[$i][1], $attr[$i][2]);
 		}
 
 		if (isset($xml->customfields)) {
@@ -181,8 +240,10 @@ Class ConfigurationService
 	 * Read XML file and return results
 	 *
 	 * @static
-	 * @param $path_and_file
+	 * @param  $path_and_file
+	 *
 	 * @return bool|object
+	 * @since  1.0
 	 * @throws \RuntimeException
 	 */
 	protected static function readXMLFile($path_and_file)
@@ -210,7 +271,7 @@ Class ConfigurationService
 	 *
 	 * @return  mixed object or void
 	 * @since   1.0
-	 * @throws \RuntimeException
+	 * @throws  \RuntimeException
 	 */
 	protected static function locateFile($model_type, $model_name)
 	{
@@ -245,6 +306,7 @@ Class ConfigurationService
 
 		/** 3. Overrides */
 		$modeltypeArray = Services::Registry()->get('Fields', 'Modeltypes');
+
 		if (in_array($model_type, $modeltypeArray)) {
 		} else {
 			echo '<br />Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
@@ -409,7 +471,7 @@ Class ConfigurationService
 	 * @throws \RuntimeException
 	 * @since  1.0
 	 */
-	public static function getIncludeCode($xml_string)
+	protected static function getIncludeCode($xml_string)
 	{
 		if (trim($xml_string) == '') {
 			return $xml_string;
@@ -490,13 +552,16 @@ Class ConfigurationService
 	 * setElementsRegistry
 	 *
 	 * @static
-	 * @param   $registryName
-	 * @param   $xml
+	 * @param  $registryName
+	 * @param  $xml
+	 * @param  $plural
+	 * @param  $singular
+	 * @param  $valid_attributes
 	 *
-	 * @return  boolean
+	 * @return  bool
 	 * @since   1.0
 	 */
-	public static function setElementsRegistry($registryName, $xml, $plural, $singular)
+	protected static function setElementsRegistry($registryName, $xml, $plural, $singular, $valid_attributes)
 	{
 		if (isset($xml->table->$plural->$singular)) {
 		} else {
@@ -515,98 +580,71 @@ Class ConfigurationService
 
 			foreach ($itemAttributes as $key => $value) {
 
-				if (in_array($key, self::$valid_field_attributes)) {
+				if (in_array($key, $valid_attributes)) {
 				} else {
-					echo $singular . ' Attribute not known ' . $key . ' for ' . $registryName . '<br />';
+					echo ucfirst($plural) . ' Attribute not known ' . $key . ' for ' . $registryName . '<br />';
 				}
-
-				switch ($plural) {
-					case 'fields':
-						$itemAttributesArray[$key] = $value;
-						break;
-
-					case 'joins': //model, alias, select, joinwith, jointo
-						$itemAttributesArray[$key] = $value;
-						break;
-
-					case 'foreignkeys': //name, source_id, source_model and required
-						$itemAttributesArray[$key] = $value; //done
-						break;
-
-					case 'criteria': //name, connector, value
-						$itemAttributesArray[] = $value;
-						break;
-
-					case 'children': // name and join
-						$itemAttributesArray[] = $value;
-						break;
-
-					case 'plugins': //name
-						$itemAttributesArray[] = $value;
-						break;
-
-					case 'values': //id value
-						$itemAttributesArray[] = $value;
-
-						$values = $value;
-						$valuesArray = array();
-						foreach ($values as $value) {
-							$t = get_object_vars($value);
-							$tXXX = ($t["@attributes"]);
-
-							$temp = new \stdClass();
-
-							$temp->id = $tXXX['id'];
-							$temp->value = $tXXX['value'];
-
-							$valuesArray[] = $temp;
-						}
-						Services::Registry()->set($registryName, 'values', $valuesArray);
-						break;
-				}
-
-
+				$itemAttributesArray[$key] = $value;
 			}
-			$itemArray[] = $itemAttributesArray;
+
+			if ($plural == 'plugins') {
+				$itemArray = $itemAttributesArray;
+			} else {
+				$itemArray[] = $itemAttributesArray;
+			}
 		}
 
 		if ($plural == 'joins') {
 			$joins = array();
 			$selects = array();
 
-			echo ' PRIOR TO LOOP <br />';
-			echo '<pre>';
-			var_dump($itemArray);
-			echo '</pre>';
-
 			for ($i = 0; $i < count($itemArray); $i++) {
-
-				echo ' in loop <br />';
-				echo '<pre>';
-				var_dump($itemArray[$i]);
-				echo '</pre>';
-
 				$temp = ConfigurationService::setJoinFields($itemArray[$i]);
 				$joins[] = $temp[0];
 				$selects[] = $temp[1];
 			}
-			echo '<pre>After loop';
-			var_dump($joins);
-			echo '</pre>';
 
-			echo '<pre>';
-			var_dump($selects);
-			echo '</pre>';
+			Services::Registry()->set($registryName, $plural, $joins);
 
-			die;
+			Services::Registry()->set($registryName, 'JoinFields', $selects);
+
+		} elseif ($plural == 'values') {
+
+			$valuesArray = array();
+
+			if (count($itemArray) > 0) {
+
+				foreach ($itemArray as $value) {
+
+					if (is_array($value)) {
+						$row = $value;
+					} else {
+						$valueVars = get_object_vars($value);
+						$row = ($valueVars["@attributes"]);
+					}
+
+					$temp = new \stdClass();
+
+					$temp->id = $row['id'];
+					$temp->value = $row['value'];
+
+					$valuesArray[] = $temp;
+				}
+				Services::Registry()->set($registryName, 'values', $valuesArray);
+			}
+
 		} else {
-
 			Services::Registry()->set($registryName, $plural, $itemArray);
 		}
-//		echo '<pre>';
-//		Services::Registry()->get($registryName, $plural);
-//		echo '</pre>';
-
+/**
+if ($plural == 'plugins') {
+		echo $registryName. '  ' . $plural . '<br />';
+		echo '<pre>';
+		var_dump(Services::Registry()->get($registryName, $plural));
+		echo '</pre>';
+	die;
+}
+ */
 		return true;
 	}
 
@@ -621,7 +659,6 @@ Class ConfigurationService
 	 */
 	protected static function setJoinFields($modelJoinArray)
 	{
-
 		$joinArray = array();
 		$joinSelectArray = array();
 
@@ -634,12 +671,10 @@ Class ConfigurationService
 
 			$results = $connect->connect('Table', $joinModel);
 			if ($results === false) {
-				echo $joinRegistry;
-				die;
 				return false;
 			}
 		}
-		    echo 'after connect ' . $joinRegistry . '<br />';
+
 		$fields = Services::Registry()->get($joinRegistry, 'fields');
 
 		$table = Services::Registry()->get($joinRegistry, 'table');
@@ -656,20 +691,23 @@ Class ConfigurationService
 		$joinArray['select'] = $select;
 
 		$selectArray = explode(',', $select);
-		foreach ($selectArray as $s) {
-			foreach ($fields as $joinSelectArray) {
-				if ($joinSelectArray['name'] == $s) {
-					$joinSelectArray['as_name'] = trim($alias) . '_' . trim($s);
-					$joinSelectArray['alias'] = $alias;
-					$joinSelectArray['table'] = $table;
+
+		if ((int) count($selectArray) > 0) {
+			foreach ($selectArray as $s) {
+				foreach ($fields as $joinSelectArray) {
+					if ($joinSelectArray['name'] == $s) {
+						$joinSelectArray['as_name'] = trim($alias) . '_' . trim($s);
+						$joinSelectArray['alias'] = $alias;
+						$joinSelectArray['table'] = $table;
+					}
 				}
 			}
 		}
 
 		$joinArray['jointo'] = (string)$modelJoinArray['jointo'];
 		$joinArray['joinwith'] = (string)$modelJoinArray['joinwith'];
-		die;
-		return array($joinArray, $fields);
+
+		return array($joinArray, $joinSelectArray);
 	}
 
 	/**
@@ -684,7 +722,7 @@ Class ConfigurationService
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	public static function getCustomFields(
+	protected static function getCustomFields(
 		$xml, $model_name, $registryName)
 	{
 		$i = 0;
@@ -804,7 +842,7 @@ Class ConfigurationService
 	 * @return void
 	 * @since  1.0
 	 */
-	public static function inheritDefinition($registryName, $xml)
+	protected static function inheritDefinition($registryName, $xml)
 	{
 		$extends = false;
 
@@ -865,59 +903,88 @@ Class ConfigurationService
 	 */
 	protected function getFieldProperties()
 	{
-		/** 1. Initialize Registry */
 		Services::Registry()->createRegistry('Fields');
 
-		/** 2. Verify File Exists */
 		if (file_exists(CONFIGURATION_FOLDER . '/Application/Fields.xml')) {
 		} else {
 			//throw error
 		}
 		$xml = simplexml_load_string(file_get_contents(CONFIGURATION_FOLDER . '/Application/Fields.xml'));
 
-		/** 3. Load Valid Modeltypes */
-		if (isset($xml->modeltypes->modeltype)) {
-		} else {
-			//throw error
-		}
-		$modeltypes = $xml->modeltypes->modeltype;
-		$modeltypeArray = array();
-		foreach ($modeltypes as $modeltype) {
-			$modeltypeArray[] = (string)$modeltype;
-		}
+		ConfigurationService::loadFieldProperties($xml, 'modeltypes', 'modeltype');
+		ConfigurationService::loadFieldProperties($xml, 'datatypes', 'datatype');
 
-		Services::Registry()->set('Fields', 'Modeltypes', $modeltypeArray);
-
-		/** 4. Load Valid Field Datatypes */
-		if (isset($xml->datatypes->datatype)) {
-		} else {
-			//throw error
-		}
-		$datatypes = $xml->datatypes->datatype;
-		$datatypeArray = array();
-		foreach ($datatypes as $datatype) {
-			$datatypeArray[] = (string)$datatype;
+		ConfigurationService::loadFieldProperties($xml, 'queryelements', 'queryelement');
+		$list = Services::Registry()->get('Fields', 'queryelements');
+		foreach ($list as $item) {
+			$field = explode(',', $item);
+			ConfigurationService::loadFieldProperties($xml, $field[0], $field[1]);
 		}
 
-		Services::Registry()->set('Fields', 'Datatypes', $datatypeArray);
+		self::$valid_field_attributes = Services::Registry()->get('Fields', 'fields');
+		self::$valid_join_attributes = Services::Registry()->get('Fields', 'joins');
+		self::$valid_foreignkey_attributes = Services::Registry()->get('Fields', 'foreignkeys');
+		self::$valid_criteria_attributes = Services::Registry()->get('Fields', 'criterion');
+		self::$valid_children_attributes = Services::Registry()->get('Fields', 'children');
+		self::$valid_plugin_attributes = Services::Registry()->get('Fields', 'plugins');
+		self::$valid_value_attributes = Services::Registry()->get('Fields', 'values');
 
-		/** 5. Load Valid Field Properties */
-		if (isset($xml->attributes->attribute)) {
-		} else {
-			//throw error
-		}
-		$attributes = $xml->attributes->attribute;
-		$attributeArray = array();
-		foreach ($attributes as $attribute) {
-			$attributeArray[] = (string)$attribute;
-		}
-
-		Services::Registry()->set('Fields', 'Attributes', $attributeArray);
-		self::$valid_field_attributes = $attributeArray;
-
-		/** 6. Load Valid Datalists */
 		$datalistsArray = array();
-		$dirRead = dir(CONFIGURATION_FOLDER . '/Datalist');
+		$datalistsArray = ConfigurationService::loadDatalists($datalistsArray, CONFIGURATION_FOLDER . '/Datalist');
+		$datalistsArray = ConfigurationService::loadDatalists($datalistsArray, EXTENSIONS . '/Resource');
+		$datalistsArray = ConfigurationService::loadDatalists($datalistsArray, CONFIGURATION_FOLDER . '/System');
+		sort($datalistsArray);
+		$datalistsArray = array_unique($datalistsArray);
+
+		Services::Registry()->set('Fields', 'Datalists', $datalistsArray);
+
+		return;
+	}
+
+	/**
+	 * loadFieldProperties
+	 *
+	 * @param   $xml
+	 * @param   $plural
+	 * @param   $singular
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	protected function loadFieldProperties($xml, $plural, $singular)
+	{
+		if (isset($xml->$plural->$singular)) {
+		} else {
+			return false;
+		}
+
+		$types = $xml->$plural->$singular;
+		if (count($types) === 0) {
+			return false;
+		}
+
+		$typeArray = array();
+		foreach ($types as $type) {
+			$typeArray[] = (string)$type;
+		}
+
+		Services::Registry()->set('Fields', $plural, $typeArray);
+
+		return true;
+	}
+
+	/**
+	 * loadDatalists
+	 *
+	 * @param   $datalistsArray
+	 * @param   $folder
+	 *
+	 * @return  bool
+	 * @since   1.0
+	 */
+	protected function loadDatalists($datalistsArray, $folder)
+	{
+		$dirRead = dir($folder);
 		$path = $dirRead->path;
 		while (false !== ($entry = $dirRead->read())) {
 			if (is_dir($path . '/' . $entry)) {
@@ -927,39 +994,7 @@ Class ConfigurationService
 		}
 		$dirRead->close();
 
-		/** 7. Load Datalists from Resources */
-		$dirRead = dir(EXTENSIONS . '/Resource');
-		$path = $dirRead->path;
-		while (false !== ($entry = $dirRead->read())) {
-			if (is_dir($path . '/' . $entry)) {
-				if (substr($entry, 0, 1) == '.') {
-				} else {
-					$datalistsArray[] = $entry;
-				}
-			}
-		}
-		$dirRead->close();
-
-		/** 8. Load Datalists from System */
-		$dirRead = dir(CONFIGURATION_FOLDER . '/System');
-		$path = $dirRead->path;
-		while (false !== ($entry = $dirRead->read())) {
-			if (is_dir($path . '/' . $entry)) {
-				if (substr($entry, 0, 1) == '.') {
-				} else {
-					$datalistsArray[] = $entry;
-				}
-			}
-		}
-		$dirRead->close();
-
-		/** Sort and unique */
-		sort($datalistsArray);
-		$datalistsArray = array_unique($datalistsArray);
-
-		Services::Registry()->set('Fields', 'Datalists', $datalistsArray);
-
-		return;
+		return $datalistsArray;
 	}
 
 	/**

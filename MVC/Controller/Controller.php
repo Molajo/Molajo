@@ -170,10 +170,7 @@ class Controller
 			. ' Type: ' . $model_type
 			. ' Name: ' . $model_name
 			. ' Class: ' . $model_class;
-echo '<br />';
-echo $profiler_message;
-echo '<br />';
-
+//echo $profiler_message . '<br />';
 		if ($model_name == null || trim($model_name) == '') {
 			$this->table_registry_name = null;
 
@@ -195,7 +192,7 @@ echo '<br />';
 		} else {
 
 			$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-			echo $table_registry_name  .'<br />';
+
 			if (Services::Registry()->exists($table_registry_name) === true) {
 				$this->table_registry_name = $table_registry_name;
 				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
@@ -207,10 +204,8 @@ echo '<br />';
 					var_dump($this);
 					echo '</pre>';
 				}
-				echo $model_type. ' ' . $model_name . '<br />';
-
 				$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
-echo $this->table_registry_name  .'<br />';
+
 				if ($this->table_registry_name === false) {
 					$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
 					Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
@@ -547,11 +542,11 @@ echo $this->table_registry_name  .'<br />';
 				$this->model_count = $this->get('model_count', 10);
 			}
 		}
-
+		echo '<br /><br />' . $this->model->query->__toString() . '<br /><br />';
 		$this->pagination_total = (int)$this->model->getQueryResults(
 			$query_object, $this->model_offset, $this->model_count);
 
-//echo '<br /><br />' . $this->model->query->__toString() . '<br /><br />';
+
 
 		/** Cache */
 		if (Services::Cache()->exists(md5($this->model->query->__toString() . ' ' . $this->model_offset . ' ' . $this->model_count))) {

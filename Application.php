@@ -6,10 +6,11 @@
  */
 namespace Molajo;
 
+use Molajo\Service\Services;
 use Molajo\Service\Services\Request\RequestService;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 use Molajo\Helpers;
-use Molajo\Service\Services;
+
 
 defined('MOLAJO') or die;
 
@@ -205,7 +206,6 @@ Class Application
 
 		if ($results == false) {
 			Services::Profiler()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
-
 			return false;
 		}
 
