@@ -538,8 +538,17 @@ Class ConfigurationService
 	 */
 	protected static function setModelRegistry($registryName, $xml)
 	{
+
+		$modelArray = Services::Registry()->get('Fields', 'Modelattributes');
+
 		foreach ($xml->attributes() as $key => $value) {
-			Services::Registry()->set($registryName, $key, (string)$value);
+			if (in_array($key, $modelArray)) {
+				Services::Registry()->set($registryName, $key, (string)$value);
+			} else {
+				echo 'Failure in ConfigurationService::setModelRegistry for Registry: '
+					. $registryName . ' Invalid Attribute: ' . $key;
+				die;
+			}
 		}
 
 		Services::Registry()->set($registryName, 'model_name',
@@ -936,6 +945,7 @@ Class ConfigurationService
 		}
 		$xml = simplexml_load_string(file_get_contents(CONFIGURATION_FOLDER . '/Application/Fields.xml'));
 
+		ConfigurationService::loadFieldProperties($xml, 'modelattributes', 'modelattribute');
 		ConfigurationService::loadFieldProperties($xml, 'modeltypes', 'modeltype');
 		ConfigurationService::loadFieldProperties($xml, 'datatypes', 'datatype');
 
