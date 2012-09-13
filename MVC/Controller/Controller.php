@@ -542,7 +542,7 @@ class Controller
 				$this->model_count = $this->get('model_count', 10);
 			}
 		}
-//echo '<br /><br />' . $this->model->query->__toString() . '<br /><br />';
+echo '<br /><br />' . $this->model->query->__toString() . '<br /><br />';
 		$this->pagination_total = (int)$this->model->getQueryResults(
 			$query_object, $this->model_offset, $this->model_count);
 

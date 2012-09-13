@@ -5,3 +5,4 @@
 <field name="grid_columns"/>
 <field name="grid_status"/>
 <field name="grid_batch"/>
+<field name="grid_ordering"/>

@@ -13,6 +13,16 @@
             name="Users"
             catalog_type_id="500"
             extension_instance_id="12"
-            extends="UserTable"/>
+            extends="UserTable">
+        <table>
+            <joins>
+                <join model="Catalog"
+                      alias="catalog"
+                      select="catalog_type_id,source_id,sef_request,view_group_id,redirect_to_id"
+                      jointo="source_id,catalog_type_id"
+                      joinwith="id,catalog_type_id"/>
+            </joins>
+        </table>
+    </model>
 </extension>
 
