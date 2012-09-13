@@ -125,10 +125,6 @@ Class ContentHelper
 
 		$parameterNamespace = $item->table_registry_name . 'Parameters';
 
-		/** Content Extension and Source */
-		Services::Registry()->set('Parameters', 'extension_instance_id',
-			Services::Registry()->get($parameterNamespace, 'criteria_extension_instance_id'));
-
 		/** Theme, Page, Template and Wrap Views */
 		$editCheck = Services::Registry()->get('Parameters', 'catalog_url_sef_request');
 		if (substr($editCheck, strlen($editCheck) - 4, 4) == 'edit') {
@@ -189,13 +185,6 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menu_title', $item->extensions_name);
 		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
 		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
-
-		//todo remove hack
-//		if (Services::Registry()->get('Parameters', 'catalog_menuitem_type') == 'grid') {
-//			$type = 'list';
-//		} else {
-//			$type = 'menuitem';
-//		}
 
 		$this->setParameters('menuitem', $item->table_registry_name . 'Parameters');
 
@@ -295,6 +284,12 @@ Class ContentHelper
 
 		/** 1. Parameters from Request Query */
 		$newParameters = Services::Registry()->get($parameterNamespace, $pageTypeNamespace . '*');
+		if (is_array($newParameters) && count($newParameters) > 0) {
+			$this->processParameterSet($newParameters, $pageTypeNamespace);
+		}
+
+		/** 2. Criteria Parameters */
+		$newParameters = Services::Registry()->get($parameterNamespace, 'criteria*');
 		if (is_array($newParameters) && count($newParameters) > 0) {
 			$this->processParameterSet($newParameters, $pageTypeNamespace);
 		}

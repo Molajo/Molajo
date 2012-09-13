@@ -199,12 +199,8 @@ Class ConfigurationService
 
 		$xml_string = ConfigurationService::readXMLFile($path_and_file);
 
-		$results = ConfigurationService::getIncludeCode($xml_string);
-//if ($model_name == 'Articles') {
-//	echo '<br/>END';
-//	echo $xml_string;
-//	echo '<br/>';
-//}
+		$results = ConfigurationService::getIncludeCode($xml_string, $model_name);
+
 		$xml = simplexml_load_string($results);
 		if (isset($xml->model)) {
 			$xml = $xml->model;
@@ -475,7 +471,7 @@ Class ConfigurationService
 	 * @throws \RuntimeException
 	 * @since  1.0
 	 */
-	protected static function getIncludeCode($xml_string)
+	protected static function getIncludeCode($xml_string, $model_name)
 	{
 		if (trim($xml_string) == '') {
 			return $xml_string;
@@ -522,19 +518,9 @@ Class ConfigurationService
 						'Failure reading XML Include file: ' . $path_and_file . ' ' . $e->getMessage()
 					);
 				}
-//if ($include == 'PluginsContent') {
-//	echo '<br/>BEFORE';
-//	echo $xml_string;
-//	echo '<br/>';
-//}
 
 				$xml_string = str_replace($replaceThis, $withThis, $xml_string);
 
-//if ($include == 'PluginsContent') {
-//	echo '<br/>AFTER';
-//	echo $xml_string;
-//	echo '<br/>';
-//}
 				$i++;
 			}
 		}
@@ -603,17 +589,10 @@ Class ConfigurationService
 				$itemAttributesArray[$key] = $value;
 			}
 
-//echo $registryName . '<br />';
-//			if ($registryName == 'ArticlesResource') {
-//				echo $registryName. '  ' . $plural . '<br />';
-//				echo '<pre>';
-//				var_dump($itemAttributesArray);
-//				echo '</pre>';
-//				die;
-///			}
-
 			if ($plural == 'plugins') {
-				$itemArray = $itemAttributesArray;
+				foreach ($itemAttributesArray as $item)  {
+					$itemArray[] = $item;
+				}
 			} else {
 				$itemArray[] = $itemAttributesArray;
 			}
@@ -889,12 +868,12 @@ Class ConfigurationService
 			$extends_model_type = 'Table';
 		}
 
-		$parentRegistryName = $extends_model_name . $extends_model_type;
+		$inheritRegistryName = $extends_model_name . $extends_model_type;
 
 		/** Load the file and build registry - IF - the registry is not already loaded */
-		if (Services::Registry()->exists($parentRegistryName) == true) {
-		} else {
+		if (Services::Registry()->exists($inheritRegistryName) == true) {
 
+		} else {
 			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
 			$results = $m->connect($extends_model_type, $extends_model_name);
@@ -904,7 +883,7 @@ Class ConfigurationService
 		}
 
 		/** Begin with inherited model */
-		Services::Registry()->copy($parentRegistryName, $registryName);
+		Services::Registry()->copy($inheritRegistryName, $registryName);
 
 		return;
 	}
