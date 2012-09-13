@@ -85,7 +85,10 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'source_routable', (int)$item->content_catalog_types_routable);
 
 		/** Set Parameters */
-		$this->setParameters('list', $item->table_registry_name . 'Parameters');
+		$this->setParameters('list',
+			$item->table_registry_name . 'Parameters',
+			$item->table_registry_name . 'Metadata'
+		);
 
 		return true;
 	}
@@ -141,9 +144,9 @@ Class ContentHelper
 
 		$this->getResourceParameters((int)$item->extension_instance_id);
 
-		$this->setParameters(
-			$pageTypeNamespace,
+		$this->setParameters($pageTypeNamespace,
 			$item->table_registry_name . 'Parameters',
+			$item->table_registry_name . 'Metadata',
 			'ResourcesSystemParameters'
 		);
 
@@ -186,7 +189,10 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
 		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
-		$this->setParameters('menuitem', $item->table_registry_name . 'Parameters');
+		$this->setParameters('menuitem',
+			$item->table_registry_name . 'Parameters',
+			$item->table_registry_name . 'Metadata'
+		);
 
 		/** Must be after parameters so as to not strip off menuitem */
 		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
@@ -272,13 +278,16 @@ Class ContentHelper
 	/**
 	 * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
 	 *
-	 * @param   $pageTypeNamespace
-	 * @param   $parameterNamespace
+	 * @param $pageTypeNamespace
+	 * @param $parameterNamespace
+	 * @param $metadataNamespace
+	 * @param string $resourceNamespace
 	 *
 	 * @return  bool
 	 * @since   1.0
 	 */
-	public function setParameters($pageTypeNamespace, $parameterNamespace, $resourceNamespace = '')
+	public function setParameters($pageTypeNamespace, $parameterNamespace,
+								  $metadataNamespace, $resourceNamespace = '')
 	{
 		Services::Registry()->set('Parameters', 'page_type', $pageTypeNamespace);
 
@@ -311,6 +320,7 @@ Class ContentHelper
 
 		/** Copy remaining */
 		Services::Registry()->copy($parameterNamespace, 'Parameters');
+		Services::Registry()->copy($metadataNamespace, 'Metadata');
 
 		/**  Merge in matching Configuration data  */
 		Services::Registry()->merge('Configuration', 'Parameters', true);
