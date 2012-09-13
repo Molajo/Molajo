@@ -726,7 +726,6 @@ Class ConfigurationService
 
 				$name = (string)$custom_field['name'];
 				$results = ConfigurationService::getCustomFieldsSpecificGroup ($registryName, $custom_field);
-
 				if ($results == false) {
 				}  else {
 

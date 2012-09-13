@@ -48,12 +48,7 @@
 
     <customfields>
         <customfield name="metadata">
-            <include field="title"/>
-            <include field="description"/>
-            <include field="keywords"/>
-            <include field="robots"/>
-            <include field="author"/>
-            <include field="content_rights"/>
+            <include name="Metadata"/>
         </customfield>
 
         <customfield name="parameters">
