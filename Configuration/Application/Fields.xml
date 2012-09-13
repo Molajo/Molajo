@@ -77,7 +77,7 @@
         <field>placeholder</field>
         <field>required</field>
         <field>shape</field>
-        <field>shape</field>
+        <field>size</field>
         <field>source_id</field>
         <field>source_model</field>
         <field>table</field>

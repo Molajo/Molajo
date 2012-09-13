@@ -176,7 +176,7 @@ Class ConfigurationService
 	 * @param string $model_name
 	 * @param string $model_type
 	 *
-	 * @return object $xml
+	 * @return string Name of the Model Registry object
 	 * @since  1.0
 	 *
 	 * @throws \RuntimeException
@@ -229,9 +229,7 @@ Class ConfigurationService
 			ConfigurationService::setElementsRegistry($registryName, $xml, $attr[$i][0], $attr[$i][1], $attr[$i][2]);
 		}
 
-		if (isset($xml->customfields)) {
-			ConfigurationService::getCustomFields($xml->customfields, $model_name, $registryName);
-		}
+		ConfigurationService::getCustomFields($xml, $registryName);
 
 		return $registryName;
 	}
@@ -538,7 +536,7 @@ Class ConfigurationService
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public static function setModelRegistry($registryName, $xml)
+	protected static function setModelRegistry($registryName, $xml)
 	{
 		foreach ($xml->attributes() as $key => $value) {
 			Services::Registry()->set($registryName, $key, (string)$value);
@@ -707,125 +705,157 @@ Class ConfigurationService
 	}
 
 	/**
-	 * processTableFile extracts XML configuration data for Tables/Models and populates Registry
+	 * getCustomFields extracts field information for all customfield groups
 	 *
 	 * @static
 	 * @param $xml
-	 * @param $model_name
 	 * @param $registryName
 	 *
 	 * @return object
 	 * @since   1.0
 	 * @throws \RuntimeException
 	 */
-	protected static function getCustomFields(
-		$xml, $model_name, $registryName)
+	protected static function getCustomFields($xml, $registryName)
 	{
-		$i = 0;
-		$continue = true;
 		$customFieldsArray = array();
 
-		while ($continue == true) {
+		/** Process Custom Fields defined within the model */
+		if (count($xml->customfields->customfield) > 0) {
 
-			if (isset($xml->customfield[$i]->field)) {
-				$customfield = $xml->customfield[$i];
+			foreach ($xml->customfields->customfield as $custom_field) {
 
-			} else {
-				$continue = false;
-				break;
-			}
+				$name = (string)$custom_field['name'];
+				$results = ConfigurationService::getCustomFieldsSpecificGroup ($registryName, $custom_field);
 
-			$name = '';
+				if ($results == false) {
+				}  else {
 
-			/** Next field  */
-			if (isset($customfield['name'])) {
-				$name = (string)$customfield['name'];
-			}
+					$fieldArray = $results[0];
+					$fieldNames = $results[1];
 
-			/** Load inherited definitions */
-			$inherit = Services::Registry()->get($registryName, $name, array());
+					ConfigurationService::inheritCustomFieldsSpecificGroup (
+						$registryName, $name, $fieldArray, $fieldNames);
 
-			$inheritFields = array();
-
-			if (count($inherit) > 0) {
-				foreach ($inherit as $row) {
-					foreach ($row as $field => $fieldvalue) {
-						if ($field == 'name') {
-							$inheritFields[] = $fieldvalue;
-						}
-					}
+					$customFieldsArray[] = $name;
 				}
 			}
-			$doNotInheritFields = array();
-
-			/** Current fieldset processing */
-			$fieldArray = array();
-
-			/** Retrieve Field Attributes for each field */
-			foreach ($customfield->field as $key1 => $value1) {
-
-				$attributes = get_object_vars($value1);
-				$fieldAttributes = ($attributes["@attributes"]);
-				$fieldAttributesArray = array();
-
-				foreach ($fieldAttributes as $key2 => $value2) {
-
-					if (in_array($key2, self::$valid_field_attributes)) {
-					} else {
-						echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $registryName . '<br />';
-					}
-
-					if ($key2 == 'name') {
-						if (in_array($value2, $inheritFields)) {
-							$doNotInheritFields[] = $value2;
-						}
-					}
-					$fieldAttributesArray[$key2] = $value2;
-				}
-
-				$fieldArray[] = $fieldAttributesArray;
-			}
-
-			if (count($inherit) > 0) {
-				foreach ($inherit as $row) {
-					if (in_array($row['name'], $doNotInheritFields)) {
-					} else {
-						$fieldArray[] = $row;
-					}
-				}
-			}
-
-			Services::Registry()->set($registryName, $name, $fieldArray);
-
-			/** Track Registry names for all customfields */
-			$exists = Services::Registry()->exists($registryName, 'CustomFieldGroups');
-
-			if ($exists === true) {
-				$temp = Services::Registry()->get($registryName, 'CustomFieldGroups');
-			} else {
-				$temp = array();
-			}
-
-			if (is_array($temp)) {
-			} else {
-				if ($temp == '') {
-					$temp = array();
-				} else {
-
-					$hold = $temp;
-					$temp = array();
-					$temp[] = $hold;
-				}
-			}
-
-			$temp[] = $name;
-
-			Services::Registry()->set($registryName, 'CustomFieldGroups', array_unique($temp));
-
-			$i++;
 		}
 
+		/** Include Inherited Groups not matching existing groups */
+		$exists = Services::Registry()->exists($registryName, 'CustomFieldGroups');
+
+		if ($exists === true) {
+			$inherited = Services::Registry()->get($registryName, 'CustomFieldGroups');
+
+			if (is_array($inherited) && count($inherited) > 0) {
+				foreach($inherited as $name) {
+
+					if (in_array($name, $customFieldsArray)) {
+					} else {
+						$results = ConfigurationService::inheritCustomFieldsSpecificGroup ($registryName, $name);
+						if ($results === false) {
+						} else {
+							$customFieldsArray[] = $name;
+						}
+					}
+				}
+			}
+		}
+
+		Services::Registry()->set($registryName, 'CustomFieldGroups', array_unique($customFieldsArray));
+
 		return;
+	}
+
+	/**
+	 * getCustomFieldsSpecificGroup
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $customfield
+	 *
+	 * @return array
+	 */
+	protected static function getCustomFieldsSpecificGroup ($registryName, $customfield)
+	{
+		$fieldArray = array();
+		$fieldNames = array();
+
+		foreach ($customfield as $key1 => $value1) {
+
+			$attributes = get_object_vars($value1);
+			$fieldAttributes = ($attributes["@attributes"]);
+			$fieldAttributesArray = array();
+
+			foreach ($fieldAttributes as $key2 => $value2) {
+
+				if (in_array($key2, self::$valid_field_attributes)) {
+				} else {
+					echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $registryName . '<br />';
+				}
+
+				if ($key2 == 'name') {
+				} else {
+					$fieldNames[] = $value2;
+				}
+
+				$fieldAttributesArray[$key2] = $value2;
+			}
+			$fieldAttributesArray['field_inherited'] = 0;
+
+			$fieldArray[] = $fieldAttributesArray;
+		}
+
+		if (is_array($fieldArray) && count($fieldArray) > 0) {
+		} else {
+			return false;
+		}
+
+		return array($fieldArray, $fieldNames);
+	}
+
+	/**
+	 * inheritCustomFieldsSpecificGroup - inherited fields are merged in with those specifically defined in model
+	 *
+	 * @static
+	 * @param $registryName
+	 * @param $name
+	 * @param $fieldArray
+	 * @param $fieldNames
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	protected static function inheritCustomFieldsSpecificGroup (
+		$registryName, $name, $fieldArray = array(), $fieldNames = array())
+	{
+
+		$inherit = array();
+		$available = Services::Registry()->get($registryName, $name, array());
+
+		if (count($available) > 0) {
+			foreach ($available as $row) {
+				foreach ($row as $field => $fieldvalue) {
+					if ($field == 'name') {
+						if (in_array($fieldvalue, $fieldNames)) {
+						} else {
+							$row['field_inherited'] = 1;
+							$fieldArray[] = $row;
+							$fieldNames[] = $fieldvalue;
+						}
+					}
+				}
+			}
+		}
+
+		if (is_array($fieldArray) && count($fieldArray) == 0) {
+			Services::Registry()->set($registryName, $name, array());
+			return false;
+		}
+
+		Services::Registry()->set($registryName, $name, $fieldArray);
+
+		return $name;
 	}
 
 	/**
@@ -975,7 +1005,7 @@ Class ConfigurationService
 	 * @param   $datalistsArray
 	 * @param   $folder
 	 *
-	 * @return  bool
+	 * @return  array
 	 * @since   1.0
 	 */
 	protected function loadDatalists($datalistsArray, $folder)
@@ -1224,6 +1254,6 @@ Class ConfigurationService
 			Services::Registry()->set('Actions', $item->title, (int)$item->id);
 		}
 
-		return;
+		return true;
 	}
 }
