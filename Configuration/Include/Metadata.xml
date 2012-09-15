@@ -1,6 +1,0 @@
-<include field="title"/>
-<include field="description"/>
-<include field="keywords"/>
-<include field="robots"/>
-<include field="author"/>
-<include field="content_rights"/>

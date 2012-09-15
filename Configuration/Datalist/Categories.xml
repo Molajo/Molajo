@@ -10,9 +10,9 @@
         use_special_joins="1"
         check_view_level_access="1"
         process_plugins="0"
-        criteria_extension_instance_id="2"
-        criteria_catalog_type_id="3200"
-        criteria_published_status="1"
+        extension_instance_id="2"
+        catalog_type_id="3200"
+        published_status="1"
         multiple="1"
         size="5"
         data_source="JDatabase">

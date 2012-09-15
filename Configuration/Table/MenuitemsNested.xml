@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="MenuitemsNested" extends="Menuitems">
+<model name="MenuitemsNested"
+       extends="MenuitemsSystem">
     <table>
         <joins>
-            <include name="JoinsNestedMenuitems"/>
+            <join model="ExtensionInstances"
+                  alias="current_menuitem"
+                  select=""
+                  jointo="lft,rgt,root"
+                  joinwith="&gt;=lft,&lt;=rgt,root"/>
         </joins>
     </table>
 </model>

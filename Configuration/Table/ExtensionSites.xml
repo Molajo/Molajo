@@ -5,11 +5,11 @@
         primary_key="id"
         name_key="name"
         use_pagination="1"
+        extends="root"
         data_source="JDatabase">
-
     <table>
         <fields>
-            <field name="id" type="integer" null="0" default="" identity="1" hidden="1"/>
+            <include field="id_pk"/>
             <include name="name"/>
             <include name="enabled"/>
             <include name="location"/>
@@ -18,7 +18,7 @@
             <include name="metadata"/>
         </fields>
         <children>
-            <child name="Extensions" join="site_id"/>
+            <child name="Extensions" type="Table" join="site_id"/>
         </children>
         <plugins>
             <plugin name="Customfields"/>

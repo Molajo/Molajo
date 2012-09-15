@@ -91,11 +91,6 @@ Class ViewHelper
 			return false;
 		}
 
-		//todo - figure out why
-		if (isset($item->listname)) {
-			return true;
-		}
-
 		Services::Registry()->set('Parameters', $type . '_view_title', $item->title);
 		Services::Registry()->set('Parameters', $type . '_view_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', $type . '_view_language', $item->language);

@@ -170,7 +170,7 @@ class Controller
 			. ' Type: ' . $model_type
 			. ' Name: ' . $model_name
 			. ' Class: ' . $model_class;
-//echo $profiler_message . '<br />';
+
 		if ($model_name == null || trim($model_name) == '') {
 			$this->table_registry_name = null;
 
@@ -276,7 +276,6 @@ class Controller
 
 		if ($dbo == false) {
 			echo 'DBO for Table Registry: ' . $this->table_registry_name . ' could not be loaded. <br />';
-
 			return false;
 		}
 

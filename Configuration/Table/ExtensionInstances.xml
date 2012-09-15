@@ -1,5 +1,5 @@
 <model
-        name="ExtensionInstances"
+        name="Extensioninstances"
         table="#__extension_instances"
         primary_key="id"
         name_key="title"
@@ -10,41 +10,108 @@
         check_view_level_access="1"
         process_plugins="1"
         use_pagination="1"
+        extends="root"
         data_source="JDatabase">
 
     <table>
         <fields>
-            <include name="FieldsExtensionInstance"/>
+            <include field="id_pk"/>
+            <include field="extension_id"/>
+            <include field="catalog_type_id"/>
+            <include field="title"/>
+            <include field="subtitle"/>
+            <include field="path"/>
+            <include field="alias"/>
+            <include field="content_text"/>
+            <include field="protected"/>
+            <include field="featured"/>
+            <include field="stickied"/>
+            <include field="status"/>
+            <include field="start_publishing_datetime"/>
+            <include field="stop_publishing_datetime"/>
+            <include field="version"/>
+            <include field="version_of_id"/>
+            <include field="status_prior_to_version"/>
+            <include field="created_datetime"/>
+            <include field="created_by"/>
+            <include field="modified_datetime"/>
+            <include field="modified_by"/>
+            <include field="checked_out_datetime"/>
+            <include field="checked_out_by"/>
+            <include field="root"/>
+            <include field="parent_id"/>
+            <include field="lft"/>
+            <include field="rgt"/>
+            <include field="lvl"/>
+            <include field="home"/>
+            <include field="customfields"/>
+            <include field="parameters"/>
+            <include field="metadata"/>
+            <include field="language"/>
+            <include field="translation_of_id"/>
+            <include field="ordering"/>
         </fields>
+
         <joins>
-            <include name="JoinsExtensionInstance"/>
+            <join model="Catalog"
+                  alias="catalog"
+                  select="id,sef_request"
+                  jointo="source_id,catalog_type_id,redirect_to_id"
+                  joinwith="id,catalog_type_id,0"/>
+            <join model="Extensions"
+                  alias="extensions"
+                  select="id,name"
+                  jointo="id"
+                  joinwith="extension_id"/>
+            <join model="ApplicationExtensionInstances"
+                  alias="application_extension_instances"
+                  select=""
+                  jointo="extension_instance_id,application_id"
+                  joinwith="id,APPLICATION_ID"/>
+            <join model="SiteExtensionInstances"
+                  alias="site_extension_instances"
+                  select=""
+                  jointo="extension_instance_id,site_id"
+                  joinwith="id,SITE_ID"/>
+            <join model="CatalogTypes"
+                  alias="catalog_types"
+                  select="title"
+                  jointo="id"
+                  joinwith="catalog_type_id"/>
         </joins>
+
         <foreignkeys>
-            <include name="ForeignKeysExtensionInstance"/>
+            <foreignkey name="extension_id" source_id="id" source_model="Extensions" required="1"/>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            <foreignkey name="checked_out_by" source_id="id" source_model="User" required="1"/>
+            <foreignkey name="created_by" source_id="id" source_model="User" required="1"/>
+            <foreignkey name="modified_by" source_id="id" source_model="User" required="1"/>
+            <foreignkey name="version_id" source_id="id" source_model="ExtensionInstances" required="1"/>
         </foreignkeys>
+
         <children>
-            <include name="ChildrenExtensionInstance"/>
+            <child name="SiteExtensionInstances" type="Table" join="extension_instance_id"/>
+            <child name="ApplicationExtensionInstances" type="Table" join="extension_instance_id"/>
         </children>
+
         <plugins>
-            <include name="PluginsAdmin"/>
-            <include name="PluginsExtensionInstance"/>
-            <include name="PluginsContent"/>
+            <plugin name="Catalogtypeid"/>
+            <plugin name="Extensioninstance"/>
+            <plugin name="Dateformats"/>
+            <plugin name="Publishedstatus"/>
+            <plugin name="Version"/>
+            <plugin name="Ordering"/>
+            <plugin name="Create"/>
         </plugins>
     </table>
-
     <customfields>
-        <customfield name="metadata">
-            <include name="Metadata"/>
-        </customfield>
         <customfield name="parameters">
-            <include name="ParametersCache"/>
-            <include name="ParametersGravatar"/>
-            <include name="ParametersCommon"/>
-            <include name="ParametersImage"/>
-            <include name="ParametersAssets"/>
-            <include name="ParametersList"/>
-            <include name="ParametersItem"/>
-            <include name="ParametersForm"/>
+            <include field="criteria_title"/>
+            <include field="criteria_display_view_on_no_results"/>
+            <include field="criteria_snippet_length"/>
+            <include field="criteria_status"/>
+            <include field="criteria_catalog_type_id"/>
+            <include field="criteria_extension_instance_id"/>
         </customfield>
     </customfields>
 </model>

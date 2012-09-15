@@ -27,7 +27,7 @@
         </fields>
 
         <joins>
-            <join model="CatalogTypes"
+            <join model="Catalogtypes"
                   alias="b"
                   select="title,source_table,extension_instance_id,model_type,model_name,primary_category_id,slug"
                   jointo="id"
@@ -41,8 +41,8 @@
         </criteria>
 
         <children>
-            <child name="CatalogActivity" join="catalog_id"/>
-            <child name="CatalogCategories" join="catalog_id"/>
+            <child name="Catalogactivity" type="Table" join="catalog_id"/>
+            <child name="Catalogcategories" type="Table" join="catalog_id"/>
         </children>
 
         <foreignkeys>

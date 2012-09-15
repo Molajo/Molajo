@@ -13,5 +13,17 @@
             name="Menuitems"
             catalog_type_id="1300"
             extension_instance_id="90"
-            extends="ExtensioninstancesTable"/>
+            extends="RenderTable">
+        <table>
+            <children>
+                <child name="Menuitems" type="System" join="parent_id"/>
+            </children>
+        </table>
+
+        <customfields>
+            <customfield name="parameters">
+                <include name="ParametersMenuitem"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

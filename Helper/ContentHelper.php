@@ -159,9 +159,9 @@ Class ContentHelper
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function getRouteTemplateView()
+	public function getRouteMenuitem()
 	{
-		Services::Registry()->set('Query', 'Current', 'Content getRouteTemplateView');
+		Services::Registry()->set('Query', 'Current', 'Content getRouteMenuitem');
 
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
@@ -248,12 +248,15 @@ Class ContentHelper
 	/**
 	 * Get Parameters for Resource
 	 *
+	 * Table Registry => Services::Registry()->get('ResourcesSystem', '*');
+	 * Parameters => Services::Registry()->get('ResourcesSystemParameters', '*');
+	 *
 	 * @param  $id
 	 *
-	 * @return  array  An object containing an array of data
+	 * @return  array  An object containing an array of basic resource info, parameters in registry
 	 * @since   1.0
 	 */
-	protected function getResourceParameters($id = 0)
+	public function getResourceParameters($id = 0)
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
@@ -351,12 +354,12 @@ Class ContentHelper
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
 
-		/** Remove standard patterns no longer needed -- need for configuration views
+		/** Remove standard patterns no longer needed -- need for configuration views  */
 		Services::Registry()->delete('Parameters', 'list*');
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'form*');
 		Services::Registry()->delete('Parameters', 'menuitem*');
-		 */
+
 		Services::Registry()->sort('Parameters');
 
 		return true;

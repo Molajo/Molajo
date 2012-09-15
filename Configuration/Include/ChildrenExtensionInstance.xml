@@ -1,2 +1,0 @@
-<child name="SiteExtensionInstances" join="extension_instance_id"/>
-<child name="ApplicationExtensionInstances" join="extension_instance_id"/>

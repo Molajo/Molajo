@@ -33,6 +33,9 @@
         <modelattribute>use_pagination</modelattribute>
         <modelattribute>data_source</modelattribute>
         <modelattribute>extension_id</modelattribute>
+        <modelattribute>published_status</modelattribute>
+        <modelattribute>multiple</modelattribute>
+        <modelattribute>size</modelattribute>
     </modelattributes>
     <datatypes>
         <datatype>audio</datatype>
@@ -128,6 +131,7 @@
     <children>
         <child>name</child>
         <child>join</child>
+        <child>type</child>
     </children>
     <plugins>
         <plugin>name</plugin>

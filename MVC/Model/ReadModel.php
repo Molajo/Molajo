@@ -462,9 +462,12 @@ class ReadModel extends Model
 			$name = (string)$child['name'];
 			$name = ucfirst(strtolower($name));
 
+			$type = (string)$child['type'];
+			$type = ucfirst(strtolower($type));
+
 			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
-			$results = $m->connect('Table', $name);
+			$results = $m->connect($type, $name);
 			if ($results == false) {
 				return false;
 			}
@@ -481,7 +484,6 @@ class ReadModel extends Model
 		}
 
 		/** return array containing primary query and additional data elements */
-
 		return $query_results;
 	}
 }

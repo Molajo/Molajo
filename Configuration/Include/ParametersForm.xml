@@ -1,3 +1,16 @@
+<field name="enable_draft_save" type="binary" null="0" default="0"/>
+<field name="enable_version_history" type="binary" null="0" default="0"/>
+<field name="enable_retain_versions_after_delete" type="binary" null="0" default="0"/>
+<field name="enable_maximum_version_count" type="integer" null="0" default="5" minimum="0" maximum="20"/>
+<field name="enable_hit_counts" type="binary" null="0" default="0"/>
+<field name="enable_comments" type="binary" null="0" default="0"/>
+<field name="enable_spam_protection" type="binary" null="0" default="1"/>
+<field name="enable_ratings" type="binary" null="0" default="0"/>
+<field name="enable_notifications" type="binary" null="0" default="0"/>
+<field name="enable_tweets" type="binary" null="0" default="0"/>
+<field name="enable_ping" type="binary" null="0" default="0"/>
+<field name="enable_captcha_option" type="char" null="0" default="ltr" values="ltr,rtl"/>
+
 <field name="form_parent_menu_id" type="integer" null="0" default="0"/>
 
 <field name="form_theme_id" type="integer" null="0" default=" "/>
@@ -16,16 +29,3 @@
 <field name="form_model_type" type="char" null="0" default=" "/>
 <field name="form_model_query_object" type="char" null="0" default="Item"/>
 <field name="form_model_parameter" type="char" null="0" default=" "/>
-
-<field name="enable_draft_save" type="binary" null="0" default="0"/>
-<field name="enable_version_history" type="binary" null="0" default="0"/>
-<field name="enable_retain_versions_after_delete" type="binary" null="0" default="0"/>
-<field name="enable_maximum_version_count" type="integer" null="0" default="5" minimum="0" maximum="20"/>
-<field name="enable_hit_counts" type="binary" null="0" default="0"/>
-<field name="enable_comments" type="binary" null="0" default="0"/>
-<field name="enable_spam_protection" type="binary" null="0" default="1"/>
-<field name="enable_ratings" type="binary" null="0" default="0"/>
-<field name="enable_notifications" type="binary" null="0" default="0"/>
-<field name="enable_tweets" type="binary" null="0" default="0"/>
-<field name="enable_ping" type="binary" null="0" default="0"/>
-<field name="enable_captcha_option" type="char" null="0" default="ltr" values="ltr,rtl"/>

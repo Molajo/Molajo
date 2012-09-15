@@ -1,3 +1,0 @@
-<child name="Comments" join="parent_id"/>
-<child name="Ratings" join="parent_id"/>
-<child name="Notifications" join="parent_id"/>

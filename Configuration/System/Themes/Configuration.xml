@@ -13,11 +13,5 @@
             name="Themes"
             catalog_type_id="1500"
             extension_instance_id="16"
-            extends="ExtensioninstancesTable">
-        <customfields>
-            <customfield name="parameters">
-                <include name="ParametersTheme"/>
-            </customfield>
-        </customfields>
-    </model>
+            extends="RenderTable"/>
 </extension>

@@ -63,7 +63,6 @@ Class ExtensionHelper
 		/** 404: routeRequest handles redirecting to error page */
 		if (count($item) == 0) {
 			Services::Registry()->set('Parameters', 'status_found', false);
-
 			return false;
 		}
 
@@ -119,6 +118,7 @@ Class ExtensionHelper
 		$extension_id = 0, $model_type = 'Table', $model_name = 'ExtensionInstances',
 		$query_object = 'item', $catalog_type_id = null)
 	{
+
 		if (Services::Registry()->get('CurrentPhase') == 'LOG_OUTPUT_ROUTING') {
 			$phase = LOG_OUTPUT_ROUTING;
 		} else {
@@ -151,7 +151,11 @@ Class ExtensionHelper
 
 		$query_results = $m->getData($query_object);
 
-		if ($query_results == false || $query_results == null) {
+		if ($query_object == 'item') {
+			$query_results->table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
+		}
+
+		if ($query_results === false || $query_results === null) {
 
 			echo 'Extension ID ' . $extension_id . '<br />';
 			echo 'Model Type ' . $model_type . '<br />';
@@ -168,12 +172,6 @@ Class ExtensionHelper
 			echo '</pre>';
 
 			return false;
-		}
-
-		if ($query_object == 'item') {
-			$query_results->table_registry_name = $m->table_registry_name;
-			$query_results->model_name = $m->get('model_name');
-			$query_results->model_type = $m->get('model_type');
 		}
 
 		return $query_results;

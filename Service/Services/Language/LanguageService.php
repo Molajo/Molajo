@@ -297,11 +297,8 @@ Class LanguageService
 	 */
 	protected function getLanguage($language = null)
 	{
-
-		/** Retrieve list of installed languages */
-		$installed = $this->getInstalledLanguages();
-
 		/** 1. Use language specified, if it is available */
+		$installed = $this->getInstalledLanguages();
 		if ($installed == false || count($installed) == 0) {
 		} else {
 			if (in_array($language, $installed)) {
@@ -320,7 +317,6 @@ Class LanguageService
 
 		/** 4. User specified value, it is is installed  */
 		$language = Services::Registry()->get('User', 'language', false);
-
 		if ($installed == false || count($installed) == 0) {
 		} else {
 			if (in_array($language, $installed)) {
@@ -354,7 +350,6 @@ Class LanguageService
 		}
 
 		/** 6. default */
-
 		return 'en-GB';
 	}
 
@@ -390,17 +385,10 @@ Class LanguageService
 			return false;
 		}
 
-		/** During System Initialization Helper is not loaded yet, instantiate here */
-		$helper = new ExtensionHelper();
-		$item = $helper->get($id, 'Table', 'Languages', 'item');
-		if ($item == false) {
-			return false;
-		}
-
 		Services::Registry()->createRegistry($language);
 		Services::Registry()->set($language, 'id', $id);
 
-		$parameters = Services::Registry()->get('LanguagesTableParameters');
+		$parameters = Services::Registry()->get('LanguagesSystemParameters');
 		foreach ($parameters as $key => $value) {
 			Services::Registry()->set($language, $key, $value);
 		}
@@ -429,8 +417,7 @@ Class LanguageService
 	{
 		/** During System Initialization Helper is not loaded yet, instantiate here */
 		$helper = new ExtensionHelper();
-		$installed = $helper->get(0, 'Table', 'Languages', 'list', 1100);
-
+		$installed = $helper->get(0, 'System', 'Languages', 'list', 1100);
 		if ($installed == false || count($installed) < 1) {
 			return false;
 		}
@@ -456,6 +443,5 @@ Class LanguageService
 		Services::Registry()->set('Languages', 'installed', $languageList);
 
 		return $tagArray;
-
 	}
 }

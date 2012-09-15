@@ -10,9 +10,8 @@
         use_special_joins="1"
         check_view_level_access="0"
         process_plugins="0"
-        criteria_catalog_type_id="1200"
-        criteria_published_status="1"
-        todo="add tag for portlets"
+        catalog_type_id="1200"
+        published_status="1"
         data_source="JDatabase">
     <table>
         <fields>

@@ -11,6 +11,7 @@
         name_key="title"
         use_pagination="1"
         data_source="JDatabase">
+
     <table>
         <fields>
             <include field="id"/>

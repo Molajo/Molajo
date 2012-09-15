@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model
-        name="Category"
-        use_pagination="1"
-        extends="Content">
-</model>

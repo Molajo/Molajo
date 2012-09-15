@@ -3,7 +3,7 @@
         name="Wrapviews"
         catalog_type_id="1250"
         extension_id="24"
-        extends="ExtensioninstancesTable">
+        extends="RenderTable">
     <customfields>
         <customfield name="parameters">
             <include name="ParametersWrap"/>

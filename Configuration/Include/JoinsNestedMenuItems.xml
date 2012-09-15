@@ -1,5 +1,0 @@
-<join model="ExtensionInstances"
-      alias="current_menuitem"
-      select=""
-      jointo="lft,rgt,root"
-      joinwith="&gt;=lft,&lt;=rgt,root"/>

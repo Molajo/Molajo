@@ -28,7 +28,7 @@
         "criteria_snippet_length":"150",
         "criteria_status":"1,2",
         "criteria_catalog_type_id":"10000",
-        "criteria_extension_instance_id":"1",
+        "extension_instance_id":"1",
 
         "image_xsmall":"50,50",
         "image_small":"75,75",

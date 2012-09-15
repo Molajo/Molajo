@@ -12,6 +12,7 @@
         process_plugins="0"
         catalog_type_id="50"
         use_pagination="0"
+        extends="root"
         data_source="JDatabase">
 
     <table>
@@ -31,11 +32,11 @@
         </foreignkeys>
 
         <children>
-            <child name="SiteApplications" join="application_id"/>
-            <child name="ApplicationExtensionInstances" join="application_id"/>
-            <child name="UserApplications" join="application_id"/>
-            <child name="Sessions" join="application_id"/>
-            <child name="ApplicationExtensionInstances" join="application_id"/>
+            <child name="SiteApplications" type="Table" join="application_id"/>
+            <child name="ApplicationExtensionInstances" type="Table" join="application_id"/>
+            <child name="UserApplications" type="Table" join="application_id"/>
+            <child name="Sessions" type="Table" join="application_id"/>
+            <child name="ApplicationExtensionInstances" type="Table" join="application_id"/>
         </children>
 
         <plugins>
@@ -47,33 +48,187 @@
     </table>
 
     <customfields>
-        <customfield name="metadata">
-            <include name="Metadata"/>
-        </customfield>
 
         <customfield name="parameters">
-            <include name="ParametersApplicationDefaults"/>
-            <include name="ParametersUitemplates"/>
-            <include name="ParametersGrid"/>
-            <include name="ParametersDashboard"/>
-            <include name="ParametersMail"/>
-            <include name="ParametersUrls"/>
-            <include name="ParametersSessions"/>
-            <include name="ParametersCache"/>
-            <include name="ParametersCookie"/>
+            <include field="application_name"/>
+            <include field="application_home_catalog_id"/>
+            <include field="application_logon_requirement"/>
+            <include field="application_google_analytics_code"/>
+            <include field="html5"/>
+
+            <include field="language"/>
+            <include field="language_direction"/>
+            <include field="language_multilingual"/>
+            <include field="language_utc_offset"/>
+
+            <include field="system_cache_folder"/>
+            <include field="system_logs_folder"/>
+            <include field="system_temp_folder"/>
+            <include field="system_temp_url"/>
+            <include field="system_media_folder"/>
+            <include field="system_media_url"/>
+
+            <field name="application_tab_class" type="char" null="0" default=" "/>
+            <field name="application_tab_link_namespace" type="char" null="0" default=" "/>
+            <field name="application_tab_array" type="char" null="0" default=" "/>
+            <field name="application_tab" type="char" null="0" default=" "/>
+            <field name="application_tab_basic" type="char" null="0" default=" "/>
+            <field name="application_tab_advanced" type="char" null="0" default=" "/>
+            <field name="application_tab_metadata" type="char" null="0" default=" "/>
+            <field name="application_tab_editor" type="char" null="0" default=" "/>
+            <field name="application_tab_grid" type="char" null="0" default=" "/>
+            <field name="application_tab_item" type="char" null="0" default=" "/>
+            <field name="application_tab_list" type="char" null="0" default=" "/>
+            <field name="application_tab_customfields" type="char" null="0" default=" "/>
+            <field name="mailer_transport"/>
+
+            <include field="mailer_html_or_text"/>
+            <include field="mailer_disable_sending"/>
+            <include field="mailer_only_deliver_to"/>
+            <include field="mailer_mail_from"/>
+            <include field="mailer_mail_reply_to"/>
+
+            <include field="mailer_send_mail"/>
+
+            <include field="mailer_smtpauth"/>
+            <include field="mailer_smtpuser"/>
+            <include field="mailer_smtphost"/>
+            <include field="mailer_smtppass"/>
+            <include field="mailer_smtpsecure"/>
+            <include field="mailer_smtpport"/>
+
+            <include field="url_sef"/>
+            <include field="url_unicode_slugs"/>
+            <include field="url_force_ssl"/>
+
+            <include field="session_lifetime"/>
+            <include field="session_handler"/>
+
+            <include field="cache"/>
+            <include field="cache_time"/>
+            <include field="cache_handler"/>
+
+            <include field="cookie_domain"/>
+            <include field="cookie_path"/>
+
             <include name="ParametersUserDefaults"/>
-            <include name="ParametersLog"/>
-            <include name="ParametersGravatar"/>
-            <include name="ParametersCommon"/>
-            <include name="ParametersImage"/>
-            <include name="ParametersAssetDefaults"/>
-            <include name="ParametersAssets"/>
-            <include name="ParametersErrorPages"/>
-            <include name="ParametersMenuitem"/>
-            <include name="ParametersList"/>
-            <include name="ParametersItem"/>
+
+            <field name="log_user_update_activity" type="binary" null="0" default="1"/>
+            <field name="log_user_view_activity" type="binary" null="0" default="0"/>
+            <field name="log_catalog_update_activity" type="binary" null="0" default="1"/>
+            <field name="log_catalog_view_activity" type="binary" null="0" default="0"/>
+
+            <field name="gravatar" type="boolean" null="0" default="0"/>
+            <field name="gravatar_size" type="integer" null="0" default="80"/>
+            <field name="gravatar_type" type="char" null="0" default="mm" values="404,mm,identicon,monsterid,wavatar"/>
+            <field name="gravatar_rating" type="char" null="0" default="pg" values="g,pg,r,x"/>
+            <field name="gravatar_image" type="integer" null="0" default="1"/>
+
+            <field name="image_xsmall" type="char" null="0" default="50,50"/>
+            <field name="image_small" type="char" null="0" default="75,75"/>
+            <field name="image_medium" type="char" null="0" default="150,150"/>
+            <field name="image_large" type="char" null="0" default="300,300"/>
+            <field name="image_xlarge" type="char" null="0" default="500,350"/>
+            <field name="image_folder" type="folder" null="0" default="Images"/>
+            <field name="image_thumb_folder" type="folder" null="0" default="Thumbs"/>
+
+            <field name="head_template_view_id" type="integer" null="0" default=" "/>
+            <field name="head_wrap_view_id" type="integer" null="0" default=" "/>
+            <field name="head_enable_use" type="boolean" null="0" default="1"/>
+
+            <field name="defer_template_view_id" type="integer" null="0" default=" "/>
+            <field name="defer_wrap_view_id" type="integer" null="0" default=" "/>
+            <field name="defer_enable_use" type="boolean" null="0" default="1"/>
+
+            <field name="asset_css_combine_and_minify" type="boolean" null="0" default="1"/>
+            <field name="asset_js_combine_and_minify" type="boolean" null="0" default="1"/>
+            <field name="asset_use_extension_css" type="boolean" null="0" default="1"/>
+            <field name="asset_use_extension_js" type="boolean" null="0" default="1"/>
+
+            <field name="asset_priority_site" type="integer" null="0" default="100"/>
+            <field name="asset_priority_application" type="integer" null="0" default="200"/>
+            <field name="asset_priority_user" type="integer" null="0" default="300"/>
+            <field name="asset_priority_extension" type="integer" null="0" default="400"/>
+            <field name="asset_priority_request" type="integer" null="0" default="500"/>
+            <field name="asset_priority_primary_category" type="integer" null="0" default="600"/>
+            <field name="asset_priority_menuitem" type="integer" null="0" default="700"/>
+            <field name="asset_priority_list" type="integer" null="0" default="700"/>
+            <field name="asset_priority_item" type="integer" null="0" default="800"/>
+            <field name="asset_priority_theme" type="integer" null="0" default="900"/>
+
+            <field name="message_template_view_id" type="integer" null="0" default="1350"/>
+            <field name="message_wrap_view_id" type="integer" null="0" default="2030"/>
+
+            <field name="offline_theme_id" type="integer" null="0" default="9000"/>
+            <field name="offline_page_view_id" type="integer" null="0" default="260"/>
+            <field name="offline" type="binary" null="0" default="1"/>
+            <field name="offline_message" type="char" null="0"
+                   default="This site is not available.&lt;br /&gt;> Please check back again soon."/>
+
+            <field name="error_theme_id" type="integer" null="0" default="9000"/>
+            <field name="error_page_view_id" type="integer" null="0" default="250"/>
+            <field name="error_404_message" type="char" null="0" default="Page not found"/>
+            <field name="error_403_message" type="char" null="0" default="Not authorised."/>
+
+            <include field="uibutton"/>
+            <include field="uibuttongroup"/>
+            <include field="uibuttondropdown"/>
+
+            <include field="uinavigationnavbar"/>
+            <include field="uinavigationverticalnav"/>
+            <include field="uinavigationadministrator"/>
+            <include field="uinavigationsidenav"/>
+            <include field="uinavigationsubnav"/>
+            <include field="uinavigationbreadcrumbs"/>
+            <include field="uinavigationpagination"/>
+            <include field="uinavigationpager"/>
+            <include field="uinavigationtabgroup"/>
+            <include field="uinavigationtab"/>
+            <include field="uinavigationlinklist"/>
+
+            <include field="uielementslabels"/>
+            <include field="uielementstooltips"/>
+            <include field="uielementsaccordion"/>
+            <include field="uielementspanel"/>
+            <include field="uielementsprogress"/>
+            <include field="uielementsmodal"/>
+            <include field="uielementsalerts"/>
+            <include field="uielementscarousel"/>
+            <include field="uielementspanel"/>
+
+            <include field="uitabgroupclass"/>
+
             <include name="ParametersForm"/>
-            <include name="ParametersProfiler"/>
+            <include name="ParametersItem"/>
+            <include name="ParametersList"/>
+            <include name="ParametersMenuitem"/>
+
+            <field name="profiler_error_reporting" type="integer" null="0" default="0"/>
+            <field name="profiler_verbose" type="boolean" null="0" default="0"/>
+            <field name="profiler_start_with" type="text" null="0" default="Initialise"
+                   values="Initialise,Route,Authorise,Execute,Response"/>
+            <field name="profiler_end_with" type="text" null="0" default="Response"
+                   values="Initialise,Route,Authorise,Execute,Response"/>
+            <field name="profiler_output" type="text" null="0"
+                   default="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Plugins"
+                   values="Actions,Application,Authorisation,Queries,Rendering,Routing,Services,Plugins"/>
+            <field name="profiler_output_queries_table_registry" type="boolean" null="0" default="0"/>
+            <field name="profiler_output_queries_sql" type="boolean" null="0" default="1"/>
+            <field name="profiler_output_queries_query_results" type="boolean" null="0" default="0"/>
+            <field name="profiler_console_template_view_id" type="integer" null="0" default="1385"/>
+            <field name="profiler_console_wrap_view_id" type="integer" null="0" default="2090"/>
+
+            <field name="profiler_log" type="char" null="0" default="profiler_log"/>
+
+            <field name="profiler_text_file" type="char" null="0" default="profiler.php"/>
+            <field name="profiler_text_file_path" type="char" null="0" default="SITE_LOGS_FOLDER"/>
+            <field name="profiler_text_file_no_php" type="char" null="0" default="0"/>
+
+            <field name="profiler_database_table" type="char" null="0" default="#__log"/>
+
+            <field name="profiler_messages_namespace" type="char" null="0" default="profiler"/>
+            <field name="profiler_email_subject" type="char" null="0" default="Debug Messages"/>
+            <field name="profiler_email_to" type="char" null="0" default="AmyStephen@gmail.com"/>
         </customfield>
     </customfields>
 </model>

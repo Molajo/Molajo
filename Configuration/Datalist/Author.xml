@@ -10,8 +10,8 @@
         use_special_joins="1"
         check_view_level_access="0"
         process_plugins="0"
-        criteria_catalog_type_id=""
-        criteria_published_status="1"
+        catalog_type_id=""
+        published_status="1"
         data_source="JDatabase">
     <table>
         <fields>

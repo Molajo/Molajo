@@ -74,17 +74,7 @@ Class MenuService
 		$m->set('model_count', 999999);
 
 		$query_results = $m->getData('list');
-		/**
-		echo '<br /><br />';
-		echo $m->model->query->__toString();
-		echo '<br /><br />';
 
-		echo '<pre>';
-		var_dump($query_results);
-		echo '</pre>';
-		 */
-
-		$hold_menuid = 0;
 		foreach ($query_results as $item) {
 
 			if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
@@ -96,8 +86,6 @@ Class MenuService
 			} else {
 				$item->url = 'index.php?id=' . (int)$item->id;
 			}
-
-			$item->url = Services::Url()->getApplicationURL($item->url);
 		}
 
 		return $query_results;
@@ -114,10 +102,11 @@ Class MenuService
 	 */
 	public function get($menu_id, $current_menu_item = 0, $bread_crumbs = array())
 	{
+
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
-		$results = $m->connect('Table', 'Menuitems');
+		$results = $m->connect('System', 'Menuitems');
 		if ($results == false) {
 			return false;
 		}

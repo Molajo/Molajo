@@ -1,0 +1,18 @@
+<model name="Root">
+    <customfields>
+        <customfield name="metadata">
+            <include field="title"/>
+            <include field="description"/>
+            <include field="keywords"/>
+            <include field="robots"/>
+            <include field="author"/>
+            <include field="content_rights"/>
+        </customfield>
+
+        <customfield name="parameters">
+            <include field="cache"/>
+            <include field="cache_time"/>
+            <include field="cache_handler"/>
+        </customfield>
+    </customfields>
+</model>
