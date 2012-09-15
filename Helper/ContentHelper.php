@@ -279,6 +279,45 @@ Class ContentHelper
 	}
 
 	/**
+	 * Get Parameters for Resource Content - send in zero for ID to retrieve Custom Fields
+	 *
+	 * Table Registry => Services::Registry()->get('ArticlesResource', '*');
+	 * Parameters => Services::Registry()->get('ArticlesResourceParameters', '*');
+	 *
+	 * @param string $model_type
+	 * @param $model_name
+	 *
+	 * @return  array  An object containing an array of basic resource info, parameters in registry
+	 * @since   1.0
+	 */
+	public function getResourceContentParameters($id = 0, $model_type = 'Resource', $model_name)
+	{
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$m = new $controllerClass();
+
+		$m->set('process_plugins', 0);
+		$m->set('get_customfields', 1);
+
+		$results = $m->connect($model_type, $model_name);
+
+		if ($results == false) {
+			return false;
+		}
+
+		if ($id == 0) {
+			return array();
+		}
+
+		$m->set('id', (int) $id);
+		$item = $m->getData('item');
+		if (count($item) == 0) {
+			return array();
+		}
+
+		return $item;
+	}
+
+	/**
 	 * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
 	 *
 	 * @param $pageTypeNamespace

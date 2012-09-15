@@ -1,57 +1,19 @@
 {
     "2":{
-
-        "edit_toolbar_buttons_new":"apply,archive,delete,display,feature,publish,restore,spam,sticky,trash,unfeature,unpublished,unsticky,saveandclose,saveandnew,saveascopy,close,help",
-        "edit_toolbar_buttons_edit":"apply,archive,delete,display,feature,publish,restore,spam,sticky,trash,unfeature,unpublished,unsticky,saveandclose,saveandnew,saveascopy,close,help",
-        "edit_editor_fields":"title,subtitle,alias,content_text,created_by,language",
-        "edit_publish_fields":"featured,stickied,status,start_publishing_datetime,stop_publishing_datetime,created_datetime,ordering",
-        "edit_revisions_fields":"version,modified_datetime,modified_by",
-        "edit_metadata_fields":"title,description,keywords,robots,author,content_rights",
-        "edit_custom_fields":"",
-
-        "options_basic":"criteria*,image*,gravatar*",
-        "options_advanced":"cache*",
-        "options_build":"assets*,item*,form*,enable*",
+        "criteria_title":"Articles",
+        "criteria_display_view_on_no_results":"0",
+        "criteria_snippet_length":"150",
+        "criteria_status":"1,2",
+        "criteria_catalog_type_id":"10000",
+        "criteria_extension_instance_id":"1",
 
         "cache":"0",
         "cache_time":"5",
         "cache_handler":"file",
 
-        "gravatar":"1",
-        "gravatar_size":"50",
-        "gravatar_type":"mm",
-        "gravatar_rating":"pg",
-        "gravatar_image":"1",
-
-        "criteria_title":"Articles Resource",
-        "criteria_display_view_on_no_results":"0",
-        "criteria_snippet_length":"150",
-        "criteria_status":"1,2",
-        "criteria_catalog_type_id":"10000",
-        "extension_instance_id":"1",
-
-        "image_xsmall":"50,50",
-        "image_small":"75,75",
-        "image_medium":"150,150",
-        "image_large":"350,200",
-        "image_xlarge":"500,350",
-        "image_folder":"Images",
-        "image_thumb_folder":"Thumbs",
-
-        "asset_priority_site":"100",
-        "asset_priority_application":"200",
-        "asset_priority_user":"300",
-        "asset_priority_extension":"400",
-        "asset_priority_request":"500",
-        "asset_priority_primary_category":"600",
-        "asset_priority_menuitem":"700",
-        "asset_priority_list":"700",
-        "asset_priority_item":"800",
-        "asset_priority_theme":"900",
-
         "item_parent_menu_id":"3012",
         "item_theme_id":"",
-        "item_page_view_id":"225",
+        "item_page_view_id":"",
         "item_page_view_css_id":"",
         "item_page_view_css_class":"",
         "item_template_view_id":"",
@@ -69,7 +31,7 @@
 
         "form_parent_menu_id":"3012",
         "form_theme_id":"",
-        "form_page_view_id":"210",
+        "form_page_view_id":"",
         "form_page_view_css_id":"",
         "form_page_view_css_class":"",
         "form_template_view_id":"",
@@ -97,6 +59,5 @@
         "enable_tweets":"1",
         "enable_ping":"1",
         "enable_captcha_option":"0"
-
     }
 }

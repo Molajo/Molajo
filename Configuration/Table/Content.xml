@@ -102,16 +102,9 @@
     </table>
 
     <customfields>
-        <customfield name="customfields">
-            <field name="tags" type="char" null="0" default=" "/>
-            <field name="categories" type="char" null="0" default=" "/>
-            <field name="author_notes" type="char" null="0" default=" " length="500"/>
-        </customfield>
-
         <customfield name="parameters">
-            <include name="ParametersItem"/>
             <include name="ParametersForm"/>
-            <include name="ParametersEdit"/>
+            <include name="ParametersItem"/>
         </customfield>
     </customfields>
 </model>

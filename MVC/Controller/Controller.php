@@ -337,8 +337,8 @@ class Controller
 				. ' <br />Model Name: ' . $this->get('model_name', '')
 				. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
 				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
-				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins');
-
+				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
+		echo $profiler_message;
 		/** 2. Schedule onBeforeRead Event */
 		if (count($this->plugins) > 0) {
 			$this->onBeforeReadEvent();

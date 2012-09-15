@@ -28,6 +28,7 @@
                 <field name="configuration_tab_list" type="char" null="0" default=" "/>
                 <field name="configuration_tab_customfields" type="char" null="0" default=" "/>
 
+                <include name="ParametersEdit"/>
                 <include name="ParametersForm"/>
                 <include name="ParametersItem"/>
                 <include name="ParametersList"/>
