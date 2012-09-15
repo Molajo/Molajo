@@ -338,7 +338,7 @@ class Controller
 				. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
 				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
-		echo $profiler_message;
+
 		/** 2. Schedule onBeforeRead Event */
 		if (count($this->plugins) > 0) {
 			$this->onBeforeReadEvent();
@@ -541,11 +541,9 @@ class Controller
 				$this->model_count = $this->get('model_count', 10);
 			}
 		}
-//echo '<br /><br />' . $this->model->query->__toString() . '<br /><br />';
+
 		$this->pagination_total = (int)$this->model->getQueryResults(
 			$query_object, $this->model_offset, $this->model_count);
-
-
 
 		/** Cache */
 		if (Services::Cache()->exists(md5($this->model->query->__toString() . ' ' . $this->model_offset . ' ' . $this->model_count))) {
