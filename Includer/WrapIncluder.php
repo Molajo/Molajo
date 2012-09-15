@@ -6,7 +6,6 @@
  */
 namespace Molajo\Includer;
 
-use Molajo\Helpers;
 use Molajo\Service\Services;
 use Molajo\Includer;
 
@@ -35,53 +34,6 @@ Class WrapIncluder extends Includer
 		Services::Registry()->set('Parameters', 'criteria_html_display_filter', false);
 
 		return $this;
-	}
-
-	/**
-	 * setRenderCriteria
-	 *
-	 * Retrieve default values, if not provided by extension
-	 *
-	 * @return bool
-	 * @since   1.0
-	 */
-	protected function DELETEsetRenderCriteria()
-	{
-		/** For wrap type - extension name is was set to the name of the wrap in the getAttributes method */
-		$wrap_title = Services::Registry()->get('Parameters', 'extension_title');
-
-		$wrap_id = Helpers::Extension()
-			->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, $wrap_title);
-
-		if ((int)$wrap_id == 0) {
-		} else {
-			Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_id);
-		}
-
-		/** Standard parameters (overwrite extension title with Wrap */
-		Services::Registry()->set('Parameters', 'extension_title', 'Wrap');
-
-		Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
-
-		/** Set parameters and merge in configuration values */
-		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');
-
-		Services::Registry()->merge('Configuration', 'Parameters', true);
-
-		/* Set other model parameters: model_parameter is set in Attributes */
-		Services::Registry()->set('Parameters', 'model_name', 'Plugindata');
-		Services::Registry()->set('Parameters', 'model_type', 'dbo');
-		Services::Registry()->set('Parameters', 'model_query_object', 'getPlugindata');
-
-		/** Cleanup */
-		Services::Registry()->delete('Parameters', 'item*');
-		Services::Registry()->delete('Parameters', 'list*');
-		Services::Registry()->delete('Parameters', 'form*');
-
-		/** Sort */
-		Services::Registry()->sort('Parameters');
-
-		return true;
 	}
 
 	/**

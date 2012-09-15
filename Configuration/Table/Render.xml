@@ -2,34 +2,7 @@
 <model
         name="Render"
         extends="Extensioninstances">
-    <table>
-        <plugins>
-            <plugin name="Admin"/>
-            <plugin name="Adminconfiguration"/>
-            <plugin name="Itemurl"/>
-            <plugin name="Detailitem"/>
-            <plugin name="List"/>
-            <plugin name="Mockimage"/>
-            <plugin name="Referencedata"/>
-            <plugin name="Blockquote"/>
-            <plugin name="Rownumber"/>
-            <plugin name="Readmore"/>
-            <plugin name="Author"/>
-            <plugin name="Smilies"/>
-            <plugin name="Email"/>
-            <plugin name="Gravatar"/>
-            <plugin name="IFrame"/>
-            <plugin name="Dateformats"/>
-            <plugin name="Snippet"/>
-            <plugin name="Publishedstatus"/>
-            <plugin name="Readmore"/>
-            <plugin name="Lists"/>
-            <plugin name="Cssclassandids"/>
-            <plugin name="Pagination"/>
-            <plugin name="Ajax"/>
-            <plugin name="Googleanalytics"/>
-        </plugins>
-    </table>
+
     <customfields>
         <customfield name="parameters">
             <include field="cache"/>

@@ -19,7 +19,9 @@
                 <child name="Menuitems" type="System" join="parent_id"/>
             </children>
         </table>
-
+        <plugins>
+            <include name="ContentPlugins"/>
+        </plugins>
         <customfields>
             <customfield name="parameters">
                 <include name="ParametersMenuitem"/>

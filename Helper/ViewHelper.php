@@ -86,11 +86,14 @@ Class ViewHelper
 		Services::Registry()->set('Parameters', $type . '_view_namespace', $this->getNamespace($node, $type));
 
 		/** Retrieve the query results */
+//echo $id . ' ' . $type . ' ' . $node . ' <br />';
 		$item = Helpers::Extension()->get($id, $type, $node);
 		if (count($item) == 0 || $item == false) {
 			return false;
 		}
-
+//echo '<pre>';
+//var_dump($item);
+//echo '</pre>';
 		Services::Registry()->set('Parameters', $type . '_view_title', $item->title);
 		Services::Registry()->set('Parameters', $type . '_view_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', $type . '_view_language', $item->language);

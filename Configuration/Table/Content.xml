@@ -99,6 +99,10 @@
             <foreignkey name="version_id" source_id="id" source_model="Content" required="1"/>
         </foreignkeys>
 
+        <plugins>
+            <include name="ContentPlugins"/>
+        </plugins>
+
     </table>
 
     <customfields>
