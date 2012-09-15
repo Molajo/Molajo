@@ -1,4 +1,5 @@
 <plugin name="Admin"/>
+<plugin name="Adminconfiguration"/>
 <plugin name="Itemurl"/>
 <plugin name="Detailitem"/>
 <plugin name="List"/>

@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_HEAD_DESCRIPTION</description>
-    <model name="Head" process_plugins="1" extends="TemplateviewsSystem"/>
+    <model name="Head" extends="TemplateviewsSystem"/>
 </extension>

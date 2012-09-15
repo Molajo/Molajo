@@ -152,7 +152,7 @@ Class ExtensionHelper
 		$query_results = $m->getData($query_object);
 
 		if ($query_object == 'item') {
-			$query_results->table_registry_name = ucfirst(strtolower($model_type)) . ucfirst(strtolower($model_name));
+			$query_results->table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 		}
 
 		if ($query_results === false || $query_results === null) {

@@ -109,6 +109,26 @@ Class HeadIncluder extends Includer
 		Services::Registry()->set('Parameters', 'wrap_view_namespace',
 			Helpers::View()->getNamespace($wrap_view_title, 'Wrap'));
 
+		if (Services::Registry()->exists('Parameters', 'wrap_view_role')) {
+		} else {
+			Services::Registry()->set('Parameters', 'wrap_view_role', '');
+		}
+		if (Services::Registry()->exists('Parameters', 'wrap_view_property')) {
+		} else {
+			Services::Registry()->set('Parameters', 'wrap_view_property', '');
+		}
+		if (Services::Registry()->exists('Parameters', 'wrap_view_header_level')) {
+		} else {
+			Services::Registry()->set('Parameters', 'wrap_view_header_level', '');
+		}
+		if (Services::Registry()->exists('Parameters', 'wrap_view_show_title')) {
+		} else {
+			Services::Registry()->set('Parameters', 'wrap_view_show_title', '');
+		}
+		if (Services::Registry()->exists('Parameters', 'wrap_view_show_subtitle')) {
+		} else {
+			Services::Registry()->set('Parameters', 'wrap_view_show_subtitle', '');
+		}
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'list*');
 		Services::Registry()->delete('Parameters', 'form*');
