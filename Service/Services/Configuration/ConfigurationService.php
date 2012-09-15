@@ -1149,6 +1149,12 @@ Class ConfigurationService
 					}
 				}
 
+				/** Application Metadata */
+				$metadata = Services::Registry()->getArray('ApplicationTableMetadata');
+				foreach ($metadata as $key => $value) {
+					Services::Registry()->set('Configuration', 'metadata_' . $key, $value);
+				}
+
 			} catch (\Exception $e) {
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
 				die;
