@@ -125,7 +125,11 @@ class DisplayController extends Controller
 		}
 
 		/** Wrap template view results */
-		return $this->wrapView($this->get('wrap_view_path_node'), $rendered_output);
+		if ($this->get('wrap_view_path_node') == '') {
+			return $rendered_output;
+		} else {
+			return $this->wrapView($this->get('wrap_view_path_node'), $rendered_output);
+		}
 	}
 
 	/**

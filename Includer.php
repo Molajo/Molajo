@@ -558,8 +558,10 @@ class Includer
 			}
 		}
 
+//if ($this->name == 'message') {
 //echo '<br />INCLUDER:: ' .  Services::Registry()->get('Parameters', 'template_view_path');
 //echo '<br />' . $message;
+//}
 		$results = $controller->execute();
 
 		return $results;

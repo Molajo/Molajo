@@ -254,6 +254,15 @@ Class ParseService
 
 		$renderedOutput = $this->renderLoop();
 
+		/** onAfterParsebody Plugin */
+		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+		} else {
+			Services::Registry()->delete('Parameters');
+			Services::Registry()->createRegistry('Parameters');
+			Services::Registry()->copy('RouteParameters', 'Parameters');
+			$renderedOutput = $this->onAfterParsebodyEvent($renderedOutput);
+		}
+
 		/** Final Includers: Now, the theme, head, messages, and defer <includes /> run */
 		$this->sequence = $this->final;
 
@@ -301,9 +310,6 @@ Class ParseService
 	protected function processPlugins($plugins, $path)
 	{
 		foreach ($plugins as $folder) {
-
-//			echo $folder . 'Plugin' . '<br />';
-//			echo $path . '\\Plugin\\' . $folder . '\\' . $folder . 'Plugin' . '<br /> ';
 
 			Services::Event()->process_events(
 				$folder . 'Plugin',
@@ -634,6 +640,59 @@ Class ParseService
 		Services::Registry()->sort('Parameters');
 
 		return true;
+	}
+
+
+	/**
+	 * Schedule onAfterParseBody Event - after body rendered, before the head, messages, and defer are processed
+	 *
+	 * @return  string - rendered output
+	 * @since   1.0
+	 */
+	protected function onAfterParsebodyEvent($renderedOutput)
+	{
+
+		Services::Profiler()->set(
+			'ParseService->process Schedules onAfterParsebody',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		/** Schedule onAfterParsebody Event */
+		$arguments = array(
+			'parameters' => Services::Registry()->getArray('Parameters'),
+			'rendered_output' => $renderedOutput,
+			'data' => array()
+		);
+
+		Services::Profiler()->set(
+			'ParseService->onAfterParsebodyEvent ' . ' Schedules onAfterParsebody',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		$arguments = Services::Event()->schedule('onAfterParsebody', $arguments);
+
+		if ($arguments == false) {
+			Services::Profiler()->set('ParseService->onBeforeParseodyEvent ' . ' failure ',
+				LOG_OUTPUT_PLUGINS
+			);
+
+			return false;
+		}
+
+		Services::Profiler()->set(
+			'ParseService->onAfterParsebodyEvent ' . ' successful ',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		/** Process results */
+		Services::Registry()->delete('Parameters');
+		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+		Services::Registry()->sort('Parameters');
+
+		return $arguments['rendered_output'];
 	}
 
 	/**
