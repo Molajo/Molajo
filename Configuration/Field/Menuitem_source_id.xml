@@ -1,0 +1,6 @@
+<field name="menuitem_source_id"
+       type="integer"
+       null="0"
+       default="0"
+        />
+

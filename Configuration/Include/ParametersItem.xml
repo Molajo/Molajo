@@ -1,17 +1,22 @@
-<field name="item_parent_menu_id" type="integer" null="0" default="0"/>
-<field name="item_theme_id" type="integer" null="0" default=" "/>
-<field name="item_page_view_id" type="integer" null="0" default=" "/>
-<field name="item_page_view_css_id" type="char" null="0" default=" "/>
-<field name="item_page_view_css_class" type="char" null="0" default=" "/>
-<field name="item_template_view_id" type="integer" null="0" default=" "/>
-<field name="item_template_view_css_id" type="char" null="0" default=" "/>
-<field name="item_template_view_css_class" type="char" null="0" default=" "/>
-<field name="item_wrap_view_id" type="integer" null="0" default=" "/>
-<field name="item_wrap_view_css_id" type="char" null="0" default=" "/>
-<field name="item_wrap_view_css_class" type="char" null="0" default=" "/>
-<field name="item_wrap_view_role" type="char" null="0" default=" "/>
-<field name="item_wrap_view_property" type="char" null="0" default=" "/>
-<field name="item_model_name" type="char" null="0" default=""/>
-<field name="item_model_type" type="char" null="0" default=" "/>
-<field name="item_model_query_object" type="char" null="0" default="Item"/>
-<field name="item_model_parameter" type="char" null="0" default=" "/>
+<include field="item_parent_menu_id"/>
+
+<include field="item_theme_id"/>
+
+<include field="item_page_view_id"/>
+<include field="item_page_view_css_id"/>
+<include field="item_page_view_css_class"/>
+
+<include field="item_template_view_id"/>
+<include field="item_template_view_css_id"/>
+<include field="item_template_view_css_class"/>
+
+<include field="item_wrap_view_id"/>
+<include field="item_wrap_view_css_id"/>
+<include field="item_wrap_view_css_class"/>
+<include field="item_wrap_view_role"/>
+<include field="item_wrap_view_property"/>
+
+<include field="item_model_name"/>
+<include field="item_model_type"/>
+<include field="item_model_query_object"/>
+<include field="item_model_parameter"/>

@@ -1,31 +1,30 @@
-<field name="enable_draft_save" type="boolean" null="0" default="0"/>
-<field name="enable_version_history" type="boolean" null="0" default="0"/>
-<field name="enable_retain_versions_after_delete" type="boolean" null="0" default="0"/>
-<field name="enable_maximum_version_count" type="integer" null="0" default="5" minimum="0" maximum="20"/>
-<field name="enable_hit_counts" type="boolean" null="0" default="0"/>
-<field name="enable_comments" type="boolean" null="0" default="0"/>
-<field name="enable_spam_protection" type="boolean" null="0" default="1"/>
-<field name="enable_ratings" type="boolean" null="0" default="0"/>
-<field name="enable_notifications" type="boolean" null="0" default="0"/>
-<field name="enable_tweets" type="boolean" null="0" default="0"/>
-<field name="enable_ping" type="boolean" null="0" default="0"/>
-<field name="enable_captcha_option" type="char" null="0" default="ltr" values="ltr,rtl"/>
+<include field="enable_draft_save"/>
+<include field="enable_version_history"/>
+<include field="enable_retain_versions_after_delete"/>
+<include field="enable_maximum_version_count"/>
+<include field="enable_hit_counts"/>
+<include field="enable_comments"/>
+<include field="enable_spam_protection"/>
+<include field="enable_ratings"/>
+<include field="enable_notifications"/>
+<include field="enable_tweets"/>
+<include field="enable_ping"/>
 
-<field name="form_parent_menu_id" type="integer" null="0" default="0"/>
+<include field="form_parent_menu_id"/>
 
-<field name="form_theme_id" type="integer" datalist="Themes" null="0" default=" "/>
-<field name="form_page_view_id" type="integer" datalist="Pages" null="0" default=" "/>
-<field name="form_page_view_css_id" type="char" null="0" default=" "/>
-<field name="form_page_view_css_class" type="char" null="0" default=" "/>
-<field name="form_template_view_id" type="integer" datalist="Templates" null="0" default=" "/>
-<field name="form_template_view_css_id" type="char" null="0" default=""/>
-<field name="form_template_view_css_class" type="char" null="0" default=" "/>
-<field name="form_wrap_view_id" type="integer"  datalist="Wraps" null="0" default=" "/>
-<field name="form_wrap_view_css_id" type="char" null="0" default=" "/>
-<field name="form_wrap_view_css_class" type="char" null="0" default=" "/>
-<field name="form_wrap_view_role" type="char" null="0" default=" "/>
-<field name="form_wrap_view_property" type="char" null="0" default=" "/>
-<field name="form_model_name" type="char" null="0" default=""/>
-<field name="form_model_type" type="char" null="0" default=" "/>
-<field name="form_model_query_object" type="char" null="0" default="Item"/>
-<field name="form_model_parameter" type="char" null="0" default=" "/>
+<include field="form_theme_id"/>
+<include field="form_page_view_id"/>
+<include field="form_page_view_css_id"/>
+<include field="form_page_view_css_class"/>
+<include field="form_template_view_id"/>
+<include field="form_template_view_css_id"/>
+<include field="form_template_view_css_class"/>
+<include field="form_wrap_view_id"/>
+<include field="form_wrap_view_css_id"/>
+<include field="form_wrap_view_css_class"/>
+<include field="form_wrap_view_role"/>
+<include field="form_wrap_view_property"/>
+<include field="form_model_name"/>
+<include field="form_model_type"/>
+<include field="form_model_query_object"/>
+<include field="form_model_parameter"/>

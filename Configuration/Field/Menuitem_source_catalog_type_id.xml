@@ -1,0 +1,7 @@
+<field name="menuitem_source_catalog_type_id"
+       type="integer"
+       null="0"
+       default="0"
+       datalist="CatalogType"
+        />
+

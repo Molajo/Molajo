@@ -15,8 +15,8 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <include field="id_pk"/>
-            <field name="title" type="char" null="0" default="" unique="1"/>
+            <include field="id"/>
+            <include field="title"/>
         </fields>
         >
         <joins>

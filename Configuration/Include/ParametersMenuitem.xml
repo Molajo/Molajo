@@ -1,29 +1,30 @@
-<field name="menuitem_type" type="char" null="1" default=" "/>
+<field name="menuitem_type"/>
 
-<field name="menuitem_source_id" type="integer" null="1" default=" "/>
-<field name="menuitem_source_catalog_type_id" type="integer" null="1" default=" "/>
-<field name="menuitem_extension_instance_id" type="char" null="1" default=" "/>
+<field name="menuitem_source_id"/>
+<field name="menuitem_source_catalog_type_id"/>
+<field name="menuitem_extension_instance_id"/>
 
-<field name="menuitem_theme_id" type="integer" null="1" default=" "/>
+<field name="menuitem_theme_id"/>
 
-<field name="menuitem_page_view_id" type="integer" null="1" default=" "/>
-<field name="menuitem_page_view_css_id" type="char" null="1" default=" "/>
-<field name="menuitem_page_view_css_class" type="char" null="1" default=" "/>
+<field name="menuitem_page_view_id"/>
+<field name="menuitem_page_view_css_id"/>
+<field name="menuitem_page_view_css_class"/>
 
-<field name="menuitem_template_view_id" type="integer" null="1" default=" "/>
-<field name="menuitem_template_view_css_id" type="char" null="1" default=" "/>
-<field name="menuitem_template_view_css_class" type="char" null="1" default=" "/>
+<field name="menuitem_template_view_id"/>
+<field name="menuitem_template_view_css_id"/>
+<field name="menuitem_template_view_css_class"/>
 
-<field name="menuitem_wrap_view_id" type="integer" null="1" default=" "/>
-<field name="menuitem_wrap_view_css_id" type="char" null="1" default=" "/>
-<field name="menuitem_wrap_view_css_class" type="char" null="1" default=" "/>
-<field name="menuitem_wrap_view_role" type="char" null="0" default=" "/>
-<field name="menuitem_wrap_view_property" type="char" null="0" default=" "/>
+<field name="menuitem_wrap_view_id"/>
+<field name="menuitem_wrap_view_css_id"/>
+<field name="menuitem_wrap_view_css_class"/>
+<field name="menuitem_wrap_view_role"/>
+<field name="menuitem_wrap_view_property"/>
 
-<field name="menuitem_model_name" type="char" null="1" default=" "/>
-<field name="menuitem_model_type" type="char" null="1" default=" "/>
-<field name="menuitem_model_query_object" type="char" null="1" default=" " values="result,item,list"/>
-<field name="menuitem_model_parameter" type="char" null="1" default=" "/>
-<field name="menuitem_model_offset" type="integer" null="0" default="0"/>
-<field name="menuitem_model_count" type="integer" null="0" default="5"/>
-<field name="menuitem_model_use_pagination" type="binary" null="0" default="1"/>
+<field name="menuitem_model_name"/>
+<field name="menuitem_model_type"/>
+<field name="menuitem_model_query_object"/>
+<field name="menuitem_model_parameter"/>
+<field name="menuitem_model_ordering"/>
+<field name="menuitem_model_offset"/>
+<field name="menuitem_model_count"/>
+<field name="menuitem_model_use_pagination"/>

@@ -1,0 +1,6 @@
+<field name="list_model_ordering"
+       type="integer"
+       null="0"
+       default="0"
+        />
+
