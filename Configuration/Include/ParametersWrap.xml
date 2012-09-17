@@ -1,15 +1,15 @@
-<field name="wrap_view_id" type="char" null="0" default=" "/>
+<include field="wrap_view_id"/>
 
-<field name="wrap_view_css_id" type="char" null="0" default=" "/>
-<field name="wrap_view_css_class" type="char" null="0" default=" "/>
-<field name="wrap_view_role" type="char" null="0" default=" "/>
-<field name="wrap_view_property" type="char" null="0" default=" "/>
-<field name="wrap_view_header_level" type="integer" null="0" default="0"/>
-<field name="wrap_view_show_title" type="binary" null="0" default=" "/>
-<field name="wrap_view_show_subtitle" type="binary" null="0" default=" "/>
+<include field="wrap_view_css_id"/>
+<include field="wrap_view_css_class"/>
+<include field="wrap_view_role"/>
+<include field="wrap_view_property"/>
+<include field="wrap_view_header_level"/>
+<include field="wrap_view_show_title"/>
+<include field="wrap_view_show_subtitle"/>
 
-<field name="model_name" type="char" null="0" default=" "/>
-<field name="model_type" type="char" null="0" default=" "/>
-<field name="model_query_object" type="char" null="0" default=" "/>
-<field name="model_parameter" type="char" null="0" default=" "/>
+<include field="model_name"/>
+<include field="model_type"/>
+<include field="model_query_object"/>
+<include field="model_parameter"/>
 

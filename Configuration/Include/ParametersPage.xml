@@ -1,2 +1,3 @@
-<field name="page_view_css_id" type="char" null="0" default=" "/>
-<field name="page_view_css_class" type="char" null="0" default=" "/>
+<include field="page_view_id"/>
+<include field="page_view_css_id"/>
+<include field="page_view_css_class"/>

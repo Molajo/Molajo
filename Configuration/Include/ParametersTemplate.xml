@@ -1,4 +1,4 @@
-<field name="template_view_id" type="char" null="0" default=" "/>
-<field name="template_view_css_id" type="char" null="0" default=" "/>
-<field name="template_view_css_class" type="char" null="0" default=" "/>
+<include field="template_view_id"/>
+<include field="template_view_css_id"/>
+<include field="template_view_css_class"/>
 <include name="ParametersWrap"/>

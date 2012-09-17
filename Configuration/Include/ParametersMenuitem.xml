@@ -1,30 +1,30 @@
-<field name="menuitem_type"/>
+<include field="menuitem_type"/>
 
-<field name="menuitem_source_id"/>
-<field name="menuitem_source_catalog_type_id"/>
-<field name="menuitem_extension_instance_id"/>
+<include field="menuitem_source_id"/>
+<include field="menuitem_source_catalog_type_id"/>
+<include field="menuitem_extension_instance_id"/>
 
-<field name="menuitem_theme_id"/>
+<include field="menuitem_theme_id"/>
 
-<field name="menuitem_page_view_id"/>
-<field name="menuitem_page_view_css_id"/>
-<field name="menuitem_page_view_css_class"/>
+<include field="menuitem_page_view_id"/>
+<include field="menuitem_page_view_css_id"/>
+<include field="menuitem_page_view_css_class"/>
 
-<field name="menuitem_template_view_id"/>
-<field name="menuitem_template_view_css_id"/>
-<field name="menuitem_template_view_css_class"/>
+<include field="menuitem_template_view_id"/>
+<include field="menuitem_template_view_css_id"/>
+<include field="menuitem_template_view_css_class"/>
 
-<field name="menuitem_wrap_view_id"/>
-<field name="menuitem_wrap_view_css_id"/>
-<field name="menuitem_wrap_view_css_class"/>
-<field name="menuitem_wrap_view_role"/>
-<field name="menuitem_wrap_view_property"/>
+<include field="menuitem_wrap_view_id"/>
+<include field="menuitem_wrap_view_css_id"/>
+<include field="menuitem_wrap_view_css_class"/>
+<include field="menuitem_wrap_view_role"/>
+<include field="menuitem_wrap_view_property"/>
 
-<field name="menuitem_model_name"/>
-<field name="menuitem_model_type"/>
-<field name="menuitem_model_query_object"/>
-<field name="menuitem_model_parameter"/>
-<field name="menuitem_model_ordering"/>
-<field name="menuitem_model_offset"/>
-<field name="menuitem_model_count"/>
-<field name="menuitem_model_use_pagination"/>
+<include field="menuitem_model_name"/>
+<include field="menuitem_model_type"/>
+<include field="menuitem_model_query_object"/>
+<include field="menuitem_model_parameter"/>
+<include field="menuitem_model_ordering"/>
+<include field="menuitem_model_offset"/>
+<include field="menuitem_model_count"/>
+<include field="menuitem_model_use_pagination"/>
