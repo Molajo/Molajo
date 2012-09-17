@@ -1,1 +1,1 @@
-<field name="application_logon_requirement" type="binary" null="0" default=" "/>
+<field name="application_logon_requirement" type="boolean" null="0" default=" "/>

@@ -1,1 +1,1 @@
-<field name="html5" type="binary" null="0" default="1"/>
+<field name="html5" type="boolean" null="0" default="1"/>

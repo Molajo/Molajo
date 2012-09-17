@@ -1,1 +1,1 @@
-<field name="url_unicode_slugs" type="binary" null="0" default="0"/>
+<field name="url_unicode_slugs" type="boolean" null="0" default="0"/>

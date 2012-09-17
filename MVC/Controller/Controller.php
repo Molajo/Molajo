@@ -418,8 +418,10 @@ class Controller
 //var_dump($this->query_results);
 //echo '</pre><br /><br />';
 
-		return $this->query_results[0];
-
+		if (is_array($this->query_results)) {
+			return $this->query_results[0];
+		}
+		return $this->query_results;
 	}
 
 	/**
@@ -558,9 +560,6 @@ class Controller
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
-//echo '<pre>';
-//var_dump($query_results);
-//echo '</pre><br /><br />';
 
 		/** Result */
 		if ($query_object == 'result' || $query_object == 'distinct') {

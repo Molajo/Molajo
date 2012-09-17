@@ -175,7 +175,6 @@ class Model
 		if ($model_type == '*' || strpos($model_type, '*')) {
 			return $this->db->getData('Plugindata', $model_type, false);
 		}
-
 		return $this->db->getData('Plugindata', $model_type, true);
 	}
 

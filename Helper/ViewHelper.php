@@ -87,6 +87,7 @@ Class ViewHelper
 
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($id, $type, $node);
+
 		if (count($item) == 0 || $item == false) {
 			return false;
 		}
@@ -304,7 +305,7 @@ Class ViewHelper
 
 		/** 4. Platform View */
 		if (file_exists(CORE_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
-			return 'Molajo\\' . $plus;
+			return 'Molajo\\MVC\\' . $plus;
 		}
 
 		return '';

@@ -77,6 +77,8 @@
         <field>name</field>
         <field>as_name</field>
         <field>alias</field>
+        <field>cols</field>
+        <field>rows</field>
         <field>datalist</field>
         <field>display</field>
         <field>default</field>

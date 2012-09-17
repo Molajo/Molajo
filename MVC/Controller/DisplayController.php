@@ -38,21 +38,20 @@ class DisplayController extends Controller
 
 		echo 		' <br /><br /><br /><br />Includer: ' . $this->get('includer_type', '')
 		. ' <br />Model Type: ' . $this->get('model_type', '')
-		. ' <br />Model Type: ' . $this->get('model_type', '')
 		. ' <br />Model Name: ' . $this->get('model_name', '')
 		. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
 		. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 		. ' <br />Template Path: ' . $this->get('template_view_path', '')
 		. ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
-		 **/
+		*/
 		if ($this->get('model_name', '') == '') {
 			$this->query_results = array();
 
 		} else {
 			$this->connect($this->get('model_type'), $this->get('model_name'));
 
-			if ((int)$this->get('content_id') == 0) {
-//todo end up with: 1. result, 2. item, 3. list 4. distinct (listbox) (dbo needs to change - add parameter for specific query, don't hijack
+			if ((int)$this->get('content_id') === 0) {
+
 			} elseif (strtolower($this->get('model_type', '')) == 'dbo') {
 
 			} else {
@@ -61,7 +60,7 @@ class DisplayController extends Controller
 			}
 
 			/** Run Query */
-			$this->getData($this->get('model_query_object', 'item'));
+			$this->getData($this->get('model_query_object'));
 
 			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
 
@@ -110,11 +109,10 @@ class DisplayController extends Controller
 
 			/**
 			 *  For primary content (the extension determined in Application::Request),
-			 *      save query results in the Request object for reuse by other
-			 *      extensions.
+			 *      save query results for possible reuse
 			 */
 			if ($this->get('extension_primary') == true) {
-				Services::Registry()->set('RouteParameters', 'query_resultset', $this->query_results);
+				Services::Registry()->set('Plugindata', 'primary_query_results', $this->query_results);
 			}
 
 			/** Render View */
@@ -180,7 +178,7 @@ class DisplayController extends Controller
 	{
 //todo think about empty queryresults processing when parameter set to true (custom and footer?)
 //todo think about the result, item, and list processing - get dbo's in shape, plugins
-//todo when close to done - do encoding - bring in filters - how?
+//todo when close to done - do encoding - bring in filters given field definitions
 
 		/** start collecting output */
 		ob_start();

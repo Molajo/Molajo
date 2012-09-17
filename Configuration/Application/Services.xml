@@ -27,6 +27,7 @@
     <service>Authorisation</service>
     <service>Metadata</service>
     <service>Image</service>
+    <service>Form</service>
     <service>Filter</service>
     <service>Parse</service>
     <service>Password</service>

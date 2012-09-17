@@ -27,6 +27,7 @@ class FormselectPlugin extends ContentPlugin
 	 */
 	public function onAfterReadall()
 	{
+		return true;
 		$formattributes = Services::Registry()->get('Parameters', 'formattributes');
 
 		$att_array = array();

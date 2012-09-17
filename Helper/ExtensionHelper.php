@@ -132,6 +132,8 @@ Class ExtensionHelper
 		if ((int)$extension_id == 0) {
 		} else {
 			$m->set('id', (int)$extension_id);
+			$m->set('process_plugins', 0);
+			$query_object = 'item';
 		}
 
 		if ((int)$catalog_type_id == 0) {

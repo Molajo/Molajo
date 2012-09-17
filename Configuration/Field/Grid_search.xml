@@ -1,1 +1,1 @@
-<field name="grid_search" type="binary" null="1" default="1"/>
+<field name="grid_search" type="boolean" null="1" default="1"/>

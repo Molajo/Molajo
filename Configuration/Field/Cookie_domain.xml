@@ -1,1 +1,1 @@
-<field name="cookie_domain" type="binary" null="0" default="0"/>
+<field name="cookie_domain" type="boolean" null="0" default="0"/>

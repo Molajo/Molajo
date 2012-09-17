@@ -1,1 +1,8 @@
-<field name="criteria_catalog_type_id" type="integer" null="0" default=" "/>
+<field
+       name="criteria_catalog_type_id"
+       hidden="1"
+       locked="1"
+       type="integer"
+       null="0"
+       default=" "
+        />

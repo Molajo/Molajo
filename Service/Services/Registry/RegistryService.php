@@ -307,8 +307,6 @@ Class RegistryService
 			$this->registry[$namespace] = $array;
 		}
 
-		/** That's what you wanted, right? */
-
 		return $array[$key];
 	}
 
@@ -352,8 +350,6 @@ Class RegistryService
 
 		/** Set the value for the key */
 		$array[$key] = $value;
-
-//echo $namespace.' '.$key.'<br />';
 
 		/** Save the registry */
 		$this->registry[$namespace] = $array;
@@ -804,7 +800,6 @@ Class RegistryService
 	{
 		$namespace = strtolower($namespace);
 		$key = strtolower($key);
-
 		$query_results = array();
 
 		/** Retrieve Parameter Registry and return as a result */
