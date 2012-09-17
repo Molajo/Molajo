@@ -162,12 +162,12 @@
             <include field="offline_theme_id"/>
             <include field="offline_page_view_id"/>
             <include field="offline"/>
-            <include field="offline_message""/>
+            <include field="offline_message"/>
 
             <include field="error_theme_id"/>
             <include field="error_page_view_id"/>
             <include field="error_404_message"/>
-            <include field="error_403_message""/>
+            <include field="error_403_message"/>
 
             <include field="uibutton"/>
             <include field="uibuttongroup"/>
