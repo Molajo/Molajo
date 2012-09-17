@@ -49,7 +49,7 @@ Class FormService
 	 *
 	 * @return array
 	 */
-	public function buildFieldset($namespace, $tabLink, $input_fields)
+	public function getFieldset($namespace, $tabLink, $input_fields)
 	{
 		$fieldset = array();
 
@@ -101,15 +101,15 @@ Class FormService
 
 				switch ($view) {
 					case 'select':
-						$registryName = $this->buildSelectField($namespace, $tabLink, $field);
+						$registryName = $this->getSelectField($namespace, $tabLink, $field);
 						break;
 
 					case 'textarea':
-						$registryName = $this->buildTextareaField($namespace, $tabLink, $field);
+						$registryName = $this->getTextareaField($namespace, $tabLink, $field);
 						break;
 
 					default:
-						$registryName = $this->buildInputField($namespace, $tabLink, $field);
+						$registryName = $this->getInputField($namespace, $tabLink, $field);
 						break;
 				}
 
@@ -127,11 +127,11 @@ Class FormService
 	}
 
 	/**
-	 * buildSelectField field
+	 * getSelectField field
 	 *
 	 * @return array
 	 */
-	protected function buildInputField($namespace, $tabLink, $field)
+	protected function getInputField($namespace, $tabLink, $field)
 	{
 		$fieldRecordset = array();
 
@@ -149,7 +149,6 @@ Class FormService
 		if (($field['application_default'] === NULL || $field['application_default'] == ' ')
 			&& ($field['default'] === NULL || $field['default'] == ' ')
 		) {
-
 			$default_message = Services::Language()->translate('No default value defined.');
 
 		} elseif ($field['application_default'] === NULL || $field['application_default'] == ' ') {
@@ -213,11 +212,11 @@ Class FormService
 	}
 
 	/**
-	 * buildSelectField field
+	 * getSelectField field
 	 *
 	 * @return array
 	 */
-	protected function buildSelectField($namespace, $tabLink, $field)
+	protected function getSelectField($namespace, $tabLink, $field)
 	{
 		$fieldRecordset = array();
 
@@ -248,6 +247,19 @@ Class FormService
 				. $field['application_default'];
 		}
 
+		if (isset($field['value'])) {
+		} else {
+			$field['value'] = NULL;
+		}
+
+		$selected = str_replace(
+			' ',
+			'&nbsp;',
+			htmlentities(trim($field['value']), ENT_COMPAT, 'UTF-8')
+		);
+
+		$datalist = $field['datalist'];
+
 		$iterate = array();
 		$iterate['id'] = $field['name'];
 		$iterate['name'] = $field['name'];
@@ -256,34 +268,16 @@ Class FormService
 			$iterate['required'] = 'required';
 		}
 
-		if ($field['type'] == 'boolean') {
-			$iterate['type'] = 'radio';
-		} else {
-			$iterate['type'] = $field['type'];
-		}
-
-		if (isset($field['hidden']) && $field['hidden'] == 1) {
-			$iterate['type'] = 'hidden';
-		}
-
-		if (isset($field['value'])) {
-		} else {
-			$field['value'] = NULL;
-		}
-
-		$selected = $field['value'];
-
-		$iterate['datalist'] = $field['datalist'];
-		$datalist = $field['datalist'];
-
 		if (isset($field['multiple'])) {
-		} else {
-			$field['multiple'] = 'multiple';
+			if ($field['multiple'] == 1) {
+				$iterate['multiple'] = 'multiple';
+			}
 		}
 
 		if (isset($field['size'])) {
-		} else {
-			$field['size'] = 'size';
+			if ($field['size'] > 1) {
+				$iterate['size'] = $field['size'];
+			}
 		}
 
 		foreach ($iterate as $key => $value) {
@@ -314,11 +308,11 @@ Class FormService
 	}
 
 	/**
-	 * buildTextareaField field
+	 * getTextareaField field
 	 *
 	 * @return array
 	 */
-	public function buildTextareaField($namespace, $tabLink, $field)
+	public function getTextareaField($namespace, $tabLink, $field)
 	{
 		$fieldRecordset = array();
 

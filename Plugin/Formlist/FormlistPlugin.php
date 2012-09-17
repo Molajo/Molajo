@@ -28,41 +28,45 @@ class FormlistPlugin extends ContentPlugin
 	public function onAfterReadall()
 	{
 
-		echo 'ayeafasdfas';
-		die;
 		if (strtolower($this->get('template_view_path_node')) == 'formlist') {
-			echo 'yes - i am in formlistplugin';
-			die;
 		} else {
 			return true;
 		}
 
-		$datalist = $this->get('Parameters', 'datalist');
-		echo  $datalist;
-		die;
+		$selected = $this->get('selected');
+		$selected = str_replace(
+			'&nbsp;',
+			' ',
+			html_entity_decode($selected, ENT_COMPAT, 'UTF-8')
+		);
+		$selectedArray = explode(',', $selected);
+
+		$datalist = $this->get('datalist');
 		$items = Services::Text()->getList($datalist, $this->parameters);
-
 		if ($items == false) {
-		} else {
 			return true;
 		}
 
-		$query_results = Services::Text()->buildSelectlist($datalist, $items, 0, 5);
+		$query_results = array();
 
-		$row = new \stdClass();
-		$row->listname = $datalist;
-		$lists[] = $row;
+		foreach ($items as $item) {
 
+			$row = new \stdClass();
 
-		$row = new \stdClass();
-		foreach ($pairs as $key=>$value) {
-			$row->key = $key;
-			$row->value = $value;
+			$row->id = $item->id;
+			$row->value = $item->value;
+
+			if (in_array($row->id, $selectedArray)) {
+				$row->selected = ' selected ';
+			} else {
+				$row->selected = '';
+			}
+
+			$query_results[] = $row;
 		}
 
 
-
-		$this->data = $datalist_array;
+		$this->data = $query_results;
 
 		return true;
 	}
