@@ -323,6 +323,14 @@ Class ConfigurationService
 			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
 		}
 
+		$resource_extension_path = false;
+		if (Services::Registry()->exists('RouteParameters')) {
+			$resource_extension_path = Services::Registry()->get('RouteParameters', 'resource_extension_path', '');
+		} else {
+			$resource_extension_path = Services::Registry()->get('Parameters', 'resource_extension_path', '');
+		}
+
+		Services::Registry()->get('Parameters', 'resource_extension_path');
 		$theme_path = false;
 		if (Services::Registry()->exists('Parameters', 'theme_path')) {
 			$theme_path = Services::Registry()->get('Parameters', 'theme_path');
@@ -353,7 +361,13 @@ Class ConfigurationService
 					return $path;
 				}
 			}
-
+			if ($resource_extension_path === false) {
+			} else {
+				$path = $resource_extension_path . '/' . $model_type . '/' . $model_name . '.xml';
+				if (file_exists($path)) {
+					return $path;
+				}
+			}
 			$path = EXTENSIONS . '/Resource/' . $model_name . '/' . $model_type . '.xml';
 			if (file_exists($path)) {
 				return $path;

@@ -325,7 +325,7 @@ Class ContentHelper
 	 * @param $metadataNamespace
 	 * @param string $resourceNamespace
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function setParameters($pageTypeNamespace, $parameterNamespace,
@@ -400,6 +400,14 @@ Class ContentHelper
 		Services::Registry()->delete('Parameters', 'menuitem*');
 
 		Services::Registry()->sort('Parameters');
+
+		/** Path to primary resource for menu item */
+		Services::Registry()->set('Parameters', 'resource_extension_path',
+			EXTENSIONS
+				. '/'
+				. Services::Registry()->get('Parameters', 'model_type')
+				. '/'
+				. Services::Registry()->get('Parameters', 'model_name'));
 
 		return true;
 	}
