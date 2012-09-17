@@ -354,6 +354,11 @@ Class ConfigurationService
 				}
 			}
 
+			$path = EXTENSIONS . '/Resource/' . $model_name . '/' . $model_type . '.xml';
+			if (file_exists($path)) {
+				return $path;
+			}
+
 			$path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;

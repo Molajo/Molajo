@@ -1,13 +1,12 @@
-<field name="configuration_tab_class" type="char" null="0" default=" "/>
-<field name="configuration_tab_link_namespace" type="char" null="0" default=" "/>
-<field name="configuration_tab_array" type="char" null="0" default=" "/>
-<field name="configuration_tab" type="char" null="0" default=" "/>
-<field name="configuration_tab_basic" type="char" null="0" default=" "/>
-<field name="configuration_tab_advanced" type="char" null="0" default=" "/>
-<field name="configuration_tab_metadata" type="char" null="0" default=" "/>
-<field name="configuration_tab_form" type="char" null="0" default=" "/>
-<field name="configuration_tab_item" type="char" null="0" default=" "/>
-<field name="configuration_tab_list" type="char" null="0" default=" "/>
-<field name="configuration_tab_editor" type="char" null="0" default=" "/>
-<field name="configuration_tab_grid" type="char" null="0" default=" "/>
-<field name="configuration_tab_customfields" type="char" null="0" default=" "/>
+<include field="configuration_tab_class"/>
+<include field="configuration_tab_link_namespace"/>
+<include field="configuration_tab_array"/>
+<include field="configuration_tab"/>
+<include field="configuration_tab_basic"/>
+<include field="configuration_tab_metadata"/>
+<include field="configuration_tab_form"/>
+<include field="configuration_tab_item"/>
+<include field="configuration_tab_list"/>
+<include field="configuration_tab_editor"/>
+<include field="configuration_tab_grid"/>
+<include field="configuration_tab_customfields"/>

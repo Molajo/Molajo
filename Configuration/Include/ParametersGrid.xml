@@ -1,0 +1,8 @@
+<include field="grid_toolbar_buttons"/>
+<include field="grid_submenu_items"/>
+<include field="grid_search"/>
+<include field="grid_lists"/>
+<include field="grid_columns"/>
+<include field="grid_status"/>
+<include field="grid_batch"/>
+<include field="grid_ordering"/>

@@ -2,4 +2,5 @@
        type="char"
        null="0"
        default=" "
+       datalist="Articles"
         />

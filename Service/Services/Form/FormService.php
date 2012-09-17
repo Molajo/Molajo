@@ -105,7 +105,7 @@ Class FormService
 
 				if (isset($field['type'])) {
 					if ($field['type'] == 'char') {
-						$field['type'] == 'text';
+						$field['type'] = 'text';
 					}
 				}
 
@@ -375,13 +375,14 @@ Class FormService
 		$multiple = '';
 		if (isset($field['multiple'])) {
 			if ($field['multiple'] == 1) {
-				$multiple = 'multiple';
+				$multiple = ' multiple';
 			}
 		}
 
+		$size = 1;
 		if (isset($field['size'])) {
 			if ($field['size'] > 1) {
-				$iterate['size'] = $field['size'];
+				$size = $field['size'];
 			}
 		}
 
@@ -393,7 +394,13 @@ Class FormService
 		$selectedArray = explode(',', $selected);
 
 		$datalist = $field['datalist'];
-		$items = Services::Text()->getSelectlist($datalist);
+		$list = Services::Text()->getList($datalist, array());
+
+		if ($list == false) {
+			$items = array();
+		} else {
+			$items = Services::Text()->buildSelectlist($datalist, $list, 0, 5);
+		}
 
 		foreach ($items as $item) {
 			$row = new \stdClass();
@@ -409,12 +416,13 @@ Class FormService
 			$row->selected = $selected;
 			$row->required = $required;
 			$row->multiple = $multiple;
+			$row->size = $size;
 
 			$row->id = $item->id;
 			$row->value = $item->value;
 
 			if (in_array($row->id, $selectedArray)) {
-				$row->selected = ' selected ';
+				$row->selected = ' selected';
 			} else {
 				$row->selected = '';
 			}
