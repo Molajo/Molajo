@@ -103,6 +103,23 @@ Class TextService
 	}
 
 	/**
+	 * getSelectlist retrieves values called from listsPlugin
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function getSelectlist($datalist)
+	{
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$m = new $controllerClass();
+		$results = $m->connect('Datalist', $datalist);
+		if ($results == false) {
+			return false;
+		}
+		return $this->getQueryResults($m, $datalist, array());
+	}
+
+	/**
 	 * getList retrieves values called from listsPlugin
 	 *
 	 * @return boolean
@@ -192,11 +209,13 @@ Class TextService
 		}
 
 		/** Where */
-		$this->setWhereCriteria('catalog_type_id',
-			$parameters['criteria_catalog_type_id'],
-			$primary_prefix,
-			$m
-		);
+		if (isset($parameters['criteria_catalog_type_id'])) {
+			$this->setWhereCriteria('catalog_type_id',
+				$parameters['criteria_catalog_type_id'],
+				$primary_prefix,
+				$m
+			);
+		}
 
 		$this->setWhereCriteria('extension_instance_id',
 			$m->get('criteria_extension_instance_id'),

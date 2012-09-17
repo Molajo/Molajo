@@ -275,7 +275,7 @@ Class FormService
 			$field['value'] = NULL;
 		}
 
-		if ((int) $field['value'] === 1) {
+		if ((int)$field['value'] === 1) {
 			$value = 1;
 		} else {
 			$value = 0;
@@ -293,7 +293,7 @@ Class FormService
 		$row->required = $required;
 		$row->id = 1;
 		$row->id_label = Services::Language()->translate('Yes');
-		if ((int) $field['value'] === 1) {
+		if ((int)$field['value'] === 1) {
 			$row->checked = ' checked';
 		} else {
 			$row->checked = '';
@@ -313,7 +313,7 @@ Class FormService
 		$row->required = $required;
 		$row->id = 0;
 		$row->id_label = Services::Language()->translate('No');
-		if ((int) $field['value'] === 1) {
+		if ((int)$field['value'] === 1) {
 			$row->checked = '';
 		} else {
 			$row->checked = ' checked';
@@ -340,6 +340,7 @@ Class FormService
 		$fieldRecordset = array();
 
 		$name = $field['name'];
+		$id = $field['name'];
 
 		$label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
 		$tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
@@ -366,30 +367,15 @@ Class FormService
 				. $field['application_default'];
 		}
 
-		if (isset($field['value'])) {
-		} else {
-			$field['value'] = NULL;
-		}
-
-		$selected = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(trim($field['value']), ENT_COMPAT, 'UTF-8')
-		);
-
-		$datalist = $field['datalist'];
-
-		$iterate = array();
-		$iterate['id'] = $field['name'];
-		$iterate['name'] = $field['name'];
-
+		$required = '';
 		if (isset($field['null']) && $field['null'] == 1) {
-			$iterate['required'] = 'required';
+			$required = 'required';
 		}
 
+		$multiple = '';
 		if (isset($field['multiple'])) {
 			if ($field['multiple'] == 1) {
-				$iterate['multiple'] = 'multiple';
+				$multiple = 'multiple';
 			}
 		}
 
@@ -399,20 +385,39 @@ Class FormService
 			}
 		}
 
-		foreach ($iterate as $key => $value) {
+		if (isset($field['value'])) {
+		} else {
+			$field['value'] = NULL;
+		}
+		$selected = $field['value'];
+		$selectedArray = explode(',', $selected);
+
+		$datalist = $field['datalist'];
+		$items = Services::Text()->getSelectlist($datalist);
+
+		foreach ($items as $item) {
 			$row = new \stdClass();
 
 			$row->view = 'formselect';
+
 			$row->name = $name;
 			$row->label = $label;
+			$row->datalist = $datalist;
 			$row->placeholder = $placeholder;
 			$row->tooltip = $tooltip;
 			$row->default_message = $default_message;
 			$row->selected = $selected;
-			$row->datalist = $datalist;
+			$row->required = $required;
+			$row->multiple = $multiple;
 
-			$row->key = $key;
-			$row->value = $value;
+			$row->id = $item->id;
+			$row->value = $item->value;
+
+			if (in_array($row->id, $selectedArray)) {
+				$row->selected = ' selected ';
+			} else {
+				$row->selected = '';
+			}
 
 			$fieldRecordset[] = $row;
 		}
