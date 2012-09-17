@@ -1,17 +1,4 @@
-<include field="enable_draft_save"/>
-<include field="enable_version_history"/>
-<include field="enable_retain_versions_after_delete"/>
-<include field="enable_maximum_version_count"/>
-<include field="enable_hit_counts"/>
-<include field="enable_comments"/>
-<include field="enable_spam_protection"/>
-<include field="enable_ratings"/>
-<include field="enable_notifications"/>
-<include field="enable_tweets"/>
-<include field="enable_ping"/>
-
 <include field="form_parent_menu_id"/>
-
 <include field="form_theme_id"/>
 <include field="form_page_view_id"/>
 <include field="form_page_view_css_id"/>
