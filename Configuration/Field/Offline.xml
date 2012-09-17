@@ -1,4 +1,4 @@
-<field name="enabled"
+<field name="offline"
        type="boolean"
        null="0"
        default="0"

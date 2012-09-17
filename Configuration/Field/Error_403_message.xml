@@ -1,0 +1,1 @@
+<field name="error_403_message" type="char" null="0" default="Not authorised."/>

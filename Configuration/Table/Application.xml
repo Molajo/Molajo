@@ -80,8 +80,8 @@
             <field name="application_tab_item" type="char" null="0" default=" "/>
             <field name="application_tab_list" type="char" null="0" default=" "/>
             <field name="application_tab_customfields" type="char" null="0" default=" "/>
-            <field name="mailer_transport"/>
 
+            <include field="mailer_transport"/>
             <include field="mailer_html_or_text"/>
             <include field="mailer_disable_sending"/>
             <include field="mailer_only_deliver_to"/>
@@ -113,10 +113,10 @@
 
             <include name="ParametersUserDefaults"/>
 
-            <field name="log_user_update_activity" type="binary" null="0" default="1"/>
-            <field name="log_user_view_activity" type="binary" null="0" default="0"/>
-            <field name="log_catalog_update_activity" type="binary" null="0" default="1"/>
-            <field name="log_catalog_view_activity" type="binary" null="0" default="0"/>
+            <field name="log_user_update_activity"/>
+            <field name="log_user_view_activity"/>
+            <field name="log_catalog_update_activity"/>
+            <field name="log_catalog_view_activity"/>
 
             <field name="gravatar" type="boolean" null="0" default="0"/>
             <field name="gravatar_size" type="integer" null="0" default="80"/>
@@ -132,13 +132,13 @@
             <field name="image_folder" type="folder" null="0" default="Images"/>
             <field name="image_thumb_folder" type="folder" null="0" default="Thumbs"/>
 
-            <field name="head_template_view_id" type="integer" null="0" default=" "/>
-            <field name="head_wrap_view_id" type="integer" null="0" default=" "/>
-            <field name="head_enable_use" type="boolean" null="0" default="1"/>
+            <include field="head_template_view_id"/>
+            <include field="head_wrap_view_id"/>
+            <include field="head_enable_use"/>
 
-            <field name="defer_template_view_id" type="integer" null="0" default=" "/>
-            <field name="defer_wrap_view_id" type="integer" null="0" default=" "/>
-            <field name="defer_enable_use" type="boolean" null="0" default="1"/>
+            <include field="defer_template_view_id"/>
+            <include field="defer_wrap_view_id"/>
+            <include field="defer_enable_use"/>
 
             <field name="asset_css_combine_and_minify" type="boolean" null="0" default="1"/>
             <field name="asset_js_combine_and_minify" type="boolean" null="0" default="1"/>
@@ -156,19 +156,18 @@
             <field name="asset_priority_item" type="integer" null="0" default="800"/>
             <field name="asset_priority_theme" type="integer" null="0" default="900"/>
 
-            <field name="message_template_view_id" type="integer" null="0" default="1350"/>
-            <field name="message_wrap_view_id" type="integer" null="0" default="2030"/>
+            <include field="message_template_view_id"/>
+            <include field="message_wrap_view_id"/>
 
-            <field name="offline_theme_id" type="integer" null="0" default="9000"/>
-            <field name="offline_page_view_id" type="integer" null="0" default="260"/>
-            <field name="offline" type="binary" null="0" default="1"/>
-            <field name="offline_message" type="char" null="0"
-                   default="This site is not available.&lt;br /&gt;> Please check back again soon."/>
+            <include field="offline_theme_id"/>
+            <include field="offline_page_view_id"/>
+            <include field="offline"/>
+            <include field="offline_message""/>
 
-            <field name="error_theme_id" type="integer" null="0" default="9000"/>
-            <field name="error_page_view_id" type="integer" null="0" default="250"/>
-            <field name="error_404_message" type="char" null="0" default="Page not found"/>
-            <field name="error_403_message" type="char" null="0" default="Not authorised."/>
+            <include field="error_theme_id"/>
+            <include field="error_page_view_id"/>
+            <include field="error_404_message"/>
+            <include field="error_403_message""/>
 
             <include field="uibutton"/>
             <include field="uibuttongroup"/>

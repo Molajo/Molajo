@@ -1,4 +1,4 @@
-<field name="enabled"
+<field name="defer_enable_use"
        type="boolean"
        null="0"
        default="0"
