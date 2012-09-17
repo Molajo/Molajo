@@ -14,7 +14,7 @@
 
     <table>
         <fields>
-            <include field="id"/>
+            <include field="id_pk"/>
             <include field="type"/>
             <include field="title"/>
             <include field="extension_instance_id"/>
