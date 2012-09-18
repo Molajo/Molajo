@@ -107,6 +107,9 @@ Class FormService
 					if ($field['type'] == 'char') {
 						$field['type'] = 'text';
 					}
+					if ($field['type'] == 'integer') {
+						$field['type'] = 'numeric';
+					}
 				}
 
 				switch ($view) {

@@ -158,7 +158,7 @@ Class TextService
 	 */
 	protected function getQueryResults($m, $filter, $parameters)
 	{
-
+		/** Data already in Registry/No Query needed */
 		$registry_entry = $m->get('registry_entry');
 		$data_source = $m->get('data_source');
 
