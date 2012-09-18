@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Plugindata"
+        registry_entry=""
+        data_source="Registry">
+    <table>
+        <fields>
+            <include field="id"/>
+            <include field="name"/>
+        </fields>
+    </table>
+</model>

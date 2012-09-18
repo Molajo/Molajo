@@ -188,6 +188,7 @@ class Controller
 			$this->get('model_offset', 0);
 			$this->set('use_pagination', 0);
 			$this->get('model_count', 5);
+			$this->set('registry_entry', '');
 
 		} else {
 
@@ -247,6 +248,9 @@ class Controller
 				Services::Registry()->get($this->table_registry_name, 'use_pagination', 1));
 			$this->set('data_source',
 				Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
+			$this->set('registry_entry',
+				Services::Registry()->get($this->table_registry_name, 'registry_entry', ''));
+
 			$this->get('model_offset', 0);
 			$this->get('model_count', 5);
 		}

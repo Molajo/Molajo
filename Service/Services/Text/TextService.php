@@ -158,6 +158,18 @@ Class TextService
 	 */
 	protected function getQueryResults($m, $filter, $parameters)
 	{
+
+		$registry_entry = $m->get('registry_entry');
+		$data_source = $m->get('data_source');
+
+		if ($registry_entry == '') {
+		} else {
+			if ($data_source == 'Registry') {
+				$values = Services::Registry()->get('Plugindata', $registry_entry);
+				return $values;
+			}
+		}
+
 		$primary_prefix = $m->get('primary_prefix');
 		$primary_key = $m->get('primary_key');
 		$name_key = $m->get('name_key');

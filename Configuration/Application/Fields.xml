@@ -36,6 +36,7 @@
         <modelattribute>published_status</modelattribute>
         <modelattribute>multiple</modelattribute>
         <modelattribute>size</modelattribute>
+        <modelattribute>registry_entry</modelattribute>
     </modelattributes>
     <datatypes>
         <datatype>audio</datatype>
