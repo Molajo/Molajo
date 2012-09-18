@@ -96,6 +96,7 @@
         <field>locked</field>
         <field>minimum</field>
         <field>maximum</field>
+        <field>model</field>
         <field>multiple</field>
         <field>null</field>
         <field>pattern</field>

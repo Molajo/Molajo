@@ -816,7 +816,8 @@ Class ConfigurationService
 
 			foreach ($fieldAttributes as $key2 => $value2) {
 
-				if (in_array($key2, self::$valid_field_attributes)) {
+				if ($key2 == 'fieldset') {
+				} elseif (in_array($key2, self::$valid_field_attributes)) {
 				} else {
 					echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $registryName . '<br />';
 				}

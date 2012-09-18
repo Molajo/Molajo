@@ -1,1 +1,1 @@
-<field name="list_template_view_id" type="integer" datalist="Templates" null="0" default=" "/>
+<field name="list_template_view_id" fieldset="template_view" type="integer" datalist="Templates" null="0" default=" "/>

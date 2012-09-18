@@ -3,5 +3,6 @@
        null="0"
        default="0"
        datalist="Fields"
+       fieldset="model"
         />
 

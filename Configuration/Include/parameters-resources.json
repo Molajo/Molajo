@@ -13,9 +13,10 @@
         "configuration_tab_link_namespace":"config",
         "configuration_tab_array":"{{Basic,basic}}{{Metadata,metadata}}{{Form,form}}{{Item,item}}{{List,list}}{{Editor,editor}}{{Grid,grid}}{{Customfields,customfields}}",
         "configuration_tab":"",
-        "configuration_tab_basic":"criteria*,enable*",
-        "configuration_tab_metadata":"metadata*",
-        "configuration_tab_form":"form*",
+        "configuration_tab_basic_description":"Settings for basic resource operation, including such options as whether or not to enable version history, draft save, or hit counts.",
+        "configuration_tab_basic":"{{CONFIG_TAB_BASIC_TITLE,CONFIG_TAB_BASIC_DESC,criteria*}}{{CONFIG_TAB_BASIC_ENABLE_TITLE,CONFIG_TAB_BASIC_ENABLE_DESC,enable*}}",
+        "configuration_tab_metadata":"{{CONFIG_TAB_METADATA_TITLE,CONFIG_TAB_METADATA_DESC,metadata*}}",
+        "configuration_tab_form":"{CONFIG_TAB_FORM_THEME_TITLE,CONFIG_TAB_FORM_THEME_DESC,form_theme*}}",
         "configuration_tab_item":"item*",
         "configuration_tab_list":"list*",
         "configuration_tab_editor":"edit*",
@@ -41,7 +42,7 @@
         "enable_notifications":"1",
         "enable_tweets":"1",
         "enable_ping":"1",
-        "enable_captcha_option":"0",
+
 
         "form_theme_id":"9020",
         "form_page_view_id":"210",

@@ -14,7 +14,6 @@
             extends="ExtensioninstancesTable">
         <customfields>
             <customfield name="parameters">
-                <include name="ParametersConfigurationtab"/>
                 <include name="ParametersEnable"/>
                 <include name="ParametersEdit"/>
                 <include name="ParametersForm"/>

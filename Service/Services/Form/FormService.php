@@ -67,7 +67,6 @@ Class FormService
 						break;
 
 					case 'audio':
-					case 'boolean':
 					case 'image':
 					case 'color':
 					case 'date':
@@ -108,7 +107,7 @@ Class FormService
 						$field['type'] = 'text';
 					}
 					if ($field['type'] == 'integer') {
-						$field['type'] = 'numeric';
+						$field['type'] = 'number';
 					}
 				}
 
@@ -385,7 +384,7 @@ Class FormService
 		$size = 1;
 		if (isset($field['size'])) {
 			if ($field['size'] > 1) {
-				$size = $field['size'];
+				$size = ' size="' . $field['size']. '"';
 			}
 		}
 
