@@ -52,6 +52,7 @@ Class FormService
 	public function getFieldset($namespace, $tabLink, $input_fields)
 	{
 		$fieldset = array();
+		$previous_fieldset_label = '';
 
 		foreach ($input_fields as $field) {
 
@@ -111,6 +112,18 @@ Class FormService
 					}
 				}
 
+				if (isset($field['tab_title'])) {
+					$tab_title = $field['tab_title'];
+				} else {
+					$tab_title = '';
+				}
+
+				if (isset($field['tab_fieldset_title'])) {
+					$fieldset_label = $field['tab_fieldset_title'];
+				} else {
+					$fieldset_label = '';
+				}
+
 				switch ($view) {
 					case 'radio':
 						$registryName = $this->getRadioField($namespace, $tabLink, $field);
@@ -134,6 +147,15 @@ Class FormService
 				$row->name = $registryName;
 				$row->view = $view;
 				$row->datalist = $datalist;
+				if ($previous_fieldset_label == $fieldset_label) {
+					$row->fieldset_change = 0;
+				} else {
+					$previous_fieldset_label = $fieldset_label;
+					$row->fieldset_change = 1;
+				}
+				$row->tab_title = $tab_title;
+				$row->fieldset_label = $fieldset_label;
+
 
 				$fieldset[] = $row;
 			}

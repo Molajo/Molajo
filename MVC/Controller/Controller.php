@@ -343,6 +343,7 @@ class Controller
 				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
 
+
 		/** 2. Schedule onBeforeRead Event */
 		if (count($this->plugins) > 0) {
 			$this->onBeforeReadEvent();
@@ -385,9 +386,6 @@ class Controller
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $this->query_results;
 		}
-
-//echo '<br />CONTROLLER<br />';
-//echo '<br />'.$this->model->query->__toString().'<br />';
 
 		/** 7. Return List  */
 		if ($query_object == 'list') {
