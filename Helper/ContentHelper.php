@@ -246,135 +246,6 @@ Class ContentHelper
 	}
 
 	/**
-	 * Get Parameters for Resource
-	 *
-	 * Table Registry => Services::Registry()->get('ResourcesSystem', '*');
-	 * Parameters => Services::Registry()->get('ResourcesSystemParameters', '*');
-	 *
-	 * @param  $id
-	 *
-	 * @return  array  An object containing an array of basic resource info, parameters in registry
-	 * @since   1.0
-	 */
-	public function getResourceParameters($id = 0)
-	{
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$m = new $controllerClass();
-
-		$m->set('id', (int)$id);
-		$m->set('process_plugins', 0);
-		$m->set('get_customfields', 1);
-
-		$results = $m->connect('System', 'Resources');
-		if ($results == false) {
-			return false;
-		}
-
-		$item = $m->getData('item');
-		if (count($item) == 0) {
-			return array();
-		}
-
-		return $item;
-	}
-
-	/**
-	 * Get Parameters for Resource Content - send in zero for ID to retrieve Custom Fields
-	 *
-	 * Table Registry => Services::Registry()->get('ArticlesResource', '*');
-	 * Parameters => Services::Registry()->get('ArticlesResourceParameters', '*');
-	 *
-	 * @param string $model_type
-	 * @param $model_name
-	 *
-	 * @return  array  An object containing an array of basic resource info, parameters in registry
-	 * @since   1.0
-	 */
-	public function getResourceContentParameters($id = 0, $model_type = 'Resource', $model_name)
-	{
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$m = new $controllerClass();
-
-		$m->set('process_plugins', 0);
-		$m->set('get_customfields', 1);
-
-		$results = $m->connect($model_type, $model_name);
-
-		if ($results == false) {
-			return false;
-		}
-
-		if ($id == 0) {
-			return array();
-		}
-
-		$m->set('id', (int) $id);
-		$item = $m->getData('item');
-		if (count($item) == 0) {
-			return array();
-		}
-
-		return $item;
-	}
-
-
-	/**
-	 * Get Menuitem Content Parameters for specific Resource
-	 *
-	 * Helpers::Content()->getResourceMenuitemParameters('Grid', $extension_instance_id);
-	 *
-	 * If the menuitem is found, parameters can be accessed, as follows (assumes Grid menuitem type):
-	 * Parameters => Services::Registry()->get('GridMenuitemParameters', '*');
-	 *
-	 * @param string $menuitem_type
-	 * @param $extension_instance_id
-	 *
-	 * @return  array  An object containing an array of basic resource info, parameters in registry
-	 * @since   1.0
-	 */
-	public function getResourceMenuitemParameters($menuitem_type = 'Grid', $extension_instance_id)
-	{
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$m = new $controllerClass();
-
-		$m->set('process_plugins', 0);
-		$m->set('get_customfields', 0);
-		$results = $m->connect('Table', 'Catalog');
-
-		$m->model->query->select('source_id');
-		$m->model->query->where('menuitem_type = ' . $m->model->db->q($menuitem_type));
-
-		$menuitems = $m->getData('list');
-		if (count($menuitems) == 0) {
-			return array();
-		}
-
-		foreach ($menuitems as $id) {
-
-			$menu = new $controllerClass();
-			$results = $menu->connect('Menuitem', 'Grid');
-
-			$menu->set('process_plugins', 0);
-			$menu->set('get_customfields', 1);
-			$menu->model->query->where('a.id = ' . $id->source_id);
-
-			$item = $menu->getData('item');
-
-			if (Services::Registry()->get('GridMenuitemParameters', 'criteria_extension_instance_id')
-				== $extension_instance_id) {
-				$item->table_registry = $menuitem_type . 'Menuitem';
-				unset($menu);
-				return $item;
-				break;
-			}
-			unset($menu);
-		}
-
-		return false;
-	}
-
-
-	/**
 	 * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
 	 *
 	 * @param $pageTypeNamespace
@@ -486,5 +357,152 @@ Class ContentHelper
 				}
 			}
 		}
+	}
+
+	/**
+	 * Get Category Type information for Resource
+	 *
+	 * @param  $id
+	 *
+	 * @return  array  An object containing an array of basic resource info, parameters in registry
+	 * @since   1.0
+	 */
+	public function getResourceCatalogType($id = 0)
+	{
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$m = new $controllerClass();
+		$m->set('process_plugins', 0);
+		$m->set('get_customfields', 0);
+
+		$results = $m->connect('Table', 'CatalogTypes');
+		if ($results == false) {
+			return false;
+		}
+
+		$m->model->query->where('a.extension_instance_id = ' . (int)$id);
+		$item = $m->getData('item');
+
+		if (count($item) == 0) {
+			return array();
+		}
+
+		return $item;
+	}
+
+	/**
+	 * Get Parameters for Resource Content
+	 *
+	 * Table Registry => Services::Registry()->get('ArticlesResource', '*');
+	 * Parameters => Services::Registry()->get('ArticlesResource', 'Parameters')
+	 *
+	 * @param string $model_type
+	 * @param $model_name
+	 *
+	 * @return  array  An object containing an array of basic resource info, parameters in registry
+	 * @since   1.0
+	 */
+	public function getResourceContentParameters($model_type = 'Resource', $model_name)
+	{
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$m = new $controllerClass();
+
+		$m->set('process_plugins', 0);
+		$m->set('get_customfields', 1);
+
+		$results = $m->connect($model_type, $model_name);
+		if ($results == false) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get Parameters for Resource
+	 *
+	 * Table Registry => Services::Registry()->get('ResourcesSystem', '*');
+	 * Parameters => Services::Registry()->get('ResourcesSystemParameters', '*');
+	 *
+	 * @param  $id
+	 *
+	 * @return  array  An object containing an array of basic resource info, parameters in registry
+	 * @since   1.0
+	 */
+	public function getResourceParameters($id = 0)
+	{
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$m = new $controllerClass();
+
+		$m->set('id', (int)$id);
+		$m->set('process_plugins', 0);
+		$m->set('get_customfields', 1);
+
+		$results = $m->connect('System', 'Resources');
+		if ($results == false) {
+			return false;
+		}
+
+		$item = $m->getData('item');
+
+		if (count($item) == 0) {
+			return array();
+		}
+
+		return $item;
+	}
+
+	/**
+	 * Get Menuitem Content Parameters for specific Resource
+	 *
+	 * Helpers::Content()->getResourceMenuitemParameters('Grid', $extension_instance_id);
+	 *
+	 * If the menuitem is found, parameters can be accessed, as follows (assumes Grid menuitem type):
+	 * Parameters => Services::Registry()->get('GridMenuitemParameters', '*');
+	 *
+	 * @param string $menuitem_type
+	 * @param $extension_instance_id
+	 *
+	 * @return  array  An object containing an array of basic resource info, parameters in registry
+	 * @since   1.0
+	 */
+	public function getResourceMenuitemParameters($menuitem_type = 'Grid', $extension_instance_id)
+	{
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$m = new $controllerClass();
+
+		$m->set('process_plugins', 0);
+		$m->set('get_customfields', 0);
+		$results = $m->connect('Table', 'Catalog');
+
+		$m->model->query->select('source_id');
+		$m->model->query->where('menuitem_type = ' . $m->model->db->q($menuitem_type));
+
+		$menuitems = $m->getData('list');
+		if (count($menuitems) == 0) {
+			return array();
+		}
+
+		foreach ($menuitems as $id) {
+
+			$menu = new $controllerClass();
+			$results = $menu->connect('Menuitem', 'Grid');
+
+			$menu->set('process_plugins', 0);
+			$menu->set('get_customfields', 1);
+			$menu->model->query->where('a.id = ' . $id->source_id);
+
+			$item = $menu->getData('item');
+
+			if (Services::Registry()->get('GridMenuitemParameters', 'criteria_extension_instance_id')
+				== $extension_instance_id) {
+				$item->table_registry = $menuitem_type . 'Menuitem';
+				unset($menu);
+				return $item;
+				break;
+			}
+			unset($menu);
+		}
+
+		return false;
 	}
 }

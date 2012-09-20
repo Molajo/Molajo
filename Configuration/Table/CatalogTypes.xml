@@ -15,10 +15,10 @@
     <table>
         <fields>
             <include field="id_pk"/>
-            <include field="type"/>
             <include field="title"/>
             <include field="extension_instance_id"/>
             <include field="protected"/>
+            <include field="model_type"/>
             <include field="model_name"/>
             <include field="primary_category_id"/>
             <include field="source_table"/>

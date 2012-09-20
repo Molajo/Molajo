@@ -560,6 +560,9 @@ class Controller
 				LOG_OUTPUT_RENDERING, 0);
 		}
 
+//echo '<br /><br />';
+//echo $this->model->query->__toString();
+//echo '<br /><br />';
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
 

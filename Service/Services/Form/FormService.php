@@ -56,166 +56,182 @@ Class FormService
 
 		foreach ($input_fields as $field) {
 
-			$view = 'input';
-			$datalist = '';
+			$row = new \stdClass();
+
+			$row->id = $field['name'];
+			$row->name = $field['name'];
+			$row->label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));;
+
+			if (isset($field['tab_title'])) {
+				$row->tab_title = $field['tab_title'];
+			} else {
+				$row->tab_title = '';
+			}
+
+			$row->tab_description = $field['tab_description'];
+
+			if (isset($field['tab_fieldset_title'])) {
+				$row->fieldset_label = $field['tab_fieldset_title'];
+			} else {
+				$row->fieldset_label = $row->tab_title;
+			}
+
+			if ($previous_fieldset_label == $row->fieldset_label) {
+				$row->new_fieldset = 0;
+				$row->first_row = 0;
+			} else {
+				if ($previous_fieldset_label == '') {
+					$row->first_row = 1;
+				} else {
+					$row->first_row = 0;
+				}
+				$previous_fieldset_label = $row->fieldset_label;
+				$row->new_fieldset = 1;
+			}
+			$row->tab_fieldset_description = $field['tab_fieldset_description'];
+
+			$row->tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
+			$row->placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
 
 			if (isset($field['locked']) && $field['locked'] == 1) {
+				$row->disabled = true;
 			} else {
-
-				switch ($field['type']) {
-					case 'boolean':
-						$view = 'radio';
-						break;
-
-					case 'audio':
-					case 'image':
-					case 'color':
-					case 'date':
-					case 'datetime':
-					case 'email':
-					case 'file':
-					case 'month':
-					case 'password':
-					case 'range':
-					case 'search':
-					case 'tel':
-					case 'time':
-					case 'url':
-					case 'integer':
-						$view = 'input';
-						break;
-
-					case 'text':
-						$view = 'textarea';
-						break;
-
-					default:
-						$view = 'input';
-						break;
-				}
-
-				if (isset($field['hidden']) && $field['hidden'] == 1) {
-					$view = 'input';
-				}
-
-				if (isset($field['datalist'])) {
-					$view = 'select';
-					$datalist = $field['datalist'];
-				}
-
-				if (isset($field['type'])) {
-					if ($field['type'] == 'char') {
-						$field['type'] = 'text';
-					}
-					if ($field['type'] == 'integer') {
-						$field['type'] = 'number';
-					}
-				}
-
-				if (isset($field['tab_title'])) {
-					$tab_title = $field['tab_title'];
-				} else {
-					$tab_title = '';
-				}
-
-				if (isset($field['tab_fieldset_title'])) {
-					$fieldset_label = $field['tab_fieldset_title'];
-				} else {
-					$fieldset_label = '';
-				}
-
-				switch ($view) {
-					case 'radio':
-						$registryName = $this->getRadioField($namespace, $tabLink, $field);
-						break;
-
-					case 'select':
-						$registryName = $this->getSelectField($namespace, $tabLink, $field);
-						break;
-
-					case 'textarea':
-						$registryName = $this->getTextareaField($namespace, $tabLink, $field);
-						break;
-
-					default:
-						$registryName = $this->getInputField($namespace, $tabLink, $field);
-						break;
-				}
-
-				$row = new \stdClass();
-
-				$row->name = $registryName;
-				$row->view = $view;
-				$row->datalist = $datalist;
-				if ($previous_fieldset_label == $fieldset_label) {
-					$row->fieldset_change = 0;
-				} else {
-					$previous_fieldset_label = $fieldset_label;
-					$row->fieldset_change = 1;
-				}
-				$row->tab_title = $tab_title;
-				$row->fieldset_label = $fieldset_label;
-
-
-				$fieldset[] = $row;
+				$row->disabled = false;
 			}
+
+			if (isset($field['application_default'])) {
+			} else {
+				$field['application_default'] = NULL;
+			}
+
+			if (($field['application_default'] === NULL || $field['application_default'] == ' ')
+				&& ($field['default'] === NULL || $field['default'] == ' ')
+			) {
+				$row->default_message = Services::Language()->translate('No default value defined.');
+				$row->default = NULL;
+
+			} elseif ($field['application_default'] === NULL || $field['application_default'] == ' ') {
+
+				$row->default_message = Services::Language()->translate('Field-level default: ')
+					. $field['default'];
+				$row->default = $field['default'];
+
+			} else {
+				$row->default_message = Services::Language()->translate('Application configured default: ')
+					. $field['application_default'];
+				$row->default = $field['application_default'];
+			}
+
+			$row->type = $field['type'];
+
+			if ($row->type == 'text') {
+				$row->type = 'textarea';
+			}
+
+			if ($row->type == 'char') {
+				$row->type = 'text';
+			}
+
+			if ($row->type == 'integer') {
+				$row->type = 'number';
+			}
+
+			if (isset($field['hidden']) && $field['hidden'] == 1) {
+				$row->type = 'hidden';
+				$row->hidden = 1;
+			} else {
+				$row->hidden = 0;
+			}
+
+			switch ($row->type) {
+				case 'boolean':
+					$row->view = 'formradio';
+					break;
+
+				case 'audio':
+				case 'color':
+				case 'date':
+				case 'datetime':
+				case 'email':
+				case 'file':
+				case 'hidden':
+				case 'image':
+				case 'month':
+				case 'number':
+				case 'password':
+				case 'range':
+				case 'search':
+				case 'tel':
+				case 'text':
+				case 'time':
+				case 'url':
+					$row->view = 'forminput';
+					break;
+
+				case 'textarea':
+					$row->view = 'formtextarea';
+					break;
+
+				default:
+					$row->view = 'forminput';
+					break;
+			}
+
+			if (isset($field['datalist'])) {
+				$row->view = 'formselect';
+				$row->datalist = $field['datalist'];
+			} else {
+				$row->datalist = '';
+			}
+
+			$field['type'] = $row->type;
+
+			switch ($row->view) {
+				case 'formradio':
+					$row->name = $this->setRadioField($namespace, $tabLink, $field, $row);
+					break;
+
+				case 'formselect':
+					$row->name = $this->getSelectField($namespace, $tabLink, $field, $row);
+					break;
+
+				case 'formtextarea':
+					$row->name = $this->getTextareaField($namespace, $tabLink, $field, $row);
+					break;
+
+				default:
+					$row->name = $this->setInputField($namespace, $tabLink, $field, $row);
+					break;
+			}
+
+			$fieldset[] = $row;
 		}
 
 		return $fieldset;
 	}
 
 	/**
-	 * getSelectField field
+	 * setInputField field
 	 *
-	 * @return array
+	 * @param $namespace
+	 * @param $tabLink
+	 * @param $field
+	 * @param $row_start
+	 *
+	 * @return string
+	 * @since  1.0
 	 */
-	protected function getInputField($namespace, $tabLink, $field)
+	protected function setInputField($namespace, $tabLink, $field, $row_start)
 	{
 		$fieldRecordset = array();
 
-		$name = $field['name'];
-
-		$label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
-		$tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
-		$placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
-
-		if (isset($field['application_default'])) {
-		} else {
-			$field['application_default'] = NULL;
-		}
-
-		if (($field['application_default'] === NULL || $field['application_default'] == ' ')
-			&& ($field['default'] === NULL || $field['default'] == ' ')
-		) {
-			$default_message = Services::Language()->translate('No default value defined.');
-
-		} elseif ($field['application_default'] === NULL || $field['application_default'] == ' ') {
-
-			$default_message = Services::Language()->translate('Field-level default: ')
-				. $field['default'];
-
-		} else {
-			$default_message = Services::Language()->translate('Application configured default setting: ')
-				. $field['application_default'];
-		}
-
 		$iterate = array();
-		$iterate['id'] = $field['name'];
-		$iterate['name'] = $field['name'];
 
 		if (isset($field['null']) && $field['null'] == 1) {
 			$iterate['required'] = 'required';
 		}
 
-		if ($field['type'] == 'boolean') {
-			$iterate['type'] = 'radio';
-		} else {
-			$iterate['type'] = $field['type'];
-		}
-
-		if (isset($field['hidden']) && $field['hidden'] == 1) {
-			$iterate['type'] = 'hidden';
-		}
+		$iterate['type'] = $field['type'];
 
 		if (isset($field['value'])) {
 		} else {
@@ -226,22 +242,16 @@ Class FormService
 
 		foreach ($iterate as $key => $value) {
 			$row = new \stdClass();
-
-			$row->view = 'forminput';
-			$row->name = $name;
-			$row->label = $label;
-			$row->placeholder = $placeholder;
-			$row->tooltip = $tooltip;
-			$row->default_message = $default_message;
-
+			foreach ($row_start as $rkey=>$rvalue) {
+				$row->$rkey = $rvalue;
+			}
 			$row->key = $key;
 			$row->value = $value;
 
 			$fieldRecordset[] = $row;
 		}
 
-		/** Field Dataset */
-		$registryName = $namespace . strtolower($tabLink) . $name;
+		$registryName = $namespace . strtolower($tabLink) . $row->name;
 		$registryName = str_replace('_', '', $registryName);
 
 		Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
@@ -250,43 +260,19 @@ Class FormService
 	}
 
 	/**
-	 * getRadioField field
+	 * setRadioField field
 	 *
-	 * @return array
+	 * @param $namespace
+	 * @param $tabLink
+	 * @param $field
+	 * @param $row_start
+	 *
+	 * @return string
+	 * @since  1.0
 	 */
-	protected function getRadioField($namespace, $tabLink, $field)
+	protected function setRadioField($namespace, $tabLink, $field, $row_start)
 	{
 		$fieldRecordset = array();
-
-		$name = $field['name'];
-
-		$label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
-		$tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
-		$placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
-
-		if (isset($field['application_default'])) {
-		} else {
-			$field['application_default'] = NULL;
-		}
-
-		if (($field['application_default'] === NULL || $field['application_default'] == ' ')
-			&& ($field['default'] === NULL || $field['default'] == ' ')
-		) {
-			$default_message = Services::Language()->translate('No default value defined.');
-
-		} elseif ($field['application_default'] === NULL || $field['application_default'] == ' ') {
-
-			$default_message = Services::Language()->translate('Field-level default: ')
-				. $field['default'];
-
-		} else {
-			$default_message = Services::Language()->translate('Application configured default setting: ')
-				. $field['application_default'];
-		}
-
-		$iterate = array();
-
-		$name = $field['name'];
 
 		if (isset($field['null']) && $field['null'] == 1) {
 			$required = 'required';
@@ -294,26 +280,17 @@ Class FormService
 			$required = '';
 		}
 
-		if (isset($field['value'])) {
-		} else {
-			$field['value'] = NULL;
-		}
-
-		if ((int)$field['value'] === 1) {
-			$value = 1;
-		} else {
-			$value = 0;
-		}
-
 		/** Yes */
 		$row = new \stdClass();
+		foreach ($row_start as $rkey=>$rvalue) {
+			$row->$rkey = $rvalue;
+		}
 
-		$row->view = 'formradio';
-		$row->name = $name;
-		$row->label = $label;
-		$row->placeholder = $placeholder;
-		$row->tooltip = $tooltip;
-		$row->default_message = $default_message;
+		if (isset($field['value'])) {
+		} else {
+			$field['value'] = $row->default;
+		}
+
 		$row->required = $required;
 		$row->id = 1;
 		$row->id_label = Services::Language()->translate('Yes');
@@ -327,26 +304,22 @@ Class FormService
 
 		/** No */
 		$row = new \stdClass();
+		foreach ($row_start as $rkey=>$rvalue) {
+			$row->$rkey = $rvalue;
+		}
 
-		$row->view = 'formradio';
-		$row->name = $name;
-		$row->label = $label;
-		$row->placeholder = $placeholder;
-		$row->tooltip = $tooltip;
-		$row->default_message = $default_message;
 		$row->required = $required;
 		$row->id = 0;
 		$row->id_label = Services::Language()->translate('No');
-		if ((int)$field['value'] === 1) {
-			$row->checked = '';
-		} else {
+		if ((int)$field['value'] === 0) {
 			$row->checked = ' checked';
+		} else {
+			$row->checked = '';
 		}
 
 		$fieldRecordset[] = $row;
 
-		/** Field Dataset */
-		$registryName = $namespace . strtolower($tabLink) . $name;
+		$registryName = $namespace . strtolower($tabLink) . $row->name;
 		$registryName = str_replace('_', '', $registryName);
 
 		Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
@@ -359,37 +332,9 @@ Class FormService
 	 *
 	 * @return array
 	 */
-	protected function getSelectField($namespace, $tabLink, $field)
+	protected function getSelectField($namespace, $tabLink, $field, $row_start)
 	{
 		$fieldRecordset = array();
-
-		$name = $field['name'];
-		$id = $field['name'];
-
-		$label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
-		$tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
-		$placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
-
-		if (isset($field['application_default'])) {
-		} else {
-			$field['application_default'] = NULL;
-		}
-
-		if (($field['application_default'] === NULL || $field['application_default'] == ' ')
-			&& ($field['default'] === NULL || $field['default'] == ' ')
-		) {
-
-			$default_message = Services::Language()->translate('No default value defined.');
-
-		} elseif ($field['application_default'] === NULL || $field['application_default'] == ' ') {
-
-			$default_message = Services::Language()->translate('Field-level default: ')
-				. $field['default'];
-
-		} else {
-			$default_message = Services::Language()->translate('Application configured default setting: ')
-				. $field['application_default'];
-		}
 
 		$required = '';
 		if (isset($field['null']) && $field['null'] == 1) {
@@ -403,9 +348,9 @@ Class FormService
 			}
 		}
 
-		$size = 1;
+		$size = '';
 		if (isset($field['size'])) {
-			if ($field['size'] > 1) {
+			if ((int) $field['size'] > 1) {
 				$size = ' size="' . $field['size']. '"';
 			}
 		}
@@ -426,18 +371,14 @@ Class FormService
 			$items = Services::Text()->buildSelectlist($datalist, $list, 0, 5);
 		}
 
+		$selectionFound = false;
 		foreach ($items as $item) {
 			$row = new \stdClass();
+			foreach ($row_start as $rkey=>$rvalue) {
+				$row->$rkey = $rvalue;
+			}
 
-			$row->view = 'formselect';
-
-			$row->name = $name;
-			$row->label = $label;
 			$row->datalist = $datalist;
-			$row->placeholder = $placeholder;
-			$row->tooltip = $tooltip;
-			$row->default_message = $default_message;
-			$row->selected = $selected;
 			$row->required = $required;
 			$row->multiple = $multiple;
 			$row->size = $size;
@@ -447,6 +388,7 @@ Class FormService
 
 			if (in_array($row->id, $selectedArray)) {
 				$row->selected = ' selected';
+				$selectionFound = true;
 			} else {
 				$row->selected = '';
 			}
@@ -454,8 +396,26 @@ Class FormService
 			$fieldRecordset[] = $row;
 		}
 
+		/** Default */
+		if ($selectionFound == false) {
+			$row = new \stdClass();
+			foreach ($row_start as $rkey=>$rvalue) {
+				$row->$rkey = $rvalue;
+			}
+
+			$row->datalist = $datalist;
+			$row->required = $required;
+			$row->multiple = $multiple;
+			$row->size = $size;
+
+			$row->id = $row->default;
+			$row->value = $row->default_message;
+
+			$row->selected = ' selected';
+		}
+
 		/** Field Dataset */
-		$registryName = $namespace . strtolower($tabLink) . $name;
+		$registryName = $namespace . strtolower($tabLink) . $row->name;
 		$registryName = str_replace('_', '', $registryName);
 
 		Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
@@ -468,36 +428,9 @@ Class FormService
 	 *
 	 * @return array
 	 */
-	public function getTextareaField($namespace, $tabLink, $field)
+	public function getTextareaField($namespace, $tabLink, $field, $row_start)
 	{
 		$fieldRecordset = array();
-
-		$name = $field['name'];
-
-		$label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
-		$tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
-		$placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
-
-		if (isset($field['application_default'])) {
-		} else {
-			$field['application_default'] = NULL;
-		}
-
-		if (($field['application_default'] === NULL || $field['application_default'] == ' ')
-			&& ($field['default'] === NULL || $field['default'] == ' ')
-		) {
-
-			$default_message = Services::Language()->translate('No default value defined.');
-
-		} elseif ($field['application_default'] === NULL || $field['application_default'] == ' ') {
-
-			$default_message = Services::Language()->translate('Field-level default: ')
-				. $field['default'];
-
-		} else {
-			$default_message = Services::Language()->translate('Application configured default setting: ')
-				. $field['application_default'];
-		}
 
 		$iterate = array();
 		$iterate['id'] = $field['name'];
@@ -507,10 +440,6 @@ Class FormService
 			$iterate['required'] = 'required';
 		}
 
-		if (isset($field['hidden']) && $field['hidden'] == 1) {
-			$iterate['type'] = 'hidden';
-		}
-
 		if (isset($field['value'])) {
 		} else {
 			$field['value'] = NULL;
@@ -518,16 +447,12 @@ Class FormService
 
 		$selected = $field['value'];
 
-
 		foreach ($iterate as $key => $value) {
 			$row = new \stdClass();
+			foreach ($row_start as $rkey=>$rvalue) {
+				$row->$rkey = $rvalue;
+			}
 
-			$row->view = 'formtextarea';
-			$row->name = $name;
-			$row->label = $label;
-			$row->placeholder = $placeholder;
-			$row->tooltip = $tooltip;
-			$row->default_message = $default_message;
 			$row->selected = $selected;
 			$row->key = $key;
 			$row->value = $value;
@@ -536,7 +461,7 @@ Class FormService
 		}
 
 		/** Field Dataset */
-		$registryName = $namespace . strtolower($tabLink) . $name;
+		$registryName = $namespace . strtolower($tabLink) . $row->name;
 		$registryName = str_replace('_', '', $registryName);
 
 		Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
