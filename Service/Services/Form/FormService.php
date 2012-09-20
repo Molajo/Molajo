@@ -42,54 +42,48 @@ Class FormService
 	}
 
 	/**
-	 * Build two sets of data:
+	 * setFieldset - builds two sets of data:
 	 *
-	 *  1. Fieldsets: collection of the names of fields to be created (as include statements) in the fieldset
-	 *  2. Fields: Field-specific registries which define attributes input to the form field creation view
+	 *  1. Fieldsets: collection of the names of fields to be used to create field-specific include statements
+	 *  2. Fields: Field-specific registries which define attributes input to the template field creation view
+	 *
+	 * @param $namespace
+	 * @param $tabLink
+	 * @param $input_fields
 	 *
 	 * @return array
+	 * @since  1.0
 	 */
-	public function getFieldset($namespace, $tabLink, $input_fields)
+	public function setFieldset($namespace, $tabLink, $input_fields)
 	{
 		$fieldset = array();
-		$previous_fieldset_label = '';
+		$previous_tab_fieldset_title = '';
 
 		foreach ($input_fields as $field) {
 
 			$row = new \stdClass();
 
-			$row->id = $field['name'];
-			$row->name = $field['name'];
-			$row->label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));;
-
-			if (isset($field['tab_title'])) {
-				$row->tab_title = $field['tab_title'];
-			} else {
-				$row->tab_title = '';
-			}
-
+			$row->tab_title = $field['tab_title'];
 			$row->tab_description = $field['tab_description'];
+			$row->tab_fieldset_title = $field['tab_fieldset_title'];
+			$row->tab_fieldset_description = $field['tab_fieldset_description'];
 
-			if (isset($field['tab_fieldset_title'])) {
-				$row->fieldset_label = $field['tab_fieldset_title'];
-			} else {
-				$row->fieldset_label = $row->tab_title;
-			}
-
-			if ($previous_fieldset_label == $row->fieldset_label) {
+			if ($previous_tab_fieldset_title == $row->tab_fieldset_title) {
 				$row->new_fieldset = 0;
 				$row->first_row = 0;
 			} else {
-				if ($previous_fieldset_label == '') {
+				if ($previous_tab_fieldset_title == '') {
 					$row->first_row = 1;
 				} else {
 					$row->first_row = 0;
 				}
-				$previous_fieldset_label = $row->fieldset_label;
+				$previous_tab_fieldset_title = $row->tab_fieldset_title;
 				$row->new_fieldset = 1;
 			}
-			$row->tab_fieldset_description = $field['tab_fieldset_description'];
 
+			$row->id = $field['name'];
+			$row->name = $field['name'];
+			$row->label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));;
 			$row->tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
 			$row->placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
 
@@ -124,6 +118,7 @@ Class FormService
 
 			$row->type = $field['type'];
 
+			/** Change database types to HTML5/form field types */
 			if ($row->type == 'text') {
 				$row->type = 'textarea';
 			}
@@ -184,19 +179,34 @@ Class FormService
 				$row->datalist = '';
 			}
 
+			/** Changes to field needed in following methods */
 			$field['type'] = $row->type;
 
+			if (isset($field['value'])) {
+			} else {
+				$field['value'] = NULL;
+			}
+
+			if (isset($field['null'])) {
+			} else {
+				$field['null'] = 0;
+			}
+
+			$field['default'] = $row->default;
+			$field['hidden'] = $row->hidden;
+
+			/** Branch to form-field type logic where Registry will be created for this formfield */
 			switch ($row->view) {
 				case 'formradio':
 					$row->name = $this->setRadioField($namespace, $tabLink, $field, $row);
 					break;
 
 				case 'formselect':
-					$row->name = $this->getSelectField($namespace, $tabLink, $field, $row);
+					$row->name = $this->setSelectField($namespace, $tabLink, $field, $row);
 					break;
 
 				case 'formtextarea':
-					$row->name = $this->getTextareaField($namespace, $tabLink, $field, $row);
+					$row->name = $this->setTextareaField($namespace, $tabLink, $field, $row);
 					break;
 
 				default:
@@ -207,6 +217,7 @@ Class FormService
 			$fieldset[] = $row;
 		}
 
+		/** Fieldset returned to be used to create template includes for field registries created below */
 		return $fieldset;
 	}
 
@@ -227,24 +238,23 @@ Class FormService
 
 		$iterate = array();
 
-		if (isset($field['null']) && $field['null'] == 1) {
-			$iterate['required'] = 'required';
-		}
-
+		$iterate['id'] = $field['name'];
+		$iterate['name'] = $field['name'];
 		$iterate['type'] = $field['type'];
 
-		if (isset($field['value'])) {
-		} else {
-			$field['value'] = NULL;
+		if ($field['null'] == 1) {
+			$iterate['required'] = 'required';
 		}
 
 		$iterate['value'] = $field['value'];
 
 		foreach ($iterate as $key => $value) {
 			$row = new \stdClass();
+
 			foreach ($row_start as $rkey=>$rvalue) {
 				$row->$rkey = $rvalue;
 			}
+
 			$row->key = $key;
 			$row->value = $value;
 
@@ -274,7 +284,7 @@ Class FormService
 	{
 		$fieldRecordset = array();
 
-		if (isset($field['null']) && $field['null'] == 1) {
+		if ($field['null'] == 1) {
 			$required = 'required';
 		} else {
 			$required = '';
@@ -282,12 +292,12 @@ Class FormService
 
 		/** Yes */
 		$row = new \stdClass();
+
 		foreach ($row_start as $rkey=>$rvalue) {
 			$row->$rkey = $rvalue;
 		}
 
-		if (isset($field['value'])) {
-		} else {
+		if ($field['value'] == NULL) {
 			$field['value'] = $row->default;
 		}
 
@@ -304,6 +314,7 @@ Class FormService
 
 		/** No */
 		$row = new \stdClass();
+
 		foreach ($row_start as $rkey=>$rvalue) {
 			$row->$rkey = $rvalue;
 		}
@@ -328,16 +339,22 @@ Class FormService
 	}
 
 	/**
-	 * getSelectField field
+	 * setSelectField field
 	 *
-	 * @return array
+	 * @param $namespace
+	 * @param $tabLink
+	 * @param $field
+	 * @param $row_start
+	 *
+	 * @return mixed|string
+	 * @somce  1.0
 	 */
-	protected function getSelectField($namespace, $tabLink, $field, $row_start)
+	protected function setSelectField($namespace, $tabLink, $field, $row_start)
 	{
 		$fieldRecordset = array();
 
 		$required = '';
-		if (isset($field['null']) && $field['null'] == 1) {
+		if ($field['null'] == 1) {
 			$required = 'required';
 		}
 
@@ -355,11 +372,10 @@ Class FormService
 			}
 		}
 
-		if (isset($field['value'])) {
-		} else {
-			$field['value'] = NULL;
-		}
 		$selected = $field['value'];
+		if ($selected == NULL) {
+			$selected = $field['default'];
+		}
 		$selectedArray = explode(',', $selected);
 
 		$datalist = $field['datalist'];
@@ -374,6 +390,7 @@ Class FormService
 		$selectionFound = false;
 		foreach ($items as $item) {
 			$row = new \stdClass();
+
 			foreach ($row_start as $rkey=>$rvalue) {
 				$row->$rkey = $rvalue;
 			}
@@ -386,9 +403,10 @@ Class FormService
 			$row->id = $item->id;
 			$row->value = $item->value;
 
-			if (in_array($row->id, $selectedArray)) {
+			if (in_array($row->value, $selectedArray)) {
 				$row->selected = ' selected';
 				$selectionFound = true;
+
 			} else {
 				$row->selected = '';
 			}
@@ -398,20 +416,29 @@ Class FormService
 
 		/** Default */
 		if ($selectionFound == false) {
+
 			$row = new \stdClass();
+
 			foreach ($row_start as $rkey=>$rvalue) {
 				$row->$rkey = $rvalue;
 			}
 
-			$row->datalist = $datalist;
-			$row->required = $required;
-			$row->multiple = $multiple;
-			$row->size = $size;
+			if ($row->default == NULL) {
 
-			$row->id = $row->default;
-			$row->value = $row->default_message;
+			} else {
+				$row->datalist = $datalist;
+				$row->required = $required;
+				$row->multiple = $multiple;
+				$row->size = $size;
 
-			$row->selected = ' selected';
+				$row->value = $row->default;
+				$row->id = $row->default;
+				$row->value = $row->default_message;
+
+				$row->selected = ' selected';
+
+				$fieldRecordset[] = $row;
+			}
 		}
 
 		/** Field Dataset */
@@ -424,11 +451,11 @@ Class FormService
 	}
 
 	/**
-	 * getTextareaField field
+	 * setTextareaField field
 	 *
 	 * @return array
 	 */
-	public function getTextareaField($namespace, $tabLink, $field, $row_start)
+	protected function setTextareaField($namespace, $tabLink, $field, $row_start)
 	{
 		$fieldRecordset = array();
 
@@ -436,19 +463,15 @@ Class FormService
 		$iterate['id'] = $field['name'];
 		$iterate['name'] = $field['name'];
 
-		if (isset($field['null']) && $field['null'] == 1) {
+		if ($field['null'] == 1) {
 			$iterate['required'] = 'required';
-		}
-
-		if (isset($field['value'])) {
-		} else {
-			$field['value'] = NULL;
 		}
 
 		$selected = $field['value'];
 
 		foreach ($iterate as $key => $value) {
 			$row = new \stdClass();
+
 			foreach ($row_start as $rkey=>$rvalue) {
 				$row->$rkey = $rvalue;
 			}
