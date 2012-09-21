@@ -15,7 +15,6 @@
         <customfields>
             <customfield name="parameters">
                 <include name="ParametersEnable"/>
-                <include name="ParametersEdit"/>
                 <include name="ParametersForm"/>
                 <include name="ParametersItem"/>
                 <include name="ParametersList"/>

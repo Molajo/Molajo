@@ -60,7 +60,7 @@
         <datatype>time</datatype>
         <datatype>text</datatype>
         <datatype>url</datatype>
-        <datatype>zip</datatype>
+        <datatype>userid</datatype>
         <datatype>video</datatype>
     </datatypes>
     <queryelements>

@@ -81,16 +81,18 @@ Class FormService
 				$row->new_fieldset = 1;
 			}
 
+			$row->field_id = $field['name'];
 			$row->id = $field['name'];
 			$row->name = $field['name'];
-			$row->label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));;
+			$row->label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
+			;
 			$row->tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
 			$row->placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
 
 			if (isset($field['locked']) && $field['locked'] == 1) {
-				$row->disabled = true;
+				$row->disabled = 1;
 			} else {
-				$row->disabled = false;
+				$row->disabled = 0;
 			}
 
 			if (isset($field['application_default'])) {
@@ -118,7 +120,7 @@ Class FormService
 
 			$row->type = $field['type'];
 
-			/** Change database types to HTML5/form field types */
+			/** todo: better mapping approach (fields.xml?) for database types to HTML5/form field types */
 			if ($row->type == 'text') {
 				$row->type = 'textarea';
 			}
@@ -128,6 +130,18 @@ Class FormService
 			}
 
 			if ($row->type == 'integer') {
+				$row->type = 'number';
+			}
+
+			if ($row->type == 'catalog_id') {
+				$row->type = 'number';
+			}
+
+			if ($row->type == 'ip_address') {
+				$row->type = 'text';
+			}
+
+			if ($row->type == 'userid') {
 				$row->type = 'number';
 			}
 
@@ -168,6 +182,7 @@ Class FormService
 					break;
 
 				default:
+					echo 'WHAT IS THIS TYPE? ' . $row->type . '<br />';
 					$row->view = 'forminput';
 					break;
 			}
@@ -192,6 +207,7 @@ Class FormService
 				$field['null'] = 0;
 			}
 
+			$field['disabled'] = $row->disabled;
 			$field['default'] = $row->default;
 			$field['hidden'] = $row->hidden;
 
@@ -243,7 +259,11 @@ Class FormService
 		$iterate['type'] = $field['type'];
 
 		if ($field['null'] == 1) {
-			$iterate['required'] = 'required';
+			$iterate['required'] = ' required';
+		}
+
+		if ($field['disabled'] == 1) {
+			$iterate['disabled'] = ' disabled';
 		}
 
 		$iterate['value'] = $field['value'];
@@ -251,7 +271,7 @@ Class FormService
 		foreach ($iterate as $key => $value) {
 			$row = new \stdClass();
 
-			foreach ($row_start as $rkey=>$rvalue) {
+			foreach ($row_start as $rkey => $rvalue) {
 				$row->$rkey = $rvalue;
 			}
 
@@ -285,7 +305,8 @@ Class FormService
 		$fieldRecordset = array();
 
 		if ($field['null'] == 1) {
-			$required = 'required';
+			//not all browsers ready for required on it's own
+			$required = ' required';
 		} else {
 			$required = '';
 		}
@@ -293,7 +314,7 @@ Class FormService
 		/** Yes */
 		$row = new \stdClass();
 
-		foreach ($row_start as $rkey=>$rvalue) {
+		foreach ($row_start as $rkey => $rvalue) {
 			$row->$rkey = $rvalue;
 		}
 
@@ -310,12 +331,19 @@ Class FormService
 			$row->checked = '';
 		}
 
+		if ($field['disabled'] == 1) {
+			$row->disabled = ' disabled';
+		} else {
+			$row->disabled = '';
+		}
+
+
 		$fieldRecordset[] = $row;
 
 		/** No */
 		$row = new \stdClass();
 
-		foreach ($row_start as $rkey=>$rvalue) {
+		foreach ($row_start as $rkey => $rvalue) {
 			$row->$rkey = $rvalue;
 		}
 
@@ -326,6 +354,12 @@ Class FormService
 			$row->checked = ' checked';
 		} else {
 			$row->checked = '';
+		}
+
+		if ($field['disabled'] == 1) {
+			$row->disabled = ' disabled';
+		} else {
+			$row->disabled = '';
 		}
 
 		$fieldRecordset[] = $row;
@@ -355,28 +389,40 @@ Class FormService
 
 		$required = '';
 		if ($field['null'] == 1) {
-			$required = 'required';
+			//not all browsers ready for required on it's own
+			$required = ' required';
 		}
+
+		$disabled = '';
+		if ($field['disabled'] == 1) {
+			//not all browsers ready for required on it's own
+			$disabled = ' disabled';
+		}
+
+		$default = $field['default'];
 
 		$multiple = '';
 		if (isset($field['multiple'])) {
 			if ($field['multiple'] == 1) {
+				//not all browsers can handle this
 				$multiple = ' multiple';
 			}
 		}
 
 		$size = '';
 		if (isset($field['size'])) {
-			if ((int) $field['size'] > 1) {
-				$size = ' size="' . $field['size']. '"';
+			if ((int)$field['size'] > 1) {
+				$size = ' size="' . $field['size'] . '"';
 			}
 		}
 
-		$selected = $field['value'];
-		if ($selected == NULL) {
-			$selected = $field['default'];
+		$temp = $field['value'];
+		$default_setting = 0;
+		if ($temp == NULL) {
+			$temp = $field['default'];
+			$default_setting = 1;
 		}
-		$selectedArray = explode(',', $selected);
+		$selectedArray = explode(',', $temp);
 
 		$datalist = $field['datalist'];
 		$list = Services::Text()->getList($datalist, array());
@@ -391,54 +437,30 @@ Class FormService
 		foreach ($items as $item) {
 			$row = new \stdClass();
 
-			foreach ($row_start as $rkey=>$rvalue) {
+			foreach ($row_start as $rkey => $rvalue) {
 				$row->$rkey = $rvalue;
 			}
 
 			$row->datalist = $datalist;
 			$row->required = $required;
+			$row->disabled = $disabled;
 			$row->multiple = $multiple;
 			$row->size = $size;
 
 			$row->id = $item->id;
 			$row->value = $item->value;
 
-			if (in_array($row->value, $selectedArray)) {
+			if (in_array($row->id, $selectedArray)) {
 				$row->selected = ' selected';
-				$selectionFound = true;
-
+				if ($default_setting == 0) {
+				} else {
+					$item->value .= ' (' . Services::Language()->translate('Default') . ')';
+				}
 			} else {
 				$row->selected = '';
 			}
 
 			$fieldRecordset[] = $row;
-		}
-
-		/** Default */
-		if ($selectionFound == false) {
-
-			$row = new \stdClass();
-
-			foreach ($row_start as $rkey=>$rvalue) {
-				$row->$rkey = $rvalue;
-			}
-
-			if ($row->default == NULL) {
-
-			} else {
-				$row->datalist = $datalist;
-				$row->required = $required;
-				$row->multiple = $multiple;
-				$row->size = $size;
-
-				$row->value = $row->default;
-				$row->id = $row->default;
-				$row->value = $row->default_message;
-
-				$row->selected = ' selected';
-
-				$fieldRecordset[] = $row;
-			}
 		}
 
 		/** Field Dataset */
@@ -464,7 +486,11 @@ Class FormService
 		$iterate['name'] = $field['name'];
 
 		if ($field['null'] == 1) {
-			$iterate['required'] = 'required';
+			$iterate['required'] = ' required';
+		}
+
+		if ($field['disabled'] == 1) {
+			$iterate['disabled'] = ' disabled';
 		}
 
 		$selected = $field['value'];
@@ -472,7 +498,7 @@ Class FormService
 		foreach ($iterate as $key => $value) {
 			$row = new \stdClass();
 
-			foreach ($row_start as $rkey=>$rvalue) {
+			foreach ($row_start as $rkey => $rvalue) {
 				$row->$rkey = $rvalue;
 			}
 
