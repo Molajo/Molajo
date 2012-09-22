@@ -1,18 +1,42 @@
-<field name="edit_toolbar_buttons_new" type="char" null="0"
-       datalist="Actions"
-       default="new,edit,publish,feature,archive,checkin,restore,delete,trash,options"/>
-<field name="edit_toolbar_buttons_edit" type="char" null="0"
-       default="apply,delete,display,feature,publish,saveandclose,saveascopy,close"
-       datalist="Actions"/>
-<field name="edit_editor_field1" type="char" null="0"
-       datalist="Fields"
-       default="title,subtitle,alias,content_text,created_by,language"
-        />
-<field name="edit_publish_field1" type="char" null="0"
-       datalist="Fields"
-       default="featured,stickied,status,start_publishing_datetime,stop_publishing_datetime,created_datetime,ordering"
-        />
-<field name="edit_revisions_fields" type="char" null="0"
-       datalist="Fields"
-       default="version,modified_datetime,modified_by"
-        />
+<include field="editor_toolbar_buttons_new"/>
+<include field="editor_toolbar_buttons_edit"/>
+
+<include field="editor_main_column1"/>
+<include field="editor_main_column2"/>
+<include field="editor_main_column3"/>
+<include field="editor_main_column4"/>
+<include field="editor_main_column5"/>
+<include field="editor_main_column6"/>
+<include field="editor_main_column7"/>
+<include field="editor_main_column8"/>
+<include field="editor_main_column9"/>
+<include field="editor_main_column10"/>
+<include field="editor_main_column11"/>
+<include field="editor_main_column12"/>
+<include field="editor_main_column13"/>
+<include field="editor_main_column14"/>
+<include field="editor_main_column15"/>
+
+<include field="editor_publish_column1"/>
+<include field="editor_publish_column2"/>
+<include field="editor_publish_column3"/>
+<include field="editor_publish_column4"/>
+<include field="editor_publish_column5"/>
+<include field="editor_publish_column6"/>
+<include field="editor_publish_column7"/>
+<include field="editor_publish_column8"/>
+<include field="editor_publish_column9"/>
+<include field="editor_publish_column10"/>
+
+<include field="editor_permissions"/>
+
+<include field="editor_seo_column1"/>
+<include field="editor_seo_column2"/>
+<include field="editor_seo_column3"/>
+<include field="editor_seo_column4"/>
+<include field="editor_seo_column5"/>
+<include field="editor_seo_column6"/>
+<include field="editor_seo_column7"/>
+<include field="editor_seo_column8"/>
+<include field="editor_seo_column9"/>
+<include field="editor_seo_column10"/>

@@ -1,1 +1,1 @@
-<field name="grid_list1" type="char" null="0"  datalist="Fields" default="status"/>
+<field name="grid_list1" type="char" null="0"  datalist="Lists" default="status"/>

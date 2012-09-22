@@ -16,5 +16,9 @@
 <include field="grid_column8"/>
 <include field="grid_column9"/>
 <include field="grid_column10"/>
-<include field="grid_batch"/>
+<include field="grid_batch_filters"/>
+<include field="grid_batch_status"/>
+<include field="grid_batch_permissions"/>
+<include field="grid_batch_categories"/>
+<include field="grid_batch_tags"/>
 <include field="grid_ordering"/>

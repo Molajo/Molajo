@@ -1,0 +1,5 @@
+<field name="editor_permissions"
+       type="boolean"
+       null="0"
+       default="0"
+        />
