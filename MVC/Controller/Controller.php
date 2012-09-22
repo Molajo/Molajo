@@ -293,6 +293,7 @@ class Controller
 			$dateFromJDate = new $dateClass('now');
 			$now = $dateFromJDate->toSql(false, Services::$dbo()->get('db'));
 			$this->model->set('now', $now);
+			$this->model->query->clear();
 		}
 
 		return $this;

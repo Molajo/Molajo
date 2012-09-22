@@ -106,8 +106,12 @@ Class ViewHelper
 			$this->setParameters('page', $item->table_registry_name . 'Parameters');
 
 		} elseif ($type == 'Template') {
+
 			$this->setParameters('template', $item->table_registry_name . 'Parameters');
+			$this->setParameters('wrap', $item->table_registry_name . 'Parameters');
+			$this->setParameters('cache', $item->table_registry_name . 'Parameters');
 			$this->setParameters('model', $item->table_registry_name . 'Parameters');
+			$this->setParameters('criteria', $item->table_registry_name . 'Parameters');
 
 		} else {
 			$this->setParameters('wrap', $item->table_registry_name . 'Parameters');
