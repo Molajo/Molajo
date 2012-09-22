@@ -247,11 +247,7 @@ Class Application
 			&& Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
 		) {
-			Services::Profiler()->set('Application Schedule onAfterRoute', LOG_OUTPUT_PLUGINS);
-			$results = Services::Event()->schedule('onAfterRoute');
-			if (is_array($results)) {
-				$results = true;
-			}
+			$results = $this->onAfterRouteEvent();
 		}
 
 		if ($results == false
@@ -271,6 +267,60 @@ Class Application
 		}
 
 		Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, LOG_OUTPUT_APPLICATION);
+
+		return true;
+	}
+
+
+	/**
+	 * Schedule onBeforeParseEvent Event - could update parameter values
+	 *
+	 * @return  boolean
+	 * @since   1.0
+	 */
+	protected function onAfterRouteEvent()
+	{
+		Services::Profiler()->set(
+			'Application Schedules onAfterRoute',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		/** Schedule onAfterRoute Event */
+		$arguments = array(
+			'parameters' => Services::Registry()->getArray('Parameters'),
+			'model_type' => Services::Registry()->get('Parameters', 'model_type'),
+			'model_name' => Services::Registry()->get('Parameters', 'model_name'),
+			'data' => array()
+		);
+
+		Services::Profiler()->set(
+			'Application->onAfterRouteEvent ' . ' Schedules onAfterRoute',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		$arguments = Services::Event()->schedule('onAfterRoute', $arguments);
+		return true;
+		if ($arguments == false) {
+			Services::Profiler()->set('Application->onAfterRouteEvent ' . ' failure ',
+				LOG_OUTPUT_PLUGINS
+			);
+
+			return false;
+		}
+
+		Services::Profiler()->set(
+			'Application->onAfterRouteEvent ' . ' successful ',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		/** Process results */
+		Services::Registry()->delete('Parameters');
+		Services::Registry()->createRegistry('Parameters');
+		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+		Services::Registry()->sort('Parameters');
 
 		return true;
 	}

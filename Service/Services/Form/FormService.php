@@ -42,6 +42,87 @@ Class FormService
 	}
 
 	/**
+	 * getFieldlist retrieves the extensive fieldlist for a resource
+	 *
+	 * @param $model_type
+	 * @param $model_name
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	public function getFieldlist ($model_type, $model_name)
+	{
+		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
+		if (Services::Registry()->exists($table_registry_name) === true)  {
+		} else {
+			Helpers::Content()->getResourceContentParameters($model_type, $model_name);
+		}
+
+		$primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
+
+		$fieldArray = array();
+
+		$normalFields = Services::Registry()->get($table_registry_name, 'fields');
+
+		if (count($normalFields) > 0) {
+			foreach ($normalFields as $field) {
+				$row = new \stdClass();
+				$row->value = $field['name'];
+				$row->id = $field['name'];
+
+				$fieldArray[] = $row;
+			}
+		}
+
+		$joins = Services::Registry()->get($table_registry_name, 'joins');
+
+		if (count($joins) > 0) {
+			foreach ($joins as $field) {
+				$temp = explode(',', $field['select']);
+				if (count($temp) > 0) {
+					foreach ($temp as $f) {
+						if (trim($f) == '') {
+						} else {
+							$row = new \stdClass();
+							$row->value = $f . ' (' . $field['alias'] . ')';
+							$row->id = $field['alias'] . '.' . $f;
+
+							$fieldArray[] = $row;
+						}
+					}
+				}
+			}
+		}
+
+		$customfields =  Services::Registry()->get($table_registry_name, 'Customfields');
+		if (count($customfields) > 0) {
+			foreach ($customfields as $field) {
+				$row = new \stdClass();
+				$row->value = $field['name'] . ' (customfield)';
+				$row->id = 'customfields' . '.' . $field['name'];
+
+				$fieldArray[] = $row;
+			}
+		}
+
+		$metadata =  Services::Registry()->get($table_registry_name, 'Metadata');
+		if (count($metadata) > 0) {
+			foreach ($metadata as $field) {
+				$row = new \stdClass();
+				$row->value = $field['name'] . ' (metadata)';
+				$row->id = 'metadata' . '.' . $field['name'];
+
+				$fieldArray[] = $row;
+			}
+		}
+
+		sort($fieldArray);
+
+		return $fieldArray;
+	}
+
+	/**
 	 * setFieldset - builds two sets of data:
 	 *
 	 *  1. Fieldsets: collection of the names of fields to be used to create field-specific include statements

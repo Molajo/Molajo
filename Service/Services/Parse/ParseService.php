@@ -207,7 +207,6 @@ Class ParseService
 
 		$this->final_indicator = false;
 
-		/** Using file_exists or is_file with git submodule returns false */
 		if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
 		} else {
 			Services::Error()->set(500, 'Theme not found');
@@ -240,7 +239,17 @@ Class ParseService
 			);
 		}
 
-		//todo load resource plugins
+		$extensionPlugins = Services::Filesystem()->folderFolders(
+			Services::Registry()->get('Parameters', 'extension_path') . '/' . 'Plugin'
+		);
+
+		if (count($extensionPlugins) == 0 || $extensionPlugins === false) {
+		} else {
+			$this->processPlugins(
+				$extensionPlugins,
+				Services::Registry()->get('Parameters', 'extension_namespace')
+			);
+		}
 
 		/** OnBeforeParse Plugins */
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
@@ -609,6 +618,8 @@ Class ParseService
 		/** Schedule onBeforeParse Event */
 		$arguments = array(
 			'parameters' => Services::Registry()->getArray('Parameters'),
+			'model_type' => Services::Registry()->get('Parameters', 'model_type'),
+			'model_name' => Services::Registry()->get('Parameters', 'model_name'),
 			'data' => array()
 		);
 
@@ -636,12 +647,12 @@ Class ParseService
 
 		/** Process results */
 		Services::Registry()->delete('Parameters');
+		Services::Registry()->createRegistry('Parameters');
 		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
 		Services::Registry()->sort('Parameters');
 
 		return true;
 	}
-
 
 	/**
 	 * Schedule onAfterParseBody Event - after body rendered, before the head, messages, and defer are processed

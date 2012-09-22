@@ -239,6 +239,7 @@ class DisplayController extends Controller
 				'table_registry_name' => $this->table_registry_name,
 				'parameters' => $this->parameters,
 				'data' => $item,
+				'model_type' => $this->get('model_type'),
 				'model_name' => $this->get('model_name')
 			);
 
@@ -282,6 +283,7 @@ class DisplayController extends Controller
 			'table_registry_name' => $this->table_registry_name,
 			'parameters' => $this->parameters,
 			'rendered_output' => $rendered_output,
+			'model_type' => $this->get('model_type'),
 			'model_name' => $this->get('model_name')
 		);
 

@@ -373,11 +373,12 @@ Class InstallService
 			'db' => '',
 			'data' => $query_results,
 			'parameters' => $parameters,
-			'model_name' => 'Articles'
+			'model_type' => $this->get('model_type'),
+			'model_name' => $this->get('model_name')
 		);
 
 		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $plugins);
-		if ($plugin['success'] == true) {
+		if ($arguments['success'] == true) {
 			$arguments = $plugin['arguments'];
 		} else {
 

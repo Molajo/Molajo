@@ -216,6 +216,7 @@ class DeleteController extends Controller
 			'null_date' => $this->model->null_date,
 			'now' => $this->model->now,
 			'parameters' => $this->parameters,
+			'model_type' => $this->get('model_type'),
 			'model_name' => $this->get('model_name')
 		);
 
@@ -257,6 +258,7 @@ class DeleteController extends Controller
 			'db' => $this->model->db,
 			'data' => $this->data,
 			'parameters' => $this->parameters,
+			'model_type' => $this->get('model_type'),
 			'model_name' => $this->get('model_name')
 		);
 

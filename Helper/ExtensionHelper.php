@@ -330,7 +330,7 @@ Class ExtensionHelper
 	}
 
 	/**
-	 * getNamespace - Return path for selected View
+	 * getNamespace - Return namespace for extension
 	 *
 	 * @param   $node
 	 *
@@ -340,16 +340,16 @@ Class ExtensionHelper
 	public function getNamespace($catalog_type_id, $node)
 	{
 		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
-			echo 'yes';
-			die;
 			return Helpers::View()->getNamespace($node, 'Page');
 
 		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
 			return Helpers::View()->getNamespace($node, 'Template');
 
-		} else {
+		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
 			return Helpers::View()->getNamespace($node, 'Wrap');
 
+		} else {
+			return 'Extension\\Resource\\' . ucfirst(strtolower($node));
 		}
 
 		return false;

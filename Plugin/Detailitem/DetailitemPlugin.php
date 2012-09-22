@@ -29,6 +29,7 @@ class DetailitemPlugin extends ContentPlugin
 	 */
 	public function onBeforeParse()
 	{
+		return true;
 		if (Services::Registry()->exists('Parameters', 'menuitem_id')) {
 			if ((int)Services::Registry()->get('Parameters', 'menuitem_id') == 0) {
 			} else {

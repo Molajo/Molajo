@@ -433,6 +433,7 @@ class CreateController extends Controller
 			'null_date' => $this->model->null_date,
 			'now' => $this->model->now,
 			'parameters' => $this->parameters,
+			'model_type' => $this->get('model_type'),
 			'model_name' => $this->get('model_name')
 		);
 
@@ -474,6 +475,7 @@ class CreateController extends Controller
 			'db' => $this->model->db,
 			'data' => $data,
 			'parameters' => $this->parameters,
+			'model_type' => $this->get('model_type'),
 			'model_name' => $this->get('model_name')
 		);
 

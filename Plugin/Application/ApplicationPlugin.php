@@ -38,19 +38,6 @@ class ApplicationPlugin extends Plugin
 	}
 
 	/**
-	 * Fires after Route has run - Parameters contain all instruction
-	 *
-	 * Services::Registry('Parameters', '*') lists all available
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRoute()
-	{
-		return true;
-	}
-
-	/**
 	 * Follows Authorise and can used to override a failed authorisation or a successful one
 	 *
 	 * @return boolean

@@ -743,6 +743,7 @@ class Controller
 				'parameters' => $this->parameters,
 				'data' => $item,
 				'model_name' => $this->get('model_name'),
+				'model_type' => $this->get('model_type'),
 				'first' => $first
 			);
 
@@ -785,6 +786,7 @@ class Controller
 			'table_registry_name' => $this->table_registry_name,
 			'parameters' => $this->parameters,
 			'data' => $this->query_results,
+			'model_type' => $this->get('model_type'),
 			'model_name' => $this->get('model_name')
 		);
 

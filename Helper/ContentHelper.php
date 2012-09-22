@@ -90,6 +90,12 @@ Class ContentHelper
 			$item->table_registry_name . 'Metadata'
 		);
 
+		/** Force List Model */
+		Services::Registry()->set('Parameters', 'model_name', $model_name);
+		Services::Registry()->set('Parameters', 'model_type', $model_type);
+		Services::Registry()->set('Parameters', 'model_parameter', '');
+		Services::Registry()->set('Parameters', 'model_query_object', 'list');
+
 		return true;
 	}
 
@@ -126,6 +132,9 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
 			(int)$item->extension_instances_catalog_type_id);
 
+		Services::Registry()->set('Parameters', 'criteria_catalog_type_id', (int)$item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'criteria_extension_instance_id', (int)$item->extension_instance_id);
+
 		$parameterNamespace = $item->table_registry_name . 'Parameters';
 
 		/** Theme, Page, Template and Wrap Views */
@@ -142,13 +151,19 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
 			(int)$item->extension_instances_catalog_type_id);
 
-		$this->getResourceParameters((int)$item->extension_instance_id);
+		$this->getResourceExtensionParameters((int)$item->extension_instance_id);
 
 		$this->setParameters($pageTypeNamespace,
 			$item->table_registry_name . 'Parameters',
 			$item->table_registry_name . 'Metadata',
-			'ResourcesSystemParameters'
+			'ResourcesSystem'
 		);
+
+		/** Force Item Model */
+		Services::Registry()->set('Parameters', 'model_name', $model_name);
+		Services::Registry()->set('Parameters', 'model_type', $model_type);
+		Services::Registry()->set('Parameters', 'model_parameter', '');
+		Services::Registry()->set('Parameters', 'model_query_object', 'item');
 
 		return true;
 	}
@@ -248,10 +263,10 @@ Class ContentHelper
 	/**
 	 * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
 	 *
-	 * @param $pageTypeNamespace
-	 * @param $parameterNamespace
-	 * @param $metadataNamespace
-	 * @param string $resourceNamespace
+	 * @param $pageTypeNamespace (ex. item, list, menuitem)
+	 * @param $parameterNamespace (ex. $item->table_registry_name . 'Parameters')
+	 * @param $metadataNamespace (ex. $item->table_registry_name . 'Metadata')
+	 * @param string $resourceNamespace (ex. ResourcesSystem)
 	 *
 	 * @return  boolean
 	 * @since   1.0
@@ -273,10 +288,10 @@ Class ContentHelper
 			$this->processParameterSet($newParameters, $pageTypeNamespace);
 		}
 
-		/** 2. Resource defaults */
+		/** 3. Resource defaults */
 		if ($resourceNamespace == '') {
 		} else {
-			$resourceParameters = Services::Registry()->get($resourceNamespace, $pageTypeNamespace . '*');
+			$resourceParameters = Services::Registry()->get($resourceNamespace . 'Parameters', $pageTypeNamespace . '*');
 			if (is_array($resourceParameters) && count($resourceParameters) > 0) {
 				$this->processParameterSet($newParameters, $pageTypeNamespace);
 			}
@@ -291,6 +306,10 @@ Class ContentHelper
 		/** Copy remaining */
 		Services::Registry()->copy($parameterNamespace, 'Parameters');
 		Services::Registry()->copy($metadataNamespace, 'Metadata');
+		if ($resourceNamespace == '') {
+		} else {
+			Services::Registry()->merge($resourceNamespace . 'Metadata', 'Metadata', true);
+		}
 
 		/**  Merge in matching Configuration data  */
 		Services::Registry()->merge('Configuration', 'Parameters', true);
@@ -307,7 +326,7 @@ Class ContentHelper
 			}
 		}
 
-		/** Set Theme, Page, Template nad Wrap */
+		/** Set Theme, Page, Template and Wrap */
 		Helpers::Extension()->setThemePageView();
 		Helpers::Extension()->setTemplateWrapModel();
 
@@ -317,6 +336,21 @@ Class ContentHelper
 				Services::Registry()->set('Parameters', $key, $value);
 			}
 		}
+
+		Services::Registry()->set('Parameters', 'extension_path',
+			Helpers::Extension()->getPath(Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
+				Services::Registry()->get('Parameters', 'extension_name_path_node'))
+		);
+
+		Services::Registry()->set('Parameters', 'extension_path_url',
+			Helpers::Extension()->getPathURL(Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
+				Services::Registry()->get('Parameters', 'extension_name_path_node'))
+		);
+
+		Services::Registry()->set('Parameters', 'extension_namespace',
+			Helpers::Extension()->getNamespace(Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
+				Services::Registry()->get('Parameters', 'extension_name_path_node'))
+		);
 
 		Services::Registry()->sort('Parameters');
 		Services::Registry()->sort('Metadata');
@@ -336,7 +370,7 @@ Class ContentHelper
 				. Services::Registry()->get('Parameters', 'model_type')
 				. '/'
 				. Services::Registry()->get('Parameters', 'model_name'));
-
+;
 		return true;
 	}
 
@@ -370,6 +404,7 @@ Class ContentHelper
 	public function getResourceCatalogType($id = 0)
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+
 		$m = new $controllerClass();
 		$m->set('process_plugins', 0);
 		$m->set('get_customfields', 0);
@@ -428,7 +463,7 @@ Class ContentHelper
 	 * @return  array  An object containing an array of basic resource info, parameters in registry
 	 * @since   1.0
 	 */
-	public function getResourceParameters($id = 0)
+	public function getResourceExtensionParameters($id = 0)
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();

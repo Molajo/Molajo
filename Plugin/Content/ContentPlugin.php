@@ -185,7 +185,14 @@ class ContentPlugin extends Plugin
 			'rendered_output'))
 		) {
 
-			$this->$key = $value;
+			if ($key == 'parameters') {
+				foreach ($value as $k => $v) {
+					$this->parameters[$k] = $v;
+				}
+			} else {
+				$this->$key = $value;
+			}
+
 		} else {
 			$this->parameters[$key] = $value;
 		}
@@ -623,6 +630,19 @@ class ContentPlugin extends Plugin
 	 * @since   1.0
 	 */
 	public function onAfterReadall()
+	{
+		return true;
+	}
+
+	/**
+	 * Fires after Route has run - Parameters contain all instruction
+	 *
+	 * Services::Registry('Parameters', '*') lists all available
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRoute()
 	{
 		return true;
 	}

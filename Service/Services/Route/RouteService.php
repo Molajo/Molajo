@@ -293,7 +293,7 @@ Class RouteService
 		if ($sef == 1) {
 			$this->getResourceSEF();
 		} else {
-			$this->getResourceParameters();
+			$this->getResourceExtensionParameters();
 		}
 
 		return true;
