@@ -1132,7 +1132,7 @@ Class ConfigurationService
 		} else {
 
 			try {
-				$profiler = 0;
+				$profiler_service = 0;
 				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 				$m = new $controllerClass();
 
@@ -1158,11 +1158,10 @@ Class ConfigurationService
 				/** Combine Application and Site Parameters into Configuration */
 				$parameters = Services::Registry()->getArray('ApplicationTableParameters');
 				foreach ($parameters as $key => $value) {
-
 					Services::Registry()->set('Configuration', $key, $value);
 
-					if (strtolower($key) == 'profiler') {
-						$profiler = $value;
+					if (strtolower($key) == 'profiler_service') {
+						$profiler_service = $value;
 					}
 					if (strtolower($key) == 'cache') {
 						$cache = $value;
@@ -1188,7 +1187,7 @@ Class ConfigurationService
 
 		Services::Registry()->sort('Configuration');
 
-		if ((int)$profiler == 1) {
+		if ((int)$profiler_service === 1) {
 			Services::Profiler()->initiate();
 		}
 

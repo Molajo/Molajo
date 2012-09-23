@@ -1,3 +1,4 @@
+<field name="profiler_service" type="integer" null="0" default="0"/>
 <field name="profiler_error_reporting" type="integer" null="0" default="0"/>
 <field name="profiler_verbose" type="boolean" null="0" default="0"/>
 <field name="profiler_start_with" type="text" null="0" default="Initialise"
