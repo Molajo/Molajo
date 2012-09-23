@@ -26,7 +26,7 @@
             <include field="protected"/>
             <include field="featured"/>
             <include field="stickied"/>
-            <include field="status"/>
+            <include field="statussingle"/>
             <include field="start_publishing_datetime"/>
             <include field="stop_publishing_datetime"/>
             <include field="version"/>

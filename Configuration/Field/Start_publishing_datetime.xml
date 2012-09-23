@@ -1,7 +1,6 @@
 <field name="start_publishing_datetime"
-       type="datetime"
+       type="date"
        null="0"
        default="0000-00-00 00:00:00"
-       ui="calendar"
         />
 

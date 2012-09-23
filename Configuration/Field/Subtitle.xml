@@ -1,5 +1,5 @@
 <field name="subtitle"
-       type="text"
+       type="char"
        null="0"
        default=" "
        width="50"

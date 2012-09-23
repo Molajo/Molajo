@@ -370,7 +370,8 @@ Class ContentHelper
 				. Services::Registry()->get('Parameters', 'model_type')
 				. '/'
 				. Services::Registry()->get('Parameters', 'model_name'));
-;
+
+
 		return true;
 	}
 
@@ -502,6 +503,8 @@ Class ContentHelper
 	 */
 	public function getResourceMenuitemParameters($menuitem_type = 'Grid', $extension_instance_id)
 	{
+		$menuitem_type = ucfirst(strtolower($menuitem_type));
+
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 
@@ -520,7 +523,7 @@ Class ContentHelper
 		foreach ($menuitems as $id) {
 
 			$menu = new $controllerClass();
-			$results = $menu->connect('Menuitem', 'Grid');
+			$results = $menu->connect('Menuitem', $menuitem_type);
 
 			$menu->set('process_plugins', 0);
 			$menu->set('get_customfields', 1);
@@ -528,7 +531,7 @@ Class ContentHelper
 
 			$item = $menu->getData('item');
 
-			if (Services::Registry()->get('GridMenuitemParameters', 'criteria_extension_instance_id')
+			if (Services::Registry()->get($menuitem_type . 'MenuitemParameters', 'criteria_extension_instance_id')
 				== $extension_instance_id) {
 				$item->table_registry = $menuitem_type . 'Menuitem';
 				unset($menu);

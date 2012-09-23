@@ -301,7 +301,7 @@ Class Application
 		);
 
 		$arguments = Services::Event()->schedule('onAfterRoute', $arguments);
-		return true;
+
 		if ($arguments == false) {
 			Services::Profiler()->set('Application->onAfterRouteEvent ' . ' failure ',
 				LOG_OUTPUT_PLUGINS

@@ -11,11 +11,17 @@
 <include field="editor_main_column8"/>
 <include field="editor_main_column9"/>
 <include field="editor_main_column10"/>
-<include field="editor_main_column11"/>
-<include field="editor_main_column12"/>
-<include field="editor_main_column13"/>
-<include field="editor_main_column14"/>
-<include field="editor_main_column15"/>
+
+<include field="editor_secondary_column1"/>
+<include field="editor_secondary_column2"/>
+<include field="editor_secondary_column3"/>
+<include field="editor_secondary_column4"/>
+<include field="editor_secondary_column5"/>
+<include field="editor_secondary_column6"/>
+<include field="editor_secondary_column7"/>
+<include field="editor_secondary_column8"/>
+<include field="editor_secondary_column9"/>
+<include field="editor_secondary_column10"/>
 
 <include field="editor_publish_column1"/>
 <include field="editor_publish_column2"/>

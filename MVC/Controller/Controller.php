@@ -367,7 +367,9 @@ class Controller
 				$this->query_results = $this->model->$query_object($model_parameter);
 			}
 		}
-
+//echo '<br /><br />';
+//echo $this->model->query->__toString();
+//echo '<br /><br />';
 		/** 4. Schedule onAfterRead Event */
 		if (count($this->plugins) > 0) {
 			$this->onAfterReadEvent(

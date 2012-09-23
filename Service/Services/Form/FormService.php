@@ -42,7 +42,7 @@ Class FormService
 	}
 
 	/**
-	 * getFieldlist retrieves the extensive fieldlist for a resource
+	 * getFieldlist retrieves the complete list of data elements for the specified model
 	 *
 	 * @param $model_type
 	 * @param $model_name
@@ -117,9 +117,596 @@ Class FormService
 			}
 		}
 
-		sort($fieldArray);
-
 		return $fieldArray;
+	}
+
+	/**
+	 * Create Configuration Tabs for Forms
+	 *
+	 * @param $model_type - ex. Resources
+	 * @param $model_name - ex. Articles
+	 * @param $namespace - ex. config, grid, edit
+	 * @param $tab_array - sent in from request parameters ex. {{Editor,editor}} or full list from config
+	 * @param $view_name - ex. Adminconfiguration or Grid or Edit
+	 * @param $default_tab_view_name ex. Adminconfigurationtab
+	 * @param $extension_instance_id
+	 * @param $item
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	public function setTabArray($model_type, $model_name, $namespace,
+								$tab_array, $tab_prefix,
+								$view_name, $default_tab_view_name, $tab_class,
+								$extension_instance_id, $item)
+	{
+		$tabs = array();
+		$configurationArray = array();
+		$temp = explode('}}', $tab_array);
+
+		foreach ($temp as $set) {
+			$set = str_replace(',', ' ', $set);
+			$set = str_replace(':', '=', $set);
+			$set = str_replace('{{', '', $set);
+			$set = str_replace('http=', 'http:', $set);
+			if (trim($set) == '') {
+			} else {
+				$configurationArray[] = trim($set);
+			}
+		}
+
+		foreach ($configurationArray as $config) {
+
+			$split = explode(' ', $config);
+			if (count($split) > 1) {
+			} else {
+				return false;
+			}
+
+			$tabTitle = str_replace(
+				' ',
+				'&nbsp;',
+				htmlentities(Services::Language()->translate(
+					$split[0]
+				), ENT_COMPAT, 'UTF-8')
+			);
+
+			$translateTabDesc = Services::Language()->translate(strtoupper(
+				strtoupper($namespace) . '_FORM_' . strtoupper(str_replace('&nbsp;', '_', $tabTitle))  . '_DESC'));
+
+			$tab_link = $split[1];
+
+			if (count($split) == 3) {
+				$tabIncludeName = $split[2];
+			} else {
+				$tabIncludeName = $default_tab_view_name;
+			}
+
+			$this->createTabFieldsets(
+				$namespace,
+				$tab_prefix,
+				ucfirst(strtolower($tab_link)),
+				$tabTitle,
+				$translateTabDesc,
+				$model_type,
+				$model_name,
+				$view_name,
+				$extension_instance_id,
+				$item
+			);
+
+			$tabArray = 'tab_title:' . $tabTitle
+				. ',' . 'tab_namespace:' . $namespace
+				. ',' . 'tab_link:' . $namespace . $tab_link
+				. ',' . 'tab_include_name:' . $tabIncludeName
+				. ',' . 'tab_include_parameter:' . $view_name . strtolower($namespace . $tab_link);
+
+			$tabs[] = '{{' . trim($tabArray) . '}}';
+		}
+
+		if ($tabs === false) {
+			$tabCount = 0;
+		} else {
+			if (is_array($tabs)) {
+			} else {
+				$tabs = array($tabs);
+			}
+			$tabCount = count($tabs);
+		}
+
+		/** expand into a single row */
+		$tabrows = array();
+
+		$row = new \stdClass();
+
+		$row->tab_count = $tabCount;
+		$row->tab_class = $tab_class;
+		$row->tab_array = '';
+
+		if ($tabCount === 0) {
+			$row->tab_array = null;
+		} else {
+			foreach ($tabs as $tab) {
+				$row->tab_array .= trim($tab);
+			}
+		}
+		$tabrows[] = $row;
+
+		return $tabrows;
+	}
+
+	/**
+	 * createTabFieldsets - tab parameters determine source data requirements
+	 *
+	 * @param $namespace
+	 * @param $tab_prefix
+	 * @param $tab_link
+	 * @param $tabTitle
+	 * @param $translateTabDesc
+	 * @param $configuration - contains the requested configuration
+	 * @param $model_type
+	 * @param $model_name
+	 * @param $view_name
+	 * @param $extension_instance_id
+	 * @param $item
+	 *
+	 * @return  string
+	 * @since   1.0
+	 */
+	protected function createTabFieldsets($namespace, $tab_prefix, $tab_link,
+										  $tabTitle, $translateTabDesc,
+										  $model_type, $model_name, $view_name,
+										  $extension_instance_id,  $item)
+	{
+
+		$configurationArray = array();
+
+		$configuration = Services::Registry()->get(
+			'ConfigurationMenuitemParameters',
+			$tab_prefix . strtolower($tab_link)
+		);
+
+		$temp = explode('}}', $configuration);
+		$fieldSets = array();
+
+		foreach ($temp as $set) {
+			$set = str_replace('{{', '', $set);
+
+			if (trim($set) == '') {
+			} else {
+				$configurationArray[] = trim($set);
+			}
+		}
+
+		foreach ($configurationArray as $config) {
+
+			$options = explode(',', $config);
+			if (count($options) > 1) {
+			} else {
+				return false;
+			}
+
+			$tabFieldsetTitle = str_replace(
+				' ',
+				'&nbsp;',
+				htmlentities(Services::Language()->translate(
+					$options[0]
+				), ENT_COMPAT, 'UTF-8')
+			);
+
+			if ($tabFieldsetTitle == '') {
+				$tabFieldsetTitle = $tabTitle;
+			}
+
+			$translateFieldsetDesc = Services::Language()->translate(strtoupper(
+				strtoupper($namespace) . '_FORM_FIELDSET_'
+					. strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_'
+					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle))  . '_DESC'));
+
+			unset($options[0]);
+
+			$get = 'get' . ucfirst(strtolower($tab_link));
+
+			if ($namespace == 'Edit') {
+				$temp = $this->getActualFields($namespace, $tab_link, $options,
+					$tabTitle, $translateTabDesc,
+					$tabFieldsetTitle, $translateFieldsetDesc,
+					$model_type, $model_name, $extension_instance_id,
+					$item);
+
+			} elseif (method_exists($this, 'get' . $tab_link)) {
+
+				$temp = $this->$get($namespace, $tab_link, $options,
+					$tabTitle, $translateTabDesc,
+					$tabFieldsetTitle, $translateFieldsetDesc,
+					$model_type, $model_name, $extension_instance_id);
+			} else {
+
+				$temp = $this->getParameters($namespace, $tab_link, $options,
+					$tabTitle, $translateTabDesc,
+					$tabFieldsetTitle, $translateFieldsetDesc,
+					$model_type, $model_name, $extension_instance_id);
+			}
+
+			$fieldSets = array_merge((array)$fieldSets, (array)$temp);
+		}
+
+		Services::Registry()->set('Plugindata', $view_name . $namespace . strtolower($tab_link), $fieldSets);
+
+		return true;
+	}
+
+	/**
+	 * Retrieves field definition, current resource setting, and application setting for requested parameters
+	 *
+	 * @param $namespace
+	 * @param $tab_link
+	 * @param $options
+	 * @param $tabTitle
+	 * @param $translateTabDesc
+	 * @param $tabFieldsetTitle
+	 * @param $translateFieldsetDesc
+	 * @param $model_type
+	 * @param $model_name,
+	 * @param $extension_instance_id
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	protected function getParameters($namespace, $tab_link, $options,
+									 $tabTitle, $translateTabDesc,
+									 $tabFieldsetTitle, $translateFieldsetDesc,
+									 $model_type, $model_name, $extension_instance_id)
+	{
+		$fieldValues = array();
+		$build_results = array();
+
+		foreach ($options as $value) {
+
+			if (substr($value, strlen($value) - 1, 1) == '*') {
+				$compare = substr($value, 0, strlen($value) - 1);
+			} else {
+				$compare = $value;
+			}
+
+			if (trim($compare) == '' || strlen($compare) == 0) {
+			} else {
+
+				$data = Services::Registry()->get('ResourcesSystem', 'parameters');
+
+				foreach ($data as $field) {
+
+					$use = false;
+
+					if ($field['name'] == $compare) {
+						$use = true;
+					}
+					if (substr($field['name'], 0, strlen($compare)) == $compare
+						&& strlen($compare) > 0) {
+						$use = true;
+					}
+					if ($use === true) {
+
+						$row = $field;
+
+						$row['tab_title'] = $tabTitle;
+						$row['tab_description'] = $translateTabDesc;
+						$row['tab_fieldset_title'] = $tabFieldsetTitle;
+						$row['tab_fieldset_description'] = $translateFieldsetDesc;
+						$row['value'] = Services::Registry()->get('ResourcesSystemParameters', $field['name']);
+						$row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
+						$build_results[] = $row;
+					}
+				}
+			}
+		}
+
+		if (count($build_results) > 0) {
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+		} else {
+			return array();
+		}
+	}
+
+	/**
+	 * Retrieves field definition, current resource setting, and application setting for requested parameters
+	 *
+	 * @param $namespace
+	 * @param $tab_link
+	 * @param $options
+	 * @param $tabTitle
+	 * @param $translateTabDesc
+	 * @param $tabFieldsetTitle
+	 * @param $translateFieldsetDesc
+	 * @param $model_type
+	 * @param $model_name,
+	 * @param $extension_instance_id
+	 * @param $item
+	 *
+	 * @return  mixed
+	 * @since   1.0
+	 */
+	protected function getActualFields($namespace, $tab_link, $options,
+									 $tabTitle, $translateTabDesc,
+									 $tabFieldsetTitle, $translateFieldsetDesc,
+									 $model_type, $model_name, $extension_instance_id,
+	 								 $item)
+	{
+		$fieldValues = array();
+		$build_results = array();
+		$fieldArray = Services::Registry()->get($model_name . $model_type, 'Fields');
+		$customfieldgroups = Services::Registry()->get($model_name . $model_type, 'customfieldgroups');
+
+		foreach ($options as $value) {
+
+			if (substr($value, strlen($value) - 1, 1) == '*') {
+				$compare = substr($value, 0, strlen($value) - 1);
+			} else {
+				$compare = $value;
+			}
+
+			if (trim($compare) == '' || strlen($compare) == 0) {
+			} else {
+
+				$data = Services::Registry()->get('ResourcesSystem', 'parameters');
+
+				foreach ($data as $field) {
+
+					$use = false;
+
+					if ($field['name'] == $compare) {
+						$use = true;
+					}
+					if (substr($field['name'], 0, strlen($compare)) == $compare
+						&& strlen($compare) > 0) {
+						$use = true;
+					}
+					if ($use === true) {
+
+						$field_name = Services::Registry()->get('ResourcesSystemParameters', $field['name']);
+
+						if ($field_name == '') {
+						} else {
+
+							$row = '';
+
+							foreach ($fieldArray as $field) {
+								foreach ($field as $key => $value) {
+									if ($key == 'name' && $value == $field_name) {
+										$row = $field;
+										$row['customfield'] = '';
+										break;
+									}
+								}
+							}
+
+							foreach ($customfieldgroups as $custom) {
+								if ($custom == 'parameters') {
+								} else {
+									$temp = Services::Registry()->get($model_name . $model_type, $custom);
+									foreach ($temp as $field) {
+										foreach ($field as $key => $value) {
+											if ($key == 'name' && $value == $field_name) {
+												$row = $field;
+												$row['customfield'] = $custom;
+												break;
+											}
+										}
+									}
+								}
+							}
+
+
+							if ($row == '') {
+							} else {
+
+								$row['tab_title'] = $tabTitle;
+								$row['tab_description'] = $translateTabDesc;
+								$row['tab_fieldset_title'] = $tabFieldsetTitle;
+								$row['tab_fieldset_description'] = $translateFieldsetDesc;
+
+								if (isset($item->$field_name)) {
+									$row['value'] = $item->$field_name;
+								} else {
+									$row['value'] = null;
+								}
+
+								$row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
+								$build_results[] = $row;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (count($build_results) > 0) {
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+		} else {
+			return array();
+		}
+	}
+
+	/**
+	 * Retrieves field definition, current resource setting, and application setting for Metadata
+	 *
+	 * @param $namespace
+	 * @param $tab_link
+	 * @param $options
+	 * @param $tabTitle
+	 * @param $translateTabDesc
+	 * @param $tabFieldsetTitle
+	 * @param $translateFieldsetDesc
+	 * @param $model_type
+	 * @param $model_name
+	 * @param $extension_instance_id
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	protected function getMetadata($namespace, $tab_link, $options,
+								   $tabTitle, $translateTabDesc,
+								   $tabFieldsetTitle, $translateFieldsetDesc,
+								   $model_type, $model_name, $extension_instance_id)
+	{
+		$build_results = array();
+
+		foreach (Services::Registry()->get('ResourcesSystem', 'metadata') as $field) {
+			$row = $field;
+			$row['tab_title'] = $tabTitle;
+			$row['tab_description'] = $translateTabDesc;
+			$row['tab_fieldset_title'] = $tabFieldsetTitle;
+			$row['tab_fieldset_description'] = $translateFieldsetDesc;
+			$row['value'] = Services::Registry()->get('ResourcesSystemMetadata', $field['name']);
+			$row['application_default'] = Services::Registry()->get('Configuration', 'metadata_' . $field['name']);
+			$build_results[] = $row;
+		}
+
+		if (count($build_results) > 0) {
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+		} else {
+			return array();
+		}
+	}
+
+	/**
+	 * Retrieves field definition, current resource setting, and application setting for Grid parameters
+	 *
+	 * @param $namespace
+	 * @param $tab_link
+	 * @param $options
+	 * @param $tabTitle
+	 * @param $translateTabDesc
+	 * @param $tabFieldsetTitle
+	 * @param $translateFieldsetDesc
+	 * @param $model_type
+	 * @param $model_name
+	 * @param $extension_instance_id
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	protected function getGrid($namespace, $tab_link, $options,
+							   $tabTitle, $translateTabDesc,
+							   $tabFieldsetTitle, $translateFieldsetDesc,
+							   $model_type, $model_name, $extension_instance_id)
+	{
+		if (Services::Registry()->exists('GridMenuitem') === true) {
+		} else {
+			$item = Helpers::Content()->getResourceMenuitemParameters('Grid', $extension_instance_id);
+			if ($item == false || count($item) == 0) {
+				return false;
+			}
+		}
+
+		$fieldValues = array();
+
+		foreach ($options as $value) {
+			if (substr($value, strlen($value) - 1, 1) == '*') {
+				$compare = substr($value, 0, strlen($value) - 1);
+			} else {
+				$compare = $value;
+			}
+
+			if (trim($compare) == '' || strlen($compare) == 0) {
+			} else {
+
+				foreach (Services::Registry()->get('GridMenuitem', 'parameters') as $field) {
+
+					$use = false;
+					if ($field['name'] == $compare) {
+						$use = true;
+					}
+					if (substr($field['name'], 0, strlen($compare)) == $compare
+						&& strlen($compare) > 0) {
+						$use = true;
+					}
+					if ($use === true) {
+						$row = $field;
+						$row['tab_title'] = $tabTitle;
+						$row['tab_description'] = $translateTabDesc;
+						$row['tab_fieldset_title'] = $tabFieldsetTitle;
+						$row['tab_fieldset_description'] = $translateFieldsetDesc;
+						$row['value'] = Services::Registry()->get('GridMenuitemParameters', $field['name']);
+						$row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
+						$build_results[] = $row;
+					}
+				}
+			}
+		}
+
+		if (count($build_results) > 0) {
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+		} else {
+			return array();
+		}
+	}
+
+	/**
+	 * Retrieves custom fields defined specifically for this resource (and therefore can be updated)
+	 *
+	 * @param $namespace
+	 * @param $tab_link
+	 * @param $options
+	 * @param $tabTitle
+	 * @param $translateTabDesc
+	 * @param $tabFieldsetTitle
+	 * @param $translateFieldsetDesc
+	 * @param $model_type
+	 * @param $model_name
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	protected function getCustomfields($namespace, $tab_link, $options,
+									   $tabTitle, $translateTabDesc,
+									   $tabFieldsetTitle, $translateFieldsetDesc,
+									   $model_type, $model_name)
+	{
+
+		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
+		$custom_fields = Services::Registry()->get($table_registry_name, 'customfieldgroups');
+		if (count($custom_fields) == 0) {
+			return array();
+		}
+
+		$build_results = array();
+		foreach ($custom_fields as $custom_field) {
+
+			$tabFieldsetTitle = str_replace(
+				' ',
+				'&nbsp;',
+				htmlentities(ucfirst(strtolower($custom_field)), ENT_COMPAT, 'UTF-8')
+			);
+
+			$translateFieldsetDesc = Services::Language()->translate(strtoupper(
+				strtoupper($namespace) . '_FORM_FIELDSET_'
+					. strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_'
+					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle))  . '_DESC'));
+
+			foreach (Services::Registry()->get('ArticlesResource', $custom_field) as $field) {
+
+				if ($field['field_inherited'] == 1) {
+				} else {
+
+					$field['tab_title'] = $tabTitle;
+					$field['tab_description'] = $translateTabDesc;
+					$field['tab_fieldset_title'] = $tabFieldsetTitle;
+					$field['tab_fieldset_description'] = $translateFieldsetDesc;
+
+					$field['customfield_type'] = $custom_field;
+
+					$build_results[] = $field;
+				}
+			}
+		}
+
+		if (count($build_results) > 0) {
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+		} else {
+			return array();
+		}
 	}
 
 	/**
@@ -129,13 +716,13 @@ Class FormService
 	 *  2. Fields: Field-specific registries which define attributes input to the template field creation view
 	 *
 	 * @param $namespace
-	 * @param $tabLink
+	 * @param $tab_link
 	 * @param $input_fields
 	 *
 	 * @return array
 	 * @since  1.0
 	 */
-	public function setFieldset($namespace, $tabLink, $input_fields)
+	public function setFieldset($namespace, $tab_link, $input_fields)
 	{
 		$fieldset = array();
 		$previous_tab_fieldset_title = '';
@@ -161,6 +748,14 @@ Class FormService
 				$previous_tab_fieldset_title = $row->tab_fieldset_title;
 				$row->new_fieldset = 1;
 			}
+			if (isset($field['name'])) {
+			} else {
+				echo 'missing name ';
+				echo '<pre>';
+				var_dump($field);
+				echo '</pre>';
+				die;
+			}
 
 			$row->field_id = $field['name'];
 			$row->id = $field['name'];
@@ -176,9 +771,20 @@ Class FormService
 				$row->disabled = 0;
 			}
 
+			if (isset($field['value'])) {
+			} else {
+				$field['value'] = NULL;
+			}
+			$row->value = $field['value'];
+
 			if (isset($field['application_default'])) {
 			} else {
 				$field['application_default'] = NULL;
+			}
+
+			if (isset($field['default'])) {
+			} else {
+				$field['default'] = NULL;
 			}
 
 			if (($field['application_default'] === NULL || $field['application_default'] == ' ')
@@ -295,19 +901,19 @@ Class FormService
 			/** Branch to form-field type logic where Registry will be created for this formfield */
 			switch ($row->view) {
 				case 'formradio':
-					$row->name = $this->setRadioField($namespace, $tabLink, $field, $row);
+					$row->name = $this->setRadioField($namespace, $tab_link, $field, $row);
 					break;
 
 				case 'formselect':
-					$row->name = $this->setSelectField($namespace, $tabLink, $field, $row);
+					$row->name = $this->setSelectField($namespace, $tab_link, $field, $row);
 					break;
 
 				case 'formtextarea':
-					$row->name = $this->setTextareaField($namespace, $tabLink, $field, $row);
+					$row->name = $this->setTextareaField($namespace, $tab_link, $field, $row);
 					break;
 
 				default:
-					$row->name = $this->setInputField($namespace, $tabLink, $field, $row);
+					$row->name = $this->setInputField($namespace, $tab_link, $field, $row);
 					break;
 			}
 
@@ -322,14 +928,14 @@ Class FormService
 	 * setInputField field
 	 *
 	 * @param $namespace
-	 * @param $tabLink
+	 * @param $tab_link
 	 * @param $field
 	 * @param $row_start
 	 *
 	 * @return string
 	 * @since  1.0
 	 */
-	protected function setInputField($namespace, $tabLink, $field, $row_start)
+	protected function setInputField($namespace, $tab_link, $field, $row_start)
 	{
 		$fieldRecordset = array();
 
@@ -362,7 +968,7 @@ Class FormService
 			$fieldRecordset[] = $row;
 		}
 
-		$registryName = $namespace . strtolower($tabLink) . $row->name;
+		$registryName = $namespace . strtolower($tab_link) . $row->name;
 		$registryName = str_replace('_', '', $registryName);
 
 		Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
@@ -374,14 +980,14 @@ Class FormService
 	 * setRadioField field
 	 *
 	 * @param $namespace
-	 * @param $tabLink
+	 * @param $tab_link
 	 * @param $field
 	 * @param $row_start
 	 *
 	 * @return string
 	 * @since  1.0
 	 */
-	protected function setRadioField($namespace, $tabLink, $field, $row_start)
+	protected function setRadioField($namespace, $tab_link, $field, $row_start)
 	{
 		$fieldRecordset = array();
 
@@ -445,7 +1051,7 @@ Class FormService
 
 		$fieldRecordset[] = $row;
 
-		$registryName = $namespace . strtolower($tabLink) . $row->name;
+		$registryName = $namespace . strtolower($tab_link) . $row->name;
 		$registryName = str_replace('_', '', $registryName);
 
 		Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
@@ -457,14 +1063,14 @@ Class FormService
 	 * setSelectField field
 	 *
 	 * @param $namespace
-	 * @param $tabLink
+	 * @param $tab_link
 	 * @param $field
 	 * @param $row_start
 	 *
 	 * @return mixed|string
 	 * @somce  1.0
 	 */
-	protected function setSelectField($namespace, $tabLink, $field, $row_start)
+	protected function setSelectField($namespace, $tab_link, $field, $row_start)
 	{
 		$fieldRecordset = array();
 
@@ -544,8 +1150,13 @@ Class FormService
 			$fieldRecordset[] = $row;
 		}
 
+		if (isset($row)) {
+		} else {
+			return false;
+		}
+
 		/** Field Dataset */
-		$registryName = $namespace . strtolower($tabLink) . $row->name;
+		$registryName = $namespace . strtolower($tab_link) . $row->name;
 		$registryName = str_replace('_', '', $registryName);
 
 		Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
@@ -558,7 +1169,7 @@ Class FormService
 	 *
 	 * @return array
 	 */
-	protected function setTextareaField($namespace, $tabLink, $field, $row_start)
+	protected function setTextareaField($namespace, $tab_link, $field, $row_start)
 	{
 		$fieldRecordset = array();
 
@@ -591,7 +1202,7 @@ Class FormService
 		}
 
 		/** Field Dataset */
-		$registryName = $namespace . strtolower($tabLink) . $row->name;
+		$registryName = $namespace . strtolower($tab_link) . $row->name;
 		$registryName = str_replace('_', '', $registryName);
 
 		Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
