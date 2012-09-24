@@ -275,7 +275,7 @@ Class ParseService
 		/** Final Includers: Now, the theme, head, messages, and defer <includes /> run */
 		$this->sequence = $this->final;
 
-		/** initialize so it is no longer used to exclude this set of include values */
+		/** initialise so it is no longer used to exclude this set of include values */
 		$this->exclude_until_final = array();
 
 		/** Saved from route */
@@ -549,7 +549,7 @@ Class ParseService
 					/** 5. store the "replace this" value */
 					$replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
-					/** 6. initialize registry */
+					/** 6. initialise registry */
 					Services::Registry()->deleteRegistry('Parameters');
 					Services::Registry()->createRegistry('Parameters');
 

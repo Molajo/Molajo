@@ -571,8 +571,6 @@ class Includer
 			$results = $controller->execute();
 			Services::Cache()->set('Template', implode('', $parms), $results);
 		} else {
-			echo 'Loaded from cache' . Services::Registry()->get('Parameters', 'template_view_title') . '<br />';
-
 			$results = $cached_output;
 		}
 

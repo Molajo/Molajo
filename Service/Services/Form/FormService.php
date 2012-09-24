@@ -953,8 +953,20 @@ Class FormService
 			$iterate['disabled'] = ' disabled';
 		}
 
+//		if (isset($field['class'])) {
+//			$iterate['class'] = $field['class'];
+//		} else {
+//			$iterate['class'] = 'editable';
+//		}
+
 		$iterate['value'] = $field['value'];
 
+//		foreach ($field as $key => $value) {
+//			if (in_array($key, $iterate)) {
+//			} else {
+//				$iterate[$key] = $value;
+//			}
+//		}
 		foreach ($iterate as $key => $value) {
 			$row = new \stdClass();
 
@@ -1103,6 +1115,12 @@ Class FormService
 			}
 		}
 
+//		if (isset($field['class'])) {
+//			$iterate['class'] = $field['class'];
+//		} else {
+//			$iterate['class'] = 'editable';
+//		}
+
 		$temp = $field['value'];
 		$default_setting = 0;
 		if ($temp == NULL) {
@@ -1174,8 +1192,6 @@ Class FormService
 		$fieldRecordset = array();
 
 		$iterate = array();
-		$iterate['id'] = $field['name'];
-		$iterate['name'] = $field['name'];
 
 		if ($field['null'] == 1) {
 			$iterate['required'] = ' required';
@@ -1184,6 +1200,26 @@ Class FormService
 		if ($field['disabled'] == 1) {
 			$iterate['disabled'] = ' disabled';
 		}
+
+		if (isset($field['rows'])) {
+			$iterate['rows'] = $field['rows'];
+		}
+
+		if (isset($field['cols'])) {
+			$iterate['cols'] = $field['cols'];
+		}
+
+//		if (isset($field['class'])) {
+//			$iterate['class'] = $field['class'];
+//		} else {
+//			$iterate['class'] = 'editable';
+//		}
+		//foreach ($field as $key => $value) {
+		//	if (in_array($key, $iterate)) {
+		//	} else {
+		//		$iterate[$key] = $value;
+		//	}
+		//}
 
 		$selected = $field['value'];
 

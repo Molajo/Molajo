@@ -1158,16 +1158,13 @@ Class ConfigurationService
 				/** Combine Application and Site Parameters into Configuration */
 				$parameters = Services::Registry()->getArray('ApplicationTableParameters');
 				$profiler_service = 0;
-				$cache_service = 0;
+
 				foreach ($parameters as $key => $value) {
 
 					Services::Registry()->set('Configuration', $key, $value);
 
 					if (strtolower($key) == 'profiler_service') {
 						$profiler_service = $value;
-					}
-					if (strtolower($key) == 'cache_service') {
-						$cache_service = $value;
 					}
 				}
 
@@ -1194,12 +1191,7 @@ Class ConfigurationService
 			Services::Profiler()->initiate();
 		}
 
-		if ((int)$cache_service == 1) {
-			Services::Cache()->startCache();
-			Services::Registry()->set('cache_service', true);
-		} else {
-			Services::Registry()->set('cache_service', false);
-		}
+		Services::Cache()->initialise();
 
 		return $this;
 	}

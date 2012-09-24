@@ -323,25 +323,34 @@ class ReadModel extends Model
 	 */
 	public function getQueryResults($query_object, $offset = 0, $count = 5)
 	{
-		$this->db->setQuery($this->query->__toString(), $offset, $count);
+		$cache_key = $this->query->__toString() . ' ' . $offset . ' ' . $count;
+		$cached_output = Services::Cache()->get('Query', $cache_key);
 
-		if ($query_object == 'result') {
-			$this->query_results = $this->db->loadResult();
-		} else {
-			$this->query_results = $this->db->loadObjectList();
+		if ($cached_output === false) {
+			$this->db->setQuery($this->query->__toString(), $offset, $count);
+
+			if ($query_object == 'result') {
+				$this->query_results = $this->db->loadResult();
+			} else {
+				$this->query_results = $this->db->loadObjectList();
+			}
+
+			if ($count > count($this->query_results)) {
+				$total = count($this->query_results);
+
+			} else {
+
+				/** Get Total Rows that could have been returned for Pagination Calculations */
+				$this->db->setQuery($this->query->__toString(), 0, 99999);
+				$this->db->execute();
+				$total = $this->db->getNumRows();
+			}
+			Services::Cache()->set('Query', $cache_key, $this->query_results);
+		}  else {
+			$this->query_results = $cached_output;
 		}
 
-		if ($count > count($this->query_results)) {
-			$total = count($this->query_results);
-
-		} else {
-
-			/** Get Total Rows that could have been returned for Pagination Calculations */
-			$this->db->setQuery($this->query->__toString(), 0, 99999);
-			$this->db->execute();
-			$total = $this->db->getNumRows();
-		}
-
+		$total = count($this->query_results);
 		return $total;
 	}
 

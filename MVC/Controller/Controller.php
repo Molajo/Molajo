@@ -192,6 +192,14 @@ class Controller
 
 		} else {
 
+			if (trim($model_type) == '' && trim($model_name) == '') {
+				echo 'BOTH ARE SPACE';
+				echo '<pre>';
+				var_dump($this);
+				echo '</pre>';
+				return false;
+			}
+
 			$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
 			if (Services::Registry()->exists($table_registry_name) === true) {
@@ -199,21 +207,32 @@ class Controller
 				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
 
 			} else {
-				if (trim($model_type) == '' && trim($model_name) == '') {
-					echo 'BOTH ARE SPACE';
-					echo '<pre>';
-					var_dump($this);
-					echo '</pre>';
-				}
-				$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
 
-				if ($this->table_registry_name === false) {
-					$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
-					Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
+				$cached_output = Services::Cache()->get('Model', $table_registry_name);
 
-					return false;
+				if ($cached_output === false) {
+					$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
+
+					if ($this->table_registry_name === false) {
+						$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' is not defined. <br />';
+						Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
+						return false;
+
+					} else {
+
+						$cache_it = Services::Registry()->getArray($table_registry_name, false);
+						Services::Cache()->set('Model', $table_registry_name, $cache_it);
+					}
+
+					$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getModel. ';
+
+				} else {
+					$this->table_registry_name = $table_registry_name;
+					Services::Registry()->createRegistry($table_registry_name);
+					Services::Registry()->loadArray($table_registry_name, $cached_output);
+					$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' loaded from cache ';
 				}
-				$profiler_message .= ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService::getModel. ';
+
 			}
 
 			/** Serialize Options */
@@ -540,8 +559,7 @@ class Controller
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
 			Services::Profiler()->set('DisplayController->getData SQL Query: <br /><br />'
-					. $this->model->query->__toString(),
-				LOG_OUTPUT_RENDERING, 0);
+					. $this->model->query->__toString(), LOG_OUTPUT_RENDERING, 0);
 		}
 
 		/** Retrieve query results from Model */

@@ -1,4 +1,5 @@
 <field
        name="content_text"
        type="text"
-       null="1"/>
+       rows="10"
+       cols="50"/>
