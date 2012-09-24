@@ -352,12 +352,7 @@ class Controller
 
 		/** 3. Execute Query, results in $this->query_results */
 		if ($dbo == 'JDatabase') {
-			$cached_output = Services::Cache()->get('Query', $this->model->query->__toString());
-			if ($cached_output == false) {
-				$this->runStandardQuery($query_object);
-			} else {
-				$this->query_results = $cached_output;
-			}
+			$this->runStandardQuery($query_object);
 
 		} else {
 
@@ -385,7 +380,6 @@ class Controller
 
 		/** 5. Return Non-standard DBO */
 		if ($dbo == 'JDatabase') {
-			Services::Cache()->set('Query', $this->model->query->__toString(), $this->query_results);
 		} else {
 			return $this->query_results;
 		}
