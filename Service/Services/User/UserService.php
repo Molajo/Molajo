@@ -81,7 +81,6 @@ Class UserService
 		}
 
 		$m->set('id', $this->id);
-
 		$item = $m->getData('item');
 		if ($item == false || count($item) == 0) {
 			throw new \RuntimeException ('User load() query problem');

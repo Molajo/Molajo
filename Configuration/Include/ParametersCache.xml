@@ -1,0 +1,7 @@
+<include field="cache_service"/>
+<include field="cache_time"/>
+<include field="cache_handler"/>
+<include field="cache_models"/>
+<include field="cache_queries"/>
+<include field="cache_templates"/>
+<include field="cache_pages"/>

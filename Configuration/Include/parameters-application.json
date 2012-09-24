@@ -4,6 +4,14 @@
     "application_google_analytics_code":"xxxx",
     "html5":"1",
 
+    "cache_service":"1",
+    "cache_time":"5",
+    "cache_handler":"file",
+    "cache_models":"0",
+    "cache_queries":"1",
+    "cache_templates":"0",
+    "cache_pages":"0",
+
     "language":"en-GB",
     "language_direction":"ltr",
     "language_multilingual":"0",
@@ -49,10 +57,6 @@
 
     "session_lifetime":"15",
     "session_handler":" ",
-
-    "cache":"0",
-    "cache_time":"5",
-    "cache_handler":"file",
 
     "cookie_domain":"0",
     "cookie_path":"",
@@ -275,6 +279,7 @@
     "menuitem_model_query_object":"",
     "menuitem_model_parameter":"",
 
+    "profiler_service":"0",
     "profiler_error_reporting":"1",
     "profiler_verbose":"1",
     "profiler_start_with":"Initialise",

@@ -153,7 +153,6 @@ Class EventService
 			if (isset($registrations[$pluginClass])) {
 
 				if (method_exists($registrations[$pluginClass], $event)) {
-
 					$results = $this->processPluginClass($registrations[$pluginClass], $event);
 					if ($results == false) {
 						return false;
@@ -170,13 +169,6 @@ Class EventService
 					//throw error
 				}
 
-			} else {
-				Services::Profiler()->set('EventService->schedule Event '
-						. $event . ' No valid registrations for class '
-						. $pluginClass,
-					LOG_OUTPUT_PLUGINS,
-					VERBOSE
-				);
 			}
 		}
 

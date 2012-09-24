@@ -559,14 +559,23 @@ class Includer
 
 		/** Set Parameters */
 		$parms = Services::Registry()->getArray('Parameters');
+		$cached_output = Services::Cache()->get('Template', implode('', $parms));
 
-		if (count($parms) > 0) {
-			foreach ($parms as $key => $value) {
-				$controller->set($key, $value);
+		if ($cached_output === false) {
+			if (count($parms) > 0) {
+				foreach ($parms as $key => $value) {
+					$controller->set($key, $value);
+				}
 			}
+
+			$results = $controller->execute();
+			Services::Cache()->set('Template', implode('', $parms), $results);
+		} else {
+			echo 'Loaded from cache' . Services::Registry()->get('Parameters', 'template_view_title') . '<br />';
+
+			$results = $cached_output;
 		}
 
-		$results = $controller->execute();
 		return $results;
 	}
 }

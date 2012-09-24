@@ -1097,7 +1097,6 @@ Class ConfigurationService
 
 		$m->set('id', (int)SITE_ID);
 		$item = $m->getData('item');
-
 		if ($item === false) {
 			throw new \RuntimeException ('Site getSite() query problem');
 		}
@@ -1144,6 +1143,7 @@ Class ConfigurationService
 				$m->set('name_key_value', APPLICATION);
 
 				$item = $m->getData('item');
+
 				if ($item === false) {
 					throw new \RuntimeException ('Application getApplication() query problem');
 				}
@@ -1157,14 +1157,17 @@ Class ConfigurationService
 
 				/** Combine Application and Site Parameters into Configuration */
 				$parameters = Services::Registry()->getArray('ApplicationTableParameters');
+				$profiler_service = 0;
+				$cache_service = 0;
 				foreach ($parameters as $key => $value) {
+
 					Services::Registry()->set('Configuration', $key, $value);
 
 					if (strtolower($key) == 'profiler_service') {
 						$profiler_service = $value;
 					}
-					if (strtolower($key) == 'cache') {
-						$cache = $value;
+					if (strtolower($key) == 'cache_service') {
+						$cache_service = $value;
 					}
 				}
 
@@ -1191,11 +1194,11 @@ Class ConfigurationService
 			Services::Profiler()->initiate();
 		}
 
-		if ((int)$cache == 1 && class_exists(Services)) {
+		if ((int)$cache_service == 1) {
 			Services::Cache()->startCache();
-			Services::Registry()->set('cache', true);
+			Services::Registry()->set('cache_service', true);
 		} else {
-			Services::Registry()->set('cache', false);
+			Services::Registry()->set('cache_service', false);
 		}
 
 		return $this;

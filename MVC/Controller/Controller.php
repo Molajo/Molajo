@@ -352,7 +352,12 @@ class Controller
 
 		/** 3. Execute Query, results in $this->query_results */
 		if ($dbo == 'JDatabase') {
-			$this->runStandardQuery($query_object);
+			$cached_output = Services::Cache()->get('Query', $this->model->query->__toString());
+			if ($cached_output == false) {
+				$this->runStandardQuery($query_object);
+			} else {
+				$this->query_results = $cached_output;
+			}
 
 		} else {
 
@@ -367,9 +372,8 @@ class Controller
 				$this->query_results = $this->model->$query_object($model_parameter);
 			}
 		}
-//echo '<br /><br />';
-//echo $this->model->query->__toString();
-//echo '<br /><br />';
+
+
 		/** 4. Schedule onAfterRead Event */
 		if (count($this->plugins) > 0) {
 			$this->onAfterReadEvent(
@@ -381,6 +385,7 @@ class Controller
 
 		/** 5. Return Non-standard DBO */
 		if ($dbo == 'JDatabase') {
+			Services::Cache()->set('Query', $this->model->query->__toString(), $this->query_results);
 		} else {
 			return $this->query_results;
 		}
@@ -406,23 +411,10 @@ class Controller
 
 				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
 			}
-
-			if (Services::Registry()->get('cache') == true) {
-				Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results);
-			}
-
 			return $this->query_results;
 		}
 
 		/** 8. Return Item */
-		if (Services::Registry()->get('cache') == true) {
-			Services::Cache()->set(md5($this->model->query->__toString()), $this->query_results[0]);
-		}
-
-//echo '<pre>';
-//var_dump($this->query_results);
-//echo '</pre><br /><br />';
-
 		if (is_array($this->query_results)) {
 			return $this->query_results[0];
 		}
@@ -552,20 +544,12 @@ class Controller
 		$this->pagination_total = (int)$this->model->getQueryResults(
 			$query_object, $this->model_offset, $this->model_count);
 
-		/** Cache */
-		if (Services::Cache()->exists(md5($this->model->query->__toString() . ' ' . $this->model_offset . ' ' . $this->model_count))) {
-			return Services::Cache()->get(md5($this->model->query->__toString() . ' ' . $this->model_offset . ' ' . $this->model_count));
-		}
-
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
 			Services::Profiler()->set('DisplayController->getData SQL Query: <br /><br />'
 					. $this->model->query->__toString(),
 				LOG_OUTPUT_RENDERING, 0);
 		}
 
-//echo '<br /><br />';
-//echo $this->model->query->__toString();
-//echo '<br /><br />';
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
 
@@ -583,10 +567,6 @@ class Controller
 				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, 0);
 			}
 
-			if (Services::Registry()->get('cache') == true) {
-				Services::Cache()->set(md5($this->model->query->__toString()), $query_results);
-			}
-
 			$this->query_results = $query_results;
 
 			return;
@@ -595,10 +575,6 @@ class Controller
 		/** No results */
 		if (count($query_results) > 0) {
 		} else {
-			if (Services::Registry()->get('cache') == true) {
-				Services::Cache()->set(md5($this->model->query->__toString()), $query_results);
-			}
-
 			return false;
 		}
 
@@ -618,7 +594,6 @@ class Controller
 
 					/** Process each field namespace */
 					foreach ($customFieldTypes as $customFieldName) {
-
 						$results =
 							$this->model->addCustomFields(
 								$this->table_registry_name,
@@ -627,7 +602,6 @@ class Controller
 								$this->get('get_customfields'),
 								$results
 							);
-
 					}
 				}
 

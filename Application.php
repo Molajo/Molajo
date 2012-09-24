@@ -433,7 +433,17 @@ Class Application
 			die;
 		}
 
-		$this->rendered_output = Services::Parse()->process();
+		$parms = Services::Registry()->getArray('Parameters');
+		$page_request = Services::Cache()->get('page', implode('', $parms));
+
+		if ($page_request === false) {
+			$results = Services::Parse()->process();
+			Services::Cache()->set('page', implode('', $parms), $results);
+		} else {
+			$results = $page_request;
+		}
+
+		$this->rendered_output = $results;
 
 		return true;
 	}

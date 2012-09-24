@@ -60,6 +60,38 @@ Class CacheService
 	protected $cache_time = 900;
 
 	/**
+	 * Cache Pages
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $cache_pages = '';
+
+	/**
+	 * Cache Templates
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $cache_templates = '';
+
+	/**
+	 * Cache Queries
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $cache_queries = '';
+
+	/**
+	 * Cache Queries
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $cache_models = '';
+
+	/**
 	 * getInstance
 	 *
 	 * @static
@@ -82,7 +114,12 @@ Class CacheService
 	 */
 	public function __construct()
 	{
-		$this->cache = false;
+		$this->cache_service = false;
+
+		$this->cache_models = false;
+		$this->cache_pages = false;
+		$this->cache_queries = false;
+		$this->cache_templates = false;
 
 		return $this;
 	}
@@ -94,13 +131,11 @@ Class CacheService
 	 */
 	public function startCache()
 	{
-		if (Services::Registry()->get('Configuration', 'cache') == 0) {
-			$this->cache = false;
-
+		if (Services::Registry()->get('Configuration', 'cache_service') == 0) {
+			$this->cache_service = false;
 			return false;
 		}
-
-		$this->cache = true;
+		$this->cache_service = true;
 
 		if (Services::Registry()->get('Configuration', 'cache_handler', 'file') == 'file') {
 			$this->system_cache_folder = SITE_BASE_PATH . '/'
@@ -109,10 +144,15 @@ Class CacheService
 			return false;
 		}
 
-		$this->cache_time = (int)Services::Registry()->get('Configuration', 'cache_time', 900);
-		if ($this->cache_time == 0) {
-			$this->cache_time = 900;
+		$this->cache_service_time = (int)Services::Registry()->get('Configuration', 'cache_time', 900);
+		if ($this->cache_service_time == 0) {
+			$this->cache_service_time = 900;
 		}
+
+		$this->cache_models = Services::Registry()->get('Configuration', 'cache_models');
+		$this->cache_pages = Services::Registry()->get('Configuration', 'cache_pages');
+		$this->cache_queries = Services::Registry()->get('Configuration', 'cache_queries');
+		$this->cache_templates = Services::Registry()->get('Configuration', 'cache_templates');
 
 		Services::Registry()->createRegistry('Cachekeys');
 		$this->loadCacheKeys();
@@ -121,39 +161,63 @@ Class CacheService
 	}
 
 	/**
-	 * Determine if cache exists for this object
+	 * Load cache keys
 	 *
-	 * @param string $key md5 name uniquely identifying content
-	 *
-	 * @return boolean The option value.
+	 * @return object
 	 * @since   1.0
 	 */
-	public function exists($key)
+	protected function loadCacheKeys()
 	{
-		if ($this->cache == true) {
-			$exists = Services::Registry()->exists('Cachekeys', $key);
-			if ($exists == false) {
-				return false;
-			}
-
-			return $this->checkExpired($key);
+		if (is_dir($this->system_cache_folder)) {
+		} else {
+			return false;
+			// error
 		}
+
+		$files = Services::Filesystem()->folderFiles($this->system_cache_folder);
+		foreach ($files as $file) {
+			Services::Registry()->set('Cachekeys', $file, 1);
+		}
+
+		if (count($files) == 0
+			|| $files === false
+		) {
+			return $this;
+		}
+
+		foreach ($files as $file) {
+			Services::Registry()->set('Cachekeys', $file, 1);
+		}
+
+		return $this;
 	}
 
 	/**
 	 * Create a cache entry
 	 *
+	 * @param string $type  Page, Template, Query, Model
 	 * @param string $key   md5 name uniquely identifying content
 	 * @param mixed  $value Data to be serialized and then saved as cache
 	 *
-	 * @return object
+	 * @return  mixed
 	 * @since   1.0
 	 */
-	public function set($key, $value)
+	public function set($type, $key, $value)
 	{
+		$continue = $this->verify_cache($type);
+		if ($continue === true) {
+		} else {
+			return false;
+		}
+
+		$key = md5($key);
+		if ($this->exists($key) === true) {
+			return $this;
+		}
+
 		file_put_contents($this->system_cache_folder . '/' . $key, serialize($value));
 
-		Services::Registry()->set('Cachekeys', $key);
+		Services::Registry()->set('Cachekeys', $key, 1);
 
 		return $this;
 	}
@@ -166,13 +230,16 @@ Class CacheService
 	 * @return mixed unserialized cache for this key
 	 * @since   1.0
 	 */
-	public function get($key)
+	public function get($type, $key)
 	{
-		if ($key == 'on') {
-			return $this->cache;
+		$continue = $this->verify_cache($type);
+		if ($continue === true) {
+		} else {
+			return false;
 		}
 
-		if ($this->cache == true) {
+		$key = md5($key);
+		if ($this->exists($key) === true) {
 			return unserialize(file_get_contents($this->system_cache_folder . '/' . $key));
 		}
 
@@ -180,34 +247,27 @@ Class CacheService
 	}
 
 	/**
-	 * Load cache keys
+	 * Determine if cache exists for this object
 	 *
-	 * @return object
+	 * @param string $key md5 name uniquely identifying content
+	 *
+	 * @return boolean The option value.
 	 * @since   1.0
 	 */
-	public function loadCacheKeys()
+	protected function exists($key)
 	{
-		if (is_dir($this->system_cache_folder)) {
+		if ($this->cache_service === true) {
 		} else {
 			return false;
 		}
 
-		$files = Services::Filesystem()->folderFiles($this->system_cache_folder);
-		if (count($files) > 0
-			|| $files === false
-		) {
-			return $this;
+		$exists = Services::Registry()->exists('Cachekeys', $key);
+		if ($exists === true) {
+		} else {
+			return false;
 		}
 
-		foreach ($files as $file) {
-			$results = Services::Registry()->delete('Cachekeys', $file);
-			if ($results === false) {
-			} else {
-				Services::Registry()->set('Cachekeys', $file);
-			}
-		}
-
-		return $this;
+		return $this->checkExpired($key);
 	}
 
 	/**
@@ -218,7 +278,7 @@ Class CacheService
 	 * @return object
 	 * @since   1.0
 	 */
-	public function checkExpired($key)
+	protected function checkExpired($key)
 	{
 
 		if (file_exists($this->system_cache_folder . '/' . $key)) {
@@ -228,11 +288,29 @@ Class CacheService
 			return false;
 		}
 
-		if (filemtime($this->system_cache_folder . '/' . $key) < (time() - $this->cache_time)) {
+		if (filemtime($this->system_cache_folder . '/' . $key) < (time() - $this->cache_service_time)) {
 			return true;
 		}
 
 		$this->delete($key);
+
+		return false;
+	}
+
+	/**
+	 * Flush all cache
+	 *
+	 * @return object
+	 * @since   1.0
+	 */
+	public function flush_cache($type)
+	{
+		$files = Services::Filesystem()->folderFiles($this->system_cache_folder);
+		foreach ($files as $file) {
+			$this->delete($file);
+		}
+
+		return $this;
 	}
 
 	/**
@@ -243,7 +321,7 @@ Class CacheService
 	 * @return object
 	 * @since   1.0
 	 */
-	public function delete($key)
+	protected function delete($key)
 	{
 		if (file_exists($this->system_cache_folder . '/' . $key)) {
 			unlink($this->system_cache_folder . '/' . $key);
@@ -252,5 +330,51 @@ Class CacheService
 		Services::Registry()->delete('Cachekeys', $key);
 
 		return $this;
+	}
+
+	/**
+	 * Verify type of cache
+	 *
+	 * @param $type
+	 * @return bool
+	 */
+	public function verify_cache($type)
+	{
+		if ($this->cache_service === true) {
+		} else {
+			return false;
+		}
+
+		switch (strtolower($type)) {
+			case 'page':
+				if ($this->cache_pages == 1) {
+					return true;
+				} else {
+					return false;
+				}
+
+			case 'template':
+				if ($this->cache_templates == 1) {
+					return true;
+				} else {
+					return false;
+				}
+
+			case 'query':
+				if ($this->cache_queries == 1) {
+					return true;
+				} else {
+					return false;
+				}
+
+			case 'model':
+				if ($this->cache_models == 1) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		return false;
 	}
 }

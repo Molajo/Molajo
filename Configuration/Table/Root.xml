@@ -10,9 +10,7 @@
         </customfield>
 
         <customfield name="parameters">
-            <include field="cache"/>
-            <include field="cache_time"/>
-            <include field="cache_handler"/>
+            <include name="ParametersCache"/>
         </customfield>
     </customfields>
 </model>

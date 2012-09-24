@@ -393,9 +393,9 @@ class ReadModel extends Model
 				}
 			}
 
-			if (is_object($query_results) && isset($query_results->$customFieldName)) {
-				unset($query_results->$customFieldName);
-			}
+//if (is_object($query_results) && isset($query_results->$customFieldName)) {
+//				unset($query_results->$customFieldName);
+//			}
 
 		} else {
 			/** No data in query results for this specific custom field */
