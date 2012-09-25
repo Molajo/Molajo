@@ -1,0 +1,6 @@
+<datalist name="FieldsTemplateviews">
+    <model
+            name="FieldsTemplateviews"
+            extends="PlugindataDatalist"
+            registry_entry="TemplateviewsResourceFields"/>
+</datalist>

@@ -1,0 +1,6 @@
+<datalist name="FieldsGroups">
+    <model
+            name="FieldsGroups"
+            extends="PlugindataDatalist"
+            registry_entry="GroupsResourceFields"/>
+</datalist>

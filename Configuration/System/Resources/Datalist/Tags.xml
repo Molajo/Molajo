@@ -1,0 +1,7 @@
+<datalist name="AuthorTags">
+    <model
+            name="AuthorTags"
+            catalog_type_id="1050"
+            extension_instance_id="70"
+            extends="TagsDatalist"/>
+</datalist>

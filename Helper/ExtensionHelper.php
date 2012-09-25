@@ -297,7 +297,32 @@ Class ExtensionHelper
 
 		$type = Helpers::Extension()->getType($catalog_type_id);
 
-		return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
+		if ($type == 'Resource') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
+			}
+
+			if (file_exists(MOLAJO_FOLDER . '/' . 'Configuration/System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return MOLAJO_FOLDER . '/' . 'Configuration/System' . '/' . ucfirst(strtolower($node));
+			}
+			return false;
+
+		} elseif ($type == 'Menuitem') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
+			}
+
+			return false;
+
+		} elseif ($type == 'Language') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
+			}
+
+			return false;
+		}
+
+		return false;
 	}
 
 	/**
@@ -322,10 +347,33 @@ Class ExtensionHelper
 		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
 			return Helpers::View()->getPathURL($node, 'Wrap');
 
-		} else {
-			$type = Helpers::Extension()->getType($catalog_type_id);
+		}
 
-			return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
+		$type = Helpers::Extension()->getType($catalog_type_id);
+
+		if ($type == 'Resource') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
+			}
+
+			if (file_exists(MOLAJO_FOLDER . '/' . 'Configuration/System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return CORE_SYSTEM_URL . '/' . ucfirst(strtolower($node));
+			}
+			return false;
+
+		} elseif ($type == 'Menuitem') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
+			}
+
+			return false;
+
+		} elseif ($type == 'Language') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
+			}
+
+			return false;
 		}
 	}
 
@@ -348,8 +396,31 @@ Class ExtensionHelper
 		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
 			return Helpers::View()->getNamespace($node, 'Wrap');
 
-		} else {
-			return 'Extension\\Resource\\' . ucfirst(strtolower($node));
+		}
+
+		$type = Helpers::Extension()->getType($catalog_type_id);
+
+		if ($type == 'Resource') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return 'Extension\\Resource\\' . ucfirst(strtolower($node));
+			}
+
+			if (file_exists(MOLAJO_FOLDER . '/' . 'Configuration/System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return 'Vendor\\Molajo\\Configuration\\System\\' . ucfirst(strtolower($node));
+			}
+			return false;
+
+		} elseif ($type == 'Menuitem') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return 'Extension\\Menuitem\\' . ucfirst(strtolower($node));
+			}
+
+			return false;
+
+		} elseif ($type == 'Language') {
+			if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+				return 'Extension\\Language\\' . ucfirst(strtolower($node));
+			}
 		}
 
 		return false;
@@ -437,6 +508,9 @@ Class ExtensionHelper
 			if ($catalog_type == 'Resource') {
 				return CATALOG_TYPE_EXTENSION_RESOURCE;
 
+			} elseif ($catalog_type == 'Menuitem') {
+				return CATALOG_TYPE_EXTENSION_MENU;
+
 			} elseif ($catalog_type == 'Language') {
 				return CATALOG_TYPE_EXTENSION_LANGUAGE;
 
@@ -460,6 +534,9 @@ Class ExtensionHelper
 
 			if ($catalog_type_id == CATALOG_TYPE_EXTENSION_RESOURCE) {
 				return 'Resource';
+
+			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_MENU) {
+				return 'Menuitem';
 
 			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_LANGUAGE) {
 				return 'Language';

@@ -1,8 +1,0 @@
-<datalist name="Categories">
-    <model
-            name="Categories"
-            catalog_type_id="3000"
-            extension_instance_id="3"
-            extends="Content"
-            />
-</datalist>

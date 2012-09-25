@@ -1,8 +1,0 @@
-<datalist name="Menus">
-    <model
-            name="Menus"
-            catalog_type_id="1050"
-            extension_instance_id="80"
-            extends="Content"
-            />
-</datalist>

@@ -627,6 +627,10 @@ Class Application
 			define('CORE_VIEWS', MOLAJO_FOLDER . '/MVC/View');
 		}
 
+		if (defined('CORE_SYSTEM_URL')) {
+		} else {
+			define('CORE_SYSTEM_URL', BASE_URL . 'Vendor/Molajo/Configuration/System');
+		}
 		if (defined('CORE_THEMES_URL')) {
 		} else {
 			define('CORE_THEMES_URL', BASE_URL . 'Vendor/Molajo/Theme');

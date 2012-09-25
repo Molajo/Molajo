@@ -1,0 +1,7 @@
+<datalist name="ContentSites">
+    <model
+            name="ContentSites"
+            catalog_type_id="10"
+            extension_instance_id="50"
+            extends="ContentDatalist"/>
+</datalist>

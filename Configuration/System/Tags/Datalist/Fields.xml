@@ -1,0 +1,6 @@
+<datalist name="FieldsTags">
+    <model
+            name="FieldsTags"
+            extends="PlugindataDatalist"
+            registry_entry="TagsResourceFields"/>
+</datalist>

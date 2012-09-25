@@ -1,0 +1,23 @@
+<datalist name="AuthorGroups">
+<model
+        name="AuthorGroups"
+        table="#__extension_instances"
+        primary_key="id"
+        name_key="title"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="1"
+        check_view_level_access="0"
+        process_plugins="0"
+        published_status="1"
+        data_source="JDatabase"
+        extends="AuthorDatalist"/>
+    <joins>
+        <join model="User"
+              alias="users"
+              select=""
+              jointo="created_by"
+              joinwith="id"/>
+    </joins>
+</datalist>

@@ -1,0 +1,6 @@
+<datalist name="FieldsApplications">
+    <model
+            name="FieldsApplications"
+            extends="PlugindataDatalist"
+            registry_entry="ApplicationsResourceFields"/>
+</datalist>

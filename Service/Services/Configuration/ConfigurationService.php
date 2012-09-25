@@ -347,6 +347,7 @@ Class ConfigurationService
 		}
 
 		if (in_array($model_type, array('Datalist', 'Table'))) {
+
 			if ($extension_path === false) {
 			} else {
 				$path = $extension_path . '/' . $model_type . '/' . $model_name . '.xml';

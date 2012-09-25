@@ -204,6 +204,15 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
 		Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
+		$registry = Services::Registry()->get('Parameters', 'catalog_menuitem_type')
+				. 'Menuitem'
+				. 'Parameters';
+		Services::Registry()->set('Parameters', 'extension_instance_id',
+			Services::Registry()->get($registry, 'criteria_extension_instance_id'));
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 1050);
+		Services::Registry()->set('Parameters', 'extension_name_path_node',
+			Services::Registry()->get($registry, 'menuitem_model_name'));
+
 		$this->setParameters('menuitem',
 			$item->table_registry_name . 'Parameters',
 			$item->table_registry_name . 'Metadata'

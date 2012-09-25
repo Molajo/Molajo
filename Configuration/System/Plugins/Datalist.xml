@@ -1,8 +1,0 @@
-<datalist name="Plugins">
-    <model
-            name="Plugins"
-            catalog_type_id="1450"
-            extension_instance_id="40"
-            extends="ExtensionInstancesTable"
-            />
-</datalist>
