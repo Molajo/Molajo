@@ -12,14 +12,6 @@
     <model
             name="Pageviews"
             catalog_type_id="1150"
-            extension_id="20"
-            extends="RenderTable">
-
-        <customfields>
-            <customfield name="parameters">
-                <include name="ParametersPage"/>
-            </customfield>
-        </customfields>
-    </model>
-
+            extension_instance_id="20"
+            extends="RenderTable"/>
 </extension>

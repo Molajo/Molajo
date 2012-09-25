@@ -1,4 +1,3 @@
-<plugin name="Admin"/>
 <plugin name="Itemurl"/>
 <plugin name="Detailitem"/>
 <plugin name="List"/>
@@ -21,3 +20,8 @@
 <plugin name="Pagination"/>
 <plugin name="Ajax"/>
 <plugin name="Googleanalytics"/>
+<plugin name="Catalogtypeid"/>
+<plugin name="Dateformats"/>
+<plugin name="Version"/>
+<plugin name="Ordering"/>
+<plugin name="Create"/>

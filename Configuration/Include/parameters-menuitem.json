@@ -27,8 +27,8 @@
         "menuitem_type":"Grid",
 
         "menuitem_source_id":"",
-        "menuitem_source_catalog_type_id":"3000",
-        "menuitem_extension_instance_id":"3",
+        "menuitem_source_catalog_type_id":"1300",
+        "menuitem_extension_instance_id":"19",
 
         "menuitem_theme_id":"9020",
         "menuitem_page_view_id":"220",
@@ -42,7 +42,7 @@
         "menuitem_wrap_view_css_class":"",
         "menuitem_wrap_view_role":"",
         "menuitem_wrap_view_property":"",
-        "menuitem_model_name":"Categories",
+        "menuitem_model_name":"Menuitems",
         "menuitem_model_type":"System",
         "menuitem_model_query_object":"list",
         "menuitem_model_parameter":"",
@@ -50,12 +50,12 @@
         "menuitem_model_count":"0",
         "menuitem_model_use_pagination":"1",
 
-        "criteria_title":"Categories",
+        "criteria_title":"Menu Items",
         "criteria_display_view_on_no_results":"0",
         "criteria_snippet_length":"150",
         "criteria_status":"1,2",
-        "criteria_catalog_type_id":"3000",
-        "criteria_extension_instance_id":"3",
+        "criteria_catalog_type_id":"1300",
+        "criteria_extension_instance_id":"90",
 
         "cache":"0",
         "cache_time":"0",

@@ -408,6 +408,14 @@ class Controller
 			return $this->query_results;
 		}
 
+/**
+echo '<br /><br /><pre>';
+echo $this->query->__toString()
+echo '<br /><br />';
+var_dump($this->query_results);
+echo '</pre><br /><br />';
+*/
+
 		/** 7. Return List  */
 		if ($query_object == 'list') {
 

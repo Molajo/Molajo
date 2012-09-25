@@ -95,12 +95,8 @@
         </children>
 
         <plugins>
-            <plugin name="Catalogtypeid"/>
+            <include name="ContentPlugins"/>
             <plugin name="Extensioninstance"/>
-            <plugin name="Dateformats"/>
-            <plugin name="Publishedstatus"/>
-            <plugin name="Version"/>
-            <plugin name="Ordering"/>
             <plugin name="Create"/>
         </plugins>
     </table>

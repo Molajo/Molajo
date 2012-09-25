@@ -417,7 +417,7 @@ Class LanguageService
 	{
 		/** During System Initialization Helper is not loaded yet, instantiate here */
 		$helper = new ExtensionHelper();
-		$installed = $helper->get(0, 'System', 'Languages', 'list', 1100);
+		$installed = $helper->get(0, 'Table', 'Languageservice', 'list', 1100);
 		if ($installed == false || count($installed) < 1) {
 			return false;
 		}
