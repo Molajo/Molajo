@@ -655,8 +655,8 @@ Class AssetService
 			return array();
 		}
 
-		$html5 = Services::Registry()->get('Configuration', 'html5', 1);
-		if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) {
+		$application_html5 = Services::Registry()->get('Configuration', 'application_html5', 1);
+		if ((int)Services::Registry()->get('Configuration', 'application_html5', 1) == 1) {
 			$end = '>' . chr(10);
 		} else {
 			$end = '/>' . chr(10);
@@ -680,7 +680,7 @@ Class AssetService
 				}
 				if ($include == false) {
 				} else {
-					$row->html5 = $html5;
+					$row->application_html5 = $application_html5;
 					$row->end = $end;
 					$row->page_mime_type = Services::Registry()->get('Metadata', 'mimetype');
 					$query_results[] = $row;

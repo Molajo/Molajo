@@ -258,13 +258,19 @@ Class FormService
 										  $model_type, $model_name, $view_name,
 										  $extension_instance_id,  $item)
 	{
-
 		$configurationArray = array();
 
-		$configuration = Services::Registry()->get(
-			'ConfigurationMenuitemParameters',
-			$tab_prefix . strtolower($tab_link)
-		);
+		if ($namespace == 'Application') {
+			$configuration = Services::Registry()->get(
+				'ApplicationMenuitemParameters',
+				$tab_prefix . strtolower($tab_link)
+			);
+		} else {
+			$configuration = Services::Registry()->get(
+				'ConfigurationMenuitemParameters',
+				$tab_prefix . strtolower($tab_link)
+			);
+		}
 
 		$temp = explode('}}', $configuration);
 		$fieldSets = array();
@@ -372,7 +378,11 @@ Class FormService
 			if (trim($compare) == '' || strlen($compare) == 0) {
 			} else {
 
-				$data = Services::Registry()->get('ResourcesSystem', 'parameters');
+				if ($namespace == 'Application') {
+					$data = Services::Registry()->get('ApplicationTable', 'parameters');
+				} else {
+					$data = Services::Registry()->get('ResourcesSystem', 'parameters');
+				}
 
 				foreach ($data as $field) {
 
@@ -393,7 +403,13 @@ Class FormService
 						$row['tab_description'] = $translateTabDesc;
 						$row['tab_fieldset_title'] = $tabFieldsetTitle;
 						$row['tab_fieldset_description'] = $translateFieldsetDesc;
-						$row['value'] = Services::Registry()->get('ResourcesSystemParameters', $field['name']);
+
+						if ($namespace == 'Application') {
+							$row['value'] = Services::Registry()->get('Configuration', $field['name']);
+						} else {
+							$data = Services::Registry()->get('ResourcesSystem', 'parameters');
+						}
+
 						$row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
 						$build_results[] = $row;
 					}
@@ -805,6 +821,10 @@ Class FormService
 				$row->default = $field['application_default'];
 			}
 
+			if (isset($field['application_default'])) {
+			} else {
+				$field['type'] = 'char';
+			}
 			$row->type = $field['type'];
 
 			/** todo: better mapping approach (fields.xml?) for database types to HTML5/form field types */

@@ -1,0 +1,12 @@
+<include field="application_tab_class"/>
+<include field="application_tab_link_namespace"/>
+<include field="application_tab_array"/>
+<include field="application_tab_basic"/>
+<include field="application_tab_user"/>
+<include field="application_tab_media"/>
+<include field="application_tab_system"/>
+<include field="application_tab_views"/>
+<include field="application_tab_form"/>
+<include field="application_tab_item"/>
+<include field="application_tab_list"/>
+

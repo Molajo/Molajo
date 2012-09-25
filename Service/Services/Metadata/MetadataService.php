@@ -111,9 +111,9 @@ Class MetadataService
 	{
 		$query_results = array();
 
-		$html5 = Services::Registry()->get('Configuration', 'html5', 1);
+		$application_html5 = Services::Registry()->get('Configuration', 'application_html5', 1);
 
-		if ((int)Services::Registry()->get('Configuration', 'html5', 1) == 1) {
+		if ((int)Services::Registry()->get('Configuration', 'application_html5', 1) == 1) {
 			$end = '>' . chr(10);
 		} else {
 			$end = '/>' . chr(10);
@@ -165,7 +165,7 @@ Class MetadataService
 			$row->language = 'en';
 
 			/** HTML5 */
-			$row->html5 = $html5;
+			$row->application_html5 = $application_html5;
 			$row->end = $end;
 			$query_results[] = $row;
 
@@ -190,7 +190,7 @@ Class MetadataService
 					}
 
 					/** HTML5 */
-					$row->html5 = $html5;
+					$row->application_html5 = $application_html5;
 					$row->end = $end;
 
 					$query_results[] = $row;
@@ -203,7 +203,7 @@ Class MetadataService
 			$row->name = 'dummy row';
 
 			/** HTML5 */
-			$row->html5 = $html5;
+			$row->application_html5 = $application_html5;
 			$row->end = $end;
 
 			$query_results[] = $row;

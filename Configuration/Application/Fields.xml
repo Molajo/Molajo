@@ -48,6 +48,7 @@
         <datatype>datetime</datatype>
         <datatype>email</datatype>
         <datatype>file</datatype>
+        <datatype>folder</datatype>
         <datatype>id</datatype>
         <datatype>image</datatype>
         <datatype>integer</datatype>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Languagedirection">
+    <table>
+        <values>
+            <value id="ltr" value="Left to Right Language"/>
+            <value id="rtl" value="Right to Left Language"/>
+        </values>
+    </table>
+</model>

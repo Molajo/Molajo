@@ -1,1 +1,1 @@
-<field name="language_direction" type="char" null="0" default="ltr" values="ltr,rtl"/>
+<field name="language_direction" type="char" datalist="Languagedirection" null="0" default="ltr"/>

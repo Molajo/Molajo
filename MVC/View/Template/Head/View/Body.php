@@ -22,12 +22,12 @@ if (trim($id) == '') {
 	$id = ' id="' . htmlspecialchars($id) . '"';
 }
 
-$html5 = $this->row->html5;
+$application_html5 = $this->row->application_html5;
 $end = $this->row->end;
 
 $l = $this->row->language;
 $d = $this->row->language_direction;
-if ((int)$html5 == 1): ?>
+if ((int)$application_html5 == 1): ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js ie oldie"<?php echo trim($d); ?> lang="<?php echo trim($l); ?>"><![endif]-->
 <!--[if IE 7]><html class="no-js ie ie7"<?php echo trim($d); ?> lang="<?php echo trim($l); ?>"><![endif]-->
@@ -42,7 +42,7 @@ if ((int)$html5 == 1): ?>
 <head>
     <title><?php echo $this->row->title; ?></title>
     <base href="<?php echo $this->row->base_url . '"' . $end; ?>
-<?php if ((int)$html5 == 1): ?>
+<?php if ((int)$application_html5 == 1): ?>
     <meta charset="utf-8"<?php echo $end; ?>
 	<?php else : ?>
     <meta http-equiv="Content-Type"
