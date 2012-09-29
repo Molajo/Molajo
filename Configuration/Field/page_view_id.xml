@@ -1,1 +1,1 @@
-<field name="page_view_id" type="integer" datalist="Pages" null="0" default=" "/>
+<field name="page_view_id" type="integer" datalist="Pages" null="0" default="0"/>

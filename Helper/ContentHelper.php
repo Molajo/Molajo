@@ -372,10 +372,6 @@ Class ContentHelper
 
 		Services::Registry()->sort('Parameters');
 
-		/** Path to primary resource for menu item */
-		Services::Registry()->set('Parameters', 'resource_extension_path',  'extension_path');
-
-
 		return true;
 	}
 

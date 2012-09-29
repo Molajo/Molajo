@@ -1,1 +1,1 @@
-<field name="grid_batch_permissions" type="boolean" null="0" default="0"/>
+<field name="grid_batch_permissions" type="boolean" null="0" default="1"/>

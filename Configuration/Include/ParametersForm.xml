@@ -1,4 +1,3 @@
-<include field="form_parent_menu_id"/>
 <include field="form_theme_id"/>
 <include field="form_page_view_id"/>
 <include field="form_page_view_css_id"/>
@@ -11,7 +10,3 @@
 <include field="form_wrap_view_css_class"/>
 <include field="form_wrap_view_role"/>
 <include field="form_wrap_view_property"/>
-<include field="form_model_name"/>
-<include field="form_model_type"/>
-<include field="form_model_query_object"/>
-<include field="form_model_parameter"/>

@@ -12,6 +12,7 @@
         process_plugins="0"
         catalog_type_id="10"
         use_pagination="1"
+        extends="root"
         data_source="JDatabase">
 
     <table>
@@ -23,13 +24,11 @@
             <include field="base_url"/>
             <include field="description"/>
         </fields>
-
-        <foreignkeys>
-            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-        </foreignkeys>
-
-        <plugins>
-            <plugin name="Sites"/>
-        </plugins>
     </table>
+
+    <customfields>
+        <customfield name="parameters">
+            <include name="ParametersDatabase"/>
+        </customfield>
+    </customfields>
 </model>

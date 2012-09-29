@@ -35,12 +35,11 @@ Class ImageService
 	/**
 	 * @var numeric $this->size
 	 *
-	 * 0 - original size
-	 * 1 - xsmall; configuration option, defaults to 50 x 50
-	 * 2 - small; configuration option, defaults to 75 x 75
-	 * 3 - medium; configuration option, defaults to 150 x 150
-	 * 4 - large; configuration option, defaults to 300 x 300
-	 * 5 - xlarge; configuration option, defaults to 500 x 500
+	 * thumbnail; configuration option, defaults to 50 x 50
+	 * small; configuration option, defaults to 75 x 75
+	 * medium; configuration option, defaults to 150 x 150
+	 * large; configuration option, defaults to 300 x 300
+	 * original
 	 */
 	protected $size;
 
@@ -125,14 +124,13 @@ Class ImageService
 		/** initialise  */
 		$this->id = (int)$id;
 		$this->size = (int)$this->size;
-		if ($this->size == 1
-			|| $this->size == 2
-			|| $this->size == 3
-			|| $this->size == 4
-			|| $this->size == 5
+		if ($this->size == 'thumbnail'
+			|| $this->size == 'small'
+			|| $this->size == 'medium'
+			|| $this->size == 'large'
 		) {
 		} else {
-			$this->size = 0;
+			$this->size = 'large';
 		}
 		if ($this->type == 'exact'
 			|| $this->type == 'portrait'
@@ -144,10 +142,10 @@ Class ImageService
 		}
 
 		/** retrieve filename and perform acl check */
-		$results = $this->getImage();
-		if ($results === false) {
-			return false;
-		}
+//		$results = $this->getImage();
+//		if ($results === false) {
+//			return false;
+//		}
 
 		/** return original size, if selected */
 		if ($this->size == 0) {
@@ -249,18 +247,23 @@ Class ImageService
 	protected function createResizedImage()
 	{
 		/** Options: exact, portrait, landscape, auto, crop and size */
-		if ($this->size == 1) {
-			$dimensions = Services::Registry()->get('Configuration', 'image_xsmall', 50);
-		} elseif ($this->size == 2) {
-			$dimensions = Services::Registry()->get('Configuration', 'image_small', 75);
-		} elseif ($this->size == 3) {
-			$dimensions = Services::Registry()->get('Configuration', 'image_medium', 150);
-		} elseif ($this->size == 4) {
-			$dimensions = Services::Registry()->get('Configuration', 'image_large', 300);
-		} elseif ($this->size == 5) {
-			$dimensions = Services::Registry()->get('Configuration', 'image_xlarge', 500);
+		if ($this->size == 'thumbnail') {
+			$width = Services::Registry()->get('Configuration', 'image_thumbnail_width', 50);
+			$height = Services::Registry()->get('Configuration', 'image_thumbnail_height', 50);
+		} elseif ($this->size == 'small') {
+			$width = Services::Registry()->get('Configuration', 'image_small_width', 100);
+			$height = Services::Registry()->get('Configuration', 'image_small_height', 100);
+
+		} elseif ($this->size == 'medium') {
+			$width = Services::Registry()->get('Configuration', 'image_medium_width', 300);
+			$height = Services::Registry()->get('Configuration', 'image_medium_height', 300);
+		} elseif ($this->size == 'medium') {
+			$width = Services::Registry()->get('Configuration', 'image_large_width', 500);
+			$height = Services::Registry()->get('Configuration', 'image_large_height', 500);
+
 		} else {
-			$dimensions = 100;
+			$this->width = imagesx($this->image);
+			$this->height = imagesy($this->image);
 		}
 
 		/** 1. open the original file */
@@ -271,7 +274,7 @@ Class ImageService
 		$this->height = imagesy($this->image);
 
 		/** 3. resize Image */
-		$this->resizeImage($dimensions);
+		$this->resizeImage($width, $height);
 
 		/** 4. Save image */
 
@@ -316,11 +319,11 @@ Class ImageService
 	 * @param  string $this->type
 	 * @return void
 	 */
-	public function resizeImage($dimensions)
+	public function resizeImage($width, $height)
 	{
 		/** Get optimal dimensions based on type */
-		$newWidth = $dimensions;
-		$newHeight = $dimensions;
+		$newWidth = $width;
+		$newHeight = $height;
 		$this->typeArray = $this->getDimensions($newWidth, $newHeight, $this->type);
 
 		$optimalWidth = $this->typeArray['optimalWidth'];

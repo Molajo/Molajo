@@ -1,1 +1,1 @@
-<field name="log_catalog_update_activity" type="boolean" null="0" default="0"/>
+<field name="log_catalog_update_activity" type="boolean" null="0" default="1"/>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="SmtpSecure">
+    <table>
+        <values>
+            <value id="none" value="None"/>
+            <value id="ssl" value="SSL"/>
+            <value id="tls" value="TLS"/>
+        </values>
+    </table>
+</model>

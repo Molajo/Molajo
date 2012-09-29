@@ -3,6 +3,7 @@
         name="Wrapviews"
         catalog_type_id="1250"
         extension_id="24"
+        process_plugins="0"
         extends="RenderTable">
     <customfields>
         <customfield name="parameters">

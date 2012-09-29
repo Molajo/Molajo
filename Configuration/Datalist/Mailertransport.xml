@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Mailertransport">
+    <table>
+        <values>
+            <value id="smtp" value="SMTP"/>
+            <value id="sendmail" value="Sendmail"/>
+            <value id="mail" value="Mail"/>
+        </values>
+    </table>
+</model>

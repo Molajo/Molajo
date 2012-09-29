@@ -323,14 +323,6 @@ Class ConfigurationService
 			$primary_extension_path = Services::Registry()->get('RouteParameters', 'extension_path', '');
 		}
 
-		$resource_extension_path = false;
-		if (Services::Registry()->exists('RouteParameters')) {
-			$resource_extension_path = Services::Registry()->get('RouteParameters', 'resource_extension_path', '');
-		} else {
-			$resource_extension_path = Services::Registry()->get('Parameters', 'resource_extension_path', '');
-		}
-
-		Services::Registry()->get('Parameters', 'resource_extension_path');
 		$theme_path = false;
 		if (Services::Registry()->exists('Parameters', 'theme_path')) {
 			$theme_path = Services::Registry()->get('Parameters', 'theme_path');
@@ -362,13 +354,7 @@ Class ConfigurationService
 					return $path;
 				}
 			}
-			if ($resource_extension_path === false) {
-			} else {
-				$path = $resource_extension_path . '/' . $model_type . '/' . $model_name . '.xml';
-				if (file_exists($path)) {
-					return $path;
-				}
-			}
+
 			$path = EXTENSIONS . '/Resource/' . $model_name . '/' . $model_type . '.xml';
 			if (file_exists($path)) {
 				return $path;
@@ -1144,7 +1130,6 @@ Class ConfigurationService
 				$m->set('name_key_value', APPLICATION);
 
 				$item = $m->getData('item');
-
 				if ($item === false) {
 					throw new \RuntimeException ('Application getApplication() query problem');
 				}
@@ -1162,10 +1147,13 @@ Class ConfigurationService
 
 				foreach ($parameters as $key => $value) {
 
-					Services::Registry()->set('Configuration', $key, $value);
+					if (substr($key, 0, strlen('jdatabase')) == 'jdatabase') {
+					} else {
+						Services::Registry()->set('Configuration', $key, $value);
 
-					if (strtolower($key) == 'profiler_service') {
-						$profiler_service = $value;
+						if (strtolower($key) == 'profiler_service') {
+							$profiler_service = $value;
+						}
 					}
 				}
 
@@ -1174,6 +1162,8 @@ Class ConfigurationService
 				foreach ($metadata as $key => $value) {
 					Services::Registry()->set('Configuration', 'metadata_' . $key, $value);
 				}
+
+				Services::Registry()->delete('Configuration', 'jdatabase*');
 
 			} catch (\Exception $e) {
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
@@ -1188,7 +1178,7 @@ Class ConfigurationService
 
 		Services::Registry()->sort('Configuration');
 
-		if ((int)$profiler_service === 1) {
+		if ((int) Services::Registry()->get('Configuration', 'profiler_service') == 1) {
 			Services::Profiler()->initiate();
 		}
 

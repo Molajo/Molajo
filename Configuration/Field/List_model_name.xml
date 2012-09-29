@@ -1,1 +1,1 @@
-<field name="list_model_name" fieldset="model" type="char" null="0" default=""/>
+<field name="list_model_name" type="char" null="0" default=""/>

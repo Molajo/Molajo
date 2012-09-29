@@ -1,0 +1,1 @@
+<field name="jdatabase_dbtype" type="char" null="0" default="" datalist="DatabaseType"/>

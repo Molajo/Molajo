@@ -1,1 +1,1 @@
-<field name="mailer_smtpport" type="char" null="0" default=" "/>
+<field name="mailer_smtpport" type="integer" null="0" default="25"/>

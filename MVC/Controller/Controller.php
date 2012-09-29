@@ -456,7 +456,7 @@ echo '</pre><br /><br />';
 			$this->plugins = array();
 			return;
 		}
-
+	   echo $this->get('model_name') . $this->get('model_type') . ': ' . (int)$this->get('process_plugins') . '<br />';
 		if ((int)$this->get('process_plugins') == 1) {
 			$temp = Services::Registry()->get($this->table_registry_name, 'plugins', array());
 			if (is_array($temp)) {
@@ -464,7 +464,6 @@ echo '</pre><br /><br />';
 			}
 
 			$temp = Services::Registry()->get('Parameters', 'template_view_path_node');
-			$this->plugins[] = str_replace('-', '', $temp);
 			$this->plugins[] = APPLICATION;
 
 		} else {

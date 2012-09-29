@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Htmlortext">
+    <table>
+        <values>
+            <value id="html" value="HTML"/>
+            <value id="text" value="Text"/>
+        </values>
+    </table>
+</model>

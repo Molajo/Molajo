@@ -99,17 +99,15 @@
             <foreignkey name="version_id" source_id="id" source_model="Content" required="1"/>
         </foreignkeys>
 
-        <plugins>
-            <include name="ContentPlugins"/>
-        </plugins>
-
     </table>
 
     <customfields>
         <customfield name="parameters">
             <include name="ParametersEnable"/>
             <include name="ParametersForm"/>
+            <include name="ParametersFormModel"/>
             <include name="ParametersItem"/>
+            <include name="ParametersItemModel"/>
         </customfield>
     </customfields>
 </model>

@@ -1,1 +1,1 @@
-<field name="cache_handler" type="char" null="0" default="file"/>
+<field name="cache_handler" type="char" null="0" datalist="CacheHandler" default="file"/>

@@ -17,8 +17,11 @@
                 <include name="ParametersEdit"/>
                 <include name="ParametersEnable"/>
                 <include name="ParametersForm"/>
+                <include name="ParametersFormModel"/>
                 <include name="ParametersItem"/>
+                <include name="ParametersItemModel"/>
                 <include name="ParametersList"/>
+                <include name="ParametersListModel"/>
             </customfield>
         </customfields>
     </model>

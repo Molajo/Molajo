@@ -1,1 +1,1 @@
-<field name="mailer_transport" type="char" null="0" default="text" values="SMTP,Sendmail,Mail"/>
+<field name="mailer_transport" type="char" null="0" default="text" datalist="Mailertransport"/>

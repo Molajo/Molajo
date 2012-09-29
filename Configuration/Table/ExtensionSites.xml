@@ -6,6 +6,7 @@
         name_key="name"
         use_pagination="1"
         extends="root"
+        process_plugins="0"
         data_source="JDatabase">
     <table>
         <fields>
@@ -20,10 +21,5 @@
         <children>
             <child name="Extensions" type="Table" join="site_id"/>
         </children>
-        <plugins>
-            <plugin name="Customfields"/>
-            <plugin name="Metadata"/>
-            <plugin name="Parameters"/>
-        </plugins>
     </table>
 </model>

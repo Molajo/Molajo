@@ -1,5 +1,3 @@
-<include field="item_parent_menu_id"/>
-
 <include field="item_theme_id"/>
 
 <include field="item_page_view_id"/>
@@ -15,8 +13,3 @@
 <include field="item_wrap_view_css_class"/>
 <include field="item_wrap_view_role"/>
 <include field="item_wrap_view_property"/>
-
-<include field="item_model_name"/>
-<include field="item_model_type"/>
-<include field="item_model_query_object"/>
-<include field="item_model_parameter"/>

@@ -1,1 +1,1 @@
-<field name="session_handler" type="char" null="0" default="file"/>
+<field name="session_handler" type="char" null="0" datalist="SessionHandler" default="file"/>

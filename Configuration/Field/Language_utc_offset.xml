@@ -1,1 +1,1 @@
-<field name="language_utc_offset" type="char" null="0" default="UTC"/>
+<field name="language_utc_offset" type="char" null="0" datalist="Utc"/>

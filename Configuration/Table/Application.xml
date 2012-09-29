@@ -7,12 +7,12 @@
         primary_prefix="a"
         get_customfields="1"
         get_item_children="0"
-        use_special_joins="0"
+        use_special_joins="1"
         check_view_level_access="0"
         process_plugins="0"
         catalog_type_id="50"
         use_pagination="0"
-        extends="root"
+        extends="site"
         data_source="JDatabase">
 
     <table>
@@ -30,6 +30,14 @@
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
         </foreignkeys>
+
+        <joins>
+            <join model="Catalog"
+                  alias="catalog"
+                  select="catalog_type_id,source_id,sef_request,view_group_id,redirect_to_id"
+                  jointo="source_id,catalog_type_id"
+                  joinwith="id,catalog_type_id"/>
+        </joins>
 
         <children>
             <child name="SiteApplications" type="Table" join="application_id"/>
@@ -51,9 +59,8 @@
 
         <customfield name="parameters">
             <include field="application_name"/>
-            <include field="application_home_catalog_id"/>
-            <include field="application_logon_requirement"/>
             <include field="application_google_analytics_code"/>
+            <include field="application_logon_requirement"/>
             <include field="application_html5"/>
 
             <include field="language"/>
@@ -68,21 +75,7 @@
             <include field="system_media_folder"/>
             <include field="system_media_url"/>
 
-            <include field="mailer_transport"/>
-            <include field="mailer_html_or_text"/>
-            <include field="mailer_disable_sending"/>
-            <include field="mailer_only_deliver_to"/>
-            <include field="mailer_mail_from"/>
-            <include field="mailer_mail_reply_to"/>
-
-            <include field="mailer_send_mail"/>
-
-            <include field="mailer_smtpauth"/>
-            <include field="mailer_smtpuser"/>
-            <include field="mailer_smtphost"/>
-            <include field="mailer_smtppass"/>
-            <include field="mailer_smtpsecure"/>
-            <include field="mailer_smtpport"/>
+            <include name="ParametersMailer"/>
 
             <include field="url_sef"/>
             <include field="url_unicode_slugs"/>
@@ -91,82 +84,44 @@
             <include field="session_lifetime"/>
             <include field="session_handler"/>
 
-            <include name="ParametersCache"/>
-
             <include field="cookie_domain"/>
             <include field="cookie_path"/>
 
             <include name="ParametersUserDefaults"/>
 
-            <field name="log_user_update_activity"/>
-            <field name="log_user_view_activity"/>
-            <field name="log_catalog_update_activity"/>
-            <field name="log_catalog_view_activity"/>
+            <include field="log_user_update_activity"/>
+            <include field="log_user_view_activity"/>
+            <include field="log_catalog_update_activity"/>
+            <include field="log_catalog_view_activity"/>
 
-            <field name="gravatar" type="boolean" null="0" default="0"/>
-            <field name="gravatar_size" type="integer" null="0" default="80"/>
-            <field name="gravatar_type" type="char" null="0" default="mm" values="404,mm,identicon,monsterid,wavatar"/>
-            <field name="gravatar_rating" type="char" null="0" default="pg" values="g,pg,r,x"/>
-            <field name="gravatar_image" type="integer" null="0" default="1"/>
+            <include name="ParametersGravatar"/>
 
-            <field name="image_xsmall" type="char" null="0" default="50,50"/>
-            <field name="image_small" type="char" null="0" default="75,75"/>
-            <field name="image_medium" type="char" null="0" default="150,150"/>
-            <field name="image_large" type="char" null="0" default="300,300"/>
-            <field name="image_xlarge" type="char" null="0" default="500,350"/>
-            <field name="image_folder" type="folder" null="0" default="Images"/>
-            <field name="image_thumb_folder" type="folder" null="0" default="Thumbs"/>
+            <include name="ParametersImage"/>
 
+            <include field="head_enable_use"/>
             <include field="head_template_view_id"/>
             <include field="head_wrap_view_id"/>
-            <include field="head_enable_use"/>
 
+            <include field="defer_enable_use"/>
             <include field="defer_template_view_id"/>
             <include field="defer_wrap_view_id"/>
-            <include field="defer_enable_use"/>
 
             <include name="ParametersAssets"/>
 
             <include field="message_template_view_id"/>
             <include field="message_wrap_view_id"/>
 
+            <include field="offline_switch"/>
+            <include field="offline_message"/>
             <include field="offline_theme_id"/>
             <include field="offline_page_view_id"/>
-            <include field="offline"/>
-            <include field="offline_message"/>
 
             <include field="error_theme_id"/>
             <include field="error_page_view_id"/>
             <include field="error_404_message"/>
             <include field="error_403_message"/>
 
-            <include field="uibutton"/>
-            <include field="uibuttongroup"/>
-            <include field="uibuttondropdown"/>
-
-            <include field="uinavigationnavbar"/>
-            <include field="uinavigationverticalnav"/>
-            <include field="uinavigationadministrator"/>
-            <include field="uinavigationsidenav"/>
-            <include field="uinavigationsubnav"/>
-            <include field="uinavigationbreadcrumbs"/>
-            <include field="uinavigationpagination"/>
-            <include field="uinavigationpager"/>
-            <include field="uinavigationtabgroup"/>
-            <include field="uinavigationtab"/>
-            <include field="uinavigationlinklist"/>
-
-            <include field="uielementslabels"/>
-            <include field="uielementstooltips"/>
-            <include field="uielementsaccordion"/>
-            <include field="uielementspanel"/>
-            <include field="uielementsprogress"/>
-            <include field="uielementsmodal"/>
-            <include field="uielementsalerts"/>
-            <include field="uielementscarousel"/>
-            <include field="uielementspanel"/>
-
-            <include field="uitabgroupclass"/>
+            <include name="ParametersUserInterface"/>
 
             <include name="ParametersEnable"/>
             <include name="ParametersForm"/>

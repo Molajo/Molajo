@@ -13,5 +13,6 @@
             name="Applications"
             catalog_type_id="50"
             extension_instance_id="60"
+            process_plugins="0"
             extends="ApplicationTable"/>
 </extension>

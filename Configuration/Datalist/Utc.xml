@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Utc">
+    <table>
+        <values>
+            <value id="UTC-12" value="UTC-12"/>
+            <value id="UTC-11.5" value="UTC-11:30"/>
+            <value id="UTC-11" value="UTC-11"/>
+            <value id="UTC-10.5" value="UTC-10:30"/>
+            <value id="UTC-10" value="UTC-10"/>
+            <value id="UTC-9.5" value="UTC-9:30"/>
+            <value id="UTC-9" value="UTC-9"/>
+            <value id="UTC-8.5" value="UTC-8:30"/>
+            <value id="UTC-8" value="UTC-8"/>
+            <value id="UTC-7.5" value="UTC-7:30"/>
+            <value id="UTC-7" value="UTC-7"/>
+            <value id="UTC-6.5" value="UTC-6:30"/>
+            <value id="UTC-6" value="UTC-6"/>
+            <value id="UTC-5.5" value="UTC-5:30"/>
+            <value id="UTC-5" value="UTC-5"/>
+            <value id="UTC-4.5" value="UTC-4:30"/>
+            <value id="UTC-4" value="UTC-4"/>
+            <value id="UTC-3.5" value="UTC-3:30"/>
+            <value id="UTC-3" value="UTC-3"/>
+            <value id="UTC-2.5" value="UTC-2:30"/>
+            <value id="UTC-2" value="UTC-2"/>
+            <value id="UTC-1.5" value="UTC-1:30"/>
+            <value id="UTC-1" value="UTC-1"/>
+            <value id="UTC-0.5" value="UTC-0:30"/>
+            <value id="UTC+0" value="UTC+0"/>
+            <value id="UTC+0.5" value="UTC+0:30"/>
+            <value id="UTC+1" value="UTC+1"/>
+            <value id="UTC+1.5" value="UTC+1:30"/>
+            <value id="UTC+2" value="UTC+2"/>
+            <value id="UTC+2.5" value="UTC+2:30"/>
+            <value id="UTC+3" value="UTC+3"/>
+            <value id="UTC+3.5" value="UTC+3:30"/>
+            <value id="UTC+4" value="UTC+4"/>
+            <value id="UTC+4.5" value="UTC+4:30"/>
+            <value id="UTC+5" value="UTC+5"/>
+            <value id="UTC+5.5" value="UTC+5:30"/>
+            <value id="UTC+5.75" value="UTC+5:45"/>
+            <value id="UTC+6" value="UTC+6"/>
+            <value id="UTC+6.5" value="UTC+6:30"/>
+            <value id="UTC+7" value="UTC+7"/>
+            <value id="UTC+7.5" value="UTC+7:30"/>
+            <value id="UTC+8" value="UTC+8"/>
+            <value id="UTC+8.5" value="UTC+8:30"/>
+            <value id="UTC+8.75" value="UTC+8:45"/>
+            <value id="UTC+9" value="UTC+9"/>
+            <value id="UTC+9.5" value="UTC+9:30"/>
+            <value id="UTC+10" value="UTC+10"/>
+            <value id="UTC+10.5" value="UTC+10:30"/>
+            <value id="UTC+11" value="UTC+11"/>
+            <value id="UTC+11.5" value="UTC+11:30"/>
+            <value id="UTC+12" value="UTC+12"/>
+            <value id="UTC+12.75" value="UTC+12:45"/>
+            <value id="UTC+13" value="UTC+13"/>
+            <value id="UTC+13.75" value="UTC+13:45"/>
+            <value id="UTC+14" value="UTC+14"/>
+        </values>
+    </table>
+</model>

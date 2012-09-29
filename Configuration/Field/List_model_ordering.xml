@@ -1,8 +1,7 @@
 <field name="list_model_ordering"
-       type="integer"
+       type="char"
        null="0"
-       default="0"
+       default=" "
        datalist="Fields"
-       fieldset="model"
         />
 

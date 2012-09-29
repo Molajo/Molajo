@@ -8,7 +8,7 @@
         get_item_children="0"
         use_special_joins="0"
         check_view_level_access="0"
-        process_plugins="1"
+        process_plugins="0"
         use_pagination="1"
         data_source="JDatabase">
     <table>
@@ -48,10 +48,6 @@
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
         </foreignkeys>
-
-        <plugins>
-            <plugin name="Catalog"/>
-        </plugins>
 
     </table>
 </model>

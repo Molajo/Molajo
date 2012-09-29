@@ -8,7 +8,7 @@
         get_item_children="0"
         use_special_joins="1"
         check_view_level_access="1"
-        process_plugins="1"
+        process_plugins="0"
         use_pagination="1"
         extends="root"
         data_source="JDatabase">
@@ -94,12 +94,8 @@
             <child name="ApplicationExtensionInstances" type="Table" join="extension_instance_id"/>
         </children>
 
-        <plugins>
-            <include name="ContentPlugins"/>
-            <plugin name="Extensioninstance"/>
-            <plugin name="Create"/>
-        </plugins>
     </table>
+
     <customfields>
         <customfield name="parameters">
             <include field="criteria_title"/>

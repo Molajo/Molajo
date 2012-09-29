@@ -91,7 +91,7 @@ Class RouteService
 		}
 
 		/** See if Application is in Offline Mode */
-		if (Services::Registry()->get('Configuration', 'offline', 0) == 1) {
+		if (Services::Registry()->get('Configuration', 'offline_switch', 0) == 1) {
 			Services::Error()->set(503);
 			Services::Profiler()->set('Application::Route() Direct to Offline Mode', 'Route');
 
@@ -122,11 +122,13 @@ Class RouteService
 		/** URL Change Redirect from Catalog */
 		if ((int)Services::Registry()->get('Parameters', 'redirect_to_id', 0) == 0) {
 		} else {
+
 			Services::Response()->redirect(
 				Helpers::Catalog()->getURL(
 					Services::Registry()->get('Parameters', 'redirect_to_id', 0)
 				), 301
 			);
+
 			Services::Profiler()->set('Application::Route() Redirect', 'Route');
 
 			return false;

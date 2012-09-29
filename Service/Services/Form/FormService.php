@@ -50,11 +50,11 @@ Class FormService
 	 * @return array
 	 * @since  1.0
 	 */
-	public function getFieldlist ($model_type, $model_name)
+	public function getFieldlist($model_type, $model_name)
 	{
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
-		if (Services::Registry()->exists($table_registry_name) === true)  {
+		if (Services::Registry()->exists($table_registry_name) === true) {
 		} else {
 			Helpers::Content()->getResourceContentParameters($model_type, $model_name);
 		}
@@ -95,7 +95,7 @@ Class FormService
 			}
 		}
 
-		$customfields =  Services::Registry()->get($table_registry_name, 'Customfields');
+		$customfields = Services::Registry()->get($table_registry_name, 'Customfields');
 		if (count($customfields) > 0) {
 			foreach ($customfields as $field) {
 				$row = new \stdClass();
@@ -106,7 +106,7 @@ Class FormService
 			}
 		}
 
-		$metadata =  Services::Registry()->get($table_registry_name, 'Metadata');
+		$metadata = Services::Registry()->get($table_registry_name, 'Metadata');
 		if (count($metadata) > 0) {
 			foreach ($metadata as $field) {
 				$row = new \stdClass();
@@ -172,7 +172,7 @@ Class FormService
 			);
 
 			$translateTabDesc = Services::Language()->translate(strtoupper(
-				strtoupper($namespace) . '_FORM_' . strtoupper(str_replace('&nbsp;', '_', $tabTitle))  . '_DESC'));
+				strtoupper($namespace) . '_FORM_' . strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_DESC'));
 
 			$tab_link = $split[1];
 
@@ -256,7 +256,7 @@ Class FormService
 	protected function createTabFieldsets($namespace, $tab_prefix, $tab_link,
 										  $tabTitle, $translateTabDesc,
 										  $model_type, $model_name, $view_name,
-										  $extension_instance_id,  $item)
+										  $extension_instance_id, $item)
 	{
 		$configurationArray = array();
 
@@ -307,7 +307,7 @@ Class FormService
 			$translateFieldsetDesc = Services::Language()->translate(strtoupper(
 				strtoupper($namespace) . '_FORM_FIELDSET_'
 					. strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_'
-					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle))  . '_DESC'));
+					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle)) . '_DESC'));
 
 			unset($options[0]);
 
@@ -385,18 +385,17 @@ Class FormService
 				}
 
 				foreach ($data as $field) {
-
 					$use = false;
 
 					if ($field['name'] == $compare) {
 						$use = true;
 					}
 					if (substr($field['name'], 0, strlen($compare)) == $compare
-						&& strlen($compare) > 0) {
+						&& strlen($compare) > 0
+					) {
 						$use = true;
 					}
 					if ($use === true) {
-
 						$row = $field;
 
 						$row['tab_title'] = $tabTitle;
@@ -407,7 +406,7 @@ Class FormService
 						if ($namespace == 'Application') {
 							$row['value'] = Services::Registry()->get('Configuration', $field['name']);
 						} else {
-							$data = Services::Registry()->get('ResourcesSystem', 'parameters');
+							$row['value'] = Services::Registry()->get('ResourcesSystemParameters', $field['name']);
 						}
 
 						$row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
@@ -443,14 +442,15 @@ Class FormService
 	 * @since   1.0
 	 */
 	protected function getActualFields($namespace, $tab_link, $options,
-									 $tabTitle, $translateTabDesc,
-									 $tabFieldsetTitle, $translateFieldsetDesc,
-									 $model_type, $model_name, $extension_instance_id,
-	 								 $item)
+									   $tabTitle, $translateTabDesc,
+									   $tabFieldsetTitle, $translateFieldsetDesc,
+									   $model_type, $model_name, $extension_instance_id,
+									   $item)
 	{
 		$fieldValues = array();
 		$build_results = array();
 		$fieldArray = Services::Registry()->get($model_name . $model_type, 'Fields');
+
 		$customfieldgroups = Services::Registry()->get($model_name . $model_type, 'customfieldgroups');
 
 		foreach ($options as $value) {
@@ -474,7 +474,8 @@ Class FormService
 						$use = true;
 					}
 					if (substr($field['name'], 0, strlen($compare)) == $compare
-						&& strlen($compare) > 0) {
+						&& strlen($compare) > 0
+					) {
 						$use = true;
 					}
 					if ($use === true) {
@@ -634,7 +635,8 @@ Class FormService
 						$use = true;
 					}
 					if (substr($field['name'], 0, strlen($compare)) == $compare
-						&& strlen($compare) > 0) {
+						&& strlen($compare) > 0
+					) {
 						$use = true;
 					}
 					if ($use === true) {
@@ -646,6 +648,7 @@ Class FormService
 						$row['value'] = Services::Registry()->get('GridMenuitemParameters', $field['name']);
 						$row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
 						$build_results[] = $row;
+
 					}
 				}
 			}
@@ -699,7 +702,7 @@ Class FormService
 			$translateFieldsetDesc = Services::Language()->translate(strtoupper(
 				strtoupper($namespace) . '_FORM_FIELDSET_'
 					. strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_'
-					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle))  . '_DESC'));
+					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle)) . '_DESC'));
 
 			foreach (Services::Registry()->get('ArticlesResource', $custom_field) as $field) {
 
@@ -821,10 +824,12 @@ Class FormService
 				$row->default = $field['application_default'];
 			}
 
-			if (isset($field['application_default'])) {
+			if (isset($field['type'])) {
 			} else {
+				echo $field['name'] . ' unknown type';
 				$field['type'] = 'char';
 			}
+
 			$row->type = $field['type'];
 
 			/** todo: better mapping approach (fields.xml?) for database types to HTML5/form field types */
@@ -889,7 +894,8 @@ Class FormService
 					break;
 
 				default:
-					echo 'WHAT IS THIS TYPE? ' . $row->type . '<br />';
+					echo 'WHAT IS THIS TYPE? (changing to text) ' . $row->type . ' Name: ' . $row->name . '<br />';
+					$row->type = 'text';
 					$row->view = 'forminput';
 					break;
 			}
@@ -903,11 +909,6 @@ Class FormService
 
 			/** Changes to field needed in following methods */
 			$field['type'] = $row->type;
-
-			if (isset($field['value'])) {
-			} else {
-				$field['value'] = NULL;
-			}
 
 			if (isset($field['null'])) {
 			} else {
@@ -1143,7 +1144,7 @@ Class FormService
 
 		$temp = $field['value'];
 		$default_setting = 0;
-		if ($temp == NULL) {
+		if ($temp === NULL) {
 			$temp = $field['default'];
 			$default_setting = 1;
 		}

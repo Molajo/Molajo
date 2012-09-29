@@ -1,5 +1,3 @@
-<include field="list_parent_menu_id"/>
-
 <include field="list_theme_id"/>
 
 <include field="list_page_view_id"/>

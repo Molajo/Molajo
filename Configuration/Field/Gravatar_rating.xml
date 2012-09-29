@@ -1,0 +1,1 @@
+<field name="gravatar_rating" type="char" null="0" default="pg" datalist="GravatarRating"/>
