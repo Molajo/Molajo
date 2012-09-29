@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Extension\Plugin\Statusfields;
+namespace Molajo\Plugin\Statusfields;
 
 use Molajo\Plugin\Content\ContentPlugin;
 

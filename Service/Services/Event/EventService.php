@@ -375,6 +375,15 @@ Class EventService
 		Services::Registry()->set('Events', $event, $count);
 		Services::Registry()->set($event, $plugin, $pluginPath);
 
+		/** Retrieve number of registrations or register new event */
+		$exists = Services::Registry()->exists('Plugins');
+		if ($exists === true) {
+		} else {
+			Services::Registry()->createRegistry('Plugins');
+		}
+
+		Services::Registry()->set('Plugins', $plugin, 1);
+
 		return $this;
 	}
 }

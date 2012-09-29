@@ -256,16 +256,11 @@ Class ProfilerService
 			$memory = memory_get_usage(true) / 1048576;
 		}
 
-		$memory = $this->getMicrotimeFloat() - $this->profiler_started_time;
-
 		if ($memory > $this->previous_memory) {
 			$memory_difference = $memory - $this->previous_memory;
 		} else {
 			$memory_difference = 0;
 		}
-
-		$this->previous_time = $elapsed;
-		$this->previous_memory = $memory;
 
 		try {
 
@@ -305,6 +300,9 @@ Class ProfilerService
 		} catch (\Exception $e) {
 			throw new \RuntimeException('Unable to add Log Entry: ' . $message . ' ' . $e->getMessage());
 		}
+
+		$this->previous_time = $elapsed;
+		$this->previous_memory = $memory;
 
 		return true;
 	}

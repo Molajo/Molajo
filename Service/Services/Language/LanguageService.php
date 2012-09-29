@@ -136,15 +136,15 @@ Class LanguageService
 	 */
 	public function load($path, $language = null)
 	{
-		if ($language == null) {
+		if ($language === null) {
 			$language = Services::Registry()->get('Languages', 'Current');
 		}
 
 		/** Core or extension files */
 		if ($path == EXTENSIONS_LANGUAGES) {
-			$path = $path . '/' . $language;
+			$path .= '/' . $language;
 		} else {
-			$path = $path . '/Language';
+			$path .= '/Language';
 		}
 
 		if (Services::Filesystem()->folderExists($path)) {
@@ -193,63 +193,54 @@ Class LanguageService
 		} else {
 			$loadedPaths[] = $path;
 		}
-
-		/** Retrieve the list of files already loaded for this language */
-		$loadedFiles = Services::Registry()->get($language, 'LoadedFiles', array());
+		Services::Registry()->set($language, 'LoadedPaths', $loadedPaths);
 
 		/** Retrieve the files that should now be loaded for this language */
 		$loadFiles = Services::Filesystem()->folderFiles($path, '.ini');
-		if ($loadFiles == false) {
+		if ($loadFiles === false) {
 			return true;
 		}
 
-		/** Retrieve the list of strings already loaded for this language */
-		$loadedStrings = Services::Registry()->getArray($language . 'translate');
-
-		$new = array();
 		/** Process each file, loading the language strings and override strings */
 		foreach ($loadFiles as $file) {
 
+			/** Load language file */
 			$filename = $path . '/' . $file;
 
-			/** standard file */
-			if (in_array($filename, $loadedFiles)) {
-			} else {
-
-				/** Load primary file */
+			$strings = false;
+			if (Services::Filesystem()->fileExists($filename)) {
 				$strings = $this->parse($filename);
-				$loadedFiles[] = $filename;
+			}
 
-				/** load the corresponding override */
-				$filename = $path . '/' . $language . '.override.ini';
-				if (Services::Filesystem()->fileExists($filename)) {
-					$override_strings = $this->parse($filename);
-					$loadedFiles[] = $filename;
-				} else {
-					$override_strings = array();
+			if ($strings === false) {
+				$strings = array();
+			}
+
+			if (count($strings) > 0) {
+				foreach ($strings as $key => $value) {
+					Services::Registry()->set($language . 'translate', $key, $value);
 				}
+			}
 
-				/** Save strings in an array */
-				if (is_array($strings) && is_array($override_strings)) {
-					$new = array_merge($strings, $override_strings);
-				} else {
-					$new = $strings;
+			/** override language */
+			$filename = $path . '/' . $language . '.override.ini';
+
+			$strings = false;
+			if (Services::Filesystem()->fileExists($filename)) {
+				$strings = $this->parse($filename);
+			}
+
+			if ($strings === false) {
+				$strings = array();
+			}
+
+			if (count($strings) > 0) {
+				foreach ($strings as $key => $value) {
+					Services::Registry()->set($language . 'translate', $key, $value);
 				}
 			}
 		}
 
-		if (is_array($loadedStrings) && is_array($new)) {
-			$loadedStrings = array_merge($loadedStrings, $new);
-		}
-
-		/** Update registry for work accomplished */
-		Services::Registry()->set($language, 'LoadedPaths', $loadedPaths);
-		Services::Registry()->set($language, 'LoadedFiles', $loadedFiles);
-		Services::Registry()->set($language, 'LoadedStrings', $loadedStrings);
-
-		foreach ($loadedStrings as $key => $value) {
-			Services::Registry()->set($language . 'translate', $key, $value);
-		}
 		Services::Registry()->sort($language . 'translate');
 
 		return true;
@@ -278,7 +269,7 @@ Class LanguageService
 			$contents = str_replace(LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
 			$strings = parse_ini_string($contents, false, INI_SCANNER_RAW);
 		} else {
-			$strings = array();
+			return false;
 		}
 
 		/** restore previous error tracking */
@@ -286,7 +277,11 @@ Class LanguageService
 			ini_set('track_errors', false);
 		}
 
-		return $strings;
+		if (is_array($strings)) {
+			return $strings;
+		}
+
+		return false;
 	}
 
 	/**

@@ -113,11 +113,22 @@ class Includer
 			return false;
 		}
 
-		/** load resources required before extension runs */
+		if (Services::Registry()->get('Parameters', 'template_view_title') == 'Admingrid') {
+			$message = 'Includer:: Loadlanguage.<br />';
+			Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
+		}
 		$this->loadLanguage();
+
+		if (Services::Registry()->get('Parameters', 'template_view_title') == 'Admingrid') {
+			$message = 'Includer:: LoadPlugins.<br />';
+			Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
+		}
 		$this->loadPlugins();
 
-		/** instantiate MVC and render output */
+		if (Services::Registry()->get('Parameters', 'template_view_title') == 'Admingrid') {
+			$message = 'Includer:: Going into invokeMVC.<br />';
+			Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
+		}
 		$rendered_output = $this->invokeMVC();
 
 		/** only load media if there was rendered output */
@@ -333,8 +344,6 @@ class Includer
 				}
 			}
 		}
-
-//		Services::Registry()->merge('RouteParameters', 'Parameters', false);
 
 		/** Template  */
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');

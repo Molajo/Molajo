@@ -452,22 +452,26 @@ echo '</pre><br /><br />';
 	 */
 	protected function getPluginList($query_object)
 	{
+		$this->plugins = array();
+
 		if ($query_object == 'result') {
-			$this->plugins = array();
-			return;
-		}
-	   echo $this->get('model_name') . $this->get('model_type') . ': ' . (int)$this->get('process_plugins') . '<br />';
-		if ((int)$this->get('process_plugins') == 1) {
+
+		} elseif ((int)$this->get('process_plugins') == 1) {
+
 			$temp = Services::Registry()->get($this->table_registry_name, 'plugins', array());
 			if (is_array($temp)) {
-				$this->plugins = $temp;
+			} else {
+				$temp = array();
 			}
 
-			$temp = Services::Registry()->get('Parameters', 'template_view_path_node');
-			$this->plugins[] = APPLICATION;
+			$temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');
 
-		} else {
-			$this->plugins = array();
+			foreach ($temp as $plugin) {
+				if ((int) Services::Registry()->get('Plugins', $plugin . 'Plugin') > 0) {
+					$this->plugins[] = $plugin;
+				}
+			}
+
 		}
 
 		return;

@@ -438,7 +438,7 @@ Class ExtensionHelper
 	 */
 	public function loadLanguage($path = null)
 	{
-		if ($path == null) {
+		if ($path === null) {
 			$path = Services::Registry()->get('Parameters', 'extension_path');
 		}
 
