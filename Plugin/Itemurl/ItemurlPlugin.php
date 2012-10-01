@@ -79,6 +79,32 @@ class ItemurlPlugin extends ContentPlugin
 			}
 		}
 
+		$status = $this->data->status;
+
+		if ($status === null) {
+			return true;
+		}
+
+		if ($status == '2') {
+			$status_name = Services::Language()->translate('Archived');
+		} elseif ($status == '1') {
+			$status_name = Services::Language()->translate('Published');
+		} elseif ($status == '0') {
+			$status_name = Services::Language()->translate('Unpublished');
+		} elseif ($status == '-1') {
+			$status_name = Services::Language()->translate('Trashed');
+		} elseif ($status == '-2') {
+			$status_name = Services::Language()->translate('Spammed');
+		} elseif ($status == '-5') {
+			$status_name = Services::Language()->translate('Draft');
+		} elseif ($status == '-10') {
+			$status_name = Services::Language()->translate('Version');
+		} else {
+			return true;
+		}
+
+		$this->saveField(null, 'status_name', $status_name);
+
 		return true;
 	}
 }

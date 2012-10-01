@@ -98,7 +98,7 @@
 
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-            <foreignkey name="checked_out_by" source_id="id" source_model="User" required="1"/>
+            <foreignkey name="checked_out_by" source_id="id" source_model="User" required="0"/>
             <foreignkey name="created_by" source_id="id" source_model="User" required="1"/>
             <foreignkey name="modified_by" source_id="id" source_model="User" required="1"/>
             <foreignkey name="extension_instance_id" source_id="id" source_model="ExtensionInstances" required="1"/>

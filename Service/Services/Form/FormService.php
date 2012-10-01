@@ -104,6 +104,7 @@ Class FormService
 		$fieldArray = array();
 
 		$normalFields = Services::Registry()->get($table_registry_name, 'fields');
+		$status = 0;
 
 		if (count($normalFields) > 0) {
 			foreach ($normalFields as $field) {
@@ -111,8 +112,21 @@ Class FormService
 				$row->value = $field['name'];
 				$row->id = $field['name'];
 
+				if ($field['name'] == 'status') {
+					$status = 1;
+				}
+
 				$fieldArray[] = $row;
 			}
+		}
+
+		if ($status == 0) {
+		} else {
+			$row = new \stdClass();
+			$row->value = 'status_name';
+			$row->id = 'status_name';
+
+			$fieldArray[] = $row;
 		}
 
 		$joins = Services::Registry()->get($table_registry_name, 'joins');
@@ -140,7 +154,7 @@ Class FormService
 			foreach ($customfields as $field) {
 				$row = new \stdClass();
 				$row->value = $field['name'] . ' (customfield)';
-				$row->id = 'customfields' . '.' . $field['name'];
+				$row->id = 'customfield' . '_' . $field['name'];
 
 				$fieldArray[] = $row;
 			}
@@ -150,8 +164,8 @@ Class FormService
 		if (count($metadata) > 0) {
 			foreach ($metadata as $field) {
 				$row = new \stdClass();
-				$row->value = $field['name'] . ' (metadata)';
-				$row->id = 'metadata' . '.' . $field['name'];
+				$row->value = 'metadata' . '_' . $field['name'];
+				$row->id = 'metadata' . '_' . $field['name'];
 
 				$fieldArray[] = $row;
 			}
@@ -778,6 +792,7 @@ Class FormService
 					$row['tab_fieldset_title'] = $tabFieldsetTitle;
 					$row['tab_fieldset_description'] = $translateFieldsetDesc;
 					$row['value'] = null;
+					$row['first_following'] = 0;
 
 					$row['customfield_type'] = 'Create';
 
@@ -788,9 +803,22 @@ Class FormService
 
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
-		$custom_fields = Services::Registry()->get($table_registry_name, 'customfieldgroups');
+		$custom_fields = array();
+		$custom_fields[] = 'metadata';
+		$custom_fields[] = 'customfields';
+		$custom_fields[] = 'parameters';
+
+		$first = 1;
+
+		$temp = Services::Registry()->get($table_registry_name, 'customfieldgroups');
 		if (count($custom_fields) == 0) {
-			return array();
+		} else {
+			foreach ($temp as $item) {
+				if (in_array($item, $custom_fields)) {
+				} else {
+					$custom_fields[] = $item;
+				}
+			}
 		}
 
 		/** Fields defined specifically for this resource */
@@ -807,7 +835,9 @@ Class FormService
 					. strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_'
 					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle)) . '_DESC'));
 
-			foreach (Services::Registry()->get($table_registry_name, $custom_field) as $field) {
+			$fields = Services::Registry()->get($table_registry_name, $custom_field);
+
+			foreach ($fields as $field) {
 
 				if ($field['field_inherited'] == 1) {
 				} else {
@@ -816,6 +846,9 @@ Class FormService
 					$field['tab_description'] = $translateTabDesc;
 					$field['tab_fieldset_title'] = $tabFieldsetTitle;
 					$field['tab_fieldset_description'] = $translateFieldsetDesc;
+					$field['first_following'] = $first;
+
+					$first = 0;
 
 					$field['customfield_type'] = $custom_field;
 
@@ -1061,6 +1094,10 @@ Class FormService
 				default:
 					$row->name = $this->setInputField($namespace, $tab_link, $field, $row);
 					break;
+			}
+
+			if (isset($field['first_following'])) {
+				$row->first_following = $field['first_following'];
 			}
 
 			$fieldset[] = $row;

@@ -345,7 +345,9 @@ class ReadModel extends Model
 				$this->db->execute();
 				$total = $this->db->getNumRows();
 			}
+
 			Services::Cache()->set('Query', $cache_key, $this->query_results);
+
 		}  else {
 			$this->query_results = $cached_output;
 		}
@@ -437,15 +439,17 @@ class ReadModel extends Model
 			/** Filter Input and Save the Registry */
 			//$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
-			if ($retrieval_method == 1
-				|| strtolower($customFieldName) == 'parameters'
-				|| strtolower($customFieldName) == 'metadata'
-			) {
+			if ($retrieval_method == 1) {
 				/** Option 1: all custom field pairs are saved in Registry */
 				Services::Registry()->set($useRegistryName, $name, $setValue);
 
 			} else {
 				/** Option 2: Make each custom field a "regular" field in query results */
+				if (strtolower($customFieldName) == 'parameters'
+					|| strtolower($customFieldName) == 'metadata') {
+
+					$name = strtolower($customFieldName) . '_' . $name;
+				}
 				$query_results->$name = $setValue;
 			}
 		}

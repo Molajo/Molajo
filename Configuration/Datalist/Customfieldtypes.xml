@@ -2,9 +2,9 @@
 <model name="Customfieldtypes">
     <table>
         <values>
-            <value id="customfields" value="Custom Field"/>
+            <value id="customfields" value="Customfield"/>
             <value id="metadata" value="Metadata"/>
             <value id="parameters" value="Parameter"/>
-\        </values>
+        </values>
     </table>
 </model>

@@ -5,21 +5,13 @@
         primary_key="id"
         name_key="title"
         primary_prefix="a"
-        get_customfields="0"
-        get_item_children="0"
-        use_special_joins="1"
-        check_view_level_access="0"
-        process_plugins="0"
-        published_status="1"
-        catalog_type_id="100,110,120"
+        extension_instance_id="7"
+        catalog_type_id="100"
         data_source="JDatabase">
     <table>
         <fields>
-            <include field="id_pk"/>
-            <field name="title" type="char" null="0" default="" unique="1"/>
+            <include field="id"/>
+            <include field="title"/>
         </fields>
-        <plugins>
-            <plugin name="Publishedstatus"/>
-        </plugins>
     </table>
 </model>
