@@ -37,13 +37,6 @@ class EditPlugin extends ContentPlugin
 			return true;
 		}
 
-		$resource_table_registry = ucfirst(strtolower($this->get('model_name')))
-			. ucfirst(strtolower($this->get('model_type')));
-
-		/** Retrieve Resource Field List */
-		$fieldArray = Services::Form()->getFieldlist($this->get('model_type'), $this->get('model_name'));
-		Services::Registry()->set('Plugindata', $resource_table_registry . 'Fields', $fieldArray);
-
 		/** Get Actual Data for matching to Fields */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();

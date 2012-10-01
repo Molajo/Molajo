@@ -1,0 +1,6 @@
+<datalist name="Menuitemtypes">
+    <model
+            name="Menuitemtypes"
+            extends="PlugindataDatalist"
+            registry_entry="Menuitemtypes"/>
+</datalist>

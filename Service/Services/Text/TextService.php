@@ -5,6 +5,7 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Text;
+
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -127,19 +128,27 @@ Class TextService
 	 */
 	public function getList($filter, $parameters)
 	{
-		/** Lists created and stored in Registry */
-		$values = Services::Registry()->get('Datalist', $filter);
-		if (is_array($values) && count($values) > 0) {
-			$query_results = $values;
-			return $query_results;
-		}
 
-		/** Queries */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Datalist', $filter);
 		if ($results === false) {
 			return false;
+		}
+
+		if ($m->parameters['registry_entry'] == '') {
+		} else {
+			$registry_entry = $m->parameters['registry_entry'];
+			if ($registry_entry === false) {
+			} else {
+
+				$values = Services::Registry()->get('Datalist', $registry_entry);
+				if ($values === false || count($values) === 0) {
+				} else {
+					$query_results = $values;
+					return $query_results;
+				}
+			}
 		}
 
 		$values = Services::Registry()->get($filter . 'Datalist', 'values');
@@ -350,12 +359,15 @@ Class TextService
 	 */
 	public function buildSelectlist($listname, $items, $multiple = 0, $size = 5)
 	{
-		ksort($items);
-
 		/** todo: Retrieve selected field from request */
 		$selected = '';
 
 		$query_results = array();
+
+		if (count($items) == 0) {
+			return false;
+		}
+
 		foreach ($items as $item) {
 
 			$row = new \stdClass();

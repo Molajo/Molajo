@@ -151,8 +151,7 @@ Class RouteService
 
 		$this->getRouteParameters();
 
-		/**   Return to Application Object */
-		return $this;
+		return true;
 	}
 
 	/**

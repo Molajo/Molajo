@@ -41,9 +41,8 @@ Class FormService
 		return self::$instance;
 	}
 
-
 	/**
-	 * getFieldlist retrieves the complete list of data elements for the specified model
+	 * getCustomfieldForm retrieves the list of custom fields defined specifically for this model
 	 *
 	 * @param $model_type
 	 * @param $model_name
@@ -78,100 +77,6 @@ Class FormService
 			}
 		}
 
-		return $fieldArray;
-	}
-
-	/**
-	 * getFieldlist retrieves the complete list of data elements for the specified model
-	 *
-	 * @param $model_type
-	 * @param $model_name
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	public function getFieldlist($model_type, $model_name)
-	{
-		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-
-		if (Services::Registry()->exists($table_registry_name) === true) {
-		} else {
-			Helpers::Content()->getResourceContentParameters($model_type, $model_name);
-		}
-
-		$primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
-
-		$fieldArray = array();
-
-		$normalFields = Services::Registry()->get($table_registry_name, 'fields');
-		$status = 0;
-
-		if (count($normalFields) > 0) {
-			foreach ($normalFields as $field) {
-				$row = new \stdClass();
-				$row->value = $field['name'];
-				$row->id = $field['name'];
-
-				if ($field['name'] == 'status') {
-					$status = 1;
-				}
-
-				$fieldArray[] = $row;
-			}
-		}
-
-		if ($status == 0) {
-		} else {
-			$row = new \stdClass();
-			$row->value = 'status_name';
-			$row->id = 'status_name';
-
-			$fieldArray[] = $row;
-		}
-
-		$joins = Services::Registry()->get($table_registry_name, 'joins');
-
-		if (count($joins) > 0) {
-			foreach ($joins as $field) {
-				$temp = explode(',', $field['select']);
-				if (count($temp) > 0) {
-					foreach ($temp as $f) {
-						if (trim($f) == '') {
-						} else {
-							$row = new \stdClass();
-							$row->value =  $field['alias'] . '_' . $f;
-							$row->id = $field['alias'] . '_' . $f;
-
-							$fieldArray[] = $row;
-						}
-					}
-				}
-			}
-		}
-
-		$customfields = Services::Registry()->get($table_registry_name, 'Customfields');
-		if (count($customfields) > 0) {
-			foreach ($customfields as $field) {
-				$row = new \stdClass();
-				$row->value = $field['name'] . ' (customfield)';
-				$row->id = 'customfield' . '_' . $field['name'];
-
-				$fieldArray[] = $row;
-			}
-		}
-
-		$metadata = Services::Registry()->get($table_registry_name, 'Metadata');
-		if (count($metadata) > 0) {
-			foreach ($metadata as $field) {
-				$row = new \stdClass();
-				$row->value = 'metadata' . '_' . $field['name'];
-				$row->id = 'metadata' . '_' . $field['name'];
-
-				$fieldArray[] = $row;
-			}
-		}
-
-		sort($fieldArray);
 		return $fieldArray;
 	}
 

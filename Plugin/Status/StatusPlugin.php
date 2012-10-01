@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Plugin\Statusfields;
+namespace Molajo\Plugin\Status;
 
 use Molajo\Service\Services;
 use Molajo\Plugin\Content\ContentPlugin;
@@ -12,13 +12,13 @@ use Molajo\Plugin\Content\ContentPlugin;
 defined('MOLAJO') or die;
 
 /**
- * Statusfields Url
+ * Status Url
  *
  * @package     Molajo
  * @subpackage  Plugin
  * @since       1.0
  */
-class StatusfieldsPlugin extends ContentPlugin
+class StatusPlugin extends ContentPlugin
 {
 
 	/**
@@ -34,31 +34,25 @@ class StatusfieldsPlugin extends ContentPlugin
 	 */
 	public function onAfterRead()
 	{
-		if (defined('ROUTE')) {
-		} else {
-			return true;
-		}
-		//todo: figure out why this plugin is ignored, then move the logic out of the ItemURL plugin
 		$status = $this->get('status');
-
 		if ($status === null) {
 			return true;
 		}
 
 		if ($status == '2') {
-			$status_name = Services::Languages()->translate('Archived');
+			$status_name = Services::Language()->translate('Archived');
 		} elseif ($status == '1') {
-			$status_name = Services::Languages()->translate('Published');
+			$status_name = Services::Language()->translate('Published');
 		} elseif ($status == '0') {
-			$status_name = Services::Languages()->translate('Unpublished');
+			$status_name = Services::Language()->translate('Unpublished');
 		} elseif ($status == '-1') {
-			$status_name = Services::Languages()->translate('Trashed');
+			$status_name = Services::Language()->translate('Trashed');
 		} elseif ($status == '-2') {
-			$status_name = Services::Languages()->translate('Spammed');
+			$status_name = Services::Language()->translate('Spammed');
 		} elseif ($status == '-5') {
-			$status_name = Services::Languages()->translate('Draft');
+			$status_name = Services::Language()->translate('Draft');
 		} elseif ($status == '-10') {
-			$status_name = Services::Languages()->translate('Version');
+			$status_name = Services::Language()->translate('Version');
 		} else {
 			return true;
 		}

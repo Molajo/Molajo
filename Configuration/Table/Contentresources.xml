@@ -9,6 +9,7 @@
         </children>
 
         <plugins>
+            <plugin name="Status"/>
             <plugin name="Itemurl"/>
             <plugin name="Mockimage"/>
             <plugin name="Blockquote"/>
@@ -28,8 +29,8 @@
             <plugin name="Version"/>
             <plugin name="Ordering"/>
             <plugin name="Create"/>
-
         </plugins>
+
     </table>
     <customfields>
         <customfield name="customfields">

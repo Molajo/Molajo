@@ -48,7 +48,7 @@ class UseractivityPlugin extends ContentPlugin
 			return $this->setUserActivityLog();
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -63,7 +63,7 @@ class UseractivityPlugin extends ContentPlugin
 			return $this->setUserActivityLog();
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -77,6 +77,8 @@ class UseractivityPlugin extends ContentPlugin
 		if ($this->get('criteria_log_user_activity_delete', 0) == 1) {
 			return $this->setUserActivityLog();
 		}
+
+		return true;
 	}
 
 	/**

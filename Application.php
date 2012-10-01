@@ -493,10 +493,13 @@ Class Application
 			Services::Profiler()
 				->set('Response Code 200', LOG_OUTPUT_APPLICATION);
 
-			$results = Services::Response()
+			Services::Response()
 				->setContent($this->rendered_output)
 				->setStatusCode(200)
 				->send();
+
+			$results = Services::Response()
+				->getStatusCode();
 
 		} else {
 
@@ -505,10 +508,15 @@ Class Application
 				. 'Redirect to: ' . Services::Redirect()->url
 				. LOG_OUTPUT_APPLICATION);
 
-			$results = Services::Redirect()->redirect()->send();
+			Services::Redirect()
+				->redirect()
+				->send();
+
+			$results = Services::Redirect()
+				->getStatusCode();
 		}
 
-		if ($results === true) {
+		if ($results == 200) {
 			Services::Profiler()->set('Application Schedule onAfterResponse', LOG_OUTPUT_PLUGINS);
 			$results = Services::Event()->schedule('onAfterResponse');
 			if (is_array($results)) {
@@ -517,7 +525,7 @@ Class Application
 		}
 
 		Services::Profiler()
-			->set('Response exit ' . (int)$results, LOG_OUTPUT_APPLICATION);
+			->set('Response exit ' . $results, LOG_OUTPUT_APPLICATION);
 
 		return true;
 	}

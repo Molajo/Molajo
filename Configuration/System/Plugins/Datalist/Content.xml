@@ -1,7 +1,7 @@
-<datalist name="ContentPlugins">
+<datalist name="Content">
     <model
-            name="ContentPlugins"
-            catalog_type_id="1450"
-            extension_instance_id="40"
-            extends="ContentDatalist"/>
+            name="Content"
+            catalog_type_id=""
+            extension_instance_id=""
+            extends="Content"/>
 </datalist>
