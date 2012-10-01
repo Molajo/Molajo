@@ -356,7 +356,7 @@ Class ProfilerService
 
 		$results = $this->setProfilerLogger();
 
-		if ($results == false) {
+		if ($results === false) {
 			$this->on = 0;
 
 			return $this;
@@ -453,7 +453,7 @@ Class ProfilerService
 		$results = $logMethod = 'set' . ucfirst(strtolower($this->profiler_options['logger'])) . 'Logger';
 		$this->$logMethod();
 
-		if ($results == false) {
+		if ($results === false) {
 			$this->profiler_options = array();
 			$this->profiler_options['logger'] = LOG_ECHO_LOGGER;
 		}

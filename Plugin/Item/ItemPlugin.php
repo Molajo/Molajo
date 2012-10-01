@@ -44,7 +44,7 @@ class ItemPlugin extends ContentPlugin
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 		$results = $connect->connect($this->get('model_type'), $this->get('model_name'));
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

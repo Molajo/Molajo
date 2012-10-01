@@ -66,7 +66,7 @@ Class RouteService
 		Services::Registry()->set('Parameters', 'redirect_to_id', 0);
 
 		/** Overrides */
-		if ((int)Services::Registry()->get('Override', 'catalog_id', false) == true) {
+		if ((int)Services::Registry()->get('Override', 'catalog_id', false) === true) {
 			Services::Registry()->set('Parameters', 'request_catalog_id', 0);
 
 		} else {
@@ -74,7 +74,7 @@ Class RouteService
 				(int)Services::Registry()->get('Override', 'catalog_id'));
 		}
 
-		if (Services::Registry()->get('Override', 'url_request', false) == false) {
+		if (Services::Registry()->get('Override', 'url_request', false) === false) {
 			$path = Application::Request()->get('requested_resource_for_route');
 
 		} else {
@@ -84,7 +84,7 @@ Class RouteService
 		/** Check for duplicate content URL for Home (and redirect, if found) */
 		$continue = $this->checkHome($path);
 
-		if ($continue == false) {
+		if ($continue === false) {
 			Services::Profiler()->set('Route checkHome() Redirect to Real Home', 'Route');
 
 			return false;
@@ -101,7 +101,7 @@ Class RouteService
 		/** Identify Resource and sub-resource values */
 		$continue = $this->getResource();
 
-		if ($continue == false) {
+		if ($continue === false) {
 			Services::Profiler()->set('Route getResource() Failed', 'Route');
 
 			return false;

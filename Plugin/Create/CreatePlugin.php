@@ -180,7 +180,7 @@ class CreatePlugin extends ContentPlugin
 	protected function copy($source, $destination)
 	{
 		$results = Services::Filesystem()->folderCopy($source, $destination);
-		if ($results == false) {
+		if ($results === false) {
 			//error copying source to destination
 			return false;
 		}
@@ -276,7 +276,7 @@ class CreatePlugin extends ContentPlugin
 		}
 
 		$results = Services::Filesystem()->folderMove($existingName, $newName, $path);
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -306,7 +306,7 @@ class CreatePlugin extends ContentPlugin
 		}
 
 		$results = Services::Filesystem()->fileMove($existingName, $newName, $path);
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -544,7 +544,7 @@ class CreatePlugin extends ContentPlugin
 
 		echo 'after delete';
 		//todo - test to see if the folder is there since a false is returned from j!
-//		if ($results == false) {
+//		if ($results === false) {
 //			//error copying source to destination
 //			return false;
 //		}

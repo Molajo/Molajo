@@ -178,7 +178,7 @@ Class MailService
 
 		/** ACL Check */
 		$results = $this->permission();
-		if ($results == true) {
+		if ($results === true) {
 		} else {
 			return $results;
 		}

@@ -61,7 +61,7 @@ Class MenuService
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'MenuitemsNested');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -107,7 +107,7 @@ Class MenuService
 		$m = new $controllerClass();
 
 		$results = $m->connect('System', 'Menuitems');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

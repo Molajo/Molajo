@@ -99,7 +99,7 @@ class UseractivityPlugin extends ContentPlugin
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'UserActivity');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

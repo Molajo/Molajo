@@ -38,14 +38,14 @@ class CatalogPlugin extends ContentPlugin
 		/** Catalog Activity: fields populated by Catalog Activity plugins */
 		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
 			$results = $this->logUserActivity($id, Services::Registry()->get('Actions', 'create'));
-			if ($results == false) {
+			if ($results === false) {
 				return false;
 			}
 		}
 
 		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
 			$results = $this->logCatalogActivity($id, Services::Registry()->get('Actions', 'create'));
-			if ($results == false) {
+			if ($results === false) {
 				return false;
 			}
 		}
@@ -64,7 +64,7 @@ class CatalogPlugin extends ContentPlugin
 		if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
 			$results = $this->logUserActivity($this->data->id,
 				Services::Registry()->get('Actions', 'delete'));
-			if ($results == false) {
+			if ($results === false) {
 				return false;
 			}
 		}
@@ -72,7 +72,7 @@ class CatalogPlugin extends ContentPlugin
 		if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
 			$results = $this->logCatalogActivity($this->data->id,
 				Services::Registry()->get('Actions', 'delete'));
-			if ($results == false) {
+			if ($results === false) {
 				return false;
 			}
 		}

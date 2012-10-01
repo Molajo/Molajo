@@ -43,11 +43,11 @@ class DateformatsPlugin extends ContentPlugin
 
 					$modifiedByField = $this->getField('modified_by');
 					$modifiedByValue = $this->getFieldValue($modifiedByField);
-					if ($modifiedByValue == false) {
+					if ($modifiedByValue === false) {
 						$this->saveField($modifiedByField, 'modified_by', Services::Registry()->get('User', 'id'));
 					}
 
-				} elseif ($fieldValue == false
+				} elseif ($fieldValue === false
 					|| $fieldValue == '0000-00-00 00:00:00'
 				) {
 
@@ -56,14 +56,14 @@ class DateformatsPlugin extends ContentPlugin
 					if ($name == 'created_datetime') {
 						$createdByField = $this->getField('created_by');
 						$createdByValue = $this->getFieldValue($createdByField);
-						if ($createdByValue == false) {
+						if ($createdByValue === false) {
 							$this->saveField($createdByField, 'created_by', Services::Registry()->get('User', 'id'));
 						}
 
 					} elseif ($name == 'activity_datetime') {
 						$createdByField = $this->getField('user_id');
 						$createdByValue = $this->getFieldValue($createdByField);
-						if ($createdByValue == false) {
+						if ($createdByValue === false) {
 							$this->saveField($createdByField, 'user_id', Services::Registry()->get('User', 'id'));
 						}
 
@@ -103,7 +103,7 @@ class DateformatsPlugin extends ContentPlugin
 				/** Retrieves the actual field value from the 'normal' or special field */
 				$fieldValue = $this->getFieldValue($field);
 
-				if ($fieldValue == false
+				if ($fieldValue === false
 					|| $fieldValue == '0000-00-00 00:00:00'
 					|| $fieldValue == ''
 					|| $fieldValue == null
@@ -116,7 +116,7 @@ class DateformatsPlugin extends ContentPlugin
 					/** formats the date for CCYYMMDD */
 					$newFieldValue = Services::Date()->convertCCYYMMDD($fieldValue);
 
-					if ($newFieldValue == false) {
+					if ($newFieldValue === false) {
 					} else {
 
 						/** Creates the new 'normal' or special field and populates the value */
@@ -128,7 +128,7 @@ class DateformatsPlugin extends ContentPlugin
 					/** Using newly formatted date, calculate NN days ago */
 					$newFieldValue = Services::Date()->differenceDays($fieldValue);
 
-					if ($newFieldValue == false) {
+					if ($newFieldValue === false) {
 					} else {
 
 						/** Creates the new 'normal' or special field and populates the value */
@@ -139,7 +139,7 @@ class DateformatsPlugin extends ContentPlugin
 					/** Pretty Date */
 					$newFieldValue = Services::Date()->prettydate($fieldValue);
 
-					if ($newFieldValue == false) {
+					if ($newFieldValue === false) {
 					} else {
 
 						/** Creates the new 'normal' or special field and populates the value */

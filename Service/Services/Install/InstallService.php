@@ -378,7 +378,7 @@ Class InstallService
 		);
 
 		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $plugins);
-		if ($arguments['success'] == true) {
+		if ($arguments['success'] === true) {
 			$arguments = $plugin['arguments'];
 		} else {
 

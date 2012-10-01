@@ -251,7 +251,7 @@ Class ContentHelper
 		$m = new $controllerClass();
 
 		$results = $m->connect($model_type, $model_name);
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -411,7 +411,7 @@ Class ContentHelper
 		$m->set('get_customfields', 0);
 
 		$results = $m->connect('Table', 'CatalogTypes');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -446,7 +446,7 @@ Class ContentHelper
 		$m->set('get_customfields', 1);
 
 		$results = $m->connect($model_type, $model_name);
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -474,7 +474,7 @@ Class ContentHelper
 		$m->set('get_customfields', 1);
 
 		$results = $m->connect('System', 'Resources');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

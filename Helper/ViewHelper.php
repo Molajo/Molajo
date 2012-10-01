@@ -68,10 +68,10 @@ Class ViewHelper
 
 		/** Retrieve Node and verify the view exists */
 		$node = Helpers::Extension()->getExtensionNode((int)$id);
-		if ($node == false || $node == '') {
+		if ($node === false || $node == '') {
 			$id = $this->getDefault($type);
 			$node = Helpers::Extension()->getExtensionNode((int)$id);
-			if ($node == false || $node == '') {
+			if ($node === false || $node == '') {
 				return false;
 			}
 		}
@@ -88,7 +88,7 @@ Class ViewHelper
 		/** Retrieve the query results */
 		$item = Helpers::Extension()->get($id, $type, $node);
 
-		if (count($item) == 0 || $item == false) {
+		if (count($item) == 0 || $item === false) {
 			return false;
 		}
 

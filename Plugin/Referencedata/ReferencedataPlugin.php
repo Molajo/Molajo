@@ -30,7 +30,7 @@ class ReferencedataPlugin extends ContentPlugin
 
 		$fkFields = $this->retrieveFieldsByType('foreignkeys');
 
-		if (count($fkFields) == 0 || $fkFields == false || $fkFields == null) {
+		if (count($fkFields) == 0 || $fkFields === false || $fkFields == null) {
 			return false;
 		}
 
@@ -42,13 +42,13 @@ class ReferencedataPlugin extends ContentPlugin
 				$name = substr($fkName, 3, strlen($fkName) - 3);
 
 				$field = $this->getField($name);
-				if ($field == false) {
+				if ($field === false) {
 					$fieldValue = false;
 				} else {
 					$fieldValue = $this->getFieldValue($field);
 				}
 
-				if ($fieldValue == false) {
+				if ($fieldValue === false) {
 				} else {
 
 					$new_name = $field->name . '_value';
@@ -66,7 +66,7 @@ class ReferencedataPlugin extends ContentPlugin
 
 					$value = $m->getData('result');
 
-					if ($value == false) {
+					if ($value === false) {
 					} else {
 						$this->saveForeignKeyValue($new_name, $value);
 					}

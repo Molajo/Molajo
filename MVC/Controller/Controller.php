@@ -297,7 +297,7 @@ class Controller
 		/** 3. Model DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
 
-		if ($dbo == false) {
+		if ($dbo === false) {
 			echo 'DBO for Table Registry: ' . $this->table_registry_name . ' could not be loaded. <br />';
 			return false;
 		}
@@ -684,7 +684,7 @@ echo '</pre><br /><br />';
 
 		$arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->plugins);
 
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set('DisplayController->onBeforeReadEvent '
 					. $this->table_registry_name
 					. ' failure ', LOG_OUTPUT_PLUGINS
@@ -756,7 +756,7 @@ echo '</pre><br /><br />';
 
 			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->plugins);
 
-			if ($arguments == false) {
+			if ($arguments === false) {
 				Services::Profiler()->set(
 					'DisplayController->onAfterRead '
 						. $this->table_registry_name
@@ -799,7 +799,7 @@ echo '</pre><br /><br />';
 
 		$arguments = Services::Event()->schedule('onAfterReadall', $arguments, $this->plugins);
 
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set(
 				'DisplayController->onAfterReadall '
 					. $this->table_registry_name

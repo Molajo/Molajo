@@ -113,7 +113,7 @@ Class TextService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Datalist', $datalist);
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 		return $this->getQueryResults($m, $datalist, array());
@@ -138,7 +138,7 @@ Class TextService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Datalist', $filter);
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

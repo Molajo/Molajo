@@ -307,7 +307,7 @@ class ExtensioninstancePlugin extends ContentPlugin
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'ExtensionInstances');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

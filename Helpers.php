@@ -169,7 +169,7 @@ Class Helpers
 	{
 		$i = count($this->message);
 
-		if ($value == null || $try == false) {
+		if ($value == null || $try === false) {
 			$this->message[$i] = ' ' . $key . ' FAILED' . $value;
 
 		} else {

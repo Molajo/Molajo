@@ -462,7 +462,7 @@ Class ParseService
 							$skipped_final_include_type = false;
 						}
 
-					} elseif ($skipped_final_include_type == false) {
+					} elseif ($skipped_final_include_type === false) {
 
 						/** Includer Attributes */
 						$attributes = str_replace('"', '', $part);
@@ -481,7 +481,7 @@ Class ParseService
 					}
 				}
 
-				if ($skipped_final_include_type == false) {
+				if ($skipped_final_include_type === false) {
 
 					/** Add empty array entry when no attributes */
 					if ($countAttributes == 0) {
@@ -631,7 +631,7 @@ Class ParseService
 
 		$arguments = Services::Event()->schedule('onBeforeParse', $arguments);
 
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set('ParseService->onBeforeParseEvent ' . ' failure ',
 				LOG_OUTPUT_PLUGINS
 			);
@@ -684,7 +684,7 @@ Class ParseService
 
 		$arguments = Services::Event()->schedule('onAfterParsebody', $arguments);
 
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set('ParseService->onBeforeParseodyEvent ' . ' failure ',
 				LOG_OUTPUT_PLUGINS
 			);
@@ -733,7 +733,7 @@ Class ParseService
 		);
 
 		$arguments = Services::Event()->schedule('onAfterParse', $arguments);
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set('ParseService->onAfterParseEvent ' . ' failure ',
 				LOG_OUTPUT_PLUGINS
 			);

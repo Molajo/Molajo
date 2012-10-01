@@ -525,7 +525,7 @@ Class AssetService
 			$query_results[] = $row;
 		}
 
-		if ($update == true) {
+		if ($update === true) {
 			Services::Registry()->set('Assets', $type, $query_results);
 
 			$priorityType = $type . 'Priorities';
@@ -580,7 +580,7 @@ Class AssetService
 			}
 		}
 
-		if ($update == true) {
+		if ($update === true) {
 			Services::Registry()->set('Assets', $type, $query_results);
 
 			$priorityType = $type . 'Priorities';
@@ -678,7 +678,7 @@ Class AssetService
 						$include = true;
 					}
 				}
-				if ($include == false) {
+				if ($include === false) {
 				} else {
 					$row->application_html5 = $application_html5;
 					$row->end = $end;

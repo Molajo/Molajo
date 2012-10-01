@@ -65,7 +65,7 @@ class ReadModel extends Model
 
 				} else {
 					foreach ($columns as $column) {
-						if ($first == true && strtolower(trim($query_object)) == 'distinct') {
+						if ($first === true && strtolower(trim($query_object)) == 'distinct') {
 							$first = false;
 							$this->query->select('DISTINCT ' . $this->db->qn($primary_prefix . '.' . $column['name']));
 						} else {
@@ -481,7 +481,7 @@ class ReadModel extends Model
 			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
 			$results = $m->connect($type, $name);
-			if ($results == false) {
+			if ($results === false) {
 				return false;
 			}
 

@@ -31,7 +31,7 @@ class VersionPlugin extends ContentPlugin
 		$field = $this->getField('version');
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
-		if ($fieldValue == false
+		if ($fieldValue === false
 			|| $fieldValue == ''
 		) {
 			$newFieldValue = 1;
@@ -41,7 +41,7 @@ class VersionPlugin extends ContentPlugin
 		$field = $this->getField('version_of_id');
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
-		if ($fieldValue == false
+		if ($fieldValue === false
 			|| $fieldValue == ''
 		) {
 			$newFieldValue = 0;
@@ -51,7 +51,7 @@ class VersionPlugin extends ContentPlugin
 		$field = $this->getField('status_prior_to_version');
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
-		if ($fieldValue == false
+		if ($fieldValue === false
 			|| $fieldValue == ''
 		) {
 			$newFieldValue = 0;
@@ -72,7 +72,7 @@ class VersionPlugin extends ContentPlugin
 		$field = $this->getField('version');
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
-		if ($fieldValue == false
+		if ($fieldValue === false
 			|| $fieldValue == ''
 		) {
 			$newFieldValue = 1 + 1;
@@ -82,7 +82,7 @@ class VersionPlugin extends ContentPlugin
 		$field = $this->getField('status_prior_to_version');
 		$name = $field->name;
 		$fieldValue = $this->getFieldValue($field);
-		if ($fieldValue == false
+		if ($fieldValue === false
 			|| $fieldValue == ''
 		) {
 			$newFieldValue = $this->data->status;

@@ -67,7 +67,7 @@ Class ModalIncluder extends Includer
 
 		/** Modal  */
 		$results = Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Modal');
-		if ($results == false) {
+		if ($results === false) {
 			echo $template_title . 'Modal was not found. Will be ignored. <br />';
 
 			return false;

@@ -103,7 +103,7 @@ Class UrlService
 	public function getURL($catalog_id)
 	{
 		$url = Helpers::Catalog()->getURL($catalog_id);
-		if ($url == false || $url == null) {
+		if ($url === false || $url == null) {
 			return false;
 		}
 

@@ -72,7 +72,7 @@ class DetailitemPlugin extends ContentPlugin
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 		$results = $connect->connect('Table', 'Comments');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

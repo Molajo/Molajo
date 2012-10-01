@@ -106,7 +106,7 @@ Class AuthorisationService
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'Siteapplications');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -204,7 +204,7 @@ Class AuthorisationService
 
 		/** display view verified in getCatalog */
 		if (Services::Registry()->get('Parameters', 'request_action', 'display') == 'display'
-			&& Services::Registry()->get('Parameters', 'status_authorised') == true
+			&& Services::Registry()->get('Parameters', 'status_authorised') === true
 		) {
 			return true;
 		}
@@ -268,7 +268,7 @@ Class AuthorisationService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Grouppermissions');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -316,7 +316,7 @@ Class AuthorisationService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Userapplications');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

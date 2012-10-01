@@ -35,7 +35,7 @@ class DeferPlugin extends ContentPlugin
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 		$results = $connect->connect('dbo', 'Assets');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 		$connect->set('model_parameter', 'JsDefer');
@@ -47,7 +47,7 @@ class DeferPlugin extends ContentPlugin
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 		$results = $connect->connect('dbo', 'Assets');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 		$connect->set('model_parameter', 'JsDeclarationsDefer');

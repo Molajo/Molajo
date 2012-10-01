@@ -109,7 +109,7 @@ class Includer
 
 		/** initialises and populates the MVC request */
 		$results = $this->setRenderCriteria();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

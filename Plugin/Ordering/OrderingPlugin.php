@@ -32,7 +32,7 @@ class OrderingPlugin extends ContentPlugin
 
 		$field = $this->getField('ordering');
 
-		if ($field == false) {
+		if ($field === false) {
 			$fieldValue = false;
 		} else {
 			$fieldValue = $this->getFieldValue($field);
@@ -44,14 +44,14 @@ class OrderingPlugin extends ContentPlugin
 
 		$newFieldValue = '';
 
-		if ($fieldValue == false
+		if ($fieldValue === false
 			|| (int)$fieldValue == 0
 		) {
 
 			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
 			$results = $m->connect($this->get('model_type'), $this->get('model_name'));
-			if ($results == false) {
+			if ($results === false) {
 				return false;
 			}
 

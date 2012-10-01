@@ -196,7 +196,7 @@ Class ExtensionHelper
 		$m = new $controllerClass();
 
 		$query_results = $m->connect('Table', 'ExtensionInstances');
-		if ($query_results == false) {
+		if ($query_results === false) {
 			return false;
 		}
 
@@ -224,7 +224,7 @@ Class ExtensionHelper
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$query_results = $m->connect('Table', 'ExtensionInstances');
-		if ($query_results == false) {
+		if ($query_results === false) {
 			return false;
 		}
 
@@ -252,7 +252,7 @@ Class ExtensionHelper
 		$m = new $controllerClass();
 
 		$query_results = $m->connect('Table', 'Extensions');
-		if ($query_results == false) {
+		if ($query_results === false) {
 			return false;
 		}
 

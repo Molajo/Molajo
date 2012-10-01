@@ -99,7 +99,7 @@ Class EventService
 		/** Does Event (with registrations) exist? */
 		$exists = Services::Registry()->exists('Events', $event);
 
-		if ($exists == false) {
+		if ($exists === false) {
 			Services::Profiler()->set('EventService->schedule Event: '
 				. $event . ' does not exist', LOG_OUTPUT_PLUGINS);
 
@@ -154,7 +154,7 @@ Class EventService
 
 				if (method_exists($registrations[$pluginClass], $event)) {
 					$results = $this->processPluginClass($registrations[$pluginClass], $event);
-					if ($results == false) {
+					if ($results === false) {
 						return false;
 					}
 
@@ -218,7 +218,7 @@ Class EventService
 
 		$results = $connection->$event();
 
-		if ($results == false) {
+		if ($results === false) {
 
 			Services::Profiler()->set('EventService->schedule Event '
 					. $event . ' Plugin Class '

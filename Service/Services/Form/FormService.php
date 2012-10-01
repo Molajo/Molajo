@@ -59,7 +59,7 @@ Class FormService
 		$connect = new $controllerClass();
 
 		$results = $connect->connect('Template', 'Adminconfiguration');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -686,7 +686,7 @@ Class FormService
 		if (Services::Registry()->exists('GridMenuitem') === true) {
 		} else {
 			$item = Helpers::Content()->getResourceMenuitemParameters('Grid', $extension_instance_id);
-			if ($item == false || count($item) == 0) {
+			if ($item === false || count($item) == 0) {
 				return false;
 			}
 		}
@@ -1317,7 +1317,7 @@ Class FormService
 		$datalist = $field['datalist'];
 		$list = Services::Text()->getList($datalist, array());
 
-		if ($list == false) {
+		if ($list === false) {
 			$items = array();
 		} else {
 			$items = Services::Text()->buildSelectlist($datalist, $list, 0, 5);

@@ -82,17 +82,17 @@ Class Application
 			$override_sequence_xml, $override_final_xml);
 
 		/** 2. Route */
-		if ($results == true) {
+		if ($results === true) {
 			$results = $this->route();
 		}
 
 		/** 3. Authorise */
-		if ($results == true) {
+		if ($results === true) {
 			$results = $this->authorise();
 		}
 
 		/** 4. Execute */
-		if ($results == true
+		if ($results === true
 			|| Services::Registry()->get('Parameters', 'error_status', 0) == 1
 		) {
 			$results = $this->execute();
@@ -100,7 +100,7 @@ Class Application
 
 
 		/** 5. Response */
-		if ($results == true) {
+		if ($results === true) {
 			$results = $this->response();
 		}
 
@@ -132,55 +132,55 @@ Class Application
 
 		/** HTTP class */
 		$results = $this->setBaseURL();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		/** PHP constants */
 		$results = $this->setDefines();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		/** Site determination and paths */
 		$results = $this->setSite();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		/** Application determination and paths */
 		$results = $this->setApplication();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		/** Installation check */
 		$results = $this->installCheck();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		/** Connect Services */
 		$results = Application::Services()->StartServices();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		/** SSL Check */
 		$results = $this->sslCheck();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		/** Verify site authorised for application */
 		$results = $this->verifySiteApplication();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		/** Connect Helpers */
 		$results = Application::Helpers()->connect();
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -196,7 +196,7 @@ Class Application
 		Services::Registry()->set('Override', 'sequence_xml', $override_sequence_xml);
 		Services::Registry()->set('Override', 'final_xml', $override_final_xml);
 
-		if ($results == true) {
+		if ($results === true) {
 			Services::Profiler()->set('Application Schedule onAfterInitialise', LOG_OUTPUT_PLUGINS);
 			$results = Services::Event()->schedule('onAfterInitialise');
 			if (is_array($results)) {
@@ -204,7 +204,7 @@ Class Application
 			}
 		}
 
-		if ($results == false) {
+		if ($results === false) {
 			Services::Profiler()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
 			return false;
 		}
@@ -243,21 +243,21 @@ Class Application
 
 		$results = Services::Route()->process();
 
-		if ($results == true
+		if ($results === true
 			&& Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
 		) {
 			$results = $this->onAfterRouteEvent();
 		}
 
-		if ($results == false
+		if ($results === false
 			|| Services::Registry()->get('Parameters', 'error_status', 0) == 1
 		) {
 			Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
 			return false;
 		}
 
-		if ($results == true
+		if ($results === true
 			&& Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
 		) {
@@ -302,7 +302,7 @@ Class Application
 
 		$arguments = Services::Event()->schedule('onAfterRoute', $arguments);
 
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set('Application->onAfterRouteEvent ' . ' failure ',
 				LOG_OUTPUT_PLUGINS
 			);
@@ -379,7 +379,7 @@ Class Application
 			$results = $this->action();
 		}
 
-		if ($results == true) {
+		if ($results === true) {
 			Services::Profiler()->set('Application Schedule onAfterExecute', LOG_OUTPUT_PLUGINS);
 
 			$results = Services::Event()->schedule('onAfterExecute');
@@ -388,7 +388,7 @@ Class Application
 			}
 		}
 
-		if ($results == false) {
+		if ($results === false) {
 			Services::Profiler()->set('Execute ' . $action . ' failed', LOG_OUTPUT_APPLICATION);
 
 			return false;
@@ -508,7 +508,7 @@ Class Application
 			$results = Services::Redirect()->redirect()->send();
 		}
 
-		if ($results == true) {
+		if ($results === true) {
 			Services::Profiler()->set('Application Schedule onAfterResponse', LOG_OUTPUT_PLUGINS);
 			$results = Services::Event()->schedule('onAfterResponse');
 			if (is_array($results)) {

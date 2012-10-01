@@ -130,7 +130,7 @@ Class CatalogHelper
 
 		} elseif ((int)$source_id > 0 && (int)$catalog_type_id > 0) {
 			$catalog_id = $this->getID((int)$catalog_type_id, (int)$source_id);
-			if ($catalog_id == false) {
+			if ($catalog_id === false) {
 				return array();
 			}
 
@@ -145,7 +145,7 @@ Class CatalogHelper
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'Catalog');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -181,7 +181,7 @@ Class CatalogHelper
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -205,7 +205,7 @@ Class CatalogHelper
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -231,7 +231,7 @@ Class CatalogHelper
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Catalog');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -267,7 +267,7 @@ Class CatalogHelper
 			$m = new $controllerClass();
 
 			$results = $m->connect('Table', 'Catalog');
-			if ($results == false) {
+			if ($results === false) {
 				return false;
 			}
 

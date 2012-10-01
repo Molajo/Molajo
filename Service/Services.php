@@ -123,7 +123,7 @@ Class Services
 			}
 
 			/** make service connection */
-			if ($connectionSucceeded == true) {
+			if ($connectionSucceeded === true) {
 				try {
 					$connection = $serviceClass::$serviceMethod();
 
@@ -134,7 +134,7 @@ Class Services
 			}
 
 			/** store connection or error message */
-			if ($connectionSucceeded == false) {
+			if ($connectionSucceeded === false) {
 				echo 'service failed for ' . $entry . '<br />';
 			}
 			$this->set($entry, $connection, $connectionSucceeded);
@@ -181,7 +181,7 @@ Class Services
 	{
 		$i = count($this->message);
 
-		if ($value == null || $connectionSucceeded == false) {
+		if ($value == null || $connectionSucceeded === false) {
 			$this->message[$i] = ' ' . $key . ' FAILED' . $value;
 			Services::Registry()->set('Service', $key, false);
 

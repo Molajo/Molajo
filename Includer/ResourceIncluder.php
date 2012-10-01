@@ -42,7 +42,7 @@ class ResourceIncluder extends Includer
 	protected function getAttribute()
 	{
 		/** Include and Parameter Registries are already loaded for Primary Resource */
-		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
+		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
 			return array();
 		} else {
 			return parent::getAttribute();
@@ -58,7 +58,7 @@ class ResourceIncluder extends Includer
 	protected function getExtension()
 	{
 		/** Include and Parameter Registries are already loaded for Primary Resource */
-		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
+		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
 			return;
 		}
 
@@ -93,7 +93,7 @@ class ResourceIncluder extends Includer
 	public function DELETEsetRenderCriteria()
 	{
 		/** Include and Parameter Registries are already loaded for Primary Resource */
-		if (Services::Registry()->get('Parameters', 'extension_primary') == true) {
+		if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
 			return true;
 		}
 

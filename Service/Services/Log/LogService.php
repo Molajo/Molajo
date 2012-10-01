@@ -103,7 +103,7 @@ Class LogService
 
 		if (Services::Registry()->get('ProfilerService', 'CurrentPhase') == START_INITIALISE) {
 			$response = Services::Profiler()->setProfilerLogger();
-			if ($response == false) {
+			if ($response === false) {
 				Services::Profiler()->setConfigurationComplete();
 
 				return $this;

@@ -76,13 +76,13 @@ Class UserService
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'User');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
 		$m->set('id', $this->id);
 		$item = $m->getData('item');
-		if ($item == false || count($item) == 0) {
+		if ($item === false || count($item) == 0) {
 			throw new \RuntimeException ('User load() query problem');
 		}
 

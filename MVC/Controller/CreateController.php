@@ -381,7 +381,7 @@ class CreateController extends Controller
 				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 				$m = new $controllerClass();
 				$results = $m->connect('Table', $source_model);
-				if ($results == false) {
+				if ($results === false) {
 					return false;
 				}
 
@@ -441,7 +441,7 @@ class CreateController extends Controller
 
 		$arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->plugins);
 
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
 			return false;
@@ -483,7 +483,7 @@ class CreateController extends Controller
 
 		$arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->plugins);
 
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
 			return false;

@@ -79,7 +79,7 @@ Class LanguageService
 		Services::Registry()->set('Languages', 'Default', $language);
 
 		$language = $this->setLanguageRegistry($language);
-		if ($language == false) {
+		if ($language === false) {
 			return false;
 		}
 
@@ -154,7 +154,7 @@ Class LanguageService
 
 		/** Load files for current language */
 		$loaded = $this->loadPath($path, $language);
-		if ($loaded == false) {
+		if ($loaded === false) {
 		} else {
 			return true;
 		}
@@ -294,7 +294,7 @@ Class LanguageService
 	{
 		/** 1. Use language specified, if it is available */
 		$installed = $this->getInstalledLanguages();
-		if ($installed == false || count($installed) == 0) {
+		if ($installed === false || count($installed) == 0) {
 		} else {
 			if (in_array($language, $installed)) {
 				return $language;
@@ -302,7 +302,7 @@ Class LanguageService
 		}
 
 		/** 2. if there is only one language installed, use it */
-		if ($installed == false || count($installed) == 0) {
+		if ($installed === false || count($installed) == 0) {
 		} elseif (count($installed) == 1) {
 			return $installed[0];
 		}
@@ -312,7 +312,7 @@ Class LanguageService
 
 		/** 4. User specified value, it is is installed  */
 		$language = Services::Registry()->get('User', 'language', false);
-		if ($installed == false || count($installed) == 0) {
+		if ($installed === false || count($installed) == 0) {
 		} else {
 			if (in_array($language, $installed)) {
 				return $language;
@@ -324,7 +324,7 @@ Class LanguageService
 			$browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			if (count($browserLanguages) > 0) {
 				foreach ($browserLanguages as $language) {
-					if ($installed == false || count($installed) == 0) {
+					if ($installed === false || count($installed) == 0) {
 					} else {
 						if (in_array($language, $installed)) {
 							return $language;
@@ -337,7 +337,7 @@ Class LanguageService
 		/** 5. Application configuration */
 		$language = Services::Registry()->get('Application', 'DefaultLanguage', '');
 		if (trim($language) == '') {
-		} elseif ($installed == false || count($installed) == 0) {
+		} elseif ($installed === false || count($installed) == 0) {
 		} else {
 			if (in_array($language, $installed)) {
 				return $language;
@@ -363,7 +363,7 @@ Class LanguageService
 
 		/** Determine if language requested is actually installed */
 		$languagesInstalled = Services::Registry()->get('Languages', 'installed');
-		if ($languagesInstalled == false
+		if ($languagesInstalled === false
 			|| count($languagesInstalled) == 0
 		) {
 			return false;
@@ -413,7 +413,7 @@ Class LanguageService
 		/** During System Initialization Helper is not loaded yet, instantiate here */
 		$helper = new ExtensionHelper();
 		$installed = $helper->get(0, 'Table', 'Languageservice', 'list', 1100);
-		if ($installed == false || count($installed) < 1) {
+		if ($installed === false || count($installed) < 1) {
 			return false;
 		}
 

@@ -97,7 +97,7 @@ class DisplayController extends Controller
 			 *  For primary content (the extension determined in Application::Request),
 			 *      save query results for possible reuse
 			 */
-			if ($this->get('extension_primary') == true) {
+			if ($this->get('extension_primary') === true) {
 				Services::Registry()->set('Plugindata', 'primary_query_results', $this->query_results);
 			}
 
@@ -183,7 +183,7 @@ class DisplayController extends Controller
 				foreach ($this->query_results as $this->row) {
 
 					/** header: before any rows are processed */
-					if ($first == true) {
+					if ($first === true) {
 						$first = false;
 						if (file_exists($this->view_path . '/View/Header.php')) {
 							include $this->view_path . '/View/Header.php';
@@ -247,7 +247,7 @@ class DisplayController extends Controller
 
 			$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
 
-			if ($arguments == false) {
+			if ($arguments === false) {
 				Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
 				return false;
@@ -291,7 +291,7 @@ class DisplayController extends Controller
 
 		$arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
 
-		if ($arguments == false) {
+		if ($arguments === false) {
 			Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
 			return false;

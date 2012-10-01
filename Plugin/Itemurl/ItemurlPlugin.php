@@ -58,7 +58,7 @@ class ItemurlPlugin extends ContentPlugin
 
 				$fieldValue = $this->getFieldValue($field);
 
-				if ($fieldValue == false) {
+				if ($fieldValue === false) {
 				} else {
 
 					if (substr($fieldValue, 0, 11) == '{sitemedia}') {
@@ -67,7 +67,7 @@ class ItemurlPlugin extends ContentPlugin
 						$newFieldValue = $fieldValue;
 					}
 
-					if ($newFieldValue == false) {
+					if ($newFieldValue === false) {
 					} else {
 
 						/** Creates the new 'normal' or special field and populates the value */

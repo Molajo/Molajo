@@ -741,7 +741,7 @@ Class ConfigurationService
 
 				$name = (string)$custom_field['name'];
 				$results = ConfigurationService::getCustomFieldsSpecificGroup ($registryName, $custom_field);
-				if ($results == false) {
+				if ($results === false) {
 				}  else {
 
 					$fieldArray = $results[0];
@@ -916,13 +916,13 @@ Class ConfigurationService
 		$inheritRegistryName = $extends_model_name . $extends_model_type;
 
 		/** Load the file and build registry - IF - the registry is not already loaded */
-		if (Services::Registry()->exists($inheritRegistryName) == true) {
+		if (Services::Registry()->exists($inheritRegistryName) === true) {
 
 		} else {
 			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 			$m = new $controllerClass();
 			$results = $m->connect($extends_model_type, $extends_model_name);
-			if ($results == false) {
+			if ($results === false) {
 				return false;
 			}
 		}
@@ -1078,7 +1078,7 @@ Class ConfigurationService
 		$m = new $controllerClass();
 
 		$results = $m->connect('Table', 'Site');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -1123,7 +1123,7 @@ Class ConfigurationService
 				$m = new $controllerClass();
 
 				$results = $m->connect('Table', 'Application');
-				if ($results == false) {
+				if ($results === false) {
 					return false;
 				}
 
@@ -1258,7 +1258,7 @@ Class ConfigurationService
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Table', 'Actions');
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 

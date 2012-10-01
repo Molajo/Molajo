@@ -168,7 +168,7 @@ class PaginationPlugin extends ContentPlugin
 			$this->get('model_type', 'Table'),
 			$this->get('model_name')
 		);
-		if ($results == false) {
+		if ($results === false) {
 			return false;
 		}
 
@@ -193,7 +193,7 @@ class PaginationPlugin extends ContentPlugin
 		$this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
 			. ucfirst(strtolower($this->get('model_type', 'Table')));
 
-		if ($item == false || count($item) == 0) {
+		if ($item === false || count($item) == 0) {
 			return false;
 		}
 	}

@@ -337,7 +337,7 @@ Class RegistryService
 		/** Match requirement for security to ensure only named parameters are updated */
 		if ($match === true) {
 			$exists = $this->exists($namespace, $key);
-			if ($exists == false) {
+			if ($exists === false) {
 				return false;
 			}
 		}
@@ -405,7 +405,7 @@ Class RegistryService
 				$use = false;
 				$test = substr($key, 0, strlen($searchfor));
 				if (strtolower($test) == strtolower($searchfor)) {
-					if ($exactMatch == true) {
+					if ($exactMatch === true) {
 						if (strtolower($key) == strtolower($searchfor)) {
 							$use = true;
 						}
@@ -413,7 +413,7 @@ Class RegistryService
 						$use = true;
 					}
 				}
-				if ($use == true) {
+				if ($use === true) {
 					$this->set($intoThis, $key, $value);
 				}
 			}
@@ -454,7 +454,7 @@ Class RegistryService
 
 		foreach ($mergeArray as $key => $value) {
 
-			if ($matching == true) {
+			if ($matching === true) {
 
 				if (isset($intoArray[$key])) {
 					$merge = true;
@@ -466,7 +466,7 @@ Class RegistryService
 				$merge = true;
 			}
 
-			if ($merge == true) {
+			if ($merge === true) {
 				$existingValue = $this->get($intoThis, $key, '');
 
 				if (trim($existingValue) == '') {
@@ -474,7 +474,7 @@ Class RegistryService
 					$this->set($intoThis, $key, $value);
 				}
 
-				if ($matching == true) {
+				if ($matching === true) {
 					$this->delete($mergeThis, $key);
 				}
 			}
@@ -595,7 +595,7 @@ Class RegistryService
 
 			if (strtolower($test) == strtolower($searchfor)) {
 
-				if ($exactMatch == true) {
+				if ($exactMatch === true) {
 					if (strtolower($newKey) == strtolower($searchfor)) {
 						$delete = true;
 					}
@@ -603,7 +603,7 @@ Class RegistryService
 					$delete = true;
 				}
 			}
-			if ($delete == false) {
+			if ($delete === false) {
 				$this->set($namespace, $newKey, $newValue);
 			}
 		}
@@ -675,7 +675,7 @@ Class RegistryService
 		$array = $this->getRegistry($namespace);
 
 		/** full registry array requested */
-		if ($keyOnly == false) {
+		if ($keyOnly === false) {
 			return $array;
 		}
 
@@ -748,7 +748,7 @@ Class RegistryService
 	 */
 	public function listRegistry($include_entries = false)
 	{
-		if ($include_entries == true) {
+		if ($include_entries === true) {
 			echo '<pre>';
 			var_dump($this->registryKeys);
 			echo '</pre>';
@@ -803,7 +803,7 @@ Class RegistryService
 		$query_results = array();
 
 		/** Retrieve Parameter Registry and return as a result */
-		if ($single_result == true) {
+		if ($single_result === true) {
 			return $this->get($namespace, $key);
 		}
 
