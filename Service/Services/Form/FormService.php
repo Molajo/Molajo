@@ -41,6 +41,46 @@ Class FormService
 		return self::$instance;
 	}
 
+
+	/**
+	 * getFieldlist retrieves the complete list of data elements for the specified model
+	 *
+	 * @param $model_type
+	 * @param $model_name
+	 *
+	 * @return array
+	 * @since  1.0
+	 */
+	public function getCustomfieldForm($table_registry_name)
+	{
+		$fieldArray = array();
+
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$connect = new $controllerClass();
+
+		$results = $connect->connect('Template', 'Adminconfiguration');
+		if ($results == false) {
+			return false;
+		}
+
+		$parameters = Services::Registry()->get('AdminconfigurationTemplate', 'parameters');
+
+		if (count($parameters) > 0) {
+			foreach ($parameters as $field) {
+
+				if (substr($field['name'], 0, strlen('define_')) == 'define_') {
+					$row = new \stdClass();
+					$row->value = $field['name'];
+					$row->id = $field['name'];
+
+					$fieldArray[] = $row;
+				}
+			}
+		}
+
+		return $fieldArray;
+	}
+
 	/**
 	 * getFieldlist retrieves the complete list of data elements for the specified model
 	 *
@@ -85,8 +125,8 @@ Class FormService
 						if (trim($f) == '') {
 						} else {
 							$row = new \stdClass();
-							$row->value = $f . ' (' . $field['alias'] . ')';
-							$row->id = $field['alias'] . '.' . $f;
+							$row->value =  $field['alias'] . '_' . $f;
+							$row->id = $field['alias'] . '_' . $f;
 
 							$fieldArray[] = $row;
 						}
@@ -117,6 +157,7 @@ Class FormService
 			}
 		}
 
+		sort($fieldArray);
 		return $fieldArray;
 	}
 
@@ -127,10 +168,12 @@ Class FormService
 	 * @param $model_name - ex. Articles
 	 * @param $namespace - ex. config, grid, edit
 	 * @param $tab_array - sent in from request parameters ex. {{Editor,editor}} or full list from config
+	 * @param $tab_prefix - NULL from grid
 	 * @param $view_name - ex. Adminconfiguration or Grid or Edit
 	 * @param $default_tab_view_name ex. Adminconfigurationtab
+	 * @param $tab_class - typically mobile
 	 * @param $extension_instance_id
-	 * @param $item
+	 * @param $item array of data (only application)
 	 *
 	 * @return array
 	 * @since  1.0
@@ -260,16 +303,20 @@ Class FormService
 	{
 		$configurationArray = array();
 
-		if ($namespace == 'Application') {
-			$configuration = Services::Registry()->get(
-				'ApplicationMenuitemParameters',
-				$tab_prefix . strtolower($tab_link)
-			);
+		if ($tab_prefix === null) {
+			$configuration = '{{' . $tab_link . ',' . strtolower($tab_link) . '}}';
 		} else {
-			$configuration = Services::Registry()->get(
-				'ConfigurationMenuitemParameters',
-				$tab_prefix . strtolower($tab_link)
-			);
+			if ($namespace == 'Application') {
+				$configuration = Services::Registry()->get(
+					'ApplicationMenuitemParameters',
+					$tab_prefix . strtolower($tab_link)
+				);
+			} else {
+				$configuration = Services::Registry()->get(
+					'ConfigurationMenuitemParameters',
+					$tab_prefix . strtolower($tab_link)
+				);
+			}
 		}
 
 		$temp = explode('}}', $configuration);
@@ -313,27 +360,41 @@ Class FormService
 
 			$get = 'get' . ucfirst(strtolower($tab_link));
 
-			if ($namespace == 'Edit') {
-				$temp = $this->getActualFields($namespace, $tab_link, $options,
-					$tabTitle, $translateTabDesc,
-					$tabFieldsetTitle, $translateFieldsetDesc,
-					$model_type, $model_name, $extension_instance_id,
-					$item);
+			if ($tab_prefix === null) {
+				/** Only titles and name of view to be included (view will take care of itself) */
+				$row = new \stdClass();
 
-			} elseif (method_exists($this, 'get' . $tab_link)) {
+				$row->tab_title = $tabTitle;
+				$row->tab_description = $translateTabDesc;
+				$row->tab_fieldset_title = $tabFieldsetTitle;
+				$row->tab_fieldset_description = $translateFieldsetDesc;
+				$row->tab_link = ucfirst(strtolower($view_name . $namespace . $tab_link));
+				$temp = array();
+				$temp[] = $row;
 
-				$temp = $this->$get($namespace, $tab_link, $options,
-					$tabTitle, $translateTabDesc,
-					$tabFieldsetTitle, $translateFieldsetDesc,
-					$model_type, $model_name, $extension_instance_id);
 			} else {
+				if ($namespace == 'Edit') {
+					$temp = $this->getActualFields($namespace, $tab_link, $options,
+						$tabTitle, $translateTabDesc,
+						$tabFieldsetTitle, $translateFieldsetDesc,
+						$model_type, $model_name, $extension_instance_id,
+						$item);
 
-				$temp = $this->getParameters($namespace, $tab_link, $options,
-					$tabTitle, $translateTabDesc,
-					$tabFieldsetTitle, $translateFieldsetDesc,
-					$model_type, $model_name, $extension_instance_id);
+				} elseif (method_exists($this, 'get' . $tab_link)) {
+
+					$temp = $this->$get($namespace, $tab_link, $options,
+						$tabTitle, $translateTabDesc,
+						$tabFieldsetTitle, $translateFieldsetDesc,
+						$model_type, $model_name, $extension_instance_id);
+
+				} else {
+
+					$temp = $this->getParameters($namespace, $tab_link, $options,
+						$tabTitle, $translateTabDesc,
+						$tabFieldsetTitle, $translateFieldsetDesc,
+						$model_type, $model_name, $extension_instance_id);
+				}
 			}
-
 			$fieldSets = array_merge((array)$fieldSets, (array)$temp);
 		}
 
@@ -682,6 +743,48 @@ Class FormService
 									   $tabFieldsetTitle, $translateFieldsetDesc,
 									   $model_type, $model_name)
 	{
+		$build_results = array();
+
+		/** Fields needed to define new Custom Fields */
+		$entry_fields = Services::Registry()->get('AdminconfigurationTemplate', 'parameters');
+		if (count($entry_fields) == 0 || $entry_fields === false) {
+		} else {
+			$useit = array();
+			foreach ($entry_fields as $entry_field) {
+
+				if (substr($entry_field['name'], 0, strlen('define_')) == 'define_') {
+					$useit[] = $entry_field;
+				}
+			}
+
+			if (count($useit) == 0) {
+			} else {
+				foreach ($useit as $field) {
+
+					$tabFieldsetTitle = str_replace(
+						' ',
+						'&nbsp;',
+						htmlentities(ucfirst(strtolower('Create')), ENT_COMPAT, 'UTF-8')
+					);
+
+					$translateFieldsetDesc = Services::Language()->translate(strtoupper(
+						strtoupper($namespace) . '_FORM_FIELDSET_'
+							. strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_'
+							. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle)) . '_DESC'));
+
+					$row = $field;
+					$row['tab_title'] = $tabTitle;
+					$row['tab_description'] = $translateTabDesc;
+					$row['tab_fieldset_title'] = $tabFieldsetTitle;
+					$row['tab_fieldset_description'] = $translateFieldsetDesc;
+					$row['value'] = null;
+
+					$row['customfield_type'] = 'Create';
+
+					$build_results[] = $row;
+				}
+			}
+		}
 
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
@@ -690,7 +793,7 @@ Class FormService
 			return array();
 		}
 
-		$build_results = array();
+		/** Fields defined specifically for this resource */
 		foreach ($custom_fields as $custom_field) {
 
 			$tabFieldsetTitle = str_replace(
@@ -704,7 +807,7 @@ Class FormService
 					. strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_'
 					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle)) . '_DESC'));
 
-			foreach (Services::Registry()->get('ArticlesResource', $custom_field) as $field) {
+			foreach (Services::Registry()->get($table_registry_name, $custom_field) as $field) {
 
 				if ($field['field_inherited'] == 1) {
 				} else {
@@ -795,6 +898,28 @@ Class FormService
 				$field['value'] = NULL;
 			}
 			$row->value = $field['value'];
+
+			if (isset($field['null'])) {
+			} else {
+				$field['null'] = 0;
+			}
+			if ((int)$field['null'] === 1) {
+				$row->required = Services::Language()->translate('N');
+			} else {
+				$row->required = Services::Language()->translate('Y');
+			}
+
+			if (isset($field['hidden'])) {
+			} else {
+				$field['hidden'] = 0;
+			}
+
+			if ((int)$field['hidden'] === 1) {
+				$row->hidden = Services::Language()->translate('Y');
+			} else {
+				$row->hidden = Services::Language()->translate('N');
+			}
+
 
 			if (isset($field['application_default'])) {
 			} else {
@@ -1109,13 +1234,11 @@ Class FormService
 
 		$required = '';
 		if ($field['null'] == 1) {
-			//not all browsers ready for required on it's own
 			$required = ' required';
 		}
 
 		$disabled = '';
 		if ($field['disabled'] == 1) {
-			//not all browsers ready for required on it's own
 			$disabled = ' disabled';
 		}
 
@@ -1124,7 +1247,6 @@ Class FormService
 		$multiple = '';
 		if (isset($field['multiple'])) {
 			if ($field['multiple'] == 1) {
-				//not all browsers can handle this
 				$multiple = ' multiple';
 			}
 		}
@@ -1148,7 +1270,12 @@ Class FormService
 			$temp = $field['default'];
 			$default_setting = 1;
 		}
-		$selectedArray = explode(',', $temp);
+
+		if ($field['name'] == 'robots') {
+			$selectedArray =array($temp);
+		} else {
+			$selectedArray = explode(',', $temp);
+		}
 
 		$datalist = $field['datalist'];
 		$list = Services::Text()->getList($datalist, array());

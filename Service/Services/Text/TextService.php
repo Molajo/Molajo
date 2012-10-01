@@ -127,6 +127,14 @@ Class TextService
 	 */
 	public function getList($filter, $parameters)
 	{
+		/** Lists created and stored in Registry */
+		$values = Services::Registry()->get('Datalist', $filter);
+		if (is_array($values) && count($values) > 0) {
+			$query_results = $values;
+			return $query_results;
+		}
+
+		/** Queries */
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
 		$results = $m->connect('Datalist', $filter);

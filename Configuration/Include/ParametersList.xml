@@ -13,13 +13,3 @@
 <include field="list_wrap_view_css_class"/>
 <include field="list_wrap_view_role"/>
 <include field="list_wrap_view_property"/>
-
-<include field="list_model_name"/>
-<include field="list_model_type"/>
-<include field="list_model_query_object"/>
-<include field="list_model_parameter"/>
-
-<include field="list_model_ordering"/>
-<include field="list_model_offset"/>
-<include field="list_model_count"/>
-<include field="list_model_use_pagination"/>

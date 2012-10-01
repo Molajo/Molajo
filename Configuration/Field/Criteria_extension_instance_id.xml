@@ -5,6 +5,4 @@
         default=" "
         datalist="ExtensionInstances"
         locked="1"
-        multiple="1"
-        size="5"
         />

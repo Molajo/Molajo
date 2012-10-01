@@ -1,0 +1,7 @@
+<datalist name="Datalists">
+    <model
+        name="Datalists"
+        extends="PlugindataDatalist"
+        registry_entry="Datalists"/>
+</datalist>
+

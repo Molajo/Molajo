@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Customfieldtypes">
+    <table>
+        <values>
+            <value id="customfields" value="Custom Field"/>
+            <value id="metadata" value="Metadata"/>
+            <value id="parameters" value="Parameter"/>
+\        </values>
+    </table>
+</model>

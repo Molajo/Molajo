@@ -566,7 +566,7 @@ echo '</pre><br /><br />';
 		}
 
 		$this->pagination_total = (int)$this->model->getQueryResults(
-			$query_object, $this->model_offset, $this->model_count);
+			$query_object, 0, 99999);
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
 			Services::Profiler()->set('DisplayController->getData SQL Query: <br /><br />'

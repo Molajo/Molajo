@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Datatypes">
+    <table>
+        <values>
+            <value id="audio" value="Audio"/>
+            <value id="boolean" value="Boolean"/>
+            <value id="date" value="Date"/>
+            <value id="datetime" value="Datetime"/>
+            <value id="email" value="Email"/>
+            <value id="file" value="File"/>
+            <value id="image" value="Image"/>
+            <value id="link" value="Link"/>
+            <value id="number" value="Number"/>
+            <value id="password" value="Password"/>
+            <value id="selectList" value="Select List"/>
+            <value id="tel" value="Tel"/>
+            <value id="char" value="Text"/>
+            <value id="text" value="Textarea"/>
+            <value id="time" value="Time"/>
+            <value id="url" value="URL"/>
+            <value id="video" value="Video"/>
+        </values>
+    </table>
+</model>

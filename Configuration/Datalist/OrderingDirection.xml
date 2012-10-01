@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="OrderingDirection">
+    <table>
+        <values>
+            <value id="DESC" value="Descending"/>
+            <value id="ASC" value="Ascending"/>
+        </values>
+    </table>
+</model>

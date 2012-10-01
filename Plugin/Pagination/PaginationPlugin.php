@@ -28,6 +28,7 @@ class PaginationPlugin extends ContentPlugin
 	 */
 	public function onAfterReadall()
 	{
+
 		if ((int)$this->get('use_pagination') > 0) {
 		} else {
 			return true;
@@ -158,7 +159,7 @@ class PaginationPlugin extends ContentPlugin
 	 *
 	 * @return bool
 	 */
-	protected function itemPagination()
+	protected function itemPaging()
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();

@@ -2,5 +2,5 @@
     <model
             name="FieldsApplications"
             extends="PlugindataDatalist"
-            registry_entry="ApplicationsResourceFields"/>
+            registry_entry="ApplicationsSystemFields"/>
 </datalist>

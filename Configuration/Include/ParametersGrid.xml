@@ -1,3 +1,6 @@
+<include field="grid_tab_class"/>
+<include field="grid_tab_link_namespace"/>
+
 <include field="grid_toolbar_buttons"/>
 <include field="grid_submenu_items"/>
 <include field="grid_search"/>

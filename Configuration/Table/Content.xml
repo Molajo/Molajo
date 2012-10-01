@@ -11,13 +11,14 @@
         check_view_level_access="1"
         process_plugins="0"
         use_pagination="1"
+        extends="root"
         data_source="JDatabase">
 
     <table>
         <fields>
             <include field="id_pk"/>
-            <include field="extension_instance_id"/>
-            <include field="catalog_type_id"/>
+            <include field="extension_instance_id_single"/>
+            <include field="catalog_type_id_single"/>
             <include field="title"/>
             <include field="subtitle"/>
             <include field="path"/>
@@ -84,8 +85,13 @@
                   jointo="extension_instance_id,site_id"
                   joinwith="extension_instance_id,SITE_ID"/>
             <join model="User"
+                  alias="created_by"
+                  select="full_name,username"
+                  jointo="id"
+                  joinwith="created_by"/>
+            <join model="User"
                   alias="modified_by"
-                  select="full_name"
+                  select="full_name,username"
                   jointo="id"
                   joinwith="modified_by"/>
         </joins>

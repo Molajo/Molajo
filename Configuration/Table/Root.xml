@@ -10,6 +10,7 @@
         </customfield>
 
         <customfield name="parameters">
+            <include name="ParametersCriteria"/>
             <include name="ParametersCache"/>
         </customfield>
     </customfields>
