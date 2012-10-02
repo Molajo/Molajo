@@ -421,6 +421,15 @@ class Includer
 			return false;
 		}
 
+		/** Copy some configuration data */
+		$fields = Services::Registry()->get('Configuration', 'application*');
+		if (count($fields) === 0 || $fields === false) {
+		} else {
+			foreach ($fields as $key => $value) {
+				Services::Registry()->set('Parameters', $key, $value);
+			}
+		}
+
 		return true;
 	}
 

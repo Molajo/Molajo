@@ -28,6 +28,11 @@ class MenuitemtypesPlugin extends ContentPlugin
 	 */
 	public function onAfterRoute()
 	{
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
+
 		$folders = Services::Filesystem()->folderFolders(
 			EXTENSIONS . '/Menuitem'
 		);

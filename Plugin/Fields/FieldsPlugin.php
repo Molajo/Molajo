@@ -29,6 +29,11 @@ class FieldsPlugin extends ContentPlugin
 	 */
 	public function onAfterRoute()
 	{
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
+
 		$model_name = Services::Registry()->get('Parameters', 'model_name');
 		$model_type = Services::Registry()->get('Parameters', 'model_type');
 
@@ -73,6 +78,24 @@ class FieldsPlugin extends ContentPlugin
 					$row->id = $field['name'] . '_pretty_date';
 					$fieldArray[] = $row;
 				}
+
+				if ($field['type'] == 'text') {
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_introductory';
+					$row->id = $field['name'] . '_introductory';
+					$fieldArray[] = $row;
+
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_fulltext';
+					$row->id = $field['name'] . '_fulltext';
+					$fieldArray[] = $row;
+
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_snippet';
+					$row->id = $field['name'] . '_snippet';
+					$fieldArray[] = $row;
+				}
+
 			}
 		}
 

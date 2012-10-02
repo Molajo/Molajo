@@ -62,6 +62,10 @@
             <include field="application_google_analytics_code"/>
             <include field="application_logon_requirement"/>
             <include field="application_html5"/>
+            <include field="application_help"/>
+            <include field="application_path"/>
+            <include field="application_base_url"/>
+            <include field="application_home_catalog_id"/>
 
             <include field="language"/>
             <include field="language_direction"/>

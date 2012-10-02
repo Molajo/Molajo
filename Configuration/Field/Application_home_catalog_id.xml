@@ -1,1 +1,1 @@
-<field name="application_home_catalog_id" type="catalog_id" datalist="Catalog" null="0" default=" "/>
+<field name="application_home_catalog_id" type="catalog_id" datalist="Catalog" null="0" default=""/>

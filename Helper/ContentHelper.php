@@ -379,6 +379,15 @@ Class ContentHelper
 		Services::Registry()->delete('Parameters', 'form*');
 		Services::Registry()->delete('Parameters', 'menuitem*');
 
+		/** Copy some configuration data */
+		$fields = Services::Registry()->get('Configuration', 'application*');
+		if (count($fields) === 0 || $fields === false) {
+		} else {
+			foreach ($fields as $key => $value) {
+				Services::Registry()->set('Parameters', $key, $value);
+			}
+		}
+
 		Services::Registry()->sort('Parameters');
 
 		return true;

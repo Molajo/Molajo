@@ -2,12 +2,12 @@
     "1":{},
     "2":{
 
-        "criteria_title":"Applications",
+        "criteria_title":"Groups",
         "criteria_display_view_on_no_results":"0",
         "criteria_snippet_length":"150",
         "criteria_status":"1,2",
-        "criteria_catalog_type_id":"50",
-        "criteria_extension_instance_id":"60",
+        "criteria_catalog_type_id":"100",
+        "criteria_extension_instance_id":"7",
 
         "menuitem_type":"Configuration",
 
@@ -25,7 +25,7 @@
         "menuitem_wrap_view_role":"",
         "menuitem_wrap_view_property":"",
 
-        "menuitem_model_name":"Applications",
+        "menuitem_model_name":"Groups",
         "menuitem_model_type":"System",
         "menuitem_model_query_object":"item",
         "menuitem_model_parameter":"",

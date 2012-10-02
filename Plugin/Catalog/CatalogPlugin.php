@@ -22,6 +22,88 @@ defined('MOLAJO') or die;
 class CatalogPlugin extends ContentPlugin
 {
 	/**
+	 * Generates list of Datalists for use in defining Custom Fields of Type Selectlist
+	 *
+	 * This can be moved to onBeforeParse when Plugin ordering is in place
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRoute()
+	{
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
+
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$connect = new $controllerClass();
+
+		$results = $connect->connect('Table', 'Catalog');
+		if ($results === false) {
+			return false;
+		}
+
+		$connect->set('get_customfields', 0);
+		$connect->set('use_special_joins', 0);
+		$connect->set('process_plugins', 0);
+
+		$connect->model->query->select(
+			$connect->model->db->qn($connect->get('primary_prefix'))
+				. '.' . $connect->model->db->qn('id')
+		);
+		$connect->model->query->select(
+			$connect->model->db->qn($connect->get('primary_prefix'))
+				. '.' . $connect->model->db->qn('sef_request')
+				. ' AS value '
+		);
+
+		$connect->model->query->where(
+			$connect->model->db->qn($connect->get('primary_prefix'))
+				. '.' . $connect->model->db->qn('redirect_to_id')
+				. ' = 0'
+		);
+		$connect->model->query->where(
+			$connect->model->db->qn($connect->get('primary_prefix'))
+				. '.' . $connect->model->db->qn('routable')
+				. ' = 1'
+		);
+
+		$connect->model->query->order(
+			$connect->model->db->qn($connect->get('primary_prefix'))
+				. '.' . $connect->model->db->qn('sef_request')
+		);
+
+		$connect->set('model_offset', 0);
+		$connect->set('model_count', 99999);
+
+		$query_results = $connect->getData('list');
+		$catalogArray = array();
+
+		$application_home_catalog_id = (int) Services::Registry()->get('configuration', 'application_home_catalog_id');
+		if ($application_home_catalog_id === 0) {
+		} else {
+			if (count($query_results) == 0 || $query_results === false) {
+			} else {
+
+				foreach ($query_results as $item) {
+					if ($item->id == $application_home_catalog_id) {
+						$item->value = trim($item->value . ' ' . Services::Language()->translate('Home'));
+						$catalogArray[] = $item;
+					} elseif (trim($item->value) == '' || $item->value === NULL) {
+						unset ($item);
+					} else {
+						$catalogArray[] = $item;
+					}
+				}
+			}
+		}
+		Services::Registry()->set('Datalist', 'Catalog', $catalogArray);
+
+		return true;
+	}
+
+	/**
 	 * Post-create processing
 	 *
 	 * @return boolean
