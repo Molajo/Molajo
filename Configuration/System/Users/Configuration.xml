@@ -8,12 +8,11 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>SYSTEM_MENUS_DESCRIPTION</description>
+    <description>SYSTEM_USERS_DESCRIPTION</description>
     <model
             name="Users"
             catalog_type_id="500"
             extension_instance_id="12"
-            process_plugins="0"
             extends="UserTable">
         <table>
             <joins>

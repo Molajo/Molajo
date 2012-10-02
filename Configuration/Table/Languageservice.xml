@@ -14,7 +14,7 @@
             catalog_type_id="1100"
             extension_instance_id="80"
             get_customfields="0"
-            use_special_joins="0"
+            use_special_joins="q"
             process_plugins="0"
             extends="ExtensioninstancesTable">
         <customfields>

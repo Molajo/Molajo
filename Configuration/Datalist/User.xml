@@ -12,7 +12,7 @@
         data_source="JDatabase">
     <table>
         <fields>
-            <include field="ID"/>
+            <include field="Id"/>
             <include field="Full_name"/>
         </fields>
     </table>

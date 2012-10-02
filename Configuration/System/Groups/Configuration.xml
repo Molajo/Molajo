@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="System" version="1.0">
-    <name>RESOURCE_GROUPS_NAME</name>
+    <name>SYSTEM_GROUPS_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,7 +8,7 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>RESOURCE_GROUPS_DESCRIPTION</description>
+    <description>SYSTEM_GROUPS_DESCRIPTION</description>
     <model
             name="Groups"
             catalog_type_id="100"
@@ -22,9 +22,9 @@
             </customfield>
             <customfield name="customfields">
                 <field name="group_web_address" type="url" null="0" default=" "/>
-                <field name="group_email_address" type="email_address" null="0" default=" "/>
-                <field name="group_owner" type="user_id" null="0" default="1"/>
-                <field name="group_collection_category_id" type="category_id" null="0" default="1"/>
+                <field name="group_email_address" type="email" null="0" default=" "/>
+                <field name="group_owner" type="integer" datalist="user" null="0" default="1"/>
+                <field name="group_collection_category_id" type="integer" datalist="categories" null="0" default="1"/>
             </customfield>
         </customfields>
     </model>

@@ -1,0 +1,6 @@
+<datalist name="FieldsLanguage">
+    <model
+            name="FieldsLanguage"
+            extends="PlugindataDatalist"
+            registry_entry="LanguageSystemFields"/>
+</datalist>

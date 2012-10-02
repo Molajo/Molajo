@@ -2,12 +2,12 @@
     "1":{},
     "2":{
 
-        "criteria_title":"Groups",
+        "criteria_title":"Users",
         "criteria_display_view_on_no_results":"0",
         "criteria_snippet_length":"150",
         "criteria_status":"0,1,2",
-        "criteria_catalog_type_id":"100",
-        "criteria_extension_instance_id":"7",
+        "criteria_catalog_type_id":"500",
+        "criteria_extension_instance_id":"12",
         "criteria_source_id":"",
 
         "grid_toolbar_buttons":"new,edit,delete,trash,restore,spam,unpublish,publish,archive,checkin,feature,sticky",
@@ -16,13 +16,13 @@
         "grid_list3":"tags",
         "grid_list4":"categories",
 
-        "grid_column1":"title",
-        "grid_column2":"content_text_snippet",
-        "grid_column3":"status",
-        "grid_column4":"ordering",
-        "grid_column5":"id",
-        "grid_column6":"",
-        "grid_column7":"",
+        "grid_column1":"full_name",
+        "grid_column2":"email",
+        "grid_column3":"gender",
+        "grid_column4":"date_of_birth",
+        "grid_column5":"about_me",
+        "grid_column6":"last_visit_datetime",
+        "grid_column7":"register_datetime",
         "grid_column8":"",
         "grid_column9":"",
         "grid_column10":"",
@@ -32,7 +32,7 @@
         "grid_batch_permissions":"1",
         "grid_batch_categories":"0",
         "grid_batch_tags":"0",
-        "grid_ordering":"name",
+        "grid_ordering":"last_name",
 
         "menuitem_type":"Grid",
 
@@ -52,10 +52,9 @@
         "menuitem_wrap_view_role":"",
         "menuitem_wrap_view_property":"",
 
-        "menuitem_model_name":"Groups",
+        "menuitem_model_name":"Users",
         "menuitem_model_type":"System",
         "menuitem_model_query_object":"list",
-        "menuitem_model_parameter":"",
         "menuitem_model_offset":"0",
         "menuitem_model_count":"0",
         "menuitem_model_use_pagination":"1"

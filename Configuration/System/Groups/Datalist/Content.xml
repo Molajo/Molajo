@@ -1,0 +1,7 @@
+<datalist name="ContentGroups">
+    <model
+            name="ContentGroups"
+            catalog_type_id="100"
+            extension_instance_id="7"
+            extends="ContentDatalist"/>
+</datalist>

@@ -13,7 +13,7 @@
             name="Languages"
             catalog_type_id="1100"
             extension_instance_id="80"
-            extends="ExtensioninstancesTable">
+            extends="RenderTable">
         <customfields>
             <customfield name="parameters">
                 <field name="name" type="char" default="English (United Kingdom)" null="0"/>
