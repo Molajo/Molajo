@@ -233,37 +233,40 @@ class DisplayController extends Controller
 		$this->parameters['even_or_odd'] = 'odd';
 		$this->parameters['total_rows'] = count($items);
 
-		foreach ($items as $item) {
+		if ((int) count($items) === 0 || $items === false) {
+		} else {
+			foreach ($items as $item) {
 
-			$arguments = array(
-				'table_registry_name' => $this->table_registry_name,
-				'parameters' => $this->parameters,
-				'data' => $item,
-				'model_type' => $this->get('model_type'),
-				'model_name' => $this->get('model_name')
-			);
+				$arguments = array(
+					'table_registry_name' => $this->table_registry_name,
+					'parameters' => $this->parameters,
+					'data' => $item,
+					'model_type' => $this->get('model_type'),
+					'model_name' => $this->get('model_name')
+				);
 
-			Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
-
-			$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
-
-			if ($arguments === false) {
 				Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-				return false;
+				$arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
+
+				if ($arguments === false) {
+					Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
+
+					return false;
+				}
+
+				Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
+
+				$this->parameters = $arguments['parameters'];
+				$this->query_results[] = $arguments['data'];
+
+				if ($this->parameters['even_or_odd'] == 'odd') {
+					$this->parameters['even_or_odd'] = 'even';
+				} else {
+					$this->parameters['even_or_odd'] = 'odd';
+				}
+				$this->parameters['row_count']++;
 			}
-
-			Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
-
-			$this->parameters = $arguments['parameters'];
-			$this->query_results[] = $arguments['data'];
-
-			if ($this->parameters['even_or_odd'] == 'odd') {
-				$this->parameters['even_or_odd'] = 'even';
-			} else {
-				$this->parameters['even_or_odd'] = 'odd';
-			}
-			$this->parameters['row_count']++;
 		}
 
 		return true;

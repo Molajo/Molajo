@@ -1,1 +1,1 @@
-<field name="configuration_tab_metadata" type="char" null="0" default=" "/>
+<field name="configuration_tab_metadata" type="char" null="0" default="{{Metadata,metadata*}}"/>

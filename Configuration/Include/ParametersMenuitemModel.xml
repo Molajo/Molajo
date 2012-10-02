@@ -1,7 +1,3 @@
-<include field="menuitem_source_id"/>
-<include field="menuitem_source_catalog_type_id"/>
-<include field="menuitem_extension_instance_id"/>
-
 <include field="menuitem_model_name"/>
 <include field="menuitem_model_type"/>
 <include field="menuitem_model_query_object"/>

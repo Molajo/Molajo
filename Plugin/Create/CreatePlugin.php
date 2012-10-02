@@ -437,15 +437,13 @@ class CreatePlugin extends ContentPlugin
 					$data->parameters[$key] = $this->data->title;
 
 					//todo get rid of one of these variables
-				} elseif ($key == 'criteria_catalog_type_id'
-					|| $key == 'menuitem_source_catalog_type_id'
-				) {
+				} elseif ($key == 'criteria_catalog_type_id') {
 					$data->parameters[$key] = $this->data->catalog_type_id;
 
-				} elseif ($key == 'menuitem_extension_instance_id') {
+				} elseif ($key == 'criteria_extension_instance_id') {
 					$data->parameters[$key] = $this->data->id;
 
-				} elseif ($key == 'menuitem_model_name') {
+				} elseif ($key == 'model_name') {
 					$data->parameters[$key] = $this->data->title;
 					$data->model_name = 'Grid';
 					$data->model_type = 'Menuitem';

@@ -741,23 +741,25 @@ Class FormService
 					. strtoupper(str_replace('&nbsp;', '_', $tabFieldsetTitle)) . '_DESC'));
 
 			$fields = Services::Registry()->get($table_registry_name, $custom_field);
+			if ((int)count($fields) === 0 || $fields === false) {
+			} else {
+				foreach ($fields as $field) {
 
-			foreach ($fields as $field) {
+					if ($field['field_inherited'] == 1) {
+					} else {
 
-				if ($field['field_inherited'] == 1) {
-				} else {
+						$field['tab_title'] = $tabTitle;
+						$field['tab_description'] = $translateTabDesc;
+						$field['tab_fieldset_title'] = $tabFieldsetTitle;
+						$field['tab_fieldset_description'] = $translateFieldsetDesc;
+						$field['first_following'] = $first;
 
-					$field['tab_title'] = $tabTitle;
-					$field['tab_description'] = $translateTabDesc;
-					$field['tab_fieldset_title'] = $tabFieldsetTitle;
-					$field['tab_fieldset_description'] = $translateFieldsetDesc;
-					$field['first_following'] = $first;
+						$first = 0;
 
-					$first = 0;
+						$field['customfield_type'] = $custom_field;
 
-					$field['customfield_type'] = $custom_field;
-
-					$build_results[] = $field;
+						$build_results[] = $field;
+					}
 				}
 			}
 		}
@@ -1229,33 +1231,37 @@ Class FormService
 		}
 
 		$selectionFound = false;
-		foreach ($items as $item) {
-			$row = new \stdClass();
 
-			foreach ($row_start as $rkey => $rvalue) {
-				$row->$rkey = $rvalue;
-			}
+		if (count($items) == 0 || $items === false) {
+		} else {
+			foreach ($items as $item) {
+				$row = new \stdClass();
 
-			$row->datalist = $datalist;
-			$row->required = $required;
-			$row->disabled = $disabled;
-			$row->multiple = $multiple;
-			$row->size = $size;
-
-			$row->id = $item->id;
-			$row->value = $item->value;
-
-			if (in_array($row->id, $selectedArray)) {
-				$row->selected = ' selected';
-				if ($default_setting == 0) {
-				} else {
-					$item->value .= ' (' . Services::Language()->translate('Default') . ')';
+				foreach ($row_start as $rkey => $rvalue) {
+					$row->$rkey = $rvalue;
 				}
-			} else {
-				$row->selected = '';
-			}
 
-			$fieldRecordset[] = $row;
+				$row->datalist = $datalist;
+				$row->required = $required;
+				$row->disabled = $disabled;
+				$row->multiple = $multiple;
+				$row->size = $size;
+
+				$row->id = $item->id;
+				$row->value = $item->value;
+
+				if (in_array($row->id, $selectedArray)) {
+					$row->selected = ' selected';
+					if ($default_setting == 0) {
+					} else {
+						$item->value .= ' (' . Services::Language()->translate('Default') . ')';
+					}
+				} else {
+					$row->selected = '';
+				}
+
+				$fieldRecordset[] = $row;
+			}
 		}
 
 		if (isset($row)) {

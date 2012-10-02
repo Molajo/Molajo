@@ -1,6 +1,0 @@
-<datalist name="FieldsWrapviews">
-    <model
-            name="FieldsWrapviews"
-            extends="PlugindataDatalist"
-            registry_entry="WrapviewsResourceFields"/>
-</datalist>

@@ -1,7 +1,0 @@
-<field name="menuitem_extension_instance_id"
-       type="integer"
-       null="0"
-       default="0"
-       datalist="Resources"
-        />
-

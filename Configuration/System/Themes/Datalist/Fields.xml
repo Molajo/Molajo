@@ -1,6 +1,0 @@
-<datalist name="FieldsThemes">
-    <model
-            name="FieldsThemes"
-            extends="PlugindataDatalist"
-            registry_entry="ThemesResourceFields"/>
-</datalist>

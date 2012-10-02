@@ -1,0 +1,59 @@
+{
+    "1":{},
+    "2":{
+
+        "criteria_title":"Applications",
+        "criteria_display_view_on_no_results":"0",
+        "criteria_snippet_length":"150",
+        "criteria_status":"1,2",
+        "criteria_catalog_type_id":"50",
+        "criteria_extension_instance_id":"60",
+
+        "menuitem_type":"Configuration",
+
+        "menuitem_theme_id":"9020",
+        "menuitem_page_view_id":"205",
+        "menuitem_page_view_css_id":"",
+        "menuitem_page_view_css_class":"",
+        "menuitem_template_view_id":"1015",
+        "menuitem_template_view_css_id":"",
+        "menuitem_template_view_css_class":"",
+
+        "menuitem_wrap_view_id":"2100",
+        "menuitem_wrap_view_css_id":"",
+        "menuitem_wrap_view_css_class":"",
+        "menuitem_wrap_view_role":"",
+        "menuitem_wrap_view_property":"",
+
+        "menuitem_model_name":"Applications",
+        "menuitem_model_type":"System",
+        "menuitem_model_query_object":"item",
+        "menuitem_model_parameter":"",
+        "menuitem_model_offset":"0",
+        "menuitem_model_count":"10",
+        "menuitem_model_use_pagination":"1"
+    }
+}
+
+{
+"1":{},
+"2":{
+"configuration_tab_class":"mobile",
+"configuration_tab_link_namespace":"config",
+"configuration_tab_array":"{{Basic,basic}}{{Customfields,customfields}}{{Metadata,metadata}}{{Form,form}}{{Item,item}}{{List,list}}{{Editor,editor}}{{Grid,grid}}",
+"configuration_tab":"",
+"configuration_tab_basic":"{{Basics,criteria*}}{{Enable Features,enable*}}",
+"configuration_tab_customfields":"{{Create,create}}{{Delete,delete}}{{Customfields,customfields*}}",
+"menuitem_type":"Configuration",
+"configuration_tab_metadata":"{{Metadata,metadata*}}",
+"configuration_tab_form":"{{Page,form_parent*,form_theme*,form_page*}}{{Template,form_template*}}{{Wrap,form_wrap*}}{{Model,form_model*}}",
+"configuration_tab_item":"{{Page,item_parent*,item_theme*,item_page*}}{{Template,item_template*}}{{Wrap,item_wrap*}}{{Model,item_model*}}",
+"configuration_tab_list":"{{Page,list_parent*,list_theme*,list_page*}}{{Template,list_template*}}{{Wrap,list_wrap*}}{{Model,list_model*}}",
+"configuration_tab_editor":"{{Main,editor_toolbar*,editor_main*,editor_secondary*}}{{Publish,editor_publish*}}{{Permissions,editor_permission*}}{{SEO,editor_seo*}}",
+"configuration_tab_grid":"{{Grid,grid_toolbar*,grid_stat*,grid_ordering*}}{{Lists,grid_list*}}{{Columns,grid_col*}}{{Batch,grid_batch*}}",
+
+"editor_tab_array":"{{Main,main}}{{Publish,publish}}{{Permissions,permissions}}{{SEO,seo}}",
+"editor_tab_main":"{{Main,editor_toolbar*,editor_main*,editor_secondary*}}",
+"editor_tab_publish":"{{Publish,editor_publish*}}",
+"editor_tab_permissions":"{{Permissions,editor_permission*}}",
+"editor_tab_seo":"{{SEO,editor_seo*}}"

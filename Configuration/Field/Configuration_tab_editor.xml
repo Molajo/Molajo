@@ -1,1 +1,1 @@
-<field name="configuration_tab_editor" type="char" null="0" default=" "/>
+<field name="configuration_tab_editor" type="char" null="0" default="{{Main,editor_toolbar*,editor_main*,editor_secondary*}}{{Publish,editor_publish*}}{{Permissions,editor_permission*}}{{SEO,editor_seo*}}"/>

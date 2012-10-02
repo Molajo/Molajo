@@ -1,7 +1,0 @@
-<datalist name="ContentWrapviews">
-    <model
-            name="ContentWrapviews"
-            catalog_type_id="1250"
-            extension_instance_id="24"
-            extends="ContentDatalist"/>
-</datalist>

@@ -1,1 +1,1 @@
-<field name="grid_tab_link_namespace" type="char" null="0" default=" "/>
+<field name="grid_tab_link_namespace" type="char" null="0" default="grid"/>

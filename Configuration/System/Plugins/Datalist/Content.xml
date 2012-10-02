@@ -1,7 +1,0 @@
-<datalist name="Content">
-    <model
-            name="Content"
-            catalog_type_id=""
-            extension_instance_id=""
-            extends="Content"/>
-</datalist>

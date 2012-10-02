@@ -13,7 +13,7 @@
             name="Groups"
             catalog_type_id="100"
             extension_instance_id="7"
-            extends="ContentTable">
+            extends="ContentresourcesTable">
         <customfields>
             <customfield name="parameters">
                 <field name="users_can_join" type="boolean" null="0" default="0"/>

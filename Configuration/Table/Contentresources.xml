@@ -9,26 +9,7 @@
         </children>
 
         <plugins>
-            <plugin name="Status"/>
-            <plugin name="Itemurl"/>
-            <plugin name="Mockimage"/>
-            <plugin name="Blockquote"/>
-            <plugin name="Rownumber"/>
-            <plugin name="Readmore"/>
-            <plugin name="Author"/>
-            <plugin name="Smilies"/>
-            <plugin name="Email"/>
-            <plugin name="Gravatar"/>
-            <plugin name="IFrame"/>
-            <plugin name="Dateformats"/>
-            <plugin name="Snippet"/>
-            <plugin name="Publishedstatus"/>
-            <plugin name="Cssclassandids"/>
-            <plugin name="Pagination"/>
-            <plugin name="Dateformats"/>
-            <plugin name="Version"/>
-            <plugin name="Ordering"/>
-            <plugin name="Create"/>
+            <include name="ParametersContent"/>
         </plugins>
 
     </table>

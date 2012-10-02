@@ -1,7 +1,0 @@
-<datalist name="ContentMenuitems">
-    <model
-            name="ContentMenuitems"
-            catalog_type_id="3000"
-            extension_instance_id="3"
-            extends="ContentDatalist"/>
-</datalist>

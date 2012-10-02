@@ -1,0 +1,62 @@
+{
+    "1":{},
+    "2":{
+
+        "criteria_title":"Applications",
+        "criteria_display_view_on_no_results":"0",
+        "criteria_snippet_length":"150",
+        "criteria_status":"0,1,2",
+        "criteria_catalog_type_id":"50",
+        "criteria_extension_instance_id":"60",
+        "criteria_source_id":"",
+
+        "grid_toolbar_buttons":"new,edit,delete,trash,restore,spam,unpublish,publish,archive,checkin,feature,sticky",
+        "grid_list1":"applications",
+        "grid_list2":"",
+        "grid_list3":"",
+        "grid_list4":"",
+        "grid_column1":"name",
+        "grid_column2":"path",
+        "grid_column3":"description",
+        "grid_column4":"",
+        "grid_column5":"",
+        "grid_column6":"",
+        "grid_column7":"",
+        "grid_column8":"",
+        "grid_column9":"",
+        "grid_column10":"",
+        "grid_status":"1",
+        "grid_batch_filters":"1",
+        "grid_batch_status":"0",
+        "grid_batch_permissions":"1",
+        "grid_batch_categories":"0",
+        "grid_batch_tags":"0",
+        "grid_ordering":"name",
+
+        "menuitem_type":"Grid",
+
+        "menuitem_theme_id":"9020",
+
+        "menuitem_page_view_id":"220",
+        "menuitem_page_view_css_id":"",
+        "menuitem_page_view_css_class":"",
+
+        "menuitem_template_view_id":"1050",
+        "menuitem_template_view_css_id":"",
+        "menuitem_template_view_css_class":"",
+
+        "menuitem_wrap_view_id":"2100",
+        "menuitem_wrap_view_css_id":"",
+        "menuitem_wrap_view_css_class":"",
+        "menuitem_wrap_view_role":"",
+        "menuitem_wrap_view_property":"",
+
+        "menuitem_model_name":"Applications",
+        "menuitem_model_type":"System",
+        "menuitem_model_query_object":"list",
+        "menuitem_model_parameter":"",
+        "menuitem_model_offset":"0",
+        "menuitem_model_count":"0",
+        "menuitem_model_use_pagination":"1"
+    }
+}

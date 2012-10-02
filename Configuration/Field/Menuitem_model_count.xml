@@ -1,4 +1,4 @@
-<field name="menuitem_source_catalog_type_id"
+<field name="menuitem_model_count"
        type="integer"
        null="0"
        default="0"

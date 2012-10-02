@@ -2,5 +2,5 @@
     <model
             name="FieldsCategories"
             extends="PlugindataDatalist"
-            registry_entry="CategoriesResourceFields"/>
+            registry_entry="CategoriesSystemFields"/>
 </datalist>

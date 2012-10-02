@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="System" version="1.0">
-    <name>SYSTEM_TAGS_NAME</name>
+    <name>RESOURCE_TAGS_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,11 +8,11 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>SYSTEM_TAGS_DESCRIPTION</description>
+    <description>RESOURCE_TAGS_DESCRIPTION</description>
     <model
             name="Tags"
             catalog_type_id="3500"
             extension_instance_id="11"
-            extends="ContentTable"/>
+            extends="ContentresourcesTable"/>
 </extension>
 

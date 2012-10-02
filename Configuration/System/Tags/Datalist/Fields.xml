@@ -2,5 +2,5 @@
     <model
             name="FieldsTags"
             extends="PlugindataDatalist"
-            registry_entry="TagsResourceFields"/>
+            registry_entry="TagsSystemFields"/>
 </datalist>

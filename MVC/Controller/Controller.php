@@ -408,13 +408,13 @@ class Controller
 			return $this->query_results;
 		}
 
-/**
-echo '<br /><br /><pre>';
-echo $this->query->__toString()
-echo '<br /><br />';
-var_dump($this->query_results);
-echo '</pre><br /><br />';
-*/
+
+//echo '<br /><br /><pre>';
+//echo $this->model->query->__toString();
+//echo '<br /><br />';
+//var_dump($this->query_results);
+//echo '</pre><br /><br />';
+
 
 		/** 7. Return List  */
 		if ($query_object == 'list') {
@@ -436,6 +436,9 @@ echo '</pre><br /><br />';
 		}
 
 		/** 8. Return Item */
+		if (count($this->query_results) === 0 || $this->query_results === false) {
+			return array();
+		}
 		if (is_array($this->query_results)) {
 			return $this->query_results[0];
 		}
@@ -735,49 +738,52 @@ echo '</pre><br /><br />';
 
 		$first = true;
 
-		foreach ($items as $item) {
+		if (count($items) == 0 || $items === false || $items === null) {
+		} else {
+			foreach ($items as $item) {
 
-			$arguments = array(
-				'table_registry_name' => $this->table_registry_name,
-				'parameters' => $this->parameters,
-				'data' => $item,
-				'model_name' => $this->get('model_name'),
-				'model_type' => $this->get('model_type'),
-				'first' => $first
-			);
-
-			Services::Profiler()->set(
-				'DisplayController->onAfterReadEvent '
-					. $this->table_registry_name
-					. ' Schedules onAfterRead',
-				LOG_OUTPUT_PLUGINS,
-				VERBOSE
-			);
-
-			$arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->plugins);
-
-			if ($arguments === false) {
-				Services::Profiler()->set(
-					'DisplayController->onAfterRead '
-						. $this->table_registry_name
-						. ' failure ',
-					LOG_OUTPUT_PLUGINS
+				$arguments = array(
+					'table_registry_name' => $this->table_registry_name,
+					'parameters' => $this->parameters,
+					'data' => $item,
+					'model_name' => $this->get('model_name'),
+					'model_type' => $this->get('model_type'),
+					'first' => $first
 				);
 
-				return false;
+				Services::Profiler()->set(
+					'DisplayController->onAfterReadEvent '
+						. $this->table_registry_name
+						. ' Schedules onAfterRead',
+					LOG_OUTPUT_PLUGINS,
+					VERBOSE
+				);
+
+				$arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->plugins);
+
+				if ($arguments === false) {
+					Services::Profiler()->set(
+						'DisplayController->onAfterRead '
+							. $this->table_registry_name
+							. ' failure ',
+						LOG_OUTPUT_PLUGINS
+					);
+
+					return false;
+				}
+
+				Services::Profiler()->set(
+					'DisplayController->onAfterReadEvent '
+						. $this->table_registry_name
+						. ' successful ',
+					LOG_OUTPUT_PLUGINS,
+					VERBOSE
+				);
+
+				$this->parameters = $arguments['parameters'];
+				$this->query_results[] = $arguments['data'];
+				$first = false;
 			}
-
-			Services::Profiler()->set(
-				'DisplayController->onAfterReadEvent '
-					. $this->table_registry_name
-					. ' successful ',
-				LOG_OUTPUT_PLUGINS,
-				VERBOSE
-			);
-
-			$this->parameters = $arguments['parameters'];
-			$this->query_results[] = $arguments['data'];
-			$first = false;
 		}
 
 		/** onAfterReadall - Passes the entire query_results through the plugin */

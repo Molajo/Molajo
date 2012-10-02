@@ -1,6 +1,0 @@
-<datalist name="FieldsMenuitems">
-    <model
-            name="FieldsMenuitems"
-            extends="PlugindataDatalist"
-            registry_entry="MenuitemsResourceFields"/>
-</datalist>
