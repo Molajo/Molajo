@@ -93,6 +93,7 @@ Class EventService
 	 */
 	public function schedule($event, $arguments = array(), $selections = array())
 	{
+
 		Services::Profiler()->set('EventService->schedule Initiated Event '
 			. $event, LOG_OUTPUT_PLUGINS, VERBOSE);
 

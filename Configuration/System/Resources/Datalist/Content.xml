@@ -1,0 +1,6 @@
+<datalist name="ContentResources">
+    <model
+            name="ContentResources"
+            catalog_type_id="1050"
+            extends="ExtensionInstancesDatalist"/>
+</datalist>

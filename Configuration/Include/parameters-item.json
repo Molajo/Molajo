@@ -2,12 +2,12 @@
     "1":{},
     "2":{
 
-        "criteria_title":"Users",
+        "criteria_title":"Services",
         "criteria_display_view_on_no_results":"1",
         "criteria_snippet_length":"200",
         "criteria_status":"0,1,2",
-        "criteria_catalog_type_id":"500",
-        "criteria_extension_instance_id":"12",
+        "criteria_catalog_type_id":"1425",
+        "criteria_extension_instance_id":"30",
         "criteria_source_id":"",
 
         "enable_draft_save":"1",
@@ -75,7 +75,7 @@
         "editor_seo_column9":"",
         "editor_seo_column10":"",
 
-        "form_parent_menu_id":"3410",
+        "form_parent_menu_id":"3614",
         "form_theme_id":"9020",
         "form_page_view_id":"210",
         "form_page_view_css_id":"",
@@ -88,12 +88,12 @@
         "form_wrap_view_css_class":"",
         "form_wrap_view_role":"",
         "form_wrap_view_property":"",
-        "form_model_name":"Users",
+        "form_model_name":"Services",
         "form_model_type":"System",
         "form_model_query_object":"item",
         "form_model_parameter":"",
 
-        "item_parent_menu_id":"3410",
+        "item_parent_menu_id":"3614",
         "item_theme_id":"9020",
         "item_page_view_id":"225",
         "item_page_view_css_id":"",
@@ -106,12 +106,12 @@
         "item_wrap_view_css_class":"",
         "item_wrap_view_role":"",
         "item_wrap_view_property":"",
-        "item_model_name":"Users",
+        "item_model_name":"Services",
         "item_model_type":"System",
         "item_model_query_object":"item",
         "item_model_parameter":"",
 
-        "list_parent_menu_id":"3410",
+        "list_parent_menu_id":"3614",
         "list_theme_id":"9020",
         "list_page_view_id":"220",
         "list_page_view_css_id":"",
@@ -125,7 +125,7 @@
         "list_wrap_view_role":"",
         "list_wrap_view_property":"",
 
-        "list_model_name":"Users",
+        "list_model_name":"Services",
         "list_model_type":"System",
         "list_model_query_object":"list",
         "list_model_parameter":"",

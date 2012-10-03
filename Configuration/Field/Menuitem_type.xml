@@ -1,1 +1,1 @@
-<field name="menuitem_type" type="char" null="0" default=" " datalist="Menuitemtype"/>
+<field name="menuitem_type" type="char" null="0" default=" " datalist="Menuitemtypes"/>

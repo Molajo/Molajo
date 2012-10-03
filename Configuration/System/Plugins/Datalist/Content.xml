@@ -1,0 +1,6 @@
+<datalist name="ContentPlugins">
+    <model
+            name="ContentPlugins"
+            catalog_type_id="1450"
+            extends="ExtensionInstancesDatalist"/>
+</datalist>
