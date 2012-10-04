@@ -46,3 +46,15 @@
 <include field="editor_seo_column8"/>
 <include field="editor_seo_column9"/>
 <include field="editor_seo_column10"/>
+
+<include field="editor_metadata_column1"/>
+<include field="editor_metadata_column2"/>
+<include field="editor_metadata_column3"/>
+<include field="editor_metadata_column4"/>
+<include field="editor_metadata_column5"/>
+<include field="editor_metadata_column6"/>
+<include field="editor_metadata_column7"/>
+<include field="editor_metadata_column8"/>
+<include field="editor_metadata_column9"/>
+<include field="editor_metadata_column10"/>
+

@@ -16,3 +16,4 @@
 <include field="editor_tab_publish"/>
 <include field="editor_tab_permissions"/>
 <include field="editor_tab_seo"/>
+<include field="editor_tab_metadata"/>

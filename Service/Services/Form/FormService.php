@@ -930,6 +930,11 @@ Class FormService
 			}
 
 			switch ($row->type) {
+				case 'datetime':
+					$row->type = 'date';
+					$row->view = 'forminput';
+					break;
+
 				case 'boolean':
 					$row->view = 'formradio';
 					break;

@@ -3,7 +3,7 @@
        null="0"
        default="model"
        datalist="CatalogType"
-       locked="0"
+       locked="1"
        display="catalog_types_title"
         />
 

@@ -166,6 +166,12 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'model_parameter', '');
 		Services::Registry()->set('Parameters', 'model_query_object', 'item');
 
+		$parent_menu_id = Services::Registry()->get(
+			'ResourcesSystemParameters',
+			$pageTypeNamespace . '_parent_menu_id');
+
+		Services::Registry()->set('Parameters', 'parent_menu_id', $parent_menu_id);
+;
 		return true;
 	}
 

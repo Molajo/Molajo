@@ -83,7 +83,7 @@ class DatalistPlugin extends Plugin
 
 		foreach ($files as $file) {
 
-			$length = strlen($file) - strlen('.xls');
+			$length = strlen($file) - strlen('.xml');
 			$value = substr($file, 0, $length);
 
 			$fileList[] = $value;

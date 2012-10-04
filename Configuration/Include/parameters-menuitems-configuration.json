@@ -2,12 +2,12 @@
     "1":{},
     "2":{
 
-        "criteria_title":"Services",
+        "criteria_title":"Financials",
         "criteria_display_view_on_no_results":"0",
         "criteria_snippet_length":"150",
         "criteria_status":"1,2",
-        "criteria_catalog_type_id":"1425",
-        "criteria_extension_instance_id":"30",
+        "criteria_catalog_type_id":"94",
+        "criteria_extension_instance_id":"94",
 
         "menuitem_type":"Configuration",
 
@@ -25,8 +25,8 @@
         "menuitem_wrap_view_role":"",
         "menuitem_wrap_view_property":"",
 
-        "menuitem_model_name":"Services",
-        "menuitem_model_type":"System",
+        "menuitem_model_name":"Financials",
+        "menuitem_model_type":"Resource",
         "menuitem_model_query_object":"item",
         "menuitem_model_parameter":"",
         "menuitem_model_offset":"0",

@@ -936,6 +936,27 @@ order by lft
 &   &amp;
 
 
+INSERT INTO `molajo_content`(`id`, `extension_instance_id`, `catalog_type_id`, `title`, `subtitle`, `path`, `alias`,
+`content_text`, `protected`, `featured`, `stickied`, `status`,
+`start_publishing_datetime`, `stop_publishing_datetime`,
+`version`, `version_of_id`, `status_prior_to_version`,
+`created_datetime`, `created_by`,
+`modified_datetime`, `modified_by`,
+`checked_out_datetime`, `checked_out_by`,
+`root`, `parent_id`, `lft`, `rgt`, `lvl`, `home`,
+`customfields`, `parameters`, `metadata`, `language`, `translation_of_id`, `ordering`)
+
+SELECT NULL, 91, 91, name, '', 'financials', lower(name),
+'', 0, 0, 0, 1,
+'0000-00-00 00:00:00', '0000-00-00 00:00:00',
+1, NULL, NULL,
+'0000-00-00 00:00:00', '1',
+'0000-00-00 00:00:00', '1',
+'0000-00-00 00:00:00', 0,
+0, 0, 0, 0, 0, 0,
+CONCAT('{"academic_year":"', academic_year, '","organizational_unit":"', organizational_unit, '","cost_object":"', cost_object, '","fund_type":"', fund_type, '","major_pcs":"', major_pcs, '","pcs":"', pcs, '","sap_node":"', sap_node, '"}'),
+'', '', 'en-GB', 0, 1
+FROM temp
 
 
 
@@ -949,3 +970,42 @@ INSERT INTO `molajo_extension_instances` (`id`, `extension_id`, `catalog_type_id
 
 INSERT INTO `molajo_catalog`(`id`, `catalog_type_id`, `source_id`, `routable`, `menuitem_type`, `sef_request`, `redirect_to_id`, `view_group_id`, `primary_category_id`, `tinyurl`)
 
+
+
+INSERT INTO `molajo_content`(`id`, `extension_instance_id`, `catalog_type_id`, `title`, `subtitle`, `path`, `alias`,
+`content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
+`version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`,
+`modified_by`, `checked_out_datetime`, `checked_out_by`, `root`, `parent_id`, `lft`, `rgt`, `lvl`, `home`,
+`customfields`, `parameters`, `metadata`, `language`, `translation_of_id`, `ordering`)
+
+SELECT NULL, 91, 91, name, '', 'financials', lower(name),
+'', 0, 0, 0, 1,
+'0000-00-00 00:00:00', '0000-00-00 00:00:00',
+`version`, `version_of_id`, NULL,
+'0000-00-00 00:00:00', `1`,
+'0000-00-00 00:00:00', `1`,
+'0000-00-00 00:00:00', 0,
+0, 0, 0, 0, 0, 0,
+CONCAT('{"data_type":"', `data_type`, '","data_length":"', data_length, '","data_precision":"', data_precision, '"}'),
+'', '', 'en-GB', 0, 1
+
+FROM data_elements
+
+INSERT INTO `molajo_catalog`(`id`, `catalog_type_id`, `source_id`, `routable`, `menuitem_type`, `sef_request`, `redirect_to_id`, `view_group_id`, `primary_category_id`, `tinyurl`)
+
+SELECT NULL, `a`.`catalog_type_id`,  `a`.`id`,  `b`.`routable`, ' ', CONCAT(`b`.`slug`, '/', `a`.`alias`), 0, 1, `b`.`primary_category_id`, ' '
+FROM molajo_content a,
+molajo_catalog_types b
+WHERE `a`.`catalog_type_id` = `b`.`id`
+AND  `a`.`catalog_type_id` = '94'
+
+
+
+INSERT INTO `molajo_catalog`(`id`, `catalog_type_id`, `source_id`, `routable`, `menuitem_type`, `sef_request`, `redirect_to_id`, `view_group_id`, `primary_category_id`, `tinyurl`)
+
+SELECT NULL, `a`.`catalog_type_id`,  `a`.`id`,  `b`.`routable`, ' ',
+CONCAT(`b`.`slug`, '/', `a`.`alias`), 0, 1, `b`.`primary_category_id`, ' '
+FROM molajo_content a,
+molajo_catalog_types b
+WHERE `a`.`catalog_type_id` = `b`.`id`
+AND  `a`.`catalog_type_id` = '94'

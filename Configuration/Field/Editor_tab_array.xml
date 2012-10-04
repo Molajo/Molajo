@@ -1,1 +1,1 @@
-<field name="editor_tab_array" type="char" null="0" default="{{Main,main}}{{Publish,publish}}{{Permissions,permissions}}{{SEO,seo}}"/>
+<field name="editor_tab_array" type="char" null="0" default="{{Main,main}}{{Publish,publish}}{{Permissions,permissions}}{{SEO,seo}}{{Metadata,metadata}}"/>

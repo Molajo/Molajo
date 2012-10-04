@@ -35,7 +35,8 @@ class CatalogPlugin extends Plugin
 		} else {
 			return true;
 		}
-
+		Services::Registry()->set('Datalist', 'Catalog', array());
+		return;
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 

@@ -564,12 +564,12 @@ class Controller
 
 			} else {
 				$this->model_offset = $this->get('model_offset', 0);
-				$this->model_count = $this->get('model_count', 10);
+				$this->model_count = $this->get('model_count', 20);
 			}
 		}
 
 		$this->pagination_total = (int)$this->model->getQueryResults(
-			$query_object, 0, 99999);
+			$query_object, $this->model_offset, $this->model_count);
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
 			Services::Profiler()->set('DisplayController->getData SQL Query: <br /><br />'
