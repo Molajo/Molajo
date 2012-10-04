@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Checkin;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('MOLAJO') or die;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class CheckinPlugin extends ContentPlugin
+class CheckinPlugin extends Plugin
 {
 
 	/**

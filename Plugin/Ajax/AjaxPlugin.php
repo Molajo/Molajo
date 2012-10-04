@@ -7,7 +7,7 @@
 namespace Molajo\Plugin\Ajax;
 
 use Molajo\Helpers;
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class AjaxPlugin extends ContentPlugin
+class AjaxPlugin extends Plugin
 {
 	/**
 	 * Identify Ajax Request (run last in onBeforeParse):

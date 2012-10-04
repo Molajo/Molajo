@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Datalist;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class DatalistPlugin extends ContentPlugin
+class DatalistPlugin extends Plugin
 {
 	/**
 	 * Prepares list of Datalist Lists
@@ -28,6 +28,11 @@ class DatalistPlugin extends ContentPlugin
 	 */
 	public function onAfterRoute()
 	{
+		if (APPLICATION_ID == 2) {
+		} else {
+			return true;
+		}
+
 		$files = Services::Filesystem()->folderFiles(
 			MOLAJO_FOLDER . '/Configuration/Datalist'
 		);

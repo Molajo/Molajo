@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Extensioninstance;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\MVC\Controller;
 use Molajo\MVC\Controller\CreateController;
 use Molajo\MVC\Controller\DeleteController;
@@ -21,7 +21,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class ExtensioninstancePlugin extends ContentPlugin
+class ExtensioninstancePlugin extends Plugin
 {
 	/**
 	 * onBeforeCreate processing

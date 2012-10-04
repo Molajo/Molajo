@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Publishedstatus;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('MOLAJO') or die;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class PublishedstatusPlugin extends ContentPlugin
+class PublishedstatusPlugin extends Plugin
 {
 	/**
 	 * Pre-read processing

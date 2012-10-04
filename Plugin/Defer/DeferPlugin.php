@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Defer;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class DeferPlugin extends ContentPlugin
+class DeferPlugin extends Plugin
 {
 	/**
 	 * Prepares data for the JS links and Declarations for the Head

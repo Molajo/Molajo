@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Referencedata;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('MOLAJO') or die;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class ReferencedataPlugin extends ContentPlugin
+class ReferencedataPlugin extends Plugin
 {
 	/**
 	 * Retrieve textual values for primary keys

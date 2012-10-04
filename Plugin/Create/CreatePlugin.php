@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Create;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\MVC\Controller\CreateController;
 use Molajo\Service\Services;
 
@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class CreatePlugin extends ContentPlugin
+class CreatePlugin extends Plugin
 {
 	/**
 	 * Post-create processing for new extension

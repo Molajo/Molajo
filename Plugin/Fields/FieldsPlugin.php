@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Fields;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 use Molajo\Helpers;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class FieldsPlugin extends ContentPlugin
+class FieldsPlugin extends Plugin
 {
 	/**
 	 * Generates list of Datalists for use in defining Custom Fields of Type Selectlist

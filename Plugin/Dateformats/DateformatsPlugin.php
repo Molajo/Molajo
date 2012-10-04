@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Dateformats;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class DateformatsPlugin extends ContentPlugin
+class DateformatsPlugin extends Plugin
 {
 	/**
 	 * Pre-create processing

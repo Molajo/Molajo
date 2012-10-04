@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Item;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 use Molajo\Helpers;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class ItemPlugin extends ContentPlugin
+class ItemPlugin extends Plugin
 {
 	/**
 	 * Prepares data for Item

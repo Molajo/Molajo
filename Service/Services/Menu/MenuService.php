@@ -68,27 +68,38 @@ Class MenuService
 		$m->model->query->where($m->model->db->qn('current_menuitem.id')
 			. ' = ' . (int)$current_menuitem_id);
 
-		$m->model->query->order('a.lft');
+		$m->model->query->order('a.lft DESC');
 
 		$m->set('model_offset', 0);
 		$m->set('model_count', 999999);
 
 		$query_results = $m->getData('list');
 
+		$look_for_parent = 0;
+
+		$select = array();
+		$i = 0;
 		foreach ($query_results as $item) {
 
-			if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
-				$item->url = $item->path;
-				if ($item->alias == '') {
-				} else {
-					$item->url .= '/' . $item->path;
-				}
+			if ($look_for_parent == 0) {
+				$select[] = $i;
+				$look_for_parent = $item->parent_id;
+
 			} else {
-				$item->url = 'index.php?id=' . (int)$item->id;
+				if ($look_for_parent == $item->id) {
+					$select[] = $i;
+					$look_for_parent = $item->parent_id;
+				}
 			}
+			$i++;
 		}
 
-		return $query_results;
+		rsort($select);
+		foreach ($select as $index) {
+				$breadcrumbs[] = $query_results[$index];
+		}
+
+		return $breadcrumbs;
 	}
 
 	/**

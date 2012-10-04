@@ -22,13 +22,12 @@ class Exceptions extends \Exception
 	/**
 	 * Application::Services
 	 *
-	 * @var    object Services
+	 * @var    Object Services
 	 * @since  1.0
 	 */
 	protected static $services = null;
 
-	// Redefine the exception so message isn't optional
-	public function __construct($message, $code = 0, \Exception $previous = null) {
+	public function __construct($message ='', $code = 0, \Exception $previous = null) {
 		// some code
 
 		// make sure everything is assigned properly

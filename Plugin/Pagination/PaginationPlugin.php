@@ -7,7 +7,7 @@
 namespace Molajo\Plugin\Pagination;
 
 use Molajo\Service\Services;
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('MOLAJO') or die;
 
@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class PaginationPlugin extends ContentPlugin
+class PaginationPlugin extends Plugin
 {
 	/**
 	 * After reading, calculate pagination data

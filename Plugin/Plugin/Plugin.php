@@ -6,12 +6,14 @@
  */
 namespace Molajo\Plugin\Plugin;
 
+use Molajo\Service\Services;
+
 defined('MOLAJO') or die;
 
 /**
  * Plugin
  *
- * Base class for Model Plugins
+ * Base class for Plugins
  *
  * @package     Molajo
  * @subpackage  Model
@@ -20,37 +22,612 @@ defined('MOLAJO') or die;
 class Plugin
 {
 	/**
-	 * Pre-create processing
+	 * Table Registry Name - can be used to retrieve table parameters
 	 *
-	 * @param   $this->data
-	 * @param   $model
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $table_registry_name;
+
+	/**
+	 * Model type
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $model_type;
+
+	/**
+	 * Model name
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $model_name;
+
+	/**
+	 * Parameters set by the Includer and used in the MVC to generate include output
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $parameters = array();
+
+	/**
+	 * Query Object from Model
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $query;
+
+	/**
+	 * db object (for escaping fields)
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $db;
+
+	/**
+	 * Query Results
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $data;
+
+	/**
+	 * null_date
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $null_date;
+
+	/**
+	 * now
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $now;
+
+	/**
+	 * Fields - name and type
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $fields;
+
+	/**
+	 * Custom Field Groups for this Data
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $customfieldgroups;
+
+	/**
+	 * Used in post-render View plugins, contains output rendered from view
+	 *
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $rendered_output;
+
+	/**
+	 * Get the current value (or default) of the specified Model property
+	 *
+	 * @param string $key     Property
+	 * @param mixed  $default Value
+	 *
+	 * @return mixed
+	 * @since   1.0
+	 */
+	public function get($key, $default = null)
+	{
+
+		$value = null;
+
+		if (in_array($key,
+			array('table_registry_name',
+				'model_type',
+				'model_name',
+				'parameters',
+				'query',
+				'db',
+				'data',
+				'null_date',
+				'now',
+				'fields',
+				'customfieldgroups',
+				'rendered_output'))
+			&& (isset($this->$key))
+		) {
+			$value = $this->$key;
+
+		} else {
+			if (isset($this->parameters[$key])) {
+				$value = $this->parameters[$key];
+			}
+		}
+
+		if ($value === null) {
+			return $default;
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Set the value of a Model property
+	 *
+	 * @param string $key   Property
+	 * @param mixed  $value Value
+	 *
+	 * @return mixed
+	 * @since   1.0
+	 */
+	public function set($key, $value = null)
+	{
+		if (in_array($key, array('table_registry_name',
+			'model_type',
+			'model_name',
+			'parameters',
+			'query',
+			'db',
+			'data',
+			'null_date',
+			'now',
+			'fields',
+			'customfieldgroups',
+			'rendered_output'))
+		) {
+
+			if ($key == 'parameters') {
+				foreach ($value as $k => $v) {
+					$this->parameters[$k] = $v;
+				}
+			} else {
+				$this->$key = $value;
+			}
+
+		} else {
+			$this->parameters[$key] = $value;
+		}
+
+		return;
+	}
+
+	/**
+	 * Unload fields for plugin use
+	 *
+	 * @return mixed
+	 * @since  1.0
+	 */
+	public function setFields()
+	{
+		/** initialise class property */
+		$this->fields = array();
+
+		/** process normal fields */
+		$fields = Services::Registry()->get($this->table_registry_name, 'fields');
+		if (is_array($fields) && count($fields) > 0) {
+			$this->processFieldType($type = '', $fields);
+		}
+
+		/** "Custom" field groups and fields */
+		$this->customfieldgroups = Services::Registry()->get($this->table_registry_name, 'customfieldgroups', array());
+
+		if (is_array($this->customfieldgroups) && count($this->customfieldgroups) > 0) {
+
+			foreach ($this->customfieldgroups as $customFieldName) {
+
+				/** For this Custom Field Group (ex. Parameters, metadata, etc.) */
+				$customFieldName = strtolower($customFieldName);
+
+				/** Retrieve Field Definitions from Registry (XML) */
+				$fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
+
+				/** Shared processing  */
+				$this->processFieldType($customFieldName, $fields);
+			}
+		}
+
+		/** join fields */
+		$joinfields = Services::Registry()->get($this->table_registry_name, 'JoinFields');
+		if (is_array($joinfields) && count($joinfields) > 0) {
+			$this->processFieldType('JoinFields', $joinfields);
+		}
+
+		/** foreign keys */
+		$foreignkeys = Services::Registry()->get($this->table_registry_name, 'foreignkeys');
+		if (is_array($foreignkeys) && count($foreignkeys) > 0) {
+			$this->processFieldType('foreignkeys', $foreignkeys);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * processFieldType processes an array of fields, populating the class property
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	public function processFieldType($type, $fields)
+	{
+
+		foreach ($fields as $key => $value) {
+
+			$row = new \stdClass();
+
+			/** Name */
+			if (isset($fields[$key]['name'])) {
+				if ($type == 'foreignkeys') {
+					$row->name = 'fk_' . $fields[$key]['name'];
+				} else {
+					$row->name = $fields[$key]['name'];
+				}
+			} else {
+				$row->name = 'Unknown';
+			}
+
+			/** As Name */
+			if (isset($fields[$key]['as_name'])) {
+				$row->as_name = $fields[$key]['as_name'];
+			} else {
+				$row->as_name = '';
+			}
+
+			/** Alias */
+			if (isset($fields[$key]['alias'])) {
+				$row->alias = $fields[$key]['alias'];
+			} else {
+				$row->alias = '';
+			}
+
+			/** Datatype */
+			if (isset($fields[$key]['type'])) {
+				$row->type = $fields[$key]['type'];
+			} else {
+				$row->type = 'char';
+			}
+
+			/** Default */
+			if (isset($fields[$key]['default'])) {
+				$row->default = $fields[$key]['default'];
+			} else {
+				$row->default = '';
+			}
+
+			/** File */
+			if (isset($fields[$key]['file'])) {
+				$row->file = $fields[$key]['file'];
+			} else {
+				$row->file = 'file';
+			}
+
+			/** Identity */
+			if (isset($fields[$key]['identity'])) {
+				$row->identity = $fields[$key]['identity'];
+			} else {
+				$row->identity = 'identity';
+			}
+
+			/** Length */
+			if (isset($fields[$key]['length'])) {
+				$row->length = $fields[$key]['length'];
+			} else {
+				$row->length = '';
+			}
+
+			/** Minimum */
+			if (isset($fields[$key]['minimum'])) {
+				$row->minimum = $fields[$key]['minimum'];
+			} else {
+				$row->minimum = '';
+			}
+
+			/** Maximum */
+			if (isset($fields[$key]['maximum'])) {
+				$row->maximum = $fields[$key]['maximum'];
+			} else {
+				$row->maximum = '';
+			}
+
+			/** Null */
+			if (isset($fields[$key]['null'])) {
+				$row->null = $fields[$key]['null'];
+			} else {
+				$row->null = false;
+			}
+
+			/** Required */
+			if (isset($fields[$key]['required'])) {
+				$row->required = $fields[$key]['required'];
+			} else {
+				$row->required = '0';
+			}
+
+			/** Shape */
+			if (isset($fields[$key]['shape'])) {
+				$row->shape = $fields[$key]['shape'];
+			} else {
+				$row->shape = '0';
+			}
+
+			/** Size */
+			if (isset($fields[$key]['size'])) {
+				$row->size = $fields[$key]['size'];
+			} else {
+				$row->size = '0';
+			}
+
+			/** Table */
+			if (isset($fields[$key]['table'])) {
+				$row->table = $fields[$key]['table'];
+			} else {
+				$row->table = '';
+			}
+
+			/** Unique */
+			if (isset($fields[$key]['unique'])) {
+				$row->unique = $fields[$key]['unique'];
+			} else {
+				$row->unique = '0';
+			}
+
+			/** Values */
+			if (isset($fields[$key]['values'])) {
+				$row->values = $fields[$key]['values'];
+			} else {
+				$row->values = '';
+			}
+
+			if ($type == '') {
+				$row->customfield = '';
+				$row->foreignkey = 0;
+
+			} elseif ($type == 'foreignkeys') {
+				$row->customfield = '';
+				$row->foreignkey = 1;
+				$row->type = $type;
+
+			} else {
+				$row->customfield = $type;
+				$row->foreignkey = 0;
+			}
+
+			/** Source ID */
+			if (isset($fields[$key]['source_id'])) {
+				$row->source_id = $fields[$key]['source_id'];
+			} else {
+				$row->source_id = '0';
+			}
+
+			/** Source Model */
+			if (isset($fields[$key]['source_model'])) {
+				$row->source_model = $fields[$key]['source_model'];
+			} else {
+				$row->source_model = '';
+			}
+
+			$this->fields[] = $row;
+		}
+
+		return;
+	}
+
+	/**
+	 * retrieveFieldsByType processes an array of fields, populating the class property
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	public function retrieveFieldsByType($type)
+	{
+		$results = array();
+
+		foreach ($this->fields as $field) {
+
+			if ($field->type == $type) {
+				$results[] = $field;
+			}
+		}
+
+		return $results;
+	}
+
+	/**
+	 * getField by name
+	 *
+	 * @return boolean
+	 * @since  1.0
+	 */
+	public function getField($name)
+	{
+		if ($this->parameters['model_type'] == 'dbo') {
+			if (isset($this->data->$name)) {
+				$field = new \stdClass();
+				$field->name = $name;
+				return $field;
+			}
+			return false;
+		}
+
+		foreach ($this->fields as $field) {
+
+			if ((int)$field->foreignkey = 0) {
+
+			} else {
+				if ($field->as_name == '') {
+					if ($field->name == $name) {
+						return $field;
+					}
+				} else {
+					if ($field->as_name == $name) {
+						return $field;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * getFieldValue retrieves the actual field value from the 'normal' or special field
+	 *
+	 * @param $field
+	 *
+	 * @return bool
+	 * @since  1.0
+	 */
+	public function getFieldValue($field)
+	{
+		if ($this->parameters['model_type'] == 'dbo') {
+			$name = $field->name;
+			if (isset($this->data->$name)) {
+				return $this->data->$name;
+			} else {
+				return false;
+			}
+		}
+
+		if (is_object($field)) {
+		} else {
+			return false;
+		}
+
+		if (isset($field->as_name)) {
+			if ($field->as_name == '') {
+				$name = $field->name;
+			} else {
+				$name = $field->as_name;
+			}
+		} else {
+			$name = $field->name;
+		}
+
+		if (isset($this->data->$name)) {
+			return $this->data->$name;
+
+		} elseif (isset($field->customfield)) {
+			if (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
+				return Services::Registry()->get($this->get('model_name') . $field->customfield, $name);
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * saveField adds a field to the 'normal' or special field group
+	 *
+	 * @param $field
+	 * @param $new_field_name
+	 * @param $value
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	public function saveField($field, $new_field_name, $value)
+	{
+		if (is_object($field)) {
+			$name = $field->name;
+		} else {
+			$name = $new_field_name;
+		}
+
+		if (isset($this->data->$name)) {
+			$this->data->$name = $value;
+
+		} elseif (isset($this->parameters[$name])) {
+			$this->parameters[$name] = $value;
+
+		} else {
+			if (is_object($this->data)) {
+			} else {
+				$this->data = new \stdClass();
+			}
+			$this->data->$new_field_name = $value;
+		}
+
+		return;
+	}
+
+	/**
+	 * saveForeignKeyValue
+	 *
+	 * @param $new_field_name
+	 * @param $value
+	 *
+	 * @return void
+	 * @since  1.0
+	 */
+	public function saveForeignKeyValue($new_field_name, $value)
+	{
+		if (isset($this->data->$new_field_name)) {
+			return;
+		}
+
+		/** Add new field */
+		$this->data->$new_field_name = $value;
+
+		return;
+	}
+
+	/**
+	 * Runs before Route and after Services and Helpers have been instantiated
 	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function onBeforeCreate()
+	public function onAfterInitialise()
 	{
 		return true;
 	}
 
 	/**
-	 * Post-create processing
-	 *
-	 * @param $this->data, $model
+	 * Follows Authorise and can used to override a failed authorisation or a successful one
 	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function onAfterCreate()
+	public function onAfterAuthorise()
+	{
+		return true;
+	}
+
+	/**
+	 * Fires after Route has run - Parameters contain all instruction
+	 *
+	 * Services::Registry('Parameters', '*') lists all available
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterRoute()
+	{
+		return true;
+	}
+
+	/**
+	 * Before the Theme/Page are parsed
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeParse()
 	{
 		return true;
 	}
 
 	/**
 	 * Pre-read processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -61,10 +638,7 @@ class Plugin
 	}
 
 	/**
-	 * Post-read processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
+	 * Post-read processing - one row at a time
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -86,10 +660,73 @@ class Plugin
 	}
 
 	/**
-	 * Pre-update processing
+	 * Before the Query results are injected into the View
 	 *
-	 * @param   $this->data
-	 * @param   $model
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeViewRender()
+	{
+		return true;
+	}
+
+	/**
+	 * After all document parsing has been accomplished and include tags replaced with rendered output
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterParse()
+	{
+		return true;
+	}
+
+	/**
+	 * Event fires after execute for both display and non-display task
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterExecute()
+	{
+		return true;
+	}
+
+	/**
+	 * Plugin that fires after all views are rendered
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterResponse()
+	{
+		return true;
+	}
+
+	/**
+	 * Pre-create processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onBeforeCreate()
+	{
+		return true;
+	}
+
+	/**
+	 * Post-create processing
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function onAfterCreate()
+	{
+		return true;
+	}
+
+	/**
+	 * Before update processing
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -100,10 +737,7 @@ class Plugin
 	}
 
 	/**
-	 * Post-update processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
+	 * After update processing
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -116,9 +750,6 @@ class Plugin
 	/**
 	 * Pre-delete processing
 	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
@@ -128,10 +759,7 @@ class Plugin
 	}
 
 	/**
-	 * Post-read processing
-	 *
-	 * @param   $this->data
-	 * @param   $model
+	 * Post-delete processing
 	 *
 	 * @return boolean
 	 * @since   1.0

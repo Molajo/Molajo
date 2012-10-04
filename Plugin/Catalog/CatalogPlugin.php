@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Catalog;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\MVC\Controller\CreateController;
 use Molajo\Service\Services;
 
@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class CatalogPlugin extends ContentPlugin
+class CatalogPlugin extends Plugin
 {
 	/**
 	 * Generates list of Datalists for use in defining Custom Fields of Type Selectlist

@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Ordering;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('MOLAJO') or die;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class OrderingPlugin extends ContentPlugin
+class OrderingPlugin extends Plugin
 {
 	//todo reorder on delete, too
 

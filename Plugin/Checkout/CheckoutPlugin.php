@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Checkout;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('MOLAJO') or die;
 /**
@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class CheckoutPlugin extends ContentPlugin
+class CheckoutPlugin extends Plugin
 {
 
 	/**

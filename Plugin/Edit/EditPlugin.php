@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Edit;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 use Molajo\Helpers;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class EditPlugin extends ContentPlugin
+class EditPlugin extends Plugin
 {
 	/**
 	 * Prepares data for Edit

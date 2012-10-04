@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Message;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 use Molajo\Application;
 
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class MessagePlugin extends ContentPlugin
+class MessagePlugin extends Plugin
 {
 	/**
 	 * Prepares data for System Message

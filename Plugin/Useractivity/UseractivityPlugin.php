@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Useractivity;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class UseractivityPlugin extends ContentPlugin
+class UseractivityPlugin extends Plugin
 {
 
 	/**

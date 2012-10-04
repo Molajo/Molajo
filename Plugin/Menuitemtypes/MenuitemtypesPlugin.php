@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Menuitemtypes;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class MenuitemtypesPlugin extends ContentPlugin
+class MenuitemtypesPlugin extends Plugin
 {
 	/**
 	 * Generates list of Datalists for use in defining Custom Fields of Type Selectlist

@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Formselectlist;
 
-use Molajo\Plugin\Content\ContentPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class FormselectlistPlugin extends ContentPlugin
+class FormselectlistPlugin extends Plugin
 {
 
 	/**

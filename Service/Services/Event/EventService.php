@@ -258,9 +258,6 @@ Class EventService
 		$pluginClass = 'Molajo\\Plugin\\Plugin\\Plugin';
 		$temp = new $pluginClass ();
 
-		$pluginClass = 'Molajo\\Plugin\\Content\\ContentPlugin';
-		$temp = new $pluginClass ();
-
 		foreach ($plugins as $folder) {
 
 			/** class name */
