@@ -323,36 +323,70 @@ class ReadModel extends Model
 	 */
 	public function getQueryResults($query_object, $offset = 0, $count = 5)
 	{
-		$cache_key = $this->query->__toString() . ' ' . $offset . ' ' . $count;
+		$this->query_results = array();
+
+		$cache_key = $this->query->__toString();
 		$cached_output = Services::Cache()->get('Query', $cache_key);
 
-		if ($cached_output === false) {
-			$this->db->setQuery($this->query->__toString(), $offset, $count);
-
-			if ($query_object == 'result') {
-				$this->query_results = $this->db->loadResult();
-			} else {
-				$this->query_results = $this->db->loadObjectList();
-			}
-
-			if ($count > count($this->query_results)) {
-				$total = count($this->query_results);
-
-			} else {
-
-				/** Get Total Rows that could have been returned for Pagination Calculations */
-				$this->db->setQuery($this->query->__toString(), 0, 99999);
-				$this->db->execute();
-				$total = $this->db->getNumRows();
-			}
-
-			Services::Cache()->set('Query', $cache_key, $this->query_results);
-
-		}  else {
-			$this->query_results = $cached_output;
+		if ($query_object == 'list') {
+		} else {
+			$this->set('use_pagination', 0);
 		}
 
-		$total = count($this->query_results);
+		if ($cached_output === false) {
+
+			if ((int) $this->get('use_pagination') === 0) {
+				$query_offset = $offset;
+				$query_count = $count;
+
+			} else {
+				$query_offset = 0;
+				$query_count = 99999999;
+			}
+
+			$this->db->setQuery($this->query->__toString());
+
+			if ($query_object == 'result') {
+				$results = $this->db->loadResult();
+			} else {
+				$results = $this->db->loadObjectList();
+			}
+
+			Services::Cache()->set('Query', $cache_key, $results);
+
+		}  else {
+
+			$results = $cached_output;
+		}
+
+		$total = count($results);
+
+		if ((int) $this->get('use_pagination') === 0
+			|| (int) $total === 0) {
+			$this->query_results = $results;
+			return $total;
+		}
+
+		$countOfOffset = 0;
+		$countOfResults = 0;
+
+		foreach ($results as $item) {
+
+			/** Read past offset */
+			if ($countOfOffset < $offset) {
+				$countOfOffset++;
+
+			/** Collect next set for pagination */
+			} elseif ($countOfResults < $count) {
+				$this->query_results[] = $results;
+
+			/** Offset and Results set collected. Exit. */
+			} else {
+				break;
+			}
+
+		}
+
 		return $total;
 	}
 
