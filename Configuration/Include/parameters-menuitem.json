@@ -1,42 +1,16 @@
 {
-    "1":{},
-    "2":{
+    "1":{
+        "menuitem_type":"Link",
 
-        "menuitem_type":"Template",
-
-        "menuitem_source_id":"",
-        "menuitem_source_catalog_type_id":"",
-        "menuitem_extension_instance_id":"",
-
-        "menuitem_theme_id":"9020",
-        "menuitem_page_view_id":"200",
-        "menuitem_page_view_css_id":"",
-        "menuitem_page_view_css_class":"",
-        "menuitem_template_view_id":"1021",
-        "menuitem_template_view_css_id":"",
-        "menuitem_template_view_css_class":"",
-        "menuitem_wrap_view_id":"2100",
-        "menuitem_wrap_view_css_id":"",
-        "menuitem_wrap_view_css_class":"",
-        "menuitem_wrap_view_role":"",
-        "menuitem_wrap_view_property":"",
-        "menuitem_model_name":"Parameters",
-        "menuitem_model_type":"dbo",
-        "menuitem_model_query_object":"getParameters",
-        "menuitem_model_parameter":"",
-        "menuitem_model_offset":"0",
-        "menuitem_model_count":"0",
-        "menuitem_model_use_pagination":"1",
-
-        "criteria_title":"Update",
+        "criteria_title":"Site Map",
         "criteria_display_view_on_no_results":"1",
         "criteria_snippet_length":"150",
-        "criteria_status":"",
-        "criteria_catalog_type_id":"",
-        "criteria_extension_instance_id":"",
+        "criteria_status":"1,2",
+        "criteria_catalog_type_id":"11000",
+        "criteria_extension_instance_id":"10",
 
-        "cache":"0",
-        "cache_time":"0",
-        "cache_handler":"file"
+        "menuitem_source_id":"1115",
+        "menuitem_source_catalog_type_id":"11000",
+        "menuitem_extension_instance_id":"10"
     }
 }

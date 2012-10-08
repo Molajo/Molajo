@@ -60,29 +60,27 @@ Class RouteService
 		Services::Registry()->createRegistry('Parameters');
 		Services::Registry()->createRegistry('Metadata');
 		Services::Registry()->deleteRegistry('Plugin');
+		Services::Registry()->set('Parameters', 'request_catalog_id', 0);
 
 		Services::Registry()->set('Parameters', 'status_found', '');
 		Services::Registry()->set('Parameters', 'status_authorised', '');
 		Services::Registry()->set('Parameters', 'redirect_to_id', 0);
 
 		/** Overrides */
-		if ((int)Services::Registry()->get('Override', 'catalog_id', false) === true) {
-			Services::Registry()->set('Parameters', 'request_catalog_id', 0);
-
-		} else {
+		if ((int) Services::Registry()->get('Override', 'catalog_id') > 0) {
 			Services::Registry()->set('Parameters', 'request_catalog_id',
 				(int)Services::Registry()->get('Override', 'catalog_id'));
+
 		}
 
-		if (Services::Registry()->get('Override', 'url_request', false) === false) {
-			$path = Application::Request()->get('requested_resource_for_route');
+		if ((int) Services::Registry()->get('Override', 'url_request', '') == '') {
+			Services::Registry()->set('Parameters', 'request_url_request',
+				Services::Registry()->get('Override', 'url_request'));
 
-		} else {
-			$path = Services::Registry()->get('Override', 'url_request');
 		}
 
 		/** Check for duplicate content URL for Home (and redirect, if found) */
-		$continue = $this->checkHome($path);
+		$continue = $this->checkHome();
 
 		if ($continue === false) {
 			Services::Profiler()->set('Route checkHome() Redirect to Real Home', 'Route');
@@ -163,9 +161,16 @@ Class RouteService
 	 * @return boolean
 	 * @since  1.0
 	 */
-	protected function checkHome($path = '')
+	protected function checkHome()
 	{
+
+		$path = Services::Registry()->get('Parameters', 'request_url_request');
+
 		if (strlen($path) == 0 || trim($path) == '') {
+			Services::Registry()->set('Parameters', 'request_url_query', '');
+			Services::Registry()->set('Parameters', 'request_catalog_id',
+				Services::Registry()->get('Configuration', 'application_home_catalog_id', 0));
+			Services::Registry()->set('Parameters', 'catalog_home', true);
 			return true;
 
 		} else {
@@ -285,9 +290,12 @@ Class RouteService
 		Services::Registry()->set('Parameters', 'request_action_authorisation', $controller); //for now
 		Services::Registry()->set('Parameters', 'request_controller', $controller);
 
-		/** Retrieve ID */
-		$value = (int)Application::Request()->get('id');
-		Services::Registry()->set('Parameters', 'request_catalog_id', $value);
+		/** Retrieve ID, unless already set for Home or Override  */
+		if (Services::Registry()->get('Parameters', 'request_catalog_id') > 0) {
+		} else {
+			$value = (int)Application::Request()->get('id');
+			Services::Registry()->set('Parameters', 'request_catalog_id', $value);
+		}
 
 		/** URL Type */
 		$sef = Services::Registry()->get('Parameters', 'sef_url', 1);
