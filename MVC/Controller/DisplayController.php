@@ -30,6 +30,8 @@ class DisplayController extends Controller
 	 */
 	public function execute()
 	{
+		$this->set('process_template_plugins', 0);
+
 		if ($this->get('model_name', '') == '') {
 			$this->query_results = array();
 
@@ -44,6 +46,11 @@ class DisplayController extends Controller
 				$this->set('id', $this->get('content_id'));
 				$this->set('model_query_object', 'item');
 			}
+
+			$this->set('process_template_plugins',
+				Services::Registry()->get(
+					$this->get('template_view_table_registry_name'), 'process_plugins')
+			);
 
 			/** Run Query */
 			$this->getData($this->get('model_query_object'));

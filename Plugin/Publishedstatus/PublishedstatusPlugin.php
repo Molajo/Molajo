@@ -36,6 +36,30 @@ class PublishedstatusPlugin extends Plugin
 			return true;
 		}
 
+		$fields = $this->get($this->table_registry_name, 'fields');
+		if ($fields == false) {
+			return true;
+		}
+		if (is_array($fields)) {
+		} else {
+			return true;
+		}
+
+		if (in_array('start_publishing_datetime', $fields)) {
+		} else {
+			return true;
+		}
+
+		if (in_array('stop_publishing_datetime', $fields)) {
+		} else {
+			return true;
+		}
+
+		if (in_array('status', $fields)) {
+		} else {
+			return true;
+		}
+
 		$primary_prefix = $this->get('primary_prefix');
 
 		$this->query->where($this->db->qn($primary_prefix)

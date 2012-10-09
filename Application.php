@@ -512,8 +512,7 @@ Class Application
 				->redirect()
 				->send();
 
-			$results = Services::Redirect()
-				->getStatusCode();
+			$results = Services::Redirect()->code;
 		}
 
 		if ($results == 200) {
@@ -541,7 +540,6 @@ Class Application
 	 */
 	protected function setBaseURL()
 	{
-		Application::Request()->get('base_url');
 
 		if (defined('BASE_URL')) {
 		} else {

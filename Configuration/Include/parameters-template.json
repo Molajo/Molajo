@@ -1,20 +1,54 @@
 {
-    "1":{},
-    "2":{
-        "criteria_title":"Installer",
-        "criteria_display_view_on_no_results":"",
-        "criteria_snippet_length":"",
+    "1":{
+        "criteria_title":"Metadata",
+        "criteria_snippet_length":"150",
+        "criteria_display_view_on_no_results":"0",
+        "criteria_status":"",
+        "criteria_catalog_type_id":"",
+        "criteria_extension_instance_id":"",
 
+        "template_view_id":"",
         "template_view_css_id":"",
         "template_view_css_class":"",
 
-        "wrap_view_id":"",
+        "wrap_view_id":"2090",
         "wrap_view_css_id":"",
         "wrap_view_css_class":"",
+        "wrap_view_role":"",
+        "wrap_view_property":"",
+        "wrap_view_header_level":"",
+        "wrap_view_show_title":"",
+        "wrap_view_show_subtitle":"",
 
-        "model_name":"Parameters",
+        "model_name":"Metadata",
         "model_type":"dbo",
-        "model_query_object":"getParameters",
-        "model_parameter":""
+        "model_query_object":"getMetadata",
+        "model_parameter":"Metadata"
+    },
+    "2":{
+        "criteria_title":"Metadata",
+        "criteria_snippet_length":"150",
+        "criteria_display_view_on_no_results":"0",
+        "criteria_status":"",
+        "criteria_catalog_type_id":"",
+        "criteria_extension_instance_id":"",
+
+        "template_view_id":"",
+        "template_view_css_id":"",
+        "template_view_css_class":"",
+
+        "wrap_view_id":"2090",
+        "wrap_view_css_id":"",
+        "wrap_view_css_class":"",
+        "wrap_view_role":"",
+        "wrap_view_property":"",
+        "wrap_view_header_level":"",
+        "wrap_view_show_title":"",
+        "wrap_view_show_subtitle":"",
+
+        "model_name":"Metadata",
+        "model_type":"dbo",
+        "model_query_object":"getMetadata",
+        "model_parameter":"Metadata"
     }
 }

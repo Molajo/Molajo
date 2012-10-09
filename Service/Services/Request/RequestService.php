@@ -158,6 +158,7 @@ Class RequestService
 		$this->set('http_host', $this->symfony_request->getHttpHost());
 
 		/** http://localhost/molajo/index.php returns 80 */
+		/** http://site1/admin/articles/ returns /admin/articles/ */
 		$this->set('request_uri', $this->symfony_request->getRequestUri());
 
 		/** http://localhost/molajo/index.php returns 80 */
@@ -190,10 +191,12 @@ Class RequestService
 		$this->set('query_parameters', $query_parameters);
 
 		/** http://localhost/molajo/index.php returns '/molajo/index.php' */
+		/** http://site1/admin/articles returns 'site1' */
 		$this->set('base_url_path', $this->get('http_host') . $this->get('base_url')
 		);
 
 		/** http://localhost/molajo/index.php returns 'http://molajo/index.php' */
+		/** http://site1/admin/articles returns 'http://site1' */
 		$this->set('base_url_path_with_scheme',
 			$this->get('scheme')
 				. '://'
@@ -224,7 +227,6 @@ Class RequestService
 		$this->set('entry_point', $this->symfony_request->server->get('SCRIPT_FILENAME'));
 
 		/** Language */
-
 		return true;
 	}
 }

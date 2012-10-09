@@ -185,9 +185,10 @@ class Controller
 			$this->set('use_special_joins', 0);
 			$this->set('check_view_level_access', 0);
 			$this->set('process_plugins', 0);
-			$this->get('model_offset', 0);
+			$this->set('process_template_plugins', 0);
+			$this->set('model_offset', 0);
 			$this->set('use_pagination', 0);
-			$this->get('model_count', 5);
+			$this->set('model_count', 5);
 			$this->set('registry_entry', '');
 
 		} else {
@@ -257,6 +258,7 @@ class Controller
 				Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0));
 			$this->set('process_plugins',
 				Services::Registry()->get($this->table_registry_name, 'process_plugins', 0));
+			$this->set('process_template_plugins', 0);
 			$this->set('criteria_catalog_type_id',
 				Services::Registry()->get($this->table_registry_name, 'catalog_type_id', 0));
 			$this->set('criteria_extension_instance_id',
@@ -282,7 +284,7 @@ class Controller
 			ob_end_clean();
 		}
 
-		Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
+		Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES);
 
 		/* 2. Instantiate Model Class */
 		$modelClass = 'Molajo\\MVC\\Model\\' . $model_class;
@@ -330,6 +332,7 @@ class Controller
 	 */
 	public function getData($query_object = 'list')
 	{
+
 		/** 1. Initialisation */
 		$this->pagination_total = 0;
 		$this->model_offset = 0;
@@ -362,7 +365,6 @@ class Controller
 				. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
 				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
-
 
 		/** 2. Schedule onBeforeRead Event */
 		if (count($this->plugins) > 0) {
@@ -408,13 +410,11 @@ class Controller
 			return $this->query_results;
 		}
 
-
 //echo '<br /><br /><pre>';
 //echo $this->model->query->__toString();
 //echo '<br /><br />';
 //var_dump($this->query_results);
 //echo '</pre><br /><br />';
-
 
 		/** 7. Return List  */
 		if ($query_object == 'list') {
@@ -430,7 +430,7 @@ class Controller
 				$message .= ob_get_contents();
 				ob_end_clean();
 
-				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, VERBOSE);
+				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES);
 			}
 			return $this->query_results;
 		}
@@ -458,23 +458,51 @@ class Controller
 		$this->plugins = array();
 
 		if ($query_object == 'result') {
+			return;
+		}
 
-		} elseif ((int)$this->get('process_plugins') == 1) {
+		$dataSourcePlugins = array();
+		if ((int)$this->get('process_plugins') == 1) {
 
-			$temp = Services::Registry()->get($this->table_registry_name, 'plugins', array());
-			if (is_array($temp)) {
+			$dataSourcePlugins = Services::Registry()->get($this->table_registry_name, 'plugins', array());
+
+			if (is_array($dataSourcePlugins)) {
 			} else {
-				$temp = array();
+				$dataSourcePlugins = array();
 			}
+		}
 
-			$temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');
+		$templatePlugins = array();
+		if ((int)$this->get('process_template_plugins') == 1) {
 
-			foreach ($temp as $plugin) {
-				if ((int) Services::Registry()->get('Plugins', $plugin . 'Plugin') > 0) {
-					$this->plugins[] = $plugin;
+			if ($this->get('template_view_table_registry_name') == $this->table_registry_name) {
+				$temp = array();
+
+			} else {
+				$templatePlugins = Services::Registry()->get(
+					$this->get('template_view_table_registry_name'), 'plugins', array()
+				);
+
+				if (is_array($templatePlugins)) {
+				} else {
+					$templatePlugins = array();
 				}
 			}
+		}
 
+		$temp = array_merge($dataSourcePlugins, $templatePlugins);
+
+		if (is_array($temp)) {
+		} else {
+			$temp = array();
+		}
+
+		$temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');
+
+		foreach ($temp as $plugin) {
+			if ((int) Services::Registry()->get('Plugins', $plugin . 'Plugin') > 0) {
+				$this->plugins[] = $plugin;
+			}
 		}
 
 		return;
@@ -571,9 +599,9 @@ class Controller
 		$this->pagination_total = (int)$this->model->getQueryResults(
 			$query_object, $this->model_offset, $this->model_count);
 
-		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql', 0) == 1) {
+		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql') == 1) {
 			Services::Profiler()->set('DisplayController->getData SQL Query: <br /><br />'
-					. $this->model->query->__toString(), LOG_OUTPUT_RENDERING, 0);
+					. $this->model->query->__toString(), LOG_OUTPUT_RENDERING);
 		}
 
 		/** Retrieve query results from Model */
@@ -582,7 +610,7 @@ class Controller
 		/** Result */
 		if ($query_object == 'result' || $query_object == 'distinct') {
 
-			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
+			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results') == 1) {
 				$message = 'DisplayController->getData Query Result <br /><br />';
 				ob_start();
 				echo '<pre>';
@@ -590,7 +618,7 @@ class Controller
 				echo '</pre><br /><br />';
 				$message .= ob_get_contents();
 				ob_end_clean();
-				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES, 0);
+				Services::Profiler()->set($message, LOG_OUTPUT_QUERIES);
 			}
 
 			$this->query_results = $query_results;

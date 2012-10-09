@@ -113,22 +113,10 @@ class Includer
 			return false;
 		}
 
-		if (Services::Registry()->get('Parameters', 'template_view_title') == 'Admingrid') {
-			$message = 'Includer:: Loadlanguage.<br />';
-			Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
-		}
 		$this->loadLanguage();
 
-		if (Services::Registry()->get('Parameters', 'template_view_title') == 'Admingrid') {
-			$message = 'Includer:: LoadPlugins.<br />';
-			Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
-		}
 		$this->loadPlugins();
 
-		if (Services::Registry()->get('Parameters', 'template_view_title') == 'Admingrid') {
-			$message = 'Includer:: Going into invokeMVC.<br />';
-			Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
-		}
 		$rendered_output = $this->invokeMVC();
 
 		/** only load media if there was rendered output */
@@ -569,6 +557,8 @@ class Includer
 		$message .= Services::Registry()->get('Parameters', '*');
 		$message .= ob_get_contents();
 		ob_end_clean();
+
+		//echo $message;
 
 		Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
 

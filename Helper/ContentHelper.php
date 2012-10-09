@@ -52,14 +52,13 @@ Class ContentHelper
 	 * @param   $id
 	 * @param   $model_type
 	 * @param   $model_name
-	 * @param   $model_query_object
 	 *
 	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function getListRoute($id, $model_type, $model_name)
+	public function getRouteList($id, $model_type, $model_name)
 	{
-		Services::Registry()->set('Query', 'Current', 'Content getListRoute');
+		Services::Registry()->set('Query', 'Current', 'Content getRouteList');
 
 		$item = $this->get($id, $model_type, $model_name);
 		if (count($item) == 0) {
@@ -72,17 +71,21 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'extension_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', 'extension_language', $item->language);
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$item->catalog_type_id);
-		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->content_catalog_types_title);
 		Services::Registry()->set('Parameters', 'extension_modified_datetime', $item->modified_datetime);
 
 		/** Content Extension and Source */
-		Services::Registry()->set('Parameters', 'catalog_type_id', $item->content_catalog_types_id);
-		Services::Registry()->set('Parameters', 'content_type', (int)$item->content_catalog_types_type);
-		Services::Registry()->set('Parameters', 'primary_category_id', $item->content_catalog_types_primary_category_id);
-		Services::Registry()->set('Parameters', 'source_table', (int)$item->content_catalog_types_source_table);
-		Services::Registry()->set('Parameters', 'source_id', 0);
-		Services::Registry()->set('Parameters', 'source_slug', (int)$item->content_catalog_types_slug);
-		Services::Registry()->set('Parameters', 'source_routable', (int)$item->content_catalog_types_routable);
+		if (Services::Registry()->get('Parameters', 'catalog_menuitem_type') == 'list') {
+
+		} else {
+			Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->content_catalog_types_title);
+			Services::Registry()->set('Parameters', 'catalog_type_id', $item->content_catalog_types_id);
+			Services::Registry()->set('Parameters', 'content_type', (int)$item->content_catalog_types_type);
+			Services::Registry()->set('Parameters', 'primary_category_id', $item->content_catalog_types_primary_category_id);
+			Services::Registry()->set('Parameters', 'source_table', (int)$item->content_catalog_types_source_table);
+			Services::Registry()->set('Parameters', 'source_id', 0);
+			Services::Registry()->set('Parameters', 'source_slug', (int)$item->content_catalog_types_slug);
+			Services::Registry()->set('Parameters', 'source_routable', (int)$item->content_catalog_types_routable);
+		}
 
 		/** Set Parameters */
 		$this->setParameters('list',
@@ -256,6 +259,7 @@ Class ContentHelper
 	 */
 	public function get($id = 0, $model_type = 'Table', $model_name = 'Content')
 	{
+
 		Services::Profiler()->set('ContentHelper->get '
 				. ' ID: ' . $id
 				. ' Model Type: ' . $model_type
@@ -300,23 +304,32 @@ Class ContentHelper
 	{
 		Services::Registry()->set('Parameters', 'page_type', $pageTypeNamespace);
 
-		/** 1. Parameters from Request Query */
+		/** I. $parameterNamespace: For an article, would be ArticlesResourceParameters */
+
+		/** 1. $pageTypeNamespace ex. Item, Menuitem, List, Form		*/
 		$newParameters = Services::Registry()->get($parameterNamespace, $pageTypeNamespace . '*');
 		if (is_array($newParameters) && count($newParameters) > 0) {
 			$this->processParameterSet($newParameters, $pageTypeNamespace);
 		}
 
-		/** 2. Criteria Parameters */
+		/** 2. Criteria Parameters (ex. criteria_content_type_id, etc.) */
 		$newParameters = Services::Registry()->get($parameterNamespace, 'criteria*');
 		if (is_array($newParameters) && count($newParameters) > 0) {
 			$this->processParameterSet($newParameters, $pageTypeNamespace);
 		}
 
-		/** 3. Resource defaults */
+		/** I. $resourceNamespace: For an article, would be ResourcesSystem */
 		if ($resourceNamespace == '') {
 		} else {
-			$resourceParameters = Services::Registry()->get($resourceNamespace . 'Parameters', $pageTypeNamespace . '*');
-			if (is_array($resourceParameters) && count($resourceParameters) > 0) {
+			/** 1. $pageTypeNamespace ex. Item, Menuitem, List, Form		*/
+			$newParameters = Services::Registry()->get($resourceNamespace . 'Parameters', $pageTypeNamespace . '*');
+			if (is_array($newParameters) && count($newParameters) > 0) {
+				$this->processParameterSet($newParameters, $pageTypeNamespace);
+			}
+
+			/** 2. Criteria Parameters (ex. criteria_content_type_id, etc.) */
+			$newParameters = Services::Registry()->get($resourceNamespace . 'Parameters', 'criteria*');
+			if (is_array($newParameters) && count($newParameters) > 0) {
 				$this->processParameterSet($newParameters, $pageTypeNamespace);
 			}
 		}
@@ -352,6 +365,7 @@ Class ContentHelper
 
 		/** Set Theme, Page, Template and Wrap */
 		Helpers::Extension()->setThemePageView();
+
 		Helpers::Extension()->setTemplateWrapModel();
 
 		/** Merge Parameters in (Pre-wrap) */
@@ -408,13 +422,25 @@ Class ContentHelper
 	protected function processParameterSet($parameterSet, $pageTypeNamespace)
 	{
 		foreach ($parameterSet as $key => $value) {
-			$existing = Services::Registry()->get('Parameters', substr($key, strlen($pageTypeNamespace) + 1, 9999));
-			if ($existing === 0 || trim($existing) == '' || $existing == null) {
-				if ($value === 0 || trim($value) == '' || $value == null) {
+
+			$copy_from = $key;
+
+			if (substr($key, 0, strlen($pageTypeNamespace)) == $pageTypeNamespace) {
+				$copy_to = substr($key, strlen($pageTypeNamespace) + 1, 9999);
+			} else {
+				$copy_to = $key;
+			}
+
+			$existing = Services::Registry()->get('Parameters', $copy_to);
+
+			if ($existing === 0 || trim($existing) == '' || $existing === null || $existing === false) {
+
+				if ($value === 0 || trim($value) == '' || $value === null) {
 				} else {
-					Services::Registry()->set('Parameters', substr($key, strlen($pageTypeNamespace) + 1, 9999), $value);
+					Services::Registry()->set('Parameters', $copy_to, $value);
 				}
 			}
+
 		}
 	}
 

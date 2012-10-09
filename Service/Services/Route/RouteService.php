@@ -60,28 +60,33 @@ Class RouteService
 		Services::Registry()->createRegistry('Parameters');
 		Services::Registry()->createRegistry('Metadata');
 		Services::Registry()->deleteRegistry('Plugin');
-		Services::Registry()->set('Parameters', 'request_catalog_id', 0);
 
+		Services::Registry()->set('Parameters', 'request_catalog_id', 0);
 		Services::Registry()->set('Parameters', 'status_found', '');
 		Services::Registry()->set('Parameters', 'status_authorised', '');
 		Services::Registry()->set('Parameters', 'redirect_to_id', 0);
+
+		$url_request = Application::Request()->get('requested_resource_for_route');
+		if (substr($url_request, 0, 1) == '/') {
+			$url_request = substr($url_request, 1);
+		}
+		Services::Registry()->set('Parameters', 'request_url_request', $url_request);
+		Services::Registry()->set('Parameters', 'request_catalog_id', 0);
 
 		/** Overrides */
 		if ((int) Services::Registry()->get('Override', 'catalog_id') > 0) {
 			Services::Registry()->set('Parameters', 'request_catalog_id',
 				(int)Services::Registry()->get('Override', 'catalog_id'));
-
 		}
 
-		if ((int) Services::Registry()->get('Override', 'url_request', '') == '') {
+		if (Services::Registry()->get('Override', 'url_request', '') == '') {
+		} else {
 			Services::Registry()->set('Parameters', 'request_url_request',
 				Services::Registry()->get('Override', 'url_request'));
-
 		}
 
 		/** Check for duplicate content URL for Home (and redirect, if found) */
 		$continue = $this->checkHome();
-
 		if ($continue === false) {
 			Services::Profiler()->set('Route checkHome() Redirect to Real Home', 'Route');
 
@@ -98,7 +103,6 @@ Class RouteService
 
 		/** Identify Resource and sub-resource values */
 		$continue = $this->getResource();
-
 		if ($continue === false) {
 			Services::Profiler()->set('Route getResource() Failed', 'Route');
 
@@ -294,7 +298,10 @@ Class RouteService
 		if (Services::Registry()->get('Parameters', 'request_catalog_id') > 0) {
 		} else {
 			$value = (int)Application::Request()->get('id');
-			Services::Registry()->set('Parameters', 'request_catalog_id', $value);
+			if ($value == 0) {
+			} else {
+				Services::Registry()->set('Parameters', 'request_catalog_id', $value);
+			}
 		}
 
 		/** URL Type */
@@ -419,20 +426,21 @@ Class RouteService
 		} else {
 			define('ROUTE', true);
 		}
-
-		$catalog_type_id = Services::Registry()->get('Parameters', 'catalog_type_id');
+		Services::Registry()->get('Parameters', '*');
+			$catalog_type_id = Services::Registry()->get('Parameters', 'catalog_type_id');
 		$id = Services::Registry()->get('Parameters', 'catalog_source_id');
 		$table = Services::Registry()->get('Parameters', 'catalog_source_table');
 		$catalog_menuitem_type = Services::Registry()->get('Parameters', 'catalog_menuitem_type');
 		$model_type = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_type')));
 		$model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
-
+echo $id;
+		die;
 		/** List */
 		if ((int)$id > 0
 			&& (int)$catalog_type_id == CATALOG_TYPE_EXTENSION_RESOURCE
 			&& strtolower(trim($catalog_menuitem_type)) == 'list'
 		) {
-			$response = Helpers::Content()->getListRoute($id, $model_type, $model_name);
+			$response = Helpers::Content()->getRouteList($id, $model_type, $model_name);
 			if ($response === false) {
 				Services::Error()->set(500, 'Extension not found');
 			}

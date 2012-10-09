@@ -34,10 +34,13 @@ class StatusPlugin extends Plugin
 	 */
 	public function onAfterRead()
 	{
-		$status = $this->get('status');
-		if ($status === null) {
+		$statusField = $this->getField('status');
+
+		if ($statusField === false) {
 			return true;
 		}
+
+		$status = $this->getFieldValue($statusField);
 
 		if ($status == '2') {
 			$status_name = Services::Language()->translate('Archived');

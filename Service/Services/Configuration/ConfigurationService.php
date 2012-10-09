@@ -1141,7 +1141,7 @@ Class ConfigurationService
 				Services::Registry()->set('Configuration', 'application_path', $item->path);
 				Services::Registry()->set('Configuration', 'application_description', $item->description);
 
-				/** Combine Application and Site Parameters into Configuration */
+					/** Combine Application and Site Parameters into Configuration */
 				$parameters = Services::Registry()->getArray('ApplicationTableParameters');
 				$profiler_service = 0;
 
@@ -1149,10 +1149,15 @@ Class ConfigurationService
 
 					if (substr($key, 0, strlen('jdatabase')) == 'jdatabase') {
 					} else {
-						Services::Registry()->set('Configuration', $key, $value);
 
-						if (strtolower($key) == 'profiler_service') {
-							$profiler_service = $value;
+						$existing = Services::Registry()->get('Configuration', $key);
+
+						if ($existing === 0 || trim($existing) == '' || $existing === null || $existing === false) {
+
+							if ($value === 0 || trim($value) == '' || $value === null) {
+							} else {
+								Services::Registry()->set('Configuration', $key, $value);
+							}
 						}
 					}
 				}
@@ -1200,6 +1205,7 @@ Class ConfigurationService
 		/** Base URLs for Site and Application */
 		Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
 		$path = Services::Registry()->get('Configuration', 'application_path', '');
+
 		Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
 
 		if (defined('SITE_NAME')) {

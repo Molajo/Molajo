@@ -79,9 +79,8 @@ class ItemurlPlugin extends Plugin
 			}
 		}
 
-		$status = $this->data->status;
-
-		if ($status === null) {
+		$status = $this->get('status');
+		if ($status === null || $status == '') {
 			return true;
 		}
 

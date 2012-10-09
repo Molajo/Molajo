@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_METADATA_DESCRIPTION</description>
-    <model name="Metadata" extends="TemplateviewsSystem"/>
+    <model name="Metadata" process_plugins="0" extends="TemplateviewsSystem"/>
 </extension>
