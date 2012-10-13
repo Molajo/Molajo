@@ -2,7 +2,7 @@
 <model
         name="ApplicationExtensionInstances"
         table="#__application_extension_instances"
-        primary_key="application_id,extension_instance_id"
+        primary_key="application_id,extension_instance_id,catalog_type_id"
         primary_prefix="a"
         get_customfields="0"
         get_item_children="0"
@@ -15,11 +15,12 @@
     <table>
         <fields>
             <include field="application_id"/>
-            <include field="extension_instance_id"/>
+            <include field="catalog_type_id"/>
+            <include field="source_id"/>
         </fields>
         <foreignkeys>
             <foreignkey name="application_id" source_id="id" source_model="Applications" required="1"/>
-            <foreignkey name="extension_instance_id" source_id="id" source_model="ExtensionInstances" required="1"/>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="Catalogtypes" required="1"/>
         </foreignkeys>
     </table>
 </model>

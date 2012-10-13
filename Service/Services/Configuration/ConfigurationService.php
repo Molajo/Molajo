@@ -1110,7 +1110,7 @@ Class ConfigurationService
 		if (APPLICATION == 'installation') {
 
 			Services::Registry()->set('Configuration', 'application_id', 0);
-			Services::Registry()->set('Configuration', 'application_catalog_type_id', CATALOG_TYPE_BASE_APPLICATION);
+			Services::Registry()->set('Configuration', 'application_catalog_type_id', CATALOG_TYPE_APPLICATION);
 			Services::Registry()->set('Configuration', 'application_name', APPLICATION);
 			Services::Registry()->set('Configuration', 'application_description', APPLICATION);
 			Services::Registry()->set('Configuration', 'application_path', APPLICATION);

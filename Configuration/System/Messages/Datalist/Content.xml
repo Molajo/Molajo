@@ -1,0 +1,7 @@
+<datalist name="ContentMessages">
+    <model
+            name="ContentMessages"
+            catalog_type_id="40000"
+            extension_instance_id="15"
+            extends="ContentDatalist"/>
+</datalist>

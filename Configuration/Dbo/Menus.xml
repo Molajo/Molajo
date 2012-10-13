@@ -3,9 +3,4 @@
         name="Menus"
         process_plugins="1"
         data_source="Menu">
-    <table>
-        <plugins>
-            <plugin name="Cssclassandids"/>
-        </plugins>
-    </table>
 </model>

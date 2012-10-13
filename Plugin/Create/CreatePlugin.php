@@ -29,8 +29,8 @@ class CreatePlugin extends Plugin
 	 */
 	public function onAfterCreate()
 	{
-		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
-			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
+		if ($this->data->catalog_type_id >= CATALOG_TYPE_BEGIN
+			AND $this->data->catalog_type_id <= CATALOG_TYPE_END
 		) {
 		} else {
 			return true;

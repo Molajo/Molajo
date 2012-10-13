@@ -13,48 +13,23 @@
     <define name="ACTION_DELETE" value="delete"/>
     <define name="ACTION_ADMIN" value="admin"/>
 
-    <define name="CATALOG_TYPE_BASE_BEGIN" value="0"/>
-    <define name="CATALOG_TYPE_BASE_CORE" value="1"/>
-    <define name="CATALOG_TYPE_BASE_SITE" value="10"/>
-    <define name="CATALOG_TYPE_BASE_APPLICATION" value="50"/>
-    <define name="CATALOG_TYPE_BASE_END" value="99"/>
+    <define name="CATALOG_TYPE_SITE" value="1000"/>
+    <define name="CATALOG_TYPE_APPLICATION" value="2000"/>
+    <define name="CATALOG_TYPE_USER" value="3000"/>
 
-    <define name="CATALOG_TYPE_GROUP_BEGIN" value="100"/>
-    <define name="CATALOG_TYPE_GROUP_SYSTEM" value="110"/>
-    <define name="CATALOG_TYPE_GROUP_USER" value="120"/>
-    <define name="CATALOG_TYPE_GROUP_NORMAL" value="130"/>
-    <define name="CATALOG_TYPE_GROUP_FRIEND" value="140"/>
-    <define name="CATALOG_TYPE_GROUP_END" value="199"/>
+    <define name="CATALOG_TYPE_SERVICE" value="4000"/>
+    <define name="CATALOG_TYPE_PLUGIN" value="5000"/>
+    <define name="CATALOG_TYPE_LANGUAGE" value="6000"/>
+    <define name="CATALOG_TYPE_MESSAGE" value="6500"/>
+    <define name="CATALOG_TYPE_THEME" value="7000"/>
+    <define name="CATALOG_TYPE_PAGE_VIEW" value="8000"/>
+    <define name="CATALOG_TYPE_TEMPLATE_VIEW" value="9000"/>
+    <define name="CATALOG_TYPE_WRAP_VIEW" value="10000"/>
+    <define name="CATALOG_TYPE_MENUITEM" value="11000"/>
+    <define name="CATALOG_TYPE_RESOURCE" value="12000"/>
 
-    <define name="CATALOG_TYPE_USER_BEGIN" value="500"/>
-    <define name="CATALOG_TYPE_USER" value="500"/>
-    <define name="CATALOG_TYPE_USER_END" value="599"/>
-
-    <define name="CATALOG_TYPE_EXTENSION_BEGIN" value="1000"/>
-    <define name="CATALOG_TYPE_EXTENSION_RESOURCE" value="1050"/>
-    <define name="CATALOG_TYPE_EXTENSION_LANGUAGE" value="1100"/>
-    <define name="CATALOG_TYPE_EXTENSION_PAGE_VIEW" value="1150"/>
-    <define name="CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW" value="1200"/>
-    <define name="CATALOG_TYPE_EXTENSION_WRAP_VIEW" value="1250"/>
-    <define name="CATALOG_TYPE_EXTENSION_MENU" value="1300"/>
-    <define name="CATALOG_TYPE_EXTENSION_SERVICE" value="1425"/>
-    <define name="CATALOG_TYPE_EXTENSION_PLUGIN" value="1450"/>
-    <define name="CATALOG_TYPE_EXTENSION_THEME" value="1500"/>
-    <define name="CATALOG_TYPE_EXTENSION_END" value="1999"/>
-
-    <define name="CATALOG_TYPE_MENU_ITEM_BEGIN" value="2000"/>
-    <define name="CATALOG_TYPE_MENU_ITEM_LINK" value="2100"/>
-    <define name="CATALOG_TYPE_MENU_ITEM_TEMPLATE_VIEW" value="2200"/>
-    <define name="CATALOG_TYPE_MENU_ITEM_SEPARATOR" value="2300"/>
-    <define name="CATALOG_TYPE_MENU_ITEM_END" value="2999"/>
-
-    <define name="CATALOG_TYPE_CATEGORY_BEGIN" value="3000"/>
-    <define name="CATALOG_TYPE_CATEGORY_SYSTEM" value="3100"/>
-    <define name="CATALOG_TYPE_CATEGORY_COLLECTIONS" value="3200"/>
-    <define name="CATALOG_TYPE_CATEGORY_LIST" value="3300"/>
-    <define name="CATALOG_TYPE_CATEGORY_TAG" value="3400"/>
-    <define name="CATALOG_TYPE_CATEGORY_FRIEND" value="3500"/>
-    <define name="CATALOG_TYPE_CATEGORY_END" value="3999"/>
+    <define name="CATALOG_TYPE_EXTENSION_BEGIN" value="4000"/>
+    <define name="CATALOG_TYPE_EXTENSION_END" value="120000"/>
 
     <define name="STATUS_ARCHIVED" value="2"/>
     <define name="STATUS_PUBLISHED" value="1"/>
@@ -69,10 +44,10 @@
     <define name="MESSAGE_TYPE_WARNING" value="warning"/>
     <define name="MESSAGE_TYPE_ERROR" value="error"/>
 
-    <define name="SYSTEM_GROUP_PUBLIC" value="1"/>
-    <define name="SYSTEM_GROUP_GUEST" value="2"/>
-    <define name="SYSTEM_GROUP_REGISTERED" value="3"/>
-    <define name="SYSTEM_GROUP_ADMINISTRATOR" value="4"/>
+    <define name="SYSTEM_GROUP_ADMINISTRATOR" value="1"/>
+    <define name="SYSTEM_GROUP_REGISTERED" value="2"/>
+    <define name="SYSTEM_GROUP_GUEST" value="3"/>
+    <define name="SYSTEM_GROUP_PUBLIC" value="4"/>
 
     <define name="LOG_TYPE_ALL" value="30719"/>
     <define name="LOG_TYPE_EMERGENCY" value="1"/>

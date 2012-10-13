@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="System" version="1.0">
-    <name>SYSTEM_SERVICES_NAME</name>
+<extension type="Resource" version="1.0">
+    <name>SYSTEM_MESSAGES_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,10 +8,10 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>SYSTEM_SERVICES_DESCRIPTION</description>
+    <description>SYSTEM_MESSAGES_DESCRIPTION</description>
     <model
-            name="Services"
-            catalog_type_id="4000"
-            extension_instance_id="30"
-            extends="RenderTable"/>
+            name="Messages"
+            catalog_type_id="40000"
+            extension_instance_id="15"
+            extends="ContentresourcesTable"/>
 </extension>

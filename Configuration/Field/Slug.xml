@@ -1,1 +1,1 @@
-<field name="slug" type="char" null="0" default=" "/>
+<field name="alias" type="char" null="0" default=" "/>

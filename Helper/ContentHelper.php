@@ -74,18 +74,13 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'extension_modified_datetime', $item->modified_datetime);
 
 		/** Content Extension and Source */
-		if (Services::Registry()->get('Parameters', 'catalog_menuitem_type') == 'list') {
-
-		} else {
-			Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->content_catalog_types_title);
-			Services::Registry()->set('Parameters', 'catalog_type_id', $item->content_catalog_types_id);
-			Services::Registry()->set('Parameters', 'content_type', (int)$item->content_catalog_types_type);
-			Services::Registry()->set('Parameters', 'primary_category_id', $item->content_catalog_types_primary_category_id);
-			Services::Registry()->set('Parameters', 'source_table', (int)$item->content_catalog_types_source_table);
-			Services::Registry()->set('Parameters', 'source_id', 0);
-			Services::Registry()->set('Parameters', 'source_slug', (int)$item->content_catalog_types_slug);
-			Services::Registry()->set('Parameters', 'source_routable', (int)$item->content_catalog_types_routable);
-		}
+		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->content_catalog_types_title);
+		Services::Registry()->set('Parameters', 'catalog_type_id', $item->content_catalog_types_id);
+		Services::Registry()->set('Parameters', 'content_type', (int)$item->content_catalog_types_type);
+		Services::Registry()->set('Parameters', 'primary_category_id', $item->content_catalog_types_primary_category_id);
+		Services::Registry()->set('Parameters', 'source_id', 0);
+		Services::Registry()->set('Parameters', 'source_alias', (int)$item->content_catalog_types_alias);
+		Services::Registry()->set('Parameters', 'source_routable', (int)$item->content_catalog_types_routable);
 
 		/** Set Parameters */
 		$this->setParameters('list',
@@ -219,7 +214,7 @@ Class ContentHelper
 				. 'Parameters';
 		Services::Registry()->set('Parameters', 'extension_instance_id',
 			Services::Registry()->get($registry, 'criteria_extension_instance_id'));
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 1050);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 12000);
 		Services::Registry()->set('Parameters', 'extension_name_path_node',
 			Services::Registry()->get($registry, 'menuitem_model_name'));
 

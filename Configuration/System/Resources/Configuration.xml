@@ -11,7 +11,7 @@
     <description>SYSTEM_RESOURCES_DESCRIPTION</description>
     <model
             name="Resources"
-            catalog_type_id="1050"
+            catalog_type_id="12000"
             extension_instance_id="70"
             extends="RenderTable">
         <customfields>

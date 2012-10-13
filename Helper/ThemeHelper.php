@@ -56,7 +56,7 @@ Class ThemeHelper
 	{
 
 		if ($theme_id == 0) {
-			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
+			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_THEME, 'System');
 		}
 
 		Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
@@ -78,7 +78,7 @@ Class ThemeHelper
 		if (count($item) == 0) {
 
 			/** System Default */
-			if ($theme_id == Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System')) {
+			if ($theme_id == Helpers::Extension()->getInstanceID(CATALOG_TYPE_THEME, 'System')) {
 				// 500 error
 				Services::Error()->set(500, 'System Theme not found');
 
@@ -86,7 +86,7 @@ Class ThemeHelper
 			}
 
 			/** System default */
-			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_THEME, 'System');
+			$theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_THEME, 'System');
 
 			Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
 

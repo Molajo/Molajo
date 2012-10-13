@@ -361,7 +361,7 @@ Class InstallService
 		$data = new \stdClass();
 		$data->id = 333;
 		$data->title = 'Test';
-		$data->catalog_type_id = CATALOG_TYPE_EXTENSION_RESOURCE;
+		$data->catalog_type_id = CATALOG_TYPE_RESOURCE;
 		$query_results[] = $data;
 
 		$parameters = array('create_extension' => 1,

@@ -161,7 +161,7 @@ class Includer
 					} else {
 						$template_title = ucfirst(strtolower(trim($value)));
 						$template_id = Helpers::Extension()
-							->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+							->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, $template_title);
 					}
 
 					Services::Registry()->set('Parameters', 'template_view_id', $template_id);
@@ -184,7 +184,7 @@ class Includer
 				$value = ucfirst(strtolower(trim($value)));
 
 				$template_id = Helpers::Extension()
-					->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $value);
+					->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, $value);
 
 				if ((int)$template_id == 0) {
 				} else {
@@ -206,7 +206,7 @@ class Includer
 				$value = ucfirst(strtolower(trim($value)));
 
 				$wrap_id = Helpers::Extension()
-					->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, $value);
+					->getInstanceID(CATALOG_TYPE_WRAP_VIEW, $value);
 
 				if ((int)$wrap_id == 0) {
 				} else {
@@ -292,7 +292,7 @@ class Includer
 		if (trim($template_title) == '') {
 		} else {
 			$template_id = Helpers::Extension()
-				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+				->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, $template_title);
 		}
 
 		if ((int)$template_id == 0) {
@@ -303,7 +303,7 @@ class Includer
 		} else {
 			Services::Registry()->set('Parameters', 'template_view_path_node', $template_title);
 			$template_id = Helpers::Extension()
-				->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+				->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, $template_title);
 		}
 
 		if ((int)$template_id == 0) {

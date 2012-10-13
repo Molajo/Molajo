@@ -9,6 +9,9 @@
         use_special_joins="1"
         check_view_level_access="0"
         process_plugins="1"
+        use_pagination="1"
+        model_offset="1"
+        model_count="5"
         data_source="JDatabase">
     <table>
 
@@ -39,7 +42,7 @@
                   joinwith="catalog_id"/>
             <join model="CatalogTypes"
                   alias="useractivity_to_catalog_type"
-                  select="title,source_table"
+                  select="title"
                   jointo="id"
                   joinwith="useractivity_to_catalog.catalog_type_id"/>
         </joins>

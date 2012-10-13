@@ -37,6 +37,8 @@
         <modelattribute>multiple</modelattribute>
         <modelattribute>size</modelattribute>
         <modelattribute>registry_entry</modelattribute>
+        <modelattribute>model_offset</modelattribute>
+        <modelattribute>model_count</modelattribute>
     </modelattributes>
     <datatypes>
         <datatype>audio</datatype>

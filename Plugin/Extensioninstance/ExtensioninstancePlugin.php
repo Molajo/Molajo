@@ -31,8 +31,8 @@ class ExtensioninstancePlugin extends Plugin
 	 */
 	public function onBeforeCreate()
 	{
-		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
-			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
+		if ($this->data->catalog_type_id >= CATALOG_TYPE_BEGIN
+			AND $this->data->catalog_type_id <= CATALOG_TYPE_END
 		) {
 		} else {
 			return true;
@@ -137,8 +137,8 @@ class ExtensioninstancePlugin extends Plugin
 	{
 		echo 'Catalog ID ' . $this->data->catalog_type_id . '<br />';
 
-		if ($this->data->catalog_type_id >= CATALOG_TYPE_EXTENSION_BEGIN
-			AND $this->data->catalog_type_id <= CATALOG_TYPE_EXTENSION_END
+		if ($this->data->catalog_type_id >= CATALOG_TYPE_BEGIN
+			AND $this->data->catalog_type_id <= CATALOG_TYPE_END
 		) {
 		} else {
 			return true;
@@ -221,7 +221,7 @@ class ExtensioninstancePlugin extends Plugin
 
 		/** Only Extension Instances */
 		if (isset($this->data->catalog_type_id)
-			&& ($this->data->catalog_type_id == CATALOG_TYPE_EXTENSION_RESOURCE)
+			&& ($this->data->catalog_type_id == CATALOG_TYPE_RESOURCE)
 		) {
 		} else {
 			return true;

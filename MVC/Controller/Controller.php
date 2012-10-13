@@ -271,9 +271,12 @@ class Controller
 				Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
 			$this->set('registry_entry',
 				Services::Registry()->get($this->table_registry_name, 'registry_entry', ''));
-
-			$this->get('model_offset', 0);
-			$this->get('model_count', 5);
+			$this->set('model_offset',
+				Services::Registry()->get($this->table_registry_name, 'model_offset', 0));
+			$this->set('use_pagination',
+				Services::Registry()->get($this->table_registry_name, 'use_pagination', ''));
+			$this->set('model_count',
+				Services::Registry()->get($this->table_registry_name, 'model_count', 5));
 		}
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
@@ -335,8 +338,8 @@ class Controller
 
 		/** 1. Initialisation */
 		$this->pagination_total = 0;
-		$this->model_offset = 0;
-		$this->model_count = 10;
+		$this->model_offset = $this->get('model_offset');
+		$this->model_count = $this->get('model_count');
 
 		$model_parameter = '';
 
@@ -409,12 +412,6 @@ class Controller
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $this->query_results;
 		}
-
-//echo '<br /><br /><pre>';
-//echo $this->model->query->__toString();
-//echo '<br /><br />';
-//var_dump($this->query_results);
-//echo '</pre><br /><br />';
 
 		/** 7. Return List  */
 		if ($query_object == 'list') {
@@ -606,6 +603,12 @@ class Controller
 
 		/** Retrieve query results from Model */
 		$query_results = $this->model->get('query_results');
+
+//echo '<br /><br /><pre>';
+//echo $this->model->query->__toString();
+//echo '<br /><br />';
+//var_dump($query_results);
+//echo '</pre><br /><br />';
 
 		/** Result */
 		if ($query_object == 'result' || $query_object == 'distinct') {

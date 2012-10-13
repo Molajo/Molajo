@@ -285,13 +285,13 @@ Class ExtensionHelper
 	 */
 	public function getPath($catalog_type_id, $node)
 	{
-		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+		if ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
 			return Helpers::View()->getPath($node, 'Page');
 
-		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+		} elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
 			return Helpers::View()->getPath($node, 'Template');
 
-		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
+		} elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
 			return Helpers::View()->getPath($node, 'Wrap');
 		}
 
@@ -338,13 +338,13 @@ Class ExtensionHelper
 	 */
 	public function getPathURL($catalog_type_id, $node)
 	{
-		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+		if ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
 			return Helpers::View()->getPathURL($node, 'Page');
 
-		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+		} elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
 			return Helpers::View()->getPathURL($node, 'Template');
 
-		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
+		} elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
 			return Helpers::View()->getPathURL($node, 'Wrap');
 
 		}
@@ -387,13 +387,13 @@ Class ExtensionHelper
 	 */
 	public function getNamespace($catalog_type_id, $node)
 	{
-		if ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+		if ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
 			return Helpers::View()->getNamespace($node, 'Page');
 
-		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+		} elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
 			return Helpers::View()->getNamespace($node, 'Template');
 
-		} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
+		} elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
 			return Helpers::View()->getNamespace($node, 'Wrap');
 
 		}
@@ -506,54 +506,54 @@ Class ExtensionHelper
 		if ((int)$catalog_type_id == 0) {
 
 			if ($catalog_type == 'Resource') {
-				return CATALOG_TYPE_EXTENSION_RESOURCE;
+				return CATALOG_TYPE_RESOURCE;
 
 			} elseif ($catalog_type == 'Menuitem') {
-				return CATALOG_TYPE_EXTENSION_MENU;
+				return CATALOG_TYPE_MENU;
 
 			} elseif ($catalog_type == 'Language') {
-				return CATALOG_TYPE_EXTENSION_LANGUAGE;
+				return CATALOG_TYPE_LANGUAGE;
 
 			} elseif ($catalog_type == 'Theme') {
-				return CATALOG_TYPE_EXTENSION_THEME;
+				return CATALOG_TYPE_THEME;
 
 			} elseif ($catalog_type == 'Plugin') {
-				return CATALOG_TYPE_EXTENSION_PLUGIN;
+				return CATALOG_TYPE_PLUGIN;
 
 			} elseif ($catalog_type == 'Page') {
-				return CATALOG_TYPE_EXTENSION_PAGE_VIEW;
+				return CATALOG_TYPE_PAGE_VIEW;
 
 			} elseif ($catalog_type == 'Template') {
-				return CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW;
+				return CATALOG_TYPE_TEMPLATE_VIEW;
 
 			} elseif ($catalog_type == 'Wrap') {
-				return CATALOG_TYPE_EXTENSION_WRAP_VIEW;
+				return CATALOG_TYPE_WRAP_VIEW;
 			}
 
 		} else {
 
-			if ($catalog_type_id == CATALOG_TYPE_EXTENSION_RESOURCE) {
+			if ($catalog_type_id == CATALOG_TYPE_RESOURCE) {
 				return 'Resource';
 
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_MENU) {
+			} elseif ($catalog_type_id == CATALOG_TYPE_MENU) {
 				return 'Menuitem';
 
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_LANGUAGE) {
+			} elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGE) {
 				return 'Language';
 
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_THEME) {
+			} elseif ($catalog_type_id == CATALOG_TYPE_THEME) {
 				return 'Theme';
 
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_PLUGIN) {
+			} elseif ($catalog_type_id == CATALOG_TYPE_PLUGIN) {
 				return 'Plugin';
 
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_PAGE_VIEW) {
+			} elseif ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
 				return 'Page';
 
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW) {
+			} elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
 				return 'Template';
 
-			} elseif ($catalog_type_id == CATALOG_TYPE_EXTENSION_WRAP_VIEW) {
+			} elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
 				return 'Wrap';
 			}
 		}

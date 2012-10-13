@@ -55,7 +55,7 @@ Class ModalIncluder extends Includer
 		$template_title = Services::Registry()->get('Parameters', 'extension_title');
 
 		$template_id = Helpers::Extension()
-			->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, $template_title);
+			->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, $template_title);
 
 		if ((int)$template_id == 0) {
 		} else {
@@ -106,7 +106,7 @@ Class ModalIncluder extends Includer
 			if ($wrap_title == '') {
 				Services::Registry()->set('Parameters', 'wrap_view_id',
 					Helpers::Extension()
-						->getInstanceID(CATALOG_TYPE_EXTENSION_WRAP_VIEW, 'None'));
+						->getInstanceID(CATALOG_TYPE_WRAP_VIEW, 'None'));
 			}
 		}
 		Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), 'Wrap');

@@ -6,7 +6,7 @@
         "criteria_display_view_on_no_results":"1",
         "criteria_snippet_length":"200",
         "criteria_status":"0,1,2",
-        "criteria_catalog_type_id":"1425",
+        "criteria_catalog_type_id":"4000",
         "criteria_extension_instance_id":"30",
         "criteria_source_id":"",
 
@@ -116,7 +116,7 @@
         "list_page_view_id":"220",
         "list_page_view_css_id":"",
         "list_page_view_css_class":"",
-        "list_template_view_id":"1050",
+        "list_template_view_id":"12000",
         "list_template_view_css_id":"",
         "list_template_view_css_class":"",
         "list_wrap_view_id":"2000",

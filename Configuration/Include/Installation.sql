@@ -63,14 +63,14 @@ INSERT INTO `molajo_extension_instances` (`id`, `extension_id`, `catalog_type_id
 
 SET @configuration_extension_id = 2;
 SET @configuration_extension_instance_id = 2;
-SET @configuration_extension_catalog_type_id = 1050;
+SET @configuration_extension_catalog_type_id = 12000;
 SET @configuration_title = 'Audio Configuration';
 SET @configuration_alias = 'audio/configuration';
 
 
 /*  Configuration */
 SET @configuration_extension_id = 3000;
-SET @configuration_extension_instance_id = @configuration_extension_instance_id + 11000;
+SET @configuration_extension_instance_id = @configuration_extension_instance_id + 20000;
 SET @configuration_catalog_type_id = 1300;
 SET @configuration_subtitle = '';
 SET @datetime = '2012-08-30 12:00:00';
@@ -169,7 +169,7 @@ INSERT INTO `molajo_catalog`( `catalog_type_id`, `source_id`, `routable`, `menui
 `redirect_to_id`, `view_group_id`, `primary_category_id`, `tinyurl`)
 
 SELECT a.catalog_type_id, a.id, 1, 'Configuration', path, 0, 1, 1001, '' FROM `molajo_extension_instances` a
-where id > 11000
+where id > 20000
 
 
 

@@ -3,9 +3,4 @@
         name="Plugindata"
         process_plugins="1"
         data_source="Registry">
-    <table>
-        <plugins>
-            <plugin name="Cssclassandids"/>
-        </plugins>
-    </table>
 </model>

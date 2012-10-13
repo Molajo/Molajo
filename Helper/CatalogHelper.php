@@ -94,8 +94,7 @@ Class CatalogHelper
 		Services::Registry()->set('Parameters', 'catalog_extension_instance_id', $item->b_extension_instance_id);
 		Services::Registry()->set('Parameters', 'catalog_model_type', $item->b_model_type);
 		Services::Registry()->set('Parameters', 'catalog_model_name', $item->b_model_name);
-		Services::Registry()->set('Parameters', 'catalog_slug', $item->b_slug);
-		Services::Registry()->set('Parameters', 'catalog_source_table', $item->b_source_table);
+		Services::Registry()->set('Parameters', 'catalog_alias', $item->b_alias);
 		Services::Registry()->set('Parameters', 'catalog_source_id', (int)$item->source_id);
 		Services::Registry()->set('Parameters', 'catalog_tinyurl', (int)$item->tinyurl);
 
@@ -106,12 +105,6 @@ Class CatalogHelper
 			Services::Registry()->set('Parameters', 'catalog_home', 1);
 		} else {
 			Services::Registry()->set('Parameters', 'catalog_home', 0);
-		}
-
-		if (Services::Registry()->get('Parameters', 'catalog_url_request')
-			== Services::Registry()->get('Parameters', 'request_url_request')) {
-		} else {
-			Services::Registry()->set('Parameters', 'catalog_menuitem_type', 'list');
 		}
 
 		return true;
@@ -193,57 +186,11 @@ Class CatalogHelper
 
 		$m->set('use_special_joins', 1);
 		$m->set('process_plugins', 0);
-		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
-		$m->model->query->where($m->model->db->qn('sef_request') . ' = ' . $m->model->db->q($url_sef_request));
-
-		$result = $m->getData('result');
-
-		/** ID found in the Catalog Table */
-		if ((int) $result > 0) {
-			return $result;
-		}
-
-		/** Look for List */
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$m = new $controllerClass();
-
-		$results = $m->connect('Table', 'CatalogTypes');
-		if ($results === false) {
-			return false;
-		}
-
-		$m->set('use_special_joins', 0);
-		$m->set('process_plugins', 0);
-		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
-		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('extension_instance_id'));
-		$m->model->query->where($m->model->db->qn('slug') . ' = ' . $m->model->db->q($url_sef_request));
-
-		$item = $m->getData('item');
-		if ($item === false) {
-			return false;
-		}
-
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$m = new $controllerClass();
-
-		$results = $m->connect('Table', 'Catalog');
-		if ($results === false) {
-			return false;
-		}
-
-		$m->set('use_special_joins', 1);
-		$m->set('process_plugins', 0);
 
 		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
-		$m->model->query->where(
-			$m->model->db->qn('a') . '.' .
-				$m->model->db->qn('extension_instance_id')
-			. ' = ' . $m->model->db->q($item->extension_instance_id));
-
-		$m->model->query->where(
-			$m->model->db->qn('a') . '.' .
-				$m->model->db->qn('catalog_type_id')
-				. ' = 1050');
+		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('sef_request')
+				. ' = '
+				. $m->model->db->q($url_sef_request));
 
 		return $m->getData('result');
 	}

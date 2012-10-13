@@ -15,14 +15,12 @@
     <table>
         <fields>
             <include field="id_pk"/>
+            <include field="primary_category_id"/>
             <include field="title"/>
-            <include field="extension_instance_id"/>
-            <include field="protected"/>
+            <include field="alias"/>
             <include field="model_type"/>
             <include field="model_name"/>
-            <include field="primary_category_id"/>
-            <include field="source_table"/>
-            <include field="slug"/>
+            <include field="protected"/>
             <include field="routable"/>
         </fields>
     </table>

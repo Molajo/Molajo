@@ -27,7 +27,7 @@ class ResourceIncluder extends Includer
 	 */
 	public function __construct($name = null, $type = null)
 	{
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_EXTENSION_RESOURCE);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_RESOURCE);
 		return parent::__construct($name, $type);
 	}
 

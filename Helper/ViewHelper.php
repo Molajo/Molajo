@@ -177,13 +177,13 @@ Class ViewHelper
 	public function getDefault($type)
 	{
 		if ($type == 'Page') {
-			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_PAGE_VIEW, 'Default');
+			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_PAGE_VIEW, 'Default');
 
 		} elseif ($type == 'Template') {
-			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'Default');
+			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, 'Default');
 
 		} else {
-			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_EXTENSION_TEMPLATE_VIEW, 'None');
+			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, 'None');
 		}
 	}
 

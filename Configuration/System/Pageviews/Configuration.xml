@@ -11,7 +11,7 @@
     <description>SYSTEM_PAGEVIEWS_DESCRIPTION</description>
     <model
             name="Pageviews"
-            catalog_type_id="1150"
+            catalog_type_id="8000"
             extension_instance_id="20"
             extends="RenderTable"/>
 </extension>

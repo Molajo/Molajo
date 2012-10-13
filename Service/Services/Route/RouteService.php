@@ -426,40 +426,43 @@ Class RouteService
 		} else {
 			define('ROUTE', true);
 		}
-		Services::Registry()->get('Parameters', '*');
-			$catalog_type_id = Services::Registry()->get('Parameters', 'catalog_type_id');
+
+		$catalog_type_id = Services::Registry()->get('Parameters', 'catalog_type_id');
 		$id = Services::Registry()->get('Parameters', 'catalog_source_id');
-		$table = Services::Registry()->get('Parameters', 'catalog_source_table');
+		$catalog_extension_instance_id = Services::Registry()->get('Parameters', 'catalog_extension_instance_id');
 		$catalog_menuitem_type = Services::Registry()->get('Parameters', 'catalog_menuitem_type');
 		$model_type = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_type')));
 		$model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
-echo $id;
+  Services::Registry()->get('Parameters', '*');
 		die;
-		/** List */
-		if ((int)$id > 0
-			&& (int)$catalog_type_id == CATALOG_TYPE_EXTENSION_RESOURCE
+		if ((int)$id == 0
+			&& (int)$catalog_extension_instance_id > 0
 			&& strtolower(trim($catalog_menuitem_type)) == 'list'
 		) {
+			echo 'yes';
+			die;
 			$response = Helpers::Content()->getRouteList($id, $model_type, $model_name);
+
 			if ($response === false) {
 				Services::Error()->set(500, 'Extension not found');
 			}
 
-		/** Item */
 		} elseif ((int)$id > 0
 			&& (strtolower(trim($catalog_menuitem_type)) == 'item'
 				|| strtolower(trim($catalog_menuitem_type)) == 'form')
 		) {
 
 			$response = Helpers::Content()->getRouteItem($id, $model_type, $model_name);
+
 			if ($response === false) {
 				Services::Error()->set(500, 'Content not found');
 				return false;
 			}
 
-		/** Template Menu item */
-		} elseif ($catalog_menuitem_type > '') {
+		} elseif ($catalog_type_id == 1300) {
+
 			$response = Helpers::Content()->getRouteMenuitem();
+
 			if ($response === false) {
 				Services::Error()->set(500, 'Menu Item not found');
 			}
