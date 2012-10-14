@@ -171,8 +171,6 @@ class Controller
 			. ' Name: ' . $model_name
 			. ' Class: ' . $model_class;
 
-		echo $profiler_message . '<br />';
-
 		if ($model_name == null || trim($model_name) == '') {
 			$this->table_registry_name = null;
 
@@ -371,9 +369,6 @@ class Controller
 				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
 
-		echo $profiler_message;
-		var_dump($this->plugins);
-
 		/** 2. Schedule onBeforeRead Event */
 		if (count($this->plugins) > 0) {
 			$this->onBeforeReadEvent();
@@ -497,6 +492,16 @@ class Controller
 		if (is_array($temp)) {
 		} else {
 			$temp = array();
+		}
+
+		$menuitemType = $this->get('catalog_menuitem_type', '');
+		if ($menuitemType == '') {
+		} else {
+			if ($menuitemType == 'list') {
+				$temp[] = 'Listmenuitem';
+			} else {
+				$temp[] = $menuitemType;
+			}
 		}
 
 		$temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');

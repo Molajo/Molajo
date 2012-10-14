@@ -184,7 +184,7 @@ Class ViewHelper
 			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, 'Default');
 
 		} else {
-			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, 'None');
+			return Helpers::Extension()->getInstanceID(CATALOG_TYPE_WRAP_VIEW, 'None');
 		}
 	}
 

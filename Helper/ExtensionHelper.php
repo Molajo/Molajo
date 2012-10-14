@@ -132,7 +132,6 @@ Class ExtensionHelper
 
 		$primary_prefix = $m->get('primary_prefix');
 		$primary_key = $m->get('primary_key');
-		$m->set('check_view_level_access', 0);
 
 		if ((int)$extension_id == 0) {
 		} else {
@@ -152,6 +151,7 @@ Class ExtensionHelper
 		if ($query_object == 'list') {
 			$m->set('model_offset', 0);
 			$m->set('model_count', 999999);
+			$m->set('check_view_level_access', 0);
 		}
 
 		$query_results = $m->getData($query_object);

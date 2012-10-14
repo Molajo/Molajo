@@ -114,7 +114,6 @@ Class RouteService
 
 		/** 404 */
 		if (Services::Registry()->get('Parameters', 'status_found') === false) {
-			echo 404;
 			Services::Error()->set(404);
 			Services::Profiler()->set('Application::Route() 404', 'Route');
 

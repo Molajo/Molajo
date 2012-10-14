@@ -61,10 +61,10 @@ Class ErrorService
 
 		/** default error theme and page */
 		Services::Registry()->set('Parameters', 'theme_id',
-			Services::Registry()->get('Configuration', 'error_theme_id', 0)
+			Services::Registry()->get('Configuration', 'error_theme_id')
 		);
 		Services::Registry()->set('Parameters', 'page_view_id',
-			Services::Registry()->get('Configuration', 'error_page_view_id', 0)
+			Services::Registry()->get('Configuration', 'error_page_view_id')
 		);
 
 		if ($code == 503) {

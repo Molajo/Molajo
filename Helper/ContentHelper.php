@@ -87,12 +87,6 @@ Class ContentHelper
 			$item->table_registry_name . 'Metadata'
 		);
 
-		/** Force List Model */
-		Services::Registry()->set('Parameters', 'model_name', $model_name);
-		Services::Registry()->set('Parameters', 'model_type', $model_type);
-		Services::Registry()->set('Parameters', 'model_parameter', '');
-		Services::Registry()->set('Parameters', 'model_query_object', 'list');
-
 		return true;
 	}
 

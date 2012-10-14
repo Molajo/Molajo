@@ -1,0 +1,24 @@
+
+{
+    "1":{
+        "criteria_display_view_on_no_results":"",
+        "criteria_snippet_length":"",
+        "criteria_extension_instance_id":"",
+        "criteria_catalog_type_id":"",
+
+        "cache":"",
+        "cache_time":"",
+        "cache_handler":""
+    },
+
+    "2":{
+        "criteria_display_view_on_no_results":"",
+        "criteria_snippet_length":"",
+        "criteria_extension_instance_id":"",
+        "criteria_catalog_type_id":"",
+
+        "cache":"",
+        "cache_time":"",
+        "cache_handler":""
+    }
+}

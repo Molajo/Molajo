@@ -87,22 +87,13 @@ Class Application
 		}
 
 		/** 3. Authorise */
-		if ($results === true) {
-			$results = $this->authorise();
-		}
+		$this->authorise();
 
 		/** 4. Execute */
-		if ($results === true
-			|| Services::Registry()->get('Parameters', 'error_status', 0) == 1
-		) {
-			$results = $this->execute();
-		}
-
+		$this->execute();
 
 		/** 5. Response */
-		if ($results === true) {
-			$results = $this->response();
-		}
+		$this->response();
 
 		exit(0);
 	}
@@ -243,8 +234,7 @@ Class Application
 
 		$results = Services::Route()->process();
 
-		if ($results === true
-			&& Services::Redirect()->url === null
+		if (Services::Redirect()->url === null
 			&& (int)Services::Redirect()->code == 0
 		) {
 			$results = $this->onAfterRouteEvent();
@@ -366,13 +356,12 @@ Class Application
 	 */
 	protected function execute()
 	{
-		Services::Profiler()->set(START_EXECUTE, LOG_OUTPUT_APPLICATION);
-
 		$action = Services::Registry()->get('Parameters', 'request_action', 'display');
 		if (trim($action) == '') {
 			$action = 'display';
 		}
 
+		$action = strtolower($action);
 		if ($action == 'display' || $action == 'edit' || $action == 'add') {
 			$results = $this->display();
 		} else {

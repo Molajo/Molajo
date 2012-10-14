@@ -331,9 +331,9 @@ class ReadModel extends Model
 	{
 		$this->query_results = array();
 
-		echo '<br /><br /><pre>';
-		var_dump($this->query->__toString());
-		echo '</pre><br /><br />';
+//echo '<br /><br /><pre>';
+//var_dump($this->query->__toString());
+//echo '</pre><br /><br />';
 
 		$cache_key = $this->query->__toString();
 		$cached_output = Services::Cache()->get('Query', $cache_key);
