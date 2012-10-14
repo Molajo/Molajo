@@ -2,11 +2,14 @@
 <applications>
     <default>
         <name>site</name>
+        <id>1</id>
     </default>
     <application>
         <name>installation</name>
+        <id>0</id>
     </application>
     <application>
         <name>admin</name>
+        <id>2</id>
     </application>
 </applications>

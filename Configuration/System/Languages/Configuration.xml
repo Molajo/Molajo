@@ -11,8 +11,8 @@
     <description>SYSTEM_LANGUAGES_DESCRIPTION</description>
     <model
             name="Languages"
-            catalog_type_id="1100"
-            extension_instance_id="80"
+            catalog_type_id="6000"
+            extension_instance_id="6000"
             extends="RenderTable">
         <customfields>
             <customfield name="parameters">

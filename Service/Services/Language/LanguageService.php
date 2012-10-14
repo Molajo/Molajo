@@ -412,7 +412,7 @@ Class LanguageService
 	{
 		/** During System Initialization Helper is not loaded yet, instantiate here */
 		$helper = new ExtensionHelper();
-		$installed = $helper->get(0, 'Table', 'Languageservice', 'list', 1100);
+		$installed = $helper->get(0, 'Table', 'Languageservice', 'list', CATALOG_TYPE_LANGUAGE);
 		if ($installed === false || count($installed) < 1) {
 			return false;
 		}
@@ -421,17 +421,19 @@ Class LanguageService
 		$tagArray = array();
 		foreach ($installed as $language) {
 
-			$row = new \stdClass();
+			if ($language->menuitem_type == 'Item') {
+				$row = new \stdClass();
 
-			$row->id = $language->extension_id;
-			$row->title = $language->title;
-			$row->tag = strtolower(substr($language->alias, 0, 2))
-				. strtoupper(substr($language->alias, 2, strlen($language->alias) - 2));
+				$row->id = $language->extension_id;
+				$row->title = $language->title;
+				$row->tag = strtolower(substr($language->alias, 0, 2))
+					. strtoupper(substr($language->alias, 2, strlen($language->alias) - 2));
 
-			/** Format language for use comparing to folders/files */
-			$tagArray[] = $row->tag;
+				/** Format language for use comparing to folders/files */
+				$tagArray[] = $row->tag;
 
-			$languageList[] = $row;
+				$languageList[] = $row;
+			}
 		}
 
 		Services::Registry()->createRegistry('Languages');

@@ -10,7 +10,7 @@
         use_special_joins="1"
         check_view_level_access="0"
         process_plugins="0"
-        catalog_type_id="1100"
+        catalog_type_id="6000"
         published_status="1"
         data_source="JDatabase">
     <table>
@@ -18,7 +18,6 @@
             <include field="id_pk"/>
             <field name="title" type="char" null="0" default="" unique="1"/>
         </fields>
-        >
         <joins>
             <join model="Extensions"
                   alias="extensions"

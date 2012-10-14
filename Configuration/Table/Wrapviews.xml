@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Wrapviews"
-        catalog_type_id="1250"
-        extension_id="24"
+        catalog_type_id="10000"
+        extension_id="10000"
         process_plugins="0"
         extends="RenderTable">
     <customfields>

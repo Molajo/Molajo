@@ -4,8 +4,8 @@
         table="#__content"
         primary_key="id"
         name_key="title"
-        extension_instance_id="11"
-        catalog_type_id="3500"
+        extension_instance_id="15000"
+        catalog_type_id="15000"
         data_source="JDatabase">
     <table>
         <fields>

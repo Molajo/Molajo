@@ -211,6 +211,9 @@ class ReadModel extends Model
 					} elseif ($to == 'MENU_ID') {
 						$whereLeft = (int)$menu_id;
 
+					} elseif ($to == 'CATALOG_TYPE_ID') {
+						$whereLeft = (int)$catalog_type_id;
+
 					} elseif (is_numeric($to)) {
 						$whereLeft = (int)$to;
 
@@ -256,6 +259,9 @@ class ReadModel extends Model
 
 					} elseif ($with == 'MENU_ID') {
 						$whereLeft = (int)$menu_id;
+
+					} elseif ($with == 'CATALOG_TYPE_ID') {
+						$whereLeft = (int)$catalog_type_id;
 
 					} elseif (is_numeric($with)) {
 						$whereRight = (int)$with;
@@ -324,6 +330,10 @@ class ReadModel extends Model
 	public function getQueryResults($query_object, $offset = 0, $count = 5)
 	{
 		$this->query_results = array();
+
+		echo '<br /><br /><pre>';
+		var_dump($this->query->__toString());
+		echo '</pre><br /><br />';
 
 		$cache_key = $this->query->__toString();
 		$cached_output = Services::Cache()->get('Query', $cache_key);

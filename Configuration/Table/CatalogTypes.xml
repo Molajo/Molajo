@@ -21,7 +21,6 @@
             <include field="model_type"/>
             <include field="model_name"/>
             <include field="protected"/>
-            <include field="routable"/>
         </fields>
     </table>
 </model>

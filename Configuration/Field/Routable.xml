@@ -1,8 +1,0 @@
-<field name="routable"
-       type="boolean"
-       null="0"
-       default="0"
-       locked="1"
-       hidden="1"
-        />
-

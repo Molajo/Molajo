@@ -15,12 +15,12 @@
     <table>
         <fields>
             <include field="application_id"/>
-            <include field="catalog_type_id"/>
-            <include field="source_id"/>
+            <include field="extension_instance_id"/>
         </fields>
         <foreignkeys>
             <foreignkey name="application_id" source_id="id" source_model="Applications" required="1"/>
-            <foreignkey name="catalog_type_id" source_id="id" source_model="Catalogtypes" required="1"/>
+            <foreignkey name="extension_instance_id" source_id="id" source_model="ExtensionInstances" required="1"/>
         </foreignkeys>
     </table>
 </model>
+

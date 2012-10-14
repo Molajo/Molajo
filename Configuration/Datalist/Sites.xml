@@ -11,6 +11,8 @@
         check_view_level_access="0"
         process_plugins="0"
         published_status="0"
+        extension_instance_id="1000"
+        catagory_type_id="1000"
         data_source="JDatabase">
     <table>
         <fields>

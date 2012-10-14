@@ -12,7 +12,6 @@
     <model
             name="Resources"
             catalog_type_id="12000"
-            extension_instance_id="70"
             extends="RenderTable">
         <customfields>
             <customfield name="parameters">

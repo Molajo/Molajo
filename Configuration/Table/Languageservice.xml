@@ -11,8 +11,8 @@
     <description>LANGUAGES_DESCRIPTION</description>
     <model
             name="Languageservice"
-            catalog_type_id="1100"
-            extension_instance_id="80"
+            catalog_type_id="6000"
+            extension_instance_id="6000"
             get_customfields="0"
             use_special_joins="q"
             process_plugins="0"

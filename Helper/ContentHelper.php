@@ -61,6 +61,7 @@ Class ContentHelper
 		Services::Registry()->set('Query', 'Current', 'Content getRouteList');
 
 		$item = $this->get($id, $model_type, $model_name);
+
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
 		}
@@ -74,13 +75,11 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'extension_modified_datetime', $item->modified_datetime);
 
 		/** Content Extension and Source */
-		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->content_catalog_types_title);
-		Services::Registry()->set('Parameters', 'catalog_type_id', $item->content_catalog_types_id);
-		Services::Registry()->set('Parameters', 'content_type', (int)$item->content_catalog_types_type);
-		Services::Registry()->set('Parameters', 'primary_category_id', $item->content_catalog_types_primary_category_id);
-		Services::Registry()->set('Parameters', 'source_id', 0);
-		Services::Registry()->set('Parameters', 'source_alias', (int)$item->content_catalog_types_alias);
-		Services::Registry()->set('Parameters', 'source_routable', (int)$item->content_catalog_types_routable);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->catalog_types_title);
+		Services::Registry()->set('Parameters', 'catalog_type_id', $item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'content_type', (int)$item->menuitem_type);
+		Services::Registry()->set('Parameters', 'primary_category_id', $item->catalog_primary_category_id);
+		Services::Registry()->set('Parameters', 'source_id',  (int)$item->id);
 
 		/** Set Parameters */
 		$this->setParameters('list',
@@ -169,7 +168,7 @@ Class ContentHelper
 			$pageTypeNamespace . '_parent_menu_id');
 
 		Services::Registry()->set('Parameters', 'parent_menu_id', $parent_menu_id);
-;
+
 		return true;
 	}
 

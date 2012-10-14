@@ -397,6 +397,14 @@ Class AuthorisationService
 				$db->qn('catalog_type_id')
 		);
 
+
+		$query->where(
+			$db->qn($parameters['catalog_prefix']) .
+				'.' . $db->qn('application_id') .
+				' = ' .
+				APPLICATION_ID
+		);
+
 		$vg = implode(',', array_unique(Services::Registry()->get('User', 'ViewGroups')));
 
 		$query->where(

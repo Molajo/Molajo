@@ -1084,6 +1084,7 @@ Class ConfigurationService
 
 		$m->set('id', (int)SITE_ID);
 		$item = $m->getData('item');
+
 		if ($item === false) {
 			throw new \RuntimeException ('Site getSite() query problem');
 		}
@@ -1126,7 +1127,6 @@ Class ConfigurationService
 				if ($results === false) {
 					return false;
 				}
-
 				$m->set('name_key_value', APPLICATION);
 
 				$item = $m->getData('item');
@@ -1174,11 +1174,6 @@ Class ConfigurationService
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
 				die;
 			}
-		}
-
-		if (defined('APPLICATION_ID')) {
-		} else {
-			define('APPLICATION_ID', Services::Registry()->get('Configuration', 'application_id'));
 		}
 
 		Services::Registry()->sort('Configuration');

@@ -61,7 +61,7 @@ Class CatalogHelper
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
-		if (count($item) == 0 || (int)$item->id == 0 || (int)$item->routable == 0) {
+		if (count($item) == 0 || (int)$item->id == 0 || (int)$item->enabled == 0) {
 			Services::Registry()->set('Parameters', 'status_found', false);
 			Services::Profiler()->set('CatalogHelper->getRouteCatalog 404 - Not Found '
 					. ' Requested Catalog ID: ' . Services::Registry()->get('Parameters', 'request_catalog_id')
@@ -91,12 +91,11 @@ Class CatalogHelper
 		Services::Registry()->set('Parameters', 'catalog_menuitem_type', $item->menuitem_type);
 		Services::Registry()->set('Parameters', 'catalog_view_group_id', (int)$item->view_group_id);
 		Services::Registry()->set('Parameters', 'catalog_category_id', (int)$item->primary_category_id);
-		Services::Registry()->set('Parameters', 'catalog_extension_instance_id', $item->b_extension_instance_id);
+		Services::Registry()->set('Parameters', 'catalog_extension_instance_id', $item->extension_instance_id);
 		Services::Registry()->set('Parameters', 'catalog_model_type', $item->b_model_type);
 		Services::Registry()->set('Parameters', 'catalog_model_name', $item->b_model_name);
 		Services::Registry()->set('Parameters', 'catalog_alias', $item->b_alias);
 		Services::Registry()->set('Parameters', 'catalog_source_id', (int)$item->source_id);
-		Services::Registry()->set('Parameters', 'catalog_tinyurl', (int)$item->tinyurl);
 
 		/** home */
 		if ((int)Services::Registry()->get('Parameters', 'catalog_id')
@@ -188,9 +187,17 @@ Class CatalogHelper
 		$m->set('process_plugins', 0);
 
 		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
+
 		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('sef_request')
 				. ' = '
 				. $m->model->db->q($url_sef_request));
+
+		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('application_id')
+			. ' = '
+			. $m->model->db->q(APPLICATION_ID));
+
+		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('enabled')
+			. ' = 1');
 
 		return $m->getData('result');
 	}
@@ -214,10 +221,19 @@ Class CatalogHelper
 		}
 
 		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
+
 		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('catalog_type_id')
 			. ' = ' . (int)$catalog_type_id);
+
 		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('source_id')
 			. ' = ' . (int)$source_id);
+
+		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('application_id')
+			. ' = '
+			. $m->model->db->q(APPLICATION_ID));
+
+		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('enabled')
+			. ' = 1');
 
 		return $m->getData('result');
 	}
@@ -240,6 +256,7 @@ Class CatalogHelper
 		}
 
 		$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('redirect_to_id'));
+
 		$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('id') . ' = ' . (int)$catalog_id);
 
 		$result = $m->getData('result');
@@ -276,9 +293,8 @@ Class CatalogHelper
 			}
 
 			$m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('sef_request'));
+
 			$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('id') . ' = ' . (int)$catalog_id);
-			$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('redirect_to_id') . ' = ' . (int)0);
-			$m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('routable') . ' = ' . (int)1);
 
 			$url = $m->getData('result');
 

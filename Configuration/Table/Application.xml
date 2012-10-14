@@ -10,7 +10,7 @@
         use_special_joins="1"
         check_view_level_access="0"
         process_plugins="0"
-        catalog_type_id="50"
+        catalog_type_id="2000"
         use_pagination="0"
         extends="site"
         data_source="JDatabase">
@@ -35,8 +35,8 @@
             <join model="Catalog"
                   alias="catalog"
                   select="catalog_type_id,source_id,sef_request,view_group_id,redirect_to_id"
-                  jointo="source_id,catalog_type_id"
-                  joinwith="id,catalog_type_id"/>
+                  jointo="application_id,source_id,catalog_type_id"
+                  joinwith="APPLICATION_ID,id,catalog_type_id"/>
         </joins>
 
         <children>

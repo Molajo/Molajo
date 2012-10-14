@@ -114,7 +114,7 @@ Class ThemeHelper
 		Services::Registry()->set('Parameters', 'theme_language', $item->language);
 		Services::Registry()->set('Parameters', 'theme_view_group_id', $item->view_group_id);
 		Services::Registry()->set('Parameters', 'theme_catalog_id', $item->catalog_id);
-		Services::Registry()->set('Parameters', 'theme_catalog_type_id', (int)$item->catalog_type_id);
+		Services::Registry()->set('Parameters', 'theme_catalog_type_id', (int)$item->catalog_view_group_id);
 		Services::Registry()->set('Parameters', 'theme_catalog_type_title', $item->catalog_types_title);
 
 		Services::Registry()->set('Parameters', 'theme_table_registry_name', $item->table_registry_name);

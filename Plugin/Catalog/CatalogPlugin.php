@@ -66,8 +66,13 @@ class CatalogPlugin extends Plugin
 		);
 		$connect->model->query->where(
 			$connect->model->db->qn($connect->get('primary_prefix'))
-				. '.' . $connect->model->db->qn('routable')
+				. '.' . $connect->model->db->qn('enabled')
 				. ' = 1'
+		);
+		$connect->model->query->where(
+			$connect->model->db->qn($connect->get('primary_prefix'))
+				. '.' . $connect->model->db->qn('appplication_id')
+				. ' = ' . (int) APPLICATION_ID
 		);
 
 		$connect->model->query->order(

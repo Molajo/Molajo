@@ -5,8 +5,8 @@
         primary_key="id"
         name_key="title"
         primary_prefix="a"
-        extension_instance_id="7"
-        catalog_type_id="100"
+        extension_instance_id="14000"
+        catalog_type_id="14000"
         data_source="JDatabase">
     <table>
         <fields>

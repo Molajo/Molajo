@@ -68,6 +68,7 @@ Class ViewHelper
 
 		/** Retrieve Node and verify the view exists */
 		$node = Helpers::Extension()->getExtensionNode((int)$id);
+
 		if ($node === false || $node == '') {
 			$id = $this->getDefault($type);
 			$node = Helpers::Extension()->getExtensionNode((int)$id);
@@ -95,7 +96,7 @@ Class ViewHelper
 		Services::Registry()->set('Parameters', $type . '_view_title', $item->title);
 		Services::Registry()->set('Parameters', $type . '_view_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', $type . '_view_language', $item->language);
-		Services::Registry()->set('Parameters', $type . '_view_view_group_id', $item->view_group_id);
+		Services::Registry()->set('Parameters', $type . '_view_view_group_id', $item->catalog_view_group_id);
 		Services::Registry()->set('Parameters', $type . '_view_catalog_id', $item->catalog_id);
 		Services::Registry()->set('Parameters', $type . '_view_catalog_type_id', (int)$item->catalog_type_id);
 		Services::Registry()->set('Parameters', $type . '_view_catalog_type_title', $item->catalog_types_title);

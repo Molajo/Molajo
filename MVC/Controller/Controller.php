@@ -171,6 +171,8 @@ class Controller
 			. ' Name: ' . $model_name
 			. ' Class: ' . $model_class;
 
+		echo $profiler_message . '<br />';
+
 		if ($model_name == null || trim($model_name) == '') {
 			$this->table_registry_name = null;
 
@@ -368,6 +370,9 @@ class Controller
 				. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
 				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
 				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
+
+		echo $profiler_message;
+		var_dump($this->plugins);
 
 		/** 2. Schedule onBeforeRead Event */
 		if (count($this->plugins) > 0) {

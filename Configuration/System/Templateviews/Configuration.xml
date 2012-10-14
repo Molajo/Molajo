@@ -11,8 +11,8 @@
     <description>SYSTEM_TEMPLATEVIEWS_DESCRIPTION</description>
     <model
             name="Templateviews"
-            catalog_type_id="1200"
-            extension_instance_id="22"
+            catalog_type_id="9000"
+            extension_instance_id="9000"
             process_plugins="0"
             extends="RenderTable">
 

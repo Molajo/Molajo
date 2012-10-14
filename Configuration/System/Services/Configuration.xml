@@ -12,6 +12,6 @@
     <model
             name="Services"
             catalog_type_id="4000"
-            extension_instance_id="30"
+            extension_instance_id="4000"
             extends="RenderTable"/>
 </extension>

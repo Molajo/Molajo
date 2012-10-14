@@ -12,6 +12,6 @@
     <model
             name="Pageviews"
             catalog_type_id="8000"
-            extension_instance_id="20"
+            extension_instance_id="8000"
             extends="RenderTable"/>
 </extension>

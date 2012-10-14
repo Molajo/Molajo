@@ -764,8 +764,7 @@ Class Application
 
 			foreach ($apps->application as $app) {
 
-				if ($app->name == $applicationTest) {
-
+				if ((string) $app->name == $applicationTest) {
 					define('APPLICATION', $app->name);
 					define('APPLICATION_URL_PATH', APPLICATION . '/');
 
@@ -782,6 +781,8 @@ Class Application
 			} else {
 				define('APPLICATION', $apps->default->name);
 				define('APPLICATION_URL_PATH', '');
+				define('APPLICATION_ID', $apps->default->id);
+
 				$requested_resource_for_route = $requestURI;
 			}
 		}
