@@ -54,9 +54,7 @@ class ReadmorePlugin extends Plugin
 						$fulltext_name = $name . '_' . 'fulltext';
 						$this->saveField(null, $fulltext_name, $newFields[1]);
 
-						$content_text = '<div class="introductory">' . trim($newFields[0]) . '</div>'
-							. trim($newFields[1]);
-
+						$content_text = trim($newFields[0]) . ' ' . trim($newFields[1]);
 						$this->saveField($name, $name, $content_text);
 					}
 				}

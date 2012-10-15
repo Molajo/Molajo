@@ -168,12 +168,14 @@ Class RouteService
 	{
 
 		$path = Services::Registry()->get('Parameters', 'request_url_request');
+		Services::Registry()->set('Parameters', 'home', 0);
 
 		if (strlen($path) == 0 || trim($path) == '') {
 			Services::Registry()->set('Parameters', 'request_url_query', '');
 			Services::Registry()->set('Parameters', 'request_catalog_id',
 				Services::Registry()->get('Configuration', 'application_home_catalog_id', 0));
 			Services::Registry()->set('Parameters', 'catalog_home', true);
+			Services::Registry()->set('Parameters', 'home', 1);
 			return true;
 
 		} else {
