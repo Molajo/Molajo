@@ -27,12 +27,7 @@ class ItemPlugin extends Plugin
 	 */
 	public function onBeforeParse()
 	{
-		if (APPLICATION_ID == 2) {
-		} else {
-			return true;
-		}
-
-		if (strtolower($this->get('template_view_path_node')) == 'item') {
+		if (strtolower($this->get('catalog_menuitem_type')) == 'item') {
 		} else {
 			return true;
 		}
@@ -40,7 +35,7 @@ class ItemPlugin extends Plugin
 		$resource_table_registry = ucfirst(strtolower($this->get('model_name')))
 			. ucfirst(strtolower($this->get('model_type')));
 
-		/** Get Actual Data for matching to Fields */
+		/** Get Actual Data for matching to Fields
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$connect = new $controllerClass();
 		$results = $connect->connect($this->get('model_type'), $this->get('model_name'));
@@ -59,6 +54,8 @@ class ItemPlugin extends Plugin
 				. '.' . $connect->model->db->qn($primary_key) . ' = ' . (int) $id);
 
 		$item = $connect->getData('item');
+*/
+		/** PrimaryRequestQueryResults populated in Content Helper getRouteItem */
 
 		$this->set('model_name', 'Plugindata');
 		$this->set('model_type', 'dbo');

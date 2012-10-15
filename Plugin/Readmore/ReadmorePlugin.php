@@ -48,14 +48,16 @@ class ReadmorePlugin extends Plugin
 
 					if ($newFields === false) {
 					} else {
-
 						$introductory_name = $name . '_' . 'introductory';
 						$this->saveField(null, $introductory_name, $newFields[0]);
 
 						$fulltext_name = $name . '_' . 'fulltext';
 						$this->saveField(null, $fulltext_name, $newFields[1]);
 
-						$this->saveField(null, $name, trim($newFields[0]) . ' ' . trim($newFields[1]));
+						$content_text = '<div class="introductory">' . trim($newFields[0]) . '</div>'
+							. trim($newFields[1]);
+
+						$this->saveField($name, $name, $content_text);
 					}
 				}
 			}

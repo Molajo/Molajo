@@ -117,6 +117,14 @@ class Controller
 	protected $model_count;
 
 	/**
+	 * Pagination: Use or do not use
+	 *
+	 * @var    boolean
+	 * @since  1.0
+	 */
+	protected $use_pagination;
+
+	/**
 	 * Get the current value (or default) of the specified Model property
 	 *
 	 * @param   string $key
@@ -274,7 +282,7 @@ class Controller
 			$this->set('model_offset',
 				Services::Registry()->get($this->table_registry_name, 'model_offset', 0));
 			$this->set('use_pagination',
-				Services::Registry()->get($this->table_registry_name, 'use_pagination', ''));
+				Services::Registry()->get($this->table_registry_name, 'use_pagination', 0));
 			$this->set('model_count',
 				Services::Registry()->get($this->table_registry_name, 'model_count', 5));
 		}
@@ -340,8 +348,7 @@ class Controller
 		$this->pagination_total = 0;
 		$this->model_offset = $this->get('model_offset');
 		$this->model_count = $this->get('model_count');
-
-		$model_parameter = '';
+		$this->use_pagination = $this->get('use_pagination');
 
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
 
@@ -586,25 +593,29 @@ class Controller
 	protected function runStandardQuery($query_object = 'list')
 	{
 		$this->model_offset = $this->get('model_offset', 0);
-		$this->model_count = $this->get('model_count', 0);
+		$this->model_count = $this->get('model_count', 20);
+		$this->use_pagination = $this->get('use_pagination', 1);
 
 		if ($this->model_offset == 0 && $this->model_count == 0) {
 			if ($query_object == 'result') {
 				$this->model_offset = 0;
 				$this->model_count = 1;
+				$this->use_pagination = 0;
 
 			} elseif ($query_object == 'distinct') {
-				$this->model_offset = $this->get('model_offset', 0);
-				$this->model_count = $this->get('model_count', 9999);
+				$this->model_offset = 0;
+				$this->model_count = 999999;
+				$this->use_pagination = 0;
 
 			} else {
-				$this->model_offset = $this->get('model_offset', 0);
-				$this->model_count = $this->get('model_count', 20);
+				$this->model_offset = 0;
+				$this->model_count = 20;
+				$this->use_pagination = 1;
 			}
 		}
 
 		$this->pagination_total = (int)$this->model->getQueryResults(
-			$query_object, $this->model_offset, $this->model_count);
+			$query_object, $this->model_offset, $this->model_count, $this->use_pagination);
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql') == 1) {
 			Services::Profiler()->set('DisplayController->getData SQL Query: <br /><br />'

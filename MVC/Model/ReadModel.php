@@ -320,14 +320,15 @@ class ReadModel extends Model
 	/**
 	 * getQueryResults - Execute query and returns an associative array of data elements
 	 *
-	 * @param     $query_object
-	 * @param int $offset
-	 * @param int $count
+	 * @param   $query_object
+	 * @param 	int $offset
+	 * @param 	int $count
+	 * @param 	boolean $use_pagination                  r
 	 *
 	 * @return int count of total rows for pagination
 	 * @since   1.0
 	 */
-	public function getQueryResults($query_object, $offset = 0, $count = 5)
+	public function getQueryResults($query_object, $offset = 0, $count = 5, $use_pagination = 0)
 	{
 		$this->query_results = array();
 
@@ -340,12 +341,12 @@ class ReadModel extends Model
 
 		if ($query_object == 'list') {
 		} else {
-			$this->set('use_pagination', 0);
+			$use_pagination = 0;
 		}
 
 		if ($cached_output === false) {
 
-			if ((int) $this->get('use_pagination') === 0) {
+			if ((int) $use_pagination === 0) {
 				$query_offset = $offset;
 				$query_count = $count;
 
@@ -371,7 +372,12 @@ class ReadModel extends Model
 
 		$total = count($results);
 
-		if ((int) $this->get('use_pagination') === 0
+		if ($offset > $total) {
+			$offset = 0;
+			$use_pagination = 0;
+		}
+
+		if ($use_pagination === 0
 			|| (int) $total === 0) {
 			$this->query_results = $results;
 			return $total;
@@ -388,7 +394,8 @@ class ReadModel extends Model
 
 			/** Collect next set for pagination */
 			} elseif ($countOfResults < $count) {
-				$this->query_results[] = $results;
+				$this->query_results[] = $item;
+				$countOfResults++;
 
 			/** Offset and Results set collected. Exit. */
 			} else {

@@ -47,14 +47,14 @@ class ListmenuitemPlugin extends Plugin
 		$connect->set('use_special_joins', 1);
 		$connect->set('check_view_level_access', 1);
 
-		$offset = $this->get('model_offset', 0);
-		$count = $this->get('model_count', 5);
-		$connect->set('model_offset', $offset);
-		$connect->set('model_count', $count);
+		$connect->set('model_offset', $this->get('model_offset', 0));
+		$connect->set('model_count', $this->get('model_count', 5));
+		$connect->set('use_pagination', $this->get('model_use_pagination', 1));
 
 		$list = $connect->getData('list');
 
 		Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $list);
+
 		$this->set('model_name', 'Plugindata');
 		$this->set('model_type', 'dbo');
 		$this->set('model_query_object', 'getPlugindata');

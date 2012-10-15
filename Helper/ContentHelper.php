@@ -113,15 +113,10 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'content_translation_of_id', (int)$item->translation_of_id);
 		Services::Registry()->set('Parameters', 'content_language', $item->language);
 		Services::Registry()->set('Parameters', 'content_catalog_type_id', (int)$item->catalog_type_id);
-		Services::Registry()->set('Parameters', 'content_catalog_type_title', $item->catalog_types_title);
 		Services::Registry()->set('Parameters', 'content_modified_datetime', $item->modified_datetime);
 
 		Services::Registry()->set('Parameters', 'extension_instance_id', (int)$item->extension_instance_id);
 		Services::Registry()->set('Parameters', 'extension_title', $item->extension_instances_title);
-		Services::Registry()->set('Parameters', 'extension_id', (int)$item->extensions_id);
-		Services::Registry()->set('Parameters', 'extension_name_path_node', $item->extensions_name);
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id',
-			(int)$item->extension_instances_catalog_type_id);
 
 		Services::Registry()->set('Parameters', 'criteria_source_id', (int)$item->id);
 		Services::Registry()->set('Parameters', 'criteria_catalog_type_id', (int)$item->catalog_type_id);
@@ -150,12 +145,6 @@ Class ContentHelper
 			$item->table_registry_name . 'Metadata',
 			'ResourcesSystem'
 		);
-
-		/** Force Item Model */
-		Services::Registry()->set('Parameters', 'model_name', $model_name);
-		Services::Registry()->set('Parameters', 'model_type', $model_type);
-		Services::Registry()->set('Parameters', 'model_parameter', '');
-		Services::Registry()->set('Parameters', 'model_query_object', 'item');
 
 		$parent_menu_id = Services::Registry()->get(
 			'ResourcesSystemParameters',
@@ -263,7 +252,7 @@ Class ContentHelper
 		}
 
 		$m->set('id', (int)$id);
-		$m->set('process_plugins', 0);
+		$m->set('process_plugins', 1);
 		$m->set('get_customfields', 1);
 
 		$item = $m->getData('item');
