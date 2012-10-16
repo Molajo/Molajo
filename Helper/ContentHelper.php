@@ -253,7 +253,7 @@ Class ContentHelper
 
 		$m->set('id', (int)$id);
 		$m->set('process_plugins', 1);
-		$m->set('get_customfields', 1);
+		$m->set('get_customfields', 2);
 
 		$item = $m->getData('item');
 		if (count($item) == 0) {

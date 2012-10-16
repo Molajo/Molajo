@@ -83,7 +83,9 @@ Class RequestService
 	 */
 	public function __construct()
 	{
+
 		$this->request = new \stdClass();
+
 		$request_class = '\\Symfony\\Component\\HttpFoundation\\Request';
 		$connection = new $request_class();
 		$this->symfony_request = $connection->createFromGlobals();
@@ -134,7 +136,6 @@ Class RequestService
 	 */
 	public function setRequest()
 	{
-
 		/** http://localhost/molajo/index.php returns 'http' */
 		$this->set('scheme', $this->symfony_request->getScheme());
 
@@ -225,6 +226,9 @@ Class RequestService
 		$this->set('document_root', $this->symfony_request->server->get('DOCUMENT_ROOT'));
 
 		$this->set('entry_point', $this->symfony_request->server->get('SCRIPT_FILENAME'));
+
+		/** Post */
+		$this->set('post_variables', $this->symfony_request->request->all());
 
 		/** Language */
 		return true;

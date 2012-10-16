@@ -69,13 +69,14 @@ Class UrlService
 			$image = Services::Registry()->get('Configuration', 'gravatar_image', 0);
 		}
 
+		/**
 		if ($align == 'right') {
 			$css = '.gravatar { float:right; margin: 0 0 15px 15px; }';
 		} else {
 			$css = '.gravatar { float:left; margin: 0 15px 15px 0; }';
 		}
 		Services::Asset()->addCssDeclaration($css, 'text/css');
-
+		*/
 		$url = 'http://www.gravatar.com/avatar/';
 		$url .= md5(strtolower(trim($email)));
 		$url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;

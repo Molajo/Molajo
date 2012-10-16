@@ -291,6 +291,24 @@ Class RouteService
 			$controller = 'read';
 		}
 
+		if ($action == 'display') {
+			$post_variables = array();
+
+		} else {
+
+			$post_variables = Services::Request()->get('post_variables');
+
+			if (count($post_variables) == 0
+				|| $post_variables === false) {
+			} else {
+				$i = 0;
+				foreach ($post_variables as $key=>$value) {
+					echo $key. ' ' . $value . '<br />';
+					Services::Request()->set($key, $value);
+				}
+			}
+		}
+
 		Services::Registry()->set('Parameters', 'request_action', $action);
 		Services::Registry()->set('Parameters', 'request_action_authorisation', $controller); //for now
 		Services::Registry()->set('Parameters', 'request_controller', $controller);

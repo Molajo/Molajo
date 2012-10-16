@@ -1,6 +1,5 @@
 <plugin name="Status"/>
 <plugin name="Itemurl"/>
-<plugin name="Mockimage"/>
 <plugin name="Blockquote"/>
 <plugin name="Rownumber"/>
 <plugin name="Readmore"/>

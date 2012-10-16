@@ -36,7 +36,7 @@ class CsrftokenPlugin extends Plugin
 			return true;
 		}
 
-		$beginFormPattern = '/<form.+?name="(.+?)"\>/';
+		$beginFormPattern = '/<form(.*)>/';
 
 		preg_match_all($beginFormPattern, $rendered, $forms);
 
@@ -47,16 +47,17 @@ class CsrftokenPlugin extends Plugin
 		$replaceThis = array();
 		$withThis = array();
 		$i = 0;
+
 		foreach ($forms[0] as $match) {
-			$formDefinition = $match;
-
-			$formName = $forms[1][$i];
-
 			$formToken = md5(rand(rand(50000, 500000), rand(500000, 50000000)));
 
-			$replaceThis[] = $formDefinition;
-			$withThis[] = $formDefinition . chr(10)
-				. '<input type="hidden" name="' . $formName . '[_csfr_token]" id="' . $formName . '__csfr_token" value="' . $formToken . '" />';
+			$withThis[] = $match
+				. chr(10)
+				. '<div class="catch"><input name="info" type="text" value=""></div>'
+				. chr(10)
+				. '<input type="hidden" name="' . $formToken . '" value="token">';
+
+			$replaceThis[] = $match;
 			$i++;
 		}
 

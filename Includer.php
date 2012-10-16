@@ -146,6 +146,7 @@ class Includer
 			return;
 		}
 
+
 		//todo filter input appropriately
 		//todo case statements
 		foreach ($this->attributes as $name => $value) {
@@ -173,11 +174,12 @@ class Includer
 					$value = ucfirst(strtolower(trim($value)));
 					Services::Registry()->set('Parameters', 'extension_title', $value);
 				}
-				/** Used to extract a list of extensions for inclusion */
+
+			/** Used to extract a list of extensions for inclusion */
 			} elseif ($name == 'tag') {
 				$this->tag = $value;
 
-				/** Template */
+			/** Template */
 			} elseif ($name == 'template' || $name == 'template_view_title'
 				|| $name == 'template_view' || $name == 'template_view'
 			) {
@@ -255,7 +257,7 @@ class Includer
 				Services::Registry()->set('Parameters', 'model_query_object', $value);
 
 			} else {
-				/** Todo: For security reasons, other parameters must override and match defined parameter values */
+				/** Todo: For security reasons: match field to table registry and filter first */
 				Services::Registry()->set('Parameters', $name, $value);
 			}
 		}

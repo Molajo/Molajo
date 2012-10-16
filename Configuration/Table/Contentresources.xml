@@ -7,11 +7,9 @@
         <children>
             <child name="Comments" type="Resources" join="parent_id"/>
         </children>
-
         <plugins>
-            <include name="ParametersContent"/>
+            <include name="Contentplugins"/>
         </plugins>
-
     </table>
     <customfields>
         <customfield name="customfields">

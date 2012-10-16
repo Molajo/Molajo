@@ -43,7 +43,7 @@ class ListmenuitemPlugin extends Plugin
 			return false;
 		}
 
-		$connect->set('get_customfields', 1);
+		$connect->set('get_customfields', 2);
 		$connect->set('use_special_joins', 1);
 		$connect->set('check_view_level_access', 1);
 

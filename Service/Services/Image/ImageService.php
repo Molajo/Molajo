@@ -250,6 +250,7 @@ Class ImageService
 		if ($this->size == 'thumbnail') {
 			$width = Services::Registry()->get('Configuration', 'image_thumbnail_width', 50);
 			$height = Services::Registry()->get('Configuration', 'image_thumbnail_height', 50);
+
 		} elseif ($this->size == 'small') {
 			$width = Services::Registry()->get('Configuration', 'image_small_width', 100);
 			$height = Services::Registry()->get('Configuration', 'image_small_height', 100);
@@ -257,7 +258,8 @@ Class ImageService
 		} elseif ($this->size == 'medium') {
 			$width = Services::Registry()->get('Configuration', 'image_medium_width', 300);
 			$height = Services::Registry()->get('Configuration', 'image_medium_height', 300);
-		} elseif ($this->size == 'medium') {
+
+		} elseif ($this->size == 'large') {
 			$width = Services::Registry()->get('Configuration', 'image_large_width', 500);
 			$height = Services::Registry()->get('Configuration', 'image_large_height', 500);
 
@@ -277,7 +279,6 @@ Class ImageService
 		$this->resizeImage($width, $height);
 
 		/** 4. Save image */
-
 		return $this->saveImage(100);
 	}
 
@@ -341,10 +342,11 @@ Class ImageService
 	/**
 	 * getDimensions
 	 *
-	 * @param $newWidth
-	 * @param $newHeight
-	 * @param $this->type
+	 * @param  $newWidth
+	 * @param  $newHeight
+	 *
 	 * @return array
+	 * @since  1.0
 	 */
 	protected function getDimensions($newWidth, $newHeight)
 	{
@@ -384,7 +386,9 @@ Class ImageService
 	 * getSizeByFixedHeight
 	 *
 	 * @param $newHeight
+	 *
 	 * @return
+	 * @since  1.0
 	 */
 	protected function getSizeByFixedHeight($newHeight)
 	{
@@ -397,8 +401,10 @@ Class ImageService
 	/**
 	 * getSizeByFixedWidth
 	 *
-	 * @param $newWidth
+	 * @param  $newWidth
+	 *
 	 * @return
+	 * @since  1.0
 	 */
 	protected function getSizeByFixedWidth($newWidth)
 	{
@@ -413,7 +419,9 @@ Class ImageService
 	 *
 	 * @param $newWidth
 	 * @param $newHeight
+	 *
 	 * @return array
+	 * @since  1.0
 	 */
 	protected function getSizeByAuto($newWidth, $newHeight)
 	{
