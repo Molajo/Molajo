@@ -58,9 +58,8 @@ Class ContentHelper
 	 */
 	public function getRouteList($id, $model_type, $model_name)
 	{
-		Services::Registry()->set('Query', 'Current', 'Content getRouteList');
 
-		$item = $this->get($id, $model_type, $model_name);
+		$item = $this->get($id, $model_type, $model_name, 'list');
 
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
@@ -98,9 +97,7 @@ Class ContentHelper
 	 */
 	public function getRouteItem($id, $model_type, $model_name)
 	{
-		Services::Registry()->set('Query', 'Current', 'Content getRouteItem');
-
-		$item = $this->get($id, $model_type, $model_name);
+		$item = $this->get($id, $model_type, $model_name, 'item');
 
 		if (count($item) == 0) {
 			return Services::Registry()->set('Parameters', 'status_found', false);
@@ -163,12 +160,11 @@ Class ContentHelper
 	 */
 	public function getRouteMenuitem()
 	{
-		Services::Registry()->set('Query', 'Current', 'Content getRouteMenuitem');
-
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'catalog_source_id'),
 			'Menuitem',
-			Services::Registry()->get('Parameters', 'catalog_menuitem_type')
+			Services::Registry()->get('Parameters', 'catalog_menuitem_type'),
+			'Menuitem'
 		);
 
 		if (count($item) == 0) {
@@ -234,7 +230,7 @@ Class ContentHelper
 	 * @return array An object containing an array of data
 	 * @since   1.0
 	 */
-	public function get($id = 0, $model_type = 'Table', $model_name = 'Content')
+	public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $menuitem_type = '')
 	{
 
 		Services::Profiler()->set('ContentHelper->get '
@@ -253,7 +249,12 @@ Class ContentHelper
 
 		$m->set('id', (int)$id);
 		$m->set('process_plugins', 1);
-		$m->set('get_customfields', 2);
+
+		if ($menuitem_type == 'item') {
+			$m->set('get_customfields', 2);
+		} else {
+			$m->set('get_customfields', 1);
+		}
 
 		$item = $m->getData('item');
 		if (count($item) == 0) {

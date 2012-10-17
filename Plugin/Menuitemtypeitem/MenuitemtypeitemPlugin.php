@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Plugin\Item;
+namespace Molajo\Plugin\Menuitemtypeitem;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
@@ -17,10 +17,10 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class ItemPlugin extends Plugin
+class MenuitemtypeitemPlugin extends Plugin
 {
 	/**
-	 * Prepares data for Item
+	 * Prepares data for Menuitemtypeitem
 	 *
 	 * @return boolean
 	 * @since   1.0
@@ -55,7 +55,7 @@ class ItemPlugin extends Plugin
 
 		$item = $connect->getData('item');
 */
-		/** PrimaryRequestQueryResults populated in Content Helper getRouteItem */
+		/** PrimaryRequestQueryResults populated in Content Helper getRouteMenuitemtypeitem */
 
 		$this->set('model_name', 'Plugindata');
 		$this->set('model_type', 'dbo');

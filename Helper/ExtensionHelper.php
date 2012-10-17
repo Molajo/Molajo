@@ -56,8 +56,6 @@ Class ExtensionHelper
 	 */
 	public function getExtension($extension_id, $model_type = 'Table', $model_name = 'ExtensionInstances')
 	{
-		Services::Registry()->set('Query', 'Current', 'Extension getExtension: ' . $extension_id);
-
 		$item = Helpers::Extension()->get($extension_id, $model_type, $model_name);
 
 		/** 404: routeRequest handles redirecting to error page */

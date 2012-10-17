@@ -465,6 +465,7 @@ class Controller
 			return;
 		}
 
+		/** Model Plugins */
 		$dataSourcePlugins = array();
 		if ((int)$this->get('process_plugins') == 1) {
 
@@ -476,6 +477,7 @@ class Controller
 			}
 		}
 
+		/** Template Plugins */
 		$templatePlugins = array();
 		if ((int)$this->get('process_template_plugins') == 1) {
 
@@ -494,26 +496,27 @@ class Controller
 			}
 		}
 
+		/** Merge */
 		$temp = array_merge($dataSourcePlugins, $templatePlugins);
-
 		if (is_array($temp)) {
 		} else {
 			$temp = array();
 		}
 
+		/** Automatically Menuitem Type, Template Node and Application */
 		$menuitemType = $this->get('catalog_menuitem_type', '');
 		if ($menuitemType == '') {
 		} else {
-			if ($menuitemType == 'list') {
-				$temp[] = 'Listmenuitem';
-			} else {
-				$temp[] = $menuitemType;
-			}
+			$temp[] = 'Menuitemtype' . strtolower($menuitemType);
 		}
 
 		$temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');
 
-		foreach ($temp as $plugin) {
+		$temp[] = 'Application' . APPLICATION_ID;
+
+		$temp2 = array_unique($temp);
+
+		foreach ($temp2 as $plugin) {
 			if ((int) Services::Registry()->get('Plugins', $plugin . 'Plugin') > 0) {
 				$this->plugins[] = $plugin;
 			}

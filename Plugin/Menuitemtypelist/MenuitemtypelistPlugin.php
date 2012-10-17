@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Plugin\Listmenuitem;
+namespace Molajo\Plugin\Menuitemtypelist;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
@@ -17,10 +17,10 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-class ListmenuitemPlugin extends Plugin
+class MenuitemtypelistPlugin extends Plugin
 {
 	/**
-	 * Prepares data for Listmenuitem
+	 * Prepares data for Menuitemtypelist
 	 *
 	 * @return boolean
 	 * @since   1.0
