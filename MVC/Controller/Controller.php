@@ -461,6 +461,11 @@ class Controller
 	{
 		$this->plugins = array();
 
+		if (defined('APPLICATION_ID')) {
+		} else {
+			return;
+		}
+
 		if ($query_object == 'result') {
 			return;
 		}
@@ -681,7 +686,8 @@ class Controller
 								$customFieldName,
 								Services::Registry()->get($this->table_registry_name, $customFieldName),
 								$this->get('get_customfields'),
-								$results
+								$results,
+								$query_object
 							);
 					}
 				}
@@ -879,8 +885,17 @@ class Controller
 			VERBOSE
 		);
 
-		$this->parameters = $arguments['parameters'];
-		$this->query_results = $arguments['data'];
+		if (isset($arguments['parameters'])) {
+			$this->parameters = $arguments['parameters'];
+		} else {
+			$this->parameters = array();
+		}
+		if (isset($arguments['data'])) {
+			$this->query_results = $arguments['data'];
+		} else {
+			$this->query_results = array();
+		}
+
 
 		return true;
 	}

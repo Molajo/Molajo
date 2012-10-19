@@ -1,1 +1,1 @@
-<field name="enable_ratings" type="boolean" null="0" default="0"/>
+<field name="enable_ratings" type="boolean" null="1"/>

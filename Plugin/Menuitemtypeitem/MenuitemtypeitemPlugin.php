@@ -54,7 +54,7 @@ class MenuitemtypeitemPlugin extends Plugin
 				. '.' . $connect->model->db->qn($primary_key) . ' = ' . (int) $id);
 
 		$item = $connect->getData('item');
-*/
+
 		/** PrimaryRequestQueryResults populated in Content Helper getRouteMenuitemtypeitem */
 
 		$this->set('model_name', 'Plugindata');

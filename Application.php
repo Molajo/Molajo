@@ -261,7 +261,6 @@ Class Application
 		return true;
 	}
 
-
 	/**
 	 * Schedule onBeforeParseEvent Event - could update parameter values
 	 *
@@ -753,9 +752,12 @@ Class Application
 
 			foreach ($apps->application as $app) {
 
-				if ((string) $app->name == $applicationTest) {
+				$xml_name = (string) $app->name;;
+
+				if (strtolower(trim($xml_name)) == strtolower(trim($applicationTest))) {
 					define('APPLICATION', $app->name);
 					define('APPLICATION_URL_PATH', APPLICATION . '/');
+					define('APPLICATION_ID', $app->id);
 
 					$requested_resource_for_route = substr(
 						$requestURI,

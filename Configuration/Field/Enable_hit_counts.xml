@@ -1,1 +1,1 @@
-<field name="enable_hit_counts" type="boolean" null="0" default="0"/>
+<field name="enable_hit_counts" type="boolean" null="1"/>

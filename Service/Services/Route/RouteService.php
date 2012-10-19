@@ -70,7 +70,7 @@ Class RouteService
 		if (substr($url_request, 0, 1) == '/') {
 			$url_request = substr($url_request, 1);
 		}
-		Services::Registry()->set('Parameters', 'request_url_request', $url_request);
+		Services::Registry()->set('Parameters', 'request_url', $url_request);
 		Services::Registry()->set('Parameters', 'request_catalog_id', 0);
 
 		/** Overrides */
@@ -81,7 +81,7 @@ Class RouteService
 
 		if (Services::Registry()->get('Override', 'url_request', '') == '') {
 		} else {
-			Services::Registry()->set('Parameters', 'request_url_request',
+			Services::Registry()->set('Parameters', 'request_url',
 				Services::Registry()->get('Override', 'url_request'));
 		}
 
@@ -167,11 +167,11 @@ Class RouteService
 	protected function checkHome()
 	{
 
-		$path = Services::Registry()->get('Parameters', 'request_url_request');
+		$path = Services::Registry()->get('Parameters', 'request_url');
 		Services::Registry()->set('Parameters', 'home', 0);
 
 		if (strlen($path) == 0 || trim($path) == '') {
-			Services::Registry()->set('Parameters', 'request_url_query', '');
+			Services::Registry()->set('Parameters', 'request_url', '');
 			Services::Registry()->set('Parameters', 'request_catalog_id',
 				Services::Registry()->get('Configuration', 'application_home_catalog_id', 0));
 			Services::Registry()->set('Parameters', 'catalog_home', true);
@@ -195,13 +195,13 @@ Class RouteService
 		}
 
 		/** populate value used in query  */
-		Services::Registry()->set('Parameters', 'request_url_query', $path);
+		Services::Registry()->set('Parameters', 'request_url', $path);
 
 		/** home: duplicate content - redirect */
-		if (Services::Registry()->get('Parameters', 'request_url_query', '') == 'index.php'
-			|| Services::Registry()->get('Parameters', 'request_url_query', '') == 'index.php/'
-			|| Services::Registry()->get('Parameters', 'request_url_query', '') == 'index.php?'
-			|| Services::Registry()->get('Parameters', 'request_url_query', '') == '/index.php/'
+		if (Services::Registry()->get('Parameters', 'request_url', '') == 'index.php'
+			|| Services::Registry()->get('Parameters', 'request_url', '') == 'index.php/'
+			|| Services::Registry()->get('Parameters', 'request_url', '') == 'index.php?'
+			|| Services::Registry()->get('Parameters', 'request_url', '') == '/index.php/'
 		) {
 			Services::Redirect()->set('', 301);
 
@@ -209,7 +209,7 @@ Class RouteService
 		}
 
 		/** Home */
-		if (Services::Registry()->get('Parameters', 'request_url_query', '') == ''
+		if (Services::Registry()->get('Parameters', 'request_url', '') == ''
 			&& (int)Services::Registry()->get('Parameters', 'request_catalog_id', 0) == 0
 		) {
 
@@ -340,7 +340,7 @@ Class RouteService
 	 * @return bool
 	 * @since   1.0
 	 */
-	protected function getResourceParameters()
+	protected function getResourceExtensionParameters()
 	{
 		return true;
 	}
@@ -353,51 +353,52 @@ Class RouteService
 	 */
 	protected function getResourceSEF()
 	{
-		return true;
+		$path = Services::Registry()->get('Parameters', 'request_url');
 
-		//todo - extract non route  parameter and values (tag/1,2,3 and date/2012-12 and author/amystephen
-		$path = Services::Registry()->get('Parameters', 'request_url_query');
-
-		$testKey = '';
-		$testPath = '';
-		if (strrpos($path, '/') > 0) {
-			$testKey = substr($path, strrpos($path, '/') + 1, strlen($path) - strrpos($path, '/'));
-			$testPath = substr($path, 0, strrpos($path, '/'));
-		} else {
-			$testPath = $path;
+		$urlParts = explode('/', $path);
+		if (count($urlParts) == 0) {
+			return true;
 		}
 
-		$action = '';
+		$actions = Services::Registry()->get('urlActions');
+
 		$path = '';
-		$authorisation = '';
-		$controller = '';
+		$action = '';
+		$action_target = '';
 
-		$list = Services::Configuration()->getFile('Application', 'Actions');
+		foreach ($urlParts as $slug) {
 
-		if (count($list) > 0) {
-			foreach ($list->action as $item) {
-
-				$key = (string)$item['name'];
-
-				if ($key == $testKey) {
-					$action = $key;
-					$path = $testPath;
-					$authorisation = (string)$item['authorisation'];
-					$controller = (string)$item['controller'];
-					break;
+			if ($action == '') {
+				if (in_array($slug, $actions)) {
+					$action = $slug;
+				} else {
+					if (trim($path) == '') {
+					} else {
+						$path .= '/';
+					}
+					$path .= $slug;
 				}
+			} else {
+				$action_target = $slug;
+				break;
 			}
-		} else {
-			$path = $testPath . '/' . $testKey;
 		}
 
-		/** Update Path and store Non-routable parameters or defaults for Extension Use */
-		Services::Registry()->set('Parameters', 'request_url_query', $path);
-		Services::Registry()->set('Parameters', 'request_non_route_parameters', $action);
+		if ($action == '') {
+			$action = 'display';
+		} else {
+			Services::Registry()->set('Parameters', 'request_url', $path);
+		}
+
+//Services::Registry()->set('Parameters', 'request_non_route_parameters', $action);
 
 		Services::Registry()->set('Parameters', 'request_action', $action);
-		Services::Registry()->set('Parameters', 'request_action_authorisation', $authorisation);
-		Services::Registry()->set('Parameters', 'request_controller', $controller);
+		Services::Registry()->set('Parameters', 'request_action_target', $action_target);
+		Services::Registry()->set('Parameters', 'request_authorisation',
+			Services::Registry()->get('action_to_authorisation', $action));
+		Services::Registry()->set('Parameters', 'request_controller',
+			Services::Registry()->get('action_to_controller', $action));
+		Services::Registry()->sort('Parameters');
 
 		return true;
 	}

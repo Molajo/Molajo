@@ -202,7 +202,7 @@ class ReadModel extends Model
 					/** join THIS to that */
 					$to = $joinToItem;
 
-					if ($to == 'APPLICATION_ID') {
+					if (defined('APPLICATION_ID') && $to == 'APPLICATION_ID') {
 						$whereLeft = APPLICATION_ID;
 
 					} elseif ($to == 'SITE_ID') {
@@ -251,7 +251,7 @@ class ReadModel extends Model
 						$with = substr($with, 0, strlen($with) - 1);
 					}
 
-					if ($with == 'APPLICATION_ID') {
+					if (defined('APPLICATION_ID') && $with == 'APPLICATION_ID') {
 						$whereRight = APPLICATION_ID;
 
 					} elseif ($with == 'SITE_ID') {
@@ -415,12 +415,13 @@ class ReadModel extends Model
 	 * @param $fields
 	 * @param $retrieval_method
 	 * @param $query_results
+	 * @param $query_object
 	 *
 	 * @return mixed
 	 * @since   1.0
 	 */
 	public function addCustomFields(
-		$table_registry_name, $customFieldName, $fields, $retrieval_method, $query_results)
+		$table_registry_name, $customFieldName, $fields, $retrieval_method, $query_results, $query_object)
 	{
 
 		/** Prepare Registry Name */
@@ -490,7 +491,8 @@ class ReadModel extends Model
 			/** Filter Input and Save the Registry */
 			//$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
-			if ($retrieval_method == 1) {
+			if ($retrieval_method == 1
+				|| ($query_object == 'item' && strtolower($customFieldName) == 'parameters')) {
 				/** Option 1: all custom field pairs are saved in Registry */
 				Services::Registry()->set($useRegistryName, $name, $setValue);
 

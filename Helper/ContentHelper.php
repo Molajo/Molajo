@@ -97,6 +97,7 @@ Class ContentHelper
 	 */
 	public function getRouteItem($id, $model_type, $model_name)
 	{
+
 		$item = $this->get($id, $model_type, $model_name, 'item');
 
 		if (count($item) == 0) {
@@ -122,10 +123,6 @@ Class ContentHelper
 		$parameterNamespace = $item->table_registry_name . 'Parameters';
 
 		/** Theme, Page, Template and Wrap Views */
-		$editCheck = Services::Registry()->get('Parameters', 'catalog_url_sef_request');
-		if (substr($editCheck, strlen($editCheck) - 4, 4) == 'edit') {
-			Services::Registry()->set('Parameters', 'request_action', 'edit');
-		}
 		if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
 			$pageTypeNamespace = 'item';
 		} else {
@@ -232,7 +229,6 @@ Class ContentHelper
 	 */
 	public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $menuitem_type = '')
 	{
-
 		Services::Profiler()->set('ContentHelper->get '
 				. ' ID: ' . $id
 				. ' Model Type: ' . $model_type
@@ -296,6 +292,12 @@ Class ContentHelper
 			$this->processParameterSet($newParameters, $pageTypeNamespace);
 		}
 
+		/** 3. Enable Parameters (ex. enable_comments, etc.) */
+		$newParameters = Services::Registry()->get($parameterNamespace, 'enable*');
+		if (is_array($newParameters) && count($newParameters) > 0) {
+			$this->processParameterSet($newParameters, $pageTypeNamespace);
+		}
+
 		/** I. $resourceNamespace: For an article, would be ResourcesSystem */
 		if ($resourceNamespace == '') {
 		} else {
@@ -310,6 +312,12 @@ Class ContentHelper
 			if (is_array($newParameters) && count($newParameters) > 0) {
 				$this->processParameterSet($newParameters, $pageTypeNamespace);
 			}
+			/** 3. Enable Parameters (ex. enable_comments, etc.) */
+			$newParameters = Services::Registry()->get($resourceNamespace . 'Parameters', 'enable*');
+
+			if (is_array($newParameters) && count($newParameters) > 0) {
+				$this->processParameterSet($newParameters, $pageTypeNamespace);
+			}
 		}
 
 		/** 3. Application defaults */
@@ -318,9 +326,10 @@ Class ContentHelper
 			$this->processParameterSet($applicationDefaults, $pageTypeNamespace);
 		}
 
-		/** Copy remaining */
-		Services::Registry()->copy($parameterNamespace, 'Parameters');
-		Services::Registry()->copy($metadataNamespace, 'Metadata');
+		/** Merge in remaining */
+		Services::Registry()->merge($parameterNamespace, 'Parameters', true);
+
+		Services::Registry()->merge($metadataNamespace, 'Metadata');
 		if ($resourceNamespace == '') {
 		} else {
 			Services::Registry()->merge($resourceNamespace . 'Metadata', 'Metadata', true);
@@ -387,8 +396,6 @@ Class ContentHelper
 		}
 
 		Services::Registry()->sort('Parameters');
-
-		return true;
 	}
 
 	/**
@@ -496,18 +503,17 @@ Class ContentHelper
 	{
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
 		$m = new $controllerClass();
-
-		$m->set('id', (int)$id);
-		$m->set('process_plugins', 0);
-		$m->set('get_customfields', 1);
-
 		$results = $m->connect('System', 'Resources');
 		if ($results === false) {
 			return false;
 		}
 
-		$item = $m->getData('item');
+		$m->set('id', (int)$id);
+		$m->set('process_plugins', 0);
+		$m->set('get_customfields', 1);
+		$m->set('check_view_level_access', 0);
 
+		$item = $m->getData('item');
 		if (count($item) == 0) {
 			return array();
 		}
@@ -538,6 +544,7 @@ Class ContentHelper
 
 		$m->set('process_plugins', 0);
 		$m->set('get_customfields', 0);
+
 		$results = $m->connect('Table', 'Catalog');
 
 		$m->model->query->select('source_id');

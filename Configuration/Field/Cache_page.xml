@@ -1,1 +1,1 @@
-<field name="cache_page" type="boolean" null="0" default="0"/>
+<field name="cache_page" type="boolean" null="1"/>

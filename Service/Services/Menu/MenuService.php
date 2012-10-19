@@ -95,6 +95,7 @@ Class MenuService
 		}
 
 		rsort($select);
+		$breadcrumbs = array();
 		foreach ($select as $index) {
 				$breadcrumbs[] = $query_results[$index];
 		}

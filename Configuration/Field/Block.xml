@@ -1,1 +1,1 @@
-<field name="block" type="boolean" null="0" default="0"/>
+<field name="block" type="boolean" null="1"/>

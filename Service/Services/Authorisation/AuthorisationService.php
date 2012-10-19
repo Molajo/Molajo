@@ -76,10 +76,15 @@ Class AuthorisationService
 			//error
 		}
 
+		$tempActions = array();
 		foreach ($actions->action as $t) {
+			$tempActions[] = (string)$t['name'];
 			Services::Registry()->set('action_to_authorisation', (string)$t['name'], (string)$t['authorisation']);
 			Services::Registry()->set('action_to_controller', (string)$t['name'], (string)$t['controller']);
 		}
+
+		sort($tempActions);
+		Services::Registry()->loadArray('urlActions', $tempActions);
 
 		$items = Services::Registry()->get('Actions');
 		foreach ($items as $title => $id) {

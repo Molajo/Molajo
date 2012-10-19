@@ -27,38 +27,12 @@ class EditPlugin extends Plugin
 	 */
 	public function onBeforeParse()
 	{
-		if (APPLICATION_ID == 2) {
-		} else {
-			return true;
-		}
-
 		if (strtolower($this->get('template_view_path_node')) == 'edit') {
 		} else {
 			return true;
 		}
 
-		/** Get Actual Data for matching to Fields */
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$connect = new $controllerClass();
-		$results = $connect->connect($this->get('model_type'), $this->get('model_name'));
-		if ($results === false) {
-			return false;
-		}
-
-		$connect->set('get_customfields', 2);
-		$connect->set('use_special_joins', 1);
-		$connect->set('process_plugins', 1);
-		$primary_prefix = $connect->get('primary_prefix');
-		$primary_key = $connect->get('primary_key');
-		$id = $this->get('content_id');
-
-		$connect->model->query->where($connect->model->db->qn($primary_prefix)
-				. '.' . $connect->model->db->qn($primary_key) . ' = ' . (int) $id);
-
-		$item = $connect->getData('item');
-
-		$this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
-			. ucfirst(strtolower($this->get('model_type')));
+		$item = Services::Registry()->get('Plugindata', 'PrimaryRequestQueryResults');
 
 		/** Get configuration menuitem settings for this resource */
 		$menuitem = Helpers::Content()->getResourceMenuitemParameters(
@@ -67,12 +41,19 @@ class EditPlugin extends Plugin
 		);
 
 		/** Tab Group Class */
-		$tab_class = Services::Registry()->get('ConfigurationMenuitemParameters', 'configuration_tab_class');
+		//$tab_class = Services::Registry()->get('ConfigurationMenuitemParameters', 'configuration_tab_class');
+		$tab_class = 'mobile';
 
 		/** Create Tabs */
 		$namespace = 'Edit';
 
-		$tab_array = Services::Registry()->get('ConfigurationMenuitemParameters', 'editor_tab_array');
+		//$tab_array = Services::Registry()->get('ConfigurationMenuitemParameters', 'editor_tab_array');
+		$tab_array = '{{Main,main}}{{Publish,publish}}{{Permissions,permissions}}{{SEO,seo}}';
+
+		//editor_tab_main {{Main,editor_toolbar*,editor_main*,editor_secondary*}}
+		//editor_tab_publish {{Publish,editor_publish*}}
+		//editor_tab_permissions {{Permissions,editor_permission*}}
+		//editor_tab_seo {{SEO,editor_seo*}}
 
 		$tabs = Services::Form()->setTabArray(
 			$this->get('model_type'),

@@ -141,6 +141,7 @@ class DateformatsPlugin extends Plugin
 						$this->saveField(null, $name . '_day_number', null);
 						$this->saveField(null, $name . '_day_name_abbr', null);
 						$this->saveField(null, $name . '_day_name', null);
+
 					} else {
 
 						/** Creates the new 'normal' or special field and populates the value */

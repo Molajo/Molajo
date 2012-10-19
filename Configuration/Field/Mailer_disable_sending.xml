@@ -1,1 +1,1 @@
-<field name="mailer_disable_sending" type="boolean" null="0" default="0"/>
+<field name="mailer_disable_sending" type="boolean" null="1"/>

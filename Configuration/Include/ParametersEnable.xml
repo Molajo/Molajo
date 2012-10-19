@@ -4,6 +4,7 @@
 <include field="enable_maximum_version_count"/>
 <include field="enable_hit_counts"/>
 <include field="enable_comments"/>
+<include field="enable_comment_form_open_days"/>
 <include field="enable_spam_protection"/>
 <include field="enable_ratings"/>
 <include field="enable_notifications"/>

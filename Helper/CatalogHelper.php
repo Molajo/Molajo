@@ -55,7 +55,7 @@ Class CatalogHelper
 
 		$item = $this->get(
 			Services::Registry()->get('Parameters', 'request_catalog_id'),
-			Services::Registry()->get('Parameters', 'request_url_query')
+			Services::Registry()->get('Parameters', 'request_url')
 		);
 
 		/** 404: routeRequest handles redirecting to error page */
@@ -63,7 +63,7 @@ Class CatalogHelper
 			Services::Registry()->set('Parameters', 'status_found', false);
 			Services::Profiler()->set('CatalogHelper->getRouteCatalog 404 - Not Found '
 					. ' Requested Catalog ID: ' . Services::Registry()->get('Parameters', 'request_catalog_id')
-					. ' Requested URL Query: ' . Services::Registry()->get('Parameters', 'request_url_query'),
+					. ' Requested URL Query: ' . Services::Registry()->get('Parameters', 'request_url'),
 				LOG_OUTPUT_ROUTING, 0);
 
 			return false;

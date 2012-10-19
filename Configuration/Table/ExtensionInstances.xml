@@ -58,8 +58,8 @@
             <join model="Catalog"
                   alias="catalog"
                   select="application_id,id,sef_request,primary_category_id,view_group_id"
-                  jointo="application_id,source_id,catalog_type_id,redirect_to_id,enabled"
-                  joinwith="APPLICATION_ID,id,catalog_type_id,0,1"/>
+                  jointo="application_id,source_id,catalog_type_id,redirect_to_id"
+                  joinwith="APPLICATION_ID,id,catalog_type_id,0"/>
             <join model="Extensions"
                   alias="extensions"
                   select="id,name"

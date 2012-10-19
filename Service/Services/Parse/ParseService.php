@@ -586,7 +586,15 @@ Class ParseService
 						VERBOSE
 					);
 
+//echo '<pre>';
+//var_dump($attributes);
+//echo '</pre>';
+
 					$output = trim($rc->process($attributes));
+
+//echo '<br />';
+//echo $output;
+//echo '<br />';
 
 					Services::Profiler()->set('ParseService->callIncluder rendered output ' . $output, LOG_OUTPUT_RENDERING, VERBOSE);
 

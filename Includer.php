@@ -75,6 +75,8 @@ class Includer
 
 		Services::Registry()->set('Parameters', 'includer_name', $this->name);
 		Services::Registry()->set('Parameters', 'includer_type', $this->type);
+		Services::Registry()->copy('RouteParameters', 'Parameters', 'Criteria*');
+		Services::Registry()->copy('RouteParameters', 'Parameters', 'Enable*');
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Request*');
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Theme*');
 		Services::Registry()->copy('RouteParameters', 'Parameters', 'Page*');
@@ -146,7 +148,6 @@ class Includer
 			return;
 		}
 
-
 		//todo filter input appropriately
 		//todo case statements
 		foreach ($this->attributes as $name => $value) {
@@ -196,10 +197,11 @@ class Includer
 					Services::Registry()->set('Parameters', 'template_view_title', $value);
 				}
 
-			} elseif ($name == 'template_view_css_id' || $name == 'template_css_id' || $name == 'template_id') {
+			} elseif ($name == 'template_view_css_id' || $name == 'template_css_id' || $name == 'template_id' || $name == 'id') {
 				Services::Registry()->set('Parameters', 'template_view_css_id', $value);
 
-			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class' || $name == 'template_class') {
+			} elseif ($name == 'template_view_css_class' || $name == 'template_css_class' || $name == 'template_class'
+				|| $name == 'class') {
 				Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
 				/** Wrap */
@@ -396,7 +398,7 @@ class Includer
 		Services::Registry()->delete('Parameters', 'item*');
 		Services::Registry()->delete('Parameters', 'list*');
 		Services::Registry()->delete('Parameters', 'form*');
-		Services::Registry()->delete('Parameters', 'menuitem');
+		Services::Registry()->delete('Parameters', 'menuitem*');
 
 		Services::Registry()->sort('Parameters');
 
@@ -560,7 +562,7 @@ class Includer
 		$message .= ob_get_contents();
 		ob_end_clean();
 
-		//echo $message;
+//		echo $message;
 
 		Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
 
