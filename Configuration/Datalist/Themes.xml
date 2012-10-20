@@ -11,7 +11,6 @@
         check_view_level_access="0"
         process_plugins="0"
         catalog_type_id="7000"
-        extension_instance_id="7000"
         published_status="1"
         data_source="JDatabase">
     <table>

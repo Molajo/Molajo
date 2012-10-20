@@ -562,7 +562,9 @@ class Includer
 		$message .= ob_get_contents();
 		ob_end_clean();
 
-//		echo $message;
+//		if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'adminconfigtab') {
+//			echo $message;
+//		}
 
 		Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
 

@@ -47,11 +47,12 @@ class Plugin
 
 	/**
 	 * Parameters set by the Includer and used in the MVC to generate include output
+	 * -> can be sent into Services classes
 	 *
 	 * @var    object
 	 * @since  1.0
 	 */
-	protected $parameters = array();
+	public $parameters = array();
 
 	/**
 	 * Query Object from Model

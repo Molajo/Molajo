@@ -52,6 +52,7 @@ Class FormService
 	 */
 	public function getCustomfieldForm($table_registry_name)
 	{
+
 		$fieldArray = array();
 
 		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
@@ -102,6 +103,14 @@ Class FormService
 								$view_name, $default_tab_view_name, $tab_class,
 								$extension_instance_id, $item)
 	{
+//		echo $model_type. ' ' .  $model_name. ' ' .  $namespace. ' ' .
+//								$tab_array. ' ' .  $tab_prefix. ' ' .
+//								$view_name. ' ' .  $default_tab_view_name. ' ' .  $tab_class. ' ' .
+//								$extension_instance_id;
+//		echo '<pre>';
+//		var_dump($item);
+//		echo '</pre>';
+
 		$tabs = array();
 		$configurationArray = array();
 		$temp = explode('}}', $tab_array);
@@ -220,22 +229,22 @@ Class FormService
 										  $model_type, $model_name, $view_name,
 										  $extension_instance_id, $item)
 	{
+/**
+		echo 'Namespace: ' . $namespace. ' Tab Prefix: ' .  $tab_prefix. ' Tab Link: ' .  $tab_link. ' Tab Title: ' .
+			$tabTitle. ' Tab Description: ' .  $translateTabDesc. ' Model Type: ' .
+			$model_type. ' Model Name: ' .  $model_name. ' View Name: ' .  $view_name. ' Extension Instance ID: ' .
+			$extension_instance_id;
+
+		echo '<pre>';
+		var_dump($item);
+		echo '</pre>';
+*/
 		$configurationArray = array();
 
 		if ($tab_prefix === null) {
 			$configuration = '{{' . $tab_link . ',' . strtolower($tab_link) . '}}';
 		} else {
-			if ($namespace == 'Application') {
-				$configuration = Services::Registry()->get(
-					'ApplicationMenuitemParameters',
-					$tab_prefix . strtolower($tab_link)
-				);
-			} else {
-				$configuration = Services::Registry()->get(
-					'ConfigurationMenuitemParameters',
-					$tab_prefix . strtolower($tab_link)
-				);
-			}
+			$configuration = Services::Registry()->get('Parameters', $tab_prefix . strtolower($tab_link));
 		}
 
 		$temp = explode('}}', $configuration);
@@ -317,6 +326,11 @@ Class FormService
 			$fieldSets = array_merge((array)$fieldSets, (array)$temp);
 		}
 
+//		echo '<br />' . 'Fieldset ' . $view_name . $namespace . strtolower($tab_link) . '<br />';
+//		echo '<pre>';
+//		var_dump($fieldSets);
+//		echo '</pre>';
+
 		Services::Registry()->set('Plugindata', $view_name . $namespace . strtolower($tab_link), $fieldSets);
 
 		return true;
@@ -344,6 +358,22 @@ Class FormService
 									 $tabFieldsetTitle, $translateFieldsetDesc,
 									 $model_type, $model_name, $extension_instance_id)
 	{
+
+//		echo 'Namespace: ' . $namespace. ' Tab Link: ' .  $tab_link . '<br />';
+
+//		echo '<pre>';
+//		var_dump($options);
+//		echo '</pre>';
+
+//		echo ' Tab Title: ' .
+//		$tabTitle. ' Tab Description: ' .  $translateTabDesc.
+//			'Tabfieldset Title ' . $tabFieldsetTitle .
+//			'Tabfieldset Description ' . $translateFieldsetDesc,
+//			' Model Type: ' .
+//		$model_type. ' Model Name: ' .  $model_name. ' Extension Instance ID: ' .
+//		$extension_instance_id;
+
+
 		$fieldValues = array();
 		$build_results = array();
 
@@ -590,7 +620,9 @@ Class FormService
 	{
 		if (Services::Registry()->exists('GridMenuitem') === true) {
 		} else {
+
 			$item = Helpers::Content()->getResourceMenuitemParameters('Grid', $extension_instance_id);
+
 			if ($item === false || count($item) == 0) {
 				return false;
 			}
