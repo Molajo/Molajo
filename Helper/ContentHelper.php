@@ -187,6 +187,7 @@ Class ContentHelper
 		$registry = Services::Registry()->get('Parameters', 'catalog_menuitem_type')
 				. 'Menuitem'
 				. 'Parameters';
+
 		Services::Registry()->set('Parameters', 'extension_instance_id',
 			Services::Registry()->get($registry, 'criteria_extension_instance_id'));
 		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 12000);
@@ -200,7 +201,8 @@ Class ContentHelper
 		Services::Registry()->set('Parameters', 'criteria_extension_instance_id',
 			(int) Services::Registry()->get($registry, 'criteria_extension_instance_id'));
 
-
+		Services::Registry()->copy($item->table_registry_name . 'Parameters', 'Parameters');
+		Services::Registry()->copy($item->table_registry_name . 'Metadata', 'Metadata');
 		$this->setParameters('menuitem',
 			$item->table_registry_name . 'Parameters',
 			$item->table_registry_name . 'Metadata'
@@ -276,6 +278,7 @@ Class ContentHelper
 	public function setParameters($pageTypeNamespace, $parameterNamespace,
 								  $metadataNamespace, $resourceNamespace = '')
 	{
+
 		Services::Registry()->set('Parameters', 'page_type', $pageTypeNamespace);
 
 		/** I. $parameterNamespace: For an article, would be ArticlesResourceParameters */
@@ -394,8 +397,9 @@ Class ContentHelper
 				Services::Registry()->set('Parameters', $key, $value);
 			}
 		}
-
 		Services::Registry()->sort('Parameters');
+
+		return true;
 	}
 
 	/**
@@ -535,7 +539,7 @@ Class ContentHelper
 	 * @return  array  An object containing an array of basic resource info, parameters in registry
 	 * @since   1.0
 	 */
-	public function getResourceMenuitemParameters($menuitem_type = 'Grid', $extension_instance_id)
+	public function getResourceMenuitemParameters($menuitem_type, $extension_instance_id)
 	{
 		$menuitem_type = ucfirst(strtolower($menuitem_type));
 
@@ -543,39 +547,23 @@ Class ContentHelper
 		$m = new $controllerClass();
 
 		$m->set('process_plugins', 0);
-		$m->set('get_customfields', 0);
+		$m->set('get_customfields', 1);
 
-		$results = $m->connect('Table', 'Catalog');
+		$m->connect('Menuitem', $menuitem_type);
 
-		$m->model->query->select('source_id');
-		$m->model->query->where('menuitem_type = ' . $m->model->db->q($menuitem_type));
+		$m->model->query->where('a.menuitem_type = ' . $m->model->db->q($menuitem_type));
+		$m->model->query->where('a.catalog_type_id = ' . (int) CATALOG_TYPE_MENUITEM);
+		$value = '"criteria_extension_instance_id":"' . $extension_instance_id . '"';
+		$m->model->query->where('a.parameters LIKE ' . $m->model->db->q('%' . $value . '%'));
 
-		$menuitems = $m->getData('list');
-		if (count($menuitems) == 0) {
-			return array();
+		$menuitem = $m->getData('item');
+
+		if ($menuitem === false) {
+			return false;
 		}
 
-		foreach ($menuitems as $id) {
+		$menuitem->table_registry = $menuitem_type . 'Menuitem';
 
-			$menu = new $controllerClass();
-			$results = $menu->connect('Menuitem', $menuitem_type);
-
-			$menu->set('process_plugins', 0);
-			$menu->set('get_customfields', 1);
-			$menu->model->query->where('a.id = ' . $id->source_id);
-
-			$item = $menu->getData('item');
-
-			if (Services::Registry()->get($menuitem_type . 'MenuitemParameters', 'criteria_extension_instance_id')
-				== $extension_instance_id) {
-				$item->table_registry = $menuitem_type . 'Menuitem';
-				unset($menu);
-				return $item;
-				break;
-			}
-			unset($menu);
-		}
-
-		return false;
+		return $menuitem;
 	}
 }

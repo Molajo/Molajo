@@ -1,15 +1,16 @@
 {
-    "1":{},
-    "2":{
-
-        "criteria_title":"Financials",
+        "criteria_title":"Articles",
         "criteria_display_view_on_no_results":"0",
         "criteria_snippet_length":"150",
         "criteria_status":"1,2",
-        "criteria_catalog_type_id":"94",
-        "criteria_extension_instance_id":"94",
+        "criteria_catalog_type_id":"16000",
+        "criteria_extension_instance_id":"16000",
 
         "menuitem_type":"Configuration",
+
+        "menuitem_source_id":"",
+        "menuitem_source_catalog_type_id":"16000",
+        "menuitem_extension_instance_id":"16000",
 
         "menuitem_theme_id":"9020",
         "menuitem_page_view_id":"205",
@@ -25,14 +26,13 @@
         "menuitem_wrap_view_role":"",
         "menuitem_wrap_view_property":"",
 
-        "menuitem_model_name":"Financials",
+        "menuitem_model_name":"Articles",
         "menuitem_model_type":"Resource",
         "menuitem_model_query_object":"item",
         "menuitem_model_parameter":"",
         "menuitem_model_offset":"0",
-        "menuitem_model_count":"10",
+        "menuitem_model_count":"20",
         "menuitem_model_use_pagination":"1"
-    }
 }
 
 {

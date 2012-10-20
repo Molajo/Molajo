@@ -1,16 +1,36 @@
 {
-    "1":{
-        "menuitem_type":"Link",
+    "criteria_title":"Articles",
+    "criteria_display_view_on_no_results":"0",
+    "criteria_snippet_length":"150",
+    "criteria_status":"1,2",
+    "criteria_catalog_type_id":"16000",
+    "criteria_extension_instance_id":"16000",
 
-        "criteria_title":"Site Map",
-        "criteria_display_view_on_no_results":"1",
-        "criteria_snippet_length":"150",
-        "criteria_status":"1,2",
-        "criteria_catalog_type_id":"20000",
-        "criteria_extension_instance_id":"10",
+    "menuitem_type":"Configuration",
 
-        "menuitem_source_id":"1115",
-        "menuitem_source_catalog_type_id":"20000",
-        "menuitem_extension_instance_id":"10"
-    }
+    "menuitem_source_id":"",
+    "menuitem_source_catalog_type_id":"16000",
+    "menuitem_extension_instance_id":"16000",
+
+    "menuitem_theme_id":"7020",
+    "menuitem_page_view_id":"8020",
+    "menuitem_page_view_css_id":"",
+    "menuitem_page_view_css_class":"",
+    "menuitem_template_view_id":"9025",
+    "menuitem_template_view_css_id":"",
+    "menuitem_template_view_css_class":"",
+
+    "menuitem_wrap_view_id":"10120",
+    "menuitem_wrap_view_css_id":"",
+    "menuitem_wrap_view_css_class":"",
+    "menuitem_wrap_view_role":"",
+    "menuitem_wrap_view_property":"",
+
+    "menuitem_model_name":"Articles",
+    "menuitem_model_type":"Resource",
+    "menuitem_model_query_object":"item",
+    "menuitem_model_parameter":"",
+    "menuitem_model_offset":"0",
+    "menuitem_model_count":"20",
+    "menuitem_model_use_pagination":"1"
 }

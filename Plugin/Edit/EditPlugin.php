@@ -32,28 +32,21 @@ class EditPlugin extends Plugin
 			return true;
 		}
 
+		/** Item Data */
 		$item = Services::Registry()->get('Plugindata', 'PrimaryRequestQueryResults');
 
-		/** Get configuration menuitem settings for this resource */
-		$menuitem = Helpers::Content()->getResourceMenuitemParameters(
-			'Configuration',
-			$this->get('criteria_extension_instance_id')
-		);
+		/** Resource Configuration */
+		Helpers::Content()->getResourceMenuitemParameters('Configuration', $this->get('criteria_extension_instance_id'));
 
 		/** Tab Group Class */
-		//$tab_class = Services::Registry()->get('ConfigurationMenuitemParameters', 'configuration_tab_class');
-		$tab_class = 'mobile';
+		$tab_class = Services::Registry()->get('ConfigurationMenuitemParameters', 'configuration_tab_class');
+		$item[0]->tab_class = $tab_class;
 
-		/** Create Tabs */
+		/** Namespace */
 		$namespace = 'Edit';
 
-		//$tab_array = Services::Registry()->get('ConfigurationMenuitemParameters', 'editor_tab_array');
-		$tab_array = '{{Main,main}}{{Publish,publish}}{{Permissions,permissions}}{{SEO,seo}}';
-
-		//editor_tab_main {{Main,editor_toolbar*,editor_main*,editor_secondary*}}
-		//editor_tab_publish {{Publish,editor_publish*}}
-		//editor_tab_permissions {{Permissions,editor_permission*}}
-		//editor_tab_seo {{SEO,editor_seo*}}
+		$tab_array = Services::Registry()->get('ConfigurationMenuitemParameters', 'editor_tab_array');
+		$item[0]->tab_array = $tab_array;
 
 		$tabs = Services::Form()->setTabArray(
 			$this->get('model_type'),
@@ -78,6 +71,7 @@ class EditPlugin extends Plugin
 
 		Services::Registry()->set('Plugindata', 'Edit', $tabs);
 
+		Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $item);
 
 		/**
 		echo '<pre>';
