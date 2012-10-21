@@ -1,6 +1,5 @@
 <field name="menuitem_model_count"
        type="integer"
-       null="0"
-       default="0"
+       null="1"
         />
 

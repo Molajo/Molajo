@@ -31,7 +31,6 @@ class AuthorPlugin extends Plugin
 	 */
 	public function onAfterRead()
 	{
-
 		/** Retrieve created_by field definition */
 		$field = $this->getField('created_by');
 		if ($field === false) {
@@ -94,6 +93,7 @@ class AuthorPlugin extends Plugin
 
 				$row->$new_field_name = $value;
 			}
+
 
 			$authorArray[] = $row;
 		}

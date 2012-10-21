@@ -34,17 +34,6 @@ class FormbeginPlugin extends Plugin
 
 		$pageUrl = Services::Registry()->get('Plugindata', 'page_url');
 
-		$id = 'id';
-		$class = 'custom';
-		$name = 'name';
-		$method = 'post';
-
-		$formActionURL = ' action="' . $pageUrl . '"';
-		$formId = ' id="' . $id . '"';
-		$formClass = ' class="' . $class . '"';
-		$formName = ' name="' . $name . '"';
-		$formMethod = ' method="' . $method . '"';
-
 		$form_action = $this->get('form_action', '');
 		if ($form_action == '' || $form_action === null) {
 			$form_action = ' action="' . Services::Registry()->get('Plugindata', 'page_url') . '"';

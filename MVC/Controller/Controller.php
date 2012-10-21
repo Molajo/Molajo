@@ -196,7 +196,7 @@ class Controller
 			$this->set('process_template_plugins', 0);
 			$this->set('model_offset', 0);
 			$this->set('use_pagination', 0);
-			$this->set('model_count', 5);
+			$this->set('model_count', 10);
 			$this->set('registry_entry', '');
 
 		} else {
@@ -284,7 +284,7 @@ class Controller
 			$this->set('use_pagination',
 				Services::Registry()->get($this->table_registry_name, 'use_pagination', 0));
 			$this->set('model_count',
-				Services::Registry()->get($this->table_registry_name, 'model_count', 5));
+				Services::Registry()->get($this->table_registry_name, 'model_count', 10));
 		}
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
@@ -601,7 +601,7 @@ class Controller
 	protected function runStandardQuery($query_object = 'list')
 	{
 		$this->model_offset = $this->get('model_offset', 0);
-		$this->model_count = $this->get('model_count', 20);
+		$this->model_count = $this->get('model_count', 10);
 		$this->use_pagination = $this->get('use_pagination', 1);
 
 		if ($this->model_offset == 0 && $this->model_count == 0) {
@@ -617,7 +617,7 @@ class Controller
 
 			} else {
 				$this->model_offset = 0;
-				$this->model_count = 20;
+				$this->model_count = 10;
 				$this->use_pagination = 1;
 			}
 		}

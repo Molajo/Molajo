@@ -217,6 +217,10 @@ class CommentPlugin extends Plugin
 			$row->closed = 0;
 		}
 
+		$row->parent_model_type = $parent_model_type;
+		$row->parent_model_name = $parent_model_name;
+		$row->parent_source_id = $parent_source_id;
+
 		$results[] = $row;
 		$this->data = $results;
 

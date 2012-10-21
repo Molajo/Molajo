@@ -47,7 +47,7 @@ class PaginationPlugin extends Plugin
 		/** model_count: max number of rows to display per page */
 		if ((int)$this->get('model_count') > 0) {
 		} else {
-			$this->set('model_count', 20);
+			$this->set('model_count', 10);
 		}
 
 		/** model_offset: offset of 0 means skip 0 rows, then start with row 1 */
