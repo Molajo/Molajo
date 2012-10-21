@@ -87,6 +87,7 @@ class Application2Plugin extends Plugin
 	protected function setBreadcrumbs($current_menuitem_id)
 	{
 		$bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id);
+
 		Services::Registry()->set('Plugindata', 'Breadcrumbs', $bread_crumbs);
 
 		return true;
@@ -106,10 +107,11 @@ class Application2Plugin extends Plugin
 			$query_results = array();
 		} else {
 			$menu_id = $bread_crumbs[0]->extension_id;
+
 			$query_results = Services::Menu()->get($menu_id, $current_menu_item, $bread_crumbs);
 		}
 
-		Services::Registry()->set('Plugindata', 'Applicationmenu', $query_results);
+		Services::Registry()->set('Plugindata', 'Adminapplicationmenu', $query_results);
 
 		return true;
 	}

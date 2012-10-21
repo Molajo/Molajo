@@ -562,7 +562,7 @@ class Includer
 		$message .= ob_get_contents();
 		ob_end_clean();
 
-//		if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'adminconfigtab') {
+//		if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'uinavigationadministratormolajito') {
 //			echo $message;
 //		}
 
