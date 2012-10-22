@@ -82,6 +82,12 @@
                   joinwith="catalog_type_id"/>
         </joins>
 
+        <criteria>
+            <where name="a.catalog_type_id"
+                   connector="!="
+                   name2="a.id"/>
+        </criteria>
+
         <foreignkeys>
             <foreignkey name="extension_id" source_id="id" source_model="Extensions" required="1"/>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>

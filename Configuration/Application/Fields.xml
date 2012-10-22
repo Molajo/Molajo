@@ -135,6 +135,7 @@
         <criteria>name</criteria>
         <criteria>connector</criteria>
         <criteria>value</criteria>
+        <criteria>name2</criteria>
     </criterion>
     <children>
         <child>name</child>

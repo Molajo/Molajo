@@ -66,6 +66,7 @@
             <plugin name="Snippet"/>
             <plugin name="Readmore"/>
             <plugin name="Dateformats"/>
+            <plugin name="Itemurl"/>
         </plugins>
     </table>
     <customfields>

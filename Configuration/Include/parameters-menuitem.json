@@ -1,16 +1,16 @@
 {
-    "criteria_title":"Articles",
+    "criteria_title":"Contacts",
     "criteria_display_view_on_no_results":"0",
     "criteria_snippet_length":"150",
     "criteria_status":"1,2",
-    "criteria_catalog_type_id":"16000",
-    "criteria_extension_instance_id":"16000",
+    "criteria_catalog_type_id":"18000",
+    "criteria_extension_instance_id":"18000",
 
     "menuitem_type":"Configuration",
 
     "menuitem_source_id":"",
-    "menuitem_source_catalog_type_id":"16000",
-    "menuitem_extension_instance_id":"16000",
+    "menuitem_source_catalog_type_id":"18000",
+    "menuitem_extension_instance_id":"18000",
 
     "menuitem_theme_id":"7020",
     "menuitem_page_view_id":"8020",
@@ -26,7 +26,7 @@
     "menuitem_wrap_view_role":"",
     "menuitem_wrap_view_property":"",
 
-    "menuitem_model_name":"Articles",
+    "menuitem_model_name":"Contacts",
     "menuitem_model_type":"Resource",
     "menuitem_model_query_object":"item",
     "menuitem_model_parameter":"",

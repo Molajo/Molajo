@@ -42,6 +42,10 @@ class ItemurlPlugin extends Plugin
 		if (isset($this->data->catalog_id)) {
 			$newFieldValue = Services::Url()->getUrl($this->data->catalog_id);
 			$this->saveField(null, 'catalog_id_url', $newFieldValue);
+
+		} elseif (isset($this->data->sef_request)) {
+			$newFieldValue = Services::Url()->getApplicationURL($this->data->sef_request);
+			$this->saveField(null, 'catalog_id_url', $newFieldValue);
 		}
 
 		$fields = $this->retrieveFieldsByType('url');
@@ -78,31 +82,6 @@ class ItemurlPlugin extends Plugin
 				}
 			}
 		}
-
-		$status = $this->get('status');
-		if ($status === null || $status == '') {
-			return true;
-		}
-
-		if ($status == '2') {
-			$status_name = Services::Language()->translate('Archived');
-		} elseif ($status == '1') {
-			$status_name = Services::Language()->translate('Published');
-		} elseif ($status == '0') {
-			$status_name = Services::Language()->translate('Unpublished');
-		} elseif ($status == '-1') {
-			$status_name = Services::Language()->translate('Trashed');
-		} elseif ($status == '-2') {
-			$status_name = Services::Language()->translate('Spammed');
-		} elseif ($status == '-5') {
-			$status_name = Services::Language()->translate('Draft');
-		} elseif ($status == '-10') {
-			$status_name = Services::Language()->translate('Version');
-		} else {
-			return true;
-		}
-
-		$this->saveField(null, 'status_name', $status_name);
 
 		return true;
 	}

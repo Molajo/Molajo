@@ -95,10 +95,17 @@ class ReadModel extends Model
 
 
 		if (is_array($criteria_array) && count($criteria_array) > 0) {
-			foreach ($criteria_array as $item) {
-				$this->query->where($this->db->qn($item['name'])
-					. ' ' . $item['connector'] . ' '
-					. $this->db->q($item['value']));
+			foreach ($criteria_array as $item)  {
+				if (isset($item['value'])) {
+					$this->query->where($this->db->qn($item['name'])
+						. ' ' . $item['connector'] . ' '
+						. $this->db->q($item['value']));
+
+				} elseif (isset($item['name2'])) {
+					$this->query->where($this->db->qn($item['name'])
+						. ' ' . $item['connector'] . ' '
+						. $this->db->qn($item['name2']));
+				}
 			}
 		}
 
