@@ -514,7 +514,7 @@ Class ExtensionHelper
                 return CATALOG_TYPE_RESOURCE;
 
             } elseif ($catalog_type == 'Menuitem') {
-                return CATALOG_TYPE_MENU;
+                return CATALOG_TYPE_MENUITEM;
 
             } elseif ($catalog_type == 'Language') {
                 return CATALOG_TYPE_LANGUAGE;
@@ -540,7 +540,7 @@ Class ExtensionHelper
             if ($catalog_type_id == CATALOG_TYPE_RESOURCE) {
                 return 'Resource';
 
-            } elseif ($catalog_type_id == CATALOG_TYPE_MENU) {
+            } elseif ($catalog_type_id == CATALOG_TYPE_MENUITEM) {
                 return 'Menuitem';
 
             } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGE) {

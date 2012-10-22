@@ -37,8 +37,8 @@ class DetailitemPlugin extends Plugin
             }
         }
 
-        if (Services::Registry()->exists('Parameters', 'content_id')) {
-            if ((int) Services::Registry()->get('Parameters', 'content_id') == 0) {
+        if (Services::Registry()->exists('Parameters', 'criteria_source_id')) {
+            if ((int) Services::Registry()->get('Parameters', 'criteria_source_id') == 0) {
                 return true; // request for list;
             } else {
                 // request for item is handled by this method

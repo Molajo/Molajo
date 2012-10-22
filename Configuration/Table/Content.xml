@@ -56,7 +56,7 @@
         <joins>
             <join model="Catalog"
                   alias="catalog"
-                  select="sef_request,primary_category_id,view_group_id"
+                  select="sef_request,primary_category_id,view_group_id,catalog_type_id,extension_instance_id"
                   jointo="application_id,source_id,catalog_type_id,redirect_to_id,enabled"
                   joinwith="APPLICATION_ID,id,catalog_type_id,0,1"/>
             <join model="ExtensionInstances"

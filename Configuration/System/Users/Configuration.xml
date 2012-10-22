@@ -19,7 +19,7 @@
             <joins>
                 <join model="Catalog"
                       alias="catalog"
-                      select="catalog_type_id,id,source_id,sef_request,view_group_id,redirect_to_id"
+                      select="id,catalog_type_id,source_id,sef_request,view_group_id,redirect_to_id,extension_instance_id"
                       jointo="source_id,application_id,catalog_type_id"
                       joinwith="id,APPLICATION_ID,catalog_type_id"/>
             </joins>

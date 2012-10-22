@@ -38,12 +38,12 @@ class DisplayController extends Controller
         } else {
             $this->connect($this->get('model_type'), $this->get('model_name'));
 
-            if ((int) $this->get('content_id') === 0) {
+            if ((int) $this->get('criteria_source_id') === 0) {
 
             } elseif (strtolower($this->get('model_type', '')) == 'dbo') {
 
             } else {
-                $this->set('id', $this->get('content_id'));
+                $this->set('id', $this->get('criteria_source_id'));
                 $this->set('model_query_object', 'item');
             }
 

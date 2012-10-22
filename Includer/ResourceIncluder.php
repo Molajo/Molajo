@@ -131,7 +131,7 @@ class ResourceIncluder extends Includer
 
         /** Source */
         $this->loadMediaPlus('/source/' . Services::Registry()->get('Parameters', 'extension_title')
-                . Services::Registry()->get('Parameters', 'content_id'),
+                . Services::Registry()->get('Parameters', 'criteria_source_id'),
             Services::Registry()->get('Parameters', 'asset_priority_item', 900));
 
         /** Resource */

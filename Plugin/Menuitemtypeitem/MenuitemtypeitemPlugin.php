@@ -46,7 +46,7 @@ class MenuitemtypeitemPlugin extends Plugin
         $connect->set('process_plugins', 1);
         $primary_prefix = $connect->get('primary_prefix');
         $primary_key = $connect->get('primary_key');
-        $id = $this->get('content_id');
+        $id = $this->get('criteria_source_id');
 
         $connect->model->query->where($connect->model->db->qn($primary_prefix)
                 . '.' . $connect->model->db->qn($primary_key) . ' = ' . (int) $id);

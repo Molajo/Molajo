@@ -106,21 +106,22 @@ Class ContentHelper
 
         Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', array($item));
 
-        Services::Registry()->set('Parameters', 'content_id', (int) $item->id);
-        Services::Registry()->set('Parameters', 'content_title', $item->title);
-        Services::Registry()->set('Parameters', 'content_translation_of_id', (int) $item->translation_of_id);
-        Services::Registry()->set('Parameters', 'content_language', $item->language);
-        Services::Registry()->set('Parameters', 'content_catalog_type_id', (int) $item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'content_modified_datetime', $item->modified_datetime);
+		if (isset($item->extension_instance_id)) {
+			$extension_instance_id = (int) $item->extension_instance_id;
+			$extension_instance_catalog_type_id = (int) $item->catalog_catalog_type_id;
+		} else {
+			$extension_instance_id = (int) $item->catalog_extension_instance_id;
+			$extension_instance_catalog_type_id = (int) $item->catalog_catalog_type_id;
+		}
 
-        Services::Registry()->set('Parameters', 'extension_instance_id', (int) $item->extension_instance_id);
-        Services::Registry()->set('Parameters', 'extension_title', $item->extension_instances_title);
+		Services::Registry()->set('Parameters', 'extension_instance_id', $extension_instance_id);
+		Services::Registry()->set('Parameters', 'extension_catalog_type_id', $extension_instance_catalog_type_id);
 
+		Services::Registry()->set('Parameters', 'criteria_extension_instance_id', (int) $extension_instance_id);
         Services::Registry()->set('Parameters', 'criteria_source_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'criteria_catalog_type_id', (int) $item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'criteria_extension_instance_id', (int) $item->extension_instance_id);
 
-        $parameterNamespace = $item->table_registry_name . 'Parameters';
+		$parameterNamespace = $item->table_registry_name . 'Parameters';
 
         /** Theme, Page, Template and Wrap Views */
         if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
@@ -129,10 +130,7 @@ Class ContentHelper
             $pageTypeNamespace = 'form';
         }
 
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id',
-            (int) $item->extension_instances_catalog_type_id);
-
-        $this->getResourceExtensionParameters((int) $item->extension_instance_id);
+        $this->getResourceExtensionParameters((int) $extension_instance_id);
 
         $this->setParameters($pageTypeNamespace,
             $item->table_registry_name . 'Parameters',
