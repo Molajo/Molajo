@@ -190,14 +190,13 @@ Class ContentHelper
 
 		Services::Registry()->set('Parameters', 'extension_instance_id',
 			Services::Registry()->get($registry, 'criteria_extension_instance_id'));
-		Services::Registry()->set('Parameters', 'extension_catalog_type_id', 12000);
 		Services::Registry()->set('Parameters', 'extension_name_path_node',
 			Services::Registry()->get($registry, 'menuitem_model_name'));
 
 		Services::Registry()->set('Parameters', 'criteria_source_id',
 			(int) Services::Registry()->get($registry, 'criteria_source_id'));
 		Services::Registry()->set('Parameters', 'criteria_catalog_type_id',
-			(int) Services::Registry()->get($registry, 'criteria_source_id'));
+			(int) Services::Registry()->get($registry, 'criteria_catalog_type_id'));
 		Services::Registry()->set('Parameters', 'criteria_extension_instance_id',
 			(int) Services::Registry()->get($registry, 'criteria_extension_instance_id'));
 
@@ -207,6 +206,13 @@ Class ContentHelper
 			$item->table_registry_name . 'Parameters',
 			$item->table_registry_name . 'Metadata'
 		);
+
+		if (Services::Registry()->get('Parameters', 'model_type') == 'System') {
+			Services::Registry()->set('Parameters', 'extension_catalog_type_id',
+				Services::Registry()->get('Parameters', 'extension_instance_id'));
+		} else {
+			Services::Registry()->set('Parameters', 'extension_catalog_type_id', 12000);
+		}
 
 		/** Must be after parameters so as to not strip off menuitem */
 		Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
