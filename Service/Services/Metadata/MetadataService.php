@@ -127,11 +127,15 @@ Class MetadataService
             $row = new \stdClass();
 
             /** Title */
-            $title = Services::Registry()->get('Metadata', 'title', '');
+            $temp = Services::Registry()->get('Metadata', 'title', '');
+			$title = $temp[0];
             if (trim($title) == '') {
                 $title = Services::Registry()->get('Configuration', 'site_name');
             }
             $row->title = Services::Filter()->escape_text($title);
+
+			/** Dont print as metadata */
+			Services::Registry()->delete('Metadata', 'title');
 
             /** Mime Type */
             $mimetype = Services::Registry()->get('Metadata', 'mimetype', '');

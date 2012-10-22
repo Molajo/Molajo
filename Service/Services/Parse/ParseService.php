@@ -293,18 +293,26 @@ Class ParseService
             // fail
         }
 
+		/** onBeforeHead Plugin */
+		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+		} else {
+			$renderedOutput = $this->onBeforeHeadEvent($renderedOutput);
+		}
+
         $renderedOutput = $this->renderLoop($renderedOutput);
 
-        /** onAfterParse Plugin */
-        if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
-        } else {
-            Services::Registry()->delete('Parameters');
-            Services::Registry()->createRegistry('Parameters');
-            Services::Registry()->copy('RouteParameters', 'Parameters');
-            $renderedOutput = $this->onAfterParseEvent($renderedOutput);
-        }
+		/** onAfterParse Plugin */
+		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
+		} else {
+			Services::Registry()->delete('Parameters');
+			Services::Registry()->createRegistry('Parameters');
+			Services::Registry()->copy('RouteParameters', 'Parameters');
+			$renderedOutput = $this->onAfterParseEvent($renderedOutput);
+		}
 
-        return $renderedOutput;
+
+
+		return $renderedOutput;
     }
 
     /**
@@ -713,6 +721,55 @@ Class ParseService
 
         return $arguments['rendered_output'];
     }
+
+	/**
+	 * Schedule onBeforeHead Event
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	protected function onBeforeHeadEvent($renderedOutput)
+	{
+		Services::Profiler()->set('ParseService->process Schedules onBeforeHead',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		$parameters = Services::Registry()->getArray('Parameters');
+
+		/** Schedule onAfterRead Event */
+		$arguments = array(
+			'parameters' => $parameters,
+			'rendered_output' => $renderedOutput
+		);
+
+		Services::Profiler()->set('ParseService->onBeforeHeadEvent ' . ' Schedules onBeforeHead',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		$arguments = Services::Event()->schedule('onBeforeHead', $arguments);
+		if ($arguments === false) {
+			Services::Profiler()->set('ParseService->onBeforeHeadEvent ' . ' failure ',
+				LOG_OUTPUT_PLUGINS
+			);
+
+			return false;
+		}
+
+		Services::Profiler()->set('ParseService->onBeforeHeadEvent ' . ' successful ',
+			LOG_OUTPUT_PLUGINS,
+			VERBOSE
+		);
+
+		/** Process results */
+		Services::Registry()->delete('Parameters');
+		Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+
+		$renderedOutput = $arguments['rendered_output'];
+
+		return $renderedOutput;
+	}
 
     /**
      * Schedule onAfterParseEvent Event - could update rendered output

@@ -337,6 +337,7 @@ Class ContentHelper
         Services::Registry()->merge($parameterNamespace, 'Parameters', true);
 
         Services::Registry()->merge($metadataNamespace, 'Metadata');
+
         if ($resourceNamespace == '') {
         } else {
             Services::Registry()->merge($resourceNamespace . 'Metadata', 'Metadata', true);
