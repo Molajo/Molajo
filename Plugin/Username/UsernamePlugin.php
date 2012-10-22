@@ -20,36 +20,36 @@ defined('MOLAJO') or die;
 class UsernamePlugin extends Plugin
 {
 
-	/**
-	 * Pre-create processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeCreate()
-	{
-		return true;
-	}
+    /**
+     * Pre-create processing
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeCreate()
+    {
+        return true;
+    }
 
-	/**
-	 * Pre-update processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeUpdate()
-	{
-		return true;
-	}
+    /**
+     * Pre-update processing
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeUpdate()
+    {
+        return true;
+    }
 
-	/**
-	 * Post-update processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterUpdate()
-	{
-		return true;
-	}
+    /**
+     * Post-update processing
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterUpdate()
+    {
+        return true;
+    }
 }

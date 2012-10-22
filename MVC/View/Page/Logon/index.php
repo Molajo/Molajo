@@ -8,14 +8,14 @@
 defined('MOLAJO') or die; ?>
 <include:head/>
 <div class="row">
-	<div class="twelve columns">
-		<include:template name=Adminheader/>
-	</div>
+    <div class="twelve columns">
+        <include:template name=Adminheader/>
+    </div>
 </div>
 <include:message wrap="div" wrap_class="row"/>
 <div class="row">
-	<div class="twelve columns">
-		<include:template name=Adminfooter/>
-	</div>
+    <div class="twelve columns">
+        <include:template name=Adminfooter/>
+    </div>
 </div>
 <include:defer/>

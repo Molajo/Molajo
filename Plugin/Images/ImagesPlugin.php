@@ -20,59 +20,59 @@ defined('MOLAJO') or die;
  */
 class ImagesPlugin extends Plugin
 {
-	/**
-	 * Pre-create processing
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeCreate()
-	{
-		return true;
-	}
+    /**
+     * Pre-create processing
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeCreate()
+    {
+        return true;
+    }
 
-	/**
-	 * After-read processing
-	 *
-	 * Adds formatted dates to 'normal' or special fields recordset
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		$fields = $this->retrieveFieldsByType('image');
+    /**
+     * After-read processing
+     *
+     * Adds formatted dates to 'normal' or special fields recordset
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        $fields = $this->retrieveFieldsByType('image');
 
-		if (is_array($fields) && count($fields) > 0) {
+        if (is_array($fields) && count($fields) > 0) {
 
-			foreach ($fields as $field) {
+            foreach ($fields as $field) {
 
-				$name = $field->name;
+                $name = $field->name;
 
-				/** Retrieves the actual field value from the 'normal' or special field */
-				$fieldValue = $this->getFieldValue($field);
+                /** Retrieves the actual field value from the 'normal' or special field */
+                $fieldValue = $this->getFieldValue($field);
 
-				if ($fieldValue === false) {
+                if ($fieldValue === false) {
 
-				} else {
+                } else {
 
-					/** formats the date for CCYYMMDD */
-					$newFieldValue = Services::Date()->convertCCYYMMDD($fieldValue);
+                    /** formats the date for CCYYMMDD */
+                    $newFieldValue = Services::Date()->convertCCYYMMDD($fieldValue);
 
-					if ($newFieldValue === false) {
-						$ccyymmdd = false;
-					} else {
+                    if ($newFieldValue === false) {
+                        $ccyymmdd = false;
+                    } else {
 
-						/** Creates the new 'normal' or special field and populates the value */
-						$ccyymmdd = $newFieldValue;
-						$new_name = $name . '_ccyymmdd';
-						$this->saveField(null, $new_name, $newFieldValue);
-						$fieldValue = $newFieldValue;
-					}
-				}
-			}
-		}
+                        /** Creates the new 'normal' or special field and populates the value */
+                        $ccyymmdd = $newFieldValue;
+                        $new_name = $name . '_ccyymmdd';
+                        $this->saveField(null, $new_name, $newFieldValue);
+                        $fieldValue = $newFieldValue;
+                    }
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

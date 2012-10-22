@@ -19,29 +19,29 @@ defined('MOLAJO') or die;
 class FormselectlistPlugin extends Plugin
 {
 
-	/**
-	 * Prepares listbox contents
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterReadall()
-	{
+    /**
+     * Prepares listbox contents
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterReadall()
+    {
 
-		$datalist = Services::Registry()->get('Parameters', 'datalist');
+        $datalist = Services::Registry()->get('Parameters', 'datalist');
 
-		if ($datalist === false || trim($datalist) == '') {
-			return true;
-		}
+        if ($datalist === false || trim($datalist) == '') {
+            return true;
+        }
 
-		$items = Services::Text()->getList($datalist, $this->parameters);
+        $items = Services::Text()->getList($datalist, $this->parameters);
 
-		if ($items === false) {
-			return true;
-		}
+        if ($items === false) {
+            return true;
+        }
 
-		$this->data = Services::Text()->buildSelectlist($datalist, $items, 0, 5);
+        $this->data = Services::Text()->buildSelectlist($datalist, $items, 0, 5);
 
-		return true;
-	}
+        return true;
+    }
 }

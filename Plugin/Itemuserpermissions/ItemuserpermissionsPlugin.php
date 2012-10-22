@@ -20,42 +20,42 @@ defined('MOLAJO') or die;
 class ItemuserpermissionsPlugin extends Plugin
 {
 
-	/**
-	 * After-read processing
-	 *
-	 * Use with Grid to determine permissions for buttons and items
-	 * Validate action-level user permissions on each row - relies upon catalog_id
-	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		if (isset($this->data->catalog_id)) {
-		} else {
-			return false;
-		}
+    /**
+     * After-read processing
+     *
+     * Use with Grid to determine permissions for buttons and items
+     * Validate action-level user permissions on each row - relies upon catalog_id
+     *
+     * @param   $this->data
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        if (isset($this->data->catalog_id)) {
+        } else {
+            return false;
+        }
 
-		/** Resource Buttons */
-		$actions = $this->get('toolbar_buttons');
+        /** Resource Buttons */
+        $actions = $this->get('toolbar_buttons');
 
-		$actionsArray = explode(',', $actions);
+        $actionsArray = explode(',', $actions);
 
-		/** User Permissions */
-		$permissions = Services::Authorisation()
-			->verifyTaskList($actionsArray, $this->data->catalog_id);
+        /** User Permissions */
+        $permissions = Services::Authorisation()
+            ->verifyTaskList($actionsArray, $this->data->catalog_id);
 
-		/** Append onto row */
-		foreach ($actionsArray as $action) {
-			if ($permissions[$action] === true) {
-				$field = $action . 'Permission';
-				$this->data->$field = $permissions[$action];
-			}
-		}
+        /** Append onto row */
+        foreach ($actionsArray as $action) {
+            if ($permissions[$action] === true) {
+                $field = $action . 'Permission';
+                $this->data->$field = $permissions[$action];
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

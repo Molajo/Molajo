@@ -18,84 +18,84 @@ defined('MOLAJO') or die;
  */
 class MenuitemsPlugin extends Plugin
 {
-	/**
-	 * Generates list of Menus and Menuitems for use in Datalists
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRoute()
-	{
-		if (APPLICATION_ID == 2) {
-		} else {
-			return true;
-		}
+    /**
+     * Generates list of Menus and Menuitems for use in Datalists
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRoute()
+    {
+        if (APPLICATION_ID == 2) {
+        } else {
+            return true;
+        }
 
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$connect = new $controllerClass();
+        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+        $connect = new $controllerClass();
 
-		$results = $connect->connect('System', 'Menuitems');
-		if ($results === false) {
-			return false;
-		}
+        $results = $connect->connect('System', 'Menuitems');
+        if ($results === false) {
+            return false;
+        }
 
-		$connect->set('get_customfields', 0);
-		$connect->set('use_special_joins', 0);
-		$connect->set('process_plugins', 0);
-		$connect->set('check_view_level_access', 0);
+        $connect->set('get_customfields', 0);
+        $connect->set('use_special_joins', 0);
+        $connect->set('process_plugins', 0);
+        $connect->set('check_view_level_access', 0);
 
-		$connect->model->query->select(
-			$connect->model->db->qn($connect->get('primary_prefix'))
-				. '.' . $connect->model->db->qn('title')
-		);
-		$connect->model->query->select(
-			$connect->model->db->qn($connect->get('primary_prefix'))
-				. '.' . $connect->model->db->qn('id')
-		);
-		$connect->model->query->select(
-			$connect->model->db->qn($connect->get('primary_prefix'))
-				. '.' . $connect->model->db->qn('lvl')
-		);
+        $connect->model->query->select(
+            $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('title')
+        );
+        $connect->model->query->select(
+            $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('id')
+        );
+        $connect->model->query->select(
+            $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('lvl')
+        );
 
-		$connect->model->query->where(
-			$connect->model->db->qn($connect->get('primary_prefix'))
-				. '.' . $connect->model->db->qn('status')
-				. ' IN (0,1,2)'
-		);
+        $connect->model->query->where(
+            $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('status')
+                . ' IN (0,1,2)'
+        );
 
-		$connect->model->query->order(
-			$connect->model->db->qn($connect->get('primary_prefix'))
-				. '.' . $connect->model->db->qn('root') . ', '
-				. $connect->model->db->qn($connect->get('primary_prefix'))
-				. '.' . $connect->model->db->qn('lft')
-		);
+        $connect->model->query->order(
+            $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('root') . ', '
+                . $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('lft')
+        );
 
-		$connect->set('model_offset', 0);
-		$connect->set('model_count', 99999);
+        $connect->set('model_offset', 0);
+        $connect->set('model_count', 99999);
 
-		$query_results = $connect->getData('list');
+        $query_results = $connect->getData('list');
 
-		$menuitems = array();
-		foreach ($query_results as $item) {
-			$row = new \stdClass();
+        $menuitems = array();
+        foreach ($query_results as $item) {
+            $row = new \stdClass();
 
-			$name = $item->title;
-			$lvl = (int) $item->lvl - 1;
+            $name = $item->title;
+            $lvl = (int) $item->lvl - 1;
 
-			if ($lvl > 0) {
-				for($i = 0; $i < $lvl; $i++) {
-					$name = ' ..' . $name;
-				}
-			}
+            if ($lvl > 0) {
+                for ($i = 0; $i < $lvl; $i++) {
+                    $name = ' ..' . $name;
+                }
+            }
 
-			$row->id = $item->id;
-			$row->value = trim($name);
+            $row->id = $item->id;
+            $row->value = trim($name);
 
-			$menuitems[] = $row;
-		}
+            $menuitems[] = $row;
+        }
 
-		Services::Registry()->set('Datalist', 'Menuitems', $menuitems);
+        Services::Registry()->set('Datalist', 'Menuitems', $menuitems);
 
-		return true;
-	}
+        return true;
+    }
 }

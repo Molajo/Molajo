@@ -6,7 +6,7 @@
  */
 defined('MOLAJO') or die;
 if ($this->row->value == $this->row->key) {
-	echo $this->row->key .' ';
+    echo $this->row->key .' ';
 } else {
-	echo $this->row->key . '="' . $this->row->value .'" ';
+    echo $this->row->key . '="' . $this->row->value .'" ';
 }

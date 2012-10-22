@@ -9,5 +9,5 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <fieldset>
-	<legend><?php echo $this->row->label; ?></legend>
-		<ol>
+    <legend><?php echo $this->row->label; ?></legend>
+        <ol>

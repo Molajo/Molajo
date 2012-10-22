@@ -1,5 +1,4 @@
 <?php
-use Molajo\Service\Services;
 
 /**
  * @package    Molajo
@@ -8,7 +7,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <div class="<?php echo $this->row->class; ?>">
-	<?php echo $this->row->message; ?>
-	<a class="close" href="<?php echo $this->row->action; ?>#">&times;</a>
-	<h4 class="alert-heading"><?php echo $this->row->heading; ?></h4>
+    <?php echo $this->row->message; ?>
+    <a class="close" href="<?php echo $this->row->action; ?>#">&times;</a>
+    <h4 class="alert-heading"><?php echo $this->row->heading; ?></h4>
 </div>

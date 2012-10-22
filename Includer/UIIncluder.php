@@ -20,40 +20,40 @@ defined('MOLAJO') or die;
  */
 class UiIncluder extends Includer
 {
-	/**
-	 * process - render include statement for configured UI Library
-	 *
-	 * @param   $attributes
-	 *
-	 * @return mixed
-	 * @since   1.0
-	 */
-	public function process($attributes = array())
-	{
-		$this->attributes = $attributes;
+    /**
+     * process - render include statement for configured UI Library
+     *
+     * @param   $attributes
+     *
+     * @return mixed
+     * @since   1.0
+     */
+    public function process($attributes = array())
+    {
+        $this->attributes = $attributes;
 
-		parent::getAttributes();
+        parent::getAttributes();
 
-		$includer = '<include:template';
+        $includer = '<include:template';
 
-		foreach ($this->attributes as $key => $value) {
+        foreach ($this->attributes as $key => $value) {
 
-			$useValue = $value;
+            $useValue = $value;
 
-			if ($key == 'name') {
+            if ($key == 'name') {
 
-				$find = 'ui' . trim($value);
+                $find = 'ui' . trim($value);
 
-				$useValue = Services::Registry()->get('Configuration', $find);
+                $useValue = Services::Registry()->get('Configuration', $find);
 
-				if ((int) $useValue == 0) {
-					$useValue = Services::Registry()->get('Configuration', $find);
-				}
-			}
-			$includer .= ' ' . trim($key) . '=' . trim($useValue);
-		}
-		$includer .= '/>';
+                if ((int) $useValue == 0) {
+                    $useValue = Services::Registry()->get('Configuration', $find);
+                }
+            }
+            $includer .= ' ' . trim($key) . '=' . trim($useValue);
+        }
+        $includer .= '/>';
 
-		return $includer;
-	}
+        return $includer;
+    }
 }

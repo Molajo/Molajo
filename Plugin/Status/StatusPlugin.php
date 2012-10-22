@@ -21,47 +21,47 @@ defined('MOLAJO') or die;
 class StatusPlugin extends Plugin
 {
 
-	/**
-	 * After-read processing
-	 *
-	 * Provides the Url for any catalog_id field in the recordset
-	 *
-	 * @param   $this->data
-	 * @param   $model
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRead()
-	{
-		$statusField = $this->getField('status');
+    /**
+     * After-read processing
+     *
+     * Provides the Url for any catalog_id field in the recordset
+     *
+     * @param   $this->data
+     * @param   $model
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onAfterRead()
+    {
+        $statusField = $this->getField('status');
 
-		if ($statusField === false) {
-			return true;
-		}
+        if ($statusField === false) {
+            return true;
+        }
 
-		$status = $this->getFieldValue($statusField);
+        $status = $this->getFieldValue($statusField);
 
-		if ($status == '2') {
-			$status_name = Services::Language()->translate('Archived');
-		} elseif ($status == '1') {
-			$status_name = Services::Language()->translate('Published');
-		} elseif ($status == '0') {
-			$status_name = Services::Language()->translate('Unpublished');
-		} elseif ($status == '-1') {
-			$status_name = Services::Language()->translate('Trashed');
-		} elseif ($status == '-2') {
-			$status_name = Services::Language()->translate('Spammed');
-		} elseif ($status == '-5') {
-			$status_name = Services::Language()->translate('Draft');
-		} elseif ($status == '-10') {
-			$status_name = Services::Language()->translate('Version');
-		} else {
-			return true;
-		}
+        if ($status == '2') {
+            $status_name = Services::Language()->translate('Archived');
+        } elseif ($status == '1') {
+            $status_name = Services::Language()->translate('Published');
+        } elseif ($status == '0') {
+            $status_name = Services::Language()->translate('Unpublished');
+        } elseif ($status == '-1') {
+            $status_name = Services::Language()->translate('Trashed');
+        } elseif ($status == '-2') {
+            $status_name = Services::Language()->translate('Spammed');
+        } elseif ($status == '-5') {
+            $status_name = Services::Language()->translate('Draft');
+        } elseif ($status == '-10') {
+            $status_name = Services::Language()->translate('Version');
+        } else {
+            return true;
+        }
 
-		$this->saveField(null, 'status_name', $status_name);
+        $this->saveField(null, 'status_name', $status_name);
 
-		return true;
-	}
+        return true;
+    }
 }
