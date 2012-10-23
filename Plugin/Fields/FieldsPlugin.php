@@ -47,36 +47,78 @@ class FieldsPlugin extends Plugin
         $primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
 
         $fieldArray = array();
+		$normalFieldArray = array();
 
         $normalFields = Services::Registry()->get($table_registry_name, 'fields');
+
+
         $status = 0;
 
         if (count($normalFields) > 0) {
+
             foreach ($normalFields as $field) {
+
                 $row = new \stdClass();
                 $row->value = $field['name'];
                 $row->id = $field['name'];
-                $fieldArray[] = $row;
+
+                $normalFieldArray[] = $row;
+				$fieldArray[] = $row;
 
                 if ($field['name'] == 'status') {
                     $status = 1;
                 }
 
                 if ($field['type'] == 'datetime') {
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_n_days_ago';
+					$row->id = $field['name'] . '_n_days_ago';
+					$fieldArray[] = $row;
+
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_ccyy';
+					$row->id = $field['name'] . '_ccyy';
+					$fieldArray[] = $row;
+
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_mm';
+					$row->id = $field['name'] . '_mm';
+					$fieldArray[] = $row;
+
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_dd';
+					$row->id = $field['name'] . '_dd';
+					$fieldArray[] = $row;
+
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_month_name_abbr';
+					$row->id = $field['name'] . '_month_name_abbr';
+					$fieldArray[] = $row;
+
                     $row = new \stdClass();
-                    $row->value = $field['name'] . '_ccyymmdd';
-                    $row->id = $field['name'] . '_ccyymmdd';
+                    $row->value = $field['name'] . '_month_name';
+                    $row->id = $field['name'] . '_month_name';
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
-                    $row->value = $field['name'] . '_n_days_ago';
-                    $row->id = $field['name'] . '_n_days_ago';
+                    $row->value = $field['name'] . '_time';
+                    $row->id = $field['name'] . '_time';
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
-                    $row->value = $field['name'] . '_pretty_date';
-                    $row->id = $field['name'] . '_pretty_date';
+                    $row->value = $field['name'] . '_day_number';
+                    $row->id = $field['name'] . '_day_number';
                     $fieldArray[] = $row;
+
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_day_name_abbr';
+					$row->id = $field['name'] . '_day_name_abbr';
+					$fieldArray[] = $row;
+
+					$row = new \stdClass();
+					$row->value = $field['name'] . '_day_name';
+					$row->id = $field['name'] . '_day_name';
+					$fieldArray[] = $row;
                 }
 
                 if ($field['type'] == 'text') {
@@ -153,6 +195,7 @@ class FieldsPlugin extends Plugin
         sort($fieldArray);
 
         Services::Registry()->set('Datalist', $table_registry_name . 'Fields', $fieldArray);
+		Services::Registry()->set('Datalist', $table_registry_name . 'Fieldsstandard', $normalFieldArray);
 
         return true;
     }

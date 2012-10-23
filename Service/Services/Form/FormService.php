@@ -42,46 +42,6 @@ Class FormService
     }
 
     /**
-     * getCustomfieldForm retrieves the list of custom fields defined specifically for this model
-     *
-     * @param $model_type
-     * @param $model_name
-     *
-     * @return array
-     * @since  1.0
-     */
-    public function getCustomfieldForm($table_registry_name)
-    {
-
-        $fieldArray = array();
-
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
-
-        $results = $connect->connect('Template', 'Adminconfiguration');
-        if ($results === false) {
-            return false;
-        }
-
-        $parameters = Services::Registry()->get('AdminconfigurationTemplate', 'parameters');
-
-        if (count($parameters) > 0) {
-            foreach ($parameters as $field) {
-
-                if (substr($field['name'], 0, strlen('define_')) == 'define_') {
-                    $row = new \stdClass();
-                    $row->value = $field['name'];
-                    $row->id = $field['name'];
-
-                    $fieldArray[] = $row;
-                }
-            }
-        }
-
-        return $fieldArray;
-    }
-
-    /**
      * Create Configuration Tabs for Forms
      *
      * @param $model_type - ex. Resources
@@ -89,11 +49,11 @@ Class FormService
      * @param $namespace - ex. config, grid, edit
      * @param $tab_array - sent in from request parameters ex. {{Editor,editor}} or full list from config
      * @param $tab_prefix - NULL from grid
-     * @param $view_name - ex. Adminconfiguration or Grid or Edit
+     * @param $view_name - ex. Adminconfiguration, Admingrid, Edit, etc.
      * @param $default_tab_view_name ex. Adminconfigurationtab
      * @param $tab_class - typically mobile
-     * @param $extension_instance_id
-     * @param $item array of data (only application)
+     * @param $extension_instance_id ex. 16000 for Articles
+     * @param $item array of data (Application configuration and Session data)
      *
      * @return array
      * @since  1.0
@@ -103,14 +63,15 @@ Class FormService
                                 $view_name, $default_tab_view_name, $tab_class,
                                 $extension_instance_id, $item)
     {
-//		echo $model_type. ' ' .  $model_name. ' ' .  $namespace. ' ' .
-//								$tab_array. ' ' .  $tab_prefix. ' ' .
-//								$view_name. ' ' .  $default_tab_view_name. ' ' .  $tab_class. ' ' .
-//								$extension_instance_id;
-//		echo '<pre>';
-//		var_dump($item);
-//		echo '</pre>';
-
+/*
+		echo $model_type. ' ' .  $model_name. ' ' .  $namespace. ' ' .
+								$tab_array. ' ' .  $tab_prefix. ' ' .
+								$view_name. ' ' .  $default_tab_view_name. ' ' .  $tab_class. ' ' .
+								$extension_instance_id;
+		echo '<pre>';
+		var_dump($item);
+		echo '</pre>';
+*/
         $tabs = array();
         $configurationArray = array();
         $temp = explode('}}', $tab_array);
@@ -301,7 +262,9 @@ Class FormService
                 $temp[] = $row;
 
             } else {
+
                 if ($namespace == 'Edit') {
+
                     $temp = $this->getActualFields($namespace, $tab_link, $options,
                         $tabTitle, $translateTabDesc,
                         $tabFieldsetTitle, $translateFieldsetDesc,
@@ -325,12 +288,12 @@ Class FormService
             }
             $fieldSets = array_merge((array) $fieldSets, (array) $temp);
         }
-
-//		echo '<br />' . 'Fieldset ' . $view_name . $namespace . strtolower($tab_link) . '<br />';
-//		echo '<pre>';
-//		var_dump($fieldSets);
-//		echo '</pre>';
-
+/**
+ 		echo '<br />' . 'Fieldset:: ' . $view_name . $namespace . strtolower($tab_link) . count($fieldSets) . '<br />';
+		echo '<pre>';
+		var_dump($fieldSets);
+		echo '</pre>';
+*/
         Services::Registry()->set('Plugindata', $view_name . $namespace . strtolower($tab_link), $fieldSets);
 
         return true;
@@ -399,7 +362,7 @@ Class FormService
                     if ($field['name'] == $compare) {
                         $use = true;
                     }
-                    if (substr($field['name'], 0, strlen($compare)) == $compare
+                    if (substr(strtolower($field['name']), 0, strlen($compare)) == $compare
                         && strlen($compare) > 0
                     ) {
                         $use = true;
@@ -420,13 +383,14 @@ Class FormService
 
                         $row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
                         $build_results[] = $row;
+
                     }
                 }
             }
         }
 
         if (count($build_results) > 0) {
-            return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+            return Services::Form()->setFieldset($namespace, $tab_link, $build_results, $model_type, $model_name);
         } else {
             return array();
         }
@@ -546,7 +510,7 @@ Class FormService
         }
 
         if (count($build_results) > 0) {
-            return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results, $model_type, $model_name);
         } else {
             return array();
         }
@@ -588,7 +552,7 @@ Class FormService
         }
 
         if (count($build_results) > 0) {
-            return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results, $model_type, $model_name);
         } else {
             return array();
         }
@@ -665,7 +629,7 @@ Class FormService
         }
 
         if (count($build_results) > 0) {
-            return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results, $model_type, $model_name);
         } else {
             return array();
         }
@@ -795,7 +759,7 @@ Class FormService
         }
 
         if (count($build_results) > 0) {
-            return Services::Form()->setFieldset($namespace, $tab_link, $build_results);
+			return Services::Form()->setFieldset($namespace, $tab_link, $build_results, $model_type, $model_name);
         } else {
             return array();
         }
@@ -810,11 +774,13 @@ Class FormService
      * @param $namespace
      * @param $tab_link
      * @param $input_fields
+	 * @param $model_type
+	 * @param $model_name
      *
      * @return array
      * @since  1.0
      */
-    public function setFieldset($namespace, $tab_link, $input_fields)
+    public function setFieldset($namespace, $tab_link, $input_fields, $model_type, $model_name)
     {
         $fieldset = array();
         $previous_tab_fieldset_title = '';
@@ -840,20 +806,20 @@ Class FormService
                 $previous_tab_fieldset_title = $row->tab_fieldset_title;
                 $row->new_fieldset = 1;
             }
-            if (isset($field['name'])) {
-            } else {
-                echo 'missing name ';
-                echo '<pre>';
-                var_dump($field);
-                echo '</pre>';
-                die;
-            }
+
+			if (isset($field['name'])) {
+			} else {
+				echo 'missing name ';
+				echo '<pre>';
+				var_dump($field);
+				echo '</pre>';
+				die;
+			}
 
             $row->field_id = $field['name'];
             $row->id = $field['name'];
             $row->name = $field['name'];
             $row->label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
-            ;
             $row->tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
             $row->placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
 
@@ -1025,7 +991,7 @@ Class FormService
                     break;
 
                 case 'formselect':
-                    $row->name = $this->setSelectField($namespace, $tab_link, $field, $row);
+                    $row->name = $this->setSelectField($namespace, $tab_link, $field, $row, $model_type, $model_name);
                     break;
 
                 case 'formtextarea':
@@ -1203,11 +1169,13 @@ Class FormService
      * @param $tab_link
      * @param $field
      * @param $row_start
+	 * @param $model_type
+	 * @param $model_name
      *
      * @return mixed|string
      * @somce  1.0
      */
-    protected function setSelectField($namespace, $tab_link, $field, $row_start)
+    protected function setSelectField($namespace, $tab_link, $field, $row_start, $model_type, $model_name)
     {
         $fieldRecordset = array();
 
@@ -1241,7 +1209,7 @@ Class FormService
 //			$iterate['class'] = $field['class'];
 //		} else {
 //			$iterate['class'] = 'editable';
-//		}
+//		}               [15]=>
 
         $temp = $field['value'];
         $default_setting = 0;
@@ -1257,7 +1225,19 @@ Class FormService
         }
 
         $datalist = $field['datalist'];
-        $list = Services::Text()->getList($datalist, array());
+
+		$yes = 0;
+		if (strtolower($datalist) == 'fields') {
+			$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+			$list = Services::Registry()->get('Datalist', $table_registry_name . 'Fields');
+
+		} elseif (strtolower($datalist) == 'fieldsstandard') {
+			$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+			$list = Services::Registry()->get('Datalist', $table_registry_name . 'Fieldsstandard');
+
+		} else {
+			$list = Services::Text()->getList($datalist, array());
+		}
 
         if ($list === false) {
             $items = array();

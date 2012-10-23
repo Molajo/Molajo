@@ -1,0 +1,8 @@
+<include field="event_tag_list"/>
+<include field="event_catalog_type_list"/>
+
+<include field="list_model_ordering"/>
+<include field="list_model_ordering_direction"/>
+<include field="list_model_offset"/>
+<include field="list_model_count"/>
+<include field="list_model_use_pagination"/>

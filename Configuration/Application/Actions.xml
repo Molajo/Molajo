@@ -2,17 +2,14 @@
 <actions>
     <action name="create" authorisation="create" controller="create"/>
     <action name="copy" authorisation="create" controller="create"/>
-    <action name="saveascopy" authorisation="create" controller="create"/>
     <action name="draft" authorisation="create" controller="create"/>
 
-    <action name="new" authorisation="create" controller="read"/>
     <action name="display" authorisation="read" controller="read"/>
     <action name="edit" authorisation="read" controller="read"/>
 
-    <action name="apply" authorisation="update" controller="update"/>
     <action name="save" authorisation="update" controller="update"/>
-    <action name="saveandnew" authorisation="update" controller="update"/>
-    <action name="move" authorisation="update" controller="update"/>
+
+
     <action name="tag" authorisation="update" controller="update"/>
 
     <action name="cancel" authorisation="none" controller="update"/>

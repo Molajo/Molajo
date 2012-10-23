@@ -310,8 +310,6 @@ Class ParseService
 			$renderedOutput = $this->onAfterParseEvent($renderedOutput);
 		}
 
-
-
 		return $renderedOutput;
     }
 

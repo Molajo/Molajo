@@ -381,7 +381,6 @@ class ReadModel extends Model
 
         if ($offset > $total) {
             $offset = 0;
-            $use_pagination = 0;
         }
 
         if ($use_pagination === 0

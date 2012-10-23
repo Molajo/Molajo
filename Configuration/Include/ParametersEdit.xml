@@ -18,10 +18,6 @@
 <include field="editor_secondary_column4"/>
 <include field="editor_secondary_column5"/>
 <include field="editor_secondary_column6"/>
-<include field="editor_secondary_column7"/>
-<include field="editor_secondary_column8"/>
-<include field="editor_secondary_column9"/>
-<include field="editor_secondary_column10"/>
 
 <include field="editor_publish_column1"/>
 <include field="editor_publish_column2"/>
@@ -41,11 +37,6 @@
 <include field="editor_seo_column3"/>
 <include field="editor_seo_column4"/>
 <include field="editor_seo_column5"/>
-<include field="editor_seo_column6"/>
-<include field="editor_seo_column7"/>
-<include field="editor_seo_column8"/>
-<include field="editor_seo_column9"/>
-<include field="editor_seo_column10"/>
 
 <include field="editor_metadata_column1"/>
 <include field="editor_metadata_column2"/>

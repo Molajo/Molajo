@@ -351,6 +351,8 @@ class Controller
         $this->pagination_total = 0;
         $this->model_offset = $this->get('model_offset');
         $this->model_count = $this->get('model_count');
+		$this->use_pagination = $this->get('use_pagination');
+
         $this->use_pagination = $this->get('use_pagination');
 
         $dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
@@ -401,7 +403,6 @@ class Controller
                 $this->query_results = $this->model->$query_object($model_parameter);
             }
         }
-
 
         /** 4. Schedule onAfterRead Event */
         if (count($this->plugins) > 0) {
@@ -520,9 +521,9 @@ class Controller
             $temp[] = 'Menuitemtype' . strtolower($menuitemType);
         }
 
-        $temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');
+		$temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');
 
-        $temp[] = 'Application' . APPLICATION_ID;
+        $temp[] = 'Application';
 
         $temp2 = array_unique($temp);
 
@@ -768,12 +769,12 @@ class Controller
         );
 
         /** Process results */
-        if (isset($arguments['query'])) {
-            $this->model->query = $arguments['query'];
-        }
-        if (isset($arguments['parameters'])) {
-            $this->parameters = $arguments['parameters'];
-        }
+		if (isset($arguments['query'])) {
+			$this->model->query = $arguments['query'];
+		}
+		if (isset($arguments['parameters'])) {
+			$this->parameters = $arguments['parameters'];
+		}
 
         return true;
     }

@@ -65,7 +65,7 @@ class MenuitemtypeconfigurationPlugin extends Plugin
             array()
         );
 
-        $this->set('model_name', 'Plugindata');
+		$this->set('model_name', 'Plugindata');
         $this->set('model_type', 'dbo');
         $this->set('model_query_object', 'getPlugindata');
         $this->set('model_parameter', 'PrimaryRequestQueryResults');
