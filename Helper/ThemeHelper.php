@@ -55,8 +55,8 @@ Class ThemeHelper
     public function get($theme_id = 0)
     {
 
-        if ($theme_id == 0) {
-            $theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_THEME, 'System');
+        if ((int) $theme_id == 0) {
+            $theme_id = Services::Registry()->get('Configuration', 'application_default_theme_id');
         }
 
         Services::Registry()->set('Parameters', 'theme_id', (int) $theme_id);

@@ -78,7 +78,6 @@ Class ViewHelper
         }
 
         Services::Registry()->set('Parameters', $type . '_view_id', (int) $id);
-
         Services::Registry()->set('Parameters', $type . '_view_path_node', $node);
         Services::Registry()->set('Parameters', $type . '_view_path', $this->getPath($node, $type));
         Services::Registry()->set('Parameters', $type . '_view_path_include',
@@ -118,7 +117,8 @@ Class ViewHelper
             $this->setParameters('wrap', $item->table_registry_name . 'Parameters');
         }
 
-        /** Copy remaining */
+        /** Copy Parameters (but do not overlay the ID value) */
+		Services::Registry()->delete($item->table_registry_name . 'Parameters', $type . '_view_id');
         Services::Registry()->copy($item->table_registry_name . 'Parameters', 'Parameters');
 
         return true;

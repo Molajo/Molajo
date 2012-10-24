@@ -463,8 +463,8 @@ Class ExtensionHelper
     public function setThemePageView()
     {
         /** Set Parameters */
-        $theme_id = Services::Registry()->get('Parameters', 'theme_id');
-        $page_view_id = Services::Registry()->get('Parameters', 'page_view_id');
+        $theme_id = (int) Services::Registry()->get('Parameters', 'theme_id');
+        $page_view_id = (int) Services::Registry()->get('Parameters', 'page_view_id');
 
         /** Theme  */
         Helpers::Theme()->get($theme_id);

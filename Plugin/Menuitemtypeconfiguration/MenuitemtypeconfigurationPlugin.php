@@ -61,7 +61,7 @@ class MenuitemtypeconfigurationPlugin extends Plugin
             'Adminconfiguration',
             'Adminconfigurationtab',
             $tab_class,
-            $this->get('extension_instance_id'),
+            $this->get('criteria_extension_instance_id'),
             array()
         );
 

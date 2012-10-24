@@ -29,26 +29,58 @@ class ResourceIncluder extends Includer
     {
         Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_RESOURCE);
 
-        return parent::__construct($name, $type);
+		$this->name = $name;
+		$this->type = $type;
+
+		Services::Registry()->createRegistry('Include');
+
+		Services::Registry()->set('Parameters', 'includer_name', $this->name);
+		Services::Registry()->set('Parameters', 'includer_type', $this->type);
+
+        return;
     }
 
-    /**
-     * getAttributes
-     *
-     * Use the view and/or wrap criteria ife specified on the <include statement
-     *
-     * @return array
-     * @since   1.0
-     */
-    protected function getAttribute()
-    {
-        /** Include and Parameter Registries are already loaded for Primary Resource */
-        if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
-            return array();
-        } else {
-            return parent::getAttribute();
-        }
-    }
+
+	/**
+	 * process
+	 *
+	 * - Loads Metadata (only Theme Includer)
+	 * - Loads Language files for Extension
+	 * - Loads Assets for Extension
+	 * - Activates Controller for Task
+	 * - Returns Rendered Output to Parse for <include:type /> replacement
+	 *
+	 * @param   $attributes <include:type attr1=x attr2=y attr3=z ... />
+	 *
+	 * @return mixed
+	 * @since   1.0
+	 */
+	public function process($attributes = array())
+	{
+		/** attributes from <include:type */
+		$this->attributes = $attributes;
+
+		$this->getAttributes();
+
+		$this->getExtension();
+
+		$this->loadLanguage();
+
+		$this->loadPlugins();
+
+		$rendered_output = $this->invokeMVC();
+
+		/** only load media if there was rendered output */
+		if ($rendered_output == ''
+			&& Services::Registry()->get('Parameters', 'criteria_display_view_on_no_results') == 0
+		) {
+		} else {
+			$this->loadMedia();
+			$this->loadViewMedia();
+		}
+
+		return $rendered_output;
+	}
 
     /**
      * getExtension - Used for non-primary Resource to set Parameter Values
@@ -79,36 +111,7 @@ class ResourceIncluder extends Includer
             Services::Error()->set(500, 'Extension not found');
         }
 
-        return parent::getExtension();
-    }
-
-    /**
-     * setRenderCriteria
-     *
-     * Use the view and/or wrap criteria ife specified on the <include statement
-     * Retrieve View and wrap criteria and path information
-     *
-     * @return bool
-     * @since   1.0
-     */
-    public function DELETEsetRenderCriteria()
-    {
-        /** Include and Parameter Registries are already loaded for Primary Resource */
-        if (Services::Registry()->get('Parameters', 'extension_primary') === true) {
-            return true;
-        }
-
-        Services::Registry()->merge('Configuration', 'Parameters', true);
-
-        Helpers::Extension()->setTemplateWrapModel();
-
-        Services::Registry()->delete('Parameters', 'item*');
-        Services::Registry()->delete('Parameters', 'list*');
-        Services::Registry()->delete('Parameters', 'form*');
-
-        Services::Registry()->sort('Parameters');
-
-        return true;
+        return;
     }
 
     /**

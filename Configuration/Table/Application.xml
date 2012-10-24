@@ -66,6 +66,7 @@
             <include field="application_path"/>
             <include field="application_base_url"/>
             <include field="application_home_catalog_id"/>
+            <include field="application_default_theme_id"/>
 
             <include field="language"/>
             <include field="language_direction"/>

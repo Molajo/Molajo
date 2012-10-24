@@ -86,6 +86,8 @@ Class ContentHelper
             $item->table_registry_name . 'Metadata'
         );
 
+		$this->setExtensionPaths();
+
         return true;
     }
 
@@ -144,6 +146,8 @@ Class ContentHelper
 
         Services::Registry()->set('Parameters', 'parent_menu_id', $parent_menu_id);
 
+		$this->setExtensionPaths();
+
         return true;
     }
 
@@ -186,11 +190,6 @@ Class ContentHelper
                 . 'Menuitem'
                 . 'Parameters';
 
-        Services::Registry()->set('Parameters', 'extension_instance_id',
-            Services::Registry()->get($registry, 'criteria_extension_instance_id'));
-        Services::Registry()->set('Parameters', 'extension_name_path_node',
-            Services::Registry()->get($registry, 'menuitem_model_name'));
-
         Services::Registry()->set('Parameters', 'criteria_source_id',
             (int) Services::Registry()->get($registry, 'criteria_source_id'));
         Services::Registry()->set('Parameters', 'criteria_catalog_type_id',
@@ -205,19 +204,12 @@ Class ContentHelper
             $item->table_registry_name . 'Metadata'
         );
 
-        if (Services::Registry()->get('Parameters', 'model_type') == 'System') {
-            Services::Registry()->set('Parameters', 'extension_catalog_type_id',
-                Services::Registry()->get('Parameters', 'extension_instance_id'));
-        } else {
-            Services::Registry()->set('Parameters', 'extension_catalog_type_id', 12000);
-        }
-
-        /** Must be after parameters so as to not strip off menuitem */
+	        /** Must be after parameters so as to not strip off menuitem */
         Services::Registry()->set('Parameters', 'menuitem_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'menuitem_type',
             Services::Registry()->get('Parameters', 'catalog_menuitem_type'));
 
-        Services::Registry()->sort('Parameters');
+		$this->setExtensionPaths();
 
         return true;
     }
@@ -370,21 +362,6 @@ Class ContentHelper
             }
         }
 
-        Services::Registry()->set('Parameters', 'extension_path',
-            Helpers::Extension()->getPath(Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
-                Services::Registry()->get('Parameters', 'extension_name_path_node'))
-        );
-
-        Services::Registry()->set('Parameters', 'extension_path_url',
-            Helpers::Extension()->getPathURL(Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
-                Services::Registry()->get('Parameters', 'extension_name_path_node'))
-        );
-
-        Services::Registry()->set('Parameters', 'extension_namespace',
-            Helpers::Extension()->getNamespace(Services::Registry()->get('Parameters', 'extension_catalog_type_id'),
-                Services::Registry()->get('Parameters', 'extension_name_path_node'))
-        );
-
         Services::Registry()->sort('Parameters');
         Services::Registry()->sort('Metadata');
 
@@ -402,7 +379,6 @@ Class ContentHelper
                 Services::Registry()->set('Parameters', $key, $value);
             }
         }
-        Services::Registry()->sort('Parameters');
 
         return true;
     }
@@ -438,7 +414,44 @@ Class ContentHelper
         }
     }
 
-    /**
+	/**
+	 * Sets the namespace, path and URL Path for extensions
+	 *
+	 * @return boolean
+	 * @since   1.0
+	 */
+	public function setExtensionPaths()
+	{
+
+		Services::Registry()->set('Parameters', 'extension_name_path_node',
+			Services::Registry()->get('Parameters', 'model_name'));
+
+		if (Services::Registry()->get('Parameters', 'model_type') == 'Resource') {
+			$cattype = CATALOG_TYPE_RESOURCE;
+		} else {
+			$cattype = Services::Registry()->get('Parameters', 'criteria_catalog_type_id');
+		}
+
+		Services::Registry()->set('Parameters', 'extension_path',
+			Helpers::Extension()->getPath($cattype,
+				Services::Registry()->get('Parameters', 'extension_name_path_node'))
+		);
+
+		Services::Registry()->set('Parameters', 'extension_path_url',
+			Helpers::Extension()->getPathURL($cattype,
+				Services::Registry()->get('Parameters', 'extension_name_path_node'))
+		);
+
+		Services::Registry()->set('Parameters', 'extension_namespace',
+			Helpers::Extension()->getNamespace($cattype,
+				Services::Registry()->get('Parameters', 'extension_name_path_node')));
+
+		Services::Registry()->sort('Parameters');
+
+		return true;
+	}
+
+	/**
      * Get Category Type information for Resource
      *
      * @param  $id

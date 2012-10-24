@@ -3,7 +3,6 @@
 <include field="uibuttondropdown"/>
 <include field="uinavigationnavbar"/>
 <include field="uinavigationverticalnav"/>
-<include field="uinavigationadministrator"/>
 <include field="uinavigationsidenav"/>
 <include field="uinavigationsubnav"/>
 <include field="uinavigationbreadcrumbs"/>
