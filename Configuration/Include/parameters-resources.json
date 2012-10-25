@@ -87,7 +87,7 @@
         "editor_metadata_column10":"",
 
         "form_parent_menu_id":"",
-        "form_theme_id":"7010",
+        "form_theme_id":"",
         "form_page_view_id":"8265",
         "form_page_view_css_id":"",
         "form_page_view_css_class":"",
@@ -105,7 +105,7 @@
         "form_model_parameter":"",
 
         "item_parent_menu_id":"",
-        "item_theme_id":"7010",
+        "item_theme_id":"",
         "item_page_view_id":"8290",
         "item_page_view_css_id":"",
         "item_page_view_css_class":"",
@@ -123,7 +123,7 @@
         "item_model_parameter":"",
 
         "list_parent_menu_id":"",
-        "list_theme_id":"7010",
+        "list_theme_id":"",
         "list_page_view_id":"8230",
         "list_page_view_css_id":"",
         "list_page_view_css_class":"",
@@ -236,8 +236,8 @@
         "editor_metadata_column10":"",
 
         "form_parent_menu_id":"11102",
-        "form_theme_id":"7020",
-        "form_page_view_id":"8030",
+        "form_theme_id":"",
+        "form_page_view_id":"8010",
         "form_page_view_css_id":"",
         "form_page_view_css_class":"",
         "form_template_view_id":"9310",
@@ -254,7 +254,7 @@
         "form_model_parameter":"",
 
         "item_parent_menu_id":"11102",
-        "item_theme_id":"7020",
+        "item_theme_id":"",
         "item_page_view_id":"8050",
         "item_page_view_css_id":"",
         "item_page_view_css_class":"",

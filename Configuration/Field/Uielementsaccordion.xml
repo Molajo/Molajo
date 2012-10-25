@@ -1,1 +1,1 @@
-<field name="uielementsaccordion" type="integer" datalist="Templates" null="0" default="0"/>
+<field name="uielementsaccordion" type="integer" datalist="Templates" null="1" default=""/>

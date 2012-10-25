@@ -1,1 +1,1 @@
-<field name="uinavigationlinklist" type="integer" datalist="Templates" null="0" default="0"/>
+<field name="uinavigationlinklist" type="integer" datalist="Templates" null="1" default=""/>

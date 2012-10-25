@@ -1,1 +1,1 @@
-<field name="uitabgroupclass" type="char" null="0" default=" "/>
+<field name="uitabgroupclass" type="char" null="1" default=" "/>

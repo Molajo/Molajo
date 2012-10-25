@@ -159,6 +159,8 @@ Class ExtensionHelper
             $query_results->table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
         }
 
+
+
         if ($query_results === false || $query_results === null) {
 
             echo 'Extension ID ' . $extension_id . '<br />';

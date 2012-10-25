@@ -59,8 +59,8 @@ class FieldsPlugin extends Plugin
             foreach ($normalFields as $field) {
 
                 $row = new \stdClass();
+				$row->id = $field['name'];
                 $row->value = $field['name'];
-                $row->id = $field['name'];
 
                 $normalFieldArray[] = $row;
 				$fieldArray[] = $row;
@@ -71,70 +71,70 @@ class FieldsPlugin extends Plugin
 
                 if ($field['type'] == 'datetime') {
 					$row = new \stdClass();
-					$row->value = $field['name'] . '_n_days_ago';
 					$row->id = $field['name'] . '_n_days_ago';
+					$row->value = $field['name'] . '_n_days_ago';
 					$fieldArray[] = $row;
 
 					$row = new \stdClass();
-					$row->value = $field['name'] . '_ccyy';
 					$row->id = $field['name'] . '_ccyy';
+					$row->value = $field['name'] . '_ccyy';
 					$fieldArray[] = $row;
 
 					$row = new \stdClass();
-					$row->value = $field['name'] . '_mm';
 					$row->id = $field['name'] . '_mm';
+					$row->value = $field['name'] . '_mm';
 					$fieldArray[] = $row;
 
 					$row = new \stdClass();
-					$row->value = $field['name'] . '_dd';
 					$row->id = $field['name'] . '_dd';
+					$row->value = $field['name'] . '_dd';
 					$fieldArray[] = $row;
 
 					$row = new \stdClass();
-					$row->value = $field['name'] . '_month_name_abbr';
 					$row->id = $field['name'] . '_month_name_abbr';
+					$row->value = $field['name'] . '_month_name_abbr';
 					$fieldArray[] = $row;
 
                     $row = new \stdClass();
+					$row->id = $field['name'] . '_month_name';
                     $row->value = $field['name'] . '_month_name';
-                    $row->id = $field['name'] . '_month_name';
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
+					$row->id = $field['name'] . '_time';
                     $row->value = $field['name'] . '_time';
-                    $row->id = $field['name'] . '_time';
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
+					$row->id = $field['name'] . '_day_number';
                     $row->value = $field['name'] . '_day_number';
-                    $row->id = $field['name'] . '_day_number';
                     $fieldArray[] = $row;
 
 					$row = new \stdClass();
-					$row->value = $field['name'] . '_day_name_abbr';
 					$row->id = $field['name'] . '_day_name_abbr';
+					$row->value = $field['name'] . '_day_name_abbr';
 					$fieldArray[] = $row;
 
 					$row = new \stdClass();
-					$row->value = $field['name'] . '_day_name';
 					$row->id = $field['name'] . '_day_name';
+					$row->value = $field['name'] . '_day_name';
 					$fieldArray[] = $row;
                 }
 
                 if ($field['type'] == 'text') {
                     $row = new \stdClass();
+					$row->id = $field['name'] . '_introductory';
                     $row->value = $field['name'] . '_introductory';
-                    $row->id = $field['name'] . '_introductory';
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
+					$row->id = $field['name'] . '_fulltext';
                     $row->value = $field['name'] . '_fulltext';
-                    $row->id = $field['name'] . '_fulltext';
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
+					$row->id = $field['name'] . '_snippet';
                     $row->value = $field['name'] . '_snippet';
-                    $row->id = $field['name'] . '_snippet';
                     $fieldArray[] = $row;
                 }
 
@@ -144,8 +144,8 @@ class FieldsPlugin extends Plugin
         if ($status == 0) {
         } else {
             $row = new \stdClass();
+			$row->id = 'status_name';
             $row->value = 'status_name';
-            $row->id = 'status_name';
 
             $fieldArray[] = $row;
         }
@@ -160,8 +160,8 @@ class FieldsPlugin extends Plugin
                         if (trim($f) == '') {
                         } else {
                             $row = new \stdClass();
+							$row->id = $field['alias'] . '_' . $f;
                             $row->value =  $field['alias'] . '_' . $f;
-                            $row->id = $field['alias'] . '_' . $f;
 
                             $fieldArray[] = $row;
                         }
@@ -174,8 +174,8 @@ class FieldsPlugin extends Plugin
         if (count($customfields) > 0) {
             foreach ($customfields as $field) {
                 $row = new \stdClass();
+				$row->id = 'customfield' . '_' . $field['name'];
                 $row->value = $field['name'] . ' (customfield)';
-                $row->id = 'customfield' . '_' . $field['name'];
 
                 $fieldArray[] = $row;
             }
@@ -185,14 +185,15 @@ class FieldsPlugin extends Plugin
         if (count($metadata) > 0) {
             foreach ($metadata as $field) {
                 $row = new \stdClass();
+				$row->id = 'metadata' . '_' . $field['name'];
                 $row->value = 'metadata' . '_' . $field['name'];
-                $row->id = 'metadata' . '_' . $field['name'];
 
                 $fieldArray[] = $row;
             }
         }
 
-        sort($fieldArray);
+        asort($fieldArray);
+		asort($normalFieldArray);
 
         Services::Registry()->set('Datalist', $table_registry_name . 'Fields', $fieldArray);
 		Services::Registry()->set('Datalist', $table_registry_name . 'Fieldsstandard', $normalFieldArray);

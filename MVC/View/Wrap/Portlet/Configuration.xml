@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Wrap" version="1.0">
+    <name>VIEW_WRAP_PORTLET_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_WRAP_PORTLET_DESCRIPTION</description>
+    <model name="Portlet" extends="WrapviewsSystem">
+        <customfields>
+            <customfield name="parameters">
+                <field name="display_title" type="boolean" null="0" default="1"/>
+                <field name="display_body" type="boolean" null="0" default="1"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>
