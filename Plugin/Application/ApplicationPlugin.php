@@ -152,7 +152,10 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageTitle($item_indicator = 0)
     {
-        $title = '<strong> Molajo</strong> '. Services::Language()->translate('Site');
+		$title = Services::Registry()->get('Configuration', 'application_name');
+		if ($title == '') {
+        	$title = '<strong> Molajo</strong> '. Services::Language()->translate(APPLICATION_NAME);
+		}
 
         Services::Registry()->set('Plugindata', 'HeaderTitle', $title);
 

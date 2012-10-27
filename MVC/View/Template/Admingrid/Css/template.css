@@ -3,26 +3,7 @@
 @copyright   Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.
 @license     GNU GPL v 2, or later and MIT, see License folder
 */
-ol.batch {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border: none;
-}
-
-ol.batch li {
-    float: left;
-    margin: 1em;
-    display: inline;
-}
-
 span.orderingicons { float:left; width: 40%; text-align: left; letter-spacing: 1em; }
 span.ordering {float:right; width: 40%; text-align: right;  }
 span.featured, span.notfeatured, span.stickied, span.notstickied { margin-left:auto; margin-right:auto; width:70%;}
-
-tr.odd {background: #DCDCDC}
-th {background: #666666 }
-th span {color: #FFFFFF }
-.grid-filters {float:left; clear:both}
-table.responsive {clear:both}
 td.center {text-align: center;}

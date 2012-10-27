@@ -417,7 +417,6 @@ class Includer
 		return true;
 	}
 
-
 	/**
 	 * Process Wrap Options
 	 *

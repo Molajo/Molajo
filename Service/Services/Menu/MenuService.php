@@ -67,6 +67,7 @@ Class MenuService
 
         $m->model->query->where($m->model->db->qn('current_menuitem.id')
             . ' = ' . (int) $current_menuitem_id);
+		$m->model->query->where($m->model->db->qn('a.status') . ' > 0');
 
         $m->model->query->order('a.lft DESC');
 
@@ -138,12 +139,19 @@ Class MenuService
         $m->model->query->select($m->model->db->qn('a.home'));
         $m->model->query->select($m->model->db->qn('a.parameters'));
         $m->model->query->select($m->model->db->qn('a.ordering'));
+
         $m->model->query->where($m->model->db->qn('a.extension_id') . ' = ' . (int) $menu_id);
+		$m->model->query->where($m->model->db->qn('a.status') . ' > 0');
+
+		$m->model->query->where($m->model->db->qn('catalog.enabled') . ' = 1');
 
         $m->model->query->order('a.lft');
 
         $m->set('model_offset', 0);
         $m->set('model_count', 999999);
+		$m->set('get_customfields', 2);
+		$m->set('use_special_joins', 1);
+		$m->set('process_plugins', 1);
 
         $query_results = $m->getData('list');
         if ($query_results === false) {
