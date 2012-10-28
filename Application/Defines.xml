@@ -28,8 +28,15 @@
     <define name="CATALOG_TYPE_MENUITEM" value="11000"/>
     <define name="CATALOG_TYPE_RESOURCE" value="12000"/>
 
-    <define name="CATALOG_TYPE_EXTENSION_BEGIN" value="4000"/>
-    <define name="CATALOG_TYPE_EXTENSION_END" value="120000"/>
+    <define name="MENUITEM_TYPE_APPLICATION" value="Application"/>
+    <define name="MENUITEM_TYPE_CONFIGURATION" value="Configuration"/>
+    <define name="MENUITEM_TYPE_DASHBOARD" value="Dashboard"/>
+    <define name="MENUITEM_TYPE_EDIT" value="Edit"/>
+    <define name="MENUITEM_TYPE_GRID" value="Grid"/>
+    <define name="MENUITEM_TYPE_LINK" value="Link"/>
+    <define name="MENUITEM_TYPE_NEW" value="New"/>
+    <define name="MENUITEM_TYPE_PROFILE" value="Profile"/>
+    <define name="MENUITEM_TYPE_TEMPLATE" value="Template"/>
 
     <define name="STATUS_ARCHIVED" value="2"/>
     <define name="STATUS_PUBLISHED" value="1"/>

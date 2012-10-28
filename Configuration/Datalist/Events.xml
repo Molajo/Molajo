@@ -1,6 +1,0 @@
-<datalist name="Events">
-    <model
-            name="Events"
-            extends="PlugindataDatalist"
-            registry_entry="Events"/>
-</datalist>

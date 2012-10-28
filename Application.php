@@ -566,11 +566,6 @@ Class Application
             include_once BASE_FOLDER . '/defines.php';
         }
 
-        if (defined('CONFIGURATION_FOLDER')) {
-        } else {
-            define('CONFIGURATION_FOLDER', MOLAJO_FOLDER . '/Configuration');
-        }
-
         if (defined('EXTENSIONS')) {
         } else {
             define('EXTENSIONS', BASE_FOLDER . '/Extension');
@@ -692,7 +687,7 @@ Class Application
         if (defined('SITE_BASE_URL')) {
         } else {
 
-            $sites = ConfigurationService::getFile('Application', 'Sites');
+            $sites = ConfigurationService::getFile('Site', 'Sites');
 
             foreach ($sites->site as $single) {
                 if (strtolower((string) $single->site_base_url) == strtolower($site_base_url)) {
@@ -700,6 +695,7 @@ Class Application
                     define('SITE_BASE_PATH', BASE_FOLDER . (string) $single->site_base_folder);
                     define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string) $single->site_base_folder);
                     define('SITE_ID', $single->id);
+					define('SITE_NAME', $single->name);
                     break;
                 }
             }

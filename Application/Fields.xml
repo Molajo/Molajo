@@ -7,9 +7,11 @@
         <modeltype>Language</modeltype>
         <modeltype>Menuitem</modeltype>
         <modeltype>Page</modeltype>
+        <modeltype>Parse</modeltype>
         <modeltype>Plugin</modeltype>
         <modeltype>Resource</modeltype>
         <modeltype>Service</modeltype>
+        <modeltype>Site</modeltype>
         <modeltype>System</modeltype>
         <modeltype>Table</modeltype>
         <modeltype>Template</modeltype>

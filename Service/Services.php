@@ -7,6 +7,7 @@
 namespace Molajo\Service;
 
 use Molajo\Application;
+use Molajo\Service\Services\Configuration\ConfigurationService;
 
 defined('MOLAJO') or die;
 
@@ -95,7 +96,13 @@ Class Services
         $this->message = array();
 
         /** start services in this sequence */
-        $services = simplexml_load_file(CONFIGURATION_FOLDER . '/Application/services.xml');
+		$services = ConfigurationService::getFile('Service', 'Services');
+		if ($services === false) {
+			//throw error
+			//error
+			echo 'Cannot file Services File ';
+			die;
+		}
 
         foreach ($services->service as $item) {
             $connectionSucceeded = true;

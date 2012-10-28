@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Configuration" extends="MenuitemsSystem">
+    <customfields>
+        <customfield name="parameters">
+            <include name="ParametersConfiguration"/>
+        </customfield>
+    </customfields>
+</model>

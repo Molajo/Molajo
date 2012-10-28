@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Edit" extends="MenuitemsSystem">
+    <customfields>
+        <customfield name="parameters">
+            <include name="ParametersEdit"/>
+        </customfield>
+    </customfields>
+</model>

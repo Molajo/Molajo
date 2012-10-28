@@ -176,7 +176,7 @@ Class ParseService
          *      for the set of includes defined in the includes-page.xml
          */
         if ($overrideIncludesPageXML === false) {
-            $sequence = Services::Configuration()->getFile('Application', 'Includespage');
+            $sequence = Services::Configuration()->getFile('Parse', 'Includespage');
         } else {
             $sequence = $overrideIncludesPageXML;
         }
@@ -187,7 +187,7 @@ Class ParseService
 
         /** Load final xml in order to remove from search for loop during initial runs */
         if ($overrideIncludesFinalXML === false) {
-            $final = Services::Configuration()->getFile('Application', 'Includesfinal');
+            $final = Services::Configuration()->getFile('Parse', 'Includesfinal');
         } else {
             $final = $overrideIncludesFinalXML;
         }

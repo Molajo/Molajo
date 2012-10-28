@@ -136,12 +136,12 @@ Class CatalogHelper
 				$catalog_type_id = 0;
 		*/
 
-		/* test 3: Application 2, Site 1- Retrieve Item: for Catalog ID 1075  */
+		/* test 3: Application 2, Site 1- Retrieve Item: for Catalog ID 1075
 		$catalog_id = 1075;
 		$url_sef_request = '';
 		$source_id = 0;
 		$catalog_type_id = 0;
-
+         */
         if ((int) $catalog_id > 0) {
 
         } elseif ((int) $source_id > 0 && (int) $catalog_type_id > 0) {
@@ -174,7 +174,9 @@ Class CatalogHelper
 		$m->model->query->where($m->model->db->qn($prefix)
 			. '.'
 			. $m->model->db->qn('menuitem_type')
-			. ' <> "link"');
+			. ' <> '
+			. $m->model->db->q(MENUITEM_TYPE_LINK)
+		);
 
 		$m->model->query->where($m->model->db->qn($prefix)
 			. '.'
