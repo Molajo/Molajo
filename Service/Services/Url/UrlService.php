@@ -45,55 +45,6 @@ Class UrlService
     }
 
     /**
-     * Get either a Gravatar URL or complete image tag for a specified email address.
-     *
-     * @param string  $email
-     * @param string  $size       Size in pixels, defaults to 80px [ 1 - 512 ]
-     * @param string  $type       Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-     * @param string  $rating     Maximum rating (inclusive) [ g | pg | r | x ]
-     * @param boolean $image      True to return a complete IMG tag False for just the URL
-     * @param array   $attributes Optional, additional key/value attributes to include in the IMG tag
-     *
-     * @return Linked image or URL
-     *
-     * @source http://gravatar.com/site/implement/images/php/
-     */
-    public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g',
-                                $image = false, $attributes = array(), $align = 'left')
-    {
-
-        if ((int) $size == 0) {
-            $size = Services::Registry()->get('Configuration', 'gravatar_size', 80);
-            $type = Services::Registry()->get('Configuration', 'gravatar_type', 'mm');
-            $rating = Services::Registry()->get('Configuration', 'gravatar_rating', 'pg');
-            $image = Services::Registry()->get('Configuration', 'gravatar_image', 0);
-        }
-
-        /**
-        if ($align == 'right') {
-            $css = '.gravatar { float:right; margin: 0 0 15px 15px; }';
-        } else {
-            $css = '.gravatar { float:left; margin: 0 15px 15px 0; }';
-        }
-        Services::Asset()->addCssDeclaration($css, 'text/css');
-        */
-        $url = 'http://www.gravatar.com/avatar/';
-        $url .= md5(strtolower(trim($email)));
-        $url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;
-        if ($image) {
-            $url = '<img class="gravatar" src="' . $url . '"';
-            if (count($attributes) > 0) {
-                foreach ($attributes as $key => $val) {
-                    $url .= ' ' . $key . '="' . $val . '"';
-                }
-            }
-            $url .= ' />';
-        }
-
-        return $url;
-    }
-
-    /**
      * getURL Retrieves URL based on Catalog ID
      *
      * @param integer $catalog_id
@@ -137,7 +88,56 @@ Class UrlService
         return BASE_URL . APPLICATION_URL_PATH . $path;
     }
 
-    /**
+	/**
+	 * Get either a Gravatar URL or complete image tag for a specified email address.
+	 *
+	 * @param string  $email
+	 * @param string  $size       Size in pixels, defaults to 80px [ 1 - 512 ]
+	 * @param string  $type       Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+	 * @param string  $rating     Maximum rating (inclusive) [ g | pg | r | x ]
+	 * @param boolean $image      True to return a complete IMG tag False for just the URL
+	 * @param array   $attributes Optional, additional key/value attributes to include in the IMG tag
+	 *
+	 * @return Linked image or URL
+	 *
+	 * @source http://gravatar.com/site/implement/images/php/
+	 */
+	public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g',
+								$image = false, $attributes = array(), $align = 'left')
+	{
+
+		if ((int) $size == 0) {
+			$size = Services::Registry()->get('Configuration', 'gravatar_size', 80);
+			$type = Services::Registry()->get('Configuration', 'gravatar_type', 'mm');
+			$rating = Services::Registry()->get('Configuration', 'gravatar_rating', 'pg');
+			$image = Services::Registry()->get('Configuration', 'gravatar_image', 0);
+		}
+
+		/**
+		if ($align == 'right') {
+		$css = '.gravatar { float:right; margin: 0 0 15px 15px; }';
+		} else {
+		$css = '.gravatar { float:left; margin: 0 15px 15px 0; }';
+		}
+		Services::Asset()->addCssDeclaration($css, 'text/css');
+		 */
+		$url = 'http://www.gravatar.com/avatar/';
+		$url .= md5(strtolower(trim($email)));
+		$url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;
+		if ($image) {
+			$url = '<img class="gravatar" src="' . $url . '"';
+			if (count($attributes) > 0) {
+				foreach ($attributes as $key => $val) {
+					$url .= ' ' . $key . '="' . $val . '"';
+				}
+			}
+			$url .= ' />';
+		}
+
+		return $url;
+	}
+
+	/**
      * obfuscate Email
      *
      * @param   $email_address

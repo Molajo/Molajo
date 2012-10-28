@@ -664,7 +664,25 @@ class Controller
             return;
         }
 
-        /** No results */
+		$this->query_results = $this->addCustomFields($query_results, $query_object);
+
+		return;
+
+	}
+
+	/**
+	 * Adds Custom Fields and Children to Query Results
+	 *
+	 * Called by Controller and Extension Helper (Extension Queries made once, then parameters built, as needed)
+	 *
+	 * @param $query_results
+	 * @param $query_object
+	 *
+	 * @return bool
+	 * @since  1.0
+	 */
+	public function addCustomFields($query_results, $query_object, $external = 0)
+	{
         if (count($query_results) > 0) {
         } else {
             return false;
@@ -716,9 +734,15 @@ class Controller
             $q[] = $results;
         }
 
-        $this->query_results = $q;
+		/** Just hijacking this to build registry special fields for specific extension (from saved extension registry) */
+		if ($external == 1) {
+			if (is_array($q)) {
+				return $q[0];
+			}
+			return $q;
+		}
 
-        return;
+        return $q;
     }
 
     /**

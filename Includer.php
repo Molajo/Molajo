@@ -450,7 +450,7 @@ class Includer
 				$wrap_title = 'None';
 			}
 			$wrap_id = Helpers::Extension()
-				->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, $wrap_title);
+				->getInstanceID(CATALOG_TYPE_WRAP_VIEW, $wrap_title);
 			Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_id);
 		}
 

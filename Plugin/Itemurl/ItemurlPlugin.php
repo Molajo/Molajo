@@ -39,14 +39,29 @@ class ItemurlPlugin extends Plugin
             return true;
         }
 
-        if (isset($this->data->catalog_id)) {
-            $newFieldValue = Services::Url()->getUrl($this->data->catalog_id);
-            $this->saveField(null, 'catalog_id_url', $newFieldValue);
+		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
-        } elseif (isset($this->data->sef_request)) {
-            $newFieldValue = Services::Url()->getApplicationURL($this->data->sef_request);
-            $this->saveField(null, 'catalog_id_url', $newFieldValue);
-        }
+			if (isset($this->data->catalog_sef_request)) {
+				$newFieldValue = Services::Url()->getApplicationURL($this->data->catalog_sef_request);
+				$this->saveField(null, 'catalog_id_url', $newFieldValue);
+
+			} elseif (isset($this->data->sef_request)) {
+				$newFieldValue = Services::Url()->getApplicationURL($this->data->sef_request);
+				$this->saveField(null, 'catalog_id_url', $newFieldValue);
+
+			} elseif (isset($this->data->catalog_id)) {
+				$newFieldValue = Services::Url()->getUrl($this->data->catalog_id);
+				$this->saveField(null, 'catalog_id_url', $newFieldValue);
+			}
+
+		} else {
+
+			if (isset($this->data->catalog_id)) {
+				$newFieldValue = Services::Url()->getUrl($this->data->catalog_id);
+				$this->saveField(null, 'catalog_id_url', $newFieldValue);
+			}
+
+		}
 
         $fields = $this->retrieveFieldsByType('url');
 

@@ -20,10 +20,10 @@
     <service>Session</service>
     <service>Response</service>
     <service>Redirect</service>
+    <service>User</service>
     <service>Language</service>
     <service>Date</service>
     <service>Asset</service>
-    <service>User</service>
     <service>Authorisation</service>
     <service>Metadata</service>
     <service>Image</service>

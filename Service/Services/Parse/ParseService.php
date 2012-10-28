@@ -592,10 +592,6 @@ Class ParseService
                         VERBOSE
                     );
 
-//echo '<pre>';
-//var_dump($attributes);
-//echo '</pre>';
-
                     $output = trim($rc->process($attributes));
 
 //echo '<br />';

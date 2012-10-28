@@ -91,6 +91,14 @@ Class CacheService
      */
     protected $cache_model = '';
 
+	/**
+	 * Count Queries
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	protected $count_queries = '';
+
     /**
      * getInstance
      *
@@ -252,6 +260,10 @@ Class CacheService
      */
     public function get($type, $key)
     {
+		if (strtolower($type) == 'query') {
+			echo 'Query Count : ' . $this->count_queries++;
+		}
+
         $continue = $this->verify_cache($type);
         if ($continue === true) {
         } else {

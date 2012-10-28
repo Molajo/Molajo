@@ -86,7 +86,7 @@ Class ViewHelper
         Services::Registry()->set('Parameters', $type . '_view_namespace', $this->getNamespace($node, $type));
 
         /** Retrieve the query results */
-        $item = Helpers::Extension()->get($id, $type, $node);
+        $item = Helpers::Extension()->get($id, $type, $node, 1);
 
         if (count($item) == 0 || $item === false) {
             return false;

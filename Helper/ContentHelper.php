@@ -350,7 +350,10 @@ Class ContentHelper
             }
         }
 
-        /** Set Theme, Page, Template and Wrap */
+		/** Retrieve array of Extension Instances Authorised for User  */
+		Helpers::Extension()->setAuthorisedExtensions(0, 'Table', 'ExtensionInstances', 'List', NULL);
+
+		/** Set Theme, Page, Template and Wrap */
         Helpers::Extension()->setThemePageView();
 
         Helpers::Extension()->setTemplateWrapModel();

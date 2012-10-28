@@ -113,6 +113,7 @@ Class Helpers
         $helpers = Services::Filesystem()->folderFiles(MOLAJO_FOLDER . '/' . 'Helper');
 
         foreach ($helpers as $filename) {
+
             $try = true;
             $connection = '';
 

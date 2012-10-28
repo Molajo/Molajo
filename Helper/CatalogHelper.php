@@ -52,7 +52,6 @@ Class CatalogHelper
      */
     public function getRouteCatalog()
     {
-
         $item = $this->get(
             Services::Registry()->get('Parameters', 'request_catalog_id'),
             Services::Registry()->get('Parameters', 'request_url')
@@ -122,6 +121,27 @@ Class CatalogHelper
      */
     public function get($catalog_id = 0, $url_sef_request = '', $source_id = 0, $catalog_type_id = 0)
     {
+
+		/* test 1: Application 2, Site 1 - Retrieve Catalog ID: 831 using Source ID: 1 and Catalog Type ID: 1000
+				$catalog_id = 0;
+				$url_sef_request = '';
+				$source_id = 1;
+				$catalog_type_id = 1000;
+		*/
+
+		/* test 2: Application 2, Site 1- Retrieve Catalog ID: 1075 using $url_sef_request = 'articles'
+				$catalog_id = 0;
+				$url_sef_request = 'articles';
+				$source_id = 0;
+				$catalog_type_id = 0;
+		*/
+
+		/* test 3: Application 2, Site 1- Retrieve Item: for Catalog ID 1075  */
+		$catalog_id = 1075;
+		$url_sef_request = '';
+		$source_id = 0;
+		$catalog_type_id = 0;
+
         if ((int) $catalog_id > 0) {
 
         } elseif ((int) $source_id > 0 && (int) $catalog_type_id > 0) {
@@ -145,12 +165,26 @@ Class CatalogHelper
             return false;
         }
 
-        $m->set('id', (int) $catalog_id);
         $m->set('use_special_joins', 1);
         $m->set('process_plugins', 0);
 
+		$prefix = $m->get('primary_prefix', 'a');
+		$key = $m->get('primary_key');
+
+		$m->model->query->where($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn('menuitem_type')
+			. ' <> "link"');
+
+		$m->model->query->where($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn($key)
+			. ' = '
+			. (int) $catalog_id);
+
         $item = $m->getData('item');
-        if (count($item) == 0) {
+
+        if (count($item) == 0 || $item === false) {
             return array();
         }
 
@@ -162,6 +196,52 @@ Class CatalogHelper
 
         return $item;
     }
+
+	/**
+	 * Retrieves Catalog ID for the specified Catalog Type ID and Source ID (From content)
+	 *
+	 * @param null $catalog_type_id
+	 * @param null $source_id
+	 *
+	 * @return bool|mixed
+	 * @since  1.0
+	 */
+	public function getID($catalog_type_id, $source_id = null)
+	{
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$m = new $controllerClass();
+
+		$results = $m->connect('Table', 'Catalog');
+		if ($results === false) {
+			return false;
+		}
+
+		$prefix = $m->get('primary_prefix', 'a');
+		$key = $m->get('primary_key', 'id');
+
+		$m->model->query->select($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn($key));
+
+		$m->model->query->where($m->model->db->qn($prefix)
+			. '.' . $m->model->db->qn('catalog_type_id')
+			. ' = '
+			. (int) $catalog_type_id);
+
+		$m->model->query->where($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn('source_id')
+			. ' = '
+			. (int) $source_id);
+
+		$m->model->query->where($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn('application_id')
+			. ' = '
+			. $m->model->db->q(APPLICATION_ID));
+
+		return $m->getData('result');
+	}
 
     /**
      * Retrieves Catalog ID for the Request SEF URL
@@ -183,54 +263,27 @@ Class CatalogHelper
 
         $m->set('use_special_joins', 1);
         $m->set('process_plugins', 0);
+		$key = $m->get('primary_key', 'id');
 
-        $m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
+		$prefix = $m->get('primary_prefix', 'a');
 
-        $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('sef_request')
-                . ' = '
-                . $m->model->db->q($url_sef_request));
+        $m->model->query->select($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn($key));
 
-        $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('application_id')
+        $m->model->query->where($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn('sef_request')
+			. ' = '
+			. $m->model->db->q($url_sef_request));
+
+        $m->model->query->where($m->model->db->qn($prefix)
+			. '.' . $m->model->db->qn('application_id')
             . ' = '
             . $m->model->db->q(APPLICATION_ID));
 
-        $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('enabled')
-            . ' = 1');
-
-        return $m->getData('result');
-    }
-
-    /**
-     * Retrieves Catalog ID for the specified Catalog Type ID and Source ID (From content)
-     *
-     * @param null $catalog_type_id
-     * @param null $source_id
-     *
-     * @return bool|mixed
-     * @since  1.0
-     */
-    public function getID($catalog_type_id, $source_id = null)
-    {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('Table', 'Catalog');
-        if ($results === false) {
-            return false;
-        }
-
-        $m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('id'));
-
-        $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('catalog_type_id')
-            . ' = ' . (int) $catalog_type_id);
-
-        $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('source_id')
-            . ' = ' . (int) $source_id);
-
-        $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('application_id')
-            . ' = '
-            . $m->model->db->q(APPLICATION_ID));
-
-        $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('enabled')
+        $m->model->query->where($m->model->db->qn($prefix)
+			. '.' . $m->model->db->qn('enabled')
             . ' = 1');
 
         return $m->getData('result');
@@ -253,9 +306,18 @@ Class CatalogHelper
             return false;
         }
 
-        $m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('redirect_to_id'));
+		$prefix = $m->get('primary_prefix', 'a');
+		$key = $m->get('primary_key', 'id');
 
-        $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('id') . ' = ' . (int) $catalog_id);
+        $m->model->query->select($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn('redirect_to_id'));
+
+        $m->model->query->where($m->model->db->qn($prefix)
+			. '.'
+			. $m->model->db->qn($key)
+			. ' = '
+			. (int) $catalog_id);
 
         $result = $m->getData('result');
 
@@ -290,9 +352,18 @@ Class CatalogHelper
                 return false;
             }
 
-            $m->model->query->select($m->model->db->qn('a') . '.' . $m->model->db->qn('sef_request'));
+			$prefix = $m->get('primary_prefix', 'a');
+			$key = $m->get('primary_key', 'id');
 
-            $m->model->query->where($m->model->db->qn('a') . '.' . $m->model->db->qn('id') . ' = ' . (int) $catalog_id);
+            $m->model->query->select($m->model->db->qn($prefix)
+				. '.'
+				. $m->model->db->qn('sef_request'));
+
+            $m->model->query->where($m->model->db->qn($prefix)
+				. '.'
+				. $m->model->db->qn($key)
+				. ' = '
+				. (int) $catalog_id);
 
             $url = $m->getData('result');
 
