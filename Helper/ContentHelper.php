@@ -101,7 +101,6 @@ Class ContentHelper
     {
 
         $item = $this->get($id, $model_type, $model_name, 'item');
-
         if (count($item) == 0) {
             return Services::Registry()->set('Parameters', 'status_found', false);
         }
@@ -277,7 +276,10 @@ Class ContentHelper
 
         Services::Registry()->set('Parameters', 'page_type', $pageTypeNamespace);
 
-        /** I. $parameterNamespace: For an article, would be ArticlesResourceParameters */
+		/** Retrieve array of Extension Instances Authorised for User  */
+		Helpers::Extension()->setAuthorisedExtensions(0, 'Table', 'ExtensionInstances', 'List', NULL);
+
+		/** I. $parameterNamespace: For an article, would be ArticlesResourceParameters */
 
         /** 1. $pageTypeNamespace ex. Item, Menuitem, List, Form		*/
         $newParameters = Services::Registry()->get($parameterNamespace, $pageTypeNamespace . '*');
@@ -349,9 +351,6 @@ Class ContentHelper
                 }
             }
         }
-
-		/** Retrieve array of Extension Instances Authorised for User  */
-		Helpers::Extension()->setAuthorisedExtensions(0, 'Table', 'ExtensionInstances', 'List', NULL);
 
 		/** Set Theme, Page, Template and Wrap */
         Helpers::Extension()->setThemePageView();
