@@ -50,7 +50,6 @@
         </foreignkeys>
 
         <children>
-            <child name="Useractivity" type="Table" join="user_id"/>
             <child name="Userapplications" type="Table" join="user_id"/>
             <child name="Usergroups" type="Table" join="user_id"/>
             <child name="Userviewgroups" type="Table" join="user_id"/>

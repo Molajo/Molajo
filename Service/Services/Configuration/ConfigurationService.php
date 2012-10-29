@@ -276,7 +276,7 @@ Class ConfigurationService
 		$model_type = trim(ucfirst(strtolower($model_type)));
 		$model_name = trim(ucfirst(strtolower($model_name)));
 
-		echo 'Type: ' . $model_type . ' ' . $model_name . '<br />';
+//		echo 'Type: ' . $model_type . ' ' . $model_name . '<br />';
 
 		$path = false;
 
@@ -285,14 +285,12 @@ Class ConfigurationService
 			if (file_exists($path)) {
 				return $path;
 			}
-
 			//throw error
 			echo 'ConfigurationService::locateFile() Cannot find Application Sites File ';
 			die;
 		}
 
 		if ($model_type == 'Service') {
-
 			$path = EXTENSIONS . '/Service/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;

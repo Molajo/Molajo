@@ -175,7 +175,6 @@ class Controller
 	public function connect($model_type = 'Table', $model_name = null, $model_class = 'ReadModel')
 	{
 		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-		echo $table_registry_name . '<br />';
 		$profiler_message = '';
 
 		if (Services::Registry()->exists($table_registry_name) === true) {
@@ -183,78 +182,20 @@ class Controller
 			$profiler_message = ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
 
 		} else {
-			$profiler_message = $this->getTableRegistry($table_registry_name, $model_type, $model_name);
-		}
+			$cached_output = Services::Cache()->get('Model', $table_registry_name);
 
-		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
-		} else {
-			ob_start();
-			Services::Registry()->get($this->table_registry_name, '*');
-			$profiler_message .= ob_get_contents();
-			ob_end_clean();
-		}
+			if ($cached_output === false) {
+				$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
+				$cache_it = Services::Registry()->getArray($table_registry_name, false);
+				Services::Cache()->set('Model', $table_registry_name, $cache_it);
+				$profiler_message = ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService';
 
-		Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
-
-		/* 2. Instantiate Model Class */
-		$modelClass = 'Molajo\\MVC\\Model\\' . $model_class;
-
-		try {
-			$this->model = new $modelClass();
-
-		} catch (\Exception $e) {
-			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
-		}
-
-		/** 3. Model DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
-		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
-		if ($dbo === false) {
-			echo 'DBO for Table Registry: ' . $this->table_registry_name . ' could not be loaded. <br />';
-			return false;
-		}
-
-		$this->model->set('db', Services::$dbo()->get('db'));
-		$this->model->set('query', Services::$dbo()->getQuery());
-		$this->model->set('null_date', Services::$dbo()->get('db')->getNullDate());
-		$this->model->set('table_registry_name', $this->table_registry_name);
-
-		if ($dbo == 'JDatabase') {
-			$dateClass = 'JPlatform\\date\\JDate';
-			$dateFromJDate = new $dateClass('now');
-			$now = $dateFromJDate->toSql(false, Services::$dbo()->get('db'));
-			$this->model->set('now', $now);
-			$this->model->query->clear();
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Connect to the Table Registry for the first time.
-	 *
-	 * @param $table_registry_name
-	 * @param $model_type
-	 * @param $model_name
-	 * @param $profiler_message
-	 *
-	 * @return bool
-	 * @since  1.0
-	 */
-	protected function getTableRegistry($table_registry_name, $model_type, $model_name)
-	{
-		$cached_output = Services::Cache()->get('Model', $table_registry_name);
-
-		if ($cached_output === false) {
-			$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
-			$cache_it = Services::Registry()->getArray($table_registry_name, false);
-			Services::Cache()->set('Model', $table_registry_name, $cache_it);
-			$profiler_message = ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService';
-
-		} else {
-			$this->table_registry_name = $table_registry_name;
-			Services::Registry()->createRegistry($table_registry_name);
-			Services::Registry()->loadArray($table_registry_name, $cached_output);
-			$profiler_message = ' Table Registry ' . $this->table_registry_name . ' loaded from cache ';
+			} else {
+				$this->table_registry_name = $table_registry_name;
+				Services::Registry()->createRegistry($table_registry_name);
+				Services::Registry()->loadArray($table_registry_name, $cached_output);
+				$profiler_message = ' Table Registry ' . $this->table_registry_name . ' loaded from Cache. ';
+			}
 		}
 
 		/** Serialize Options */
@@ -299,7 +240,47 @@ class Controller
 		$this->set('model_count',
 			Services::Registry()->get($this->table_registry_name, 'model_count', 10));
 
-		return $profiler_message;
+		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
+		} else {
+			ob_start();
+			Services::Registry()->get($this->table_registry_name, '*');
+			$profiler_message .= ob_get_contents();
+			ob_end_clean();
+		}
+
+		Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
+
+		/* 2. Instantiate Model Class */
+		$modelClass = 'Molajo\\MVC\\Model\\' . $model_class;
+
+		try {
+			$this->model = new $modelClass();
+
+		} catch (\Exception $e) {
+			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
+		}
+
+		/** 3. Model DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
+		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
+		if ($dbo === false) {
+			echo 'DBO for Table Registry: ' . $this->table_registry_name . ' could not be loaded. <br />';
+			return false;
+		}
+
+		$this->model->set('db', Services::$dbo()->get('db'));
+		$this->model->set('query', Services::$dbo()->getQuery());
+		$this->model->set('null_date', Services::$dbo()->get('db')->getNullDate());
+		$this->model->set('table_registry_name', $this->table_registry_name);
+
+		if ($dbo == 'JDatabase') {
+			$dateClass = 'JPlatform\\date\\JDate';
+			$dateFromJDate = new $dateClass('now');
+			$now = $dateFromJDate->toSql(false, Services::$dbo()->get('db'));
+			$this->model->set('now', $now);
+			$this->model->query->clear();
+		}
+
+		return $this;
 	}
 
 	/**

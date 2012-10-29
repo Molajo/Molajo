@@ -81,10 +81,19 @@ Class UserService
         }
 
         $m->set('id', $this->id);
+		$m->set('get_customfields', 2);
+		$m->set('use_special_joins', 1);
+		$m->set('process_plugins', 1);
+
         $item = $m->getData('item');
         if ($item === false || count($item) == 0) {
             throw new \RuntimeException ('User load() query problem');
         }
+
+		unset($item->customfields);
+		unset($item->metadata);
+		unset($item->parameters);
+		unset($item->password);
 
         /** User Applications */
         $applications = array();
@@ -92,48 +101,54 @@ Class UserService
         foreach ($x as $app) {
             $applications[] = $app->application_id;
         }
+		array_unique($applications);
+
         unset($item->Userapplications);
 
         /** User Groups */
-        $groups = array();
+        $temp = array();
         $x = $item->Usergroups;
         foreach ($x as $group) {
-            $groups[] = $group->group_id;
+            $temp[] = $group->group_id;
         }
 
-        if (in_array(SYSTEM_GROUP_PUBLIC, $groups)) {
+        if (in_array(SYSTEM_GROUP_PUBLIC, $temp)) {
         } else {
-            $groups[] = SYSTEM_GROUP_PUBLIC;
+            $temp[] = SYSTEM_GROUP_PUBLIC;
         }
 
         if ($this->id == 0) {
-            $groups[] = SYSTEM_GROUP_GUEST;
+            $temp[] = SYSTEM_GROUP_GUEST;
         } else {
-            if (in_array(SYSTEM_GROUP_REGISTERED, $groups)) {
+            if (in_array(SYSTEM_GROUP_REGISTERED, $temp)) {
             } else {
-                $groups[] = SYSTEM_GROUP_REGISTERED;
+                $temp[] = SYSTEM_GROUP_REGISTERED;
             }
         }
         unset($item->Usergroups);
+		sort($temp);
+		$groups = array_unique($temp);
 
         /** User View Groups */
-        $viewGroups = array();
+        $temp = array();
         $x = $item->Userviewgroups;
         foreach ($x as $vg) {
-            $viewGroups[] = $vg->view_group_id;
+            $temp[] = $vg->view_group_id;
         }
 
-        if (count($viewGroups) == 0) {
-            $viewGroups = array(SYSTEM_GROUP_PUBLIC, SYSTEM_GROUP_GUEST);
-        }
+        $temp[] = SYSTEM_GROUP_PUBLIC;
+
+		if (in_array(SYSTEM_GROUP_REGISTERED, $temp)) {
+		} else {
+			$temp[] = SYSTEM_GROUP_GUEST;
+		}
+		sort($temp);
+		$viewGroups = array_unique($temp);
+
         unset($item->Userviewgroups);
 
-        /** User Activity */
-        $activity = $item->Useractivity;
-        unset($item->Useractivity);
-
         /** Initialize */
-        Services::Registry()->deleteRegistry('User');
+        Services::Registry()->createRegistry('User');
 
         /** Retrieve each field */
         foreach (get_object_vars($item) as $key => $value) {
@@ -160,18 +175,14 @@ Class UserService
         Services::Registry()->set('User', 'Applications', $applications);
         Services::Registry()->set('User', 'Groups', $groups);
         Services::Registry()->set('User', 'ViewGroups', $viewGroups);
-        Services::Registry()->set('User', 'Activity', $activity);
-/**
-        echo 'User<br />';
-        Services::Registry()->get('User', '*');
 
-        echo '<br />User Parameters<br />';
-        Services::Registry()->get('UserParameters', '*');
+		unset($m);
+		unset($item);
+		unset($applications);
+		unset($groups);
+		unset($viewGroups);
 
-        echo '<br />User Metadata<br />';
-        Services::Registry()->get('UserMetadata', '*');
-        die;
-*/
+		Services::Registry()->sort('User');
 
         return $this;
     }

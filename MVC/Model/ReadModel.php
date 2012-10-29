@@ -437,7 +437,6 @@ echo '</pre><br /><br />';
     public function addCustomFields(
         $table_registry_name, $customFieldName, $fields, $retrieval_method, $query_results, $query_object)
     {
-
         /** Prepare Registry Name */
         $customFieldName = strtolower($customFieldName);
         $useRegistryName = $table_registry_name . ucfirst($customFieldName);
@@ -453,7 +452,6 @@ echo '</pre><br /><br />';
             if (count($data) > 0 && (defined('APPLICATION_ID'))) {
 
                 foreach ($data as $key => $value) {
-
                     if ($key == APPLICATION_ID) {
                         $data = $value;
                         break;
@@ -469,10 +467,6 @@ echo '</pre><br /><br />';
                     $lookup[$key] = $value;
                 }
             }
-
-//if (is_object($query_results) && isset($query_results->$customFieldName)) {
-//				unset($query_results->$customFieldName);
-//			}
 
         } else {
             /** No data in query results for this specific custom field */
@@ -503,15 +497,13 @@ echo '</pre><br /><br />';
             }
 
             /** Filter Input and Save the Registry */
+			//todo: filter
             //$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
-            if ($retrieval_method == 1
-                || ($query_object == 'item' && strtolower($customFieldName) == 'parameters')) {
-                /** Option 1: all custom field pairs are saved in Registry */
+            if ($retrieval_method == 1 && $query_object == 'item') {
                 Services::Registry()->set($useRegistryName, $name, $setValue);
 
             } else {
-                /** Option 2: Make each custom field a "regular" field in query results */
                 if (strtolower($customFieldName) == 'parameters'
                     || strtolower($customFieldName) == 'metadata') {
 
