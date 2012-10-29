@@ -142,20 +142,6 @@ Class CatalogHelper
 		$source_id = 0;
 		$catalog_type_id = 0;
          */
-        if ((int) $catalog_id > 0) {
-
-        } elseif ((int) $source_id > 0 && (int) $catalog_type_id > 0) {
-            $catalog_id = $this->getID((int) $catalog_type_id, (int) $source_id);
-            if ($catalog_id === false) {
-                return array();
-            }
-
-        } else {
-            $catalog_id = $this->getIDUsingSEFURL($url_sef_request);
-            if ((int) $catalog_id == 0) {
-                return array();
-            }
-        }
 
         $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
         $m = new $controllerClass();
@@ -171,18 +157,40 @@ Class CatalogHelper
 		$prefix = $m->get('primary_prefix', 'a');
 		$key = $m->get('primary_key');
 
+		if ((int) $catalog_id > 0) {
+			$m->model->query->where($m->model->db->qn($prefix)
+				. '.'
+				. $m->model->db->qn($key)
+				. ' = '
+				. (int) $catalog_id);
+
+		} elseif ((int) $source_id > 0 && (int) $catalog_type_id > 0) {
+			$m->model->query->where($m->model->db->qn($prefix)
+				. '.'
+				. $m->model->db->qn('catalog_type_id')
+				. ' = '
+				. (int) $catalog_type_id);
+
+			$m->model->query->where($m->model->db->qn($prefix)
+				. '.'
+				. $m->model->db->qn('source_id')
+				. ' = '
+				. (int) $source_id);
+
+		} else {
+			$m->model->query->where($m->model->db->qn($prefix)
+				. '.'
+				. $m->model->db->qn('sef_request')
+				. ' = '
+				. $m->model->db->q($url_sef_request));
+		}
+
 		$m->model->query->where($m->model->db->qn($prefix)
 			. '.'
 			. $m->model->db->qn('menuitem_type')
 			. ' <> '
 			. $m->model->db->q(MENUITEM_TYPE_LINK)
 		);
-
-		$m->model->query->where($m->model->db->qn($prefix)
-			. '.'
-			. $m->model->db->qn($key)
-			. ' = '
-			. (int) $catalog_id);
 
         $item = $m->getData('item');
 
