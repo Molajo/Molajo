@@ -570,10 +570,7 @@ Class Application
         } else {
             define('EXTENSIONS', BASE_FOLDER . '/Extension');
         }
-        if (defined('EXTENSIONS_LANGUAGES')) {
-        } else {
-            define('EXTENSIONS_LANGUAGES', EXTENSIONS . '/Language');
-        }
+
         if (defined('EXTENSIONS_MENUITEMS')) {
         } else {
             define('EXTENSIONS_MENUITEMS', EXTENSIONS . '/Menuitem');
@@ -616,10 +613,14 @@ Class Application
         } else {
             define('CORE_VIEWS', MOLAJO_FOLDER . '/MVC/View');
         }
+		if (defined('CORE_LANGUAGES')) {
+		} else {
+			define('CORE_LANGUAGES', MOLAJO_FOLDER . '/Language');
+		}
 
         if (defined('CORE_SYSTEM_URL')) {
         } else {
-            define('CORE_SYSTEM_URL', BASE_URL . 'Vendor/Molajo/Configuration/System');
+            define('CORE_SYSTEM_URL', BASE_URL . 'Vendor/Molajo/System');
         }
         if (defined('CORE_THEMES_URL')) {
         } else {
@@ -634,15 +635,6 @@ Class Application
         if (defined('SITES')) {
         } else {
             define('SITES', BASE_FOLDER . '/Site');
-        }
-
-        /**
-         *  Allows for quoting in language .ini files.
-         *  todo: PHP 5.3 allows escaping in ini files -- this approach should be removed
-         */
-        if (defined('LANGUAGE_QUOTE_REPLACEMENT')) {
-        } else {
-            define('LANGUAGE_QUOTE_REPLACEMENT', '"');
         }
 
         /** Define PHP constants for application variables */

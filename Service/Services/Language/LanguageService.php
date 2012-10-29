@@ -76,23 +76,18 @@ Class LanguageService
     {
         $language = $this->getLanguage($language);
 
-        Services::Registry()->set('Languages', 'Default', $language);
+        $this->setLanguageRegistry($language);
 
-        $language = $this->setLanguageRegistry($language);
-        if ($language === false) {
-            return false;
-        }
-
-        $this->load(EXTENSIONS_LANGUAGES, $language);
+        $this->load(CORE_LANGUAGES, $language);
 
         return $this;
     }
 
     /**
-     * Translate a specified string to the requested, or current, language
+     * Translate a specified string for the language requested (or current language)
      *
-     * @param $string value to be translated
-     * @param null $language requested language (defaults to current or default)
+     * @param $string Translate this
+     * @param null Language (if overriding current)
      *
      * @return mixed
      * @since  1.0
@@ -125,53 +120,74 @@ Class LanguageService
         return Services::Registry()->get($language, $property, $default);
     }
 
-    /**
-     * Loads the requested language file (as specified by path).
-     * If not successful, loads default language.
-     *
-     * @param string $path
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function load($path, $language = null)
+	/**
+	 * Loads the requested language file (as specified by path).
+	 * If not successful, loads default language.
+	 *
+	 * @param $path
+	 * @param null $language
+	 *
+	 * @return bool
+	 * @since   1.0
+	 */
+	public function load($path, $language = null)
     {
         if ($language === null) {
             $language = Services::Registry()->get('Languages', 'Current');
         }
 
-        /** Core or extension files */
-        if ($path == EXTENSIONS_LANGUAGES) {
+		$language = strtolower(substr($language, 0, 2)) . strtoupper(substr($language, 2, strlen($language) - 2));
+
+		$found = false;
+
+        if ($path == CORE_LANGUAGES) {
             $path .= '/' . $language;
         } else {
-            $path .= '/Language';
+            $path .= '/Language/' . $language;;
         }
 
         if (Services::Filesystem()->folderExists($path)) {
-        } else {
-            return false;
+			$found = true;
+		} else {
+			$current = Services::Registry()->get('Languages', 'Current');
+			$current = strtolower(substr($current, 0, 2)) . strtoupper(substr($current, 2, strlen($current) - 2));
+			if ($language == $current) {
+			} else {
+				$language = $current;
+				if ($path == CORE_LANGUAGES) {
+					$path .= '/' . $language;
+				} else {
+					$path .= '/Language/' . $language;
+				}
+			}
         }
 
-        /** Load files for current language */
-        $loaded = $this->loadPath($path, $language);
-        if ($loaded === false) {
-        } else {
-            return true;
-        }
+		if ($found === true
+			|| Services::Filesystem()->folderExists($path)) {
+			$found = true;
+		} else {
+			$default = Services::Registry()->get('Languages', 'Default');
+			$default = strtolower(substr($default, 0, 2)) . strtoupper(substr($default, 2, strlen($default) - 2));
+			if ($language == $default) {
+			} else {
+				$language = $default;
+				if ($path == CORE_LANGUAGES) {
+					$path .= '/' . $language;
+				} else {
+					$path .= '/Language/' . $language;
+				}
+			}
+		}
 
-        /** If the requested language is not available, load the default */
-        $defaultLanguage = Services::Registry()->get('Languages', 'Default');
-        if ($language == $defaultLanguage) {
-            return true;
-        }
-
-        $loaded = $this->loadPath($path, $defaultLanguage);
-
-        return $loaded;
+		if ($found === true) {
+        	return $this->loadPath($path, $language);
+		} else {
+			return false;
+		}
     }
 
     /**
-     * load all language files located within the specified path
+     * load all language files within specified path
      *
      * @param $path
      * @param $language
@@ -181,27 +197,22 @@ Class LanguageService
      */
     protected function loadPath($path, $language)
     {
-        /** Format language for use comparing to folders/files */
-        //$language = strtolower(substr($language, 0, 2)) . strtoupper(substr($language, 2, strlen($language) - 2));
-
         /** Retrieve paths already loaded */
         $loadedPaths = Services::Registry()->get($language, 'LoadedPaths', array());
-
-        /** Do not reload */
         if (in_array($path, $loadedPaths)) {
             return true;
-        } else {
-            $loadedPaths[] = $path;
         }
+
+        $loadedPaths[] = $path;
         Services::Registry()->set($language, 'LoadedPaths', $loadedPaths);
 
         /** Retrieve the files that should now be loaded for this language */
         $loadFiles = Services::Filesystem()->folderFiles($path, '.ini');
         if ($loadFiles === false) {
-            return true;
+            return false;
         }
 
-        /** Process each file, loading the language strings and override strings */
+        /** Process each file, loading the language strings followed by the override strings */
         foreach ($loadFiles as $file) {
 
             /** Load language file */
@@ -266,7 +277,6 @@ Class LanguageService
 
         if ($contents) {
             $contents = str_replace('"', '', $contents);
-            $contents = str_replace(LANGUAGE_QUOTE_REPLACEMENT, '"\""', $contents);
             $strings = parse_ini_string($contents, false, INI_SCANNER_RAW);
         } else {
             return false;
@@ -284,124 +294,110 @@ Class LanguageService
         return false;
     }
 
-    /**
-     * Get Default Language when no specific language is requested
-     *
-     * @return bool|null|string
-     * @since  1.0
-     */
-    protected function getLanguage($language = null)
-    {
-        /** 1. Use language specified, if it is available */
-        $installed = $this->getInstalledLanguages();
-        if ($installed === false || count($installed) == 0) {
-        } else {
-            if (in_array($language, $installed)) {
-                return $language;
-            }
-        }
+	/**
+	 * Get Language in priority order
+	 *
+	 * @return string
+	 * @since  1.0
+	 */
+	protected function getLanguage($language = null)
+	{
+		/** 1. List of Installed Languages */
+		$installed = $this->getInstalledLanguages();
 
-        /** 2. if there is only one language installed, use it */
-        if ($installed === false || count($installed) == 0) {
-        } elseif (count($installed) == 1) {
-            return $installed[0];
-        }
+		/** 2. If only one language is installed, use it. */
+		if (count($installed) == 1) {
+			return $installed[0];
+		}
 
-        /** 3. session */
-        //
+		/** 3. Requested */
+		if (in_array($language, $installed)) {
+			return $language;
+		}
 
-        /** 4. User specified value, it is is installed  */
-        $language = Services::Registry()->get('User', 'language', false);
-        if ($installed === false || count($installed) == 0) {
-        } else {
-            if (in_array($language, $installed)) {
-                return $language;
-            }
-        }
+		/** 4. Retrieve from Session, if installed */
+		//
 
-        /** 5. language of browser */
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            if (count($browserLanguages) > 0) {
-                foreach ($browserLanguages as $language) {
-                    if ($installed === false || count($installed) == 0) {
-                    } else {
-                        if (in_array($language, $installed)) {
-                            return $language;
-                        }
-                    }
-                }
-            }
-        }
+		/** 5. Retrieve from User Registry, if installed */
+		$language = Services::Registry()->get('User', 'Language', '');
+		if (in_array($language, $installed)) {
+			return $language;
+		}
 
-        /** 5. Application configuration */
-        $language = Services::Registry()->get('Application', 'DefaultLanguage', '');
-        if (trim($language) == '') {
-        } elseif ($installed === false || count($installed) == 0) {
-        } else {
-            if (in_array($language, $installed)) {
-                return $language;
-            }
-        }
+		/** 6. Browser Language */
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+			$browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			if (count($browserLanguages) > 0) {
+				foreach ($browserLanguages as $language) {
+					if (in_array($language, $installed)) {
+						return $language;
+					}
+				}
+			}
+		}
 
-        /** 6. default */
+		/** 7. Application Configuration */
+		$language = Services::Registry()->get('Application', 'Language');
+		Services::Registry()->set('Languages', 'Default', $language);
+		if (in_array($language, $installed)) {
+			return $language;
+		}
 
-        return 'en-GB';
-    }
+		/** 8. Shouldn't happen */
+		if (in_array('en-GB', $installed)) {
+			return 'en-GB';
+		}
 
-    /**
-     * setLanguageRegistry for requested language
-     *
-     * @param $language
-     * @return bool
-     */
-    protected function setLanguageRegistry($language)
-    {
-        /** If it's already loaded, move on */
-        if (Services::Registry()->exists($language)) {
-            return $language;
-        }
+		//throw exception
+		echo 'Language Error: no matching and installed language option.';
+		die;
+	}
 
-        /** Determine if language requested is actually installed */
-        $languagesInstalled = Services::Registry()->get('Languages', 'installed');
-        if ($languagesInstalled === false
-            || count($languagesInstalled) == 0
-        ) {
-            return false;
-        }
+	/**
+	 * setLanguageRegistry - Loads the Core Language for specified language
+	 *
+	 * @param $language
+	 * @return string
+	 */
+	protected function setLanguageRegistry($language)
+	{
+		/** If it's already loaded, move on */
+		if (Services::Registry()->exists($language)) {
+			return $language;
+		}
 
-        $id = 0;
-        foreach ($languagesInstalled as $installed) {
-            if ($installed->tag == trim($language)) {
-                $id = $installed->id;
-                break;
-            }
-        }
-        if ($id == 0) {
-            return false;
-        }
+		/** Determine if language requested is actually installed */
+		$languagesInstalled = Services::Registry()->get('Languages', 'installed');
 
-        Services::Registry()->createRegistry($language);
-        Services::Registry()->set($language, 'id', $id);
+		$id = 0;
+		foreach ($languagesInstalled as $installed) {
+			if ($installed->tag == trim($language)) {
+				$id = $installed->id;
+				break;
+			}
+		}
 
-        $parameters = Services::Registry()->get('LanguagesSystemParameters');
-        foreach ($parameters as $key => $value) {
-            Services::Registry()->set($language, $key, $value);
-        }
+		Services::Registry()->createRegistry($language);
+		Services::Registry()->set($language, 'id', $id);
 
-        $rtl = Services::Registry()->get($language, 'rtl');
-        if ($rtl == 'rtl') {
-            $direction = 'rtl';
-        } else {
-            $direction = '';
-        }
-        Services::Registry()->set($language, 'direction', $direction);
+		$parameters = Services::Registry()->get('LanguagesSystemParameters');
+		foreach ($parameters as $key => $value) {
+			Services::Registry()->set($language, $key, $value);
+		}
 
-        /** Set current language */
-        Services::Registry()->set('Languages', 'Current', $language);
+		$rtl = Services::Registry()->get($language, 'rtl');
+		if ($rtl == 'rtl') {
+			$direction = 'rtl';
+		} else {
+			$direction = '';
+		}
+		Services::Registry()->set($language, 'direction', $direction);
 
-        return $language;
-    }
+		/** Set current language */
+		Services::Registry()->set('Languages', 'Current', $language);
+
+		return $language;
+	}
 
     /**
      * Retrieve a full list of installed languages for the application
@@ -414,12 +410,15 @@ Class LanguageService
         /** During System Initialization Helper is not loaded yet, instantiate here */
         $helper = new ExtensionHelper();
         $installed = $helper->get(0, 'Table', 'Languageservice', 'list', CATALOG_TYPE_LANGUAGE);
-        if ($installed === false || count($installed) < 1) {
-            return false;
+        if ($installed === false || count($installed) == 0) {
+            //throw error
+			echo 'No Language Installed';
+			die;
         }
 
         $languageList = array();
         $tagArray = array();
+
         foreach ($installed as $language) {
 
             if ($language->menuitem_type == 'Item') {

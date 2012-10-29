@@ -849,7 +849,6 @@ Class RegistryService
         $query_results[] = $row;
 
         /** Return results to Model */
-
         return $query_results;
     }
 }

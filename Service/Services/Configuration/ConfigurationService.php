@@ -276,6 +276,8 @@ Class ConfigurationService
 		$model_type = trim(ucfirst(strtolower($model_type)));
 		$model_name = trim(ucfirst(strtolower($model_name)));
 
+		echo 'Type: ' . $model_type . ' ' . $model_name . '<br />';
+
 		$path = false;
 
 		if ($model_type == 'Site') {
@@ -290,10 +292,12 @@ Class ConfigurationService
 		}
 
 		if ($model_type == 'Service') {
+
 			$path = EXTENSIONS . '/Service/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;
 			}
+
 			$path = MOLAJO_FOLDER . '/Service/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;
@@ -423,7 +427,7 @@ Class ConfigurationService
 		}
 
 		/** Search for overrides before standard placement */
-		$valid = array('Datalist', 'Menuitem', 'Plugin');
+		$valid = array('Menuitem', 'Plugin');
 		if (in_array($model_type, $valid)) {
 			$path = ConfigurationService::commonSearch(
 				$model_type, $model_name,
@@ -437,7 +441,7 @@ Class ConfigurationService
 			}
 		}
 
-		$valid = array('Table');
+		$valid = array('Datalist', 'Table');
 		if (in_array($model_type, $valid)) {
 			$path = ConfigurationService::commonSearch(
 				$model_type, $model_name,
