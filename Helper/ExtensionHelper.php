@@ -62,7 +62,6 @@ Class ExtensionHelper
         /** 404: routeRequest handles redirecting to error page */
         if (count($item) == 0) {
             Services::Registry()->set('Parameters', 'status_found', false);
-
             return false;
         }
 

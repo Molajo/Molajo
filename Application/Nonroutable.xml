@@ -9,4 +9,5 @@
     <parameter name="tag" filter="char"/>
     <parameter name="category" filter="char"/>
     <parameter name="group" filter="char"/>
+    <parameter name="page" filter="char"/>
 </list>

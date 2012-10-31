@@ -269,7 +269,7 @@ Class RouteService
     {
         /**echo '<pre>';
         var_dump(Application::Request()->request);
-        echo '</pre>'; */
+        echo '</pre>';
 
         /** Defaults */
         Services::Registry()->set('Parameters', 'request_non_route_parameters', '');
@@ -356,10 +356,13 @@ Class RouteService
     {
         $path = Services::Registry()->get('Parameters', 'request_url');
 
+		/** Actions */
         $urlParts = explode('/', $path);
         if (count($urlParts) == 0) {
             return true;
         }
+
+//todo - separate display action from other (ex. tag)
 
         $actions = Services::Registry()->get('urlActions');
 
@@ -385,21 +388,62 @@ Class RouteService
             }
         }
 
-        if ($action == '') {
-            $action = 'display';
-        } else {
-            Services::Registry()->set('Parameters', 'request_url', $path);
-        }
+		if ($action == '') {
+			$action = 'display';
+		}
+		Services::Registry()->set('Parameters', 'request_action', $action);
+		Services::Registry()->set('Parameters', 'request_action_target', $action_target);
+		Services::Registry()->set('Parameters', 'request_authorisation',
+			Services::Registry()->get('action_to_authorisation', $action));
+		Services::Registry()->set('Parameters', 'request_controller',
+			Services::Registry()->get('action_to_controller', $action));
 
-//Services::Registry()->set('Parameters', 'request_non_route_parameters', $action);
+		if ($path == Services::Registry()->get('Parameters', 'request_url')) {
+		} else {
+			Services::Registry()->set('Parameters', 'request_url', $path);
+			return true;
+		}
 
-        Services::Registry()->set('Parameters', 'request_action', $action);
-        Services::Registry()->set('Parameters', 'request_action_target', $action_target);
-        Services::Registry()->set('Parameters', 'request_authorisation',
-            Services::Registry()->get('action_to_authorisation', $action));
-        Services::Registry()->set('Parameters', 'request_controller',
-            Services::Registry()->get('action_to_controller', $action));
-        Services::Registry()->sort('Parameters');
+	/** Request Non-routing Parameters */
+
+		$urlParts = explode('/', $path);
+		if (count($urlParts) == 0) {
+			return true;
+		}
+
+		$filters = array('page','category','author');
+
+		$path = '';
+		$filterArray =  '';
+		$filter = '';
+		$i = 0;
+
+		foreach ($urlParts as $slug) {
+
+			if ($filter == '') {
+				if (in_array($slug, $filters)) {
+					$filter = $slug;
+				} else {
+					if (trim($path) == '') {
+					} else {
+						$path .= '/';
+					}
+					$path .= $slug;
+				}
+			} else {
+				$filterArray .= $filter . ':' . $slug . ',';
+				$filter = '';
+			}
+		}
+
+		Services::Registry()->set('Parameters', 'request_filters', $filterArray);
+
+		if ($path == Services::Registry()->get('Parameters', 'request_url')) {
+		} else {
+			Services::Registry()->set('Parameters', 'request_url', $path);
+		}
+
+		Services::Registry()->sort('Parameters');
 
         return true;
     }

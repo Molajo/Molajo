@@ -340,9 +340,9 @@ class ReadModel extends Model
         $this->query_results = array();
 
 //echo  'Offset ' . $offset . ' Count ' . $count = 5 . ' Use Pagination ' . $use_pagination  . '<br />';
-echo '<br /><br /><pre>';
-var_dump($this->query->__toString());
-echo '</pre><br /><br />';
+//echo '<br /><br /><pre>';
+//var_dump($this->query->__toString());
+//echo '</pre><br /><br />';
 
         $cache_key = $this->query->__toString();
 		if ($cache_key == '') {

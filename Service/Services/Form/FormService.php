@@ -190,8 +190,7 @@ Class FormService
                                           $model_type, $model_name, $view_name,
                                           $extension_instance_id, $item)
     {
-/**
-        echo 'Namespace: ' . $namespace. ' Tab Prefix: ' .  $tab_prefix. ' Tab Link: ' .  $tab_link. ' Tab Title: ' .
+/**        echo 'Namespace: ' . $namespace. ' Tab Prefix: ' .  $tab_prefix. ' Tab Link: ' .  $tab_link. ' Tab Title: ' .
             $tabTitle. ' Tab Description: ' .  $translateTabDesc. ' Model Type: ' .
             $model_type. ' Model Name: ' .  $model_name. ' View Name: ' .  $view_name. ' Extension Instance ID: ' .
             $extension_instance_id;
@@ -219,6 +218,10 @@ Class FormService
                 $configurationArray[] = trim($set);
             }
         }
+
+		$countFieldsets = 0;
+		$tab_first_row = 1;
+		$tab_fieldset_column = 1;
 
         foreach ($configurationArray as $config) {
 
@@ -249,16 +252,19 @@ Class FormService
 
             $get = 'get' . ucfirst(strtolower($tab_link));
 
+			$temp = array();
+
             if ($tab_prefix === null) {
-                /** Only titles and name of view to be included (view will take care of itself) */
+                /** Only titles and name of view to be included (view will take care of data retrieval) */
                 $row = new \stdClass();
 
                 $row->tab_title = $tabTitle;
                 $row->tab_description = $translateTabDesc;
                 $row->tab_fieldset_title = $tabFieldsetTitle;
                 $row->tab_fieldset_description = $translateFieldsetDesc;
+
                 $row->tab_link = ucfirst(strtolower($view_name . $namespace . $tab_link));
-                $temp = array();
+
                 $temp[] = $row;
 
             } else {
@@ -286,14 +292,49 @@ Class FormService
                         $model_type, $model_name, $extension_instance_id);
                 }
             }
-            $fieldSets = array_merge((array) $fieldSets, (array) $temp);
+
+			if (count($temp) > 0) {
+
+				$write = array();
+
+				$tab_new_fieldset = 1;
+				$tab_fieldset_count = count($temp);
+				$tab_fieldset_odd_or_even = 'odd';
+				$tab_fieldset_row_number = 1;
+
+				foreach ($temp as $item) {
+
+					$item->tab_new_fieldset = $tab_new_fieldset;
+					$item->tab_first_row = $tab_first_row;
+					$item->tab_fieldset_count = $tab_fieldset_count;
+					$item->tab_fieldset_odd_or_even = $tab_fieldset_odd_or_even;
+					$item->tab_fieldset_row_number = $tab_fieldset_row_number;
+					$item->tab_fieldset_column = $tab_fieldset_column;
+					$tab_fieldset_row_number++;
+
+					$tab_new_fieldset = 0;
+					$tab_first_row = 0;
+
+					$write[] = $item;
+				}
+
+				if ($tab_fieldset_odd_or_even == 'odd') {
+					$tab_fieldset_odd_or_even = 'even';
+				} else {
+					$tab_fieldset_odd_or_even = 'odd';
+				}
+
+				if ($tab_fieldset_column == 1) {
+					$tab_fieldset_column = 2;
+				} else {
+					$tab_fieldset_column = 1;
+				}
+
+			}
+
+            $fieldSets = array_merge((array) $fieldSets, (array) $write);
         }
-/**
- 		echo '<br />' . 'Fieldset:: ' . $view_name . $namespace . strtolower($tab_link) . count($fieldSets) . '<br />';
-		echo '<pre>';
-		var_dump($fieldSets);
-		echo '</pre>';
-*/
+
         Services::Registry()->set('Plugindata', $view_name . $namespace . strtolower($tab_link), $fieldSets);
 
         return true;
@@ -390,10 +431,15 @@ Class FormService
         }
 
         if (count($build_results) > 0) {
-            return Services::Form()->setFieldset($namespace, $tab_link, $build_results, $model_type, $model_name);
+            $x = Services::Form()->setFieldset($namespace, $tab_link, $build_results, $model_type, $model_name);
         } else {
             return array();
         }
+
+		//echo '<br />END OF FIELDSET PROCESSING<pre>';
+		//var_dump($x);
+		//echo '<pre><br />><br />';
+		return $x;
     }
 
     /**
@@ -783,7 +829,7 @@ Class FormService
     public function setFieldset($namespace, $tab_link, $input_fields, $model_type, $model_name)
     {
         $fieldset = array();
-        $previous_tab_fieldset_title = '';
+        $first = true;
 
         foreach ($input_fields as $field) {
 
@@ -793,19 +839,6 @@ Class FormService
             $row->tab_description = $field['tab_description'];
             $row->tab_fieldset_title = $field['tab_fieldset_title'];
             $row->tab_fieldset_description = $field['tab_fieldset_description'];
-
-            if ($previous_tab_fieldset_title == $row->tab_fieldset_title) {
-                $row->new_fieldset = 0;
-                $row->first_row = 0;
-            } else {
-                if ($previous_tab_fieldset_title == '') {
-                    $row->first_row = 1;
-                } else {
-                    $row->first_row = 0;
-                }
-                $previous_tab_fieldset_title = $row->tab_fieldset_title;
-                $row->new_fieldset = 1;
-            }
 
 			if (isset($field['name'])) {
 			} else {

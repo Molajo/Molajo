@@ -78,7 +78,7 @@ class ApplicationPlugin extends Plugin
     protected function urls()
     {
         $url = Application::Request()->get('base_url_path_for_application') .
-            Application::Request()->get('requested_resource_for_route');
+            Services::Registry()->get('Parameters', 'request_url');
 
         Services::Registry()->set('Plugindata', 'page_url', $url);
 

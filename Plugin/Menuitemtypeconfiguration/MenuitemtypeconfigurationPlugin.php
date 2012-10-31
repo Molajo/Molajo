@@ -50,7 +50,35 @@ class MenuitemtypeconfigurationPlugin extends Plugin
         $namespace = $this->get('configuration_tab_link_namespace');
         $namespace = ucfirst(strtolower($namespace));
 
-        $tab_array = $this->get('configuration_tab_array');
+		$temp = $this->get('configuration_tab_array');
+		$tabs = explode('{{', $temp);
+
+		/** Determine Current Page Number */
+		$temp = Services::Registry()->get('Parameters', 'request_filters', array());
+		$filters = explode(',', $temp);
+
+		$page = 1;
+		if ($filters == '' || count($filters) == 0) {
+			$page = 1;
+		} else {
+			foreach ($filters as $x) {
+				if (trim($x) == '') {
+				} else {
+					$pair = explode(':', $x);
+					if (strtolower($pair[0]) == 'page') {
+						$page = (int) $pair[1];
+						break;
+					}
+				}
+			}
+		}
+
+		if ($page < count($tabs)) {
+		} else {
+			$page = 1;
+		}
+
+		$tab_array = '{{' . $tabs[$page];
 
         $query_results = Services::Form()->setTabArray(
             $resource_model_type,
@@ -65,6 +93,8 @@ class MenuitemtypeconfigurationPlugin extends Plugin
             array()
         );
 
+		$query_results[0]->tab_count = count($tabs) - 1;
+
 		$this->set('model_name', 'Plugindata');
         $this->set('model_type', 'dbo');
         $this->set('model_query_object', 'getPlugindata');
@@ -75,6 +105,29 @@ class MenuitemtypeconfigurationPlugin extends Plugin
 
         Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $query_results);
 
-        return true;
+		/** Build Tabs */
+		$pageArray = array();
+		$i = 0;
+		foreach ($tabs as $tab) {
+			if ($tab == '') {
+			} else {
+				$i++;
+				$row = new \stdClass();
+				$row->id = $i;
+				if ($i == $page) {
+					$row->current = 1;
+				} else {
+					$row->current = 0;
+				}
+				$row->title = substr($tab, 0, strpos($tab, ','));
+				$row->url = Services::Registry()->get('Plugindata', 'page_url') . '/page/' . $i;
+
+				$pageArray[] = $row;
+			}
+		}
+		Services::Registry()->set('Plugindata', 'ConfigurationTabs', $pageArray);
+
+
+		return true;
     }
 }

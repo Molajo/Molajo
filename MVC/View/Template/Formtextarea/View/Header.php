@@ -7,4 +7,4 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  * echo Services::Language()->translate('No textareaion')
  */
-defined('MOLAJO') or die; ?><label for=<?php echo $this->row->id; ?>><?php echo $this->row->label; ?></label><div class="editable" name="<?php echo $this->row->id; ?>" id="<?php echo $this->row->id; ?>"
+defined('MOLAJO') or die; ?><label for=<?php echo $this->row->id; ?>><?php echo $this->row->label; ?></label><textarea

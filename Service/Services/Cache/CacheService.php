@@ -261,7 +261,7 @@ Class CacheService
     public function get($type, $key)
     {
 		if (strtolower($type) == 'query') {
-			echo 'Query Count : ' . $this->count_queries++;
+			$this->count_queries++;
 		}
 
         $continue = $this->verify_cache($type);

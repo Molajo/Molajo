@@ -84,6 +84,12 @@
             <foreignkey name="version_id" source_id="id" source_model="Content" required="1"/>
         </foreignkeys>
 
+        <criteria>
+            <where name="a.protected"
+                   connector="!="
+                   value="2"/>
+        </criteria>
+
     </table>
 
     <customfields>

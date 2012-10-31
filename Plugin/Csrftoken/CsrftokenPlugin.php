@@ -48,7 +48,10 @@ class CsrftokenPlugin extends Plugin
         $withThis = array();
         $i = 0;
 
-        foreach ($forms[0] as $match) {
+		$distinct = array_unique($forms[0]);
+
+        foreach ($distinct as $match) {
+
             $formToken = md5(rand(rand(50000, 500000), rand(500000, 50000000)));
 
             $withThis[] = $match
