@@ -166,7 +166,7 @@ class MenuitemtypegridPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set('Plugindata', 'AdminToolbar', $query_results);
+        Services::Registry()->set('Plugindata', 'Toolbar', $query_results);
 
         return true;
     }

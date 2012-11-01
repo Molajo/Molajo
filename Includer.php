@@ -657,7 +657,7 @@ class Includer
         $message .= ob_get_contents();
         ob_end_clean();
 
-//		if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'uinavigationadministratormolajito') {
+//		if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'toolbar') {
 //			echo $message;
 //		}
 
@@ -682,6 +682,11 @@ class Includer
         } else {
             $results = $cached_output;
         }
+
+		//if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'toolbar') {
+		//	echo $results;
+		//	die;
+		//}
 
         return $results;
     }
