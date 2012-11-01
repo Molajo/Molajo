@@ -125,8 +125,7 @@ class MenuitemtypeconfigurationPlugin extends Plugin
 				$pageArray[] = $row;
 			}
 		}
-		Services::Registry()->set('Plugindata', 'ConfigurationTabs', $pageArray);
-
+		Services::Registry()->set('Plugindata', 'Buttonbar', $pageArray);
 
 		return true;
     }

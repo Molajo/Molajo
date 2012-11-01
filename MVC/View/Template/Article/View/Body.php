@@ -10,7 +10,7 @@ defined('MOLAJO') or die; ?>
 
 <h3><?php echo $this->row->title; ?></h3>
 
-<h6><?php echo Services::Language()->translate('Written by'); ?>
+<h4><?php echo Services::Language()->translate('Written by'); ?>
     <a href="#">
         <?php echo $this->row->author_full_name; ?>
     </a>
@@ -19,7 +19,7 @@ defined('MOLAJO') or die; ?>
         . ', ' . $this->row->start_publishing_datetime_month_name
         . ' ' . $this->row->start_publishing_datetime_dd
         . ', '. $this->row->start_publishing_datetime_ccyy; ?>.
-</h6>
+</h4>
 
 <?php if ($this->row->image2 == '') {
 } else { ?>
@@ -34,7 +34,7 @@ defined('MOLAJO') or die; ?>
 
 if ($this->row->content_text_introductory == '') {
 } else { ?>
-    <div class="introductory"><?php echo $this->row->content_text_introductory; ?></div>
+    <h5 class="subheader"><?php echo $this->row->content_text_introductory; ?></h5>
 <?php }
 
 if ($this->row->image3 == '') {
