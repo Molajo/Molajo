@@ -495,11 +495,11 @@ Class RouteService
         $catalog_type_id = Services::Registry()->get('Parameters', 'catalog_type_id');
         $id = Services::Registry()->get('Parameters', 'catalog_source_id');
         $catalog_extension_instance_id = Services::Registry()->get('Parameters', 'catalog_extension_instance_id');
-        $catalog_menuitem_type = Services::Registry()->get('Parameters', 'catalog_menuitem_type');
+        $catalog_page_type = Services::Registry()->get('Parameters', 'catalog_page_type');
         $model_type = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_type')));
         $model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
 
-        if (strtolower(trim($catalog_menuitem_type)) == 'list'
+        if (strtolower(trim($catalog_page_type)) == 'list'
         ) {
             $response = Helpers::Content()->getRouteList($id, $model_type, $model_name);
 
@@ -509,8 +509,8 @@ Class RouteService
                 return false;
             }
 
-        } elseif (strtolower(trim($catalog_menuitem_type)) == 'item'
-                || strtolower(trim($catalog_menuitem_type)) == 'form'
+        } elseif (strtolower(trim($catalog_page_type)) == 'item'
+                || strtolower(trim($catalog_page_type)) == 'form'
         ) {
             $response = Helpers::Content()->getRouteItem($id, $model_type, $model_name);
 

@@ -488,7 +488,7 @@ class CreatePlugin extends Plugin
         $data2->extension_instance_id = $this->id;
         $data2->model_name = 'Catalog';
         $data2->sef_request = $this->data->alias;
-        $data2->menuitem_type = $this->data->menuitem_type;
+        $data2->page_type = $this->data->page_type;
         $data2->routable = 1;
 
         $controller->data = $data2;

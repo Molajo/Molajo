@@ -421,7 +421,7 @@ Class LanguageService
 
         foreach ($installed as $language) {
 
-            if ($language->menuitem_type == 'Item') {
+            if ($language->page_type == 'Item') {
                 $row = new \stdClass();
 
                 $row->id = $language->extension_id;

@@ -2,7 +2,7 @@
 <model name="Link" extends="MenuitemsSystem">
     <customfields>
         <customfield name="parameters">
-            <include field="menuitem_type"/>
+            <include field="page_type"/>
             <include field="criteria_title"/>
             <include field="criteria_display_view_on_no_results"/>
             <include field="criteria_snippet_length"/>

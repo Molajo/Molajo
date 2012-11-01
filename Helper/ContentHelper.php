@@ -76,7 +76,7 @@ Class ContentHelper
         /** Content Extension and Source */
         Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->catalog_types_title);
         Services::Registry()->set('Parameters', 'catalog_type_id', $item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'content_type', (int) $item->menuitem_type);
+        Services::Registry()->set('Parameters', 'content_type', (int) $item->page_type);
         Services::Registry()->set('Parameters', 'primary_category_id', $item->catalog_primary_category_id);
         Services::Registry()->set('Parameters', 'source_id',  (int) $item->id);
 
@@ -161,7 +161,7 @@ Class ContentHelper
         $item = $this->get(
             Services::Registry()->get('Parameters', 'catalog_source_id'),
             'Menuitem',
-            Services::Registry()->get('Parameters', 'catalog_menuitem_type'),
+            Services::Registry()->get('Parameters', 'catalog_page_type'),
             'Menuitem'
         );
 
@@ -185,7 +185,7 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'menu_extension_id', (int) $item->extensions_id);
         Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
-        $registry = Services::Registry()->get('Parameters', 'catalog_menuitem_type')
+        $registry = Services::Registry()->get('Parameters', 'catalog_page_type')
                 . 'Menuitem'
                 . 'Parameters';
 
@@ -205,8 +205,8 @@ Class ContentHelper
 
 	        /** Must be after parameters so as to not strip off menuitem */
         Services::Registry()->set('Parameters', 'menuitem_id', (int) $item->id);
-        Services::Registry()->set('Parameters', 'menuitem_type',
-            Services::Registry()->get('Parameters', 'catalog_menuitem_type'));
+        Services::Registry()->set('Parameters', 'page_type',
+            Services::Registry()->get('Parameters', 'catalog_page_type'));
 
 		$this->setExtensionPaths();
 
@@ -224,7 +224,7 @@ Class ContentHelper
      * @return array An object containing an array of data
      * @since   1.0
      */
-    public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $menuitem_type = '')
+    public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $page_type = '')
     {
         Services::Profiler()->set('ContentHelper->get '
                 . ' ID: ' . $id
@@ -243,7 +243,7 @@ Class ContentHelper
         $m->set('id', (int) $id);
         $m->set('process_plugins', 1);
 
-        if ($menuitem_type == 'item') {
+        if ($page_type == 'item') {
             $m->set('get_customfields', 2);
         } else {
             $m->set('get_customfields', 1);
@@ -553,15 +553,15 @@ Class ContentHelper
      * If the menuitem is found, parameters can be accessed, as follows (assumes Grid menuitem type):
      * Parameters => Services::Registry()->get('GridMenuitemParameters', '*');
      *
-     * @param string $menuitem_type
+     * @param string $page_type
      * @param $extension_instance_id
      *
      * @return array An object containing an array of basic resource info, parameters in registry
      * @since   1.0
      */
-    public function getResourceMenuitemParameters($menuitem_type, $extension_instance_id)
+    public function getResourceMenuitemParameters($page_type, $extension_instance_id)
     {
-        $menuitem_type = ucfirst(strtolower($menuitem_type));
+        $page_type = ucfirst(strtolower($page_type));
 
         $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
         $m = new $controllerClass();
@@ -569,9 +569,9 @@ Class ContentHelper
         $m->set('process_plugins', 0);
         $m->set('get_customfields', 1);
 
-        $m->connect('Menuitem', $menuitem_type);
+        $m->connect('Menuitem', $page_type);
 
-        $m->model->query->where('a.menuitem_type = ' . $m->model->db->q($menuitem_type));
+        $m->model->query->where('a.page_type = ' . $m->model->db->q($page_type));
         $m->model->query->where('a.catalog_type_id = ' . (int) CATALOG_TYPE_MENUITEM);
         $value = '"criteria_extension_instance_id":"' . $extension_instance_id . '"';
         $m->model->query->where('a.parameters LIKE ' . $m->model->db->q('%' . $value . '%'));
@@ -582,7 +582,7 @@ Class ContentHelper
             return false;
         }
 
-        $menuitem->table_registry = $menuitem_type . 'Menuitem';
+        $menuitem->table_registry = $page_type . 'Menuitem';
 
         return $menuitem;
     }

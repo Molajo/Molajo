@@ -21,7 +21,7 @@
             <include field="enabled"/>
             <include field="redirect_to_id"/>
             <include field="sef_request"/>
-            <include field="menuitem_type"/>
+            <include field="page_type"/>
             <include field="extension_instance_id"/>
             <include field="view_group_id"/>
             <include field="primary_category_id"/>

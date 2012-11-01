@@ -23,7 +23,7 @@
             <include field="path"/>
             <include field="alias"/>
             <include field="menu"/>
-            <include field="menuitem_type"/>
+            <include field="page_type"/>
             <include field="content_text"/>
             <include field="protected"/>
             <include field="featured"/>

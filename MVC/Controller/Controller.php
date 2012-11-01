@@ -464,10 +464,10 @@ class Controller
 		}
 
 		/** Automatically Menuitem Type, Template Node and Application */
-		$menuitemType = $this->get('catalog_menuitem_type', '');
-		if ($menuitemType == '') {
+		$page_type = $this->get('catalog_page_type', '');
+		if ($page_type == '') {
 		} else {
-			$temp[] = 'Menuitemtype' . strtolower($menuitemType);
+			$temp[] = 'Pagetype' . strtolower($page_type);
 		}
 
 		$temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');

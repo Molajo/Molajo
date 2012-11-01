@@ -33,7 +33,7 @@
         "grid_batch_tags":"1",
         "grid_ordering":"start_publishing_datetime",
 
-        "menuitem_type":"Grid",
+        "page_type":"Grid",
 
         "menuitem_theme_id":"7020",
 

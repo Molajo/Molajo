@@ -245,7 +245,7 @@ Class InstallService
                 . '/'
                 . $data->alias;
 
-            $data2->menuitem_type = '';
+            $data2->page_type = '';
             $data2->routable = 1;
 
             $controller2->data = $data2;
@@ -275,7 +275,7 @@ Class InstallService
         $data2->extension_instance_id = 281;
         $data2->model_name = 'Catalog';
         $data2->sef_request = 'data-dictionary';
-        $data2->menuitem_type = 'grid';
+        $data2->page_type = 'grid';
         $data2->routable = 1;
 
         $controller->data = $data2;

@@ -85,7 +85,7 @@ Class CatalogHelper
         Services::Registry()->set('Parameters', 'catalog_type', $item->b_title);
         Services::Registry()->set('Parameters', 'catalog_url_sef_request', $item->sef_request);
         Services::Registry()->set('Parameters', 'catalog_url_request', $item->catalog_url_request);
-        Services::Registry()->set('Parameters', 'catalog_menuitem_type', $item->menuitem_type);
+        Services::Registry()->set('Parameters', 'catalog_page_type', $item->page_type);
         Services::Registry()->set('Parameters', 'catalog_view_group_id', (int) $item->view_group_id);
         Services::Registry()->set('Parameters', 'catalog_category_id', (int) $item->primary_category_id);
         Services::Registry()->set('Parameters', 'catalog_extension_instance_id', $item->extension_instance_id);
@@ -187,9 +187,9 @@ Class CatalogHelper
 
 		$m->model->query->where($m->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn('menuitem_type')
+			. $m->model->db->qn('page_type')
 			. ' <> '
-			. $m->model->db->q(MENUITEM_TYPE_LINK)
+			. $m->model->db->q(PAGE_TYPE_LINK)
 		);
 
         $item = $m->getData('item');

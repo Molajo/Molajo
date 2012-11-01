@@ -165,7 +165,7 @@ class ApplicationPlugin extends Plugin
 		$request_action = $this->get('request_action');
 
 		if ($page_type == 'menuitem') {
-			$page_type = $this->get('menuitem_type');
+			$page_type = $this->get('page_type');
 			$heading2 = Services::Language()->translate(ucfirst(strtolower($page_type)));
 		} else {
 			$heading2 = Services::Language()->translate(ucfirst(strtolower($request_action))

@@ -95,7 +95,7 @@ SET @parameters = CONCAT('
 "configuration_tab":"",
 "configuration_tab_basic":"{{Basics,criteria*}}{{Enable Features,enable*}}",
 "configuration_tab_customfields":"{{Create,create}}{{Delete,delete}}{{Customfields,customfields*}}",
-"menuitem_type":"Configuration",
+"page_type":"Configuration",
 "configuration_tab_metadata":"{{Metadata,metadata*}}",
 "configuration_tab_form":"{{Page,form_parent*,form_theme*,form_page*}}{{Template,form_template*}}{{Wrap,form_wrap*}}{{Model,form_model*}}",
 "configuration_tab_item":"{{Page,item_parent*,item_theme*,item_page*}}{{Template,item_template*}}{{Wrap,item_wrap*}}{{Model,item_model*}}",
@@ -165,7 +165,7 @@ INSERT INTO `molajo_extension_instances`
 
 
 
-INSERT INTO `molajo_catalog`( `catalog_type_id`, `source_id`, `routable`, `menuitem_type`, `sef_request`,
+INSERT INTO `molajo_catalog`( `catalog_type_id`, `source_id`, `routable`, `page_type`, `sef_request`,
 `redirect_to_id`, `view_group_id`, `primary_category_id`, `tinyurl`)
 
 SELECT a.catalog_type_id, a.id, 1, 'Configuration', path, 0, 1, 1001, '' FROM `molajo_extension_instances` a

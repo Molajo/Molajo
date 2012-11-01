@@ -1,4 +1,4 @@
-<include field="menuitem_type"/>
+<include field="page_type"/>
 
 <include field="menuitem_theme_id"/>
 
