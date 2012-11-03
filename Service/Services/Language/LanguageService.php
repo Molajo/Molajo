@@ -14,26 +14,23 @@ defined('MOLAJO') or die;
 /**
  * LanguageService API:
  *
- * To retrieve a list of all installed languages:
+ * List installed languages:
  * $list = Services::Registry()->get('Languages', 'installed');
  *
- * To retrieve the current language:
+ * Current language:
  * $current = Services::Registry()->get('Languages', 'Current');
  *
- * To retrieve the default language:
+ * Default language:
  * $default = Services::Registry()->get('Languages', 'Default');
  *
- * To retrieve all values for the current (or default) Language (en-GB as example):
+ * All values for a specific language:
  * Services::Registry()->get('en-GB', '*');
  *
- * or a specific value
- * echo Services::Registry()->get('en-GB', 'name');
- * or Services::Language()->get('direction');
+ * Specific value for specific language
+ * Services::Registry()->get('en-GB', 'direction');
  *
- * Other specific values include: id, name, rtl, local, first_day, loaded_folders, loaded_files, loaded_strings
- *
- * To load translations in a language folder
- * Services::Language()->load($path);
+ * Other language key values:
+ * 	id, name, rtl, local, first_day
  *
  * To translate a string:
  * Services::Language()->translate($string);
@@ -74,20 +71,20 @@ Class LanguageService
      */
     protected function __construct($language = null)
     {
-        $language = $this->getLanguage($language);
+        $language = $this->setLanguageOption($language);
 
         $this->setLanguageRegistry($language);
 
-        $this->load(CORE_LANGUAGES, $language);
+        $this->load($language);
 
         return $this;
     }
 
     /**
-     * Translate a specified string for the language requested (or current language)
+     * Translate string
      *
-     * @param $string Translate this
-     * @param null Language (if overriding current)
+     * @param string $string
+     * @param string $language
      *
      * @return mixed
      * @since  1.0
@@ -100,13 +97,39 @@ Class LanguageService
 
         $result = Services::Registry()->get($language . 'translate', $string, $string);
 		if ($result == $string) {
-			  $this->logUntranslatedString ($string, $language);
+		} else {
+			return $result;
+		}
+
+		if ($language == Services::Registry()->get('Languages', 'Default')) {
+		} else {
+			$language = Services::Registry()->get('Languages', 'Default');
+			$result = Services::Registry()->get($language . 'translate', $string, $string);
+			if ($result == $string) {
+			} else {
+				return $result;
+			}
+		}
+
+		if ($language == Services::Registry()->get('Languages', 'en-GB')) {
+		} else {
+			$language = 'en-GB';
+			$result = Services::Registry()->get($language . 'translate', $string, $string);
+			if ($result == $string) {
+			} else {
+				return $result;
+			}
 		}
 
 		return $result;
     }
 
-	protected function logUntranslatedString ($string, $language)
+	/**
+	 * Log requests for translations that could not be processed
+	 *
+	 * @param $string
+	 */
+	protected function logUntranslatedString ($string)
 	{
 		if (Services::Registry()->exists('TranslatedStringsMissing')) {
 		} else {
@@ -119,14 +142,14 @@ Class LanguageService
 
 	}
 
+	/**
+	 * Add missing strings to log file - or database
+	 *
+	 * @return bool
+	 */
 	public function logUntranslatedStrings()
 	{
-		if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . 'language.php')) {
-		} else {
-			return false;
-		}
 
-		//$body = Services::Filesystem()->fileRead(SITE_LOGS_FOLDER . '/' . 'language.php');
 		Services::Registry()->sort('TranslatedStringsMissing');
 
 		$body = '';
@@ -160,16 +183,15 @@ Class LanguageService
     }
 
 	/**
-	 * Loads the requested language file (as specified by path).
+	 * Loads the requested language
 	 * If not successful, loads default language.
 	 *
-	 * @param $path
 	 * @param null $language
 	 *
 	 * @return bool
 	 * @since   1.0
 	 */
-	public function load($path, $language = null)
+	public function load($language = null)
     {
         if ($language === null) {
             $language = Services::Registry()->get('Languages', 'Current');
@@ -177,45 +199,17 @@ Class LanguageService
 
 		$language = strtolower(substr($language, 0, 2)) . strtoupper(substr($language, 2, strlen($language) - 2));
 
-		$found = false;
-
-        if ($path == CORE_LANGUAGES) {
-            $path .= '/' . $language;
-        } else {
-            $path .= '/Language/' . $language;;
+		//retrieve content
+        if ($results === false || count($results) == 0) {
+			$current = Services::Registry()->get('Languages', 'Default');
+			//read
         }
 
-        if (Services::Filesystem()->folderExists($path)) {
-			$found = true;
-		} else {
-			$current = Services::Registry()->get('Languages', 'Current');
-			$current = strtolower(substr($current, 0, 2)) . strtoupper(substr($current, 2, strlen($current) - 2));
-			if ($language == $current) {
-			} else {
-				$language = $current;
-				if ($path == CORE_LANGUAGES) {
-					$path .= '/' . $language;
-				} else {
-					$path .= '/Language/' . $language;
-				}
-			}
-        }
 
-		if ($found === true
-			|| Services::Filesystem()->folderExists($path)) {
-			$found = true;
-		} else {
-			$default = Services::Registry()->get('Languages', 'Default');
-			$default = strtolower(substr($default, 0, 2)) . strtoupper(substr($default, 2, strlen($default) - 2));
-			if ($language == $default) {
-			} else {
-				$language = $default;
-				if ($path == CORE_LANGUAGES) {
-					$path .= '/' . $language;
-				} else {
-					$path .= '/Language/' . $language;
-				}
-			}
+		//retrieve content
+		if ($results === false || count($results) == 0) {
+			$current = Services::Registry()->get('Languages', 'en-GB');
+			//read
 		}
 
 		if ($found === true) {
@@ -223,123 +217,26 @@ Class LanguageService
 		} else {
 			return false;
 		}
-    }
-
-    /**
-     * load all language files within specified path
-     *
-     * @param $path
-     * @param $language
-     *
-     * @return bool
-     * @since  1.0
-     */
-    protected function loadPath($path, $language)
-    {
-        /** Retrieve paths already loaded */
-        $loadedPaths = Services::Registry()->get($language, 'LoadedPaths', array());
-        if (in_array($path, $loadedPaths)) {
-            return true;
-        }
-
-        $loadedPaths[] = $path;
-        Services::Registry()->set($language, 'LoadedPaths', $loadedPaths);
-
-        /** Retrieve the files that should now be loaded for this language */
-        $loadFiles = Services::Filesystem()->folderFiles($path, '.ini');
-        if ($loadFiles === false) {
-            return false;
-        }
-
-        /** Process each file, loading the language strings followed by the override strings */
-        foreach ($loadFiles as $file) {
-
-            /** Load language file */
-            $filename = $path . '/' . $file;
-
-            $strings = false;
-            if (Services::Filesystem()->fileExists($filename)) {
-                $strings = $this->parse($filename);
-            }
-
-            if ($strings === false) {
-                $strings = array();
-            }
 
             if (count($strings) > 0) {
                 foreach ($strings as $key => $value) {
                     Services::Registry()->set($language . 'translate', $key, $value);
                 }
             }
-
-            /** override language */
-            $filename = $path . '/' . $language . '.override.ini';
-
-            $strings = false;
-            if (Services::Filesystem()->fileExists($filename)) {
-                $strings = $this->parse($filename);
-            }
-
-            if ($strings === false) {
-                $strings = array();
-            }
-
-            if (count($strings) > 0) {
-                foreach ($strings as $key => $value) {
-                    Services::Registry()->set($language . 'translate', $key, $value);
-                }
-            }
-        }
 
         Services::Registry()->sort($language . 'translate');
 
         return true;
     }
 
-    /**
-     * Parses a language file.
-     *
-     * @param string $filename The name of the file.
-     *
-     * @return array The array of parsed strings.
-     * @since   1.0
-     */
-    protected function parse($filename)
-    {
-        /** capture php errors during parsing */
-        $track_errors = ini_get('track_errors');
-        if ($track_errors === false) {
-            ini_set('track_errors', true);
-        }
-
-        $contents = file_get_contents($filename);
-
-        if ($contents) {
-            $contents = str_replace('"', '', $contents);
-            $strings = parse_ini_string($contents, false, INI_SCANNER_RAW);
-        } else {
-            return false;
-        }
-
-        /** restore previous error tracking */
-        if ($track_errors === false) {
-            ini_set('track_errors', false);
-        }
-
-        if (is_array($strings)) {
-            return $strings;
-        }
-
-        return false;
-    }
 
 	/**
-	 * Get Language in priority order
+	 * Determine which Language in priority order
 	 *
 	 * @return string
 	 * @since  1.0
 	 */
-	protected function getLanguage($language = null)
+	protected function setLanguageOption($language = null)
 	{
 		/** 1. List of Installed Languages */
 		$installed = $this->getInstalledLanguages();
