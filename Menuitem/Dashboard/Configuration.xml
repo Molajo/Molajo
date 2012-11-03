@@ -4,7 +4,6 @@
         <customfield name="parameters">
             <field name="dashboard_section" type="char" null="0" default=" "/>
             <field name="dashboard_portlet" type="char" null="0" default=" "/>
-            <include field="dashboard_tab_class"/>
             <include field="dashboard_tab_array"/>
             <include field="dashboard_tab_main"/>
             <include field="dashboard_tab_page"/>

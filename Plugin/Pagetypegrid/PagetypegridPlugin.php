@@ -51,10 +51,6 @@ class PagetypegridPlugin extends Plugin
 
         $this->setBatch($connect, $connect->get('primary_prefix'));
 
-        /** Tab Group Class */
-        $tab_class = str_replace(',', ' ', $this->get('grid_tab_class'));
-        $tab_class = 'mobile';
-
         /** Namespace */
         $namespace = $this->parameters['grid_tab_link_namespace'];
         $namespace = ucfirst(strtolower($namespace));
@@ -99,7 +95,6 @@ class PagetypegridPlugin extends Plugin
             null,
             'Admin',
             'Admingridtab',
-            $tab_class,
             null,
             array()
         );

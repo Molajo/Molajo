@@ -1,0 +1,7 @@
+INSERT INTO `molajo_language_strings`(`id`, `site_id`, `extension_instance_id`, `catalog_type_id`, `title`, `subtitle`, `path`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `root`, `parent_id`, `lft`, `rgt`, `lvl`, `home`, `customfields`, `parameters`, `metadata`, `language`, `translation_of_id`, `ordering`)
+
+SELECT DISTINCT NULL as `id`, 1 AS `site_id`, 1000 AS `extension_instance_id`, 1000 AS `catalog_type_id`,
+a.title as `title`, '' as `subtitle`, 'languages' as `path`, a.title as `alias`, ' ' as `content_text`, 1 as `protected`, 0 AS `featured`,
+0 AS `stickied`, 1 AS `status`, '2012-09-13 12:00:00' as `start_publishing_datetime`, '0000-00-00 00:00:00' as `stop_publishing_datetime`, 1 as `version`, NULL as `version_of_id`, NULL as `status_prior_to_version`, '2012-09-13 12:00:00' as `created_datetime`, 1 as `created_by`, '2012-09-13 12:00:00' as `modified_datetime`, 1 as `modified_by`, '2012-09-13 12:00:00' as `checked_out_datetime`, 1 as `checked_out_by`, 1 as `root`, 0 as `parent_id`, 0 as `lft`, 0 as `rgt`, 1 as `lvl`, 0 as `home`, '{}' as `customfields`, '{}' as `parameters`, '{}' as `metadata`, '' as `language`, NULL `translation_of_id`, 0 as `ordering`
+FROM amy_temp a
+ORDER BY a.title

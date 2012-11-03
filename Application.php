@@ -512,6 +512,8 @@ Class Application
             }
         }
 
+		Services::Language()->logUntranslatedStrings();
+
         Services::Profiler()
             ->set('Response exit ' . $results, LOG_OUTPUT_APPLICATION);
 

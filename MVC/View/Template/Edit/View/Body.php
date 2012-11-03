@@ -7,5 +7,5 @@
  */
 defined('MOLAJO') or die; ?>
 <include:template name=formbegin form_name=edit/>
-<include:ui name=navigationtab tab_class=<?php echo $this->row->tab_class; ?> tab_array=<?php echo $this->row->tab_array; ?>/>
+<include:ui name=navigationtab tab_array=<?php echo $this->row->tab_array; ?>/>
 <include:template name=formend/>

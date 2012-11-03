@@ -228,9 +228,6 @@ class CommentPlugin extends Plugin
         /** Get configuration menuitem settings for this resource */
 //		$menuitem = Helpers::Content()->getResourceMenuitemParameters('Configuration', 17000);
 
-        /** Tab Group Class */
-//		$tab_class = Services::Registry()->get('ConfigurationMenuitemParameters', 'configuration_tab_class');
-
         /** Create Tabs */
         $namespace = 'Comments';
 
@@ -253,7 +250,6 @@ class CommentPlugin extends Plugin
             'comments_tab_',
             'Comment',
             'Commenttab',
-            $tab_class,
             17000,
             array()
         );
@@ -313,7 +309,7 @@ class CommentPlugin extends Plugin
 
         $actual = Services::Date()->getNumberofDaysAgo($converted);
 
-        $open_days = $this->get('enable_comment_form_open_days');
+        $open_days = $this->get('enable_response_comment_form_open_days');
 
         if ($actual >  $open_days) {
             return false;

@@ -45,9 +45,6 @@ class PagetypedashboardPlugin extends Plugin
             $this->portlets($portletOptionsArray);
         }
 
-        /** Tab Group Class */
-        $tab_class = $this->get('dashboard_tab_class');
-
         /** Create Tabs */
         $namespace = 'Pagetypedashboard';
 
@@ -61,7 +58,6 @@ class PagetypedashboardPlugin extends Plugin
             'dahboard_tab_',
             'Pagetypedashboard',
             'Pagetypedashboardtab',
-            $tab_class,
             null,
             null
         );

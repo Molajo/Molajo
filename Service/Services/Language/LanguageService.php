@@ -98,8 +98,47 @@ Class LanguageService
             $language = Services::Registry()->get('Languages', 'Current');
         }
 
-        return Services::Registry()->get($language . 'translate', $string, $string);
+        $result = Services::Registry()->get($language . 'translate', $string, $string);
+		if ($result == $string) {
+			  $this->logUntranslatedString ($string, $language);
+		}
+
+		return $result;
     }
+
+	protected function logUntranslatedString ($string, $language)
+	{
+		if (Services::Registry()->exists('TranslatedStringsMissing')) {
+		} else {
+			Services::Registry()->createRegistry('TranslatedStringsMissing');
+		}
+
+		Services::Registry()->set('TranslatedStringsMissing', $string);
+
+		return;
+
+	}
+
+	public function logUntranslatedStrings()
+	{
+		if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . 'language.php')) {
+		} else {
+			return false;
+		}
+
+		//$body = Services::Filesystem()->fileRead(SITE_LOGS_FOLDER . '/' . 'language.php');
+		Services::Registry()->sort('TranslatedStringsMissing');
+
+		$body = '';
+		$translated = Services::Registry()->getArray('TranslatedStringsMissing');
+		foreach ($translated as $key => $value) {
+			$body .= $key . CHR(10);
+		}
+
+		Services::Filesystem()->fileWrite(SITE_LOGS_FOLDER . '/' . 'language.php', $body);
+
+		return true;
+	}
 
     /**
      * retrieve a specified property for the current language

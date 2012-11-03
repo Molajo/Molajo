@@ -1,12 +1,33 @@
-<include field="enable_draft_save"/>
-<include field="enable_version_history"/>
-<include field="enable_retain_versions_after_delete"/>
-<include field="enable_maximum_version_count"/>
-<include field="enable_hit_counts"/>
-<include field="enable_comments"/>
-<include field="enable_comment_form_open_days"/>
-<include field="enable_spam_protection"/>
-<include field="enable_ratings"/>
-<include field="enable_notifications"/>
-<include field="enable_tweets"/>
-<include field="enable_ping"/>
+<include field="enable_broadcast_notifications"/>
+<include field="enable_broadcast_ping"/>
+<include field="enable_broadcast_tweets"/>
+<include field="enable_broadcast_feed"/>
+
+<include field="enable_categorize_categories"/>
+<include field="enable_categorize_tags"/>
+
+<include field="enable_content_draft_save"/>
+<include field="enable_content_log_catalog_activity"/>
+<include field="enable_content_maximum_version_count"/>
+<include field="enable_content_retain_versions_after_delete"/>
+<include field="enable_content_version_history"/>
+
+<include field="enable_protection_bad_word_filter"/>
+<include field="enable_protection_block_email_address"/>
+<include field="enable_protection_block_name"/>
+<include field="enable_protection_flood_control_seconds"/>
+<include field="enable_protection_ip_address"/>
+<include field="enable_protection_content_length"/>
+<include field="enable_protection_log_user_activity"/>
+<include field="enable_protection_spam_guard"/>
+
+<include field="enable_response_comment_form_open_days"/>
+<include field="enable_response_comments"/>
+<include field="enable_response_hit_counts"/>
+<include field="enable_response_ratings"/>
+<include field="enable_response_subscriptions"/>
+<include field="enable_response_vote_form_open_days"/>
+<include field="enable_response_vote"/>
+
+<include field="enable_system_ajax_access"/>
+<include field="enable_system_search"/>

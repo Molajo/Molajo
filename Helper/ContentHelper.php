@@ -293,7 +293,7 @@ Class ContentHelper
             $this->processParameterSet($newParameters, $pageTypeNamespace);
         }
 
-        /** 3. Enable Parameters (ex. enable_comments, etc.) */
+        /** 3. Enable Parameters (ex. enable_response_comments, etc.) */
         $newParameters = Services::Registry()->get($parameterNamespace, 'enable*');
         if (is_array($newParameters) && count($newParameters) > 0) {
             $this->processParameterSet($newParameters, $pageTypeNamespace);
@@ -313,7 +313,7 @@ Class ContentHelper
             if (is_array($newParameters) && count($newParameters) > 0) {
                 $this->processParameterSet($newParameters, $pageTypeNamespace);
             }
-            /** 3. Enable Parameters (ex. enable_comments, etc.) */
+            /** 3. Enable Parameters (ex. enable_response_comments, etc.) */
             $newParameters = Services::Registry()->get($resourceNamespace . 'Parameters', 'enable*');
 
             if (is_array($newParameters) && count($newParameters) > 0) {

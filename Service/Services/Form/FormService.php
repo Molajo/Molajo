@@ -51,7 +51,6 @@ Class FormService
      * @param $tab_prefix - NULL from grid
      * @param $view_name - ex. Adminconfiguration, Admingrid, Edit, etc.
      * @param $default_tab_view_name ex. Adminconfigurationtab
-     * @param $tab_class - typically mobile
      * @param $extension_instance_id ex. 16000 for Articles
      * @param $item array of data (Application configuration and Session data)
      *
@@ -60,18 +59,10 @@ Class FormService
      */
     public function setTabArray($model_type, $model_name, $namespace,
                                 $tab_array, $tab_prefix,
-                                $view_name, $default_tab_view_name, $tab_class,
+                                $view_name, $default_tab_view_name,
                                 $extension_instance_id, $item)
     {
-/*
-		echo $model_type. ' ' .  $model_name. ' ' .  $namespace. ' ' .
-								$tab_array. ' ' .  $tab_prefix. ' ' .
-								$view_name. ' ' .  $default_tab_view_name. ' ' .  $tab_class. ' ' .
-								$extension_instance_id;
-		echo '<pre>';
-		var_dump($item);
-		echo '</pre>';
-*/
+
         $tabs = array();
         $configurationArray = array();
         $temp = explode('}}', $tab_array);
@@ -95,13 +86,25 @@ Class FormService
                 return false;
             }
 
-            $tabTitle = str_replace(
+			$tabTitle = Services::Language()->translate($split[0], ENT_COMPAT, 'UTF-8');
+
+			$tabTitle = str_replace(
+				' ',
+				'&nbsp;',
+				htmlentities($tabTitle)
+			);
+
+			$tabTitleExtended = ucfirst(strtolower($model_name))
+				. ' '
+				. Services::Language()->translate($split[0], ENT_COMPAT, 'UTF-8')
+				. ' '
+				. Services::Language()->translate('Configuration');
+
+			$tabTitleExtended = str_replace(
                 ' ',
                 '&nbsp;',
-                htmlentities(Services::Language()->translate(
-                    $split[0]
-                ), ENT_COMPAT, 'UTF-8')
-            );
+                htmlentities($tabTitleExtended)
+			);
 
             $translateTabDesc = Services::Language()->translate(strtoupper(
                 strtoupper($namespace) . '_FORM_' . strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_DESC'));
@@ -119,6 +122,7 @@ Class FormService
                 $tab_prefix,
                 ucfirst(strtolower($tab_link)),
                 $tabTitle,
+				$tabTitleExtended,
                 $translateTabDesc,
                 $model_type,
                 $model_name,
@@ -128,6 +132,7 @@ Class FormService
             );
 
             $tabArray = 'tab_title:' . $tabTitle
+				. ',' . 'tab_title_extended:' . $tabTitleExtended
                 . ',' . 'tab_namespace:' . $namespace
                 . ',' . 'tab_link:' . $namespace . $tab_link
                 . ',' . 'tab_include_name:' . $tabIncludeName
@@ -152,7 +157,6 @@ Class FormService
         $row = new \stdClass();
 
         $row->tab_count = $tabCount;
-        $row->tab_class = $tab_class;
         $row->tab_array = '';
 
         if ($tabCount === 0) {
@@ -174,6 +178,7 @@ Class FormService
      * @param $tab_prefix
      * @param $tab_link
      * @param $tabTitle
+	 * @param $tabTitleExtended
      * @param $translateTabDesc
      * @param $configuration - contains the requested configuration
      * @param $model_type
@@ -186,7 +191,7 @@ Class FormService
      * @since   1.0
      */
     protected function createTabFieldsets($namespace, $tab_prefix, $tab_link,
-                                          $tabTitle, $translateTabDesc,
+                                          $tabTitle, $tabTitleExtended, $translateTabDesc,
                                           $model_type, $model_name, $view_name,
                                           $extension_instance_id, $item)
     {
@@ -259,6 +264,7 @@ Class FormService
                 $row = new \stdClass();
 
                 $row->tab_title = $tabTitle;
+				$row->tab_title_extended = $tabTitleExtended;
                 $row->tab_description = $translateTabDesc;
                 $row->tab_fieldset_title = $tabFieldsetTitle;
                 $row->tab_fieldset_description = $translateFieldsetDesc;
@@ -304,6 +310,7 @@ Class FormService
 
 				foreach ($temp as $item) {
 
+					$item->tab_title_extended = $tabTitleExtended;
 					$item->tab_new_fieldset = $tab_new_fieldset;
 					$item->tab_first_row = $tab_first_row;
 					$item->tab_fieldset_count = $tab_fieldset_count;

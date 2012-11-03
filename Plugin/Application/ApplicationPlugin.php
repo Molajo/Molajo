@@ -77,18 +77,22 @@ class ApplicationPlugin extends Plugin
      */
     protected function urls()
     {
-        $url = Application::Request()->get('base_url_path_for_application') .
-            Services::Registry()->get('Parameters', 'request_url');
+		/* Home */
+		$url = Services::Registry()->get('Configuration', 'application_base_url');
+		Services::Registry()->set('Plugindata', 'home_url', $url);
 
-        Services::Registry()->set('Plugindata', 'page_url', $url);
-
+		/* Page and Canonical */
+		$url = Application::Request()->get('base_url_path_for_application') .
+			Services::Registry()->get('Parameters', 'request_url');
+		Services::Registry()->set('Plugindata', 'page_url', $url);
         Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
 
+		/* Resource */
+		$resource = $this->get('extension_name_path_node', '');
+		$url = Services::Registry()->get('Configuration', 'application_base_url') . '/' . strtolower($resource);
+		Services::Registry()->set('Plugindata', 'resource_url', $url);
+
 		//todo: add links for prev and next
-
-        $url = Services::Registry()->get('Configuration', 'application_base_url');
-
-        Services::Registry()->set('Plugindata', 'home_url', $url);
 
         return true;
     }
@@ -156,24 +160,55 @@ class ApplicationPlugin extends Plugin
 		if ($title == '') {
         	$title = '<strong> Molajo</strong> '. Services::Language()->translate(APPLICATION_NAME);
 		}
-
         Services::Registry()->set('Plugindata', 'HeaderTitle', $title);
 
 		$heading1 = $this->get('criteria_title');
 		$page_type = $this->get('page_type');
-
-		$request_action = $this->get('request_action');
-
-		if ($page_type == 'menuitem') {
-			$page_type = $this->get('page_type');
-			$heading2 = Services::Language()->translate(ucfirst(strtolower($page_type)));
-		} else {
-			$heading2 = Services::Language()->translate(ucfirst(strtolower($request_action))
-				. ' ' . ucfirst(strtolower($page_type)));
+		if ($page_type == 'Grid') {
+			$page_type = 'List';
 		}
+
+		$list_current = 0;
+		$configuration_current = 0;
+		$new_current = 0;
+		if (strtolower($page_type) == 'item') {
+			$new_current = 1;
+		} elseif (strtolower($page_type) == 'configuration') {
+			$configuration_current = 1;
+		} else {
+			$list_current = 1;
+		}
+
+		$display_page_type = Services::Language()->translate(strtoupper($page_type));
+//		$request_action = $this->get('request_action');
+		$heading2 = ucfirst(strtolower($page_type));
 
 		Services::Registry()->set('Plugindata', 'heading1', $heading1);
 		Services::Registry()->set('Plugindata', 'heading2', $heading2);
+
+		$resource_menu_item = array();
+
+		Services::Registry()->get('Plugindata', 'resource_url');
+
+		$row = new \stdClass();
+		$row->link_text = Services::Language()->translate('LIST');
+		$row->link = Services::Registry()->get('Plugindata', 'resource_url');
+		$row->current = $list_current;
+		$query_results[] = $row;
+
+		$row = new \stdClass();
+		$row->link_text = Services::Language()->translate('CONFIGURATION');
+		$row->link = Services::Registry()->get('Plugindata', 'resource_url') . '/' . 'configuration';
+		$row->current = $configuration_current;
+		$query_results[] = $row;
+
+		$row = new \stdClass();
+		$row->link_text = Services::Language()->translate('NEW');
+		$row->link = Services::Registry()->get('Plugindata', 'resource_url') . '/' . 'new';
+		$row->current = $new_current;
+		$query_results[] = $row;
+
+		Services::Registry()->set('Plugindata', 'PageSubmenu', $query_results);
 
 		return true;
     }
@@ -186,7 +221,6 @@ class ApplicationPlugin extends Plugin
 	 */
 	protected function setPageEligibleActions()
 	{
-
 		if ($this->get('page_type') == 'item') {
 			$actions = $this->setItemActions();
 

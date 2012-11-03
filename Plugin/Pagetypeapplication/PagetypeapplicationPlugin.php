@@ -32,9 +32,6 @@ class PagetypeapplicationPlugin extends Plugin
             return true;
         }
 
-        /** Tab Group Class */
-        $tab_class = str_replace(',', ' ', $this->get('configuration_tab_class'));
-
         /** Create Tabs */
         $namespace = $this->parameters['application_tab_link_namespace'];
         $namespace = ucfirst(strtolower($namespace));
@@ -49,7 +46,6 @@ class PagetypeapplicationPlugin extends Plugin
             'application_tab_',
             'Pagetypeapplication',
             'Admineapplicationtab',
-            $tab_class,
             null,
             array()
         );

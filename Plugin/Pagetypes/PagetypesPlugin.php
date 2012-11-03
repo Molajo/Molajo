@@ -46,7 +46,7 @@ class PagetypesPlugin extends Plugin
 		if (count($folders) === 0 || $folders === false) {
 		} else {
 			$new = array_merge($page_type_list, $folders);
-			$menuitemLists = $new;
+			$page_type_list = $new;
 		}
 
         $resourceFolders = Services::Filesystem()->folderFolders(

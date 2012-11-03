@@ -1,7 +1,5 @@
-<include field="configuration_tab_class"/>
 <include field="configuration_tab_link_namespace"/>
 <include field="configuration_tab_array"/>
-<include field="configuration_tab"/>
 <include field="configuration_tab_basic"/>
 <include field="configuration_tab_metadata"/>
 <include field="configuration_tab_form"/>
@@ -10,10 +8,3 @@
 <include field="configuration_tab_editor"/>
 <include field="configuration_tab_grid"/>
 <include field="configuration_tab_customfields"/>
-
-<include field="editor_tab_array"/>
-<include field="editor_tab_main"/>
-<include field="editor_tab_publish"/>
-<include field="editor_tab_permissions"/>
-<include field="editor_tab_seo"/>
-<include field="editor_tab_metadata"/>

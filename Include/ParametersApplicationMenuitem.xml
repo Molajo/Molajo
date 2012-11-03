@@ -1,4 +1,3 @@
-<include field="application_tab_class"/>
 <include field="application_tab_link_namespace"/>
 <include field="application_tab_array"/>
 <include field="application_tab_basic"/>

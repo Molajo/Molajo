@@ -38,10 +38,6 @@ class PagetypeeditPlugin extends Plugin
         /** Resource Configuration */
         Helpers::Content()->getResourceMenuitemParameters('Configuration', $this->get('criteria_extension_instance_id'));
 
-        /** Tab Group Class */
-        $tab_class = Services::Registry()->get('ConfigurationMenuitemParameters', 'configuration_tab_class');
-        $item[0]->tab_class = $tab_class;
-
         /** Namespace */
         $namespace = 'Pagetypeedit';
 
@@ -56,7 +52,6 @@ class PagetypeeditPlugin extends Plugin
             'editor_tab_',
             'Pagetypeedit',
             'Pagetypeedittab',
-            $tab_class,
             $this->get('extension_instance_id'),
             $item
         );

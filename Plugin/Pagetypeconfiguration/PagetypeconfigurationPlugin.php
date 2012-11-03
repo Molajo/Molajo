@@ -38,9 +38,6 @@ class PagetypeconfigurationPlugin extends Plugin
         /** Retrieve Resource Parameters  */
         Helpers::Content()->getResourceExtensionParameters((int) $this->parameters['criteria_extension_instance_id']);
 
-        /** Tab Group Class */
-        $tab_class = str_replace(',', ' ', $this->get('configuration_tab_class'));
-
         /** Create Tabs */
         $namespace = $this->get('configuration_tab_link_namespace');
         $namespace = ucfirst(strtolower($namespace));
@@ -83,7 +80,6 @@ class PagetypeconfigurationPlugin extends Plugin
             'configuration_tab_',
             'Adminconfiguration',
             'Adminconfigurationtab',
-            $tab_class,
             $this->get('criteria_extension_instance_id'),
             array()
         );
@@ -120,7 +116,7 @@ class PagetypeconfigurationPlugin extends Plugin
 				$pageArray[] = $row;
 			}
 		}
-		Services::Registry()->set('Plugindata', 'Submenu', $pageArray);
+		Services::Registry()->set('Plugindata', 'ResourceSubmenu', $pageArray);
 
 		return true;
     }

@@ -118,7 +118,6 @@ class FilesystemService
      */
     public function processCall($name, $arguments)
     {
-
         if (strtolower(substr($name, 0, 4)) == 'file') {
             $class = 'JPlatform\\filesystem\\JFile';
             $method = substr($name, 4, strlen($name) - 4);
@@ -140,7 +139,6 @@ class FilesystemService
         $method = strtolower($method);
         if (method_exists($class, $method)) {
             return call_user_func_array(array($class, $method), $arguments);
-
         }
 
         echo 'Invalid Filesystem Method: ' . $name;
