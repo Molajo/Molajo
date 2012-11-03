@@ -75,9 +75,6 @@ class plgSystemDebug extends JPlugin
             return;
         }
 
-        // Load the language
-        $this->loadLanguage();
-
         // Capture output
         $contents = ob_get_contents();
         ob_end_clean();

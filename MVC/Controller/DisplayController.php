@@ -164,7 +164,7 @@ class DisplayController extends Controller
      *
      * On no query results
      *
-     * @return string
+     * @return  string
      * @since   1.0
      */
     protected function renderView()
@@ -225,7 +225,7 @@ class DisplayController extends Controller
      */
     protected function onBeforeViewRender()
     {
-        if ((int) $this->get('process_plugins') == 0) {
+		if ((int) $this->get('process_plugins') == 0) {
             return true;
         }
         if (count($this->query_results) == 0) {

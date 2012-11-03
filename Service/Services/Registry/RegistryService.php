@@ -160,7 +160,6 @@ Class RegistryService
     public function createRegistry($namespace)
     {
         $namespace = strtolower($namespace);
-
         if ($namespace == 'db') {
             return false;
             // reserved word -- throw error

@@ -64,8 +64,6 @@ class ResourceIncluder extends Includer
 
 		$this->getExtension();
 
-		$this->loadLanguage();
-
 		$this->loadPlugins();
 
 		$rendered_output = $this->invokeMVC();

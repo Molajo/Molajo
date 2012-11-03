@@ -1,0 +1,6 @@
+<datalist name="ContentLanguage">
+    <model
+            name="ContentLanguage"
+            catalog_type_id="6250"
+            extends="ExtensionInstancesDatalist"/>
+</datalist>

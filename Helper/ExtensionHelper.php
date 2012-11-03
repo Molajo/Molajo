@@ -206,7 +206,7 @@ Class ExtensionHelper
             $m->set('model_count', 999999);
 			$m->set('use_pagination', 0);
 			$m->set('use_special_joins', 1);
-			$m->set('get_customfields', 1);
+			$m->set('get_customfields', 2);
 
 			$m->model->query->where(
 				$m->model->db->qn($primary_prefix)
@@ -552,34 +552,9 @@ Class ExtensionHelper
 
             return false;
 
-        } elseif ($type == 'Language') {
-            if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
-                return 'Extension\\Language\\' . ucfirst(strtolower($node));
-            }
         }
 
         return false;
-    }
-
-    /**
-     * loadLanguage
-     *
-     * Loads Language Files for Extension
-     *
-     * @param null $path
-     *
-     * @return boolean
-     * @since   1.0
-     */
-    public function loadLanguage($path = null)
-    {
-        if ($path === null) {
-            $path = Services::Registry()->get('Parameters', 'extension_path');
-        }
-
-        Services::Language()->load($path);
-
-        return true;
     }
 
     /**
@@ -592,14 +567,11 @@ Class ExtensionHelper
      */
     public function setThemePageView()
     {
-        /** Set Parameters */
         $theme_id = (int) Services::Registry()->get('Parameters', 'theme_id');
         $page_view_id = (int) Services::Registry()->get('Parameters', 'page_view_id');
 
-        /** Theme  */
         Helpers::Theme()->get($theme_id);
 
-        /** Page  */
         Helpers::View()->get($page_view_id, 'Page');
 
         return true;
@@ -613,14 +585,11 @@ Class ExtensionHelper
      */
     public function setTemplateWrapModel()
     {
-        /** Set Parameters */
         $template_view_id = Services::Registry()->get('Parameters', 'template_view_id');
         $wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id');
 
-        /** Template  */
         Helpers::View()->get($template_view_id, 'Template');
 
-        /** Wrap  */
         Helpers::View()->get($wrap_view_id, 'Wrap');
 
         return;

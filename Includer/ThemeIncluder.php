@@ -53,28 +53,9 @@ Class ThemeIncluder extends Includer
      */
     public function process($attributes = array())
     {
-        $this->loadLanguage();
-
         $this->loadMedia();
 
         return;
-    }
-
-    /**
-     * loadLanguage
-     *
-     * Loads Language Files for extension
-     *
-     * @return null
-     * @since   1.0
-     */
-    protected function loadLanguage()
-    {
-        /** Theme */
-        Helpers::Extension()->loadLanguage(Services::Registry()->get('Parameters', 'theme_path'));
-
-        /** Page View */
-        Helpers::Extension()->loadLanguage(Services::Registry()->get('Parameters', 'page_view_path'));
     }
 
     /**

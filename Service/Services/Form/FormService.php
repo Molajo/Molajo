@@ -105,10 +105,10 @@ Class FormService
                 '&nbsp;',
                 htmlentities($tabTitleExtended)
 			);
-
-            $translateTabDesc = Services::Language()->translate(strtoupper(
-                strtoupper($namespace) . '_FORM_' . strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_DESC'));
-
+			$translate =  strtoupper(strtoupper($namespace) . '_FORM_' . strtoupper(str_replace('&nbsp;', '_', $tabTitle)) . '_DESC');
+			echo $translate;
+            $translateTabDesc = Services::Language()->translate($translate);
+			  die;
             $tab_link = $split[1];
 
             if (count($split) == 3) {
@@ -195,7 +195,7 @@ Class FormService
                                           $model_type, $model_name, $view_name,
                                           $extension_instance_id, $item)
     {
-/**        echo 'Namespace: ' . $namespace. ' Tab Prefix: ' .  $tab_prefix. ' Tab Link: ' .  $tab_link. ' Tab Title: ' .
+        echo 'Namespace: ' . $namespace. ' Tab Prefix: ' .  $tab_prefix. ' Tab Link: ' .  $tab_link. ' Tab Title: ' .
             $tabTitle. ' Tab Description: ' .  $translateTabDesc. ' Model Type: ' .
             $model_type. ' Model Name: ' .  $model_name. ' View Name: ' .  $view_name. ' Extension Instance ID: ' .
             $extension_instance_id;
@@ -203,7 +203,7 @@ Class FormService
         echo '<pre>';
         var_dump($item);
         echo '</pre>';
-*/
+
         $configurationArray = array();
 
         if ($tab_prefix === null) {

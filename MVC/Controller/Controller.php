@@ -297,11 +297,10 @@ class Controller
 	{
 
 		/** 1. Initialisation */
+		$query_object = strtolower($query_object);
 		$this->pagination_total = 0;
 		$this->model_offset = $this->get('model_offset');
 		$this->model_count = $this->get('model_count');
-		$this->use_pagination = $this->get('use_pagination');
-
 		$this->use_pagination = $this->get('use_pagination');
 
 		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
@@ -317,6 +316,7 @@ class Controller
 				} else {
 					$query_object = 'list';
 				}
+
 				$this->prepareQuery($query_object);
 			}
 		}
@@ -470,7 +470,17 @@ class Controller
 			$temp[] = 'Pagetype' . strtolower($page_type);
 		}
 
-		$temp[] = Services::Registry()->get('Parameters', 'template_view_path_node');
+		$template = Services::Registry()->get('Parameters', 'template_view_path_node', '');
+		if ($template == '') {
+		} else {
+			$temp[] = $template;
+		}
+
+		if ((int)$this->get('process_plugins') == 0
+			&& count($temp) == 0) {
+			$this->plugins = array();
+			return;
+		}
 
 		$temp[] = 'Application';
 
@@ -515,6 +525,10 @@ class Controller
 			$query_object,
 			Services::Registry()->get($this->table_registry_name, 'Criteria')
 		);
+
+		if ($this->table_registry_name == 'LanguagestringsSystem') {
+			$this->set('check_view_level_access', 0);
+		}
 
 		/** 3. append ACL query elements */
 		if ((int)$this->get('check_view_level_access') == 1) {

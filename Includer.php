@@ -120,8 +120,6 @@ class Includer
             return false;
         }
 
-        $this->loadLanguage();
-
         $this->loadPlugins();
 
         $rendered_output = $this->invokeMVC();
@@ -519,29 +517,6 @@ class Includer
 
 		return true;
 	}
-
-    /**
-     * loadLanguage
-     *
-     * Loads Language Files for extension
-     *
-     * @return null
-     * @since   1.0
-     */
-    protected function loadLanguage()
-    {
-        Helpers::Extension()->loadLanguage(
-            Services::Registry()->get('Parameters', 'extension_path')
-        );
-        Helpers::Extension()->loadLanguage(
-            Services::Registry()->get('Parameters', 'template_view_path')
-        );
-        Helpers::Extension()->loadLanguage(
-            Services::Registry()->get('Parameters', 'wrap_view_path')
-        );
-
-        return;
-    }
 
     /**
      * 	loadPlugins overrides (or initially loads) Plugins from the Template and/or Wrap View folders

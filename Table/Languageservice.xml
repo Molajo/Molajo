@@ -13,8 +13,8 @@
             name="Languageservice"
             catalog_type_id="6000"
             extension_instance_id="6000"
-            get_customfields="0"
-            use_special_joins="q"
+            get_customfields="2"
+            use_special_joins="1"
             process_plugins="0"
             extends="ExtensioninstancesTable">
         <customfields>
