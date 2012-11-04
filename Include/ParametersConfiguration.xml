@@ -1,10 +1,12 @@
-<include field="configuration_tab_link_namespace"/>
-<include field="configuration_tab_array"/>
-<include field="configuration_tab_basic"/>
-<include field="configuration_tab_metadata"/>
-<include field="configuration_tab_form"/>
-<include field="configuration_tab_item"/>
-<include field="configuration_tab_list"/>
-<include field="configuration_tab_editor"/>
-<include field="configuration_tab_grid"/>
-<include field="configuration_tab_customfields"/>
+<include field="configuration_namespace"/>
+<include field="configuration_array"/>
+<include field="configuration_basic"/>
+<include field="configuration_access"/>
+<include field="configuration_metadata"/>
+<include field="configuration_customfields"/>
+<include field="configuration_editor"/>
+<include field="configuration_grid"/>
+<include field="configuration_form"/>
+<include field="configuration_item"/>
+<include field="configuration_list"/>
+

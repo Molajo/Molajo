@@ -1,1 +1,0 @@
-<field name="configuration_tab_grid" type="char" null="0" default="{{Grid,grid_toolbar*,grid_stat*,grid_search,grid_ordering*}}{{Lists,grid_list*}}{{Columns,grid_col*}}{{Batch,grid_batch*}}"/>

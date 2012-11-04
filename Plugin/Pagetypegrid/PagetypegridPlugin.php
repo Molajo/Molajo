@@ -56,7 +56,7 @@ class PagetypegridPlugin extends Plugin
         $namespace = ucfirst(strtolower($namespace));
 
         /** Create Tab Array */
-        $tab_array = '';
+        $page_array = '';
         $batch = array();
         $batch = Services::Registry()->get('Parameters', 'grid_batch_*');
 
@@ -69,7 +69,7 @@ class PagetypegridPlugin extends Plugin
                         $temp = '{{';
                         $temp .= ucfirst(strtolower(substr($key, strlen('grid_batch_'), 9999))) . ',';
                         $temp .= strtolower(substr($key, strlen('grid_batch_'), 9999)) . '}}';
-                        $tab_array .= $temp;
+                        $page_array .= $temp;
                     }
                 }
             }
@@ -81,17 +81,17 @@ class PagetypegridPlugin extends Plugin
                         $temp = '{{';
                         $temp .= ucfirst(strtolower(substr($key, strlen('grid_batch_'), 9999))) . ',';
                         $temp .= strtolower(substr($key, strlen('grid_batch_'), 9999)) . '}}';
-                        $tab_array .= $temp;
+                        $page_array .= $temp;
                     }
                 }
             }
         }
 
-        $tabs = Services::Form()->setTabArray(
+        $tabs = Services::Form()->setPageArray(
             $this->get('model_type'),
             $this->get('model_name'),
             $namespace,
-            $tab_array,
+            $page_array,
             null,
             'Admin',
             'Admingridtab',

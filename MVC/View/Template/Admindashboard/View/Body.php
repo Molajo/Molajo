@@ -8,7 +8,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <include:template name=formbegin form_name=dashboard/>
-<include:ui name=navigationtab tab_array=<?php echo $this->row->tab_array; ?>/>
+<include:ui name=navigationtab page_array=<?php echo $this->row->page_array; ?>/>
 <include:template name=formend/>
 
 <section class="dashboard">

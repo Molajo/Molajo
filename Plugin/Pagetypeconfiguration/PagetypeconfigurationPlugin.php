@@ -20,10 +20,10 @@ defined('MOLAJO') or die;
 class PagetypeconfigurationPlugin extends Plugin
 {
     /**
-     * Prepares Configuration Tabs and Tab Content
+     * Prepares Configuration Data
      *
-     * @return boolean
-     * @since   1.0
+     * @return 	boolean
+     * @since	1.0
      */
     public function onBeforeParse()
     {
@@ -35,15 +35,15 @@ class PagetypeconfigurationPlugin extends Plugin
         $resource_model_type = $this->get('model_type');
         $resource_model_name = $this->get('model_name');
 
-        /** Retrieve Resource Parameters  */
-        Helpers::Content()->getResourceExtensionParameters((int) $this->parameters['criteria_extension_instance_id']);
+        Helpers::Content()->getResourceExtensionParameters(
+			(int) $this->parameters['criteria_extension_instance_id']
+		);
 
-        /** Create Tabs */
-        $namespace = $this->get('configuration_tab_link_namespace');
+        $namespace = $this->get('configuration_namespace');
         $namespace = ucfirst(strtolower($namespace));
 
-		$temp = $this->get('configuration_tab_array');
-		$tabs = explode('{{', $temp);
+		$temp = $this->get('configuration_array');
+		$pages = explode('{{', $temp);
 
 		/** Determine Current Page Number */
 		$temp = Services::Registry()->get('Parameters', 'request_filters', array());
@@ -65,42 +65,32 @@ class PagetypeconfigurationPlugin extends Plugin
 			}
 		}
 
-		if ($page < count($tabs)) {
+		if ($page < count($pages)) {
 		} else {
 			$page = 1;
 		}
 
-		$tab_array = '{{' . $tabs[$page];
+		$page_array = '{{' . $pages[$page];
 
-        $query_results = Services::Form()->setTabArray(
+        $pageFieldsets = Services::Form()->setPageArray(
             $resource_model_type,
             $resource_model_name,
             $namespace,
-            $tab_array,
-            'configuration_tab_',
-            'Adminconfiguration',
-            'Adminconfigurationtab',
+            $page_array,
+            'configuration_',
+			'Formpage',
+            'Formpage',
             $this->get('criteria_extension_instance_id'),
             array()
         );
 
-		$query_results[0]->tab_count = count($tabs) - 1;
+		/** Resource Submenu - ex. Basic, Metadata, Fields, Page, Template, Wrap, etc. */
+		$pageFieldsets[0]->page_count = count($pages) - 1;
 
-		$this->set('model_name', 'Plugindata');
-        $this->set('model_type', 'dbo');
-        $this->set('model_query_object', 'getPlugindata');
-        $this->set('model_parameter', 'PrimaryRequestQueryResults');
-
-        $this->parameters['model_name'] = 'Plugindata';
-        $this->parameters['model_type'] = 'dbo';
-
-        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $query_results);
-
-		/** Build Tabs */
 		$pageArray = array();
 		$i = 0;
-		foreach ($tabs as $tab) {
-			if ($tab == '') {
+		foreach ($pages as $page) {
+			if ($page == '') {
 			} else {
 				$i++;
 				$row = new \stdClass();
@@ -110,14 +100,97 @@ class PagetypeconfigurationPlugin extends Plugin
 				} else {
 					$row->current = 0;
 				}
-				$row->title = substr($tab, 0, strpos($tab, ','));
+				$row->title = substr($page, 0, strpos($page, ','));
 				$row->url = Services::Registry()->get('Plugindata', 'page_url') . '/page/' . $i;
 
 				$pageArray[] = $row;
 			}
 		}
 		Services::Registry()->set('Plugindata', 'ResourceSubmenu', $pageArray);
+//STOP AMY. this below - needs to go into the PrimaryRequestQueryResults
+//$array = Services::Registry()->get('Plugindata', 'Formpageconfigbasic');
+//		echo '<pre>';
+//		var_dump($array);
+//		die;
+
+		/** Prepare recordset for Page Form Fieldset View */
+		$page_array = $this->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
+
+		$this->set('model_name', 'Plugindata');
+		$this->set('model_type', 'dbo');
+		$this->set('model_query_object', 'getPlugindata');
+		$this->set('model_parameter', 'PrimaryRequestQueryResults');
+
+		$this->parameters['model_name'] = 'Plugindata';
+		$this->parameters['model_type'] = 'dbo';
+
+		Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $page_array);
 
 		return true;
     }
+
+	/**
+	 * Get Form Page Fieldsets
+	 *
+	 * @param $pages
+	 * @return array
+	 */
+	protected function getPages($pages, $page_count)
+	{
+		$page_array = array();
+		$temp_array = array();
+		$temp = explode('}}', $pages);
+
+		foreach ($temp as $set) {
+			$set = str_replace(',', ' ', $set);
+			$set = str_replace(':', '=', $set);
+			$set = str_replace('{{', '', $set);
+			$set = str_replace('http=', 'http:', $set);
+			if (trim($set) == '') {
+			} else {
+				$temp_array[] = trim($set);
+			}
+		}
+
+		$number_of_pages = $this->convertNumberToWord(count($temp_array));
+
+		foreach ($temp_array as $set) {
+
+			$fields = explode(' ', $set);
+			foreach ($fields as $field) {
+				$temp = explode('=', $field);
+				$pairs[$temp[0]] = $temp[1];
+			}
+
+			$row = new \stdClass();
+			foreach ($pairs as $key=>$value) {
+				$row->$key = $value;
+				$row->number_of_pages = $number_of_pages;
+				$row->count_of_pages = $page_count;
+			}
+			$page_array[] = $row;
+		}
+
+		return $page_array;
+	}
+
+	/**
+	 * convertNumberToWord
+	 *
+	 * Converts numbers from 1-24 as their respective written word
+	 *
+	 * @return string
+	 * @since   1.0
+	 */
+	public function convertNumberToWord($number)
+	{
+		$key = $number-1;
+		$words = array('one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree','twentyfour');
+		if (array_key_exists($key, $words)) {
+			return $words[$key];
+		}
+
+		return false;
+	}
+
 }

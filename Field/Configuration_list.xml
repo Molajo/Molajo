@@ -1,0 +1,1 @@
+<field name="configuration_list" type="text" null="0" default="{{Page,list_parent*,list_theme*,list_page*}}{{Template,list_template*}}{{Wrap,list_wrap*}}{{Model,list_model*}}"/>

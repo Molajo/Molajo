@@ -1,4 +1,4 @@
-<include field="editor_tab_array"/>
+<include field="editor_page_array"/>
 <include field="editor_tab_main"/>
 <include field="editor_tab_publish"/>
 <include field="editor_tab_permissions"/>

@@ -33,17 +33,17 @@ class PagetypeapplicationPlugin extends Plugin
         }
 
         /** Create Tabs */
-        $namespace = $this->parameters['application_tab_link_namespace'];
+        $namespace = $this->parameters['application_namespace'];
         $namespace = ucfirst(strtolower($namespace));
 
-        $tab_array = $this->parameters['application_tab_array'];
+        $page_array = $this->parameters['application_array'];
 
-        $tabs = Services::Form()->setTabArray(
+        $tabs = Services::Form()->setPageArray(
             'Table',
             'Application',
             $namespace,
-            $tab_array,
-            'application_tab_',
+            $page_array,
+            'application_',
             'Pagetypeapplication',
             'Admineapplicationtab',
             null,

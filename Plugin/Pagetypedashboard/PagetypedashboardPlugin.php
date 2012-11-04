@@ -48,13 +48,13 @@ class PagetypedashboardPlugin extends Plugin
         /** Create Tabs */
         $namespace = 'Pagetypedashboard';
 
-        $tab_array = $this->get('dashboard_tab_array');
+        $page_array = $this->get('dashboard_page_array');
 
-        $tabs = Services::Form()->setTabArray(
+        $tabs = Services::Form()->setPageArray(
             $this->get('model_type'),
             $this->get('model_name'),
             $namespace,
-            $tab_array,
+            $page_array,
             'dahboard_tab_',
             'Pagetypedashboard',
             'Pagetypedashboardtab',

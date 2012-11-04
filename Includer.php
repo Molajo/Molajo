@@ -659,7 +659,7 @@ class Includer
         }
 
 		//if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'toolbar') {
-		//	echo $results;
+		echo $results;
 		//	die;
 		//}
 

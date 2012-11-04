@@ -1,0 +1,1 @@
+<field name="access_create_groups" type="integer" null="0" datalist="groups" multiple="1" size="5" default=""/>

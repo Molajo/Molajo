@@ -41,14 +41,14 @@ class PagetypeeditPlugin extends Plugin
         /** Namespace */
         $namespace = 'Pagetypeedit';
 
-        $tab_array = Services::Registry()->get('ConfigurationMenuitemParameters', 'editor_tab_array');
-        $item[0]->tab_array = $tab_array;
+        $page_array = Services::Registry()->get('ConfigurationMenuitemParameters', 'editor_page_array');
+        $item[0]->page_array = $page_array;
 
-        $tabs = Services::Form()->setTabArray(
+        $tabs = Services::Form()->setPageArray(
             $this->get('model_type'),
             $this->get('model_name'),
             $namespace,
-            $tab_array,
+            $page_array,
             'editor_tab_',
             'Pagetypeedit',
             'Pagetypeedittab',

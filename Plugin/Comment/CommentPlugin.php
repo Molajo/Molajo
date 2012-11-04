@@ -231,8 +231,8 @@ class CommentPlugin extends Plugin
         /** Create Tabs */
         $namespace = 'Comments';
 
-        $tab_array = Services::Registry()->get('ConfigurationMenuitemParameters', 'commentform_tab_array');
-        $tab_array = '{{Comments,visitor*,email*,website*,ip*,spam*}}';
+        $page_array = Services::Registry()->get('ConfigurationMenuitemParameters', 'commentform_page_array');
+        $page_array = '{{Comments,visitor*,email*,website*,ip*,spam*}}';
 
         /*
         visitor_name
@@ -242,11 +242,11 @@ class CommentPlugin extends Plugin
         spam_protection
         */
 
-        $tabs = Services::Form()->setTabArray(
+        $tabs = Services::Form()->setPageArray(
             'System',
             'Comments',
             'Comments',
-            $tab_array,
+            $page_array,
             'comments_tab_',
             'Comment',
             'Commenttab',
