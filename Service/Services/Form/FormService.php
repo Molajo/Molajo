@@ -42,27 +42,27 @@ Class FormService
     }
 
     /**
-     * Create Configuration Tabs for Forms
-     *
-     * @param $model_type - ex. Resources
-     * @param $model_name - ex. Articles
-     * @param $namespace - ex. config, grid, edit
-     * @param $page_array - sent in from request parameters ex. {{Editor,editor}} or full list from config
-     * @param $prefix - NULL from grid, configuration_, application_, etc.
-     * @param $view_name - ex. Adminapplication, Adminconfiguration, Admingrid, Edit, etc.
-     * @param $default_page_view_name Typically Formpage or Customfields
+     * For Single or Multi-page(or tab) Forms
+	 *
+	 * @param string $page_array - The request for a single or set of page form fieldsets to be generated
+	 *  Examples:
+	 * 		Single Page {{Editor,editor}}
+	 *  	Multi Pages {{Basic,basic}}{{Access,access}}{{Metadata,metadata}}{{Fields,customfields,Customfields}}{{Editor,editor}}{{Grid,grid}}{{Form,form}}{{Item,item}}{{List,list}}
+	 *
+	 * @param string $namespace - ex. config, grid, edit, etc.
+	 * @param string $model_type - ex. Resources
+     * @param string $model_name - ex. Articles
      * @param $extension_instance_id ex. 16000 for Articles
-     * @param $item array of data (Application configuration and Session data)
+     * @param $form_field_values array of data (Application configuration and Session data)
      *
      * @return array
      * @since  1.0
      */
-    public function setPageArray($model_type, $model_name, $namespace,
-                                $page_array, $prefix,
-                                $view_name, $default_page_view_name,
-                                $extension_instance_id, $item)
+    public function setPageArray($page_array, $namespace,
+								 $model_type, $model_name,
+                                 $extension_instance_id,
+								 $form_field_values)
     {
-
         $pages = array();
         $configurationArray = array();
         $temp = explode('}}', $page_array);
@@ -115,31 +115,30 @@ Class FormService
             $page_link = $split[1];
 
             if (count($split) == 3) {
-                $pageIncludeName = $split[2];
+                $pageFormFieldsetHandlerView = $split[2];
             } else {
-                $pageIncludeName = $default_page_view_name;
+                $pageFormFieldsetHandlerView = 'Formpage';
             }
 
-            $this->createPageFieldsets(
-                $namespace,
-                $prefix,
-                ucfirst(strtolower($page_link)),
-                $pageTitle,
-				$pageTitleExtended,
-                $translateTabDesc,
-                $model_type,
-                $model_name,
-                $view_name,
+			$this->createPageFieldsets(
+				$namespace,
+				$model_type, $model_name,
                 $extension_instance_id,
-                $item
-            );
+				$form_field_values,
+
+				ucfirst(strtolower($page_link)),
+				$pageTitle,
+				$pageTitleExtended,
+				$translateTabDesc,
+				$pageFormFieldsetHandlerView
+			);
 
             $pageArray = 'page_title:' . $pageTitle
 				. ',' . 'page_title_extended:' . $pageTitleExtended
                 . ',' . 'page_namespace:' . $namespace
                 . ',' . 'page_link:' . $namespace . $page_link
-                . ',' . 'page_include_name:' . $pageIncludeName
-                . ',' . 'page_include_parameter:' . $view_name . strtolower($namespace . $page_link);
+                . ',' . 'page_form_fieldset_handler_view:' . $pageFormFieldsetHandlerView
+                . ',' . 'page_include_parameter:' . $pageFormFieldsetHandlerView . strtolower($namespace . $page_link);
 
             $pages[] = '{{' . trim($pageArray) . '}}';
         }
@@ -175,48 +174,42 @@ Class FormService
     }
 
     /**
-     * createPageFieldsets - page parameters determine source data requirements
+     * createPageFieldsets - Processes a request for one page (could be many fieldsets and fields)
+	 * Examples: {{Editor,editor}} or {{Metadata,metadata}} or {{Fields,customfields,Customfields}}
+	 * This method is invoked for each page processed by setPageArray.
+	 * To build a one-page form, use this method or setPageArray
      *
-     * @param $namespace
-     * @param $prefix
-     * @param $page_link
-     * @param $pageTitle
-	 * @param $pageTitleExtended
-     * @param $translateTabDesc
-     * @param $configuration - contains the requested configuration
-     * @param $model_type
-     * @param $model_name
-     * @param $view_name
-     * @param $extension_instance_id
-     * @param $item
+	 * @param string $namespace - ex. config, grid, edit, etc.
+	 * @param string $model_type - ex. Resources
+	 * @param string $model_name - ex. Articles
+	 * @param $extension_instance_id ex. 16000 for Articles
+	 * @param $form_field_values array of data (Application configuration values, resoucre item, Session data, etc.)
+	 * @param $page_link - constructed from the page array data to provide a #link value if tabs are used
+     * @param $pageTitle - constructed from the page array - used in headings, etc.
+	 * @param $pageTitleExtended - constructed from title, type of config and resource
+     * @param $translateTabDesc - retrieved from language strings, given page array values
+     * @param page_form_fieldset_handler_view - View invoked for Page to render form fieldset and
+	 * 	each <include statement needed for each form field
      *
      * @return string
      * @since   1.0
      */
-    protected function createPageFieldsets($namespace, $prefix, $page_link,
-                                          $pageTitle, $pageTitleExtended, $translateTabDesc,
-                                          $model_type, $model_name, $view_name,
-                                          $extension_instance_id, $item)
-    {
-        /**echo 'Namespace: ' . $namespace. ' Tab Prefix: ' .  $prefix. ' Tab Link: ' .  $page_link. ' Tab Title: ' .
-            $pageTitle. ' Tab Description: ' .  $translateTabDesc. ' Model Type: ' .
-            $model_type. ' Model Name: ' .  $model_name. ' View Name: ' .  $view_name. ' Extension Instance ID: ' .
-            $extension_instance_id;
+    protected function createPageFieldsets($namespace, $model_type, $model_name,
+                $extension_instance_id, $form_field_values, $page_link,
+				$pageTitle, $pageTitleExtended, $translateTabDesc,
+				$page_form_fieldset_handler_view)
 
-        echo '<pre>';
-        var_dump($item);
-        echo '</pre>';
-		*/
+    {
         $configurationArray = array();
 
-        if ($prefix === null) {
+        if ($page_link === 'noformfields') {
             $configuration = '{{' . $page_link . ',' . strtolower($page_link) . '}}';
         } else {
-            $configuration = Services::Registry()->get('Parameters', $prefix . strtolower($page_link));
+            $configuration = Services::Registry()->get('Parameters', $namespace . '_' . strtolower($page_link));
         }
 
         $temp = explode('}}', $configuration);
-        $fieldSets = array();
+		$fieldSets = array();
 
         foreach ($temp as $set) {
             $set = str_replace('{{', '', $set);
@@ -227,7 +220,6 @@ Class FormService
             }
         }
 
-		$countFieldsets = 0;
 		$page_first_row = 1;
 		$page_fieldset_column = 1;
 
@@ -262,7 +254,7 @@ Class FormService
 
 			$temp = array();
 
-            if ($prefix === null) {
+            if ($namespace === null) {
                 /** Only titles and name of view to be included (view will take care of data retrieval) */
                 $row = new \stdClass();
 
@@ -272,7 +264,11 @@ Class FormService
                 $row->page_fieldset_title = $pageFieldsetTitle;
                 $row->page_fieldset_description = $translateFieldsetDesc;
 
-                $row->page_link = ucfirst(strtolower($view_name . $namespace . $page_link));
+                $row->page_link = ucfirst(strtolower(
+					$page_form_fieldset_handler_view
+						. $namespace
+						. $page_link)
+				);
 
                 $temp[] = $row;
 
@@ -280,11 +276,10 @@ Class FormService
 				// todo: retrieve ACL actual values
                 if ($namespace == 'Edit') {
 
-                    $temp = $this->getActualFields($namespace, $page_link, $options,
-                        $pageTitle, $translateTabDesc,
-                        $pageFieldsetTitle, $translateFieldsetDesc,
-                        $model_type, $model_name, $extension_instance_id,
-                        $item);
+					$temp = $this->getActualFields($namespace, $model_type, $model_name,
+						$extension_instance_id, $form_field_values, $page_link,
+						$pageTitle, $translateTabDesc,
+						$page_form_fieldset_handler_view);
 
                 } elseif (method_exists($this, 'get' . $page_link)) {
 
@@ -311,21 +306,22 @@ Class FormService
 				$page_fieldset_odd_or_even = 'odd';
 				$page_fieldset_row_number = 1;
 
-				foreach ($temp as $item) {
+				foreach ($temp as $form_field_values) {
 
-					$item->page_title_extended = $pageTitleExtended;
-					$item->page_new_fieldset = $page_new_fieldset;
-					$item->page_first_row = $page_first_row;
-					$item->page_fieldset_count = $page_fieldset_count;
-					$item->page_fieldset_odd_or_even = $page_fieldset_odd_or_even;
-					$item->page_fieldset_row_number = $page_fieldset_row_number;
-					$item->page_fieldset_column = $page_fieldset_column;
+					$form_field_values->page_title_extended = $pageTitleExtended;
+					$form_field_values->page_new_fieldset = $page_new_fieldset;
+					$form_field_values->page_first_row = $page_first_row;
+					$form_field_values->page_fieldset_count = $page_fieldset_count;
+					$form_field_values->page_fieldset_odd_or_even = $page_fieldset_odd_or_even;
+					$form_field_values->page_fieldset_row_number = $page_fieldset_row_number;
+					$form_field_values->page_fieldset_column = $page_fieldset_column;
+
 					$page_fieldset_row_number++;
 
 					$page_new_fieldset = 0;
 					$page_first_row = 0;
 
-					$write[] = $item;
+					$write[] = $form_field_values;
 				}
 
 				if ($page_fieldset_odd_or_even == 'odd') {
@@ -345,47 +341,36 @@ Class FormService
             $fieldSets = array_merge((array) $fieldSets, (array) $write);
         }
 
-        Services::Registry()->set('Plugindata', $view_name . $namespace . strtolower($page_link), $fieldSets);
+		Services::Registry()->set('Plugindata', $page_form_fieldset_handler_view . $namespace . strtolower($page_link), $fieldSets);
 
         return true;
     }
 
     /**
-     * Retrieves field definition, current resource setting, and application setting for requested parameters
-     *
-     * @param $namespace
-     * @param $page_link
-     * @param $options
-     * @param $pageTitle
-     * @param $translateTabDesc
-     * @param $pageFieldsetTitle
-     * @param $translateFieldsetDesc
-     * @param $model_type
-     * @param $model_name,
-     * @param $extension_instance_id
-     *
-     * @return mixed
-     * @since   1.0
-     */
+     * Retrieves field definitions and current settings for requested parameters
+	 * Examples: {{Editor,editor}} or {{Metadata,metadata}} or {{Fields,customfields,Customfields}}
+	 * This method is invoked for each page processed by setPageArray.
+	 * To build a one-page form, use this method or setPageArray
+	 *
+	 * @param string $namespace - ex. config, grid, edit, etc.
+	 * @param $page_link - constructed from the page array data to provide a #link value if tabs are used
+	 * @param $options - Value used as a prefix to extract parameters which start with that value
+	 * @param $pageTitle - constructed from the page array - used in headings, etc.
+	 * @param $translateTabDesc - retrieved from language strings, given page array values
+	 * @param $pageFieldsetTitle - Fieldset title
+	 * @param $translateFieldsetDesc - Fieldset description
+	 * @param string $model_type - ex. Resources
+	 * @param string $model_name - ex. Articles
+	 * @param $extension_instance_id ex. 16000 for Articles
+	 *
+	 * @return string
+	 * @since   1.0
+	 */
     protected function getParameters($namespace, $page_link, $options,
                                      $pageTitle, $translateTabDesc,
                                      $pageFieldsetTitle, $translateFieldsetDesc,
                                      $model_type, $model_name, $extension_instance_id)
     {
-
-//		echo 'Namespace: ' . $namespace. ' Tab Link: ' .  $page_link . '<br />';
-
-//		echo '<pre>';
-//		var_dump($options);
-//		echo '</pre>';
-
-//		echo ' Tab Title: ' .
-//		$pageTitle. ' Tab Description: ' .  $translateTabDesc.
-//			'Tabfieldset Title ' . $pageFieldsetTitle .
-//			'Tabfieldset Description ' . $translateFieldsetDesc,
-//			' Model Type: ' .
-//		$model_type. ' Model Name: ' .  $model_name. ' Extension Instance ID: ' .
-//		$extension_instance_id;
 
         $fieldValues = array();
         $build_results = array();
@@ -445,37 +430,35 @@ Class FormService
         } else {
             return array();
         }
-/*
-		echo '<br />END OF FIELDSET PROCESSING<pre>';
-		var_dump($x);
-		echo '<pre><br />><br />';
-*/
+
 		return $x;
     }
-
-    /**
-     * Retrieves field definition, current resource setting, and application setting for requested parameters
-     *
-     * @param $namespace
-     * @param $page_link
-     * @param $options
-     * @param $pageTitle
-     * @param $translateTabDesc
-     * @param $pageFieldsetTitle
-     * @param $translateFieldsetDesc
-     * @param $model_type
-     * @param $model_name,
-     * @param $extension_instance_id
-     * @param $item
-     *
-     * @return mixed
-     * @since   1.0
-     */
+	/**
+	 * Retrieves Custom Fields created for this Resource
+	 * Examples: {{Editor,editor}} or {{Metadata,metadata}} or {{Fields,customfields,Customfields}}
+	 * This method is invoked for each page processed by setPageArray.
+	 * To build a one-page form, use this method or setPageArray
+	 *
+	 * @param  string $namespace - ex. config, grid, edit, etc.
+	 * @param  string $page_link - constructed from the page array data to provide a #link value if tabs are used
+	 * @param  string $options - Value used as a prefix to extract parameters which start with that value
+	 * @param  string $pageTitle - constructed from the page array - used in headings, etc.
+	 * @param  string $translateTabDesc - retrieved from language strings, given page array values
+	 * @param  string $pageFieldsetTitle - Fieldset title
+	 * @param  string $translateFieldsetDesc - Fieldset description
+	 * @param  string string $model_type - ex. Resources
+	 * @param  string $model_name - ex. Articles
+	 * @param  string $extension_instance_id ex. 16000 for Articles
+	 *
+	 * @return  string
+	 * @since   1.0
+	 */
     protected function getActualFields($namespace, $page_link, $options,
                                        $pageTitle, $translateTabDesc,
                                        $pageFieldsetTitle, $translateFieldsetDesc,
                                        $model_type, $model_name, $extension_instance_id,
-                                       $item)
+                                       $form_field_values)
+
     {
         $fieldValues = array();
         $build_results = array();
@@ -551,8 +534,8 @@ Class FormService
                                 $row['page_fieldset_title'] = $pageFieldsetTitle;
                                 $row['page_fieldset_description'] = $translateFieldsetDesc;
 
-                                if (isset($item->$field_name)) {
-                                    $row['value'] = $item->$field_name;
+                                if (isset($form_field_values->$field_name)) {
+                                    $row['value'] = $form_field_values->$field_name;
                                 } else {
                                     $row['value'] = null;
                                 }
@@ -573,23 +556,26 @@ Class FormService
         }
     }
 
-    /**
-     * Retrieves field definition, current resource setting, and application setting for Metadata
-     *
-     * @param $namespace
-     * @param $page_link
-     * @param $options
-     * @param $pageTitle
-     * @param $translateTabDesc
-     * @param $pageFieldsetTitle
-     * @param $translateFieldsetDesc
-     * @param $model_type
-     * @param $model_name
-     * @param $extension_instance_id
-     *
-     * @return mixed
-     * @since  1.0
-     */
+	/**
+	 * Retrieves Metadata definitions and current configuration values
+	 * Examples: {{Metadata,metadata}}
+	 * This method is invoked for each page processed by setPageArray.
+	 * To build a one-page form, use this method or setPageArray
+	 *
+	 * @param  string $namespace - ex. config, grid, edit, etc.
+	 * @param  string $page_link - constructed from the page array data to provide a #link value if tabs are used
+	 * @param  string $options - Value used as a prefix to extract parameters which start with that value
+	 * @param  string $pageTitle - constructed from the page array - used in headings, etc.
+	 * @param  string $translateTabDesc - retrieved from language strings, given page array values
+	 * @param  string $pageFieldsetTitle - Fieldset title
+	 * @param  string $translateFieldsetDesc - Fieldset description
+	 * @param  string $model_type - ex. Resources
+	 * @param  string $model_name - ex. Articles
+	 * @param  string $extension_instance_id ex. 16000 for Articles
+	 *
+	 * @return  string
+	 * @since   1.0
+	 */
     protected function getMetadata($namespace, $page_link, $options,
                                    $pageTitle, $translateTabDesc,
                                    $pageFieldsetTitle, $translateFieldsetDesc,
@@ -616,21 +602,24 @@ Class FormService
     }
 
     /**
-     * Retrieves field definition, current resource setting, and application setting for Grid parameters
-     *
-     * @param $namespace
-     * @param $page_link
-     * @param $options
-     * @param $pageTitle
-     * @param $translateTabDesc
-     * @param $pageFieldsetTitle
-     * @param $translateFieldsetDesc
-     * @param $model_type
-     * @param $model_name
-     * @param $extension_instance_id
-     *
-     * @return array
-     * @since   1.0
+	 * Retrieves Metadata definitions and current configuration values
+	 * Examples: {{Metadata,metadata}}
+	 * This method is invoked for each page processed by setPageArray.
+	 * To build a one-page form, use this method or setPageArray
+	 *
+	 * @param  string $namespace - ex. config, grid, edit, etc.
+	 * @param  string $page_link - constructed from the page array data to provide a #link value if tabs are used
+	 * @param  string $options - Value used as a prefix to extract parameters which start with that value
+	 * @param  string $pageTitle - constructed from the page array - used in headings, etc.
+	 * @param  string $translateTabDesc - retrieved from language strings, given page array values
+	 * @param  string $pageFieldsetTitle - Fieldset title
+	 * @param  string $translateFieldsetDesc - Fieldset description
+	 * @param  string $model_type - ex. Resources
+	 * @param  string $model_name - ex. Articles
+	 * @param  string $extension_instance_id ex. 16000 for Articles
+	 *
+	 * @return  string
+	 * @since   1.0
      */
     protected function getGrid($namespace, $page_link, $options,
                                $pageTitle, $translateTabDesc,
@@ -693,17 +682,21 @@ Class FormService
     }
 
     /**
-     * Retrieves custom fields defined specifically for this resource (and therefore can be updated)
-     *
-     * @param $namespace
-     * @param $page_link
-     * @param $options
-     * @param $pageTitle
-     * @param $translateTabDesc
-     * @param $pageFieldsetTitle
-     * @param $translateFieldsetDesc
-     * @param $model_type
-     * @param $model_name
+	 * Retrieves Metadata definitions and current configuration values
+	 * Examples: {{Metadata,metadata}}
+	 * This method is invoked for each page processed by setPageArray.
+	 * To build a one-page form, use this method or setPageArray
+	 *
+	 * @param  string $namespace - ex. config, grid, edit, etc.
+	 * @param  string $page_link - constructed from the page array data to provide a #link value if tabs are used
+	 * @param  string $options - Value used as a prefix to extract parameters which start with that value
+	 * @param  string $pageTitle - constructed from the page array - used in headings, etc.
+	 * @param  string $translateTabDesc - retrieved from language strings, given page array values
+	 * @param  string $pageFieldsetTitle - Fieldset title
+	 * @param  string $translateFieldsetDesc - Fieldset description
+	 * @param  string $model_type - ex. Resources
+	 * @param  string $model_name - ex. Articles
+	 * @param  string $extension_instance_id ex. 16000 for Articles
      *
      * @return array
      * @since   1.0
@@ -711,7 +704,8 @@ Class FormService
     protected function getCustomfields($namespace, $page_link, $options,
                                        $pageTitle, $translateTabDesc,
                                        $pageFieldsetTitle, $translateFieldsetDesc,
-                                       $model_type, $model_name)
+                                       $model_type, $model_name,
+									   $extension_instance_id)
     {
         $build_results = array();
 

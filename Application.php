@@ -151,7 +151,7 @@ Class Application
         }
 
         /** Connect Services */
-        $results = Application::Services()->StartServices();
+        $results = Application::Services()->initiate();
         if ($results === false) {
             return false;
         }

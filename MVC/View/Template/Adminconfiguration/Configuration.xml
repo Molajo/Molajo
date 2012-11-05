@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="Template" version="1.0">
-    <name>VIEW_TEMPLATE_FORM_NAME</name>
+    <name>VIEW_TEMPLATE_ADMINCONFIGURATION_NAME</name>
     <author>Amy Stephen</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
@@ -9,5 +9,11 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ADMINCONFIGURATION_DESCRIPTION</description>
-    <model name="Formname" extends="TemplateviewsSystem"/>
+    <model name="Adminconfiguration" extends="TemplateviewsSystem">
+        <customfields>
+            <customfield name="parameters">
+                <include name="ParametersDefinecustomfields"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>
