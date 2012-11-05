@@ -87,12 +87,14 @@ Class LanguageService
      */
     public function translate($string, $language = null)
     {
+		$string = trim($string);
+
         if ($language == null) {
             $language = Services::Registry()->get('Languages', 'Current');
         }
 
-        $result = Services::Registry()->get($language, $string, $string);
-		if ($result == $string) {
+        $result = Services::Registry()->get($language, $string);
+		if ($result === null) {
 		} else {
 			return $result;
 		}
@@ -100,8 +102,8 @@ Class LanguageService
 		if ($language == Services::Registry()->get('Languages', 'Default')) {
 		} else {
 			$language = Services::Registry()->get('Languages', 'Default');
-			$result = Services::Registry()->get($language . 'translate', $string, $string);
-			if ($result == $string) {
+			$result = Services::Registry()->get($language, $string);
+			if ($result === null) {
 			} else {
 				return $result;
 			}
@@ -110,14 +112,20 @@ Class LanguageService
 		if ($language == Services::Registry()->get('Languages', 'en-GB')) {
 		} else {
 			$language = 'en-GB';
-			$result = Services::Registry()->get($language . 'translate', $string, $string);
-			if ($result == $string) {
+			$result = Services::Registry()->get($language, $string);
+			if ($result === null) {
 			} else {
 				return $result;
 			}
 		}
 
-		return $result;
+		if ($string == 'Application configured default:')  {
+
+		} else {
+			Services::Language()->logUntranslatedString($string);
+		}
+
+		return $string;
     }
 
     /**
@@ -188,8 +196,9 @@ Class LanguageService
 			foreach ($results as $item) {
 
 				if (trim($item->content_text) == '' || $item->content_text === null) {
+					Services::Registry()->set($language, trim($item->title), trim($item->title));
 				} else {
-					Services::Registry()->set($language, $item->title, $item->content_text);
+					Services::Registry()->set($language, trim($item->title), $item->content_text);
 				}
 			}
 		}
@@ -331,6 +340,7 @@ Class LanguageService
 
 		return $connect->getData('List');
 	}
+
 	/**
 	 * Log requests for translations that could not be processed
 	 *
@@ -343,28 +353,38 @@ Class LanguageService
 			Services::Registry()->createRegistry('TranslatedStringsMissing');
 		}
 
-		Services::Registry()->set('TranslatedStringsMissing', $string);
+		/* Value preserves case */
+		Services::Registry()->set('TranslatedStringsMissing', $string, $string);
 
 		return;
 
 	}
 
 	/**
-	 * Add missing strings
+	 * Log missing strings
 	 *
 	 * @return bool
 	 */
-	protected function logUntranslatedStrings()
+	public function logUntranslatedStrings()
 	{
 		Services::Registry()->sort('TranslatedStringsMissing');
 
 		$body = '';
 		$translated = Services::Registry()->getArray('TranslatedStringsMissing');
-		foreach ($translated as $key => $value) {
-			$body .= $key . CHR(10);
+
+		if (count($translated) === 0) {
+			return true;
 		}
 
-		Services::Filesystem()->fileWrite(SITE_LOGS_FOLDER . '/' . 'language.php', $body);
+		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+		$connect = new $controllerClass();
+
+		$results = $connect->connect('System', 'Languagestrings');
+		if ($results === false) {
+			return false;
+		}
+
+		$connect->model->insertLanguageString($translated);
 
 		return true;
 	}

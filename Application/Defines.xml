@@ -20,6 +20,7 @@
     <define name="CATALOG_TYPE_SERVICE" value="4000"/>
     <define name="CATALOG_TYPE_PLUGIN" value="5000"/>
     <define name="CATALOG_TYPE_LANGUAGE" value="6000"/>
+    <define name="CATALOG_TYPE_LANGUAGE_STRING" value="6250"/>
     <define name="CATALOG_TYPE_MESSAGE" value="6500"/>
     <define name="CATALOG_TYPE_THEME" value="7000"/>
     <define name="CATALOG_TYPE_PAGE_VIEW" value="8000"/>
