@@ -29,6 +29,10 @@
     <define name="CATALOG_TYPE_MENUITEM" value="11000"/>
     <define name="CATALOG_TYPE_RESOURCE" value="12000"/>
 
+    <define name="CATALOG_TYPE_GROUP" value="13000"/>
+    <define name="CATALOG_TYPE_CATEGORY" value="14000"/>
+    <define name="CATALOG_TYPE_TAG" value="15000"/>
+
     <define name="PAGE_TYPE_APPLICATION" value="Application"/>
     <define name="PAGE_TYPE_CONFIGURATION" value="Configuration"/>
     <define name="PAGE_TYPE_DASHBOARD" value="Dashboard"/>

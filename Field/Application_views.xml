@@ -1,1 +1,1 @@
-<field name="application_views" type="char" null="0" default=" "/>
+<field name="application_views" type="char" null="0" default="{{Head View,head*}}{{Defer View,defer*}}{{Messages View,message*}}{{Offline View,offline_them*,offline_page*}}{{Error View,error*}}"/>

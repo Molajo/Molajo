@@ -91,7 +91,7 @@ class PagetypeconfigurationPlugin extends Plugin
 				$pageArray[] = $row;
 			}
 		}
-		Services::Registry()->set('Plugindata', 'ResourceSubmenu', $pageArray);
+		Services::Registry()->set('Plugindata', 'SectionSubmenu', $pageArray);
 
 		/** Even tho links are created to each form page, generate Form for the current page, only */
 		$current_page = '{{' . $pages[$page_number];

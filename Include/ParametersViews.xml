@@ -1,0 +1,22 @@
+<include field="head_enable_use"/>
+<include field="head_template_view_id"/>
+<include field="head_wrap_view_id"/>
+
+<include field="defer_enable_use"/>
+<include field="defer_template_view_id"/>
+<include field="defer_wrap_view_id"/>
+
+<include field="message_template_view_id"/>
+<include field="message_wrap_view_id"/>
+
+<include field="offline_switch"/>
+<include field="offline_message"/>
+<include field="offline_theme_id"/>
+<include field="offline_page_view_id"/>
+
+<include field="error_theme_id"/>
+<include field="error_page_view_id"/>
+<include field="error_404_message"/>
+<include field="error_403_message"/>
+
+<include name="ParametersAssets"/>

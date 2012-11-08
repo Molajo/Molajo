@@ -1,1 +1,1 @@
-<field name="application_system" type="char" null="0" default=" "/>
+<field name="application_system" type="char" null="0" default="{{System Folders,system*}}{{Session Settings,session*}}{{Cookie Settings,cookie*}}{{Cache Settings,cache*}}"/>

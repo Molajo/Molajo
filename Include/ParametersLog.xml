@@ -1,0 +1,4 @@
+<include field="log_user_update_activity"/>
+<include field="log_user_view_activity"/>
+<include field="log_catalog_update_activity"/>
+<include field="log_catalog_view_activity"/>

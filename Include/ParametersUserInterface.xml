@@ -1,27 +1,3 @@
 <include field="uibuttondropdown"/>
 <include field="uibutton"/>
 <include field="uibuttongroup"/>
-
-<include field="uielementsaccordion"/>
-<include field="uielementsalerts"/>
-<include field="uielementscarousel"/>
-<include field="uielementslabels"/>
-<include field="uielementsmodal"/>
-<include field="uielementspanel"/>
-<include field="uielementsprogress"/>
-<include field="uielementstooltips"/>
-
-<include field="uinavigationbreadcrumbs"/>
-<include field="uinavigationlinklist"/>
-<include field="uinavigationnavbar"/>
-<include field="uinavigationpager"/>
-<include field="uinavigationpagination"/>
-<include field="uinavigationsidenav"/>
-<include field="uinavigationsubnav"/>
-<include field="uinavigationtab"/>
-<include field="uinavigationtabgroup"/>
-<include field="uinavigationverticalnav"/>
-
-<include field="uimodal"/>
-
-<include field="uitabgroupclass"/>

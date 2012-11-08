@@ -1,7 +1,5 @@
-<include field="application_namespace"/>
 <include field="application_array"/>
 <include field="application_basic"/>
-<include field="application_access"/>
 <include field="application_user"/>
 <include field="application_media"/>
 <include field="application_system"/>

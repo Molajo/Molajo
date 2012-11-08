@@ -386,7 +386,7 @@ Class FormService
 			if (trim($compare) == '' || strlen($compare) == 0) {
 			} else {
 
-				if ($namespace == 'Application') {
+				if ($namespace == 'application') {
 					$data = Services::Registry()->get('ApplicationTable', 'parameters');
 				} else {
 					$data = Services::Registry()->get('ResourcesSystem', 'parameters');
@@ -412,7 +412,7 @@ Class FormService
 						$row['page_fieldset_title'] = $pageFieldsetTitle;
 						$row['page_fieldset_description'] = $translateFieldsetDesc;
 
-						if ($namespace == 'Application') {
+						if ($namespace == 'application') {
 							$row['value'] = Services::Registry()->get('Configuration', $field['name']);
 						} else {
 							$row['value'] = Services::Registry()->get('ResourcesSystemParameters', $field['name']);

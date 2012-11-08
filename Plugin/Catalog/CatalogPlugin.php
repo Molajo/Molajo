@@ -35,9 +35,7 @@ class CatalogPlugin extends Plugin
         } else {
             return true;
         }
-        Services::Registry()->set('Datalist', 'Catalog', array());
 
-        return;
         $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
         $connect = new $controllerClass();
 
@@ -72,7 +70,22 @@ class CatalogPlugin extends Plugin
         );
         $connect->model->query->where(
             $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('appplication_id')
+                . '.' . $connect->model->db->qn('page_type')
+                . ' <> '
+                . $connect->model->db->q('Link')
+        );
+        $connect->model->query->where(
+            $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('catalog_type_id')
+                . ' = ' . CATALOG_TYPE_MENUITEM
+                . ' OR ' .
+            $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('catalog_type_id')
+                . ' > ' . CATALOG_TYPE_TAG
+        );
+        $connect->model->query->where(
+            $connect->model->db->qn($connect->get('primary_prefix'))
+                . '.' . $connect->model->db->qn('application_id')
                 . ' = ' . (int) APPLICATION_ID
         );
 
@@ -84,7 +97,7 @@ class CatalogPlugin extends Plugin
         $connect->set('model_offset', 0);
         $connect->set('model_count', 99999);
 
-        $query_results = $connect->getData('list');
+        $query_results = $connect->getData('distinct');
         $catalogArray = array();
 
         $application_home_catalog_id = (int) Services::Registry()->get('configuration', 'application_home_catalog_id');

@@ -59,82 +59,40 @@
 
         <customfield name="parameters">
             <include field="application_name"/>
-            <include field="application_google_analytics_code"/>
-            <include field="application_logon_requirement"/>
-            <include field="application_html5"/>
-            <include field="application_help"/>
-            <include field="application_path"/>
-            <include field="application_base_url"/>
             <include field="application_home_catalog_id"/>
             <include field="application_default_theme_id"/>
+            <include field="application_logon_requirement"/>
+            <include field="application_help"/>
+            <include field="application_google_analytics_code"/>
+            <include field="application_html5"/>
 
-            <include field="language"/>
-            <include field="language_direction"/>
-            <include field="language_multilingual"/>
-            <include field="language_utc_offset"/>
-
-            <include field="system_cache_folder"/>
-            <include field="system_logs_folder"/>
-            <include field="system_temp_folder"/>
-            <include field="system_temp_url"/>
-            <include field="system_media_folder"/>
-            <include field="system_media_url"/>
-
+            <include name="ParametersURL"/>
+            <include name="ParametersLanguage"/>
+            <include name="ParametersFolders"/>
             <include name="ParametersMailer"/>
-
-            <include field="url_sef"/>
-            <include field="url_unicode_slugs"/>
-            <include field="url_force_ssl"/>
-
-            <include field="session_lifetime"/>
-            <include field="session_handler"/>
-
-            <include field="cookie_domain"/>
-            <include field="cookie_path"/>
+            <include name="ParametersCache"/>
+            <include name="ParametersSession"/>
+            <include name="ParametersCookie"/>
+            <include name="ParametersLog"/>
 
             <include name="ParametersUserDefaults"/>
-
-            <include field="log_user_update_activity"/>
-            <include field="log_user_view_activity"/>
-            <include field="log_catalog_update_activity"/>
-            <include field="log_catalog_view_activity"/>
-
             <include name="ParametersGravatar"/>
-
             <include name="ParametersImage"/>
 
-            <include field="head_enable_use"/>
-            <include field="head_template_view_id"/>
-            <include field="head_wrap_view_id"/>
-
-            <include field="defer_enable_use"/>
-            <include field="defer_template_view_id"/>
-            <include field="defer_wrap_view_id"/>
-
-            <include name="ParametersAssets"/>
-
-            <include field="message_template_view_id"/>
-            <include field="message_wrap_view_id"/>
-
-            <include field="offline_switch"/>
-            <include field="offline_message"/>
-            <include field="offline_theme_id"/>
-            <include field="offline_page_view_id"/>
-
-            <include field="error_theme_id"/>
-            <include field="error_page_view_id"/>
-            <include field="error_404_message"/>
-            <include field="error_403_message"/>
-
-            <include name="ParametersUserInterface"/>
-
+            <include name="ParametersViews"/>
             <include name="ParametersEnable"/>
             <include name="ParametersForm"/>
+            <include name="ParametersFormModel"/>
             <include name="ParametersItem"/>
+            <include name="ParametersItemModel"/>
             <include name="ParametersList"/>
+            <include name="ParametersListModel"/>
             <include name="ParametersMenuitem"/>
+            <include name="ParametersMenuitemModel"/>
 
             <include name="ParametersProfiler"/>
+
+            <include name="ParametersUserInterface"/>
         </customfield>
     </customfields>
 </model>
