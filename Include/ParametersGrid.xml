@@ -1,4 +1,4 @@
-<include field="grid_tab_link_namespace"/>
+<include field="grid_page_link_namespace"/>
 
 <include field="grid_toolbar_buttons"/>
 <include field="grid_submenu_items"/>

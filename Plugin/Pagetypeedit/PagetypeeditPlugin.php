@@ -49,7 +49,7 @@ class PagetypeeditPlugin extends Plugin
             $this->get('model_name'),
             $namespace,
             $page_array,
-            'editor_tab_',
+            'editor_page_',
             'Pagetypeedit',
             'Pagetypeedittab',
             $this->get('extension_instance_id'),

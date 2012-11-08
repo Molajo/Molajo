@@ -177,6 +177,7 @@ Class FormService
 	 * createPageFieldsets - Processes a request for one page (could be many fieldsets and fields)
 	 * Examples: {{Editor,editor}} or {{Metadata,metadata}} or {{Fields,customfields,Customfields}}
 	 * This method is invoked for each page processed by setPageArray.
+	 *
 	 * To build a one-page form, use this method or setPageArray
 	 *
 	 * @param string $namespace - ex. config, grid, edit, etc.
@@ -254,7 +255,7 @@ Class FormService
 
 			$temp = array();
 
-			if ($namespace === null) {
+			if ($namespace == 'noformfields') {
 				/** Only titles and name of view to be included (view will take care of data retrieval) */
 				$row = new \stdClass();
 
@@ -273,7 +274,7 @@ Class FormService
 				$temp[] = $row;
 
 			} else {
-				// todo: retrieve ACL actual values
+
 				if ($namespace == 'Edit') {
 
 					$temp = $this->getActualFields($namespace, $model_type, $model_name,
@@ -337,13 +338,12 @@ Class FormService
 				}
 
 			}
-
 			$fieldSets = array_merge((array)$fieldSets, (array)$write);
 		}
 
 		Services::Registry()->set('Plugindata', $page_form_fieldset_handler_view . $namespace . strtolower($page_link), $fieldSets);
 
-		return true;
+		return;
 	}
 
 	/**
@@ -393,6 +393,7 @@ Class FormService
 				}
 
 				foreach ($data as $field) {
+
 					$use = false;
 
 					if ($field['name'] == $compare) {
@@ -418,8 +419,8 @@ Class FormService
 						}
 
 						$row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
-						$build_results[] = $row;
 
+						$build_results[] = $row;
 					}
 				}
 			}
@@ -585,13 +586,16 @@ Class FormService
 		$build_results = array();
 
 		foreach (Services::Registry()->get('ResourcesSystem', 'metadata') as $field) {
+
 			$row = $field;
+
 			$row['page_title'] = $pageTitle;
 			$row['page_description'] = $translateTabDesc;
 			$row['page_fieldset_title'] = $pageFieldsetTitle;
 			$row['page_fieldset_description'] = $translateFieldsetDesc;
 			$row['value'] = Services::Registry()->get('ResourcesSystemMetadata', $field['name']);
 			$row['application_default'] = Services::Registry()->get('Configuration', 'metadata_' . $field['name']);
+
 			$build_results[] = $row;
 		}
 

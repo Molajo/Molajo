@@ -39,13 +39,13 @@ class PagetypeconfigurationPlugin extends Plugin
 			(int) $this->parameters['criteria_extension_instance_id']
 		);
 
-        $namespace = $this->get('configuration_namespace');
-        $namespace = ucfirst(strtolower($namespace));
-
+		/** Array - All Pages in Set
+		{{Basic,basic}}{{Access,access}}{{Metadata,metadata}}{{Fields,customfields,Customfields}}{{Editor,editor}}{{Grid,grid}}{{Form,form}}{{Item,item}}{{List,list}}
+		 */
 		$temp = $this->get('configuration_array');
 		$pages = explode('{{', $temp);
 
-		/** Determine Current Page Number */
+		/** Determine Current Page of Set */
 		$temp = Services::Registry()->get('Parameters', 'request_filters', array());
 		$filters = explode(',', $temp);
 
@@ -93,24 +93,41 @@ class PagetypeconfigurationPlugin extends Plugin
 		}
 		Services::Registry()->set('Plugindata', 'ResourceSubmenu', $pageArray);
 
-		/**
-		 * $pageFieldsets - two fields (page_count and page_array) for the Extension Template Page Title
-		 *	and to create the include statement for the Template defined in page_form_fieldset_handler_view
-		 *  The registry used by the form handler view is defined in page_include_parameter
-		 */
-		$page_array = '{{' . $pages[$page_number];
+		/** Even tho links are created to each form page, generate Form for the current page, only */
+		$current_page = '{{' . $pages[$page_number];
 
-		$pageFieldsets = Services::Form()->setPageArray(
-			$page_array,
-			'configuration',
+		/**
+		 * $pageFieldsets - contains two fields: page_count and page_array
+		 *
+		 * 	page_count - the number of pages created (will be 1 for this use)
+		 *
+		 * 	page_array: several fields that will be used by the primary view to display titles
+		 *		and create the include that contains the form fieldsets
+		 *
+		 *	Example page_array: Basic Page (tab 1)
+		 * 		page_title: Basic
+		 * 		page_title_extended: Articles Basic Configuration
+		 * 		page_namespace: configuration
+		 * 		page_link: configurationbasic
+		 *
+		 * 		Form View to include and the Registry containing Form contents:
+		 * 			page_form_fieldset_handler_view: Formpage
+		 * 			page_include_parameter: Formpageconfigurationbasic
+		 *
+		 */
+		$connect = Services::Form();
+
+		$pageFieldsets = $connect->setPageArray(
+			$current_page,
+			strtolower($this->get('page_type')),
 			$resource_model_type,
 			$resource_model_name,
 			$this->get('criteria_extension_instance_id'),
 			array()
 		);
 
-		/** Prepare recordset for Page Form Fieldset View */
-		$page_array = $this->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
+		/** Set the View Model Parameters and Populate the Registry used as the Model */
+		$current_page = $this->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
 
 		$this->set('model_name', 'Plugindata');
 		$this->set('model_type', 'dbo');
@@ -120,9 +137,7 @@ class PagetypeconfigurationPlugin extends Plugin
 		$this->parameters['model_name'] = 'Plugindata';
 		$this->parameters['model_type'] = 'dbo';
 
-		Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $page_array);
-		Services::Registry()->get('Plugindata', 'PrimaryRequestQueryResults', $page_array);
-
+		Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $current_page);
 
 		return true;
     }

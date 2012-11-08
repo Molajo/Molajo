@@ -139,10 +139,10 @@ SET @parameters = CONCAT('
 "cache_handler":"file",
 
 "editor_page_array":"{{Main,main}}{{Publish,publish}}{{Permissions,permissions}}{{SEO,seo}}",
-		"editor_tab_main":"{{Main,editor_toolbar*,editor_main*,editor_secondary*}}",
-		"editor_tab_publish":"{{Publish,editor_publish*}}",
-		"editor_tab_permissions":"{{Permissions,editor_permission*}}",
-		"editor_tab_seo":"{{SEO,editor_seo*}}"
+		"editor_page_main":"{{Main,editor_toolbar*,editor_main*,editor_secondary*}}",
+		"editor_page_publish":"{{Publish,editor_publish*}}",
+		"editor_page_permissions":"{{Permissions,editor_permission*}}",
+		"editor_page_seo":"{{SEO,editor_seo*}}"
 
 
 }

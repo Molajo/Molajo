@@ -247,7 +247,7 @@ class CommentPlugin extends Plugin
             'Comments',
             'Comments',
             $page_array,
-            'comments_tab_',
+            'comments_page_',
             'Comment',
             'Commenttab',
             17000,

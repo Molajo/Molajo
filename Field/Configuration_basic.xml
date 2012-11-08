@@ -1,1 +1,1 @@
-<field name="configuration_basic" type="char" null="0" default="{{Basics,criteria*}}{{Content,enable_content*}}{{Categorize,enable_categorize*}}{{Protection,enable_protection*}}{{Response,enable_response*}}{{Response,enable_broadcaste*}}{{System,enable_system*}}"/>
+<field name="configuration_basic" type="char" null="0" default="{{Basics,criteria*}}{{Content,enable_content*}}{{Broadcast,enable_broadcast*}}{{Categorize,enable_categorize*}}{{Protection,enable_protection*}}{{Response,enable_response*}}{{System,enable_system*}}"/>

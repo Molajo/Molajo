@@ -59,7 +59,16 @@ Class Services
 	 * @var   object
 	 * @since 1.0
 	 */
-	protected $service_connection;
+	protected $static_connection;
+
+
+	/**
+	 * Service Connections
+	 *
+	 * @var   object
+	 * @since 1.0
+	 */
+	protected $dynamic_connection;
 
 	/**
 	 * getInstance
@@ -100,7 +109,8 @@ Class Services
 	 */
 	public function initiate()
 	{
-		$this->service_connection = array();
+		$this->static_connection = array();
+		$this->dynamic_connection = array();
 		$this->message = array();
 
 		$services = ConfigurationService::getFile('Service', 'Services');
@@ -159,15 +169,15 @@ Class Services
 					echo 'service failed for ' . $entry . '<br />';
 				}
 				$this->set($entry, $connection, $connectionSucceeded);
+
+			} elseif ($service->attributes()->scope == 'Instance') {
+
+				$this->dynamic_connection[$service->attributes()->name . 'Service']
+					= $service->attributes()->name;
+
 			}
 
 		}
-
-		foreach ($this->message as $message) {
-			Services::Profiler()->set($message, LOG_OUTPUT_SERVICES, VERBOSE);
-		}
-
-		return true;
 
 		foreach ($this->message as $message) {
 			Services::Profiler()->set($message, LOG_OUTPUT_SERVICES, VERBOSE);
@@ -188,58 +198,51 @@ Class Services
 	 */
 	protected function get($key)
 	{
-		if (isset($this->service_connection[$key])) {
-			return $this->service_connection[$key];
+		if (isset($this->static_connection[$key])) {
+			return $this->static_connection[$key];
+
+		} elseif (isset($this->dynamic_connection[$key])) {
+			$entry = $key;
+			$folder = $this->dynamic_connection[$key];
+
+		} else {
+			throw new \BadMethodCallException('Service ' . $key . ' is not available');
 		}
 
-		if ($key == 'FormService') {
+		$connectionSucceeded = true;
+		$connection = '';
 
-			$connectionSucceeded = true;
-			$connection = '';
+		/** class name */
+		$serviceClass = 'Molajo\\Service\\Services\\' . $folder . '\\' . $entry;
 
-			/** class name */
-			$entry = (string)$key . 'Service';
-			$folder = (string)$key;
-			$serviceClass = 'Molajo\\Service\\Services\\' . $folder . '\\' . $entry;
+		/** method name */
+		$serviceMethod = 'getInstance';
 
-			/** method name */
-			$serviceMethod = 'getInstance';
+		/** trap errors for missing class or method */
+		if (class_exists($serviceClass)) {
+			if (method_exists($serviceClass, $serviceMethod)) {
 
-			/** trap errors for missing class or method */
-			if (class_exists($serviceClass)) {
-				if (method_exists($serviceClass, $serviceMethod)) {
-
-				} else {
-					$connectionSucceeded = false;
-					$connection = $serviceClass . '::' . $serviceMethod . ' Class Method does not exist';
-				}
 			} else {
 				$connectionSucceeded = false;
-				$connection = $serviceClass . ' Class does not exist';
+				$connection = $serviceClass . '::' . $serviceMethod . ' Class Method does not exist';
 			}
-
-			/** make service connection */
-			if ($connectionSucceeded === true) {
-				try {
-					$connection = $serviceClass::$serviceMethod();
-
-				} catch (\Exception $e) {
-					$connectionSucceeded = false;
-					$connection = 'Fatal Error: ' . $e->getMessage();
-				}
-			}
-
-			/** store connection or error message
-			if ($connectionSucceeded === false) {
-				echo 'service failed for ' . $entry . '<br />';
-			}
-			$this->set($entry, $connection, $connectionSucceeded);
-			 */
-
-			return $connection;
+		} else {
+			$connectionSucceeded = false;
+			$connection = $serviceClass . ' Class does not exist';
 		}
 
-		throw new \BadMethodCallException('Service ' . $key . ' is not available');
+		/** make service connection */
+		if ($connectionSucceeded === true) {
+			try {
+				$connection = $serviceClass::$serviceMethod();
+
+			} catch (\Exception $e) {
+				$connectionSucceeded = false;
+				$connection = 'Fatal Error: ' . $e->getMessage();
+			}
+		}
+
+		return $connection;
 	}
 
 	/**
@@ -261,7 +264,7 @@ Class Services
 			Services::Registry()->set('Service', $key, false);
 
 		} else {
-			$this->service_connection[$key] = $value;
+			$this->static_connection[$key] = $value;
 			$this->message[$i] = ' ' . $key . ' started successfully. ';
 			Services::Registry()->set('Service', $key, true);
 		}

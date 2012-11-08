@@ -1,1 +1,1 @@
-<field name="enable_categorize_categories" type="boolean" null="1"/>
+<field name="enable_categorize_categories" type="text" datalist="Categories" size="10" multiple="1" null="1"/>

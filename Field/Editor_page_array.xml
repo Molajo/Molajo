@@ -1,0 +1,1 @@
+<field name="editor_page_array" type="char" null="0" default="{{Main,main}}{{Secondary,secondary}}{{Publish,publish}}{{Access,noformfields}}{{SEO,seo}}{{Metadata,metadata}}"/>

@@ -52,7 +52,7 @@ class PagetypegridPlugin extends Plugin
         $this->setBatch($connect, $connect->get('primary_prefix'));
 
         /** Namespace */
-        $namespace = $this->parameters['grid_tab_link_namespace'];
+        $namespace = $this->parameters['grid_page_link_namespace'];
         $namespace = ucfirst(strtolower($namespace));
 
         /** Create Tab Array */

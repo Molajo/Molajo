@@ -1,3 +1,9 @@
+<include field="enable_content_draft_save"/>
+<include field="enable_content_log_catalog_activity"/>
+<include field="enable_content_maximum_version_count"/>
+<include field="enable_content_retain_versions_after_delete"/>
+<include field="enable_content_version_history"/>
+
 <include field="enable_broadcast_notifications"/>
 <include field="enable_broadcast_ping"/>
 <include field="enable_broadcast_tweets"/>
@@ -5,12 +11,6 @@
 
 <include field="enable_categorize_categories"/>
 <include field="enable_categorize_tags"/>
-
-<include field="enable_content_draft_save"/>
-<include field="enable_content_log_catalog_activity"/>
-<include field="enable_content_maximum_version_count"/>
-<include field="enable_content_retain_versions_after_delete"/>
-<include field="enable_content_version_history"/>
 
 <include field="enable_protection_bad_word_filter"/>
 <include field="enable_protection_block_email_address"/>

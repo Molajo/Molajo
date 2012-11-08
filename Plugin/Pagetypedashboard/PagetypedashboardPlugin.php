@@ -55,7 +55,7 @@ class PagetypedashboardPlugin extends Plugin
             $this->get('model_name'),
             $namespace,
             $page_array,
-            'dahboard_tab_',
+            'dahboard_page_',
             'Pagetypedashboard',
             'Pagetypedashboardtab',
             null,

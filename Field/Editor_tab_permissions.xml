@@ -1,1 +1,0 @@
-<field name="editor_tab_permissions" type="char" null="0" default="{{Permissions,editor_permission*}}"/>

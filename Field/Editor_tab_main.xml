@@ -1,1 +1,0 @@
-<field name="editor_tab_main" type="char" null="0" default="{{Main,editor_toolbar*,editor_main*,editor_secondary*}}"/>

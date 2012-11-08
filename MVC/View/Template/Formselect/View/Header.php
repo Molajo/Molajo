@@ -15,4 +15,5 @@ $tooltip_css_class = 'has-tip'; ?>
     <option value=""><?php echo Services::Language()->translate('SELECT_' . strtoupper($this->row->datalist)); ?></option>
     <?php } else { ?>
     <option value=""><?php echo Services::Language()->translate('No selection'); ?></option>
+    <option value="#"><?php echo Services::Language()->translate('Select all'); ?></option>
 <?php }

@@ -171,6 +171,7 @@ Class ExtensionHelper
         $m = new $controllerClass();
 
         $m->connect($model_type, $model_name);
+        $m->model->query->clear();
 
         $primary_prefix = $m->get('primary_prefix');
         $primary_key = $m->get('primary_key');

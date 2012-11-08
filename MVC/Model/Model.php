@@ -307,6 +307,8 @@ class Model
 		/** Add Missing Language Strings to Base */
 		foreach ($translated as $key => $value) {
 
+            echo $key. ' '.$value . '<br />';
+
 			$sql = "
 
 			INSERT INTO `#__language_strings`
@@ -331,10 +333,10 @@ class Model
 			'2012-09-13 12:00:00', 1, '2012-09-13 12:00:00', 1,
 			'2012-09-13 12:00:00', 0, 5, 0, 1, 0, 1, 0, '{}', '{}', '{}', 'string', 0, 0);";
 
-			$this->db->setQuery($sql);
-			$this->db->execute();
+			//$this->db->setQuery($sql);
+			//$this->db->execute();
 		}
-
+return;
 		/** Add to English Language */
 		$en_GB = "SELECT DISTINCT id
 					FROM `molajo_language_strings`

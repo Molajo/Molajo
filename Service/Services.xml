@@ -36,5 +36,5 @@
     <service name="Search" scope="Application"/>
     <service name="Install" scope="Application"/>
     <service name="Menu" scope="Application"/>
-    <service name="Form" scope="Application"/>
+    <service name="Form" scope="Instance"/>
 </services>

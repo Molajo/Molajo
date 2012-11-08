@@ -1,4 +1,3 @@
-<include field="configuration_namespace"/>
 <include field="configuration_array"/>
 <include field="configuration_basic"/>
 <include field="configuration_access"/>

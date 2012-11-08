@@ -38,22 +38,33 @@ class ReadModel extends Model
      * @return ReadModel
      * @since  1.0
      */
-    public function setBaseQuery($columns, $table_name, $primary_prefix,
-                                 $primary_key, $id, $name_key, $name_key_value,
-                                 $query_object, $criteria_array = array())
-    {
+    public function setBaseQuery(
+        $columns,
+        $table_name,
+        $primary_prefix,
+        $primary_key,
+        $id,
+        $name_key,
+        $name_key_value,
+        $query_object,
+        $criteria_array = array()
+    ) {
         if ($this->query->select == null) {
 
             if ($query_object == 'result') {
 
-                if ((int) $id > 0) {
+                if ((int)$id > 0) {
                     $this->query->select($this->db->qn($primary_prefix . '.' . $name_key));
-                    $this->query->where($this->db->qn($primary_prefix . '.' . $primary_key)
-                        . ' = ' . $this->db->q($id));
+                    $this->query->where(
+                        $this->db->qn($primary_prefix . '.' . $primary_key)
+                            . ' = ' . $this->db->q($id)
+                    );
                 } else {
                     $this->query->select($this->db->qn($primary_prefix . '.' . $primary_key));
-                    $this->query->where($this->db->qn($primary_prefix . '.' . $name_key)
-                        . ' = ' . $this->db->q($name_key_value));
+                    $this->query->where(
+                        $this->db->qn($primary_prefix . '.' . $name_key)
+                            . ' = ' . $this->db->q($name_key_value)
+                    );
                 }
 
             } else {
@@ -81,29 +92,37 @@ class ReadModel extends Model
         }
 
         if ($this->query->where == null) {
-            if ((int) $id > 0) {
-                $this->query->where($this->db->qn($primary_prefix . '.' . $primary_key)
-                    . ' = ' . $this->db->q($id));
+            if ((int)$id > 0) {
+                $this->query->where(
+                    $this->db->qn($primary_prefix . '.' . $primary_key)
+                        . ' = ' . $this->db->q($id)
+                );
 
             } elseif (trim($name_key_value) == '') {
 
             } else {
-                $this->query->where($this->db->qn($primary_prefix . '.' . $name_key)
-                    . ' = ' . $this->db->q($name_key_value));
+                $this->query->where(
+                    $this->db->qn($primary_prefix . '.' . $name_key)
+                        . ' = ' . $this->db->q($name_key_value)
+                );
             }
         }
 
         if (is_array($criteria_array) && count($criteria_array) > 0) {
             foreach ($criteria_array as $item) {
                 if (isset($item['value'])) {
-                    $this->query->where($this->db->qn($item['name'])
-                        . ' ' . $item['connector'] . ' '
-                        . $this->db->q($item['value']));
+                    $this->query->where(
+                        $this->db->qn($item['name'])
+                            . ' ' . $item['connector'] . ' '
+                            . $this->db->q($item['value'])
+                    );
 
                 } elseif (isset($item['name2'])) {
-                    $this->query->where($this->db->qn($item['name'])
-                        . ' ' . $item['connector'] . ' '
-                        . $this->db->qn($item['name2']));
+                    $this->query->where(
+                        $this->db->qn($item['name'])
+                            . ' ' . $item['connector'] . ' '
+                            . $this->db->qn($item['name2'])
+                    );
                 }
             }
         }
@@ -138,7 +157,8 @@ class ReadModel extends Model
         Services::Authorisation()->setQueryViewAccess(
             $this->query,
             $this->db,
-            array('join_to_prefix' => $primary_prefix,
+            array(
+                'join_to_prefix' => $primary_prefix,
                 'join_to_primary_key' => $primary_key,
                 'catalog_prefix' => 'acl_check_catalog',
                 'select' => $select
@@ -160,8 +180,8 @@ class ReadModel extends Model
      */
     public function useSpecialJoins($joins, $primary_prefix, $query_object)
     {
-        $menu_id = (int) $this->get('menu_id', 0);
-        $catalog_type_id = (int) $this->get('catalog_type_id', 0);
+        $menu_id = (int)$this->get('menu_id', 0);
+        $catalog_type_id = (int)$this->get('catalog_type_id', 0);
 
         foreach ($joins as $join) {
 
@@ -215,13 +235,13 @@ class ReadModel extends Model
                         $whereLeft = SITE_ID;
 
                     } elseif ($to == 'MENU_ID') {
-                        $whereLeft = (int) $menu_id;
+                        $whereLeft = (int)$menu_id;
 
                     } elseif ($to == 'CATALOG_TYPE_ID') {
-                        $whereLeft = (int) $catalog_type_id;
+                        $whereLeft = (int)$catalog_type_id;
 
                     } elseif (is_numeric($to)) {
-                        $whereLeft = (int) $to;
+                        $whereLeft = (int)$to;
 
                     } else {
 
@@ -264,13 +284,13 @@ class ReadModel extends Model
                         $whereRight = SITE_ID;
 
                     } elseif ($with == 'MENU_ID') {
-                        $whereLeft = (int) $menu_id;
+                        $whereLeft = (int)$menu_id;
 
                     } elseif ($with == 'CATALOG_TYPE_ID') {
-                        $whereLeft = (int) $catalog_type_id;
+                        $whereLeft = (int)$catalog_type_id;
 
                     } elseif (is_numeric($with)) {
-                        $whereRight = (int) $with;
+                        $whereRight = (int)$with;
 
                     } else {
 
@@ -308,18 +328,20 @@ class ReadModel extends Model
      */
     public function setModelCriteria($catalog_type_id, $extension_instance_id, $primary_prefix)
     {
-        if ((int) $catalog_type_id == 0) {
+        if ((int)$catalog_type_id == 0) {
         } else {
-            $this->query->where($this->db->qn($primary_prefix . '.' . 'catalog_type_id')
-                . ' = ' . (int) $catalog_type_id);
+            $this->query->where(
+                $this->db->qn($primary_prefix . '.' . 'catalog_type_id')
+                    . ' = ' . (int)$catalog_type_id
+            );
         }
-/**
+        /**
         if ((int) $extension_instance_id == 0) {
         } else {
-            $this->query->where($this->db->qn($primary_prefix . '.' . 'extension_instance_id')
-                . ' = ' . (int) $extension_instance_id);
+        $this->query->where($this->db->qn($primary_prefix . '.' . 'extension_instance_id')
+        . ' = ' . (int) $extension_instance_id);
         }
-*/
+         */
 
         return $this;
     }
@@ -330,7 +352,7 @@ class ReadModel extends Model
      * @param         $query_object
      * @param int     $offset
      * @param int     $count
-     * @param boolean $use_pagination r
+     * @param boolean $use_pagination
      *
      * @return int count of total rows for pagination
      * @since   1.0
@@ -338,19 +360,20 @@ class ReadModel extends Model
     public function getQueryResults($query_object, $offset = 0, $count = 5, $use_pagination = 0)
     {
         $this->query_results = array();
-
-//echo  'Offset ' . $offset . ' Count ' . $count = 5 . ' Use Pagination ' . $use_pagination  . '<br />';
-//echo '<br /><br /><pre>';
-//var_dump($this->query->__toString());
-//echo '</pre><br /><br />';
-
+/*
+ echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination  . '<br />';
+echo '<br /><br /><pre>';
+        $string = $this->query->__toString();
+        echo str_replace('#__', 'molajo_', $string);
+echo '</pre><br /><br />';
+*/
         $cache_key = $this->query->__toString();
-		if ($cache_key == '') {
-			echo '<pre>';
-			var_dump($this);
-			echo '</pre>';
-			die;
-		}
+        if ($cache_key == '') {
+            echo '<pre>';
+            var_dump($this);
+            echo '</pre>';
+            die;
+        }
         $cached_output = Services::Cache()->get('Query', $cache_key);
 
         if ($query_object == 'list') {
@@ -360,7 +383,7 @@ class ReadModel extends Model
 
         if ($cached_output === false) {
 
-            if ((int) $use_pagination === 0) {
+            if ((int)$use_pagination === 0) {
                 $query_offset = $offset;
                 $query_count = $count;
 
@@ -369,7 +392,7 @@ class ReadModel extends Model
                 $query_count = 99999999;
             }
 
-            $this->db->setQuery($this->query->__toString());
+            $this->db->setQuery($this->query->__toString(), $query_offset, $query_count);
 
             if ($query_object == 'result') {
                 $results = $this->db->loadResult();
@@ -391,7 +414,8 @@ class ReadModel extends Model
         }
 
         if ($use_pagination === 0
-            || (int) $total === 0) {
+            || (int)$total === 0
+        ) {
             $this->query_results = $results;
 
             return $total;
@@ -406,12 +430,12 @@ class ReadModel extends Model
             if ($countOfOffset < $offset) {
                 $countOfOffset++;
 
-            /** Collect next set for pagination */
+                /** Collect next set for pagination */
             } elseif ($countOfResults < $count) {
                 $this->query_results[] = $item;
                 $countOfResults++;
 
-            /** Offset and Results set collected. Exit. */
+                /** Offset and Results set collected. Exit. */
             } else {
                 break;
             }
@@ -429,14 +453,19 @@ class ReadModel extends Model
      * @param $fields
      * @param $retrieval_method
      * @param $query_results
-     * @param $query_object
+     * @param  $query_object
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function addCustomFields(
-        $table_registry_name, $customFieldName, $fields, $retrieval_method, $query_results, $query_object)
-    {
+        $table_registry_name,
+        $customFieldName,
+        $fields,
+        $retrieval_method,
+        $query_results,
+        $query_object
+    ) {
         /** Prepare Registry Name */
         $customFieldName = strtolower($customFieldName);
         $useRegistryName = $table_registry_name . ucfirst($customFieldName);
@@ -497,7 +526,7 @@ class ReadModel extends Model
             }
 
             /** Filter Input and Save the Registry */
-			//todo: filter
+            //todo: filter
             //$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
             if ($retrieval_method == 1 && $query_object == 'item') {
@@ -505,7 +534,8 @@ class ReadModel extends Model
 
             } else {
                 if (strtolower($customFieldName) == 'parameters'
-                    || strtolower($customFieldName) == 'metadata') {
+                    || strtolower($customFieldName) == 'metadata'
+                ) {
 
                     $name = strtolower($customFieldName) . '_' . $name;
                 }
@@ -531,10 +561,10 @@ class ReadModel extends Model
     {
         foreach ($children as $child) {
 
-            $name = (string) $child['name'];
+            $name = (string)$child['name'];
             $name = ucfirst(strtolower($name));
 
-            $type = (string) $child['type'];
+            $type = (string)$child['type'];
             $type = ucfirst(strtolower($type));
 
             $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
@@ -544,11 +574,13 @@ class ReadModel extends Model
                 return false;
             }
 
-            $join = (string) $child['join'];
+            $join = (string)$child['join'];
             $joinPrimaryPrefix = $m->get('primary_prefix');
 
-            $m->model->query->where($m->model->db->qn($joinPrimaryPrefix . '.' . $join)
-                . ' = ' . (int) $id);
+            $m->model->query->where(
+                $m->model->db->qn($joinPrimaryPrefix . '.' . $join)
+                    . ' = ' . (int)$id
+            );
 
             $results = $m->getData('list');
 
