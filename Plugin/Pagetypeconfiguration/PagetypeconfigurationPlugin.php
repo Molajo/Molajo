@@ -139,6 +139,9 @@ class PagetypeconfigurationPlugin extends Plugin
 
 		Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $current_page);
 
+//        echo '<pre>';
+//        var_dump(Services::Registry()->get('Plugindata', 'Formpageconfigurationbasic'));
+//        echo '</pre>';
 		return true;
     }
 
