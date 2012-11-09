@@ -125,7 +125,6 @@ Class FormService
 				$model_type, $model_name,
 				$extension_instance_id,
 				$form_field_values,
-
 				ucfirst(strtolower($page_link)),
 				$pageTitle,
 				$pageTitleExtended,
@@ -264,7 +263,6 @@ Class FormService
 				$row->page_description = $translateTabDesc;
 				$row->page_fieldset_title = $pageFieldsetTitle;
 				$row->page_fieldset_description = $translateFieldsetDesc;
-
 				$row->page_link = ucfirst(strtolower(
 						$page_form_fieldset_handler_view
 							. $namespace
@@ -673,7 +671,6 @@ Class FormService
 						$row['value'] = Services::Registry()->get('GridMenuitemParameters', $field['name']);
 						$row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
 						$build_results[] = $row;
-
 					}
 				}
 			}
@@ -749,7 +746,6 @@ Class FormService
 					$row['page_fieldset_description'] = $translateFieldsetDesc;
 					$row['value'] = null;
 					$row['first_following'] = 0;
-
 					$row['customfield_type'] = 'Create';
 
 					$build_results[] = $row;
@@ -805,9 +801,7 @@ Class FormService
 						$field['page_fieldset_title'] = $pageFieldsetTitle;
 						$field['page_fieldset_description'] = $translateFieldsetDesc;
 						$field['first_following'] = $first;
-
 						$first = 0;
-
 						$field['customfield_type'] = $custom_field;
 
 						$build_results[] = $field;
@@ -1056,7 +1050,6 @@ Class FormService
 		}
 
 		/** Fieldset returned to be used to create template includes for field registries created below */
-
 		return $fieldset;
 	}
 
@@ -1088,21 +1081,8 @@ Class FormService
 		if ($field['disabled'] == 1) {
 			$iterate['disabled'] = ' disabled';
 		}
-
-//		if (isset($field['class'])) {
-//			$iterate['class'] = $field['class'];
-//		} else {
-//			$iterate['class'] = 'edipagele';
-//		}
-
 		$iterate['value'] = $field['value'];
 
-//		foreach ($field as $key => $value) {
-//			if (in_array($key, $iterate)) {
-//			} else {
-//				$iterate[$key] = $value;
-//			}
-//		}
 		foreach ($iterate as $key => $value) {
 			$row = new \stdClass();
 
@@ -1140,7 +1120,6 @@ Class FormService
 		$fieldRecordset = array();
 
 		if ($field['null'] == 1) {
-			//not all browsers ready for required on it's own
 			$required = ' required';
 		} else {
 			$required = '';
@@ -1250,12 +1229,6 @@ Class FormService
 			}
 		}
 
-//		if (isset($field['class'])) {
-//			$iterate['class'] = $field['class'];
-//		} else {
-//			$iterate['class'] = 'edipagele';
-//		}               [15]=>
-
 		$temp = $field['value'];
 		$default_setting = 0;
 		if ($temp === NULL) {
@@ -1364,18 +1337,6 @@ Class FormService
 		if (isset($field['cols'])) {
 			$iterate['cols'] = $field['cols'];
 		}
-
-//		if (isset($field['class'])) {
-//			$iterate['class'] = $field['class'];
-//		} else {
-//			$iterate['class'] = 'edipagele';
-//		}
-		//foreach ($field as $key => $value) {
-		//	if (in_array($key, $iterate)) {
-		//	} else {
-		//		$iterate[$key] = $value;
-		//	}
-		//}
 
 		$selected = $field['value'];
 

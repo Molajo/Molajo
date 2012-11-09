@@ -114,19 +114,24 @@ class PagetypegridPlugin extends Plugin
     {
         $url = Services::Registry()->get('Plugindata', 'page_url');
 
-        $grid_toolbar_buttons = explode(',', $this->get('grid_toolbar_buttons',
-                'new,edit,publish,feature,archive,checkin,restore,delete,trash,options')
-        );
+        $button = $this->get('grid_toolbar_buttons');
+
+        if ($button == '#') {
+            $button = 'new,edit,publish,feature,archive,checkin,restore,delete,trash,options';
+        }
+
+        $grid_toolbar_buttons = explode(',', $button);
 
         $permissions = Services::Authorisation()
             ->verifyTaskList($grid_toolbar_buttons, $this->get('catalog_id')
         );
-
         $query_results = array();
         foreach ($grid_toolbar_buttons as $buttonname) {
 
             if ($permissions[$buttonname] === true) {
+
                 $row = new \stdClass();
+
                 $row->name = Services::Language()->translate(
                     strtoupper('TASK_' . strtoupper($buttonname) . '_BUTTON')
                 );
@@ -201,6 +206,7 @@ class PagetypegridPlugin extends Plugin
                 } else {
 
                     $query_results = Services::Text()->buildSelectlist($listname, $items, 0, 5);
+
                     Services::Registry()->set('Plugindata', 'list_' . $listname, $query_results);
 
                     $row = new \stdClass();

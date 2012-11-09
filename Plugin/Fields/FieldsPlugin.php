@@ -90,6 +90,11 @@ class FieldsPlugin extends Plugin
 					$row->value = $field['name'] . '_dd';
 					$fieldArray[] = $row;
 
+                    $row = new \stdClass();
+                    $row->id = $field['name'] . '_ccyy_mm_dd';
+                    $row->value = $field['name'] . '_ccyy_mm_dd';
+                    $fieldArray[] = $row;
+
 					$row = new \stdClass();
 					$row->id = $field['name'] . '_month_name_abbr';
 					$row->value = $field['name'] . '_month_name_abbr';

@@ -87,18 +87,21 @@ Class TextService
      * @return string
      * @since   1.0
      */
-    public function getPlaceHolderText($paragraph_word_count, $paragraph_count, $format,
-                                       $start_with_lorem_ipsum)
-    {
+    public function getPlaceHolderText(
+        $paragraph_word_count,
+        $paragraph_count,
+        $format,
+        $start_with_lorem_ipsum
+    ) {
         /**
         $generator = new LoremIpsumGenerator($paragraph_word_count);
 
         return ucfirst(
-            $generator->getContent(
-                $paragraph_word_count * $paragraph_count,
-                $format,
-                $start_with_lorem_ipsum
-            )
+        $generator->getContent(
+        $paragraph_word_count * $paragraph_count,
+        $format,
+        $start_with_lorem_ipsum
+        )
         );
          */
     }
@@ -124,7 +127,10 @@ Class TextService
     /**
      * getList retrieves values called from listsPlugin
      *
-     * @return boolean
+     * @param $filter
+     * @param $parameters
+     *
+     * @return array|bool|object
      * @since   1.0
      */
     public function getList($filter, $parameters)
@@ -204,12 +210,22 @@ Class TextService
 
         if (count($fields) < 2) {
 
-            $m->model->query->select('DISTINCT '
-                . $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id');
-            $m->model->query->select($m->model->db->qn($primary_prefix
-                . '.' . $name_key) . ' as value');
-            $m->model->query->order($m->model->db->qn($primary_prefix
-                . '.' . $name_key) . ' ASC');
+            $m->model->query->select(
+                'DISTINCT '
+                    . $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id'
+            );
+            $m->model->query->select(
+                $m->model->db->qn(
+                    $primary_prefix
+                        . '.' . $name_key
+                ) . ' as value'
+            );
+            $m->model->query->order(
+                $m->model->db->qn(
+                    $primary_prefix
+                        . '.' . $name_key
+                ) . ' ASC'
+            );
 
         } else {
 
@@ -240,43 +256,23 @@ Class TextService
             $m->model->query->order($m->model->db->qn($ordering) . ' ASC');
         }
 
-        /** Where */
-        if (isset($parameters['criteria_catalog_type_id'])) {
-            $this->setWhereCriteria('catalog_type_id',
-                $parameters['criteria_catalog_type_id'],
+        if ($m->get('extension_instance_id', 0) == 0) {
+        } else {
+            $this->setWhereCriteria(
+                'extension_instance_id',
+                $m->get('extension_instance_id'),
                 $primary_prefix,
                 $m
             );
         }
-
-        $this->setWhereCriteria('extension_instance_id',
-            $m->get('criteria_extension_instance_id'),
-            $primary_prefix,
-            $m
-        );
-
-        $menu_id = null;
-        if (isset($parameters['criteria_catalog_type_id'])
-            && (int) $parameters['criteria_catalog_type_id'] == 1300
-        ) {
-            $this->setWhereCriteria('menu_id',
-                $m->get('item_parent_menu_id'),
+        if ($m->get('catalog_type_id', 0) == 0) {
+        } else {
+            $this->setWhereCriteria(
+                'catalog_type_id',
+                $m->get('catalog_type_id'),
                 $primary_prefix,
                 $m
             );
-        } else {
-
-            $catalog_type_id = $m->get('criteria_catalog_type_id');
-            if ((int) $catalog_type_id > 0
-                || strrpos($catalog_type_id, ',') > 0
-            ) {
-                $this->setWhereCriteria(
-                    'catalog_type_id',
-                    $catalog_type_id,
-                    $primary_prefix,
-                    $m
-                );
-            }
         }
 
         $query_object = 'distinct';
@@ -307,11 +303,11 @@ Class TextService
                     . ' IN (' . $value . ')'
             );
 
-        } elseif ((int) $value == 0) {
+        } elseif ((int)$value == 0) {
 
         } else {
             $connection->model->query->where(
-                $connection->model->db->qn($alias . '.' . $field) . ' = ' . (int) $value
+                $connection->model->db->qn($alias . '.' . $field) . ' = ' . (int)$value
             );
         }
 
@@ -328,18 +324,22 @@ Class TextService
     {
         $primary_prefix = Services::Registry()->get($m->table_registry_name, 'primary_prefix', 'a');
 
-        $m->model->query->where($m->model->db->qn($primary_prefix)
-            . '.' . $m->model->db->qn('status')
-            . ' > ' . STATUS_UNPUBLISHED);
+        $m->model->query->where(
+            $m->model->db->qn($primary_prefix)
+                . '.' . $m->model->db->qn('status')
+                . ' > ' . STATUS_UNPUBLISHED
+        );
 
-        $m->model->query->where('(' . $m->model->db->qn($primary_prefix)
+        $m->model->query->where(
+            '(' . $m->model->db->qn($primary_prefix)
                 . '.' . $m->model->db->qn('start_publishing_datetime')
                 . ' = ' . $m->model->db->q($m->model->null_date)
                 . ' OR ' . $m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('start_publishing_datetime')
                 . ' <= ' . $m->model->db->q($m->model->now) . ')'
         );
 
-        $m->model->query->where('(' . $m->model->db->qn($primary_prefix)
+        $m->model->query->where(
+            '(' . $m->model->db->qn($primary_prefix)
                 . '.' . $m->model->db->qn('stop_publishing_datetime')
                 . ' = ' . $m->model->db->q($m->model->null_date)
                 . ' OR ' . $m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('stop_publishing_datetime')
@@ -352,8 +352,8 @@ Class TextService
     /**
      * buildSelectlist - build select list for insertion into webpage
      *
-     * @param  $listname
-     * @param  $items
+     * @param string $listname
+     * @param array $items
      * @param int $multiple
      * @param int $size
      *
@@ -390,10 +390,10 @@ Class TextService
 
             if ($multiple == 1) {
                 $row->multiple = ' multiple ';
-                if ((int) $size == 0) {
+                if ((int)$size == 0) {
                     $row->multiple .= 'size=5 ';
                 } else {
-                    $row->multiple .= 'size=' . (int) $size;
+                    $row->multiple .= 'size=' . (int)$size;
                 }
             }
 
