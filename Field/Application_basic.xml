@@ -1,1 +1,1 @@
-<field name="application_basic" type="char" null="0" default="{{Basics,application*}}{{Metadata,metadata*}}{{URLs,url*}}{{Mail Transport,mailer_t*}}{{Mail Options,mailer_d*,mailer_only*,mailer_mail*}}{{Sendmail only:,mailer_send*}}{{SMTP Mail only:,mailer_smtp*}}{{Offline,offline_sw*,offline_message}}"/>
+<field name="application_basic" type="char" null="0" default="{{Basics,application*}}{{URLs,url*}}{{Language,language*}}{{Offline,offline_sw*,offline_message}}"/>

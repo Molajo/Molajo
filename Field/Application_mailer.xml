@@ -1,0 +1,1 @@
+<field name="application_mailer" type="char" null="0" default="{{Mail Transport,mailer_t*}}{{Mail Options,mailer_d*,mailer_only*,mailer_mail*}}{{Sendmail only:mailer_send*}}{{SMTP Mail only:mailer_smtp*}}"/>

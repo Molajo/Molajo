@@ -8,13 +8,33 @@ use Molajo\Service\Services;
  */
 defined("MOLAJO") or die;
 
-if ($this->row->page_first_row == 1) {
-} elseif ($this->row->page_new_fieldset == 1) { ?>
-</fieldset>
-<?php }
+$first_row = $this->row->page_first_row;
 
-if ($this->row->page_new_fieldset == 1) { ?>
-<fieldset class="configuration">
+if ($first_row == 1) {
+
+/** End Last Fieldset */
+} elseif ($this->row->page_new_fieldset == 1) { ?>
+    	    </fieldset>
+        </div>
+<?php
+	if ($this->row->page_fieldset_column == 1) {  ?>
+    </div>
+<?php }
+}
+
+/** Process NEW Recordset */
+if ($this->row->page_new_fieldset == 1) {
+
+	if ($first_row == 1 || $this->row->page_fieldset_column  == 1) {  ?>
+    <div class="left-configuration-row">
+		<div class="left-configuration-column">
+			<fieldset class="configuration">
+
+	<?php } else { ?>
+		<div class="right-configuration-column">
+			<fieldset class="configuration">
+	<?php }  ?>
+
 	<legend class="configuration"><?php echo $this->row->page_fieldset_title; ?></legend>
 	<?php if ($this->parameters['application_help'] == 1) { ?>
 			<p><?php echo $this->row->page_fieldset_description; ?></p>

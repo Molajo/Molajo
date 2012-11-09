@@ -1,1 +1,1 @@
-<field name="application_array" type="char" null="0" default="{{Basic,basic}}{{User,user}}{{Media,media}}{{System,system}}{{Views,views}}{{Form,form}}{{Item,item}}{{List,list}}"/>
+<field name="application_array" type="char" null="0" default="{{Basic,basic}}{{Resource,resource}}{{User,user}}{{Media,media}}{{System,system}}{{Mailer,mailer}}{{Views,views}}{{Form,form}}{{Item,item}}{{List,list}}"/>

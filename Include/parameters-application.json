@@ -6,7 +6,8 @@
     "application_help":"1",
     "application_google_analytics_code":"xxxx",
     "application_html5":"1",
-
+{{Basic,basic}}{{User,user}}{{Media,media}}{{System,system}}{{Mailer,mailer}}{{Views,views}}{{Form,form}}{{Item,item}}{{List,list}}
+{{Basics,application*}}{{URLs,url*}}{{Language,language*}}{{Content,enable_content*}}{{Broadcast,enable_broadcast*}}{{Categorize,enable_categorize*}}{{Protection,enable_protection*}}{{Response,enable_response*}}{{Offline,offline_sw*,offline_message}}
     "url_sef":"1",
     "url_unicode_slugs":"0",
     "url_force_ssl":"0",

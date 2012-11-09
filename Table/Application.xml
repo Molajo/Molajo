@@ -66,8 +66,10 @@
             <include field="application_google_analytics_code"/>
             <include field="application_html5"/>
 
-            <include name="ParametersURL"/>
+            <include name="ParametersUrl"/>
+            <include name="ParametersEnable"/>
             <include name="ParametersLanguage"/>
+
             <include name="ParametersFolders"/>
             <include name="ParametersMailer"/>
             <include name="ParametersCache"/>
@@ -80,7 +82,7 @@
             <include name="ParametersImage"/>
 
             <include name="ParametersViews"/>
-            <include name="ParametersEnable"/>
+
             <include name="ParametersForm"/>
             <include name="ParametersFormModel"/>
             <include name="ParametersItem"/>
