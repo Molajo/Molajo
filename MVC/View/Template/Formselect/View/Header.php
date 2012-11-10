@@ -1,6 +1,5 @@
 <?php
 use Molajo\Service\Services;
-echo '<br />' . $this->row->selected . ' ' . $this->row->datalist. '<br />';
 
 /**
  * @package    Molajo

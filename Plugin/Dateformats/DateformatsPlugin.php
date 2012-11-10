@@ -167,7 +167,7 @@ class DateformatsPlugin extends Plugin
                         $this->saveField(null, $name . '_mm', (int) substr($ccyymmdd, 5, 2));
                         $this->saveField(null, $name . '_dd', (int) substr($ccyymmdd, 8, 2));
 
-                        $this->saveField(null, $name . 'ccyy_mm_dd',
+                        $this->saveField(null, $name . '_ccyy_mm_dd',
                             substr($ccyymmdd, 0, 4) . '-' . substr($ccyymmdd, 5, 2) . '-' . substr($ccyymmdd, 8, 2));
 
                         $newFieldValue = Services::Date()->getMonthName((int) substr($ccyymmdd, 5, 2), true);

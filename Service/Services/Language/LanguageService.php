@@ -367,6 +367,11 @@ Class LanguageService
 	 */
 	public function logUntranslatedStrings()
 	{
+        if (Services::Registry()->get('User', 'username') == 'admin') {
+        } else {
+            return true;
+        }
+
 		Services::Registry()->sort('TranslatedStringsMissing');
 
 		$body = '';

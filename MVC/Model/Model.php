@@ -304,44 +304,61 @@ class Model
 			return true;
 		}
 
+        if (Services::Registry()->get('User', 'username') == 'admin') {
+        } else {
+            return true;
+        }
+
 		/** Add Missing Language Strings to Base */
 		foreach ($translated as $key => $value) {
 
-            echo $key. ' '.$value . '<br />';
+           $sql = "
+             SELECT id
+					FROM `molajo_language_strings`
+					WHERE language = 'string'
+					AND title = "
+               . $this->db->q($value)
+               ;
 
-			$sql = "
+            $this->db->setQuery($sql);
+            $results = $this->db->loadResult();
 
-			INSERT INTO `#__language_strings`
-				(`id`, `site_id`, `extension_instance_id`, `catalog_type_id`,
-					`title`, `subtitle`, `path`, `alias`, `content_text`,
-					`protected`, `featured`, `stickied`, `status`,
-					`start_publishing_datetime`, `stop_publishing_datetime`,
-					`version`, `version_of_id`, `status_prior_to_version`,
-					`created_datetime`, `created_by`,
-					`modified_datetime`, `modified_by`,
-					`checked_out_datetime`, `checked_out_by`,
-					`root`, `parent_id`, `lft`, `rgt`, `lvl`, `home`,
-					`customfields`, `parameters`, `metadata`,
-					`language`, `translation_of_id`, `ordering`)
+            if ((int) $results == 0) {
 
-			VALUES (NULL, 0, 6250, 6250, "
-				. $this->db->q($value) . ",
-			'', 'languagestrings',
-			LOWER(REPLACE("
-				. $this->db->q($value) . ", ' ', '_')), '',
-			1, 0, 0, 1, '2012-09-13 12:00:00', '0000-00-00 00:00:00', 1, 0, 0,
-			'2012-09-13 12:00:00', 1, '2012-09-13 12:00:00', 1,
-			'2012-09-13 12:00:00', 0, 5, 0, 1, 0, 1, 0, '{}', '{}', '{}', 'string', 0, 0);";
+                $sql = "
 
-			//$this->db->setQuery($sql);
-			//$this->db->execute();
+                INSERT INTO `#__language_strings`
+                    (`id`, `site_id`, `extension_instance_id`, `catalog_type_id`,
+                        `title`, `subtitle`, `path`, `alias`, `content_text`,
+                        `protected`, `featured`, `stickied`, `status`,
+                        `start_publishing_datetime`, `stop_publishing_datetime`,
+                        `version`, `version_of_id`, `status_prior_to_version`,
+                        `created_datetime`, `created_by`,
+                        `modified_datetime`, `modified_by`,
+                        `checked_out_datetime`, `checked_out_by`,
+                        `root`, `parent_id`, `lft`, `rgt`, `lvl`, `home`,
+                        `customfields`, `parameters`, `metadata`,
+                        `language`, `translation_of_id`, `ordering`)
+
+                VALUES (NULL, 0, 6250, 6250, "
+                    . $this->db->q($value) . ",
+                '', 'languagestrings',
+                LOWER(REPLACE("
+                    . $this->db->q($value) . ", ' ', '_')), '',
+                1, 0, 0, 1, '2012-09-13 12:00:00', '0000-00-00 00:00:00', 1, 0, 0,
+                '2012-09-13 12:00:00', 1, '2012-09-13 12:00:00', 1,
+                '2012-09-13 12:00:00', 0, 5, 0, 1, 0, 1, 0, '{}', '{}', '{}', 'string', 0, 0);";
+
+                $this->db->setQuery($sql);
+                $this->db->execute();
+            }
 		}
-return;
+
 		/** Add to English Language */
 		$en_GB = "SELECT DISTINCT id
 					FROM `molajo_language_strings`
 					WHERE language = 'string'
-					  AND id NOT IN (SELECT parent_id
+					  AND title NOT IN (SELECT title
 					  FROM  `molajo_language_strings`
 					  WHERE language = 'en-gb')
 					    AND id <> 5";
@@ -356,37 +373,37 @@ return;
 
 				if ($row->id == 5) {
 				} else {
-				$sql = "
+                    $sql = "
 
-				INSERT INTO `#__language_strings`
-					(`id`, `site_id`, `extension_instance_id`, `catalog_type_id`,
-						`title`, `subtitle`, `path`, `alias`, `content_text`,
-						`protected`, `featured`, `stickied`, `status`,
-						`start_publishing_datetime`, `stop_publishing_datetime`,
-						`version`, `version_of_id`, `status_prior_to_version`,
-						`created_datetime`, `created_by`,
-						`modified_datetime`, `modified_by`,
-						`checked_out_datetime`, `checked_out_by`,
-						`root`, `parent_id`, `lft`, `rgt`, `lvl`, `home`,
-						`customfields`, `parameters`, `metadata`,
-						`language`, `translation_of_id`, `ordering`)
+                    INSERT INTO `#__language_strings`
+                        (`id`, `site_id`, `extension_instance_id`, `catalog_type_id`,
+                            `title`, `subtitle`, `path`, `alias`, `content_text`,
+                            `protected`, `featured`, `stickied`, `status`,
+                            `start_publishing_datetime`, `stop_publishing_datetime`,
+                            `version`, `version_of_id`, `status_prior_to_version`,
+                            `created_datetime`, `created_by`,
+                            `modified_datetime`, `modified_by`,
+                            `checked_out_datetime`, `checked_out_by`,
+                            `root`, `parent_id`, `lft`, `rgt`, `lvl`, `home`,
+                            `customfields`, `parameters`, `metadata`,
+                            `language`, `translation_of_id`, `ordering`)
 
-				SELECT NULL as `id`, `site_id`, `extension_instance_id`, `catalog_type_id`,
-						`title`, `subtitle`, 'languagestrings/en-gb', `alias`, `content_text`,
-						`protected`, `featured`, `stickied`, `status`,
-						`start_publishing_datetime`, `stop_publishing_datetime`,
-						`version`, `version_of_id`, `status_prior_to_version`,
-						`created_datetime`, `created_by`,
-						`modified_datetime`, `modified_by`,
-						`checked_out_datetime`, `checked_out_by`,
-						`root`, id as `parent_id`, `lft`, `rgt`, `lvl`, `home`,
-						`customfields`, `parameters`, `metadata`,
-						'en-gb', `translation_of_id`, `ordering`
-				FROM #__language_strings
-				WHERE id = " . (int) $row->id;
+                    SELECT NULL as `id`, `site_id`, `extension_instance_id`, `catalog_type_id`,
+                            `title`, `subtitle`, 'languagestrings/en-gb', `alias`, `content_text`,
+                            `protected`, `featured`, `stickied`, `status`,
+                            `start_publishing_datetime`, `stop_publishing_datetime`,
+                            `version`, `version_of_id`, `status_prior_to_version`,
+                            `created_datetime`, `created_by`,
+                            `modified_datetime`, `modified_by`,
+                            `checked_out_datetime`, `checked_out_by`,
+                            `root`, id as `parent_id`, `lft`, `rgt`, `lvl`, `home`,
+                            `customfields`, `parameters`, `metadata`,
+                            'en-gb', `translation_of_id`, `ordering`
+                    FROM #__language_strings
+                    WHERE id = " . (int) $row->id;
 
-				$this->db->setQuery($sql);
-				$this->db->execute();
+                    $this->db->setQuery($sql);
+                    $this->db->execute();
 				}
 			}
 		}
@@ -394,7 +411,7 @@ return;
 		/** Add to Catalog */
 		$catalog = "SELECT DISTINCT id
 					FROM `molajo_language_strings`
-					WHERE id NOT IN (SELECT DISTINCT source_id
+					WHERE CONCAT(path, '/', alias) NOT IN (SELECT DISTINCT sef_request
 					  FROM  `molajo_catalog`
 					  WHERE catalog_type_id = " . (INT) CATALOG_TYPE_LANGUAGE_STRING . ")";
 
