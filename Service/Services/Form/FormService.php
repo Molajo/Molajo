@@ -198,146 +198,155 @@ Class FormService
 										   $extension_instance_id, $form_field_values, $page_link,
 										   $pageTitle, $pageTitleExtended, $translateTabDesc,
 										   $page_form_fieldset_handler_view)
-
 	{
 		$configurationArray = array();
 
-		if ($page_link === 'noformfields') {
+		if ($page_link == 'noformfields') {
 			$configuration = '{{' . $page_link . ',' . strtolower($page_link) . '}}';
 		} else {
-			$configuration = Services::Registry()->get('Parameters', $namespace . '_' . strtolower($page_link));
+			$configuration = Services::Registry()->get('Parameters', $namespace . '_' . strtolower($page_link), '');
+            if ($configuration == '') {
+                return false;
+            }
 		}
 
 		$temp = explode('}}', $configuration);
+        if ($temp == null || count($temp) == 0) {
+            $temp = array();
+        }
 		$fieldSets = array();
 
-		foreach ($temp as $set) {
-			$set = str_replace('{{', '', $set);
+        if (count($temp) > 0) {
+            foreach ($temp as $set) {
+                $set = str_replace('{{', '', $set);
 
-			if (trim($set) == '') {
-			} else {
-				$configurationArray[] = trim($set);
-			}
-		}
+                if (trim($set) == '') {
+                } else {
+                    $configurationArray[] = trim($set);
+                }
+            }
+        }
 
 		$page_first_row = 1;
 		$page_fieldset_column = 1;
 
-		foreach ($configurationArray as $config) {
+        if (count($configurationArray) > 0) {
+            foreach ($configurationArray as $config) {
 
-			$options = explode(',', $config);
-			if (count($options) > 1) {
-			} else {
-				return false;
-			}
+                $options = explode(',', $config);
+                if (count($options) > 1) {
+                } else {
+                    return false;
+                }
 
-			$pageFieldsetTitle = str_replace(
-				' ',
-				'&nbsp;',
-				htmlentities(Services::Language()->translate(
-					$options[0]
-				), ENT_COMPAT, 'UTF-8')
-			);
+                $pageFieldsetTitle = str_replace(
+                    ' ',
+                    '&nbsp;',
+                    htmlentities(Services::Language()->translate(
+                        $options[0]
+                    ), ENT_COMPAT, 'UTF-8')
+                );
 
-			if ($pageFieldsetTitle == '') {
-				$pageFieldsetTitle = $pageTitle;
-			}
+                if ($pageFieldsetTitle == '') {
+                    $pageFieldsetTitle = $pageTitle;
+                }
 
-			$translateFieldsetDesc = Services::Language()->translate(strtoupper(
-				strtoupper($namespace) . '_FORM_FIELDSET_'
-					. strtoupper(str_replace('&nbsp;', '_', $pageTitle)) . '_'
-					. strtoupper(str_replace('&nbsp;', '_', $pageFieldsetTitle)) . '_DESC'));
+                $translateFieldsetDesc = Services::Language()->translate(strtoupper(
+                    strtoupper($namespace) . '_FORM_FIELDSET_'
+                        . strtoupper(str_replace('&nbsp;', '_', $pageTitle)) . '_'
+                        . strtoupper(str_replace('&nbsp;', '_', $pageFieldsetTitle)) . '_DESC'));
 
-			unset($options[0]);
+                unset($options[0]);
 
-			$get = 'get' . ucfirst(strtolower($page_link));
+                $get = 'get' . ucfirst(strtolower($page_link));
 
-			$temp = array();
+                $temp = array();
 
-			if ($namespace == 'noformfields') {
-				/** Only titles and name of view to be included (view will take care of data retrieval) */
-				$row = new \stdClass();
+                if ($namespace == 'noformfields') {
+                    /** Only titles and name of view to be included (view will take care of data retrieval) */
+                    $row = new \stdClass();
 
-				$row->page_title = $pageTitle;
-				$row->page_title_extended = $pageTitleExtended;
-				$row->page_description = $translateTabDesc;
-				$row->page_fieldset_title = $pageFieldsetTitle;
-				$row->page_fieldset_description = $translateFieldsetDesc;
-				$row->page_link = ucfirst(strtolower(
-						$page_form_fieldset_handler_view
-							. $namespace
-							. $page_link)
-				);
+                    $row->page_title = $pageTitle;
+                    $row->page_title_extended = $pageTitleExtended;
+                    $row->page_description = $translateTabDesc;
+                    $row->page_fieldset_title = $pageFieldsetTitle;
+                    $row->page_fieldset_description = $translateFieldsetDesc;
+                    $row->page_link = ucfirst(strtolower(
+                            $page_form_fieldset_handler_view
+                                . $namespace
+                                . $page_link)
+                    );
 
-				$temp[] = $row;
+                    $temp[] = $row;
 
-			} else {
+                } else {
 
-				if ($namespace == 'Edit') {
+                    if ($namespace == 'Edit') {
 
-					$temp = $this->getActualFields($namespace, $model_type, $model_name,
-						$extension_instance_id, $form_field_values, $page_link,
-						$pageTitle, $translateTabDesc,
-						$page_form_fieldset_handler_view);
+                        $temp = $this->getActualFields($namespace, $model_type, $model_name,
+                            $extension_instance_id, $form_field_values, $page_link,
+                            $pageTitle, $translateTabDesc,
+                            $page_form_fieldset_handler_view);
 
-				} elseif (method_exists($this, 'get' . $page_link)) {
+                    } elseif (method_exists($this, 'get' . $page_link)) {
 
-					$temp = $this->$get($namespace, $page_link, $options,
-						$pageTitle, $translateTabDesc,
-						$pageFieldsetTitle, $translateFieldsetDesc,
-						$model_type, $model_name, $extension_instance_id);
+                        $temp = $this->$get($namespace, $page_link, $options,
+                            $pageTitle, $translateTabDesc,
+                            $pageFieldsetTitle, $translateFieldsetDesc,
+                            $model_type, $model_name, $extension_instance_id);
 
-				} else {
+                    } else {
 
-					$temp = $this->getParameters($namespace, $page_link, $options,
-						$pageTitle, $translateTabDesc,
-						$pageFieldsetTitle, $translateFieldsetDesc,
-						$model_type, $model_name, $extension_instance_id);
-				}
-			}
+                        $temp = $this->getParameters($namespace, $page_link, $options,
+                            $pageTitle, $translateTabDesc,
+                            $pageFieldsetTitle, $translateFieldsetDesc,
+                            $model_type, $model_name, $extension_instance_id);
+                    }
+                }
 
-			if (count($temp) > 0) {
+                if (count($temp) > 0) {
 
-				$write = array();
+                    $write = array();
 
-				$page_new_fieldset = 1;
-				$page_fieldset_count = count($temp);
-				$page_fieldset_odd_or_even = 'odd';
-				$page_fieldset_row_number = 1;
+                    $page_new_fieldset = 1;
+                    $page_fieldset_count = count($temp);
+                    $page_fieldset_odd_or_even = 'odd';
+                    $page_fieldset_row_number = 1;
 
-				foreach ($temp as $form_field_values) {
+                    foreach ($temp as $form_field_values) {
 
-					$form_field_values->page_title_extended = $pageTitleExtended;
-					$form_field_values->page_new_fieldset = $page_new_fieldset;
-					$form_field_values->page_first_row = $page_first_row;
-					$form_field_values->page_fieldset_count = $page_fieldset_count;
-					$form_field_values->page_fieldset_odd_or_even = $page_fieldset_odd_or_even;
-					$form_field_values->page_fieldset_row_number = $page_fieldset_row_number;
-					$form_field_values->page_fieldset_column = $page_fieldset_column;
+                        $form_field_values->page_title_extended = $pageTitleExtended;
+                        $form_field_values->page_new_fieldset = $page_new_fieldset;
+                        $form_field_values->page_first_row = $page_first_row;
+                        $form_field_values->page_fieldset_count = $page_fieldset_count;
+                        $form_field_values->page_fieldset_odd_or_even = $page_fieldset_odd_or_even;
+                        $form_field_values->page_fieldset_row_number = $page_fieldset_row_number;
+                        $form_field_values->page_fieldset_column = $page_fieldset_column;
 
-					$page_fieldset_row_number++;
+                        $page_fieldset_row_number++;
 
-					$page_new_fieldset = 0;
-					$page_first_row = 0;
+                        $page_new_fieldset = 0;
+                        $page_first_row = 0;
 
-					$write[] = $form_field_values;
-				}
+                        $write[] = $form_field_values;
+                    }
 
-				if ($page_fieldset_odd_or_even == 'odd') {
-					$page_fieldset_odd_or_even = 'even';
-				} else {
-					$page_fieldset_odd_or_even = 'odd';
-				}
+                    if ($page_fieldset_odd_or_even == 'odd') {
+                        $page_fieldset_odd_or_even = 'even';
+                    } else {
+                        $page_fieldset_odd_or_even = 'odd';
+                    }
 
-				if ($page_fieldset_column == 1) {
-					$page_fieldset_column = 2;
-				} else {
-					$page_fieldset_column = 1;
-				}
+                    if ($page_fieldset_column == 1) {
+                        $page_fieldset_column = 2;
+                    } else {
+                        $page_fieldset_column = 1;
+                    }
 
-			}
-			$fieldSets = array_merge((array)$fieldSets, (array)$write);
-		}
+                }
+                $fieldSets = array_merge((array)$fieldSets, (array)$write);
+            }
+        }
 
 		Services::Registry()->set('Plugindata', $page_form_fieldset_handler_view . $namespace . strtolower($page_link), $fieldSets);
 

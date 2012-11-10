@@ -360,13 +360,13 @@ class ReadModel extends Model
     public function getQueryResults($query_object, $offset = 0, $count = 5, $use_pagination = 0)
     {
         $this->query_results = array();
-
+/*
  echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination  . '<br />';
 echo '<br /><br /><pre>';
         $string = $this->query->__toString();
         echo str_replace('#__', 'molajo_', $string);
 echo '</pre><br /><br />';
-
+*/
         $cache_key = $this->query->__toString();
         if ($cache_key == '') {
             echo '<pre>';

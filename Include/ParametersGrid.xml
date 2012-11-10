@@ -1,13 +1,14 @@
-<include field="grid_page_link_namespace"/>
-
 <include field="grid_toolbar_buttons"/>
 <include field="grid_submenu_items"/>
+
 <include field="grid_search"/>
+
 <include field="grid_status"/>
 <include field="grid_list1"/>
 <include field="grid_list2"/>
 <include field="grid_list3"/>
 <include field="grid_list4"/>
+
 <include field="grid_column1"/>
 <include field="grid_column2"/>
 <include field="grid_column3"/>
@@ -18,6 +19,7 @@
 <include field="grid_column8"/>
 <include field="grid_column9"/>
 <include field="grid_column10"/>
+
 <include field="grid_batch_filters"/>
 <include field="grid_batch_status"/>
 <include field="grid_batch_permissions"/>

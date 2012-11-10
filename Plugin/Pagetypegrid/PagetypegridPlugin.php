@@ -8,6 +8,7 @@ namespace Molajo\Plugin\Pagetypegrid;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
+use Molajo\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -34,6 +35,9 @@ class PagetypegridPlugin extends Plugin
         $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
         $connect = new $controllerClass();
 
+        $model_type = $this->get('model_type');
+        $model_name = $this->get('model_name');
+
         $results = $connect->connect($this->get('model_type'), $this->get('model_name'));
         if ($results === false) {
             return false;
@@ -51,55 +55,7 @@ class PagetypegridPlugin extends Plugin
 
         $this->setBatch($connect, $connect->get('primary_prefix'));
 
-        /** Namespace */
-        $namespace = $this->parameters['grid_page_link_namespace'];
-        $namespace = ucfirst(strtolower($namespace));
-
-        /** Create Tab Array */
-        $page_array = '';
-        $batch = array();
-        $batch = Services::Registry()->get('Parameters', 'grid_batch_*');
-
-        if (count($batch) == 0 || $batch === false) {
-        } else {
-            /** Need filters first (and it is not alphabetical but parameters are sorted that way) */
-            foreach ($batch as $key => $value) {
-                if ((int) $value === 1) {
-                    if ($key == 'grid_batch_filters') {
-                        $temp = '{{';
-                        $temp .= ucfirst(strtolower(substr($key, strlen('grid_batch_'), 9999))) . ',';
-                        $temp .= strtolower(substr($key, strlen('grid_batch_'), 9999)) . '}}';
-                        $page_array .= $temp;
-                    }
-                }
-            }
-            /** Now, pick up all none-filters in alphabetic order, hackish? Sure, but I am a hacker. */
-            foreach ($batch as $key => $value) {
-                if ((int) $value === 1) {
-                    if ($key == 'grid_batch_filters') {
-                    } else {
-                        $temp = '{{';
-                        $temp .= ucfirst(strtolower(substr($key, strlen('grid_batch_'), 9999))) . ',';
-                        $temp .= strtolower(substr($key, strlen('grid_batch_'), 9999)) . '}}';
-                        $page_array .= $temp;
-                    }
-                }
-            }
-        }
-
-        $tabs = Services::Form()->setPageArray(
-            $this->get('model_type'),
-            $this->get('model_name'),
-            $namespace,
-            $page_array,
-            null,
-            'Admin',
-            'Admingridtab',
-            null,
-            array()
-        );
-
-        Services::Registry()->set('Plugindata', 'Admingrid', $tabs);
+//        $this->setForm($model_type, $model_name);
 
         return true;
     }
@@ -216,7 +172,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set('Plugindata', 'Admingridfilterlist', $lists);
+        Services::Registry()->set('Plugindata', 'Gridfilterlist', $lists);
 
         return true;
     }
@@ -275,7 +231,7 @@ class PagetypegridPlugin extends Plugin
             $grid_columns[] = $this->get('grid_column10');
         }
 
-        Services::Registry()->set('Plugindata', 'AdminGridTableColumns', $grid_columns);
+        Services::Registry()->set('Plugindata', 'GridTableColumns', $grid_columns);
 
         $list = $this->get('criteria_catalog_type_id');
 
@@ -292,7 +248,7 @@ class PagetypegridPlugin extends Plugin
         if ($ordering == '' || $ordering === null) {
             $ordering = $connect->get('primary_key', 'id');
         }
-        Services::Registry()->set('Plugindata', 'AdminGridTableOrdering', $ordering);
+        Services::Registry()->set('Plugindata', 'GridTableOrdering', $ordering);
 
         $connect->model->query->order($connect->model->db->qn($ordering));
 
@@ -352,6 +308,7 @@ class PagetypegridPlugin extends Plugin
 
         Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $query_results);
 
+
         return true;
     }
 
@@ -407,7 +364,7 @@ class PagetypegridPlugin extends Plugin
 
                     Services::Registry()->set('Plugindata', 'listbatch_' . $listname, $query_results);
 
-                    Services::Registry()->set('Plugindata', 'AdminGrid' . $listname, 1);
+                    Services::Registry()->set('Plugindata', 'Grid' . $listname, 1);
 
                     $row = new \stdClass();
                     $row->listname = $listname;
@@ -417,5 +374,201 @@ class PagetypegridPlugin extends Plugin
         }
 
         return true;
+    }
+
+    /**
+     * Create Toolbar Registry based on Authorized Access
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    protected function setForm($model_type, $model_name)
+    {
+        $resource_model_type = $model_type;
+        $resource_model_name = $model_name;
+
+        Helpers::Content()->getResourceExtensionParameters(
+            (int) $this->parameters['criteria_extension_instance_id']
+        );
+
+        /** Array - All Pages in Set
+        {{Filters,batch_filters*}}{{Status,batch_status*}}{{Permissions,batch_permissions*}}{{Categories,batch_categories*}}{{Tags, batch_tags}}
+         */
+        $grid_array = $this->get('grid_array');
+        $grid_array = '{{Filters,batch_filters}}{{Status,batch_status}}{{Permissions,batch_permissions}}{{Categories,batch_categories}}{{Tags, batch_tags}}';
+        $pages = explode('{{', $grid_array);
+
+        /** Determine Current Page of Set */
+        $temp = Services::Registry()->get('Parameters', 'request_filters', array());
+        $filters = explode(',', $temp);
+
+        $page = 1;
+        if ($filters == '' || count($filters) == 0) {
+            $page = 1;
+        } else {
+            foreach ($filters as $x) {
+                if (trim($x) == '') {
+                } else {
+                    $pair = explode(':', $x);
+                    if (strtolower($pair[0]) == 'page') {
+                        $page = (int) $pair[1];
+                        break;
+                    }
+                }
+            }
+        }
+
+        if ($page < count($pages)) {
+        } else {
+            $page = 1;
+        }
+        $page_number = $page;
+
+        /** Submenu: Links to various Form Pages (Tabs) - ex. Basic, Metadata, Fields, etc. */
+        $pageArray = array();
+        $i = 0;
+        foreach ($pages as $item) {
+            if ($item == '') {
+            } else {
+                $i++;
+                $row = new \stdClass();
+                $row->id = $i;
+                if ($i == $page_number) {
+                    $row->current = 1;
+                } else {
+                    $row->current = 0;
+                }
+                $row->title = substr($item, 0, strpos($item, ','));
+                $row->url = Services::Registry()->get('Plugindata', 'page_url') . '/page/' . $i;
+
+                $pageArray[] = $row;
+            }
+        }
+        Services::Registry()->set('Plugindata', 'SectionSubmenu', $pageArray);
+
+        /** Even tho links are created to each form page, generate Form for the current page, only */
+        //$current_page = '{{' . $pages[$page_number];
+
+        /**
+         * $pageFieldsets - contains two fields: page_count and page_array
+         *
+         * 	page_count - the number of pages created (will be 1 for this use)
+         *
+         * 	page_array: several fields that will be used by the primary view to display titles
+         *		and create the include that contains the form fieldsets
+         *
+         *	Example page_array: Basic Page (tab 1)
+         * 		page_title: Basic
+         * 		page_title_extended: Articles Basic Configuration
+         * 		page_namespace: application
+         * 		page_link: applicationbasic
+         *
+         * 		Form View to include and the Registry containing Form contents:
+         * 			page_form_fieldset_handler_view: Formpage
+         * 			page_include_parameter: Formpageapplicationbasic
+         *
+         */
+        $connect = Services::Form();
+
+        echo '<pre>';
+        var_dump( $grid_array,
+            strtolower($this->get('page_type')),
+            $resource_model_type,
+            $resource_model_name,
+            $this->parameters['criteria_extension_instance_id'],
+            array());
+        echo '</pre>';
+
+        $pageFieldsets = $connect->setPageArray(
+            $grid_array,
+            strtolower($this->get('page_type')),
+            $resource_model_type,
+            $resource_model_name,
+            $this->parameters['criteria_extension_instance_id'],
+            array()
+        );
+
+        /** Set the View Model Parameters and Populate the Registry used as the Model */
+        $current_page = $this->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
+
+        $this->set('model_name', 'Plugindata');
+        $this->set('model_type', 'dbo');
+        $this->set('model_query_object', 'getPlugindata');
+        $this->set('model_parameter', 'PrimaryRequestQueryResults');
+
+        $this->parameters['model_name'] = 'Plugindata';
+        $this->parameters['model_type'] = 'dbo';
+
+        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $current_page);
+
+//        echo '<pre>';
+//        var_dump(Services::Registry()->get('Plugindata', 'Formpageapplicationbasic'));
+//        echo '</pre>';
+        return true;
+    }
+
+    /**
+     * Get Form Page Fieldsets
+     *
+     * @param $pages
+     * @return array
+     */
+    protected function getPages($pages, $page_count)
+    {
+        $page_array = array();
+        $temp_array = array();
+        $temp = explode('}}', $pages);
+
+        foreach ($temp as $set) {
+            $set = str_replace(',', ' ', $set);
+            $set = str_replace(':', '=', $set);
+            $set = str_replace('{{', '', $set);
+            $set = str_replace('http=', 'http:', $set);
+            if (trim($set) == '') {
+            } else {
+                $temp_array[] = trim($set);
+            }
+        }
+
+        $current_page_number = count($temp_array);
+        $current_page_number_word = $this->convertNumberToWord($current_page_number);
+
+        foreach ($temp_array as $set) {
+            $fields = explode(' ', $set);
+            foreach ($fields as $field) {
+                $temp = explode('=', $field);
+                $pairs[$temp[0]] = $temp[1];
+            }
+
+            $row = new \stdClass();
+            foreach ($pairs as $key=>$value) {
+                $row->$key = $value;
+                $row->current_page_number = $current_page_number;
+                $row->current_page_number_word = $current_page_number_word;
+                $row->total_page_count = $page_count;
+            }
+            $page_array[] = $row;
+        }
+
+        return $page_array;
+    }
+
+    /**
+     * convertNumberToWord
+     *
+     * Converts numbers from 1-24 as their respective written word
+     *
+     * @return string
+     * @since   1.0
+     */
+    public function convertNumberToWord($number)
+    {
+        $key = $number-1;
+        $words = array('one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree','twentyfour');
+        if (array_key_exists($key, $words)) {
+            return $words[$key];
+        }
+
+        return false;
     }
 }
