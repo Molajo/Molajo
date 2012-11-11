@@ -9,5 +9,13 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>FORMSELECTCONTENTLIST_PLUGIN_DESCRIPTION</description>
-    <model name="Formselectlist" extends="PluginsSystem"/>
+    <model
+            name="Formselectlist"
+            extends="PluginsSystem">
+        <customfields>
+            <customfield name="parameters">
+                <field name="selected" type="char" null="0"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

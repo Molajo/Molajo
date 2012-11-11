@@ -356,15 +356,13 @@ Class TextService
      * @param array $items
      * @param int $multiple
      * @param int $size
+     * @param char $selected
      *
      * @return array
      * @since   1.0
      */
-    public function buildSelectlist($listname, $items, $multiple = 0, $size = 5)
+    public function buildSelectlist($listname, $items, $multiple = 0, $size = 5, $selected = null)
     {
-        /** todo: Retrieve selected field from request */
-        $selected = '';
-
         $query_results = array();
 
         if (count($items) == 0) {

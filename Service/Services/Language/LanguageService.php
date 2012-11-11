@@ -367,6 +367,7 @@ Class LanguageService
 	 */
 	public function logUntranslatedStrings()
 	{
+        return true;
         if (Services::Registry()->get('User', 'username') == 'admin') {
         } else {
             return true;

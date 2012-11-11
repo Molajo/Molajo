@@ -40,7 +40,12 @@ class FormselectlistPlugin extends Plugin
             return true;
         }
 
-        $this->data = Services::Text()->buildSelectlist($datalist, $items, 0, 5);
+        if (isset($this->parameters['selected'])) {
+            $selected = $this->parameters['selected'];
+        } else {
+            $selected = null;
+        }
+        $this->data = Services::Text()->buildSelectlist($datalist, $items, 0, 5, $selected);
 
         return true;
     }

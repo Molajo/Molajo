@@ -25,4 +25,7 @@
 <include field="grid_batch_permissions"/>
 <include field="grid_batch_categories"/>
 <include field="grid_batch_tags"/>
+
 <include field="grid_ordering"/>
+<include field="grid_ordering_direction"/>
+<include field="grid_items_per_page"/>

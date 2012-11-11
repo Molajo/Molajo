@@ -243,17 +243,33 @@ class PagetypegridPlugin extends Plugin
 
         $connect->model->query->where($connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
 
-        $ordering = $this->get('grid_ordering', 'start_publishing_datetime');
+
+        $ordering = $this->get('grid_ordering', '');
 
         if ($ordering == '' || $ordering === null) {
             $ordering = $connect->get('primary_key', 'id');
         }
         Services::Registry()->set('Plugindata', 'GridTableOrdering', $ordering);
 
-        $connect->model->query->order($connect->model->db->qn($ordering));
+
+        $orderingDirection = $this->get('grid_ordering_direction', 'DESC');
+
+        if ($orderingDirection == 'ASC') {
+        } else {
+            $orderingDirection = 'DESC';
+        }
+        Services::Registry()->set('Plugindata', 'GridTableOrderingDirection', $orderingDirection);
+
+
+        $itemsPerPage = $this->get('grid_items_per_page', 10);
+
+        if ((int)$itemsPerPage == 0) {
+            $itemsPerPage = 10;
+        }
+        Services::Registry()->set('Plugindata', 'GridTableItemsPerPage', $itemsPerPage);
 
         $connect->set('model_offset', 0);
-        $connect->set('model_count', 20);
+        $connect->set('model_count', $itemsPerPage);
 
         $query_results = $connect->getData('list');
 

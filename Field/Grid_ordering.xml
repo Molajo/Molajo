@@ -1,6 +1,1 @@
-<field name="grid_ordering"
-       type="char"
-       null="0"
-       default=" "
-       datalist="Fields"
-        />
+<field name="grid_ordering" type="char" null="1" datalist="Fields"/>
