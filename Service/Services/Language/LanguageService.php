@@ -367,8 +367,12 @@ Class LanguageService
 	 */
 	public function logUntranslatedStrings()
 	{
-        return true;
         if (Services::Registry()->get('User', 'username') == 'admin') {
+        } else {
+            return true;
+        }
+
+        if (Services::Registry()->get('Configuration', 'profiler_collect_missing_language_strings') == '1') {
         } else {
             return true;
         }

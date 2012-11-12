@@ -86,6 +86,7 @@ class PagetypeapplicationPlugin extends Plugin
                 } else {
                     $row->current = 0;
                 }
+                $row->id = $i;
                 $row->title = substr($item, 0, strpos($item, ','));
                 $row->url = Services::Registry()->get('Plugindata', 'page_url') . '/page/' . $i;
 

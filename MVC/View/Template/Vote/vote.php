@@ -37,8 +37,8 @@ class plgContentVote extends JPlugin
         $html = '';
 
         if ($params->get('show_vote')) {
-            $rating = intval(@$row->rating);
-            $rating_count = intval(@$row->rating_count);
+            $rating = intval(@$this->row->rating);
+            $rating_count = intval(@$this->row->rating_count);
 
             $view = JRequest::getString('view', '');
             $img = '';
@@ -57,7 +57,7 @@ class plgContentVote extends JPlugin
             $html .= JText::sprintf('PLG_VOTE_USER_RATING', $img, $rating_count);
             $html .= "</span>\n<br />\n";
 
-            if ($view == 'article' && $row->state == 1) {
+            if ($view == 'article' && $this->row->state == 1) {
                 $uri = JFactory::getURI();
                 $uri->setQuery($uri->getQuery() . '&hitcount=0');
 

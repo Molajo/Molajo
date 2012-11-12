@@ -34,26 +34,6 @@ defined('MOLAJO') or die; ?>
                     echo '</a>';
 
             } elseif ($column == 'status') {
-				/*
-                echo '<span class="status">';
-                if ((int) $this->row->status == 2) {
-                    echo '<i class="icon-lock" alt="' . Services::Language()->translate($this->row->status_name) .'"></i>';
-                } elseif ((int) $this->row->status == 1) {
-                    echo '<i class="icon-ok" alt="' . Services::Language()->translate($this->row->status) .'"></i>';
-                } elseif ((int) $this->row->status == 0) {
-                    echo '<i class="icon-off" alt="' . Services::Language()->translate($this->row->status) .'"></i>';
-                } elseif ((int) $this->row->status == -1) {
-                    echo '<i class="icon-trash" alt="' . Services::Language()->translate($this->row->status) .'"></i>';
-                } elseif ((int) $this->row->status == -2) {
-                    echo '<i class="icon-ban-circle" alt="' . Services::Language()->translate($this->row->status) .'"></i>';
-                } elseif ((int) $this->row->status == -5) {
-                    echo '<i class="icon-pencil" alt="' . Services::Language()->translate($this->row->status) .'"></i>';
-                } elseif ((int) $this->row->status == -10) {
-                    echo '<i class="icon-camera" alt="' . Services::Language()->translate($this->row->status) .'"></i>';
-                }
-                echo '</span>';
-				*/
-
 				if ((int) $this->row->status == 2) {
 					$class = 'success radius label';
 				} elseif ((int) $this->row->status == 1) {

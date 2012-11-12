@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 $nowrap = '';
 $checked = '';
 $rowCount = Services::Registry()->get('Plugindata', 'GridTableRows'); ?>
-<table class="twelve responsive">
+<table class="grid responsive">
     <thead>
     <tr>
         <?php

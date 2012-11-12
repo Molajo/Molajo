@@ -1,13 +1,20 @@
-<include field="grid_toolbar_buttons"/>
-<include field="grid_submenu_items"/>
-
-<include field="grid_search"/>
-
 <include field="grid_status"/>
+<include field="grid_search"/>
+<include field="grid_ordering"/>
+<include field="grid_ordering_direction"/>
+<include field="grid_items_per_page"/>
+<include field="grid_use_pagination"/>
+
 <include field="grid_list1"/>
 <include field="grid_list2"/>
 <include field="grid_list3"/>
 <include field="grid_list4"/>
+<include field="grid_list5"/>
+<include field="grid_list6"/>
+<include field="grid_list7"/>
+<include field="grid_list8"/>
+<include field="grid_list9"/>
+<include field="grid_list10"/>
 
 <include field="grid_column1"/>
 <include field="grid_column2"/>
@@ -19,13 +26,17 @@
 <include field="grid_column8"/>
 <include field="grid_column9"/>
 <include field="grid_column10"/>
+<include field="grid_column11"/>
+<include field="grid_column12"/>
+<include field="grid_column13"/>
+<include field="grid_column14"/>
+<include field="grid_column15"/>
 
-<include field="grid_batch_filters"/>
+<include field="grid_batch_array"/>
+<include field="grid_batch_ordering"/>
 <include field="grid_batch_status"/>
-<include field="grid_batch_permissions"/>
 <include field="grid_batch_categories"/>
 <include field="grid_batch_tags"/>
-
-<include field="grid_ordering"/>
-<include field="grid_ordering_direction"/>
-<include field="grid_items_per_page"/>
+<include field="grid_batch_permissions"/>
+<include field="grid_batch_feature"/>
+<include field="grid_batch_sticky"/>

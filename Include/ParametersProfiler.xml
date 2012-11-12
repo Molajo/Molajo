@@ -1,3 +1,4 @@
+<field name="profiler_collect_missing_language_strings" type="boolean" null="1"/>
 <field name="profiler_service" type="integer" null="0" default="0"/>
 <field name="profiler_error_reporting" type="integer" null="0" default="0"/>
 <field name="profiler_verbose" type="boolean" null="0" default="0"/>

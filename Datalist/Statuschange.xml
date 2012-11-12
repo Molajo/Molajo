@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Status">
+    <table>
+        <values>
+            <value id="2" value="Archive"/>
+            <value id="1" value="Publish"/>
+            <value id="0" value="Unpublish"/>
+            <value id="-1" value="Trash"/>
+            <value id="-2" value="Spam"/>
+            <value id="-20" value="Delete"/>
+        </values>
+    </table>
+</model>

@@ -309,7 +309,12 @@ class Model
             return true;
         }
 
-		/** Add Missing Language Strings to Base */
+        if (Services::Registry()->get('Configuration', 'profiler_collect_missing_language_strings') == '1') {
+        } else {
+            return true;
+        }
+
+        /** Add Missing Language Strings to Base */
 		foreach ($translated as $key => $value) {
 
            $sql = "

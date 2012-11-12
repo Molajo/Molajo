@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="Template" version="1.0">
-    <name>VIEW_TEMPLATE_ADMINGRIDSTATUS_NAME</name>
+    <name>VIEW_TEMPLATE_GRIDCATEGORIES_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,6 +8,6 @@
     <author_email>collaborate@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>VIEW_TEMPLATE_ADMINGRIDSTATUS_DESCRIPTION</description>
-    <model name="Admingridstatus" extends="TemplateviewsSystem"/>
+    <description>VIEW_TEMPLATE_GRIDCATEGORIES_DESCRIPTION</description>
+    <model name="Gridcategories" extends="TemplateviewsSystem"/>
 </extension>
