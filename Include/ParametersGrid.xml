@@ -40,3 +40,4 @@
 <include field="grid_batch_permissions"/>
 <include field="grid_batch_feature"/>
 <include field="grid_batch_sticky"/>
+<include field="grid_batch_checkin"/>

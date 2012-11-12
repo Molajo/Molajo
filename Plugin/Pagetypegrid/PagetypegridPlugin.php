@@ -296,6 +296,7 @@ class PagetypegridPlugin extends Plugin
     protected function setBatch($connect, $primary_prefix)
     {
         $temp = $this->get('grid_batch_array', '');
+
         if ($temp == '') {
             Services::Registry()->set('Plugindata', 'SectionSubmenu', array());
             return true;

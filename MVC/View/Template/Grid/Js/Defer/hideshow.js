@@ -54,4 +54,11 @@ $(document).ready(function () {
         $('#sticky').addClass('active');
     });
 
+    $('#checkin').click(function(){
+        $('div.grid-batch').hide();
+        $('div.grid-checkin').show();
+        $('ul.section-submenu li a').removeClass('active');
+        $('#checkin').addClass('active');
+    });
+
 });
