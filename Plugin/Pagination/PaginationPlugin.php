@@ -34,6 +34,12 @@ class PaginationPlugin extends Plugin
             return true;
         }
 
+        if (strtolower($this->get('template_view_path_node')) == 'pagination') {
+        } else {
+            return true;
+        }
+         echo 'I am in Pagination Plguin dddd';
+        die;
         /** initialise */
         $url = Services::Registry()->get('Plugindata', 'page_url');
         $query_results = array();

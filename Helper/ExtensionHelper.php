@@ -436,8 +436,8 @@ Class ExtensionHelper
                 return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(MOLAJO_FOLDER . '/' . 'Configuration/System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
-                return MOLAJO_FOLDER . '/' . 'Configuration/System' . '/' . ucfirst(strtolower($node));
+            if (file_exists(MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+                return MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
             }
 
             return false;
@@ -455,7 +455,10 @@ Class ExtensionHelper
             }
 
             return false;
-        }
+
+        }    if (file_exists(MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+        return MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
+    }
 
         return false;
     }
@@ -490,7 +493,7 @@ Class ExtensionHelper
                 return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(MOLAJO_FOLDER . '/' . 'Configuration/System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+            if (file_exists(MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return CORE_SYSTEM_URL . '/' . ucfirst(strtolower($node));
             }
 
@@ -540,8 +543,8 @@ Class ExtensionHelper
                 return 'Extension\\Resource\\' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(MOLAJO_FOLDER . '/' . 'Configuration/System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
-                return 'Vendor\\Molajo\\Configuration\\System\\' . ucfirst(strtolower($node));
+            if (file_exists(MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+                return 'Vendor\\Molajo\\System\\' . ucfirst(strtolower($node));
             }
 
             return false;
@@ -635,6 +638,8 @@ Class ExtensionHelper
                 return CATALOG_TYPE_WRAP_VIEW;
             }
 
+            return CATALOG_TYPE_RESOURCE;
+
         } else {
 
             if ($catalog_type_id == CATALOG_TYPE_RESOURCE) {
@@ -661,6 +666,8 @@ Class ExtensionHelper
             } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
                 return 'Wrap';
             }
+
+            return 'Resource';
         }
 
         /** Should not be reachable */

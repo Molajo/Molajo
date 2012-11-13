@@ -1,6 +1,6 @@
-<datalist name="FieldsUsers">
+<datalist name="FieldsusersDatalist">
     <model
-            name="FieldsUsers"
+            name="FieldsusersDatalist"
             extends="PlugindataDatalist"
-            registry_entry="UsersSystemFields"/>
+            registry_entry="UserssystemFields"/>
 </datalist>

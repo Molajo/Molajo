@@ -51,7 +51,6 @@ class FieldsPlugin extends Plugin
 
         $normalFields = Services::Registry()->get($table_registry_name, 'fields');
 
-
         $status = 0;
 
         if (count($normalFields) > 0) {

@@ -27,6 +27,10 @@ class FormselectlistPlugin extends Plugin
      */
     public function onAfterReadall()
     {
+        if (strtolower($this->get('template_view_path_node')) == 'formselectlist') {
+        } else {
+            return true;
+        }
 
         $datalist = Services::Registry()->get('Parameters', 'datalist');
 

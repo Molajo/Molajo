@@ -296,7 +296,6 @@ Class TextService
      */
     protected function setWhereCriteria($field, $value, $alias, $connection)
     {
-
         if (strrpos($value, ',') > 0) {
             $connection->model->query->where(
                 $connection->model->db->qn($alias . '.' . $field)

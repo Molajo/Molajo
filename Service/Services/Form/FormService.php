@@ -304,9 +304,9 @@ Class FormService
                     }
                 }
 
-                if (count($temp) > 0) {
+                $write = array();
 
-                    $write = array();
+                if (count($temp) > 0) {
 
                     $page_new_fieldset = 1;
                     $page_fieldset_count = count($temp);

@@ -32,6 +32,12 @@ class PagetypegridPlugin extends Plugin
 			return true;
 		}
 
+        $this->parameters['model_ordering'] = $this->get('grid_ordering');
+        $this->parameters['model_ordering_direction'] = $this->get('grid_ordering_direction');
+        $this->parameters['model_offset'] = 0;
+        $this->parameters['model_count'] = $this->get('grid_items_per_page');
+        $this->parameters['model_use_pagination'] = $this->get('grid_use_pagination');
+
         $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
         $connect = new $controllerClass();
 
@@ -54,8 +60,6 @@ class PagetypegridPlugin extends Plugin
         $this->setGrid($connect, $connect->get('primary_prefix'));
 
         $this->setBatch($connect, $connect->get('primary_prefix'));
-
-//        $this->setForm($model_type, $model_name);
 
         return true;
     }

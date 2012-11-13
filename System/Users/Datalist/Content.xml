@@ -1,0 +1,7 @@
+<datalist name="ContentusersDatalist">
+    <model
+            name="ContentusersDatalist"
+            catalog_type_id="3000"
+            extension_instance_id="3000"
+            extends="ContentDatalist"/>
+</datalist>
