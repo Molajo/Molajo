@@ -38,10 +38,11 @@ class FormselectlistPlugin extends Plugin
             return true;
         }
 
-        $items = Services::Text()->getList($datalist, $this->parameters);
+        $results = Services::Text()->getList($datalist, $this->parameters);
 
-        if ($items === false) {
+        if ($results === false) {
             return true;
+
         }
 
         if (isset($this->parameters['selected'])) {
@@ -49,7 +50,14 @@ class FormselectlistPlugin extends Plugin
         } else {
             $selected = null;
         }
-        $this->data = Services::Text()->buildSelectlist($datalist, $items, 0, 5, $selected);
+
+        $this->data = Services::Text()->buildSelectlist(
+            $datalist,
+            $results[0]->listitems,
+            $results[0]->multiple,
+            $results[0]->size,
+            $selected
+        );
 
         return true;
     }

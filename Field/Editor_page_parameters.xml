@@ -1,0 +1,1 @@
+<field name="editor_page_parameters" type="char" null="0" default="{{Parameters,parameters*}}"/>

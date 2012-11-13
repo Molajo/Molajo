@@ -128,7 +128,26 @@ protected function setDashboardPermissions()
 protected function setOptions()
 {
 
-    $list = Services::Text()->getList('Portlets', $this->parameters);
+    $results = Services::Text()->getList('Portlets', $this->parameters);
+
+    if ($results === false) {
+        return true;
+
+    }
+
+    if (isset($this->parameters['selected'])) {
+        $selected = $this->parameters['selected'];
+    } else {
+        $selected = null;
+    }
+
+    $list = Services::Text()->buildSelectlist(
+        'Portlets',
+        $results[0]->listitems,
+        $results[0]->multiple,
+        $results[0]->size,
+        $selected
+    );
 
     if (count($list) == 0 || $list === false) {
         //throw exception

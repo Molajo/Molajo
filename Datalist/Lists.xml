@@ -2,15 +2,15 @@
 <model name="Lists">
     <table>
         <values>
-            <value id="author" value="Author"/>
-            <value id="categories" value="Categories"/>
-            <value id="content" value="Content"/>
-            <value id="featured" value="Featured"/>
-            <value id="groups" value="Groups"/>
-            <value id="languages" value="languages"/>
-            <value id="status" value="Status"/>
-            <value id="stickied" value="Stickied"/>
-            <value id="tags" value="Tags"/>
+            <value id="filter_author" value="Author"/>
+            <value id="filter_categories" value="Categories"/>
+            <value id="filter_content" value="Content"/>
+            <value id="filter_featured" value="Featured"/>
+            <value id="filter_groups" value="Groups"/>
+            <value id="filter_languages" value="languages"/>
+            <value id="filter_status" value="Status"/>
+            <value id="filter_stickied" value="Stickied"/>
+            <value id="filter_tags" value="Tags"/>
         </values>
     </table>
 </model>

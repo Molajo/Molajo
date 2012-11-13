@@ -1,9 +1,0 @@
-/*
-@package     Molajo
-@copyright   Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.
-@license     GNU GPL v 2, or later and MIT, see License folder
-*/
-span.orderingicons { float:left; width: 40%; text-align: left; letter-spacing: 1em; }
-span.ordering {float:right; width: 40%; text-align: right;  }
-span.featured, span.notfeatured, span.stickied, span.notstickied { margin-left:auto; margin-right:auto; width:70%;}
-td.center {text-align: center;}

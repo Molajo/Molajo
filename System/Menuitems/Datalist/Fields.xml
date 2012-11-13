@@ -1,6 +1,6 @@
-<datalist name="FieldsMenuitems">
+<datalist name="FieldsmenuitemsDatalist">
     <model
-            name="FieldsMenuitems"
+            name="FieldsmenuitemsDatalist"
             extends="PlugindataDatalist"
-            registry_entry="MenuitemsSystemFields"/>
+            registry_entry="MenuitemssystemFields"/>
 </datalist>

@@ -14,22 +14,6 @@
 <include field="editor_main_column14"/>
 <include field="editor_main_column15"/>
 
-<include field="editor_secondary_column1"/>
-<include field="editor_secondary_column2"/>
-<include field="editor_secondary_column3"/>
-<include field="editor_secondary_column4"/>
-<include field="editor_secondary_column5"/>
-<include field="editor_secondary_column6"/>
-<include field="editor_secondary_column7"/>
-<include field="editor_secondary_column8"/>
-<include field="editor_secondary_column9"/>
-<include field="editor_secondary_column10"/>
-<include field="editor_secondary_column11"/>
-<include field="editor_secondary_column12"/>
-<include field="editor_secondary_column13"/>
-<include field="editor_secondary_column14"/>
-<include field="editor_secondary_column15"/>
-
 <include field="editor_publish_column1"/>
 <include field="editor_publish_column2"/>
 <include field="editor_publish_column3"/>
@@ -46,21 +30,21 @@
 <include field="editor_publish_column14"/>
 <include field="editor_publish_column15"/>
 
-<include field="editor_seo_column1"/>
-<include field="editor_seo_column2"/>
-<include field="editor_seo_column3"/>
-<include field="editor_seo_column4"/>
-<include field="editor_seo_column5"/>
-<include field="editor_seo_column6"/>
-<include field="editor_seo_column7"/>
-<include field="editor_seo_column8"/>
-<include field="editor_seo_column9"/>
-<include field="editor_seo_column10"/>
-<include field="editor_seo_column11"/>
-<include field="editor_seo_column12"/>
-<include field="editor_seo_column13"/>
-<include field="editor_seo_column14"/>
-<include field="editor_seo_column15"/>
+<include field="editor_categorization_column1"/>
+<include field="editor_categorization_column2"/>
+<include field="editor_categorization_column3"/>
+<include field="editor_categorization_column4"/>
+<include field="editor_categorization_column5"/>
+<include field="editor_categorization_column6"/>
+<include field="editor_categorization_column7"/>
+<include field="editor_categorization_column8"/>
+<include field="editor_categorization_column9"/>
+<include field="editor_categorization_column10"/>
+<include field="editor_categorization_column11"/>
+<include field="editor_categorization_column12"/>
+<include field="editor_categorization_column13"/>
+<include field="editor_categorization_column14"/>
+<include field="editor_categorization_column15"/>
 
 <include field="editor_metadata_column1"/>
 <include field="editor_metadata_column2"/>

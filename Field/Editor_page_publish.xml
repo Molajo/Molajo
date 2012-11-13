@@ -1,1 +1,0 @@
-<field name="editor_page_publish" type="char" null="0" default="{{Publish,editor_publish*}}"/>

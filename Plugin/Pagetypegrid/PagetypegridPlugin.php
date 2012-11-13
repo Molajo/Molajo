@@ -32,12 +32,6 @@ class PagetypegridPlugin extends Plugin
 			return true;
 		}
 
-        $this->parameters['model_ordering'] = $this->get('grid_ordering');
-        $this->parameters['model_ordering_direction'] = $this->get('grid_ordering_direction');
-        $this->parameters['model_offset'] = 0;
-        $this->parameters['model_count'] = $this->get('grid_items_per_page');
-        $this->parameters['model_use_pagination'] = $this->get('grid_use_pagination');
-
         $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
         $connect = new $controllerClass();
 
@@ -150,12 +144,20 @@ class PagetypegridPlugin extends Plugin
 
             foreach ($grid_list as $listname) {
 
-                $items = Services::Text()->getList($listname, $this->parameters);
+                //todo: figure out selected value
+                $selected = '';
+                $results = Services::Text()->getList($listname, $this->parameters);
 
-                if ($items === false) {
+                if ($results === false) {
                 } else {
 
-                    $query_results = Services::Text()->buildSelectlist($listname, $items, 0, 5);
+                    $query_results = Services::Text()->buildSelectlist(
+                        $listname,
+                        $results[0]->listitems,
+                        $results[0]->multiple,
+                        $results[0]->size,
+                        $selected
+                    );
 
                     Services::Registry()->set('Plugindata', 'list_' . $listname, $query_results);
 
@@ -183,6 +185,7 @@ class PagetypegridPlugin extends Plugin
      */
     protected function setGrid($connect, $primary_prefix)
     {
+        /** Columns */
         $grid_columns = array();
         for ($i=1; $i < 16; $i++) {
             $item = $this->get('grid_column' . $i);
@@ -194,6 +197,7 @@ class PagetypegridPlugin extends Plugin
 
         Services::Registry()->set('Plugindata', 'GridTableColumns', $grid_columns);
 
+        /** Catalog Type ID */
         $list = $this->get('criteria_catalog_type_id');
 
         $connect->model->query->where(
@@ -202,17 +206,30 @@ class PagetypegridPlugin extends Plugin
                 . ' IN (' . $list . ')'
         );
 
+        /** Redirect ID */
         $connect->model->query->where($connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
 
-        $ordering = $this->get('grid_ordering', '');
+        /** Status */
+        $status = $this->get('grid_status');
+        if (trim($status == '')) {
+        } else {
+            $connect->model->query->where(
+                $connect->model->db->qn($primary_prefix)
+                    . '.' . $connect->model->db->qn('status')
+                    . ' IN (' . $status . ')'
+            );
+        }
+
+        /** Ordering */
+        $ordering = $this->get('grid_ordering');
 
         if ($ordering == '' || $ordering === null) {
             $ordering = $connect->get('primary_key', 'id');
         }
         Services::Registry()->set('Plugindata', 'GridTableOrdering', $ordering);
 
-
-        $orderingDirection = $this->get('grid_ordering_direction', 'DESC');
+        /** Ordering Direction */
+        $orderingDirection = $this->get('grid_ordering_direction');
 
         if ($orderingDirection == 'ASC') {
         } else {
@@ -220,17 +237,28 @@ class PagetypegridPlugin extends Plugin
         }
         Services::Registry()->set('Plugindata', 'GridTableOrderingDirection', $orderingDirection);
 
+        $connect->model->query->order(
+            $connect->model->db->qn($primary_prefix)
+                . '.' . $connect->model->db->qn($ordering)
+                . ' '
+                . $orderingDirection
+        );
 
-        $itemsPerPage = $this->get('grid_items_per_page', 10);
+        /** Offset */
+        $offset = (int) $this->get('grid_offset');
+        Services::Registry()->set('Plugindata', 'GridTableOffset', (int) $offset);
+        $connect->set('model_offset', $offset);
 
+        /** Items per page */
+        $itemsPerPage = (int) $this->get('grid_items_per_page');
         if ((int)$itemsPerPage == 0) {
-            $itemsPerPage = 10;
+            $itemsPerPage = 15;
         }
         Services::Registry()->set('Plugindata', 'GridTableItemsPerPage', $itemsPerPage);
 
-        $connect->set('model_offset', 0);
         $connect->set('model_count', $itemsPerPage);
 
+        /** Run Query */
         $query_results = $connect->getData('list');
 
         $gridItems = array();

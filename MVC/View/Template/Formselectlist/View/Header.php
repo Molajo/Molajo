@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<select <?php echo $this->row->multiple; ?> name="<?php echo $this->row->listname; ?>" class="inputbox" onchange="javascript: submitform()">
+<select <?php echo $this->row->multiple; ?> <?php echo $this->row->size; ?>name="<?php echo $this->row->listname; ?>" class="inputbox">
 <?php if ($this->row->multiple == '') { ?>
     <option value=""><?php echo Services::Language()->translate('SELECT_' . strtoupper($this->row->listname)); ?></option>
 <?php } else { ?>

@@ -1,6 +1,6 @@
-<datalist name="FieldsLanguages">
+<datalist name="FieldslanguagesDatalist">
     <model
-            name="FieldsLanguages"
+            name="FieldslanguagesDatalist"
             extends="PlugindataDatalist"
-            registry_entry="LanguagesSystemFields"/>
+            registry_entry="LanguagessystemFields"/>
 </datalist>

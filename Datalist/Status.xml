@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Status">
+<model
+       name="Status"
+       primary_key="id"
+       name_key="value">
     <table>
         <values>
             <value id="2" value="Archived"/>

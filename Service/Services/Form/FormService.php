@@ -1263,7 +1263,10 @@ Class FormService
 			$list = Services::Registry()->get('Datalist', $pagele_registry_name . 'Fieldsstandard');
 
 		} else {
-			$list = Services::Text()->getList($datalist, array());
+            $results = Services::Text()->getList($datalist, array());
+            $list = $results[0]->listitems;
+            $multiple = $results[0]->multiple;
+            $size = $results[0]->size;
 		}
 
 		if ($list === false) {

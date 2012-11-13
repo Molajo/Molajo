@@ -1,1 +1,2 @@
-<field name="configuration_editor" type="char" null="0" default="{{Main,editor_main*}}{{Secondary,editor_secondary*}}{{Publish,editor_publish*}}{{SEO,editor_seo*}}{{Metadata,editor_metadata*}}"/>
+<field name="configuration_editor" type="char" null="0" default="{{Main,editor_main*}}{{Parameters,noformfields}}{{Permissions,noformfields}}{{Versions,noformfields}}"/>
+

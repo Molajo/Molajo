@@ -143,6 +143,18 @@ Class TextService
             return false;
         }
 
+        $multiple = (int) Services::Registry()->get($filter . 'Datalist', 'multiple');
+        $size = (int) Services::Registry()->get($filter . 'Datalist', 'size');
+
+        if ((int) $multiple == 1)  {
+            if ((int) $size == 0) {
+                $size = 5;
+            }
+        } else {
+            $multiple = 0;
+            $size = 0 ;
+        }
+
         if ($m->parameters['registry_entry'] == '') {
         } else {
             $registry_entry = $m->parameters['registry_entry'];
@@ -151,8 +163,17 @@ Class TextService
 
                 $values = Services::Registry()->get('Datalist', $registry_entry);
                 if ($values === false || count($values) === 0) {
+
                 } else {
-                    $query_results = $values;
+                    $query_results = array();
+
+                    $row = new \stdClass();
+
+                    $row->listitems = $values;
+                    $row->multiple = $multiple;
+                    $row->size = $size;
+
+                    $query_results[] = $row;
 
                     return $query_results;
                 }
@@ -162,11 +183,20 @@ Class TextService
         $values = Services::Registry()->get($filter . 'Datalist', 'values');
 
         if (is_array($values) && count($values) > 0) {
-            $query_results = $values;
 
         } else {
-            $query_results = $this->getQueryResults($m, $filter, $parameters);
+            $values = $this->getQueryResults($m, $filter, $parameters);
         }
+
+        $query_results = array();
+
+        $row = new \stdClass();
+
+        $row->listitems = $values;
+        $row->multiple = $multiple;
+        $row->size = $size;
+
+        $query_results[] = $row;
 
         return $query_results;
     }
