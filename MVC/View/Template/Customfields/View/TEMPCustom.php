@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined("MOLAJO") or die;
-if ($this->row->page_new_fieldset == '1') {
+if ($this->row->new_fieldset == '1') {
         if ($this->row->page_first_row == 'first') {
         } elseif ((int) $this->row->first_following === 1) { ?>
         </ol>
@@ -17,18 +17,18 @@ if ($this->row->page_new_fieldset == '1') {
     </table>
     </fieldset>
     <?php } ?>
-    <?php if ($this->row->page_fieldset_title == 'Create') { ?>
+    <?php if ($this->row->fieldset_title == 'Create') { ?>
 <fieldset class="two-up">
-<legend><?php echo $this->row->page_fieldset_title; ?></legend>
+<legend><?php echo $this->row->fieldset_title; ?></legend>
     <?php if (Services::Registry()->get('Parameters', 'application_help') == 1) { ?>
-        <p><?php echo $this->row->page_fieldset_description; ?></p>
+        <p><?php echo $this->row->fieldset_description; ?></p>
     <?php } ?>
     <ol>
     <?php } else { ?>
 <fieldset>
-<legend><?php echo $this->row->page_fieldset_title; ?></legend>
+<legend><?php echo $this->row->fieldset_title; ?></legend>
 <?php if (Services::Registry()->get('Parameters', 'application_help') == 1) { ?>
-    <p><?php echo $this->row->page_fieldset_description; ?></p>
+    <p><?php echo $this->row->fieldset_description; ?></p>
 <?php } ?>
 <table class="responsive">
     <thead>

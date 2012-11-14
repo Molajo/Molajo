@@ -113,13 +113,13 @@ class PagetypeapplicationPlugin extends Plugin
          * 		page_link: applicationbasic
          *
          * 		Form View to include and the Registry containing Form contents:
-         * 			page_form_fieldset_handler_view: Formpage
-         * 			page_include_parameter: Formpageapplicationbasic
+         * 			fieldset_template_view: Formpage
+         * 			fieldset_template_view_parameter: Formpageapplicationbasic
          *
          */
-        $connect = Services::Form();
+        $form = Services::Form();
 
-        $pageFieldsets = $connect->setPageArray(
+        $pageFieldsets = $form->setPageArray(
             $current_page,
             strtolower($this->get('page_type')),
             $resource_model_type,
@@ -129,7 +129,7 @@ class PagetypeapplicationPlugin extends Plugin
         );
 
         /** Set the View Model Parameters and Populate the Registry used as the Model */
-        $current_page = $this->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
+        $current_page = $form->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
 
         $this->set('model_name', 'Plugindata');
         $this->set('model_type', 'dbo');
@@ -147,68 +147,4 @@ class PagetypeapplicationPlugin extends Plugin
         return true;
     }
 
-    /**
-     * Get Form Page Fieldsets
-     *
-     * @param $pages
-     * @return array
-     */
-    protected function getPages($pages, $page_count)
-    {
-        $page_array = array();
-        $temp_array = array();
-        $temp = explode('}}', $pages);
-
-        foreach ($temp as $set) {
-            $set = str_replace(',', ' ', $set);
-            $set = str_replace(':', '=', $set);
-            $set = str_replace('{{', '', $set);
-            $set = str_replace('http=', 'http:', $set);
-            if (trim($set) == '') {
-            } else {
-                $temp_array[] = trim($set);
-            }
-        }
-
-        $current_page_number = count($temp_array);
-        $current_page_number_word = $this->convertNumberToWord($current_page_number);
-
-        foreach ($temp_array as $set) {
-            $fields = explode(' ', $set);
-            foreach ($fields as $field) {
-                $temp = explode('=', $field);
-                $pairs[$temp[0]] = $temp[1];
-            }
-
-            $row = new \stdClass();
-            foreach ($pairs as $key=>$value) {
-                $row->$key = $value;
-                $row->current_page_number = $current_page_number;
-                $row->current_page_number_word = $current_page_number_word;
-                $row->total_page_count = $page_count;
-            }
-            $page_array[] = $row;
-        }
-
-        return $page_array;
-    }
-
-    /**
-     * convertNumberToWord
-     *
-     * Converts numbers from 1-24 as their respective written word
-     *
-     * @return string
-     * @since   1.0
-     */
-    public function convertNumberToWord($number)
-    {
-        $key = $number-1;
-        $words = array('one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree','twentyfour');
-        if (array_key_exists($key, $words)) {
-            return $words[$key];
-        }
-
-        return false;
-    }
 }

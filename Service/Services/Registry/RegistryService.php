@@ -206,7 +206,6 @@ Class RegistryService
 
     /**
      * Returns a Parameter property for a specific item and namespace registry
-     *   Alias for JFactory::getConfig, returning full registry set for local use
      *
      * Usage:
      * Services::Registry()->get('Name Space', 'key value');
@@ -243,7 +242,6 @@ Class RegistryService
             return $this->getRegistry($namespace);
 
         } elseif ($key == '*' || strpos($key, '*')) {
-
             $sort = $this->getRegistry($namespace);
 
             if ($key == '*') {

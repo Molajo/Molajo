@@ -7,6 +7,6 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined("MOLAJO") or die;
-$template = ucfirst(strtolower($this->row->page_form_fieldset_handler_view));
-$parameters = $this->row->page_include_parameter; ?>
+$template = ucfirst(strtolower($this->row->fieldset_template_view));
+$parameters = $this->row->fieldset_template_view_parameter; ?>
 <include:template name=<?php echo $template; ?> parameter=<?php echo $parameters; ?> wrap=div wrap_id=<?php echo $parameters; ?>/>

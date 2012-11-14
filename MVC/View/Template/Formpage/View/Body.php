@@ -9,15 +9,15 @@ use Molajo\Service\Services;
 defined("MOLAJO") or die;
 
 if ($this->row->page_first_row == 1) {
-} elseif ($this->row->page_new_fieldset == 1) { ?>
+} elseif ($this->row->new_fieldset == 1) { ?>
 </fieldset>
 <?php }
 
-if ($this->row->page_new_fieldset == 1) { ?>
+if ($this->row->new_fieldset == 1) { ?>
 <fieldset class="configuration">
-	<legend class="configuration"><?php echo $this->row->page_fieldset_title; ?></legend>
+	<legend class="configuration"><?php echo $this->row->fieldset_title; ?></legend>
 	<?php if ($this->parameters['application_help'] == 1) { ?>
-			<p><?php echo $this->row->page_fieldset_description; ?></p>
+			<p><?php echo $this->row->fieldset_description; ?></p>
 	<?php }
 } ?>
 <include:template name=<?php echo $this->row->view; ?> parameter_np=<?php echo $this->row->name; ?>/>

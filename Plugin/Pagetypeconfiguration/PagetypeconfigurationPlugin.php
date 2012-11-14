@@ -32,182 +32,149 @@ class PagetypeconfigurationPlugin extends Plugin
             return true;
         }
 
-        $resource_model_type = $this->get('model_type');
-        $resource_model_name = $this->get('model_name');
+        /** Array - All Pages in Set
+        2, {{Access,noformfields}}{{Editor,editor}}{{Grid,grid}}{{Form,form}}{{Item,item}}{{List,list}}
+         */
+        $temp = $this->get('configuration_array');
+        $pages = explode('{{', $temp);
 
-        Helpers::Content()->getResourceExtensionParameters(
-			(int) $this->parameters['criteria_extension_instance_id']
-		);
+        /** Determine Current Page of Set */
+        $temp = Services::Registry()->get('Parameters', 'request_filters', array());
+        $filters = explode(',', $temp);
 
-		/** Array - All Pages in Set
-		{{Basic,basic}}{{Access,access}}{{Metadata,metadata}}{{Fields,customfields,Customfields}}{{Editor,editor}}{{Grid,grid}}{{Form,form}}{{Item,item}}{{List,list}}
-		 */
-		$temp = $this->get('configuration_array');
-		$pages = explode('{{', $temp);
+        $page = 1;
+        if ($filters == '' || count($filters) == 0) {
+            $page = 1;
+        } else {
+            foreach ($filters as $x) {
+                if (trim($x) == '') {
+                } else {
+                    $pair = explode(':', $x);
+                    if (strtolower($pair[0]) == 'page') {
+                        $page = (int) $pair[1];
+                        break;
+                    }
+                }
+            }
+        }
 
-		/** Determine Current Page of Set */
-		$temp = Services::Registry()->get('Parameters', 'request_filters', array());
-		$filters = explode(',', $temp);
+        if ($page < count($pages)) {
+        } else {
+            $page = 1;
+        }
+        $page_number = $page;
 
-		$page = 1;
-		if ($filters == '' || count($filters) == 0) {
-			$page = 1;
-		} else {
-			foreach ($filters as $x) {
-				if (trim($x) == '') {
-				} else {
-					$pair = explode(':', $x);
-					if (strtolower($pair[0]) == 'page') {
-						$page = (int) $pair[1];
-						break;
-					}
-				}
-			}
-		}
-
-		if ($page < count($pages)) {
-		} else {
-			$page = 1;
-		}
-		$page_number = $page;
-
-		/** Resource Submenu: Links to various Form Pages (Tabs) - ex. Basic, Metadata, Fields, etc. */
-		$pageArray = array();
-		$i = 0;
-		foreach ($pages as $item) {
-			if ($item == '') {
-			} else {
-				$i++;
-				$row = new \stdClass();
-				$row->id = $i;
-				if ($i == $item) {
-					$row->current = 1;
-				} else {
-					$row->current = 0;
-				}
+        /** Resource Submenu: Links to various Form Pages (Tabs) - ex. Basic, Metadata, Fields, etc. */
+        $pageArray = array();
+        $i = 0;
+        foreach ($pages as $item) {
+            if ($item == '') {
+            } else {
+                $i++;
+                $row = new \stdClass();
                 $row->id = $i;
-				$row->title = substr($item, 0, strpos($item, ','));
-				$row->url = Services::Registry()->get('Plugindata', 'page_url') . '/page/' . $i;
+                if ($i == $item) {
+                    $row->current = 1;
+                } else {
+                    $row->current = 0;
+                }
+                $row->id = $i;
+                $row->title = substr($item, 0, strpos($item, ','));
+                $row->url = Services::Registry()->get('Plugindata', 'page_url') . '/page/' . $i;
 
-				$pageArray[] = $row;
-			}
-		}
-		Services::Registry()->set('Plugindata', 'SectionSubmenu', $pageArray);
+                $pageArray[] = $row;
+            }
+        }
+        Services::Registry()->set('Plugindata', 'SectionSubmenu', $pageArray);
 
-		/** Even tho links are created to each form page, generate Form for the current page, only */
-		$current_page = '{{' . $pages[$page_number];
+        /** Even tho links are created to each form page, generate Form for the current page, only */
+        $current_page = '{{' . $pages[$page_number];
 
-		/**
-		 * $pageFieldsets - contains two fields: page_count and page_array
-		 *
-		 * 	page_count - the number of pages created (will be 1 for this use)
-		 *
-		 * 	page_array: several fields that will be used by the primary view to display titles
-		 *		and create the include that contains the form fieldsets
-		 *
-		 *	Example page_array: Basic Page (tab 1)
-		 * 		page_title: Basic
-		 * 		page_title_extended: Articles Basic Configuration
-		 * 		page_namespace: configuration
-		 * 		page_link: configurationbasic
-		 *
-		 * 		Form View to include and the Registry containing Form contents:
-		 * 			page_form_fieldset_handler_view: Formpage
-		 * 			page_include_parameter: Formpageconfigurationbasic
-		 *
-		 */
-		$connect = Services::Form();
+        /** Build Fieldsets and Fields */
+        $form = Services::Form();
 
-		$pageFieldsets = $connect->setPageArray(
-			$current_page,
-			strtolower($this->get('page_type')),
-			$resource_model_type,
-			$resource_model_name,
-			$this->get('criteria_extension_instance_id'),
-			array()
-		);
+        /** Resource
+        1. {{Basic,basic}}
+        3. {{Fields,customfields,Customfields}}
+        4. {{Editor,editor}}
+        5. {{Grid,grid}}
+        6. {{Form,form}}
+        7. {{Item,item}}
+        8. {{List,list}}
+         */
+        if ($page_number == 1 || $page_number == 3  || $page_number == 4
+            || $page_number == 5  || $page_number == 6  || $page_number == 7
+            || $page_number == 8) {
 
-		/** Set the View Model Parameters and Populate the Registry used as the Model */
-		$current_page = $this->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
+            $pageFieldsets = $this->getResourceConfiguration($form, $current_page);
+        }
 
-		$this->set('model_name', 'Plugindata');
-		$this->set('model_type', 'dbo');
-		$this->set('model_query_object', 'getPlugindata');
-		$this->set('model_parameter', 'PrimaryRequestQueryResults');
+        /** Set the View Model Parameters and Populate the Registry used as the Model */
+        $current_page = $form->getPages(
+            $pageFieldsets[0]->page_array,
+            $pageFieldsets[0]->page_count
+        );
 
-		$this->parameters['model_name'] = 'Plugindata';
-		$this->parameters['model_type'] = 'dbo';
+        $this->set('model_name', 'Plugindata');
+        $this->set('model_type', 'dbo');
+        $this->set('model_query_object', 'getPlugindata');
+        $this->set('model_parameter', 'PrimaryRequestQueryResults');
 
-		Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $current_page);
+        $this->parameters['model_name'] = 'Plugindata';
+        $this->parameters['model_type'] = 'dbo';
 
-//        echo '<pre>';
-//        var_dump(Services::Registry()->get('Plugindata', 'Formpageconfigurationbasic'));
-//        echo '</pre>';
-		return true;
+        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $current_page);
+
+        return true;
     }
 
-	/**
-	 * Get Form Page Fieldsets
-	 *
-	 * @param $pages
-	 * @return array
-	 */
-	protected function getPages($pages, $page_count)
-	{
-		$page_array = array();
-		$temp_array = array();
-		$temp = explode('}}', $pages);
+    /**
+     * Prepares Configuration Data
+     *
+     * @return 	boolean
+     * @since	1.0
+     */
+    protected function getResourceConfiguration($form, $current_page)
+    {
+        Helpers::Content()->getResourceExtensionParameters(
+            (int) $this->parameters['criteria_extension_instance_id']
+        );
 
-		foreach ($temp as $set) {
-			$set = str_replace(',', ' ', $set);
-			$set = str_replace(':', '=', $set);
-			$set = str_replace('{{', '', $set);
-			$set = str_replace('http=', 'http:', $set);
-			if (trim($set) == '') {
-			} else {
-				$temp_array[] = trim($set);
-			}
-		}
+        /** Set Input */
+        $form->set('namespace', strtolower($this->get('page_type')));
 
-		$current_page_number = count($temp_array);
-		$current_page_number_word = $this->convertNumberToWord($current_page_number);
+        $form->set('model_type', $this->get('model_type'));
+        $form->set('model_name', $this->get('model_name'));
+        $form->set('model_registry_name',
+            ucfirst(strtolower($this->get('model_name'))) . ucfirst(strtolower($this->get('model_type')))
+        );
 
-		foreach ($temp_array as $set) {
-			$fields = explode(' ', $set);
-			foreach ($fields as $field) {
-				$temp = explode('=', $field);
-				$pairs[$temp[0]] = $temp[1];
-			}
+        $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));
 
-			$row = new \stdClass();
-			foreach ($pairs as $key=>$value) {
-				$row->$key = $value;
-				$row->current_page_number = $current_page_number;
-				$row->current_page_number_word = $current_page_number_word;
-				$row->total_page_count = $page_count;
-			}
-			$page_array[] = $row;
-		}
+        $form->set('data', array());
 
-		return $page_array;
-	}
+        /** Parameters */
+        $parameters = Services::Registry()->getArray('ResourcesSystemParameters');
+        $array2 = Services::Registry()->getArray('Parameters');
 
-	/**
-	 * convertNumberToWord
-	 *
-	 * Converts numbers from 1-24 as their respective written word
-	 *
-	 * @return string
-	 * @since   1.0
-	 */
-	public function convertNumberToWord($number)
-	{
-		$key = $number-1;
-		$words = array('one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree','twentyfour');
-		if (array_key_exists($key, $words)) {
-			return $words[$key];
-		}
+        foreach ($array2 as $key => $value) {
+            if (substr($key, 0, strlen('configuration')) == 'configuration') {
+                $parameters[$key] = $value;
+            }
+        }
 
-		return false;
-	}
+        $form->set('parameters', $parameters);
+        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', 'parameters'));
+
+        /** Metadata */
+        $form->set('metadata', Services::Registry()->getArray('ResourcesSystemMetadata'));
+        $form->set('metadata_fields', Services::Registry()->get('ResourcesSystem', 'metadata'));
+
+        /** Customfields */
+        $form->set('customfields', Services::Registry()->getArray('ResourcesSystemCustomfields'));
+        $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', 'customfields'));
+
+        /** Build Fieldsets and Fields */
+        return $form->execute($current_page);
+    }
 }

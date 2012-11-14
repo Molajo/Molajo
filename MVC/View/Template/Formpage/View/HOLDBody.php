@@ -13,19 +13,19 @@ $first_row = $this->row->page_first_row;
 if ($first_row == 1) {
 
 /** End Last Fieldset */
-} elseif ($this->row->page_new_fieldset == 1) { ?>
+} elseif ($this->row->new_fieldset == 1) { ?>
     	    </fieldset>
         </div>
 <?php
-	if ($this->row->page_fieldset_column == 1) {  ?>
+	if ($this->row->fieldset_column == 1) {  ?>
     </div>
 <?php }
 }
 
 /** Process NEW Recordset */
-if ($this->row->page_new_fieldset == 1) {
+if ($this->row->new_fieldset == 1) {
 
-	if ($first_row == 1 || $this->row->page_fieldset_column  == 1) {  ?>
+	if ($first_row == 1 || $this->row->fieldset_column  == 1) {  ?>
     <div class="left-configuration-row">
 		<div class="left-configuration-column">
 			<fieldset class="configuration">
@@ -35,9 +35,9 @@ if ($this->row->page_new_fieldset == 1) {
 			<fieldset class="configuration">
 	<?php }  ?>
 
-	<legend class="configuration"><?php echo $this->row->page_fieldset_title; ?></legend>
+	<legend class="configuration"><?php echo $this->row->fieldset_title; ?></legend>
 	<?php if ($this->parameters['application_help'] == 1) { ?>
-			<p><?php echo $this->row->page_fieldset_description; ?></p>
+			<p><?php echo $this->row->fieldset_description; ?></p>
 	<?php }
 } ?>
 <include:template name=<?php echo $this->row->view; ?> parameter_np=<?php echo $this->row->name; ?>/>
