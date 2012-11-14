@@ -1,5 +1,6 @@
 <?php
 use Molajo\Service\Services;
+
 /**
  * @package    Molajo
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
@@ -8,11 +9,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <include:template name=Formbegin/>
-<include:template name=Editfilters wrap=nav wrap_class=edit-filters role=nav/>
 <section class="edit">
-    <include:template name=Editstatus/>
-    <include:template name=Editcheckin/>
     <include:request role=main/>
-    <include:template name=Editcheckin/>
 </section>
 <include:template name=Formend/>

@@ -99,8 +99,14 @@ Class ContentHelper
      */
     public function getRouteItem($id, $model_type, $model_name)
     {
+        /** Theme, Page, Template and Wrap Views */
+        if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
+            $pageTypeNamespace = 'item';
+        } else {
+            $pageTypeNamespace = 'form';
+        }
 
-        $item = $this->get($id, $model_type, $model_name, 'item');
+        $item = $this->get($id, $model_type, $model_name, $pageTypeNamespace);
         if (count($item) == 0) {
             return Services::Registry()->set('Parameters', 'status_found', false);
         }
@@ -124,13 +130,6 @@ Class ContentHelper
 
 		$parameterNamespace = $item->table_registry_name . 'Parameters';
 
-        /** Theme, Page, Template and Wrap Views */
-        if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
-            $pageTypeNamespace = 'item';
-        } else {
-            $pageTypeNamespace = 'form';
-        }
-
         $this->getResourceExtensionParameters((int) $extension_instance_id);
 
         $this->setParameters($pageTypeNamespace,
@@ -146,6 +145,10 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'parent_menu_id', $parent_menu_id);
 
 		$this->setExtensionPaths();
+
+        if ($pageTypeNamespace == 'form') {
+            Services::Registry()->set('Parameters', 'page_type', 'Edit');
+        }
 
         return true;
     }
@@ -273,7 +276,6 @@ Class ContentHelper
     public function setParameters($pageTypeNamespace, $parameterNamespace,
                                   $metadataNamespace, $resourceNamespace = '')
     {
-
         Services::Registry()->set('Parameters', 'page_type', $pageTypeNamespace);
 
 		/** Retrieve array of Extension Instances Authorised for User  */
@@ -424,7 +426,6 @@ Class ContentHelper
 	 */
 	public function setExtensionPaths()
 	{
-
 		Services::Registry()->set('Parameters', 'extension_name_path_node',
 			Services::Registry()->get('Parameters', 'model_name'));
 

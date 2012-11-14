@@ -1,5 +1,5 @@
-<include field="editor_page_array"/>
-<include field="editor_page_main"/>
-<include field="editor_page_parameters"/>
-<include field="editor_page_permissions"/>
-<include field="editor_page_versions"/>
+<include field="edit_array"/>
+<include field="edit_main"/>
+<include field="edit_parameters"/>
+<include field="edit_permissions"/>
+<include field="edit_versions"/>

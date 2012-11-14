@@ -201,8 +201,17 @@ Class FormService
 	{
 		$configurationArray = array();
 
+        $namespace = strtolower($namespace);
+
 		if ($page_link == 'noformfields') {
 			$configuration = '{{' . $page_link . ',' . strtolower($page_link) . '}}';
+
+        } elseif ($namespace == 'edit') {
+            $configuration = Services::Registry()->get('ResourcesSystemParameters', $namespace . '_' . strtolower($page_link), '');
+            if ($configuration == '') {
+                return false;
+            }
+
 		} else {
 			$configuration = Services::Registry()->get('Parameters', $namespace . '_' . strtolower($page_link), '');
             if ($configuration == '') {
@@ -280,15 +289,16 @@ Class FormService
                     $temp[] = $row;
 
                 } else {
-
-                    if ($namespace == 'Edit') {
+                    /**
+                    if ($namespace == 'edit') {
 
                         $temp = $this->getActualFields($namespace, $model_type, $model_name,
                             $extension_instance_id, $form_field_values, $page_link,
                             $pageTitle, $translateTabDesc,
                             $page_form_fieldset_handler_view);
 
-                    } elseif (method_exists($this, 'get' . $page_link)) {
+                    } else */
+                    if (method_exists($this, 'get' . $page_link)) {
 
                         $temp = $this->$get($namespace, $page_link, $options,
                             $pageTitle, $translateTabDesc,

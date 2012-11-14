@@ -1,1 +1,0 @@
-<field name="editor_page_main" type="char" null="0" default="{{Main,editor_main*}}{{Publishing,editor_publish*}}{{Main,editor_cat*}}{{Main,editor_metadata*}}"/>

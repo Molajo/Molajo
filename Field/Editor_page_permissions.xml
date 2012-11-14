@@ -1,1 +1,0 @@
-<field name="editor_page_permissions" type="char" null="0" default="{{Permissions,permissions*}}"/>
