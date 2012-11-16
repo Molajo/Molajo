@@ -21,30 +21,6 @@ defined('MOLAJO') or die;
 Class UrlService
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new UrlService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * getURL Retrieves URL based on Catalog ID
      *
      * @param integer $catalog_id

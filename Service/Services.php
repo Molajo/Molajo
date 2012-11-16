@@ -114,6 +114,7 @@ Class Services
 		$this->message = array();
 
 		$services = ConfigurationService::getFile('Service', 'Services');
+
 		if ($services === false) {
 			//throw error
 			//error
@@ -123,60 +124,34 @@ Class Services
 
 		foreach ($services->service as $service) {
 
-			if ($service->attributes()->scope == 'Application') {
+            $static_indicator = (int) $service->attributes()->static;
+            $name = (string) $service->attributes()->name;
+            $startup = (string) $service->attributes()->startup;
 
-				$name = $service->attributes()->name;
+//todo: overrides for service
+            $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
 
-				foreach ($service->parameter as $parameter) {
-				}
-				$connectionSucceeded = true;
-				$connection = '';
+            foreach ($service->parameter as $parameter) {
+            }
 
-				/** class name */
-				$entry = (string)$name . 'Service';
-				$folder = (string)$name;
-				$serviceClass = 'Molajo\\Service\\Services\\' . $folder . '\\' . $entry;
+			if ($static_indicator == '1') {
 
-				/** method name */
-				$serviceMethod = 'getInstance';
+                $connection = $this->getClassInstance($serviceClass);
+                $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
 
-				/** trap errors for missing class or method */
-				if (class_exists($serviceClass)) {
-					if (method_exists($serviceClass, $serviceMethod)) {
+				$this->set($name . 'Service', $connection, $connectionSucceeded);
 
-					} else {
-						$connectionSucceeded = false;
-						$connection = $serviceClass . '::' . $serviceMethod . ' Class Method does not exist';
-					}
-				} else {
-					$connectionSucceeded = false;
-					$connection = $serviceClass . ' Class does not exist';
-				}
+			} else {
 
-				/** make service connection */
-				if ($connectionSucceeded === true) {
-					try {
-						$connection = $serviceClass::$serviceMethod();
+                $this->dynamic_connection[$service->attributes()->name . 'Service']
+                    = $service->attributes()->name;
 
-					} catch (\Exception $e) {
-						$connectionSucceeded = false;
-						$connection = 'Fatal Error: ' . $e->getMessage();
-					}
-				}
-
-				/** store connection or error message */
-				if ($connectionSucceeded === false) {
-					echo 'service failed for ' . $entry . '<br />';
-				}
-				$this->set($entry, $connection, $connectionSucceeded);
-
-			} elseif ($service->attributes()->scope == 'Instance') {
-
-				$this->dynamic_connection[$service->attributes()->name . 'Service']
-					= $service->attributes()->name;
-
+                if (trim($startup) == '') {
+                } else {
+                    $connection = $this->getClassInstance($serviceClass);
+                    $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
+                }
 			}
-
 		}
 
 		foreach ($this->message as $message) {
@@ -202,71 +177,88 @@ Class Services
 			return $this->static_connection[$key];
 
 		} elseif (isset($this->dynamic_connection[$key])) {
-			$entry = $key;
-			$folder = $this->dynamic_connection[$key];
-
-		} else {
-			throw new \BadMethodCallException('Service ' . $key . ' is not available');
+//todo: overrides for service
+            return $this->getClassInstance('Molajo\\Service\\Services\\'
+                    . substr($key, 0, (strlen($key) - 7))
+                    . '\\' . $key);
 		}
 
-		$connectionSucceeded = true;
-		$connection = '';
-
-		/** class name */
-		$serviceClass = 'Molajo\\Service\\Services\\' . $folder . '\\' . $entry;
-
-		/** method name */
-		$serviceMethod = 'getInstance';
-
-		/** trap errors for missing class or method */
-		if (class_exists($serviceClass)) {
-			if (method_exists($serviceClass, $serviceMethod)) {
-
-			} else {
-				$connectionSucceeded = false;
-				$connection = $serviceClass . '::' . $serviceMethod . ' Class Method does not exist';
-			}
-		} else {
-			$connectionSucceeded = false;
-			$connection = $serviceClass . ' Class does not exist';
-		}
-
-		/** make service connection */
-		if ($connectionSucceeded === true) {
-			try {
-				$connection = $serviceClass::$serviceMethod();
-
-			} catch (\Exception $e) {
-				$connectionSucceeded = false;
-				$connection = 'Fatal Error: ' . $e->getMessage();
-			}
-		}
-
-		return $connection;
+		throw new \BadMethodCallException('Service ' . $key . ' is not available');
 	}
 
-	/**
-	 * Stores the service connection
-	 *
-	 * @param $key
-	 * @param null $value
-	 * @param bool $connectionSucceeded
-	 *
-	 * @return mixed
-	 * @since   1.0
-	 */
-	private function set($key, $value = null, $connectionSucceeded = true)
-	{
-		$i = count($this->message);
+    /**
+     * Get Class Instance
+     *
+     * @param   string  $entry
+     * @param   $folder $entry
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    private function getClassInstance($serviceClass) {
 
-		if ($value == null || $connectionSucceeded === false) {
-			$this->message[$i] = ' ' . $key . ' FAILED' . $value;
-			Services::Registry()->set('Service', $key, false);
+        if (class_exists($serviceClass)) {
+        } else {
+            $connectionSucceeded = false;
+            $connection = $serviceClass . ' Class does not exist';
+            //throw error
+        }
 
-		} else {
-			$this->static_connection[$key] = $value;
-			$this->message[$i] = ' ' . $key . ' started successfully. ';
-			Services::Registry()->set('Service', $key, true);
-		}
-	}
+        return new $serviceClass();
+    }
+
+    /**
+     * Execute Startup method
+     *
+     * @param   $connection
+     * @param   $serviceClass
+     * @param   $serviceMethod
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    private function runStartupMethod($connection, $serviceClass, $serviceMethod)
+    {
+        try {
+            return $connection->$serviceMethod();
+
+        } catch (\Exception $e) {
+            $connectionSucceeded = false;
+            $error = 'Fatal Error: ' . $e->getMessage();
+            echo $error;
+            die;
+        }
+    }
+
+    /**
+     * Stores static service connections
+     *
+     * Oh, get off your high horse. The minor use of static connections here is perfectly
+     * valid, makes it easier for less technical people to use the application resources
+     * and it support a rich environment for integrating resource data.
+     *
+     * If you have specific ideas on services that would be better implemented as dynamic
+     * connections your pull request will get serious consideration.
+     *
+     * @param   string $key
+     * @param   null   $value
+     * @param   bool   $connectionSucceeded
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    private function set($key, $value = null, $connectionSucceeded = true)
+    {
+        $i = count($this->message);
+
+        if ($value == null || $connectionSucceeded === false) {
+            $this->message[$i] = ' ' . $key . ' FAILED' . $value;
+            Services::Registry()->set('Service', $key, false);
+
+        } else {
+            $this->static_connection[$key] = $value;
+            $this->message[$i] = ' ' . $key . ' started successfully. ';
+            Services::Registry()->set('Service', $key, true);
+        }
+    }
 }

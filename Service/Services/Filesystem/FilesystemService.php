@@ -55,30 +55,6 @@ defined('MOLAJO') or die;
 class FilesystemService
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new FilesystemService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * Magic method __call intercepts calls and act as a proxy to
      * Joomla JFile, JFolder, and JPath Classes
      *

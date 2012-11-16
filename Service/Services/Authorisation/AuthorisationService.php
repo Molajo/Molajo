@@ -21,54 +21,12 @@ defined('MOLAJO') or die;
 Class AuthorisationService
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * Registry specific to the AuthorisationService class
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $registry;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new AuthorisationService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * Class constructor.
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-        $this->initialise();
-    }
-
-    /**
      * Load ACL-related data for use with Authorisation
      *
      * @return null
      * @since   1.0
      */
-    protected function initialise()
+    public function initialise()
     {
         $actions = Services::Configuration()->getFile('Application', 'Actions');
         if (count($actions) == 0) {

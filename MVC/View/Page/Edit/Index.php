@@ -8,8 +8,4 @@ use Molajo\Service\Services;
  *     <include:template name=Toolbar/>
  */
 defined('MOLAJO') or die; ?>
-<include:template name=Formbegin/>
-<section class="edit">
-    <include:request role=main/>
-</section>
-<include:template name=Formend/>
+<include:request role=main wrap=form/>

@@ -12,7 +12,7 @@ $action = Services::Registry()->get('Plugindata', 'page_url');
 if ($this->row->enable == 1) { ?>
 <div class="grid-sticky grid-batch">
     <ol class="grid-batch">
-        <li><strong><?php echo Services::Language()->translate('Assign or Remove Sticky Designation'); ?></strong></li>
+        <li><strong><?php echo Services::Language()->translate('Sticky Assignment'); ?></strong></li>
         <li><input type="submit" class="submit button small radius" name="submit" id="Sticky" value="Sticky"></li>
         <li><input type="submit" class="submit button small radius" name="submit" id="Unsticky" value="Unsticky"></li>
     </ol>

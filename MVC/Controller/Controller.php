@@ -348,7 +348,6 @@ class Controller
 				if (trim($model_parameter) == '') {
 					$model_parameter = null;
 				}
-
 				$this->query_results = $this->model->$query_object($model_parameter);
 			}
 		}

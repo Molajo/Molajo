@@ -69,7 +69,7 @@ Class LanguageService
      * @return null
      * @since   1.0
      */
-    protected function __construct($language = null)
+    public function __construct($language = null)
     {
         $language = $this->setCurrentLanguage($language);
 		$this->setLanguageRegistry($language);

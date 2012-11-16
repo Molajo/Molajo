@@ -68,16 +68,18 @@ class PagetypeconfigurationPlugin extends Plugin
         $pageArray = array();
         $i = 0;
         foreach ($pages as $item) {
+
             if ($item == '') {
             } else {
                 $i++;
                 $row = new \stdClass();
                 $row->id = $i;
-                if ($i == $item) {
+                if ($i == $page_number) {
                     $row->current = 1;
                 } else {
                     $row->current = 0;
                 }
+
                 $row->id = $i;
                 $row->title = substr($item, 0, strpos($item, ','));
                 $row->url = Services::Registry()->get('Plugindata', 'page_url') . '/page/' . $i;

@@ -1,40 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
-    <service name="Registry" scope="Application">
-        <parameter name="example">1</parameter>
-    </service>
-    <service name="Cache" scope="Application"/>
-    <service name="Profiler" scope="Application"/>
-    <service name="Error" scope="Application"/>
-    <service name="Version" scope="Application"/>
-    <service name="Client" scope="Application"/>
-    <service name="Url" scope="Application"/>
-    <service name="Text" scope="Application"/>
-    <service name="Mail" scope="Application"/>
-    <service name="Filesystem" scope="Application"/>
-    <service name="Message" scope="Application"/>
-    <service name="JDatabase" scope="Application"/>
-    <service name="Configuration" scope="Application"/>
-    <service name="Log" scope="Application"/>
-    <service name="Event" scope="Application"/>
-    <service name="Route" scope="Application"/>
-    <service name="Cookie" scope="Application"/>
-    <service name="Session" scope="Application"/>
-    <service name="Response" scope="Application"/>
-    <service name="Redirect" scope="Application"/>
-    <service name="User" scope="Application"/>
-    <service name="Language" scope="Application"/>
-    <service name="Date" scope="Application"/>
-    <service name="Asset" scope="Application"/>
-    <service name="Authorisation" scope="Application"/>
-    <service name="Metadata" scope="Application"/>
-    <service name="Image" scope="Application"/>
-    <service name="Filter" scope="Application"/>
-    <service name="Parse" scope="Application"/>
-    <service name="Password" scope="Application"/>
-    <service name="Authentication" scope="Application"/>
-    <service name="Search" scope="Application"/>
-    <service name="Install" scope="Application"/>
-    <service name="Menu" scope="Application"/>
-    <service name="Form" scope="Instance"/>
+    <service name="Registry" static="1" startup="getInstance"/>
+    <service name="Cache" static="1" startup="getInstance"/>
+    <service name="Profiler" static="1" startup="getInstance"/>
+    <service name="Error" static="0" startup=""/>
+    <service name="Version" static="1" startup="getInstance"/>
+    <service name="Client" static="0" startup="setRegistry"/>
+    <service name="Url" static="0" startup=""/>
+    <service name="Text" static="0" startup=""/>
+    <service name="Mail" static="0" startup=""/>
+    <service name="Filesystem" static="0" startup=""/>
+    <service name="Message" static="1" startup="getInstance"/>
+    <service name="JDatabase" static="1" startup="getInstance"/>
+    <service name="Configuration" static="1" startup="getInstance"/>
+    <service name="Log" static="1" startup="initialise"/>
+    <service name="Event" static="1" startup="getInstance"/>
+    <service name="Route" static="0" startup=""/>
+    <service name="Cookie" static="0" startup=""/>
+    <service name="Session" static="0" startup=""/>
+    <service name="Response" static="0" startup=""/>
+    <service name="Redirect" static="0" startup=""/>
+    <service name="User" static="0" startup="load"/>
+    <service name="Language" static="1" startup="getInstance"/>
+    <service name="Date" static="1" startup="getInstance"/>
+    <service name="Asset" static="0" startup="Initialise"/>
+    <service name="Authorisation" static="0" startup="initialise"/>
+    <service name="Metadata" static="0" startup=""/>
+    <service name="Image" static="0" startup=""/>
+    <service name="Filter" static="0" startup=""/>
+    <service name="Parse" static="0" startup=""/>
+    <service name="Password" static="0" startup=""/>
+    <service name="Authentication" static="0" startup=""/>
+    <service name="Search" static="0" startup=""/>
+    <service name="Install" static="0" startup=""/>
+    <service name="Menu" static="0" startup=""/>
+    <service name="Form" static="0" startup=""/>
 </services>

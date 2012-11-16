@@ -20,26 +20,6 @@ defined('MOLAJO') or die;
  */
 Class FormService
 {
-    /**
-     * @static
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * @static
-     * @return  bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new FormService();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Namespace - input
@@ -190,6 +170,22 @@ Class FormService
     protected $page_description;
 
     /**
+     * Page Subtitle - output
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $page_subtitle;
+
+    /**
+     * Page Subtitle Description
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $page_subtitle_description;
+
+    /**
      * Fieldset Title
      *
      * @var    object
@@ -291,7 +287,7 @@ Class FormService
                 . ' '
                 . Services::Language()->translate($split[0])
                 . ' '
-                . Services::Language()->translate('Configuration');
+                . Services::Language()->translate($this->namespace);
 
             $this->page_title_extended = str_replace(' ', '&nbsp;', htmlentities($this->page_title_extended));
 
@@ -312,12 +308,17 @@ Class FormService
                 $this->fieldset_template_view = 'Formpage';
             }
 
+            $this->page_subtitle = '';
+            $this->page_subtitle_description = '';
+
             $this->setFieldset();
 
             $pageArray = 'page_title:' . $this->page_title
                 . ',' . 'page_title_extended:' . $this->page_title_extended
                 . ',' . 'page_namespace:' . $this->namespace
                 . ',' . 'page_link:' . $this->namespace . $this->page_link
+                . ',' . 'page_subtitle:' . $this->page_subtitle
+                . ',' . 'page_subtitle_description:' . $this->page_subtitle_description
                 . ',' . 'fieldset_template_view:' . $this->fieldset_template_view
                 . ',' . 'fieldset_template_view_parameter:'
                 . $this->fieldset_template_view . strtolower($this->namespace . $this->page_link);
@@ -380,8 +381,8 @@ Class FormService
         }
 
         $current_page_number = count($temp_array);
-        $current_page_number_word = $this->convertNumberToWord($current_page_number);
-
+        $current_page_number_word =
+            Services::Text()->convertNumberToText($current_page_number, 0, 1);
         foreach ($temp_array as $set) {
             $fields = explode(' ', $set);
             foreach ($fields as $field) {
@@ -437,6 +438,10 @@ Class FormService
 
     /**
      * setFieldset - Processes a request for a fieldset
+     *  Uses namespace and page link to retrieve configuration file, ex. 'Configuration' + - + "views"
+     *  Retrieves XML file Configuration_views.xml,
+     *  Within for default value processes
+     *  {{Page,form_parent*,form_theme*,form_page*}}{{Template,form_template*}}{{Wrap,form_wrap*}}{{Model,form_model*}}{{Page,item_parent* ...
      *
      * @return  string
      * @since   1.0
@@ -472,16 +477,74 @@ Class FormService
                 }
             }
         }
-
+        /**
+        array(12) {
+        [0]=>
+        string(40) "Page,form_parent*,form_theme*,form_page*"
+        [1]=>
+        string(23) "Template,form_template*"
+        [2]=>
+        string(15) "Wrap,form_wrap*"
+        [3]=>
+        string(17) "Model,form_model*"
+        [4]=>
+        string(40) "Page,item_parent*,item_theme*,item_page*"
+        [5]=>
+        string(23) "Template,item_template*"
+        [6]=>
+        string(15) "Wrap,item_wrap*"
+        [7]=>
+        string(17) "Model,item_model*"
+        [8]=>
+        string(40) "Page,list_parent*,list_theme*,list_page*"
+        [9]=>
+        string(23) "Template,list_template*"
+        [10]=>
+        string(15) "Wrap,list_wrap*"
+        [11]=>
+        string(17) "Model,list_model*"
+        }
+         */
         $page_first_row = 1;
+        $page_subtitle_first_row = 1;
 
         if (count($configurationArray) > 0) {
+
             foreach ($configurationArray as $config) {
 
+                $i = 0;
                 $options = explode(',', $config);
                 if (count($options) > 1) {
                 } else {
                     return false;
+                }
+
+                if (substr($options[$i], 0, strlen('subtitle:')) == 'subtitle:') {
+
+                    $this->page_subtitle = str_replace(
+                        ' ',
+                        '&nbsp;',
+                        htmlentities(
+                            Services::Language()->translate(
+                                substr($options[$i], strlen('subtitle:'), 9999)
+                            ),
+                            ENT_COMPAT,
+                            'UTF-8'
+                        )
+                    );
+
+                    $this->page_subtitle_description = Services::Language()->translate(
+                        strtoupper(
+                            strtoupper($this->namespace) . '_FORM_FIELDSET_'
+                                . strtoupper(str_replace('&nbsp;', '_', $this->page_subtitle))
+                                . '_DESC'
+                        )
+                    );
+
+                    $page_subtitle_first_row = 1;
+
+                    unset($options[$i]);
+                    $i++;
                 }
 
                 $this->fieldset_title = str_replace(
@@ -489,7 +552,7 @@ Class FormService
                     '&nbsp;',
                     htmlentities(
                         Services::Language()->translate(
-                            $options[0]
+                            $options[$i]
                         ),
                         ENT_COMPAT,
                         'UTF-8'
@@ -508,7 +571,7 @@ Class FormService
                     )
                 );
 
-                unset($options[0]);
+                unset($options[$i]);
 
                 $get = 'get' . ucfirst(strtolower($this->page_link));
 
@@ -524,6 +587,14 @@ Class FormService
                     $row->page_description = $this->page_description;
                     $row->page_link =
                         ucfirst(strtolower($this->fieldset_template_view . $this->namespace . $this->page_link));
+
+                    $row->page_subtitle = $this->page_subtitle;
+                    $row->page_subtitle_description = $this->page_subtitle_description;
+                    if ($this->page_subtitle == '') {
+                        $row->page_subtitle_first_row = 0;
+                    } else {
+                        $row->page_subtitle_first_row = $page_subtitle_first_row;
+                    }
 
                     $row->fieldset_title = $this->fieldset_title;
                     $row->fieldset_description = $this->fieldset_description;
@@ -554,7 +625,16 @@ Class FormService
 
                         $item->page_title = $this->page_title;
                         $item->page_title_extended = $this->page_title_extended;
+                        $item->page_description = $this->page_description;
                         $item->page_first_row = $page_first_row;
+
+                        $item->page_subtitle = $this->page_subtitle;
+                        $item->page_subtitle_description = $this->page_subtitle_description;
+                        if ($this->page_subtitle == '') {
+                            $item->page_subtitle_first_row = 0;
+                        } else {
+                            $item->page_subtitle_first_row = $page_subtitle_first_row;
+                        }
 
                         $item->new_fieldset = $new_fieldset;
 
@@ -566,6 +646,7 @@ Class FormService
 
                         $new_fieldset = 0;
                         $page_first_row = 0;
+                        $page_subtitle_first_row = 0;
 
                         $write[] = $item;
                     }
@@ -639,6 +720,11 @@ Class FormService
 
                         $row['page_title'] = $this->page_title;
                         $row['page_description'] = $this->page_description;
+
+                        $row['page_subtitle'] = $this->page_subtitle;
+                        $row['page_subtitle_description'] = $this->page_subtitle_description;
+                        $row['page_subtitle_first_row'] = 0;
+
                         $row['fieldset_title'] = $this->fieldset_title;
                         $row['fieldset_description'] = $this->fieldset_description;
 
@@ -1519,49 +1605,5 @@ Class FormService
         Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
 
         return $registryName;
-    }
-
-    /**
-     * convertNumberToWord
-     *
-     * Converts numbers from 1-24 as their respective written word
-     *
-     * @return string
-     * @since   1.0
-     */
-    protected function convertNumberToWord($number)
-    {
-        $key = $number - 1;
-        $words = array(
-            'one',
-            'two',
-            'three',
-            'four',
-            'five',
-            'six',
-            'seven',
-            'eight',
-            'nine',
-            'ten',
-            'eleven',
-            'twelve',
-            'thirteen',
-            'fourteen',
-            'fifteen',
-            'sixteen',
-            'seventeen',
-            'eighteen',
-            'nineteen',
-            'twenty',
-            'twentyone',
-            'twentytwo',
-            'twentythree',
-            'twentyfour'
-        );
-        if (array_key_exists($key, $words)) {
-            return $words[$key];
-        }
-
-        return false;
     }
 }

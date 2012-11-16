@@ -609,6 +609,7 @@ Class ProfilerService
             return Services::Log()->get($option);
 
         } else {
+
             return Services::Log()->get();
         }
 
@@ -646,9 +647,11 @@ Class ProfilerService
      */
     public function getProfiler()
     {
+
         $query_results = array();
 
         $messages = $this->get();
+
         if (count($messages) == 0) {
             return array();
         }

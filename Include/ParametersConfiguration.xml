@@ -5,7 +5,4 @@
 <include field="configuration_customfields"/>
 <include field="configuration_editor"/>
 <include field="configuration_grid"/>
-<include field="configuration_form"/>
-<include field="configuration_item"/>
-<include field="configuration_list"/>
-
+<include field="configuration_views"/>

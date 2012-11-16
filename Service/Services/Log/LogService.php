@@ -20,14 +20,6 @@ defined('MOLAJO') or die;
 Class LogService
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * Valid Priorities
      *
      * @var    object
@@ -52,28 +44,12 @@ Class LogService
     protected $loggers;
 
     /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new LogService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * Class constructor
      *
      * @return boolean
      * @since   1.0
      */
-    public function __construct()
+    public function initialise()
     {
         /** Valid Priorities */
         $this->priorities = array();
@@ -209,7 +185,7 @@ Class LogService
 
         /** Date */
         $date = Services::Date()->getDate($date);
-
+          echo $message .' ' . $priority . ' ' . $type . ' ' . $date . '<br />';
         /** Log it */
         try {
             if ($type == 'console') {

@@ -20,48 +20,6 @@ defined('MOLAJO') or die;
 Class UserService
 {
     /**
-     * Instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instances = array();
-
-    /**
-     * getInstance
-     *
-     * @param string $identifier Requested User (id or username or 0 for guest)
-     *
-     * @return object User
-     * @since   1.0
-     */
-    public static function getInstance($id = 0)
-    {
-        $id = 1;
-        if (empty(self::$instances[$id])) {
-            $user = new UserService($id);
-            self::$instances[$id] = $user;
-        }
-
-        return self::$instances[$id];
-    }
-
-    /**
-     * __construct
-     *
-     * @param integer $identifier
-     *
-     * @return object
-     * @since   1.0
-     */
-    protected function __construct($id = 0)
-    {
-        $this->id = (int) $id;
-
-        return $this->load();
-    }
-
-    /**
      * load
      *
      * Retrieve User Information (both authenticated and guest)
@@ -69,8 +27,10 @@ Class UserService
      * @return User
      * @since   1.0
      */
-    protected function load()
+    public function load($id = 0)
     {
+        $this->id = 1;
+
         /** Retrieve User Data  */
         $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
         $m = new $controllerClass();

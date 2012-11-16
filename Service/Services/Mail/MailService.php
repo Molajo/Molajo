@@ -35,12 +35,6 @@ defined('MOLAJO') or die;
 Class MailService
 {
     /**
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * Registry
      *
      * @var    object
@@ -65,22 +59,6 @@ Class MailService
     protected $error_count = 0;
 
     /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new MailService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * Class constructor.
      *
      * @return boolean
@@ -88,7 +66,10 @@ Class MailService
      */
     public function __construct()
     {
-        $this->registry = Services::Registry()->createRegistry('Mail');
+        if (Services::Registry()->exists('Mail')) {
+        } else {
+            $this->registry = Services::Registry()->createRegistry('Mail');
+        }
 
         return $this;
     }

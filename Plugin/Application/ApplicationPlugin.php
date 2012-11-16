@@ -64,7 +64,7 @@ class ApplicationPlugin extends Plugin
 	 * @return boolean
 	 * @since   1.0
 	 */
-	public function onBeforeHead()
+	public function onBeforeParsehead()
 	{
 		$this->setPageMeta();
 	}
@@ -191,7 +191,7 @@ class ApplicationPlugin extends Plugin
 		Services::Registry()->get('Plugindata', 'resource_url');
 
 		$row = new \stdClass();
-		$row->link_text = Services::Language()->translate('LIST');
+		$row->link_text = Services::Language()->translate('GRID');
 		$row->link = Services::Registry()->get('Plugindata', 'resource_url');
 		$row->current = $list_current;
 		$query_results[] = $row;

@@ -23,14 +23,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 Class RedirectService
 {
     /**
-     * Instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * $url
      *
      * @var    string
@@ -45,23 +37,6 @@ Class RedirectService
      * @since  1.0
      */
     public $code = 0;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return object
-     *
-     * @since  1.0
-     */
-    public static function getInstance($content = '', $status = 200, $headers = array())
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new RedirectService($content, $status, $headers);
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Set the Redirect URL and Code

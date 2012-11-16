@@ -1,4 +1,3 @@
-<include field="grid_status"/>
 <include field="grid_search"/>
 <include field="grid_ordering"/>
 <include field="grid_ordering_direction"/>

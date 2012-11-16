@@ -20,8 +20,8 @@ if ($this->row->enable == 1) { ?>
         <li><input id="update" type="radio" value="update" name="permission"><label for="update"><?php echo Services::Language()->translate('Update'); ?></label></li>
         <li><input id="publish" type="radio" value="publish" name="permission"><label for="publish"><?php echo Services::Language()->translate('Publish'); ?></label></li>
         <li><input id="delete" type="radio" value="delete" name="permission"><label for="delete"><?php echo Services::Language()->translate('Delete'); ?></label></li>
-        <li><strong><?php echo Services::Language()->translate(' Permission for Group '); ?></strong></li>
         <li><include:template name=formselectlist datalist=groups/></li>
+        <li><strong><?php echo Services::Language()->translate('Permissions'); ?></strong></li>
     </ol>
 </div>
 <?php }

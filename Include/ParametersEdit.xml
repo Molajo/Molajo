@@ -70,5 +70,19 @@
 <include field="edit_metadata_column14"/>
 <include field="edit_metadata_column15"/>
 
+
 <include field="edit_parameter_column1"/>
 <include field="edit_parameter_column2"/>
+<include field="edit_parameter_column3"/>
+<include field="edit_parameter_column4"/>
+<include field="edit_parameter_column5"/>
+<include field="edit_parameter_column6"/>
+<include field="edit_parameter_column7"/>
+<include field="edit_parameter_column8"/>
+<include field="edit_parameter_column9"/>
+<include field="edit_parameter_column10"/>
+<include field="edit_parameter_column11"/>
+<include field="edit_parameter_column12"/>
+<include field="edit_parameter_column13"/>
+<include field="edit_parameter_column14"/>
+<include field="edit_parameter_column15"/>

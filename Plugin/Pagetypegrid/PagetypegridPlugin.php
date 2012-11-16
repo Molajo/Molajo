@@ -209,17 +209,6 @@ class PagetypegridPlugin extends Plugin
         /** Redirect ID */
         $connect->model->query->where($connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
 
-        /** Status */
-        $status = $this->get('grid_status');
-        if (trim($status == '')) {
-        } else {
-            $connect->model->query->where(
-                $connect->model->db->qn($primary_prefix)
-                    . '.' . $connect->model->db->qn('status')
-                    . ' IN (' . $status . ')'
-            );
-        }
-
         /** Ordering */
         $ordering = $this->get('grid_ordering');
 

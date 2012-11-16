@@ -20,31 +20,6 @@ use Molajo\Service\Services;
 Class MetadataService
 {
     /**
-     * Instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return object
-     *
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new MetadataService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * get application Metadata
      *
      * @return array Application Metadata

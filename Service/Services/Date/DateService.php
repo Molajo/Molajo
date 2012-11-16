@@ -49,7 +49,7 @@ Class DateService
      * @return boolean
      * @since  1.0
      */
-    protected function __construct()
+    public function __construct()
     {
         return $this->getDate();
     }

@@ -18,7 +18,6 @@
             <include field="id_pk"/>
             <field name="title" type="char" null="0" default="" unique="1"/>
         </fields>
-        >
         <joins>
             <join model="Extensions"
                   alias="extensions"
