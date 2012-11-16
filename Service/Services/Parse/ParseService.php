@@ -218,6 +218,7 @@ Class ParseService
         /** OnBeforeParse Plugins */
         if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
         } else {
+            //todo - pass in lists of includes to the plugins for possible change
             $this->onBeforeParseEvent();
         }
 

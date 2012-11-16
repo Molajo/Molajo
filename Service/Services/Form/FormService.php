@@ -438,6 +438,7 @@ Class FormService
 
     /**
      * setFieldset - Processes a request for a fieldset
+     *
      *  Uses namespace and page link to retrieve configuration file, ex. 'Configuration' + - + "views"
      *  Retrieves XML file Configuration_views.xml,
      *  Within for default value processes
@@ -454,7 +455,8 @@ Class FormService
             $configuration = '{{' . $this->page_link . ',' . strtolower($this->page_link) . '}}';
 
         } else {
-
+             echo $this->namespace . '_' . strtolower($this->page_link);
+            echo '<br>';
             $configuration = $this->get('parameters', $this->namespace . '_' . strtolower($this->page_link), '');
             if ($configuration == '') {
                 return false;
@@ -477,32 +479,21 @@ Class FormService
                 }
             }
         }
+        echo '<pre>';
+        var_dump($configurationArray);
+        echo '</pre>';
         /**
-        array(12) {
+        array(5) {
         [0]=>
-        string(40) "Page,form_parent*,form_theme*,form_page*"
+        string(25) "Main,edit_main_*,Editmain"
         [1]=>
-        string(23) "Template,form_template*"
+        string(48) "Categorization,categorization,Editcategorization"
         [2]=>
-        string(15) "Wrap,form_wrap*"
+        string(30) "Metadata,metadata,Editmetadata"
         [3]=>
-        string(17) "Model,form_model*"
+        string(36) "Publishing,publishing,Editpublishing"
         [4]=>
-        string(40) "Page,item_parent*,item_theme*,item_page*"
-        [5]=>
-        string(23) "Template,item_template*"
-        [6]=>
-        string(15) "Wrap,item_wrap*"
-        [7]=>
-        string(17) "Model,item_model*"
-        [8]=>
-        string(40) "Page,list_parent*,list_theme*,list_page*"
-        [9]=>
-        string(23) "Template,list_template*"
-        [10]=>
-        string(15) "Wrap,list_wrap*"
-        [11]=>
-        string(17) "Model,list_model*"
+        string(30) "Versions,versions,Editversions"
         }
          */
         $page_first_row = 1;
@@ -511,6 +502,10 @@ Class FormService
         if (count($configurationArray) > 0) {
 
             foreach ($configurationArray as $config) {
+
+                echo '<pre>';
+                var_dump($config);
+                echo '</pre>';
 
                 $i = 0;
                 $options = explode(',', $config);
@@ -610,7 +605,13 @@ Class FormService
                         $temp = $this->getParameters($options);
                     }
                 }
+echo '<pre>';
+var_dump($temp);
+echo '</pre>';
 
+                if ($namespace == 'edit') { //but find better way
+                }
+                die;
                 $write = array();
 
                 if (count($temp) > 0) {

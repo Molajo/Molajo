@@ -1,1 +1,1 @@
-<field name="edit_array" type="char" null="0" default="{{Editor,editor,Editmain}}{{Categorization,categorization,Editcategorization}}{{Metadata,metadata,Editmetadata}}{{Publishing,publishing,Editpublishing}}{{Versions,versions,Editversions}}{{Parameters,parameters,Editparameters}}{{Permissions,permissions,Permissions}}{{Views,views,Editviews}}"/>
+<field name="edit_array" type="char" null="0" default="{{Editor,main,Editmain}}{{Parameters,parameters,Editparameters}}{{Permissions,permissions,Permissions}}{{Views,views,Editviews}}"/>

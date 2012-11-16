@@ -65,6 +65,7 @@ class PagetypeeditPlugin extends Plugin
         /** Customfields */
         $form->set('customfields', Services::Registry()->getArray('ResourcesSystemCustomfields'));
         $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', 'customfields'));
+echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
 
         /** Build Fieldsets and Fields */
         $pageFieldsets = $form->execute(Services::Registry()->get('ResourcesSystemParameters', 'edit_array'));

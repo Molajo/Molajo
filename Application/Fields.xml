@@ -4,6 +4,7 @@
         <modeltype>Application</modeltype>
         <modeltype>Datalist</modeltype>
         <modeltype>Dbo</modeltype>
+        <modeltype>Fields</modeltype>
         <modeltype>Language</modeltype>
         <modeltype>Menuitem</modeltype>
         <modeltype>Page</modeltype>
@@ -18,36 +19,38 @@
         <modeltype>Theme</modeltype>
         <modeltype>Wrap</modeltype>
     </modeltypes>
+
     <modelattributes>
-        <modelattribute>catalog_type_id</modelattribute>
-        <modelattribute>check_view_level_access</modelattribute>
-        <modelattribute>data_source</modelattribute>
-        <modelattribute>extends</modelattribute>
-        <modelattribute>extension_id</modelattribute>
-        <modelattribute>extension_instance_id</modelattribute>
-        <modelattribute>get_customfields</modelattribute>
-        <modelattribute>get_item_children</modelattribute>
-        <modelattribute>model_count</modelattribute>
-        <modelattribute>model_offset</modelattribute>
-        <modelattribute>multiple</modelattribute>
-        <modelattribute>name_key</modelattribute>
         <modelattribute>name</modelattribute>
         <modelattribute>primary_key</modelattribute>
+        <modelattribute>name_key</modelattribute>
         <modelattribute>primary_prefix</modelattribute>
-        <modelattribute>process_plugins</modelattribute>
-        <modelattribute>published_status</modelattribute>
-        <modelattribute>registry_entry</modelattribute>
-        <modelattribute>size</modelattribute>
+        <modelattribute>data_source</modelattribute>
+        <modelattribute>extends</modelattribute>
         <modelattribute>table</modelattribute>
-        <modelattribute>use_pagination</modelattribute>
+        <modelattribute>registry_entry</modelattribute>
+
+        <modelattribute>catalog_type_id</modelattribute>
+        <modelattribute>extension_id</modelattribute>
+        <modelattribute>extension_instance_id</modelattribute>
+        <modelattribute>published_status</modelattribute>
+
+        <modelattribute>check_view_level_access</modelattribute>
+        <modelattribute>process_plugins</modelattribute>
+        <modelattribute>get_customfields</modelattribute>
+        <modelattribute>get_item_children</modelattribute>
         <modelattribute>use_special_joins</modelattribute>
+        <modelattribute>use_pagination</modelattribute>
+        <modelattribute>model_count</modelattribute>
+        <modelattribute>model_offset</modelattribute>
+
+        <modelattribute>multiple</modelattribute>
+        <modelattribute>size</modelattribute>
     </modelattributes>
     <datatypes>
         <datatype>audio</datatype>
         <datatype>boolean</datatype>
-        <datatype>catalog_id</datatype>
         <datatype>color</datatype>
-        <datatype>customfield</datatype>
         <datatype>date</datatype>
         <datatype>datetime</datatype>
         <datatype>email</datatype>
@@ -67,6 +70,9 @@
         <datatype>url</datatype>
         <datatype>userid</datatype>
         <datatype>video</datatype>
+
+        <datatype>catalog_id</datatype>
+        <datatype>customfield</datatype>
     </datatypes>
     <queryelements>
         <queryelement>fields,field</queryelement>
