@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="System" version="1.0">
+    <name>SYSTEM_PERMISSIONS_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>SYSTEM_PERMISSIONS_DESCRIPTION</description>
+    <model
+            name="Permissions"
+            catalog_type_id="3500"
+            extension_instance_id="3500"
+            table="#__molajo_group_permissions"
+            primary_key="id"
+            primary_prefix="a"
+            get_customfields="0"
+            get_item_children="0"
+            use_special_joins="10"
+            check_view_level_access="1"
+            process_plugins="1"
+            extends="GroupPermissions"/>
+</extension>

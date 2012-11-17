@@ -2,12 +2,12 @@
     "1":{},
     "2":{
 
-        "criteria_title":"Groups",
+        "criteria_title":"Language Strings",
         "criteria_display_view_on_no_results":"0",
         "criteria_snippet_length":"150",
         "criteria_status":"1,2",
-        "criteria_catalog_type_id":"13000",
-        "criteria_extension_instance_id":"13000",
+        "criteria_catalog_type_id":"6250",
+        "criteria_extension_instance_id":"6250",
         "criteria_source_id":"",
 
         "grid_toolbar_buttons":"#",
@@ -71,12 +71,12 @@
         "menuitem_wrap_view_role":"",
         "menuitem_wrap_view_property":"",
 
-        "menuitem_model_name":"Groups",
-        "menuitem_model_type":"Resource",
+        "menuitem_model_name":"Language Strings",
+        "menuitem_model_type":"System",
         "menuitem_model_query_object":"list",
         "menuitem_model_parameter":"",
         "menuitem_model_offset":"0",
-        "menuitem_model_count":"10",
+        "menuitem_model_count":"50",
         "menuitem_model_use_pagination":"1"
     }
 }

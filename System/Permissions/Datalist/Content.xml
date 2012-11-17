@@ -1,0 +1,6 @@
+<datalist name="ContentPermissions">
+    <model
+            name="ContentPermissions"
+            catalog_type_id="3500"
+            extends="ExtensionInstancesDatalist"/>
+</datalist>
