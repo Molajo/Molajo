@@ -778,11 +778,6 @@ Class RegistryService
         return $this;
     }
 
-    public function clear()
-    {
-        return $this;
-    }
-
     /**
      * getData - simulates DBO - interacts with the Model getParameters method
      *

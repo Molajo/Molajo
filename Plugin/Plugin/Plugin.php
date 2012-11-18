@@ -22,12 +22,12 @@ defined('MOLAJO') or die;
 class Plugin
 {
     /**
-     * Table Registry Name - can be used to retrieve table parameters
+     * Registry Name - can be used to retrieve table parameters
      *
      * @var    object
      * @since  1.0
      */
-    protected $table_registry_name;
+    protected $model_registry;
 
     /**
      * Model type
@@ -133,7 +133,7 @@ class Plugin
         $value = null;
 
         if (in_array($key,
-            array('table_registry_name',
+            array('model_registry',
                 'model_type',
                 'model_name',
                 'parameters',
@@ -173,7 +173,7 @@ class Plugin
      */
     public function set($key, $value = null)
     {
-        if (in_array($key, array('table_registry_name',
+        if (in_array($key, array('model_registry',
             'model_type',
             'model_name',
             'parameters',
@@ -214,13 +214,13 @@ class Plugin
         $this->fields = array();
 
         /** process normal fields */
-        $fields = Services::Registry()->get($this->table_registry_name, 'fields');
+        $fields = Services::Registry()->get($this->model_registry, 'fields');
         if (is_array($fields) && count($fields) > 0) {
             $this->processFieldType($type = '', $fields);
         }
 
         /** "Custom" field groups and fields */
-        $this->customfieldgroups = Services::Registry()->get($this->table_registry_name, 'customfieldgroups', array());
+        $this->customfieldgroups = Services::Registry()->get($this->model_registry, 'customfieldgroups', array());
 
         if (is_array($this->customfieldgroups) && count($this->customfieldgroups) > 0) {
 
@@ -230,7 +230,7 @@ class Plugin
                 $customFieldName = strtolower($customFieldName);
 
                 /** Retrieve Field Definitions from Registry (XML) */
-                $fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
+                $fields = Services::Registry()->get($this->model_registry, $customFieldName);
 
                 /** Shared processing  */
                 $this->processFieldType($customFieldName, $fields);
@@ -238,13 +238,13 @@ class Plugin
         }
 
         /** join fields */
-        $joinfields = Services::Registry()->get($this->table_registry_name, 'JoinFields');
+        $joinfields = Services::Registry()->get($this->model_registry, 'JoinFields');
         if (is_array($joinfields) && count($joinfields) > 0) {
             $this->processFieldType('JoinFields', $joinfields);
         }
 
         /** foreign keys */
-        $foreignkeys = Services::Registry()->get($this->table_registry_name, 'foreignkeys');
+        $foreignkeys = Services::Registry()->get($this->model_registry, 'foreignkeys');
         if (is_array($foreignkeys) && count($foreignkeys) > 0) {
             $this->processFieldType('foreignkeys', $foreignkeys);
         }
@@ -450,17 +450,6 @@ class Plugin
      */
     public function getField($name)
     {
-        if ($this->parameters['model_type'] == 'dbo') {
-            if (isset($this->data->$name)) {
-                $field = new \stdClass();
-                $field->name = $name;
-
-                return $field;
-            }
-
-            return false;
-        }
-
         foreach ($this->fields as $field) {
 
             if ((int) $field->foreignkey = 0) {
@@ -491,14 +480,6 @@ class Plugin
      */
     public function getFieldValue($field)
     {
-        if ($this->parameters['model_type'] == 'dbo') {
-            $name = $field->name;
-            if (isset($this->data->$name)) {
-                return $this->data->$name;
-            } else {
-                return false;
-            }
-        }
 
         if (is_object($field)) {
         } else {

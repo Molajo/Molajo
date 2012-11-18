@@ -36,68 +36,73 @@ class CatalogPlugin extends Plugin
             return true;
         }
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $connect->connect('Table', 'Catalog');
+        $results = $controller->getModelRegistry('Datasource', 'Catalog');
         if ($results === false) {
             return false;
         }
 
-        $connect->set('get_customfields', 0);
-        $connect->set('use_special_joins', 0);
-        $connect->set('process_plugins', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $connect->model->query->select(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('id')
+        $controller->set('get_customfields', 0);
+        $controller->set('use_special_joins', 0);
+        $controller->set('process_plugins', 0);
+
+        $controller->model->query->select(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('id')
         );
-        $connect->model->query->select(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('sef_request')
+        $controller->model->query->select(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('sef_request')
                 . ' AS value '
         );
 
-        $connect->model->query->where(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('redirect_to_id')
+        $controller->model->query->where(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('redirect_to_id')
                 . ' = 0'
         );
-        $connect->model->query->where(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('enabled')
+        $controller->model->query->where(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('enabled')
                 . ' = 1'
         );
-        $connect->model->query->where(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('page_type')
+        $controller->model->query->where(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('page_type')
                 . ' <> '
-                . $connect->model->db->q('Link')
+                . $controller->model->db->q('Link')
         );
-        $connect->model->query->where(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('catalog_type_id')
+        $controller->model->query->where(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' = ' . CATALOG_TYPE_MENUITEM
                 . ' OR ' .
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('catalog_type_id')
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' > ' . CATALOG_TYPE_TAG
         );
-        $connect->model->query->where(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('application_id')
+        $controller->model->query->where(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('application_id')
                 . ' = ' . (int) APPLICATION_ID
         );
 
-        $connect->model->query->order(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('sef_request')
+        $controller->model->query->order(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('sef_request')
         );
 
-        $connect->set('model_offset', 0);
-        $connect->set('model_count', 99999);
+        $controller->set('model_offset', 0);
+        $controller->set('model_count', 99999);
 
-        $query_results = $connect->getData('distinct');
+        $query_results = $controller->getData('distinct');
         $catalogArray = array();
 
         $application_home_catalog_id = (int) Services::Registry()->get('configuration', 'application_home_catalog_id');
@@ -204,19 +209,24 @@ class CatalogPlugin extends Plugin
      */
     public function onBeforeDelete()
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $m->connect();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry();
 
-        $sql = 'DELETE FROM ' . $m->model->db->qn('#__catalog_categories');
-        $sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
-        $m->model->db->setQuery($sql);
-        $m->model->db->execute();
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $sql = 'DELETE FROM ' . $m->model->db->qn('#__catalog_activity');
-        $sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
-        $m->model->db->setQuery($sql);
-        $m->model->db->execute();
+        $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_categories');
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
+        $controller->model->db->setQuery($sql);
+        $controller->model->db->execute();
+
+        $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_activity');
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
+        $controller->model->db->setQuery($sql);
+        $controller->model->db->execute();
 
         return true;
     }
@@ -252,7 +262,7 @@ class CatalogPlugin extends Plugin
     {
         $data = new \stdClass();
         $data->model_name = 'UserActivity';
-        $data->model_table = 'Table';
+        $data->model_table = 'Datasource';
         $data->catalog_id = $id;
         $data->action_id = $action_id;
 
@@ -277,7 +287,7 @@ class CatalogPlugin extends Plugin
     {
         $data = new \stdClass();
         $data->model_name = 'CatalogActivity';
-        $data->model_table = 'Table';
+        $data->model_table = 'Datasource';
         $data->catalog_id = $id;
         $data->action_id = $action_id;
 

@@ -2,4 +2,3 @@
 <include field="form_model_name"/>
 <include field="form_model_type"/>
 <include field="form_model_query_object"/>
-<include field="form_model_parameter"/>

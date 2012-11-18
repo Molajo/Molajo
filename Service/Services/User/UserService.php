@@ -32,20 +32,25 @@ Class UserService
         $this->id = 1;
 
         /** Retrieve User Data  */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $m->connect('Table', 'User');
+        $results = $controller->getModelRegistry('Datasource', 'User');
         if ($results === false) {
             return false;
         }
 
-        $m->set('id', $this->id);
-		$m->set('get_customfields', 2);
-		$m->set('use_special_joins', 1);
-		$m->set('process_plugins', 1);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $item = $m->getData('item');
+        $controller->set('id', $this->id);
+		$controller->set('get_customfields', 2);
+		$controller->set('use_special_joins', 1);
+		$controller->set('process_plugins', 1);
+
+        $item = $controller->getData('item');
         if ($item === false || count($item) == 0) {
             throw new \RuntimeException ('User load() query problem');
         }

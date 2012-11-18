@@ -25,7 +25,7 @@
     "menuitem_model_name":"Sites",
     "menuitem_model_type":"System",
     "menuitem_model_query_object":"item",
-    "menuitem_model_parameter":"",
+
     "menuitem_model_offset":"0",
     "menuitem_model_count":"10",
     "menuitem_model_use_pagination":"1"

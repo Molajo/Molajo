@@ -82,8 +82,8 @@ Class ContentHelper
 
         /** Set Parameters */
         $this->setParameters('list',
-            $item->table_registry_name . 'Parameters',
-            $item->table_registry_name . 'Metadata'
+            $item->model_registry . 'Parameters',
+            $item->model_registry . 'Metadata'
         );
 
 		$this->setExtensionPaths();
@@ -128,13 +128,13 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'criteria_source_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'criteria_catalog_type_id', (int) $item->catalog_type_id);
 
-		$parameterNamespace = $item->table_registry_name . 'Parameters';
+		$parameterNamespace = $item->model_registry . 'Parameters';
 
         $this->getResourceExtensionParameters((int) $extension_instance_id);
 
         $this->setParameters($pageTypeNamespace,
-            $item->table_registry_name . 'Parameters',
-            $item->table_registry_name . 'Metadata',
+            $item->model_registry . 'Parameters',
+            $item->model_registry . 'Metadata',
             'ResourcesSystem'
         );
 
@@ -199,11 +199,11 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'criteria_extension_instance_id',
             (int) Services::Registry()->get($registry, 'criteria_extension_instance_id'));
 
-        Services::Registry()->copy($item->table_registry_name . 'Parameters', 'Parameters');
-        Services::Registry()->copy($item->table_registry_name . 'Metadata', 'Metadata');
+        Services::Registry()->copy($item->model_registry . 'Parameters', 'Parameters');
+        Services::Registry()->copy($item->model_registry . 'Metadata', 'Metadata');
         $this->setParameters('menuitem',
-            $item->table_registry_name . 'Parameters',
-            $item->table_registry_name . 'Metadata'
+            $item->model_registry . 'Parameters',
+            $item->model_registry . 'Metadata'
         );
 
 	        /** Must be after parameters so as to not strip off menuitem */
@@ -227,7 +227,7 @@ Class ContentHelper
      * @return array An object containing an array of data
      * @since   1.0
      */
-    public function get($id = 0, $model_type = 'Table', $model_name = 'Content', $page_type = '')
+    public function get($id = 0, $model_type = 'Datasource', $model_name = 'Content', $page_type = '')
     {
         Services::Profiler()->set('ContentHelper->get '
                 . ' ID: ' . $id
@@ -235,29 +235,34 @@ Class ContentHelper
                 . ' Model Name: ' . $model_name,
             LOG_OUTPUT_ROUTING, VERBOSE);
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $m->connect($model_type, $model_name);
+        $results = $controller->getModelRegistry($model_type, $model_name);
         if ($results === false) {
             return false;
         }
 
-        $m->set('id', (int) $id);
-        $m->set('process_plugins', 1);
-
-        if ($page_type == 'item') {
-            $m->set('get_customfields', 2);
-        } else {
-            $m->set('get_customfields', 1);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
         }
 
-        $item = $m->getData('item');
+        $controller->set('id', (int) $id);
+        $controller->set('process_plugins', 1);
+
+        if ($page_type == 'item') {
+            $controller->set('get_customfields', 2);
+        } else {
+            $controller->set('get_customfields', 1);
+        }
+
+        $item = $controller->getData('item');
         if (count($item) == 0) {
             return array();
         }
 
-        $item->table_registry_name = $m->table_registry_name;
+        $item->model_registry = $controller->model_registry;
 
         return $item;
     }
@@ -266,8 +271,8 @@ Class ContentHelper
      * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
      *
      * @param $pageTypeNamespace (ex. item, list, menuitem)
-     * @param $parameterNamespace (ex. $item->table_registry_name . 'Parameters')
-     * @param $metadataNamespace (ex. $item->table_registry_name . 'Metadata')
+     * @param $parameterNamespace (ex. $item->model_registry . 'Parameters')
+     * @param $metadataNamespace (ex. $item->model_registry . 'Metadata')
      * @param string $resourceNamespace (ex. ResourcesSystem)
      *
      * @return boolean
@@ -279,7 +284,7 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'page_type', $pageTypeNamespace);
 
 		/** Retrieve array of Extension Instances Authorised for User  */
-		Helpers::Extension()->setAuthorisedExtensions(0, 'Table', 'ExtensionInstances', 'List', NULL);
+		Helpers::Extension()->setAuthorisedExtensions(0, 'Datasource', 'ExtensionInstances', 'List', NULL);
 
 		/** I. $parameterNamespace: For an article, would be ArticlesResourceParameters */
 
@@ -464,19 +469,24 @@ Class ContentHelper
      */
     public function getResourceCatalogType($id = 0)
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
+        $controllerClass = CONTROLLER_CLASS;
 
-        $m = new $controllerClass();
-        $m->set('process_plugins', 0);
-        $m->set('get_customfields', 0);
+        $controller = new $controllerClass();
+        $controller->set('process_plugins', 0);
+        $controller->set('get_customfields', 0);
 
-        $results = $m->connect('Table', 'CatalogTypes');
+        $results = $controller->getModelRegistry('Datasource', 'CatalogTypes');
         if ($results === false) {
             return false;
         }
 
-        $m->model->query->where('a.extension_instance_id = ' . (int) $id);
-        $item = $m->getData('item');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $controller->model->query->where('a.extension_instance_id = ' . (int) $id);
+        $item = $controller->getData('item');
 
         if (count($item) == 0) {
             return array();
@@ -488,7 +498,7 @@ Class ContentHelper
     /**
      * Get Parameters for Resource Content
      *
-     * Table Registry => Services::Registry()->get('ArticlesResource', '*');
+     * Registry => Services::Registry()->get('ArticlesResource', '*');
      * Parameters => Services::Registry()->get('ArticlesResource', 'Parameters')
      *
      * @param string $model_type
@@ -499,13 +509,18 @@ Class ContentHelper
      */
     public function getResourceContentParameters($model_type = 'Resource', $model_name)
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $m->set('process_plugins', 0);
-        $m->set('get_customfields', 1);
+        $controller->set('process_plugins', 0);
+        $controller->set('get_customfields', 1);
 
-        $results = $m->connect($model_type, $model_name);
+        $results = $controller->getModelRegistry($model_type, $model_name);
+        if ($results === false) {
+            return false;
+        }
+
+        $results = $controller->setDataobject();
         if ($results === false) {
             return false;
         }
@@ -516,7 +531,7 @@ Class ContentHelper
     /**
      * Get Parameters for Resource
      *
-     * Table Registry => Services::Registry()->get('ResourcesSystem', '*');
+     * Registry => Services::Registry()->get('ResourcesSystem', '*');
      * Parameters => Services::Registry()->get('ResourcesSystemParameters', '*');
      *
      * @param  $id
@@ -526,19 +541,23 @@ Class ContentHelper
      */
     public function getResourceExtensionParameters($id = 0)
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('System', 'Resources');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('System', 'Resources');
+        if ($results === false) {
+            return false;
+        }
+        $results = $controller->setDataobject();
         if ($results === false) {
             return false;
         }
 
-        $m->set('id', (int) $id);
-        $m->set('process_plugins', 0);
-        $m->set('get_customfields', 1);
-        $m->set('check_view_level_access', 0);
+        $controller->set('id', (int) $id);
+        $controller->set('process_plugins', 0);
+        $controller->set('get_customfields', 1);
+        $controller->set('check_view_level_access', 0);
 
-        $item = $m->getData('item');
+        $item = $controller->getData('item');
         if (count($item) == 0) {
             return array();
         }
@@ -564,20 +583,25 @@ Class ContentHelper
     {
         $page_type = ucfirst(strtolower($page_type));
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $m->set('process_plugins', 0);
-        $m->set('get_customfields', 1);
+        $controller->set('process_plugins', 0);
+        $controller->set('get_customfields', 1);
 
-        $m->connect('Menuitem', $page_type);
+        $controller->getModelRegistry('Menuitem', $page_type);
 
-        $m->model->query->where('a.page_type = ' . $m->model->db->q($page_type));
-        $m->model->query->where('a.catalog_type_id = ' . (int) CATALOG_TYPE_MENUITEM);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $controller->model->query->where('a.page_type = ' . $controller->model->db->q($page_type));
+        $controller->model->query->where('a.catalog_type_id = ' . (int) CATALOG_TYPE_MENUITEM);
         $value = '"criteria_extension_instance_id":"' . $extension_instance_id . '"';
-        $m->model->query->where('a.parameters LIKE ' . $m->model->db->q('%' . $value . '%'));
+        $controller->model->query->where('a.parameters LIKE ' . $controller->model->db->q('%' . $value . '%'));
 
-        $menuitem = $m->getData('item');
+        $menuitem = $controller->getData('item');
 
         if ($menuitem === false) {
             return false;

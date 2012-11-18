@@ -55,7 +55,7 @@ Class ExtensionHelper
      * @return boolean
      * @since   1.0
      */
-    public function getExtension($extension_id, $model_type = 'Table', $model_name = 'ExtensionInstances', $acl_check = 0)
+    public function getExtension($extension_id, $model_type = 'Datasource', $model_name = 'ExtensionInstances', $acl_check = 0)
     {
         $item = Helpers::Extension()->get($extension_id, $model_type, $model_name, $acl_check);
 
@@ -88,13 +88,13 @@ Class ExtensionHelper
         );
 
         /** Process each field namespace  */
-        $customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
+        $customFieldTypes = Services::Registry()->get($item->model_registry, 'CustomFieldGroups');
 
         if (count($customFieldTypes) > 0) {
             foreach ($customFieldTypes as $customFieldName) {
                 $customFieldName = ucfirst(strtolower($customFieldName));
-                Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
-                Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
+                Services::Registry()->merge($item->model_registry . $customFieldName, $customFieldName);
+                Services::Registry()->deleteRegistry($item->model_registry . $customFieldName);
             }
         }
 
@@ -114,10 +114,10 @@ Class ExtensionHelper
 	 * @since   1.0
 	 */
 	public function setAuthorisedExtensions(
-		$extension_id = 0, $model_type = 'Table', $model_name = 'ExtensionInstances',
+		$extension_id = 0, $model_type = 'Datasource', $model_name = 'ExtensionInstances',
 		$query_object = 'item', $catalog_type_id = null)
 	{
-		$results = Helpers::Extension()->get(0, 'Table', 'ExtensionInstances', 'List', NULL, 1);
+		$results = Helpers::Extension()->get(0, 'Datasource', 'ExtensionInstances', 'List', NULL, 1);
 		if ($results === false || count($results) == 0) {
 			//throw error
 			echo 'No authorised extensions for user.';
@@ -158,7 +158,7 @@ Class ExtensionHelper
      * @since   1.0
      */
     public function get(
-        $extension_id = 0, $model_type = 'Table', $model_name = 'ExtensionInstances',
+        $extension_id = 0, $model_type = 'Datasource', $model_name = 'ExtensionInstances',
         $query_object = 'item', $catalog_type_id = null, $acl_check = 0)
     {
         if (Services::Registry()->get('CurrentPhase') == 'LOG_OUTPUT_ROUTING') {
@@ -167,67 +167,71 @@ Class ExtensionHelper
             $phase = LOG_OUTPUT_RENDERING;
         }
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $m->connect($model_type, $model_name);
-        $m->model->query->clear();
+        $controller->getModelRegistry($model_type, $model_name);
 
-        $primary_prefix = $m->get('primary_prefix');
-        $primary_key = $m->get('primary_key');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $primary_prefix = $controller->get('primary_prefix');
+        $primary_key = $controller->get('primary_key');
 
         if ((int) $extension_id == 0) {
         } else {
 
-			$m->model->query->where(
-				$m->model->db->qn($primary_prefix)
+			$controller->model->query->where(
+				$controller->model->db->qn($primary_prefix)
 					. '.'
-					. $m->model->db->qn('id')
+					. $controller->model->db->qn('id')
 					. ' = '
 					. (int) $extension_id
 			);
-            $m->set('process_plugins', 0);
+            $controller->set('process_plugins', 0);
             $query_object = 'item';
         }
 
         if ((int) $catalog_type_id == 0) {
         } else {
 
-            $m->model->query->where(
-					$m->model->db->qn($primary_prefix)
+            $controller->model->query->where(
+					$controller->model->db->qn($primary_prefix)
 				. '.'
-				. $m->model->db->qn('catalog_type_id')
+				. $controller->model->db->qn('catalog_type_id')
                 . ' = '
 				. (int) $catalog_type_id
 			);
         }
 
         if (strtolower($query_object) == 'list') {
-            $m->set('model_offset', 0);
-            $m->set('model_count', 999999);
-			$m->set('use_pagination', 0);
-			$m->set('use_special_joins', 1);
-			$m->set('get_customfields', 2);
+            $controller->set('model_offset', 0);
+            $controller->set('model_count', 999999);
+			$controller->set('use_pagination', 0);
+			$controller->set('use_special_joins', 1);
+			$controller->set('get_customfields', 2);
 
-			$m->model->query->where(
-				$m->model->db->qn($primary_prefix)
+			$controller->model->query->where(
+				$controller->model->db->qn($primary_prefix)
 					. '.'
-					. $m->model->db->qn('catalog_type_id')
+					. $controller->model->db->qn('catalog_type_id')
 					. ' <> '
-					. $m->model->db->qn($primary_prefix)
+					. $controller->model->db->qn($primary_prefix)
 					. '.'
-					. $m->model->db->qn($primary_key)
+					. $controller->model->db->qn($primary_key)
 			);
         }
 
-		$m->set('check_view_level_access', $acl_check);
+		$controller->set('check_view_level_access', $acl_check);
 
-		if ($model_type == 'Table') {
+		if ($model_type == 'Datasource') {
 		} else {
-			$m->model->query->where(
-				$m->model->db->qn('catalog')
+			$controller->model->query->where(
+				$controller->model->db->qn('catalog')
 					. '.'
-					. $m->model->db->qn('enabled')
+					. $controller->model->db->qn('enabled')
 					. ' = '
 					. (int) 1
 			);
@@ -239,16 +243,16 @@ Class ExtensionHelper
 			if (strtolower($query_object) == 'item' && (int) $extension_id > 0) {
 				$saved =  Services::Registry()->get('AuthorisedExtensions', $extension_id, '');
 				if (is_object($saved)) {
-					$m->set('get_customfields', 1);
-					$query_results = $m->addCustomFields(array($saved), 'item', 1);
-					$query_results->table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+					$controller->set('get_customfields', 1);
+					$query_results = $controller->addCustomFields(array($saved), 'item', 1);
+					$query_results->model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 					return $query_results;
 				}
 			}
 		}
 
 		/** Then, if not available, run the query */
-        $query_results = $m->getData($query_object);
+        $query_results = $controller->getData($query_object);
 
         if ($query_results === false || $query_results === null) {
 
@@ -259,7 +263,7 @@ Class ExtensionHelper
             echo 'Catalog Type ID ' . $catalog_type_id . '<br />';
 
             echo '<br />';
-            echo $m->model->query->__toString();
+            echo $controller->model->query->__toString();
             echo '<br />';
 
             echo '<pre>';
@@ -270,7 +274,7 @@ Class ExtensionHelper
         }
 
 		if ($query_object == 'item') {
-			$query_results->table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+			$query_results->model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 		}
 
         return $query_results;
@@ -298,21 +302,26 @@ Class ExtensionHelper
 			}
 		}
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $query_results = $m->connect('Table', 'ExtensionInstances');
+        $query_results = $controller->getModelRegistry('Datasource', 'ExtensionInstances');
         if ($query_results === false) {
             return false;
         }
 
-        $m->set('process_plugins', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $m->model->query->select($m->model->db->qn('a.id'));
-        $m->model->query->where($m->model->db->qn('a.title') . ' = ' . $m->model->db->q($title));
-        $m->model->query->where($m->model->db->qn('a.catalog_type_id') . ' = ' . (int) $catalog_type_id);
+        $controller->set('process_plugins', 0);
 
-        return $m->getData('result');
+        $controller->model->query->select($controller->model->db->qn('a.id'));
+        $controller->model->query->where($controller->model->db->qn('a.title') . ' = ' . $controller->model->db->q($title));
+        $controller->model->query->where($controller->model->db->qn('a.catalog_type_id') . ' = ' . (int) $catalog_type_id);
+
+        return $controller->getData('result');
     }
 
     /**
@@ -341,19 +350,23 @@ Class ExtensionHelper
 			}
 		}
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $query_results = $m->connect('Table', 'ExtensionInstances');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $query_results = $controller->getModelRegistry('Datasource', 'ExtensionInstances');
         if ($query_results === false) {
             return false;
         }
 
-        $m->set('process_plugins', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+        $controller->set('process_plugins', 0);
 
-        $m->model->query->select($m->model->db->qn('a.title'));
-        $m->model->query->where($m->model->db->qn('a.id') . ' = ' . (int) $extension_instance_id);
+        $controller->model->query->select($controller->model->db->qn('a.title'));
+        $controller->model->query->where($controller->model->db->qn('a.id') . ' = ' . (int) $extension_instance_id);
 
-        return $m->getData('result');
+        return $controller->getData('result');
     }
 
     /**
@@ -382,25 +395,30 @@ Class ExtensionHelper
 			}
 		}
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $query_results = $m->connect('Table', 'Extensions');
+        $query_results = $controller->getModelRegistry('Datasource', 'Extensions');
         if ($query_results === false) {
             return false;
         }
 
-        $m->set('process_plugins', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $m->model->query->select($m->model->db->qn('a.name'));
+        $controller->set('process_plugins', 0);
 
-        $m->model->query->from($m->model->db->qn('#__extensions') . ' as ' . $m->model->db->qn('a'));
-        $m->model->query->from($m->model->db->qn('#__extension_instances') . ' as ' . $m->model->db->qn('b'));
+        $controller->model->query->select($controller->model->db->qn('a.name'));
 
-        $m->model->query->where($m->model->db->qn('a.id') . ' = ' . $m->model->db->qn('b.extension_id'));
-        $m->model->query->where($m->model->db->qn('b.id') . ' = ' . (int) $extension_instance_id);
+        $controller->model->query->from($controller->model->db->qn('#__extensions') . ' as ' . $controller->model->db->qn('a'));
+        $controller->model->query->from($controller->model->db->qn('#__extension_instances') . ' as ' . $controller->model->db->qn('b'));
 
-        return $m->getData('result');
+        $controller->model->query->where($controller->model->db->qn('a.id') . ' = ' . $controller->model->db->qn('b.extension_id'));
+        $controller->model->query->where($controller->model->db->qn('b.id') . ' = ' . (int) $extension_instance_id);
+
+        return $controller->getData('result');
     }
 
     /**
@@ -436,8 +454,8 @@ Class ExtensionHelper
                 return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
-                return MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
+            if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+                return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
             }
 
             return false;
@@ -456,8 +474,8 @@ Class ExtensionHelper
 
             return false;
 
-        }    if (file_exists(MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
-        return MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
+        }    if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+        return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
     }
 
         return false;
@@ -493,7 +511,7 @@ Class ExtensionHelper
                 return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+            if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return CORE_SYSTEM_URL . '/' . ucfirst(strtolower($node));
             }
 
@@ -543,7 +561,7 @@ Class ExtensionHelper
                 return 'Extension\\Resource\\' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(MOLAJO_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+            if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return 'Vendor\\Molajo\\System\\' . ucfirst(strtolower($node));
             }
 

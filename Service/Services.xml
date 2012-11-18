@@ -11,7 +11,7 @@
     <service name="Mail" static="0" startup=""/>
     <service name="Filesystem" static="0" startup=""/>
     <service name="Message" static="1" startup="getInstance"/>
-    <service name="JDatabase" static="1" startup="getInstance"/>
+    <service name="Database" static="0" startup=""/>
     <service name="Configuration" static="1" startup="getInstance"/>
     <service name="Log" static="1" startup="initialise"/>
     <service name="Event" static="1" startup="getInstance"/>

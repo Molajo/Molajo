@@ -102,7 +102,7 @@ class ResourceIncluder extends Includer
 
         $response = Helpers::Extension()->getExtension(
             Services::Registry()->get('Parameters', 'extension_instance_id'),
-            'Table',
+            'Datasource',
             'ExtensionInstances'
         );
         if ($response === false) {

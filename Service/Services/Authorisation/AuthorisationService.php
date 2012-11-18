@@ -65,19 +65,24 @@ Class AuthorisationService
      */
     public function verifySiteApplication()
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $m->connect('Table', 'Siteapplications');
+        $results = $controller->getModelRegistry('Datasource', 'Siteapplications');
         if ($results === false) {
             return false;
         }
 
-        $m->model->query->select($m->model->db->qn('a.application_id'));
-        $m->model->query->where($m->model->db->qn('a.site_id') . ' = ' . (int) SITE_ID);
-        $m->model->query->where($m->model->db->qn('a.application_id') . ' = ' . (int) APPLICATION_ID);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $application_id = $m->getData('result');
+        $controller->model->query->select($controller->model->db->qn('a.application_id'));
+        $controller->model->query->where($controller->model->db->qn('a.site_id') . ' = ' . (int) SITE_ID);
+        $controller->model->query->where($controller->model->db->qn('a.application_id') . ' = ' . (int) APPLICATION_ID);
+
+        $application_id = $controller->getData('result');
 
         if ($application_id === false) {
             //todo: finish the response action/test
@@ -228,21 +233,25 @@ Class AuthorisationService
         /** check for permission */
         $action_id = 3;
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('Table', 'Grouppermissions');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('Datasource', 'Grouppermissions');
         if ($results === false) {
             return false;
         }
 
-        $m->model->query->select($m->model->db->qn('a.id'));
-        $m->model->query->where($m->model->db->qn('a.catalog_id') . ' = ' . (int) $catalog_id);
-        $m->model->query->where($m->model->db->qn('a.action_id') . ' = ' . (int) $action_id);
-        $m->model->query->where($m->model->db->qn('a.group_id')
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+        $controller->model->query->select($controller->model->db->qn('a.id'));
+        $controller->model->query->where($controller->model->db->qn('a.catalog_id') . ' = ' . (int) $catalog_id);
+        $controller->model->query->where($controller->model->db->qn('a.action_id') . ' = ' . (int) $action_id);
+        $controller->model->query->where($controller->model->db->qn('a.group_id')
                 . ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
         );
 
-        $count = $m->getData('result');
+        $count = $controller->getData('result');
         if ($count > 0) {
             return true;
 
@@ -276,17 +285,22 @@ Class AuthorisationService
             return false;
         }
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('Table', 'Userapplications');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('Datasource', 'Userapplications');
         if ($results === false) {
             return false;
         }
 
-        $m->model->query->where('a.application_id = ' . (int) APPLICATION_ID);
-        $m->model->query->where('a.user_id = ' . (int) $user_id);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $count = $m->model->getData('result');
+        $controller->model->query->where('a.application_id = ' . (int) APPLICATION_ID);
+        $controller->model->query->where('a.user_id = ' . (int) $user_id);
+
+        $count = $controller->model->getData('result');
 
         if ($count > 0) {
             return true;
@@ -304,7 +318,7 @@ Class AuthorisationService
      *     $this->query,
      *     $this->db,
      *     array('join_to_prefix' => $this->primary_prefix,
-     *         'join_to_primary_key' => Services::Registry()->get($this->table_registry_name, 'primary_key'),
+     *         'join_to_primary_key' => Services::Registry()->get($this->model_registry, 'primary_key'),
      *         'catalog_prefix' => $this->primary_prefix . '_catalog',
      *         'select' => true
      *     )

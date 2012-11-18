@@ -534,7 +534,7 @@ Class ProfilerService
      */
     protected function setDatabaseLogger()
     {
-        $this->profiler_options['dbo'] = Services::JDatabase()->get('db');
+        $this->profiler_options['dbo'] = Services::Database()->get('db');
         $this->profiler_options['db_table'] = Services::Registry()
             ->get('Configuration', 'profiler_database_table', '#__log');
 
@@ -629,11 +629,6 @@ Class ProfilerService
     }
 
     public function toSql()
-    {
-        return $this;
-    }
-
-    public function clear()
     {
         return $this;
     }

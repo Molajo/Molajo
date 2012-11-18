@@ -44,27 +44,36 @@ class CommentPlugin extends Plugin
         $parent_source_id = $results['parent_source_id'];
 
         /** Connect to Comment Resource */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
-        $results = $connect->connect('Resource', 'Comments');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+
+        $results = $controller->getModelRegistry('Resource', 'Comments');
         if ($results === false) {
             return false;
         }
 
-        $connect->set('get_customfields', 2);
-        $connect->set('use_special_joins', 1);
-        $connect->set('check_view_level_access', 1);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+        $controller->set('get_customfields', 2);
+        $controller->set('use_special_joins', 1);
+        $controller->set('check_view_level_access', 1);
 
         /** Connect to Parent */
-        $parentConnect = new $controllerClass();
-        $results = $parentConnect->connect($parent_model_type, $parent_model_name);
+        $parentController = new $controllerClass();
+        $results = $parentController->getModelRegistry($parent_model_type, $parent_model_name);
+        if ($results === false) {
+            return false;
+        }
+        $results = $controller->setDataobject();
         if ($results === false) {
             return false;
         }
 
         $method = 'get' . ucfirst(strtolower($this->get('template_view_path_node')));
 
-        return $this->$method($connect, $parentConnect,
+        return $this->$method($controller, $parentController,
             $parent_model_type, $parent_model_name, $parent_source_id);
 
     }
@@ -105,8 +114,8 @@ class CommentPlugin extends Plugin
     /**
      * Retrieve Data for Comment Heading
      *
-     * @param $connect
-     * @param $parentConnect
+     * @param $controller
+     * @param $parentController
      * @param $parent_model_type
      * @param $parent_model_name
      * @param $parent_source_id
@@ -114,18 +123,18 @@ class CommentPlugin extends Plugin
      * @return bool
      * @since  1.0
      */
-    public function getComment($connect, $parentConnect, $parent_model_type, $parent_model_name, $parent_source_id)
+    public function getComment($controller, $parentController, $parent_model_type, $parent_model_name, $parent_source_id)
     {
-        $primary_prefix = $connect->get('primary_prefix');
+        $primary_prefix = $controller->get('primary_prefix');
 
-        $connect->model->query->select('count(*)');
-        $connect->model->query->where(
-            $connect->model->db->qn($primary_prefix)
-                . '.' . $connect->model->db->qn('root')
+        $controller->model->query->select('count(*)');
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('root')
                 . ' = ' . (int) $parent_source_id
         );
 
-        $count = $connect->getData('result');
+        $count = $controller->getData('result');
 
         $results = array();
         $row = new \stdClass();
@@ -140,7 +149,7 @@ class CommentPlugin extends Plugin
             $row->content_text = Services::Language()->translate('COMMENTS_TEXT_HAS_COMMENTS');
         }
 
-        $open = $this->getCommentsOpen($parentConnect, $parent_source_id);
+        $open = $this->getCommentsOpen($parentController, $parent_source_id);
         if ($open === false) {
             $row->closed_comment = Services::Language()->translate('COMMENTS_ARE_CLOSED');
             $row->closed = 1;
@@ -158,8 +167,8 @@ class CommentPlugin extends Plugin
     /**
      * Retrieve Comments
      *
-     * @param $connect
-     * @param $parentConnect
+     * @param $controller
+     * @param $parentController
      * @param $parent_model_type
      * @param $parent_model_name
      * @param $parent_source_id
@@ -167,25 +176,25 @@ class CommentPlugin extends Plugin
      * @return bool
      * @since  1.0
      */
-    public function getComments($connect, $parentConnect, $parent_model_type, $parent_model_name, $parent_source_id)
+    public function getComments($controller, $parentController, $parent_model_type, $parent_model_name, $parent_source_id)
     {
-        $primary_prefix = $connect->get('primary_prefix');
+        $primary_prefix = $controller->get('primary_prefix');
 
-        $connect->set('root', (int) $parent_source_id);
+        $controller->set('root', (int) $parent_source_id);
 
-        $connect->model->query->where(
-            $connect->model->db->qn($primary_prefix)
-                . '.' . $connect->model->db->qn('root')
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('root')
                 . ' = ' . (int) $parent_source_id
         );
-        $connect->model->query->order(
-            $connect->model->db->qn($primary_prefix)
-                . '.' . $connect->model->db->qn('lft')
+        $controller->model->query->order(
+            $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('lft')
         );
 
-        $this->data = $connect->getData('list');
+        $this->data = $controller->getData('list');
 
-        $open = $this->getCommentsOpen($parentConnect, $parent_source_id);
+        $open = $this->getCommentsOpen($parentController, $parent_source_id);
 
         return true;
     }
@@ -193,8 +202,8 @@ class CommentPlugin extends Plugin
     /**
      * Retrieve Data for Comment Heading
      *
-     * @param $connect
-     * @param $parentConnect
+     * @param $controller
+     * @param $parentController
      * @param $parent_model_type
      * @param $parent_model_name
      * @param $parent_source_id
@@ -202,12 +211,12 @@ class CommentPlugin extends Plugin
      * @return bool
      * @since  1.0
      */
-    public function getCommentform($connect, $parentConnect, $parent_model_type, $parent_model_name, $parent_source_id)
+    public function getCommentform($controller, $parentController, $parent_model_type, $parent_model_name, $parent_source_id)
     {
         $results = array();
         $row = new \stdClass();
 
-        $open = $this->getCommentsOpen($parentConnect, $parent_source_id);
+        $open = $this->getCommentsOpen($parentController, $parent_source_id);
         if ($open === false) {
             $row->closed_comment = Services::Language()->translate('COMMENTS_ARE_CLOSED');
             $row->closed = 1;
@@ -254,13 +263,12 @@ class CommentPlugin extends Plugin
             array()
         );
 
-        $this->set('model_name', 'Plugindata');
-        $this->set('model_type', 'dbo');
-        $this->set('model_query_object', 'getPlugindata');
-        $this->set('model_parameter', 'Edit');
+        $this->set('model_type', 'Plugindata');
+        $this->set('model_name', 'Edit');
+        $this->set('model_query_object', 'item');
 
-        $this->parameters['model_name'] = 'Plugindata';
-        $this->parameters['model_type'] = 'dbo';
+        $this->parameters['model_type'] = 'Plugindata';
+        $this->parameters['model_name'] = 'Edit';
 
         Services::Registry()->set('Plugindata', 'Commentform', $tabs);
 
@@ -279,25 +287,25 @@ class CommentPlugin extends Plugin
     /**
      * Determine if Comments are still open for Content
      *
-     * @param $parentConnect
+     * @param $parentController
      * @param $parent_source_id
      *
      * @return string
      * @since  1.0
      */
-    public function getCommentsOpen($parentConnect, $parent_source_id)
+    public function getCommentsOpen($parentController, $parent_source_id)
     {
-        $primary_prefix = $parentConnect->get('primary_prefix');
+        $primary_prefix = $parentController->get('primary_prefix');
 
-        $parentConnect->set('id', (int) $parent_source_id);
+        $parentController->set('id', (int) $parent_source_id);
 
-        $parentConnect->model->query->select(
-            $parentConnect->model->db->qn($primary_prefix)
+        $parentController->model->query->select(
+            $parentController->model->db->qn($primary_prefix)
                 . '.' .
-                $parentConnect->model->db->qn('start_publishing_datetime')
+                $parentController->model->db->qn('start_publishing_datetime')
         );
 
-        $published = $parentConnect->getData('result');
+        $published = $parentController->getData('result');
         if ($published === false) {
             return false;
         }

@@ -38,15 +38,13 @@ class PagetypeitemPlugin extends Plugin
             . ucfirst(strtolower($this->get('model_type')));
 
 		/** Item Data */
-		//$item = Services::Registry()->get('Plugindata', 'PrimaryRequestQueryResults');
+        $this->set('model_type', 'Plugindata');
+        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_query_object', 'list');
 
-		$this->set('model_name', 'Plugindata');
-		$this->set('model_type', 'dbo');
-		$this->set('model_query_object', 'getPlugindata');
-		$this->set('model_parameter', 'PrimaryRequestQueryResults');
+        $this->parameters['model_type'] = 'Plugindata';
+        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
 
-		$this->parameters['model_name'] = 'Plugindata';
-		$this->parameters['model_type'] = 'dbo';
 
         return true;
     }

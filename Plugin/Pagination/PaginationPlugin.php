@@ -170,37 +170,42 @@ class PaginationPlugin extends Plugin
      */
     protected function itemPaging()
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $connect->connect(
-            $this->get('model_type', 'Table'),
+        $results = $controller->getModelRegistry(
+            $this->get('model_type', 'Datasource'),
             $this->get('model_name')
         );
         if ($results === false) {
             return false;
         }
 
-        $connect->set('get_customfields', 0);
-        $connect->set('use_special_joins', 0);
-        $connect->set('process_plugins', 0);
-        $connect->set('get_item_children', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $connect->model->query->select($connect->model->db->qn('a')
-            . '.' . $connect->model->db->qn($connect->get('primary_key', 'id')));
+        $controller->set('get_customfields', 0);
+        $controller->set('use_special_joins', 0);
+        $controller->set('process_plugins', 0);
+        $controller->set('get_item_children', 0);
 
-        $connect->model->query->select($connect->model->db->qn('a')
-            . '.' . $connect->model->db->qn($connect->get('name_key', 'title')));
+        $controller->model->query->select($controller->model->db->qn('a')
+            . '.' . $controller->model->db->qn($controller->get('primary_key', 'id')));
 
-        $connect->model->query->where($connect->model->db->qn('a')
-            . '.' . $connect->model->db->qn($connect->get('primary_key', 'id')
+        $controller->model->query->select($controller->model->db->qn('a')
+            . '.' . $controller->model->db->qn($controller->get('name_key', 'title')));
+
+        $controller->model->query->where($controller->model->db->qn('a')
+            . '.' . $controller->model->db->qn($controller->get('primary_key', 'id')
             . ' = ' . (int) $this->parameters['catalog_source_id']));
 
 //todo ordering
-        $item = $connect->getData('item');
+        $item = $controller->getData('item');
 
-        $this->table_registry_name = ucfirst(strtolower($this->get('model_name')))
-            . ucfirst(strtolower($this->get('model_type', 'Table')));
+        $this->model_registry = ucfirst(strtolower($this->get('model_name')))
+            . ucfirst(strtolower($this->get('model_type', 'Datasource')));
 
         if ($item === false || count($item) == 0) {
             return false;

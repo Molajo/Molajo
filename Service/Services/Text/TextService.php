@@ -34,7 +34,7 @@ Class TextService
     {
         $controller = new CreateController();
 
-        $table_registry_name = ucfirst(strtolower($model_name)) . 'Table';
+        $model_registry = ucfirst(strtolower($model_name)) . 'Datasource';
 
         $data = new \stdClass();
         $data->title = $model_name;
@@ -90,9 +90,9 @@ Class TextService
      */
     public function getSelectlist($datalist)
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('Datalist', $datalist);
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('Datalist', $datalist);
         if ($results === false) {
             return false;
         }
@@ -112,9 +112,14 @@ Class TextService
     public function getList($filter, $parameters)
     {
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('Datalist', $filter);
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('Datalist', $filter);
+        if ($results === false) {
+            return false;
+        }
+
+        $results = $controller->setDataobject();
         if ($results === false) {
             return false;
         }
@@ -131,9 +136,9 @@ Class TextService
             $size = 0;
         }
 
-        if ($m->parameters['registry_entry'] == '') {
+        if ($controller->parameters['registry_entry'] == '') {
         } else {
-            $registry_entry = $m->parameters['registry_entry'];
+            $registry_entry = $controller->parameters['registry_entry'];
             if ($registry_entry === false) {
             } else {
 
@@ -190,24 +195,24 @@ Class TextService
     protected function getQueryResults($m, $filter, $parameters)
     {
         /** Data already in Registry/No Query needed */
-        $registry_entry = $m->get('registry_entry');
-        $data_source = $m->get('data_source');
+        $registry_entry = $controller->get('registry_entry');
+        $data_object = $controller->get('data_object');
 
         if ($registry_entry == '') {
         } else {
-            if ($data_source == 'Registry') {
+            if ($data_object == 'Registry') {
                 $values = Services::Registry()->get('Plugindata', $registry_entry);
 
                 return $values;
             }
         }
 
-        $primary_prefix = $m->get('primary_prefix');
-        $primary_key = $m->get('primary_key');
-        $name_key = $m->get('name_key');
+        $primary_prefix = $controller->get('primary_prefix');
+        $primary_key = $controller->get('primary_key');
+        $name_key = $controller->get('name_key');
 
-        $m->model->set('model_offset', 0);
-        $m->model->set('model_count', 999999);
+        $controller->model->set('model_offset', 0);
+        $controller->model->set('model_count', 999999);
 
         /** Select */
         $fields = Services::Registry()->get($filter . 'Datalist', 'Fields');
@@ -216,18 +221,18 @@ Class TextService
 
         if (count($fields) < 2) {
 
-            $m->model->query->select(
+            $controller->model->query->select(
                 'DISTINCT '
-                    . $m->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id'
+                    . $controller->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id'
             );
-            $m->model->query->select(
-                $m->model->db->qn(
+            $controller->model->query->select(
+                $controller->model->db->qn(
                     $primary_prefix
                         . '.' . $name_key
                 ) . ' as value'
             );
-            $m->model->query->order(
-                $m->model->db->qn(
+            $controller->model->query->order(
+                $controller->model->db->qn(
                     $primary_prefix
                         . '.' . $name_key
                 ) . ' ASC'
@@ -256,26 +261,26 @@ Class TextService
                     $ordering = $alias . '.' . $name;
                 }
 
-                $m->model->query->select($distinct . ' ' . $m->model->db->qn($alias . '.' . $name) . ' as ' . $as);
+                $controller->model->query->select($distinct . ' ' . $controller->model->db->qn($alias . '.' . $name) . ' as ' . $as);
             }
 
-            $m->model->query->order($m->model->db->qn($ordering) . ' ASC');
+            $controller->model->query->order($controller->model->db->qn($ordering) . ' ASC');
         }
 
-        if ($m->get('extension_instance_id', 0) == 0) {
+        if ($controller->get('extension_instance_id', 0) == 0) {
         } else {
             $this->setWhereCriteria(
                 'extension_instance_id',
-                $m->get('extension_instance_id'),
+                $controller->get('extension_instance_id'),
                 $primary_prefix,
                 $m
             );
         }
-        if ($m->get('catalog_type_id', 0) == 0) {
+        if ($controller->get('catalog_type_id', 0) == 0) {
         } else {
             $this->setWhereCriteria(
                 'catalog_type_id',
-                $m->get('catalog_type_id'),
+                $controller->get('catalog_type_id'),
                 $primary_prefix,
                 $m
             );
@@ -283,10 +288,10 @@ Class TextService
 
         $query_object = 'distinct';
 
-        $offset = $m->set('model_offset', 0);
-        $count = $m->set('model_count', 9999999);
+        $offset = $controller->set('model_offset', 0);
+        $count = $controller->set('model_count', 9999999);
 
-        return $m->getData($query_object);
+        return $controller->getData($query_object);
     }
 
     /**
@@ -327,28 +332,28 @@ Class TextService
      */
     protected function publishedStatus($m)
     {
-        $primary_prefix = Services::Registry()->get($m->table_registry_name, 'primary_prefix', 'a');
+        $primary_prefix = Services::Registry()->get($controller->model_registry, 'primary_prefix', 'a');
 
-        $m->model->query->where(
-            $m->model->db->qn($primary_prefix)
-                . '.' . $m->model->db->qn('status')
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('status')
                 . ' > ' . STATUS_UNPUBLISHED
         );
 
-        $m->model->query->where(
-            '(' . $m->model->db->qn($primary_prefix)
-                . '.' . $m->model->db->qn('start_publishing_datetime')
-                . ' = ' . $m->model->db->q($m->model->null_date)
-                . ' OR ' . $m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('start_publishing_datetime')
-                . ' <= ' . $m->model->db->q($m->model->now) . ')'
+        $controller->model->query->where(
+            '(' . $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('start_publishing_datetime')
+                . ' = ' . $controller->model->db->q($controller->model->null_date)
+                . ' OR ' . $controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('start_publishing_datetime')
+                . ' <= ' . $controller->model->db->q($controller->model->now) . ')'
         );
 
-        $m->model->query->where(
-            '(' . $m->model->db->qn($primary_prefix)
-                . '.' . $m->model->db->qn('stop_publishing_datetime')
-                . ' = ' . $m->model->db->q($m->model->null_date)
-                . ' OR ' . $m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('stop_publishing_datetime')
-                . ' >= ' . $m->model->db->q($m->model->now) . ')'
+        $controller->model->query->where(
+            '(' . $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('stop_publishing_datetime')
+                . ' = ' . $controller->model->db->q($controller->model->null_date)
+                . ' OR ' . $controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('stop_publishing_datetime')
+                . ' >= ' . $controller->model->db->q($controller->model->now) . ')'
         );
 
         return;
@@ -875,11 +880,6 @@ Class TextService
     }
 
     public function toSql()
-    {
-        return $this;
-    }
-
-    public function clear()
     {
         return $this;
     }

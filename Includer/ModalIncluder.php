@@ -77,25 +77,9 @@ Class ModalIncluder extends Includer
         if ($model_name === null) {
             $model_name = '';
         }
-        $model_parameter = Services::Registry()->get('Parameters', 'model_parameter', '');
-        if ($model_parameter === null) {
-            $model_parameter = '';
-        }
 
-        if (substr(strtolower($model_parameter), 0, 4) == 'list') {
-            $model_name = 'plugindata';
-
-        } elseif (strtolower($model_name) == '' && strtolower($model_parameter) == '') {
+        if (strtolower($model_name) == '') {
             $model_name = 'Dummy';
-
-        } elseif (strtolower($this->type) == 'asset') {
-            $model_name = 'Assets';
-
-        } elseif (strtolower($this->type) == 'metadata') {
-            $model_name = 'Metadata';
-
-        } elseif (strtolower($this->type) == 'template' && $model_name == '') {
-            $model_name = 'plugindata';
         }
         Services::Registry()->set('Parameters', 'model_name', $model_name);
 
@@ -116,10 +100,9 @@ Class ModalIncluder extends Includer
 
         /* Set other model parameters: model_parameter is set in Attributes */
 
-        $model_parameter = Services::Registry()->get('Parameters', 'model_parameter', '');
-
-        Services::Registry()->set('Parameters', 'model_type', 'dbo');
-        Services::Registry()->set('Parameters', 'model_query_object', 'get' . strtolower(ucfirst($model_name)));
+        Services::Registry()->set('Parameters', 'model_type', 'Registry');
+        Services::Registry()->set('Parameters', 'model_name', strtolower(ucfirst($model_name)));
+        Services::Registry()->set('Parameters', 'model_query_object', 'list');
 
         /** Cleanup */
         Services::Registry()->delete('Parameters', 'item*');

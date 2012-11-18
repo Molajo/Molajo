@@ -45,13 +45,12 @@ class DetailitemPlugin extends Plugin
             }
         }
 
-        /** Sets primary request model to use the PrimaryRequestQueryResults (created in Route ContentHelper) */
-        $this->set('model_name', 'Plugindata');
-        $this->parameters['model_name'] = 'Plugindata';
-        $this->set('model_type', 'dbo');
-        $this->parameters['model_type'] = 'dbo';
-        $this->set('model_query_object', 'getPlugindata');
-        $this->set('model_parameter', 'PrimaryRequestQueryResults');
+        $this->set('model_type', 'Plugindata');
+        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_query_object', 'list');
+
+        $this->parameters['model_type'] = 'Plugindata';
+        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
 
         //$this->getComments();
         return true;
@@ -60,34 +59,35 @@ class DetailitemPlugin extends Plugin
     /**
      * Grid Query: results stored in Plugin registry
      *
-     * @param   $connect
-     * @param   $primary_prefix
-     * @param   $table_name
-     *
      * @return bool
      * @since   1.0
      */
     protected function getComments()
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
-        $results = $connect->connect('Table', 'Comments');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('Datasource', 'Comments');
         if ($results === false) {
             return false;
         }
 
-        $connect->model->query->where('a.root = ' . $this->get('id'));
-        $connect->set('model_offset', 0);
-        $connect->set('model_count', 10);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $query_results = $connect->getData('list');
+        $controller->model->query->where('a.root = ' . $this->get('id'));
+        $controller->set('model_offset', 0);
+        $controller->set('model_count', 10);
+
+        $query_results = $controller->getData('list');
 
         echo '<pre><br /><br />';
         var_dump($query_results);
         echo '<br /><br /></pre>';
 
         echo '<br /><br />';
-        echo $connect->model->query->__toString();
+        echo $controller->model->query->__toString();
         echo '<br /><br />';
 
         die;

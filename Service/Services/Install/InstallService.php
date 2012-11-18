@@ -54,34 +54,34 @@ Class InstallService
     public function content()
     {
         $copy_model_name = 'Content';
-        $copy_model_type = 'Table';
+        $copy_model_type = 'Datasource';
         $copy_extension_instance_id = 2;
         $copy_catalog_type_id = 10000;
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $m->connect($copy_model_type, $copy_model_name);
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry($copy_model_type, $copy_model_name);
 
-        $table_registry_name = $copy_model_name . $copy_model_type;
+        $model_registry = $copy_model_name . $copy_model_type;
 
-        $m->set('get_item_children', 0);
-        $m->set('use_special_joins', 0);
-        $m->set('check_view_level_access', 1);
-        $m->set('process_plugins', 0);
+        $controller->set('get_item_children', 0);
+        $controller->set('use_special_joins', 0);
+        $controller->set('check_view_level_access', 1);
+        $controller->set('process_plugins', 0);
 
-        $name_key = $m->get('name_key');
-        $primary_key = $m->get('primary_key');
-        $primary_prefix = $m->get('primary_prefix', 'a');
+        $name_key = $controller->get('name_key');
+        $primary_key = $controller->get('primary_key');
+        $primary_prefix = $controller->get('primary_prefix', 'a');
 
-        $m->model->query->where($m->model->db->qn($primary_prefix)
-            . '.' . $m->model->db->qn('extension_instance_id')
+        $controller->model->query->where($controller->model->db->qn($primary_prefix)
+            . '.' . $controller->model->db->qn('extension_instance_id')
             . ' = ' . (int) $copy_extension_instance_id);
 
-        $m->model->query->where($m->model->db->qn($primary_prefix)
-            . '.' . $m->model->db->qn('catalog_type_id')
+        $controller->model->query->where($controller->model->db->qn($primary_prefix)
+            . '.' . $controller->model->db->qn('catalog_type_id')
             . ' = ' . (int) $copy_catalog_type_id);
 
-        $item = $m->getData('item');
+        $item = $controller->getData('item');
 
         /** target data */
         $extension_instance_id = 5;
@@ -108,7 +108,7 @@ Class InstallService
         $email_address[] = 'MaryKline@example.com';
         $website[] = 'http://example.com/';
 
-        $fields = Services::Registry()->get($table_registry_name, 'fields');
+        $fields = Services::Registry()->get($model_registry, 'fields');
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -160,13 +160,13 @@ Class InstallService
         $data->status_prior_to_version = 0;
         $data->protected = 0;
         $data->model_name = $item_model_name;
-        $data->model_type = 'Table';
+        $data->model_type = 'Datasource';
 
 //Services::Text()->addImage(200, 300, 'cat');
 
         $data->parameters = array();
-        Services::Registry()->sort($table_registry_name . 'Parameters');
-        $parameters = Services::Registry()->getArray($table_registry_name . 'Parameters');
+        Services::Registry()->sort($model_registry . 'Parameters');
+        $parameters = Services::Registry()->getArray($model_registry . 'Parameters');
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
 
@@ -189,8 +189,8 @@ Class InstallService
         }
 
         $data->metadata = array();
-        Services::Registry()->sort($table_registry_name . 'Metadata');
-        $parameters = Services::Registry()->getArray($table_registry_name . 'Metadata');
+        Services::Registry()->sort($model_registry . 'Metadata');
+        $parameters = Services::Registry()->getArray($model_registry . 'Metadata');
 
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
@@ -205,8 +205,8 @@ Class InstallService
         for ($i = 0; $i < 3; $i++) {
 
             $data->customfields = array();
-            Services::Registry()->sort($table_registry_name . 'Customfields');
-            $customfields = Services::Registry()->getArray($table_registry_name . 'Customfields');
+            Services::Registry()->sort($model_registry . 'Customfields');
+            $customfields = Services::Registry()->getArray($model_registry . 'Customfields');
 
             if (count($customfields) > 0) {
                 foreach ($customfields as $key => $value) {
@@ -287,7 +287,7 @@ Class InstallService
     public function testCreateExtension($extension_name, $model_name, $source_path = null, $destination_path = null)
     {
         $controller = new CreateController();
-        $table_registry_name = ucfirst(strtolower($model_name)) . 'Table';
+        $model_registry = ucfirst(strtolower($model_name)) . 'Datasource';
 
         $data = new \stdClass();
         $data->title = $extension_name;
@@ -307,18 +307,23 @@ Class InstallService
     public function testDeleteExtension($extension_name, $model_name, $source_path = null)
     {
         /** Get Catalog Type ID */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $m->connect('Catalogtypes', 'Table');
+        $controller->getModelRegistry('Catalogtypes', 'Datasource');
 
-        $primary_prefix = $m->get('primary_prefix', 'a');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $m->model->query->select($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('id'));
-        $m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('model_name')
-            . ' = ' . $m->model->db->q($model_name));
+        $primary_prefix = $controller->get('primary_prefix', 'a');
 
-        $catalog_type_id = $m->getData('result');
+        $controller->model->query->select($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('id'));
+        $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('model_name')
+            . ' = ' . $controller->model->db->q($model_name));
+
+        $catalog_type_id = $controller->getData('result');
 
         // With the Catalog ID now available, contact the Delete Controller
         $controller = new DeleteController();
@@ -352,7 +357,7 @@ Class InstallService
     {
 
         $controller = new CreateController();
-        $table_registry_name = 'ArticlesTable';
+        $model_registry = 'ArticlesResource';
 
         $plugins = array();
         $plugins[] = 'Create';
@@ -369,7 +374,7 @@ Class InstallService
 
         /** Schedule onAfterCreate Event */
         $arguments = array(
-            'table_registry_name' => $table_registry_name,
+            'model_registry' => $model_registry,
             'db' => '',
             'data' => $query_results,
             'parameters' => $parameters,

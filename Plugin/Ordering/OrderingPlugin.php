@@ -48,28 +48,32 @@ class OrderingPlugin extends Plugin
             || (int) $fieldValue == 0
         ) {
 
-            $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-            $m = new $controllerClass();
-            $results = $m->connect($this->get('model_type'), $this->get('model_name'));
+            $controllerClass = CONTROLLER_CLASS;
+            $controller = new $controllerClass();
+            $results = $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
             if ($results === false) {
                 return false;
             }
 
+            $results = $controller->setDataobject();
+            if ($results === false) {
+                return false;
+            }
             $primary_prefix = $this->get('primary_prefix');
 
             $catalog_type_idField = $this->getField('catalog_type_id');
             $catalog_type_id = $this->getFieldValue($catalog_type_idField);
 
-            $m->model->query->select('max(' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('ordering') . ')');
-            $m->model->query->where($this->db->qn($primary_prefix) . '.' . $this->db->qn('catalog_type_id')
+            $controller->model->query->select('max(' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('ordering') . ')');
+            $controller->model->query->where($this->db->qn($primary_prefix) . '.' . $this->db->qn('catalog_type_id')
                 . ' = ' . (int) $catalog_type_id);
 
-            $m->set('use_special_joins', 0);
-            $m->set('check_view_level_access', 0);
-            $m->set('process_plugins', 0);
-            $m->set('get_customfields', 0);
+            $controller->set('use_special_joins', 0);
+            $controller->set('check_view_level_access', 0);
+            $controller->set('process_plugins', 0);
+            $controller->set('get_customfields', 0);
 
-            $ordering = $m->getData('result');
+            $ordering = $controller->getData('result');
 
             $newFieldValue = (int) $ordering + 1;
 

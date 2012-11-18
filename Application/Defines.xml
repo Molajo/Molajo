@@ -101,4 +101,7 @@
     <define name="AUTHENTICATE_STATUS_CANCEL" value="2"/>
     <define name="AUTHENTICATE_STATUS_FAILURE" value="4"/>
 
+    <define name="CONTROLLER_CLASS" value="Molajo\MVC\Controller\Controller"/>
+    <define name="HELPER_FILES" value="Molajo\Helper\"/>
+
 </defines>

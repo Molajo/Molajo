@@ -32,26 +32,32 @@ class DeferPlugin extends Plugin
         }
 
         /** JS */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
-        $results = $connect->connect('dbo', 'Assets');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+
+        $results = $controller->getModelRegistry('Assets', 'JsDefer');
         if ($results === false) {
             return false;
         }
-        $connect->set('model_parameter', 'JsDefer');
-        $query_results = $connect->getData('getAssets');
+
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $query_results = $controller->getData();
 
         Services::Registry()->set('Plugindata', 'jsdefer', $query_results);
 
         /** JS Declarations */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
-        $results = $connect->connect('dbo', 'Assets');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('dbo', 'Assets');
         if ($results === false) {
             return false;
         }
-        $connect->set('model_parameter', 'JsDeclarationsDefer');
-        $query_results = $connect->getData('getAssets');
+        $controller->set('model_parameter', 'JsDeclarationsDefer');
+        $query_results = $controller->getData('getAssets');
 
         Services::Registry()->set('Plugindata', 'jsdeclarationsdefer', $query_results);
 

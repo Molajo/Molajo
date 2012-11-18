@@ -623,11 +623,6 @@ Class AssetService
 		return $this;
 	}
 
-	public function clear()
-	{
-		return $this;
-	}
-
 	/**
 	 * getData
 	 *

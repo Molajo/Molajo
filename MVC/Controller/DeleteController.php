@@ -56,8 +56,8 @@ class DeleteController extends Controller
 
         if ($valid === true) {
 
-            $this->connect('Table', $this->data->model_name, 'DeleteModel');
-            $results = $this->model->delete($this->data, $this->table_registry_name);
+            $this->connect('Datasource', $this->data->model_name, 'DeleteModel');
+            $results = $this->model->delete($this->data, $this->model_registry);
 
             if ($results === false) {
             } else {
@@ -105,7 +105,7 @@ class DeleteController extends Controller
     public function getDeleteData()
     {
         $hold_model_name = $this->data->model_name;
-        $this->connect('Table', $hold_model_name);
+        $this->connect('Datasource', $hold_model_name);
 
         $this->set('use_special_joins', 0);
         $name_key = $this->get('name_key');
@@ -141,7 +141,7 @@ class DeleteController extends Controller
             return false;
         }
 
-        $fields = Services::Registry()->get($this->table_registry_name, 'fields');
+        $fields = Services::Registry()->get($this->model_registry, 'fields');
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -165,13 +165,13 @@ class DeleteController extends Controller
         $this->data->model_name = $hold_model_name;
 
         /** Process each field namespace  */
-        $customFieldTypes = Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups');
+        $customFieldTypes = Services::Registry()->get($this->model_registry, 'CustomFieldGroups');
 
         if (count($customFieldTypes) > 0) {
             foreach ($customFieldTypes as $customFieldName) {
                 $customFieldName = ucfirst(strtolower($customFieldName));
-                Services::Registry()->merge($this->table_registry_name . $customFieldName, $customFieldName);
-                Services::Registry()->deleteRegistry($this->table_registry_name . $customFieldName);
+                Services::Registry()->merge($this->model_registry . $customFieldName, $customFieldName);
+                Services::Registry()->deleteRegistry($this->model_registry . $customFieldName);
             }
         }
 
@@ -210,7 +210,7 @@ class DeleteController extends Controller
         }
 
         $arguments = array(
-            'table_registry_name' => $this->table_registry_name,
+            'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $this->data,
             'null_date' => $this->model->null_date,
@@ -254,7 +254,7 @@ class DeleteController extends Controller
 
         /** Schedule onAfterDelete Event */
         $arguments = array(
-            'table_registry_name' => $this->table_registry_name,
+            'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $this->data,
             'parameters' => $this->parameters,

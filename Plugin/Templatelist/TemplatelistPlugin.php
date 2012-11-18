@@ -46,15 +46,20 @@ class TemplatelistPlugin extends Plugin
 			$model_type = 'Resource';
 		}
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $connect->connect($model_type, $model_name);
+        $results = $controller->getModelRegistry($model_type, $model_name);
         if ($results === false) {
             return false;
         }
 
-		$primary_prefix = $connect->get('primary_prefix', 'a');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+		$primary_prefix = $controller->get('primary_prefix', 'a');
 
 		if (isset($this->parameters['list_ordering'])) {
 			$ordering = $this->parameters['list_ordering'];
@@ -70,10 +75,10 @@ class TemplatelistPlugin extends Plugin
         if ($ordering == '' || $ordering === null) {
         } else {
 			if ($direction == '' || $direction === null) {
-				$connect->model->query->order($connect->model->db->qn($ordering));
+				$controller->model->query->order($controller->model->db->qn($ordering));
 			} else {
-				$connect->model->query->order($connect->model->db->qn($ordering)
-					. ' ' . $connect->model->db->qn($direction));
+				$controller->model->query->order($controller->model->db->qn($ordering)
+					. ' ' . $controller->model->db->qn($direction));
 			}
 		}
 
@@ -103,11 +108,11 @@ class TemplatelistPlugin extends Plugin
 			$pagination = 0;
 		}
 
-        $connect->set('model_offset', $offset);
-        $connect->set('model_count', $count);
-		$connect->set('use_pagination', $pagination);
+        $controller->set('model_offset', $offset);
+        $controller->set('model_count', $count);
+		$controller->set('use_pagination', $pagination);
 
-        $this->data = $connect->getData('list');
+        $this->data = $controller->getData('list');
 
         return true;
     }

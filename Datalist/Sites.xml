@@ -12,7 +12,7 @@
         process_plugins="0"
         published_status="0"
         catalog_type_id="1000"
-        data_source="JDatabase">
+        data_object="Database">
     <table>
         <fields>
             <include field="id_pk"/>

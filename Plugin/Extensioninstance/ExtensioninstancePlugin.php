@@ -41,24 +41,29 @@ class ExtensioninstancePlugin extends Plugin
         /** Check ACL */
 
         /** Check if the Extension Instance already exists */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $m->connect('Table', 'ExtensionInstances');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry('Datasource', 'ExtensionInstances');
 
-        $primary_prefix = $m->get('primary_prefix', 'a');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $m->set('get_customfields', '0');
-        $m->set('get_item_children', '0');
-        $m->set('use_special_joins', '0');
-        $m->set('check_view_level_access', '0');
+        $primary_prefix = $controller->get('primary_prefix', 'a');
 
-        $m->model->query->select($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('id'));
-        $m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('title')
-            . ' = ' . $m->model->db->q($this->data->title));
-        $m->model->query->where($m->model->db->qn($primary_prefix) . '.' . $m->model->db->qn('catalog_type_id')
+        $controller->set('get_customfields', '0');
+        $controller->set('get_item_children', '0');
+        $controller->set('use_special_joins', '0');
+        $controller->set('check_view_level_access', '0');
+
+        $controller->model->query->select($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('id'));
+        $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('title')
+            . ' = ' . $controller->model->db->q($this->data->title));
+        $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('catalog_type_id')
             . ' = ' . (int) $this->data->catalog_type_id);
 
-        $id = $m->getData('result');
+        $id = $controller->getData('result');
 
         if ((int) $id > 0) {
             //name already exists
@@ -66,17 +71,21 @@ class ExtensioninstancePlugin extends Plugin
         }
 
         /** Next, see if the Extension node exists */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $m->connect('Table', 'Extensions');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry('Datasource', 'Extensions');
 
-        $m->model->query->select($m->model->db->qn('a.id'));
-        $m->model->query->where($m->model->db->qn('a.name')
-            . ' = ' . $m->model->db->q($this->data->title));
-        $m->model->query->where($m->model->db->qn('a.catalog_type_id')
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+        $controller->model->query->select($controller->model->db->qn('a.id'));
+        $controller->model->query->where($controller->model->db->qn('a.name')
+            . ' = ' . $controller->model->db->q($this->data->title));
+        $controller->model->query->where($controller->model->db->qn('a.catalog_type_id')
             . ' = ' . (int) $this->data->catalog_type_id);
 
-        $item = $m->getData('item');
+        $item = $controller->getData('item');
 
         if ($item === false) {
         } else {
@@ -91,22 +100,27 @@ class ExtensioninstancePlugin extends Plugin
         //todo decide if another query is warranted for verifying existence of catalog type
 
         /** Create a new Catalog Type */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $m->connect();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry();
+
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
         /** Catalog Types */
-        $sql = 'INSERT INTO ' . $m->model->db->qn('#__catalog_types');
+        $sql = 'INSERT INTO ' . $controller->model->db->qn('#__catalog_types');
         $sql .= ' VALUES ( NULL, '
-            . $m->model->db->q($this->data->title)
+            . $controller->model->db->q($this->data->title)
             . ', 0, '
-            . $m->model->db->q($this->data->title)
-            . ', ' . $m->model->db->q('#__content') . ')';
+            . $controller->model->db->q($this->data->title)
+            . ', ' . $controller->model->db->q('#__content') . ')';
 
-        $m->model->db->setQuery($sql);
-        $m->model->db->execute();
+        $controller->model->db->setQuery($sql);
+        $controller->model->db->execute();
 
-        $this->parameters['criteria_catalog_type_id'] = $m->model->db->insertid();
+        $this->parameters['criteria_catalog_type_id'] = $controller->model->db->insertid();
 
         /** Create a new Extension Node */
         $data = new \stdClass();
@@ -188,7 +202,7 @@ class ExtensioninstancePlugin extends Plugin
         $controller = new CreateController();
 
         $data = new \stdClass();
-        $data->catalog_type_id = Services::Registry()->get($this->table_registry_name, 'catalog_type_id');
+        $data->catalog_type_id = Services::Registry()->get($this->model_registry, 'catalog_type_id');
         $data->source_id = $id;
         $data->view_group_id = 1;
         $data->extension_instance_id = $id;
@@ -228,26 +242,31 @@ class ExtensioninstancePlugin extends Plugin
         }
 
         /** Do not allow delete if there is content for this resource */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $m->connect('Table', $this->data->title);
+        $controller->getModelRegistry('Datasource', $this->data->title);
 
-        $primary_prefix = $m->get('primary_prefix', 'a');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $m->set('get_customfields', '0');
-        $m->set('get_item_children', '0');
-        $m->set('use_special_joins', '0');
-        $m->set('check_view_level_access', '0');
+        $primary_prefix = $controller->get('primary_prefix', 'a');
+
+        $controller->set('get_customfields', '0');
+        $controller->set('get_item_children', '0');
+        $controller->set('use_special_joins', '0');
+        $controller->set('check_view_level_access', '0');
 
         if (isset($this->parameters['criteria_catalog_type_id'])) {
             $temp = (int) $this->parameters['criteria_catalog_type_id'];
 
-            $m->model->query->where($m->model->db->qn($primary_prefix)
-                . '.' . $m->model->db->qn('catalog_type_id')
+            $controller->model->query->where($controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' = ' . $temp);
 
-            $item = $m->getData('item');
+            $item = $controller->getData('item');
 
             if ($item === false) {
             } else {
@@ -257,29 +276,33 @@ class ExtensioninstancePlugin extends Plugin
         }
 
         /** Delete allowed - get rid of ACL info */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $m->connect();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry();
 
-        $sql = 'DELETE FROM ' . $m->model->db->qn('#__application_extension_instances');
-        $sql .= ' WHERE ' . $m->model->db->qn('extension_instance_id') . ' = ' . (int) $this->data->id;
-        $m->model->db->setQuery($sql);
-        $m->model->db->execute();
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+        $sql = 'DELETE FROM ' . $controller->model->db->qn('#__application_extension_instances');
+        $sql .= ' WHERE ' . $controller->model->db->qn('extension_instance_id') . ' = ' . (int) $this->data->id;
+        $controller->model->db->setQuery($sql);
+        $controller->model->db->execute();
 
-        $sql = 'DELETE FROM ' . $m->model->db->qn('#__site_extension_instances');
-        $sql .= ' WHERE ' . $m->model->db->qn('extension_instance_id') . ' = ' . (int) $this->data->id;
-        $m->model->db->setQuery($sql);
-        $m->model->db->execute();
+        $sql = 'DELETE FROM ' . $controller->model->db->qn('#__site_extension_instances');
+        $sql .= ' WHERE ' . $controller->model->db->qn('extension_instance_id') . ' = ' . (int) $this->data->id;
+        $controller->model->db->setQuery($sql);
+        $controller->model->db->execute();
 
-        $sql = 'DELETE FROM ' . $m->model->db->qn('#__group_permissions');
-        $sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->catalog_id;
-        $m->model->db->setQuery($sql);
-        $m->model->db->execute();
+        $sql = 'DELETE FROM ' . $controller->model->db->qn('#__group_permissions');
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->data->catalog_id;
+        $controller->model->db->setQuery($sql);
+        $controller->model->db->execute();
 
-        $sql = 'DELETE FROM ' . $m->model->db->qn('#__view_group_permissions');
-        $sql .= ' WHERE ' . $m->model->db->qn('catalog_id') . ' = ' . (int) $this->data->catalog_id;
-        $m->model->db->setQuery($sql);
-        $m->model->db->execute();
+        $sql = 'DELETE FROM ' . $controller->model->db->qn('#__view_group_permissions');
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->data->catalog_id;
+        $controller->model->db->setQuery($sql);
+        $controller->model->db->execute();
 
         /** Catalog has plugins for more deletions */
         $controller = new DeleteController();
@@ -304,25 +327,31 @@ class ExtensioninstancePlugin extends Plugin
      */
     public function onAfterDelete()
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('Table', 'ExtensionInstances');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+
+        $results = $controller->getModelRegistry('Datasource', 'ExtensionInstances');
         if ($results === false) {
             return false;
         }
 
-        $m->set('get_customfields', 0);
-        $m->set('get_item_children', 0);
-        $m->set('use_special_joins', 0);
-        $m->set('check_view_level_access', 0);
-        $m->set('process_plugins', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $m->model->query->select('COUNT(*)');
-        $m->model->query->from($m->model->db->qn('#__extension_instances'));
-        $m->model->query->where($m->model->db->qn('extension_id')
+        $controller->set('get_customfields', 0);
+        $controller->set('get_item_children', 0);
+        $controller->set('use_special_joins', 0);
+        $controller->set('check_view_level_access', 0);
+        $controller->set('process_plugins', 0);
+
+        $controller->model->query->select('COUNT(*)');
+        $controller->model->query->from($controller->model->db->qn('#__extension_instances'));
+        $controller->model->query->where($controller->model->db->qn('extension_id')
             . ' = ' . (int) $this->data->extension_id);
 
-        $value = $m->getData('result');
+        $value = $controller->getData('result');
 
         if (empty($value) || (int) $value == 0) {
         } else {

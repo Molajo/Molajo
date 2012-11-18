@@ -28,6 +28,14 @@ Class ConfigurationService
 	 */
 	protected static $instance;
 
+    /**
+     * Valid Data Object Attributes
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected static $valid_dataobject_attributes;
+
 	/**
 	 * Valid Query Attributes
 	 *
@@ -99,10 +107,10 @@ Class ConfigurationService
 	 * @return bool|object
 	 * @since  1.0
 	 */
-	public static function getInstance($configuration_file = null)
+	public static function getInstance()
 	{
 		if (empty(self::$instance)) {
-			self::$instance = new ConfigurationService($configuration_file);
+			self::$instance = new ConfigurationService();
 		}
 
 		return self::$instance;
@@ -116,11 +124,11 @@ Class ConfigurationService
 	 * @return object
 	 * @since   1.0
 	 */
-	public function __construct($configuration_file = null)
+	public function __construct()
 	{
 		$this->getFieldProperties();
 
-		$this->getSite($configuration_file);
+		$this->getSite();
 
 		$this->getApplication();
 
@@ -161,77 +169,126 @@ Class ConfigurationService
 		return simplexml_load_string($xml_string);
 	}
 
-	/**
-	 * getModel loads registry for requested model configuration
-	 *
-	 * Usage:
-	 * Services::Configuration()->getModel('Resource', 'Articles');
-	 *
-	 * or - in classes where usage can happen before the service is activated:
-	 *
-	 * ConfigurationService::getModel($model_type, $model_name);
-	 *
-	 * @static
-	 * @param string $model_name
-	 * @param string $model_type
-	 *
-	 * @return string Name of the Model Registry object
-	 * @since  1.0
-	 *
-	 * @throws \RuntimeException
-	 */
-	public static function getModel($model_type, $model_name)
-	{
-		$registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+    /**
+     * getDataobject loads registry for requested resource
+     *
+     * Usage:
+     * Services::Configuration()->getDataobject('Dataobject', 'Database');
+     * Services::Configuration()->getDataobject('Dataobject', 'Assets');
+     *
+     * @static
+     * @param string $model_name
+     * @param string $model_type
+     *
+     * @return string Name of the Dataobject Registry object
+     * @since  1.0
+     *
+     * @throws \RuntimeException
+     */
+    public static function getDataobject($model_type, $model_name)
+    {
+        $registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
-		if (class_exists('Services')) {
-			$exists = Services::Registry()->exists($registryName);
-			if ($exists === true) {
-				return $registryName;
-			}
-		}
+        if (class_exists('Services')) {
+            $exists = Services::Registry()->exists($registryName);
+            if ($exists === true) {
+                return $registryName;
+            }
+        }
 
-		$path_and_file = ConfigurationService::locateFile($model_type, $model_name);
-		if ($path_and_file === false) {
-			// FAIL
-		}
+        $path_and_file = ConfigurationService::locateFile($model_type, $model_name);
+        if ($path_and_file === false) {
+            // FAIL
+        }
 
-		$xml_string = ConfigurationService::readXMLFile($path_and_file);
+        $xml_string = ConfigurationService::readXMLFile($path_and_file);
 
-		$results = ConfigurationService::getIncludeCode($xml_string, $model_name);
+        $results = ConfigurationService::getIncludeCode($xml_string, $model_name);
 
-		$xml = simplexml_load_string($results);
-		if (isset($xml->model)) {
-			$xml = $xml->model;
-		} else {
-			// FAIL
-		}
+        $xml = simplexml_load_string($results);
+        if (isset($xml->model)) {
+            $xml = $xml->model;
+        } else {
+            // FAIL
+        }
 
-		Services::Registry()->createRegistry($registryName);
+        Services::Registry()->createRegistry($registryName);
 
-		ConfigurationService::inheritDefinition($registryName, $xml);
+        ConfigurationService::setDataobjectRegistry($registryName, $xml);
 
-		ConfigurationService::setModelRegistry($registryName, $xml);
+        return $registryName;
+    }
 
-		$attr = array();
-		foreach (self::$valid_field_attributes as $type) {
-			$attr[] = array('fields', 'field', self::$valid_field_attributes);
-			$attr[] = array('joins', 'join', self::$valid_join_attributes);
-			$attr[] = array('foreignkeys', 'foreignkey', self::$valid_foreignkey_attributes);
-			$attr[] = array('criteria', 'where', self::$valid_criteria_attributes);
-			$attr[] = array('children', 'child', self::$valid_children_attributes);
-			$attr[] = array('plugins', 'plugin', self::$valid_plugin_attributes);
-			$attr[] = array('values', 'value', self::$valid_value_attributes);
-		}
+    /**
+     * getModel loads registry for requested model resource
+     *
+     * Usage:
+     * Services::Configuration()->getModel('Resource', 'Articles');
+     *
+     * or - in classes where usage can happen before the service is activated:
+     *
+     * ConfigurationService::getModel($model_type, $model_name);
+     *
+     * @static
+     * @param string $model_name
+     * @param string $model_type
+     *
+     * @return string Name of the Model Registry object
+     * @since  1.0
+     *
+     * @throws \RuntimeException
+     */
+    public static function getModel($model_type, $model_name)
+    {
+        $registryName = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
-		for ($i = 0; $i < count($attr); $i++) {
-			ConfigurationService::setElementsRegistry($registryName, $xml, $attr[$i][0], $attr[$i][1], $attr[$i][2]);
-		}
+        if (class_exists('Services')) {
+            $exists = Services::Registry()->exists($registryName);
+            if ($exists === true) {
+                return $registryName;
+            }
+        }
 
-		ConfigurationService::getCustomFields($xml, $registryName);
+        $path_and_file = ConfigurationService::locateFile($model_type, $model_name);
+        if ($path_and_file === false) {
+            // FAIL
+        }
 
-		return $registryName;
-	}
+        $xml_string = ConfigurationService::readXMLFile($path_and_file);
+
+        $results = ConfigurationService::getIncludeCode($xml_string, $model_name);
+
+        $xml = simplexml_load_string($results);
+        if (isset($xml->model)) {
+            $xml = $xml->model;
+        } else {
+            // FAIL
+        }
+
+        Services::Registry()->createRegistry($registryName);
+
+        ConfigurationService::inheritDefinition($registryName, $xml);
+        ConfigurationService::setModelRegistry($registryName, $xml);
+
+        $attr = array();
+        foreach (self::$valid_field_attributes as $type) {
+            $attr[] = array('fields', 'field', self::$valid_field_attributes);
+            $attr[] = array('joins', 'join', self::$valid_join_attributes);
+            $attr[] = array('foreignkeys', 'foreignkey', self::$valid_foreignkey_attributes);
+            $attr[] = array('criteria', 'where', self::$valid_criteria_attributes);
+            $attr[] = array('children', 'child', self::$valid_children_attributes);
+            $attr[] = array('plugins', 'plugin', self::$valid_plugin_attributes);
+            $attr[] = array('values', 'value', self::$valid_value_attributes);
+        }
+
+        for ($i = 0; $i < count($attr); $i++) {
+            ConfigurationService::setElementsRegistry($registryName, $xml, $attr[$i][0], $attr[$i][1], $attr[$i][2]);
+        }
+
+        ConfigurationService::getCustomFields($xml, $registryName);
+
+        return $registryName;
+    }
 
 	/**
 	 * Read XML file and return results
@@ -290,28 +347,49 @@ Class ConfigurationService
 			die;
 		}
 
-		if ($model_type == 'Service') {
-			$path = EXTENSIONS . '/Service/' . $model_name . '.xml';
+		if ($model_type == 'Dataobject') {
+			$path = SITE_DATAOBJECT_FOLDER. '/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;
 			}
 
-			$path = MOLAJO_FOLDER . '/Service/' . $model_name . '.xml';
+            $path = SITES_DATAOBJECT_FOLDER . '/' . $model_name . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            }
+
+			$path = PLATFORM_FOLDER . '/' . $model_type . '/' .$model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;
 			}
 
 			//throw error
-			echo 'ConfigurationService::locateFile() Cannot find Application Services File ';
+			echo 'ConfigurationService::locateFile() Cannot find ' . $model_type . ' for ' . $model_name;
 			die;
 		}
+
+        if ($model_type == 'Service') {
+            $path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            }
+
+            $path = PLATFORM_FOLDER . '/' . $model_type . '/' .$model_name . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            }
+
+            //throw error
+            echo 'ConfigurationService::locateFile() Cannot find ' . $model_type . ' for ' . $model_name;
+            die;
+        }
 
 		if ($model_type == 'Parse') {
 			$path = EXTENSIONS . '/Service/Services/Parse/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;
 			}
-			$path = MOLAJO_FOLDER . '/Service/Services/Parse/' . $model_name . '.xml';
+			$path = PLATFORM_FOLDER . '/Service/Services/Parse/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;
 			}
@@ -329,7 +407,7 @@ Class ConfigurationService
 				return $path;
 			}
 
-			$path = MOLAJO_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+			$path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;
 			}
@@ -348,7 +426,7 @@ Class ConfigurationService
 			}
 		}
 
-		$modeltypeArray = array('Application', 'Dbo', 'Include', 'Includer');
+		$modeltypeArray = array('Application', 'Include', 'Includer');
 		if (in_array($model_type, $modeltypeArray)) {
 			$path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '.xml';
 			if (file_exists($path)) {
@@ -356,7 +434,7 @@ Class ConfigurationService
 			} else {
 				$path = false;
 			}
-			$path = MOLAJO_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+			$path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
 			if (file_exists($path)) {
 				return $path;
 			} else {
@@ -374,7 +452,7 @@ Class ConfigurationService
 				$path = false;
 			}
 
-			$path = MOLAJO_FOLDER . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+			$path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
 			if (file_exists($path)) {
 				return $path;
 			} else {
@@ -387,8 +465,11 @@ Class ConfigurationService
 
 		if (in_array($model_type, $modeltypeArray)) {
 		} else {
+            echo '<pre>';
+            var_dump($modeltypeArray);
+            echo '</pre>';
 			echo '<br />Error found in Configuration Service. Model Type: ' . $model_type . ' is not valid ';
-			echo '<br />Also sent in was Model Name' . $model_name;
+			echo '<br />Model Name' . $model_name;
 			die;
 
 			return false;
@@ -439,20 +520,6 @@ Class ConfigurationService
 			}
 		}
 
-		$valid = array('Datalist', 'Table');
-		if (in_array($model_type, $valid)) {
-			$path = ConfigurationService::commonSearch(
-				$model_type, $model_name,
-				$extension_path, $primary_extension_path,
-				$theme_path, $page_view_path, $template_view_path, $wrap_view_path,
-				'', 'file'
-			);
-			if ($path === false) {
-			} else {
-				return $path;
-			}
-		}
-
 		$valid = array('Page', 'Template', 'Wrap');
 		if (in_array($model_type, $valid)) {
 
@@ -469,7 +536,35 @@ Class ConfigurationService
 			}
 		}
 
-		throw new \RuntimeException('File not found for Model Type: ' . $model_type . ' Name: ' . $model_name);
+
+        $valid = array('Datalist', 'Datasource');
+        if (in_array($model_type, $valid)) {
+            $path = ConfigurationService::commonSearch(
+                $model_type, $model_name,
+                $extension_path, $primary_extension_path,
+                $theme_path, $page_view_path, $template_view_path, $wrap_view_path,
+                '', 'file'
+            );
+            if ($path === false) {
+            } else {
+                return $path;
+            }
+        }
+
+        /** These are the Dataobjects, other than Database */
+        $path = ConfigurationService::commonSearch(
+            'Datasource', $model_type,
+            $extension_path, $primary_extension_path,
+            $theme_path, $page_view_path, $template_view_path, $wrap_view_path,
+            '', 'file'
+        );
+        if ($path === false) {
+        } else {
+            echo $path;
+            return $path;
+        }
+
+        throw new \RuntimeException('File not found for Model Type: ' . $model_type . ' Name: ' . $model_name);
 	}
 
 	/**
@@ -579,7 +674,7 @@ Class ConfigurationService
 			}
 
 			if ($path === false) {
-				$path = MOLAJO_FOLDER . $core_connector . $model_type . '/' . $model_name . '/Configuration.xml';
+				$path = PLATFORM_FOLDER . $core_connector . $model_type . '/' . $model_name . '/Configuration.xml';
 				if (file_exists($path)) {
 				} else {
 					$path = false;
@@ -597,7 +692,7 @@ Class ConfigurationService
 			}
 
 			if ($path === false) {
-				$path = MOLAJO_FOLDER . $core_connector . $model_type . '/' . $model_name . '.xml';
+				$path = PLATFORM_FOLDER . $core_connector . $model_type . '/' . $model_name . '.xml';
 				if (file_exists($path)) {
 				} else {
 					$path = false;
@@ -675,6 +770,38 @@ Class ConfigurationService
 
 		return $xml_string;
 	}
+
+    /**
+     * Retrieve base Dataobject Registry data and store it to the registry
+     *
+     * @static
+     * @param   $registryName
+     * @param   $xml
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    protected static function setDataobjectRegistry($registryName, $xml)
+    {
+
+        $doArray = Services::Registry()->get('Fields', 'Dataobjectattributes');
+
+        foreach ($xml->attributes() as $key => $value) {
+
+            if (in_array($key, $doArray)) {
+                Services::Registry()->set($registryName, $key, (string)$value);
+            } else {
+                echo 'Failure in ConfigurationService::setDataobjectRegistry for Registry: '
+                    . $registryName . ' Invalid Attribute: ' . $key;
+                die;
+            }
+        }
+
+        Services::Registry()->set($registryName, 'data_object',
+            Services::Registry()->get($registryName, 'name'));
+
+        return true;
+    }
 
 	/**
 	 * Retrieves base Model Registry data and stores it to the datasource registry
@@ -817,16 +944,21 @@ Class ConfigurationService
 		$joinSelectArray = array();
 
 		$joinModel = ucfirst(strtolower($modelJoinArray['model']));
-		$joinRegistry = $joinModel . 'Table';
+		$joinRegistry = $joinModel . 'Datasource';
 
 		if (Services::Registry()->exists($joinRegistry) === false) {
-			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-			$connect = new $controllerClass();
+			$controllerClass = CONTROLLER_CLASS;
+			$controller = new $controllerClass();
 
-			$results = $connect->connect('Table', $joinModel);
+			$results = $controller->getModelRegistry('Datasource', $joinModel);
 			if ($results === false) {
 				return false;
 			}
+
+            $results = $controller->setDataobject();
+            if ($results === false) {
+                return false;
+            }
 		}
 
 		$fields = Services::Registry()->get($joinRegistry, 'fields');
@@ -1055,7 +1187,7 @@ Class ConfigurationService
 
 		if ($extends_model_name == '') {
 			$extends_model_name = ucfirst(strtolower($extends));
-			$extends_model_type = 'Table';
+			$extends_model_type = 'Datasource';
 		}
 
 		$inheritRegistryName = $extends_model_name . $extends_model_type;
@@ -1064,12 +1196,18 @@ Class ConfigurationService
 		if (Services::Registry()->exists($inheritRegistryName) === true) {
 
 		} else {
-			$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-			$m = new $controllerClass();
-			$results = $m->connect($extends_model_type, $extends_model_name);
+            $controller_class = CONTROLLER_CLASS;
+			$controller = new $controller_class();
+
+            $results = $controller->getModelRegistry($extends_model_type, $extends_model_name);
 			if ($results === false) {
 				return false;
 			}
+
+            $results = $controller->setDataobject();
+            if ($results === false) {
+                return false;
+            }
 		}
 
 		/** Begin with inherited model */
@@ -1098,6 +1236,8 @@ Class ConfigurationService
 			die;
 		}
 
+        ConfigurationService::loadFieldProperties($xml, 'dataobjectattributes', 'dataobjectattribute');
+
 		ConfigurationService::loadFieldProperties($xml, 'modelattributes', 'modelattribute');
 
 		ConfigurationService::loadFieldProperties($xml, 'modeltypes', 'modeltype');
@@ -1119,10 +1259,11 @@ Class ConfigurationService
 		self::$valid_children_attributes = Services::Registry()->get('Fields', 'children');
 		self::$valid_plugin_attributes = Services::Registry()->get('Fields', 'plugins');
 		self::$valid_value_attributes = Services::Registry()->get('Fields', 'values');
+        self::$valid_dataobject_attributes = Services::Registry()->get('Fields', 'dataobjectattribute');
 
 		$datalistsArray = array();
 		$extensionArray = array();
-		$datalistsArray = ConfigurationService::loadDatalists($datalistsArray, MOLAJO_FOLDER . '/Datalist');
+		$datalistsArray = ConfigurationService::loadDatalists($datalistsArray, PLATFORM_FOLDER . '/Datalist');
 		$extensionArray = ConfigurationService::loadDatalists($datalistsArray, EXTENSIONS . '/Datalist');
 		array_merge($datalistsArray, $extensionArray);
 		sort($datalistsArray);
@@ -1190,56 +1331,15 @@ Class ConfigurationService
 	}
 
 	/**
-	 * Retrieve site configuration object from ini file
+	 * Add site data to configuration registry
+     *
+     * todo: get rid of this - make certain application uses the Defines, not the configuration values
 	 *
-	 * @param string $configuration_file optional
-	 *
-	 * @return object
-	 * @throws \Exception
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	protected function getSite($configuration_file = null)
+	protected function getSite()
 	{
-
-		if ($configuration_file === null) {
-			$configuration_file = SITE_BASE_PATH . '/configuration.php';
-		}
-		$configuration_class = 'SiteConfiguration';
-
-		if (file_exists($configuration_file)) {
-			require_once $configuration_file;
-
-		} else {
-			throw new \Exception('Fatal error - Site Configuration File does not exist', 100);
-		}
-
-		if (class_exists($configuration_class)) {
-			$siteData = new $configuration_class();
-		} else {
-			throw new \Exception('Fatal error - Configuration Class does not exist', 100);
-		}
-
-		foreach ($siteData as $key => $value) {
-			Services::Registry()->set('Configuration', $key, $value);
-		}
-
-		/** Retrieve Sites Data from DB
-		 * REMOVE QUERY - NOT NEEDED FOR STARTUP - DATE AVAILABLE FROM SITES.XML
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$m = new $controllerClass();
-
-		$results = $m->connect('Table', 'Site');
-		if ($results === false) {
-		return false;
-		}
-
-		$m->set('id', (int) SITE_ID);
-		$item = $m->getData('item');
-
-		if ($item === false) {
-		throw new \RuntimeException ('Site getSite() query problem');
-		}
-		 */
 		Services::Registry()->set('Configuration', 'site_id', SITE_ID);
 		Services::Registry()->set('Configuration', 'site_catalog_type_id', CATALOG_TYPE_SITE);
 		Services::Registry()->set('Configuration', 'site_name', SITE_NAME);
@@ -1271,16 +1371,23 @@ Class ConfigurationService
 
 			try {
 				$profiler_service = 0;
-				$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-				$m = new $controllerClass();
 
-				$results = $m->connect('Table', 'Application');
+				$controllerClass = CONTROLLER_CLASS;
+				$controller = new $controllerClass();
+
+				$results = $controller->getModelRegistry('Datasource', 'Application');
 				if ($results === false) {
 					return false;
 				}
-				$m->set('name_key_value', APPLICATION);
 
-				$item = $m->getData('item');
+                $results = $controller->setDataobject();
+                if ($results === false) {
+                    return false;
+                }
+
+				$controller->set('name_key_value', APPLICATION);
+
+				$item = $controller->getData('item');
 				if ($item === false) {
 					throw new \RuntimeException ('Application getApplication() query problem');
 				}
@@ -1292,13 +1399,12 @@ Class ConfigurationService
 				Services::Registry()->set('Configuration', 'application_path', $item->path);
 				Services::Registry()->set('Configuration', 'application_description', $item->description);
 
-				/** Combine Application and Site Parameters into Configuration */
-				$parameters = Services::Registry()->getArray('ApplicationTableParameters');
+				$parameters = Services::Registry()->getArray('ApplicationDatasourceParameters');
 				$profiler_service = 0;
 
 				foreach ($parameters as $key => $value) {
 
-					if (substr($key, 0, strlen('jdatabase')) == 'jdatabase') {
+					if (substr($key, 0, strlen('database')) == 'database') {
 					} else {
 
 						$existing = Services::Registry()->get('Configuration', $key);
@@ -1314,12 +1420,12 @@ Class ConfigurationService
 				}
 
 				/** Application Metadata */
-				$metadata = Services::Registry()->getArray('ApplicationTableMetadata');
+				$metadata = Services::Registry()->getArray('ApplicationDatasourceMetadata');
 				foreach ($metadata as $key => $value) {
 					Services::Registry()->set('Configuration', 'metadata_' . $key, $value);
 				}
 
-				Services::Registry()->delete('Configuration', 'jdatabase*');
+				Services::Registry()->delete('Configuration', 'database*');
 
 			} catch (\Exception $e) {
 				echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
@@ -1407,14 +1513,18 @@ Class ConfigurationService
 	 */
 	protected function getActions()
 	{
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$m = new $controllerClass();
-		$results = $m->connect('Table', 'Actions');
+		$controllerClass = CONTROLLER_CLASS;
+		$controller = new $controllerClass();
+		$results = $controller->getModelRegistry('Datasource', 'Actions');
 		if ($results === false) {
 			return false;
 		}
 
-		$items = $m->getData('list');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+		$items = $controller->getData('list');
 
 		if ($items === false) {
 			throw new \RuntimeException ('Application getApplication() getActions Query failed');

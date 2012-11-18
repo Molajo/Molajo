@@ -12,10 +12,9 @@
     <model name="Assetsjs" extends="TemplateviewsSystem">
         <customfields>
             <customfield name="parameters">
-                <field name="model_name" type="char" null="0" default="Plugindata"/>
-                <field name="model_type" type="char" null="0" default="dbo"/>
-                <field name="model_query_object" type="char" null="0" default="getPlugindata"/>
-                <field name="model_parameter" type="char" null="0" default="js"/>
+                <field name="model_type" type="char" null="0" default="Plugindata"/>
+                <field name="model_name" type="char" null="0" default="js"/>
+                <field name="model_query_object" type="char" null="0" default="list"/>
             </customfield>
         </customfields>
     </model>

@@ -54,11 +54,6 @@ Class MetadataService
         return $this;
     }
 
-    public function clear()
-    {
-        return $this;
-    }
-
     /**
      * getMetadata - retrieve header and metadata information
      *

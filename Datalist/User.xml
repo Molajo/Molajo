@@ -10,7 +10,7 @@
         process_plugins="0"
         published_status="1"
         catalog_type_id="3000"
-        data_source="JDatabase">
+        data_object="Database">
     <table>
         <fields>
             <include field="Id"/>

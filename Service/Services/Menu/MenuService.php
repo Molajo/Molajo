@@ -57,24 +57,29 @@ Class MenuService
             return false;
         }
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $m->connect('Table', 'MenuitemsNested');
+        $results = $controller->getModelRegistry('Datasource', 'MenuitemsNested');
         if ($results === false) {
             return false;
         }
 
-        $m->model->query->where($m->model->db->qn('current_menuitem.id')
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $controller->model->query->where($controller->model->db->qn('current_menuitem.id')
             . ' = ' . (int) $current_menuitem_id);
-		$m->model->query->where($m->model->db->qn('a.status') . ' > 0');
+		$controller->model->query->where($controller->model->db->qn('a.status') . ' > 0');
 
-        $m->model->query->order('a.lft DESC');
+        $controller->model->query->order('a.lft DESC');
 
-        $m->set('model_offset', 0);
-        $m->set('model_count', 999999);
+        $controller->set('model_offset', 0);
+        $controller->set('model_count', 999999);
 
-        $query_results = $m->getData('list');
+        $query_results = $controller->getData('list');
 
         $look_for_parent = 0;
 
@@ -116,44 +121,49 @@ Class MenuService
     public function get($menu_id, $current_menu_item = 0, $bread_crumbs = array())
     {
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $m->connect('System', 'Menuitems');
+        $results = $controller->getModelRegistry('System', 'Menuitems');
         if ($results === false) {
             return false;
         }
 
-        $m->model->query->select($m->model->db->qn('a.id'));
-        $m->model->query->select($m->model->db->qn('a.extension_id'));
-        $m->model->query->select($m->model->db->qn('a.catalog_type_id'));
-        $m->model->query->select($m->model->db->qn('a.title'));
-        $m->model->query->select($m->model->db->qn('a.subtitle'));
-        $m->model->query->select($m->model->db->qn('a.path'));
-        $m->model->query->select($m->model->db->qn('a.alias'));
-        $m->model->query->select($m->model->db->qn('a.root'));
-        $m->model->query->select($m->model->db->qn('a.parent_id'));
-        $m->model->query->select($m->model->db->qn('a.lvl'));
-        $m->model->query->select($m->model->db->qn('a.lft'));
-        $m->model->query->select($m->model->db->qn('a.rgt'));
-        $m->model->query->select($m->model->db->qn('a.home'));
-        $m->model->query->select($m->model->db->qn('a.parameters'));
-        $m->model->query->select($m->model->db->qn('a.ordering'));
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $m->model->query->where($m->model->db->qn('a.extension_id') . ' = ' . (int) $menu_id);
-		$m->model->query->where($m->model->db->qn('a.status') . ' > 0');
+        $controller->model->query->select($controller->model->db->qn('a.id'));
+        $controller->model->query->select($controller->model->db->qn('a.extension_id'));
+        $controller->model->query->select($controller->model->db->qn('a.catalog_type_id'));
+        $controller->model->query->select($controller->model->db->qn('a.title'));
+        $controller->model->query->select($controller->model->db->qn('a.subtitle'));
+        $controller->model->query->select($controller->model->db->qn('a.path'));
+        $controller->model->query->select($controller->model->db->qn('a.alias'));
+        $controller->model->query->select($controller->model->db->qn('a.root'));
+        $controller->model->query->select($controller->model->db->qn('a.parent_id'));
+        $controller->model->query->select($controller->model->db->qn('a.lvl'));
+        $controller->model->query->select($controller->model->db->qn('a.lft'));
+        $controller->model->query->select($controller->model->db->qn('a.rgt'));
+        $controller->model->query->select($controller->model->db->qn('a.home'));
+        $controller->model->query->select($controller->model->db->qn('a.parameters'));
+        $controller->model->query->select($controller->model->db->qn('a.ordering'));
 
-		$m->model->query->where($m->model->db->qn('catalog.enabled') . ' = 1');
+        $controller->model->query->where($controller->model->db->qn('a.extension_id') . ' = ' . (int) $menu_id);
+		$controller->model->query->where($controller->model->db->qn('a.status') . ' > 0');
 
-        $m->model->query->order('a.lft');
+		$controller->model->query->where($controller->model->db->qn('catalog.enabled') . ' = 1');
 
-        $m->set('model_offset', 0);
-        $m->set('model_count', 999999);
-		$m->set('get_customfields', 2);
-		$m->set('use_special_joins', 1);
-		$m->set('process_plugins', 1);
+        $controller->model->query->order('a.lft');
 
-        $query_results = $m->getData('list');
+        $controller->set('model_offset', 0);
+        $controller->set('model_count', 999999);
+		$controller->set('get_customfields', 2);
+		$controller->set('use_special_joins', 1);
+		$controller->set('process_plugins', 1);
+
+        $query_results = $controller->getData('list');
         if ($query_results === false) {
             return array();
         }

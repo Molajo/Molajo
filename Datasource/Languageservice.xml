@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Datasource" version="1.0">
+    <name>LANGUAGES_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>LANGUAGES_DESCRIPTION</description>
+    <model
+            name="Languageservice"
+            catalog_type_id="6000"
+            extension_instance_id="6000"
+            get_customfields="2"
+            use_special_joins="1"
+            process_plugins="0"
+            extends="ExtensioninstancesDatasource">
+        <customfields>
+            <customfield name="parameters">
+                <field name="name" type="char" default="English (United Kingdom)" null="0"/>
+                <field name="tag" type="char" default="en-GB" null="0"/>
+                <field name="rtl" type="char" default="0" null="0"/>
+                <field name="locale" type="char"
+                       default="en_GB.utf8, en_GB.UTF-8, en_GB, eng_GB, en, english, english-uk, uk, gbr, britain, england, great britain, uk, united kingdom, united-kingdom"
+                       null="0"/>
+                <field name="first_day" type="integer" default="0" null="0" values="1,2,3,4,5,6,7"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

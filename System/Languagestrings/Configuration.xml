@@ -23,5 +23,5 @@
             check_view_level_access="1"
             process_plugins="0"
             published_status="0"
-            extends="LanguagestringsTable"/>
+            extends="LanguagestringsDatasource"/>
 </extension>

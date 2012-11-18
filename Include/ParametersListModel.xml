@@ -3,7 +3,6 @@
 <include field="list_model_name"/>
 <include field="list_model_type"/>
 <include field="list_model_query_object"/>
-<include field="list_model_parameter"/>
 
 <include field="list_model_ordering"/>
 <include field="list_model_ordering_direction"/>

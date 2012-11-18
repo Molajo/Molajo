@@ -117,16 +117,16 @@ Class ThemeHelper
         Services::Registry()->set('Parameters', 'theme_catalog_type_id', (int) $item->catalog_view_group_id);
         Services::Registry()->set('Parameters', 'theme_catalog_type_title', $item->catalog_types_title);
 
-        Services::Registry()->set('Parameters', 'theme_table_registry_name', $item->table_registry_name);
+        Services::Registry()->set('Parameters', 'theme_model_registry', $item->model_registry);
 
         /** Merge in each custom field namespace  */
-        $customFieldTypes = Services::Registry()->get($item->table_registry_name, 'CustomFieldGroups');
+        $customFieldTypes = Services::Registry()->get($item->model_registry, 'CustomFieldGroups');
 
         if (count($customFieldTypes) > 0) {
             foreach ($customFieldTypes as $customFieldName) {
                 $customFieldName = ucfirst(strtolower($customFieldName));
-                Services::Registry()->merge($item->table_registry_name . $customFieldName, $customFieldName);
-                Services::Registry()->deleteRegistry($item->table_registry_name . $customFieldName);
+                Services::Registry()->merge($item->model_registry . $customFieldName, $customFieldName);
+                Services::Registry()->deleteRegistry($item->model_registry . $customFieldName);
             }
         }
 

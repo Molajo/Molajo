@@ -3,6 +3,6 @@
             name="Wrapviews"
             catalog_type_id="8000"
             extension_instance_id="1"
-            extends="ExtensionInstancesTable"
+            extends="ExtensionInstancesDatasource"
             />
 </datalist>

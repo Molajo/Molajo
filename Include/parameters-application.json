@@ -176,7 +176,7 @@
     "form_model_name":"",
     "form_model_type":"",
     "form_model_query_object":"item",
-    "form_model_parameter":"",
+
 
     "item_parent_menu_id":"",
     "item_theme_id":"",
@@ -194,7 +194,7 @@
     "item_model_name":"",
     "item_model_type":"",
     "item_model_query_object":"",
-    "item_model_parameter":"",
+
 
     "list_parent_menu_id":"",
     "list_theme_id":"",
@@ -212,7 +212,7 @@
     "list_model_name":"",
     "list_model_type":"",
     "list_model_query_object":"",
-    "list_model_parameter":"",
+
     "list_model_ordering":"",
     "list_model_ordering_direction":"",
     "list_model_offset":"10",

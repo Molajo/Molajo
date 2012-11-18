@@ -40,7 +40,7 @@ class PagetypesPlugin extends Plugin
 
 
 		$folders = Services::Filesystem()->folderFolders(
-			MOLAJO_FOLDER . '/Menuitem'
+			PLATFORM_FOLDER . '/Menuitem'
 		);
 
 		if (count($folders) === 0 || $folders === false) {

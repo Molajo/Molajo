@@ -37,7 +37,7 @@
         "form_model_name":"Articles",
         "form_model_type":"Resource",
         "form_model_query_object":"item",
-        "form_model_parameter":"",
+
 
         "item_parent_menu_id":"3012",
         "item_theme_id":"9020",
@@ -55,7 +55,7 @@
         "item_model_name":"Articles",
         "item_model_type":"Resource",
         "item_model_query_object":"item",
-        "item_model_parameter":"",
+
 
         "list_parent_menu_id":"3012",
         "list_theme_id":"9020",
@@ -73,7 +73,7 @@
         "list_model_name":"Articles",
         "list_model_type":"Resource",
         "list_model_query_object":"list",
-        "list_model_parameter":"",
+
         "list_model_ordering":"start_publishing_datetime",
         "list_model_direction":"DESC",
         "list_model_offset":"0",

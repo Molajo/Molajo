@@ -353,28 +353,33 @@ class CreatePlugin extends Plugin
      */
     protected function cloneGridMenuItem()
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $m->connect('Menuitem', 'Grid');
-        $table_registry_name = 'GridMenuitem';
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry('Menuitem', 'Grid');
 
-        $name_key = $m->get('name_key');
-        $primary_key = $m->get('primary_key');
-        $primary_prefix = $m->get('primary_prefix', 'a');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+        $model_registry = 'GridMenuitem';
 
-        $m->model->query->where($m->model->db->qn($primary_prefix)
-            . '.' . $m->model->db->qn('extension_instance_id') . ' = 100 ');
-        $m->model->query->where($m->model->db->qn($primary_prefix)
-            . '.' . $m->model->db->qn('lvl') . ' = 3 ');
+        $name_key = $controller->get('name_key');
+        $primary_key = $controller->get('primary_key');
+        $primary_prefix = $controller->get('primary_prefix', 'a');
 
-        $item = $m->getData('item');
+        $controller->model->query->where($controller->model->db->qn($primary_prefix)
+            . '.' . $controller->model->db->qn('extension_instance_id') . ' = 100 ');
+        $controller->model->query->where($controller->model->db->qn($primary_prefix)
+            . '.' . $controller->model->db->qn('lvl') . ' = 3 ');
+
+        $item = $controller->getData('item');
 
         /**
         echo '<br /><br /><br />';
-        echo $m->model->query->__toString();
+        echo $controller->model->query->__toString();
         echo '<br /><br /><br />';
          */
-        $fields = Services::Registry()->get($table_registry_name, 'fields');
+        $fields = Services::Registry()->get($model_registry, 'fields');
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -419,8 +424,8 @@ class CreatePlugin extends Plugin
         $data->protected = 0;
 
         $data->customfields = array();
-        Services::Registry()->sort($table_registry_name . 'Customfields');
-        $customfields = Services::Registry()->getArray($table_registry_name . 'Customfields');
+        Services::Registry()->sort($model_registry . 'Customfields');
+        $customfields = Services::Registry()->getArray($model_registry . 'Customfields');
         if (count($customfields) > 0) {
             foreach ($customfields as $key => $value) {
                 $data->customfields[$key] = '';
@@ -428,8 +433,8 @@ class CreatePlugin extends Plugin
         }
 
         $data->parameters = array();
-        Services::Registry()->sort($table_registry_name . 'Parameters');
-        $parameters = Services::Registry()->getArray($table_registry_name . 'Parameters');
+        Services::Registry()->sort($model_registry . 'Parameters');
+        $parameters = Services::Registry()->getArray($model_registry . 'Parameters');
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
 
@@ -455,8 +460,8 @@ class CreatePlugin extends Plugin
         }
 
         $data->metadata = array();
-        Services::Registry()->sort($table_registry_name . 'Metadata');
-        $parameters = Services::Registry()->getArray($table_registry_name . 'Metadata');
+        Services::Registry()->sort($model_registry . 'Metadata');
+        $parameters = Services::Registry()->getArray($model_registry . 'Metadata');
 
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {

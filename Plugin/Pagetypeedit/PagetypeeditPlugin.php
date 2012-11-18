@@ -76,13 +76,12 @@ echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
             $pageFieldsets[0]->page_count
         );
 
-        $this->set('model_name', 'Plugindata');
-        $this->set('model_type', 'dbo');
-        $this->set('model_query_object', 'getPlugindata');
-        $this->set('model_parameter', 'PrimaryRequestQueryResults');
+        $this->set('model_type', 'Plugindata');
+        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_query_object', 'list');
 
-        $this->parameters['model_name'] = 'Plugindata';
-        $this->parameters['model_type'] = 'dbo';
+        $this->parameters['model_type'] = 'Plugindata';
+        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
 
         Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $current_page);
 

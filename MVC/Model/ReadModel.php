@@ -169,13 +169,13 @@ class ReadModel extends Model
     }
 
     /**
-     * useSpecialJoins - Use joins defined in table xml to extend model
+     * useSpecialJoins - Use joins defined in table registry to extend model
      *
-     * @param  $joins
-     * @param  $primary_prefix
-     * @param  $query_object
+     * @param   $joins
+     * @param   $primary_prefix
+     * @param   $query_object
      *
-     * @return ReadModel
+     * @return  ReadModel
      * @since   1.0
      */
     public function useSpecialJoins($joins, $primary_prefix, $query_object)
@@ -319,11 +319,11 @@ class ReadModel extends Model
     /**
      * Add Model Criteria to Query
      *
-     * @param  $catalog_type_id
-     * @param  $extension_instance_id
-     * @param  $primary_prefix
+     * @param   $catalog_type_id
+     * @param   $extension_instance_id
+     * @param   $primary_prefix
      *
-     * @return ReadModel
+     * @return  ReadModel
      * @since   1.0
      */
     public function setModelCriteria($catalog_type_id, $extension_instance_id, $primary_prefix)
@@ -360,13 +360,13 @@ class ReadModel extends Model
     public function getQueryResults($query_object, $offset = 0, $count = 5, $use_pagination = 0)
     {
         $this->query_results = array();
-/*
+
  echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination  . '<br />';
 echo '<br /><br /><pre>';
         $string = $this->query->__toString();
         echo str_replace('#__', 'molajo_', $string);
 echo '</pre><br /><br />';
-*/
+
         $cache_key = $this->query->__toString();
         if ($cache_key == '') {
             echo '<pre>';
@@ -446,7 +446,7 @@ echo '</pre><br /><br />';
     }
 
     /**
-     * addCustomFields - Populate the custom fields defined by the Table xml with query results
+     * addCustomFields - Populate the custom fields defined by the xml with query results
      *
      * @param $model_name
      * @param $customFieldName
@@ -459,7 +459,7 @@ echo '</pre><br /><br />';
      * @since   1.0
      */
     public function addCustomFields(
-        $table_registry_name,
+        $model_registry,
         $customFieldName,
         $fields,
         $retrieval_method,
@@ -468,7 +468,7 @@ echo '</pre><br /><br />';
     ) {
         /** Prepare Registry Name */
         $customFieldName = strtolower($customFieldName);
-        $useRegistryName = $table_registry_name . ucfirst($customFieldName);
+        $useRegistryName = $model_registry . ucfirst($customFieldName);
 
         /** See if there are query results for this Custom Field Group */
         if (is_object($query_results) && isset($query_results->$customFieldName)) {
@@ -550,12 +550,13 @@ echo '</pre><br /><br />';
      * addItemChildren - Method to append additional data elements needed to the
      *     standard array of elements provided by the data source
      *
-     * @param $children
-     * @param $id
-     * @param $query_results
-     * @return mixed
+     * @param   $children
+     * @param   $id
+     * @param   $query_results
+     * @return  mixed
      *
-     * @since  1.0
+     * @since   1.0
+     * @return  object
      */
     public function addItemChildren($children, $id, $query_results)
     {
@@ -567,22 +568,25 @@ echo '</pre><br /><br />';
             $type = (string)$child['type'];
             $type = ucfirst(strtolower($type));
 
-            $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-            $m = new $controllerClass();
-            $results = $m->connect($type, $name);
+            $controllerClass = CONTROLLER_CLASS;
+            $controller = new $controllerClass();
+
+            $results = $controller->getModelRegistry($type, $name);
             if ($results === false) {
                 return false;
             }
 
-            $join = (string)$child['join'];
-            $joinPrimaryPrefix = $m->get('primary_prefix');
+            $results = $controller->setDataobject();
 
-            $m->model->query->where(
-                $m->model->db->qn($joinPrimaryPrefix . '.' . $join)
+            $join = (string)$child['join'];
+            $joinPrimaryPrefix = $controller->get('primary_prefix');
+
+            $controller->model->query->where(
+                $controller->model->db->qn($joinPrimaryPrefix . '.' . $join)
                     . ' = ' . (int)$id
             );
 
-            $results = $m->getData('list');
+            $results = $controller->getData('list');
 
             $query_results->$name = $results;
         }

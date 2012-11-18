@@ -234,9 +234,9 @@ class Includer
                 /** Model */
             } elseif ($name == 'datalist') {
                 Services::Registry()->set('Parameters', 'datalist', $value);
-                Services::Registry()->set('Parameters', 'model_type', 'dbo');
-                Services::Registry()->set('Parameters', 'model_name', 'Parameters');
-                Services::Registry()->set('Parameters', 'model_query_object', 'getParameters');
+                Services::Registry()->set('Parameters', 'model_type', 'Registry');
+                Services::Registry()->set('Parameters', 'model_name', $value);
+                Services::Registry()->set('Parameters', 'model_query_object', 'list');
 
             } elseif ($name == 'model_name') {
                 Services::Registry()->set('Parameters', 'model_name', $value);
@@ -244,17 +244,10 @@ class Includer
             } elseif ($name == 'model_type') {
                 Services::Registry()->set('Parameters', 'model_type', $value);
 
-            } elseif ($name == 'model_parameter' || $name == 'parameter' || $name == 'value') {
-                Services::Registry()->set('Parameters', 'model_parameter', $value);
-                Services::Registry()->set('Parameters', 'model_type', 'dbo');
-                Services::Registry()->set('Parameters', 'model_name', 'Plugindata');
-                Services::Registry()->set('Parameters', 'model_query_object', 'getPlugindata');
-
             } elseif ($name == 'model_parameter_np' || $name == 'parameter_np') {
-                Services::Registry()->set('Parameters', 'model_parameter', $value);
-                Services::Registry()->set('Parameters', 'model_type', 'dbo');
-                Services::Registry()->set('Parameters', 'model_name', 'Plugindatanoplugins');
-                Services::Registry()->set('Parameters', 'model_query_object', 'getPlugindata');
+                Services::Registry()->set('Parameters', 'model_type', 'Plugindatanoplugins');
+                Services::Registry()->set('Parameters', 'model_name', $value);
+                Services::Registry()->set('Parameters', 'model_query_object', 'list');
 
             } elseif ($name == 'model_query_object' || $name == 'query_object') {
                 Services::Registry()->set('Parameters', 'model_query_object', $value);

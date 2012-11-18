@@ -53,18 +53,23 @@ class ReferencedataPlugin extends Plugin
 
                     $new_name = $field->name . '_value';
 
-                    $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-                    $m = new $controllerClass();
-                    $m->connect('Table', $fk->source_model);
+                    $controllerClass = CONTROLLER_CLASS;
+                    $controller = new $controllerClass();
+                    $controller->getModelRegistry('Datasource', $fk->source_model);
 
-                    $m->set('get_customfields', '0');
-                    $m->set('get_item_children', '0');
-                    $m->set('use_special_joins', '0');
-                    $m->set('check_view_level_access', '0');
+                    $results = $controller->setDataobject();
+                    if ($results === false) {
+                        return false;
+                    }
 
-                    $m->set($m->get('primary_key', 'id'), (int) $fieldValue);
+                    $controller->set('get_customfields', '0');
+                    $controller->set('get_item_children', '0');
+                    $controller->set('use_special_joins', '0');
+                    $controller->set('check_view_level_access', '0');
 
-                    $value = $m->getData('result');
+                    $controller->set($controller->get('primary_key', 'id'), (int) $fieldValue);
+
+                    $value = $controller->getData('result');
 
                     if ($value === false) {
                     } else {

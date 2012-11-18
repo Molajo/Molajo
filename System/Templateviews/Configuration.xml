@@ -14,7 +14,7 @@
             catalog_type_id="9000"
             extension_instance_id="9000"
             process_plugins="0"
-            extends="RenderTable">
+            extends="RenderDatasource">
 
         <customfields>
             <customfield name="parameters">

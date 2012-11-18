@@ -169,7 +169,6 @@ Class EventService
                     return false;
                     //throw error
                 }
-
             }
         }
 
@@ -191,7 +190,7 @@ Class EventService
         $pluginClass = $class;
 
         try {
-            $connection = new $pluginClass();
+            $plugin = new $pluginClass();
 
         } catch (\Exception $e) {
 
@@ -208,16 +207,16 @@ Class EventService
         if (count($this->arguments) > 0) {
 
             foreach ($this->arguments as $propertyKey => $propertyValue) {
-                $connection->set($propertyKey, $propertyValue);
+                $plugin->set($propertyKey, $propertyValue);
             }
-            $connection->setFields();
+            $plugin->setFields();
         }
 
         /** 3. Execute Plugin Class Method */
         Services::Profiler()->set('EventService->schedule Event ' . $event
             . ' calling ' . $pluginClass . ' ' . $event, LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $results = $connection->$event();
+        $results = $plugin->$event();
 
         if ($results === false) {
 
@@ -234,7 +233,7 @@ Class EventService
             /** Retrieve Properties from Plugin Class to send back to Controller */
             if (count($this->arguments) > 0) {
                 foreach ($this->arguments as $propertyKey => $propertyValue) {
-                    $this->arguments[$propertyKey] = $connection->get($propertyKey);
+                    $this->arguments[$propertyKey] = $plugin->get($propertyKey);
                 }
             }
         }
@@ -252,7 +251,7 @@ Class EventService
     {
         Services::Profiler()->set('EventService->registerInstalledPlugins ', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $plugins = Services::Filesystem()->folderFolders(MOLAJO_FOLDER . '/' . 'Plugin');
+        $plugins = Services::Filesystem()->folderFolders(PLATFORM_FOLDER . '/' . 'Plugin');
 
         /** Load Parent Classes first */
         $pluginClass = 'Molajo\\Plugin\\Plugin\\Plugin';

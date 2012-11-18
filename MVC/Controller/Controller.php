@@ -56,7 +56,7 @@ class Controller
 	 * @var    string
 	 * @since  1.0
 	 */
-	public $table_registry_name;
+	public $model_registry;
 
 	/**
 	 * Set of rows returned from a query
@@ -147,10 +147,10 @@ class Controller
 	/**
 	 * Set the value of a Model property
 	 *
-	 * @param string $key
-	 * @param mixed  $value
+	 * @param   string $key
+	 * @param   mixed  $value
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   1.0
 	 */
 	public function set($key, $value = null)
@@ -161,89 +161,95 @@ class Controller
 	}
 
 	/**
-	 * Prepares data needed for the model using an XML table definition
+	 * Prepares data needed for the model using the model registry
 	 *
-	 * @param string $model_type
-	 * @param null   $model_name
-	 * @param string $model_class
+	 * @param   string  $model_type
+	 * @param   null    $model_name
+	 * @param   string  $model_class
 	 *
-	 * @return bool
-	 * @since  1.0
+	 * @return  bool
+	 * @since   1.0
 	 *
 	 * @throws \RuntimeException
 	 */
-	public function connect($model_type = 'Table', $model_name = null, $model_class = 'ReadModel')
+	public function getModelRegistry($model_type = 'Datasource', $model_name = null, $model_class = 'ReadModel')
 	{
-		$table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+		$model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 		$profiler_message = '';
 
-		if (Services::Registry()->exists($table_registry_name) === true) {
-			$this->table_registry_name = $table_registry_name;
-			$profiler_message = ' Table Registry ' . $this->table_registry_name . ' retrieved from Registry. <br />';
+		if (Services::Registry()->exists($model_registry) === true) {
+			$this->model_registry = $model_registry;
+			$profiler_message = ' Registry ' . $this->model_registry . ' retrieved from Registry. <br />';
 
 		} else {
-			$cached_output = Services::Cache()->get('Model', $table_registry_name);
+
+			$cached_output = Services::Cache()->get('Model', $model_registry);
 
 			if ($cached_output === false) {
-				$this->table_registry_name = ConfigurationService::getModel($model_type, $model_name);
-				$cache_it = Services::Registry()->getArray($table_registry_name, false);
-				Services::Cache()->set('Model', $table_registry_name, $cache_it);
-				$profiler_message = ' Table Registry ' . $this->table_registry_name . ' processed by ConfigurationService';
+				$this->model_registry = ConfigurationService::getModel($model_type, $model_name);
+				$cache_it = Services::Registry()->getArray($model_registry, false);
+				Services::Cache()->set('Model', $model_registry, $cache_it);
+				$profiler_message = ' Registry ' . $this->model_registry . ' processed by ConfigurationService';
 
 			} else {
-				$this->table_registry_name = $table_registry_name;
-				Services::Registry()->createRegistry($table_registry_name);
-				Services::Registry()->loadArray($table_registry_name, $cached_output);
-				$profiler_message = ' Table Registry ' . $this->table_registry_name . ' loaded from Cache. ';
+				$this->model_registry = $model_registry;
+				Services::Registry()->createRegistry($model_registry);
+				Services::Registry()->loadArray($model_registry, $cached_output);
+				$profiler_message = ' Registry ' . $this->model_registry . ' loaded from Cache. ';
 			}
 		}
+
+        if ($model_type == 'dbo') {
+            echo $profiler_message . '<br />';
+            die;
+        }
 
 		/** Serialize Options */
 		$this->set('model_type', $model_type);
 		$this->set('model_name',
-			Services::Registry()->get($this->table_registry_name, 'model_name', ''));
+			Services::Registry()->get($this->model_registry, 'model_name', ''));
 		$this->set('table_name',
-			Services::Registry()->get($this->table_registry_name, 'table', '#__content'));
+			Services::Registry()->get($this->model_registry, 'table', '#__content'));
 		$this->set('primary_key',
-			Services::Registry()->get($this->table_registry_name, 'primary_key', 'id'));
+			Services::Registry()->get($this->model_registry, 'primary_key', 'id'));
 		$this->set('name_key',
-			Services::Registry()->get($this->table_registry_name, 'name_key', 'title'));
+			Services::Registry()->get($this->model_registry, 'name_key', 'title'));
 		$this->set('primary_prefix',
-			Services::Registry()->get($this->table_registry_name, 'primary_prefix', 'a'));
+			Services::Registry()->get($this->model_registry, 'primary_prefix', 'a'));
 		$this->set('get_customfields',
-			Services::Registry()->get($this->table_registry_name, 'get_customfields', 0));
+			Services::Registry()->get($this->model_registry, 'get_customfields', 0));
 		$this->set('get_item_children',
-			Services::Registry()->get($this->table_registry_name, 'get_item_children', 0));
+			Services::Registry()->get($this->model_registry, 'get_item_children', 0));
 		$this->set('use_special_joins',
-			Services::Registry()->get($this->table_registry_name, 'use_special_joins', 0));
+			Services::Registry()->get($this->model_registry, 'use_special_joins', 0));
 		$this->set('check_view_level_access',
-			Services::Registry()->get($this->table_registry_name, 'check_view_level_access', 0));
+			Services::Registry()->get($this->model_registry, 'check_view_level_access', 0));
 		$this->set('process_plugins',
-			Services::Registry()->get($this->table_registry_name, 'process_plugins', 0));
+			Services::Registry()->get($this->model_registry, 'process_plugins', 0));
 		$this->set('process_template_plugins', 0);
 		$this->set('criteria_catalog_type_id',
-			Services::Registry()->get($this->table_registry_name, 'catalog_type_id', 0));
+			Services::Registry()->get($this->model_registry, 'catalog_type_id', 0));
 		$this->set('criteria_extension_instance_id',
-			Services::Registry()->get($this->table_registry_name, 'extension_instance_id', 0));
+			Services::Registry()->get($this->model_registry, 'extension_instance_id', 0));
 		$this->set('criteria_published_status',
-			Services::Registry()->get($this->table_registry_name, 'published_status', 0));
+			Services::Registry()->get($this->model_registry, 'published_status', 0));
 		$this->set('use_pagination',
-			Services::Registry()->get($this->table_registry_name, 'use_pagination', 1));
-		$this->set('data_source',
-			Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase'));
+			Services::Registry()->get($this->model_registry, 'use_pagination', 1));
+		$this->set('data_object',
+			Services::Registry()->get($this->model_registry, 'data_object', 'Database'));
 		$this->set('registry_entry',
-			Services::Registry()->get($this->table_registry_name, 'registry_entry', ''));
+			Services::Registry()->get($this->model_registry, 'registry_entry', ''));
 		$this->set('model_offset',
-			Services::Registry()->get($this->table_registry_name, 'model_offset', 0));
+			Services::Registry()->get($this->model_registry, 'model_offset', 0));
 		$this->set('use_pagination',
-			Services::Registry()->get($this->table_registry_name, 'use_pagination', 0));
+			Services::Registry()->get($this->model_registry, 'use_pagination', 0));
 		$this->set('model_count',
-			Services::Registry()->get($this->table_registry_name, 'model_count', 10));
+			Services::Registry()->get($this->model_registry, 'model_count', 10));
 
 		if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
 		} else {
 			ob_start();
-			Services::Registry()->get($this->table_registry_name, '*');
+			Services::Registry()->get($this->model_registry, '*');
 			$profiler_message .= ob_get_contents();
 			ob_end_clean();
 		}
@@ -260,28 +266,41 @@ class Controller
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
 		}
 
-		/** 3. Model DB Properties (note: 'mock' DBO's are used for processing non-DB data, like Messages */
-		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
-		if ($dbo === false) {
-			echo 'DBO for Table Registry: ' . $this->table_registry_name . ' could not be loaded. <br />';
-			return false;
-		}
-
-		$this->model->set('db', Services::$dbo()->get('db'));
-		$this->model->set('query', Services::$dbo()->getQuery());
-		$this->model->set('null_date', Services::$dbo()->get('db')->getNullDate());
-		$this->model->set('table_registry_name', $this->table_registry_name);
-
-		if ($dbo == 'JDatabase') {
-			$dateClass = 'JPlatform\\date\\JDate';
-			$dateFromJDate = new $dateClass('now');
-			$now = $dateFromJDate->toSql(false, Services::$dbo()->get('db'));
-			$this->model->set('now', $now);
-			$this->model->query->clear();
-		}
 
 		return $this;
 	}
+
+    /**
+     *  Connects to the Data Object, be it a Database or a Registry or Assets, etc.
+     *
+     *  @return  void
+     *  @since   1.0
+     */
+    public function setDataobject()
+    {
+        $data_object = $this->model->get('data_object');
+
+        if ($data_object === null || $data_object === false) {
+            $data_object = 'Database';
+            $this->model->set('data_object', $data_object);
+        }
+
+        $this->model->set('db', Services::$data_object()->get('db'));
+
+        $this->model->set('query', Services::$data_object()->getQuery());
+
+        $this->model->set('null_date', Services::$data_object()->get('db')->getNullDate());
+
+        $this->model->set('model_registry', $this->model_registry);
+
+//todo create an event for these
+        if ($data_object == 'Database') {
+            $dateClass = 'JPlatform\\date\\JDate';
+            $dateFromJDate = new $dateClass('now');
+            $now = $dateFromJDate->toSql(false, Services::$data_object()->get('db'));
+            $this->model->set('now', $now);
+        }
+    }
 
 	/**
 	 * Method to execute a model method and returns results
@@ -296,48 +315,48 @@ class Controller
 	public function getData($query_object = 'list')
 	{
 
-		/** 1. Initialisation */
+        $data_object = Services::Registry()->get($this->model_registry, 'data_object');
+        if ($data_object === false || $data_object === null) {
+            echo 'Data Object for Model Registry: ' . $this->model_registry . ' could not be loaded. <br />';
+            //throw error
+            die;
+        }
+
+        if ($this->model->get('db') === null) {
+            $this->setDataobject();
+        }
+
 		$query_object = strtolower($query_object);
+
 		$this->pagination_total = 0;
 		$this->model_offset = $this->get('model_offset');
 		$this->model_count = $this->get('model_count');
 		$this->use_pagination = $this->get('use_pagination');
 
-		$dbo = Services::Registry()->get($this->table_registry_name, 'data_source', 'JDatabase');
+        if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
+        } else {
+            $query_object = 'list';
+        }
 
-		$model_parameter = null;
-		if ($this->get('model_parameter') == '') {
-		} else {
-			$model_parameter = $this->get('model_parameter');
-		}
-		if ($this->get('model_parameter') == '') {
-			if ($dbo == 'JDatabase') {
-				if (in_array($query_object, array('result', 'item', 'list', 'distinct'))) {
-				} else {
-					$query_object = 'list';
-				}
-
-				$this->prepareQuery($query_object);
-			}
-		}
+        if ($data_object == 'Database') {
+            $this->prepareQuery($query_object);
+        }
 
 		$this->getPluginList($query_object);
 
 		$profiler_message =
-			' <br />Model Type: ' . $this->get('model_type', '')
-				. ' <br />Model Name: ' . $this->get('model_name', '')
-				. ' <br />Model Parameter: ' . $this->get('model_parameter', '')
-				. ' <br />Model Query Object: ' . $this->get('model_query_object', '')
+			' <br />Model Type: ' . $this->get('model_type')
+				. ' <br />Model Name: ' . $this->get('model_name')
+				. ' <br />Model Query Object: ' . $this->get('model_query_object')
 				. ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
+echo $profiler_message . ' <br />';
 
-		/** 2. Schedule onBeforeRead Event */
 		if (count($this->plugins) > 0) {
 			$this->onBeforeReadEvent();
 		}
 
-		/** 3. Execute Query, results in $this->query_results */
-		if ($dbo == 'JDatabase') {
-			$this->runStandardQuery($query_object);
+		if ($data_object == 'Database') {
+			$this->runQuery($query_object);
 
 		} else {
 
@@ -345,14 +364,14 @@ class Controller
 				$this->query_results = array();
 
 			} else {
-				if (trim($model_parameter) == '') {
-					$model_parameter = null;
-				}
-				$this->query_results = $this->model->$query_object($model_parameter);
+                $this->query_results = $this->db->runQuery(
+                    $this->get('model_type'),
+                    $this->get('model_name'),
+                    $query_object
+                );
 			}
 		}
 
-		/** 4. Schedule onAfterRead Event */
 		if (count($this->plugins) > 0) {
 			$this->onAfterReadEvent(
 				$this->pagination_total,
@@ -361,18 +380,15 @@ class Controller
 			);
 		}
 
-		/** 5. Return Non-standard DBO */
-		if ($dbo == 'JDatabase') {
+		if ($data_object == 'Database') {
 		} else {
 			return $this->query_results;
 		}
 
-		/** 6. Return Result and Distinct */
 		if ($query_object == 'result' || $query_object == 'distinct') {
 			return $this->query_results;
 		}
 
-		/** 7. Return List  */
 		if ($query_object == 'list') {
 
 			if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
@@ -392,7 +408,6 @@ class Controller
 			return $this->query_results;
 		}
 
-		/** 8. Return Item */
 		if (count($this->query_results) === 0 || $this->query_results === false) {
 			return array();
 		}
@@ -428,7 +443,7 @@ class Controller
 		$dataSourcePlugins = array();
 		if ((int)$this->get('process_plugins') == 1) {
 
-			$dataSourcePlugins = Services::Registry()->get($this->table_registry_name, 'plugins', array());
+			$dataSourcePlugins = Services::Registry()->get($this->model_registry, 'plugins', array());
 
 			if (is_array($dataSourcePlugins)) {
 			} else {
@@ -440,12 +455,12 @@ class Controller
 		$templatePlugins = array();
 		if ((int)$this->get('process_template_plugins') == 1) {
 
-			if ($this->get('template_view_table_registry_name') == $this->table_registry_name) {
+			if ($this->get('template_view_model_registry') == $this->model_registry) {
 				$temp = array();
 
 			} else {
 				$templatePlugins = Services::Registry()->get(
-					$this->get('template_view_table_registry_name'), 'plugins', array()
+					$this->get('template_view_model_registry'), 'plugins', array()
 				);
 
 				if (is_array($templatePlugins)) {
@@ -498,38 +513,33 @@ class Controller
 	 * Prepare query object for standard dbo queries
 	 *
 	 * @param  string $query_object
-	 * @return bool
+     *
+	 * @return  bool
+     * @since   1.0
 	 */
 	protected function prepareQuery($query_object = 'list')
 	{
-		/** 1. Base query */
 		if ($query_object == 'item' || $query_object == 'result') {
-			$id_key = (int)$this->get('id', 0);
+			$id_key_value = (int)$this->get('id', 0);
 			$name_key_value = (string)$this->get('name_key_value', '');
 
 		} else {
-			$id_key = 0;
+			$id_key_value = 0;
 			$name_key_value = '';
 		}
 
-		/** 2. if not already set, fields and where for primary key */
 		$this->model->setBaseQuery(
-			Services::Registry()->get($this->table_registry_name, 'Fields'),
+			Services::Registry()->get($this->model_registry, 'Fields'),
 			$this->get('table_name'),
 			$this->get('primary_prefix'),
 			$this->get('primary_key'),
-			$id_key,
+			$id_key_value,
 			$this->get('name_key'),
 			$name_key_value,
 			$query_object,
-			Services::Registry()->get($this->table_registry_name, 'Criteria')
+			Services::Registry()->get($this->model_registry, 'Criteria')
 		);
 
-		if ($this->table_registry_name == 'LanguagestringsSystem') {
-			$this->set('check_view_level_access', 0);
-		}
-
-		/** 3. append ACL query elements */
 		if ((int)$this->get('check_view_level_access') == 1) {
 			$this->model->addACLCheck(
 				$this->get('primary_prefix'),
@@ -538,9 +548,8 @@ class Controller
 			);
 		}
 
-		/** 4. model joins: select, from, and where */
 		if ((int)$this->get('use_special_joins') == 1) {
-			$joins = Services::Registry()->get($this->table_registry_name, 'Joins');
+			$joins = Services::Registry()->get($this->model_registry, 'Joins');
 			if (count($joins) > 0) {
 				$this->model->useSpecialJoins(
 					$joins,
@@ -550,7 +559,6 @@ class Controller
 			}
 		}
 
-		/** 5. Model Values */
 		$this->model->setModelCriteria(
 			$this->get('criteria_catalog_type_id'),
 			$this->get('criteria_extension_instance_id'),
@@ -566,7 +574,7 @@ class Controller
 	 * @param  string $query_object
 	 * @return bool
 	 */
-	protected function runStandardQuery($query_object = 'list')
+	protected function runQuery($query_object = 'list')
 	{
 		$this->model_offset = $this->get('model_offset', 0);
 		$this->model_count = $this->get('model_count', 10);
@@ -659,7 +667,7 @@ class Controller
 			if ((int)$this->get('get_customfields') == 0) {
 			} else {
 
-				$customFieldTypes = Services::Registry()->get($this->table_registry_name, 'CustomFieldGroups');
+				$customFieldTypes = Services::Registry()->get($this->model_registry, 'CustomFieldGroups');
 
 				if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
 				} else {
@@ -668,9 +676,9 @@ class Controller
 					foreach ($customFieldTypes as $customFieldName) {
 						$results =
 							$this->model->addCustomFields(
-								$this->table_registry_name,
+								$this->model_registry,
 								$customFieldName,
-								Services::Registry()->get($this->table_registry_name, $customFieldName),
+								Services::Registry()->get($this->model_registry, $customFieldName),
 								$this->get('get_customfields'),
 								$results,
 								$query_object
@@ -681,7 +689,7 @@ class Controller
 				/** Retrieve Child Objects */
 				if ((int)$this->get('get_item_children') == 1) {
 
-					$children = Services::Registry()->get($this->table_registry_name, 'Children');
+					$children = Services::Registry()->get($this->model_registry, 'Children');
 
 					if (count($children) > 0) {
 						$results = $this->model->addItemChildren(
@@ -710,7 +718,7 @@ class Controller
 	/**
 	 * Schedule onBeforeRead Event - could update model and parameter objects
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function onBeforeReadEvent()
@@ -723,7 +731,7 @@ class Controller
 
 		/** Schedule onBeforeRead Event */
 		$arguments = array(
-			'table_registry_name' => $this->table_registry_name,
+			'model_registry' => $this->model_registry,
 			'db' => $this->model->db,
 			'query' => $this->model->query,
 			'null_date' => $this->model->null_date,
@@ -734,7 +742,7 @@ class Controller
 		);
 
 		Services::Profiler()->set('DisplayController->onBeforeReadEvent '
-				. $this->table_registry_name
+				. $this->model_registry
 				. ' Schedules onBeforeRead', LOG_OUTPUT_PLUGINS, VERBOSE
 		);
 
@@ -742,7 +750,7 @@ class Controller
 
 		if ($arguments === false) {
 			Services::Profiler()->set('DisplayController->onBeforeReadEvent '
-					. $this->table_registry_name
+					. $this->model_registry
 					. ' failure ', LOG_OUTPUT_PLUGINS
 			);
 
@@ -750,7 +758,7 @@ class Controller
 		}
 
 		Services::Profiler()->set('DisplayController->onBeforeReadEvent '
-				. $this->table_registry_name
+				. $this->model_registry
 				. ' successful ', LOG_OUTPUT_PLUGINS, VERBOSE
 		);
 
@@ -796,7 +804,7 @@ class Controller
 			foreach ($items as $item) {
 
 				$arguments = array(
-					'table_registry_name' => $this->table_registry_name,
+					'model_registry' => $this->model_registry,
 					'parameters' => $this->parameters,
 					'data' => $item,
 					'model_name' => $this->get('model_name'),
@@ -806,7 +814,7 @@ class Controller
 
 				Services::Profiler()->set(
 					'DisplayController->onAfterReadEvent '
-						. $this->table_registry_name
+						. $this->model_registry
 						. ' Schedules onAfterRead',
 					LOG_OUTPUT_PLUGINS,
 					VERBOSE
@@ -817,7 +825,7 @@ class Controller
 				if ($arguments === false) {
 					Services::Profiler()->set(
 						'DisplayController->onAfterRead '
-							. $this->table_registry_name
+							. $this->model_registry
 							. ' failure ',
 						LOG_OUTPUT_PLUGINS
 					);
@@ -827,7 +835,7 @@ class Controller
 
 				Services::Profiler()->set(
 					'DisplayController->onAfterReadEvent '
-						. $this->table_registry_name
+						. $this->model_registry
 						. ' successful ',
 					LOG_OUTPUT_PLUGINS,
 					VERBOSE
@@ -841,7 +849,7 @@ class Controller
 
 		/** onAfterReadall - Passes the entire query_results through the plugin */
 		$arguments = array(
-			'table_registry_name' => $this->table_registry_name,
+			'model_registry' => $this->model_registry,
 			'parameters' => $this->parameters,
 			'data' => $this->query_results,
 			'model_type' => $this->get('model_type'),
@@ -850,7 +858,7 @@ class Controller
 
 		Services::Profiler()->set(
 			'DisplayController->onAfterReadEventAll '
-				. $this->table_registry_name
+				. $this->model_registry
 				. ' Schedules onAfterReadall',
 			LOG_OUTPUT_PLUGINS,
 			VERBOSE
@@ -861,7 +869,7 @@ class Controller
 		if ($arguments === false) {
 			Services::Profiler()->set(
 				'DisplayController->onAfterReadall '
-					. $this->table_registry_name
+					. $this->model_registry
 					. ' failure ',
 				LOG_OUTPUT_PLUGINS
 			);
@@ -871,7 +879,7 @@ class Controller
 
 		Services::Profiler()->set(
 			'DisplayController->onAfterReadEventAll '
-				. $this->table_registry_name
+				. $this->model_registry
 				. ' successful ',
 			LOG_OUTPUT_PLUGINS,
 			VERBOSE

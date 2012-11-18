@@ -132,15 +132,15 @@ Class ParseService
         Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
         /** Retrieve overrides (could be passed in and are set in the AjaxPlugin, too) */
-        $overrideIncludesPageXML = Services::Registry()->get('Override', 'sequence_xml', false);
-        $overrideIncludesFinalXML = Services::Registry()->get('Override', 'final_xml', false);
+        $overrideIncludesPageXML = Services::Registry()->get('Override', 'parse_sequence', false);
+        $overrideIncludesFinalXML = Services::Registry()->get('Override', 'parse_final', false);
 
         /**
          *  Body Includers: processed recursively until no more <include: are found
          *      for the set of includes defined in the includes-page.xml
          */
         if ($overrideIncludesPageXML === false) {
-            $sequence = Services::Configuration()->getFile('Parse', 'Includespage');
+            $sequence = Services::Configuration()->getFile('Parse', 'Parse_sequence');
         } else {
             $sequence = $overrideIncludesPageXML;
         }
@@ -151,7 +151,7 @@ Class ParseService
 
         /** Load final xml in order to remove from search for loop during initial runs */
         if ($overrideIncludesFinalXML === false) {
-            $final = Services::Configuration()->getFile('Parse', 'Includesfinal');
+            $final = Services::Configuration()->getFile('Parse', 'Parse_final');
         } else {
             $final = $overrideIncludesFinalXML;
         }

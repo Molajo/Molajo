@@ -42,19 +42,19 @@ class FieldsPlugin extends Plugin
         $model_name = Services::Registry()->get('Parameters', 'model_name');
         $model_type = Services::Registry()->get('Parameters', 'model_type');
 
-        $table_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+        $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
-        if (Services::Registry()->exists($table_registry_name) === true) {
+        if (Services::Registry()->exists($model_registry) === true) {
         } else {
             Helpers::Content()->getResourceContentParameters($model_type, $model_name);
         }
 
-        $primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
+        $primary_prefix = Services::Registry()->get($model_registry, 'primary_prefix');
 
         $fieldArray = array();
 		$standardFieldArray = array();
 
-        $normalFields = Services::Registry()->get($table_registry_name, 'fields');
+        $normalFields = Services::Registry()->get($model_registry, 'fields');
 
         $status = 0;
 
@@ -159,7 +159,7 @@ class FieldsPlugin extends Plugin
             $fieldArray[] = $row;
         }
 
-        $joins = Services::Registry()->get($table_registry_name, 'joins');
+        $joins = Services::Registry()->get($model_registry, 'joins');
 
         if (count($joins) > 0) {
             foreach ($joins as $field) {
@@ -179,7 +179,7 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $customfields = Services::Registry()->get($table_registry_name, 'Customfields');
+        $customfields = Services::Registry()->get($model_registry, 'Customfields');
         $customFieldArray = array();
         if (count($customfields) > 0) {
             foreach ($customfields as $field) {
@@ -193,7 +193,7 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $parameters = Services::Registry()->get($table_registry_name, 'Parameters');
+        $parameters = Services::Registry()->get($model_registry, 'Parameters');
         $parametersFieldArray = array();
         if (count($parameters) > 0) {
             foreach ($parameters as $field) {
@@ -206,7 +206,7 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $metadata = Services::Registry()->get($table_registry_name, 'Metadata');
+        $metadata = Services::Registry()->get($model_registry, 'Metadata');
         $metadataFieldArray = array();
         if (count($metadata) > 0) {
             foreach ($metadata as $field) {
@@ -226,11 +226,11 @@ class FieldsPlugin extends Plugin
         asort($parametersFieldArray);
         asort($customFieldArray);
 
-        Services::Registry()->set('Datalist', $table_registry_name . 'Fields', $fieldArray);
-		Services::Registry()->set('Datalist', $table_registry_name . 'Fieldsstandard', $standardFieldArray);
-        Services::Registry()->set('Datalist', $table_registry_name . 'Fieldsmetadata', $metadataFieldArray);
-        Services::Registry()->set('Datalist', $table_registry_name . 'Fieldsparameters', $parametersFieldArray);
-        Services::Registry()->set('Datalist', $table_registry_name . 'Fieldscustom', $customFieldArray);
+        Services::Registry()->set('Datalist', $model_registry . 'Fields', $fieldArray);
+		Services::Registry()->set('Datalist', $model_registry . 'Fieldsstandard', $standardFieldArray);
+        Services::Registry()->set('Datalist', $model_registry . 'Fieldsmetadata', $metadataFieldArray);
+        Services::Registry()->set('Datalist', $model_registry . 'Fieldsparameters', $parametersFieldArray);
+        Services::Registry()->set('Datalist', $model_registry . 'Fieldscustom', $customFieldArray);
 
         return true;
     }

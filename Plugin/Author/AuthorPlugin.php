@@ -58,17 +58,23 @@ class AuthorPlugin extends Plugin
         }
 
         /** Using the created_by value, retrieve the Author Profile Data */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('System', 'Users');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+
+        $results = $controller->getModelRegistry('System', 'Users');
         if ($results === false) {
             return false;
         }
 
-        $m->set('id', (int) $fieldValue);
-        $m->set('get_item_children', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $item = $m->getData('item');
+        $controller->set('id', (int) $fieldValue);
+        $controller->set('get_item_children', 0);
+
+        $item = $controller->getData('item');
 
         if ($item === false || count($item) == 0) {
             return false;

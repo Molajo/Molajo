@@ -34,7 +34,7 @@ class DatalistPlugin extends Plugin
 		}
 
 		$files = Services::Filesystem()->folderFiles(
-			MOLAJO_FOLDER . '/Datalist'
+			PLATFORM_FOLDER . '/Datalist'
 		);
 
 		if (count($files) === 0 || $files === false) {

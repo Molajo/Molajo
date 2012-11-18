@@ -31,49 +31,54 @@ class MenuitemsPlugin extends Plugin
             return true;
         }
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $connect->connect('System', 'Menuitems');
+        $results = $controller->getModelRegistry('System', 'Menuitems');
         if ($results === false) {
             return false;
         }
 
-        $connect->set('get_customfields', 0);
-        $connect->set('use_special_joins', 0);
-        $connect->set('process_plugins', 0);
-        $connect->set('check_view_level_access', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $connect->model->query->select(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('title')
+        $controller->set('get_customfields', 0);
+        $controller->set('use_special_joins', 0);
+        $controller->set('process_plugins', 0);
+        $controller->set('check_view_level_access', 0);
+
+        $controller->model->query->select(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('title')
         );
-        $connect->model->query->select(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('id')
+        $controller->model->query->select(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('id')
         );
-        $connect->model->query->select(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('lvl')
+        $controller->model->query->select(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('lvl')
         );
 
-        $connect->model->query->where(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('status')
+        $controller->model->query->where(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('status')
                 . ' IN (0,1,2)'
         );
 
-        $connect->model->query->order(
-            $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('root') . ', '
-                . $connect->model->db->qn($connect->get('primary_prefix'))
-                . '.' . $connect->model->db->qn('lft')
+        $controller->model->query->order(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('root') . ', '
+                . $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('lft')
         );
 
-        $connect->set('model_offset', 0);
-        $connect->set('model_count', 99999);
+        $controller->set('model_offset', 0);
+        $controller->set('model_count', 99999);
 
-        $query_results = $connect->getData('list');
+        $query_results = $controller->getData('list');
 
         $menuitems = array();
         foreach ($query_results as $item) {

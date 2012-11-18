@@ -143,56 +143,61 @@ Class CatalogHelper
 		$catalog_type_id = 0;
          */
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $m->connect('Table', 'Catalog');
+        $results = $controller->getModelRegistry('Datasource', 'Catalog');
         if ($results === false) {
             return false;
         }
 
-        $m->set('use_special_joins', 1);
-        $m->set('process_plugins', 0);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-		$prefix = $m->get('primary_prefix', 'a');
-		$key = $m->get('primary_key');
+        $controller->set('use_special_joins', 1);
+        $controller->set('process_plugins', 0);
+
+		$prefix = $controller->get('primary_prefix', 'a');
+		$key = $controller->get('primary_key');
 
 		if ((int) $catalog_id > 0) {
-			$m->model->query->where($m->model->db->qn($prefix)
+			$controller->model->query->where($controller->model->db->qn($prefix)
 				. '.'
-				. $m->model->db->qn($key)
+				. $controller->model->db->qn($key)
 				. ' = '
 				. (int) $catalog_id);
 
 		} elseif ((int) $source_id > 0 && (int) $catalog_type_id > 0) {
-			$m->model->query->where($m->model->db->qn($prefix)
+			$controller->model->query->where($controller->model->db->qn($prefix)
 				. '.'
-				. $m->model->db->qn('catalog_type_id')
+				. $controller->model->db->qn('catalog_type_id')
 				. ' = '
 				. (int) $catalog_type_id);
 
-			$m->model->query->where($m->model->db->qn($prefix)
+			$controller->model->query->where($controller->model->db->qn($prefix)
 				. '.'
-				. $m->model->db->qn('source_id')
+				. $controller->model->db->qn('source_id')
 				. ' = '
 				. (int) $source_id);
 
 		} else {
-			$m->model->query->where($m->model->db->qn($prefix)
+			$controller->model->query->where($controller->model->db->qn($prefix)
 				. '.'
-				. $m->model->db->qn('sef_request')
+				. $controller->model->db->qn('sef_request')
 				. ' = '
-				. $m->model->db->q($url_sef_request));
+				. $controller->model->db->q($url_sef_request));
 		}
 
-		$m->model->query->where($m->model->db->qn($prefix)
+		$controller->model->query->where($controller->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn('page_type')
+			. $controller->model->db->qn('page_type')
 			. ' <> '
-			. $m->model->db->q(PAGE_TYPE_LINK)
+			. $controller->model->db->q(PAGE_TYPE_LINK)
 		);
 
-        $item = $m->getData('item');
+        $item = $controller->getData('item');
 
         if (count($item) == 0 || $item === false) {
             return array();
@@ -218,39 +223,44 @@ Class CatalogHelper
 	 */
 	public function getID($catalog_type_id, $source_id = null)
 	{
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$m = new $controllerClass();
+		$controllerClass = CONTROLLER_CLASS;
+		$controller = new $controllerClass();
 
-		$results = $m->connect('Table', 'Catalog');
+		$results = $controller->getModelRegistry('Datasource', 'Catalog');
 		if ($results === false) {
 			return false;
 		}
 
-		$prefix = $m->get('primary_prefix', 'a');
-		$key = $m->get('primary_key', 'id');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-		$m->model->query->select($m->model->db->qn($prefix)
+		$prefix = $controller->get('primary_prefix', 'a');
+		$key = $controller->get('primary_key', 'id');
+
+		$controller->model->query->select($controller->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn($key));
+			. $controller->model->db->qn($key));
 
-		$m->model->query->where($m->model->db->qn($prefix)
-			. '.' . $m->model->db->qn('catalog_type_id')
+		$controller->model->query->where($controller->model->db->qn($prefix)
+			. '.' . $controller->model->db->qn('catalog_type_id')
 			. ' = '
 			. (int) $catalog_type_id);
 
-		$m->model->query->where($m->model->db->qn($prefix)
+		$controller->model->query->where($controller->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn('source_id')
+			. $controller->model->db->qn('source_id')
 			. ' = '
 			. (int) $source_id);
 
-		$m->model->query->where($m->model->db->qn($prefix)
+		$controller->model->query->where($controller->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn('application_id')
+			. $controller->model->db->qn('application_id')
 			. ' = '
-			. $m->model->db->q(APPLICATION_ID));
+			. $controller->model->db->q(APPLICATION_ID));
 
-		return $m->getData('result');
+		return $controller->getData('result');
 	}
 
     /**
@@ -263,40 +273,45 @@ Class CatalogHelper
      */
     public function getIDUsingSEFURL($url_sef_request)
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $results = $m->connect('Table', 'Catalog');
+        $results = $controller->getModelRegistry('Datasource', 'Catalog');
         if ($results === false) {
             return false;
         }
 
-        $m->set('use_special_joins', 1);
-        $m->set('process_plugins', 0);
-		$key = $m->get('primary_key', 'id');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-		$prefix = $m->get('primary_prefix', 'a');
+        $controller->set('use_special_joins', 1);
+        $controller->set('process_plugins', 0);
+		$key = $controller->get('primary_key', 'id');
 
-        $m->model->query->select($m->model->db->qn($prefix)
+		$prefix = $controller->get('primary_prefix', 'a');
+
+        $controller->model->query->select($controller->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn($key));
+			. $controller->model->db->qn($key));
 
-        $m->model->query->where($m->model->db->qn($prefix)
+        $controller->model->query->where($controller->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn('sef_request')
+			. $controller->model->db->qn('sef_request')
 			. ' = '
-			. $m->model->db->q($url_sef_request));
+			. $controller->model->db->q($url_sef_request));
 
-        $m->model->query->where($m->model->db->qn($prefix)
-			. '.' . $m->model->db->qn('application_id')
+        $controller->model->query->where($controller->model->db->qn($prefix)
+			. '.' . $controller->model->db->qn('application_id')
             . ' = '
-            . $m->model->db->q(APPLICATION_ID));
+            . $controller->model->db->q(APPLICATION_ID));
 
-        $m->model->query->where($m->model->db->qn($prefix)
-			. '.' . $m->model->db->qn('enabled')
+        $controller->model->query->where($controller->model->db->qn($prefix)
+			. '.' . $controller->model->db->qn('enabled')
             . ' = 1');
 
-        return $m->getData('result');
+        return $controller->getData('result');
     }
 
     /**
@@ -309,27 +324,31 @@ Class CatalogHelper
      */
     public function getRedirectURL($catalog_id)
     {
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('Table', 'Catalog');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('Datasource', 'Catalog');
         if ($results === false) {
             return false;
         }
 
-		$prefix = $m->get('primary_prefix', 'a');
-		$key = $m->get('primary_key', 'id');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+		$prefix = $controller->get('primary_prefix', 'a');
+		$key = $controller->get('primary_key', 'id');
 
-        $m->model->query->select($m->model->db->qn($prefix)
+        $controller->model->query->select($controller->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn('redirect_to_id'));
+			. $controller->model->db->qn('redirect_to_id'));
 
-        $m->model->query->where($m->model->db->qn($prefix)
+        $controller->model->query->where($controller->model->db->qn($prefix)
 			. '.'
-			. $m->model->db->qn($key)
+			. $controller->model->db->qn($key)
 			. ' = '
 			. (int) $catalog_id);
 
-        $result = $m->getData('result');
+        $result = $controller->getData('result');
 
         if ((int) $result == 0) {
             return false;
@@ -354,28 +373,32 @@ Class CatalogHelper
 
         if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
-            $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-            $m = new $controllerClass();
+            $controllerClass = CONTROLLER_CLASS;
+            $controller = new $controllerClass();
 
-            $results = $m->connect('Table', 'Catalog');
+            $results = $controller->getModelRegistry('Datasource', 'Catalog');
             if ($results === false) {
                 return false;
             }
 
-			$prefix = $m->get('primary_prefix', 'a');
-			$key = $m->get('primary_key', 'id');
+            $results = $controller->setDataobject();
+            if ($results === false) {
+                return false;
+            }
+			$prefix = $controller->get('primary_prefix', 'a');
+			$key = $controller->get('primary_key', 'id');
 
-            $m->model->query->select($m->model->db->qn($prefix)
+            $controller->model->query->select($controller->model->db->qn($prefix)
 				. '.'
-				. $m->model->db->qn('sef_request'));
+				. $controller->model->db->qn('sef_request'));
 
-            $m->model->query->where($m->model->db->qn($prefix)
+            $controller->model->query->where($controller->model->db->qn($prefix)
 				. '.'
-				. $m->model->db->qn($key)
+				. $controller->model->db->qn($key)
 				. ' = '
 				. (int) $catalog_id);
 
-            $url = $m->getData('result');
+            $url = $controller->getData('result');
 
         } else {
             $url = 'index.php?id=' . (int) $catalog_id;

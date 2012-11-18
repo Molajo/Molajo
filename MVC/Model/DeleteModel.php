@@ -23,17 +23,17 @@ class DeleteModel extends Model
      * delete - deletes a row from a table
      *
      * @param   $data
-     * @param   $table_registry_name
+     * @param   $model_registry
      *
      * @return bool
      * @since   1.0
      */
-    public function delete($data, $table_registry_name)
+    public function delete($data, $model_registry)
     {
-        $table_name = Services::Registry()->get($table_registry_name, 'table');
-        $primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
-        $name_key = Services::Registry()->get($table_registry_name, 'name_key');
-        $primary_key = Services::Registry()->get($table_registry_name, 'primary_key');
+        $table_name = Services::Registry()->get($model_registry, 'table');
+        $primary_prefix = Services::Registry()->get($model_registry, 'primary_prefix');
+        $name_key = Services::Registry()->get($model_registry, 'name_key');
+        $primary_key = Services::Registry()->get($model_registry, 'primary_key');
 
         /** Build Delete Statement */
         $deleteSQL = 'DELETE FROM ' . $this->db->qn($table_name);

@@ -302,43 +302,49 @@ Class LanguageService
 	 */
 	protected function getLanguageStrings($language)
 	{
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$connect = new $controllerClass();
+		$controllerClass = CONTROLLER_CLASS;
+		$controller = new $controllerClass();
 
-		$results = $connect->connect('System', 'Languagestrings');
+		$results = $controller->getModelRegistry('System', 'Languagestrings');
 		if ($results === false) {
 			return false;
 		}
 
-		$primary_prefix = $connect->get('primary_prefix', 'a');
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-		$connect->model->query->select(
-			$connect->model->db->qn($primary_prefix)
+        $controller->set('check_view_level_access', 0);
+		$primary_prefix = $controller->get('primary_prefix', 'a');
+
+		$controller->model->query->select(
+			$controller->model->db->qn($primary_prefix)
 			. '.'
-			. $connect->model->db->qn('title'));
+			. $controller->model->db->qn('title'));
 
-		$connect->model->query->select(
-			$connect->model->db->qn($primary_prefix)
+		$controller->model->query->select(
+			$controller->model->db->qn($primary_prefix)
 				. '.'
-				. $connect->model->db->qn('content_text'));
+				. $controller->model->db->qn('content_text'));
 
-		$connect->model->query->where(
-			$connect->model->db->qn($primary_prefix)
-				. '.' . $connect->model->db->qn('language')
+		$controller->model->query->where(
+			$controller->model->db->qn($primary_prefix)
+				. '.' . $controller->model->db->qn('language')
 				. ' = '
-				. $connect->model->db->q($language)
+				. $controller->model->db->q($language)
 		);
 
-		$connect->model->query->order(
-			$connect->model->db->qn($primary_prefix)
+		$controller->model->query->order(
+			$controller->model->db->qn($primary_prefix)
 				. '.'
-				. $connect->model->db->qn('title')
+				. $controller->model->db->qn('title')
 		);
 
-		$connect->set('model_offset', 0);
-		$connect->set('model_count', 99999);
+		$controller->set('model_offset', 0);
+		$controller->set('model_count', 99999);
 
-		return $connect->getData('List');
+		return $controller->getData('List');
 	}
 
 	/**
@@ -386,15 +392,21 @@ Class LanguageService
 			return true;
 		}
 
-		$controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-		$connect = new $controllerClass();
+		$controllerClass = CONTROLLER_CLASS;
+		$controller = new $controllerClass();
 
-		$results = $connect->connect('System', 'Languagestrings');
+		$results = $controller->getModelRegistry('System', 'Languagestrings');
 		if ($results === false) {
 			return false;
 		}
 
-		$connect->model->insertLanguageString($translated);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $controller->set('check_view_level_access', 0);
+		$controller->model->insertLanguageString($translated);
 
 		return true;
 	}
@@ -409,7 +421,7 @@ Class LanguageService
     {
         /** During System Initialization Helper is not loaded yet, instantiate here */
         $helper = new ExtensionHelper();
-        $installed = $helper->get(0, 'Table', 'Languageservice', 'list', CATALOG_TYPE_LANGUAGE);
+        $installed = $helper->get(0, 'Datasource', 'Languageservice', 'list', CATALOG_TYPE_LANGUAGE);
         if ($installed === false || count($installed) == 0) {
             //throw error
 			echo 'No Language Installed';

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="ExtensionSites"
+        table="#__extension_sites"
+        primary_key="id"
+        name_key="name"
+        use_pagination="1"
+        extends="root"
+        process_plugins="0"
+        data_object="Database">
+    <table>
+        <fields>
+            <include field="id_pk"/>
+            <include name="name"/>
+            <include name="enabled"/>
+            <include name="location"/>
+            <include name="customfields"/>
+            <include name="parameters"/>
+            <include name="metadata"/>
+        </fields>
+        <children>
+            <child name="Extensions" type="Datasource" join="site_id"/>
+        </children>
+    </table>
+</model>

@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <field>
+    <dataobjectattributes>
+        <dataobjectattribute>name</dataobjectattribute>
+        <dataobjectattribute>dbtype</dataobjectattribute>
+        <dataobjectattribute>host</dataobjectattribute>
+        <dataobjectattribute>user</dataobjectattribute>
+        <dataobjectattribute>password</dataobjectattribute>
+        <dataobjectattribute>db</dataobjectattribute>
+        <dataobjectattribute>prefix</dataobjectattribute>
+        <dataobjectattribute>process_plugins</dataobjectattribute>
+        <dataobjectattribute>extends</dataobjectattribute>
+        <dataobjectattribute>connectclass</dataobjectattribute>
+        <dataobjectattribute>queryclass</dataobjectattribute>
+    </dataobjectattributes>
+
     <modeltypes>
         <modeltype>Application</modeltype>
         <modeltype>Datalist</modeltype>
-        <modeltype>Dbo</modeltype>
+        <modeltype>Dataobject</modeltype>
+        <modeltype>Datasource</modeltype>
         <modeltype>Fields</modeltype>
         <modeltype>Language</modeltype>
         <modeltype>Menuitem</modeltype>
@@ -14,18 +29,25 @@
         <modeltype>Service</modeltype>
         <modeltype>Site</modeltype>
         <modeltype>System</modeltype>
-        <modeltype>Table</modeltype>
         <modeltype>Template</modeltype>
         <modeltype>Theme</modeltype>
         <modeltype>Wrap</modeltype>
+
+        <modeltype>Assets</modeltype>
+        <modeltype>Messages</modeltype>
+        <modeltype>Metadata</modeltype>
+        <modeltype>Parameters</modeltype>
+        <modeltype>Plugindata</modeltype>
     </modeltypes>
 
     <modelattributes>
         <modelattribute>name</modelattribute>
         <modelattribute>primary_key</modelattribute>
+        <modelattribute>primary_key_value</modelattribute>
         <modelattribute>name_key</modelattribute>
+        <modelattribute>name_key_value</modelattribute>
         <modelattribute>primary_prefix</modelattribute>
-        <modelattribute>data_source</modelattribute>
+        <modelattribute>data_object</modelattribute>
         <modelattribute>extends</modelattribute>
         <modelattribute>table</modelattribute>
         <modelattribute>registry_entry</modelattribute>
@@ -47,6 +69,7 @@
         <modelattribute>multiple</modelattribute>
         <modelattribute>size</modelattribute>
     </modelattributes>
+
     <datatypes>
         <datatype>audio</datatype>
         <datatype>boolean</datatype>
@@ -70,10 +93,10 @@
         <datatype>url</datatype>
         <datatype>userid</datatype>
         <datatype>video</datatype>
-
         <datatype>catalog_id</datatype>
         <datatype>customfield</datatype>
     </datatypes>
+
     <queryelements>
         <queryelement>fields,field</queryelement>
         <queryelement>joins,join</queryelement>
@@ -83,6 +106,7 @@
         <queryelement>plugins,plugin</queryelement>
         <queryelement>values,value</queryelement>
     </queryelements>
+
     <fields>
         <field>autocomplete</field>
         <field>autofocus</field>

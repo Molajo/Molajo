@@ -27,14 +27,14 @@ class CreateModel extends Model
      * @return object
      * @since  1.0
      */
-    public function create($data, $table_registry_name)
+    public function create($data, $model_registry)
     {
-        $table_name = Services::Registry()->get($table_registry_name, 'table');
-        $primary_prefix = Services::Registry()->get($table_registry_name, 'primary_prefix');
+        $table_name = Services::Registry()->get($model_registry, 'table');
+        $primary_prefix = Services::Registry()->get($model_registry, 'primary_prefix');
 
         /** Prepare Data from Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
-            $table_registry_name, 'customfieldgroups', array());
+            $model_registry, 'customfieldgroups', array());
 
         if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
 
@@ -44,7 +44,7 @@ class CreateModel extends Model
                 $customFieldName = strtolower($customFieldName);
 
                 /** Retrieve Field Definitions from Registry (XML) */
-                $fields = Services::Registry()->get($table_registry_name, $customFieldName);
+                $fields = Services::Registry()->get($model_registry, $customFieldName);
 
                 $temp = $data->$customFieldName;
 
@@ -76,7 +76,7 @@ class CreateModel extends Model
         }
 
         /** Build Insert Statement */
-        $fields = Services::Registry()->get($table_registry_name, 'fields');
+        $fields = Services::Registry()->get($model_registry, 'fields');
 
         $insertSQL = 'INSERT INTO ' . $this->db->qn($table_name) . ' ( ';
         $valuesSQL = ' VALUES ( ';

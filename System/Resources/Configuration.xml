@@ -12,7 +12,7 @@
     <model
             name="Resources"
             catalog_type_id="12000"
-            extends="RenderTable">
+            extends="RenderDatasource">
         <customfields>
             <customfield name="parameters">
                 <include name="ParametersEdit"/>

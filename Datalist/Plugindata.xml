@@ -2,7 +2,7 @@
 <model
         name="Plugindata"
         registry_entry=""
-        data_source="Registry">
+        data_object="Registry">
     <table>
         <fields>
             <include field="id"/>

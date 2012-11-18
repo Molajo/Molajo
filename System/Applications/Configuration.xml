@@ -14,5 +14,5 @@
             catalog_type_id="2000"
             extension_instance_id="2000"
             process_plugins="0"
-            extends="ApplicationTable"/>
+            extends="ApplicationDatasource"/>
 </extension>

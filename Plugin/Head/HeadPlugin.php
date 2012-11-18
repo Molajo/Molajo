@@ -32,26 +32,38 @@ class HeadPlugin extends Plugin
         }
 
         /** JS */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
-        $results = $connect->connect('dbo', 'Assets');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('dbo', 'Assets');
         if ($results === false) {
             return false;
         }
-        $connect->set('model_parameter', 'Js');
-        $query_results = $connect->getData('getAssets');
+
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $controller->set('model_parameter', 'Js');
+        $query_results = $controller->getData('getAssets');
 
         Services::Registry()->set('Plugindata', 'js', $query_results);
 
         /** JS Declarations */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
-        $results = $connect->connect('dbo', 'Assets');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('dbo', 'Assets');
         if ($results === false) {
             return false;
         }
-        $connect->set('model_parameter', 'JsDeclarations');
-        $query_results = $connect->getData('getAssets');
+
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $controller->set('model_parameter', 'JsDeclarations');
+        $query_results = $controller->getData('getAssets');
 
         Services::Registry()->set('Plugindata', 'jsdeclarations', $query_results);
 

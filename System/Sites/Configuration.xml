@@ -23,8 +23,8 @@
             catalog_type_id="1000"
             use_pagination="1"
             extension_instance_id="1000"
-            extends="SiteTable"
-            data_source="JDatabase">
+            extends="SiteDatasource"
+            data_object="Database">
     <table>
         <foreignkeys>
             <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>

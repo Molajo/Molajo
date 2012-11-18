@@ -1,3 +1,4 @@
+<include field="system_dataobject_folder"/>
 <include field="system_cache_folder"/>
 <include field="system_logs_folder"/>
 <include field="system_temp_folder"/>

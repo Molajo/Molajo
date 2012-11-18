@@ -11,4 +11,3 @@
 <include field="model_name"/>
 <include field="model_type"/>
 <include field="model_query_object"/>
-<include field="model_parameter"/>

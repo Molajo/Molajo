@@ -98,19 +98,23 @@ class UseractivityPlugin extends Plugin
         );
 
         /** Retrieve User Data  */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $m = new $controllerClass();
-        $results = $m->connect('Table', 'UserActivity');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry('Datasource', 'UserActivity');
         if ($results === false) {
             return false;
         }
 
-        $m->set('user_id', Services::Registry()->set('User', 'id'));
-        $m->set('action_id', $action_id);
-        $m->set('catalog_id', $this->data->catalog_id);
-        $m->set('activity_datetime', null);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+        $controller->set('user_id', Services::Registry()->set('User', 'id'));
+        $controller->set('action_id', $action_id);
+        $controller->set('catalog_id', $this->data->catalog_id);
+        $controller->set('activity_datetime', null);
 
-        $results = $m->getData('create');
+        $results = $controller->getData('create');
 
         return true;
     }

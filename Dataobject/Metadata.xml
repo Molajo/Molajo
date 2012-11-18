@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Metadata"
+        dbtype=""
+        host=""
+        user=""
+        password=""
+        db=""
+        prefix=""
+        connectclass=""
+        queryclass=""
+        process_plugins="1"/>
+
+

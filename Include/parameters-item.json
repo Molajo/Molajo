@@ -91,7 +91,7 @@
         "form_model_name":"Services",
         "form_model_type":"System",
         "form_model_query_object":"item",
-        "form_model_parameter":"",
+
 
         "item_parent_menu_id":"3614",
         "item_theme_id":"9020",
@@ -109,7 +109,7 @@
         "item_model_name":"Services",
         "item_model_type":"System",
         "item_model_query_object":"item",
-        "item_model_parameter":"",
+
 
         "list_parent_menu_id":"3614",
         "list_theme_id":"9020",
@@ -128,7 +128,7 @@
         "list_model_name":"Services",
         "list_model_type":"System",
         "list_model_query_object":"list",
-        "list_model_parameter":"",
+
         "list_model_ordering":"name",
         "list_model_ordering_direction":"DESC",
         "list_model_offset":"0",

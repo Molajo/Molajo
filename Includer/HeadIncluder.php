@@ -44,7 +44,7 @@ Class HeadIncluder extends Includer
     {
         Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 1);
 
-        Services::Registry()->set('Parameters', 'model_type', 'dbo');
+        Services::Registry()->set('Parameters', 'model_type', 'Assets');
 
         if ($this->type == 'defer') {
 

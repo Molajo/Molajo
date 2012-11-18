@@ -2,4 +2,3 @@
 <include field="item_model_name"/>
 <include field="item_model_type"/>
 <include field="item_model_query_object"/>
-<include field="item_model_parameter"/>

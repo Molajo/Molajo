@@ -9,6 +9,7 @@ namespace Molajo;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Request\RequestService;
 use Molajo\Service\Services\Configuration\ConfigurationService;
+
 use Molajo\Helpers;
 
 defined('MOLAJO') or die;
@@ -61,8 +62,8 @@ Class Application
      *
      * @param string $override_url_request
      * @param string $override_catalog_id
-     * @param string $override_sequence_xml
-     * @param string $override_final_xml
+     * @param string $override_parse_sequence
+     * @param string $override_parse_final
      *
      *  1. Initialise
      *  2. Route
@@ -74,11 +75,11 @@ Class Application
      * @since   1.0
      */
     public function process($override_url_request = false, $override_catalog_id = false,
-                            $override_sequence_xml = false, $override_final_xml = false)
+                            $override_parse_sequence = false, $override_parse_final = false)
     {
         /** 1. Initialise */
         $results = $this->initialise($override_url_request, $override_catalog_id,
-            $override_sequence_xml, $override_final_xml);
+            $override_parse_sequence, $override_parse_final);
 
         /** 2. Route */
         if ($results === true) {
@@ -102,14 +103,14 @@ Class Application
      *
      * @param string $override_url_request
      * @param string $override_catalog_id
-     * @param string $override_sequence_xml
-     * @param string $override_final_xml
+     * @param string $override_parse_sequence
+     * @param string $override_parse_final
      *
      * @return boolean
      * @since   1.0
      */
     protected function initialise($override_url_request = false, $override_catalog_id = false,
-                                  $override_sequence_xml = false, $override_final_xml = false)
+                                  $override_parse_sequence = false, $override_parse_final = false)
 
     {
         if (version_compare(PHP_VERSION, '5.3', '<')) {
@@ -183,8 +184,8 @@ Class Application
 
         Services::Registry()->set('Override', 'url_request', $override_url_request);
         Services::Registry()->set('Override', 'catalog_id', $override_catalog_id);
-        Services::Registry()->set('Override', 'sequence_xml', $override_sequence_xml);
-        Services::Registry()->set('Override', 'final_xml', $override_final_xml);
+        Services::Registry()->set('Override', 'parse_sequence', $override_parse_sequence);
+        Services::Registry()->set('Override', 'parse_final', $override_parse_final);
 
         if ($results === true) {
             Services::Profiler()->set('Application Schedule onAfterInitialise', LOG_OUTPUT_PLUGINS);
@@ -406,7 +407,7 @@ Class Application
      * Steps 1-3 continue until no more <include:type statements are
      *    found in the Theme and rendered output
      *
-     * Override Registry have values for sequence_xml and final_xml
+     * Override Registry have values for parse_sequence and parse_final
      *
      * @since   1.0
      * @return Application
@@ -605,19 +606,19 @@ Class Application
 
         if (defined('SERVICES')) {
         } else {
-            define('SERVICES', MOLAJO_FOLDER . '/Service');
+            define('SERVICES', PLATFORM_FOLDER . '/Service');
         }
         if (defined('CORE_THEMES')) {
         } else {
-            define('CORE_THEMES', MOLAJO_FOLDER . '/Theme');
+            define('CORE_THEMES', PLATFORM_FOLDER . '/Theme');
         }
         if (defined('CORE_VIEWS')) {
         } else {
-            define('CORE_VIEWS', MOLAJO_FOLDER . '/MVC/View');
+            define('CORE_VIEWS', PLATFORM_FOLDER . '/MVC/View');
         }
 		if (defined('CORE_LANGUAGES')) {
 		} else {
-			define('CORE_LANGUAGES', MOLAJO_FOLDER . '/Language');
+			define('CORE_LANGUAGES', PLATFORM_FOLDER . '/Language');
 		}
 
         if (defined('CORE_SYSTEM_URL')) {
@@ -656,7 +657,7 @@ Class Application
      * Identifies the specific site and sets site paths
      * for use in the application
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function setSite()
@@ -676,6 +677,11 @@ Class Application
             define('SITES_MEDIA_URL', BASE_URL . 'Site/media');
         }
 
+        if (defined('SITES_DATAOBJECT_FOLDER')) {
+        } else {
+            define('SITES_DATAOBJECT_FOLDER', BASE_URL . 'Site/media');
+        }
+
         $site_base_url = Application::Request()->get('base_url_path');
 
         if (defined('SITE_BASE_URL')) {
@@ -688,6 +694,7 @@ Class Application
                     define('SITE_BASE_URL', (string) $single->site_base_url);
                     define('SITE_BASE_PATH', BASE_FOLDER . (string) $single->site_base_folder);
                     define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string) $single->site_base_folder);
+                    define('SITE_DATAOBJECT_FOLDER', SITE_BASE_PATH . '/' . 'Dataobject');
                     define('SITE_ID', $single->id);
 					define('SITE_NAME', $single->name);
                     break;
@@ -802,8 +809,8 @@ Class Application
             return true;
         }
 
-        if (file_exists(SITE_BASE_PATH . '/configuration.php')
-            && filesize(SITE_BASE_PATH . '/configuration.php') > 10
+        if (file_exists(SITE_BASE_PATH . '/Dataobject/Database.xml')
+            && filesize(SITE_BASE_PATH . '/Dataobject/Database.xml') > 10
         ) {
             return true;
         }

@@ -35,32 +35,36 @@ class PagetypelistPlugin extends Plugin
             . ucfirst(strtolower($this->get('model_type')));
 
         /** Get Actual Data for matching to Fields */
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
-        $results = $connect->connect($this->get('model_type'), $this->get('model_name'));
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $results = $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
         if ($results === false) {
             return false;
         }
 
-        $connect->set('get_customfields', 2);
-        $connect->set('use_special_joins', 1);
-        $connect->set('check_view_level_access', 1);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
 
-        $connect->set('model_offset', $this->get('model_offset', 0));
-        $connect->set('model_count', $this->get('model_count', 5));
-        $connect->set('use_pagination', $this->get('model_use_pagination', 1));
+        $controller->set('get_customfields', 2);
+        $controller->set('use_special_joins', 1);
+        $controller->set('check_view_level_access', 1);
 
-        $list = $connect->getData('list');
+        $controller->set('model_offset', $this->get('model_offset', 0));
+        $controller->set('model_count', $this->get('model_count', 5));
+        $controller->set('use_pagination', $this->get('model_use_pagination', 1));
+
+        $list = $controller->getData('list');
 
         Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $list);
 
-        $this->set('model_name', 'Plugindata');
-        $this->set('model_type', 'dbo');
-        $this->set('model_query_object', 'getPlugindata');
-        $this->set('model_parameter', 'PrimaryRequestQueryResults');
+        $this->set('model_type', 'Plugindata');
+        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_query_object', 'list');
 
-        $this->parameters['model_name'] = 'Plugindata';
-        $this->parameters['model_type'] = 'dbo';
+        $this->parameters['model_type'] = 'Plugindata';
+        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
 
         return true;
     }

@@ -32,7 +32,7 @@ class CreateController extends Controller
 
         if (isset($this->data->model_type)) {
         } else {
-            $this->data->model_type = 'Table';
+            $this->data->model_type = 'Datasource';
         }
         if (isset($this->data->model_name)) {
         } else {
@@ -42,7 +42,7 @@ class CreateController extends Controller
         $this->connect($this->data->model_type, $this->data->model_name, 'CreateModel');
         if (isset($this->data->catalog_type_id) && (int) $this->data->catalog_type_id > 0) {
         } else {
-            $this->data->catalog_type_id = Services::Registry()->get($this->table_registry_name, 'catalog_type_id');
+            $this->data->catalog_type_id = Services::Registry()->get($this->model_registry, 'catalog_type_id');
         }
 
         $results = $this->verifyPermissions();
@@ -69,7 +69,7 @@ class CreateController extends Controller
 
         if ($valid === true) {
 
-            $fields = Services::Registry()->get($this->table_registry_name, 'fields');
+            $fields = Services::Registry()->get($this->model_registry, 'fields');
 
             if (count($fields) == 0 || $fields === null) {
                 return false;
@@ -88,7 +88,7 @@ class CreateController extends Controller
                 }
             }
 
-            $results = $this->model->create($data, $this->table_registry_name);
+            $results = $this->model->create($data, $this->model_registry);
 
             if ($results === false) {
             } else {
@@ -165,7 +165,7 @@ class CreateController extends Controller
 
         /** Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
-            $this->table_registry_name, 'customfieldgroups', array());
+            $this->model_registry, 'customfieldgroups', array());
 
         if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
 
@@ -179,7 +179,7 @@ class CreateController extends Controller
                 }
 
                 /** Retrieve Field Definitions from Registry (XML) */
-                $fields = Services::Registry()->get($this->table_registry_name, $customFieldName);
+                $fields = Services::Registry()->get($this->model_registry, $customFieldName);
 
                 /** Shared processing  */
                 $valid = $this->processFieldGroup($fields, $userHTMLFilter, $customFieldName);
@@ -192,7 +192,7 @@ class CreateController extends Controller
         }
 
         /** Standard Field Group */
-        $fields = Services::Registry()->get($this->table_registry_name, 'fields');
+        $fields = Services::Registry()->get($this->model_registry, 'fields');
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -328,7 +328,7 @@ class CreateController extends Controller
      */
     protected function checkForeignKeys()
     {
-        $foreignkeys = Services::Registry()->get($this->table_registry_name, 'foreignkeys');
+        $foreignkeys = Services::Registry()->get($this->model_registry, 'foreignkeys');
 
         if (count($foreignkeys) == 0 || $foreignkeys === null) {
             return false;
@@ -378,25 +378,25 @@ class CreateController extends Controller
 
             if (isset($this->data->$name)) {
 
-                $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-                $m = new $controllerClass();
-                $results = $m->connect('Table', $source_model);
+                $controllerClass = CONTROLLER_CLASS;
+                $controller = new $controllerClass();
+                $results = $controller->getModelRegistry('Datasource', $source_model);
                 if ($results === false) {
                     return false;
                 }
 
-                $m->model->query->select('COUNT(*)');
-                $m->model->query->from($m->model->db->qn($m->get('table_name')));
-                $m->model->query->where($m->model->db->qn($source_id)
+                $controller->model->query->select('COUNT(*)');
+                $controller->model->query->from($controller->model->db->qn($controller->get('table_name')));
+                $controller->model->query->where($controller->model->db->qn($source_id)
                     . ' = ' . (int) $this->data->$name);
 
-                $m->set('get_customfields', 0);
-                $m->set('get_item_children', 0);
-                $m->set('use_special_joins', 0);
-                $m->set('check_view_level_access', 0);
-                $m->set('process_plugins', 0);
+                $controller->set('get_customfields', 0);
+                $controller->set('get_item_children', 0);
+                $controller->set('use_special_joins', 0);
+                $controller->set('check_view_level_access', 0);
+                $controller->set('process_plugins', 0);
 
-                $value = $m->getData('result');
+                $value = $controller->getData('result');
 
                 if (empty($value)) {
                     //error
@@ -427,7 +427,7 @@ class CreateController extends Controller
         }
 
         $arguments = array(
-            'table_registry_name' => $this->table_registry_name,
+            'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $this->data,
             'null_date' => $this->model->null_date,
@@ -471,7 +471,7 @@ class CreateController extends Controller
 
         /** Schedule onAfterCreate Event */
         $arguments = array(
-            'table_registry_name' => $this->table_registry_name,
+            'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $data,
             'parameters' => $this->parameters,

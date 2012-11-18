@@ -21,11 +21,12 @@ defined('MOLAJO') or die;
  */
 class DisplayController extends Controller
 {
-
     /**
-     * Display action is used to render view output
+     * Interact with the model to connect with data object, run query, schedule events, push
+     *  data into Template View and then push rendered results into Wrap View,
+     *  returning results to Includer
      *
-     * @return string Rendered output
+     * @return  string  Rendered output
      * @since   1.0
      */
     public function execute()
@@ -36,23 +37,26 @@ class DisplayController extends Controller
             $this->query_results = array();
 
         } else {
-            $this->connect($this->get('model_type'), $this->get('model_name'));
+            $this->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+
+            $results = $this->setDataobject();
+            if ($results === false) {
+                return false;
+            }
 
             if ((int) $this->get('criteria_source_id') === 0) {
 
-            } elseif (strtolower($this->get('model_type', '')) == 'dbo') {
+            } elseif (strtolower($this->get('data_object')) == 'database') {
 
-            } else {
                 $this->set('id', $this->get('criteria_source_id'));
                 $this->set('model_query_object', 'item');
             }
 
             $this->set('process_template_plugins',
                 Services::Registry()->get(
-                    $this->get('template_view_table_registry_name'), 'process_plugins')
+                    $this->get('template_view_model_registry'), 'process_plugins')
             );
 
-            /** Run Query */
             $this->getData($this->get('model_query_object'));
 
             if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
@@ -61,7 +65,6 @@ class DisplayController extends Controller
                     . ' <br />Includer: ' . $this->get('includer_type', '')
                     . ' <br />Model Type: ' . $this->get('model_type', '')
                     . ' <br />Model Name: ' . $this->get('model_name', '')
-                    . ' <br />Model Parameter: ' . $this->get('model_parameter', '')
                     . ' <br />Model Query Object: ' . $this->get('model_query_object', '')
                     . ' <br />Template Path: ' . $this->get('template_view_path', '')
                     . ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
@@ -78,7 +81,6 @@ class DisplayController extends Controller
             }
         }
 
-        /** no results */
         if (count($this->query_results) == 0
             && (int) $this->get('criteria_display_view_on_no_results', 0) == 0
         ) {
@@ -90,14 +92,12 @@ class DisplayController extends Controller
 
         } else {
 
-            /** Template View */
             $this->set('view_css_id', $this->get('template_view_css_id'));
             $this->set('view_css_class', $this->get('template_view_css_class'));
 
             $this->view_path = $this->get('template_view_path');
             $this->view_path_url = $this->get('template_view_path_url');
 
-            /** Plugin Pre-View Render Event */
             $this->onBeforeViewRender();
 
             /**
@@ -108,14 +108,11 @@ class DisplayController extends Controller
                 Services::Registry()->set('Plugindata', 'primary_query_results', $this->query_results);
             }
 
-            /** Render View */
             $rendered_output = $this->renderView();
 
-            /** Plugin After-View Render Event */
             $rendered_output = $this->onAfterViewRender($rendered_output);
         }
 
-        /** Wrap template view results */
         if ($this->get('wrap_view_path_node') == '') {
             return $rendered_output;
         } else {
@@ -169,8 +166,6 @@ class DisplayController extends Controller
      */
     protected function renderView()
     {
-//todo think about empty queryresults processing when parameter set to true (custom and footer?)
-//todo think about the result, item, and list processing - get dbo's in shape, plugins
 //todo when close to done - do encoding - bring in filters given field definitions
 
         /** start collecting output */
@@ -220,8 +215,8 @@ class DisplayController extends Controller
     /**
      * Schedule onBeforeViewRender Event - could update query_results objects
      *
-     * @return bool
-     * @since  1.0
+     * @return  bool
+     * @since   1.0
      */
     protected function onBeforeViewRender()
     {
@@ -232,7 +227,6 @@ class DisplayController extends Controller
             return true;
         }
 
-        /** Process each item, one at a time */
         $items = $this->query_results;
         $this->query_results = array();
 
@@ -245,24 +239,23 @@ class DisplayController extends Controller
             foreach ($items as $item) {
 
                 $arguments = array(
-                    'table_registry_name' => $this->table_registry_name,
+                    'model_registry' => $this->model_registry,
                     'parameters' => $this->parameters,
                     'data' => $item,
                     'model_type' => $this->get('model_type'),
                     'model_name' => $this->get('model_name')
                 );
 
-                Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
+                Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender',
+                    LOG_OUTPUT_PLUGINS, VERBOSE);
 
                 $arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
 
                 if ($arguments === false) {
-                    Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
-
+                    Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender',
+                        LOG_OUTPUT_PLUGINS, VERBOSE);
                     return false;
                 }
-
-                Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
                 $this->parameters = $arguments['parameters'];
                 $this->query_results[] = $arguments['data'];
@@ -282,32 +275,32 @@ class DisplayController extends Controller
     /**
      * Schedule onAfterViewRender Event - can update rendered results
      *
-     * Position where other rendering engines, like Mustache and Twig can process rendered results
+     * todo: add Mustache or Twig Plugin in onAfterViewRender to process rendered results
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     protected function onAfterViewRender($rendered_output)
     {
         $arguments = array(
-            'table_registry_name' => $this->table_registry_name,
+            'model_registry' => $this->model_registry,
             'parameters' => $this->parameters,
             'rendered_output' => $rendered_output,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender',
+            LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
 
         if ($arguments === false) {
-            Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
+            Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender',
+                LOG_OUTPUT_PLUGINS, VERBOSE);
 
             return false;
         }
-
-        Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $rendered_output = $arguments['rendered_output'];
 

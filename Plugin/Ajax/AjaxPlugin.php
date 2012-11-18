@@ -47,8 +47,8 @@ class AjaxPlugin extends Plugin
         Helpers::View()->get(2090, 'Wrap');
 
         /** Ajax Parser */
-        Services::Registry()->set('Override', 'sequence_xml', 'Ajaxpage');
-        Services::Registry()->set('Override', 'final_xml', 'Ajaxfinal');
+        Services::Registry()->set('Override', 'parse_sequence', 'Ajax_sequence');
+        Services::Registry()->set('Override', 'parse_final', 'Ajax_final');
 
         return true;
     }

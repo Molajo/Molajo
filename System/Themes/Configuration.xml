@@ -13,5 +13,5 @@
             name="Themes"
             catalog_type_id="7000"
             extension_instance_id="7000"
-            extends="RenderTable"/>
+            extends="RenderDatasource"/>
 </extension>

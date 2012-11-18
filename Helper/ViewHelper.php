@@ -100,26 +100,26 @@ Class ViewHelper
         Services::Registry()->set('Parameters', $type . '_view_catalog_type_id', (int) $item->catalog_type_id);
         Services::Registry()->set('Parameters', $type . '_view_catalog_type_title', $item->catalog_types_title);
 
-        Services::Registry()->set('Parameters', $type . '_view_table_registry_name', $item->table_registry_name);
+        Services::Registry()->set('Parameters', $type . '_view_model_registry', $item->model_registry);
 
         if ($type == 'Page') {
-            $this->setParameters('page', $item->table_registry_name . 'Parameters');
+            $this->setParameters('page', $item->model_registry . 'Parameters');
 
         } elseif ($type == 'Template') {
 
-            $this->setParameters('template', $item->table_registry_name . 'Parameters');
-            $this->setParameters('wrap', $item->table_registry_name . 'Parameters');
-            $this->setParameters('cache', $item->table_registry_name . 'Parameters');
-            $this->setParameters('model', $item->table_registry_name . 'Parameters');
-            $this->setParameters('criteria', $item->table_registry_name . 'Parameters');
+            $this->setParameters('template', $item->model_registry . 'Parameters');
+            $this->setParameters('wrap', $item->model_registry . 'Parameters');
+            $this->setParameters('cache', $item->model_registry . 'Parameters');
+            $this->setParameters('model', $item->model_registry . 'Parameters');
+            $this->setParameters('criteria', $item->model_registry . 'Parameters');
 
         } else {
-            $this->setParameters('wrap', $item->table_registry_name . 'Parameters');
+            $this->setParameters('wrap', $item->model_registry . 'Parameters');
         }
 
         /** Copy Parameters (but do not overlay the ID value) */
-		Services::Registry()->delete($item->table_registry_name . 'Parameters', $type . '_view_id');
-        Services::Registry()->copy($item->table_registry_name . 'Parameters', 'Parameters');
+		Services::Registry()->delete($item->model_registry . 'Parameters', $type . '_view_id');
+        Services::Registry()->copy($item->model_registry . 'Parameters', 'Parameters');
 
         return true;
     }

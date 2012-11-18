@@ -110,7 +110,7 @@
         "form_model_name":"Articles",
         "form_model_type":"Resource",
         "form_model_query_object":"item",
-        "form_model_parameter":"",
+
 
         "item_parent_menu_id":"",
         "item_theme_id":"",
@@ -128,7 +128,7 @@
         "item_model_name":"Articles",
         "item_model_type":"Resource",
         "item_model_query_object":"item",
-        "item_model_parameter":"",
+
 
         "list_parent_menu_id":"",
         "list_theme_id":"",
@@ -147,7 +147,7 @@
         "list_model_name":"Articles",
         "list_model_type":"Resource",
         "list_model_query_object":"list",
-        "list_model_parameter":"",
+
         "list_model_ordering":"start_publishing_datetime",
         "list_model_ordering_direction":"DESC",
         "list_model_offset":"0",
@@ -267,7 +267,7 @@
         "form_model_name":"Articles",
         "form_model_type":"Resource",
         "form_model_query_object":"item",
-        "form_model_parameter":"",
+
 
         "item_parent_menu_id":"11102",
         "item_theme_id":"",
@@ -285,7 +285,7 @@
         "item_model_name":"Articles",
         "item_model_type":"Resource",
         "item_model_query_object":"item",
-        "item_model_parameter":"",
+
 
         "list_parent_menu_id":"",
         "list_theme_id":"",
@@ -304,7 +304,7 @@
         "list_model_name":"",
         "list_model_type":"",
         "list_model_query_object":"",
-        "list_model_parameter":"",
+
         "list_model_ordering":"",
         "list_model_ordering_direction":"",
         "list_model_offset":"10",

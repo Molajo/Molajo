@@ -13,5 +13,5 @@
             name="Messages"
             catalog_type_id="6500"
             extension_instance_id="6500"
-            extends="ContentresourcesTable"/>
+            extends="ContentresourcesDatasource"/>
 </extension>

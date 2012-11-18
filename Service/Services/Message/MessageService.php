@@ -125,11 +125,6 @@ Class MessageService
         return $this;
     }
 
-    public function clear()
-    {
-        return $this;
-    }
-
     /**
      * getMessages is called out of the ReadModel to simulate a database query for Messages
      *

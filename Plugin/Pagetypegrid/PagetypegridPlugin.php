@@ -32,28 +32,30 @@ class PagetypegridPlugin extends Plugin
 			return true;
 		}
 
-        $controllerClass = 'Molajo\\MVC\\Controller\\Controller';
-        $connect = new $controllerClass();
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
 
-        $model_type = $this->get('model_type');
-        $model_name = $this->get('model_name');
-
-        $results = $connect->connect($this->get('model_type'), $this->get('model_name'));
+        $results = $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
         if ($results === false) {
             return false;
         }
 
-        $connect->set('get_customfields', 2);
-        $connect->set('use_special_joins', 1);
-        $connect->set('process_plugins', 1);
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $controller->set('get_customfields', 2);
+        $controller->set('use_special_joins', 1);
+        $controller->set('process_plugins', 1);
 
         $this->setToolbar();
 
-        $this->setFilter($connect, $connect->get('primary_prefix'));
+        $this->setFilter();
 
-        $this->setGrid($connect, $connect->get('primary_prefix'));
+        $this->setGrid($controller);
 
-        $this->setBatch($connect, $connect->get('primary_prefix'));
+        $this->setBatch();
 
         return true;
     }
@@ -123,13 +125,10 @@ class PagetypegridPlugin extends Plugin
     /**
      * Filters: lists stored in registry, where clauses for primary grid query set
      *
-     * @param   $connect
-     * @param   $primary_prefix
-     *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
-    protected function setFilter($connect, $primary_prefix)
+    protected function setFilter()
     {
         $grid_list = array();
         for ($i=1; $i < 11; $i++) {
@@ -176,16 +175,13 @@ class PagetypegridPlugin extends Plugin
     /**
      * Grid Query: results stored in Plugin registry
      *
-     * @param   $connect
-     * @param   $primary_prefix
-     * @param   $table_name
+     * @param   $controller
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
-    protected function setGrid($connect, $primary_prefix)
+    protected function setGrid($controller)
     {
-        /** Columns */
         $grid_columns = array();
         for ($i=1; $i < 16; $i++) {
             $item = $this->get('grid_column' . $i);
@@ -197,62 +193,54 @@ class PagetypegridPlugin extends Plugin
 
         Services::Registry()->set('Plugindata', 'GridTableColumns', $grid_columns);
 
-        /** Catalog Type ID */
         $list = $this->get('criteria_catalog_type_id');
 
-        $connect->model->query->where(
-            $connect->model->db->qn($primary_prefix)
-                . '.' . $connect->model->db->qn('catalog_type_id')
+        $controller->model->query->where(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' IN (' . $list . ')'
         );
 
-        /** Redirect ID */
-        $connect->model->query->where($connect->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
+        $controller->model->query->where($controller->model->db->qn('catalog.redirect_to_id') . ' = ' . 0);
 
-        /** Ordering */
         $ordering = $this->get('grid_ordering');
-
         if ($ordering == '' || $ordering === null) {
-            $ordering = $connect->get('primary_key', 'id');
+            $ordering = $controller->get('primary_key', 'id');
         }
         Services::Registry()->set('Plugindata', 'GridTableOrdering', $ordering);
 
-        /** Ordering Direction */
         $orderingDirection = $this->get('grid_ordering_direction');
-
         if ($orderingDirection == 'ASC') {
         } else {
             $orderingDirection = 'DESC';
         }
         Services::Registry()->set('Plugindata', 'GridTableOrderingDirection', $orderingDirection);
 
-        $connect->model->query->order(
-            $connect->model->db->qn($primary_prefix)
-                . '.' . $connect->model->db->qn($ordering)
+        $controller->model->query->order(
+            $controller->model->db->qn($controller->get('primary_prefix'))
+                . '.' . $controller->model->db->qn($ordering)
                 . ' '
                 . $orderingDirection
         );
 
-        /** Offset */
         $offset = (int) $this->get('grid_offset');
         Services::Registry()->set('Plugindata', 'GridTableOffset', (int) $offset);
-        $connect->set('model_offset', $offset);
+        $controller->set('model_offset', $offset);
 
-        /** Items per page */
         $itemsPerPage = (int) $this->get('grid_items_per_page');
         if ((int)$itemsPerPage == 0) {
             $itemsPerPage = 15;
         }
         Services::Registry()->set('Plugindata', 'GridTableItemsPerPage', $itemsPerPage);
 
-        $connect->set('model_count', $itemsPerPage);
+        $controller->set('model_count', $itemsPerPage);
 
         /** Run Query */
-        $query_results = $connect->getData('list');
+        $query_results = $controller->getData('list');
 
         $gridItems = array();
 
-        $name_key = $connect->get('name_key');
+        $name_key = $controller->get('name_key');
 
         if (count($query_results) > 0) {
 
@@ -288,19 +276,18 @@ class PagetypegridPlugin extends Plugin
         die;
 
         echo '<br /><br />';
-        echo $connect->model->query->__toString();
+        echo $controller->model->query->__toString();
         echo '<br /><br />';
 */
-        $this->set('model_name', 'Plugindata');
-        $this->set('model_type', 'dbo');
-        $this->set('model_query_object', 'getPlugindata');
-        $this->set('model_parameter', 'PrimaryRequestQueryResults');
 
-        $this->parameters['model_name'] = 'Plugindata';
-        $this->parameters['model_type'] = 'dbo';
+        $this->set('model_type', 'Plugindata');
+        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_query_object', 'list');
+
+        $this->parameters['model_type'] = 'Plugindata';
+        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
 
         Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $query_results);
-
 
         return true;
     }
@@ -308,13 +295,13 @@ class PagetypegridPlugin extends Plugin
     /**
      * Creates and stores lists for Grid Batch area
      *
-     * @param   $connect
+     * @param   $controller
      * @param   $primary_prefix
      *
      * @return boolean
      * @since   1.0
      */
-    protected function setBatch($connect, $primary_prefix)
+    protected function setBatch()
     {
         $temp = $this->get('grid_batch_array', '');
 

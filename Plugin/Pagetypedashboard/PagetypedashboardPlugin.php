@@ -62,13 +62,12 @@ class PagetypedashboardPlugin extends Plugin
             null
         );
 
-        $this->set('model_name', 'Plugindata');
-        $this->set('model_type', 'dbo');
-        $this->set('model_query_object', 'getPlugindata');
-        $this->set('model_parameter', 'Pagetypedashboard');
+        $this->set('model_type', 'Plugindata');
+        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_query_object', 'list');
 
-        $this->parameters['model_name'] = 'Plugindata';
-        $this->parameters['model_type'] = 'dbo';
+        $this->parameters['model_type'] = 'Plugindata';
+        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
 
         Services::Registry()->set('Plugindata', 'Pagetypedashboard', $tabs);
 
@@ -119,10 +118,7 @@ protected function setDashboardPermissions()
 /**
  * Options: creates a list of Portlets available for this Dashboard
  *
- * @param   $connect
- * @param   $primary_prefix
- *
- * @return boolean
+ * @return  boolean
  * @since   1.0
  */
 protected function setOptions()

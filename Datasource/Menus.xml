@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Menus"
+        process_plugins="1"
+        data_object="Menu">
+</model>
