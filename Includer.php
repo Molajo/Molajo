@@ -626,7 +626,7 @@ class Includer
         ob_end_clean();
 
 //		if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'toolbar') {
-//			echo $message;
+			echo $message;
 //		}
 
         Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);

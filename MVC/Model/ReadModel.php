@@ -25,18 +25,18 @@ class ReadModel extends Model
      *
      * Retrieve all elements of the specific table for a specific item
      *
-     * @param  $columns
-     * @param  $table_name
-     * @param  $primary_prefix
-     * @param  $primary_key
-     * @param  $id
-     * @param  $name_key
-     * @param  $name_key_value
-     * @param  $query_object - item, list, result
-     * @param  $criteria_array
+     * @param   $columns
+     * @param   $table_name
+     * @param   $primary_prefix
+     * @param   $primary_key
+     * @param   $id
+     * @param   $name_key
+     * @param   $name_key_value
+     * @param   $query_object - item, list, result
+     * @param   $criteria_array
      *
-     * @return ReadModel
-     * @since  1.0
+     * @return  ReadModel
+     * @since   1.0
      */
     public function setBaseQuery(
         $columns,

@@ -37,9 +37,19 @@ class DisplayController extends Controller
             $this->query_results = array();
 
         } else {
-            $this->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+            echo'Name/Type ' . $this->get('model_name') . $this->get('model_type');
+            echo '<br />';
 
+            $this->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+            echo'AFTER Name/Type ' . $this->get('model_name') . $this->get('model_type');
+            echo '<br />';
+
+            echo 'Model Registry: ' . $this->model_registry;
+
+Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '*');
+            die;
             $results = $this->setDataobject();
+
             if ($results === false) {
                 return false;
             }
@@ -123,11 +133,11 @@ class DisplayController extends Controller
     /**
      * wrapView
      *
-     * @param  $view
-     * @param  $rendered_output
+     * @param   $view
+     * @param   $rendered_output
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function wrapView($view, $rendered_output)
     {
@@ -142,7 +152,6 @@ class DisplayController extends Controller
 
         $this->query_results[] = $temp;
 
-        /** paths */
         $this->view_path = $this->get('wrap_view_path');
         $this->view_path_url = $this->get('wrap_view_path_url');
 
@@ -158,8 +167,6 @@ class DisplayController extends Controller
      *
      * 2. Include Header.php, Body.php, and/or Footer.php views for Molajo to
      *  perform the looping, injecting $row into each of the three views
-     *
-     * On no query results
      *
      * @return  string
      * @since   1.0

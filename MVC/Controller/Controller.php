@@ -31,7 +31,7 @@ class Controller
 	/**
 	 * Stores various extension-specific key/value pairs
 	 *
-	 * Public as it is passed into plugined events
+	 * Public as it is passed into events
 	 *
 	 * @var    array
 	 * @since  1.0
@@ -41,7 +41,7 @@ class Controller
 	/**
 	 * Model Instance
 	 *
-	 * Public as it is passed into plugined events
+	 * Public as it is passed into events
 	 *
 	 * @var    object
 	 * @since  1.0
@@ -51,7 +51,7 @@ class Controller
 	/**
 	 * Registry containing Table Configuration from XML
 	 *
-	 * Public as it is passed into plugined events
+	 * Public as it is passed into events
 	 *
 	 * @var    string
 	 * @since  1.0
@@ -127,10 +127,10 @@ class Controller
 	/**
 	 * Get the current value (or default) of the specified Model property
 	 *
-	 * @param string $key
-	 * @param mixed  $default
+	 * @param   string  $key
+	 * @param   mixed   $default
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   1.0
 	 */
 	public function get($key, $default = null)
@@ -199,15 +199,16 @@ class Controller
 			}
 		}
 
-        if ($model_type == 'dbo') {
             echo $profiler_message . '<br />';
-            die;
-        }
 
 		/** Serialize Options */
 		$this->set('model_type', $model_type);
+
+        echo 'Before ' . $model_type . ' ' . $model_name .'<br />';
 		$this->set('model_name',
 			Services::Registry()->get($this->model_registry, 'model_name', ''));
+        echo 'After ' . $this->get('model_type') . ' ' . $this->get('model_name') .'<br />';
+
 		$this->set('table_name',
 			Services::Registry()->get($this->model_registry, 'table', '#__content'));
 		$this->set('primary_key',
@@ -265,7 +266,6 @@ class Controller
 		} catch (\Exception $e) {
 			throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
 		}
-
 
 		return $this;
 	}

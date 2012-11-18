@@ -253,7 +253,6 @@ Class ConfigurationService
         if ($path_and_file === false) {
             // FAIL
         }
-
         $xml_string = ConfigurationService::readXMLFile($path_and_file);
 
         $results = ConfigurationService::getIncludeCode($xml_string, $model_name);
@@ -333,7 +332,7 @@ Class ConfigurationService
 		$model_type = trim(ucfirst(strtolower($model_type)));
 		$model_name = trim(ucfirst(strtolower($model_name)));
 
-//		echo 'Type: ' . $model_type . ' ' . $model_name . '<br />';
+//echo 'in Configuration: Type: ' . $model_type . ' ' . $model_name . '<br />';
 
 		$path = false;
 
@@ -536,7 +535,6 @@ Class ConfigurationService
 			}
 		}
 
-
         $valid = array('Datalist', 'Datasource');
         if (in_array($model_type, $valid)) {
             $path = ConfigurationService::commonSearch(
@@ -560,7 +558,6 @@ Class ConfigurationService
         );
         if ($path === false) {
         } else {
-            echo $path;
             return $path;
         }
 
@@ -815,7 +812,6 @@ Class ConfigurationService
 	 */
 	protected static function setModelRegistry($registryName, $xml)
 	{
-
 		$modelArray = Services::Registry()->get('Fields', 'Modelattributes');
 
 		foreach ($xml->attributes() as $key => $value) {

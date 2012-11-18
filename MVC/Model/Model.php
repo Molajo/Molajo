@@ -21,271 +21,208 @@ defined('MOLAJO') or die;
  */
 class Model
 {
-	/**
-	 * Database connection
-	 *
-	 * Public to access db quoting on query parts
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $db;
+    /**
+     * Database connection
+     *
+     * Public to access db quoting on query parts
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $db;
 
-	/**
-	 * Database query object
-	 *
-	 * Public to allow setting of partial query values
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $query;
+    /**
+     * Database query object
+     *
+     * Public to allow setting of partial query values
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $query;
 
-	/**
-	 * Used in queries to determine date validity
-	 *
-	 * Public to access property during query development
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $null_date;
+    /**
+     * Used in queries to determine date validity
+     *
+     * Public to access property during query development
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $null_date;
 
-	/**
-	 * Today's CCYY-MM-DD 00:00:00 Used in queries to determine date validity
-	 *
-	 * Public to access property during query development
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $now;
+    /**
+     * Today's CCYY-MM-DD 00:00:00 Used in queries to determine date validity
+     *
+     * Public to access property during query development
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $now;
 
-	/**
-	 * Results from queries
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	protected $query_results;
+    /**
+     * Results from queries
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $query_results;
 
-	/**
-	 * Parameters
-	 *
-	 * @var    object
-	 * @since  1.0
-	 */
-	public $parameters = array();
+    /**
+     * Parameters
+     *
+     * @var    object
+     * @since  1.0
+     */
+    public $parameters = array();
 
-	/**
-	 * @return object
-	 * @since   1.0
-	 */
-	public function __construct()
-	{
-		$this->parameters = array();
-		$this->query_results = array();
-	}
+    /**
+     * @return object
+     * @since   1.0
+     */
+    public function __construct()
+    {
+        $this->parameters = array();
+        $this->query_results = array();
+    }
 
-	/**
-	 * Get the current value (or default) of the specified Model property
-	 *
-	 * @param string $key     Property
-	 * @param mixed  $default Value
-	 *
-	 * @return mixed
-	 * @since   1.0
-	 */
-	public function get($key, $default = null)
-	{
-		$value = null;
+    /**
+     * Get the current value (or default) of the specified Model property
+     *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function get($key, $default = null)
+    {
+        $value = null;
 
-		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results'))) {
-			$value = $this->$key;
+        if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results'))) {
+            $value = $this->$key;
 
-		} else {
-			if (isset($this->parameters[$key])) {
-				$value = $this->parameters[$key];
-			}
-		}
+        } else {
+            if (isset($this->parameters[$key])) {
+                $value = $this->parameters[$key];
+            }
+        }
 
-		if ($value === null) {
-			return $default;
-		}
+        if ($value === null) {
+            return $default;
+        }
 
-		return $value;
-	}
+        return $value;
+    }
 
-	/**
-	 * Set the value of a Model property
-	 *
-	 * @param string $key   Property
-	 * @param mixed  $value Value
-	 *
-	 * @return mixed
-	 * @since   1.0
-	 */
-	public function set($key, $value = null)
-	{
-		if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results'))) {
-			$this->$key = $value;
-		} else {
-			$this->parameters[$key] = $value;
-		}
+    /**
+     * Set the value of a Model property
+     *
+     * @param   string $key
+     * @param   mixed  $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        if (in_array($key, array('db', 'query', 'null_date', 'now', 'query_results'))) {
+            $this->$key = $value;
+        } else {
+            $this->parameters[$key] = $value;
+        }
 
-		return;
-	}
+        return;
+    }
 
-	/**
-	 * retrieves messages from Messages dbo
-	 *
-	 * @param null $model_type
-	 *
-	 * @return mixed Array or String or Null
-	 * @since   1.0
-	 */
-	public function getMessages($model_type = null)
-	{
-		return $this->db->getMessages();
-	}
+    /**
+     * filterInput
+     *
+     * @param   string  $name
+     * @param   string  $field_value
+     * @param   string  $dataType
+     * @param   int     $null        0 or 1 - is null allowed
+     * @param   string  $default     Default value, optional
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function filterInput(
+        $name,
+        $value,
+        $dataType,
+        $null = null,
+        $default = null
+    ) {
 
-	/**
-	 * retrieves parameters from Registry DBO
-	 *
-	 * @param null $model_type
-	 *
-	 * @return mixed Array or String or Null
-	 * @since   1.0
-	 */
-	public function getParameters($model_type = null)
-	{
-		return $this->db->getData('Parameters', $model_type);
-	}
+        try {
+            $value = Services::Filter()
+                ->filter(
+                $value,
+                $dataType,
+                $null,
+                $default
+            );
 
-	/**
-	 * retrieves head and metadata from Metadata registry
-	 *
-	 * @param null $model_type
-	 *
-	 * @return mixed Array or String or Null
-	 * @since   1.0
-	 */
-	public function getMetadata($model_type = null)
-	{
-		return $this->db->getMetadata($model_type);
-	}
+        } catch (\Exception $e) {
+            //todo: errors
+            echo $e->getMessage() . ' ' . $name;
+        }
 
-	/**
-	 * retrieves JS and CSS assets, metadata for head from Asset Registry
-	 *
-	 * @param null $model_type
-	 *
-	 * @return mixed Array or String or Null
-	 * @since   1.0
-	 */
-	public function getAssets($model_type = null)
-	{
-		return $this->db->getAssets($model_type);
-	}
+        return $value;
+    }
 
-	/**
-	 * retrieves Profiler Console messages
-	 *
-	 * @param null $model_type
-	 *
-	 * @return mixed Array or String or Null
-	 * @since   1.0
-	 */
-	public function getProfiler($model_type = null)
-	{
-		return $this->db->getProfiler();
-	}
+    /**
+     * loadResult
+     *
+     * Single Value Result
+     *
+     * Access by referencing the query results field, directly
+     *
+     * For example, in this method, the result is in $this->query_results.
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function loadResult($primary_prefix, $table_name)
+    {
+        if ($this->query->select == null) {
+            $this->query->select($this->db->qn($primary_prefix . '.' . $this->primary_key));
+        }
 
-	/**
-	 * filterInput
-	 *
-	 * @param string $name        Name of input field
-	 * @param string $field_value Value of input field
-	 * @param string $dataType    Datatype of input field
-	 * @param int    $null        0 or 1 - is null allowed
-	 * @param string $default     Default value, optional
-	 *
-	 * @return mixed
-	 * @since   1.0
-	 */
-	protected function filterInput(
-		$name, $value, $dataType, $null = null, $default = null)
-	{
+        if ($this->query->from == null) {
+            $this->query->from($this->db->qn($table_name) . ' as ' . $this->db->qn($primary_prefix));
+        }
 
-		try {
-			$value = Services::Filter()
-				->filter(
-				$value,
-				$dataType,
-				$null,
-				$default
-			);
+        $this->db->setQuery($this->query->__toString());
 
-		} catch (\Exception $e) {
-			//todo: errors
-			echo $e->getMessage() . ' ' . $name;
-		}
+        $this->query_results = $this->db->loadResult();
 
-		return $value;
-	}
+        if (empty($this->query_results)) {
+            return false;
+        }
 
-	/**
-	 * loadResult
-	 *
-	 * Single Value Result
-	 *
-	 * Access by referencing the query results field, directly
-	 *
-	 * For example, in this method, the result is in $this->query_results.
-	 *
-	 * @return object
-	 * @since   1.0
-	 */
-	protected function loadResult($primary_prefix, $table_name)
-	{
-		if ($this->query->select == null) {
-			$this->query->select($this->db->qn($primary_prefix . '.' . $this->primary_key));
-		}
+        $this->processQueryResults('loadResult');
 
-		if ($this->query->from == null) {
-			$this->query->from($this->db->qn($table_name) . ' as ' . $this->db->qn($primary_prefix));
-		}
+        return $this->query_results;
+    }
 
-		$this->db->setQuery($this->query->__toString());
-
-		$this->query_results = $this->db->loadResult();
-
-		if (empty($this->query_results)) {
-			return false;
-		}
-
-		$this->processQueryResults('loadResult');
-
-		return $this->query_results;
-	}
-
-	/**
-	 * loadResult
-	 *
-	 * Single Value Result
-	 *
-	 * Access by referencing the query results field, directly
-	 *
-	 * For example, in this method, the result is in $this->query_results.
-	 *
-	 * @return object
-	 * @since   1.0
-	 */
-	public function insertLanguageString($translated = array())
-	{
-		if (count($translated) === 0) {
-			return true;
-		}
+    /**
+     * insertLanguageString
+     *
+     * todo: move this into normal CRUD operations
+     *
+     * @param   array $translated
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function insertLanguageString($translated = array())
+    {
+        if (count($translated) === 0) {
+            return true;
+        }
 
         if (Services::Registry()->get('User', 'username') == 'admin') {
         } else {
@@ -298,20 +235,19 @@ class Model
         }
 
         /** Add Missing Language Strings to Base */
-		foreach ($translated as $key => $value) {
+        foreach ($translated as $key => $value) {
 
-           $sql = "
+            $sql = "
              SELECT id
 					FROM `molajo_language_strings`
 					WHERE language = 'string'
 					AND title = "
-               . $this->db->q($value)
-               ;
+                . $this->db->q($value);
 
             $this->db->setQuery($sql);
             $results = $this->db->loadResult();
 
-            if ((int) $results == 0) {
+            if ((int)$results == 0) {
 
                 $sql = "
 
@@ -340,10 +276,10 @@ class Model
                 $this->db->setQuery($sql);
                 $this->db->execute();
             }
-		}
+        }
 
-		/** Add to English Language */
-		$en_GB = "SELECT DISTINCT id
+        /** Add to English Language */
+        $en_GB = "SELECT DISTINCT id
 					FROM `molajo_language_strings`
 					WHERE language = 'string'
 					  AND title NOT IN (SELECT title
@@ -351,16 +287,16 @@ class Model
 					  WHERE language = 'en-gb')
 					    AND id <> 5";
 
-		$this->db->setQuery($en_GB);
-		$results = $this->db->loadObjectList();
+        $this->db->setQuery($en_GB);
+        $results = $this->db->loadObjectList();
 
-		if ($results === false || count($results) === 0) {
-		} else {
-			foreach ($results as $row) {
+        if ($results === false || count($results) === 0) {
+        } else {
+            foreach ($results as $row) {
 
 
-				if ($row->id == 5) {
-				} else {
+                if ($row->id == 5) {
+                } else {
                     $sql = "
 
                     INSERT INTO `#__language_strings`
@@ -388,29 +324,29 @@ class Model
                             `customfields`, `parameters`, `metadata`,
                             'en-gb', `translation_of_id`, `ordering`
                     FROM #__language_strings
-                    WHERE id = " . (int) $row->id;
+                    WHERE id = " . (int)$row->id;
 
                     $this->db->setQuery($sql);
                     $this->db->execute();
-				}
-			}
-		}
+                }
+            }
+        }
 
-		/** Add to Catalog */
-		$catalog = "SELECT DISTINCT id
+        /** Add to Catalog */
+        $catalog = "SELECT DISTINCT id
 					FROM `molajo_language_strings`
 					WHERE CONCAT(path, '/', alias) NOT IN (SELECT DISTINCT sef_request
 					  FROM  `molajo_catalog`
-					  WHERE catalog_type_id = " . (INT) CATALOG_TYPE_LANGUAGE_STRING . ")";
+					  WHERE catalog_type_id = " . (INT)CATALOG_TYPE_LANGUAGE_STRING . ")";
 
-		$this->db->setQuery($catalog);
-		$results = $this->db->loadObjectList();
+        $this->db->setQuery($catalog);
+        $results = $this->db->loadObjectList();
 
-		if ($results === false || count($results) === 0) {
-		} else {
-			foreach ($results as $row) {
+        if ($results === false || count($results) === 0) {
+        } else {
+            foreach ($results as $row) {
 
-				$sql = "
+                $sql = "
 
 				INSERT INTO `molajo_catalog`(`id`, `application_id`, `catalog_type_id`,
 						`source_id`, `enabled`, `redirect_to_id`, `sef_request`, `page_type`,
@@ -423,12 +359,12 @@ class Model
 				FROM `molajo_language_strings` as `a`,
 					`molajo_applications` as `b`
 
-				WHERE a.id = " . (int) $row->id;
+				WHERE a.id = " . (int)$row->id;
 
-				$this->db->setQuery($sql);
-				$this->db->execute();
-			}
-		}
-		return true;
-	}
+                $this->db->setQuery($sql);
+                $this->db->execute();
+            }
+        }
+        return true;
+    }
 }
