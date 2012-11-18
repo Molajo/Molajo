@@ -74,7 +74,7 @@ class AuthorPlugin extends Plugin
         $controller->set('id', (int) $fieldValue);
         $controller->set('get_item_children', 0);
 
-        $item = $controller->getData('item');
+        $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         if ($item === false || count($item) == 0) {
             return false;

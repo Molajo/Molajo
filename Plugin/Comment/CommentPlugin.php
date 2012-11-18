@@ -47,7 +47,7 @@ class CommentPlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $results = $controller->getModelRegistry('Resource', 'Comments');
+        $results = $controller->getModelRegistry(CATALOG_TYPE_RESOURCE_LITERAL, 'Comments');
         if ($results === false) {
             return false;
         }
@@ -134,7 +134,7 @@ class CommentPlugin extends Plugin
                 . ' = ' . (int) $parent_source_id
         );
 
-        $count = $controller->getData('result');
+        $count = $controller->getData(QUERY_OBJECT_RESULT);
 
         $results = array();
         $row = new \stdClass();
@@ -192,7 +192,7 @@ class CommentPlugin extends Plugin
                 . '.' . $controller->model->db->qn('lft')
         );
 
-        $this->data = $controller->getData('list');
+        $this->data = $controller->getData(QUERY_OBJECT_LIST);
 
         $open = $this->getCommentsOpen($parentController, $parent_source_id);
 
@@ -305,7 +305,7 @@ class CommentPlugin extends Plugin
                 $parentController->model->db->qn('start_publishing_datetime')
         );
 
-        $published = $parentController->getData('result');
+        $published = $parentController->getData(QUERY_OBJECT_RESULT);
         if ($published === false) {
             return false;
         }

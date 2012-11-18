@@ -52,7 +52,7 @@ class PagetypeeditPlugin extends Plugin
 
         $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));
 
-        $form->set('data', Services::Registry()->get('Plugindata', 'PrimaryRequestQueryResults'));
+        $form->set('data', Services::Registry()->get('Plugindata', PRIMARY_QUERY_RESULTS));
 
         /** Parameters */
         $form->set('parameters', Services::Registry()->getArray('ResourcesSystemParameters'));
@@ -77,13 +77,13 @@ echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
         );
 
         $this->set('model_type', 'Plugindata');
-        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_name', PRIMARY_QUERY_RESULTS);
         $this->set('model_query_object', 'list');
 
         $this->parameters['model_type'] = 'Plugindata';
-        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
+        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;
 
-        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $current_page);
+        Services::Registry()->set('Plugindata', PRIMARY_QUERY_RESULTS, $current_page);
 
         return true;
     }

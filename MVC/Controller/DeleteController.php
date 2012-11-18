@@ -131,7 +131,7 @@ class DeleteController extends Controller
                 . ' = ' . $this->model->db->q($this->data->catalog_type_id));
         }
 
-        $item = $this->getData('item');
+        $item = $this->getData(QUERY_OBJECT_ITEM);
 //		echo '<br /><br /><br />';
 //		echo $this->model->query->__toString();
 //		echo '<br /><br /><br />';

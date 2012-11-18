@@ -132,13 +132,13 @@ class PagetypeapplicationPlugin extends Plugin
         $current_page = $form->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
 
         $this->set('model_type', 'Plugindata');
-        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_name', PRIMARY_QUERY_RESULTS);
         $this->set('model_query_object', 'list');
 
         $this->parameters['model_type'] = 'Plugindata';
-        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
+        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;
 
-        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $current_page);
+        Services::Registry()->set('Plugindata', PRIMARY_QUERY_RESULTS, $current_page);
 
 //        echo '<pre>';
 //        var_dump(Services::Registry()->get('Plugindata', 'Formpageapplicationbasic'));

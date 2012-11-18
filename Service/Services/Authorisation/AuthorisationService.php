@@ -82,7 +82,7 @@ Class AuthorisationService
         $controller->model->query->where($controller->model->db->qn('a.site_id') . ' = ' . (int) SITE_ID);
         $controller->model->query->where($controller->model->db->qn('a.application_id') . ' = ' . (int) APPLICATION_ID);
 
-        $application_id = $controller->getData('result');
+        $application_id = $controller->getData(QUERY_OBJECT_RESULT);
 
         if ($application_id === false) {
             //todo: finish the response action/test
@@ -251,7 +251,7 @@ Class AuthorisationService
                 . ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
         );
 
-        $count = $controller->getData('result');
+        $count = $controller->getData(QUERY_OBJECT_RESULT);
         if ($count > 0) {
             return true;
 
@@ -300,7 +300,7 @@ Class AuthorisationService
         $controller->model->query->where('a.application_id = ' . (int) APPLICATION_ID);
         $controller->model->query->where('a.user_id = ' . (int) $user_id);
 
-        $count = $controller->model->getData('result');
+        $count = $controller->model->getData(QUERY_OBJECT_RESULT);
 
         if ($count > 0) {
             return true;

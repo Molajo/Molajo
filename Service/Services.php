@@ -98,7 +98,7 @@ Class Services
 	 */
 	public static function __callStatic($name, $arguments)
 	{
-		return Application::Services()->get($name . 'Service');
+		return Application::Services()->get($name . CATALOG_TYPE_SERVICE_VIEW_LITERAL);
 	}
 
 	/**
@@ -113,7 +113,7 @@ Class Services
 		$this->dynamic_connection = array();
 		$this->message = array();
 
-		$services = ConfigurationService::getFile('Service', 'Services');
+		$services = ConfigurationService::getFile(CATALOG_TYPE_SERVICE_VIEW_LITERAL, 'Services');
 
 		if ($services === false) {
 			//throw error
@@ -129,7 +129,7 @@ Class Services
             $startup = (string) $service->attributes()->startup;
 
 //todo: overrides for service
-            $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
+            $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . CATALOG_TYPE_SERVICE_VIEW_LITERAL;
 
             foreach ($service->parameter as $parameter) {
             }
@@ -137,19 +137,19 @@ Class Services
 			if ($static_indicator == '1') {
 
                 $connection = $this->getClassInstance($serviceClass);
-                $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
+                $connectionSucceeded = $this->runStartupMethod($connection, $name . CATALOG_TYPE_SERVICE_VIEW_LITERAL, $startup);
 
-				$this->set($name . 'Service', $connection, $connectionSucceeded);
+				$this->set($name . CATALOG_TYPE_SERVICE_VIEW_LITERAL, $connection, $connectionSucceeded);
 
 			} else {
 
-                $this->dynamic_connection[$service->attributes()->name . 'Service']
+                $this->dynamic_connection[$service->attributes()->name . CATALOG_TYPE_SERVICE_VIEW_LITERAL]
                     = $service->attributes()->name;
 
                 if (trim($startup) == '') {
                 } else {
                     $connection = $this->getClassInstance($serviceClass);
-                    $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
+                    $connectionSucceeded = $this->runStartupMethod($connection, $name . CATALOG_TYPE_SERVICE_VIEW_LITERAL, $startup);
                 }
 			}
 		}
@@ -253,12 +253,12 @@ Class Services
 
         if ($value == null || $connectionSucceeded === false) {
             $this->message[$i] = ' ' . $key . ' FAILED' . $value;
-            Services::Registry()->set('Service', $key, false);
+            Services::Registry()->set(CATALOG_TYPE_SERVICE_VIEW_LITERAL, $key, false);
 
         } else {
             $this->static_connection[$key] = $value;
             $this->message[$i] = ' ' . $key . ' started successfully. ';
-            Services::Registry()->set('Service', $key, true);
+            Services::Registry()->set(CATALOG_TYPE_SERVICE_VIEW_LITERAL, $key, true);
         }
     }
 }

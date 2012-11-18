@@ -72,7 +72,7 @@ Class ThemeHelper
         Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
 
         /** Retrieve the query results */
-        $item = Helpers::Extension()->get($theme_id, 'Theme', $node, 1);
+        $item = Helpers::Extension()->get($theme_id, CATALOG_TYPE_THEME_LITERAL, $node, 1);
 
         /** Not found: get system default */
         if (count($item) == 0) {
@@ -100,7 +100,7 @@ Class ThemeHelper
             Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
             Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
 
-            $item = Helpers::Extension()->get($theme_id, 'Theme', $node, 1);
+            $item = Helpers::Extension()->get($theme_id, CATALOG_TYPE_THEME_LITERAL, $node, 1);
 
             if (count($item) == 0) {
                 Services::Error()->set(500, 'Theme not found');

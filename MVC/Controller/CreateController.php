@@ -396,7 +396,7 @@ class CreateController extends Controller
                 $controller->set('check_view_level_access', 0);
                 $controller->set('process_plugins', 0);
 
-                $value = $controller->getData('result');
+                $value = $controller->getData(QUERY_OBJECT_RESULT);
 
                 if (empty($value)) {
                     //error

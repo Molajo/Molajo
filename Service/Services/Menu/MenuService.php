@@ -79,7 +79,7 @@ Class MenuService
         $controller->set('model_offset', 0);
         $controller->set('model_count', 999999);
 
-        $query_results = $controller->getData('list');
+        $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         $look_for_parent = 0;
 
@@ -163,7 +163,7 @@ Class MenuService
 		$controller->set('use_special_joins', 1);
 		$controller->set('process_plugins', 1);
 
-        $query_results = $controller->getData('list');
+        $query_results = $controller->getData(QUERY_OBJECT_LIST);
         if ($query_results === false) {
             return array();
         }

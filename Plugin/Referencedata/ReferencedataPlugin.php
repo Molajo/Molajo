@@ -69,7 +69,7 @@ class ReferencedataPlugin extends Plugin
 
                     $controller->set($controller->get('primary_key', 'id'), (int) $fieldValue);
 
-                    $value = $controller->getData('result');
+                    $value = $controller->getData(QUERY_OBJECT_RESULT);
 
                     if ($value === false) {
                     } else {

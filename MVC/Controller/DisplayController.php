@@ -97,7 +97,7 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
             return '';
         }
 
-        if (strtolower($this->get('includer_name', '')) == 'wrap') {
+        if (strtolower($this->get('includer_name', '')) == CATALOG_TYPE_WRAP_LITERAL) {
             $rendered_output = $this->query_results;
 
         } else {

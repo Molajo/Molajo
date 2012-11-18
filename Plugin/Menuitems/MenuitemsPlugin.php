@@ -78,7 +78,7 @@ class MenuitemsPlugin extends Plugin
         $controller->set('model_offset', 0);
         $controller->set('model_count', 99999);
 
-        $query_results = $controller->getData('list');
+        $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         $menuitems = array();
         foreach ($query_results as $item) {

@@ -226,7 +226,7 @@ Class LanguageService
 
 		/** todo: Retrieve from Session, if installed */
 
-		$language = Services::Registry()->get('User', 'Language', '');
+		$language = Services::Registry()->get('User', CATALOG_TYPE_LANGUAGE_LITERAL, '');
 		if (in_array($language, $installed)) {
 			return $language;
 		}
@@ -242,7 +242,7 @@ Class LanguageService
 			}
 		}
 
-		$language = Services::Registry()->get('Configuration', 'Language');
+		$language = Services::Registry()->get('Configuration', CATALOG_TYPE_LANGUAGE_LITERAL);
 		Services::Registry()->set('Languages', 'Default', $language);
 		if (in_array($language, $installed)) {
 			return $language;
@@ -344,7 +344,7 @@ Class LanguageService
 		$controller->set('model_offset', 0);
 		$controller->set('model_count', 99999);
 
-		return $controller->getData('List');
+		return $controller->getData(QUERY_OBJECT_LIST);
 	}
 
 	/**

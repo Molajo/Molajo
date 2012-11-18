@@ -264,7 +264,7 @@ Class ProfilerService
 
         try {
 
-            if (Services::Registry()->get('Service', 'DateService') == 1) {
+            if (Services::Registry()->get(CATALOG_TYPE_SERVICE_LITERAL, 'DateService') == 1) {
 
                 if (count($this->hold_for_date_service_startup) > 0) {
 

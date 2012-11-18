@@ -32,7 +32,7 @@ Class CatalogHelper
      * getInstance
      *
      * @static
-     * @return bool|object
+     * @return  bool|object
      * @since   1.0
      */
     public static function getInstance()
@@ -47,8 +47,8 @@ Class CatalogHelper
     /**
      * Retrieve Catalog and Catalog Type data for a specific catalog id or query request
      *
-     * @return boolean
-     * @since    1.0
+     * @return  boolean
+     * @since   1.0
      */
     public function getRouteCatalog()
     {
@@ -57,7 +57,6 @@ Class CatalogHelper
             Services::Registry()->get('Parameters', 'request_url')
         );
 
-        /** 404: routeRequest handles redirecting to error page */
         if (count($item) == 0 || (int) $item->id == 0 || (int) $item->enabled == 0) {
             Services::Registry()->set('Parameters', 'status_found', false);
             Services::Profiler()->set('CatalogHelper->getRouteCatalog 404 - Not Found '
@@ -68,7 +67,6 @@ Class CatalogHelper
             return false;
         }
 
-        /** Redirect: routeRequest handles rerouting the request */
         if ((int) $item->redirect_to_id == 0) {
         } else {
             Services::Profiler()->set('CatalogHelper->getRouteCatalog Redirect to ID '
@@ -79,7 +77,6 @@ Class CatalogHelper
             return false;
         }
 
-        /** Route Registry */
         Services::Registry()->set('Parameters', 'catalog_id', (int) $item->id);
         Services::Registry()->set('Parameters', 'catalog_type_id', (int) $item->catalog_type_id);
         Services::Registry()->set('Parameters', 'catalog_type', $item->b_title);
@@ -94,9 +91,8 @@ Class CatalogHelper
         Services::Registry()->set('Parameters', 'catalog_alias', $item->b_alias);
         Services::Registry()->set('Parameters', 'catalog_source_id', (int) $item->source_id);
 
-        /** home */
         if ((int) Services::Registry()->get('Parameters', 'catalog_id')
-            == Services::Registry()->get('Configuration', 'application_home_catalog_id')
+            == (int) Services::Registry()->get('Configuration', 'application_home_catalog_id')
         ) {
             Services::Registry()->set('Parameters', 'catalog_home', 1);
         } else {
@@ -107,16 +103,14 @@ Class CatalogHelper
     }
 
     /**
-     * Retrieve Catalog and Catalog Type for specific id or query request
+     * Retrieve Catalog and Catalog Type data for specific Catalog ID, SEF Request, or Source ID/Catalog Type
      *
-     * View Access is verified in Application::Request to identify 403 errors
+     * @param   int     $catalog_id
+     * @param   string  $url_sef_request
+     * @param   int     $source_id
+     * @param   int     $catalog_type_id
      *
-     * @param int    $catalog_id
-     * @param string $url_sef_request
-     * @param int    $source_id
-     * @param int    $catalog_type_id
-     *
-     * @return array
+     * @return  array
      * @since   1.0
      */
     public function get($catalog_id = 0, $url_sef_request = '', $source_id = 0, $catalog_type_id = 0)
@@ -137,24 +131,16 @@ Class CatalogHelper
 		*/
 
 		/* test 3: Application 2, Site 1- Retrieve Item: for Catalog ID 1075
-		$catalog_id = 1075;
-		$url_sef_request = '';
-		$source_id = 0;
-		$catalog_type_id = 0;
+                $catalog_id = 1075;
+                $url_sef_request = '';
+                $source_id = 0;
+                $catalog_type_id = 0;
          */
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry('Datasource', 'Catalog');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Datasource', 'Catalog');
+        $controller->setDataobject();
 
         $controller->set('use_special_joins', 1);
         $controller->set('process_plugins', 0);
@@ -197,7 +183,7 @@ Class CatalogHelper
 			. $controller->model->db->q(PAGE_TYPE_LINK)
 		);
 
-        $item = $controller->getData('item');
+        $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         if (count($item) == 0 || $item === false) {
             return array();
@@ -213,28 +199,20 @@ Class CatalogHelper
     }
 
 	/**
-	 * Retrieves Catalog ID for the specified Catalog Type ID and Source ID (From content)
+	 * Retrieves Catalog ID for the specified Catalog Type ID and Source ID
 	 *
-	 * @param null $catalog_type_id
-	 * @param null $source_id
+	 * @param   null $catalog_type_id
+	 * @param   null $source_id
 	 *
-	 * @return bool|mixed
-	 * @since  1.0
+	 * @return  bool|mixed
+	 * @since   1.0
 	 */
 	public function getID($catalog_type_id, $source_id = null)
 	{
 		$controllerClass = CONTROLLER_CLASS;
 		$controller = new $controllerClass();
-
-		$results = $controller->getModelRegistry('Datasource', 'Catalog');
-		if ($results === false) {
-			return false;
-		}
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+		$controller->getModelRegistry('Datasource', 'Catalog');
+        $controller->setDataobject();
 
 		$prefix = $controller->get('primary_prefix', 'a');
 		$key = $controller->get('primary_key', 'id');
@@ -260,31 +238,23 @@ Class CatalogHelper
 			. ' = '
 			. $controller->model->db->q(APPLICATION_ID));
 
-		return $controller->getData('result');
+		return $controller->getData(QUERY_OBJECT_RESULT);
 	}
 
     /**
      * Retrieves Catalog ID for the Request SEF URL
      *
-     * @param string $url_sef_request
+     * @param   string  $url_sef_request
      *
-     * @return bool|mixed
-     * @since  1.0
+     * @return  bool|mixed
+     * @since   1.0
      */
     public function getIDUsingSEFURL($url_sef_request)
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry('Datasource', 'Catalog');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Datasource', 'Catalog');
+        $controller->setDataobject();
 
         $controller->set('use_special_joins', 1);
         $controller->set('process_plugins', 0);
@@ -311,59 +281,16 @@ Class CatalogHelper
 			. '.' . $controller->model->db->qn('enabled')
             . ' = 1');
 
-        return $controller->getData('result');
+        return $controller->getData(QUERY_OBJECT_RESULT);
     }
 
     /**
-     * Retrieves Redirect URL for Catalog id
+     * Retrieves URL for a specific Catalog ID
      *
-     * @param integer $catalog_id
+     * @param   integer  $catalog_id
      *
-     * @return string URL
-     * @since  1.0
-     */
-    public function getRedirectURL($catalog_id)
-    {
-        $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('Datasource', 'Catalog');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
-		$prefix = $controller->get('primary_prefix', 'a');
-		$key = $controller->get('primary_key', 'id');
-
-        $controller->model->query->select($controller->model->db->qn($prefix)
-			. '.'
-			. $controller->model->db->qn('redirect_to_id'));
-
-        $controller->model->query->where($controller->model->db->qn($prefix)
-			. '.'
-			. $controller->model->db->qn($key)
-			. ' = '
-			. (int) $catalog_id);
-
-        $result = $controller->getData('result');
-
-        if ((int) $result == 0) {
-            return false;
-        }
-
-        return $this->getURL($result);
-    }
-
-    /**
-     * getURL Retrieves URL based on Catalog ID
-     *
-     * @param integer $catalog_id
-     *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function getURL($catalog_id)
     {
@@ -398,12 +325,49 @@ Class CatalogHelper
 				. ' = '
 				. (int) $catalog_id);
 
-            $url = $controller->getData('result');
+            $url = $controller->getData(QUERY_OBJECT_RESULT);
 
         } else {
             $url = 'index.php?id=' . (int) $catalog_id;
         }
 
         return $url;
+    }
+
+    /**
+     * Retrieves Redirect URL for a specific Catalog id
+     *
+     * @param   integer  $catalog_id
+     *
+     * @return  string   URL
+     * @since   1.0
+     */
+    public function getRedirectURL($catalog_id)
+    {
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry('Datasource', 'Catalog');
+        $controller->setDataobject();
+
+        $prefix = $controller->get('primary_prefix', 'a');
+        $key = $controller->get('primary_key', 'id');
+
+        $controller->model->query->select($controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn('redirect_to_id'));
+
+        $controller->model->query->where($controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn($key)
+                . ' = '
+                . (int) $catalog_id);
+
+        $result = $controller->getData(QUERY_OBJECT_RESULT);
+
+        if ((int) $result == 0) {
+            return false;
+        }
+
+        return $this->getURL($result);
     }
 }

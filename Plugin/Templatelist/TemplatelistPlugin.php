@@ -40,10 +40,10 @@ class TemplatelistPlugin extends Plugin
 		if (isset($this->parameters['list_model_type'])) {
 			$model_type = $this->parameters['list_model_type'];
 		} else {
-			$model_type = 'Resource';
+			$model_type = CATALOG_TYPE_RESOURCE_LITERAL;
 		}
 		if ($model_type == '')  {
-			$model_type = 'Resource';
+			$model_type = CATALOG_TYPE_RESOURCE_LITERAL;
 		}
 
         $controllerClass = CONTROLLER_CLASS;
@@ -112,7 +112,7 @@ class TemplatelistPlugin extends Plugin
         $controller->set('model_count', $count);
 		$controller->set('use_pagination', $pagination);
 
-        $this->data = $controller->getData('list');
+        $this->data = $controller->getData(QUERY_OBJECT_LIST);
 
         return true;
     }

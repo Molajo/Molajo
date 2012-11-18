@@ -46,11 +46,11 @@ class DetailitemPlugin extends Plugin
         }
 
         $this->set('model_type', 'Plugindata');
-        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_name', PRIMARY_QUERY_RESULTS);
         $this->set('model_query_object', 'list');
 
         $this->parameters['model_type'] = 'Plugindata';
-        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
+        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;
 
         //$this->getComments();
         return true;
@@ -80,7 +80,7 @@ class DetailitemPlugin extends Plugin
         $controller->set('model_offset', 0);
         $controller->set('model_count', 10);
 
-        $query_results = $controller->getData('list');
+        $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         echo '<pre><br /><br />';
         var_dump($query_results);

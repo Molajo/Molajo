@@ -39,11 +39,11 @@ class PagetypeitemPlugin extends Plugin
 
 		/** Item Data */
         $this->set('model_type', 'Plugindata');
-        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_name', PRIMARY_QUERY_RESULTS);
         $this->set('model_query_object', 'list');
 
         $this->parameters['model_type'] = 'Plugindata';
-        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
+        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;
 
 
         return true;

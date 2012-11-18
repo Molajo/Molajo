@@ -30,6 +30,19 @@
     <define name="CATALOG_TYPE_MENUITEM" value="11000"/>
     <define name="CATALOG_TYPE_RESOURCE" value="12000"/>
 
+    <define name="CATALOG_TYPE_SERVICE_LITERAL" value="Service"/>
+    <define name="CATALOG_TYPE_PLUGIN_LITERAL" value="Plugin"/>
+    <define name="CATALOG_TYPE_FIELDS_LITERAL" value="Fields"/>
+    <define name="CATALOG_TYPE_LANGUAGE_LITERAL" value="Language"/>
+    <define name="CATALOG_TYPE_LANGUAGE_STRING_LITERAL" value="Languagestrings"/>
+    <define name="CATALOG_TYPE_MESSAGE_LITERAL" value="Message"/>
+    <define name="CATALOG_TYPE_THEME_LITERAL" value="Theme"/>
+    <define name="CATALOG_TYPE_PAGE_VIEW_LITERAL" value="Page"/>
+    <define name="CATALOG_TYPE_TEMPLATE_VIEW_LITERAL" value="Template"/>
+    <define name="CATALOG_TYPE_WRAP_VIEW_LITERAL" value="Wrap"/>
+    <define name="CATALOG_TYPE_MENUITEM_LITERAL" value="Menuitem"/>
+    <define name="CATALOG_TYPE_RESOURCE_LITERAL" value="Resource"/>
+
     <define name="CATALOG_TYPE_GROUP" value="13000"/>
     <define name="CATALOG_TYPE_CATEGORY" value="14000"/>
     <define name="CATALOG_TYPE_TAG" value="15000"/>
@@ -38,6 +51,7 @@
     <define name="PAGE_TYPE_CONFIGURATION" value="Configuration"/>
     <define name="PAGE_TYPE_DASHBOARD" value="Dashboard"/>
     <define name="PAGE_TYPE_EDIT" value="Edit"/>
+    <define name="PAGE_TYPE_ITEM" value="Item"/>
     <define name="PAGE_TYPE_GRID" value="Grid"/>
     <define name="PAGE_TYPE_LINK" value="Link"/>
     <define name="PAGE_TYPE_NEW" value="New"/>
@@ -103,5 +117,12 @@
 
     <define name="CONTROLLER_CLASS" value="Molajo\MVC\Controller\Controller"/>
     <define name="HELPER_FILES" value="Molajo\Helper\"/>
+
+    <define name="QUERY_OBJECT_RESULT" value="result"/>
+    <define name="QUERY_OBJECT_ITEM" value="item"/>
+    <define name="QUERY_OBJECT_LIST" value="list"/>
+    <define name="QUERY_OBJECT_DISTINCT" value="distinct"/>
+
+    <define name="PRIMARY_QUERY_RESULTS" value="PrimaryRequestQueryResults"/>
 
 </defines>

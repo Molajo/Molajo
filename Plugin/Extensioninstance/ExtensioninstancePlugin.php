@@ -63,7 +63,7 @@ class ExtensioninstancePlugin extends Plugin
         $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('catalog_type_id')
             . ' = ' . (int) $this->data->catalog_type_id);
 
-        $id = $controller->getData('result');
+        $id = $controller->getData(QUERY_OBJECT_RESULT);
 
         if ((int) $id > 0) {
             //name already exists
@@ -85,7 +85,7 @@ class ExtensioninstancePlugin extends Plugin
         $controller->model->query->where($controller->model->db->qn('a.catalog_type_id')
             . ' = ' . (int) $this->data->catalog_type_id);
 
-        $item = $controller->getData('item');
+        $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         if ($item === false) {
         } else {
@@ -266,7 +266,7 @@ class ExtensioninstancePlugin extends Plugin
                 . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' = ' . $temp);
 
-            $item = $controller->getData('item');
+            $item = $controller->getData(QUERY_OBJECT_ITEM);
 
             if ($item === false) {
             } else {
@@ -351,7 +351,7 @@ class ExtensioninstancePlugin extends Plugin
         $controller->model->query->where($controller->model->db->qn('extension_id')
             . ' = ' . (int) $this->data->extension_id);
 
-        $value = $controller->getData('result');
+        $value = $controller->getData(QUERY_OBJECT_RESULT);
 
         if (empty($value) || (int) $value == 0) {
         } else {

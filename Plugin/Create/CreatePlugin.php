@@ -63,7 +63,7 @@ class CreatePlugin extends Plugin
     protected function createExtension()
     {
         $sourceFolder = 'Samples';
-        $catalog_type = 'Resource';
+        $catalog_type = CATALOG_TYPE_RESOURCE_LITERAL;
         $catalog_type_id = $this->parameters['criteria_catalog_type_id'];
 
         /** Determine Source Folder for files to copy */
@@ -108,7 +108,7 @@ class CreatePlugin extends Plugin
     public function onAfterDelete()
     {
         /** Determine Destination Folder for target location */
-        $destinationFolder = $this->getFolderToDelete('Resource', $this->data->title);
+        $destinationFolder = $this->getFolderToDelete(CATALOG_TYPE_RESOURCE_LITERAL, $this->data->title);
         if ($destinationFolder === false) {
             return false;
         }
@@ -355,7 +355,7 @@ class CreatePlugin extends Plugin
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Menuitem', 'Grid');
+        $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, 'Grid');
 
         $results = $controller->setDataobject();
         if ($results === false) {
@@ -372,7 +372,7 @@ class CreatePlugin extends Plugin
         $controller->model->query->where($controller->model->db->qn($primary_prefix)
             . '.' . $controller->model->db->qn('lvl') . ' = 3 ');
 
-        $item = $controller->getData('item');
+        $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         /**
         echo '<br /><br /><br />';
@@ -451,7 +451,7 @@ class CreatePlugin extends Plugin
                 } elseif ($key == 'model_name') {
                     $data->parameters[$key] = $this->data->title;
                     $data->model_name = 'Grid';
-                    $data->model_type = 'Menuitem';
+                    $data->model_type = CATALOG_TYPE_MENUITEM_LITERAL;
 
                 } else {
                     $data->parameters[$key] = $value;

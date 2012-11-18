@@ -158,7 +158,7 @@ class Includer
             /** Name used by includer for extension */
             if ($name == 'name' || $name == 'title') {
 
-                if ($this->name == 'template') {
+                if ($this->name == CATALOG_TYPE_TEMPLATE_LITERAL) {
 
                     if ((int) $value > 0) {
                         $template_id = (int) $value;
@@ -184,7 +184,7 @@ class Includer
                 $this->tag = $value;
 
             /** Template */
-            } elseif ($name == 'template' || $name == 'template_view_title'
+            } elseif ($name == CATALOG_TYPE_TEMPLATE_LITERAL || $name == 'template_view_title'
                 || $name == 'template_view' || $name == 'template_view') {
                 $value = ucfirst(strtolower(trim($value)));
 
@@ -207,7 +207,7 @@ class Includer
                 Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
                 /** Wrap */
-            } elseif ($name == 'wrap' || $name == 'wrap_view_title' || $name == 'wrap_view' || $name == 'wrap_title') {
+            } elseif ($name == CATALOG_TYPE_WRAP_LITERAL || $name == 'wrap_view_title' || $name == 'wrap_view' || $name == 'wrap_title') {
 
                 $value = ucfirst(strtolower(trim($value)));
                 $wrap_id = Helpers::Extension()
@@ -327,7 +327,7 @@ class Includer
 			}
 		}
 
-		if ($this->type == 'wrap') {
+		if ($this->type == CATALOG_TYPE_WRAP_LITERAL) {
 		} else {
 			$results = $this->setTemplateRenderCriteria($saveTemplate);
 			if ($results === false) {
@@ -389,7 +389,7 @@ class Includer
 		}
 
 		if ((int) $template_id == 0) {
-			$template_id = Helpers::View()->getDefault('Template');
+			$template_id = Helpers::View()->getDefault(CATALOG_TYPE_TEMPLATE_LITERAL);
 			Services::Registry()->set('Parameters', 'template_view_id', $template_id);
 		}
 
@@ -397,7 +397,7 @@ class Includer
 			return false;
 		}
 
-		Helpers::View()->get($template_id, 'Template');
+		Helpers::View()->get($template_id, CATALOG_TYPE_TEMPLATE_LITERAL);
 
 		if (is_array($saveTemplate) && count($saveTemplate) > 0) {
 			foreach ($saveTemplate as $key => $value) {
@@ -476,7 +476,7 @@ class Includer
 			}
 		}
 
-		Helpers::View()->get($wrap_id, 'Wrap');
+		Helpers::View()->get($wrap_id, CATALOG_TYPE_WRAP_LITERAL);
 
 		if (is_array($saveWrap) && count($saveWrap) > 0) {
 			foreach ($saveWrap as $key => $value) {
@@ -636,7 +636,7 @@ class Includer
 
         /** Set Parameters */
         $parms = Services::Registry()->getArray('Parameters');
-        $cached_output = Services::Cache()->get('Template', implode('', $parms));
+        $cached_output = Services::Cache()->get(CATALOG_TYPE_TEMPLATE_LITERAL, implode('', $parms));
 
         if ($cached_output === false) {
             if (count($parms) > 0) {
@@ -646,7 +646,7 @@ class Includer
             }
 
             $results = $controller->execute();
-            Services::Cache()->set('Template', implode('', $parms), $results);
+            Services::Cache()->set(CATALOG_TYPE_TEMPLATE_LITERAL, implode('', $parms), $results);
         } else {
             $results = $cached_output;
         }

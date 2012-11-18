@@ -202,7 +202,7 @@ class PaginationPlugin extends Plugin
             . ' = ' . (int) $this->parameters['catalog_source_id']));
 
 //todo ordering
-        $item = $controller->getData('item');
+        $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         $this->model_registry = ucfirst(strtolower($this->get('model_name')))
             . ucfirst(strtolower($this->get('model_type', 'Datasource')));

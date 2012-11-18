@@ -55,16 +55,16 @@ class PagetypelistPlugin extends Plugin
         $controller->set('model_count', $this->get('model_count', 5));
         $controller->set('use_pagination', $this->get('model_use_pagination', 1));
 
-        $list = $controller->getData('list');
+        $list = $controller->getData(QUERY_OBJECT_LIST);
 
-        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $list);
+        Services::Registry()->set('Plugindata', PRIMARY_QUERY_RESULTS, $list);
 
         $this->set('model_type', 'Plugindata');
-        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_name', PRIMARY_QUERY_RESULTS);
         $this->set('model_query_object', 'list');
 
         $this->parameters['model_type'] = 'Plugindata';
-        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
+        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;
 
         return true;
     }

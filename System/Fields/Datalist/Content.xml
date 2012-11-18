@@ -1,0 +1,6 @@
+<datalist name="ContentFields">
+    <model
+            name="ContentFields"
+            catalog_type_id="5500"
+            extends="ContentDatalist"/>
+</datalist>

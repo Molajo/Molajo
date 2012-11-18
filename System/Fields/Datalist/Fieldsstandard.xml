@@ -1,0 +1,6 @@
+<datalist name="FieldsstandardfieldsDatalist">
+    <model
+            name="FieldsstandardfieldsDatalist"
+            extends="PlugindataDatalist"
+            registry_entry="FieldssystemFieldsstandard"/>
+</datalist>

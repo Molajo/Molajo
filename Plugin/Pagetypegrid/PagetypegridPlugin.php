@@ -236,7 +236,7 @@ class PagetypegridPlugin extends Plugin
         $controller->set('model_count', $itemsPerPage);
 
         /** Run Query */
-        $query_results = $controller->getData('list');
+        $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         $gridItems = array();
 
@@ -281,13 +281,13 @@ class PagetypegridPlugin extends Plugin
 */
 
         $this->set('model_type', 'Plugindata');
-        $this->set('model_name', 'PrimaryRequestQueryResults');
+        $this->set('model_name', PRIMARY_QUERY_RESULTS);
         $this->set('model_query_object', 'list');
 
         $this->parameters['model_type'] = 'Plugindata';
-        $this->parameters['model_name'] = 'PrimaryRequestQueryResults';
+        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;
 
-        Services::Registry()->set('Plugindata', 'PrimaryRequestQueryResults', $query_results);
+        Services::Registry()->set('Plugindata', PRIMARY_QUERY_RESULTS, $query_results);
 
         return true;
     }

@@ -54,7 +54,7 @@ Class ViewHelper
      */
     public function get($id = 0, $type)
     {
-        if ($type == 'Page' || $type == 'Template' || $type == 'Wrap') {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL) {
         } else {
             return false;
         }
@@ -102,10 +102,10 @@ Class ViewHelper
 
         Services::Registry()->set('Parameters', $type . '_view_model_registry', $item->model_registry);
 
-        if ($type == 'Page') {
-            $this->setParameters('page', $item->model_registry . 'Parameters');
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
+            $this->setParameters(CATALOG_TYPE_PAGE_VIEW_LITERAL, $item->model_registry . 'Parameters');
 
-        } elseif ($type == 'Template') {
+        } elseif ($type == CATALOG_TYPE_TEMPLATE_LITERAL) {
 
             $this->setParameters('template', $item->model_registry . 'Parameters');
             $this->setParameters('wrap', $item->model_registry . 'Parameters');
@@ -177,10 +177,10 @@ Class ViewHelper
      */
     public function getDefault($type)
     {
-        if ($type == 'Page') {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
             return Helpers::Extension()->getInstanceID(CATALOG_TYPE_PAGE_VIEW, 'Default');
 
-        } elseif ($type == 'Template') {
+        } elseif ($type == CATALOG_TYPE_TEMPLATE_LITERAL) {
             return Helpers::Extension()->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, 'Default');
 
         } else {
@@ -202,7 +202,7 @@ Class ViewHelper
     public function getPath($node, $type)
     {
         $type = ucfirst(strtolower($type));
-        if ($type == 'Page' || $type == 'Template' || $type == 'Wrap') {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL) {
         } else {
             return false;
         }
@@ -244,7 +244,7 @@ Class ViewHelper
     public function getPathURL($node = false, $type)
     {
         $type = ucfirst(strtolower($type));
-        if ($type == 'Page' || $type == 'Template' || $type == 'Wrap') {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL) {
         } else {
             return false;
         }
@@ -286,7 +286,7 @@ Class ViewHelper
     public function getNamespace($node = false, $type)
     {
         $type = ucfirst(strtolower($type));
-        if ($type == 'Page' || $type == 'Template' || $type == 'Wrap') {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL) {
         } else {
             return false;
         }

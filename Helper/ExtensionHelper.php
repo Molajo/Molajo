@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
- * @license   GNU General Public License version 2 or later; see LICENSE
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Helper;
 
@@ -32,7 +32,7 @@ Class ExtensionHelper
      * getInstance
      *
      * @static
-     * @return bool|object
+     * @return  bool|object
      * @since   1.0
      */
     public static function getInstance()
@@ -47,16 +47,20 @@ Class ExtensionHelper
     /**
      * Retrieve Route information for a specific Extension
      *
-     * @param  $extension_id
-     * @param string $model_type
-     * @param string $model_name
-	 * @param string $acl_check
+     * @param   string  $extension_id
+     * @param   string  $model_type
+     * @param   string  $model_name
+     * @param   string  $acl_check
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
-    public function getExtension($extension_id, $model_type = 'Datasource', $model_name = 'ExtensionInstances', $acl_check = 0)
-    {
+    public function getExtension(
+        $extension_id,
+        $model_type = 'Datasource',
+        $model_name = 'ExtensionInstances',
+        $acl_check = 0
+    ) {
         $item = Helpers::Extension()->get($extension_id, $model_type, $model_name, $acl_check);
 
         /** 404: routeRequest handles redirecting to error page */
@@ -65,26 +69,33 @@ Class ExtensionHelper
             return false;
         }
 
-        /** Route Registry */
         Services::Registry()->set('Parameters', 'extension_id', $item->extensions_id);
         Services::Registry()->set('Parameters', 'extension_name', $item->extensions_name);
         Services::Registry()->set('Parameters', 'extension_name_path_node', $item->extensions_name);
         Services::Registry()->set('Parameters', 'extension_title', $item->title);
-        Services::Registry()->set('Parameters', 'extension_translation_of_id', (int) $item->translation_of_id);
+        Services::Registry()->set('Parameters', 'extension_translation_of_id', (int)$item->translation_of_id);
         Services::Registry()->set('Parameters', 'extension_language', $item->language);
         Services::Registry()->set('Parameters', 'extension_view_group_id', $item->view_group_id);
         Services::Registry()->set('Parameters', 'extension_catalog_id', $item->catalog_id);
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int) $item->catalog_type_id);
+        Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$item->catalog_type_id);
         Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->catalog_types_title);
 
-        Services::Registry()->set('Parameters', 'extension_path',
-            $this->getPath((int) $item->catalog_type_id,
-                Services::Registry()->get('Parameters', 'extension_name_path_node'))
+        Services::Registry()->set(
+            'Parameters',
+            'extension_path',
+            $this->getPath(
+                (int)$item->catalog_type_id,
+                Services::Registry()->get('Parameters', 'extension_name_path_node')
+            )
         );
 
-        Services::Registry()->set('Parameters', 'extension_path_url',
-            $this->getPathURL((int) $item->catalog_type_id,
-                Services::Registry()->get('Parameters', 'extension_name_path_node'))
+        Services::Registry()->set(
+            'Parameters',
+            'extension_path_url',
+            $this->getPathURL(
+                (int)$item->catalog_type_id,
+                Services::Registry()->get('Parameters', 'extension_name_path_node')
+            )
         );
 
         /** Process each field namespace  */
@@ -101,66 +112,74 @@ Class ExtensionHelper
         return true;
     }
 
-	/**
-	 * Common query for all Extensions - Merges into Parameter Registry
-	 *
-	 * @param        $extension_id
-	 * @param string $model_type
-	 * @param string $model_name
-	 * @param string $query_object
-	 * @param string $catalog_type_id
-	 *
-	 * @return bool
-	 * @since   1.0
-	 */
-	public function setAuthorisedExtensions(
-		$extension_id = 0, $model_type = 'Datasource', $model_name = 'ExtensionInstances',
-		$query_object = 'item', $catalog_type_id = null)
-	{
-		$results = Helpers::Extension()->get(0, 'Datasource', 'ExtensionInstances', 'List', NULL, 1);
-		if ($results === false || count($results) == 0) {
-			//throw error
-			echo 'No authorised extensions for user.';
-			die;
-		}
+    /**
+     * Common query for all Extensions -
+     * First time it runs, ALL extension data is returned and stored in registry
+     * Subsequent calls reuse the registry instead of issuing new calls
+     *
+     * @param   string  $extension_id
+     * @param   string  $model_type
+     * @param   string  $model_name
+     * @param   string  $query_object
+     * @param   string  $catalog_type_id
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function setAuthorisedExtensions(
+        $extension_id = 0,
+        $model_type = 'Datasource',
+        $model_name = 'ExtensionInstances',
+        $query_object = QUERY_OBJECT_ITEM,
+        $catalog_type_id = null
+    ) {
+        $results = Helpers::Extension()->get(0, 'Datasource', 'ExtensionInstances', QUERY_OBJECT_LIST, null, 1);
+        if ($results === false || count($results) == 0) {
+            echo 'No authorised extensions for user.';
+            //throw error
+        }
 
-		Services::Registry()->createRegistry('AuthorisedExtensions');
-		Services::Registry()->createRegistry('AuthorisedExtensionsByInstanceTitle');
+        Services::Registry()->createRegistry('AuthorisedExtensions');
+        Services::Registry()->createRegistry('AuthorisedExtensionsByInstanceTitle');
 
-		foreach ($results as $extension) {
+        foreach ($results as $extension) {
 
-			Services::Registry()->set('AuthorisedExtensions', $extension->id, $extension);
+            Services::Registry()->set('AuthorisedExtensions', $extension->id, $extension);
 
-			if ($extension->catalog_type_id == CATALOG_TYPE_MENUITEM) {
-			} else {
-				$key = trim($extension->title) . $extension->catalog_type_id;
-				Services::Registry()->set('AuthorisedExtensionsByInstanceTitle', $key, $extension->id);
-			}
-		}
+            if ($extension->catalog_type_id == CATALOG_TYPE_MENUITEM) {
+            } else {
+                $key = trim($extension->title) . $extension->catalog_type_id;
+                Services::Registry()->set('AuthorisedExtensionsByInstanceTitle', $key, $extension->id);
+            }
+        }
 
-		Services::Registry()->sort('AuthorisedExtensions');
-		Services::Registry()->sort('AuthorisedExtensionsByInstanceTitle');
+        Services::Registry()->sort('AuthorisedExtensions');
+        Services::Registry()->sort('AuthorisedExtensionsByInstanceTitle');
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
+    /**
      * Common query for all Extensions - Merges into Parameter Registry
      *
-     * @param        $extension_id
-     * @param string $model_type
-     * @param string $model_name
-     * @param string $query_object
-     * @param string $catalog_type_id
-	 * @param string $acl_check (not possible during language list)
+     * @param   string  $extension_id
+     * @param   string  $model_type
+     * @param   string  $model_name
+     * @param   string  $query_object
+     * @param   string  $catalog_type_id
+     * @param   string  $acl_check (not possible during language list)
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     public function get(
-        $extension_id = 0, $model_type = 'Datasource', $model_name = 'ExtensionInstances',
-        $query_object = 'item', $catalog_type_id = null, $acl_check = 0)
-    {
+        $extension_id = 0,
+        $model_type = 'Datasource',
+        $model_name = 'ExtensionInstances',
+        $query_object = QUERY_OBJECT_ITEM,
+        $catalog_type_id = null,
+        $acl_check = 0
+    ) {
         if (Services::Registry()->get('CurrentPhase') == 'LOG_OUTPUT_ROUTING') {
             $phase = LOG_OUTPUT_ROUTING;
         } else {
@@ -169,89 +188,86 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
         $controller->getModelRegistry($model_type, $model_name);
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->setDataobject();
 
         $primary_prefix = $controller->get('primary_prefix');
         $primary_key = $controller->get('primary_key');
 
-        if ((int) $extension_id == 0) {
+        if ((int)$extension_id == 0) {
         } else {
 
-			$controller->model->query->where(
-				$controller->model->db->qn($primary_prefix)
-					. '.'
-					. $controller->model->db->qn('id')
-					. ' = '
-					. (int) $extension_id
-			);
+            $controller->model->query->where(
+                $controller->model->db->qn($primary_prefix)
+                    . '.'
+                    . $controller->model->db->qn('id')
+                    . ' = '
+                    . (int)$extension_id
+            );
             $controller->set('process_plugins', 0);
             $query_object = 'item';
         }
 
-        if ((int) $catalog_type_id == 0) {
+        if ((int)$catalog_type_id == 0) {
         } else {
 
             $controller->model->query->where(
-					$controller->model->db->qn($primary_prefix)
-				. '.'
-				. $controller->model->db->qn('catalog_type_id')
-                . ' = '
-				. (int) $catalog_type_id
-			);
+                $controller->model->db->qn($primary_prefix)
+                    . '.'
+                    . $controller->model->db->qn('catalog_type_id')
+                    . ' = '
+                    . (int)$catalog_type_id
+            );
         }
 
-        if (strtolower($query_object) == 'list') {
+        if (strtolower($query_object) == QUERY_OBJECT_LIST) {
             $controller->set('model_offset', 0);
             $controller->set('model_count', 999999);
-			$controller->set('use_pagination', 0);
-			$controller->set('use_special_joins', 1);
-			$controller->set('get_customfields', 2);
+            $controller->set('use_pagination', 0);
+            $controller->set('use_special_joins', 1);
+            $controller->set('get_customfields', 2);
 
-			$controller->model->query->where(
-				$controller->model->db->qn($primary_prefix)
-					. '.'
-					. $controller->model->db->qn('catalog_type_id')
-					. ' <> '
-					. $controller->model->db->qn($primary_prefix)
-					. '.'
-					. $controller->model->db->qn($primary_key)
-			);
+            $controller->model->query->where(
+                $controller->model->db->qn($primary_prefix)
+                    . '.'
+                    . $controller->model->db->qn('catalog_type_id')
+                    . ' <> '
+                    . $controller->model->db->qn($primary_prefix)
+                    . '.'
+                    . $controller->model->db->qn($primary_key)
+            );
         }
 
-		$controller->set('check_view_level_access', $acl_check);
+        $controller->set('check_view_level_access', $acl_check);
 
-		if ($model_type == 'Datasource') {
-		} else {
-			$controller->model->query->where(
-				$controller->model->db->qn('catalog')
-					. '.'
-					. $controller->model->db->qn('enabled')
-					. ' = '
-					. (int) 1
-			);
-		}
+        if ($model_type == 'Datasource') {
+        } else {
+            $controller->model->query->where(
+                $controller->model->db->qn('catalog')
+                    . '.'
+                    . $controller->model->db->qn('enabled')
+                    . ' = '
+                    . (int)1
+            );
+        }
 
-		/** First, attempt to retrieve from registry */
-		if (Services::Registry()->exists('AuthorisedExtensions') === true) {
+        /** First, attempt to retrieve from registry */
+        if (Services::Registry()->exists('AuthorisedExtensions') === true) {
 
-			if (strtolower($query_object) == 'item' && (int) $extension_id > 0) {
-				$saved =  Services::Registry()->get('AuthorisedExtensions', $extension_id, '');
-				if (is_object($saved)) {
-					$controller->set('get_customfields', 1);
-					$query_results = $controller->addCustomFields(array($saved), 'item', 1);
-					$query_results->model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-					return $query_results;
-				}
-			}
-		}
+            if (strtolower($query_object) == QUERY_OBJECT_ITEM && (int)$extension_id > 0) {
+                $saved = Services::Registry()->get('AuthorisedExtensions', $extension_id, '');
+                if (is_object($saved)) {
+                    $controller->set('get_customfields', 1);
+                    $query_results = $controller->addCustomFields(array($saved), QUERY_OBJECT_ITEM, 1);
+                    $query_results->model_registry = ucfirst(strtolower($model_name)) . ucfirst(
+                        strtolower($model_type)
+                    );
+                    return $query_results;
+                }
+            }
+        }
 
-		/** Then, if not available, run the query */
+        /** Then, if not available, run the query */
         $query_results = $controller->getData($query_object);
 
         if ($query_results === false || $query_results === null) {
@@ -273,9 +289,9 @@ Class ExtensionHelper
             return false;
         }
 
-		if ($query_object == 'item') {
-			$query_results->model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-		}
+        if ($query_object == QUERY_OBJECT_ITEM) {
+            $query_results->model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+        }
 
         return $query_results;
     }
@@ -285,88 +301,105 @@ Class ExtensionHelper
      *
      * Retrieves Extension ID, given Title and catalog ID, first from registry, if not available, the DB
      *
-     * @param  $catalog_type_id
-     * @param  $title
+     * @param   $catalog_type_id
+     * @param   $title
      *
-     * @return bool|mixed
+     * @return  bool|mixed
      * @since   1.0
      */
     public function getInstanceID($catalog_type_id, $title)
     {
-		if (Services::Registry()->exists('AuthorisedExtensionsByInstanceTitle') === true) {
-			$key = trim($title) . $catalog_type_id;
-			$id = Services::Registry()->get('AuthorisedExtensionsByInstanceTitle', $key, 0);
-			if ((int) $id == 0) {
-			} else {
-				return $id;
-			}
-		}
+        if (Services::Registry()->exists('AuthorisedExtensionsByInstanceTitle') === true) {
+            $key = trim($title) . $catalog_type_id;
+            $id = Services::Registry()->get('AuthorisedExtensionsByInstanceTitle', $key, 0);
+            if ((int)$id == 0) {
+            } else {
+                return $id;
+            }
+        }
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $query_results = $controller->getModelRegistry('Datasource', 'ExtensionInstances');
-        if ($query_results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Datasource', 'ExtensionInstances');
+        $controller->setDataobject();
 
         $controller->set('process_plugins', 0);
+        $prefix = $controller->get('primary_prefix', 'a');
 
-        $controller->model->query->select($controller->model->db->qn('a.id'));
-        $controller->model->query->where($controller->model->db->qn('a.title') . ' = ' . $controller->model->db->q($title));
-        $controller->model->query->where($controller->model->db->qn('a.catalog_type_id') . ' = ' . (int) $catalog_type_id);
+        $controller->model->query->select(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn('id')
+        );
 
-        return $controller->getData('result');
+        $controller->model->query->select(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn('title')
+                . ' = '
+                . $controller->model->db->q($title)
+        );
+
+        $controller->model->query->select(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn('catalog_type_id')
+                . ' = '
+                . (int)$catalog_type_id
+        );
+
+        return $controller->getData(QUERY_OBJECT_RESULT);
     }
 
     /**
      * getInstanceTitle
-	 *
-	 * Retrieves Extension Title, given the extension_instance_id, first from registry, if not available, the DB
+     *
+     * Retrieves Extension Title, given the extension_instance_id, first from registry, if not available, the DB
      *
      * @param   $extension_instance_id
      *
-     * @return bool|mixed
+     * @return  bool|mixed
      * @since   1.0
      */
     public function getInstanceTitle($extension_instance_id)
     {
-		if (Services::Registry()->exists('AuthorisedExtensions') === true) {
-			$object = Services::Registry()->get('AuthorisedExtensions', $extension_instance_id, '');
-			if ($object === false) {
-				$title = '';
-			} else {
-				$title = $object->title;
-			}
+        if (Services::Registry()->exists('AuthorisedExtensions') === true) {
+            $object = Services::Registry()->get('AuthorisedExtensions', $extension_instance_id, '');
+            if ($object === false) {
+                $title = '';
+            } else {
+                $title = $object->title;
+            }
 
-			if ($title == '') {
-			} else {
-				return $title;
-			}
-		}
+            if ($title == '') {
+            } else {
+                return $title;
+            }
+        }
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $query_results = $controller->getModelRegistry('Datasource', 'ExtensionInstances');
-        if ($query_results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Datasource', 'ExtensionInstances');
+        $controller->setDataobject();
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
         $controller->set('process_plugins', 0);
+        $prefix = $controller->get('primary_prefix', 'a');
 
-        $controller->model->query->select($controller->model->db->qn('a.title'));
-        $controller->model->query->where($controller->model->db->qn('a.id') . ' = ' . (int) $extension_instance_id);
+        $controller->model->query->select(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn('title')
+        );
 
-        return $controller->getData('result');
+        $controller->model->query->where(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn('id')
+                . ' = '
+                . (int)$extension_instance_id
+        );
+
+        return $controller->getData(QUERY_OBJECT_RESULT);
     }
 
     /**
@@ -381,150 +414,177 @@ Class ExtensionHelper
      */
     public function getExtensionNode($extension_instance_id)
     {
-		if (Services::Registry()->exists('AuthorisedExtensions') === true) {
-			$object = Services::Registry()->get('AuthorisedExtensions', $extension_instance_id, '');
-			if (is_object($object)) {
-				$name = $object->extensions_name;
-			} else {
-				$name = '';
-			}
+        if (Services::Registry()->exists('AuthorisedExtensions') === true) {
+            $object = Services::Registry()->get('AuthorisedExtensions', $extension_instance_id, '');
+            if (is_object($object)) {
+                $name = $object->extensions_name;
+            } else {
+                $name = '';
+            }
 
-			if ($name == '') {
-			} else {
-				return $name;
-			}
-		}
+            if ($name == '') {
+            } else {
+                return $name;
+            }
+        }
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $query_results = $controller->getModelRegistry('Datasource', 'Extensions');
-        if ($query_results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Datasource', 'Extensions');
+        $controller->setDataobject();
 
         $controller->set('process_plugins', 0);
 
-        $controller->model->query->select($controller->model->db->qn('a.name'));
+        $controller->model->query->select(
+            $controller->model->db->qn('a')
+                . '.'
+                . $controller->model->db->qn('name')
+        );
 
-        $controller->model->query->from($controller->model->db->qn('#__extensions') . ' as ' . $controller->model->db->qn('a'));
-        $controller->model->query->from($controller->model->db->qn('#__extension_instances') . ' as ' . $controller->model->db->qn('b'));
+        $controller->model->query->from(
+            $controller->model->db->qn('#__extensions')
+                . ' as '
+                . $controller->model->db->qn('a')
+        );
 
-        $controller->model->query->where($controller->model->db->qn('a.id') . ' = ' . $controller->model->db->qn('b.extension_id'));
-        $controller->model->query->where($controller->model->db->qn('b.id') . ' = ' . (int) $extension_instance_id);
+        $controller->model->query->from(
+            $controller->model->db->qn('#__extension_instances')
+                . ' as '
+                . $controller->model->db->qn('b')
+        );
 
-        return $controller->getData('result');
+        $controller->model->query->where(
+            $controller->model->db->qn('a')
+                . '.'
+                . $controller->model->db->qn('id')
+                . ' = '
+                . $controller->model->db->qn('b')
+                . '.'
+                . $controller->model->db->qn('extension_id')
+        );
+
+        $controller->model->query->where(
+            $controller->model->db->qn('b')
+                . '.'
+                . $controller->model->db->qn('id')
+                . ' = '
+                . (int)$extension_instance_id
+        );
+
+        return $controller->getData(QUERY_OBJECT_RESULT);
     }
 
     /**
      * getPath
      *
-     * Return path for Extension - make certain to send in extension name, not
-     *     extension instance title. Extensions Instances do not have to have
-     *  the same name as the Extension, itself. The Extension name is what
-     *  is used in the path statements.
+     * Returns path for Extension - make certain to send in extension name, not instance title.
      *
-     * @param $catalog_type_id
-     * @param $node
+     * @param   string  $catalog_type_id
+     * @param   string  $node
      *
-     * @return string
-     * @since 1.0
+     * @return  string
+     * @since   1.0
      */
     public function getPath($catalog_type_id, $node)
     {
         if ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
-            return Helpers::View()->getPath($node, 'Page');
+            return Helpers::View()->getPath($node, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
-            return Helpers::View()->getPath($node, 'Template');
+            return Helpers::View()->getPath($node, CATALOG_TYPE_TEMPLATE_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
-            return Helpers::View()->getPath($node, 'Wrap');
+            return Helpers::View()->getPath($node, CATALOG_TYPE_WRAP_LITERAL);
         }
 
         $type = Helpers::Extension()->getType($catalog_type_id);
 
-        if ($type == 'Resource') {
+        if ($type == CATALOG_TYPE_RESOURCE_LITERAL) {
             if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+            if (file_exists(
+                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+            )
+            ) {
                 return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
             }
 
             return false;
 
-        } elseif ($type == 'Menuitem') {
+        } elseif ($type == CATALOG_TYPE_MENUITEM_LITERAL) {
             if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
             return false;
 
-        } elseif ($type == 'Language') {
+        } elseif ($type == CATALOG_TYPE_LANGUAGE_LITERAL) {
             if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
             return false;
 
-        }    if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
-        return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
-    }
+        }
+        if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+            return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
+        }
 
         return false;
     }
 
     /**
-     * getPathURL
-     *
      * Return URL path for Extension
      *
-     * @param $catalog_type_id
-     * @param $node
+     * @param    $catalog_type_id
+     * @param    $node
      *
-     * @return mixed
-     * @since 1.0
+     * @return   mixed
+     * @since    1.0
      */
     public function getPathURL($catalog_type_id, $node)
     {
+
+ /**      CATALOG_TYPE_FIELDS_LITERAL" value="Fields"/>
+    <define name="CATALOG_TYPE_LANGUAGE_STRING_LITERAL" value="Languagestrings"/>
+    <define name="CATALOG_TYPE_MESSAGE_LITERAL" value="Message"/>
+*/
         if ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
-            return Helpers::View()->getPathURL($node, 'Page');
+            return Helpers::View()->getPathURL($node, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
-            return Helpers::View()->getPathURL($node, 'Template');
+            return Helpers::View()->getPathURL($node, CATALOG_TYPE_TEMPLATE_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
-            return Helpers::View()->getPathURL($node, 'Wrap');
+            return Helpers::View()->getPathURL($node, CATALOG_TYPE_WRAP_LITERAL);
         }
 
         $type = Helpers::Extension()->getType($catalog_type_id);
 
-        if ($type == 'Resource') {
+        if ($type == CATALOG_TYPE_RESOURCE_LITERAL) {
             if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+            if (file_exists(
+                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+            )
+            ) {
                 return CORE_SYSTEM_URL . '/' . ucfirst(strtolower($node));
             }
 
             return false;
 
-        } elseif ($type == 'Menuitem') {
+        } elseif ($type == CATALOG_TYPE_MENUITEM_LITERAL) {
             if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
             }
 
             return false;
 
-        } elseif ($type == 'Language') {
+        } elseif ($type == CATALOG_TYPE_LANGUAGE_LITERAL) {
             if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return EXTENSIONS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
             }
@@ -544,30 +604,33 @@ Class ExtensionHelper
     public function getNamespace($catalog_type_id, $node)
     {
         if ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
-            return Helpers::View()->getNamespace($node, 'Page');
+            return Helpers::View()->getNamespace($node, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
-            return Helpers::View()->getNamespace($node, 'Template');
+            return Helpers::View()->getNamespace($node, CATALOG_TYPE_TEMPLATE_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
-            return Helpers::View()->getNamespace($node, 'Wrap');
+            return Helpers::View()->getNamespace($node, CATALOG_TYPE_WRAP_LITERAL);
 
         }
 
         $type = Helpers::Extension()->getType($catalog_type_id);
 
-        if ($type == 'Resource') {
+        if ($type == CATALOG_TYPE_RESOURCE_LITERAL) {
             if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return 'Extension\\Resource\\' . ucfirst(strtolower($node));
             }
 
-            if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+            if (file_exists(
+                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+            )
+            ) {
                 return 'Vendor\\Molajo\\System\\' . ucfirst(strtolower($node));
             }
 
             return false;
 
-        } elseif ($type == 'Menuitem') {
+        } elseif ($type == CATALOG_TYPE_MENUITEM_LITERAL) {
             if (file_exists(EXTENSIONS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
                 return 'Extension\\Menuitem\\' . ucfirst(strtolower($node));
             }
@@ -589,12 +652,12 @@ Class ExtensionHelper
      */
     public function setThemePageView()
     {
-        $theme_id = (int) Services::Registry()->get('Parameters', 'theme_id');
-        $page_view_id = (int) Services::Registry()->get('Parameters', 'page_view_id');
+        $theme_id = (int)Services::Registry()->get('Parameters', 'theme_id');
+        $page_view_id = (int)Services::Registry()->get('Parameters', 'page_view_id');
 
         Helpers::Theme()->get($theme_id);
 
-        Helpers::View()->get($page_view_id, 'Page');
+        Helpers::View()->get($page_view_id, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
         return true;
     }
@@ -610,9 +673,9 @@ Class ExtensionHelper
         $template_view_id = Services::Registry()->get('Parameters', 'template_view_id');
         $wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id');
 
-        Helpers::View()->get($template_view_id, 'Template');
+        Helpers::View()->get($template_view_id, CATALOG_TYPE_TEMPLATE_LITERAL);
 
-        Helpers::View()->get($wrap_view_id, 'Wrap');
+        Helpers::View()->get($wrap_view_id, CATALOG_TYPE_WRAP_LITERAL);
 
         return;
     }
@@ -629,30 +692,30 @@ Class ExtensionHelper
      */
     public function getType($catalog_type_id = 0, $catalog_type = null)
     {
-        if ((int) $catalog_type_id == 0) {
+        if ((int)$catalog_type_id == 0) {
 
-            if ($catalog_type == 'Resource') {
+            if ($catalog_type == CATALOG_TYPE_RESOURCE_LITERAL) {
                 return CATALOG_TYPE_RESOURCE;
 
-            } elseif ($catalog_type == 'Menuitem') {
+            } elseif ($catalog_type == CATALOG_TYPE_MENUITEM_LITERAL) {
                 return CATALOG_TYPE_MENUITEM;
 
-            } elseif ($catalog_type == 'Language') {
+            } elseif ($catalog_type == CATALOG_TYPE_LANGUAGE_LITERAL) {
                 return CATALOG_TYPE_LANGUAGE;
 
-            } elseif ($catalog_type == 'Theme') {
+            } elseif ($catalog_type == CATALOG_TYPE_THEME_LITERAL) {
                 return CATALOG_TYPE_THEME;
 
-            } elseif ($catalog_type == 'Plugin') {
+            } elseif ($catalog_type == CATALOG_TYPE_PLUGIN_LITERAL) {
                 return CATALOG_TYPE_PLUGIN;
 
-            } elseif ($catalog_type == 'Page') {
+            } elseif ($catalog_type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
                 return CATALOG_TYPE_PAGE_VIEW;
 
-            } elseif ($catalog_type == 'Template') {
+            } elseif ($catalog_type == CATALOG_TYPE_TEMPLATE_LITERAL) {
                 return CATALOG_TYPE_TEMPLATE_VIEW;
 
-            } elseif ($catalog_type == 'Wrap') {
+            } elseif ($catalog_type == CATALOG_TYPE_WRAP_LITERAL) {
                 return CATALOG_TYPE_WRAP_VIEW;
             }
 
@@ -661,35 +724,35 @@ Class ExtensionHelper
         } else {
 
             if ($catalog_type_id == CATALOG_TYPE_RESOURCE) {
-                return 'Resource';
+                return CATALOG_TYPE_RESOURCE_LITERAL;
 
             } elseif ($catalog_type_id == CATALOG_TYPE_MENUITEM) {
-                return 'Menuitem';
+                return CATALOG_TYPE_MENUITEM_LITERAL;
 
             } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGE) {
-                return 'Language';
+                return CATALOG_TYPE_LANGUAGE_LITERAL;
 
             } elseif ($catalog_type_id == CATALOG_TYPE_THEME) {
-                return 'Theme';
+                return CATALOG_TYPE_THEME_LITERAL;
 
             } elseif ($catalog_type_id == CATALOG_TYPE_PLUGIN) {
-                return 'Plugin';
+                return CATALOG_TYPE_PLUGIN_LITERAL;
 
             } elseif ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
-                return 'Page';
+                return CATALOG_TYPE_PAGE_VIEW_LITERAL;
 
             } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
-                return 'Template';
+                return CATALOG_TYPE_TEMPLATE_LITERAL;
 
             } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
-                return 'Wrap';
+                return CATALOG_TYPE_WRAP_LITERAL;
             }
 
-            return 'Resource';
+            return CATALOG_TYPE_RESOURCE_LITERAL;
         }
 
         /** Should not be reachable */
-		//throw error
+        //throw error
         return '';
     }
 }

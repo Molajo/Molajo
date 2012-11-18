@@ -81,7 +81,7 @@ Class InstallService
             . '.' . $controller->model->db->qn('catalog_type_id')
             . ' = ' . (int) $copy_catalog_type_id);
 
-        $item = $controller->getData('item');
+        $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         /** target data */
         $extension_instance_id = 5;
@@ -323,7 +323,7 @@ Class InstallService
         $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('model_name')
             . ' = ' . $controller->model->db->q($model_name));
 
-        $catalog_type_id = $controller->getData('result');
+        $catalog_type_id = $controller->getData(QUERY_OBJECT_RESULT);
 
         // With the Catalog ID now available, contact the Delete Controller
         $controller = new DeleteController();

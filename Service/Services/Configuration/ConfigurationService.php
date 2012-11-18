@@ -367,7 +367,7 @@ Class ConfigurationService
 			die;
 		}
 
-        if ($model_type == 'Service') {
+        if ($model_type == CATALOG_TYPE_SERVICE_VIEW_LITERAL) {
             $path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
@@ -416,7 +416,7 @@ Class ConfigurationService
 			die;
 		}
 
-		if ($model_type == 'Resource') {
+		if ($model_type == CATALOG_TYPE_RESOURCE_LITERAL) {
 			$path = EXTENSIONS . '/Resource/' . $model_name . '/Configuration.xml';
 			if (file_exists($path)) {
 				return $path;
@@ -441,7 +441,7 @@ Class ConfigurationService
 			}
 		}
 
-		$modeltypeArray = array('Language', 'Theme', 'System', 'Service');
+		$modeltypeArray = array(CATALOG_TYPE_LANGUAGE_LITERAL, CATALOG_TYPE_THEME_LITERAL, 'System', CATALOG_TYPE_SERVICE_VIEW_LITERAL);
 		if (in_array($model_type, $modeltypeArray)) {
 
 			$path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
@@ -505,7 +505,7 @@ Class ConfigurationService
 		}
 
 		/** Search for overrides before standard placement */
-		$valid = array('Menuitem', 'Plugin');
+		$valid = array(CATALOG_TYPE_MENUITEM_LITERAL, 'Plugin');
 		if (in_array($model_type, $valid)) {
 			$path = ConfigurationService::commonSearch(
 				$model_type, $model_name,
@@ -519,7 +519,7 @@ Class ConfigurationService
 			}
 		}
 
-		$valid = array('Page', 'Template', 'Wrap');
+		$valid = array(CATALOG_TYPE_PAGE_VIEW_LITERAL, CATALOG_TYPE_TEMPLATE_LITERAL, CATALOG_TYPE_WRAP_LITERAL);
 		if (in_array($model_type, $valid)) {
 
 			$path = ConfigurationService::commonSearch(
@@ -1383,7 +1383,7 @@ Class ConfigurationService
 
 				$controller->set('name_key_value', APPLICATION);
 
-				$item = $controller->getData('item');
+				$item = $controller->getData(QUERY_OBJECT_ITEM);
 				if ($item === false) {
 					throw new \RuntimeException ('Application getApplication() query problem');
 				}
@@ -1520,7 +1520,7 @@ Class ConfigurationService
         if ($results === false) {
             return false;
         }
-		$items = $controller->getData('list');
+		$items = $controller->getData(QUERY_OBJECT_LIST);
 
 		if ($items === false) {
 			throw new \RuntimeException ('Application getApplication() getActions Query failed');

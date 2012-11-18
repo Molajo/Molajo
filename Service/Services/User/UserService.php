@@ -50,7 +50,7 @@ Class UserService
 		$controller->set('use_special_joins', 1);
 		$controller->set('process_plugins', 1);
 
-        $item = $controller->getData('item');
+        $item = $controller->getData(QUERY_OBJECT_ITEM);
         if ($item === false || count($item) == 0) {
             throw new \RuntimeException ('User load() query problem');
         }

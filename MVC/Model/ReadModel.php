@@ -586,7 +586,7 @@ echo '</pre><br /><br />';
                     . ' = ' . (int)$id
             );
 
-            $results = $controller->getData('list');
+            $results = $controller->getData(QUERY_OBJECT_LIST);
 
             $query_results->$name = $results;
         }

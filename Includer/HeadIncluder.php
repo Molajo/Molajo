@@ -87,7 +87,7 @@ Class HeadIncluder extends Includer
         }
 
         /** Template  */
-        Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), 'Template');
+        Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), CATALOG_TYPE_TEMPLATE_LITERAL);
 
         /** Merge Parameters in (Pre-wrap) */
         if (is_array($savedParameters) && count($savedParameters) > 0) {
@@ -103,11 +103,11 @@ Class HeadIncluder extends Includer
 
         Services::Registry()->set('Parameters', 'wrap_view_title', $wrap_view_title);
         Services::Registry()->set('Parameters', 'wrap_view_path',
-            Helpers::View()->getPath($wrap_view_title, 'Wrap'));
+            Helpers::View()->getPath($wrap_view_title, CATALOG_TYPE_WRAP_LITERAL));
         Services::Registry()->set('Parameters', 'wrap_view_path_url',
-            Helpers::View()->getPathURL($wrap_view_title, 'Wrap'));
+            Helpers::View()->getPathURL($wrap_view_title, CATALOG_TYPE_WRAP_LITERAL));
         Services::Registry()->set('Parameters', 'wrap_view_namespace',
-            Helpers::View()->getNamespace($wrap_view_title, 'Wrap'));
+            Helpers::View()->getNamespace($wrap_view_title, CATALOG_TYPE_WRAP_LITERAL));
 
         if (Services::Registry()->exists('Parameters', 'wrap_view_role')) {
         } else {

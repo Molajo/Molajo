@@ -73,7 +73,7 @@ class OrderingPlugin extends Plugin
             $controller->set('process_plugins', 0);
             $controller->set('get_customfields', 0);
 
-            $ordering = $controller->getData('result');
+            $ordering = $controller->getData(QUERY_OBJECT_RESULT);
 
             $newFieldValue = (int) $ordering + 1;
 
