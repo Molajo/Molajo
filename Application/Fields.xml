@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <field>
+    <dataobjecttypes>
+        <dataobjecttype>Assets</dataobjecttype>
+        <dataobjecttype>Database</dataobjecttype>
+        <dataobjecttype>Dummy</dataobjecttype>
+        <dataobjecttype>Menu</dataobjecttype>
+        <dataobjecttype>Metadata</dataobjecttype>
+        <dataobjecttype>Profiler</dataobjecttype>
+        <dataobjecttype>Registry</dataobjecttype>
+    </dataobjecttypes>
+
     <dataobjectattributes>
         <dataobjectattribute>name</dataobjectattribute>
         <dataobjectattribute>dbtype</dataobjectattribute>
@@ -9,9 +19,10 @@
         <dataobjectattribute>db</dataobjectattribute>
         <dataobjectattribute>prefix</dataobjectattribute>
         <dataobjectattribute>process_plugins</dataobjectattribute>
-        <dataobjectattribute>extends</dataobjectattribute>
         <dataobjectattribute>connectclass</dataobjectattribute>
         <dataobjectattribute>queryclass</dataobjectattribute>
+        <dataobjectattribute>dbclass</dataobjectattribute>
+        <dataobjectattribute>process_plugins</dataobjectattribute>
     </dataobjectattributes>
 
     <modeltypes>
@@ -41,7 +52,11 @@
     </modeltypes>
 
     <modelattributes>
+        <modelattribute>model_type</modelattribute>
+        <modelattribute>model_name</modelattribute>
         <modelattribute>name</modelattribute>
+
+        <modelattribute>table_name</modelattribute>
         <modelattribute>primary_key</modelattribute>
         <modelattribute>primary_key_value</modelattribute>
         <modelattribute>name_key</modelattribute>
@@ -49,12 +64,12 @@
         <modelattribute>primary_prefix</modelattribute>
         <modelattribute>data_object</modelattribute>
         <modelattribute>extends</modelattribute>
-        <modelattribute>table</modelattribute>
+
         <modelattribute>registry_entry</modelattribute>
 
-        <modelattribute>catalog_type_id</modelattribute>
-        <modelattribute>extension_id</modelattribute>
-        <modelattribute>extension_instance_id</modelattribute>
+        <modelattribute>criteria_catalog_type_id</modelattribute>
+        <modelattribute>criteria_extension_id</modelattribute>
+        <modelattribute>criteria_extension_instance_id</modelattribute>
         <modelattribute>published_status</modelattribute>
 
         <modelattribute>check_view_level_access</modelattribute>

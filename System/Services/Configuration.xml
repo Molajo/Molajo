@@ -11,7 +11,7 @@
     <description>SYSTEM_SERVICES_DESCRIPTION</description>
     <model
             name="Services"
-            catalog_type_id="4000"
-            extension_instance_id="4000"
+            criteria_catalog_type_id="4000"
+            criteria_extension_instance_id="4000"
             extends="RenderDatasource"/>
 </extension>

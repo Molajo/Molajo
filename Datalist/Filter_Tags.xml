@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Tags"
-        table="#__content"
+        table_name="#__content"
         primary_key="id"
         name_key="title"
-        extension_instance_id="15000"
-        catalog_type_id="15000"
+        criteria_extension_instance_id="15000"
+        criteria_catalog_type_id="15000"
         multiple="1"
         size="5"
         data_object="Database">

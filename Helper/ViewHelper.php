@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
- * @license   GNU General Public License version 2 or later; see LICENSE
+ * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Helper;
 
@@ -32,8 +32,8 @@ Class ViewHelper
      * getInstance
      *
      * @static
-     * @return bool|object
-     * @since  1.0
+     * @return  bool|object
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -47,59 +47,60 @@ Class ViewHelper
     /**
      * Get requested page_view data
      *
-     * @param int $id
+     * @param   int $id
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function get($id = 0, $type)
     {
-        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL) {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL
+            || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL
+        ) {
         } else {
             return false;
         }
 
         if ($id == 0) {
             $id = $this->getDefault($type);
-            if ((int) $id == 0) {
+            if ((int)$id == 0) {
                 return false;
             }
         }
 
-        /** Retrieve Node and verify the view exists */
-        $node = Helpers::Extension()->getExtensionNode((int) $id);
+        $node = Helpers::Extension()->getExtensionNode((int)$id);
 
         if ($node === false || $node == '') {
             $id = $this->getDefault($type);
-            $node = Helpers::Extension()->getExtensionNode((int) $id);
+            $node = Helpers::Extension()->getExtensionNode((int)$id);
             if ($node === false || $node == '') {
                 return false;
             }
         }
 
-        Services::Registry()->set('Parameters', $type . '_view_id', (int) $id);
+        Services::Registry()->set('Parameters', $type . '_view_id', (int)$id);
         Services::Registry()->set('Parameters', $type . '_view_path_node', $node);
         Services::Registry()->set('Parameters', $type . '_view_path', $this->getPath($node, $type));
-        Services::Registry()->set('Parameters', $type . '_view_path_include',
-            $this->getPath($node, $type) . '/index.php');
+        Services::Registry()->set(
+            'Parameters',
+            $type . '_view_path_include',
+            $this->getPath($node, $type) . '/index.php'
+        );
         Services::Registry()->set('Parameters', $type . '_view_path_url', $this->getPathURL($node, $type));
         Services::Registry()->set('Parameters', $type . '_view_namespace', $this->getNamespace($node, $type));
 
-        /** Retrieve the query results */
         $item = Helpers::Extension()->get($id, $type, $node, 1);
-
         if (count($item) == 0 || $item === false) {
             return false;
         }
 
         Services::Registry()->set('Parameters', $type . '_view_title', $item->title);
-        Services::Registry()->set('Parameters', $type . '_view_translation_of_id', (int) $item->translation_of_id);
+        Services::Registry()->set('Parameters', $type . '_view_translation_of_id', (int)$item->translation_of_id);
         Services::Registry()->set('Parameters', $type . '_view_language', $item->language);
         Services::Registry()->set('Parameters', $type . '_view_view_group_id', $item->catalog_view_group_id);
         Services::Registry()->set('Parameters', $type . '_view_catalog_id', $item->catalog_id);
-        Services::Registry()->set('Parameters', $type . '_view_catalog_type_id', (int) $item->catalog_type_id);
+        Services::Registry()->set('Parameters', $type . '_view_catalog_type_id', (int)$item->catalog_type_id);
         Services::Registry()->set('Parameters', $type . '_view_catalog_type_title', $item->catalog_types_title);
-
         Services::Registry()->set('Parameters', $type . '_view_model_registry', $item->model_registry);
 
         if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
@@ -117,8 +118,7 @@ Class ViewHelper
             $this->setParameters('wrap', $item->model_registry . 'Parameters');
         }
 
-        /** Copy Parameters (but do not overlay the ID value) */
-		Services::Registry()->delete($item->model_registry . 'Parameters', $type . '_view_id');
+        Services::Registry()->delete($item->model_registry . 'Parameters', $type . '_view_id');
         Services::Registry()->copy($item->model_registry . 'Parameters', 'Parameters');
 
         return true;
@@ -130,21 +130,19 @@ Class ViewHelper
      * @param   $requestTypeNamespace
      * @param   $parameterNamespace
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     public function setParameters($requestTypeNamespace, $parameterNamespace)
     {
-        /** 1. Parameters from Query */
         $newParameters = Services::Registry()->get($parameterNamespace, $requestTypeNamespace . '*');
         if (is_array($newParameters) && count($newParameters) > 0) {
-            $this->processParameterSet($newParameters, $requestTypeNamespace);
+            $this->processParameterSet($newParameters);
         }
 
-        /** 2. Application defaults */
         $applicationDefaults = Services::Registry()->get('Configuration', $requestTypeNamespace . '*');
         if (count($applicationDefaults) > 0) {
-            $this->processParameterSet($applicationDefaults, $requestTypeNamespace);
+            $this->processParameterSet($applicationDefaults);
         }
 
         return true;
@@ -153,10 +151,12 @@ Class ViewHelper
     /**
      * processParameterSet iterates a new parameter set to determine whether or not it should be applied
      *
-     * @param $parameterSet
-     * @param $requestTypeNamespace
+     * @param   $parameterSet
+     *
+     * @return  $bool
+     * @since   1.0
      */
-    protected function processParameterSet($parameterSet, $requestTypeNamespace)
+    protected function processParameterSet($parameterSet)
     {
         foreach ($parameterSet as $key => $value) {
             $existing = Services::Registry()->get('Parameters', $key);
@@ -172,8 +172,11 @@ Class ViewHelper
     /**
      * Get default for View Type
      *
-     * @param $type
-     * @return mixed
+     * @param   $parameterSet
+     * @param   $requestTypeNamespace
+     *
+     * @return  $bool
+     * @since   1.0
      */
     public function getDefault($type)
     {
@@ -202,29 +205,27 @@ Class ViewHelper
     public function getPath($node, $type)
     {
         $type = ucfirst(strtolower($type));
-        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL) {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL
+            || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL
+        ) {
         } else {
             return false;
         }
 
         $plus = '/View/' . $type . '/' . ucfirst(strtolower($node));
 
-        /** 1. Theme */
         if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Configuration.xml')) {
             return Services::Registry()->get('Parameters', 'theme_path') . $plus;
         }
 
-        /** 2. Extension */
         if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Configuration.xml')) {
             return Services::Registry()->get('Parameters', 'extension_path') . $plus;
         }
 
-        /** 3. View */
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
             return EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node));
         }
 
-        /** 4. Core */
         if (file_exists(CORE_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
             return CORE_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node));
         }
@@ -233,86 +234,82 @@ Class ViewHelper
     }
 
     /**
-     * getURLPath - Return URL path for selected View
+     * Return URL path for selected View
      *
-     * @param bool $node
-     * @param $type
+     * @param   bool $node
+     * @param   $type
      *
-     * @return bool|string
-     * @since  1.0
+     * @return  bool|string
+     * @since   1.0
      */
     public function getPathURL($node = false, $type)
     {
         $type = ucfirst(strtolower($type));
-        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL) {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL
+            || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL
+        ) {
         } else {
             return false;
         }
 
         $plus = '/View/' . $type . '/' . ucfirst(strtolower($node));
 
-        /** 1. Theme */
         if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Configuration.xml')) {
             return Services::Registry()->get('Parameters', 'theme_path_url') . $plus;
         }
 
-        /** 2. Extension */
         if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Configuration.xml')) {
             return Services::Registry()->get('Parameters', 'extension_path_url') . $plus;
         }
 
-        /** 3. View */
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
             return EXTENSIONS_VIEWS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
         }
 
-        /** 4. View */
         if (file_exists(CORE_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
             return CORE_VIEWS_URL . '/' . $type . '/' . ucfirst(strtolower($node));
         }
 
-        return '';
+        return false;
     }
 
     /**
-     * getNamespace - Return Namespace for selected View
+     * Return Namespace for selected View
      *
-     * @param bool $node
-     * @param $type
+     * @param   bool   $node
+     * @param   $type
      *
-     * @return bool|string
-     * @since  1.0
+     * @return  bool|string
+     * @since   1.0
      */
     public function getNamespace($node = false, $type)
     {
         $type = ucfirst(strtolower($type));
-        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL) {
+        if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL
+            || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL
+        ) {
         } else {
             return false;
         }
 
         $plus = 'View\\' . $type . '\\' . ucfirst(strtolower($node));
 
-        /** 1. Theme */
         if (file_exists(Services::Registry()->get('Parameters', 'theme_path') . $plus . '/Configuration.xml')) {
             return 'Extension\\Theme\\' . Services::Registry()->get('Parameters', 'theme_path_node') . '\\' . $plus;
         }
 
-        /** 2. Resource */
         if (file_exists(Services::Registry()->get('Parameters', 'extension_path') . $plus . '/Configuration.xml')) {
             return 'Extension\\Resource\\' . Services::Registry()->get('Parameters', 'extension_title') . '\\' . $plus;
         }
 
-        /** 3. Extension View */
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
             return 'Extension\\' . $plus;
         }
 
-        /** 4. Platform View */
         if (file_exists(CORE_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
             return 'Molajo\\MVC\\' . $plus;
         }
 
-        return '';
+        return false;
     }
 }

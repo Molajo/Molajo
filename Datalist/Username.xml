@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="User"
-        table="#__users"
+        table_name="#__users"
         primary_prefix="a"
         get_customfields="0"
         get_item_children="0"

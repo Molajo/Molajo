@@ -251,12 +251,12 @@ class UpdateController extends Controller
                 $errorFoundForItem = true;
             }
 
-            /** edit: acl **/
+            /** edit: permissions **/
             if ($errorFoundForItem === true) {
             } else {
 
                 /** View access (copy or move will be checked, too) **/
-                $results = $this->checkTaskAuthorisation('display');
+                $results = $this->checkTaskAuthorisation(ACTION_VIEW);
                 if ($results === false) {
                     $errorFoundForItem = true;
                 }

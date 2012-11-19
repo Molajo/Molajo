@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Author"
-        table="#__users"
+        table_name="#__users"
         primary_key="id"
         name_key="full_name"
         primary_prefix="a"

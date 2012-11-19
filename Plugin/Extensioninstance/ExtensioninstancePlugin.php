@@ -38,17 +38,13 @@ class ExtensioninstancePlugin extends Plugin
             return true;
         }
 
-        /** Check ACL */
+        /** Check Permissions */
 
         /** Check if the Extension Instance already exists */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'ExtensionInstances');
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->setDataobject();
 
         $primary_prefix = $controller->get('primary_prefix', 'a');
 
@@ -74,11 +70,8 @@ class ExtensioninstancePlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Extensions');
+        $controller->setDataobject();
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
         $controller->model->query->select($controller->model->db->qn('a.id'));
         $controller->model->query->where($controller->model->db->qn('a.name')
             . ' = ' . $controller->model->db->q($this->data->title));
@@ -103,11 +96,7 @@ class ExtensioninstancePlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry();
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->setDataobject();
 
         /** Catalog Types */
         $sql = 'INSERT INTO ' . $controller->model->db->qn('#__catalog_types');

@@ -102,7 +102,7 @@ Class ModalIncluder extends Includer
 
         Services::Registry()->set('Parameters', 'model_type', 'Registry');
         Services::Registry()->set('Parameters', 'model_name', strtolower(ucfirst($model_name)));
-        Services::Registry()->set('Parameters', 'model_query_object', 'list');
+        Services::Registry()->set('Parameters', 'model_query_object', QUERY_OBJECT_LIST);
 
         /** Cleanup */
         Services::Registry()->delete('Parameters', 'item*');

@@ -11,8 +11,8 @@
     <description>SYSTEM_APPLICATIONS_DESCRIPTION</description>
     <model
             name="Applications"
-            catalog_type_id="2000"
-            extension_instance_id="2000"
+            criteria_catalog_type_id="2000"
+            criteria_extension_instance_id="2000"
             process_plugins="0"
             extends="ApplicationDatasource"/>
 </extension>

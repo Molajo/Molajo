@@ -1,0 +1,1 @@
+<field name="profiler_database_table" type="char" null="0" default="#__log"/>

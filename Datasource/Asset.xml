@@ -9,6 +9,7 @@
         prefix=""
         connectclass=""
         queryclass=""
-        process_plugins="1"/>
+        process_plugins="1"
+        data_object="Assets"/>
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="ViewGroupPermissions"
-        table="#__user_group_permissions"
+        table_name="#__user_group_permissions"
         primary_key="id"
         process_plugins="0"
         data_object="Database">

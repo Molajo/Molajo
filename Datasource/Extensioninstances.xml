@@ -1,6 +1,6 @@
 <model
         name="Extensioninstances"
-        table="#__extension_instances"
+        table_name="#__extension_instances"
         primary_key="id"
         name_key="title"
         primary_prefix="a"

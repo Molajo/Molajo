@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="SiteApplications"
-        table="#__site_applications"
+        table_name="#__site_applications"
         primary_key="site_id, application_id"
         primary_prefix="a"
         get_customfields="0"

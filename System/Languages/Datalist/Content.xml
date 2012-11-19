@@ -1,6 +1,6 @@
 <datalist name="ContentLanguage">
     <model
             name="ContentLanguage"
-            catalog_type_id="6000"
+            criteria_catalog_type_id="6000"
             extends="ExtensionInstancesDatalist"/>
 </datalist>

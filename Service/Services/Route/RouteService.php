@@ -288,11 +288,11 @@ Class RouteService
             $controller = 'delete';
 
         } else {
-            $action = 'display';
+            $action = ACTION_VIEW;
             $controller = 'read';
         }
 
-        if ($action == 'display') {
+        if ($action == ACTION_VIEW) {
             $post_variables = array();
 
         } else {
@@ -389,7 +389,7 @@ Class RouteService
         }
 
 		if ($action == '') {
-			$action = 'display';
+			$action = ACTION_VIEW;
 		}
 		Services::Registry()->set('Parameters', 'request_action', $action);
 		Services::Registry()->set('Parameters', 'request_action_target', $action_target);
@@ -499,7 +499,7 @@ Class RouteService
         $model_type = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_type')));
         $model_name = ucfirst(strtolower(Services::Registry()->get('Parameters', 'catalog_model_name')));
 
-        if (strtolower(trim($catalog_page_type)) == 'list'
+        if (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_LIST
         ) {
             $response = Helpers::Content()->getRouteList($id, $model_type, $model_name);
 
@@ -509,8 +509,8 @@ Class RouteService
                 return false;
             }
 
-        } elseif (strtolower(trim($catalog_page_type)) == 'item'
-                || strtolower(trim($catalog_page_type)) == 'form'
+        } elseif (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_ITEM
+                || strtolower(trim($catalog_page_type)) == QUERY_OBJECT_FORM
         ) {
             $response = Helpers::Content()->getRouteItem($id, $model_type, $model_name);
 

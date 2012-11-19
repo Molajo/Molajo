@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="GroupViewGroups"
-        table="#__group_view_groups"
+        table_name="#__group_view_groups"
         primary_key="id"
         primary_prefix="a"
         get_customfields="0"

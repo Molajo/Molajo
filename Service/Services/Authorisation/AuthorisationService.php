@@ -171,7 +171,7 @@ Class AuthorisationService
         }
 
         /** display view verified in getCatalog */
-        if (Services::Registry()->get('Parameters', 'request_action', 'display') == 'display'
+        if (Services::Registry()->get('Parameters', 'request_action', ACTION_VIEW) == ACTION_VIEW
             && Services::Registry()->get('Parameters', 'status_authorised') === true
         ) {
             return true;

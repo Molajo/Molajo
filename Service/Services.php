@@ -22,7 +22,7 @@ defined('MOLAJO') or die;
  *  1) Simplify application interface for services for frontend developers
  *
  *  2) Guard against the impact of change by providing a cushioning layer
- *        where change can be compensated and backwards compatability better insured
+ *        where backwards compatability better insured
  *
  *  3) Reduce interdependence between software within the application
  *
@@ -30,7 +30,7 @@ defined('MOLAJO') or die;
  *         of application utilities that provide basic functionality which can be supplied by different
  *         vendors without requiring change to the application itself
  *
- * @return boolean
+ * @return  boolean
  * @since   1.0
  */
 Class Services
@@ -40,24 +40,24 @@ Class Services
 	ini_set('display_errors', 0);
 	 * Static instance
 	 *
-	 * @var    object
-	 * @since  1.0
+	 * @var     object
+	 * @since   1.0
 	 */
 	protected static $instance;
 
 	/**
 	 * Stores messages locally until the Profiler Service has been activated
 	 *
-	 * @var    object
-	 * @since  1.0
+	 * @var     object
+	 * @since   1.0
 	 */
 	protected $message;
 
 	/**
 	 * Service Connections
 	 *
-	 * @var   object
-	 * @since 1.0
+	 * @var     object
+	 * @since   1.0
 	 */
 	protected $static_connection;
 
@@ -65,8 +65,8 @@ Class Services
 	/**
 	 * Service Connections
 	 *
-	 * @var   object
-	 * @since 1.0
+	 * @var     object
+	 * @since   1.0
 	 */
 	protected $dynamic_connection;
 
@@ -74,8 +74,8 @@ Class Services
 	 * getInstance
 	 *
 	 * @static
-	 * @return bool|object
-	 * @since  1.0
+	 * @return  bool|object
+	 * @since   1.0
 	 */
 	public static function getInstance()
 	{
@@ -90,21 +90,21 @@ Class Services
 	 * Used to connect to services
 	 *
 	 * @static
-	 * @param  $name
-	 * @param  $arguments
+	 * @param   $name
+	 * @param   $arguments
 	 *
-	 * @return object
-	 * @since  1.0
+	 * @return  object
+	 * @since   1.0
 	 */
 	public static function __callStatic($name, $arguments)
 	{
-		return Application::Services()->get($name . CATALOG_TYPE_SERVICE_VIEW_LITERAL);
+		return Application::Services()->get($name . 'Service');
 	}
 
 	/**
 	 * loads all services defined in the services.xml file
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	public function initiate()
@@ -113,7 +113,7 @@ Class Services
 		$this->dynamic_connection = array();
 		$this->message = array();
 
-		$services = ConfigurationService::getFile(CATALOG_TYPE_SERVICE_VIEW_LITERAL, 'Services');
+		$services = ConfigurationService::getFile('Service', 'Services');
 
 		if ($services === false) {
 			//throw error
@@ -128,8 +128,7 @@ Class Services
             $name = (string) $service->attributes()->name;
             $startup = (string) $service->attributes()->startup;
 
-//todo: overrides for service
-            $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . CATALOG_TYPE_SERVICE_VIEW_LITERAL;
+            $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
 
             foreach ($service->parameter as $parameter) {
             }
@@ -137,19 +136,19 @@ Class Services
 			if ($static_indicator == '1') {
 
                 $connection = $this->getClassInstance($serviceClass);
-                $connectionSucceeded = $this->runStartupMethod($connection, $name . CATALOG_TYPE_SERVICE_VIEW_LITERAL, $startup);
+                $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
 
-				$this->set($name . CATALOG_TYPE_SERVICE_VIEW_LITERAL, $connection, $connectionSucceeded);
+				$this->set($name . 'Service', $connection, $connectionSucceeded);
 
 			} else {
 
-                $this->dynamic_connection[$service->attributes()->name . CATALOG_TYPE_SERVICE_VIEW_LITERAL]
+                $this->dynamic_connection[$service->attributes()->name . 'Service']
                     = $service->attributes()->name;
 
                 if (trim($startup) == '') {
                 } else {
                     $connection = $this->getClassInstance($serviceClass);
-                    $connectionSucceeded = $this->runStartupMethod($connection, $name . CATALOG_TYPE_SERVICE_VIEW_LITERAL, $startup);
+                    $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
                 }
 			}
 		}
@@ -233,12 +232,11 @@ Class Services
     /**
      * Stores static service connections
      *
-     * Oh, get off your high horse. The minor use of static connections here is perfectly
-     * valid, makes it easier for less technical people to use the application resources
-     * and it support a rich environment for integrating resource data.
+     * Minor use of static connections makes it easier for less technical people to use
+     * application services and integrating resource data.
      *
      * If you have specific ideas on services that would be better implemented as dynamic
-     * connections your pull request will get serious consideration.
+     * connections your pull request will have serious consideration.
      *
      * @param   string $key
      * @param   null   $value
@@ -253,12 +251,12 @@ Class Services
 
         if ($value == null || $connectionSucceeded === false) {
             $this->message[$i] = ' ' . $key . ' FAILED' . $value;
-            Services::Registry()->set(CATALOG_TYPE_SERVICE_VIEW_LITERAL, $key, false);
+            Services::Registry()->set('Service', $key, false);
 
         } else {
             $this->static_connection[$key] = $value;
             $this->message[$i] = ' ' . $key . ' started successfully. ';
-            Services::Registry()->set(CATALOG_TYPE_SERVICE_VIEW_LITERAL, $key, true);
+            Services::Registry()->set('Service', $key, true);
         }
     }
 }

@@ -26,7 +26,7 @@ class TemplatelistPlugin extends Plugin
      */
     public function onAfterReadAll()
     {
-        if (strtolower($this->get('template_view_path_node')) == 'list') {
+        if (strtolower($this->get('template_view_path_node')) == QUERY_OBJECT_LIST) {
         } else {
             return true;
         }

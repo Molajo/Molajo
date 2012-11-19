@@ -50,7 +50,7 @@ Class ExtensionHelper
      * @param   string  $extension_id
      * @param   string  $model_type
      * @param   string  $model_name
-     * @param   string  $acl_check
+     * @param   string  $check_permissions
      *
      * @return  boolean
      * @since   1.0
@@ -59,9 +59,9 @@ Class ExtensionHelper
         $extension_id,
         $model_type = 'Datasource',
         $model_name = 'ExtensionInstances',
-        $acl_check = 0
+        $check_permissions = 0
     ) {
-        $item = Helpers::Extension()->get($extension_id, $model_type, $model_name, $acl_check);
+        $item = Helpers::Extension()->get($extension_id, $model_type, $model_name, $check_permissions);
 
         /** 404: routeRequest handles redirecting to error page */
         if (count($item) == 0) {
@@ -134,6 +134,7 @@ Class ExtensionHelper
         $catalog_type_id = null
     ) {
         $results = Helpers::Extension()->get(0, 'Datasource', 'ExtensionInstances', QUERY_OBJECT_LIST, null, 1);
+
         if ($results === false || count($results) == 0) {
             echo 'No authorised extensions for user.';
             //throw error
@@ -167,7 +168,7 @@ Class ExtensionHelper
      * @param   string  $model_name
      * @param   string  $query_object
      * @param   string  $catalog_type_id
-     * @param   string  $acl_check (not possible during language list)
+     * @param   string  $check_permissions (not possible during language list)
      *
      * @return  bool
      * @since   1.0
@@ -178,7 +179,7 @@ Class ExtensionHelper
         $model_name = 'ExtensionInstances',
         $query_object = QUERY_OBJECT_ITEM,
         $catalog_type_id = null,
-        $acl_check = 0
+        $check_permissions = 0
     ) {
         if (Services::Registry()->get('CurrentPhase') == 'LOG_OUTPUT_ROUTING') {
             $phase = LOG_OUTPUT_ROUTING;
@@ -205,7 +206,7 @@ Class ExtensionHelper
                     . (int)$extension_id
             );
             $controller->set('process_plugins', 0);
-            $query_object = 'item';
+            $query_object = QUERY_OBJECT_ITEM;
         }
 
         if ((int)$catalog_type_id == 0) {
@@ -238,7 +239,7 @@ Class ExtensionHelper
             );
         }
 
-        $controller->set('check_view_level_access', $acl_check);
+        $controller->set('check_view_level_access', $check_permissions);
 
         if ($model_type == 'Datasource') {
         } else {
@@ -297,8 +298,6 @@ Class ExtensionHelper
     }
 
     /**
-     * getInstanceID
-     *
      * Retrieves Extension ID, given Title and catalog ID, first from registry, if not available, the DB
      *
      * @param   $catalog_type_id
@@ -546,11 +545,6 @@ Class ExtensionHelper
      */
     public function getPathURL($catalog_type_id, $node)
     {
-
- /**      CATALOG_TYPE_FIELDS_LITERAL" value="Fields"/>
-    <define name="CATALOG_TYPE_LANGUAGE_STRING_LITERAL" value="Languagestrings"/>
-    <define name="CATALOG_TYPE_MESSAGE_LITERAL" value="Message"/>
-*/
         if ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
             return Helpers::View()->getPathURL($node, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
@@ -598,7 +592,7 @@ Class ExtensionHelper
      *
      * @param   $node
      *
-     * @return bool|string
+     * @return  bool|string
      * @since   1.0
      */
     public function getNamespace($catalog_type_id, $node)
@@ -611,7 +605,6 @@ Class ExtensionHelper
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
             return Helpers::View()->getNamespace($node, CATALOG_TYPE_WRAP_LITERAL);
-
         }
 
         $type = Helpers::Extension()->getType($catalog_type_id);
@@ -643,11 +636,9 @@ Class ExtensionHelper
     }
 
     /**
-     * setThemePageView
-     *
      * Determine the default theme value, given system default sequence
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function setThemePageView()
@@ -665,7 +656,7 @@ Class ExtensionHelper
     /**
      * setTemplateWrapModel - Determine the default Template and Wrap values
      *
-     * @return string
+     * @return  string
      * @since   1.0
      */
     public function setTemplateWrapModel()
@@ -684,75 +675,111 @@ Class ExtensionHelper
      * Retrieve the path node for a specified catalog type or
      * it retrieves the catalog id value for the requested type
      *
-     * @param int  $catalog_type_id
-     * @param null $catalog_type
+     * @param   int   $catalog_type_id
+     * @param   null  $catalog_type
      *
-     * @return string
+     * @return  string
      * @since   1.0
      */
     public function getType($catalog_type_id = 0, $catalog_type = null)
     {
         if ((int)$catalog_type_id == 0) {
 
-            if ($catalog_type == CATALOG_TYPE_RESOURCE_LITERAL) {
-                return CATALOG_TYPE_RESOURCE;
+            if ($catalog_type == CATALOG_TYPE_APPLICATION_LITERAL) {
+                return CATALOG_TYPE_APPLICATION;
 
-            } elseif ($catalog_type == CATALOG_TYPE_MENUITEM_LITERAL) {
-                return CATALOG_TYPE_MENUITEM;
+            } elseif ($catalog_type == CATALOG_TYPE_FIELD_LITERAL) {
+                return CATALOG_TYPE_FIELD;
 
             } elseif ($catalog_type == CATALOG_TYPE_LANGUAGE_LITERAL) {
                 return CATALOG_TYPE_LANGUAGE;
 
-            } elseif ($catalog_type == CATALOG_TYPE_THEME_LITERAL) {
-                return CATALOG_TYPE_THEME;
+            } elseif ($catalog_type == CATALOG_TYPE_LANGUAGESTRINGS_LITERAL) {
+                return CATALOG_TYPE_LANGUAGESTRINGS;
 
-            } elseif ($catalog_type == CATALOG_TYPE_PLUGIN_LITERAL) {
-                return CATALOG_TYPE_PLUGIN;
+            } elseif ($catalog_type == CATALOG_TYPE_MENUITEM_LITERAL) {
+                return CATALOG_TYPE_MENUITEM;
+
+            } elseif ($catalog_type == CATALOG_TYPE_MESSAGES_LITERAL) {
+                return CATALOG_TYPE_MESSAGES;
 
             } elseif ($catalog_type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
                 return CATALOG_TYPE_PAGE_VIEW;
 
+            } elseif ($catalog_type == CATALOG_TYPE_PLUGIN_LITERAL) {
+                return CATALOG_TYPE_PLUGIN;
+
+            } elseif ($catalog_type == CATALOG_TYPE_RESOURCE_LITERAL) {
+                return CATALOG_TYPE_RESOURCE;
+
+            } elseif ($catalog_type == CATALOG_TYPE_SERVICE_LITERAL) {
+                return CATALOG_TYPE_SERVICE;
+
+            } elseif ($catalog_type == CATALOG_TYPE_SITE_LITERAL) {
+                return CATALOG_TYPE_SITE;
+
             } elseif ($catalog_type == CATALOG_TYPE_TEMPLATE_LITERAL) {
                 return CATALOG_TYPE_TEMPLATE_VIEW;
+
+            } elseif ($catalog_type == CATALOG_TYPE_THEME_LITERAL) {
+                return CATALOG_TYPE_THEME;
+
+            } elseif ($catalog_type == CATALOG_TYPE_USERS_LITERAL) {
+                return CATALOG_TYPE_USERS;
 
             } elseif ($catalog_type == CATALOG_TYPE_WRAP_LITERAL) {
                 return CATALOG_TYPE_WRAP_VIEW;
             }
 
             return CATALOG_TYPE_RESOURCE;
-
-        } else {
-
-            if ($catalog_type_id == CATALOG_TYPE_RESOURCE) {
-                return CATALOG_TYPE_RESOURCE_LITERAL;
-
-            } elseif ($catalog_type_id == CATALOG_TYPE_MENUITEM) {
-                return CATALOG_TYPE_MENUITEM_LITERAL;
-
-            } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGE) {
-                return CATALOG_TYPE_LANGUAGE_LITERAL;
-
-            } elseif ($catalog_type_id == CATALOG_TYPE_THEME) {
-                return CATALOG_TYPE_THEME_LITERAL;
-
-            } elseif ($catalog_type_id == CATALOG_TYPE_PLUGIN) {
-                return CATALOG_TYPE_PLUGIN_LITERAL;
-
-            } elseif ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
-                return CATALOG_TYPE_PAGE_VIEW_LITERAL;
-
-            } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
-                return CATALOG_TYPE_TEMPLATE_LITERAL;
-
-            } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
-                return CATALOG_TYPE_WRAP_LITERAL;
-            }
-
-            return CATALOG_TYPE_RESOURCE_LITERAL;
         }
 
-        /** Should not be reachable */
-        //throw error
-        return '';
+        if ($catalog_type_id == CATALOG_TYPE_APPLICATION) {
+            return CATALOG_TYPE_APPLICATION_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_FIELD) {
+            return CATALOG_TYPE_FIELD_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGE) {
+            return CATALOG_TYPE_LANGUAGE_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGESTRINGS) {
+            return CATALOG_TYPE_LANGUAGESTRINGS_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_MENUITEM) {
+            return CATALOG_TYPE_MENUITEM_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_MESSAGES) {
+            return CATALOG_TYPE_MESSAGES_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
+            return CATALOG_TYPE_PAGE_VIEW_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_PLUGIN) {
+            return CATALOG_TYPE_PLUGIN_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_RESOURCE) {
+            return CATALOG_TYPE_RESOURCE_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_SERVICE) {
+            return CATALOG_TYPE_SERVICE_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_SITE) {
+            return CATALOG_TYPE_SITE_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE) {
+            return CATALOG_TYPE_TEMPLATE_VIEW_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_THEME) {
+            return CATALOG_TYPE_THEME_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_USERS) {
+            return CATALOG_TYPE_USERS_LITERAL;
+
+        } elseif ($catalog_type_id == CATALOG_TYPE_WRAP) {
+            return CATALOG_TYPE_WRAP_VIEW_LITERAL;
+        }
+
+        return CATALOG_TYPE_RESOURCE_LITERAL;
     }
 }

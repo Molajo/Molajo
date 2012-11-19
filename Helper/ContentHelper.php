@@ -76,7 +76,7 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'source_id', (int)$item->id);
 
         $this->setParameters(
-            'list',
+            QUERY_OBJECT_LIST,
             $item->model_registry . 'Parameters',
             $item->model_registry . 'Metadata'
         );
@@ -94,10 +94,10 @@ Class ContentHelper
      */
     public function getRouteItem($id, $model_type, $model_name)
     {
-        if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == 'display') {
+        if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == ACTION_VIEW) {
             $pageTypeNamespace = 'item';
         } else {
-            $pageTypeNamespace = 'form';
+            $pageTypeNamespace = QUERY_OBJECT_FORM;
         }
 
         $item = $this->get($id, $model_type, $model_name, $pageTypeNamespace);
@@ -141,7 +141,7 @@ Class ContentHelper
 
         $this->setExtensionPaths();
 
-        if ($pageTypeNamespace == 'form') {
+        if ($pageTypeNamespace == QUERY_OBJECT_FORM) {
             Services::Registry()->set('Parameters', 'page_type', 'Edit');
         }
 

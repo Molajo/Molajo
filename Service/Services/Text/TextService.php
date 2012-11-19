@@ -22,13 +22,13 @@ Class TextService
     /**
      * Add rows to model
      *
-     * @param $extension_name
-     * @param $model_name
-     * @param $source_path
-     * @param $destination_path
+     * @param   string  $extension_name
+     * @param   string  $model_name
+     * @param   string  $source_path
+     * @param   string  $destination_path
      *
-     * @return bool
-     * @since  1.0
+     * @return  bool
+     * @since   1.0
      */
     public function extension($model_name, $source_path = null, $destination_path = null)
     {
@@ -39,7 +39,6 @@ Class TextService
         $data = new \stdClass();
         $data->title = $model_name;
         $data->model_name = $model_name;
-
         $controller->data = $data;
 
         $id = $controller->execute();
@@ -55,12 +54,12 @@ Class TextService
      * Usage:
      * Services::Text()->getPlaceHolderText(4, 20, 'html', 1);
      *
-     * @param int  $paragraph_word_count - number of words per paragraph
-     * @param int  $paragraph_count
-     * @param char $format               txt, plain, html
-     * @param  $start_with_lorem_ipsum 0 or 1
+     * @param   int     $paragraph_word_count - number of words per paragraph
+     * @param   int     $paragraph_count
+     * @param   string  $format               txt, plain, html
+     * @param   $start_with_lorem_ipsum 0 or 1
      *
-     * @return string
+     * @return  string
      * @since   1.0
      */
     public function getPlaceHolderText(
@@ -92,37 +91,26 @@ Class TextService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('Datalist', $datalist);
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Datalist', $datalist);
 
-        return $this->getQueryResults($m, $datalist, array());
+        return $this->getQueryResults($controller, $datalist, array());
     }
 
     /**
      * getList retrieves values called from listsPlugin
      *
-     * @param $filter
-     * @param $parameters
+     * @param   $filter
+     * @param   $parameters
      *
-     * @return array|bool|object
+     * @return  array|bool|object
      * @since   1.0
      */
     public function getList($filter, $parameters)
     {
-
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('Datalist', $filter);
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Datalist', $filter);
+        $controller->setDataobject();
 
         $multiple = (int)Services::Registry()->get($filter . 'Datalist', 'multiple');
         $size = (int)Services::Registry()->get($filter . 'Datalist', 'size');
@@ -166,7 +154,7 @@ Class TextService
         if (is_array($values) && count($values) > 0) {
 
         } else {
-            $values = $this->getQueryResults($m, $filter, $parameters);
+            $values = $this->getQueryResults($controller, $filter, $parameters);
         }
 
         $query_results = array();
@@ -185,16 +173,15 @@ Class TextService
     /**
      * getQueryResults for list
      *
-     * @param   $m
+     * @param   $controller
      * @param   $filter
      * @param   $parameters
      *
-     * @return object
+     * @return  object
      * @since   1.0
      */
-    protected function getQueryResults($m, $filter, $parameters)
+    protected function getQueryResults($controller, $filter, $parameters)
     {
-        /** Data already in Registry/No Query needed */
         $registry_entry = $controller->get('registry_entry');
         $data_object = $controller->get('data_object');
 
@@ -214,23 +201,23 @@ Class TextService
         $controller->model->set('model_offset', 0);
         $controller->model->set('model_count', 999999);
 
-        /** Select */
         $fields = Services::Registry()->get($filter . 'Datalist', 'Fields');
 
         $first = true;
-
         if (count($fields) < 2) {
 
             $controller->model->query->select(
                 'DISTINCT '
                     . $controller->model->db->qn($primary_prefix . '.' . $primary_key) . ' as id'
             );
+
             $controller->model->query->select(
                 $controller->model->db->qn(
                     $primary_prefix
                         . '.' . $name_key
                 ) . ' as value'
             );
+
             $controller->model->query->order(
                 $controller->model->db->qn(
                     $primary_prefix
@@ -254,14 +241,17 @@ Class TextService
                 if ($first) {
                     $first = false;
                     $as = 'id';
-                    $distinct = 'DISTINCT';
+                    $distinct = QUERY_OBJECT_DISTINCT;
                 } else {
                     $as = 'value';
                     $distinct = '';
                     $ordering = $alias . '.' . $name;
                 }
 
-                $controller->model->query->select($distinct . ' ' . $controller->model->db->qn($alias . '.' . $name) . ' as ' . $as);
+                $controller->model->query->select(
+                    $distinct . ' '
+                        . $controller->model->db->qn($alias . '.' . $name) . ' as ' . $as
+                );
             }
 
             $controller->model->query->order($controller->model->db->qn($ordering) . ' ASC');
@@ -273,7 +263,7 @@ Class TextService
                 'extension_instance_id',
                 $controller->get('extension_instance_id'),
                 $primary_prefix,
-                $m
+                $controller
             );
         }
         if ($controller->get('catalog_type_id', 0) == 0) {
@@ -282,11 +272,11 @@ Class TextService
                 'catalog_type_id',
                 $controller->get('catalog_type_id'),
                 $primary_prefix,
-                $m
+                $controller
             );
         }
 
-        $query_object = 'distinct';
+        $query_object = QUERY_OBJECT_DISTINCT;
 
         $offset = $controller->set('model_offset', 0);
         $count = $controller->set('model_count', 9999999);
@@ -330,7 +320,7 @@ Class TextService
      * @return void
      * @since   1.0
      */
-    protected function publishedStatus($m)
+    protected function publishedStatus($controller)
     {
         $primary_prefix = Services::Registry()->get($controller->model_registry, 'primary_prefix', 'a');
 
@@ -344,7 +334,8 @@ Class TextService
             '(' . $controller->model->db->qn($primary_prefix)
                 . '.' . $controller->model->db->qn('start_publishing_datetime')
                 . ' = ' . $controller->model->db->q($controller->model->null_date)
-                . ' OR ' . $controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('start_publishing_datetime')
+                . ' OR ' . $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('start_publishing_datetime')
                 . ' <= ' . $controller->model->db->q($controller->model->now) . ')'
         );
 
@@ -352,7 +343,8 @@ Class TextService
             '(' . $controller->model->db->qn($primary_prefix)
                 . '.' . $controller->model->db->qn('stop_publishing_datetime')
                 . ' = ' . $controller->model->db->q($controller->model->null_date)
-                . ' OR ' . $controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('stop_publishing_datetime')
+                . ' OR ' . $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('stop_publishing_datetime')
                 . ' >= ' . $controller->model->db->q($controller->model->now) . ')'
         );
 
@@ -362,13 +354,13 @@ Class TextService
     /**
      * buildSelectlist - build select list for insertion into webpage
      *
-     * @param string $listname
-     * @param array $items
-     * @param int $multiple
-     * @param int $size
-     * @param char $selected
+     * @param   string $listname
+     * @param   array  $items
+     * @param   int    $multiple
+     * @param   int    $size
+     * @param   string $selected
      *
-     * @return array
+     * @return  array
      * @since   1.0
      */
     public function buildSelectlist($listname, $items, $multiple = 0, $size = 5, $selected = null)
@@ -384,7 +376,6 @@ Class TextService
             $row = new \stdClass();
 
             $row->listname = $listname;
-
             $row->id = $item->id;
             $row->value = $item->value;
 
@@ -404,7 +395,6 @@ Class TextService
                     $row->multiple .= 'size=' . (int)$size;
                 }
             }
-
             $query_results[] = $row;
         }
 
@@ -416,73 +406,73 @@ Class TextService
     $results = Services::Text()->convertNumberToText(0);
     if ($results == 'zero') {
     } else {
-        echo 'This should be zero but is: ' . $results;
-        die;
+    echo 'This should be zero but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(5);
     if ($results == 'five') {
     } else {
-        echo 'This should be five but is: ' . $results;
-        die;
+    echo 'This should be five but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(15);
     if ($results == 'fifteen') {
     } else {
-        echo 'This should be fifteen but is: ' . $results;
-        die;
+    echo 'This should be fifteen but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(20);
     if ($results == 'twenty') {
     } else {
-        echo 'This should be twenty but is: ' . $results;
-        die;
+    echo 'This should be twenty but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(23, 0, 1);
     if ($results == 'twentythree') {
     } else {
-        echo 'This should be twentythree but is: ' . $results;
-        die;
+    echo 'This should be twentythree but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(100);
     if ($results == 'one hundred') {
     } else {
-        echo 'This should be one hundred but is: ' . $results;
-        die;
+    echo 'This should be one hundred but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(123);
     if ($results == 'one hundred and twenty three') {
     } else {
-        echo 'This should be one hundred and twenty three but is: ' . $results;
-        die;
+    echo 'This should be one hundred and twenty three but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(103);
     if ($results == 'one hundred three') {
     } else {
-        echo 'This should be one hundred three but is: ' . $results;
-        die;
+    echo 'This should be one hundred three but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(1000);
     if ($results == 'one thousand') {
     } else {
-        echo 'This should be one thousand but is: ' . $results;
-        die;
+    echo 'This should be one thousand but is: ' . $results;
+    die;
     }
 
     $results = Services::Text()->convertNumberToText(923403123);
     if ($results == 'nine hundred and twenty three million, four hundred three thousand, one hundred and twenty three') {
     } else {
-        echo 'This should be nine hundred and twenty three million, four hundred three thousand, one hundred and twenty three but is: ' . $results;
-        die;
+    echo 'This should be nine hundred and twenty three million, four hundred three thousand, one hundred and twenty three but is: ' . $results;
+    die;
     }
-    **/
+     **/
 
     /**
      * Converts a numeric value, with or without a decimal, up to a 999 quattuordecillion to words
@@ -527,9 +517,9 @@ Class TextService
         $word_value = $sign;
 
         $reverseDigits = str_split($number, 1);
-        $number = implode(array_reverse ($reverseDigits));
+        $number = implode(array_reverse($reverseDigits));
 
-        if ((strlen($number) % 3) == 0)  {
+        if ((strlen($number) % 3) == 0) {
             $padToSetsOfThree = strlen($number);
         } else {
             $padToSetsOfThree = 3 - (strlen($number) % 3) + strlen($number);
@@ -576,7 +566,7 @@ Class TextService
                     $translate
                 );
 
-                $temp_word_value .= ' ' . $this->convertGrouping ($i, $translate);
+                $temp_word_value .= ' ' . $this->convertGrouping($i, $translate);
             }
 
             $onesDigit = null;
@@ -597,7 +587,7 @@ Class TextService
             $word_value .= ' ' . Services::Language()->translate('point', $translate) . ' ' . $decimal;
         }
 
-        if ((int) $remove_spaces == 1) {
+        if ((int)$remove_spaces == 1) {
             $word_value = str_replace(' ', '', $word_value);
         }
 
@@ -739,14 +729,14 @@ Class TextService
     /**
      * Creates words for Hundreds Digit, combining previously determined tens digit word
      *
-     * @param  string  $hundredsDigit
-     * @param  string  $tensDigit
-     * @param  string  $tensWord
-     * @param  string  $onesDigit
-     * @param  string  $translate
+     * @param   string  $hundredsDigit
+     * @param   string  $tensDigit
+     * @param   string  $tensWord
+     * @param   string  $onesDigit
+     * @param   string  $translate
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     protected function convertPlaceValueHundreds($hundredsDigit, $tensDigit, $tensWord, $onesDigit, $translate)
     {
@@ -793,12 +783,9 @@ Class TextService
 
         } elseif ($tensDigit == 0) {
             return $temp . ' ' . $tensWord;
-        } else {
-            return $temp . ' ' . Services::Language()->translate('and', $translate) . ' ' . $tensWord;
-
         }
 
-        return $temp . ' ' . $tensWord;
+        return $temp . ' ' . Services::Language()->translate('and', $translate) . ' ' . $tensWord;
     }
 
     /**
@@ -812,11 +799,11 @@ Class TextService
      *
      * Source: http://en.wikipedia.org/wiki/Names_of_large_numbers
      *
-     * @param  $number
-     * @param  string  $translate
+     * @param   string  $number
+     * @param   string  $translate
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     protected function convertGrouping($number, $translate)
     {
@@ -887,19 +874,16 @@ Class TextService
     /**
      * getData - simulates DBO - interacts with the Model getTextlist method
      *
-     * @param $registry
-     * @param $element
-     * @param $single_result
+     * @param   $registry
+     * @param   $element
+     * @param   $single_result
      *
-     * @return array
-     * @since    1.0
+     * @return  array
+     * @since   1.0
      */
     public function getData($list)
     {
         $query_results = array();
-
-        /** Return results to Model */
-
         return $query_results;
     }
 }

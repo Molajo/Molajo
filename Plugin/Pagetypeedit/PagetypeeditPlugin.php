@@ -78,7 +78,7 @@ echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
 
         $this->set('model_type', 'Plugindata');
         $this->set('model_name', PRIMARY_QUERY_RESULTS);
-        $this->set('model_query_object', 'list');
+        $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = 'Plugindata';
         $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;

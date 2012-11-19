@@ -11,9 +11,9 @@
     <description>SYSTEM_PERMISSIONS_DESCRIPTION</description>
     <model
             name="Permissions"
-            catalog_type_id="3500"
-            extension_instance_id="3500"
-            table="#__molajo_group_permissions"
+            criteria_catalog_type_id="3500"
+            criteria_extension_instance_id="3500"
+            table_name="#__molajo_group_permissions"
             primary_key="id"
             primary_prefix="a"
             get_customfields="0"

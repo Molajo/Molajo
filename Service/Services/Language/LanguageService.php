@@ -421,7 +421,7 @@ Class LanguageService
     {
         /** During System Initialization Helper is not loaded yet, instantiate here */
         $helper = new ExtensionHelper();
-        $installed = $helper->get(0, 'Datasource', 'Languageservice', 'list', CATALOG_TYPE_LANGUAGE);
+        $installed = $helper->get(0, 'Datasource', 'Languageservice', QUERY_OBJECT_LIST, CATALOG_TYPE_LANGUAGE);
         if ($installed === false || count($installed) == 0) {
             //throw error
 			echo 'No Language Installed';

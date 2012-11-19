@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="UserApplications"
-        table="#__user_applications"
+        table_name="#__user_applications"
         primary_key="user_id,application_id"
         get_customfields="1"
         get_item_children="1"

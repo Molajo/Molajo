@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Wrapviews"
-        catalog_type_id="10000"
+        criteria_catalog_type_id="10000"
         extension_id="10000"
         process_plugins="0"
         extends="RenderDatasource">

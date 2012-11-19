@@ -66,7 +66,7 @@ Class MessageIncluder extends Includer
         /** DBO  */
         Services::Registry()->set('Parameters', 'model_type', 'Plugindata');
         Services::Registry()->set('Parameters', 'model_name', 'alertmessage');
-        Services::Registry()->set('Parameters', 'model_query_object', 'list');
+        Services::Registry()->set('Parameters', 'model_query_object', QUERY_OBJECT_LIST);
 
         /** Cleanup */
         Services::Registry()->delete('Parameters', 'item*');

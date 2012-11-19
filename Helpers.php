@@ -23,24 +23,24 @@ Class Helpers
     /**
      * Static instance
      *
-     * @var    object
-     * @since  1.0
+     * @var     object
+     * @since   1.0
      */
     protected static $instance;
 
     /**
      * Service Connections
      *
-     * @var   object
-     * @since 1.0
+     * @var     object
+     * @since   1.0
      */
     protected $helper_connection;
 
     /**
      * Messages
      *
-     * @var   object
-     * @since 1.0
+     * @var     object
+     * @since   1.0
      */
     protected $message;
 
@@ -48,8 +48,8 @@ Class Helpers
      * getInstance
      *
      * @static
-     * @return bool|object
-     * @since  1.0
+     * @return  bool|object
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -63,8 +63,8 @@ Class Helpers
     /**
      * __construct
      *
-     * @return null
-     * @since  1.0
+     * @return  null
+     * @since   1.0
      */
     public function __construct()
     {
@@ -74,10 +74,10 @@ Class Helpers
     /**
      * Retrieves helper key value pair
      *
-     * @param string $key
-     * @param string $default
+     * @param   string  $key
+     * @param   string  $default
      *
-     * @return mixed
+     * @return  mixed
      *
      * @since   1.0
      */
@@ -86,7 +86,7 @@ Class Helpers
         if (isset($this->helper_connection[$key])) {
             return $this->helper_connection[$key];
         } else {
-            //error
+            return false;
         }
     }
 
@@ -94,8 +94,8 @@ Class Helpers
      * Used to connect to helpers
      *
      * @static
-     * @param  $name
-     * @param  $arguments
+     * @param  string  $name
+     * @param  string  $arguments
      */
     public static function __callStatic($name, $arguments)
     {
@@ -105,7 +105,7 @@ Class Helpers
     /**
      * loads all helpers in the helpers folder
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function connect()
@@ -160,10 +160,10 @@ Class Helpers
      *
      * Stores the helper connection
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param   string  $key
+     * @param   mixed   $value
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     private function set($key, $value = null, $try = true)

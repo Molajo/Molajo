@@ -9,7 +9,7 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>RESOURCE_SAMPLES_DESCRIPTION</description>
-    <model name="Samples" catalog_type_id="xxxxx">
+    <model name="Samples" criteria_catalog_type_id="xxxxx">
         <customfields>
             <customfield name="parameters">
                 <field name="tags" type="tags" null="0" default="1" extends="PluginsSystem"/>

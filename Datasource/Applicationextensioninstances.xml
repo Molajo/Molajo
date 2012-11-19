@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="ApplicationExtensionInstances"
-        table="#__application_extension_instances"
+        table_name="#__application_extension_instances"
         primary_key="application_id,extension_instance_id,catalog_type_id"
         primary_prefix="a"
         get_customfields="0"

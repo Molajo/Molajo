@@ -38,16 +38,8 @@ class CatalogPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry('Datasource', 'Catalog');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Datasource', 'Catalog');
+        $controller->setDataobject();
 
         $controller->set('get_customfields', 0);
         $controller->set('use_special_joins', 0);
@@ -102,10 +94,12 @@ class CatalogPlugin extends Plugin
         $controller->set('model_offset', 0);
         $controller->set('model_count', 99999);
 
-        $query_results = $controller->getData('distinct');
+        $query_results = $controller->getData(QUERY_OBJECT_DISTINCT);
         $catalogArray = array();
 
-        $application_home_catalog_id = (int) Services::Registry()->get('configuration', 'application_home_catalog_id');
+        $application_home_catalog_id =
+            (int) Services::Registry()->get('configuration', 'application_home_catalog_id');
+
         if ($application_home_catalog_id === 0) {
         } else {
             if (count($query_results) == 0 || $query_results === false) {
@@ -123,6 +117,7 @@ class CatalogPlugin extends Plugin
                 }
             }
         }
+
         Services::Registry()->set('Datalist', 'Catalog', $catalogArray);
 
         return true;
@@ -131,12 +126,11 @@ class CatalogPlugin extends Plugin
     /**
      * Post-create processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterCreate()
     {
-        /** Just inserted UD */
         $id = $this->data->id;
         if ((int) $id == 0) {
             return false;
@@ -144,14 +138,14 @@ class CatalogPlugin extends Plugin
 
         /** Catalog Activity: fields populated by Catalog Activity plugins */
         if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
-            $results = $this->logUserActivity($id, Services::Registry()->get('Actions', 'create'));
+            $results = $this->logUserActivity($id, Services::Registry()->get('Actions', ACTION_CREATE));
             if ($results === false) {
                 return false;
             }
         }
 
         if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
-            $results = $this->logCatalogActivity($id, Services::Registry()->get('Actions', 'create'));
+            $results = $this->logCatalogActivity($id, Services::Registry()->get('Actions', ACTION_CREATE));
             if ($results === false) {
                 return false;
             }
@@ -170,7 +164,7 @@ class CatalogPlugin extends Plugin
     {
         if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
             $results = $this->logUserActivity($this->data->id,
-                Services::Registry()->get('Actions', 'delete'));
+                Services::Registry()->get('Actions', ACTION_DELETE));
             if ($results === false) {
                 return false;
             }
@@ -178,7 +172,7 @@ class CatalogPlugin extends Plugin
 
         if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
             $results = $this->logCatalogActivity($this->data->id,
-                Services::Registry()->get('Actions', 'delete'));
+                Services::Registry()->get('Actions', ACTION_DELETE));
             if ($results === false) {
                 return false;
             }
@@ -212,11 +206,7 @@ class CatalogPlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry();
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->setDataobject();
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_categories');
         $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;

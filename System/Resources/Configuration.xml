@@ -11,7 +11,7 @@
     <description>SYSTEM_RESOURCES_DESCRIPTION</description>
     <model
             name="Resources"
-            catalog_type_id="12000"
+            criteria_catalog_type_id="12000"
             extends="RenderDatasource">
         <customfields>
             <customfield name="parameters">

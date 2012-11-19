@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Templates"
-        table="#__extension_instances"
+        table_name="#__extension_instances"
         primary_key="id"
         name_key="title"
         primary_prefix="a"
@@ -10,7 +10,7 @@
         use_special_joins="1"
         check_view_level_access="0"
         process_plugins="0"
-        catalog_type_id="9000"
+        criteria_catalog_type_id="9000"
         published_status="1"
         data_object="Database">
     <table>

@@ -21,7 +21,7 @@ class CommentPlugin extends Plugin
     /**
      * Retrieve Comment for Resource
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterReadAll()
@@ -46,30 +46,17 @@ class CommentPlugin extends Plugin
         /** Connect to Comment Resource */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
+        $controller->getModelRegistry(CATALOG_TYPE_RESOURCE_LITERAL, 'Comments');
+        $controller->setDataobject();
 
-        $results = $controller->getModelRegistry(CATALOG_TYPE_RESOURCE_LITERAL, 'Comments');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
         $controller->set('get_customfields', 2);
         $controller->set('use_special_joins', 1);
         $controller->set('check_view_level_access', 1);
 
         /** Connect to Parent */
         $parentController = new $controllerClass();
-        $results = $parentController->getModelRegistry($parent_model_type, $parent_model_name);
-        if ($results === false) {
-            return false;
-        }
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $parentController->getModelRegistry($parent_model_type, $parent_model_name);
+        $controller->setDataobject();
 
         $method = 'get' . ucfirst(strtolower($this->get('template_view_path_node')));
 
@@ -96,13 +83,17 @@ class CommentPlugin extends Plugin
         $parent_model_name = $this->get('parent_model_name', '');
         $parent_source_id = (int) $this->get('parent_source_id', 0);
 
-        if ($parent_model_type == '' || $parent_model_name == '' || $parent_source_id == 0) {
+        if ($parent_model_type == ''
+            || $parent_model_name == ''
+            || $parent_source_id == 0) {
             $parent_model_type = Services::Registry()->get('RouteParameters', 'catalog_model_type');
             $parent_model_name = Services::Registry()->get('RouteParameters', 'catalog_model_name');
             $parent_source_id = (int) Services::Registry()->get('RouteParameters', 'catalog_source_id');
         }
 
-        if ($parent_model_type == '' || $parent_model_name == '' || $parent_source_id == 0) {
+        if ($parent_model_type == ''
+            || $parent_model_name == ''
+            || $parent_source_id == 0) {
             return false;
         }
 
@@ -114,16 +105,17 @@ class CommentPlugin extends Plugin
     /**
      * Retrieve Data for Comment Heading
      *
-     * @param $controller
-     * @param $parentController
-     * @param $parent_model_type
-     * @param $parent_model_name
-     * @param $parent_source_id
+     * @param   $controller
+     * @param   $parentController
+     * @param   $parent_model_type
+     * @param   $parent_model_name
+     * @param   $parent_source_id
      *
-     * @return bool
-     * @since  1.0
+     * @return  bool
+     * @since   1.0
      */
-    public function getComment($controller, $parentController, $parent_model_type, $parent_model_name, $parent_source_id)
+    public function getComment($controller, $parentController,
+        $parent_model_type, $parent_model_name, $parent_source_id)
     {
         $primary_prefix = $controller->get('primary_prefix');
 
@@ -167,16 +159,17 @@ class CommentPlugin extends Plugin
     /**
      * Retrieve Comments
      *
-     * @param $controller
-     * @param $parentController
-     * @param $parent_model_type
-     * @param $parent_model_name
-     * @param $parent_source_id
+     * @param   $controller
+     * @param   $parentController
+     * @param   $parent_model_type
+     * @param   $parent_model_name
+     * @param   $parent_source_id
      *
-     * @return bool
-     * @since  1.0
+     * @return  bool
+     * @since   1.0
      */
-    public function getComments($controller, $parentController, $parent_model_type, $parent_model_name, $parent_source_id)
+    public function getComments($controller, $parentController,
+        $parent_model_type, $parent_model_name, $parent_source_id)
     {
         $primary_prefix = $controller->get('primary_prefix');
 
@@ -202,16 +195,17 @@ class CommentPlugin extends Plugin
     /**
      * Retrieve Data for Comment Heading
      *
-     * @param $controller
-     * @param $parentController
-     * @param $parent_model_type
-     * @param $parent_model_name
-     * @param $parent_source_id
+     * @param   $controller
+     * @param   $parentController
+     * @param   $parent_model_type
+     * @param   $parent_model_name
+     * @param   $parent_source_id
      *
-     * @return bool
-     * @since  1.0
+     * @return  bool
+     * @since   1.0
      */
-    public function getCommentform($controller, $parentController, $parent_model_type, $parent_model_name, $parent_source_id)
+    public function getCommentform($controller, $parentController,
+        $parent_model_type, $parent_model_name, $parent_source_id)
     {
         $results = array();
         $row = new \stdClass();
@@ -265,7 +259,7 @@ class CommentPlugin extends Plugin
 
         $this->set('model_type', 'Plugindata');
         $this->set('model_name', 'Edit');
-        $this->set('model_query_object', 'item');
+        $this->set('model_query_object', QUERY_OBJECT_ITEM);
 
         $this->parameters['model_type'] = 'Plugindata';
         $this->parameters['model_name'] = 'Edit';
@@ -287,13 +281,17 @@ class CommentPlugin extends Plugin
     /**
      * Determine if Comments are still open for Content
      *
-     * @param $parentController
-     * @param $parent_source_id
+     * @param   $controller
+     * @param   $parentController
+     * @param   $parent_model_type
+     * @param   $parent_model_name
+     * @param   $parent_source_id
      *
-     * @return string
-     * @since  1.0
+     * @return  bool
+     * @since   1.0
      */
-    public function getCommentsOpen($parentController, $parent_source_id)
+    public function getCommentsOpen($controller, $parentController,
+        $parent_model_type, $parent_model_name, $parent_source_id)
     {
         $primary_prefix = $parentController->get('primary_prefix');
 

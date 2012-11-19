@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="CatalogActivity"
-        table="#__catalog_activity"
+        table_name="#__catalog_activity"
         primary_key="id"
         primary_prefix="a"
         get_customfields="0"

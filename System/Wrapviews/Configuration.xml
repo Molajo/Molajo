@@ -11,8 +11,8 @@
     <description>SYSTEM_WRAPVIEWS_DESCRIPTION</description>
     <model
             name="Wrapviews"
-            catalog_type_id="10000"
-            extension_instance_id="10000"
+            criteria_catalog_type_id="10000"
+            criteria_extension_instance_id="10000"
             extends="RenderDatasource">
         <customfields>
             <customfield name="parameters">

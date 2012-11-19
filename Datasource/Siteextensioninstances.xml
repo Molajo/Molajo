@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="SiteExtensionInstances"
-        table="#__site_extension_instances"
+        table_name="#__site_extension_instances"
         primary_key="site_id, extension_instance_id"
         primary_prefix="a"
         get_customfields="0"

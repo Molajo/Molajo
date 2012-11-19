@@ -78,7 +78,7 @@ class Model
     public $parameters = array();
 
     /**
-     * @return object
+     * @return  object
      * @since   1.0
      */
     public function __construct()
@@ -119,8 +119,8 @@ class Model
     /**
      * Set the value of a Model property
      *
-     * @param   string $key
-     * @param   mixed  $value
+     * @param   string  $key
+     * @param   mixed   $value
      *
      * @return  mixed
      * @since   1.0

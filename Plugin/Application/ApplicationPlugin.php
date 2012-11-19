@@ -165,13 +165,13 @@ class ApplicationPlugin extends Plugin
 		$heading1 = $this->get('criteria_title');
 		$page_type = $this->get('page_type');
 		if ($page_type == 'Grid') {
-			$page_type = 'List';
+			$page_type = QUERY_OBJECT_LIST;
 		}
 
 		$list_current = 0;
 		$configuration_current = 0;
 		$new_current = 0;
-		if (strtolower($page_type) == 'item') {
+		if (strtolower($page_type) == QUERY_OBJECT_ITEM) {
 			$new_current = 1;
 		} elseif (strtolower($page_type) == 'configuration') {
 			$configuration_current = 1;
@@ -221,13 +221,13 @@ class ApplicationPlugin extends Plugin
 	 */
 	protected function setPageEligibleActions()
 	{
-		if ($this->get('page_type') == 'item') {
+		if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
 			$actions = $this->setItemActions();
-
-		} elseif ($this->get('page_type') == 'form') {
+//todo fix this
+		} elseif ($this->get('page_type') == QUERY_OBJECT_FORM) {
 			$actions = $this->setEditActions();
 
-		} elseif ($this->get('page_type') == 'list') {
+		} elseif ($this->get('page_type') == QUERY_OBJECT_LIST) {
 			$actions = $this->setListActions();
 
 		} else {
@@ -274,11 +274,11 @@ class ApplicationPlugin extends Plugin
 		$actions = array();
 		$actions[] = 'create';
 		$actions[] = 'copy';
-		$actions[] = 'display';
+		$actions[] = ACTION_VIEW;
 		$actions[] = 'edit';
 
 		// editing item
-		$actions[] = 'display';
+		$actions[] = ACTION_VIEW;
 		$actions[] = 'copy';
 		$actions[] = 'draft';
 		$actions[] = 'save';
@@ -377,12 +377,12 @@ class ApplicationPlugin extends Plugin
 			return true;
 		}
 
-		$data = Services::Registry()->get('Plugindata', 'primary_query_results');
+		$data = Services::Registry()->get('Plugindata', PRIMARY_QUERY_RESULTS);
 		$type = strtolower(Services::Registry()->get('RouteParameters', 'page_type'));
 		$type = strtolower($type);
 
 		if (trim($title) == '') {
-			if ($type == 'item') {
+			if ($type == QUERY_OBJECT_ITEM) {
 				if (isset($data[0]->title)) {
 					$title = $data[0]->title;
 				}
@@ -403,7 +403,7 @@ class ApplicationPlugin extends Plugin
 
 		if (trim($description) == '') {
 
-			if ($type == 'item') {
+			if ($type == QUERY_OBJECT_ITEM) {
 
 				if (isset($data[0]->description)) {
 					$description = $data[0]->description;
@@ -418,7 +418,7 @@ class ApplicationPlugin extends Plugin
 
 		if (trim($author) == '') {
 
-			if ($type == 'item') {
+			if ($type == QUERY_OBJECT_ITEM) {
 
 				if (isset($data[0]->author_full_name)) {
 					$author = $data[0]->author_full_name;

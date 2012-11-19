@@ -59,7 +59,7 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
             } elseif (strtolower($this->get('data_object')) == 'database') {
 
                 $this->set('id', $this->get('criteria_source_id'));
-                $this->set('model_query_object', 'item');
+                $this->set('model_query_object', QUERY_OBJECT_ITEM);
             }
 
             $this->set('process_template_plugins',
@@ -115,7 +115,7 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
              *      save query results for possible reuse
              */
             if ($this->get('extension_primary') === true) {
-                Services::Registry()->set('Plugindata', 'primary_query_results', $this->query_results);
+                Services::Registry()->set('Plugindata', PRIMARY_QUERY_RESULTS, $this->query_results);
             }
 
             $rendered_output = $this->renderView();

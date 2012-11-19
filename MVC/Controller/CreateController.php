@@ -280,7 +280,7 @@ class CreateController extends Controller
                 }
             }
 
-            if ($type == null || $type == 'customfield' || $type == 'list') {
+            if ($type == null || $type == 'customfield' || $type == QUERY_OBJECT_LIST) {
 
             } elseif ($type == 'text' && $userHTMLFilter === false) {
 

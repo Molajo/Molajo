@@ -51,7 +51,7 @@ class ReadModel extends Model
     ) {
         if ($this->query->select == null) {
 
-            if ($query_object == 'result') {
+            if ($query_object == QUERY_OBJECT_RESULT) {
 
                 if ((int)$id > 0) {
                     $this->query->select($this->db->qn($primary_prefix . '.' . $name_key));
@@ -76,7 +76,7 @@ class ReadModel extends Model
 
                 } else {
                     foreach ($columns as $column) {
-                        if ($first === true && strtolower(trim($query_object)) == 'distinct') {
+                        if ($first === true && strtolower(trim($query_object)) == QUERY_OBJECT_DISTINCT) {
                             $first = false;
                             $this->query->select('DISTINCT ' . $this->db->qn($primary_prefix . '.' . $column['name']));
                         } else {
@@ -131,23 +131,20 @@ class ReadModel extends Model
     }
 
     /**
-     * addACLCheck
-     *
-     * Add ACL checking to the Query
+     * Add View Permission Verification to the Query
      *
      * Note: When Language query runs, Authorisation Service is not yet available.
      *
-     * @param  $primary_prefix
-     * @param  $primary_key
-     * @param  $query_object
+     * @param   $primary_prefix
+     * @param   $primary_key
+     * @param   $query_object
      *
-     * @return ReadModel
+     * @return  ReadModel
      * @since   1.0
      */
-    public function addACLCheck($primary_prefix, $primary_key, $query_object)
+    public function checkPermissions($primary_prefix, $primary_key, $query_object)
     {
-
-        if ($query_object == 'result') {
+        if ($query_object == QUERY_OBJECT_RESULT) {
             $select = false;
         } else {
             $select = true;
@@ -160,7 +157,7 @@ class ReadModel extends Model
             array(
                 'join_to_prefix' => $primary_prefix,
                 'join_to_primary_key' => $primary_key,
-                'catalog_prefix' => 'acl_check_catalog',
+                'catalog_prefix' => 'check_permissions_catalog',
                 'select' => $select
             )
         );
@@ -200,7 +197,7 @@ class ReadModel extends Model
                 $selectArray = explode(',', $select);
             }
 
-            if ($query_object == 'result') {
+            if ($query_object == QUERY_OBJECT_RESULT) {
             } else {
 
                 if (count($selectArray) > 0) {
@@ -349,23 +346,23 @@ class ReadModel extends Model
     /**
      * getQueryResults - Execute query and returns an associative array of data elements
      *
-     * @param         $query_object
-     * @param int     $offset
-     * @param int     $count
-     * @param boolean $use_pagination
+     * @param   string   $query_object result, item, list, distinct
+     * @param   int      $offset
+     * @param   int      $count
+     * @param   boolean  $use_pagination
      *
-     * @return int count of total rows for pagination
+     * @return  int      count of total rows for pagination
      * @since   1.0
      */
     public function getQueryResults($query_object, $offset = 0, $count = 5, $use_pagination = 0)
     {
         $this->query_results = array();
 
- echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination  . '<br />';
-echo '<br /><br /><pre>';
+        echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination . '<br />';
+        echo '<br /><br /><pre>';
         $string = $this->query->__toString();
         echo str_replace('#__', 'molajo_', $string);
-echo '</pre><br /><br />';
+        echo '</pre><br /><br />';
 
         $cache_key = $this->query->__toString();
         if ($cache_key == '') {
@@ -376,7 +373,7 @@ echo '</pre><br /><br />';
         }
         $cached_output = Services::Cache()->get('Query', $cache_key);
 
-        if ($query_object == 'list') {
+        if ($query_object == QUERY_OBJECT_LIST) {
         } else {
             $use_pagination = 0;
         }
@@ -394,7 +391,7 @@ echo '</pre><br /><br />';
 
             $this->db->setQuery($this->query->__toString(), $query_offset, $query_count);
 
-            if ($query_object == 'result') {
+            if ($query_object == QUERY_OBJECT_RESULT) {
                 $results = $this->db->loadResult();
             } else {
                 $results = $this->db->loadObjectList();
@@ -448,12 +445,12 @@ echo '</pre><br /><br />';
     /**
      * addCustomFields - Populate the custom fields defined by the xml with query results
      *
-     * @param $model_name
-     * @param $customFieldName
-     * @param $fields
-     * @param $retrieval_method
-     * @param $query_results
-     * @param  $query_object
+     * @param   string  $model_name
+     * @param   string  $customFieldName
+     * @param   array   $fields
+     * @param   string  $retrieval_method
+     * @param   object  $query_results
+     * @param   string  $query_object
      *
      * @return  mixed
      * @since   1.0
@@ -466,9 +463,8 @@ echo '</pre><br /><br />';
         $query_results,
         $query_object
     ) {
-        /** Prepare Registry Name */
         $customFieldName = strtolower($customFieldName);
-        $useRegistryName = $model_registry . ucfirst($customFieldName);
+        $useModelRegistry = $model_registry . ucfirst($customFieldName);
 
         /** See if there are query results for this Custom Field Group */
         if (is_object($query_results) && isset($query_results->$customFieldName)) {
@@ -529,14 +525,13 @@ echo '</pre><br /><br />';
             //todo: filter
             //$set = $this->filterInput($name, $set, $dataType, $null, $default);
 
-            if ($retrieval_method == 1 && $query_object == 'item') {
-                Services::Registry()->set($useRegistryName, $name, $setValue);
+            if ($retrieval_method == 1 && $query_object == QUERY_OBJECT_ITEM) {
+                Services::Registry()->set($useModelRegistry, $name, $setValue);
 
             } else {
                 if (strtolower($customFieldName) == 'parameters'
                     || strtolower($customFieldName) == 'metadata'
                 ) {
-
                     $name = strtolower($customFieldName) . '_' . $name;
                 }
                 $query_results->$name = $setValue;
@@ -570,13 +565,8 @@ echo '</pre><br /><br />';
 
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-
-            $results = $controller->getModelRegistry($type, $name);
-            if ($results === false) {
-                return false;
-            }
-
-            $results = $controller->setDataobject();
+            $controller->getModelRegistry($type, $name);
+            $controller->setDataobject();
 
             $join = (string)$child['join'];
             $joinPrimaryPrefix = $controller->get('primary_prefix');
@@ -590,8 +580,6 @@ echo '</pre><br /><br />';
 
             $query_results->$name = $results;
         }
-
-        /** return array containing primary query and additional data elements */
 
         return $query_results;
     }

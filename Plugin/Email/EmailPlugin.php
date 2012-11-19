@@ -50,7 +50,7 @@ class EmailPlugin extends Plugin
                     if ($newFieldValue === false) {
                     } else {
 
-                        if (strtolower($this->get('model_query_object')) == 'item') {
+                        if (strtolower($this->get('model_query_object')) == QUERY_OBJECT_ITEM) {
                         } else {
                             return true;
                         }

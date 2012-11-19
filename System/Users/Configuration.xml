@@ -11,8 +11,8 @@
     <description>SYSTEM_USERS_DESCRIPTION</description>
     <model
             name="Users"
-            catalog_type_id="3000"
-            extension_instance_id="3000"
+            criteria_catalog_type_id="3000"
+            criteria_extension_instance_id="3000"
             check_view_level_access="1"
             extends="UserDatasource">
         <table>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="GroupPermissions"
-        table="#__group_permissions"
+        table_name="#__group_permissions"
         primary_key="id"
         primary_prefix="a"
         get_customfields="0"
@@ -10,7 +10,6 @@
         check_view_level_access="0"
         use_pagination="1"
         data_object="Database">
-
     <table>
         <fields>
             <include field="id_pk"/>

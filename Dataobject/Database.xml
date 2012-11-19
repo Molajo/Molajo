@@ -9,5 +9,5 @@
         prefix="molajo_"
         connectclass="JPlatform\database\driver\JDatabaseDriverMysqli"
         queryclass="JPlatform\database\query\JDatabaseQueryMysqli"
+        dbclass="Database"
         process_plugins="1"/>
-

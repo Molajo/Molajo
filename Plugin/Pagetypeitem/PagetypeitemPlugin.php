@@ -26,7 +26,7 @@ class PagetypeitemPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-		if (strtolower($this->get('page_type')) == 'item') {
+		if (strtolower($this->get('page_type')) == QUERY_OBJECT_ITEM) {
 		} else {
 			return true;
 		}
@@ -40,7 +40,7 @@ class PagetypeitemPlugin extends Plugin
 		/** Item Data */
         $this->set('model_type', 'Plugindata');
         $this->set('model_name', PRIMARY_QUERY_RESULTS);
-        $this->set('model_query_object', 'list');
+        $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = 'Plugindata';
         $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;

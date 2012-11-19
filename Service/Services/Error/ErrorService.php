@@ -35,7 +35,7 @@ Class ErrorService
     {
         Services::Registry()->set('Parameters', 'error_status', true);
 
-        Services::Registry()->set('Parameters', 'request_action', 'Display');
+        Services::Registry()->set('Parameters', 'request_action', ACTION_VIEW);
         Services::Registry()->set('Parameters', 'request_action_authorisation', 'read'); //for now
         Services::Registry()->set('Parameters', 'request_controller', 'read');
 

@@ -50,8 +50,8 @@ Class Application
     /**
      * $rendered_output
      *
-     * @var        string
-     * @since      1.0
+     * @var    object Request
+     * @since  1.0
      */
     protected $rendered_output = null;
 
@@ -60,10 +60,10 @@ Class Application
      *
      * Override normal processing with these parameters
      *
-     * @param string $override_url_request
-     * @param string $override_catalog_id
-     * @param string $override_parse_sequence
-     * @param string $override_parse_final
+     * @param   string  $override_url_request
+     * @param   string  $override_catalog_id
+     * @param   string  $override_parse_sequence
+     * @param   string  $override_parse_final
      *
      *  1. Initialise
      *  2. Route
@@ -71,15 +71,22 @@ Class Application
      *  3. Execute (Display or Action)
      *  4. Respond
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
-    public function process($override_url_request = false, $override_catalog_id = false,
-                            $override_parse_sequence = false, $override_parse_final = false)
-    {
+    public function process(
+        $override_url_request = false,
+        $override_catalog_id = false,
+        $override_parse_sequence = false,
+        $override_parse_final = false
+    ) {
         /** 1. Initialise */
-        $results = $this->initialise($override_url_request, $override_catalog_id,
-            $override_parse_sequence, $override_parse_final);
+        $results = $this->initialise(
+            $override_url_request,
+            $override_catalog_id,
+            $override_parse_sequence,
+            $override_parse_final
+        );
 
         /** 2. Route */
         if ($results === true) {
@@ -101,18 +108,20 @@ Class Application
     /**
      * Initialise Site, Application, and Services
      *
-     * @param string $override_url_request
-     * @param string $override_catalog_id
-     * @param string $override_parse_sequence
-     * @param string $override_parse_final
+     * @param   string  $override_url_request
+     * @param   string  $override_catalog_id
+     * @param   string  $override_parse_sequence
+     * @param   string  $override_parse_final
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
-    protected function initialise($override_url_request = false, $override_catalog_id = false,
-                                  $override_parse_sequence = false, $override_parse_final = false)
-
-    {
+    protected function initialise(
+        $override_url_request = false,
+        $override_catalog_id = false,
+        $override_parse_sequence = false,
+        $override_parse_final = false
+    ) {
         if (version_compare(PHP_VERSION, '5.3', '<')) {
             die('Your host needs to use PHP 5.3 or higher to run Molajo.');
         }
@@ -151,25 +160,25 @@ Class Application
             return false;
         }
 
-        /** Connect Services */
+        /** Services */
         $results = Application::Services()->initiate();
         if ($results === false) {
             return false;
         }
 
-        /** SSL Check */
+        /** SSL */
         $results = $this->sslCheck();
         if ($results === false) {
             return false;
         }
 
-        /** Verify site authorised for application */
+        /** Site authorised for application */
         $results = $this->verifySiteApplication();
         if ($results === false) {
             return false;
         }
 
-        /** Connect Helpers */
+        /** Helpers */
         $results = Application::Helpers()->connect();
         if ($results === false) {
             return false;
@@ -197,8 +206,8 @@ Class Application
 
         if ($results === false) {
             Services::Profiler()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
-
-            return false;
+            //throw error
+            die;
         }
 
         Services::Profiler()->set('Initialise succeeded', LOG_OUTPUT_APPLICATION);
@@ -236,7 +245,7 @@ Class Application
         $results = Services::Route()->process();
 
         if (Services::Redirect()->url === null
-            && (int) Services::Redirect()->code == 0
+            && (int)Services::Redirect()->code == 0
         ) {
             $results = $this->onAfterRouteEvent();
         }
@@ -245,16 +254,14 @@ Class Application
             || Services::Registry()->get('Parameters', 'error_status', 0) == 1
         ) {
             Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
-
             return false;
         }
 
         if ($results === true
             && Services::Redirect()->url === null
-            && (int) Services::Redirect()->code == 0
+            && (int)Services::Redirect()->code == 0
         ) {
             Services::Profiler()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
-
             return true;
         }
 
@@ -266,7 +273,7 @@ Class Application
     /**
      * Schedule onBeforeParseEvent Event - could update parameter values
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function onAfterRouteEvent()
@@ -277,7 +284,6 @@ Class Application
             VERBOSE
         );
 
-        /** Schedule onAfterRoute Event */
         $arguments = array(
             'parameters' => Services::Registry()->getArray('Parameters'),
             'model_type' => Services::Registry()->get('Parameters', 'model_type'),
@@ -292,9 +298,9 @@ Class Application
         );
 
         $arguments = Services::Event()->schedule('onAfterRoute', $arguments);
-
         if ($arguments === false) {
-            Services::Profiler()->set('Application->onAfterRouteEvent ' . ' failure ',
+            Services::Profiler()->set(
+                'Application->onAfterRouteEvent ' . ' failure ',
                 LOG_OUTPUT_PLUGINS
             );
 
@@ -307,7 +313,6 @@ Class Application
             VERBOSE
         );
 
-        /** Process results */
         Services::Registry()->delete('Parameters');
         Services::Registry()->createRegistry('Parameters');
         Services::Registry()->loadArray('Parameters', $arguments['parameters']);
@@ -322,7 +327,7 @@ Class Application
      * OnAfterAuthorise Event is invoked even when core authorisation fails to authorise
      * so that authorisation can be overridden and other methods of authorisation can be used
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function authorise()
@@ -352,18 +357,18 @@ Class Application
     /**
      * Execute the action requested
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function execute()
     {
-        $action = Services::Registry()->get('Parameters', 'request_action', 'display');
+        $action = Services::Registry()->get('Parameters', 'request_action', ACTION_VIEW);
         if (trim($action) == '') {
-            $action = 'display';
+            $action = ACTION_VIEW;
         }
 
         $action = strtolower($action);
-        if ($action == 'display' || $action == 'edit' || $action == 'add') {
+        if ($action == ACTION_VIEW || $action == ACTION_EDIT || $action == ACTION_CREATE) {
             $results = $this->display();
         } else {
             $results = $this->action();
@@ -380,7 +385,6 @@ Class Application
 
         if ($results === false) {
             Services::Profiler()->set('Execute ' . $action . ' failed', LOG_OUTPUT_APPLICATION);
-
             return false;
         }
 
@@ -410,11 +414,10 @@ Class Application
      * Override Registry have values for parse_sequence and parse_final
      *
      * @since   1.0
-     * @return Application
+     * @return  Application
      */
     protected function display()
     {
-        /** Theme must be found to proceed */
         if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme Not found');
@@ -441,7 +444,8 @@ Class Application
     /**
      * Execute action (other than Display)
      *
-     * @return boolean
+     * @return  boolean
+     * @since   1.0
      */
     protected function action()
     {
@@ -469,7 +473,7 @@ Class Application
     /**
      * Return HTTP response
      *
-     * @return object
+     * @return  object
      * @since   1.0
      */
     protected function response()
@@ -477,7 +481,7 @@ Class Application
         Services::Profiler()->set(START_RESPONSE, LOG_OUTPUT_APPLICATION);
 
         if (Services::Redirect()->url === null
-            && (int) Services::Redirect()->code == 0
+            && (int)Services::Redirect()->code == 0
         ) {
 
             Services::Profiler()
@@ -494,9 +498,11 @@ Class Application
         } else {
 
             Services::Profiler()
-                ->set('Response Code:' . Services::Redirect()->code
-                . 'Redirect to: ' . Services::Redirect()->url
-                . LOG_OUTPUT_APPLICATION);
+                ->set(
+                'Response Code:' . Services::Redirect()->code
+                    . 'Redirect to: ' . Services::Redirect()->url
+                    . LOG_OUTPUT_APPLICATION
+            );
 
             Services::Redirect()
                 ->redirect()
@@ -513,7 +519,7 @@ Class Application
             }
         }
 
-		Services::Language()->logUntranslatedStrings();
+        Services::Language()->logUntranslatedStrings();
 
         Services::Profiler()
             ->set('Response exit ' . $results, LOG_OUTPUT_APPLICATION);
@@ -527,7 +533,7 @@ Class Application
      * Note: The Application::Request object is used instead of the Application::Request due to where
      * processing is at this point
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function setBaseURL()
@@ -545,26 +551,16 @@ Class Application
     }
 
     /**
-     * The APPLICATIONS, EXTENSIONS and VENDOR
-     * folders and subfolders can be relocated outside of the
-     * Apache htdocs folder for increased security. To do so:
+     * Folders and subfolders can be relocated outside of the Apache htdocs for increased security.
+     * To do so, create a defines file and override the Autoload.php file for the new namespaces.
      *
-     * - create a defines.php file placed in the root of this site
-     * that defines the location of those files (except VENDOR)
+     * Note: SITES contains content that must be accessible by the Website and thus cannot be moved.
      *
-     * - create an autoloadoverride.php file to replace the
-     * Molajo/Common/Autoload.php file defining the namespaces
-     *
-     * SITES contains content that must be accessible by the
-     * Website and thus cannot be moved
-     *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function setDefines()
     {
-
-        /** Override */
         if (file_exists(BASE_FOLDER . '/defines.php')) {
             include_once BASE_FOLDER . '/defines.php';
         }
@@ -616,10 +612,10 @@ Class Application
         } else {
             define('CORE_VIEWS', PLATFORM_FOLDER . '/MVC/View');
         }
-		if (defined('CORE_LANGUAGES')) {
-		} else {
-			define('CORE_LANGUAGES', PLATFORM_FOLDER . '/Language');
-		}
+        if (defined('CORE_LANGUAGES')) {
+        } else {
+            define('CORE_LANGUAGES', PLATFORM_FOLDER . '/Language');
+        }
 
         if (defined('CORE_SYSTEM_URL')) {
         } else {
@@ -634,19 +630,17 @@ Class Application
             define('CORE_VIEWS_URL', BASE_URL . 'Vendor/Molajo/MVC/View');
         }
 
-
         if (defined('SITES')) {
         } else {
             define('SITES', BASE_FOLDER . '/Site');
         }
 
-        /** Define PHP constants for application variables */
         $defines = ConfigurationService::getFile('Application', 'Defines');
         foreach ($defines->define as $item) {
-            if (defined((string) $item['name'])) {
+            if (defined((string)$item['name'])) {
             } else {
-                $value = (string) $item['value'];
-                define((string) $item['name'], $value);
+                $value = (string)$item['value'];
+                define((string)$item['name'], $value);
             }
         }
 
@@ -654,8 +648,7 @@ Class Application
     }
 
     /**
-     * Identifies the specific site and sets site paths
-     * for use in the application
+     * Identifies the specific site and sets site paths for use in the application
      *
      * @return  boolean
      * @since   1.0
@@ -690,13 +683,13 @@ Class Application
             $sites = ConfigurationService::getFile('Site', 'Sites');
 
             foreach ($sites->site as $single) {
-                if (strtolower((string) $single->site_base_url) == strtolower($site_base_url)) {
-                    define('SITE_BASE_URL', (string) $single->site_base_url);
-                    define('SITE_BASE_PATH', BASE_FOLDER . (string) $single->site_base_folder);
-                    define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string) $single->site_base_folder);
+                if (strtolower((string)$single->site_base_url) == strtolower($site_base_url)) {
+                    define('SITE_BASE_URL', (string)$single->site_base_url);
+                    define('SITE_BASE_PATH', BASE_FOLDER . (string)$single->site_base_folder);
+                    define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string)$single->site_base_folder);
                     define('SITE_DATAOBJECT_FOLDER', SITE_BASE_PATH . '/' . 'Dataobject');
                     define('SITE_ID', $single->id);
-					define('SITE_NAME', $single->name);
+                    define('SITE_NAME', $single->name);
                     break;
                 }
             }
@@ -713,14 +706,11 @@ Class Application
     /**
      * Identify current application and page request
      *
-     * Note: The Application::Request object is used due to where processing is at this point
-     *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function setApplication()
     {
-        /** Used to isolate the application portion of the URL    */
         $p1 = Application::Request()->get('path_info');
         $t2 = Application::Request()->get('query_string');
 
@@ -730,7 +720,6 @@ Class Application
             $requestURI = $p1 . '?' . $t2;
         }
 
-        /** remove the first /  */
         $requestURI = substr($requestURI, 1, 9999);
 
         /** extract first node for testing as application name  */
@@ -750,9 +739,11 @@ Class Application
 
             foreach ($apps->application as $app) {
 
-                $xml_name = (string) $app->name;;
+                $xml_name = (string)$app->name;
+                ;
 
                 if (strtolower(trim($xml_name)) == strtolower(trim($applicationTest))) {
+
                     define('APPLICATION', $app->name);
                     define('APPLICATION_URL_PATH', APPLICATION . '/');
                     define('APPLICATION_ID', $app->id);
@@ -778,7 +769,8 @@ Class Application
 
         /*  Page Request used in Application::Request */
         if (strripos($requested_resource_for_route, '/') == (strlen($requested_resource_for_route) - 1)) {
-            $requested_resource_for_route = substr($requested_resource_for_route, 0, strripos($requested_resource_for_route, '/'));
+            $requested_resource_for_route
+                = substr($requested_resource_for_route, 0, strripos($requested_resource_for_route, '/'));
         }
 
         Application::Request()->set('requested_resource_for_route', $requested_resource_for_route);
@@ -824,20 +816,20 @@ Class Application
     /**
      * Check to see if secure access to the application is required by configuration
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     protected function sslCheck()
     {
         Services::Registry()->get('ApplicationsParameters');
 
-        if ((int) Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
+        if ((int)Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
 
             if ((Application::Request()->get('connection')->isSecure() === true)) {
 
             } else {
 
-                $redirectTo = (string) 'https' .
+                $redirectTo = (string)'https' .
                     substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
                     APPLICATION_URL_PATH .
                     '/' . Application::Request()->get('requested_resource_for_route');
@@ -855,13 +847,14 @@ Class Application
     /**
      * Verify that this site is authorised to access this application
      *
-     * @returns boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function verifySiteApplication()
     {
         $authorise = Services::Authorisation()->verifySiteApplication();
         if ($authorise === false) {
+            //todo: redirect to error page
             $message = '304: ' . BASE_URL;
             echo $message;
             die;
@@ -874,8 +867,8 @@ Class Application
      * Application::Services
      *
      * @static
-     * @return Services
-     * @throws \RuntimeException
+     * @return  Services
+     * @throws  \RuntimeException
      * @since   1.0
      */
     public static function Services()
@@ -897,8 +890,8 @@ Class Application
      * Application::Helpers
      *
      * @static
-     * @return Helpers
-     * @throws \RuntimeException
+     * @return  Helpers
+     * @throws  \RuntimeException
      * @since   1.0
      */
     public static function Helpers()
@@ -920,7 +913,7 @@ Class Application
      * Application::RequestService
      *
      * @static
-     * @return RequestService
+     * @return  RequestService
      * @since   1.0
      */
     public static function Request()

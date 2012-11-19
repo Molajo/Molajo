@@ -1,6 +1,0 @@
-<include field="jdatabase_dbtype"/>
-<include field="jdatabase_host"/>
-<include field="jdatabase_user"/>
-<include field="jdatabase_password"/>
-<include field="jdatabase_db"/>
-<include field="jdatabase_dbprefix"/>

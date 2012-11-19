@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Extensions"
-        table="#__extensions"
+        table_name="#__extensions"
         primary_key="id"
         name_key="name"
         primary_prefix="a"

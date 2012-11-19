@@ -20,7 +20,6 @@ defined('MOLAJO') or die;
  */
 Class FormService
 {
-
     /**
      * Namespace - input
      *
@@ -251,8 +250,8 @@ Class FormService
      *      Single Page {{Editor,editor}}
      *      Multi Pages {{Basic,basic}}{{Access,access}}{{Metadata,metadata}}{{Fields,customfields,Customfields}} ...
      *
-     * @return array
-     * @since  1.0
+     * @return  array
+     * @since   1.0
      */
     public function execute($pages_array)
     {
@@ -383,14 +382,18 @@ Class FormService
         $current_page_number = count($temp_array);
         $current_page_number_word =
             Services::Text()->convertNumberToText($current_page_number, 0, 1);
+
         foreach ($temp_array as $set) {
+
             $fields = explode(' ', $set);
+
             foreach ($fields as $field) {
                 $temp = explode('=', $field);
                 $pairs[$temp[0]] = $temp[1];
             }
 
             $row = new \stdClass();
+
             foreach ($pairs as $key => $value) {
                 $row->$key = $value;
                 $row->current_page_number = $current_page_number;
@@ -406,10 +409,10 @@ Class FormService
     /**
      * Get the current value (or default) of the specified property
      *
-     * @param string $key
-     * @param mixed  $default
+     * @param   string  $key
+     * @param   mixed   $default
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     protected function get($type, $key = null, $default = null)
@@ -674,7 +677,7 @@ echo '</pre>';
     /**
      * Retrieves field definitions and current settings for requested parameters
      *
-     * @return string
+     * @return  string
      * @since   1.0
      */
     protected function getParameters($options)
@@ -750,7 +753,7 @@ echo '</pre>';
     /**
      * Retrieves Custom Fields created for this Resource
      *
-     * @param  string $options - Value used as a prefix to extract parameters which start with that value
+     * @param   string $options - Value used as a prefix to extract parameters which start with that value
      *
      * @return  string
      * @since   1.0
@@ -857,7 +860,7 @@ echo '</pre>';
     /**
      * Retrieves Metadata definitions and current configuration values
      *
-     * @param  string $options - Value used as a prefix to extract parameters which start with that value
+     * @param   string $options - Value used as a prefix to extract parameters which start with that value
      *
      * @return  string
      * @since   1.0
@@ -1345,12 +1348,12 @@ echo '</pre>';
             $fieldRecordset[] = $row;
         }
 
-        $registryName = $this->namespace . strtolower($this->page_link) . $row->name;
-        $registryName = str_replace('_', '', $registryName);
+        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
+        $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
+        Services::Registry()->set('Plugindata', $ModelRegistry, $fieldRecordset);
 
-        return $registryName;
+        return $ModelRegistry;
     }
 
     /**
@@ -1424,12 +1427,12 @@ echo '</pre>';
 
         $fieldRecordset[] = $row;
 
-        $registryName = $this->namespace . strtolower($this->page_link) . $row->name;
-        $registryName = str_replace('_', '', $registryName);
+        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
+        $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
+        Services::Registry()->set('Plugindata', $ModelRegistry, $fieldRecordset);
 
-        return $registryName;
+        return $ModelRegistry;
     }
 
     /**
@@ -1548,12 +1551,12 @@ echo '</pre>';
         }
 
         /** Field Dataset */
-        $registryName = $this->namespace . strtolower($this->page_link) . $row->name;
-        $registryName = str_replace('_', '', $registryName);
+        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
+        $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
+        Services::Registry()->set('Plugindata', $ModelRegistry, $fieldRecordset);
 
-        return $registryName;
+        return $ModelRegistry;
     }
 
     /**
@@ -1600,11 +1603,11 @@ echo '</pre>';
         }
 
         /** Field Dataset */
-        $registryName = $this->namespace . strtolower($this->page_link) . $row->name;
-        $registryName = str_replace('_', '', $registryName);
+        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
+        $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set('Plugindata', $registryName, $fieldRecordset);
+        Services::Registry()->set('Plugindata', $ModelRegistry, $fieldRecordset);
 
-        return $registryName;
+        return $ModelRegistry;
     }
 }

@@ -9,6 +9,7 @@
     <define name="ACTION_CREATE" value="create"/>
     <define name="ACTION_VIEW" value="view"/>
     <define name="ACTION_EDIT" value="edit"/>
+    <define name="ACTION_UPDATE" value="update"/>
     <define name="ACTION_PUBLISH" value="publish"/>
     <define name="ACTION_DELETE" value="delete"/>
     <define name="ACTION_ADMIN" value="admin"/>
@@ -19,7 +20,7 @@
 
     <define name="CATALOG_TYPE_SERVICE" value="4000"/>
     <define name="CATALOG_TYPE_PLUGIN" value="5000"/>
-    <define name="CATALOG_TYPE_FIELDS" value="5500"/>
+    <define name="CATALOG_TYPE_FIELD" value="5500"/>
     <define name="CATALOG_TYPE_LANGUAGE" value="6000"/>
     <define name="CATALOG_TYPE_LANGUAGE_STRING" value="6250"/>
     <define name="CATALOG_TYPE_MESSAGE" value="6500"/>
@@ -30,9 +31,12 @@
     <define name="CATALOG_TYPE_MENUITEM" value="11000"/>
     <define name="CATALOG_TYPE_RESOURCE" value="12000"/>
 
+    <define name="CATALOG_TYPE_SITE_LITERAL" value="Site"/>
+    <define name="CATALOG_TYPE_APPLICATION_LITERAL" value="Application"/>
+    <define name="CATALOG_TYPE_USER_LITERAL" value="User"/>
     <define name="CATALOG_TYPE_SERVICE_LITERAL" value="Service"/>
     <define name="CATALOG_TYPE_PLUGIN_LITERAL" value="Plugin"/>
-    <define name="CATALOG_TYPE_FIELDS_LITERAL" value="Fields"/>
+    <define name="CATALOG_TYPE_FIELD_LITERAL" value="Field"/>
     <define name="CATALOG_TYPE_LANGUAGE_LITERAL" value="Language"/>
     <define name="CATALOG_TYPE_LANGUAGE_STRING_LITERAL" value="Languagestrings"/>
     <define name="CATALOG_TYPE_MESSAGE_LITERAL" value="Message"/>

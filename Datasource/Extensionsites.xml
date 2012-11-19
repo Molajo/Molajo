@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="ExtensionSites"
-        table="#__extension_sites"
+        table_name="#__extension_sites"
         primary_key="id"
         name_key="name"
         use_pagination="1"

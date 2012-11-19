@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Actions"
-        table="#__actions"
+        table_name="#__actions"
         primary_key="id"
         primary_prefix="a"
         get_customfields="0"

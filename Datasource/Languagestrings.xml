@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Languagestrings"
-        table="#__language_strings"
+        table_name="#__language_strings"
         primary_key="id"
         name_key="title"
-        catalog_type_id="6250"
-        extension_instance_id="6250"
+        criteria_catalog_type_id="6250"
+        criteria_extension_instance_id="6250"
         primary_prefix="a"
         get_customfields="2"
         get_item_children="0"

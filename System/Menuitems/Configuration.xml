@@ -11,9 +11,9 @@
     <description>SYSTEM_MENUITEMS_DESCRIPTION</description>
     <model
             name="Menuitems"
-            catalog_type_id="11000"
+            criteria_catalog_type_id="11000"
             process_plugins="0"
-            extension_instance_id="11000"
+            criteria_extension_instance_id="11000"
             extends="RenderDatasource">
         <table>
             <children>
