@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Templateview" version="1.0">
+    <name>VIEW_TEMPLATE_UIBUTTONDROPDOWNFOUNDATION_NAME</name>
+    <author>Molajo Team</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU GPL v 2, or later and MIT, see License folder</license>
+    <author_email>collaborate@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_TEMPLATE_UIBUTTONDROPDOWNFOUNDATION_DESCRIPTION</description>
+    <model name="Uibuttondropdownfoundation" extends="TemplateviewsSystem">
+        <table>
+            <plugins>
+                <plugin name="Foundationui"/>
+            </plugins>
+        </table>
+        <customfields>
+            <customfield name="parameters">
+                <field name="button_dropdown_title" type="char" null="0" default="primary" values=" "/>
+                <field name="button_dropdown_type" type="char" null="0" default="primary" values="primary,secondary,success,alert"/>
+                <field name="button_dropdown_size" type="char" null="0" default="regular" values="tiny,small,regular,large"/>
+                <field name="button_dropdown_shape" type="char" null="0" default="square" values="square,radius,rounded"/>
+                <field name="button_dropdown_class" type="char" null="0" default="dropdown" values="up,dropdown"/>
+                <field name="button_group_array" type="char" null="0" default=" "/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>
