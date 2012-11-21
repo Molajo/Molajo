@@ -29,9 +29,7 @@ class Controller
     public $user;
 
     /**
-     * Stores various extension-specific key/value pairs
-     *
-     * Public as it is passed into events
+     * Stores various extension-specific key/value pairs - public
      *
      * @var    array
      * @since  1.0
@@ -39,9 +37,7 @@ class Controller
     public $parameters = array();
 
     /**
-     * Model Instance
-     *
-     * Public as it is passed into events
+     * Model Instance - Public as it is passed into events
      *
      * @var    object
      * @since  1.0
@@ -49,9 +45,7 @@ class Controller
     public $model;
 
     /**
-     * Registry containing Table Configuration from XML
-     *
-     * Public as it is passed into events
+     * Model Registry - Public as it is passed into events
      *
      * @var    string
      * @since  1.0
@@ -75,9 +69,7 @@ class Controller
     protected $row;
 
     /**
-     * Used to build Create, Update, Delete data structures
-     *
-     * Public as it is passed into plugined events
+     * Used to build Create, Update, Delete data structures - public
      *
      * @var    array
      * @since  1.0
@@ -396,7 +388,6 @@ class Controller
             return;
         }
 
-        /** Model Plugins */
         $dataSourcePlugins = array();
         if ((int)$this->get('process_plugins') == 1) {
 
@@ -408,7 +399,6 @@ class Controller
             }
         }
 
-        /** Template Plugins */
         $templatePlugins = array();
         if ((int)$this->get('process_template_plugins') == 1) {
 
@@ -429,14 +419,12 @@ class Controller
             }
         }
 
-        /** Merge */
         $temp = array_merge($dataSourcePlugins, $templatePlugins);
         if (is_array($temp)) {
         } else {
             $temp = array();
         }
 
-        /** Automatically Menuitem Type, Template Node and Application */
         $page_type = $this->get('catalog_page_type');
         if ($page_type == '') {
         } else {
@@ -541,7 +529,6 @@ class Controller
      */
     protected function runQuery($query_object = QUERY_OBJECT_LIST)
     {
-
         if ($this->get('model_offset') == 0 && $this->get('model_count') == 0) {
 
             if ($query_object == QUERY_OBJECT_RESULT) {
@@ -588,7 +575,6 @@ class Controller
 //var_dump($query_results);
 //echo '</pre><br /><br />';
 
-        /** Result */
         if ($query_object == QUERY_OBJECT_RESULT || $query_object == QUERY_OBJECT_DISTINCT) {
 
             if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results') == 1) {
@@ -610,7 +596,6 @@ class Controller
         $this->query_results = $this->addCustomFields($query_results, $query_object);
 
         return;
-
     }
 
     /**
@@ -750,12 +735,11 @@ class Controller
     /**
      * Schedule onAfterRead Event - could update parameters and query_results objects
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     protected function onAfterReadEvent()
     {
-        /** Prepare input */
         if (count($this->plugins) == 0
             || (int)$this->get('process_plugins') == 0
             || count($this->query_results) == 0
@@ -763,7 +747,6 @@ class Controller
             return true;
         }
 
-        /** Process each item, one at a time */
         $items = $this->query_results;
         $this->query_results = array();
 
@@ -821,7 +804,6 @@ class Controller
             }
         }
 
-        /** onAfterReadall - Passes the entire query_results through the plugin */
         $arguments = array(
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->parameters,

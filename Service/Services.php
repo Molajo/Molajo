@@ -22,11 +22,11 @@ defined('MOLAJO') or die;
  *  1) Simplify application interface for services for frontend developers
  *
  *  2) Guard against the impact of change by providing a cushioning layer
- *        where backwards compatability better insured
+ *        where backwards compatibility better insured
  *
  *  3) Reduce interdependence between software within the application
  *
- *  4) Standarize API by removing vendor-specific namespacing/characteritics to establish a basic set
+ *  4) Standarise API by removing vendor-specific namespacing/characteristics to establish a basic set
  *         of application utilities that provide basic functionality which can be supplied by different
  *         vendors without requiring change to the application itself
  *
@@ -128,8 +128,6 @@ Class Services
             $name = (string) $service->attributes()->name;
             $startup = (string) $service->attributes()->startup;
 
-            echo 'IN SERVICESS: ' . $name . '<br />';
-
             $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
 
             foreach ($service->parameter as $parameter) {
@@ -165,12 +163,12 @@ Class Services
 	/**
 	 * Retrieves service key value pair
 	 *
-	 * @param string $key
+	 * @param   string $key
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   1.0
 	 *
-	 * @throws \BadMethodCallException
+	 * @throws  \BadMethodCallException
 	 */
 	protected function get($key)
 	{

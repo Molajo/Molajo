@@ -24,7 +24,7 @@ class FieldsPlugin extends Plugin
      *
      * This can be moved to onBeforeParse when Plugin ordering is in place
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRoute()

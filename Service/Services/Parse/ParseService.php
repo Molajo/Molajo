@@ -13,103 +13,51 @@ defined('MOLAJO') or die;
 /**
  * Parse
  *
- * @package     Molajo
- * @subpackage  Parse
- * @since       1.0
+ * @package    Molajo
+ * @subpackage Parse
+ * @since      1.0
  */
 Class ParseService
 {
     /**
-     * $sequence
+     * System defined order for processing includes stored in the sequence.xml file
      *
-     * System defined order for processing includes
-     * stored in the sequence.xml file
-     *
-     * @var array
-     * @since 1.0
+     * @var    array
+     * @since  1.0
      */
     protected $sequence = array();
 
     /**
-     * $final
-     *
      * Final include types -- used to for final iteration of parsing
      *
-     * @var array
-     * @since 1.0
+     * @var    array
+     * @since  1.0
      */
     protected $final = array();
 
     /**
-     * $exclude_until_final
+     * Exclude from parsing for all iterations except the final processing
      *
-     * Used to exclude from parsing for all iterations except the final processing
-     *
-     * @var array
-     * @since 1.0
+     * @var    array
+     * @since  1.0
      */
     protected $exclude_until_final = array();
 
     /**
-     * $final_indicator
-     *
      * Indicator of final processing for includes
      *
-     * @var boolean
-     * @since 1.0
+     * @var    boolean
+     * @since  1.0
      */
     protected $final_indicator = false;
 
     /**
-     * $include_request
+     * Include Statement literals to be extracted from the theme (initially) and rendered output
      *
-     * Include Statement Includer requests extracted from the
-     * theme (initially) and then the rendered output
-     *
-     * @var array
-     * @since 1.0
+     * @var    array
+     * @since  1.0
      */
     protected $include_request = array();
-
-    /**
-     * $includes
-     *
-     * Parsing process retrieves include statements from the theme and rendered output
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $includes = array();
-
-    /**
-     * $parameters
-     *
-     * Application parameters for sharing with the Routed Extension, Metadata, Theme and Page View
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $parameters = array();
-
-    /**
-     * $user
-     *
-     * User object for sharing with the Theme and Page View
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $user = array();
-
-    /**
-     * $configuration
-     *
-     * Configuration object for sharing with the Theme and Page View
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $configuration = array();
 
     /**
      * process
@@ -124,21 +72,16 @@ Class ParseService
      * When no more <include:type/> statements are found in the rendered output,
      * process sets the Responder body and completes
      *
-     * @return string
+     * @return  string
      * @since   1.0
      */
     public function process()
     {
         Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
 
-        /** Retrieve overrides (could be passed in and are set in the AjaxPlugin, too) */
         $overrideIncludesPageXML = Services::Registry()->get('Override', 'parse_sequence', false);
         $overrideIncludesFinalXML = Services::Registry()->get('Override', 'parse_final', false);
 
-        /**
-         *  Body Includers: processed recursively until no more <include: are found
-         *      for the set of includes defined in the includes-page.xml
-         */
         if ($overrideIncludesPageXML === false) {
             $sequence = Services::Configuration()->getFile('Parse', 'Parse_sequence');
         } else {
@@ -149,7 +92,6 @@ Class ParseService
             $this->sequence[] = (string) $next;
         }
 
-        /** Load final xml in order to remove from search for loop during initial runs */
         if ($overrideIncludesFinalXML === false) {
             $final = Services::Configuration()->getFile('Parse', 'Parse_final');
         } else {
@@ -178,7 +120,7 @@ Class ParseService
             return false;
         }
 
-        /** Load Theme, Page, and Request Extension Plugins */
+        /** Load Theme, Page, and Request Override Plugins */
         $themePlugins = Services::Filesystem()->folderFolders(
             Services::Registry()->get('Parameters', 'theme_path') . '/' . 'Plugin'
         );
@@ -215,7 +157,6 @@ Class ParseService
             );
         }
 
-        /** OnBeforeParse Plugins */
         if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
         } else {
             //todo - pass in lists of includes to the plugins for possible change
@@ -228,7 +169,6 @@ Class ParseService
 
         $renderedOutput = $this->renderLoop();
 
-        /** onAfterParsebody Plugin */
         if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
         } else {
             Services::Registry()->delete('Parameters');
@@ -237,20 +177,14 @@ Class ParseService
             $renderedOutput = $this->onAfterParsebodyEvent($renderedOutput);
         }
 
-        /** Final Includers: Process theme, head, messages, and defer <includes />  */
         $this->sequence = $this->final;
-
-        /** initialise so it is no longer used to exclude this set of include values */
         $this->exclude_until_final = array();
-
-        /** Saved from route */
         Services::Registry()->delete('Parameters');
         Services::Registry()->createRegistry('Parameters');
         Services::Registry()->copy('RouteParameters', 'Parameters');
 
         $bodyOutput = $renderedOutput;
 
-        /** theme: load template media files */
         $class = 'Molajo\\Includer\\ThemeIncluder';
 
         if (class_exists($class)) {
@@ -260,7 +194,6 @@ Class ParseService
             // fail
         }
 
-		/** onBeforeParsehead Plugin */
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
 		} else {
 			$renderedOutput = $this->onBeforeParseheadEvent($renderedOutput);
@@ -268,13 +201,11 @@ Class ParseService
 
         $renderedOutput = $this->renderLoop($renderedOutput);
 
-        /** onAfterParsehead Plugin */
         if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
         } else {
             $renderedOutput = $this->onAfterParseheadEvent($renderedOutput);
         }
 
-        /** onAfterParse */
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
 		} else {
 			Services::Registry()->delete('Parameters');
@@ -289,11 +220,11 @@ Class ParseService
     /**
      * processPlugins for Theme, Page, and Request Extension (overrides Core and Plugin folder)
      *
-     * @param  $plugins array of folder names
-     * @param  $path
+     * @param   $plugins array of folder names
+     * @param   $path
      *
-     * @return void
-     * @since  1.0
+     * @return  void
+     * @since   1.0
      */
     protected function processPlugins($plugins, $path)
     {
@@ -321,7 +252,9 @@ Class ParseService
      *
      * Same process as is used for the document body with new set of defined <include:type statements
      *
-     * @return string $renderedOutput  Rendered output for the Response Head and Body
+     * @param   string  $renderedOutput
+     *
+     * @return  string  $renderedOutput  Rendered output for the Response Head and Body
      * @since   1.0
      */
     protected function renderLoop($renderedOutput = null)
@@ -381,12 +314,12 @@ Class ParseService
     }
 
     /**
-     * parseIncludeRequests
-     *
      * Parse the theme (first) and then rendered output (subsequent calls) for include statements
      *
      * Note: Attribute pairs may NOT contain spaces. To include multiple values, separate with a comma:
      *  ex. class=one,two,three
+     *
+     * @param   string  $renderedOutput
      *
      * @return  array
      * @since   1.0
@@ -486,9 +419,10 @@ Class ParseService
     }
 
     /**
-     * callIncluder
-     *
      * Invoke extension-specific includer for include statement
+     *
+     * @param bool $first
+     * @param $renderedOutput
      *
      * @return  string rendered output
      * @since   1.0
@@ -498,10 +432,9 @@ Class ParseService
         $replace = array();
         $with = array();
 
-        /** 1. process extension includers in order defined by includespage.xml and includesfinal */
         foreach ($this->sequence as $sequence) {
 
-            /** 2. if necessary, split includer name and type (ex. request:resource and defer:head) */
+            /** if necessary, split includer name and type (ex. request:resource and defer:head) */
             if (stripos($sequence, ':')) {
                 $includeName = substr($sequence, 0, strpos($sequence, ':'));
                 $includerType = substr($sequence, strpos($sequence, ':') + 1, 999);
@@ -510,24 +443,20 @@ Class ParseService
                 $includerType = $sequence;
             }
 
-            /** 3. loop thru parsed include requests for match */
             for ($i = 0; $i < count($this->include_request); $i++) {
 
                 $parsedRequests = $this->include_request[$i];
 
                 if ($includeName == $parsedRequests['name']) {
 
-                    /** 4. place attribute pairs into variable */
                     if (isset($parsedRequests['attributes'])) {
                         $attributes = $parsedRequests['attributes'];
                     } else {
                         $attributes = array();
                     }
 
-                    /** 5. store the "replace this" value */
                     $replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
-                    /** 6. initialise registry */
                     Services::Registry()->deleteRegistry('Parameters');
                     Services::Registry()->createRegistry('Parameters');
 
@@ -538,9 +467,9 @@ Class ParseService
                         Services::Registry()->set('Parameters', 'extension_primary', false);
                     }
 
-                    /** 7. call the includer class */
                     $class = 'Molajo\\Includer\\';
                     $class .= ucfirst($includerType) . 'Includer';
+echo $class .'<br />';
                     if (class_exists($class)) {
                         $rc = new $class ($includerType, $includeName);
 
@@ -550,7 +479,6 @@ Class ParseService
                         // ERROR
                     }
 
-                    /** 8. render output and store results as "replace with" */
                     ob_start();
                     echo 'ParseService->callIncluder invoking class ' . $class . ' Attributes: ' . '<br />';
                     echo '<pre>';
@@ -565,11 +493,9 @@ Class ParseService
                     );
 
                     $output = trim($rc->process($attributes));
-
 //echo '<br />';
-//echo $output;
+echo $output;
 //echo '<br />';
-
                     Services::Profiler()->set('ParseService->callIncluder rendered output ' . $output, LOG_OUTPUT_RENDERING, VERBOSE);
 
                     $with[] = $output;
@@ -577,7 +503,6 @@ Class ParseService
             }
         }
 
-        /** 9. replace it */
         $renderedOutput = str_replace($replace, $with, $renderedOutput);
 
         return $renderedOutput;
@@ -608,7 +533,6 @@ Class ParseService
             return false;
         }
 
-        /** Process results */
         Services::Registry()->delete('Parameters');
         Services::Registry()->createRegistry('Parameters');
         Services::Registry()->loadArray('Parameters', $arguments['parameters']);
@@ -691,7 +615,7 @@ Class ParseService
     /**
      * Schedule onAfterParseheadEvent Event
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function onAfterParseheadEvent($renderedOutput)
@@ -724,7 +648,7 @@ Class ParseService
     /**
      * Schedule onAfterParseEvent Event
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function onAfterParseEvent($renderedOutput)
