@@ -38,12 +38,9 @@ class FieldsPlugin extends Plugin
         $parameter_literal = ' (' . Services::Language()->translate('parameter') . ')';
         $customfield_literal = ' (' . Services::Language()->translate('customfield') . ')';
         $metadata_literal = ' (' . Services::Language()->translate('metadata') . ')';
-Services::Registry()->get('Parameters','*');
 
         $model_name = $this->get('model_name');
         $model_type = $this->get('model_type');
-        echo $model_name.' '.$model_type;
-        die;
 
         $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 

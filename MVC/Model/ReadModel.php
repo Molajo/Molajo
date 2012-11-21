@@ -178,11 +178,11 @@ class ReadModel extends Model
     }
 
     /**
-     * useSpecialJoins - Use joins defined in table registry to extend model
+     * Uses joins defined in model registry to build SQL statements
      *
-     * @param   $joins
-     * @param   $primary_prefix
-     * @param   $query_object
+     * @param   array   $joins
+     * @param   string  $primary_prefix
+     * @param   string  $query_object - result, item, list, or distinct
      *
      * @return  ReadModel
      * @since   1.0
@@ -566,7 +566,6 @@ echo '</pre><br /><br />';
                 $default = null;
             }
 
-            /** Use value, if exists, or defined default */
             if (isset($lookup[$name])) {
                 $setValue = $lookup[$name];
             } else {

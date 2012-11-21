@@ -311,7 +311,7 @@ class Controller
 
             } else {
                 $this->query_results =
-                    $this->db->runQuery(
+                    $this->model->db->runQuery(
                         $this->get('model_type'),
                         $this->get('model_name'),
                         $query_object

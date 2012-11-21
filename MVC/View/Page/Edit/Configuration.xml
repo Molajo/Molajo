@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="ViewPage" version="1.0">
+<extension type="Pageview" version="1.0">
     <name>VIEW_PAGE_EDIT_NAME</name>
     <author>Molajo Team</author>
     <create_date>August 2012</create_date>

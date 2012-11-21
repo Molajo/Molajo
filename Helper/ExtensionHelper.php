@@ -685,7 +685,7 @@ Class ExtensionHelper
                 return CATALOG_TYPE_LANGUAGE;
 
             } elseif ($catalog_type == CATALOG_TYPE_LANGUAGE_STRING_LITERAL) {
-                return CATALOG_TYPE_LANGUAGESTRINGS;
+                return CATALOG_TYPE_LANGUAGE_STRING;
 
             } elseif ($catalog_type == CATALOG_TYPE_MENUITEM_LITERAL) {
                 return CATALOG_TYPE_MENUITEM;
@@ -733,7 +733,7 @@ Class ExtensionHelper
         } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGE) {
             return CATALOG_TYPE_LANGUAGE_LITERAL;
 
-        } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGESTRINGS) {
+        } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGE_STRING) {
             return CATALOG_TYPE_LANGUAGE_STRING_LITERAL;
 
         } elseif ($catalog_type_id == CATALOG_TYPE_MENUITEM) {

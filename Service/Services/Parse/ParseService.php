@@ -196,14 +196,14 @@ Class ParseService
 
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
 		} else {
-			$renderedOutput = $this->onBeforeParseheadEvent($renderedOutput);
+			$renderedOutput = $this->onBeforeDocumentheadEvent($renderedOutput);
 		}
 
         $renderedOutput = $this->renderLoop($renderedOutput);
 
         if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
         } else {
-            $renderedOutput = $this->onAfterParseheadEvent($renderedOutput);
+            $renderedOutput = $this->onAfterDocumentheadEvent($renderedOutput);
         }
 
 		if (Services::Registry()->get('Parameters', 'error_status', 0) == 1) {
@@ -578,16 +578,16 @@ echo $output;
     }
 
 	/**
-	 * Schedule onBeforeParsehead Event
+	 * Schedule onBeforeDocumenthead Event
 	 *
      * @param   string  $renderedOutput
      *
      * @return  string  rendered output
      * @since   1.0
      */
-	protected function onBeforeParseheadEvent($renderedOutput)
+	protected function onBeforeDocumentheadEvent($renderedOutput)
 	{
-        Services::Profiler()->set('ParseService onBeforeParsehead', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('ParseService onBeforeDocumenthead', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray('Parameters');
 
@@ -596,11 +596,11 @@ echo $output;
             'rendered_output' => $renderedOutput
         );
 
-        $arguments = Services::Event()->schedule('onBeforeParsehead', $arguments);
+        $arguments = Services::Event()->schedule('onBeforeDocumenthead', $arguments);
 
         if ($arguments === false) {
             Services::Registry()->set('Parameters', 'error_status', 1);
-            Services::Profiler()->set('ParseService onBeforeParsehead failed', LOG_OUTPUT_PLUGINS);
+            Services::Profiler()->set('ParseService onBeforeDocumenthead failed', LOG_OUTPUT_PLUGINS);
             return false;
         }
 
@@ -613,14 +613,14 @@ echo $output;
 	}
 
     /**
-     * Schedule onAfterParseheadEvent Event
+     * Schedule onAfterDocumentheadEvent Event
      *
      * @return  boolean
      * @since   1.0
      */
-    protected function onAfterParseheadEvent($renderedOutput)
+    protected function onAfterDocumentheadEvent($renderedOutput)
     {
-        Services::Profiler()->set('ParseService onAfterParsehead', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('ParseService onAfterDocumenthead', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray('Parameters');
 
@@ -629,11 +629,11 @@ echo $output;
             'rendered_output' => $renderedOutput
         );
 
-        $arguments = Services::Event()->schedule('onAfterParsehead', $arguments);
+        $arguments = Services::Event()->schedule('onAfterDocumenthead', $arguments);
 
         if ($arguments === false) {
             Services::Registry()->set('Parameters', 'error_status', 1);
-            Services::Profiler()->set('ParseService onAfterParsehead failed', LOG_OUTPUT_PLUGINS);
+            Services::Profiler()->set('ParseService onAfterDocumenthead failed', LOG_OUTPUT_PLUGINS);
             return false;
         }
 

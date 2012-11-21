@@ -22,16 +22,11 @@ class ApplicationPlugin extends Plugin
     /**
      * Prepares Application Menus
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeParse()
     {
-        /** Only used for the Site */
-        if (APPLICATION_ID == 2) {
-        } else {
-            return true;
-        }
 
         $current_menuitem_id = (int) $this->get('menuitem_id');
 
@@ -61,10 +56,10 @@ class ApplicationPlugin extends Plugin
 	/**
 	 * Prepares Application Menus
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
-	public function onBeforeParsehead()
+	public function onBeforeDocumenthead()
 	{
 		$this->setPageMeta();
 	}

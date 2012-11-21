@@ -29,8 +29,7 @@ class Includer
     protected $name = null;
 
     /**
-     * $type
-     * Examples: head, message, tag, request, resource, defer
+     * $type: Head, Message, Profiler, Resource, Tag, Template, Theme, Wrap
      *
      * @var    string
      * @since  1.0
@@ -46,13 +45,9 @@ class Includer
     protected $tag = null;
 
     /**
-     * $attributes
-     *
-     * Extracted in Parser Class from Theme/Rendered output
+     * Any defined parameter for the extension can be overridden on the include
      *
      * <include:extension statement attr1=x attr2=y attrN="and-so-on" />
-     *      template, template_view_css_id, template_view_css_class
-     *      wrap, wrap_view_css_id, wrap_view_css_class
      *
      * @var    array
      * @since  1.0
@@ -100,15 +95,9 @@ class Includer
      */
     public function process($attributes = array())
     {
-        /** attributes from <include:type */
-        $this->attributes = $attributes;
-
-        $exists = Services::Registry()->exists('Tempattributes');
-        if ($exists === true) {
-            Services::Registry()->deleteRegistry('Tempattributes');
-        }
+        Services::Registry()->deleteRegistry('Tempattributes');
         Services::Registry()->createRegistry('Tempattributes');
-
+        $this->attributes = $attributes;
         $this->getAttributes();
 
         $this->getExtension();
@@ -209,7 +198,6 @@ class Includer
             ) {
                 Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
-                /** Wrap */
             } elseif ($name == strtolower(CATALOG_TYPE_WRAP_VIEW_LITERAL)
                 || $name == 'wrap_view_title'
                 || $name == 'wrap_view'
@@ -268,7 +256,7 @@ class Includer
                 Services::Registry()->set('Parameters', 'model_query_object', $value);
 
             } else {
-                /** Todo: For security reasons: match field to table registry and filter first */
+                /** Todo: For security reasons: match field to model registry and filter first */
                 Services::Registry()->set('Tempattributes', $name, $value);
             }
         }
@@ -288,10 +276,7 @@ class Includer
     }
 
     /**
-     * setRenderCriteria
-     *
-     * Uses Request and attributes (overrides) defined on the <include statement
-     * to retrieve Template and Wrap information
+     * Uses Include Request and Attributes (overrides) to set Parameters for Rendering
      *
      * @return  bool
      * @since   1.0
@@ -387,7 +372,7 @@ class Includer
     /**
      * Process Template Options
      *
-     * @param   $saveTemplate
+     * @param   string  $saveTemplate
      *
      * @return  bool
      * @since   1.0
@@ -530,7 +515,7 @@ class Includer
     }
 
     /**
-     * loadPlugins overrides (or initially loads) Plugins from the Template and/or Wrap View folders
+     * Load Plugins Overrides from the Template and/or Wrap View folders
      *
      * @return  void
      * @since   1.0
@@ -565,7 +550,7 @@ class Includer
     }
 
     /**
-     * processPlugins for Theme, Page, and Request Extension (overrides Core and Plugin folder)
+     * Iterate a set of Extension Plugins to Overrides Core and Plugin folders
      *
      * @param   $plugins array of folder names
      * @param   $path
@@ -584,8 +569,6 @@ class Includer
     }
 
     /**
-     * loadMedia
-     *
      * Loads Media CSS and JS files for extension and related content
      *
      * @return  null
@@ -624,7 +607,7 @@ class Includer
     }
 
     /**
-     * Instantiate the Controller and fire off the action, returns rendered output
+     * Instantiate the Controller and execute action method, receive rendered output from Controller
      *
      * @return  mixed
      * @since   1.0
@@ -664,11 +647,6 @@ class Includer
         } else {
             $results = $cached_output;
         }
-
-        //if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'toolbar') {
-//		echo $results;
-        //	die;
-        //}
 
         return $results;
     }
