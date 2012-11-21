@@ -34,7 +34,7 @@ Class ContentHelper
      * getInstance
      *
      * @static
-     * @return bool|object
+     * @return  bool|object
      * @since   1.0
      */
     public static function getInstance()
@@ -180,9 +180,9 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
         Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
+
         $registry = Services::Registry()->get('Parameters', 'catalog_page_type')
-            . CATALOG_TYPE_MENUITEM_LITERAL
-            . 'Parameters';
+            . CATALOG_TYPE_MENUITEM_LITERAL;
 
         Services::Registry()->set(
             'Parameters',
@@ -204,9 +204,9 @@ Class ContentHelper
         Services::Registry()->copy($item->model_registry . 'Metadata', 'Metadata');
 
         $this->setParameters(
-            CATALOG_TYPE_MENUITEM_LITERAL,
-            $item->model_registry . 'Parameters',
-            $item->model_registry . 'Metadata'
+            strtolower(CATALOG_TYPE_MENUITEM_LITERAL),
+            $registry . 'Parameters',
+            $registry . 'Metadata'
         );
 
         /** Must be after parameter set so as to not strip off menuitem */
