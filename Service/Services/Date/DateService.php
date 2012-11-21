@@ -31,8 +31,8 @@ Class DateService
      * getInstance
      *
      * @static
-     * @return bool|object
-     * @since  1.0
+     * @return  bool|object
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -46,8 +46,8 @@ Class DateService
     /**
      * Class constructor.
      *
-     * @return boolean
-     * @since  1.0
+     * @return  boolean
+     * @since   1.0
      */
     public function __construct()
     {
@@ -57,10 +57,10 @@ Class DateService
     /**
      * Converts standard MYSQL date (ex. 2011-11-11 11:11:11) to CCYY-MM-DD format (ex. 2011-11-11)
      *
-     * @param string $date
+     * @param   string  $date
      *
-     * @return string CCYY-MM-DD
-     * @since  1.0
+     * @return  string  CCYY-MM-DD
+     * @since   1.0
      */
     public function convertCCYYMMDD($date = null)
     {
@@ -68,13 +68,13 @@ Class DateService
     }
 
     /**
-     * getNumberofDaysAgo
+     * Get the number of days between two dates
      *
-     * @param string $date1 expressed as CCYY-MM-DD
-     * @param string $date2 expressed as CCYY-MM-DD
+     * @param   string  $date1 expressed as CCYY-MM-DD
+     * @param   string  $date2 expressed as CCYY-MM-DD
      *
-     * @since 1.0
-     * @return integer
+     * @since   1.0
+     * @return  integer
      */
     public function getNumberofDaysAgo($date1, $date2 = null)
     {
@@ -82,17 +82,17 @@ Class DateService
             $date2 = $this->convertCCYYMMDD($this->getDate());
         }
 
-        $day_number1mm = substr($date1, 5, 2);
-        $day_number1dd = substr($date1, 8, 2);
-        $day_number1ccyy = substr($date1, 0, 4);
+        $date1mm = substr($date1, 5, 2);
+        $date1dd = substr($date1, 8, 2);
+        $date1ccyy = substr($date1, 0, 4);
 
-        $date1 = date_create("$day_number1mm/$day_number1dd/$day_number1ccyy");
+        $date1 = date_create("$date1mm/$date1dd/$date1ccyy");
 
-        $day_number2mm = substr($date2, 5, 2);
-        $day_number2dd = substr($date2, 8, 2);
-        $day_number2ccyy = substr($date2, 0, 4);
+        $date2mm = substr($date2, 5, 2);
+        $date2dd = substr($date2, 8, 2);
+        $date2ccyy = substr($date2, 0, 4);
 
-        $date2 = date_create("$day_number2mm/$day_number2dd/$day_number2ccyy");
+        $date2 = date_create("$date2mm/$date2dd/$date2ccyy");
 
         $day_object = date_diff($date2, $date1);
 
@@ -102,10 +102,10 @@ Class DateService
     /**
      * getPrettyDate
      *
-     * @param  $date
+     * @param   $date
      *
-     * @return string formatted pretty date
-     * @since  1.0
+     * @return  string formatted pretty date
+     * @since   1.0
      */
     public function getPrettyDate($source, $compare = null)
     {
@@ -174,15 +174,13 @@ Class DateService
     }
 
     /**
-     * getDayName
-     *
      * Provides translated name of day in abbreviated or full format, given day number
      *
-     * @param $day_number
-     * @param bool $abbreviation
+     * @param   string  $day_number
+     * @param   bool    $abbreviation
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function getDayName($day_number, $abbreviation = false)
     {
@@ -240,15 +238,13 @@ Class DateService
     }
 
     /**
-     * getMonthName
-     *
      * Provides translated name of month in abbreviated or full format, given month number
      *
-     * @param string $month_number
-     * @param bool   $abbreviation
+     * @param   string  $month_number
+     * @param   bool    $abbreviation
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function getMonthName($month_number, $abbreviation = false)
     {
@@ -331,15 +327,14 @@ Class DateService
     /**
      * getTimezoneDate - retrieves a date in the server or user timezone
      *
-     * @param $utc_date
-     * @param string $server_or_user_UTC
+     * @param   string  $utc_date
+     * @param   string  $server_or_user_UTC
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function getTimezoneDate($utc_date, $server_or_user_utc = 'user')
     {
-
         if (intval($utc_date)) {
         } else {
             return false;
@@ -356,14 +351,15 @@ Class DateService
     /**
      * Get the Time Zone of the user or server
      *
-     * @param string $server_or_user_utc
+     * @param   string $server_or_user_utc
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function getTimezone($server_or_user_utc = 'user')
     {
         $offset = '';
+
         if ($server_or_user_utc == 'server') {
         } else {
             if (Services::Registry()->exists('User')) {
@@ -381,13 +377,13 @@ Class DateService
     }
 
     /**
-     * getDate - prepares Date object
+     * Prepares Date object
      *
-     * @param mixed $time     The initial time for the Date object
-     * @param mixed $tzOffset The timezone offset.
+     * @param   mixed  $time     The initial time for the Date object
+     * @param   mixed  $tzOffset The timezone offset.
      *
-     * @return Date object
-     * @since  1.0
+     * @return  Date   object
+     * @since   1.0
      */
     public function getDate($time = 'now', $tzOffset = null)
     {
@@ -397,6 +393,7 @@ Class DateService
         $locale = Services::Language()->get('tag', 'en-GB');
 
         $class = str_replace('-', '_', $locale) . 'Date';
+
         if (class_exists($class)) {
         } else {
             $class = 'JPlatform\\date\\JDate';
@@ -408,12 +405,12 @@ Class DateService
     /**
      * translatePrettyDate
      *
-     * @param  $numeric_value
-     * @param  $singular_literal
-     * @param  $plural_literal
+     * @param   $numeric_value
+     * @param   $singular_literal
+     * @param   $plural_literal
      *
-     * @return mixed
-     * @since  1.0
+     * @return  mixed
+     * @since   1.0
      */
     protected function translatePrettyDate($numeric_value, $singular_literal, $plural_literal)
     {
@@ -431,24 +428,26 @@ Class DateService
     /**
      * buildCalendar
      *
-     *
      * $d = getdate();
      * $month = $d['mon'];
      * $year = $d['year'];
+     *
      * $calendar = Services::Date()->buildCalendar ($month, $year);
      *
-     * @param string $month
-     * @param string $year
+     * @param   string  $month
+     * @param   string  $year
      *
-     * @return string CCYY-MM-DD
+     * @return  string  CCYY-MM-DD
      * @since   1.0
      */
 //todo: Amy - redo to generate a set of dates in a model, combine with other data, pass to a view for rendering
 
     /**
-     * @param $month
-     * @param $year
-     * @return string
+     * @param   $month
+     * @param   $year
+     *
+     * @return  string
+     * @since   1.0
      */
     public function buildCalendar($month, $year)
     {

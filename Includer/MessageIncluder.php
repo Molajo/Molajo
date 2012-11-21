@@ -55,10 +55,10 @@ Class MessageIncluder extends Includer
         Services::Registry()->set('Parameters', 'criteria_display_view_on_no_results', 0);
 
         /** Template  */
-        Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), CATALOG_TYPE_TEMPLATE_LITERAL);
+        Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         /** Wrap  */
-        Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), CATALOG_TYPE_WRAP_LITERAL);
+        Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         /** Merge Configuration in */
         Services::Registry()->merge('Configuration', 'Parameters', true);

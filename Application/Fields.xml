@@ -52,37 +52,33 @@
     </modeltypes>
 
     <modelattributes>
-        <modelattribute>model_type</modelattribute>
-        <modelattribute>model_name</modelattribute>
-        <modelattribute>name</modelattribute>
-
-        <modelattribute>table_name</modelattribute>
-        <modelattribute>primary_key</modelattribute>
-        <modelattribute>primary_key_value</modelattribute>
-        <modelattribute>name_key</modelattribute>
-        <modelattribute>name_key_value</modelattribute>
-        <modelattribute>primary_prefix</modelattribute>
-        <modelattribute>data_object</modelattribute>
-        <modelattribute>extends</modelattribute>
-
-        <modelattribute>registry_entry</modelattribute>
-
-        <modelattribute>criteria_catalog_type_id</modelattribute>
-        <modelattribute>criteria_extension_id</modelattribute>
-        <modelattribute>criteria_extension_instance_id</modelattribute>
-        <modelattribute>published_status</modelattribute>
-
-        <modelattribute>check_view_level_access</modelattribute>
-        <modelattribute>process_plugins</modelattribute>
-        <modelattribute>get_customfields</modelattribute>
-        <modelattribute>get_item_children</modelattribute>
-        <modelattribute>use_special_joins</modelattribute>
-        <modelattribute>use_pagination</modelattribute>
-        <modelattribute>model_count</modelattribute>
-        <modelattribute>model_offset</modelattribute>
-
-        <modelattribute>multiple</modelattribute>
-        <modelattribute>size</modelattribute>
+        <modelattribute name="model_type" default=""/>
+        <modelattribute name="model_name" default=""/>
+        <modelattribute name="name" default=""/>
+        <modelattribute name="table_name" default=""/>
+        <modelattribute name="primary_key" default="id"/>
+        <modelattribute name="primary_key_value" default=""/>
+        <modelattribute name="name_key" default="title"/>
+        <modelattribute name="name_key_value" default=""/>
+        <modelattribute name="primary_prefix" default="a"/>
+        <modelattribute name="data_object" default="Database"/>
+        <modelattribute name="extends" default=""/>
+        <modelattribute name="registry_entry" default=""/>
+        <modelattribute name="criteria_catalog_type_id" default=""/>
+        <modelattribute name="criteria_extension_id" default=""/>
+        <modelattribute name="criteria_extension_instance_id" default=""/>
+        <modelattribute name="published_status" default="1,2"/>
+        <modelattribute name="extends" default=""/>
+        <modelattribute name="check_view_level_access" default="1"/>
+        <modelattribute name="process_plugins" default="1"/>
+        <modelattribute name="get_customfields" default="1"/>
+        <modelattribute name="get_item_children" default="1"/>
+        <modelattribute name="use_special_joins" default="1"/>
+        <modelattribute name="use_pagination" default="1"/>
+        <modelattribute name="model_count" default="15"/>
+        <modelattribute name="model_offset" default="0"/>
+        <modelattribute name="multiple" default="0"/>
+        <modelattribute name="size" default=""/>
     </modelattributes>
 
     <datatypes>

@@ -97,7 +97,7 @@ Class ContentHelper
         if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == ACTION_VIEW) {
             $pageTypeNamespace = 'item';
         } else {
-            $pageTypeNamespace = QUERY_OBJECT_FORM;
+            $pageTypeNamespace = 'form';
         }
 
         $item = $this->get($id, $model_type, $model_name, $pageTypeNamespace);
@@ -141,7 +141,7 @@ Class ContentHelper
 
         $this->setExtensionPaths();
 
-        if ($pageTypeNamespace == QUERY_OBJECT_FORM) {
+        if ($pageTypeNamespace == 'form') {
             Services::Registry()->set('Parameters', 'page_type', 'Edit');
         }
 

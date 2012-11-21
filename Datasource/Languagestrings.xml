@@ -54,6 +54,7 @@
             <include field="translation_of_id"/>
             <include field="ordering"/>
         </fields>
+
         <plugins>
             <include name="Contentplugins"/>
         </plugins>

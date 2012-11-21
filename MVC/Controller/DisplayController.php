@@ -24,71 +24,43 @@ class DisplayController extends Controller
     /**
      * Interact with the model to connect with data object, run query, schedule events, push
      *  data into Template View and then push rendered results into Wrap View,
-     *  returning results to Includer
+     *  returning rendered output to Includer
      *
      * @return  string  Rendered output
      * @since   1.0
      */
     public function execute()
     {
-        $this->set('process_template_plugins', 0);
+        $this->getModelRegistry($this->get('model_type'), $this->get('model_name'));
 
-        if ($this->get('model_name', '') == '') {
-            $this->query_results = array();
+        $this->setDataobject();
 
-        } else {
-            echo'Name/Type ' . $this->get('model_name') . $this->get('model_type');
-            echo '<br />';
+        $this->set('process_template_plugins',
+            Services::Registry()->get(
+                $this->get('template_view_model_registry'), 'process_plugins')
+        );
 
-            $this->getModelRegistry($this->get('model_type'), $this->get('model_name'));
-            echo'AFTER Name/Type ' . $this->get('model_name') . $this->get('model_type');
-            echo '<br />';
+        $this->getData($this->get('model_query_object'));
 
-            echo 'Model Registry: ' . $this->model_registry;
+        if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
 
-Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '*');
-            die;
-            $results = $this->setDataobject();
+            $profiler_message = 'DisplayController->execute '
+                . ' <br />Includer: ' . $this->get('includer_type', '')
+                . ' <br />Model Type: ' . $this->get('model_type', '')
+                . ' <br />Model Name: ' . $this->get('model_name', '')
+                . ' <br />Model Query Object: ' . $this->get('model_query_object', '')
+                . ' <br />Template Path: ' . $this->get('template_view_path', '')
+                . ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
 
-            if ($results === false) {
-                return false;
-            }
+            ob_start();
+            echo '<pre>';
+            var_dump($this->query_results);
+            echo '</pre>';
+            $profiler_message .= ob_get_contents();
+            ob_end_clean();
 
-            if ((int) $this->get('criteria_source_id') === 0) {
-
-            } elseif (strtolower($this->get('data_object')) == 'database') {
-
-                $this->set('id', $this->get('criteria_source_id'));
-                $this->set('model_query_object', QUERY_OBJECT_ITEM);
-            }
-
-            $this->set('process_template_plugins',
-                Services::Registry()->get(
-                    $this->get('template_view_model_registry'), 'process_plugins')
-            );
-
-            $this->getData($this->get('model_query_object'));
-
-            if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
-
-                $profiler_message = 'DisplayController->execute '
-                    . ' <br />Includer: ' . $this->get('includer_type', '')
-                    . ' <br />Model Type: ' . $this->get('model_type', '')
-                    . ' <br />Model Name: ' . $this->get('model_name', '')
-                    . ' <br />Model Query Object: ' . $this->get('model_query_object', '')
-                    . ' <br />Template Path: ' . $this->get('template_view_path', '')
-                    . ' <br />Wrap Path: ' . $this->get('wrap_view_path', '');
-
-                ob_start();
-                echo '<pre>';
-                var_dump($this->query_results);
-                echo '</pre>';
-                $profiler_message .= ob_get_contents();
-                ob_end_clean();
-
-                Services::Profiler()->set('Controller->onAfterExecute ' . $profiler_message,
-                    LOG_OUTPUT_PLUGINS, VERBOSE);
-            }
+            Services::Profiler()->set('Controller->onAfterExecute ' . $profiler_message,
+                LOG_OUTPUT_PLUGINS, VERBOSE);
         }
 
         if (count($this->query_results) == 0
@@ -97,7 +69,7 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
             return '';
         }
 
-        if (strtolower($this->get('includer_name', '')) == CATALOG_TYPE_WRAP_LITERAL) {
+        if (strtolower($this->get('includer_name')) == CATALOG_TYPE_WRAP_VIEW_LITERAL) {
             $rendered_output = $this->query_results;
 
         } else {
@@ -126,20 +98,19 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
         if ($this->get('wrap_view_path_node') == '') {
             return $rendered_output;
         } else {
-            return $this->wrapView($this->get('wrap_view_path_node'), $rendered_output);
+            return $this->wrapView($rendered_output);
         }
     }
 
     /**
-     * wrapView
+     * Wrap View for wrapping Template View Rendered Output
      *
-     * @param   $view
      * @param   $rendered_output
      *
      * @return  string
      * @since   1.0
      */
-    public function wrapView($view, $rendered_output)
+    public function wrapView($rendered_output)
     {
         $this->query_results = array();
 
@@ -159,14 +130,17 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
     }
 
     /**
-     * renderView
+     * Two ways that Template Views can be rendered:
      *
-     * Depending on the files within view/view-type/view-name/View/*.*:
+     * 1. If there is a Custom.php file in the Template View folder, then all query
+     *      results are pushed into the View using the $this->query_results array/object.
+     *      The Custom.php View must handle it's own loop iteration, if necessary
      *
-     * 1. Include a single Custom.php file to process all query results in $this->query_results
-     *
-     * 2. Include Header.php, Body.php, and/or Footer.php views for Molajo to
-     *  perform the looping, injecting $row into each of the three views
+     * 2. If there is a Header.php, and/or Body.php, and/or Footer.php Template View(s)
+     *      then data is injected into the View, one row at a time, using the $this->row object.
+     *      Header.php (if existing) - used one time for the first row in the resultset
+     *      Body.php (if existing) - injected with $this->row for each row within $this->query_results
+     *      Footer.php (if existing) - used one time for the last row in the resultset
      *
      * @return  string
      * @since   1.0
@@ -175,7 +149,6 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
     {
 //todo when close to done - do encoding - bring in filters given field definitions
 
-        /** start collecting output */
         ob_start();
 
         /** 1. view handles loop and event processing */
@@ -191,7 +164,6 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
                 $first = true;
                 foreach ($this->query_results as $this->row) {
 
-                    /** header: before any rows are processed */
                     if ($first === true) {
                         $first = false;
                         if (file_exists($this->view_path . '/View/Header.php')) {
@@ -199,20 +171,17 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
                         }
                     }
 
-                    /** body: once for each row */
                     if (file_exists($this->view_path . '/View/Body.php')) {
                         include $this->view_path . '/View/Body.php';
                     }
                 }
 
-                /** footer: after all rows are processed */
                 if (file_exists($this->view_path . '/View/Footer.php')) {
                     include $this->view_path . '/View/Footer.php';
                 }
             }
         }
 
-        /** collect and return rendered output */
         $output = ob_get_contents();
         ob_end_clean();
 
@@ -282,8 +251,6 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
     /**
      * Schedule onAfterViewRender Event - can update rendered results
      *
-     * todo: add Mustache or Twig Plugin in onAfterViewRender to process rendered results
-     *
      * @return  bool
      * @since   1.0
      */
@@ -305,7 +272,6 @@ Services::Registry()->get($this->get('model_name') . $this->get('model_type'), '
         if ($arguments === false) {
             Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender',
                 LOG_OUTPUT_PLUGINS, VERBOSE);
-
             return false;
         }
 

@@ -23,7 +23,7 @@ class DateformatsPlugin extends Plugin
     /**
      * Pre-create processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeCreate()
@@ -49,7 +49,7 @@ class DateformatsPlugin extends Plugin
 
                 } elseif ($fieldValue === false
                     || $fieldValue == '0000-00-00 00:00:00'
-) {
+                ) {
 
                     $this->saveField($field, $name, $this->now);
 
@@ -80,7 +80,7 @@ class DateformatsPlugin extends Plugin
      *
      * Adds formatted dates to 'normal' or special fields recordset
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
@@ -89,7 +89,7 @@ class DateformatsPlugin extends Plugin
 
         try {
             Services::Date()->convertCCYYMMDD('2011-11-11');
-            /** Date Service is not available (likely startup) */
+            /** Skip when Date Service is not available (likely startup) */
         } catch (\Exception $e) {
             return true;
         }
@@ -113,7 +113,6 @@ class DateformatsPlugin extends Plugin
 
                 } else {
 
-                    /** formats the date for CCYYMMDD */
                     $newFieldValue = Services::Date()->convertCCYYMMDD($fieldValue);
 
                     if ($newFieldValue === false) {
@@ -164,28 +163,31 @@ class DateformatsPlugin extends Plugin
                     if ($ccyymmdd === false) {
                     } else {
                         $this->saveField(null, $name . '_ccyy', substr($ccyymmdd, 0, 4));
-                        $this->saveField(null, $name . '_mm', (int) substr($ccyymmdd, 5, 2));
-                        $this->saveField(null, $name . '_dd', (int) substr($ccyymmdd, 8, 2));
+                        $this->saveField(null, $name . '_mm', (int)substr($ccyymmdd, 5, 2));
+                        $this->saveField(null, $name . '_dd', (int)substr($ccyymmdd, 8, 2));
 
-                        $this->saveField(null, $name . '_ccyy_mm_dd',
-                            substr($ccyymmdd, 0, 4) . '-' . substr($ccyymmdd, 5, 2) . '-' . substr($ccyymmdd, 8, 2));
+                        $this->saveField(
+                            null,
+                            $name . '_ccyy_mm_dd',
+                            substr($ccyymmdd, 0, 4) . '-' . substr($ccyymmdd, 5, 2) . '-' . substr($ccyymmdd, 8, 2)
+                        );
 
-                        $newFieldValue = Services::Date()->getMonthName((int) substr($ccyymmdd, 5, 2), true);
+                        $newFieldValue = Services::Date()->getMonthName((int)substr($ccyymmdd, 5, 2), true);
                         $this->saveField(null, $name . '_month_name_abbr', $newFieldValue);
 
-                        $newFieldValue = Services::Date()->getMonthName((int) substr($ccyymmdd, 5, 2), false);
+                        $newFieldValue = Services::Date()->getMonthName((int)substr($ccyymmdd, 5, 2), false);
                         $this->saveField(null, $name . '_month_name', $newFieldValue);
 
                         $dateObject = Services::Date()->getDate($fieldValue);
                         $this->saveField(null, $name . '_time', date_format($dateObject, 'G:ia'));
 
-                        $newFieldValue = (int) date_format($dateObject, 'N');
+                        $newFieldValue = (int)date_format($dateObject, 'N');
                         $this->saveField(null, $name . '_day_number', $newFieldValue);
 
-                        $newFieldValue = Services::Date()->getDayName((int) date_format($dateObject, 'N'), true);
+                        $newFieldValue = Services::Date()->getDayName((int)date_format($dateObject, 'N'), true);
                         $this->saveField(null, $name . '_day_name_abbr', $newFieldValue);
 
-                        $newFieldValue = Services::Date()->getDayName((int) date_format($dateObject, 'N'), false);
+                        $newFieldValue = Services::Date()->getDayName((int)date_format($dateObject, 'N'), false);
                         $this->saveField(null, $name . '_day_name', $newFieldValue);
                     }
                 }

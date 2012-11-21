@@ -128,6 +128,8 @@ Class Services
             $name = (string) $service->attributes()->name;
             $startup = (string) $service->attributes()->startup;
 
+            echo 'IN SERVICESS: ' . $name . '<br />';
+
             $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
 
             foreach ($service->parameter as $parameter) {

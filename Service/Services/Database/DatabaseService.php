@@ -9,8 +9,6 @@ namespace Molajo\Service\Services\Database;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 
-//use JPlatform\date\JDate;
-
 defined('MOLAJO') or die;
 
 /**
@@ -51,9 +49,9 @@ Class DatabaseService
     /**
      * Retrieve Site and Application data, set constants and paths
      *
-     * @param null $configuration_file
+     * @param   null  $configuration_file
      *
-     * @return object
+     * @return  object
      * @since   1.0
      */
     public function __construct()
@@ -68,7 +66,7 @@ Class DatabaseService
      *
      * @param   $value
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function get($value)
@@ -84,14 +82,14 @@ Class DatabaseService
      */
     public function connect()
     {
-
-        if (Services::Registry()->exists('DatabaseDataObject')) {
+        if (Services::Registry()->exists('DatabaseDataobject')) {
         } else {
-            ConfigurationService::getDataobject('Dataobject', 'database');
+            ConfigurationService::getDataobject('Dataobject', 'Database');
         }
 
         $this->options = array(
-            'driver' => preg_replace('/[^A-Z0-9_\.-]/i', '', Services::Registry()->get('DatabaseDataObject', 'dbtype')),
+            'driver' => preg_replace('/[^A-Z0-9_\.-]/i', '',
+                Services::Registry()->get('DatabaseDataObject', 'dbtype')),
             'host' => Services::Registry()->get('DatabaseDataObject', 'host'),
             'user' => Services::Registry()->get('DatabaseDataObject', 'user'),
             'password' => Services::Registry()->get('DatabaseDataObject', 'password'),
@@ -116,22 +114,15 @@ Class DatabaseService
             throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
         }
 
-//        $this->db->debug(0);
-
-//        $date = null;
-//        $dateFromJDate = new JDate($date ? $date : 'now');
-//        $dateFromJDate = $dateFromJDate->toSql(false, $this->db);
-
-        return $this;
+        return $this->db;
     }
 
     /**
      * Get the current query object for the current database connection
      *
-     * @return Database Query Object
-     *
+     * @return  Database Query Object
      * @since   1.0
-     * @throws \RuntimeException
+     * @throws  \RuntimeException
      */
     public function getQuery()
     {

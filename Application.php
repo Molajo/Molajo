@@ -65,11 +65,11 @@ Class Application
      * @param   string  $override_parse_sequence
      * @param   string  $override_parse_final
      *
-     *  1. Initialise
-     *  2. Route
-     *  3. Authorise
-     *  3. Execute (Display or Action)
-     *  4. Respond
+     * 1. Initialise
+     * 2. Route
+     * 3. Authorise
+     * 3. Execute (Display or Action)
+     * 4. Respond
      *
      * @return  mixed
      * @since   1.0
@@ -218,21 +218,15 @@ Class Application
     /**
      * Evaluates HTTP Request to determine routing requirements, including:
      *
-     * - Normal page request: populates Registry for Request, Catalog, and Menuitem (if appropriate)
-     *
-     * - Issues redirect request for "home" duplicate content
-     *
+     * - Normal page request: populates Registry for Request
+     * - Issues redirect request for "home" duplicate content (i.e., http://example.com/index.php, etc.)
      * - Checks for 'Application Offline Mode', sets a 503 error and registry values for View
-     *
      * - For 'Page not found', sets 404 error and registry values for Error Template/View
-     *
      * - For defined redirect with Catalog, issues 301 Redirect to new URL
-     *
      * - For 'Logon requirement' situations, issues 303 redirect to configured login page
      *
-     * @return boolean
-     *
-     * @since  1.0
+     * @return  boolean
+     * @since   1.0
      */
     protected function route()
     {
@@ -271,7 +265,7 @@ Class Application
     }
 
     /**
-     * Schedule onBeforeParseEvent Event - could update parameter values
+     * Schedule onBeforeParseEvent Event
      *
      * @return  boolean
      * @since   1.0
@@ -291,13 +285,8 @@ Class Application
             'data' => array()
         );
 
-        Services::Profiler()->set(
-            'Application->onAfterRouteEvent ' . ' Schedules onAfterRoute',
-            LOG_OUTPUT_PLUGINS,
-            VERBOSE
-        );
-
         $arguments = Services::Event()->schedule('onAfterRoute', $arguments);
+
         if ($arguments === false) {
             Services::Profiler()->set(
                 'Application->onAfterRouteEvent ' . ' failure ',
@@ -306,12 +295,6 @@ Class Application
 
             return false;
         }
-
-        Services::Profiler()->set(
-            'Application->onAfterRouteEvent ' . ' successful ',
-            LOG_OUTPUT_PLUGINS,
-            VERBOSE
-        );
 
         Services::Registry()->delete('Parameters');
         Services::Registry()->createRegistry('Parameters');
@@ -324,8 +307,8 @@ Class Application
     /**
      * Verify user authorization
      *
-     * OnAfterAuthorise Event is invoked even when core authorisation fails to authorise
-     * so that authorisation can be overridden and other methods of authorisation can be used
+     * OnAfterAuthorise Event is invoked regardless of normal authorisation results (fail or succeed)
+     *      in order to allow overriding the finding and/or providing other methods of authorisation
      *
      * @return  boolean
      * @since   1.0
@@ -334,7 +317,7 @@ Class Application
     {
         Services::Profiler()->set(START_AUTHORISATION, LOG_OUTPUT_APPLICATION);
 
-        $results = Services::Authorisation()->verifyAction();
+        Services::Authorisation()->verifyAction();
 
         Services::Profiler()->set('Application Schedule onAfterAuthorise', LOG_OUTPUT_PLUGINS);
 
@@ -345,9 +328,9 @@ Class Application
 
         if ($results === false) {
             Services::Profiler()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
-
             return false;
         }
+
 
         Services::Profiler()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
 
@@ -394,24 +377,16 @@ Class Application
     }
 
     /**
-     * Executes a display action
+     * Executes a view action
      *
-     * Display Task
+     * 1. Parse: recursively parses theme and then rendered output for <include:type statements
      *
-     * 1. Parse: recursively parses theme and then rendered output
-     *      for <include:type statements
+     * 2. Includer: each include statement is processed by the associated extension includer
+     *      which retrieves data needed by the MVC, passing control and data into the Controller
      *
-     * 2. Includer: each include statement is processed by the
-     *      associated extension includer in order, collecting
-     *      rendering data needed by the MVC
+     * 3. MVC: executes actions, invoking model processing and rendering of views
      *
-     * 3. MVC: executes controller action, invoking model processing and
-     *    rendering of template and wrap views
-     *
-     * Steps 1-3 continue until no more <include:type statements are
-     *    found in the Theme and rendered output
-     *
-     * Override Registry have values for parse_sequence and parse_final
+     * Continues until no more <include:type statements are found in the Theme and rendered output
      *
      * @since   1.0
      * @return  Application
@@ -635,6 +610,7 @@ Class Application
             define('SITES', BASE_FOLDER . '/Site');
         }
 
+        /** Defines used to help ensure consistency of literal values in application */
         $defines = ConfigurationService::getFile('Application', 'Defines');
         foreach ($defines->define as $item) {
             if (defined((string)$item['name'])) {

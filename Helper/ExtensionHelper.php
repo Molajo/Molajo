@@ -63,7 +63,6 @@ Class ExtensionHelper
     ) {
         $item = Helpers::Extension()->get($extension_id, $model_type, $model_name, $check_permissions);
 
-        /** 404: routeRequest handles redirecting to error page */
         if (count($item) == 0) {
             Services::Registry()->set('Parameters', 'status_found', false);
             return false;
@@ -98,7 +97,6 @@ Class ExtensionHelper
             )
         );
 
-        /** Process each field namespace  */
         $customFieldTypes = Services::Registry()->get($item->model_registry, 'CustomFieldGroups');
 
         if (count($customFieldTypes) > 0) {
@@ -252,7 +250,6 @@ Class ExtensionHelper
             );
         }
 
-        /** First, attempt to retrieve from registry */
         if (Services::Registry()->exists('AuthorisedExtensions') === true) {
 
             if (strtolower($query_object) == QUERY_OBJECT_ITEM && (int)$extension_id > 0) {
@@ -268,7 +265,6 @@ Class ExtensionHelper
             }
         }
 
-        /** Then, if not available, run the query */
         $query_results = $controller->getData($query_object);
 
         if ($query_results === false || $query_results === null) {
@@ -351,8 +347,6 @@ Class ExtensionHelper
     }
 
     /**
-     * getInstanceTitle
-     *
      * Retrieves Extension Title, given the extension_instance_id, first from registry, if not available, the DB
      *
      * @param   $extension_instance_id
@@ -402,13 +396,11 @@ Class ExtensionHelper
     }
 
     /**
-     * getExtensionNode
-     *
      * Retrieves the folder node for the specific extension
      *
-     * @param  $extension_instance_id
+     * @param   $extension_instance_id
      *
-     * @return bool|mixed
+     * @return  bool|mixed
      * @since   1.0
      */
     public function getExtensionNode($extension_instance_id)
@@ -474,8 +466,6 @@ Class ExtensionHelper
     }
 
     /**
-     * getPath
-     *
      * Returns path for Extension - make certain to send in extension name, not instance title.
      *
      * @param   string  $catalog_type_id
@@ -490,10 +480,10 @@ Class ExtensionHelper
             return Helpers::View()->getPath($node, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
-            return Helpers::View()->getPath($node, CATALOG_TYPE_TEMPLATE_LITERAL);
+            return Helpers::View()->getPath($node, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
-            return Helpers::View()->getPath($node, CATALOG_TYPE_WRAP_LITERAL);
+            return Helpers::View()->getPath($node, CATALOG_TYPE_WRAP_VIEW_LITERAL);
         }
 
         $type = Helpers::Extension()->getType($catalog_type_id);
@@ -549,10 +539,10 @@ Class ExtensionHelper
             return Helpers::View()->getPathURL($node, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
-            return Helpers::View()->getPathURL($node, CATALOG_TYPE_TEMPLATE_LITERAL);
+            return Helpers::View()->getPathURL($node, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
-            return Helpers::View()->getPathURL($node, CATALOG_TYPE_WRAP_LITERAL);
+            return Helpers::View()->getPathURL($node, CATALOG_TYPE_WRAP_VIEW_LITERAL);
         }
 
         $type = Helpers::Extension()->getType($catalog_type_id);
@@ -588,7 +578,7 @@ Class ExtensionHelper
     }
 
     /**
-     * getNamespace - Return namespace for extension
+     * Return namespace for extension
      *
      * @param   $node
      *
@@ -601,10 +591,10 @@ Class ExtensionHelper
             return Helpers::View()->getNamespace($node, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_TEMPLATE_VIEW) {
-            return Helpers::View()->getNamespace($node, CATALOG_TYPE_TEMPLATE_LITERAL);
+            return Helpers::View()->getNamespace($node, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
-            return Helpers::View()->getNamespace($node, CATALOG_TYPE_WRAP_LITERAL);
+            return Helpers::View()->getNamespace($node, CATALOG_TYPE_WRAP_VIEW_LITERAL);
         }
 
         $type = Helpers::Extension()->getType($catalog_type_id);
@@ -664,9 +654,9 @@ Class ExtensionHelper
         $template_view_id = Services::Registry()->get('Parameters', 'template_view_id');
         $wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id');
 
-        Helpers::View()->get($template_view_id, CATALOG_TYPE_TEMPLATE_LITERAL);
+        Helpers::View()->get($template_view_id, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
-        Helpers::View()->get($wrap_view_id, CATALOG_TYPE_WRAP_LITERAL);
+        Helpers::View()->get($wrap_view_id, CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         return;
     }
@@ -694,14 +684,14 @@ Class ExtensionHelper
             } elseif ($catalog_type == CATALOG_TYPE_LANGUAGE_LITERAL) {
                 return CATALOG_TYPE_LANGUAGE;
 
-            } elseif ($catalog_type == CATALOG_TYPE_LANGUAGESTRINGS_LITERAL) {
+            } elseif ($catalog_type == CATALOG_TYPE_LANGUAGE_STRING_LITERAL) {
                 return CATALOG_TYPE_LANGUAGESTRINGS;
 
             } elseif ($catalog_type == CATALOG_TYPE_MENUITEM_LITERAL) {
                 return CATALOG_TYPE_MENUITEM;
 
-            } elseif ($catalog_type == CATALOG_TYPE_MESSAGES_LITERAL) {
-                return CATALOG_TYPE_MESSAGES;
+            } elseif ($catalog_type == CATALOG_TYPE_MESSAGE_LITERAL) {
+                return CATALOG_TYPE_MESSAGE;
 
             } elseif ($catalog_type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
                 return CATALOG_TYPE_PAGE_VIEW;
@@ -718,16 +708,16 @@ Class ExtensionHelper
             } elseif ($catalog_type == CATALOG_TYPE_SITE_LITERAL) {
                 return CATALOG_TYPE_SITE;
 
-            } elseif ($catalog_type == CATALOG_TYPE_TEMPLATE_LITERAL) {
+            } elseif ($catalog_type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL) {
                 return CATALOG_TYPE_TEMPLATE_VIEW;
 
             } elseif ($catalog_type == CATALOG_TYPE_THEME_LITERAL) {
                 return CATALOG_TYPE_THEME;
 
-            } elseif ($catalog_type == CATALOG_TYPE_USERS_LITERAL) {
+            } elseif ($catalog_type == CATALOG_TYPE_USER_LITERAL) {
                 return CATALOG_TYPE_USERS;
 
-            } elseif ($catalog_type == CATALOG_TYPE_WRAP_LITERAL) {
+            } elseif ($catalog_type == CATALOG_TYPE_WRAP_VIEW_LITERAL) {
                 return CATALOG_TYPE_WRAP_VIEW;
             }
 
@@ -744,13 +734,13 @@ Class ExtensionHelper
             return CATALOG_TYPE_LANGUAGE_LITERAL;
 
         } elseif ($catalog_type_id == CATALOG_TYPE_LANGUAGESTRINGS) {
-            return CATALOG_TYPE_LANGUAGESTRINGS_LITERAL;
+            return CATALOG_TYPE_LANGUAGE_STRING_LITERAL;
 
         } elseif ($catalog_type_id == CATALOG_TYPE_MENUITEM) {
             return CATALOG_TYPE_MENUITEM_LITERAL;
 
-        } elseif ($catalog_type_id == CATALOG_TYPE_MESSAGES) {
-            return CATALOG_TYPE_MESSAGES_LITERAL;
+        } elseif ($catalog_type_id == CATALOG_TYPE_MESSAGE) {
+            return CATALOG_TYPE_MESSAGE_LITERAL;
 
         } elseif ($catalog_type_id == CATALOG_TYPE_PAGE_VIEW) {
             return CATALOG_TYPE_PAGE_VIEW_LITERAL;
@@ -774,7 +764,7 @@ Class ExtensionHelper
             return CATALOG_TYPE_THEME_LITERAL;
 
         } elseif ($catalog_type_id == CATALOG_TYPE_USERS) {
-            return CATALOG_TYPE_USERS_LITERAL;
+            return CATALOG_TYPE_USER_LITERAL;
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP) {
             return CATALOG_TYPE_WRAP_VIEW_LITERAL;

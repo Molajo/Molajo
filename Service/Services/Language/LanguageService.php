@@ -51,8 +51,8 @@ Class LanguageService
 
     /**
      * @static
-     * @return bool|object
-     * @since  1.0
+     * @return  bool|object
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -64,9 +64,9 @@ Class LanguageService
     }
 
     /**
-     * @param string $language
+     * @param   string  $language
      *
-     * @return null
+     * @return  null
      * @since   1.0
      */
     public function __construct($language = null)
@@ -79,11 +79,11 @@ Class LanguageService
     /**
      * Translate string
      *
-     * @param string $string
-     * @param string $language
+     * @param   string  $string
+     * @param   string  $language
      *
-     * @return mixed
-     * @since  1.0
+     * @return  mixed
+     * @since   1.0
      */
     public function translate($string, $language = null)
     {
@@ -131,12 +131,12 @@ Class LanguageService
     /**
      * get language property
      *
-     * @param string $property
-     * @param string $default
-     * @param string $language
+     * @param   string  $property
+     * @param   string  $default
+     * @param   string  $language
      *
-     * @return mixed
-     * @since  1.0
+     * @return  mixed
+     * @since   1.0
      */
     public function get($property, $default = '', $language = null)
     {
@@ -150,7 +150,7 @@ Class LanguageService
 	/**
 	 * Loads language strings into registry
 	 *
-	 * @param null $language
+	 * @param   string $language, optional
 	 *
 	 * @return 	bool
 	 * @since   1.0
@@ -161,7 +161,6 @@ Class LanguageService
             $language = Services::Registry()->get('Languages', 'Current');
         }
 
-		/** Don't reload */
 		if (Services::Registry()->exists($language) == false) {
 			 $this->setLanguageRegistry($language);
 		}
@@ -169,8 +168,6 @@ Class LanguageService
 		$results = $this->getLanguageStrings($language);
 
 		if ($results === false || count($results) == 0) {
-
-
 			if ($language == Services::Registry()->get('Languages', 'Default')) {
 			} else {
 				$language == Services::Registry()->get('Languages', 'Default');
@@ -208,11 +205,13 @@ Class LanguageService
 
 	/**
 	 * Determine language to be used as current
+     *
+     * @param   string $language, optional
 	 *
-	 * @return string
-	 * @since  1.0
+	 * @return  null/string
+	 * @since   1.0
 	 */
-	protected function setCurrentLanguage($language = null)
+    protected function setCurrentLanguage($language = null)
 	{
 		$installed = $this->getInstalledLanguages();
 
@@ -248,7 +247,6 @@ Class LanguageService
 			return $language;
 		}
 
-		/** 8. Shouldn't happen */
 		if (in_array('en-GB', $installed)) {
 			return 'en-GB';
 		}
@@ -261,8 +259,8 @@ Class LanguageService
 	/**
 	 * setLanguageRegistry - Loads the Core Language for specified language
 	 *
-	 * @param $language
-	 * @return string
+	 * @param   string  $language
+	 * @return  string
 	 */
 	protected function setLanguageRegistry($language)
 	{
@@ -297,23 +295,15 @@ Class LanguageService
 	/**
 	 * Get language strings from database
 	 *
-	 * @return bool
-	 * @since  1.0
+	 * @return  bool
+	 * @since   1.0
 	 */
 	protected function getLanguageStrings($language)
 	{
 		$controllerClass = CONTROLLER_CLASS;
 		$controller = new $controllerClass();
-
-		$results = $controller->getModelRegistry('System', 'Languagestrings');
-		if ($results === false) {
-			return false;
-		}
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+		$controller->getModelRegistry('System', 'Languagestrings');
+        $controller->setDataobject();
 
         $controller->set('check_view_level_access', 0);
 		$primary_prefix = $controller->get('primary_prefix', 'a');
@@ -328,12 +318,50 @@ Class LanguageService
 				. '.'
 				. $controller->model->db->qn('content_text'));
 
+		$controller->model->query->select(
+            $controller->model->db->qn('catalog')
+                . '.'
+                . $controller->model->db->qn('sef_request'));
+
+        $controller->model->query->from(
+            $controller->model->db->qn('#__language_strings')
+                . ' as '
+                . $controller->model->db->qn($primary_prefix));
+
+        $controller->model->query->from(
+            $controller->model->db->qn('#__catalog')
+                . ' as '
+                . $controller->model->db->qn('catalog'));
+
 		$controller->model->query->where(
 			$controller->model->db->qn($primary_prefix)
 				. '.' . $controller->model->db->qn('language')
 				. ' = '
 				. $controller->model->db->q($language)
 		);
+
+        $controller->model->query->where(
+            $controller->model->db->qn('catalog')
+                . '.' . $controller->model->db->qn('application_id')
+                . ' = '
+                . (int) APPLICATION_ID
+        );
+
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('id')
+                . ' = '
+                . $controller->model->db->qn('catalog')
+                . '.' . $controller->model->db->qn('source_id')
+        );
+
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('catalog_type_id')
+                . ' = '
+                . $controller->model->db->qn('catalog')
+                . '.' . $controller->model->db->qn('catalog_type_id')
+        );
 
 		$controller->model->query->order(
 			$controller->model->db->qn($primary_prefix)
@@ -350,7 +378,10 @@ Class LanguageService
 	/**
 	 * Log requests for translations that could not be processed
 	 *
-	 * @param $string
+	 * @param   $string
+     *
+     * @return  void
+     * @since   1.0
 	 */
 	protected function logUntranslatedString ($string)
 	{
@@ -363,13 +394,13 @@ Class LanguageService
 		Services::Registry()->set('TranslatedStringsMissing', $string, $string);
 
 		return;
-
 	}
 
 	/**
 	 * Log missing strings
 	 *
-	 * @return bool
+	 * @return  bool
+     * @since   1.0
 	 */
 	public function logUntranslatedStrings()
 	{
@@ -414,12 +445,11 @@ Class LanguageService
     /**
      * Retrieve installed languages for this application
      *
-     * @return bool
-     * @since  1.0
+     * @return   bool
+     * @since    1.0
      */
     protected function getInstalledLanguages()
     {
-        /** During System Initialization Helper is not loaded yet, instantiate here */
         $helper = new ExtensionHelper();
         $installed = $helper->get(0, 'Datasource', 'Languageservice', QUERY_OBJECT_LIST, CATALOG_TYPE_LANGUAGE);
         if ($installed === false || count($installed) == 0) {

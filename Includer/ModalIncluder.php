@@ -93,7 +93,7 @@ Class ModalIncluder extends Includer
                         ->getInstanceID(CATALOG_TYPE_WRAP_VIEW, 'None'));
             }
         }
-        Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), CATALOG_TYPE_WRAP_LITERAL);
+        Helpers::View()->get(Services::Registry()->get('Parameters', 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         /** Merge Configuration in */
         Services::Registry()->merge('Configuration', 'Parameters', true);

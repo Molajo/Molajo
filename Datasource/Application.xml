@@ -12,7 +12,6 @@
         process_plugins="0"
         criteria_catalog_type_id="2000"
         use_pagination="0"
-        extends="site"
         data_object="Database">
 
     <table>

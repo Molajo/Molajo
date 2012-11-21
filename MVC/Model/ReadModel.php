@@ -32,7 +32,7 @@ class ReadModel extends Model
      * @param   $id
      * @param   $name_key
      * @param   $name_key_value
-     * @param   $query_object - item, list, result
+     * @param   $query_object - item, list, result, distinct
      * @param   $criteria_array
      *
      * @return  ReadModel
@@ -54,13 +54,18 @@ class ReadModel extends Model
             if ($query_object == QUERY_OBJECT_RESULT) {
 
                 if ((int)$id > 0) {
+
                     $this->query->select($this->db->qn($primary_prefix . '.' . $name_key));
+
                     $this->query->where(
                         $this->db->qn($primary_prefix . '.' . $primary_key)
                             . ' = ' . $this->db->q($id)
                     );
+
                 } else {
+
                     $this->query->select($this->db->qn($primary_prefix . '.' . $primary_key));
+
                     $this->query->where(
                         $this->db->qn($primary_prefix . '.' . $name_key)
                             . ' = ' . $this->db->q($name_key_value)
@@ -72,13 +77,17 @@ class ReadModel extends Model
                 $first = true;
 
                 if (count($columns) == 0) {
+
                     $this->query->select($this->db->qn($primary_prefix) . '.' . '*');
 
                 } else {
                     foreach ($columns as $column) {
+
                         if ($first === true && strtolower(trim($query_object)) == QUERY_OBJECT_DISTINCT) {
+
                             $first = false;
                             $this->query->select('DISTINCT ' . $this->db->qn($primary_prefix . '.' . $column['name']));
+
                         } else {
                             $this->query->select($this->db->qn($primary_prefix . '.' . $column['name']));
                         }
@@ -88,7 +97,9 @@ class ReadModel extends Model
         }
 
         if ($this->query->from == null) {
-            $this->query->from($this->db->qn($table_name) . ' as ' . $this->db->qn($primary_prefix));
+            $this->query->from($this->db->qn($table_name)
+                    . ' as '
+                    . $this->db->qn($primary_prefix));
         }
 
         if ($this->query->where == null) {
@@ -109,6 +120,7 @@ class ReadModel extends Model
         }
 
         if (is_array($criteria_array) && count($criteria_array) > 0) {
+
             foreach ($criteria_array as $item) {
                 if (isset($item['value'])) {
                     $this->query->where(
@@ -182,13 +194,17 @@ class ReadModel extends Model
 
         foreach ($joins as $join) {
 
-            $join_table = $join['table'];
+            $join_table = $join['table_name'];
             $alias = $join['alias'];
             $select = $join['select'];
             $joinTo = $join['jointo'];
             $joinWith = $join['joinwith'];
 
-            $this->query->from($this->db->qn($join_table) . ' as ' . $this->db->qn($alias));
+            $this->query->from(
+                $this->db->qn($join_table)
+                    . ' as '
+                    . $this->db->qn($alias)
+            );
 
             /* Select fields */
             if (trim($select) == '') {
@@ -319,11 +335,12 @@ class ReadModel extends Model
      * @param   $catalog_type_id
      * @param   $extension_instance_id
      * @param   $primary_prefix
+     * @param   $status
      *
      * @return  ReadModel
      * @since   1.0
      */
-    public function setModelCriteria($catalog_type_id, $extension_instance_id, $primary_prefix)
+    public function setModelCriteria($catalog_type_id, $extension_instance_id, $primary_prefix, $status = null )
     {
         if ((int)$catalog_type_id == 0) {
         } else {
@@ -332,21 +349,27 @@ class ReadModel extends Model
                     . ' = ' . (int)$catalog_type_id
             );
         }
-        /**
+/**
         if ((int) $extension_instance_id == 0) {
         } else {
-        $this->query->where($this->db->qn($primary_prefix . '.' . 'extension_instance_id')
-        . ' = ' . (int) $extension_instance_id);
+            $this->query->where($this->db->qn($primary_prefix . '.' . 'extension_instance_id')
+                . ' = ' . (int) $extension_instance_id);
         }
-         */
 
+        if ($status === NULL) {
+        } else {
+            $this->query->where($this->db->qn($primary_prefix . '.' . 'status')
+                    . ' IN ' .
+                    ' (' . $status . ') ');
+        }
+*/
         return $this;
     }
 
     /**
      * getQueryResults - Execute query and returns an associative array of data elements
      *
-     * @param   string   $query_object result, item, list, distinct
+     * @param   string   $query_object: result, item, list, distinct
      * @param   int      $offset
      * @param   int      $count
      * @param   boolean  $use_pagination
@@ -358,11 +381,37 @@ class ReadModel extends Model
     {
         $this->query_results = array();
 
-        echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination . '<br />';
-        echo '<br /><br /><pre>';
-        $string = $this->query->__toString();
-        echo str_replace('#__', 'molajo_', $string);
-        echo '</pre><br /><br />';
+        if ($query_object == QUERY_OBJECT_RESULT ||
+            $query_object == QUERY_OBJECT_ITEM   ||
+            $query_object == QUERY_OBJECT_LIST   ||
+            $query_object == QUERY_OBJECT_DISTINCT ) {
+        } else {
+            $query_object = QUERY_OBJECT_LIST;
+        }
+
+        if ($offset == 0 && $count == 0) {
+            if ($query_object == QUERY_OBJECT_RESULT) {
+                $offset = 0;
+                $count = 1;
+                $use_pagination = 0;
+
+            } elseif ($query_object == QUERY_OBJECT_DISTINCT) {
+                $offset = 0;
+                $count = 999999;
+                $use_pagination = 0;
+
+            } else {
+                $offset = 0;
+                $count = 15;
+                $use_pagination = 1;
+            }
+        }
+
+echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination . '<br />';
+echo '<br /><br /><pre>';
+$string = $this->query->__toString();
+echo str_replace('#__', 'molajo_', $string);
+echo '</pre><br /><br />';
 
         $cache_key = $this->query->__toString();
         if ($cache_key == '') {
@@ -396,6 +445,10 @@ class ReadModel extends Model
             } else {
                 $results = $this->db->loadObjectList();
             }
+//echo '<pre>';
+//echo 'Query results ';
+//var_dump($results);
+//echo '</pre>';
 
             Services::Cache()->set('Query', $cache_key, $results);
 
@@ -414,7 +467,6 @@ class ReadModel extends Model
             || (int)$total === 0
         ) {
             $this->query_results = $results;
-
             return $total;
         }
 
@@ -443,7 +495,7 @@ class ReadModel extends Model
     }
 
     /**
-     * addCustomFields - Populate the custom fields defined by the xml with query results
+     * Populate query results with custom fields and values
      *
      * @param   string  $model_name
      * @param   string  $customFieldName
@@ -521,10 +573,6 @@ class ReadModel extends Model
                 $setValue = $default;
             }
 
-            /** Filter Input and Save the Registry */
-            //todo: filter
-            //$set = $this->filterInput($name, $set, $dataType, $null, $default);
-
             if ($retrieval_method == 1 && $query_object == QUERY_OBJECT_ITEM) {
                 Services::Registry()->set($useModelRegistry, $name, $setValue);
 
@@ -542,30 +590,30 @@ class ReadModel extends Model
     }
 
     /**
-     * addItemChildren - Method to append additional data elements needed to the
-     *     standard array of elements provided by the data source
+     * Append additional rows of child data as defined by the Model Registry
      *
-     * @param   $children
-     * @param   $id
-     * @param   $query_results
+     * @param   bool     $children
+     * @param   integer  $id
+     * @param   array    $query_results
+     *
      * @return  mixed
-     *
      * @since   1.0
+     *
      * @return  object
      */
     public function addItemChildren($children, $id, $query_results)
     {
         foreach ($children as $child) {
 
-            $name = (string)$child['name'];
-            $name = ucfirst(strtolower($name));
+            $model_name = (string)$child['name'];
+            $model_name = ucfirst(strtolower($model_name));
 
-            $type = (string)$child['type'];
-            $type = ucfirst(strtolower($type));
+            $model_type = (string)$child['type'];
+            $model_type = ucfirst(strtolower($model_type));
 
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-            $controller->getModelRegistry($type, $name);
+            $controller->getModelRegistry($model_type, $model_name);
             $controller->setDataobject();
 
             $join = (string)$child['join'];
@@ -578,7 +626,7 @@ class ReadModel extends Model
 
             $results = $controller->getData(QUERY_OBJECT_LIST);
 
-            $query_results->$name = $results;
+            $query_results->$model_name = $results;
         }
 
         return $query_results;

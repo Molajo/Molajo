@@ -29,7 +29,7 @@ class CreateModel extends Model
      */
     public function create($data, $model_registry)
     {
-        $table_name = Services::Registry()->get($model_registry, 'table');
+        $table_name = Services::Registry()->get($model_registry, 'table_name');
         $primary_prefix = Services::Registry()->get($model_registry, 'primary_prefix');
 
         /** Prepare Data from Custom Field Groups */

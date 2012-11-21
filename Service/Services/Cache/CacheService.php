@@ -103,8 +103,8 @@ Class CacheService
 	 * getInstance
 	 *
 	 * @static
-	 * @return bool|object
-	 * @since  1.0
+	 * @return  bool|object
+	 * @since   1.0
 	 */
 	public static function getInstance()
 	{
@@ -128,7 +128,7 @@ Class CacheService
 	}
 
 	/**
-	 * Start Cache - if so configured
+	 * Initialise Cache when activated
 	 *
 	 * @since  1.0
 	 */

@@ -142,7 +142,13 @@ class Controller
      */
     public function getModelRegistry($model_type = 'Datasource', $model_name = null, $model_class = 'ReadModel')
     {
-        /** 1. Get the model_registry  */
+        if ($model_type == '') {
+            $model_type = 'Datasource';
+        }
+        if ($model_class == '') {
+            $model_class = 'ReadModel';
+        }
+
         $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
         $profiler_message = '';
 
@@ -154,16 +160,17 @@ class Controller
             $cached_output = Services::Cache()->get('Model', $model_registry);
 
             if ($cached_output === false) {
+
                 ConfigurationService::getModel($model_type, $model_name);
                 $cache_it = Services::Registry()->getArray($model_registry, false);
                 Services::Cache()->set('Model', $model_registry, $cache_it);
-                $profiler_message = ' Registry ' . $this->get('model_registry') . ' processed by ConfigurationService';
+                $profiler_message = ' Registry ' . $model_registry . ' processed by ConfigurationService';
 
             } else {
 
                 Services::Registry()->createRegistry($model_registry);
                 Services::Registry()->loadArray($model_registry, $cached_output);
-                $profiler_message = ' Registry ' . $this->get('model_registry') . ' loaded from Cache. ';
+                $profiler_message = ' Registry ' . $model_registry . ' loaded from Cache. ';
             }
         }
 
@@ -172,30 +179,45 @@ class Controller
         $this->set('model_type', ucfirst(strtolower($model_type)));
         $this->set('model_name', ucfirst(strtolower($model_name)));
         $this->set('model_registry', ucfirst(strtolower($model_registry)));
+        $this->set('model_class', $model_class);
 
+        $defaults = Services::Registry()->get('Fields', 'ModelattributesDefaults');
         foreach (Services::Registry()->get('Fields', 'Modelattributes') as $key) {
+
             if (isset($registry[$key])) {
                 if ($key == 'model_name' || $key == 'model_type') {
                 } else {
                     $this->set($key, $registry[$key]);
                 }
             } else {
-                $this->set($key, null);
+                $this->set($key, $defaults[$key]);
             }
         }
 
         if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
         } else {
             ob_start();
-            Services::Registry()->get($this->get('model_registry'), '*');
+            Services::Registry()->get($model_registry, '*');
             $profiler_message .= ob_get_contents();
             ob_end_clean();
         }
 
         Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
 
-        /* 2. Instantiate Model Class */
-        $modelClass = 'Molajo\\MVC\\Model\\' . $model_class;
+        return $this;
+    }
+
+    /**
+     * Connects to the Dataobject
+     *
+     * @return  void
+     * @since   1.0
+     *
+     * @throws  \RuntimeException
+     */
+    public function setDataobject()
+    {
+        $modelClass = 'Molajo\\MVC\\Model\\' . $this->get('model_class', 'ReadModel');
 
         try {
             $this->model = new $modelClass();
@@ -204,17 +226,6 @@ class Controller
             throw new \RuntimeException('Model entry failed. Error: ' . $e->getMessage());
         }
 
-        return $this;
-    }
-
-    /**
-     *  Connects to the Data Object, be it a Database or a Registry or Assets, etc.
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setDataobject()
-    {
         if ($this->model->get('data_object') === null
             || $this->model->get('data_object') === false
         ) {
@@ -222,12 +233,22 @@ class Controller
         }
 
         if ($this->model->get('dbclass', 'Database') == 'Database') {
+
             $db_class = $this->model->get('dbclass', 'Database');
-            $this->model->set('db', Services::$db_class()->get('db'));
+
+            $this->model->db = Services::$db_class()->connect();
+
             $this->model->set('query', Services::$db_class()->getQuery());
-            $this->model->set('null_date', Services::$db_class()->get('db')->getNullDate());
-            $now = Services::Date()->getDate()->toSql(false, Services::$db_class()->get('db'));
-            $this->model->set('now', $now);
+            $this->model->set('null_date', $this->model->db->getNullDate());
+
+            try {
+                $this->model->set('now', Services::Date()->getDate());
+
+
+            } catch (\Exception $e) {
+                // ignore error due to Date Service activation later in sequence
+                $this->model->set('now', $this->model->get('null_date'));
+            }
         }
 
         return;
@@ -239,13 +260,12 @@ class Controller
      * @param    string   $query_object - result, item, list, distinct (for datalist)
      *
      * @return   mixed    Depends on QueryObject selected
-     *
      * @since    1.0
+     *
      * @throws   \RuntimeException
      */
     public function getData($query_object = QUERY_OBJECT_LIST)
     {
-
         if ($this->get('data_object') === false
             || $this->get('data_object') === null
         ) {
@@ -255,7 +275,7 @@ class Controller
             die;
         }
 
-        if ($this->model->get('db') === null) {
+        if ($this->model->db === null) {
             $this->setDataobject();
         }
 
@@ -284,8 +304,6 @@ class Controller
                 . ' <br />Model Name: ' . $this->get('model_name')
                 . ' <br />Model Query Object: ' . $this->get('model_query_object')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
-
-        echo $profiler_message . ' <br />';
 
         if (count($this->plugins) > 0) {
             $this->onBeforeReadEvent();
@@ -360,10 +378,10 @@ class Controller
     /**
      * Get the list of potential plugins identified with this model (used to filter registered plugins)
      *
-     * @param $query_object
+     * @param    $query_object
      *
-     * @return void
-     * @since   1.0
+     * @return   void
+     * @since    1.0
      */
     protected function getPluginList($query_object)
     {
@@ -419,13 +437,13 @@ class Controller
         }
 
         /** Automatically Menuitem Type, Template Node and Application */
-        $page_type = $this->get('catalog_page_type', '');
+        $page_type = $this->get('catalog_page_type');
         if ($page_type == '') {
         } else {
             $temp[] = 'Pagetype' . strtolower($page_type);
         }
 
-        $template = Services::Registry()->get('Parameters', 'template_view_path_node', '');
+        $template = $this->get('template_view_path_node');
         if ($template == '') {
         } else {
             $temp[] = $template;
@@ -454,7 +472,7 @@ class Controller
     /**
      * Prepare query object for standard dbo queries
      *
-     * @param  string $query_object
+     * @param   string  $query_object
      *
      * @return  bool
      * @since   1.0
@@ -516,8 +534,10 @@ class Controller
     /**
      * Execute data retrieval query for standard requests
      *
-     * @param  string $query_object
-     * @return bool
+     * @param   string  $query_object
+     *
+     * @return  bool
+     * @since   1.0
      */
     protected function runQuery($query_object = QUERY_OBJECT_LIST)
     {
@@ -596,13 +616,11 @@ class Controller
     /**
      * Adds Custom Fields and Children to Query Results
      *
-     * Called by Controller and Extension Helper (Extension Queries made once, then parameters built, as needed)
+     * @param   $query_results
+     * @param   $query_object
      *
-     * @param $query_results
-     * @param $query_object
-     *
-     * @return bool
-     * @since  1.0
+     * @return  bool
+     * @since   1.0
      */
     public function addCustomFields($query_results, $query_object, $external = 0)
     {
@@ -611,12 +629,10 @@ class Controller
             return false;
         }
 
-        /** Iterate through results to process special fields and requests for additional queries for child objects */
         $q = array();
 
         foreach ($query_results as $results) {
 
-            /** Load Special Fields */
             if ((int)$this->get('get_customfields') == 0) {
             } else {
 
@@ -625,7 +641,6 @@ class Controller
                 if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
                 } else {
 
-                    /** Process each field namespace */
                     foreach ($customFieldTypes as $customFieldName) {
                         $results =
                             $this->model->addCustomFields(
@@ -639,7 +654,6 @@ class Controller
                     }
                 }
 
-                /** Retrieve Child Objects */
                 if ((int)$this->get('get_item_children') == 1) {
 
                     $children = Services::Registry()->get($this->get('model_registry'), 'Children');
@@ -682,7 +696,6 @@ class Controller
             return true;
         }
 
-        /** Schedule onBeforeRead Event */
         $arguments = array(
             'model_registry' => $this->get('model_registry'),
             'db' => $this->model->db,

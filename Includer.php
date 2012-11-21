@@ -51,8 +51,8 @@ class Includer
      * Extracted in Parser Class from Theme/Rendered output
      *
      * <include:extension statement attr1=x attr2=y attrN="and-so-on" />
-     * template, template_view_css_id, template_view_css_class
-     * wrap, wrap_view_css_id, wrap_view_css_class
+     *      template, template_view_css_id, template_view_css_class
+     *      wrap, wrap_view_css_id, wrap_view_css_class
      *
      * @var    array
      * @since  1.0
@@ -102,6 +102,7 @@ class Includer
     {
         /** attributes from <include:type */
         $this->attributes = $attributes;
+
         $exists = Services::Registry()->exists('Tempattributes');
         if ($exists === true) {
             Services::Registry()->deleteRegistry('Tempattributes');
@@ -152,7 +153,7 @@ class Includer
             $name = strtolower($name);
             if ($name == 'name' || $name == 'title') {
 
-                if ($this->name == strtolower(CATALOG_TYPE_TEMPLATE_LITERAL)) {
+                if ($this->name == strtolower(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL)) {
 
                     if ((int)$value > 0) {
                         $template_id = (int)$value;
@@ -170,6 +171,7 @@ class Includer
                     Services::Registry()->set('Parameters', 'template_view_title', $template_title);
 
                 } else {
+
                     $value = ucfirst(strtolower(trim($value)));
                     Services::Registry()->set('Parameters', 'extension_title', $value);
                 }
@@ -177,7 +179,7 @@ class Includer
             } elseif ($name == 'tag') {
                 $this->tag = $value;
 
-            } elseif ($name == strtolower(CATALOG_TYPE_TEMPLATE_LITERAL)
+            } elseif ($name == strtolower(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL)
                 || $name == 'template_view_title'
                 || $name == 'template_view'
             ) {
@@ -208,7 +210,7 @@ class Includer
                 Services::Registry()->set('Parameters', 'template_view_css_class', str_replace(',', ' ', $value));
 
                 /** Wrap */
-            } elseif ($name == strtolower(CATALOG_TYPE_WRAP_LITERAL)
+            } elseif ($name == strtolower(CATALOG_TYPE_WRAP_VIEW_LITERAL)
                 || $name == 'wrap_view_title'
                 || $name == 'wrap_view'
                 || $name == 'wrap_title') {
@@ -277,8 +279,8 @@ class Includer
      *
      * Retrieve extension information after looking up the ID in the extension-specific includer
      *
-     * @return bool
-     * @since 1.0
+     * @return  bool
+     * @since   1.0
      */
     protected function getExtension()
     {
@@ -291,26 +293,30 @@ class Includer
      * Uses Request and attributes (overrides) defined on the <include statement
      * to retrieve Template and Wrap information
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     protected function setRenderCriteria()
     {
-        /** Save Template Overrides */
         $template_id = 0;
         $template_title = '';
 
         $saveTemplate = array();
         $temp = Services::Registry()->get('Parameters', 'template*');
+
         if (is_array($temp) && count($temp) > 0) {
             foreach ($temp as $key => $value) {
 
-                if ($key == 'template_view_id' || $key == 'template_view_path_node' || $key == 'template_view_title') {
+                if ($key == 'template_view_id'
+                    || $key == 'template_view_path_node'
+                    || $key == 'template_view_title') {
 
                 } elseif (is_array($value)) {
                     $saveTemplate[$key] = $value;
 
-                } elseif ($value === 0 || trim($value) == '' || $value === null) {
+                } elseif ($value === 0
+                    || trim($value) == ''
+                    || $value === null) {
 
                 } else {
                     $saveTemplate[$key] = $value;
@@ -318,7 +324,6 @@ class Includer
             }
         }
 
-        /** Save Wrap Overrides */
         $saveWrap = array();
         $temp = Services::Registry()->get('Parameters', 'wrap*');
         $temp2 = Services::Registry()->get('Parameters', 'model*');
@@ -340,7 +345,7 @@ class Includer
             }
         }
 
-        if ($this->type == CATALOG_TYPE_WRAP_LITERAL) {
+        if ($this->type == CATALOG_TYPE_WRAP_VIEW_LITERAL) {
         } else {
             $results = $this->setTemplateRenderCriteria($saveTemplate);
             if ($results === false) {
@@ -360,7 +365,6 @@ class Includer
 
         Services::Registry()->sort('Parameters');
 
-        /** Copy some configuration data */
         $fields = Services::Registry()->get('Configuration', 'application*');
         if (count($fields) === 0 || $fields === false) {
         } else {
@@ -383,12 +387,13 @@ class Includer
     /**
      * Process Template Options
      *
-     * @param $saveTemplate
-     * @return bool
+     * @param   $saveTemplate
+     *
+     * @return  bool
+     * @since   1.0
      */
     protected function setTemplateRenderCriteria($saveTemplate)
     {
-        /** Process Template */
         $template_id = (int)Services::Registry()->get('Parameters', 'template_view_id');
 
         if ((int)$template_id == 0) {
@@ -402,7 +407,7 @@ class Includer
         }
 
         if ((int)$template_id == 0) {
-            $template_id = Helpers::View()->getDefault(CATALOG_TYPE_TEMPLATE_LITERAL);
+            $template_id = Helpers::View()->getDefault(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
             Services::Registry()->set('Parameters', 'template_view_id', $template_id);
         }
 
@@ -410,7 +415,7 @@ class Includer
             return false;
         }
 
-        Helpers::View()->get($template_id, CATALOG_TYPE_TEMPLATE_LITERAL);
+        Helpers::View()->get($template_id, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         if (is_array($saveTemplate) && count($saveTemplate) > 0) {
             foreach ($saveTemplate as $key => $value) {
@@ -424,12 +429,13 @@ class Includer
     /**
      * Process Wrap Options
      *
-     * @param $saveWrap
-     * @return bool
+     * @param   string  @saveWrap
+     *
+     * @return  bool
+     * @since   1.0
      */
     protected function setWrapRenderCriteria($saveWrap)
     {
-        /** Process Wrap - Replace Overrides (If Template overlaid them) */
         if (is_array($saveWrap) && count($saveWrap) > 0) {
             foreach ($saveWrap as $key => $value) {
                 if (is_array($value)) {
@@ -458,7 +464,6 @@ class Includer
             Services::Registry()->set('Parameters', 'wrap_view_id', $wrap_id);
         }
 
-        /** Save New Wrap Values from Template Read - and Overrides */
         if (is_array($saveWrap) && count($saveWrap) > 0) {
             foreach ($saveWrap as $key => $value) {
                 if ($key == 'wrap_view_id' || $key == 'wrap_view_path_node' || $key == 'wrap_view_title') {
@@ -489,7 +494,7 @@ class Includer
             }
         }
 
-        Helpers::View()->get($wrap_id, CATALOG_TYPE_WRAP_LITERAL);
+        Helpers::View()->get($wrap_id, CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         if (is_array($saveWrap) && count($saveWrap) > 0) {
             foreach ($saveWrap as $key => $value) {
@@ -525,7 +530,7 @@ class Includer
     }
 
     /**
-     *     loadPlugins overrides (or initially loads) Plugins from the Template and/or Wrap View folders
+     * loadPlugins overrides (or initially loads) Plugins from the Template and/or Wrap View folders
      *
      * @return  void
      * @since   1.0
@@ -562,11 +567,11 @@ class Includer
     /**
      * processPlugins for Theme, Page, and Request Extension (overrides Core and Plugin folder)
      *
-     * @param  $plugins array of folder names
-     * @param  $path
+     * @param   $plugins array of folder names
+     * @param   $path
      *
-     * @return void
-     * @since  1.0
+     * @return  void
+     * @since   1.0
      */
     protected function processPlugins($plugins, $path)
     {
@@ -583,7 +588,7 @@ class Includer
      *
      * Loads Media CSS and JS files for extension and related content
      *
-     * @return null
+     * @return  null
      * @since   1.0
      */
     protected function loadMedia()
@@ -592,11 +597,9 @@ class Includer
     }
 
     /**
-     * loadViewMedia
-     *
      * Loads Media CSS and JS files for Template and Wrap Views
      *
-     * @return null
+     * @return  null
      * @since   1.0
      */
     protected function loadViewMedia()
@@ -621,36 +624,32 @@ class Includer
     }
 
     /**
-     * invokeMVC
-     *
      * Instantiate the Controller and fire off the action, returns rendered output
      *
-     * @return mixed
+     * @return  mixed
+     * @since   1.0
      */
     protected function invokeMVC()
     {
         Services::Registry()->sort('Parameters');
 
-        $message = 'Includer->invokeMVC ' . 'Name ' . $this->name . ' Type: ' . $this->type . ' Template: ' . Services::Registry(
-        )->get('Parameters', 'template_view_title');
+        $message = 'Includer->invokeMVC '
+            . 'Name ' . $this->name
+            . ' Type: ' . $this->type
+            . ' Template: ' . Services::Registry()->get('Parameters', 'template_view_title');
+
         $message .= ' Parameters:<br />';
         ob_start();
         $message .= Services::Registry()->get('Parameters', '*');
         $message .= ob_get_contents();
         ob_end_clean();
 
-//		if (strtolower( Services::Registry()->get('Parameters', 'template_view_title')) == 'toolbar') {
-        echo $message;
-//		}
-
         Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
 
         $controller = new DisplayController();
         $controller->set('id', (int)Services::Registry()->get('Parameters', 'source_id'));
-
-        /** Set Parameters */
         $parms = Services::Registry()->getArray('Parameters');
-        $cached_output = Services::Cache()->get(CATALOG_TYPE_TEMPLATE_LITERAL, implode('', $parms));
+        $cached_output = Services::Cache()->get(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, implode('', $parms));
 
         if ($cached_output === false) {
             if (count($parms) > 0) {
@@ -660,7 +659,8 @@ class Includer
             }
 
             $results = $controller->execute();
-            Services::Cache()->set(CATALOG_TYPE_TEMPLATE_LITERAL, implode('', $parms), $results);
+
+            Services::Cache()->set(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, implode('', $parms), $results);
         } else {
             $results = $cached_output;
         }

@@ -55,7 +55,8 @@ Class ViewHelper
     public function get($id = 0, $type)
     {
         if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL
-            || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL
+            || $type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL
+            || $type == CATALOG_TYPE_WRAP_VIEW_LITERAL
         ) {
         } else {
             return false;
@@ -106,7 +107,7 @@ Class ViewHelper
         if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
             $this->setParameters(CATALOG_TYPE_PAGE_VIEW_LITERAL, $item->model_registry . 'Parameters');
 
-        } elseif ($type == CATALOG_TYPE_TEMPLATE_LITERAL) {
+        } elseif ($type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL) {
 
             $this->setParameters('template', $item->model_registry . 'Parameters');
             $this->setParameters('wrap', $item->model_registry . 'Parameters');
@@ -183,7 +184,7 @@ Class ViewHelper
         if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
             return Helpers::Extension()->getInstanceID(CATALOG_TYPE_PAGE_VIEW, 'Default');
 
-        } elseif ($type == CATALOG_TYPE_TEMPLATE_LITERAL) {
+        } elseif ($type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL) {
             return Helpers::Extension()->getInstanceID(CATALOG_TYPE_TEMPLATE_VIEW, 'Default');
 
         } else {
@@ -196,17 +197,18 @@ Class ViewHelper
      *
      * Note: Expects known path for Theme and Extension
      *
-     * @param $node
-     * @param $type
+     * @param   $node
+     * @param   $type
      *
-     * @return bool|string
-     * @since  1.0
+     * @return  bool|string
+     * @since   1.0
      */
     public function getPath($node, $type)
     {
         $type = ucfirst(strtolower($type));
         if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL
-            || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL
+            || $type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL
+            || $type == CATALOG_TYPE_WRAP_VIEW_LITERAL
         ) {
         } else {
             return false;
@@ -246,7 +248,8 @@ Class ViewHelper
     {
         $type = ucfirst(strtolower($type));
         if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL
-            || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL
+            || $type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL
+            || $type == CATALOG_TYPE_WRAP_VIEW_LITERAL
         ) {
         } else {
             return false;
@@ -276,7 +279,7 @@ Class ViewHelper
     /**
      * Return Namespace for selected View
      *
-     * @param   bool   $node
+     * @param   bool $node
      * @param   $type
      *
      * @return  bool|string
@@ -286,7 +289,8 @@ Class ViewHelper
     {
         $type = ucfirst(strtolower($type));
         if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL
-            || $type == CATALOG_TYPE_TEMPLATE_LITERAL || $type == CATALOG_TYPE_WRAP_LITERAL
+            || $type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL
+            || $type == CATALOG_TYPE_WRAP_VIEW_LITERAL
         ) {
         } else {
             return false;

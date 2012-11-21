@@ -368,8 +368,8 @@ class Plugin
             }
 
             /** Table */
-            if (isset($fields[$key]['table'])) {
-                $row->table = $fields[$key]['table'];
+            if (isset($fields[$key]['table_name'])) {
+                $row->table = $fields[$key]['table_name'];
             } else {
                 $row->table = '';
             }

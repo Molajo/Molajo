@@ -222,10 +222,11 @@ class ApplicationPlugin extends Plugin
 	protected function setPageEligibleActions()
 	{
 		if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
-			$actions = $this->setItemActions();
-//todo fix this
-		} elseif ($this->get('page_type') == QUERY_OBJECT_FORM) {
-			$actions = $this->setEditActions();
+            if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == ACTION_VIEW) {
+                $actions = $this->setItemActions();
+            } else {
+                $actions = $this->setEditActions();
+            }
 
 		} elseif ($this->get('page_type') == QUERY_OBJECT_LIST) {
 			$actions = $this->setListActions();

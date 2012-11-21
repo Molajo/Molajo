@@ -22,7 +22,7 @@ defined('MOLAJO') or die;
 Class HeadIncluder extends Includer
 {
     /**
-     * @return null
+     * @return  null
      * @since   1.0
      */
     public function __construct($name = null, $type = null)
@@ -37,7 +37,7 @@ Class HeadIncluder extends Includer
     /**
      *  Retrieve default values for Rendering, if not provided by extension
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     protected function setRenderCriteria()
@@ -87,7 +87,8 @@ Class HeadIncluder extends Includer
         }
 
         /** Template  */
-        Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'), CATALOG_TYPE_TEMPLATE_LITERAL);
+        Helpers::View()->get(Services::Registry()->get('Parameters', 'template_view_id'),
+            CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         /** Merge Parameters in (Pre-wrap) */
         if (is_array($savedParameters) && count($savedParameters) > 0) {
@@ -103,11 +104,11 @@ Class HeadIncluder extends Includer
 
         Services::Registry()->set('Parameters', 'wrap_view_title', $wrap_view_title);
         Services::Registry()->set('Parameters', 'wrap_view_path',
-            Helpers::View()->getPath($wrap_view_title, CATALOG_TYPE_WRAP_LITERAL));
+            Helpers::View()->getPath($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL));
         Services::Registry()->set('Parameters', 'wrap_view_path_url',
-            Helpers::View()->getPathURL($wrap_view_title, CATALOG_TYPE_WRAP_LITERAL));
+            Helpers::View()->getPathURL($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL));
         Services::Registry()->set('Parameters', 'wrap_view_namespace',
-            Helpers::View()->getNamespace($wrap_view_title, CATALOG_TYPE_WRAP_LITERAL));
+            Helpers::View()->getNamespace($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL));
 
         if (Services::Registry()->exists('Parameters', 'wrap_view_role')) {
         } else {

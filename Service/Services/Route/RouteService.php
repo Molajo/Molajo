@@ -509,9 +509,8 @@ Class RouteService
                 return false;
             }
 
-        } elseif (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_ITEM
-                || strtolower(trim($catalog_page_type)) == QUERY_OBJECT_FORM
-        ) {
+        } elseif (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_ITEM) {
+
             $response = Helpers::Content()->getRouteItem($id, $model_type, $model_name);
 
             if ($response === false) {

@@ -30,7 +30,7 @@ class DeleteModel extends Model
      */
     public function delete($data, $model_registry)
     {
-        $table_name = Services::Registry()->get($model_registry, 'table');
+        $table_name = Services::Registry()->get($model_registry, 'table_name');
         $primary_prefix = Services::Registry()->get($model_registry, 'primary_prefix');
         $name_key = Services::Registry()->get($model_registry, 'name_key');
         $primary_key = Services::Registry()->get($model_registry, 'primary_key');

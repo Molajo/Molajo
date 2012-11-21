@@ -137,7 +137,7 @@ class Model
     }
 
     /**
-     * filterInput
+     * Pass input to Filter Service which handles each data element according to datatype
      *
      * @param   string  $name
      * @param   string  $field_value
@@ -148,22 +148,10 @@ class Model
      * @return  mixed
      * @since   1.0
      */
-    protected function filterInput(
-        $name,
-        $value,
-        $dataType,
-        $null = null,
-        $default = null
-    ) {
-
+    protected function filterInput($name, $value, $dataType, $null = null, $default = null)
+    {
         try {
-            $value = Services::Filter()
-                ->filter(
-                $value,
-                $dataType,
-                $null,
-                $default
-            );
+            $value = Services::Filter()->filter($value, $dataType, $null, $default);
 
         } catch (\Exception $e) {
             //todo: errors
@@ -174,13 +162,10 @@ class Model
     }
 
     /**
-     * loadResult
+     * Single Value Result returned in $this->query_results
      *
-     * Single Value Result
-     *
-     * Access by referencing the query results field, directly
-     *
-     * For example, in this method, the result is in $this->query_results.
+     * @param   $primary_prefix
+     * @param   $table_name
      *
      * @return  object
      * @since   1.0
@@ -188,11 +173,15 @@ class Model
     protected function loadResult($primary_prefix, $table_name)
     {
         if ($this->query->select == null) {
-            $this->query->select($this->db->qn($primary_prefix . '.' . $this->primary_key));
+            $this->query->select(
+                $this->db->qn($primary_prefix . '.' . $this->primary_key)
+            );
         }
 
         if ($this->query->from == null) {
-            $this->query->from($this->db->qn($table_name) . ' as ' . $this->db->qn($primary_prefix));
+            $this->query->from(
+                $this->db->qn($table_name) . ' as ' . $this->db->qn($primary_prefix)
+            );
         }
 
         $this->db->setQuery($this->query->__toString());

@@ -78,7 +78,6 @@ Class Helpers
      * @param   string  $default
      *
      * @return  mixed
-     *
      * @since   1.0
      */
     public function get($key, $default = null)
@@ -94,8 +93,11 @@ Class Helpers
      * Used to connect to helpers
      *
      * @static
-     * @param  string  $name
-     * @param  string  $arguments
+     * @param   string  $name
+     * @param   string  $arguments
+     *
+     * @return  mixed
+     * @since   1.0
      */
     public static function __callStatic($name, $arguments)
     {
@@ -156,9 +158,7 @@ Class Helpers
     }
 
     /**
-     * set
-     *
-     * Stores the helper connection
+    * Stores the helper connection
      *
      * @param   string  $key
      * @param   mixed   $value
