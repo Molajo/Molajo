@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Parameters"
-        queryclass="getData"
-        dbclass="Registry"
+        service_class_query_method="getData"
+        service_class="Registry"
         process_plugins="1"/>

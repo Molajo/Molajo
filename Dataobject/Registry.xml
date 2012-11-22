@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Registry"
-        connectclass=""
-        queryclass="getData"
-        dbclass="Registry"
+        data_object_connection_namespace=""
+        service_class_query_method="getData"
+        service_class="Registry"
         process_plugins="1"/>

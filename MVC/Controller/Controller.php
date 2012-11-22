@@ -145,6 +145,11 @@ class Controller
         $model_name = ucfirst(strtolower($model_name));
         $model_registry = $model_name . $model_type;
 
+        $this->set('model_type', $model_type);
+        $this->set('model_name', $model_name);
+        $this->set('model_registry', $model_registry);
+
+echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_registry . '<br />';
         $profiler_message = '';
 
         if (Services::Registry()->exists($model_registry) === true) {
@@ -166,48 +171,6 @@ class Controller
                 Services::Registry()->createRegistry($model_registry);
                 Services::Registry()->loadArray($model_registry, $cached_output);
                 $profiler_message = ' Registry ' . $model_registry . ' loaded from Cache. ';
-            }
-        }
-
-        $registry = Services::Registry()->getArray($model_registry);
-
-        $data_object = Services::Registry()->get($model_registry, 'data_object');
-
-        $this->set('data_object', ucfirst(strtolower($data_object)));
-
-        $this->set('model_type', ucfirst(strtolower($model_type)));
-        $this->set('model_name', ucfirst(strtolower($model_name)));
-        $this->set('model_registry', ucfirst(strtolower($model_registry)));
-        $this->set('model_class', $model_class);
-
-        if ($data_object == 'Database') {
-
-            $defaults = Services::Registry()->get('Fields', 'ModelattributesDefaults');
-
-            foreach (Services::Registry()->get('Fields', 'Modelattributes') as $key) {
-
-                if (isset($registry[$key])) {
-                    if ($key == 'model_name' || $key == 'model_type') {
-                    } else {
-                        $this->set($key, $registry[$key]);
-                    }
-                } else {
-                    $this->set($key, $defaults[$key]);
-                }
-            }
-        }  else {
-            $defaults = Services::Registry()->get('Fields', 'DataObjectAttributeDefaults');
-
-            foreach (Services::Registry()->get('Fields', 'DataObjectAttributes') as $key) {
-
-                if (isset($registry[$key])) {
-                    if ($key == 'model_name' || $key == 'model_type') {
-                    } else {
-                        $this->set($key, $registry[$key]);
-                    }
-                } else {
-                    $this->set($key, $defaults[$key]);
-                }
             }
         }
 
@@ -235,7 +198,35 @@ class Controller
     public function setDataobject()
     {
 
-        if ($this->get('data_object', 'Database')) {
+        if ($this->get('model_registry') == 'PrimaryqueryDataobject') {
+            Services::Registry()->get($this->get('model_registry'), '*');
+        }
+        $registry = Services::Registry()->getArray($this->get('model_registry'));
+        $data_object = Services::Registry()->get($this->get('model_registry'), 'data_object');
+        $this->set('data_object', ucfirst(strtolower($data_object)));
+
+        if ($data_object == 'Database') {
+            $defaults = Services::Registry()->get('Fields', 'ModelattributesDefaults');
+            foreach (Services::Registry()->get('Fields', 'Modelattributes') as $key) {
+                if (isset($registry[$key])) {
+                    $this->set($key, $registry[$key]);
+                } else {
+                    $this->set($key, $defaults[$key]);
+                }
+            }
+
+        }  else {
+            $defaults = Services::Registry()->get('Fields', 'DataObjectAttributeDefaults');
+            foreach (Services::Registry()->get('Fields', 'DataObjectAttributes') as $key) {
+                if (isset($registry[$key])) {
+                    $this->set($key, $registry[$key]);
+                } else {
+                    $this->set($key, $defaults[$key]);
+                }
+            }
+        }
+
+        if ($this->get('data_object') == 'Database') {
         } else {
             return;
         }
@@ -255,13 +246,13 @@ class Controller
             $this->model->set('data_object', 'Database');
         }
 
-        if ($this->model->get('dbclass', 'Database') == 'Database') {
+        if ($this->model->get('service_class', 'Database') == 'Database') {
 
-            $db_class = $this->model->get('dbclass', 'Database');
+            $service_class = $this->get('service_class', 'Database');
 
-            $this->model->db = Services::$db_class()->connect();
+            $this->model->db = Services::$service_class()->connect();
 
-            $this->model->set('query', Services::$db_class()->getQuery());
+            $this->model->set('query', Services::$service_class()->getQuery());
             $this->model->set('null_date', $this->model->db->getNullDate());
 
             try {
@@ -289,6 +280,12 @@ class Controller
      */
     public function getData($query_object = QUERY_OBJECT_LIST)
     {
+
+        if ($this->model->db === null
+            && $this->get('data_object') == 'Database') {
+            $this->setDataobject();
+        }
+
         if ($this->get('data_object') === false
             || $this->get('data_object') === null
         ) {
@@ -296,17 +293,6 @@ class Controller
                 . $this->get('model_registry') . ' could not be loaded. <br />';
             //throw error
             die;
-        }
-
-        if ($this->model->db === null
-            && $this->get('data_object') == 'Database') {
-            $this->setDataobject();
-        }
-
-        if ($this->get('model_type') == 'Dataobject') {
-            $dbclass = $this->get('dbclass');
-            $queryclass = $this->get('queryclass');
-            $stuff = Services::$dbclass()->$queryclass($this->get('model_name'));
         }
 
         $query_object = strtolower($query_object);
@@ -333,8 +319,11 @@ class Controller
                 . ' <br />Model Type: ' . $this->get('model_type')
                 . ' <br />Model Name: ' . $this->get('model_name')
                 . ' <br />Model Query Object: ' . $this->get('model_query_object')
+                . ' <br />Non-DB Services Class: ' . $this->get('service_class')
+                . ' <br />Non-DB Services Method: ' . $this->get('service_class_query_method')
+                . ' <br />Non-DB Services Method Parameter: ' . $this->get('service_class_query_method_parameter')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
-
+echo $profiler_message;
         if (count($this->plugins) > 0) {
             $this->onBeforeReadEvent();
         }
@@ -348,11 +337,13 @@ class Controller
                 $this->query_results = array();
 
             } else {
-                $this->query_results =
-                    $this->model->db->runQuery(
-                        $this->get('model_type'),
+                $service_class = $this->get('service_class');
+                $service_class_query_method = $this->get('service_class_query_method');
+
+                $this->query_results = Services::$service_class()
+                    ->$service_class_query_method(
                         $this->get('model_name'),
-                        $query_object
+                        $this->get('service_class_query_method_parameter', null)
                     );
             }
         }

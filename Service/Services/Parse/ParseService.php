@@ -469,7 +469,7 @@ Class ParseService
 
                     $class = 'Molajo\\Includer\\';
                     $class .= ucfirst($includerType) . 'Includer';
-echo $class .'<br />';
+
                     if (class_exists($class)) {
                         $rc = new $class ($includerType, $includeName);
 
@@ -486,15 +486,14 @@ echo $class .'<br />';
                     echo '</pre>';
                     $includeDisplay = ob_get_contents();
                     ob_end_clean();
-
+echo $includeDisplay;
                     Services::Profiler()->set($includeDisplay,
-                        LOG_OUTPUT_RENDERING,
-                        VERBOSE
+                        LOG_OUTPUT_RENDERING
                     );
 
                     $output = trim($rc->process($attributes));
 //echo '<br />';
-echo $output;
+// echo $output;
 //echo '<br />';
                     Services::Profiler()->set('ParseService->callIncluder rendered output ' . $output, LOG_OUTPUT_RENDERING, VERBOSE);
 

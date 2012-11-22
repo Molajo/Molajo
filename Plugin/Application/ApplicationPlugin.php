@@ -373,7 +373,9 @@ class ApplicationPlugin extends Plugin
 			return true;
 		}
 
-		$data = Services::Registry()->get('Plugindata', PRIMARY_QUERY_RESULTS);
+		$data = Services::Registry()->get(PRIMARY_QUERY_RESULTS_MODEL_NAME,
+            PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS);
+
 		$type = strtolower(Services::Registry()->get('RouteParameters', 'page_type'));
 		$type = strtolower($type);
 

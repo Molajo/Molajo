@@ -127,6 +127,8 @@
     <define name="QUERY_OBJECT_LIST" value="list"/>
     <define name="QUERY_OBJECT_DISTINCT" value="distinct"/>
 
-    <define name="PRIMARY_QUERY_RESULTS" value="PrimaryRequestQueryResults"/>
+    <define name="PRIMARY_QUERY_RESULTS_MODEL_TYPE" value="Dataobject"/>
+    <define name="PRIMARY_QUERY_RESULTS_MODEL_NAME" value="PrimaryQuery"/>
+    <define name="PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS" value="PrimaryQueryResults"/>
 
 </defines>

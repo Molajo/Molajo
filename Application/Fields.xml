@@ -11,21 +11,19 @@
     </dataobjecttypes>
 
     <dataobjectattributes>
-        <dataobjectattribute name="model_type" default=""/>
-        <dataobjectattribute name="model_name" default=""/>
         <dataobjectattribute name="name" default=""/>
-        <dataobjectattribute name="table_name" default=""/>
-        <dataobjectattribute name="dbtype" default="id"/>
-        <dataobjectattribute name="host" default=""/>
-        <dataobjectattribute name="user" default=""/>
-        <dataobjectattribute name="password" default=""/>
+        <dataobjectattribute name="data_object_connection_namespace" default=""/>
+        <dataobjectattribute name="data_object_query_namespace" default=""/>
         <dataobjectattribute name="db" default=""/>
-        <dataobjectattribute name="prefix" default="a"/>
-        <dataobjectattribute name="process_plugins" default="1"/>
-        <dataobjectattribute name="connectclass" default=""/>
-        <dataobjectattribute name="queryclass" default="getData"/>
-        <dataobjectattribute name="dbclass" default=""/>
-        <dataobjectattribute name="process_plugins" default="0"/>
+        <dataobjectattribute name="db_prefix" default=""/>
+        <dataobjectattribute name="db_type" default="mysqli"/>
+        <dataobjectattribute name="db_host" default=""/>
+        <dataobjectattribute name="db_user" default=""/>
+        <dataobjectattribute name="db_password" default=""/>
+        <dataobjectattribute name="service_class" default="Registry"/>
+        <dataobjectattribute name="service_class_query_method" default="getData"/>
+        <dataobjectattribute name="service_class_query_method_parameter" default="Parameters"/>
+        <dataobjectattribute name="process_plugins" default=""/>
     </dataobjectattributes>
 
     <modeltypes>
@@ -55,8 +53,6 @@
     </modeltypes>
 
     <modelattributes>
-        <modelattribute name="model_type" default=""/>
-        <modelattribute name="model_name" default=""/>
         <modelattribute name="name" default=""/>
         <modelattribute name="table_name" default=""/>
         <modelattribute name="primary_key" default="id"/>

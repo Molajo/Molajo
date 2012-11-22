@@ -82,14 +82,6 @@ class DisplayController extends Controller
 
             $this->onBeforeViewRender();
 
-            /**
-             *  For primary content (the extension determined in Application::Request),
-             *      save query results for possible reuse
-             */
-            if ($this->get('extension_primary') === true) {
-                Services::Registry()->set('Plugindata', PRIMARY_QUERY_RESULTS, $this->query_results);
-            }
-
             $rendered_output = $this->renderView();
 
             $rendered_output = $this->onAfterViewRender($rendered_output);
@@ -150,7 +142,9 @@ class DisplayController extends Controller
 //todo when close to done - do encoding - bring in filters given field definitions
 
         ob_start();
-
+        echo '<pre>';
+        var_dump($this->query_results);
+        echo '</pre>';
         /** 1. view handles loop and event processing */
         if (file_exists($this->view_path . '/View/Custom.php')) {
             include $this->view_path . '/View/Custom.php';
@@ -159,6 +153,7 @@ class DisplayController extends Controller
 
             /** 2. controller manages loop and event processing */
             $totalRows = count($this->query_results);
+
             if (count($this->query_results) > 0) {
 
                 $first = true;
@@ -184,6 +179,12 @@ class DisplayController extends Controller
 
         $output = ob_get_contents();
         ob_end_clean();
+
+        echo '<br />';
+        echo $this->view_path;
+        echo '<br />';
+        echo $output;
+        echo '<br />';
 
         return $output;
     }

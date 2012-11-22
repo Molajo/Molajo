@@ -37,15 +37,15 @@ class PagetypeitemPlugin extends Plugin
         $resource_table_registry = ucfirst(strtolower($this->get('model_name')))
             . ucfirst(strtolower($this->get('model_type')));
 
-		/** Item Data */
-        $this->set('model_type', 'Plugindata');
-        $this->set('model_name', PRIMARY_QUERY_RESULTS);
+
+        $this->set('model_type', PRIMARY_QUERY_RESULTS_MODEL_TYPE);
+        $this->set('model_name', PRIMARY_QUERY_RESULTS_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
-        $this->parameters['model_type'] = 'Plugindata';
-        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;
+        $this->parameters['model_type'] = PRIMARY_QUERY_RESULTS_MODEL_TYPE;
+        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS_MODEL_NAME;
 
-
+        /** ContentHelper already placed data already in registry */
         return true;
     }
 

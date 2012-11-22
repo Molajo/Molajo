@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model
-        name="Messages"
-        process_plugins="1"
-        data_object="Message">
-</model>

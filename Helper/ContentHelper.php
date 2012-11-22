@@ -105,7 +105,11 @@ Class ContentHelper
             return Services::Registry()->set('Parameters', 'status_found', false);
         }
 
-        Services::Registry()->set('Plugindata', PRIMARY_QUERY_RESULTS, array($item));
+        Services::Registry()->set(
+            PRIMARY_QUERY_RESULTS_MODEL_NAME,
+            PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS,
+            array($item)
+        );
 
         if (isset($item->extension_instance_id)) {
             $extension_instance_id = (int)$item->extension_instance_id;

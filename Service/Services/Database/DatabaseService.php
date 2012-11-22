@@ -89,25 +89,25 @@ Class DatabaseService
 
         $this->options = array(
             'driver' => preg_replace('/[^A-Z0-9_\.-]/i', '',
-                Services::Registry()->get('DatabaseDataObject', 'dbtype')),
-            'host' => Services::Registry()->get('DatabaseDataObject', 'host'),
-            'user' => Services::Registry()->get('DatabaseDataObject', 'user'),
-            'password' => Services::Registry()->get('DatabaseDataObject', 'password'),
+                Services::Registry()->get('DatabaseDataObject', 'db_type')),
+            'host' => Services::Registry()->get('DatabaseDataObject', 'db_host'),
+            'user' => Services::Registry()->get('DatabaseDataObject', 'db_user'),
+            'password' => Services::Registry()->get('DatabaseDataObject', 'db_password'),
             'database' => Services::Registry()->get('DatabaseDataObject', 'db'),
-            'prefix' => Services::Registry()->get('DatabaseDataObject', 'prefix'),
+            'prefix' => Services::Registry()->get('DatabaseDataObject', 'db_prefix'),
             'select' => true
         );
 
-        $this->name = Services::Registry()->get('DatabaseDataObject', 'dbtype');
+        $this->name = Services::Registry()->get('DatabaseDataObject', 'db_type');
 
-        $connectclass = Services::Registry()->get('DatabaseDataObject', 'connectclass');
-        if (class_exists($connectclass)) {
+        $data_object_connection_namespace = Services::Registry()->get('DatabaseDataObject', 'data_object_connection_namespace');
+        if (class_exists($data_object_connection_namespace)) {
         } else {
             throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $this->options['driver']));
         }
 
         try {
-            $this->db = new $connectclass($this->options);
+            $this->db = new $data_object_connection_namespace($this->options);
 
         } catch (\Exception $e) {
 
@@ -126,12 +126,12 @@ Class DatabaseService
      */
     public function getQuery()
     {
-        $queryclass = Services::Registry()->get('DatabaseDataObject', 'queryclass');
-        if (class_exists($queryclass)) {
+        $data_object_query_namespace = Services::Registry()->get('DatabaseDataObject', 'data_object_query_namespace');
+        if (class_exists($data_object_query_namespace)) {
         } else {
             throw new \RuntimeException('Database Query class not found');
         }
 
-        return new $queryclass($this->db);
+        return new $data_object_query_namespace($this->db);
     }
 }

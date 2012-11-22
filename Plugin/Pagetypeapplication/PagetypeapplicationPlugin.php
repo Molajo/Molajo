@@ -131,18 +131,19 @@ class PagetypeapplicationPlugin extends Plugin
         /** Set the View Model Parameters and Populate the Registry used as the Model */
         $current_page = $form->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
 
-        $this->set('model_type', 'Plugindata');
-        $this->set('model_name', PRIMARY_QUERY_RESULTS);
+        $this->set('model_type', PRIMARY_QUERY_RESULTS_MODEL_TYPE);
+        $this->set('model_name', PRIMARY_QUERY_RESULTS_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
-        $this->parameters['model_type'] = 'Plugindata';
-        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS;
+        $this->parameters['model_type'] = PRIMARY_QUERY_RESULTS_MODEL_TYPE;
+        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS_MODEL_NAME;
 
-        Services::Registry()->set('Plugindata', PRIMARY_QUERY_RESULTS, $current_page);
+        Services::Registry()->set(
+            PRIMARY_QUERY_RESULTS_MODEL_NAME,
+            PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS,
+            $current_page
+        );
 
-//        echo '<pre>';
-//        var_dump(Services::Registry()->get('Plugindata', 'Formpageapplicationbasic'));
-//        echo '</pre>';
         return true;
     }
 

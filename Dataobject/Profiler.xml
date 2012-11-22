@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Profiler"
-        dbtype=""
-        host=""
-        user=""
-        password=""
-        db=""
-        prefix=""
-        connectclass=""
-        queryclass=""
+        service_class_query_method="getData"
+        service_class="Profiler"
         process_plugins="1"/>
-
 

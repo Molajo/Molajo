@@ -761,65 +761,34 @@ Class RegistryService
     }
 
     /**
-     *     Dummy functions to pass service off as a DBO to interact with model
-     */
-    public function getNullDate()
-    {
-        return $this;
-    }
-
-    public function getQuery()
-    {
-        return $this;
-    }
-
-    public function toSql()
-    {
-        return $this;
-    }
-
-    /**
-     * getData - simulates DBO - interacts with the Model getParameters method
+     * getData - returns Registry (comes from $model_name) as Query Results (array of objects)
      *
-     * @param $registry
-     * @param $element
-     * @param $single_result
+     * Data can be requested as a result - provide $registry, $element and true for $single result
      *
-     * @return array
-     * @since    1.0
+     * Use '*' in the key to retrieve all values starting with a specific phrase (ex. 'model*')
+     *
+     * @param   string  $registry  Name of registry, for the MVC this is the $model_name
+     * @param   string  $key       Key of the named pair
+     * @param   $single_result     Set to True when only the value should be returned for the specified key
+     *
+     * @return  array
+     * @since   1.0
      */
-    public function getData($namespace, $key = null, $single_result = false)
+    public function getData($registry, $key = null, $single_result = false)
     {
-        $namespace = strtolower($namespace);
+        $registry = strtolower($registry);
         $key = strtolower($key);
         $query_results = array();
 
-        /** Retrieve Parameter Registry and return as a result */
-        if ($single_result === true) {
-            return $this->get($namespace, $key);
-        }
-
-        /** Retrieve registry and return as a recordset */
-        if ($key == null) {
-            $results = $this->get($namespace);
-
+        if ($key === NULL) {
+            $key = '*';
         } else {
-
-            if ($key == '*' || strpos($key, '*')) {
-
-                if ($key == '*') {
-                    $results = $this->getRegistry($namespace);
-
-                } else {
-                    $key = substr($key, 0, strlen($key) - 1);
-
-                    return $this->get($namespace, $key);
-                }
-
-            } else {
-                $results = $this->get($namespace, $key);
+            if ($single_result === true) {
+                return $this->get($registry, $key);
             }
         }
+
+        $results = $this->get($registry, $key);
 
         if (is_object($results)) {
             $query_results = $results;
@@ -827,20 +796,14 @@ Class RegistryService
             return $query_results;
         }
 
-        /** Simulate a recordset */
         $row = new \stdClass();
-
-        /** Process all parameters as fields */
         if (count($results) > 0) {
             foreach ($results as $key => $value) {
                 $row->$key = $value;
             }
         }
-
-        /** Place all fields into a row */
         $query_results[] = $row;
 
-        /** Return results to Model */
         return $query_results;
     }
 }

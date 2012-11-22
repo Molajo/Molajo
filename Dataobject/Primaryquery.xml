@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Primaryquery"
+        service_class="Registry"
+        service_class_query_method="getData"
+        service_class_query_method_parameter="PrimaryQueryResults"
+        process_plugins="1"/>
