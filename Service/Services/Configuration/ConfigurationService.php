@@ -186,7 +186,7 @@ Class ConfigurationService
 
         ConfigurationService::loadFieldProperties($xml, 'dataobjecttypes', 'dataobjecttype');
 
-        ConfigurationService::loadFieldProperties($xml, 'dataobjectattributes', 'dataobjectattribute');
+        ConfigurationService::loadFieldPropertiesWithAttributes($xml, 'dataobjectattributes', 'dataobjectattribute');
 
         ConfigurationService::loadFieldProperties($xml, 'modeltypes', 'modeltype');
 
@@ -562,7 +562,13 @@ Class ConfigurationService
      */
     public static function getModel($model_type, $model_name)
     {
-        $ModelRegistry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+        $model_type = ucfirst(strtolower($model_type));
+        $model_name = ucfirst(strtolower($model_name));
+        $ModelRegistry = $model_name . $model_type;
+
+        if ($model_type == 'Dataobject') {
+            return ConfigurationService::getDataobject('Dataobject', $model_name);
+        }
 
         if (class_exists('Services')) {
             $exists = Services::Registry()->exists($ModelRegistry);
@@ -690,6 +696,7 @@ Class ConfigurationService
     public static function getDataobject($model_type, $model_name)
     {
         $ModelRegistry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+echo         $ModelRegistry . '<br />';
 
         if (class_exists('Services')) {
             $exists = Services::Registry()->exists($ModelRegistry);
@@ -717,6 +724,8 @@ Class ConfigurationService
         Services::Registry()->createRegistry($ModelRegistry);
 
         ConfigurationService::setDataobjectRegistry($ModelRegistry, $xml);
+
+        Services::Registry()->sort($ModelRegistry);
 
         return $ModelRegistry;
     }

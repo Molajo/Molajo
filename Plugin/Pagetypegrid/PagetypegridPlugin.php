@@ -22,7 +22,7 @@ class PagetypegridPlugin extends Plugin
     /**
      * Prepares data for the Administrator Grid  - run PagetypegridPlugin after AdminmenuPlugin
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeParse()
@@ -34,16 +34,8 @@ class PagetypegridPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+        $controller->setDataobject();
 
         $controller->set('get_customfields', 2);
         $controller->set('use_special_joins', 1);

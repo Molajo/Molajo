@@ -11,18 +11,21 @@
     </dataobjecttypes>
 
     <dataobjectattributes>
-        <dataobjectattribute>name</dataobjectattribute>
-        <dataobjectattribute>dbtype</dataobjectattribute>
-        <dataobjectattribute>host</dataobjectattribute>
-        <dataobjectattribute>user</dataobjectattribute>
-        <dataobjectattribute>password</dataobjectattribute>
-        <dataobjectattribute>db</dataobjectattribute>
-        <dataobjectattribute>prefix</dataobjectattribute>
-        <dataobjectattribute>process_plugins</dataobjectattribute>
-        <dataobjectattribute>connectclass</dataobjectattribute>
-        <dataobjectattribute>queryclass</dataobjectattribute>
-        <dataobjectattribute>dbclass</dataobjectattribute>
-        <dataobjectattribute>process_plugins</dataobjectattribute>
+        <dataobjectattribute name="model_type" default=""/>
+        <dataobjectattribute name="model_name" default=""/>
+        <dataobjectattribute name="name" default=""/>
+        <dataobjectattribute name="table_name" default=""/>
+        <dataobjectattribute name="dbtype" default="id"/>
+        <dataobjectattribute name="host" default=""/>
+        <dataobjectattribute name="user" default=""/>
+        <dataobjectattribute name="password" default=""/>
+        <dataobjectattribute name="db" default=""/>
+        <dataobjectattribute name="prefix" default="a"/>
+        <dataobjectattribute name="process_plugins" default="1"/>
+        <dataobjectattribute name="connectclass" default=""/>
+        <dataobjectattribute name="queryclass" default="getData"/>
+        <dataobjectattribute name="dbclass" default=""/>
+        <dataobjectattribute name="process_plugins" default="0"/>
     </dataobjectattributes>
 
     <modeltypes>

@@ -406,13 +406,13 @@ class ReadModel extends Model
                 $use_pagination = 1;
             }
         }
-
+/**
 echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination . '<br />';
 echo '<br /><br /><pre>';
 $string = $this->query->__toString();
 echo str_replace('#__', 'molajo_', $string);
 echo '</pre><br /><br />';
-
+*/
         $cache_key = $this->query->__toString();
         if ($cache_key == '') {
             echo '<pre>';

@@ -47,7 +47,7 @@ class Controller
     /**
      * Model Registry - Public as it is passed into events
      *
-     * @var    string
+     * @var    object
      * @since  1.0
      */
     public $model_registry;
@@ -55,7 +55,7 @@ class Controller
     /**
      * Set of rows returned from a query
      *
-     * @var    array()
+     * @var    array
      * @since  1.0
      */
     protected $query_results = array();
@@ -141,7 +141,10 @@ class Controller
             $model_class = 'ReadModel';
         }
 
-        $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+        $model_type = ucfirst(strtolower($model_type));
+        $model_name = ucfirst(strtolower($model_name));
+        $model_registry = $model_name . $model_type;
+
         $profiler_message = '';
 
         if (Services::Registry()->exists($model_registry) === true) {
@@ -168,21 +171,43 @@ class Controller
 
         $registry = Services::Registry()->getArray($model_registry);
 
+        $data_object = Services::Registry()->get($model_registry, 'data_object');
+
+        $this->set('data_object', ucfirst(strtolower($data_object)));
+
         $this->set('model_type', ucfirst(strtolower($model_type)));
         $this->set('model_name', ucfirst(strtolower($model_name)));
         $this->set('model_registry', ucfirst(strtolower($model_registry)));
         $this->set('model_class', $model_class);
 
-        $defaults = Services::Registry()->get('Fields', 'ModelattributesDefaults');
-        foreach (Services::Registry()->get('Fields', 'Modelattributes') as $key) {
+        if ($data_object == 'Database') {
 
-            if (isset($registry[$key])) {
-                if ($key == 'model_name' || $key == 'model_type') {
+            $defaults = Services::Registry()->get('Fields', 'ModelattributesDefaults');
+
+            foreach (Services::Registry()->get('Fields', 'Modelattributes') as $key) {
+
+                if (isset($registry[$key])) {
+                    if ($key == 'model_name' || $key == 'model_type') {
+                    } else {
+                        $this->set($key, $registry[$key]);
+                    }
                 } else {
-                    $this->set($key, $registry[$key]);
+                    $this->set($key, $defaults[$key]);
                 }
-            } else {
-                $this->set($key, $defaults[$key]);
+            }
+        }  else {
+            $defaults = Services::Registry()->get('Fields', 'DataObjectAttributeDefaults');
+
+            foreach (Services::Registry()->get('Fields', 'DataObjectAttributes') as $key) {
+
+                if (isset($registry[$key])) {
+                    if ($key == 'model_name' || $key == 'model_type') {
+                    } else {
+                        $this->set($key, $registry[$key]);
+                    }
+                } else {
+                    $this->set($key, $defaults[$key]);
+                }
             }
         }
 
@@ -209,6 +234,12 @@ class Controller
      */
     public function setDataobject()
     {
+
+        if ($this->get('data_object', 'Database')) {
+        } else {
+            return;
+        }
+
         $modelClass = 'Molajo\\MVC\\Model\\' . $this->get('model_class', 'ReadModel');
 
         try {
@@ -267,8 +298,15 @@ class Controller
             die;
         }
 
-        if ($this->model->db === null) {
+        if ($this->model->db === null
+            && $this->get('data_object') == 'Database') {
             $this->setDataobject();
+        }
+
+        if ($this->get('model_type') == 'Dataobject') {
+            $dbclass = $this->get('dbclass');
+            $queryclass = $this->get('queryclass');
+            $stuff = Services::$dbclass()->$queryclass($this->get('model_name'));
         }
 
         $query_object = strtolower($query_object);
@@ -529,7 +567,8 @@ class Controller
      */
     protected function runQuery($query_object = QUERY_OBJECT_LIST)
     {
-        if ($this->get('model_offset') == 0 && $this->get('model_count') == 0) {
+        if ($this->get('model_offset') == 0
+            && $this->get('model_count') == 0) {
 
             if ($query_object == QUERY_OBJECT_RESULT) {
                 $this->set('model_offset', 0);

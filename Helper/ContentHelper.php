@@ -53,7 +53,7 @@ Class ContentHelper
      * @param   $model_type
      * @param   $model_name
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function getRouteList($id, $model_type, $model_name)
@@ -180,28 +180,27 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
         Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
 
-
         $registry = Services::Registry()->get('Parameters', 'catalog_page_type')
             . CATALOG_TYPE_MENUITEM_LITERAL;
 
         Services::Registry()->set(
             'Parameters',
             'criteria_source_id',
-            (int)Services::Registry()->get($registry, 'criteria_source_id')
+            (int)Services::Registry()->get($registry . 'Parameters', 'criteria_source_id')
         );
         Services::Registry()->set(
             'Parameters',
             'criteria_catalog_type_id',
-            (int)Services::Registry()->get($registry, 'criteria_catalog_type_id')
+            (int)Services::Registry()->get($registry . 'Parameters', 'criteria_catalog_type_id')
         );
         Services::Registry()->set(
             'Parameters',
             'criteria_extension_instance_id',
-            (int)Services::Registry()->get($registry, 'criteria_extension_instance_id')
+            (int)Services::Registry()->get($registry . 'Parameters', 'criteria_extension_instance_id')
         );
 
-        Services::Registry()->copy($item->model_registry . 'Parameters', 'Parameters');
-        Services::Registry()->copy($item->model_registry . 'Metadata', 'Metadata');
+        Services::Registry()->copy($registry . 'Parameters', 'Parameters');
+        Services::Registry()->copy($registry . 'Metadata', 'Metadata');
 
         $this->setParameters(
             strtolower(CATALOG_TYPE_MENUITEM_LITERAL),
