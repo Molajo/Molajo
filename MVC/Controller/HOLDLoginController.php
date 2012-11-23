@@ -113,9 +113,9 @@ class HOLDLoginController extends Controller
     {
 //        MolajoPluginHelper::getPlugin('user');
 //        if ($type == 'authenticate') {
-//            Services::Event()->schedule('onUserLoginFailure', array($response, $options));
+//            Services::Event()->scheduleEvent('onUserLoginFailure', array($response, $options));
 //        } else {
-//            Services::Event()->schedule('onUserAuthorisationFailure', array($response, $options));
+//            Services::Event()->scheduleEvent('onUserAuthorisationFailure', array($response, $options));
 //        }
 
         //redirect false;
@@ -185,7 +185,7 @@ class HOLDLoginController extends Controller
 //        MolajoPluginHelper::importPlugin('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
-//        $results = Services::Event()->schedule('onUserLogout', array($parameters, $options));
+//        $results = Services::Event()->scheduleEvent('onUserLogout', array($parameters, $options));
 
         // Check if any of the plugins failed. If none did, success.
 
@@ -200,7 +200,7 @@ class HOLDLoginController extends Controller
 //        }
 
         // Plugin onUserLoginFailure Event.
-//        Services::Event()->schedule('onUserLogoutFailure', array($parameters));
+//        Services::Event()->scheduleEvent('onUserLogoutFailure', array($parameters));
         return false;
     }
 }

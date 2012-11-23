@@ -182,7 +182,7 @@ class DisplayController extends Controller
     }
 
     /**
-     * Schedule onBeforeViewRender Event - could update query_results objects
+     * Schedule Event onBeforeViewRender Event - could update query_results objects
      *
      * @return  bool
      * @since   1.0
@@ -218,7 +218,7 @@ class DisplayController extends Controller
                 Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender',
                     LOG_OUTPUT_PLUGINS, VERBOSE);
 
-                $arguments = Services::Event()->schedule('onBeforeViewRender', $arguments);
+                $arguments = Services::Event()->scheduleEvent('onBeforeViewRender', $arguments);
 
                 if ($arguments === false) {
                     Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender',
@@ -242,7 +242,7 @@ class DisplayController extends Controller
     }
 
     /**
-     * Schedule onAfterViewRender Event - can update rendered results
+     * Schedule Event onAfterViewRender Event - can update rendered results
      *
      * @return  bool
      * @since   1.0
@@ -260,7 +260,7 @@ class DisplayController extends Controller
         Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender',
             LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onAfterViewRender', $arguments);
+        $arguments = Services::Event()->scheduleEvent('onAfterViewRender', $arguments);
 
         if ($arguments === false) {
             Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender',

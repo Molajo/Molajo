@@ -11,7 +11,7 @@
         check_view_level_access="0"
         process_plugins="0"
         published_status="1"
-        data_object="Database">
+        data_object="Datalist">
     <table>
         <fields>
             <include field="id"/>

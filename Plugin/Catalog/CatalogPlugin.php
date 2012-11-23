@@ -22,7 +22,7 @@ defined('MOLAJO') or die;
 class CatalogPlugin extends Plugin
 {
     /**
-     * Generates list of Datalists for use in defining Custom Fields of Type Selectlist
+     * Generates Catalog Datalist
      *
      * This can be moved to onBeforeParse when Plugin ordering is in place
      *
@@ -95,6 +95,7 @@ class CatalogPlugin extends Plugin
         $controller->set('model_count', 99999);
 
         $query_results = $controller->getData(QUERY_OBJECT_DISTINCT);
+
         $catalogArray = array();
 
         $application_home_catalog_id =

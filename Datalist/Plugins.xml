@@ -12,7 +12,7 @@
         process_plugins="0"
         criteria_catalog_type_id="5000"
         published_status="0,1,2"
-        data_object="Database">
+        data_object="Datalist">
     <table>
         <fields>
             <include field="id_pk"/>

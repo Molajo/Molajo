@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class FormselectlistPlugin extends Plugin
 {
-
     /**
      * Prepares listbox contents
      *
@@ -57,7 +56,7 @@ class FormselectlistPlugin extends Plugin
 
 
         $this->set('model_type', DATAOBJECT_MODEL_TYPE);
-        $this->set('model_name', TEMPLATEVIEWNAME_MODEL_NAME);
+        $this->set('model_name', DATALIST_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;

@@ -127,7 +127,7 @@ Class ParseService
 
         if (count($themePlugins) == 0 || $themePlugins === false) {
         } else {
-            $this->processPlugins(
+            $this->registerPlugins(
                 $themePlugins,
                 Services::Registry()->get('Parameters', 'theme_namespace')
             );
@@ -139,7 +139,7 @@ Class ParseService
 
         if (count($pagePlugins) == 0 || $pagePlugins === false) {
         } else {
-            $this->processPlugins(
+            $this->registerPlugins(
                 $pagePlugins,
                 Services::Registry()->get('Parameters', 'page_view_namespace')
             );
@@ -151,7 +151,7 @@ Class ParseService
 
         if (count($extensionPlugins) == 0 || $extensionPlugins === false) {
         } else {
-            $this->processPlugins(
+            $this->registerPlugins(
                 $extensionPlugins,
                 Services::Registry()->get('Parameters', 'extension_namespace')
             );
@@ -218,7 +218,7 @@ Class ParseService
     }
 
     /**
-     * processPlugins for Theme, Page, and Request Extension (overrides Core and Plugin folder)
+     * registerPlugins for Theme, Page, and Request Extension (overrides Core and Plugin folder)
      *
      * @param   $plugins array of folder names
      * @param   $path
@@ -226,11 +226,11 @@ Class ParseService
      * @return  void
      * @since   1.0
      */
-    protected function processPlugins($plugins, $path)
+    protected function registerPlugins($plugins, $path)
     {
         foreach ($plugins as $folder) {
 
-            Services::Event()->process_events(
+            Services::Event()->registerPlugin(
                 $folder . 'Plugin',
                 $path . '\\Plugin\\' . $folder . '\\' . $folder . 'Plugin'
             );
@@ -492,9 +492,9 @@ echo $includeDisplay;
                     );
 
                     $output = trim($rc->process($attributes));
-//echo '<br />';
-// echo $output;
-//echo '<br />';
+echo '<br />';
+echo $output;
+echo '<br />';
                     Services::Profiler()->set('ParseService->callIncluder rendered output ' . $output, LOG_OUTPUT_RENDERING, VERBOSE);
 
                     $with[] = $output;
@@ -508,7 +508,7 @@ echo $includeDisplay;
     }
 
     /**
-     * Schedule onBeforeParseEvent Event
+     * Schedule Event onBeforeParseEvent Event
      *
      * @return  boolean
      * @since   1.0
@@ -524,7 +524,7 @@ echo $includeDisplay;
             'data' => array()
         );
 
-        $arguments = Services::Event()->schedule('onBeforeParse', $arguments);
+        $arguments = Services::Event()->scheduleEvent('onBeforeParse', $arguments);
 
         if ($arguments === false) {
             Services::Registry()->set('Parameters', 'error_status', 1);
@@ -541,7 +541,7 @@ echo $includeDisplay;
     }
 
     /**
-     * Schedule onAfterParseBody Event
+     * Schedule Event onAfterParseBody Event
      *
      * @param   string  $renderedOutput
      *
@@ -559,7 +559,7 @@ echo $includeDisplay;
             'rendered_output' => $renderedOutput
         );
 
-        $arguments = Services::Event()->schedule('onAfterParsebody', $arguments);
+        $arguments = Services::Event()->scheduleEvent('onAfterParsebody', $arguments);
 
         if ($arguments === false) {
             Services::Registry()->set('Parameters', 'error_status', 1);
@@ -577,7 +577,7 @@ echo $includeDisplay;
     }
 
 	/**
-	 * Schedule onBeforeDocumenthead Event
+	 * Schedule Event onBeforeDocumenthead Event
 	 *
      * @param   string  $renderedOutput
      *
@@ -595,7 +595,7 @@ echo $includeDisplay;
             'rendered_output' => $renderedOutput
         );
 
-        $arguments = Services::Event()->schedule('onBeforeDocumenthead', $arguments);
+        $arguments = Services::Event()->scheduleEvent('onBeforeDocumenthead', $arguments);
 
         if ($arguments === false) {
             Services::Registry()->set('Parameters', 'error_status', 1);
@@ -612,7 +612,7 @@ echo $includeDisplay;
 	}
 
     /**
-     * Schedule onAfterDocumentheadEvent Event
+     * Schedule Event onAfterDocumentheadEvent Event
      *
      * @return  boolean
      * @since   1.0
@@ -628,7 +628,7 @@ echo $includeDisplay;
             'rendered_output' => $renderedOutput
         );
 
-        $arguments = Services::Event()->schedule('onAfterDocumenthead', $arguments);
+        $arguments = Services::Event()->scheduleEvent('onAfterDocumenthead', $arguments);
 
         if ($arguments === false) {
             Services::Registry()->set('Parameters', 'error_status', 1);
@@ -645,7 +645,7 @@ echo $includeDisplay;
     }
 
     /**
-     * Schedule onAfterParseEvent Event
+     * Schedule Event onAfterParseEvent Event
      *
      * @return  boolean
      * @since   1.0
@@ -661,7 +661,7 @@ echo $includeDisplay;
             'rendered_output' => $renderedOutput
         );
 
-        $arguments = Services::Event()->schedule('onAfterParse', $arguments);
+        $arguments = Services::Event()->scheduleEvent('onAfterParse', $arguments);
 
         if ($arguments === false) {
             Services::Registry()->set('Parameters', 'error_status', 1);

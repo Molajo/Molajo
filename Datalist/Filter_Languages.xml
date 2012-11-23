@@ -14,7 +14,7 @@
         published_status="1"
         multiple="1"
         size="5"
-        data_object="Database">
+        data_object="Datalist">
     <table>
         <fields>
             <include field="id_pk"/>

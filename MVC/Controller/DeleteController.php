@@ -196,7 +196,7 @@ class DeleteController extends Controller
     }
 
     /**
-     * Schedule onBeforeDeleteEvent Event - could update model and data objects
+     * Schedule Event onBeforeDeleteEvent Event - could update model and data objects
      *
      * @return boolean
      * @since   1.0
@@ -222,7 +222,7 @@ class DeleteController extends Controller
 
         Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onBeforeDelete', $arguments, $this->plugins);
+        $arguments = Services::Event()->scheduleEvent('onBeforeDelete', $arguments, $this->plugins);
         if ($arguments === false) {
             Services::Profiler()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
@@ -239,7 +239,7 @@ class DeleteController extends Controller
     }
 
     /**
-     * Schedule onAfterDeleteEvent Event
+     * Schedule Event onAfterDeleteEvent Event
      *
      * @return boolean
      * @since   1.0
@@ -252,7 +252,7 @@ class DeleteController extends Controller
             return true;
         }
 
-        /** Schedule onAfterDelete Event */
+        /** Schedule Event onAfterDelete Event */
         $arguments = array(
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
@@ -264,7 +264,7 @@ class DeleteController extends Controller
 
         Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onAfterDelete', $arguments, $this->plugins);
+        $arguments = Services::Event()->scheduleEvent('onAfterDelete', $arguments, $this->plugins);
         if ($arguments === false) {
             Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
 

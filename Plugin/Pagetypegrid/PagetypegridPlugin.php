@@ -222,7 +222,6 @@ class PagetypegridPlugin extends Plugin
 
         $controller->set('model_count', $itemsPerPage);
 
-        /** Run Query */
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         $gridItems = array();
@@ -321,6 +320,7 @@ class PagetypegridPlugin extends Plugin
         /** Submenu: Links to various Form Pages (Tabs) - ex. Batch Options */
         $pageArray = array();
         $i = 0;
+
         foreach ($grid_batch as $item) {
             if ($item == '') {
             } else {
@@ -340,6 +340,7 @@ class PagetypegridPlugin extends Plugin
                 $i++;
             }
         }
+
         Services::Registry()->set('Plugindata', 'SectionSubmenu', $pageArray);
 
         return true;

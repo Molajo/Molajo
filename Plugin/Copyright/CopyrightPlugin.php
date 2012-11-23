@@ -21,12 +21,11 @@ class CopyrightPlugin extends Plugin
     /**
      * Prepares formatted copyright statement with year span
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
     {
-
         $current_year = Services::Date()->getDate()->format('Y');
 
         $first_year_field = $this->getField('copyright_first_year');
@@ -57,7 +56,7 @@ class CopyrightPlugin extends Plugin
         }
 
         $copyright_statement = '&#169;' . ' ' . $ccDateSpan . ' ' . $copyright_holder;
-        $this->saveField(null, Services::Language()->translate('copyright_statement'), $copyright_statement);
+        $this->saveField(null, 'copyright_statement', $copyright_statement);
 
         return true;
     }

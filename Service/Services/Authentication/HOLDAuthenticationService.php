@@ -239,7 +239,7 @@ Class AuthenticationService
     public static function authorise($response, $options = Array())
     {
 
-        $authorisations = Services::Event()->schedule('onUserAuthorisation', Array($response, $options));
+        $authorisations = Services::Event()->scheduleEvent('onUserAuthorisation', Array($response, $options));
 
         $response->status = MolajoAuthentication::STATUS_SUCCESS;
         foreach ($authorisations as $authorisation) {

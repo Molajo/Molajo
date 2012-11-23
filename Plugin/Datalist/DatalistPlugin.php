@@ -21,8 +21,6 @@ class DatalistPlugin extends Plugin
 	/**
 	 * Prepares list of Datalist Lists
 	 *
-	 * This can be moved to onBeforeParse when Plugin ordering is in place
-	 *
 	 * @return boolean
 	 * @since   1.0
 	 */
@@ -74,7 +72,7 @@ class DatalistPlugin extends Plugin
 	/**
 	 * Prepares list of Datalist Lists
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function processFiles($files)

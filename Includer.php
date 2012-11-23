@@ -109,6 +109,8 @@ class Includer
 
         $this->loadPlugins();
 
+
+
         $rendered_output = $this->invokeMVC();
 
         if ($rendered_output == ''
@@ -528,7 +530,7 @@ class Includer
 
         if (count($templatePlugins) == 0 || $templatePlugins === false) {
         } else {
-            $this->processPlugins(
+            $this->registerPlugins(
                 $templatePlugins,
                 Services::Registry()->get('Parameters', 'template_view_namespace')
             );
@@ -540,7 +542,7 @@ class Includer
 
         if (count($wrapPlugins) == 0 || $wrapPlugins === false) {
         } else {
-            $this->processPlugins(
+            $this->registerPlugins(
                 $wrapPlugins,
                 Services::Registry()->get('Parameters', 'wrap_view_namespace')
             );
@@ -558,10 +560,10 @@ class Includer
      * @return  void
      * @since   1.0
      */
-    protected function processPlugins($plugins, $path)
+    protected function registerPlugins($plugins, $path)
     {
         foreach ($plugins as $folder) {
-            Services::Event()->process_events(
+            Services::Event()->registerPlugin(
                 $folder . 'Plugin',
                 $path . '\\Plugin\\' . $folder . '\\' . $folder . 'Plugin'
             );
@@ -607,6 +609,37 @@ class Includer
     }
 
     /**
+     * Schedule Event onBeforeInclude Event
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function onBeforeIncludeEvent()
+    {
+        Services::Profiler()->set('IncludeService onBeforeInclude', LOG_OUTPUT_PLUGINS, VERBOSE);
+
+        $parameters = Services::Registry()->getArray('Parameters');
+
+        $arguments = array(
+            'parameters' => $parameters
+        );
+
+        $arguments = Services::Event()->scheduleEvent('onBeforeInclude', $arguments);
+
+        if ($arguments === false) {
+            Services::Registry()->set('Parameters', 'error_status', 1);
+            Services::Profiler()->set('IncludeService onBeforeInclude failed', LOG_OUTPUT_PLUGINS);
+            return false;
+        }
+
+        Services::Registry()->delete('Parameters');
+        Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+        Services::Registry()->sort('Parameters');
+
+        return true;
+    }
+
+    /**
      * Instantiate the Controller and execute action method, receive rendered output from Controller
      *
      * @return  mixed
@@ -647,7 +680,41 @@ class Includer
         } else {
             $results = $cached_output;
         }
-
+echo $results;
         return $results;
+    }
+
+    /**
+     * Schedule Event onAfterIncludeEvent Event
+     *
+     * @param   $rendered_output
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function onAfterIncludeEvent($rendered_output)
+    {
+        Services::Profiler()->set('IncludeService onAfterInclude', LOG_OUTPUT_PLUGINS, VERBOSE);
+
+        $parameters = Services::Registry()->getArray('Parameters');
+
+        $arguments = array(
+            'parameters' => $parameters,
+            'rendered_output' => $rendered_output
+        );
+
+        $arguments = Services::Event()->scheduleEvent('onAfterInclude', $arguments);
+
+        if ($arguments === false) {
+            Services::Registry()->set('Parameters', 'error_status', 1);
+            Services::Profiler()->set('IncludeService onAfterInclude failed', LOG_OUTPUT_PLUGINS);
+            return false;
+        }
+
+        Services::Registry()->delete('Parameters');
+        Services::Registry()->loadArray('Parameters', $arguments['parameters']);
+        Services::Registry()->sort('Parameters');
+
+        return $rendered_output;
     }
 }

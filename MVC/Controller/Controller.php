@@ -328,11 +328,13 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
                 . ' <br />Template View: ' . $this->get('template_view_path_node')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
 echo $profiler_message;
-        if (count($this->plugins) > 0) {
-            $this->onBeforeReadEvent();
-        }
 
         if ($this->get('data_object') == 'Database') {
+
+            if (count($this->plugins) > 0) {
+                $this->onBeforeReadEvent();
+            }
+
             $this->runQuery($query_object);
 
         } else {
@@ -345,24 +347,35 @@ echo $profiler_message;
                 $service_class = $this->get('service_class');
                 $service_class_query_method = $this->get('service_class_query_method');
                 $service_class_query_method_parameter = $this->get('service_class_query_method_parameter');
+
                 if ($service_class_query_method_parameter == 'REGISTRY_ENTRY') {
                     $method_parameter = $this->get('registry_entry');
+
                 } elseif ($service_class_query_method_parameter == 'TEMPLATE_VIEW_NAME') {
                     $method_parameter = $this->get('template_view_path_node');
+
                 } else {
                     $method_parameter = $service_class_query_method_parameter;
+                }
+
+                if (strtolower($this->get('model_name')) == 'parameters') {
+                    $query_object = QUERY_OBJECT_ITEM;
+                }
+
+                if (count($this->plugins) > 0) {
+                    $this->onBeforeReadEvent();
                 }
 
                 $this->query_results = Services::$service_class()
                     ->$service_class_query_method(
                         $this->get('model_name'),
-                        $method_parameter
+                        $method_parameter,
+                        $query_object
                     );
 
-                if ($method_parameter == 'Grid') {
-                } elseif (strtolower(substr($method_parameter, 0, 4)) == 'grid') {
+                if (strtolower($this->get('template_view_path_node')) == 'gridorderingXXXX') {
                     echo '<pre>';
-                    var_dump($this->query_results);
+                    echo count($this->query_results);
                     echo '</pre>';
                 }
             }
@@ -374,6 +387,12 @@ echo $profiler_message;
                 $this->get('model_offset'),
                 $this->get('model_count')
             );
+        }
+
+        if (strtolower($this->get('template_view_path_node')) == 'gridorderingXXX') {
+            echo '<pre>';
+            echo count($this->query_results);
+            echo '</pre>';
         }
 
         if ($this->get('data_object') == 'Database') {
@@ -718,7 +737,7 @@ echo $profiler_message;
     }
 
     /**
-     * Schedule onBeforeRead Event - could update model and parameter objects
+     * Schedule Event onBeforeRead Event - could update model and parameter objects
      *
      * @return  boolean
      * @since   1.0
@@ -750,7 +769,7 @@ echo $profiler_message;
             VERBOSE
         );
 
-        $arguments = Services::Event()->schedule('onBeforeRead', $arguments, $this->plugins);
+        $arguments = Services::Event()->scheduleEvent('onBeforeRead', $arguments, $this->plugins);
 
         if ($arguments === false) {
             Services::Profiler()->set(
@@ -783,7 +802,7 @@ echo $profiler_message;
     }
 
     /**
-     * Schedule onAfterRead Event - could update parameters and query_results objects
+     * Schedule Event onAfterRead Event - could update parameters and query_results objects
      *
      * @return  bool
      * @since   1.0
@@ -827,9 +846,10 @@ echo $profiler_message;
                     VERBOSE
                 );
 
-                $arguments = Services::Event()->schedule('onAfterRead', $arguments, $this->plugins);
+                $arguments = Services::Event()->scheduleEvent('onAfterRead', $arguments, $this->plugins);
 
                 if ($arguments === false) {
+
                     Services::Profiler()->set(
                         'DisplayController->onAfterRead '
                             . $this->get('model_registry')
@@ -870,7 +890,7 @@ echo $profiler_message;
             VERBOSE
         );
 
-        $arguments = Services::Event()->schedule('onAfterReadall', $arguments, $this->plugins);
+        $arguments = Services::Event()->scheduleEvent('onAfterReadall', $arguments, $this->plugins);
 
         if ($arguments === false) {
             Services::Profiler()->set(

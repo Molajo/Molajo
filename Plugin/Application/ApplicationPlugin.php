@@ -27,7 +27,8 @@ class ApplicationPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-
+        Services::Registry()->get('Parameters', '*');
+        die;;
         $current_menuitem_id = (int) $this->get('menuitem_id');
 
         $item_indicator = 0;
@@ -67,7 +68,7 @@ class ApplicationPlugin extends Plugin
     /**
      * Build the home and page url to be used in links
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function urls()
@@ -95,8 +96,8 @@ class ApplicationPlugin extends Plugin
     /**
      * Set breadcrumbs
      *
-     * @return boolean
-     * @since  1.0
+     * @return  boolean
+     * @since   1.0
      */
     protected function setBreadcrumbs($current_menuitem_id)
     {
@@ -110,8 +111,8 @@ class ApplicationPlugin extends Plugin
     /**
      * Retrieve an array of values that represent the active menuitem ids for a specific menu
      *
-     * @return boolean
-     * @since  1.0
+     * @return  boolean
+     * @since   1.0
      */
     protected function setMenu($current_menu_item = 0)
     {
@@ -146,7 +147,7 @@ class ApplicationPlugin extends Plugin
     /**
      * Set the Header Title
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function setPageTitle($item_indicator = 0)
@@ -211,7 +212,7 @@ class ApplicationPlugin extends Plugin
 	/**
 	 * Prepares Page Title and Actions for Rendering
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function setPageEligibleActions()
@@ -260,8 +261,8 @@ class ApplicationPlugin extends Plugin
 	/**
 	 * Create Item Actions
 	 *
-	 * @return array
-	 * @since  1.0
+	 * @return  array
+	 * @since   1.0
 	 */
 	protected function setItemActions()
 	{
@@ -302,13 +303,12 @@ class ApplicationPlugin extends Plugin
 	/**
 	 * Create Edit Actions
 	 *
-	 * @return array
-	 * @since  1.0
+	 * @return  array
+	 * @since   1.0
 	 */
 	protected function setEditActions()
 	{
 		$actions = array();
-
 
 		return $actions;
 	}
@@ -316,8 +316,8 @@ class ApplicationPlugin extends Plugin
 	/**
 	 * Create List Actions
 	 *
-	 * @return array
-	 * @since  1.0
+	 * @return  array
+	 * @since   1.0
 	 */
 	protected function setListActions()
 	{
@@ -344,9 +344,10 @@ class ApplicationPlugin extends Plugin
 	}
 
 	/**
-	 * Create Dashboard Page Actions
+	 * Menu Item Actions
 	 *
-	 * @return array
+	 * @return  array
+     * @since   1.0
 	 */
 	protected function setMenuitemActions()
 	{
@@ -358,7 +359,7 @@ class ApplicationPlugin extends Plugin
 	/**
 	 * Set Page Meta Data
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   1.0
 	 */
 	protected function setPageMeta()

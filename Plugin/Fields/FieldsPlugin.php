@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
 class FieldsPlugin extends Plugin
 {
     /**
-     * Generates list of Fields for select lists and for use in defining Custom Fields
+     * Generates list of Fields for select lists and defining Custom Fields
      *
      * This can be moved to onBeforeParse when Plugin ordering is in place
      *
@@ -41,7 +41,8 @@ class FieldsPlugin extends Plugin
 
         $model_name = $this->get('model_name');
         $model_type = $this->get('model_type');
-
+               echo 'xxx';
+        die;
         $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
         if (Services::Registry()->exists($model_registry) === true) {

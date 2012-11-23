@@ -14,7 +14,7 @@
     <service name="Database" static="0" startup=""/>
     <service name="Configuration" static="1" startup="getInstance"/>
     <service name="Log" static="1" startup="initialise"/>
-    <service name="Event" static="1" startup="getInstance"/>
+    <service name="Event" static="0" startup="initialise"/>
     <service name="Route" static="0" startup=""/>
     <service name="Cookie" static="0" startup=""/>
     <service name="Session" static="0" startup=""/>

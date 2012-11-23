@@ -740,7 +740,7 @@ Class RegistryService
      * @param boolean $all true - returns the entire list and each registry
      *                         false - returns a list of registry names, only
      *
-     * @return mixed|boolean or array
+     * @return  mixed|boolean or array
      * @since   1.0
      */
     public function listRegistry($include_entries = false)
@@ -765,35 +765,38 @@ Class RegistryService
      *
      * Data can be requested as a result - provide $registry, $element and true for $single result
      *
-     * Use '*' in the key to retrieve all values starting with a specific phrase (ex. 'model*')
+     * Use '*' in the key to retrieve all values starting with a specific phrase (ex. 'model')
      *
      * @param   string  $registry  Name of registry, for the MVC this is the $model_name
      * @param   string  $key       Key of the named pair
-     * @param   $single_result     Set to True when only the value should be returned for the specified key
+     * @param   $query_object      Result, Item, or List
      *
      * @return  array
      * @since   1.0
      */
-    public function getData($registry, $key = null, $single_result = false)
+    public function getData($registry, $key = null, $query_object = false)
     {
         $registry = strtolower($registry);
+
         $key = strtolower($key);
         $query_results = array();
 
-        if ($key === NULL) {
-            $key = '*';
+        if ($key === NULL || $key == '*') {
+            $results = $this->get($registry);
+
+        } elseif ($query_object == QUERY_OBJECT_RESULT) {
+            return $this->get($registry, $key);
+
         } else {
-            if ($single_result === true) {
-                return $this->get($registry, $key);
-            }
+            $results = $this->get($registry, $key);
         }
 
-        $results = $this->get($registry, $key);
-
-        if (is_object($results)) {
-            $query_results = $results;
-
-            return $query_results;
+        if (is_array($results)) {
+            if (isset($results[0])) {
+                if (is_object($results[0])) {
+                    return $results;
+                }
+            }
         }
 
         $row = new \stdClass();
@@ -803,7 +806,6 @@ Class RegistryService
             }
         }
         $query_results[] = $row;
-
         return $query_results;
     }
 }

@@ -197,8 +197,8 @@ Class Application
         Services::Registry()->set('Override', 'parse_final', $override_parse_final);
 
         if ($results === true) {
-            Services::Profiler()->set('Application Schedule onAfterInitialise', LOG_OUTPUT_PLUGINS);
-            $results = Services::Event()->schedule('onAfterInitialise');
+            Services::Profiler()->set('Application Schedule Event onAfterInitialise', LOG_OUTPUT_PLUGINS);
+            $results = Services::Event()->scheduleEvent('onAfterInitialise');
             if (is_array($results)) {
                 $results = true;
             }
@@ -265,7 +265,7 @@ Class Application
     }
 
     /**
-     * Schedule onBeforeParseEvent Event
+     * Schedule Event onBeforeParseEvent Event
      *
      * @return  boolean
      * @since   1.0
@@ -285,7 +285,7 @@ Class Application
             'data' => array()
         );
 
-        $arguments = Services::Event()->schedule('onAfterRoute', $arguments);
+        $arguments = Services::Event()->scheduleEvent('onAfterRoute', $arguments);
 
         if ($arguments === false) {
             Services::Profiler()->set(
@@ -319,9 +319,9 @@ Class Application
 
         Services::Authorisation()->verifyAction();
 
-        Services::Profiler()->set('Application Schedule onAfterAuthorise', LOG_OUTPUT_PLUGINS);
+        Services::Profiler()->set('Application Schedule Event onAfterAuthorise', LOG_OUTPUT_PLUGINS);
 
-        $results = Services::Event()->schedule('onAfterAuthorise');
+        $results = Services::Event()->scheduleEvent('onAfterAuthorise');
         if (is_array($results)) {
             $results = true;
         }
@@ -330,7 +330,6 @@ Class Application
             Services::Profiler()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
             return false;
         }
-
 
         Services::Profiler()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
 
@@ -358,9 +357,9 @@ Class Application
         }
 
         if ($results === true) {
-            Services::Profiler()->set('Application Schedule onAfterExecute', LOG_OUTPUT_PLUGINS);
+            Services::Profiler()->set('Application Schedule Event onAfterExecute', LOG_OUTPUT_PLUGINS);
 
-            $results = Services::Event()->schedule('onAfterExecute');
+            $results = Services::Event()->scheduleEvent('onAfterExecute');
             if (is_array($results)) {
                 $results = true;
             }
@@ -487,8 +486,8 @@ Class Application
         }
 
         if ($results == 200) {
-            Services::Profiler()->set('Application Schedule onAfterResponse', LOG_OUTPUT_PLUGINS);
-            $results = Services::Event()->schedule('onAfterResponse');
+            Services::Profiler()->set('Application Schedule Event onAfterResponse', LOG_OUTPUT_PLUGINS);
+            $results = Services::Event()->scheduleEvent('onAfterResponse');
             if (is_array($results)) {
                 $results = true;
             }

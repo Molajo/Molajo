@@ -10,7 +10,7 @@
         process_plugins="0"
         published_status="1"
         criteria_catalog_type_id="3000"
-        data_object="Database">
+        data_object="Datalist">
     <table>
         <fields>
             <include field="Id"/>

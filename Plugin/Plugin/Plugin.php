@@ -255,7 +255,7 @@ class Plugin
     /**
      * processFieldType processes an array of fields, populating the class property
      *
-     * @return boolean
+     * @return  boolean
      * @since  1.0
      */
     public function processFieldType($type, $fields)
@@ -425,7 +425,7 @@ class Plugin
     /**
      * retrieveFieldsByType processes an array of fields, populating the class property
      *
-     * @return boolean
+     * @return  boolean
      * @since  1.0
      */
     public function retrieveFieldsByType($type)
@@ -445,7 +445,7 @@ class Plugin
     /**
      * getField by name
      *
-     * @return boolean
+     * @return  boolean
      * @since  1.0
      */
     public function getField($name)
@@ -567,7 +567,7 @@ class Plugin
     /**
      * Runs before Route and after Services and Helpers have been instantiated
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterInitialise()
@@ -576,22 +576,9 @@ class Plugin
     }
 
     /**
-     * Follows Authorise and can used to override a failed authorisation or a successful one
+     * Scheduled after Route has been determined. Parameters contain all instruction to produce primary request.
      *
-     * @return boolean
-     * @since   1.0
-     */
-    public function onAfterAuthorise()
-    {
-        return true;
-    }
-
-    /**
-     * Fires after Route has run - Parameters contain all instruction
-     *
-     * Services::Registry('Parameters', '*') lists all available
-     *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRoute()
@@ -600,9 +587,20 @@ class Plugin
     }
 
     /**
-     * Before the Theme/Page are parsed
+     * Scheduled after core Authorise to augment, change authorisation process or override a failed test
      *
-     * @return boolean
+     * @return  boolean
+     * @since   1.0
+     */
+    public function onAfterAuthorise()
+    {
+        return true;
+    }
+
+    /**
+     * After Route and Authorisation,  the Theme/Page are parsed
+     *
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeParse()
@@ -613,7 +611,7 @@ class Plugin
     /**
      * Pre-read processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeRead()
@@ -624,7 +622,7 @@ class Plugin
     /**
      * Post-read processing - one row at a time
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
@@ -635,7 +633,7 @@ class Plugin
     /**
      * Post-read processing - all rows at one time from query_results
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterReadall()
@@ -644,9 +642,9 @@ class Plugin
     }
 
     /**
-     * Before the Query results are injected into the View
+     * After the Read Query has executed but Before Query results are injected into the View
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeViewRender()
@@ -654,10 +652,45 @@ class Plugin
         return true;
     }
 
+
     /**
-     * After all document parsing has been accomplished and include tags replaced with rendered output
+     * After the View has been rendered but before the output has been passed back to the Includer
      *
-     * @return boolean
+     * @return  boolean
+     * @since   1.0
+     */
+    public function onAfterViewRender()
+    {
+        return true;
+    }
+
+    /**
+     * Document parsing and rendering for document body complete, document head has not started
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function onAfterParseBody()
+    {
+        return true;
+    }
+
+
+    /**
+     * After list of Head Include tags has been loaded and before the parsing begins
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function onBeforeDocumentHead()
+    {
+        return true;
+    }
+
+    /**
+     * After all document parsing, body and head, has been accomplished and include tags replaced with rendered output
+     *
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterParse()
@@ -668,7 +701,7 @@ class Plugin
     /**
      * Event fires after execute for both display and non-display task
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterExecute()
@@ -679,7 +712,7 @@ class Plugin
     /**
      * Plugin that fires after all views are rendered
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterResponse()
@@ -690,7 +723,7 @@ class Plugin
     /**
      * Pre-create processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeCreate()
@@ -701,7 +734,7 @@ class Plugin
     /**
      * Post-create processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterCreate()
@@ -712,7 +745,7 @@ class Plugin
     /**
      * Before update processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeUpdate()
@@ -723,7 +756,7 @@ class Plugin
     /**
      * After update processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterUpdate()
@@ -734,7 +767,7 @@ class Plugin
     /**
      * Pre-delete processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeDelete()
@@ -745,7 +778,7 @@ class Plugin
     /**
      * Post-delete processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterDelete()

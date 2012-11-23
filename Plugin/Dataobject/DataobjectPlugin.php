@@ -66,7 +66,7 @@ class DataobjectPlugin extends Plugin
 			$dataobject[] = $row;
 		}
 
-		Services::Registry()->set('Dataobject', 'Dataobjects', $dataobject);
+		Services::Registry()->set('Datalist', 'Dataobjects', $dataobject);
 
 		return true;
 	}

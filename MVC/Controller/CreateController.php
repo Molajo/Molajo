@@ -413,7 +413,7 @@ class CreateController extends Controller
     }
 
     /**
-     * Schedule onBeforeCreateEvent Event - could update model and data objects
+     * Schedule Event onBeforeCreateEvent Event - could update model and data objects
      *
      * @return boolean
      * @since   1.0
@@ -439,7 +439,7 @@ class CreateController extends Controller
 
         Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onBeforeCreate', $arguments, $this->plugins);
+        $arguments = Services::Event()->scheduleEvent('onBeforeCreate', $arguments, $this->plugins);
 
         if ($arguments === false) {
             Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
@@ -456,7 +456,7 @@ class CreateController extends Controller
     }
 
     /**
-     * Schedule onAfterCreateEvent Event
+     * Schedule Event onAfterCreateEvent Event
      *
      * @return boolean
      * @since   1.0
@@ -469,7 +469,7 @@ class CreateController extends Controller
             return true;
         }
 
-        /** Schedule onAfterCreate Event */
+        /** Schedule Event onAfterCreate Event */
         $arguments = array(
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
@@ -481,7 +481,7 @@ class CreateController extends Controller
 
         Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $arguments = Services::Event()->schedule('onAfterCreate', $arguments, $this->plugins);
+        $arguments = Services::Event()->scheduleEvent('onAfterCreate', $arguments, $this->plugins);
 
         if ($arguments === false) {
             Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_PLUGINS, VERBOSE);

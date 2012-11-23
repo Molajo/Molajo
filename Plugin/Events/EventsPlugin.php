@@ -21,7 +21,7 @@ class EventsPlugin extends Plugin
     /**
      * Generates list of Events for use in Datalists
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRoute()

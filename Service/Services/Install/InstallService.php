@@ -372,7 +372,7 @@ Class InstallService
         $parameters = array('create_extension' => 1,
             'create_sample_data' => 1);
 
-        /** Schedule onAfterCreate Event */
+        /** Schedule Event onAfterCreate Event */
         $arguments = array(
             'model_registry' => $model_registry,
             'db' => '',
@@ -382,7 +382,7 @@ Class InstallService
             'model_name' => $this->get('model_name')
         );
 
-        $arguments = Services::Event()->schedule('onAfterCreate', $arguments, $plugins);
+        $arguments = Services::Event()->scheduleEvent('onAfterCreate', $arguments, $plugins);
         if ($arguments['success'] === true) {
             $arguments = $plugin['arguments'];
         } else {
