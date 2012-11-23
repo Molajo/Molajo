@@ -45,18 +45,28 @@ class FormselectlistPlugin extends Plugin
 
         }
 
-        if (isset($this->parameters['selected'])) {
-            $selected = $this->parameters['selected'];
-        } else {
-            $selected = null;
-        }
+        $selected = $this->get('selected', NULL);
 
-        $this->data = Services::Text()->buildSelectlist(
+        $query_results = Services::Text()->buildSelectlist(
             $datalist,
             $results[0]->listitems,
             $results[0]->multiple,
             $results[0]->size,
-            $selected
+            $this->get('selected', NULL)
+        );
+
+
+        $this->set('model_type', DATAOBJECT_MODEL_TYPE);
+        $this->set('model_name', TEMPLATEVIEWNAME_MODEL_NAME);
+        $this->set('model_query_object', QUERY_OBJECT_LIST);
+
+        $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
+        $this->parameters['model_name'] = TEMPLATEVIEWNAME_MODEL_NAME;
+
+        Services::Registry()->set(
+            TEMPLATEVIEWNAME_MODEL_NAME,
+            'Formselectlist',
+            $query_results
         );
 
         return true;

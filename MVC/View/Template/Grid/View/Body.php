@@ -11,7 +11,7 @@ defined('MOLAJO') or die; ?>
     $columnCount = 1;
     $nowrap = ' nowrap';
     $first = 1;
-    $columnArray = Services::Registry()->get('Plugindata', 'GridTableColumns');
+    $columnArray = Services::Registry()->get('Grid', 'Tablecolumns');
     foreach ($columnArray as $column) {
         $class = '';
         $nowrap = '';

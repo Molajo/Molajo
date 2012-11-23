@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
 class PagetypegridPlugin extends Plugin
 {
     /**
-     * Prepares data for the Administrator Grid  - run PagetypegridPlugin after AdminmenuPlugin
+     * Prepares data for the Administrator Grid
      *
      * @return  boolean
      * @since   1.0
@@ -55,8 +55,8 @@ class PagetypegridPlugin extends Plugin
     /**
      * Create Toolbar Registry based on Authorized Access
      *
-     * @return boolean
-     * @since  1.0
+     * @return  boolean
+     * @since   1.0
      */
     protected function setToolbar()
     {
@@ -77,39 +77,32 @@ class PagetypegridPlugin extends Plugin
         foreach ($grid_toolbar_buttons as $buttonname) {
 
             if ($permissions[$buttonname] === true) {
-
                 $row = new \stdClass();
-
-                $row->name = Services::Language()->translate(
-                    strtoupper('TASK_' . strtoupper($buttonname) . '_BUTTON')
-                );
+                $row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($buttonname) . '_BUTTON'));
                 $row->action = $buttonname;
-
                 if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
                     $row->link = $url . '/' . $row->action;
                 } else {
                     $row->link = $url . '&action=' . $row->action;
                 }
-
                 $query_results[] = $row;
             }
         }
 
         if (Services::Registry()->get('Plugindata', 'grid_search', 1) == 1) {
+
             $row = new \stdClass();
             $row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
             $row->action = 'search';
-
             if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
                 $row->link = $url . '/' . $row->action;
             } else {
                 $row->link = $url . '&action=' . $row->action;
             }
-
             $query_results[] = $row;
         }
 
-        Services::Registry()->set('Plugindata', 'Toolbar', $query_results);
+        Services::Registry()->set('Templateviewname', 'Toolbar', $query_results);
 
         return true;
     }
@@ -123,6 +116,7 @@ class PagetypegridPlugin extends Plugin
     protected function setFilter()
     {
         $grid_list = array();
+
         for ($i=1; $i < 11; $i++) {
             if ($this->get('grid_list' . $i, '') == '') {
             } else {
@@ -150,7 +144,7 @@ class PagetypegridPlugin extends Plugin
                         $selected
                     );
 
-                    Services::Registry()->set('Plugindata', 'list_' . $listname, $query_results);
+                    Services::Registry()->set('Gridfilters', 'list_' . $listname, $query_results);
 
                     $row = new \stdClass();
                     $row->listname = $listname;
@@ -159,7 +153,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set('Plugindata', 'Gridfilterlist', $lists);
+        Services::Registry()->set('Templateviewname', 'Gridfilters', $lists);
 
         return true;
     }
@@ -175,6 +169,7 @@ class PagetypegridPlugin extends Plugin
     protected function setGrid($controller)
     {
         $grid_columns = array();
+
         for ($i=1; $i < 16; $i++) {
             $item = $this->get('grid_column' . $i);
             if (trim($item) == '') {
@@ -183,7 +178,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set('Plugindata', 'GridTableColumns', $grid_columns);
+        Services::Registry()->set('Grid', 'TableColumns', $grid_columns);
 
         $list = $this->get('criteria_catalog_type_id');
 
@@ -199,14 +194,14 @@ class PagetypegridPlugin extends Plugin
         if ($ordering == '' || $ordering === null) {
             $ordering = $controller->get('primary_key', 'id');
         }
-        Services::Registry()->set('Plugindata', 'GridTableOrdering', $ordering);
+        Services::Registry()->set('Grid', 'Tableordering', $ordering);
 
         $orderingDirection = $this->get('grid_ordering_direction');
         if ($orderingDirection == 'ASC') {
         } else {
             $orderingDirection = 'DESC';
         }
-        Services::Registry()->set('Plugindata', 'GridTableOrderingDirection', $orderingDirection);
+        Services::Registry()->set('Grid', 'Orderingdirection', $orderingDirection);
 
         $controller->model->query->order(
             $controller->model->db->qn($controller->get('primary_prefix'))
@@ -216,14 +211,14 @@ class PagetypegridPlugin extends Plugin
         );
 
         $offset = (int) $this->get('grid_offset');
-        Services::Registry()->set('Plugindata', 'GridTableOffset', (int) $offset);
+        Services::Registry()->set('Grid', 'Offset', (int) $offset);
         $controller->set('model_offset', $offset);
 
         $itemsPerPage = (int) $this->get('grid_items_per_page');
         if ((int)$itemsPerPage == 0) {
             $itemsPerPage = 15;
         }
-        Services::Registry()->set('Plugindata', 'GridTableItemsPerPage', $itemsPerPage);
+        Services::Registry()->set('Grid', 'ItemsPerPage', $itemsPerPage);
 
         $controller->set('model_count', $itemsPerPage);
 
@@ -261,22 +256,11 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        /**
-        echo '<pre><br /><br />';
-        var_dump($query_results);
-        echo '<br /><br /></pre>';
-        die;
-
-        echo '<br /><br />';
-        echo $controller->model->query->__toString();
-        echo '<br /><br />';
-*/
-
-        $this->set('model_type', PRIMARY_QUERY_RESULTS_MODEL_TYPE);
+        $this->set('model_type', DATAOBJECT_MODEL_TYPE);
         $this->set('model_name', PRIMARY_QUERY_RESULTS_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
-        $this->parameters['model_type'] = PRIMARY_QUERY_RESULTS_MODEL_TYPE;
+        $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
         $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS_MODEL_NAME;
 
         Services::Registry()->set(
@@ -294,7 +278,7 @@ class PagetypegridPlugin extends Plugin
      * @param   $controller
      * @param   $primary_prefix
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function setBatch()
@@ -327,7 +311,7 @@ class PagetypegridPlugin extends Plugin
                 $row->enable = 1;
 
                 Services::Registry()->set(
-                    'Plugindata',
+                    'Templateviewname',
                     'Grid' . strtolower($grid_batch_array[$i]),
                     array($row)
                 );

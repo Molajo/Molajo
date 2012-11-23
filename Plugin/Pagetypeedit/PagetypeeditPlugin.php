@@ -77,11 +77,11 @@ echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
         );
 
 
-        $this->set('model_type', PRIMARY_QUERY_RESULTS_MODEL_TYPE);
+        $this->set('model_type', DATAOBJECT_MODEL_TYPE);
         $this->set('model_name', PRIMARY_QUERY_RESULTS_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
-        $this->parameters['model_type'] = PRIMARY_QUERY_RESULTS_MODEL_TYPE;
+        $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
         $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS_MODEL_NAME;
 
         Services::Registry()->set(

@@ -10,13 +10,13 @@ defined('MOLAJO') or die;
 
 $nowrap = '';
 $checked = '';
-$rowCount = Services::Registry()->get('Plugindata', 'GridTableRows'); ?>
+$rowCount = Services::Registry()->get('Grid', 'Tablerows'); ?>
 <table class="grid responsive">
     <thead>
     <tr>
         <?php
         $count = 1;
-        $columnArray = Services::Registry()->get('Plugindata', 'GridTableColumns');
+        $columnArray = Services::Registry()->get('Grid', 'Tablecolumns');
         foreach ($columnArray as $column) {
             $extraClass = '';
             $nowrap = '';

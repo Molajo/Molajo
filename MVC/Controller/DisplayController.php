@@ -142,9 +142,7 @@ class DisplayController extends Controller
 //todo when close to done - do encoding - bring in filters given field definitions
 
         ob_start();
-        echo '<pre>';
-        var_dump($this->query_results);
-        echo '</pre>';
+
         /** 1. view handles loop and event processing */
         if (file_exists($this->view_path . '/View/Custom.php')) {
             include $this->view_path . '/View/Custom.php';
@@ -179,12 +177,6 @@ class DisplayController extends Controller
 
         $output = ob_get_contents();
         ob_end_clean();
-
-        echo '<br />';
-        echo $this->view_path;
-        echo '<br />';
-        echo $output;
-        echo '<br />';
 
         return $output;
     }

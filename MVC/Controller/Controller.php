@@ -134,6 +134,8 @@ class Controller
      */
     public function getModelRegistry($model_type = 'Datasource', $model_name = null, $model_class = 'ReadModel')
     {
+        $this->set('data_object_set', 0);
+
         if ($model_type == '') {
             $model_type = 'Datasource';
         }
@@ -197,10 +199,8 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
      */
     public function setDataobject()
     {
+        $this->set('data_object_set', 1);
 
-        if ($this->get('model_registry') == 'PrimaryqueryDataobject') {
-            Services::Registry()->get($this->get('model_registry'), '*');
-        }
         $registry = Services::Registry()->getArray($this->get('model_registry'));
         $data_object = Services::Registry()->get($this->get('model_registry'), 'data_object');
         $this->set('data_object', ucfirst(strtolower($data_object)));
@@ -226,11 +226,6 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
             }
         }
 
-        if ($this->get('data_object') == 'Database') {
-        } else {
-            return;
-        }
-
         $modelClass = 'Molajo\\MVC\\Model\\' . $this->get('model_class', 'ReadModel');
 
         try {
@@ -244,6 +239,15 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
             || $this->model->get('data_object') === false
         ) {
             $this->model->set('data_object', 'Database');
+        }
+
+        if ($this->get('data_object') == 'Database') {
+        } else {
+            $this->model->db = NULL;
+            $this->model->query = NULL;
+            $this->model->null_date = NULL;
+            $this->model->now = NULL;
+            return;
         }
 
         if ($this->model->get('service_class', 'Database') == 'Database') {
@@ -280,9 +284,7 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
      */
     public function getData($query_object = QUERY_OBJECT_LIST)
     {
-
-        if ($this->model->db === null
-            && $this->get('data_object') == 'Database') {
+        if ($this->get('data_object_set') === 0) {
             $this->setDataobject();
         }
 
@@ -322,6 +324,8 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
                 . ' <br />Non-DB Services Class: ' . $this->get('service_class')
                 . ' <br />Non-DB Services Method: ' . $this->get('service_class_query_method')
                 . ' <br />Non-DB Services Method Parameter: ' . $this->get('service_class_query_method_parameter')
+                . ' <br />Registry Entry (Datalist parameter): ' . $this->get('registry_entry')
+                . ' <br />Template View: ' . $this->get('template_view_path_node')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
 echo $profiler_message;
         if (count($this->plugins) > 0) {
@@ -337,14 +341,30 @@ echo $profiler_message;
                 $this->query_results = array();
 
             } else {
+                $method_parameter = NULL;
                 $service_class = $this->get('service_class');
                 $service_class_query_method = $this->get('service_class_query_method');
+                $service_class_query_method_parameter = $this->get('service_class_query_method_parameter');
+                if ($service_class_query_method_parameter == 'REGISTRY_ENTRY') {
+                    $method_parameter = $this->get('registry_entry');
+                } elseif ($service_class_query_method_parameter == 'TEMPLATE_VIEW_NAME') {
+                    $method_parameter = $this->get('template_view_path_node');
+                } else {
+                    $method_parameter = $service_class_query_method_parameter;
+                }
 
                 $this->query_results = Services::$service_class()
                     ->$service_class_query_method(
                         $this->get('model_name'),
-                        $this->get('service_class_query_method_parameter', null)
+                        $method_parameter
                     );
+
+                if ($method_parameter == 'Grid') {
+                } elseif (strtolower(substr($method_parameter, 0, 4)) == 'grid') {
+                    echo '<pre>';
+                    var_dump($this->query_results);
+                    echo '</pre>';
+                }
             }
         }
 

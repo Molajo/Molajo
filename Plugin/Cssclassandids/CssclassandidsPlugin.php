@@ -24,7 +24,7 @@ class CssclassandidsPlugin extends Plugin
      * @return boolean
      * @since   1.0
      */
-    public function onBeforeViewRender()
+    public function onAfterRead()
     {
 
         $count = count($this->data);
@@ -46,8 +46,8 @@ class CssclassandidsPlugin extends Plugin
             $class_field_value = $this->getFieldValue($class_field);
         }
 
-        $view_css_class = $this->parameters['template_view_css_class'];
-
+        $view_css_class = $this->get('template_view_css_class');
+           echo $view_css_class;
         $current_field = $this->getField('current');
         if ($current_field === false) {
             $current_field_value = '';
@@ -75,7 +75,7 @@ class CssclassandidsPlugin extends Plugin
             $id_field_value = $this->getFieldValue($id_field);
         }
 
-        $view_css_id = $this->parameters['template_view_css_id'];
+        $view_css_id = $this->get('template_view_css_id');
 
         $id .= ' ' . trim($id_field_value) . ' ' . trim($view_css_id);
 
