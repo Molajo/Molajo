@@ -19,8 +19,6 @@ defined('MOLAJO') or die;
 class CommentPlugin extends Plugin
 {
     /**
-     * Retrieve Comments for Resource
-     *
      * This method is used to retrieve data input for the Comment, Commentform, and Comments Template Views
      *
      * @return  boolean
