@@ -1,0 +1,6 @@
+<datalist name="FieldsPrivatemessages">
+    <model
+            name="FieldsPrivatemessages"
+            extends="PlugindataDatalist"
+            registry_entry="PrivatemessagesSystemFields"/>
+</datalist>

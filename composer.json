@@ -1,0 +1,24 @@
+{
+    "name": "Molajo/Molajo",
+    "type":"Content Management Framework",
+    "description":"Molajo Content Management Framework",
+    "keywords":["cmf", "framework", "mvc"],
+    "homepage":"http://molajo.org",
+    "license":"GPL v 2, or later, and MIT",
+    "authors": [
+        {
+            "name": "Amy Stephen",
+            "email": "AmyStephen@gmail.com",
+            "homepage": "http://molajo.org",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php":">=5.3.4"
+    },
+    "autoload": {
+        "psr-0": {
+            "Molajo": "src"
+        }
+    }
+}

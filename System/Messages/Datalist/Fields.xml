@@ -1,6 +1,0 @@
-<datalist name="FieldsMessages">
-    <model
-            name="FieldsMessages"
-            extends="PlugindataDatalist"
-            registry_entry="MessagesResourceFields"/>
-</datalist>

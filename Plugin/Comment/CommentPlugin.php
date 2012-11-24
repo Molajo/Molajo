@@ -162,12 +162,12 @@ class CommentPlugin extends Plugin
         }
 
         if ((int)$this->get('parent_comments_open', 1) == 1) {
-            $row->comments_closed_message = Services::Language()->translate('COMMENTS_ARE_CLOSED');
+            $row->closed_comment = Services::Language()->translate('COMMENTS_ARE_CLOSED');
+            $row->closed = 1;
         } else {
-            $row->comments_closed_message = '';
+            $row->closed_comment = '';
+            $row->closed = 0;
         }
-        ;
-
         $results[] = $row;
 
         Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Comment', $results);
