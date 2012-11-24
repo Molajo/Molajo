@@ -21,9 +21,9 @@
     <service name="Response" static="0" startup=""/>
     <service name="Redirect" static="0" startup=""/>
     <service name="User" static="0" startup="load"/>
-    <service name="Language" static="1" startup="getInstance"/>
+    <service name="Language" static="0" startup="initialise"/>
     <service name="Date" static="1" startup="getInstance"/>
-    <service name="Asset" static="0" startup="Initialise"/>
+    <service name="Asset" static="0" startup="initialise"/>
     <service name="Authorisation" static="0" startup="initialise"/>
     <service name="Metadata" static="0" startup=""/>
     <service name="Image" static="0" startup=""/>

@@ -42,34 +42,12 @@ defined('MOLAJO') or die;
 Class LanguageService
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * @static
-     * @return  bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new LanguageService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * @param   string  $language
      *
      * @return  null
      * @since   1.0
      */
-    public function __construct($language = null)
+    public function initialise($language = null)
     {
         $language = $this->setCurrentLanguage($language);
 		$this->setLanguageRegistry($language);

@@ -26,7 +26,7 @@ Class Application
     /**
      * Application::Services
      *
-     * @var    object Services
+     * @var    object  Services
      * @since  1.0
      */
     protected static $services = null;
@@ -34,7 +34,7 @@ Class Application
     /**
      * Application::Helpers
      *
-     * @var    object Helper
+     * @var    object  Helper
      * @since  1.0
      */
     protected static $helpers = null;
@@ -42,7 +42,7 @@ Class Application
     /**
      * Application::Request
      *
-     * @var    object Request
+     * @var    object  Request
      * @since  1.0
      */
     protected static $request = null;
@@ -50,7 +50,7 @@ Class Application
     /**
      * $rendered_output
      *
-     * @var    object Request
+     * @var    object  Request
      * @since  1.0
      */
     protected $rendered_output = null;
@@ -896,7 +896,8 @@ Class Application
         if (self::$request) {
         } else {
             try {
-                self::$request = RequestService::getInstance();
+                self::$request = new RequestService();
+//                self::$request = $connect>getInstance();
             } catch (\Exception $e) {
                 echo 'Instantiate RequestService Exception : ', $e->getMessage(), "\n";
                 die;
