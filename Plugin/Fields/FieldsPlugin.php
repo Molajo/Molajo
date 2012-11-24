@@ -41,8 +41,7 @@ class FieldsPlugin extends Plugin
 
         $model_name = $this->get('model_name');
         $model_type = $this->get('model_type');
-               echo 'xxx';
-        die;
+
         $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
         if (Services::Registry()->exists($model_registry) === true) {

@@ -23,7 +23,7 @@ class PagetypesPlugin extends Plugin
      *
      * This can be moved to onBeforeParse when Plugin ordering is in place
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRoute()
@@ -37,7 +37,6 @@ class PagetypesPlugin extends Plugin
         } else {
             $page_type_list = $folders;
         }
-
 
 		$folders = Services::Filesystem()->folderFolders(
 			PLATFORM_FOLDER . '/Menuitem'
@@ -64,15 +63,15 @@ class PagetypesPlugin extends Plugin
         $newer = array_unique($new);
         sort($newer);
 
-        $menuitems = array();
+        $page_types = array();
         foreach ($newer as $item) {
             $row = new \stdClass();
             $row->value = $item;
             $row->id = $item;
-            $menuitems[] = $row;
+            $page_types[] = $row;
         }
 
-        Services::Registry()->set('Datalist', 'Pagetypes', $menuitems);
+        Services::Registry()->set('Datalist', 'Pagetypes', $page_types);
 
         return true;
     }

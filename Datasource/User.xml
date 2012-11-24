@@ -71,6 +71,7 @@
     <customfields>
 
         <customfield name="parameters">
+            <include field="display_phone"/>
             <include field="display_gravatar"/>
             <include field="display_birthdate"/>
             <include field="display_email"/>
@@ -84,6 +85,7 @@
             <include field="language"/>
             <include field="date_of_birth"/>
             <include field="secondary_email"/>
+            <include field="phone"/>
         </customfield>
 
     </customfields>

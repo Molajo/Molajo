@@ -28,7 +28,8 @@ class CommentPlugin extends Plugin
     {
         if (strtolower($this->get('template_view_path_node')) == 'comment' ||
             strtolower($this->get('template_view_path_node')) == 'comments' ||
-            strtolower($this->get('template_view_path_node')) == 'commentform') {
+            strtolower($this->get('template_view_path_node')) == 'commentform'
+        ) {
         } else {
             return true;
         }
@@ -60,8 +61,13 @@ class CommentPlugin extends Plugin
 
         $method = 'get' . ucfirst(strtolower($this->get('template_view_path_node')));
 
-        return $this->$method($controller, $parentController,
-            $parent_model_type, $parent_model_name, $parent_source_id);
+        return $this->$method(
+            $controller,
+            $parentController,
+            $parent_model_type,
+            $parent_model_name,
+            $parent_source_id
+        );
 
     }
 
@@ -81,25 +87,35 @@ class CommentPlugin extends Plugin
     {
         $parent_model_type = $this->get('parent_model_type', '');
         $parent_model_name = $this->get('parent_model_name', '');
-        $parent_source_id = (int) $this->get('parent_source_id', 0);
+        $parent_source_id = (int)$this->get('parent_source_id', 0);
 
         if ($parent_model_type == ''
             || $parent_model_name == ''
-            || $parent_source_id == 0) {
-            $parent_model_type = Services::Registry()->get('RouteParameters', 'catalog_model_type');
-            $parent_model_name = Services::Registry()->get('RouteParameters', 'catalog_model_name');
-            $parent_source_id = (int) Services::Registry()->get('RouteParameters', 'catalog_source_id');
+            || $parent_source_id == 0
+        ) {
+            $parent_model_type = Services::Registry()->get('RouteParameters', 'model_type');
+            $parent_model_name = Services::Registry()->get('RouteParameters', 'model_name');
+            $parent_source_id = (int)Services::Registry()->get('RouteParameters', 'source_id');
         }
 
         if ($parent_model_type == ''
             || $parent_model_name == ''
-            || $parent_source_id == 0) {
+            || $parent_source_id == 0
+        ) {
             return false;
         }
 
-        return array('parent_model_type' => $parent_model_type,
+        echo '<pre>';
+        var_dump(array(
+            'parent_model_type' => $parent_model_type,
             'parent_model_name' => $parent_model_name,
-            'parent_source_id' => $parent_source_id);
+            'parent_source_id' => $parent_source_id));
+die;
+        return array(
+            'parent_model_type' => $parent_model_type,
+            'parent_model_name' => $parent_model_name,
+            'parent_source_id' => $parent_source_id
+        );
     }
 
     /**
@@ -114,16 +130,20 @@ class CommentPlugin extends Plugin
      * @return  bool
      * @since   1.0
      */
-    public function getComment($controller, $parentController,
-        $parent_model_type, $parent_model_name, $parent_source_id)
-    {
+    public function getComment(
+        $controller,
+        $parentController,
+        $parent_model_type,
+        $parent_model_name,
+        $parent_source_id
+    ) {
         $primary_prefix = $controller->get('primary_prefix');
 
         $controller->model->query->select('count(*)');
         $controller->model->query->where(
             $controller->model->db->qn($primary_prefix)
                 . '.' . $controller->model->db->qn('root')
-                . ' = ' . (int) $parent_source_id
+                . ' = ' . (int)$parent_source_id
         );
 
         $count = $controller->getData(QUERY_OBJECT_RESULT);
@@ -141,7 +161,13 @@ class CommentPlugin extends Plugin
             $row->content_text = Services::Language()->translate('COMMENTS_TEXT_HAS_COMMENTS');
         }
 
-        $open = $this->getCommentsOpen($parentController, $parent_source_id);
+        $open = $this->getCommentsOpen(
+            $controller,
+            $parentController,
+            $parent_model_type,
+            $parent_model_name,
+            $parent_source_id
+        );
         if ($open === false) {
             $row->closed_comment = Services::Language()->translate('COMMENTS_ARE_CLOSED');
             $row->closed = 1;
@@ -168,17 +194,21 @@ class CommentPlugin extends Plugin
      * @return  bool
      * @since   1.0
      */
-    public function getComments($controller, $parentController,
-        $parent_model_type, $parent_model_name, $parent_source_id)
-    {
+    public function getComments(
+        $controller,
+        $parentController,
+        $parent_model_type,
+        $parent_model_name,
+        $parent_source_id
+    ) {
         $primary_prefix = $controller->get('primary_prefix');
 
-        $controller->set('root', (int) $parent_source_id);
+        $controller->set('root', (int)$parent_source_id);
 
         $controller->model->query->where(
             $controller->model->db->qn($primary_prefix)
                 . '.' . $controller->model->db->qn('root')
-                . ' = ' . (int) $parent_source_id
+                . ' = ' . (int)$parent_source_id
         );
         $controller->model->query->order(
             $controller->model->db->qn($primary_prefix)
@@ -187,7 +217,13 @@ class CommentPlugin extends Plugin
 
         $this->data = $controller->getData(QUERY_OBJECT_LIST);
 
-        $open = $this->getCommentsOpen($parentController, $parent_source_id);
+        $open = $this->getCommentsOpen(
+            $controller,
+            $parentController,
+            $parent_model_type,
+            $parent_model_name,
+            $parent_source_id
+        );
 
         return true;
     }
@@ -204,13 +240,24 @@ class CommentPlugin extends Plugin
      * @return  bool
      * @since   1.0
      */
-    public function getCommentform($controller, $parentController,
-        $parent_model_type, $parent_model_name, $parent_source_id)
-    {
+    public function getCommentform(
+        $controller,
+        $parentController,
+        $parent_model_type,
+        $parent_model_name,
+        $parent_source_id
+    ) {
         $results = array();
         $row = new \stdClass();
 
-        $open = $this->getCommentsOpen($parentController, $parent_source_id);
+        $open = $this->getCommentsOpen(
+            $controller,
+            $parentController,
+            $parent_model_type,
+            $parent_model_name,
+            $parent_source_id
+        );
+
         if ($open === false) {
             $row->closed_comment = Services::Language()->translate('COMMENTS_ARE_CLOSED');
             $row->closed = 1;
@@ -290,12 +337,16 @@ class CommentPlugin extends Plugin
      * @return  bool
      * @since   1.0
      */
-    public function getCommentsOpen($controller, $parentController,
-        $parent_model_type, $parent_model_name, $parent_source_id)
-    {
+    public function getCommentsOpen(
+        $controller,
+        $parentController,
+        $parent_model_type,
+        $parent_model_name,
+        $parent_source_id
+    ) {
         $primary_prefix = $parentController->get('primary_prefix');
 
-        $parentController->set('id', (int) $parent_source_id);
+        $parentController->set('id', (int)$parent_source_id);
 
         $parentController->model->query->select(
             $parentController->model->db->qn($primary_prefix)
@@ -317,7 +368,7 @@ class CommentPlugin extends Plugin
 
         $open_days = $this->get('enable_response_comment_form_open_days');
 
-        if ($actual >  $open_days) {
+        if ($actual > $open_days) {
             return false;
         }
 

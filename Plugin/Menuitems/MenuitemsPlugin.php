@@ -21,7 +21,7 @@ class MenuitemsPlugin extends Plugin
     /**
      * Generates list of Menus and Menuitems for use in Datalists
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRoute()
@@ -33,16 +33,8 @@ class MenuitemsPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry('System', 'Menuitems');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('System', 'Menuitems');
+        $controller->setDataobject();
 
         $controller->set('get_customfields', 0);
         $controller->set('use_special_joins', 0);

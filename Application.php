@@ -265,7 +265,7 @@ Class Application
     }
 
     /**
-     * Schedule Event onBeforeParseEvent Event
+     * Schedule Event onAfterRoute
      *
      * @return  boolean
      * @since   1.0

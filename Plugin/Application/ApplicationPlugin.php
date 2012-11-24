@@ -27,8 +27,6 @@ class ApplicationPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        Services::Registry()->get('Parameters', '*');
-        die;;
         $current_menuitem_id = (int) $this->get('menuitem_id');
 
         $item_indicator = 0;

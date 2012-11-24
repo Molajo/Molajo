@@ -268,7 +268,7 @@ Class ContentHelper
             return array();
         }
 
-        $item->model_registry = $controller->model_registry;
+        $item->model_registry = $controller->get('model_registry');
 
         return $item;
     }
