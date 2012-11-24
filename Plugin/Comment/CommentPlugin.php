@@ -19,12 +19,14 @@ defined('MOLAJO') or die;
 class CommentPlugin extends Plugin
 {
     /**
-     * Retrieve Comment for Resource
+     * Retrieve Comments for Resource
+     *
+     * This method is used to retrieve data input for the Comment, Commentform, and Comments Template Views
      *
      * @return  boolean
      * @since   1.0
      */
-    public function onAfterReadAll()
+    public function onBeforeInclude()
     {
         if (strtolower($this->get('template_view_path_node')) == 'comment' ||
             strtolower($this->get('template_view_path_node')) == 'comments' ||
@@ -35,7 +37,6 @@ class CommentPlugin extends Plugin
         }
 
         $results = $this->getParentKeys();
-
         if ($results === false) {
             return true;
         }
@@ -44,7 +45,6 @@ class CommentPlugin extends Plugin
         $parent_model_name = $results['parent_model_name'];
         $parent_source_id = $results['parent_source_id'];
 
-        /** Connect to Comment Resource */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_RESOURCE_LITERAL, 'Comments');
@@ -54,10 +54,18 @@ class CommentPlugin extends Plugin
         $controller->set('use_special_joins', 1);
         $controller->set('check_view_level_access', 1);
 
-        /** Connect to Parent */
         $parentController = new $controllerClass();
         $parentController->getModelRegistry($parent_model_type, $parent_model_name);
-        $controller->setDataobject();
+        $parentController->setDataobject();
+
+        $open = $this->getCommentsOpen(
+            $controller,
+            $parentController,
+            $parent_model_type,
+            $parent_model_name,
+            $parent_source_id
+        );
+        $this->set('parent_comments_open', $open);
 
         $method = 'get' . ucfirst(strtolower($this->get('template_view_path_node')));
 
@@ -68,7 +76,6 @@ class CommentPlugin extends Plugin
             $parent_model_name,
             $parent_source_id
         );
-
     }
 
     /**
@@ -76,12 +83,11 @@ class CommentPlugin extends Plugin
      *
      * If comments are required for content that is not the primary request, the parent variables
      * can be defined on the include statement, as shown below:
-     *
-     * Note: Include statements must not break on multiple lines
-     *
      * <include:template name=Comment wrap=none parent_model_type=<?php echo Services::Registry()->get('Parameters', 'catalog_model_type'); ?> parent_model_name=<?php echo Services::Registry()->get('Parameters', 'catalog_model_name'); ?> parent_source_id=<?php echo Services::Registry()->get('Parameters', 'catalog_source_id'); ?>/>
+     *      Note: Include statements must not break on multiple lines
      *
-     * @return array|bool
+     * @return  array|bool
+     * @since   1.0
      */
     public function getParentKeys()
     {
@@ -93,9 +99,9 @@ class CommentPlugin extends Plugin
             || $parent_model_name == ''
             || $parent_source_id == 0
         ) {
-            $parent_model_type = Services::Registry()->get('RouteParameters', 'model_type');
-            $parent_model_name = Services::Registry()->get('RouteParameters', 'model_name');
-            $parent_source_id = (int)Services::Registry()->get('RouteParameters', 'source_id');
+            $parent_model_type = Services::Registry()->get('RouteParameters', 'request_model_type');
+            $parent_model_name = Services::Registry()->get('RouteParameters', 'request_model_name');
+            $parent_source_id = (int)Services::Registry()->get('RouteParameters', 'criteria_source_id');
         }
 
         if ($parent_model_type == ''
@@ -105,12 +111,6 @@ class CommentPlugin extends Plugin
             return false;
         }
 
-        echo '<pre>';
-        var_dump(array(
-            'parent_model_type' => $parent_model_type,
-            'parent_model_name' => $parent_model_name,
-            'parent_source_id' => $parent_source_id));
-die;
         return array(
             'parent_model_type' => $parent_model_type,
             'parent_model_name' => $parent_model_name,
@@ -161,23 +161,16 @@ die;
             $row->content_text = Services::Language()->translate('COMMENTS_TEXT_HAS_COMMENTS');
         }
 
-        $open = $this->getCommentsOpen(
-            $controller,
-            $parentController,
-            $parent_model_type,
-            $parent_model_name,
-            $parent_source_id
-        );
-        if ($open === false) {
-            $row->closed_comment = Services::Language()->translate('COMMENTS_ARE_CLOSED');
-            $row->closed = 1;
+        if ((int)$this->get('parent_comments_open', 1) == 1) {
+            $row->comments_closed_message = Services::Language()->translate('COMMENTS_ARE_CLOSED');
         } else {
-            $row->closed_comment = '';
-            $row->closed = 0;
+            $row->comments_closed_message = '';
         }
+        ;
 
         $results[] = $row;
-        $this->data = $results;
+
+        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Comment', $results);
 
         return true;
     }
@@ -215,15 +208,9 @@ die;
                 . '.' . $controller->model->db->qn('lft')
         );
 
-        $this->data = $controller->getData(QUERY_OBJECT_LIST);
+        $results = $controller->getData(QUERY_OBJECT_LIST);
 
-        $open = $this->getCommentsOpen(
-            $controller,
-            $parentController,
-            $parent_model_type,
-            $parent_model_name,
-            $parent_source_id
-        );
+        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Comments', $results);
 
         return true;
     }
@@ -250,15 +237,7 @@ die;
         $results = array();
         $row = new \stdClass();
 
-        $open = $this->getCommentsOpen(
-            $controller,
-            $parentController,
-            $parent_model_type,
-            $parent_model_name,
-            $parent_source_id
-        );
-
-        if ($open === false) {
+        if ((int)$this->get('parent_comments_open', 1) == 1) {
             $row->closed_comment = Services::Language()->translate('COMMENTS_ARE_CLOSED');
             $row->closed = 1;
         } else {
@@ -271,12 +250,12 @@ die;
         $row->parent_source_id = $parent_source_id;
 
         $results[] = $row;
-        $this->data = $results;
+        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Commentform', $results);
 
         return true;
 
         /** Get configuration menuitem settings for this resource */
-//		$menuitem = Helpers::Content()->getResourceMenuitemParameters('Configuration', 17000);
+        $menuitem = Helpers::Content()->getResourceMenuitemParameters('Configuration', 17000);
 
         /** Create Tabs */
         $namespace = 'Comments';
@@ -311,16 +290,7 @@ die;
         $this->parameters['model_type'] = 'Plugindata';
         $this->parameters['model_name'] = 'Edit';
 
-        Services::Registry()->set('Plugindata', 'Commentform', $tabs);
-
-        echo '<pre>';
-        var_dump($tabs);
-        echo '</pre>';
-
-        echo '<pre>';
-        var_dump(Services::Registry()->get('Plugindata', 'Commentform'));
-        echo '</pre>';
-        die;
+        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Commentform', $tabs);
 
         return true;
     }
@@ -344,6 +314,7 @@ die;
         $parent_model_name,
         $parent_source_id
     ) {
+
         $primary_prefix = $parentController->get('primary_prefix');
 
         $parentController->set('id', (int)$parent_source_id);
@@ -369,9 +340,14 @@ die;
         $open_days = $this->get('enable_response_comment_form_open_days');
 
         if ($actual > $open_days) {
-            return false;
+            $o = false;
         }
 
-        return true;
+        if ((int)$this->get('parent_comments_open', 1) == 1) {
+        } else {
+            $this->set('parent_comments_open', $o);
+        }
+
+        return $this->get('parent_comments_open');
     }
 }

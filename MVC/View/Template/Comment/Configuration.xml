@@ -15,6 +15,7 @@
                 <field name="parent_model_type" type="char" null="0" default=""/>
                 <field name="parent_model_name" type="char" null="0" default=""/>
                 <field name="parent_source_id" type="char" null="0" default=""/>
+                <field name="parent_comments_open" type="boolean" null="0" default="1"/>
             </customfield>
         </customfields>
         <table>

@@ -109,7 +109,7 @@ class Includer
 
         $this->loadPlugins();
 
-
+        $this->onBeforeIncludeEvent();
 
         $rendered_output = $this->invokeMVC();
 
@@ -121,6 +121,7 @@ class Includer
             $this->loadViewMedia();
         }
 
+        $rendered_output = $this->onAfterIncludeEvent($rendered_output);
         return $rendered_output;
     }
 

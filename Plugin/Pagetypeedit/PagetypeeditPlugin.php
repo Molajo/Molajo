@@ -76,6 +76,8 @@ echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
             $pageFieldsets[0]->page_count
         );
 
+        $this->set('request_model_type', $this->get('model_type'));
+        $this->set('request_model_name', $this->get('model_name'));
 
         $this->set('model_type', DATAOBJECT_MODEL_TYPE);
         $this->set('model_name', PRIMARY_QUERY_RESULTS_MODEL_NAME);

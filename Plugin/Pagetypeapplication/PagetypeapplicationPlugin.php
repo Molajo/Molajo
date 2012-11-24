@@ -131,6 +131,9 @@ class PagetypeapplicationPlugin extends Plugin
         /** Set the View Model Parameters and Populate the Registry used as the Model */
         $current_page = $form->getPages($pageFieldsets[0]->page_array, $pageFieldsets[0]->page_count);
 
+        $this->set('request_model_type', $this->get('model_type'));
+        $this->set('request_model_name', $this->get('model_name'));
+
         $this->set('model_type', DATAOBJECT_MODEL_TYPE);
         $this->set('model_name', PRIMARY_QUERY_RESULTS_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
