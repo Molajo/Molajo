@@ -8,7 +8,6 @@ namespace Molajo\Plugin\Pagetypegrid;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
-use Molajo\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -27,7 +26,7 @@ class PagetypegridPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-		if (strtolower($this->get('page_type')) == 'grid') {
+		if (strtolower($this->get('page_type')) == strtolower(PAGE_TYPE_GRID)) {
 		} else {
 			return true;
 		}
@@ -60,7 +59,7 @@ class PagetypegridPlugin extends Plugin
      */
     protected function setToolbar()
     {
-        $url = Services::Registry()->get('Plugindata', 'page_url');
+        $url = Services::Registry()->get('Page', 'page_url');
 
         $button = $this->get('grid_toolbar_buttons');
 
@@ -73,6 +72,7 @@ class PagetypegridPlugin extends Plugin
         $permissions = Services::Authorisation()
             ->verifyTaskList($grid_toolbar_buttons, $this->get('catalog_id')
         );
+
         $query_results = array();
         foreach ($grid_toolbar_buttons as $buttonname) {
 
@@ -89,7 +89,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        if (Services::Registry()->get('Plugindata', 'grid_search', 1) == 1) {
+        if ($this->get('grid_search', 1) == 1) {
 
             $row = new \stdClass();
             $row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
@@ -102,7 +102,7 @@ class PagetypegridPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set('Templateviewname', 'Toolbar', $query_results);
+        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Toolbar', $query_results);
 
         return true;
     }
@@ -131,8 +131,12 @@ class PagetypegridPlugin extends Plugin
 
                 //todo: figure out selected value
                 $selected = '';
-                $results = Services::Text()->getList($listname, $this->parameters);
 
+                $results = Services::Text()->getDatalist($listname, DATALIST_MODEL_NAME, $this->parameters);
+                echo $listname . '<br />';
+                echo '<pre>';
+                var_dump($results);
+                echo '</pre>';
                 if ($results === false) {
                 } else {
 
@@ -144,7 +148,7 @@ class PagetypegridPlugin extends Plugin
                         $selected
                     );
 
-                    Services::Registry()->set('Gridfilters', 'list_' . $listname, $query_results);
+                    Services::Registry()->set(DATALIST_MODEL_NAME, $listname, $query_results);
 
                     $row = new \stdClass();
                     $row->listname = $listname;
@@ -153,7 +157,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set('Templateviewname', 'Gridfilters', $lists);
+        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Gridfilters', $lists);
 
         return true;
     }
@@ -178,7 +182,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set('Grid', 'TableColumns', $grid_columns);
+        Services::Registry()->set(PAGE_TYPE_GRID, 'TableColumns', $grid_columns);
 
         $list = $this->get('criteria_catalog_type_id');
 
@@ -194,14 +198,14 @@ class PagetypegridPlugin extends Plugin
         if ($ordering == '' || $ordering === null) {
             $ordering = $controller->get('primary_key', 'id');
         }
-        Services::Registry()->set('Grid', 'Tableordering', $ordering);
+        Services::Registry()->set(PAGE_TYPE_GRID, 'Tableordering', $ordering);
 
         $orderingDirection = $this->get('grid_ordering_direction');
         if ($orderingDirection == 'ASC') {
         } else {
             $orderingDirection = 'DESC';
         }
-        Services::Registry()->set('Grid', 'Orderingdirection', $orderingDirection);
+        Services::Registry()->set(PAGE_TYPE_GRID, 'Orderingdirection', $orderingDirection);
 
         $controller->model->query->order(
             $controller->model->db->qn($controller->get('primary_prefix'))
@@ -211,14 +215,14 @@ class PagetypegridPlugin extends Plugin
         );
 
         $offset = (int) $this->get('grid_offset');
-        Services::Registry()->set('Grid', 'Offset', (int) $offset);
+        Services::Registry()->set(PAGE_TYPE_GRID, 'Offset', (int) $offset);
         $controller->set('model_offset', $offset);
 
         $itemsPerPage = (int) $this->get('grid_items_per_page');
         if ((int)$itemsPerPage == 0) {
             $itemsPerPage = 15;
         }
-        Services::Registry()->set('Grid', 'ItemsPerPage', $itemsPerPage);
+        Services::Registry()->set(PAGE_TYPE_GRID, 'ItemsPerPage', $itemsPerPage);
 
         $controller->set('model_count', $itemsPerPage);
 
@@ -288,13 +292,13 @@ class PagetypegridPlugin extends Plugin
         $temp = $this->get('grid_batch_array', '');
 
         if ($temp == '') {
-            Services::Registry()->set('Plugindata', 'SectionSubmenu', array());
+            Services::Registry()->set('Navigation', 'SectionSubmenu', array());
             return true;
         }
 
         $grid_batch_array = explode(',', $temp);
         if (count($grid_batch_array) == 0) {
-            Services::Registry()->set('Plugindata', 'SectionSubmenu', array());
+            Services::Registry()->set('Navigation', 'SectionSubmenu', array());
             return true;
         }
 
@@ -313,7 +317,7 @@ class PagetypegridPlugin extends Plugin
                 $row->enable = 1;
 
                 Services::Registry()->set(
-                    'Templateviewname',
+                    TEMPLATEVIEWNAME_MODEL_NAME,
                     'Grid' . strtolower($grid_batch_array[$i]),
                     array($row)
                 );
@@ -336,7 +340,7 @@ class PagetypegridPlugin extends Plugin
                     $row->current = 0;
                 }
                 $row->title = ucfirst(strtolower($item));
-                $row->url = Services::Registry()->get('Plugindata', 'page_url') . '#lk' . strtolower($item);
+                $row->url = Services::Registry()->get('Page', 'page_url') . '#lk' . strtolower($item);
 
                 $pageArray[] = $row;
 
@@ -344,7 +348,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set('Plugindata', 'SectionSubmenu', $pageArray);
+        Services::Registry()->set('Navigation', 'SectionSubmenu', $pageArray);
 
         return true;
     }

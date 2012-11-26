@@ -5,9 +5,9 @@ use Molajo\Service\Services;
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  *     <include:template name=Toolbar/>
- * <include:template name=Pagination wrap=nav wrap_class=pagination/>
  */
 defined('MOLAJO') or die; ?>
+xyz
 <include:template name=Formbegin/>
 <include:template name=Gridfilters wrap=nav wrap_class=grid-filters role=nav/>
 <section class="grid">

@@ -9,7 +9,7 @@
         size="5"
         criteria_extension_instance_id="13000"
         criteria_catalog_type_id="13000"
-        data_object="Datalist">
+        data_object="Database">
     <table>
         <fields>
             <include field="id"/>

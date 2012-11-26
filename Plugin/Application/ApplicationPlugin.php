@@ -22,20 +22,23 @@ class ApplicationPlugin extends Plugin
     /**
      * Prepares Application Menus
      *
+     * Note: Services::Registry()->get('Parameters') is valid during this method.
+     *  Following, Services::Registry()->get('RequestParameters') should be used
+     *
      * @return  boolean
      * @since   1.0
      */
     public function onBeforeParse()
     {
-        $current_menuitem_id = (int) $this->get('menuitem_id');
+        $current_menuitem_id = (int)$this->get('menuitem_id');
 
         $item_indicator = 0;
-        if ((int) $current_menuitem_id == 0) {
+        if ((int)$current_menuitem_id == 0) {
             $item_indicator = 1;
-            $current_menuitem_id = (int) $this->get('parent_menu_id');
+            $current_menuitem_id = (int)$this->get('parent_menu_id');
         }
 
-        if ((int) $current_menuitem_id == 0) {
+        if ((int)$current_menuitem_id == 0) {
             return true;
         }
 
@@ -47,21 +50,21 @@ class ApplicationPlugin extends Plugin
 
         $this->setPageTitle($item_indicator);
 
-		$this->setPageEligibleActions();
+        $this->setPageEligibleActions();
 
         return true;
     }
 
-	/**
-	 * Prepares Application Menus
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function onBeforeDocumenthead()
-	{
-		$this->setPageMeta();
-	}
+    /**
+     * Prepares Application Menus
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function onBeforeDocumenthead()
+    {
+        $this->setPageMeta();
+    }
 
     /**
      * Build the home and page url to be used in links
@@ -71,28 +74,25 @@ class ApplicationPlugin extends Plugin
      */
     protected function urls()
     {
-		/* Home */
-		$url = Services::Registry()->get('Configuration', 'application_base_url');
-		Services::Registry()->set('Plugindata', 'home_url', $url);
+        $url = Services::Registry()->get('Configuration', 'application_base_url');
+        Services::Registry()->set('Page', 'home_url', $url);
 
-		/* Page and Canonical */
-		$url = Services::Request()->get('base_url_path_for_application') .
-			Services::Registry()->get('Parameters', 'request_url');
-		Services::Registry()->set('Plugindata', 'page_url', $url);
+        $url = Services::Registry()->get('Parameters', 'request_base_url_path') .
+            Services::Registry()->get('Parameters', 'request_url');
+        Services::Registry()->set('Page', 'page_url', $url);
         Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
 
-		/* Resource */
-		$resource = $this->get('extension_name_path_node', '');
-		$url = Services::Registry()->get('Configuration', 'application_base_url') . '/' . strtolower($resource);
-		Services::Registry()->set('Plugindata', 'resource_url', $url);
+        $resource = $this->get('extension_name_path_node', '');
+        $url = Services::Registry()->get('Configuration', 'application_base_url') . '/' . strtolower($resource);
+        Services::Registry()->set('Page', 'resource_url', $url);
 
-		//todo: add links for prev and next
+        //todo: add links for prev and next
 
         return true;
     }
 
     /**
-     * Set breadcrumbs
+     * Set Breadcrumbs for the page
      *
      * @return  boolean
      * @since   1.0
@@ -101,7 +101,7 @@ class ApplicationPlugin extends Plugin
     {
         $bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id);
 
-        Services::Registry()->set('Plugindata', 'Breadcrumbs', $bread_crumbs);
+        Services::Registry()->set('Navigation', 'Breadcrumbs', $bread_crumbs);
 
         return true;
     }
@@ -114,30 +114,30 @@ class ApplicationPlugin extends Plugin
      */
     protected function setMenu($current_menu_item = 0)
     {
-        $bread_crumbs = Services::Registry()->get('Plugindata', 'Breadcrumbs');
+        $bread_crumbs = Services::Registry()->get('Navigation', 'Breadcrumbs');
 
-		$menuname = '';
-		$query_results = array();
+        $menuname = '';
+        $query_results = array();
 
         if ($bread_crumbs == false || count($bread_crumbs) == 0) {
-			return true;
+            return true;
         }
 
-		$menu_id = $bread_crumbs[0]->extension_id;
+        $menu_id = $bread_crumbs[0]->extension_id;
 
-		$query_results = Services::Menu()->get($menu_id, $current_menu_item, $bread_crumbs);
+        $query_results = Services::Menu()->get($menu_id, $current_menu_item, $bread_crumbs);
 
-		if ($query_results == false || count($query_results) == 0) {
-			$menuname = '';
-		} else {
-			$menuname = $query_results[0]->extensions_name;
-		}
+        if ($query_results == false || count($query_results) == 0) {
+            $menuname = '';
+        } else {
+            $menuname = $query_results[0]->extensions_name;
+        }
 
-		if ($menuname == '') {
-			return true;
-		}
+        if ($menuname == '') {
+            return true;
+        }
 
-        Services::Registry()->set('Plugindata', $menuname, $query_results);
+        Services::Registry()->set('Navigation', $menuname, $query_results);
 
         return true;
     }
@@ -150,284 +150,293 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageTitle($item_indicator = 0)
     {
-		$title = Services::Registry()->get('Configuration', 'application_name');
-		if ($title == '') {
-        	$title = '<strong> Molajo</strong> '. Services::Language()->translate(APPLICATION_NAME);
-		}
-        Services::Registry()->set('Plugindata', 'HeaderTitle', $title);
+        $title = Services::Registry()->get('Configuration', 'application_name');
+        if ($title == '') {
+            $title = '<strong> Molajo</strong> ' . Services::Language()->translate(APPLICATION_NAME);
+        }
+        Services::Registry()->set('Page', 'HeaderTitle', $title);
 
-		$heading1 = $this->get('criteria_title');
-		$page_type = $this->get('page_type');
-		if ($page_type == 'Grid') {
-			$page_type = QUERY_OBJECT_LIST;
-		}
+        Services::Registry()->set('Page', 'page_type', $this->get('page_type'));
 
-		$list_current = 0;
-		$configuration_current = 0;
-		$new_current = 0;
-		if (strtolower($page_type) == QUERY_OBJECT_ITEM) {
-			$new_current = 1;
-		} elseif (strtolower($page_type) == 'configuration') {
-			$configuration_current = 1;
-		} else {
-			$list_current = 1;
-		}
+        $heading1 = $this->get('criteria_title');
+        $page_type = $this->get('page_type');
+        if ($page_type == 'Grid') {
+            $page_type = QUERY_OBJECT_LIST;
+        }
 
-		$display_page_type = Services::Language()->translate(strtoupper($page_type));
+        $list_current = 0;
+        $configuration_current = 0;
+        $new_current = 0;
+        if (strtolower($page_type) == QUERY_OBJECT_ITEM) {
+            $new_current = 1;
+        } elseif (strtolower($page_type) == PAGE_TYPE_CONFIGURATION) {
+            $configuration_current = 1;
+        } else {
+            $list_current = 1;
+        }
+
+        $display_page_type = Services::Language()->translate(strtoupper($page_type));
 //		$request_action = $this->get('request_action');
-		$heading2 = ucfirst(strtolower($page_type));
+        $heading2 = ucfirst(strtolower($page_type));
 
-		Services::Registry()->set('Plugindata', 'heading1', $heading1);
-		Services::Registry()->set('Plugindata', 'heading2', $heading2);
+        Services::Registry()->set('Page', 'heading1', $heading1);
+        Services::Registry()->set('Page', 'heading2', $heading2);
 
-		$resource_menu_item = array();
+        $resource_menu_item = array();
 
-		Services::Registry()->get('Plugindata', 'resource_url');
+        Services::Registry()->get('Page', 'resource_url');
 
-		$row = new \stdClass();
-		$row->link_text = Services::Language()->translate('GRID');
-		$row->link = Services::Registry()->get('Plugindata', 'resource_url');
-		$row->current = $list_current;
-		$query_results[] = $row;
+        $row = new \stdClass();
+        $row->link_text = Services::Language()->translate('GRID');
+        $row->link = Services::Registry()->get('Page', 'resource_url');
+        $row->current = $list_current;
+        $query_results[] = $row;
 
-		$row = new \stdClass();
-		$row->link_text = Services::Language()->translate('CONFIGURATION');
-		$row->link = Services::Registry()->get('Plugindata', 'resource_url') . '/' . 'configuration';
-		$row->current = $configuration_current;
-		$query_results[] = $row;
+        $row = new \stdClass();
+        $row->link_text = Services::Language()->translate('CONFIGURATION');
+        $row->link = Services::Registry()->get('Page', 'resource_url') . '/' . 'configuration';
+        $row->current = $configuration_current;
+        $query_results[] = $row;
 
-		$row = new \stdClass();
-		$row->link_text = Services::Language()->translate('NEW');
-		$row->link = Services::Registry()->get('Plugindata', 'resource_url') . '/' . 'new';
-		$row->current = $new_current;
-		$query_results[] = $row;
+        $row = new \stdClass();
+        $row->link_text = Services::Language()->translate('NEW');
+        $row->link = Services::Registry()->get('Page', 'resource_url') . '/' . 'new';
+        $row->current = $new_current;
+        $query_results[] = $row;
 
-		Services::Registry()->set('Plugindata', 'PageSubmenu', $query_results);
+        Services::Registry()->set('Navigation', 'PageSubmenu', $query_results);
 
-		return true;
+        return true;
     }
 
-	/**
-	 * Prepares Page Title and Actions for Rendering
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	protected function setPageEligibleActions()
-	{
-		if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
+    /**
+     * Prepares Page Title and Actions for Rendering
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function setPageEligibleActions()
+    {
+        if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
+
             if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == ACTION_VIEW) {
                 $actions = $this->setItemActions();
             } else {
                 $actions = $this->setEditActions();
             }
 
-		} elseif ($this->get('page_type') == QUERY_OBJECT_LIST) {
-			$actions = $this->setListActions();
+        } elseif ($this->get('page_type') == QUERY_OBJECT_LIST) {
+            $actions = $this->setListActions();
 
-		} else {
-			$actions = $this->setMenuitemActions();
-		}
+        } else {
+            $actions = $this->setMenuitemActions();
+        }
 
-		if ($actions === false) {
-			$actionCount = 0;
-		} else {
-			$actionCount = count($actions);
-		}
+        if ($actions === false) {
+            $actionCount = 0;
+        } else {
+            $actionCount = count($actions);
+        }
 
-		$query_results = array();
+        $query_results = array();
 
-		$row = new \stdClass();
-		$row->action_count = $actionCount;
-		$row->action_array = '';
+        $row = new \stdClass();
+        $row->action_count = $actionCount;
+        $row->action_array = '';
 
-		if ($actionCount === 0) {
-			$row->action_array = null;
-		} else {
-			foreach ($actions as $action) {
-				$row->action_array .= trim($action);
-			}
-		}
+        if ($actionCount === 0) {
+            $row->action_array = null;
+        } else {
+            foreach ($actions as $action) {
+                $row->action_array .= trim($action);
+            }
+        }
 
-		$query_results[] = $row;
+        $query_results[] = $row;
 
-		Services::Registry()->set('Plugindata', 'PageEligibleActions', $query_results);
+        Services::Registry()->set('Page', 'PageEligibleActions', $query_results);
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Create Item Actions
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	protected function setItemActions()
-	{
-		// Currently display
-
-		$actions = array();
-		$actions[] = 'create';
-		$actions[] = 'copy';
-		$actions[] = ACTION_VIEW;
-		$actions[] = 'edit';
-
-		// editing item
-		$actions[] = ACTION_VIEW;
-		$actions[] = 'copy';
-		$actions[] = 'draft';
-		$actions[] = 'save';
-		$actions[] = 'restore';
-		$actions[] = 'cancel';
-
-		// either
-		$actions[] = 'tag';
-		$actions[] = 'categorize';
-		$actions[] = 'status';  // archive, publish, unpublish, trash, spam, version
-		$actions[] = 'sticky';
-		$actions[] = 'feature';
-		$actions[] = 'delete';
-
-		// list
-		$actions[] = 'orderup';
-		$actions[] = 'orderdown';
-		$actions[] = 'reorder';
-		$actions[] = 'status';
-
-
-		return $actions;
-	}
-
-	/**
-	 * Create Edit Actions
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	protected function setEditActions()
-	{
-		$actions = array();
-
-		return $actions;
-	}
-
-	/**
-	 * Create List Actions
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	protected function setListActions()
-	{
-		$actions = array();
-
-		$actions[] = 'create';
-		$actions[] = 'copy';
-		$actions[] = 'edit';
-
-		$actions[] = 'tag';
-		$actions[] = 'categorize';
-		$actions[] = 'status';  // archive, publish, unpublish, trash, spam, version
-		$actions[] = 'sticky';
-		$actions[] = 'feature';
-		$actions[] = 'delete';
-
-		$actions[] = 'orderup';
-		$actions[] = 'orderdown';
-		$actions[] = 'reorder';
-		$actions[] = 'status';
-
-
-		return $actions;
-	}
-
-	/**
-	 * Menu Item Actions
-	 *
-	 * @return  array
+    /**
+     * Create Item Actions
+     *
+     * @return  array
      * @since   1.0
-	 */
-	protected function setMenuitemActions()
-	{
-		$actions = array();
+     */
+    protected function setItemActions()
+    {
+        // Currently display
 
-		return $actions;
-	}
+        $actions = array();
+        $actions[] = 'create';
+        $actions[] = 'copy';
+        $actions[] = ACTION_VIEW;
+        $actions[] = 'edit';
 
-	/**
-	 * Set Page Meta Data
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	protected function setPageMeta()
-	{
-		$title = Services::Registry()->get('Metadata', 'title', '');
-		$description = Services::Registry()->get('Metadata', 'description', '');
-		$author = Services::Registry()->get('Metadata', 'author', '');
-		$robots = Services::Registry()->get('Metadata', 'robots', '');
+        // editing item
+        $actions[] = ACTION_VIEW;
+        $actions[] = 'copy';
+        $actions[] = 'draft';
+        $actions[] = 'save';
+        $actions[] = 'restore';
+        $actions[] = 'cancel';
 
-		if ($title == '' || $description == '' || $author == '' || $robots == '') {
-		} else {
-			return true;
-		}
+        // either
+        $actions[] = 'tag';
+        $actions[] = 'categorize';
+        $actions[] = 'status'; // archive, publish, unpublish, trash, spam, version
+        $actions[] = 'sticky';
+        $actions[] = 'feature';
+        $actions[] = 'delete';
 
-		$data = Services::Registry()->get(PRIMARY_QUERY_RESULTS_MODEL_NAME,
-            PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS);
+        // list
+        $actions[] = 'orderup';
+        $actions[] = 'orderdown';
+        $actions[] = 'reorder';
+        $actions[] = 'status';
 
-		$type = strtolower(Services::Registry()->get('RouteParameters', 'page_type'));
-		$type = strtolower($type);
 
-		if (trim($title) == '') {
-			if ($type == QUERY_OBJECT_ITEM) {
-				if (isset($data[0]->title)) {
-					$title = $data[0]->title;
-				}
-			}
-			if ($title == '') {
-				$title = Services::Registry()->get('RouteParameters', 'criteria_title', '');
-			}
+        return $actions;
+    }
 
-			if ($title == '') {
-			} else {
-				$title .= ': ';
-			}
+    /**
+     * Create Edit Actions
+     *
+     * @return  array
+     * @since   1.0
+     */
+    protected function setEditActions()
+    {
+        $actions = array();
 
-			$title .= Services::Registry()->get('Configuration', 'site_name');
+        return $actions;
+    }
 
-			Services::Metadata()->set('title', $title);
-		}
+    /**
+     * Create List Actions
+     *
+     * @return  array
+     * @since   1.0
+     */
+    protected function setListActions()
+    {
+        $actions = array();
 
-		if (trim($description) == '') {
+        $actions[] = 'create';
+        $actions[] = 'copy';
+        $actions[] = 'edit';
 
-			if ($type == QUERY_OBJECT_ITEM) {
+        $actions[] = 'tag';
+        $actions[] = 'categorize';
+        $actions[] = 'status'; // archive, publish, unpublish, trash, spam, version
+        $actions[] = 'sticky';
+        $actions[] = 'feature';
+        $actions[] = 'delete';
 
-				if (isset($data[0]->description)) {
-					$description = $data[0]->description;
+        $actions[] = 'orderup';
+        $actions[] = 'orderdown';
+        $actions[] = 'reorder';
+        $actions[] = 'status';
 
-				} elseif (isset($data[0]->content_text_snippet)) {
-					$description = $data[0]->content_text_snippet;
-				}
-			}
 
-			Services::Metadata()->set('description', $description);
-		}
+        return $actions;
+    }
 
-		if (trim($author) == '') {
+    /**
+     * Menu Item Actions
+     *
+     * @return  array
+     * @since   1.0
+     */
+    protected function setMenuitemActions()
+    {
+        $actions = array();
 
-			if ($type == QUERY_OBJECT_ITEM) {
+        return $actions;
+    }
 
-				if (isset($data[0]->author_full_name)) {
-					$author = $data[0]->author_full_name;
-					Services::Metadata()->set('author', $author);
-				}
-			}
-		}
+    /**
+     * Set Page Meta Data
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function setPageMeta()
+    {
+        $title = Services::Registry()->get('Metadata', 'title', '');
+        $description = Services::Registry()->get('Metadata', 'description', '');
+        $author = Services::Registry()->get('Metadata', 'author', '');
+        $robots = Services::Registry()->get('Metadata', 'robots', '');
 
-		if (trim($robots) == '') {
-			Services::Metadata()->set('robots', 'follow,index');
-		}
+        if ($title == '' || $description == '' || $author == '' || $robots == '') {
+        } else {
+            return true;
+        }
 
-		return true;
-	}
+        $data = Services::Registry()->get(
+            PRIMARY_QUERY_RESULTS_MODEL_NAME,
+            PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS
+        );
+
+        $type = strtolower(Services::Registry()->get('Page', 'page_type'));
+        $type = strtolower($type);
+
+        if (trim($title) == '') {
+            if ($type == QUERY_OBJECT_ITEM) {
+                if (isset($data[0]->title)) {
+                    $title = $data[0]->title;
+                }
+            }
+            if ($title == '') {
+                $title = Services::Registry()->get('RouteParameters', 'criteria_title', '');
+            }
+
+            if ($title == '') {
+                $title = Services::Registry()->set('Page', 'HeaderTitle', '');
+            }
+
+            if ($title == '') {
+            } else {
+                $title .= ': ';
+            }
+
+            $title .= Services::Registry()->get('Configuration', 'site_name');
+
+            Services::Metadata()->set('title', $title);
+        }
+
+        if (trim($description) == '') {
+
+            if ($type == QUERY_OBJECT_ITEM) {
+
+                if (isset($data[0]->description)) {
+                    $description = $data[0]->description;
+
+                } elseif (isset($data[0]->content_text_snippet)) {
+                    $description = $data[0]->content_text_snippet;
+                }
+            }
+
+            Services::Metadata()->set('description', $description);
+        }
+
+        if (trim($author) == '') {
+
+            if ($type == QUERY_OBJECT_ITEM) {
+
+                if (isset($data[0]->author_full_name)) {
+                    $author = $data[0]->author_full_name;
+                    Services::Metadata()->set('author', $author);
+                }
+            }
+        }
+
+        if (trim($robots) == '') {
+            Services::Metadata()->set('robots', 'follow,index');
+        }
+
+        return true;
+    }
 }

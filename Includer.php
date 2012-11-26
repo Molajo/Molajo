@@ -238,7 +238,7 @@ class Includer
 
             } elseif ($name == 'datalist') {
                 Services::Registry()->set('Parameters', 'datalist', $value);
-                Services::Registry()->set('Parameters', 'model_type', 'Registry');
+                Services::Registry()->set('Parameters', 'model_type', 'datalist');
                 Services::Registry()->set('Parameters', 'model_name', $value);
                 Services::Registry()->set('Parameters', 'model_query_object', QUERY_OBJECT_LIST);
 

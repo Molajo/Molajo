@@ -34,7 +34,7 @@ class PagingPlugin extends Plugin
         }
 
         /** initialise */
-        $url = Services::Registry()->get('Plugindata', 'page_url');
+        $url = Services::Registry()->get('Page', 'page_url');
         $query_results = array();
 
         /** pagination_total: number of items */

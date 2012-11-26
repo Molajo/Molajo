@@ -24,39 +24,42 @@ class FormselectlistPlugin extends Plugin
      * @return boolean
      * @since   1.0
      */
-    public function onAfterReadall()
+    public function onBeforeInclude()
     {
-        if (strtolower($this->get('template_view_path_node')) == 'formselectlist') {
-        } else {
+        $results = Registry()->get(TEMPLATEVIEWNAME_MODEL_NAME, $this->get('template_view_path_node'));
+        if (count($results) > 0) {
             return true;
         }
 
         $datalist = Services::Registry()->get('Parameters', 'datalist');
 
-        if ($datalist === false || trim($datalist) == '') {
-            return true;
+        $query_results = Services::Registry()->get(DATALIST_MODEL_NAME, $datalist);
+
+        if (count($query_results) > 0) {
+
+        } else {
+            if ($datalist === false || trim($datalist) == '') {
+                return true;
+            }
+
+            $results = Services::Text()->getDatalist($datalist, DATALIST_MODEL_NAME, $this->parameters);
+            if ($results === false) {
+                return true;
+            }
+
+            $selected = $this->get('selected', null);
+
+            $query_results = Services::Text()->buildSelectlist(
+                $datalist,
+                $results[0]->listitems,
+                $results[0]->multiple,
+                $results[0]->size,
+                $this->get('selected', null)
+            );
         }
-
-        $results = Services::Text()->getList($datalist, $this->parameters);
-
-        if ($results === false) {
-            return true;
-
-        }
-
-        $selected = $this->get('selected', NULL);
-
-        $query_results = Services::Text()->buildSelectlist(
-            $datalist,
-            $results[0]->listitems,
-            $results[0]->multiple,
-            $results[0]->size,
-            $this->get('selected', NULL)
-        );
-
 
         $this->set('model_type', DATAOBJECT_MODEL_TYPE);
-        $this->set('model_name', DATALIST_MODEL_NAME);
+        $this->set('model_name', TEMPLATEVIEWNAME_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
@@ -64,7 +67,7 @@ class FormselectlistPlugin extends Plugin
 
         Services::Registry()->set(
             TEMPLATEVIEWNAME_MODEL_NAME,
-            'Formselectlist',
+            $this->get('template_view_path_node'),
             $query_results
         );
 

@@ -1,6 +1,5 @@
 <datalist name="FieldsstandardmenuitemsDatalist">
     <model
             name="FieldsstandardmenuitemsDatalist"
-            extends="PlugindataDatalist"
             registry_entry="MenuitemssystemFieldsstandard"/>
 </datalist>

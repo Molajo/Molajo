@@ -91,7 +91,7 @@ class MenuitemsPlugin extends Plugin
             $menuitems[] = $row;
         }
 
-        Services::Registry()->set('Datalist', 'Menuitems', $menuitems);
+        Services::Registry()->set(DATALIST_MODEL_NAME, 'Menuitems', $menuitems);
 
         return true;
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Level">
+<model name="Level"
+       data_object="Datalist">
     <table>
         <values>
             <value id="1" value="Level  1"/>

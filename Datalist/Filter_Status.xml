@@ -4,7 +4,8 @@
        primary_key="id"
        name_key="value"
        multiple="1"
-       size="5">
+       size="5"
+       data_object="Datalist">
     <table>
         <values>
             <value id="2" value="Archived"/>

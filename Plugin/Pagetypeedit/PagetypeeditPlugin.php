@@ -36,7 +36,7 @@ class PagetypeeditPlugin extends Plugin
         $resource_model_name = $this->get('model_name');
 
         //todo - submenu
-        Services::Registry()->set('Plugindata', 'SectionSubmenu', array());
+        Services::Registry()->set('Navigation', 'SectionSubmenu', array());
 
         /** Form Service */
         $form = Services::Form();

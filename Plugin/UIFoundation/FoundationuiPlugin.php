@@ -153,7 +153,7 @@ class FoundationuiPlugin extends Plugin
 			htmlentities(Services::Language()->translate('Edit'), ENT_COMPAT, 'UTF-8')
 		);
 		$buttonIcon = htmlentities('icon-edit', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get('Plugindata', 'page_url') . '/edit';
+		$linkURL = Services::Registry()->get('Page', 'page_url') . '/edit';
 		$buttonArray = 'button_title:'
 			. trim($buttonTitle)
 			. ','
@@ -173,7 +173,7 @@ class FoundationuiPlugin extends Plugin
 			htmlentities(Services::Language()->translate('Delete'), ENT_COMPAT, 'UTF-8')
 		);
 		$buttonIcon = htmlentities('icon-trash', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get('Plugindata', 'page_url') . '/delete';
+		$linkURL = Services::Registry()->get('Page', 'page_url') . '/delete';
 		$buttonArray = 'button_title:'
 			. trim($buttonTitle)
 			. ','
@@ -227,7 +227,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
-		$linkURL = $linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$linkURL = $linkURL = Services::Registry()->get('Page', 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -249,7 +249,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$linkURL = Services::Registry()->get('Page', 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -286,7 +286,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:resource-options', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
-		$linkURL = $linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$linkURL = $linkURL = Services::Registry()->get('Page', 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -308,7 +308,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$linkURL = Services::Registry()->get('Page', 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -364,7 +364,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get('Plugindata', 'page_url');
+		$linkURL = Services::Registry()->get('Page', 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','

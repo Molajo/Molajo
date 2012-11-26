@@ -9,7 +9,7 @@
         check_view_level_access="1"
         process_plugins="0"
         published_status="1"
-        data_object="Datalist">
+        data_object="Database">
     <table>
         <fields>
             <include field="ID"/>

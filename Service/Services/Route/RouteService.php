@@ -21,7 +21,6 @@ defined('MOLAJO') or die;
  */
 Class RouteService
 {
-
     /**
      * Using the Services::Request()->get('requested_resource_for_route') constant:
      *

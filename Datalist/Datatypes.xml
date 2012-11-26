@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Datatypes">
+<model
+        name="Datatypes"
+        data_object="Datalist">
     <table>
         <values>
             <value id="audio" value="Audio"/>

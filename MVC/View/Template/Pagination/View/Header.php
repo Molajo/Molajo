@@ -5,9 +5,6 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-echo '<pre>';
-var_dump($this->row);
-echo '</pre>';
 
 if ($this->row->previous_page === 0) {
     $class = 'class="arrow unavailable"';

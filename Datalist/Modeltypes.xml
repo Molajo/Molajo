@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Modeltypes">
+<model name="Modeltypes"
+       data_object="Datalist">
     <table>
         <values>
             <value id="datalist" value="Datalist"/>

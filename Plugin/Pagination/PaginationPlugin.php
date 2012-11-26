@@ -35,13 +35,11 @@ class PaginationPlugin extends Plugin
         }
 
         if (strtolower($this->get('template_view_path_node')) == 'pagination') {
-        } else {
             return true;
         }
-         echo 'I am in Pagination Plguin dddd';
-        die;
+
         /** initialise */
-        $url = Services::Registry()->get('Plugindata', 'page_url');
+        $url = Services::Registry()->get('Page', 'page_url');
         $query_results = array();
 
         /** pagination_total: number of items */
@@ -158,7 +156,7 @@ class PaginationPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set('Plugindata', 'Pagination', $query_results);
+        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Pagination', $query_results);
 
         return true;
     }
@@ -167,6 +165,7 @@ class PaginationPlugin extends Plugin
      * Prev and Next Pagination for Item Pages
      *
      * @return bool
+     * @since  1.0
      */
     protected function itemPaging()
     {

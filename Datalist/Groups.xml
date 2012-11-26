@@ -1,7 +1,6 @@
 <datalist name="Groups">
     <model
             name="Groups"
-            extends="PlugindataDatalist"
             registry_entry="Groups"/>
 </datalist>
 

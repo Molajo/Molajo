@@ -1,6 +1,5 @@
 <datalist name="FieldsusersDatalist">
     <model
             name="FieldsusersDatalist"
-            extends="PlugindataDatalist"
             registry_entry="UserssystemFields"/>
 </datalist>

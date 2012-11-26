@@ -1,6 +1,5 @@
 <datalist name="FieldsResources">
     <model
             name="FieldsResources"
-            extends="PlugindataDatalist"
             registry_entry="ResourcesSystemFields"/>
 </datalist>

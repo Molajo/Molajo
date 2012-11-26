@@ -33,10 +33,10 @@ Class TextService
     public function extension($model_name, $source_path = null, $destination_path = null)
     {
         $controller = new CreateController();
-
         $model_registry = ucfirst(strtolower($model_name)) . 'Datasource';
 
         $data = new \stdClass();
+
         $data->title = $model_name;
         $data->model_name = $model_name;
         $controller->data = $data;
@@ -82,38 +82,28 @@ Class TextService
     }
 
     /**
-     * getSelectlist retrieves values from model
+     * getDatalist creates named pair lists
      *
-     * @return  array
-     * @since   1.0
-     */
-    public function getSelectlist($datalist)
-    {
-        $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
-        $controller->getModelRegistry('Datalist', $datalist);
-
-        return $this->getQueryResults($controller, $datalist, array());
-    }
-
-    /**
-     * getList retrieves values called from listsPlugin
-     *
-     * @param   $filter
-     * @param   $parameters
+     * @param   string  $model_name     ex. Articles or Templateviews
+     * @param   string  $model_type     ex. Datalist, ResourceLists, Database, etc.
+     * @param   string  $parameters
      *
      * @return  array|bool|object
      * @since   1.0
      */
-    public function getList($filter, $parameters)
+    public function getDatalist($model_name, $model_type, $parameters)
     {
+        $model_name = ucfirst(strtolower($model_name));
+        $model_type = ucfirst(strtolower($model_type));
+        $model_registry = $model_name . $model_type;
+
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datalist', $filter);
+        $controller->getModelRegistry($model_type, $model_name);
         $controller->setDataobject();
 
-        $multiple = (int)Services::Registry()->get($filter . 'Datalist', 'multiple');
-        $size = (int)Services::Registry()->get($filter . 'Datalist', 'size');
+        $multiple = (int)Services::Registry()->get($model_registry, 'multiple');
+        $size = (int)Services::Registry()->get($model_registry, 'size');
 
         if ((int)$multiple == 1) {
             if ((int)$size == 0) {
@@ -123,39 +113,27 @@ Class TextService
             $multiple = 0;
             $size = 0;
         }
+        echo $model_registry .'<br />';
+        Services::Registry()->get($model_registry, '*');
 
-        if ($controller->parameters['registry_entry'] == '') {
-        } else {
-            $registry_entry = $controller->parameters['registry_entry'];
-            if ($registry_entry === false) {
-            } else {
-
-                $values = Services::Registry()->get('Datalist', $registry_entry);
-                if ($values === false || count($values) === 0) {
-
-                } else {
-                    $query_results = array();
-
-                    $row = new \stdClass();
-
-                    $row->listitems = $values;
-                    $row->multiple = $multiple;
-                    $row->size = $size;
-
-                    $query_results[] = $row;
-
-                    return $query_results;
-                }
-            }
-        }
-
-        $values = Services::Registry()->get($filter . 'Datalist', 'values');
-
-        if (is_array($values) && count($values) > 0) {
+        $values = Services::Registry()->get($model_registry, 'values', array());
+        if ($values === false || count($values) === 0) {
 
         } else {
-            $values = $this->getQueryResults($controller, $filter, $parameters);
+            $query_results = array();
+
+            $row = new \stdClass();
+
+            $row->listitems = $values;
+            $row->multiple = $multiple;
+            $row->size = $size;
+
+            $query_results[] = $row;
+
+            return $query_results;
         }
+
+        $values = $this->getQueryResults($controller, $model_type, $parameters);
 
         $query_results = array();
 
@@ -174,23 +152,22 @@ Class TextService
      * getQueryResults for list
      *
      * @param   $controller
-     * @param   $filter
+     * @param   $model_type      ex. ArticlesResource
      * @param   $parameters
      *
      * @return  object
      * @since   1.0
      */
-    protected function getQueryResults($controller, $filter, $parameters)
+    protected function getQueryResults($controller, $model_type, $parameters)
     {
         $registry_entry = $controller->get('registry_entry');
-        $data_object = $controller->get('data_object');
 
         if ($registry_entry == '') {
+            $results = array();
         } else {
-            if ($data_object == 'Registry') {
-                $values = Services::Registry()->get('Plugindata', $registry_entry);
-
-                return $values;
+            $results = Services::Registry()->get(DATALIST_MODEL_NAME, $registry_entry, array());
+            if (count($results) > 0) {
+                return $results;
             }
         }
 
@@ -198,11 +175,17 @@ Class TextService
         $primary_key = $controller->get('primary_key');
         $name_key = $controller->get('name_key');
 
+        $model_registry = $controller->get('model_registry');
+
         $controller->model->set('model_offset', 0);
         $controller->model->set('model_count', 999999);
 
-        $fields = Services::Registry()->get($filter . 'Datalist', 'Fields');
+echo $model_registry . '<br />';
 
+        $fields = Services::Registry()->get($model_registry, 'Fields');
+echo '<pre>';
+var_dump($fields);
+echo '</pre>';
         $first = true;
         if (count($fields) < 2) {
 
@@ -242,6 +225,7 @@ Class TextService
                     $first = false;
                     $as = 'id';
                     $distinct = QUERY_OBJECT_DISTINCT;
+
                 } else {
                     $as = 'value';
                     $distinct = '';
@@ -266,6 +250,7 @@ Class TextService
                 $controller
             );
         }
+
         if ($controller->get('catalog_type_id', 0) == 0) {
         } else {
             $this->setWhereCriteria(
@@ -287,13 +272,13 @@ Class TextService
     /**
      * setWhereCriteria
      *
-     * @param $field
-     * @param $value
-     * @param $alias
-     * @param $connection
+     * @param   $field
+     * @param   $value
+     * @param   $alias
+     * @param   $connection
      *
-     * @return void
-     * @since  1.0
+     * @return  void
+     * @since   1.0
      */
     protected function setWhereCriteria($field, $value, $alias, $connection)
     {
@@ -317,7 +302,7 @@ Class TextService
     /**
      * add publishedStatus information to list query
      *
-     * @return void
+     * @return  void
      * @since   1.0
      */
     protected function publishedStatus($controller)
@@ -354,11 +339,11 @@ Class TextService
     /**
      * buildSelectlist - build select list for insertion into webpage
      *
-     * @param   string $listname
-     * @param   array  $items
-     * @param   int    $multiple
-     * @param   int    $size
-     * @param   string $selected
+     * @param   string  $listname
+     * @param   array   $items
+     * @param   int     $multiple
+     * @param   int     $size
+     * @param   string  $selected
      *
      * @return  array
      * @since   1.0
@@ -372,7 +357,9 @@ Class TextService
         }
 
         foreach ($items as $item) {
-
+echo '<pre>';
+var_dump($item);
+echo '</pre>';
             $row = new \stdClass();
 
             $row->listname = $listname;
@@ -597,8 +584,8 @@ Class TextService
     /**
      * Convert the ones place value to a word
      *
-     * @param  string  $digit
-     * @param  string  $translate
+     * @param   string  $digit
+     * @param   string  $translate
      *
      * @return  bool
      * @since   1.0
@@ -636,9 +623,9 @@ Class TextService
     /**
      * Convert the tens placeholder to a word, combining with the ones placeholder word
      *
-     * @param  string  $tensDigit
-     * @param  string  $onesDigit
-     * @param  string  $translate
+     * @param   string  $tensDigit
+     * @param   string  $onesDigit
+     * @param   string  $translate
      *
      * @return  bool
      * @since   1.0
@@ -844,46 +831,5 @@ Class TextService
         }
 
         return Services::Language()->translate('quattuordecillion');
-    }
-
-    /**
-     *     Dummy functions to pass service off as a DBO to interact with model
-     */
-    public function get($option = null)
-    {
-        if ($option == 'db') {
-            return $this;
-        }
-    }
-
-    public function getNullDate()
-    {
-        return $this;
-    }
-
-    public function getQuery()
-    {
-        return $this;
-    }
-
-    public function toSql()
-    {
-        return $this;
-    }
-
-    /**
-     * getData - simulates DBO - interacts with the Model getTextlist method
-     *
-     * @param   $registry
-     * @param   $element
-     * @param   $single_result
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public function getData($list)
-    {
-        $query_results = array();
-        return $query_results;
     }
 }

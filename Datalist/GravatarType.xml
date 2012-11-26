@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="GravatarType">
+<model name="GravatarType"
+       data_object="Datalist">
     <table>
         <values>
             <value id="404" value="404"/>

@@ -27,7 +27,7 @@ class PagetypeapplicationPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        if (strtolower($this->get('page_type')) == 'application') {
+        if (strtolower($this->get('page_type')) == PAGE_TYPE_APPLICATION) {
         } else {
             return true;
         }
@@ -88,12 +88,12 @@ class PagetypeapplicationPlugin extends Plugin
                 }
                 $row->id = $i;
                 $row->title = substr($item, 0, strpos($item, ','));
-                $row->url = Services::Registry()->get('Plugindata', 'page_url') . '/page/' . $i;
+                $row->url = Services::Registry()->get('Page', 'page_url') . '/page/' . $i;
 
                 $pageArray[] = $row;
             }
         }
-        Services::Registry()->set('Plugindata', 'SectionSubmenu', $pageArray);
+        Services::Registry()->set('Navigation', 'SectionSubmenu', $pageArray);
 
         /** Even tho links are created to each form page, generate Form for the current page, only */
         $current_page = '{{' . $pages[$page_number];

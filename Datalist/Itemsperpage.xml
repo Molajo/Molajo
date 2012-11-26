@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Itemsperpage">
+<model name="Itemsperpage"
+    data_object="Datalist">
     <table>
         <values>
             <value id="1" value="1"/>
@@ -15,6 +16,7 @@
             <value id="100" value="100"/>
             <value id="250" value="250"/>
             <value id="1000" value="1000"/>
+            <value id="999999" value="999999"/>
         </values>
     </table>
 </model>

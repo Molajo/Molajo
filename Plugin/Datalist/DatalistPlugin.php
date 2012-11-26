@@ -64,7 +64,7 @@ class DatalistPlugin extends Plugin
 			$datalist[] = $row;
 		}
 
-		Services::Registry()->set('Datalist', 'Datalists', $datalist);
+		Services::Registry()->set(DATALIST_MODEL_NAME, 'Datalists', $datalist);
 
 		return true;
 	}

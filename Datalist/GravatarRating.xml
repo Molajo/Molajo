@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="GravatarRating">
+<model name="GravatarRating"
+       data_object="Datalist">
     <table>
         <values>
             <value id="g" value="G"/>

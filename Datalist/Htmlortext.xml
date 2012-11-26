@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Htmlortext">
+<model name="Htmlortext"
+       data_object="Datalist">
     <table>
         <values>
             <value id="html" value="HTML"/>

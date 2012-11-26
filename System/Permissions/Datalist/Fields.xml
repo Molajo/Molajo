@@ -1,6 +1,5 @@
 <datalist name="FieldsPermissions">
     <model
             name="FieldsPermissions"
-            extends="PlugindataDatalist"
             registry_entry="PermissionsSystemFields"/>
 </datalist>

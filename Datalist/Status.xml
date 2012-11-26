@@ -2,7 +2,8 @@
 <model
        name="Status"
        primary_key="id"
-       name_key="value">
+       name_key="value"
+       data_object="Datalist">
     <table>
         <values>
             <value id="2" value="Archived"/>

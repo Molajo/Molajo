@@ -1,6 +1,5 @@
 <datalist name="Pagetypes">
     <model
             name="Pagetypes"
-            extends="PlugindataDatalist"
             registry_entry="Pagetypes"/>
 </datalist>

@@ -6,7 +6,7 @@
         name_key="title"
         criteria_extension_instance_id="14000"
         criteria_catalog_type_id="14000"
-        data_object="Datalist">
+        data_object="Database">
     <table>
         <fields>
             <include field="id"/>

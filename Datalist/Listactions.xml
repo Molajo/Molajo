@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Listactions">
+<model name="Listactions"
+       data_object="Datalist">
     <table>
         <values>
             <value id="archive" value="Archive item(s)"/>

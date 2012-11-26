@@ -32,11 +32,11 @@ class FormbeginPlugin extends Plugin
             return true;
         }
 
-        $pageUrl = Services::Registry()->get('Plugindata', 'page_url');
+        $pageUrl = Services::Registry()->get('Page', 'page_url');
 
         $form_action = $this->get('form_action', '');
         if ($form_action == '' || $form_action === null) {
-            $form_action = ' action="' . Services::Registry()->get('Plugindata', 'page_url') . '"';
+            $form_action = ' action="' . Services::Registry()->get('Page', 'page_url') . '"';
         } else {
             $form_action = ' action="' . $form_action . '"';
         }

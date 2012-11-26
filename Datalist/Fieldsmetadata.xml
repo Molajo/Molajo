@@ -1,6 +1,6 @@
 <datalist name="Fieldsmetadata">
     <model
             name="Fieldsmetadata"
-            extends="PlugindataDatalist"
-            registry_entry=""/>
+            registry_entry="Fieldsmetadata"
+            data_object="Resourcelist"/>
 </datalist>

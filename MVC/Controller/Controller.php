@@ -206,8 +206,8 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
         $this->set('data_object', ucfirst(strtolower($data_object)));
 
         if ($data_object == 'Database') {
-            $defaults = Services::Registry()->get('Fields', 'ModelattributesDefaults');
-            foreach (Services::Registry()->get('Fields', 'Modelattributes') as $key) {
+            $defaults = Services::Registry()->get(FIELDS_MODEL_TYPE, 'ModelattributesDefaults');
+            foreach (Services::Registry()->get(FIELDS_MODEL_TYPE, 'Modelattributes') as $key) {
                 if (isset($registry[$key])) {
                     $this->set($key, $registry[$key]);
                 } else {
@@ -216,8 +216,8 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
             }
 
         }  else {
-            $defaults = Services::Registry()->get('Fields', 'DataObjectAttributeDefaults');
-            foreach (Services::Registry()->get('Fields', 'DataObjectAttributes') as $key) {
+            $defaults = Services::Registry()->get(FIELDS_MODEL_TYPE, 'DataObjectAttributeDefaults');
+            foreach (Services::Registry()->get(FIELDS_MODEL_TYPE, 'DataObjectAttributes') as $key) {
                 if (isset($registry[$key])) {
                     $this->set($key, $registry[$key]);
                 } else {
@@ -348,6 +348,12 @@ echo $profiler_message;
                 $service_class_query_method = $this->get('service_class_query_method');
                 $service_class_query_method_parameter = $this->get('service_class_query_method_parameter');
 
+                //if ($service_class_query_method_parameter == 'DATALIST_NAME') {
+                  //  $method_parameter = $this->get('datalist');
+
+
+                $model_name = $this->get('model_name');
+
                 if ($service_class_query_method_parameter == 'REGISTRY_ENTRY') {
                     $method_parameter = $this->get('registry_entry');
 
@@ -371,12 +377,12 @@ echo $profiler_message;
 
                 $this->query_results = Services::$service_class()
                     ->$service_class_query_method(
-                        $this->get('model_name'),
+                        $model_name,
                         $method_parameter,
                         $query_object
                     );
 
-                if (strtolower($this->get('template_view_path_node')) == 'commentsxxx') {
+                if (strtolower($method_parameter) == 'articlesresourcefields') {
                     echo $query_object;
                     echo '<pre>';
                     echo count($this->query_results);
@@ -553,7 +559,7 @@ echo $profiler_message;
         }
 
         $this->model->setBaseQuery(
-            Services::Registry()->get($this->get('model_registry'), 'Fields'),
+            Services::Registry()->get($this->get('model_registry'), FIELDS_MODEL_TYPE),
             $this->get('table_name'),
             $this->get('primary_prefix'),
             $this->get('primary_key'),

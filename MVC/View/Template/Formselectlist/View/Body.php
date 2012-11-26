@@ -1,4 +1,6 @@
 <?php
+echo '<pre>';
+var_dump($this->row);
 /**
  * @package    Molajo
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.

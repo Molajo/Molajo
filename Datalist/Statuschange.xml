@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Statuschange">
+<model name="Statuschange"
+       data_object="Datalist">
     <table>
         <values>
             <value id="2" value="Archive"/>

@@ -21,12 +21,10 @@ class PagetypesPlugin extends Plugin
     /**
      * Generates list of Pagetypes
      *
-     * This can be moved to onBeforeParse when Plugin ordering is in place
-     *
      * @return  boolean
      * @since   1.0
      */
-    public function onAfterRoute()
+    public function OnBeforeInclude()
     {
         $folders = Services::Filesystem()->folderFolders(
             EXTENSIONS . '/Menuitem'
@@ -71,7 +69,7 @@ class PagetypesPlugin extends Plugin
             $page_types[] = $row;
         }
 
-        Services::Registry()->set('Datalist', 'Pagetypes', $page_types);
+        Services::Registry()->set(DATALIST_MODEL_NAME, 'Pagetypes', $page_types);
 
         return true;
     }

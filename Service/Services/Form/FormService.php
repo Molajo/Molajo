@@ -612,7 +612,7 @@ echo '<pre>';
 var_dump($temp);
 echo '</pre>';
 
-                if ($namespace == 'edit') { //but find better way
+                if ($this->namespace == 'edit') { //but find better way
                 }
                 die;
                 $write = array();
@@ -763,7 +763,7 @@ echo '</pre>';
         $fieldValues = array();
         $input_fields = array();
 
-        $fieldArray = Services::Registry()->get($this->model_name . $this->model_type, 'Fields');
+        $fieldArray = Services::Registry()->get($this->model_name . $this->model_type, DATALIST_MODEL_NAME);
         $customfieldgroups = Services::Registry()->get($this->model_name . $this->model_type, 'customfieldgroups');
 
         foreach ($options as $value) {
@@ -1490,16 +1490,22 @@ echo '</pre>';
         $datalist = $field['datalist'];
 
         $yes = 0;
-        if (strtolower($datalist) == 'fields') {
-            $list = Services::Registry()->get('Datalist', $this->model_registry_name . 'Fields');
+        if (strtolower($datalist) == FIELDS_MODEL_TYPE) {
+            $list = Services::Registry()->get(
+                RESOURCELIST_MODEL_NAME,
+                $this->model_registry_name . FIELDSSTANDARD_MODEL_TYPE
+            );
 
-        } elseif (strtolower($datalist) == 'fieldsstandard') {
+        } elseif (strtolower($datalist) == strtolower(FIELDSSTANDARD_MODEL_TYPE)) {
             $this->model_registry_name
                 = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
-            $list = Services::Registry()->get('Datalist', $this->model_registry_name . 'Fieldsstandard');
+            $list = Services::Registry()->get(
+                RESOURCELIST_MODEL_NAME,
+                $this->model_registry_name . FIELDSSTANDARD_MODEL_TYPE
+            );
 
         } else {
-            $results = Services::Text()->getList($datalist, array());
+            $results = Services::Text()->getDatalist($datalist, DATALIST_MODEL_NAME, array());
             $list = $results[0]->listitems;
             $multiple = $results[0]->multiple;
             $size = $results[0]->size;

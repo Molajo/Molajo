@@ -24,12 +24,10 @@ class CatalogPlugin extends Plugin
     /**
      * Generates Catalog Datalist
      *
-     * This can be moved to onBeforeParse when Plugin ordering is in place
-     *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
-    public function onAfterRoute()
+    public function onBeforeInclude()
     {
         if (APPLICATION_ID == 2) {
         } else {
@@ -119,7 +117,7 @@ class CatalogPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set('Datalist', 'Catalog', $catalogArray);
+        Services::Registry()->set(DATALIST_MODEL_NAME, 'Catalog', $catalogArray);
 
         return true;
     }

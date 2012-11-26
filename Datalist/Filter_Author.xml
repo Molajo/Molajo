@@ -13,7 +13,7 @@
         published_status="1"
         multiple="1"
         size="5"
-        data_object="Datalist">
+        data_object="Database">
     <table>
         <fields>
             <field name="id" type="integer" null="1" default="0" identity="1"/>

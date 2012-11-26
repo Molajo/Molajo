@@ -22,12 +22,10 @@ class FieldsPlugin extends Plugin
     /**
      * Generates list of Fields for select lists and defining Custom Fields
      *
-     * This can be moved to onBeforeParse when Plugin ordering is in place
-     *
      * @return  boolean
      * @since   1.0
      */
-    public function onAfterRoute()
+    public function onBeforeInclude()
     {
         if (APPLICATION_ID == 2) {
         } else {
@@ -146,7 +144,6 @@ class FieldsPlugin extends Plugin
                     $row->value = $field['name'] . '_snippet' . $extended_literal;
                     $fieldArray[] = $row;
                 }
-
             }
         }
 
@@ -155,7 +152,6 @@ class FieldsPlugin extends Plugin
             $row = new \stdClass();
 			$row->id = 'status_name';
             $row->value = 'status_name' . $extended_literal;
-
             $fieldArray[] = $row;
         }
 
@@ -226,11 +222,21 @@ class FieldsPlugin extends Plugin
         asort($parametersFieldArray);
         asort($customFieldArray);
 
-        Services::Registry()->set('Datalist', $model_registry . 'Fields', $fieldArray);
-		Services::Registry()->set('Datalist', $model_registry . 'Fieldsstandard', $standardFieldArray);
-        Services::Registry()->set('Datalist', $model_registry . 'Fieldsmetadata', $metadataFieldArray);
-        Services::Registry()->set('Datalist', $model_registry . 'Fieldsparameters', $parametersFieldArray);
-        Services::Registry()->set('Datalist', $model_registry . 'Fieldscustom', $customFieldArray);
+        Services::Registry()->set(RESOURCELIST_MODEL_NAME,
+            $model_registry . FIELDS_MODEL_TYPE,
+            $fieldArray);
+		Services::Registry()->set(RESOURCELIST_MODEL_NAME,
+            $model_registry . FIELDSSTANDARD_MODEL_TYPE,
+            $standardFieldArray);
+        Services::Registry()->set(RESOURCELIST_MODEL_NAME,
+            $model_registry . FIELDSMETADATA_MODEL_TYPE,
+            $metadataFieldArray);
+        Services::Registry()->set(RESOURCELIST_MODEL_NAME,
+            $model_registry . FIELDSPARAMETERS_MODEL_TYPE,
+            $parametersFieldArray);
+        Services::Registry()->set(RESOURCELIST_MODEL_NAME,
+            $model_registry . FIELDSCUSTOM_MODEL_TYPE,
+            $customFieldArray);
 
         return true;
     }

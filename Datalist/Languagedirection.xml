@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Languagedirection">
+<model name="Languagedirection"
+       data_object="Datalist">
     <table>
         <values>
             <value id="ltr" value="Left to Right Language"/>

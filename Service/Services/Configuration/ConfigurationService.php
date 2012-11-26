@@ -174,9 +174,9 @@ Class ConfigurationService
      */
     protected function getFieldProperties()
     {
-        Services::Registry()->createRegistry('Fields');
+        Services::Registry()->createRegistry(FIELDS_MODEL_TYPE);
 
-        $xml = ConfigurationService::getFile('Application', 'Fields');
+        $xml = ConfigurationService::getFile('Application', FIELDS_MODEL_TYPE);
         if ($xml === false) {
             //throw error
             //error
@@ -196,7 +196,7 @@ Class ConfigurationService
 
         ConfigurationService::loadFieldProperties($xml, 'queryelements', 'queryelement');
 
-        $list = Services::Registry()->get('Fields', 'queryelements');
+        $list = Services::Registry()->get(FIELDS_MODEL_TYPE, 'queryelements');
         foreach ($list as $item) {
             $field = explode(',', $item);
             ConfigurationService::loadFieldProperties($xml, $field[0], $field[1]);
@@ -1414,7 +1414,7 @@ echo         $ModelRegistry . '<br />';
             }
         }
 
-        $valid = array('Datalist', 'Datasource');
+        $valid = array(DATALIST_MODEL_NAME, 'Datasource');
 
         if (in_array($model_type, $valid)) {
             $path = ConfigurationService::commonSearch(

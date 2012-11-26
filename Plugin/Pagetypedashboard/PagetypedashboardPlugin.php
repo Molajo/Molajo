@@ -26,10 +26,10 @@ class PagetypedashboardPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-		if (strtolower($this->get('page_type')) == 'dashboard') {
-		} else {
-			return true;
-		}
+        if (strtolower($this->get('page_type')) == 'dashboard') {
+        } else {
+            return true;
+        }
 
         $portletOptions = Services::Registry()->get('Parameters', 'dashboard_portlet');
         if (trim($portletOptions) == '') {
@@ -107,67 +107,64 @@ class PagetypedashboardPlugin extends Plugin
         $this->setOptions();
     }
 
-/**
- * Create Toolbar Registry based on Authorized Access
- *
- * @return boolean
- * @since  1.0
- */
-protected function setDashboardPermissions()
-{
-}
-
-/**
- * Options: creates a list of Portlets available for this Dashboard
- *
- * @return  boolean
- * @since   1.0
- */
-protected function setOptions()
-{
-
-    $results = Services::Text()->getList('Portlets', $this->parameters);
-
-    if ($results === false) {
-        return true;
-
+    /**
+     * Create Toolbar Registry based on Authorized Access
+     *
+     * @return boolean
+     * @since  1.0
+     */
+    protected function setDashboardPermissions()
+    {
     }
 
-    if (isset($this->parameters['selected'])) {
-        $selected = $this->parameters['selected'];
-    } else {
-        $selected = null;
-    }
+    /**
+     * Options: creates a list of Portlets available for this Dashboard
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function setOptions()
+    {
+        $results = Services::Text()->getDatalist('Portlets', DATALIST_MODEL_NAME, $this->parameters);
+        if ($results === false) {
+            return true;
+        }
 
-    $list = Services::Text()->buildSelectlist(
-        'Portlets',
-        $results[0]->listitems,
-        $results[0]->multiple,
-        $results[0]->size,
-        $selected
-    );
+        if (isset($this->parameters['selected'])) {
+            $selected = $this->parameters['selected'];
+        } else {
+            $selected = null;
+        }
 
-    if (count($list) == 0 || $list === false) {
-        //throw exception
-    }
-
-    $query_results = array();
-
-    foreach ($list as $item) {
-
-        $row = new \stdClass();
-        $row->id = $item->id;
-        $row->value = Services::Language()->translate(
-            ucfirst(strtolower(substr($item->value, 7, strlen($item->value))))
+        $list = Services::Text()->buildSelectlist(
+            'Portlets',
+            $results[0]->listitems,
+            $results[0]->multiple,
+            $results[0]->size,
+            $selected
         );
-        $row->selected = '';
-        $row->multiple = '';
-        $row->listname = 'Portlets';
 
-        $query_results[] = $row;
+        if (count($list) == 0 || $list === false) {
+            //throw exception
+        }
+
+        $query_results = array();
+
+        foreach ($list as $item) {
+
+            $row = new \stdClass();
+            $row->id = $item->id;
+            $row->value = Services::Language()->translate(
+                ucfirst(strtolower(substr($item->value, 7, strlen($item->value))))
+            );
+            $row->selected = '';
+            $row->multiple = '';
+            $row->listname = 'Portlets';
+
+            $query_results[] = $row;
+        }
+        Services::Registry()->set(DATALIST_MODEL_NAME, 'Portlets', $query_results);
+
+        return true;
     }
-    Services::Registry()->set('Plugindata', 'list_portlets', $query_results);
-
-    return true;
-}
 }

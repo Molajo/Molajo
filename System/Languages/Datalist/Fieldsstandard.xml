@@ -1,6 +1,5 @@
 <datalist name="FieldsstandardlanguagesDatalist">
     <model
             name="FieldsstandardlanguagesDatalist"
-            extends="PlugindataDatalist"
             registry_entry="LanguagessystemFieldsstandard"/>
 </datalist>

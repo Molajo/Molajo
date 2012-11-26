@@ -8,7 +8,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$action = Services::Registry()->get('Plugindata', 'page_url');
+$action = Services::Registry()->get('Page', 'page_url');
 if ($this->row->enable == 1) { ?>
 <div class="grid-permissions grid-batch">
     <ol class="grid-batch">
@@ -20,7 +20,7 @@ if ($this->row->enable == 1) { ?>
         <li><input id="update" type="radio" value="update" name="permission"><label for="update"><?php echo Services::Language()->translate('Update'); ?></label></li>
         <li><input id="publish" type="radio" value="publish" name="permission"><label for="publish"><?php echo Services::Language()->translate('Publish'); ?></label></li>
         <li><input id="delete" type="radio" value="delete" name="permission"><label for="delete"><?php echo Services::Language()->translate('Delete'); ?></label></li>
-        <li>include:template name=formselectlist datalist=groups/></li>
+        <li><include:template name=formselectlist datalist=groups/></li>
         <li><strong><?php echo Services::Language()->translate('Permissions'); ?></strong></li>
     </ol>
 </div>

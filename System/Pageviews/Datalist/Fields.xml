@@ -1,6 +1,5 @@
 <datalist name="FieldsPageviews">
     <model
             name="FieldsPageviews"
-            extends="PlugindataDatalist"
             registry_entry="PageviewsSystemFields"/>
 </datalist>

@@ -71,12 +71,12 @@ Class ContentHelper
     public function getRouteItem($id, $model_type, $model_name)
     {
         if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == ACTION_VIEW) {
-            $pageTypeNamespace = 'item';
+            $page_type_namespace = 'item';
         } else {
-            $pageTypeNamespace = 'form';
+            $page_type_namespace = 'form';
         }
 
-        $item = $this->get($id, $model_type, $model_name, $pageTypeNamespace);
+        $item = $this->get($id, $model_type, $model_name, $page_type_namespace);
         if (count($item) == 0) {
             return Services::Registry()->set('Parameters', 'status_found', false);
         }
@@ -101,12 +101,10 @@ Class ContentHelper
         Services::Registry()->set('Parameters', 'criteria_source_id', (int)$item->id);
         Services::Registry()->set('Parameters', 'criteria_catalog_type_id', (int)$item->catalog_type_id);
 
-        $parameterNamespace = $item->model_registry . 'Parameters';
-
         $this->getResourceExtensionParameters((int)$extension_instance_id);
 
         $this->setParameters(
-            $pageTypeNamespace,
+            $page_type_namespace,
             $item->model_registry . 'Parameters',
             $item->model_registry . 'Metadata',
             'ResourcesSystem'
@@ -114,15 +112,15 @@ Class ContentHelper
 
         $parent_menu_id = Services::Registry()->get(
             'ResourcesSystemParameters',
-            $pageTypeNamespace . '_parent_menu_id'
+            $page_type_namespace . '_parent_menu_id'
         );
 
         Services::Registry()->set('Parameters', 'parent_menu_id', $parent_menu_id);
 
         $this->setExtensionPaths();
 
-        if ($pageTypeNamespace == 'form') {
-            Services::Registry()->set('Parameters', 'page_type', 'Edit');
+        if ($page_type_namespace == 'form') {
+            Services::Registry()->set('Parameters', 'page_type', PAGE_TYPE_EDIT);
         }
 
         return true;
@@ -163,19 +161,13 @@ Class ContentHelper
         $registry = Services::Registry()->get('Parameters', 'catalog_page_type')
             . CATALOG_TYPE_MENUITEM_LITERAL;
 
-        Services::Registry()->set(
-            'Parameters',
-            'criteria_source_id',
+        Services::Registry()->set('Parameters', 'criteria_source_id',
             (int)Services::Registry()->get($registry . 'Parameters', 'criteria_source_id')
         );
-        Services::Registry()->set(
-            'Parameters',
-            'criteria_catalog_type_id',
+        Services::Registry()->set('Parameters', 'criteria_catalog_type_id',
             (int)Services::Registry()->get($registry . 'Parameters', 'criteria_catalog_type_id')
         );
-        Services::Registry()->set(
-            'Parameters',
-            'criteria_extension_instance_id',
+        Services::Registry()->set('Parameters', 'criteria_extension_instance_id',
             (int)Services::Registry()->get($registry . 'Parameters', 'criteria_extension_instance_id')
         );
 
@@ -190,9 +182,7 @@ Class ContentHelper
 
         /** Must be after parameter set so as to not strip off menuitem */
         Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
-        Services::Registry()->set(
-            'Parameters',
-            'page_type',
+        Services::Registry()->set('Parameters', 'page_type',
             Services::Registry()->get('Parameters', 'catalog_page_type')
         );
 
@@ -253,76 +243,76 @@ Class ContentHelper
      * Determines parameter values from primary item (form, item, list, or menuitem)
      *  Extension and Application defaults applied following item values
      *
-     * @param   $pageTypeNamespace (ex. item, list, menuitem)
-     * @param   $parameterNamespace (ex. $item->model_registry . 'Parameters')
-     * @param   $metadataNamespace (ex. $item->model_registry . 'Metadata')
-     * @param   string $resourceNamespace For extension (ex. ResourcesSystem)
+     * @param   string  $page_type_namespace (ex. item, list, menuitem)
+     * @param   string  $parameter_namespace (ex. $item->model_registry . 'Parameters')
+     * @param   string  $metadata_namespace (ex. $item->model_registry . 'Metadata')
+     * @param   string  $resource_namespace For extension (ex. ResourcesSystem)
      *
      * @return  boolean
      * @since   1.0
      */
     public function setParameters(
-        $pageTypeNamespace,
-        $parameterNamespace,
-        $metadataNamespace,
-        $resourceNamespace = ''
+        $page_type_namespace,
+        $parameter_namespace,
+        $metadata_namespace,
+        $resource_namespace = ''
     ) {
-        Services::Registry()->set('Parameters', 'page_type', $pageTypeNamespace);
+        Services::Registry()->set('Parameters', 'page_type', $page_type_namespace);
 
         /** Retrieve array of Extension Instances Authorised for User  */
         Helpers::Extension()->setAuthorisedExtensions(0, 'Datasource', 'ExtensionInstances', QUERY_OBJECT_LIST);
 
         /** I. Priority 1 - Item parameter values (be it an item, menu item, list) */
-        $newParameters = Services::Registry()->get($parameterNamespace, $pageTypeNamespace . '*');
+        $newParameters = Services::Registry()->get($parameter_namespace, $page_type_namespace . '*');
         if (is_array($newParameters) && count($newParameters) > 0) {
-            $this->processParameterSet($newParameters, $pageTypeNamespace);
+            $this->processParameterSet($newParameters, $page_type_namespace);
         }
 
-        $newParameters = Services::Registry()->get($parameterNamespace, 'criteria*');
+        $newParameters = Services::Registry()->get($parameter_namespace, 'criteria*');
         if (is_array($newParameters) && count($newParameters) > 0) {
-            $this->processParameterSet($newParameters, $pageTypeNamespace);
+            $this->processParameterSet($newParameters, $page_type_namespace);
         }
 
-        $newParameters = Services::Registry()->get($parameterNamespace, 'enable*');
+        $newParameters = Services::Registry()->get($parameter_namespace, 'enable*');
         if (is_array($newParameters) && count($newParameters) > 0) {
-            $this->processParameterSet($newParameters, $pageTypeNamespace);
+            $this->processParameterSet($newParameters, $page_type_namespace);
         }
 
         /** II. Next, Extension level defaults */
-        if ($resourceNamespace == '') {
+        if ($resource_namespace == '') {
         } else {
 
-            $newParameters = Services::Registry()->get($resourceNamespace . 'Parameters', $pageTypeNamespace . '*');
+            $newParameters = Services::Registry()->get($resource_namespace . 'Parameters', $page_type_namespace . '*');
             if (is_array($newParameters) && count($newParameters) > 0) {
-                $this->processParameterSet($newParameters, $pageTypeNamespace);
+                $this->processParameterSet($newParameters, $page_type_namespace);
             }
 
-            $newParameters = Services::Registry()->get($resourceNamespace . 'Parameters', 'criteria*');
+            $newParameters = Services::Registry()->get($resource_namespace . 'Parameters', 'criteria*');
             if (is_array($newParameters) && count($newParameters) > 0) {
-                $this->processParameterSet($newParameters, $pageTypeNamespace);
+                $this->processParameterSet($newParameters, $page_type_namespace);
             }
 
-            $newParameters = Services::Registry()->get($resourceNamespace . 'Parameters', 'enable*');
+            $newParameters = Services::Registry()->get($resource_namespace . 'Parameters', 'enable*');
             if (is_array($newParameters) && count($newParameters) > 0) {
-                $this->processParameterSet($newParameters, $pageTypeNamespace);
+                $this->processParameterSet($newParameters, $page_type_namespace);
             }
         }
 
         /** III. Finally, Application level defaults */
-        $applicationDefaults = Services::Registry()->get('Configuration', $pageTypeNamespace . '*');
+        $applicationDefaults = Services::Registry()->get('Configuration', $page_type_namespace . '*');
         if (count($applicationDefaults) > 0) {
-            $this->processParameterSet($applicationDefaults, $pageTypeNamespace);
+            $this->processParameterSet($applicationDefaults, $page_type_namespace);
         }
 
         /** Merge in the rest */
-        Services::Registry()->merge($parameterNamespace, 'Parameters', true);
+        Services::Registry()->merge($parameter_namespace, 'Parameters', true);
 
         /** Metadata defaulting */
-        Services::Registry()->merge($metadataNamespace, 'Metadata');
+        Services::Registry()->merge($metadata_namespace, 'Metadata');
 
-        if ($resourceNamespace == '') {
+        if ($resource_namespace == '') {
         } else {
-            Services::Registry()->merge($resourceNamespace . 'Metadata', 'Metadata', true);
+            Services::Registry()->merge($resource_namespace . 'Metadata', 'Metadata', true);
         }
 
         Services::Registry()->merge('Configuration', 'Parameters', true);
@@ -376,19 +366,19 @@ Class ContentHelper
      * Iterates parameter set to determine whether or not value should be applied
      *
      * @param   $parameterSet
-     * @param   $pageTypeNamespace
+     * @param   $page_type_namespace
      *
      * @return  void
      * @since   1.0
      */
-    protected function processParameterSet($parameterSet, $pageTypeNamespace)
+    protected function processParameterSet($parameterSet, $page_type_namespace)
     {
         foreach ($parameterSet as $key => $value) {
 
             $copy_from = $key;
 
-            if (substr($key, 0, strlen($pageTypeNamespace)) == $pageTypeNamespace) {
-                $copy_to = substr($key, strlen($pageTypeNamespace) + 1, 9999);
+            if (substr($key, 0, strlen($page_type_namespace)) == $page_type_namespace) {
+                $copy_to = substr($key, strlen($page_type_namespace) + 1, 9999);
             } else {
                 $copy_to = $key;
             }
@@ -459,9 +449,9 @@ Class ContentHelper
     /**
      * Get Category Type information for Resource
      *
-     * @param  $id
+     * @param   $id
      *
-     * @return array An object containing an array of basic resource info, parameters in registry
+     * @return  array  An object containing an array of basic resource info, parameters in registry
      * @since   1.0
      */
     public function getResourceCatalogType($id = 0)
@@ -551,7 +541,7 @@ Class ContentHelper
      * Get Menuitem Content Parameters for specific Resource
      *
      * Usage:
-     *  Helpers::Content()->getResourceMenuitemParameters('Grid', $extension_instance_id);
+     *  Helpers::Content()->getResourceMenuitemParameters(PAGE_TYPE_GRID, $extension_instance_id);
      *
      * Populates this registry:
      * If the menuitem is found, parameters can be accessed using the 'Menuitemtype' + 'MenuitemParameters' registry
