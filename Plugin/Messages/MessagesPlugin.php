@@ -34,7 +34,7 @@ class MessagesPlugin extends Plugin
         $messages = $controller->getData(QUERY_OBJECT_LIST);
 
         if (count($messages) == 0 || $messages === false) {
-            Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, $this->get('template_view_path_node'), array());
+            Services::Registry()->set(MESSAGES_MODEL_NAME, $this->get('template_view_path_node'), array());
             return true;
         }
 

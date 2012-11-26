@@ -315,6 +315,7 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
         }
 
         $this->getPluginList($query_object);
+
         $profiler_message =
             ' <br />Data Object: ' . $this->get('data_object')
                 . ' <br />Model Type: ' . $this->get('model_type')
@@ -351,6 +352,9 @@ echo $profiler_message;
                     $method_parameter = $this->get('registry_entry');
 
                 } elseif ($service_class_query_method_parameter == 'TEMPLATE_VIEW_NAME') {
+                    $method_parameter = $this->get('template_view_path_node');
+
+                } elseif ($service_class_query_method_parameter == 'DATAOBJECT_MODEL_TYPE') {
                     $method_parameter = $this->get('template_view_path_node');
 
                 } else {

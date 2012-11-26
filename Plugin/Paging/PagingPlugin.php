@@ -26,13 +26,12 @@ class PagingPlugin extends Plugin
      * @return boolean
      * @since   1.0
      */
-    public function onAfterReadall()
+    public function onBeforeInclude()
     {
         if (strtolower($this->get('template_view_path_node')) == 'paging') {
         } else {
             return true;
         }
-        return true;
 
         /** initialise */
         $url = Services::Registry()->get('Plugindata', 'page_url');
@@ -152,7 +151,10 @@ class PagingPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set('Plugindata', 'Paging', $query_results);
+        Services::Registry()->set(
+            TEMPLATEVIEWNAME_MODEL_NAME,
+            $this->get('template_view_path_node'),
+            $query_results);
 
         return true;
     }
