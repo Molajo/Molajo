@@ -3,36 +3,9 @@
     <service name="Registry" static="1" startup="getInstance"/>
     <service name="Cache" static="1" startup="getInstance"/>
     <service name="Profiler" static="1" startup="getInstance"/>
-    <service name="Error" static="0" startup=""/>
     <service name="Version" static="1" startup="getInstance"/>
-    <service name="Client" static="0" startup="setRegistry"/>
-    <service name="Url" static="0" startup=""/>
-    <service name="Text" static="0" startup=""/>
-    <service name="Mail" static="0" startup=""/>
-    <service name="Filesystem" static="0" startup=""/>
-    <service name="Message" static="0" startup="initialise"/>
-    <service name="Database" static="0" startup=""/>
     <service name="Configuration" static="1" startup="getInstance"/>
     <service name="Log" static="1" startup="initialise"/>
     <service name="Event" static="0" startup="initialise"/>
-    <service name="Route" static="0" startup=""/>
-    <service name="Cookie" static="0" startup=""/>
-    <service name="Session" static="0" startup=""/>
-    <service name="Response" static="0" startup=""/>
-    <service name="Redirect" static="0" startup=""/>
-    <service name="User" static="0" startup="load"/>
-    <service name="Language" static="0" startup="initialise"/>
     <service name="Date" static="1" startup="getInstance"/>
-    <service name="Asset" static="0" startup="initialise"/>
-    <service name="Authorisation" static="0" startup="initialise"/>
-    <service name="Metadata" static="0" startup=""/>
-    <service name="Image" static="0" startup=""/>
-    <service name="Filter" static="0" startup=""/>
-    <service name="Parse" static="0" startup=""/>
-    <service name="Password" static="0" startup=""/>
-    <service name="Authentication" static="0" startup=""/>
-    <service name="Search" static="0" startup=""/>
-    <service name="Install" static="0" startup=""/>
-    <service name="Menu" static="0" startup=""/>
-    <service name="Form" static="0" startup=""/>
 </services>

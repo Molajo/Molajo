@@ -14,100 +14,46 @@ defined('MOLAJO') or die;
 /**
  * LanguageService API:
  *
- * List installed languages:
- * $list = Services::Registry()->get('Languages', 'installed');
- *
- * Current language:
- * $current = Services::Registry()->get('Languages', 'Current');
- *
- * Default language:
- * $default = Services::Registry()->get('Languages', 'Default');
- *
- * All values for a specific language:
- * Services::Registry()->get('en-GB', '*');
- *
- * Specific value for specific language
- * Services::Registry()->get('en-GB', 'direction');
- *
- * Other language key values:
- * 	id, name, rtl, local, first_day
- *
- * To translate a string:
- * Services::Language()->translate($string);
- *
  * @package     Molajo
  * @subpackage  Language
  * @since       1.0
+ *
+ * Load language strings - initiated by the Services class
+ *      Services::Language()->translate($string);
+ *
+ * Get specific information about languages:
+ *      Services::Language()->get('installed');
+ *      Services::Language()->get('default');
+ *      Services::Language()->get('current');
+ *      Services::Language()->get('name-of-attribute');
+ *          Note: id, name, rtl, local, first_day or '*' (all)
+ *
+ * Translate a language string:
+ *      Services::Language()->translate($string);
+
+ * Insert strings found in code but not in database - initiated by the Applications cLass after render
+ *      Services::Language()->logUntranslatedStrings();
  */
 Class LanguageService
 {
+
     /**
+     * Load language file for specific language
+     *
      * @param   string  $language
      *
      * @return  null
      * @since   1.0
      */
-    public function initialise($language = null)
+    public function load($language = null)
     {
         $language = $this->setCurrentLanguage($language);
-		$this->setLanguageRegistry($language);
-		return $this->loadLanguageStrings($language);
+        $this->setLanguageRegistry($language);
+        return $this->loadLanguageStrings($language);
     }
 
     /**
-     * Translate string
-     *
-     * @param   string  $string
-     * @param   string  $language
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function translate($string, $language = null)
-    {
-		$string = trim($string);
-
-        if ($language == null) {
-            $language = Services::Registry()->get('Languages', 'Current');
-        }
-
-        $result = Services::Registry()->get($language, $string);
-		if ($result === null) {
-		} else {
-			return $result;
-		}
-
-		if ($language == Services::Registry()->get('Languages', 'Default')) {
-		} else {
-			$language = Services::Registry()->get('Languages', 'Default');
-			$result = Services::Registry()->get($language, $string);
-			if ($result === null) {
-			} else {
-				return $result;
-			}
-		}
-
-		if ($language == Services::Registry()->get('Languages', 'en-GB')) {
-		} else {
-			$language = 'en-GB';
-			$result = Services::Registry()->get($language, $string);
-			if ($result === null) {
-			} else {
-				return $result;
-			}
-		}
-
-		if ($string == 'Application configured default:')  {
-
-		} else {
-			Services::Language()->logUntranslatedString($string);
-		}
-
-		return $string;
-    }
-
-    /**
-     * get language property
+     * Get language property
      *
      * @param   string  $property
      * @param   string  $default
@@ -122,10 +68,140 @@ Class LanguageService
             $language = Services::Registry()->get('Languages', 'Current');
         }
 
+        if ($property == 'installed') {
+            return Services::Registry()->get('Languages', 'installed');
+
+        } elseif ($property == 'default') {
+            return Services::Registry()->get('Languages', 'Default');
+
+        } elseif ($property == 'current') {
+            return Services::Registry()->get('Languages', 'Current');
+        }
+
         return Services::Registry()->get($language, $property, $default);
     }
 
-	/**
+    /**
+     * Translate string
+     *
+     * @param   string  $string
+     * @param   string  $language
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function translate($string, $language = null)
+    {
+        $string = trim($string);
+
+        if ($language == null) {
+            $language = Services::Registry()->get('Languages', 'Current');
+        }
+
+        $result = Services::Registry()->get($language, $string);
+        if ($result === null) {
+        } else {
+            return $result;
+        }
+
+        if ($language == Services::Registry()->get('Languages', 'Default')) {
+        } else {
+            $language = Services::Registry()->get('Languages', 'Default');
+            $result = Services::Registry()->get($language, $string);
+            if ($result === null) {
+            } else {
+                return $result;
+            }
+        }
+
+        if ($language == Services::Registry()->get('Languages', 'en-GB')) {
+        } else {
+            $language = 'en-GB';
+            $result = Services::Registry()->get($language, $string);
+            if ($result === null) {
+            } else {
+                return $result;
+            }
+        }
+
+        if ($string == 'Application configured default:')  {
+
+        } else {
+            Services::Language()->logUntranslatedString($string);
+        }
+
+        return $string;
+    }
+
+    /**
+     * Language strings found within the code but not identified to the database are captured and
+     *      inserted into the language strings table
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function logUntranslatedStrings()
+    {
+        if (Services::Registry()->get('User', 'username') == 'admin') {
+        } else {
+            return true;
+        }
+
+        if (Services::Registry()->get('Configuration', 'profiler_collect_missing_language_strings') == '1') {
+        } else {
+            return true;
+        }
+
+        Services::Registry()->sort('TranslatedStringsMissing');
+
+        $body = '';
+        $translated = Services::Registry()->getArray('TranslatedStringsMissing');
+
+        if (count($translated) === 0) {
+            return true;
+        }
+
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+
+        $results = $controller->getModelRegistry('System', 'Languagestrings');
+        if ($results === false) {
+            return false;
+        }
+
+        $results = $controller->setDataobject();
+        if ($results === false) {
+            return false;
+        }
+
+        $controller->set('check_view_level_access', 0);
+        $controller->model->insertLanguageString($translated);
+
+        return true;
+    }
+
+    /**
+     * Log requests for translations that could not be processed
+     *
+     * @param   $string
+     *
+     * @return  void
+     * @since   1.0
+     */
+    protected function logUntranslatedString ($string)
+    {
+        if (Services::Registry()->exists('TranslatedStringsMissing')) {
+        } else {
+            Services::Registry()->createRegistry('TranslatedStringsMissing');
+        }
+
+        /* Value preserves case */
+        Services::Registry()->set('TranslatedStringsMissing', $string, $string);
+
+        return;
+    }
+
+    /**
 	 * Loads language strings into registry
 	 *
 	 * @param   string $language, optional
@@ -133,7 +209,7 @@ Class LanguageService
 	 * @return 	bool
 	 * @since   1.0
 	 */
-	public function loadLanguageStrings($language = null)
+	protected function loadLanguageStrings($language = null)
     {
         if ($language === null) {
             $language = Services::Registry()->get('Languages', 'Current');
@@ -351,73 +427,6 @@ Class LanguageService
 		$controller->set('model_count', 99999);
 
 		return $controller->getData(QUERY_OBJECT_LIST);
-	}
-
-	/**
-	 * Log requests for translations that could not be processed
-	 *
-	 * @param   $string
-     *
-     * @return  void
-     * @since   1.0
-	 */
-	protected function logUntranslatedString ($string)
-	{
-		if (Services::Registry()->exists('TranslatedStringsMissing')) {
-		} else {
-			Services::Registry()->createRegistry('TranslatedStringsMissing');
-		}
-
-		/* Value preserves case */
-		Services::Registry()->set('TranslatedStringsMissing', $string, $string);
-
-		return;
-	}
-
-	/**
-	 * Log missing strings
-	 *
-	 * @return  bool
-     * @since   1.0
-	 */
-	public function logUntranslatedStrings()
-	{
-        if (Services::Registry()->get('User', 'username') == 'admin') {
-        } else {
-            return true;
-        }
-
-        if (Services::Registry()->get('Configuration', 'profiler_collect_missing_language_strings') == '1') {
-        } else {
-            return true;
-        }
-
-		Services::Registry()->sort('TranslatedStringsMissing');
-
-		$body = '';
-		$translated = Services::Registry()->getArray('TranslatedStringsMissing');
-
-		if (count($translated) === 0) {
-			return true;
-		}
-
-		$controllerClass = CONTROLLER_CLASS;
-		$controller = new $controllerClass();
-
-		$results = $controller->getModelRegistry('System', 'Languagestrings');
-		if ($results === false) {
-			return false;
-		}
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
-
-        $controller->set('check_view_level_access', 0);
-		$controller->model->insertLanguageString($translated);
-
-		return true;
 	}
 
     /**

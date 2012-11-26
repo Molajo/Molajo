@@ -17,6 +17,14 @@ defined('MOLAJO') or die;
 /**
  * Application
  *
+ * Front Controller for the Molajo Application
+ *
+ * 1. Initialise
+ * 2. Route
+ * 3. Authorise
+ * 4. Execute (Display or Action)
+ * 5. Respond
+ *
  * @package     Molajo
  * @subpackage  Application
  * @since       1.0
@@ -37,39 +45,59 @@ Class Application
      * @var    object  Helper
      * @since  1.0
      */
-    protected static $helpers = null;
+    protected $helpers = null;
 
     /**
-     * Application::Request
+     * $request
      *
      * @var    object  Request
      * @since  1.0
      */
-    protected static $request = null;
+    protected $request = null;
+
+    /**
+     * $requested_resource_for_route
+     *
+     * ex. articles/article-1/index.php?tag=xyz
+     *
+     * @var    object  Request
+     * @since  1.0
+     */
+    protected $requested_resource_for_route = null;
+
+    /**
+     * $base_url_path_for_application
+     *
+     * ex. http://site1/admin/
+     *
+     * @var    object  Request
+     * @since  1.0
+     */
+    protected $base_url_path_for_application = null;
 
     /**
      * $rendered_output
      *
-     * @var    object  Request
+     * @var    object
      * @since  1.0
      */
     protected $rendered_output = null;
 
     /**
-     * Application Controller
+     * $exception_handler
      *
+     * @var    object
+     * @since  1.0
+     */
+    protected $exception_handler = null;
+
+    /**
      * Override normal processing with these parameters
      *
      * @param   string  $override_url_request
      * @param   string  $override_catalog_id
      * @param   string  $override_parse_sequence
      * @param   string  $override_parse_final
-     *
-     * 1. Initialise
-     * 2. Route
-     * 3. Authorise
-     * 3. Execute (Display or Action)
-     * 4. Respond
      *
      * @return  mixed
      * @since   1.0
@@ -80,6 +108,7 @@ Class Application
         $override_parse_sequence = false,
         $override_parse_final = false
     ) {
+
         /** 1. Initialise */
         $results = $this->initialise(
             $override_url_request,
@@ -89,18 +118,40 @@ Class Application
         );
 
         /** 2. Route */
-        if ($results === true) {
-            $results = $this->route();
+        try {
+            if ($results === true) {
+                $results = $this->route();
+            }
+            if ($results === false) {
+                return false;
+            }
+        } catch (\Exception $e) {
+            throw new \Exception('Route Error: ' . $e->getMessage(), $e->getCode());
         }
 
         /** 3. Authorise */
-        $this->authorise();
+        try {
+            $this->authorise();
+
+        } catch (\Exception $e) {
+            throw new \Exception('Authorisation Error: ' . $e->getMessage(), $e->getCode());
+        }
 
         /** 4. Execute */
-        $this->execute();
+        try {
+            $this->execute();
+
+        } catch (\Exception $e) {
+            throw new \Exception('Execute Error: ' . $e->getMessage(), $e->getCode());
+        }
 
         /** 5. Response */
-        $this->response();
+        try {
+            $this->response();
+
+        } catch (\Exception $e) {
+            throw new \Exception('Response Error: ' . $e->getMessage(), $e->getCode());
+        }
 
         exit(0);
     }
@@ -122,13 +173,17 @@ Class Application
         $override_parse_sequence = false,
         $override_parse_final = false
     ) {
-        if (version_compare(PHP_VERSION, '5.3', '<')) {
-            die('Your host needs to use PHP 5.3 or higher to run Molajo.');
+
+        set_exception_handler(array($this, 'handleException'));
+        set_error_handler(array($this, 'createExceptionFromError'), E_ALL);
+
+        $results = version_compare(PHP_VERSION, '5.3', '<');
+        if ($results == 1) {
+            throw new \Exception('PHP version: ' . PHP_VERSION . ' does not meet 5.3 minimum.', 500);
         }
 
-        /** Use this error for ALL (E_ALL) errors */
-//		$exceptionHandler = 'Molajo//Exceptions';
-//		set_error_handler($exceptionHandler, E_ALL);
+        /** Request */
+        $this->request = new RequestService();
 
         /** HTTP class */
         $results = $this->setBaseURL();
@@ -179,7 +234,7 @@ Class Application
         }
 
         /** Helpers */
-        $results = Application::Helpers()->connect();
+        $results = Application::Helpers();
         if ($results === false) {
             return false;
         }
@@ -216,6 +271,49 @@ Class Application
     }
 
     /**
+     * Custom PHP Exception Handler for Molajo
+     *
+     * @param   null  $title
+     * @param   null  $message
+     * @param   null  $code
+     * @param   int   $display_file
+     * @param   int   $display_line
+     * @param   int   $display_stack_trace
+     * @param   int   $terminate
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function handleException($title = null, $message = null, $code = null,
+        $display_file = 1, $display_line = 1, $display_stack_trace = 1, $terminate = 1)
+    {
+        $x = Services::Exception();
+
+        return $x->formatMessage($title, $message, $code,
+            $display_file, $display_line, $display_stack_trace, $terminate);
+    }
+
+    /**
+     * Custom PHP Error Handler - turns Errors into PHP Exceptions
+     *
+     * @param   $errno
+     * @param   $errstr
+     * @param   $errfile
+     * @param   $errline
+     *
+     * @throws  \ErrorException
+     * @since   1.0
+     */
+    public function createExceptionFromError($errno, $errstr, $errfile, $errline )
+    {
+        echo $errstr . ' ' . $errno . '<br />';
+        echo $errfile . '<br />';
+        echo $errline . '<br />';
+
+        throw new \ErrorException ($errstr, $errno);
+    }
+
+    /**
      * Evaluates HTTP Request to determine routing requirements, including:
      *
      * - Normal page request: populates Registry for Request
@@ -236,7 +334,10 @@ Class Application
 
         Services::Profiler()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
 
-        $results = Services::Route()->process();
+        $results = Services::Route()->process(
+            $this->requested_resource_for_route,
+            $this->base_url_path_for_application
+        );
 
         if (Services::Redirect()->url === null
             && (int)Services::Redirect()->code == 0
@@ -317,8 +418,6 @@ Class Application
     {
         Services::Profiler()->set(START_AUTHORISATION, LOG_OUTPUT_APPLICATION);
 
-        Services::Authorisation()->verifyAction();
-
         Services::Profiler()->set('Application Schedule Event onAfterAuthorise', LOG_OUTPUT_PLUGINS);
 
         $results = Services::Event()->scheduleEvent('onAfterAuthorise');
@@ -328,7 +427,7 @@ Class Application
 
         if ($results === false) {
             Services::Profiler()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
-            return false;
+            throw new \Exception('Authorisation Failed', 403);
         }
 
         Services::Profiler()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
@@ -367,6 +466,7 @@ Class Application
 
         if ($results === false) {
             Services::Profiler()->set('Execute ' . $action . ' failed', LOG_OUTPUT_APPLICATION);
+            throw new \Exception('Execute ' . $action . ' Failed', 500);
             return false;
         }
 
@@ -491,6 +591,8 @@ Class Application
             if (is_array($results)) {
                 $results = true;
             }
+        } else {
+            throw new \Exception('Response failed', $results);
         }
 
         Services::Language()->logUntranslatedStrings();
@@ -518,7 +620,7 @@ Class Application
             /**
              * BASE_URL - root of the website with a trailing slash
              */
-            define('BASE_URL', Application::Request()->get('base_url') . '/');
+            define('BASE_URL', $this->request->get('base_url') . '/');
         }
 
         return true;
@@ -650,7 +752,7 @@ Class Application
             define('SITES_DATAOBJECT_FOLDER', BASE_URL . 'Site/media');
         }
 
-        $site_base_url = Application::Request()->get('base_url_path');
+        $site_base_url = $this->request->get('base_url_path');
 
         if (defined('SITE_BASE_URL')) {
         } else {
@@ -686,8 +788,8 @@ Class Application
      */
     protected function setApplication()
     {
-        $p1 = Application::Request()->get('path_info');
-        $t2 = Application::Request()->get('query_string');
+        $p1 = $this->request->get('path_info');
+        $t2 = $this->request->get('query_string');
 
         if (trim($t2) == '') {
             $requestURI = $p1;
@@ -707,7 +809,7 @@ Class Application
         $requested_resource_for_route = '';
 
         if (defined('APPLICATION')) {
-            /* to override - must also define Application::Request()->get('requested_resource_for_route') */
+            /* to override - must also define $this->request->get('requested_resource_for_route') */
         } else {
 
             $apps = ConfigurationService::getFile('Application', 'Applications');
@@ -748,14 +850,12 @@ Class Application
                 = substr($requested_resource_for_route, 0, strripos($requested_resource_for_route, '/'));
         }
 
-        Application::Request()->set('requested_resource_for_route', $requested_resource_for_route);
+        $this->requested_resource_for_route = $requested_resource_for_route;
 
-        Application::Request()->set(
-            'base_url_path_for_application',
-            Application::Request()->get('base_url_path_with_scheme')
-                . '/'
-                . APPLICATION_URL_PATH
-        );
+        $this->base_url_path_for_application
+            = $this->request->get('base_url_path_with_scheme')
+            . '/'
+            . APPLICATION_URL_PATH;
 
         return true;
     }
@@ -800,14 +900,14 @@ Class Application
 
         if ((int)Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
 
-            if ((Application::Request()->get('connection')->isSecure() === true)) {
+            if (($this->request->get('connection')->isSecure() === true)) {
 
             } else {
 
                 $redirectTo = (string)'https' .
                     substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
                     APPLICATION_URL_PATH .
-                    '/' . Application::Request()->get('requested_resource_for_route');
+                    '/' . $this->request->get('requested_resource_for_route');
 
                 Services::Redirect()
                     ->set($redirectTo, 301);
@@ -851,7 +951,7 @@ Class Application
         if (self::$services) {
         } else {
             try {
-                self::$services = Services::getInstance();
+                self::$services = new Services();
             } catch (\RuntimeException $e) {
                 echo 'Instantiate Service Exception : ', $e->getMessage(), "\n";
                 die;
@@ -864,46 +964,22 @@ Class Application
     /**
      * Application::Helpers
      *
-     * @static
      * @return  Helpers
      * @throws  \RuntimeException
      * @since   1.0
      */
-    public static function Helpers()
+    public function Helpers()
     {
-        if (self::$helpers) {
+        if ($this->helpers) {
         } else {
             try {
-                self::$helpers = Helpers::getInstance();
+                $this->helpers = new Helpers();
             } catch (\Exception $e) {
                 echo 'Instantiate Helpers Exception : ', $e->getMessage(), "\n";
                 die;
             }
         }
 
-        return self::$helpers;
-    }
-
-    /**
-     * Application::RequestService
-     *
-     * @static
-     * @return  RequestService
-     * @since   1.0
-     */
-    public static function Request()
-    {
-        if (self::$request) {
-        } else {
-            try {
-                self::$request = new RequestService();
-//                self::$request = $connect>getInstance();
-            } catch (\Exception $e) {
-                echo 'Instantiate RequestService Exception : ', $e->getMessage(), "\n";
-                die;
-            }
-        }
-
-        return self::$request;
+        return $this->helpers;
     }
 }

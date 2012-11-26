@@ -85,7 +85,7 @@ Class RegistryService
      * @return object
      * @since   1.0
      */
-    public function __construct()
+    public function initialise()
     {
         /** store all registries in this object  */
         $this->registry = array();

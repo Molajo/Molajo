@@ -21,30 +21,6 @@ defined('MOLAJO') or die;
 Class ThemeHelper
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return  bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new ThemeHelper();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * Get requested theme data
      *
      * @param   int $theme_id

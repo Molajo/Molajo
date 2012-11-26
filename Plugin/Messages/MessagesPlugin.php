@@ -46,8 +46,8 @@ class MessagesPlugin extends Plugin
             $row->message = $message->message;
             $row->type = $message->type;
             $row->code = $message->code;
-            $row->action = Application::Request()->get('base_url_path_for_application') .
-                Application::Request()->get('requested_resource_for_route');
+            $row->action = Services::Registry()->get('Parameters', 'request_base_url_path') .
+                Services::Registry()->get('Parameters', 'request_url');
 
             $row->class = 'alert-box';
             if ($message->type == MESSAGE_TYPE_SUCCESS) {

@@ -35,155 +35,143 @@ defined('MOLAJO') or die;
  */
 Class Services
 {
-	/**
-	 * error_reporting(0);
-	ini_set('display_errors', 0);
-	 * Static instance
-	 *
-	 * @var     object
-	 * @since   1.0
-	 */
-	protected static $instance;
 
-	/**
-	 * Stores messages locally until the Profiler Service has been activated
-	 *
-	 * @var     object
-	 * @since   1.0
-	 */
-	protected $message;
+    /**
+     * Stores messages locally until the Profiler Service has been activated
+     *
+     * @var     object
+     * @since   1.0
+     */
+    protected $message;
 
-	/**
-	 * Service Connections
-	 *
-	 * @var     object
-	 * @since   1.0
-	 */
-	protected $static_connection;
+    /**
+     * Service Connections
+     *
+     * @var     object
+     * @since   1.0
+     */
+    protected $connections;
 
+    /**
+     * Registry
+     *
+     * @var     object
+     * @since   1.0
+     */
+    protected $registry;
 
-	/**
-	 * Service Connections
-	 *
-	 * @var     object
-	 * @since   1.0
-	 */
-	protected $dynamic_connection;
+    /**
+     * Used to connect to service either dynamically or reuse of an existing connection
+     *
+     * @static
+     * @param   $name
+     * @param   $arguments
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        return Application::Services()->get($name . 'Service');
+    }
 
-	/**
-	 * getInstance
-	 *
-	 * @static
-	 * @return  bool|object
-	 * @since   1.0
-	 */
-	public static function getInstance()
-	{
-		if (empty(self::$instance)) {
-			self::$instance = new Services();
-		}
+    /**
+     * Retrieves Service Connection or Connects Service
+     *
+     * @param   string $key
+     *
+     * @return  mixed
+     * @since   1.0
+     *
+     * @throws  \BadMethodCallException
+     */
+    protected function get($key)
+    {
+        try {
 
-		return self::$instance;
-	}
+            if (isset($this->connections[$key])) {
+                echo 'yes it is returned<br />';
+                return $this->connections[$key];
+            }
 
-	/**
-	 * Used to connect to services
-	 *
-	 * @static
-	 * @param   $name
-	 * @param   $arguments
-	 *
-	 * @return  object
-	 * @since   1.0
-	 */
-	public static function __callStatic($name, $arguments)
-	{
-		return Application::Services()->get($name . 'Service');
-	}
+            $serviceClass = 'Molajo\\Service\\Services\\'
+                . substr($key, 0, strlen($key) - strlen('service'))
+                . '\\'
+                . $key;
 
-	/**
-	 * loads all services defined in the services.xml file
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public function initiate()
-	{
-		$this->static_connection = array();
-		$this->dynamic_connection = array();
-		$this->message = array();
+            return $this->getClassInstance($serviceClass);
 
-		$services = ConfigurationService::getFile('Service', 'Services');
+        } catch (\Exception $e) {
 
-		if ($services === false) {
-			//throw error
-			//error
-			echo 'Cannot file Services File ';
-			die;
-		}
+            $trace = debug_backtrace();
+            $caller = array_shift($trace);
 
-		foreach ($services->service as $service) {
+            $error_message = "Called by {$caller['function']}";
 
-            $static_indicator = (int) $service->attributes()->static;
-            $name = (string) $service->attributes()->name;
-            $startup = (string) $service->attributes()->startup;
+            if (isset($caller['class'])) {
+                $error_message .= " in {$caller['class']}";
+            }
+
+            throw new \Exception($error_message);
+        }
+    }
+
+    /**
+     * loads all services defined in the services.xml file
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function initiate()
+    {
+        $this->connections = array();
+        $this->message = array();
+
+        $services = ConfigurationService::getFile('Service', 'Services');
+
+        if ($services === false) {
+            //throw error
+            //error
+            echo 'Cannot file Services File ';
+            die;
+        }
+        throw new \RuntimeException('Service Connection for  failed');
+
+        foreach ($services->service as $service) {
+
+            $static_indicator = (int)$service->attributes()->static;
+            $name = (string)$service->attributes()->name;
+            $startup = (string)$service->attributes()->startup;
+            $store_connection = (int)$service->attributes()->store_connection;
 
             $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
 
-            foreach ($service->parameter as $parameter) {
-            }
+            $connectionSucceeded = null;
 
-			if ($static_indicator == '1') {
-
+            try {
                 $connection = $this->getClassInstance($serviceClass);
-                $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
-
-				$this->set($name . 'Service', $connection, $connectionSucceeded);
-
-			} else {
-
-                $this->dynamic_connection[$service->attributes()->name . 'Service']
-                    = $service->attributes()->name;
 
                 if (trim($startup) == '') {
                 } else {
-                    $connection = $this->getClassInstance($serviceClass);
                     $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
                 }
-			}
-		}
 
-		foreach ($this->message as $message) {
-			Services::Profiler()->set($message, LOG_OUTPUT_SERVICES, VERBOSE);
-		}
+                if ($store_connection == 1 || $static_indicator == 1) {
+                    $this->set($name . 'Service', $connection, $connectionSucceeded);
+                }
 
-		return true;
-	}
+            } catch (\Exception $e) {
+                throw new \Exception('Service Connection for ' . $name . ' failed.' . $e->getMessage(), $e->getCode());
+            }
 
-	/**
-	 * Retrieves service key value pair
-	 *
-	 * @param   string $key
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 *
-	 * @throws  \BadMethodCallException
-	 */
-	protected function get($key)
-	{
-		if (isset($this->static_connection[$key])) {
-			return $this->static_connection[$key];
+        }
 
-		} elseif (isset($this->dynamic_connection[$key])) {
-//todo: overrides for service
-            return $this->getClassInstance('Molajo\\Service\\Services\\'
-                    . substr($key, 0, (strlen($key) - 7))
-                    . '\\' . $key);
-		}
+        foreach ($this->message as $message) {
+            Services::Profiler()->set($message, LOG_OUTPUT_SERVICES, VERBOSE);
+        }
 
-		throw new \BadMethodCallException('Service ' . $key . ' is not available');
-	}
+        return true;
+    }
 
     /**
      * Get Class Instance
@@ -194,13 +182,11 @@ Class Services
      * @return  mixed
      * @since   1.0
      */
-    private function getClassInstance($serviceClass) {
-
+    private function getClassInstance($serviceClass)
+    {
         if (class_exists($serviceClass)) {
         } else {
-            $connectionSucceeded = false;
-            $connection = $serviceClass . ' Class does not exist';
-            //throw error
+            throw new \Exception('Service Class ' . $serviceClass . ' does not exist.');
         }
 
         return new $serviceClass();
@@ -222,21 +208,19 @@ Class Services
             return $connection->$serviceMethod();
 
         } catch (\Exception $e) {
-            $connectionSucceeded = false;
-            $error = 'Fatal Error: ' . $e->getMessage();
-            echo $error;
-            die;
+
+            $error = 'Service: ' . $serviceClass
+                . ' Startup Method: ' . $serviceMethod
+                . ' failed: ' . $e->getMessage();
+
+            throw new \Exception($error);
         }
     }
 
     /**
-     * Stores static service connections
+     * Store service connection locally
      *
-     * Minor use of static connections makes it easier for less technical people to use
-     * application services and integrating resource data.
-     *
-     * If you have specific ideas on services that would be better implemented as dynamic
-     * connections your pull request will have serious consideration.
+     * Set indicator of Service availability in Registry
      *
      * @param   string $key
      * @param   null   $value
@@ -247,6 +231,7 @@ Class Services
      */
     private function set($key, $value = null, $connectionSucceeded = true)
     {
+        echo $key . '<br />';
         $i = count($this->message);
 
         if ($value == null || $connectionSucceeded === false) {
@@ -254,7 +239,12 @@ Class Services
             Services::Registry()->set('Service', $key, false);
 
         } else {
-            $this->static_connection[$key] = $value;
+            $this->connections[$key] = $value;
+
+            echo '<pre>';
+            var_dump($this->connections);
+            echo '</pre>';
+
             $this->message[$i] = ' ' . $key . ' started successfully. ';
             Services::Registry()->set('Service', $key, true);
         }

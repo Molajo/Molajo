@@ -15,48 +15,27 @@ defined('MOLAJO') or die;
 /**
  * Route Service
  *
- * @package    Molajo
- * @subpackage Route
- * @since      1.0
+ * @package     Molajo
+ * @subpackage  Route
+ * @since       1.0
  */
 Class RouteService
 {
-    /**
-     * $instance
-     *
-     * @var     object
-     * @since   1.0
-     */
-    protected static $instance = null;
 
     /**
-     * @return Object
-     *
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (self::$instance) {
-        } else {
-            self::$instance = new RouteService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * Using the Application::Request()->get('requested_resource_for_route') constant:
+     * Using the Services::Request()->get('requested_resource_for_route') constant:
      *
      *  - retrieve the catalog record
      *  - set registry values needed to fulfill the page request
      *
-     * @return mixed
+     * @param   $requested_resource_for_route
+     * @param   $base_url_path_for_application
      *
-     * @since 1.0
+     * @return  bool
+     * @since   1.0
      */
-    public function process()
+    public function process($requested_resource_for_route, $base_url_path_for_application)
     {
-        /** Route Registry */
         Services::Registry()->createRegistry('Parameters');
         Services::Registry()->createRegistry('Metadata');
         Services::Registry()->deleteRegistry('Plugin');
@@ -66,11 +45,12 @@ Class RouteService
         Services::Registry()->set('Parameters', 'status_authorised', '');
         Services::Registry()->set('Parameters', 'redirect_to_id', 0);
 
-        $url_request = Application::Request()->get('requested_resource_for_route');
+        $url_request = $requested_resource_for_route;
         if (substr($url_request, 0, 1) == '/') {
             $url_request = substr($url_request, 1);
         }
         Services::Registry()->set('Parameters', 'request_url', $url_request);
+        Services::Registry()->set('Parameters', 'request_base_url_path', $base_url_path_for_application);
         Services::Registry()->set('Parameters', 'request_catalog_id', 0);
 
         /** Overrides */
@@ -89,7 +69,6 @@ Class RouteService
         $continue = $this->checkHome();
         if ($continue === false) {
             Services::Profiler()->set('Route checkHome() Redirect to Real Home', 'Route');
-
             return false;
         }
 
@@ -97,7 +76,6 @@ Class RouteService
         if (Services::Registry()->get('Configuration', 'offline_switch', 0) == 1) {
             Services::Error()->set(503);
             Services::Profiler()->set('Application::Route() Direct to Offline Mode', 'Route');
-
             return false;
         }
 
@@ -105,7 +83,6 @@ Class RouteService
         $continue = $this->getResource();
         if ($continue === false) {
             Services::Profiler()->set('Route getResource() Failed', 'Route');
-
             return false;
         }
 
@@ -116,7 +93,6 @@ Class RouteService
         if (Services::Registry()->get('Parameters', 'status_found') === false) {
             Services::Error()->set(404);
             Services::Profiler()->set('Application::Route() 404', 'Route');
-
             return false;
         }
 
@@ -146,7 +122,6 @@ Class RouteService
                 , 303
             );
             Services::Profiler()->set('Application::Route() Redirect to Logon', 'Route');
-
             return false;
         }
 
@@ -166,7 +141,6 @@ Class RouteService
      */
     protected function checkHome()
     {
-
         $path = Services::Registry()->get('Parameters', 'request_url');
         Services::Registry()->set('Parameters', 'home', 0);
 
@@ -267,14 +241,10 @@ Class RouteService
      */
     protected function getResource()
     {
-        /**echo '<pre>';
-        var_dump(Application::Request()->request);
-        echo '</pre>';
-
-        /** Defaults */
         Services::Registry()->set('Parameters', 'request_non_route_parameters', '');
 
-        $method = Application::Request()->get('method');
+        $method = Services::Request()->get('method');
+
         if ($method == 'POST') {
             $action = 'create';
             $controller = 'create';
@@ -296,7 +266,7 @@ Class RouteService
             $post_variables = array();
 
         } else {
-
+            //todo retrieve post variables
             $post_variables = Services::Request()->get('post_variables');
 
             if (count($post_variables) == 0
@@ -305,7 +275,7 @@ Class RouteService
                 $i = 0;
                 foreach ($post_variables as $key=>$value) {
                     echo $key. ' ' . $value . '<br />';
-                    Services::Request()->set($key, $value);
+                    //Services::Request()->set($key, $value);
                 }
             }
         }
@@ -317,7 +287,7 @@ Class RouteService
         /** Retrieve ID, unless already set for Home or Override  */
         if (Services::Registry()->get('Parameters', 'request_catalog_id') > 0) {
         } else {
-            $value = (int) Application::Request()->get('id');
+            $value = (int) Services::Request()->get('id');
             if ($value == 0) {
             } else {
                 Services::Registry()->set('Parameters', 'request_catalog_id', $value);
@@ -338,7 +308,7 @@ Class RouteService
     /**
      * Retrieve non-route values from parameter URL
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     protected function getResourceExtensionParameters()
@@ -349,7 +319,7 @@ Class RouteService
     /**
      * Retrieve non-route values for SEF URLs
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function getResourceSEF()
@@ -505,7 +475,6 @@ Class RouteService
 
             if ($response === false) {
                 Services::Error()->set(500, 'Extension not found');
-
                 return false;
             }
 
@@ -515,17 +484,14 @@ Class RouteService
 
             if ($response === false) {
                 Services::Error()->set(500, 'Content not found');
-
                 return false;
             }
 
         } else {
 
             $response = Helpers::Content()->getRouteMenuitem();
-
             if ($response === false) {
                 Services::Error()->set(500, 'Menu Item not found');
-
                 return false;
             }
         }

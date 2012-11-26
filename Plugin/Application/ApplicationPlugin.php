@@ -76,7 +76,7 @@ class ApplicationPlugin extends Plugin
 		Services::Registry()->set('Plugindata', 'home_url', $url);
 
 		/* Page and Canonical */
-		$url = Application::Request()->get('base_url_path_for_application') .
+		$url = Services::Request()->get('base_url_path_for_application') .
 			Services::Registry()->get('Parameters', 'request_url');
 		Services::Registry()->set('Plugindata', 'page_url', $url);
         Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);

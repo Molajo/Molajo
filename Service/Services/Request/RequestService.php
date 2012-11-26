@@ -13,11 +13,9 @@ defined('MOLAJO') or die;
 /**
  * Request
  *
- * Initiated by Application, not Services
- *
  * @url http://symfony.com/doc/current/resources/http_foundation.html#accessing-request-data
  *
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */
@@ -48,18 +46,26 @@ Class RequestService
     /**
      * Local object contained request elements
      *
-     *     protected $request;
+     * object
+     * since 1.0
      */
-    public $request;
 
     /**
-     * Class constructor.
+     * Request
      *
+     * @var    object  Request
+     * @since  1.0
+     */
+    protected $request = null;
+
+    /**
+     * Class constructor
+     *
+     * return  object  Request
      * @since  1.0
      */
     public function __construct()
     {
-
         $this->request = new \stdClass();
 
         $request_class = '\\Symfony\\Component\\HttpFoundation\\Request';
@@ -72,11 +78,11 @@ Class RequestService
     }
 
     /**
-     * get - retrieve the specified request item
+     * Retrieve the specified request item
      *
      * @param   $key
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function get($key)
@@ -91,10 +97,10 @@ Class RequestService
     /**
      * set - store the key and value for the specified request item
      *
-     * @param string $key
-     * @param string $value
+     * @param   string  $key
+     * @param   string  $value
      *
-     * @return object
+     * @return  object
      * @since   1.0
      */
     public function set($key, $value)
@@ -107,7 +113,7 @@ Class RequestService
     /**
      * Request values for port, scheme, host, method and base URL from Symfony2 HTTP Foundation
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function setRequest()
@@ -169,12 +175,12 @@ Class RequestService
 
         /** http://localhost/molajo/index.php returns '/molajo/index.php' */
         /** http://site1/admin/articles returns 'site1' */
-        $this->set('base_url_path', $this->get('http_host') . $this->get('base_url')
-        );
+        $this->set('base_url_path', $this->get('http_host') . $this->get('base_url'));
 
         /** http://localhost/molajo/index.php returns 'http://molajo/index.php' */
         /** http://site1/admin/articles returns 'http://site1' */
-        $this->set('base_url_path_with_scheme',
+        $this->set(
+            'base_url_path_with_scheme',
             $this->get('scheme')
                 . '://'
                 . $this->get('http_host')
@@ -207,7 +213,6 @@ Class RequestService
         $this->set('post_variables', $this->symfony_request->request->all());
 
         /** Language */
-
         return true;
     }
 }

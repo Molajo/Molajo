@@ -21,30 +21,6 @@ defined('MOLAJO') or die;
 Class ExtensionHelper
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return  bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new ExtensionHelper();
-        }
-
-        return self::$instance;
-    }
-
-    /**
      * Retrieve Route information for a specific Extension
      *
      * @param   string  $extension_id
