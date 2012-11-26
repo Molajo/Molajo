@@ -325,10 +325,18 @@ Class RegistryService
     public function set($namespace, $key, $value = null, $match = false)
     {
         $namespace = strtolower($namespace);
-        $key = strtolower($key);
+
+        if (is_string($key)) {
+            $key = strtolower($key);
+        } elseif (is_bool($key)) {
+        } else {
+            echo '<pre>';
+            var_dump($key);
+            throw new \Exception ($namespace. ' Key must be a string.');
+        }
 
         if ($key == '') {
-            return; //error
+            return false;
         }
 
         /** Match requirement for security to ensure only named parameters are updated */
@@ -338,9 +346,6 @@ Class RegistryService
                 return false;
             }
         }
-
-        /** keep it all on the down-low */
-        $key = strtolower($key);
 
         /** Get the Registry (or create it) */
         $array = $this->getRegistry($namespace);

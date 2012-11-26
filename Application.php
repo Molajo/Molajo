@@ -126,7 +126,7 @@ Class Application
                 return false;
             }
         } catch (\Exception $e) {
-            throw new \Exception('Route Error: ' . $e->getMessage(), $e->getCode());
+            throw new \Exception('Route Error: ' . $e->getMessage(), $e->getCode(), $e);
         }
 
         /** 3. Authorise */
@@ -134,7 +134,7 @@ Class Application
             $this->authorise();
 
         } catch (\Exception $e) {
-            throw new \Exception('Authorisation Error: ' . $e->getMessage(), $e->getCode());
+            throw new \Exception('Authorisation Error: ' . $e->getMessage(), $e->getCode(), $e);
         }
 
         /** 4. Execute */
@@ -142,7 +142,7 @@ Class Application
             $this->execute();
 
         } catch (\Exception $e) {
-            throw new \Exception('Execute Error: ' . $e->getMessage(), $e->getCode());
+            throw new \Exception('Execute Error: ' . $e->getMessage(), $e->getCode(), $e);
         }
 
         /** 5. Response */
@@ -150,7 +150,7 @@ Class Application
             $this->response();
 
         } catch (\Exception $e) {
-            throw new \Exception('Response Error: ' . $e->getMessage(), $e->getCode());
+            throw new \Exception('Response Error: ' . $e->getMessage(), $e->getCode(), $e);
         }
 
         exit(0);
@@ -289,7 +289,7 @@ Class Application
     {
         $x = Services::Exception();
 
-        return $x->formatMessage($title, $message, $code,
+        $x->formatMessage($title, $message, $code,
             $display_file, $display_line, $display_stack_trace, $terminate);
     }
 
@@ -306,11 +306,13 @@ Class Application
      */
     public function createExceptionFromError($errno, $errstr, $errfile, $errline )
     {
-        echo $errstr . ' ' . $errno . '<br />';
-        echo $errfile . '<br />';
-        echo $errline . '<br />';
-
-        throw new \ErrorException ($errstr, $errno);
+        echo '<strong>PHP Error</strong><br />';
+        echo '<strong>Message: </strong>' . $errstr . '<br />';
+        echo '<strong>Code: </strong>' . $errno . '<br />';
+        echo '<strong>File: </strong>' . $errfile . '<br />';
+        echo '<strong>Line: </strong>' . $errline . '<br />';
+        die;
+        //throw new \Exception('PHP Error');
     }
 
     /**

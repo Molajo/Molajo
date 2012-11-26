@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 
 $pageURL = Services::Registry()->get('Plugindata', 'page_url');
 ?>
-<article class="<?php echo trim('comment' . ' ' . $this->row->first_row . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd_row  . ' ' . $this->row->css_class); ?>"
+<article class="<?php //echo trim('comment' . ' ' . $this->row->first_row . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd_row  . ' ' . $this->row->css_class); ?>"
          id="<?php echo $this->row->alias; ?>">
     <div class="comment-meta">
         <a class="permalink" href="<?php echo $pageURL; ?>#<?php echo $this->row->alias; ?>">#</a>

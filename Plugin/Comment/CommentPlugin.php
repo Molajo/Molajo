@@ -67,13 +67,20 @@ class CommentPlugin extends Plugin
 
         $method = 'get' . ucfirst(strtolower($this->get('template_view_path_node')));
 
-        return $this->$method(
+        $results = $this->$method(
             $controller,
             $parentController,
             $parent_model_type,
             $parent_model_name,
             $parent_source_id
         );
+
+        Services::Registry()->set(
+            TEMPLATEVIEWNAME_MODEL_NAME,
+            $this->get('template_view_path_node'),
+            $results);
+
+        return true;
     }
 
     /**
@@ -166,11 +173,10 @@ class CommentPlugin extends Plugin
             $row->closed_comment = '';
             $row->closed = 0;
         }
+
         $results[] = $row;
 
-        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Comment', $results);
-
-        return true;
+        return $results;
     }
 
     /**
@@ -192,6 +198,7 @@ class CommentPlugin extends Plugin
         $parent_model_name,
         $parent_source_id
     ) {
+
         $primary_prefix = $controller->get('primary_prefix');
 
         $controller->set('root', (int)$parent_source_id);
@@ -208,9 +215,7 @@ class CommentPlugin extends Plugin
 
         $results = $controller->getData(QUERY_OBJECT_LIST);
 
-        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Comments', $results);
-
-        return true;
+        return $results;
     }
 
     /**
@@ -248,9 +253,8 @@ class CommentPlugin extends Plugin
         $row->parent_source_id = $parent_source_id;
 
         $results[] = $row;
-        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Commentform', $results);
 
-        return true;
+        return $results;
 
         /** Get configuration menuitem settings for this resource */
         $menuitem = Helpers::Content()->getResourceMenuitemParameters('Configuration', 17000);

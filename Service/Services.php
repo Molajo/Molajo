@@ -64,8 +64,8 @@ Class Services
      * Used to connect to service either dynamically or reuse of an existing connection
      *
      * @static
-     * @param   $name
-     * @param   $arguments
+     * @param   string  $name
+     * @param   array   $arguments
      *
      * @return  object
      * @since   1.0
@@ -90,7 +90,6 @@ Class Services
         try {
 
             if (isset($this->connections[$key])) {
-                echo 'yes it is returned<br />';
                 return $this->connections[$key];
             }
 
@@ -135,7 +134,6 @@ Class Services
             echo 'Cannot file Services File ';
             die;
         }
-        throw new \RuntimeException('Service Connection for  failed');
 
         foreach ($services->service as $service) {
 
@@ -163,7 +161,6 @@ Class Services
             } catch (\Exception $e) {
                 throw new \Exception('Service Connection for ' . $name . ' failed.' . $e->getMessage(), $e->getCode());
             }
-
         }
 
         foreach ($this->message as $message) {
@@ -231,7 +228,6 @@ Class Services
      */
     private function set($key, $value = null, $connectionSucceeded = true)
     {
-        echo $key . '<br />';
         $i = count($this->message);
 
         if ($value == null || $connectionSucceeded === false) {
@@ -240,11 +236,6 @@ Class Services
 
         } else {
             $this->connections[$key] = $value;
-
-            echo '<pre>';
-            var_dump($this->connections);
-            echo '</pre>';
-
             $this->message[$i] = ' ' . $key . ' started successfully. ';
             Services::Registry()->set('Service', $key, true);
         }

@@ -4,8 +4,14 @@
     <service name="Cache" static="1" startup="getInstance"/>
     <service name="Profiler" static="1" startup="getInstance"/>
     <service name="Version" static="1" startup="getInstance"/>
+    <service name="Client" static="0" startup="setRegistry"/>
+    <service name="Message" static="0" startup="initialise"/>
     <service name="Configuration" static="1" startup="getInstance"/>
     <service name="Log" static="1" startup="initialise"/>
     <service name="Event" static="0" startup="initialise"/>
+    <service name="User" static="0" startup="load"/>
+    <service name="Language" static="0" startup="load"/>
     <service name="Date" static="1" startup="getInstance"/>
+    <service name="Asset" static="0" startup="initialise"/>
+    <service name="Authorisation" static="0" startup="initialise"/>
 </services>

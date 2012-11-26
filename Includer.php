@@ -681,7 +681,7 @@ class Includer
         } else {
             $results = $cached_output;
         }
-echo $results;
+
         return $results;
     }
 

@@ -20,6 +20,7 @@
         <table>
             <plugins>
                 <plugin name="Comment"/>
+                <include name="ContentPlugins"/>
             </plugins>
         </table>
     </model>

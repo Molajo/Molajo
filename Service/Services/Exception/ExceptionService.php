@@ -30,7 +30,7 @@ Class ExceptionService extends \Exception
      * @return void
      * @since  1.0
      */
-    public function __construct($message = '', $code = 0, Exception $previous = null)
+    public function __construct($message = '', $code = 0, \Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

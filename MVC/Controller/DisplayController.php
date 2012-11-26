@@ -42,6 +42,12 @@ class DisplayController extends Controller
 
         $this->getData($this->get('model_query_object'));
 
+        if (strtolower($this->get('extension_title')) == 'commentsXXXXXXX') {
+            echo '<pre>';
+            var_dump($this->query_results);
+            echo '</pre>';
+        }
+
         if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
 
             $profiler_message = 'DisplayController->execute '
@@ -151,7 +157,6 @@ class DisplayController extends Controller
 
             /** 2. controller manages loop and event processing */
             $totalRows = count($this->query_results);
-
             if (count($this->query_results) > 0) {
 
                 $first = true;

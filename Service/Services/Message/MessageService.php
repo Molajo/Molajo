@@ -31,26 +31,6 @@ Class MessageService
     }
 
     /**
-     * get application messages
-     *
-     * @param   null $option
-     *
-     * @return  int|array|MessageService
-     * @since   1.0
-     */
-    public function get($option = null)
-    {
-        if ($option == 'db') {
-            return $this;
-
-        } elseif ($option == 'count') {
-            return count($this->messages);
-        }
-
-        return Services::Registry()->get('Systemmessages');
-    }
-
-    /**
      * getMessages simulates a database list query for Messages
      *
      * @return  array
@@ -61,11 +41,25 @@ Class MessageService
         $query_results = array();
 
         $messages = $this->get();
+
         if (count($messages) == 0) {
             return array();
         }
 
         return $messages;
+    }
+
+    /**
+     * get application messages
+     *
+     * @param   null $option
+     *
+     * @return  int|array|MessageService
+     * @since   1.0
+     */
+    public function get($option = null)
+    {
+        return Services::Registry()->getArray('Systemmessages', 'Systemmessages');
     }
 
     /**
@@ -94,7 +88,7 @@ Class MessageService
             $type = MESSAGE_TYPE_SUCCESS;
         }
 
-        $messageArray = Services::Registry()->get('Systemmessages');
+        $messageArray = Services::Registry()->getArray('Systemmessages', 'Systemmessages');
 
         $row = new \stdClass();
 
@@ -104,7 +98,7 @@ Class MessageService
 
         $messageArray[] = $row;
 
-        Services::Registry()->set('Systemmessages', $messageArray);
+        Services::Registry()->set('Systemmessages', 'Systemmessages', $messageArray);
 
         return true;
     }
