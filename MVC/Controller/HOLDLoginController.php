@@ -115,7 +115,7 @@ class HOLDLoginController extends Controller
 //        if ($type == 'authenticate') {
 //            Services::Event()->scheduleEvent('onUserLoginFailure', array($response, $options));
 //        } else {
-//            Services::Event()->scheduleEvent('onUserAuthorisationFailure', array($response, $options));
+//            Services::Event()->scheduleEvent('onUserPermissionsFailure', array($response, $options));
 //        }
 
         //redirect false;

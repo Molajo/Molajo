@@ -60,16 +60,16 @@ class PagetypelistPlugin extends Plugin
         $this->set('request_model_type', $this->get('model_type'));
         $this->set('request_model_name', $this->get('model_name'));
 
-        $this->set('model_type', DATAOBJECT_MODEL_TYPE);
-        $this->set('model_name', PRIMARY_MODEL_NAME);
+        $this->set('model_type', DATA_OBJECT_LITERAL);
+        $this->set('model_name', DATA_OBJECT_PRIMARY);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
-        $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
-        $this->parameters['model_name'] = PRIMARY_MODEL_NAME;
+        $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
+        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
 
         Services::Registry()->set(
-            PRIMARY_MODEL_NAME,
-            PRIMARY_MODEL_NAME_RESULTS,
+            DATA_OBJECT_PRIMARY,
+            DATA_OBJECT_PRIMARY_DATA,
             $query_results
         );
 

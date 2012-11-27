@@ -33,18 +33,18 @@ Class ErrorService
      */
     public function set($code, $message = 'Internal server error')
     {
-        Services::Registry()->set('Parameters', 'error_status', true);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'error_status', true);
 
-        Services::Registry()->set('Parameters', 'request_action', ACTION_VIEW);
-        Services::Registry()->set('Parameters', 'request_action_authorisation', 'read'); //for now
-        Services::Registry()->set('Parameters', 'request_controller', 'read');
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action', ACTION_VIEW);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action_authorisation', 'read'); //for now
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_controller', 'read');
 
         /** default error theme and page */
-        Services::Registry()->set('Parameters', 'theme_id',
-            Services::Registry()->get('Configuration', 'error_theme_id')
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_id',
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'error_theme_id')
         );
-        Services::Registry()->set('Parameters', 'page_view_id',
-            Services::Registry()->get('Configuration', 'error_page_view_id')
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'page_view_id',
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'error_page_view_id')
         );
 
         if ($code == 503) {
@@ -66,7 +66,7 @@ Class ErrorService
                 ->set($message, MESSAGE_TYPE_ERROR, 500);
         }
 
-        Services::Registry()->merge('Configuration', 'Parameters', true);
+        Services::Registry()->merge(CONFIGURATION_LITERAL, DATA_OBJECT_PARAMETERS, true);
 
         Helpers::Extension()->setThemePageView();
 
@@ -87,19 +87,19 @@ Class ErrorService
 
         Services::Message()
             ->set(
-            Services::Registry()->get('Configuration', 'offline_message',
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_message',
                 'This site is not available.<br /> Please check back again soon.'
             ),
             MESSAGE_TYPE_WARNING,
             503
         );
 
-        Services::Registry()->set('Parameters', 'theme_id',
-            Services::Registry()->get('Configuration', 'offline_theme_id', 0)
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_id',
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_theme_id', 0)
         );
 
-        Services::Registry()->set('Parameters', 'page_view_id',
-            Services::Registry()->get('Configuration', 'offline_page_view_id', 0)
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'page_view_id',
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_page_view_id', 0)
         );
     }
 
@@ -117,7 +117,7 @@ Class ErrorService
 
         Services::Message()
             ->set(
-            Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'error_403_message', 'Not Authorised.'),
             MESSAGE_TYPE_ERROR,
             403
         );
@@ -137,7 +137,7 @@ Class ErrorService
 
         Services::Message()
             ->set(
-            Services::Registry()->get('Configuration', 'error_404_message', 'Page not found.'),
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'error_404_message', 'Page not found.'),
             MESSAGE_TYPE_ERROR,
             404
         );

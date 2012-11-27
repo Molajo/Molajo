@@ -153,7 +153,7 @@ Class MailService
     public function send()
     {
         /** Email disabled */
-        if (Services::Registry()->get('Configuration', 'mailer_disable_sending', 0) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_disable_sending', 0) == 1) {
             return true;
         }
 
@@ -165,7 +165,7 @@ Class MailService
         }
 
         /** For development only deliver to values */
-        $mailer_only_deliver_to = Services::Registry()->get('Configuration', 'mailer_only_deliver_to', '');
+        $mailer_only_deliver_to = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_only_deliver_to', '');
 
         if (trim($mailer_only_deliver_to) == '') {
         } else {
@@ -184,21 +184,21 @@ Class MailService
         $this->processInput();
 
         /** Type of email */
-        switch (Services::Registry()->get('Configuration', 'mailer_transport')) {
+        switch (Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_transport')) {
 
             case 'smtp':
-                $this->mailInstance->mailer_smtpauth = Services::Registry()->get('Configuration', 'mailer_smtpauth');
-                $this->mailInstance->smtphost = Services::Registry()->get('Configuration', 'smtphost');
-                $this->mailInstance->mailer_smtpuser = Services::Registry()->get('Configuration', 'mailer_smtpuser');
-                $this->mailInstance->mailer_mailer_smtphost = Services::Registry()->get('Configuration', 'mailer_mailer_smtphost');
-                $this->mailInstance->smtpsecure = Services::Registry()->get('Configuration', 'smtpsecure');
-                $this->mailInstance->smtpport = Services::Registry()->get('Configuration', 'smtpport');
+                $this->mailInstance->mailer_smtpauth = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_smtpauth');
+                $this->mailInstance->smtphost = Services::Registry()->get(CONFIGURATION_LITERAL, 'smtphost');
+                $this->mailInstance->mailer_smtpuser = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_smtpuser');
+                $this->mailInstance->mailer_mailer_smtphost = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mailer_smtphost');
+                $this->mailInstance->smtpsecure = Services::Registry()->get(CONFIGURATION_LITERAL, 'smtpsecure');
+                $this->mailInstance->smtpport = Services::Registry()->get(CONFIGURATION_LITERAL, 'smtpport');
 
                 $this->mailInstance->IsSMTP();
                 break;
 
             case 'sendmail':
-                $this->mailInstance->mailer_smtpauth = Services::Registry()->get('Configuration', 'sendmail_path');
+                $this->mailInstance->mailer_smtpauth = Services::Registry()->get(CONFIGURATION_LITERAL, 'sendmail_path');
 
                 $this->mailInstance->IsSendmail();
                 break;
@@ -232,7 +232,7 @@ Class MailService
 
         /** authorization event */
         //todo: what is the catalog id of a service?
-        //$results = Services::Authorisation()->verifyTask('email', $catalog_id);
+        //$results = Services::Permissions()->verifyTask('email', $catalog_id);
         return $permission;
     }
 
@@ -255,7 +255,7 @@ Class MailService
         /** Subject */
         $value = $this->get('subject', '');
         if ($value == '') {
-            $value = Services::Registry()->get('Configuration', 'site_name', '');
+            $value = SITE_NAME;
         }
         $value = $this->filterInput('subject', $value, 'char');
         $this->mailInstance->set('Subject', $value);

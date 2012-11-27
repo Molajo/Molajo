@@ -41,22 +41,22 @@ class AuthorPlugin extends Plugin
             return true;
         }
 
-        if (Services::Registry()->exists(TEMPLATE_MODEL_NAME, 'Author' . $fieldValue)) {
+        if (Services::Registry()->exists(DATA_OBJECT_TEMPLATE, 'Author' . $fieldValue)) {
 
-            $authorArray = Services::Registry()->get(TEMPLATE_MODEL_NAME, 'Author' . $fieldValue);
+            $authorArray = Services::Registry()->get(DATA_OBJECT_TEMPLATE, 'Author' . $fieldValue);
 
             foreach ($authorArray[0] as $key => $value) {
                 $new_field_name = $key;
                 $this->saveField(null, $new_field_name, $value);
             }
 
-            Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Author', $authorArray);
+            Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Author', $authorArray);
             return true;
         }
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('System', 'Users');
+        $controller->getModelRegistry(SYSTEM_LITERAL, 'Users');
         $controller->setDataobject();
 
         $controller->set('id', (int) $fieldValue);
@@ -88,8 +88,8 @@ class AuthorPlugin extends Plugin
             }
         }
         $authorArray[] = $row;
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Author' . $fieldValue, $authorArray);
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Author', $authorArray);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Author' . $fieldValue, $authorArray);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Author', $authorArray);
 
         return true;
     }

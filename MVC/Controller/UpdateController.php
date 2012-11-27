@@ -256,7 +256,7 @@ class UpdateController extends Controller
             } else {
 
                 /** View access (copy or move will be checked, too) **/
-                $results = $this->checkTaskAuthorisation(ACTION_VIEW);
+                $results = $this->checkTaskPermissions(ACTION_VIEW);
                 if ($results === false) {
                     $errorFoundForItem = true;
                 }

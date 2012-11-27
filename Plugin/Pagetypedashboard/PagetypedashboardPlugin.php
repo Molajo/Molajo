@@ -31,7 +31,7 @@ class PagetypedashboardPlugin extends Plugin
             return true;
         }
 
-        $portletOptions = Services::Registry()->get('Parameters', 'dashboard_portlet');
+        $portletOptions = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'dashboard_portlet');
         if (trim($portletOptions) == '') {
             return true;
         }
@@ -65,16 +65,16 @@ class PagetypedashboardPlugin extends Plugin
         $this->set('request_model_type', $this->get('model_type'));
         $this->set('request_model_name', $this->get('model_name'));
 
-        $this->set('model_type', DATAOBJECT_MODEL_TYPE);
-        $this->set('model_name', PRIMARY_MODEL_NAME);
+        $this->set('model_type', DATA_OBJECT_LITERAL);
+        $this->set('model_name', DATA_OBJECT_PRIMARY);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
-        $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
-        $this->parameters['model_name'] = PRIMARY_MODEL_NAME;
+        $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
+        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
 
         Services::Registry()->set(
-            PRIMARY_MODEL_NAME,
-            PRIMARY_MODEL_NAME_RESULTS,
+            DATA_OBJECT_PRIMARY,
+            DATA_OBJECT_PRIMARY_DATA,
             $tabs
         );
 
@@ -125,7 +125,7 @@ class PagetypedashboardPlugin extends Plugin
      */
     protected function setOptions()
     {
-        $results = Services::Text()->getDatalist('Portlets', DATALIST_MODEL_NAME, $this->parameters);
+        $results = Services::Text()->getDatalist('Portlets', DATA_OBJECT_DATALIST, $this->parameters);
         if ($results === false) {
             return true;
         }
@@ -163,7 +163,7 @@ class PagetypedashboardPlugin extends Plugin
 
             $query_results[] = $row;
         }
-        Services::Registry()->set(DATALIST_MODEL_NAME, 'Portlets', $query_results);
+        Services::Registry()->set(DATA_OBJECT_DATALIST, 'Portlets', $query_results);
 
         return true;
     }

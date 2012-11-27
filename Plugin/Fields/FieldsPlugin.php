@@ -50,9 +50,9 @@ class FieldsPlugin extends Plugin
         $primary_prefix = Services::Registry()->get($model_registry, 'primary_prefix');
 
         $fieldArray = array();
-		$standardFieldArray = array();
+        $standardArray = array();
 
-        $normalFields = Services::Registry()->get($model_registry, 'fields');
+        $normalFields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
 
         $status = 0;
 
@@ -61,86 +61,86 @@ class FieldsPlugin extends Plugin
             foreach ($normalFields as $field) {
 
                 $row = new \stdClass();
-				$row->id = $field['name'];
+                $row->id = $field['name'];
                 $row->value = $field['name'];
 
-                $standardFieldArray[] = $row;
-				$fieldArray[] = $row;
+                $standardArray[] = $row;
+                $fieldArray[] = $row;
 
                 if ($field['name'] == 'status') {
                     $status = 1;
                 }
 
                 if ($field['type'] == 'datetime') {
-					$row = new \stdClass();
-					$row->id = $field['name'] . '_n_days_ago';
-					$row->value = $field['name'] . '_n_days_ago ' . $extended_literal;
-					$fieldArray[] = $row;
+                    $row = new \stdClass();
+                    $row->id = $field['name'] . '_n_days_ago';
+                    $row->value = $field['name'] . '_n_days_ago ' . $extended_literal;
+                    $fieldArray[] = $row;
 
-					$row = new \stdClass();
-					$row->id = $field['name'] . '_ccyy';
-					$row->value = $field['name'] . '_ccyy' . $extended_literal;
-					$fieldArray[] = $row;
+                    $row = new \stdClass();
+                    $row->id = $field['name'] . '_ccyy';
+                    $row->value = $field['name'] . '_ccyy' . $extended_literal;
+                    $fieldArray[] = $row;
 
-					$row = new \stdClass();
-					$row->id = $field['name'] . '_mm';
-					$row->value = $field['name'] . '_mm' . $extended_literal;
-					$fieldArray[] = $row;
+                    $row = new \stdClass();
+                    $row->id = $field['name'] . '_mm';
+                    $row->value = $field['name'] . '_mm' . $extended_literal;
+                    $fieldArray[] = $row;
 
-					$row = new \stdClass();
-					$row->id = $field['name'] . '_dd';
-					$row->value = $field['name'] . '_dd' . $extended_literal;
-					$fieldArray[] = $row;
+                    $row = new \stdClass();
+                    $row->id = $field['name'] . '_dd';
+                    $row->value = $field['name'] . '_dd' . $extended_literal;
+                    $fieldArray[] = $row;
 
                     $row = new \stdClass();
                     $row->id = $field['name'] . '_ccyy_mm_dd';
                     $row->value = $field['name'] . '_ccyy_mm_dd' . $extended_literal;
                     $fieldArray[] = $row;
 
-					$row = new \stdClass();
-					$row->id = $field['name'] . '_month_name_abbr';
-					$row->value = $field['name'] . '_month_name_abbr' . $extended_literal;
-					$fieldArray[] = $row;
+                    $row = new \stdClass();
+                    $row->id = $field['name'] . '_month_name_abbr';
+                    $row->value = $field['name'] . '_month_name_abbr' . $extended_literal;
+                    $fieldArray[] = $row;
 
                     $row = new \stdClass();
-					$row->id = $field['name'] . '_month_name';
+                    $row->id = $field['name'] . '_month_name';
                     $row->value = $field['name'] . '_month_name' . $extended_literal;
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
-					$row->id = $field['name'] . '_time';
+                    $row->id = $field['name'] . '_time';
                     $row->value = $field['name'] . '_time' . $extended_literal;
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
-					$row->id = $field['name'] . '_day_number';
+                    $row->id = $field['name'] . '_day_number';
                     $row->value = $field['name'] . '_day_number' . $extended_literal;
                     $fieldArray[] = $row;
 
-					$row = new \stdClass();
-					$row->id = $field['name'] . '_day_name_abbr';
-					$row->value = $field['name'] . '_day_name_abbr' . $extended_literal;
-					$fieldArray[] = $row;
+                    $row = new \stdClass();
+                    $row->id = $field['name'] . '_day_name_abbr';
+                    $row->value = $field['name'] . '_day_name_abbr' . $extended_literal;
+                    $fieldArray[] = $row;
 
-					$row = new \stdClass();
-					$row->id = $field['name'] . '_day_name';
-					$row->value = $field['name'] . '_day_name' . $extended_literal;
-					$fieldArray[] = $row;
+                    $row = new \stdClass();
+                    $row->id = $field['name'] . '_day_name';
+                    $row->value = $field['name'] . '_day_name' . $extended_literal;
+                    $fieldArray[] = $row;
                 }
 
                 if ($field['type'] == 'text') {
                     $row = new \stdClass();
-					$row->id = $field['name'] . '_introductory';
+                    $row->id = $field['name'] . '_introductory';
                     $row->value = $field['name'] . '_introductory' . $extended_literal;
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
-					$row->id = $field['name'] . '_fulltext';
+                    $row->id = $field['name'] . '_fulltext';
                     $row->value = $field['name'] . '_fulltext' . $extended_literal;
                     $fieldArray[] = $row;
 
                     $row = new \stdClass();
-					$row->id = $field['name'] . '_snippet';
+                    $row->id = $field['name'] . '_snippet';
                     $row->value = $field['name'] . '_snippet' . $extended_literal;
                     $fieldArray[] = $row;
                 }
@@ -150,7 +150,7 @@ class FieldsPlugin extends Plugin
         if ($status == 0) {
         } else {
             $row = new \stdClass();
-			$row->id = 'status_name';
+            $row->id = 'status_name';
             $row->value = 'status_name' . $extended_literal;
             $fieldArray[] = $row;
         }
@@ -165,8 +165,8 @@ class FieldsPlugin extends Plugin
                         if (trim($f) == '') {
                         } else {
                             $row = new \stdClass();
-							$row->id = $field['alias'] . '_' . $f;
-                            $row->value =  $field['alias'] . '_' . $f . $extended_literal;
+                            $row->id = $field['alias'] . '_' . $f;
+                            $row->value = $field['alias'] . '_' . $f . $extended_literal;
 
                             $fieldArray[] = $row;
                         }
@@ -180,30 +180,30 @@ class FieldsPlugin extends Plugin
         if (count($customfields) > 0) {
             foreach ($customfields as $field) {
                 $row = new \stdClass();
-				$row->id = $field['name'];
+                $row->id = $field['name'];
                 $row->value = $field['name'] . $customfield_literal;
 
                 $fieldArray[] = $row;
-                $standardFieldArray[] = $row;
+                $standardArray[] = $row;
                 $customFieldArray[] = $row;
             }
         }
 
-        $parameters = Services::Registry()->get($model_registry, 'Parameters');
-        $parametersFieldArray = array();
+        $parameters = Services::Registry()->get($model_registry, DATA_OBJECT_PARAMETERS);
+        $parametersArray = array();
         if (count($parameters) > 0) {
             foreach ($parameters as $field) {
                 $row = new \stdClass();
-				$row->id = 'parameter' . '_' . $field['name'];
+                $row->id = 'parameter' . '_' . $field['name'];
                 $row->value = $field['name'] . $parameter_literal;
 
                 $fieldArray[] = $row;
-                $parametersFieldArray[] = $row;
+                $parametersArray[] = $row;
             }
         }
 
         $metadata = Services::Registry()->get($model_registry, 'Metadata');
-        $metadataFieldArray = array();
+        $metadataArray = array();
         if (count($metadata) > 0) {
             foreach ($metadata as $field) {
                 $row = new \stdClass();
@@ -211,22 +211,26 @@ class FieldsPlugin extends Plugin
                 $row->value = 'metadata' . '_' . $field['name'] . $metadata_literal;
 
                 $fieldArray[] = $row;
-                $standardFieldArray[] = $row;
-                $metadataFieldArray[] = $row;
+                $standardArray[] = $row;
+                $metadataArray[] = $row;
             }
         }
 
         asort($fieldArray);
-		asort($standardFieldArray);
-        asort($metadataFieldArray);
-        asort($parametersFieldArray);
+        asort($standardArray);
+        asort($metadataArray);
+        asort($parametersArray);
         asort($customFieldArray);
 
-        Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_MODEL_TYPE, $fieldArray);
-		Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_STANDARD_MODEL_TYPE, $standardFieldArray);
-        Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_METADATA_MODEL_TYPE, $metadataFieldArray);
-        Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_PARAMETERS_MODEL_TYPE, $parametersFieldArray);
-        Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_CUSTOM_MODEL_TYPE, $customFieldArray);
+        Services::Registry()->set(DATA_OBJECT_DATALIST, $model_registry . FIELDS_MODEL_TYPE, $fieldArray);
+        Services::Registry()->set(DATA_OBJECT_DATALIST, $model_registry . FIELDS_STANDARD_MODEL_TYPE, $standardArray);
+        Services::Registry()->set(DATA_OBJECT_DATALIST, $model_registry . FIELDS_METADATA_MODEL_TYPE, $metadataArray);
+        Services::Registry()->set(
+            DATA_OBJECT_DATALIST,
+            $model_registry . FIELDS_PARAMETERS_MODEL_TYPE,
+            $parametersArray
+        );
+        Services::Registry()->set(DATA_OBJECT_DATALIST, $model_registry . FIELDS_CUSTOM_MODEL_TYPE, $customFieldArray);
 
         return true;
     }

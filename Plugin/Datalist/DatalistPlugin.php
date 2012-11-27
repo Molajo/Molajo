@@ -42,7 +42,7 @@ class DatalistPlugin extends Plugin
 		}
 
 		$resourceFiles = Services::Filesystem()->folderFiles(
-			Services::Registry()->get('Parameters', 'extension_path') . '/Datalist'
+			Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path') . '/Datalist'
 		);
 
 		if (count($resourceFiles) == 0 || $resourceFiles === false) {
@@ -64,7 +64,7 @@ class DatalistPlugin extends Plugin
 			$datalist[] = $row;
 		}
 
-		Services::Registry()->set(DATALIST_MODEL_NAME, 'Datalists', $datalist);
+		Services::Registry()->set(DATA_OBJECT_DATALIST, 'Datalists', $datalist);
 
 		return true;
 	}

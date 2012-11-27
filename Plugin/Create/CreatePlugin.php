@@ -379,7 +379,7 @@ class CreatePlugin extends Plugin
         echo $controller->model->query->__toString();
         echo '<br /><br /><br />';
          */
-        $fields = Services::Registry()->get($model_registry, 'fields');
+        $fields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -433,8 +433,8 @@ class CreatePlugin extends Plugin
         }
 
         $data->parameters = array();
-        Services::Registry()->sort($model_registry . 'Parameters');
-        $parameters = Services::Registry()->getArray($model_registry . 'Parameters');
+        Services::Registry()->sort($model_registry . DATA_OBJECT_PARAMETERS);
+        $parameters = Services::Registry()->getArray($model_registry . DATA_OBJECT_PARAMETERS);
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
 

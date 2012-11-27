@@ -145,7 +145,7 @@ class ReadModel extends Model
     /**
      * Add View Permission Verification to the Query
      *
-     * Note: When Language query runs, Authorisation Service is not yet available.
+     * Note: When Language query runs, Permissions Service is not yet available.
      *
      * @param   $primary_prefix
      * @param   $primary_key
@@ -163,7 +163,7 @@ class ReadModel extends Model
         }
 
 // when language query runs, Services is not yet defined
-        Services::Authorisation()->setQueryViewAccess(
+        Services::Permissions()->setQueryViewAccess(
             $this->query,
             $this->db,
             array(
@@ -571,7 +571,7 @@ echo '</pre><br /><br />';
                 Services::Registry()->set($useModelRegistry, $name, $setValue);
 
             } else {
-                if (strtolower($customFieldName) == 'parameters'
+                if (strtolower($customFieldName) == DATA_OBJECT_PARAMETERS
                     || strtolower($customFieldName) == 'metadata'
                 ) {
                     $name = strtolower($customFieldName) . '_' . $name;

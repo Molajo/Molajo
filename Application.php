@@ -134,7 +134,7 @@ Class Application
             $this->authorise();
 
         } catch (\Exception $e) {
-            throw new \Exception('Authorisation Error: ' . $e->getMessage(), $e->getCode(), $e);
+            throw new \Exception('Permissions Error: ' . $e->getMessage(), $e->getCode(), $e);
         }
 
         /** 4. Execute */
@@ -252,7 +252,9 @@ Class Application
         Services::Registry()->set('Override', 'parse_final', $override_parse_final);
 
         if ($results === true) {
-            Services::Profiler()->set('Application Schedule Event onAfterInitialise', LOG_OUTPUT_PLUGINS);
+            if (PROFILER_ON) {
+                Services::Profiler()->set('Application Schedule Event onAfterInitialise', LOG_OUTPUT_PLUGINS);
+            }
             $results = Services::Event()->scheduleEvent('onAfterInitialise');
             if (is_array($results)) {
                 $results = true;
@@ -260,9 +262,10 @@ Class Application
         }
 
         if ($results === false) {
-            Services::Profiler()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
-            //throw error
-            die;
+            if (PROFILER_ON) {
+                Services::Profiler()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
+            }
+            throw new \Exception('Initialisation failed');
         }
 
         Services::Profiler()->set('Initialise succeeded', LOG_OUTPUT_APPLICATION);
@@ -334,7 +337,9 @@ Class Application
 //$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
 //$results = Services::Install()->testDeleteExtension('Test', 'Resources');
 
-        Services::Profiler()->set(START_ROUTING, LOG_OUTPUT_APPLICATION);
+        if (PROFILER_ON) {
+            Services::Profiler()->set(ROUTING, LOG_OUTPUT_APPLICATION);
+        }
 
         $results = Services::Route()->process(
             $this->requested_resource_for_route,
@@ -348,21 +353,27 @@ Class Application
         }
 
         if ($results === false
-            || Services::Registry()->get('Parameters', 'error_status', 0) == 1
+            || Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'error_status', 0) == 1
         ) {
-            Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
-            return false;
+            if (PROFILER_ON) {
+                Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
+            }
+            throw new \Exception('Route failed');
         }
 
         if ($results === true
             && Services::Redirect()->url === null
             && (int)Services::Redirect()->code == 0
         ) {
-            Services::Profiler()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
+            if (PROFILER_ON) {
+                Services::Profiler()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
+            }
             return true;
         }
 
-        Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, LOG_OUTPUT_APPLICATION);
+        if (PROFILER_ON) {
+            Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, LOG_OUTPUT_APPLICATION);
+        }
 
         return true;
     }
@@ -375,16 +386,18 @@ Class Application
      */
     protected function onAfterRouteEvent()
     {
-        Services::Profiler()->set(
-            'Application Schedules onAfterRoute',
-            LOG_OUTPUT_PLUGINS,
-            VERBOSE
-        );
+        if (PROFILER_ON) {
+            Services::Profiler()->set(
+                'Application Schedules onAfterRoute',
+                LOG_OUTPUT_PLUGINS,
+                VERBOSE
+            );
+        }
 
         $arguments = array(
-            'parameters' => Services::Registry()->getArray('Parameters'),
-            'model_type' => Services::Registry()->get('Parameters', 'model_type'),
-            'model_name' => Services::Registry()->get('Parameters', 'model_name'),
+            DATA_OBJECT_PARAMETERS => Services::Registry()->getArray(DATA_OBJECT_PARAMETERS),
+            'model_type' => Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'model_type'),
+            'model_name' => Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'model_name'),
             'data' => array()
         );
 
@@ -395,14 +408,13 @@ Class Application
                 'Application->onAfterRouteEvent ' . ' failure ',
                 LOG_OUTPUT_PLUGINS
             );
-
-            return false;
+            throw new \Exception('onAfterRouteEvent Failed');
         }
 
-        Services::Registry()->delete('Parameters');
-        Services::Registry()->createRegistry('Parameters');
-        Services::Registry()->loadArray('Parameters', $arguments['parameters']);
-        Services::Registry()->sort('Parameters');
+        Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
+        Services::Registry()->createRegistry(DATA_OBJECT_PARAMETERS);
+        Services::Registry()->loadArray(DATA_OBJECT_PARAMETERS, $arguments[DATA_OBJECT_PARAMETERS]);
+        Services::Registry()->sort(DATA_OBJECT_PARAMETERS);
 
         return true;
     }
@@ -418,9 +430,9 @@ Class Application
      */
     protected function authorise()
     {
-        Services::Profiler()->set(START_AUTHORISATION, LOG_OUTPUT_APPLICATION);
-
-        Services::Profiler()->set('Application Schedule Event onAfterAuthorise', LOG_OUTPUT_PLUGINS);
+        if (PROFILER_ON) {
+            Services::Profiler()->set(AUTHORISATION, LOG_OUTPUT_APPLICATION);
+        }
 
         $results = Services::Event()->scheduleEvent('onAfterAuthorise');
         if (is_array($results)) {
@@ -428,8 +440,16 @@ Class Application
         }
 
         if ($results === false) {
+            Services::Profiler()->set(
+                'onAfterAuthorise Failed',
+                LOG_OUTPUT_PLUGINS
+            );
+            throw new \Exception('onAfterRouteEvent Failed');
+        }
+
+        if ($results === false) {
             Services::Profiler()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
-            throw new \Exception('Authorisation Failed', 403);
+            throw new \Exception('Permissions Failed', 403);
         }
 
         Services::Profiler()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
@@ -445,7 +465,7 @@ Class Application
      */
     protected function execute()
     {
-        $action = Services::Registry()->get('Parameters', 'request_action', ACTION_VIEW);
+        $action = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action', ACTION_VIEW);
         if (trim($action) == '') {
             $action = ACTION_VIEW;
         }
@@ -494,15 +514,15 @@ Class Application
      */
     protected function display()
     {
-        if (file_exists(Services::Registry()->get('Parameters', 'theme_path_include'))) {
+        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme Not found');
             echo 'Theme not found - application stopped before parse. Parameters follow:';
-            Services::Registry()->get('Parameters', '*');
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, '*');
             die;
         }
 
-        $parms = Services::Registry()->getArray('Parameters');
+        $parms = Services::Registry()->getArray(DATA_OBJECT_PARAMETERS);
         $page_request = Services::Cache()->get('page', implode('', $parms));
 
         if ($page_request === false) {
@@ -534,11 +554,11 @@ Class Application
 
 // what parameters
 
-        if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
-            $url = Services::Registry()->get('Parameters', 'catalog_url_sef_request');
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
+            $url = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_url_sef_request');
 
         } else {
-            $url = Services::Registry()->get('Parameters', 'catalog_url_request');
+            $url = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_url_request');
         }
 
         Services::Redirect()->redirect(Services::Url()->getApplicationURL($url), '301')->send();
@@ -554,7 +574,7 @@ Class Application
      */
     protected function response()
     {
-        Services::Profiler()->set(START_RESPONSE, LOG_OUTPUT_APPLICATION);
+        Services::Profiler()->set(RESPONSE, LOG_OUTPUT_APPLICATION);
 
         if (Services::Redirect()->url === null
             && (int)Services::Redirect()->code == 0
@@ -749,9 +769,9 @@ Class Application
             define('SITES_MEDIA_URL', BASE_URL . 'Site/media');
         }
 
-        if (defined('SITES_DATAOBJECT_FOLDER')) {
+        if (defined('SITES_DATA_OBJECT_FOLDER')) {
         } else {
-            define('SITES_DATAOBJECT_FOLDER', BASE_URL . 'Site/media');
+            define('SITES_DATA_OBJECT_FOLDER', BASE_URL . 'Site/media');
         }
 
         $site_base_url = $this->request->get('base_url_path');
@@ -766,7 +786,7 @@ Class Application
                     define('SITE_BASE_URL', (string)$single->site_base_url);
                     define('SITE_BASE_PATH', BASE_FOLDER . (string)$single->site_base_folder);
                     define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string)$single->site_base_folder);
-                    define('SITE_DATAOBJECT_FOLDER', SITE_BASE_PATH . '/' . 'Dataobject');
+                    define('SITE_DATA_OBJECT_FOLDER', SITE_BASE_PATH . '/' . DATA_OBJECT_LITERAL);
                     define('SITE_ID', $single->id);
                     define('SITE_NAME', $single->name);
                     break;
@@ -900,7 +920,7 @@ Class Application
     {
         Services::Registry()->get('ApplicationsParameters');
 
-        if ((int)Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
+        if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_force_ssl', 0) > 0) {
 
             if (($this->request->get('connection')->isSecure() === true)) {
 
@@ -929,7 +949,7 @@ Class Application
      */
     protected function verifySiteApplication()
     {
-        $authorise = Services::Authorisation()->verifySiteApplication();
+        $authorise = Services::Permissions()->verifySiteApplication();
         if ($authorise === false) {
             //todo: redirect to error page
             $message = '304: ' . BASE_URL;

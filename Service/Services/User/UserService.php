@@ -35,7 +35,7 @@ Class UserService
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $results = $controller->getModelRegistry('Datasource', 'User');
+        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'User');
         if ($results === false) {
             return false;
         }

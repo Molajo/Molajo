@@ -100,7 +100,7 @@ class UseractivityPlugin extends Plugin
         /** Retrieve User Data  */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('Datasource', 'UserActivity');
+        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'UserActivity');
         if ($results === false) {
             return false;
         }

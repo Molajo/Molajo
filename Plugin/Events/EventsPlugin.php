@@ -59,7 +59,7 @@ class EventsPlugin extends Plugin
             $eventArray[] = $row;
         }
 
-        Services::Registry()->set(DATALIST_MODEL_NAME, 'Events', $eventArray);
+        Services::Registry()->set(DATA_OBJECT_DATALIST, 'Events', $eventArray);
 
         return true;
     }

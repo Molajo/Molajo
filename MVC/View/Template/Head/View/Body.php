@@ -8,14 +8,14 @@ use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
-$class = Services::Registry()->get('Parameters', 'page_view_css_class');
+$class = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_css_class');
 if (trim($class) == '') {
     $class = '';
 } else {
     $class = ' class="' . htmlspecialchars($class) . '"';
 }
 
-$id = Services::Registry()->get('Parameters', 'page_view_css_id');
+$id = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_css_id');
 if (trim($id) == '') {
     $id = '';
 } else {

@@ -4,7 +4,7 @@
  * @copyright  2012 Individual Molajo Contributors. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Service\Services\Authorisation;
+namespace Molajo\Service\Services\Permissions;
 
 use Molajo\Application;
 use Molajo\Service\Services;
@@ -12,51 +12,76 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Authorisation
+ * Permissions
  *
  * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */
-Class AuthorisationService
+Class PermissionsService
 {
     /**
-     * Load ACL-related data for use with Authorisation
+     * Get action ids and values to load into registry
      *
-     * @return null
+     * @return  null
      * @since   1.0
+     * @throws   \Exception
      */
     public function initialise()
     {
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Actions');
+        $controller->setDataobject();
+
+        $items = $controller->getData(QUERY_OBJECT_LIST);
+        if ($items === false) {
+            throw new \RuntimeException ('Configuration: getActions Query failed.');
+        }
+
+        $actions = array();
+        foreach ($items as $item) {
+            $actions[$item->title] = (int)$item->id;
+        }
+        Services::Registry()->set(DATA_OBJECT_PERMISSIONS, 'actions', $actions);
+
         $actions = Services::Configuration()->getFile('Application', 'Actions');
+
         if (count($actions) == 0) {
-            //echo '<br />Error in AuthorisationService -- Application Actions table returned no rows <br />';
-            //error
+            throw new \Exception('Permissions: Actions Table not found.');
         }
 
-        $tempActions = array();
+        $urlActions = array();
+        $action_to_authorisation = array();
+        $action_to_controller = array();
+
         foreach ($actions->action as $t) {
-            $tempActions[] = (string) $t['name'];
-            Services::Registry()->set('action_to_authorisation', (string) $t['name'], (string) $t['authorisation']);
-            Services::Registry()->set('action_to_controller', (string) $t['name'], (string) $t['controller']);
+            $urlActions[] = (string) $t['name'];
+            $action_to_authorisation[(string) $t['name']] = (string) $t['authorisation'];
+            $action_to_controller[(string) $t['name']] = (string) $t['controller'];
         }
 
-        sort($tempActions);
-        Services::Registry()->loadArray('urlActions', $tempActions);
+        Services::Registry()->set(DATA_OBJECT_PERMISSIONS, 'action_to_authorisation', $action_to_authorisation);
+        Services::Registry()->set(DATA_OBJECT_PERMISSIONS, 'action_to_controller', $action_to_controller);
 
-        $items = Services::Registry()->get('Actions');
-        foreach ($items as $title => $id) {
-            Services::Registry()->set('action_to_authorisation_id', $title, (int) $id);
+        sort($urlActions);
+        Services::Registry()->loadArray(DATA_OBJECT_PERMISSIONS, 'urlActions', $urlActions);
+
+        $action_to_authorisation_id = array();
+        foreach ($actions as $title => $id) {
+            $action_to_authorisation_id[$title] = (int) $id;
         }
 
-        return;
+        Services::Registry()->set(DATA_OBJECT_PERMISSIONS, 'action_to_authorisation_id', $action_to_authorisation_id);
+
+        return true;
     }
 
     /**
      * Check if the Site is authorised for this Application
      *
      * Usage:
-     * $results = Services::Authorisation()->verifySiteApplication();
+     * $results = Services::Permissions()->verifySiteApplication();
      *
      * @param mixed $application_id if valid, or false
      *
@@ -67,8 +92,7 @@ Class AuthorisationService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry('Datasource', 'Siteapplications');
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Siteapplications');
         if ($results === false) {
             return false;
         }
@@ -90,7 +114,7 @@ Class AuthorisationService
             Services::Response()->setHeader('Status', '403 Not Authorised', 'true');
 
             Services::Message()->set(
-                Services::Registry()->get('Configuration', 'error_403_message', 'Not Authorised.'),
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'error_403_message', 'Not Authorised.'),
                 MESSAGE_TYPE_ERROR,
                 403
             );
@@ -103,7 +127,7 @@ Class AuthorisationService
      * Using the Request Task, retrieve the Controller
      *
      * Example usage:
-     * $controller = Services::Authorisation()->getTaskController($action);
+     * $controller = Services::Permissions()->getTaskController($action);
      *
      * @param $action
      *
@@ -123,7 +147,7 @@ Class AuthorisationService
      * Useful for button bars, links, and other User Interface Presentation Logic
      *
      * Example usage:
-     * $permissions = Services::Authorisation()->verifyTaskList($actionsArray, $item->catalog_id);
+     * $permissions = Services::Permissions()->verifyTaskList($actionsArray, $item->catalog_id);
      *
      * @param array  $actionlist
      * @param string $catalog_id
@@ -153,7 +177,7 @@ Class AuthorisationService
      * Verify user authorization for the Request Action and Catalog ID
      *
      * Example usage:
-     * $permissions = Services::Authorisation()->verifyAction();
+     * $permissions = Services::Permissions()->verifyAction();
      *
      * @return boolean
      * @since    1.0
@@ -161,31 +185,31 @@ Class AuthorisationService
     public function verifyAction()
     {
         /** 403: verifyTask handles redirecting to error page */
-        if (in_array(Services::Registry()->get('Parameters', 'catalog_view_group_id'),
+        if (in_array(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_view_group_id'),
             Services::Registry()->get('User', 'ViewGroups'))
         ) {
-            Services::Registry()->set('Parameters', 'status_authorised', true);
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_authorised', true);
 
         } else {
-            return Services::Registry()->set('Parameters', 'status_authorised', false);
+            return Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_authorised', false);
         }
 
         /** display view verified in getCatalog */
-        if (Services::Registry()->get('Parameters', 'request_action', ACTION_VIEW) == ACTION_VIEW
-            && Services::Registry()->get('Parameters', 'status_authorised') === true
+        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action', ACTION_VIEW) == ACTION_VIEW
+            && Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'status_authorised') === true
         ) {
             return true;
         }
 
         /** verify other actions */
         $authorised = $this->verifyTask(
-            Services::Registry()->get('Parameters', 'request_action'),
-            Services::Registry()->get('Parameters', 'request_catalog_id')
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action'),
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_catalog_id')
         );
 
-        Services::Registry()->set('Parameters', 'status_authorised', $authorised);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_authorised', $authorised);
 
-        if (Services::Registry()->get('Parameters', 'status_authorised') === true) {
+        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'status_authorised') === true) {
             return true;
 
         } else {
@@ -200,7 +224,7 @@ Class AuthorisationService
      * Could be used to determine if an "Edit Article" link is warranted.
      *
      * Example usage:
-     * Services::Authorisation()->verifyTask($action, $catalog_id);
+     * Services::Permissions()->verifyTask($action, $catalog_id);
      *
      * @param string $action
      * @param string $catalog_id
@@ -221,7 +245,7 @@ Class AuthorisationService
         $action_id = Services::Registry()->get('action_to_authorisation_id', $action);
 
         if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
-            //Echo 'AuthorisationServices::verifyTask '
+            //Echo 'PermissionsServices::verifyTask '
             //         . ' Task: ' . $action
             //         . ' Action: ' . $action
             //         . ' Action ID: ' . $action_id;
@@ -235,7 +259,7 @@ Class AuthorisationService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('Datasource', 'Grouppermissions');
+        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'Grouppermissions');
         if ($results === false) {
             return false;
         }
@@ -256,7 +280,7 @@ Class AuthorisationService
             return true;
 
         } else {
-            //echo 'AuthorisationServices::verifyTask No Query Results  '
+            //echo 'PermissionsServices::verifyTask No Query Results  '
             //       . ' Task: ' . $action
             //       . ' Action: ' . $action
             //       . ' Action ID: ' . $action_id;
@@ -271,7 +295,7 @@ Class AuthorisationService
      * Verifies permission for a user to logon to a specific application
      *
      * Example usage:
-     * Services::Authorisation()->verifyLogin('login', $catalog_id);
+     * Services::Permissions()->verifyLogin('login', $catalog_id);
      *
      * @param $key
      * @param $action
@@ -287,7 +311,7 @@ Class AuthorisationService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('Datasource', 'Userapplications');
+        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'Userapplications');
         if ($results === false) {
             return false;
         }
@@ -314,7 +338,7 @@ Class AuthorisationService
      * Used by queries to append criteria needed to implement view access
      *
      * Example usage:
-     *  Services::Authorisation()->setQueryViewAccess(
+     *  Services::Permissions()->setQueryViewAccess(
      *     $this->query,
      *     $this->db,
      *     array('join_to_prefix' => $this->primary_prefix,
@@ -406,14 +430,14 @@ Class AuthorisationService
      *  it returns true
      *
      * Example usage:
-     * $userHTMLFilter = Services::Authorisation()->setHTMLFilter();
+     * $userHTMLFilter = Services::Permissions()->setHTMLFilter();
      *
      * @return bool
      * @since  1.0
      */
     public function setHTMLFilter()
     {
-        $groups = Services::Registry()->get('Configuration', 'user_disable_filter_for_groups');
+        $groups = Services::Registry()->get(CONFIGURATION_LITERAL, 'user_disable_filter_for_groups');
         $groupArray = explode(',', $groups);
         $userGroups = Services::Registry()->get('User', 'groups');
 

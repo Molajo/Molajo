@@ -36,7 +36,7 @@ class CatalogPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Catalog');
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
 
         $controller->set('get_customfields', 0);
@@ -97,7 +97,7 @@ class CatalogPlugin extends Plugin
         $catalogArray = array();
 
         $application_home_catalog_id =
-            (int) Services::Registry()->get('configuration', 'application_home_catalog_id');
+            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id');
 
         if ($application_home_catalog_id === 0) {
         } else {
@@ -117,7 +117,7 @@ class CatalogPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set(DATALIST_MODEL_NAME, 'Catalog', $catalogArray);
+        Services::Registry()->set(DATA_OBJECT_DATALIST, 'Catalog', $catalogArray);
 
         return true;
     }
@@ -136,14 +136,14 @@ class CatalogPlugin extends Plugin
         }
 
         /** Catalog Activity: fields populated by Catalog Activity plugins */
-        if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_user_update_activity', 1) == 1) {
             $results = $this->logUserActivity($id, Services::Registry()->get('Actions', ACTION_CREATE));
             if ($results === false) {
                 return false;
             }
         }
 
-        if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_catalog_update_activity', 1) == 1) {
             $results = $this->logCatalogActivity($id, Services::Registry()->get('Actions', ACTION_CREATE));
             if ($results === false) {
                 return false;
@@ -161,7 +161,7 @@ class CatalogPlugin extends Plugin
      */
     public function onAfterUpdate()
     {
-        if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_user_update_activity', 1) == 1) {
             $results = $this->logUserActivity($this->data->id,
                 Services::Registry()->get('Actions', ACTION_DELETE));
             if ($results === false) {
@@ -169,7 +169,7 @@ class CatalogPlugin extends Plugin
             }
         }
 
-        if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_catalog_update_activity', 1) == 1) {
             $results = $this->logCatalogActivity($this->data->id,
                 Services::Registry()->get('Actions', ACTION_DELETE));
             if ($results === false) {
@@ -202,6 +202,7 @@ class CatalogPlugin extends Plugin
      */
     public function onBeforeDelete()
     {
+        /** todo - fix empty setModelRegistry */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry();
@@ -230,10 +231,10 @@ class CatalogPlugin extends Plugin
     {
         //how to get id - referential integrity?
         /**
-        if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_user_update_activity', 1) == 1) {
         $this->logUserActivity($id, Services::Registry()->get('Actions', 'delete'));
         }
-        if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_catalog_update_activity', 1) == 1) {
         $this->logCatalogActivity($id, Services::Registry()->get('Actions', 'delete'));
         }
          */
@@ -251,7 +252,7 @@ class CatalogPlugin extends Plugin
     {
         $data = new \stdClass();
         $data->model_name = 'UserActivity';
-        $data->model_table = 'Datasource';
+        $data->model_table = DATASOURCE_LITERAL;
         $data->catalog_id = $id;
         $data->action_id = $action_id;
 
@@ -276,7 +277,7 @@ class CatalogPlugin extends Plugin
     {
         $data = new \stdClass();
         $data->model_name = 'CatalogActivity';
-        $data->model_table = 'Datasource';
+        $data->model_table = DATASOURCE_LITERAL;
         $data->catalog_id = $id;
         $data->action_id = $action_id;
 

@@ -5,7 +5,7 @@
         <values>
             <value id="Initialise" value="Initialise"/>
             <value id="Route" value="Route"/>
-            <value id="Authorisation" value="Authorisation"/>
+            <value id="Permissions" value="Permissions"/>
             <value id="Execute" value="Execute"/>
             <value id="Response" value="Response"/>
         </values>

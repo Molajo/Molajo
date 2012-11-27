@@ -157,16 +157,14 @@ Class ConfigurationService
     public function __construct()
     {
         $this->getFieldProperties();
-        $this->getSite();
         $this->getApplication();
         $this->setSitePaths();
-        $this->getActions();
 
         return $this;
     }
 
     /**
-     * Retrieve valid field properties: modeltype, datatype, attribute, and datalist
+     * Retrieve and load valid properties for fields, data models and data objects
      *
      * @return  object
      * @throws  \Exception
@@ -202,21 +200,21 @@ Class ConfigurationService
             ConfigurationService::loadFieldProperties($xml, $field[0], $field[1]);
         }
 
-        self::$valid_dataobject_types = Services::Registry()->get('Fields', 'dataobjecttypes');
-        self::$valid_dataobject_attributes = Services::Registry()->get('Fields', 'dataobjectattributes');
+        self::$valid_dataobject_types = Services::Registry()->get(FIELDS_MODEL_TYPE, 'dataobjecttypes');
+        self::$valid_dataobject_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'dataobjectattributes');
 
-        self::$valid_model_types = Services::Registry()->get('Fields', 'modeltypes');
-        self::$valid_model_attributes = Services::Registry()->get('Fields', 'modelattributes');
+        self::$valid_model_types = Services::Registry()->get(FIELDS_MODEL_TYPE, 'modeltypes');
+        self::$valid_model_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'modelattributes');
 
-        self::$valid_data_types = Services::Registry()->get('Fields', 'datatypes');
-        self::$valid_field_attributes = Services::Registry()->get('Fields', 'fields');
+        self::$valid_data_types = Services::Registry()->get(FIELDS_MODEL_TYPE, 'datatypes');
+        self::$valid_field_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, FIELDS_MODEL_TYPE);
 
-        self::$valid_join_attributes = Services::Registry()->get('Fields', 'joins');
-        self::$valid_foreignkey_attributes = Services::Registry()->get('Fields', 'foreignkeys');
-        self::$valid_criteria_attributes = Services::Registry()->get('Fields', 'criterion');
-        self::$valid_children_attributes = Services::Registry()->get('Fields', 'children');
-        self::$valid_plugin_attributes = Services::Registry()->get('Fields', 'plugins');
-        self::$valid_value_attributes = Services::Registry()->get('Fields', 'values');
+        self::$valid_join_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'joins');
+        self::$valid_foreignkey_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'foreignkeys');
+        self::$valid_criteria_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'criterion');
+        self::$valid_children_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'children');
+        self::$valid_plugin_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'plugins');
+        self::$valid_value_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'values');
 
         $datalistsArray = array();
         $extensionArray = array();
@@ -226,7 +224,7 @@ Class ConfigurationService
         sort($datalistsArray);
         $datalistsArray = array_unique($datalistsArray);
 
-        Services::Registry()->set('Fields', 'Datalists', $datalistsArray);
+        Services::Registry()->set(FIELDS_MODEL_TYPE, 'Datalists', $datalistsArray);
 
         return;
     }
@@ -258,7 +256,7 @@ Class ConfigurationService
             $typeArray[] = (string)$type;
         }
 
-        Services::Registry()->set('Fields', $plural, $typeArray);
+        Services::Registry()->set(FIELDS_MODEL_TYPE, $plural, $typeArray);
 
         return true;
     }
@@ -287,8 +285,8 @@ Class ConfigurationService
             $typeDefaultArray[(string)$type['name']] = (string)$type['default'];
         }
 
-        Services::Registry()->set('Fields', $plural, $typeArray);
-        Services::Registry()->set('Fields', $plural . 'Defaults', $typeDefaultArray);
+        Services::Registry()->set(FIELDS_MODEL_TYPE, $plural, $typeArray);
+        Services::Registry()->set(FIELDS_MODEL_TYPE, $plural . 'Defaults', $typeDefaultArray);
 
         return true;
     }
@@ -320,27 +318,7 @@ Class ConfigurationService
     }
 
     /**
-     * Add site data to configuration registry
-     *
-     * todo: get rid of this - make certain application uses the Defines, not the configuration values
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function getSite()
-    {
-        Services::Registry()->set('Configuration', 'site_id', SITE_ID);
-        Services::Registry()->set('Configuration', 'site_catalog_type_id', CATALOG_TYPE_SITE);
-        Services::Registry()->set('Configuration', 'site_name', SITE_NAME);
-        Services::Registry()->set('Configuration', 'site_path', SITE_BASE_PATH);
-        Services::Registry()->set('Configuration', 'site_base_url_resources', SITE_BASE_URL_RESOURCES);
-        Services::Registry()->set('Configuration', 'site_base_url', SITE_BASE_URL);
-
-        return true;
-    }
-
-    /**
-     * Get the application data and store it in the registry, combine with site data for configuration
+     * Get the application data and store it in the registry
      *
      * @return  boolean
      * @since   1.0
@@ -349,11 +327,11 @@ Class ConfigurationService
     {
         if (APPLICATION == 'installation') {
 
-            Services::Registry()->set('Configuration', 'application_id', 0);
-            Services::Registry()->set('Configuration', 'application_catalog_type_id', CATALOG_TYPE_APPLICATION);
-            Services::Registry()->set('Configuration', 'application_name', APPLICATION);
-            Services::Registry()->set('Configuration', 'application_description', APPLICATION);
-            Services::Registry()->set('Configuration', 'application_path', APPLICATION);
+            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_id', 0);
+            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_catalog_type_id', CATALOG_TYPE_APPLICATION);
+            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_name', APPLICATION);
+            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_description', APPLICATION);
+            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_path', APPLICATION);
 
         } else {
 
@@ -362,38 +340,34 @@ Class ConfigurationService
 
                 $controllerClass = CONTROLLER_CLASS;
                 $controller = new $controllerClass();
-                $controller->getModelRegistry('Datasource', 'Application');
+                $controller->getModelRegistry(DATASOURCE_LITERAL, 'Application');
                 $controller->setDataobject();
 
                 $controller->set('name_key_value', APPLICATION);
 
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
                 if ($item === false) {
-                    throw new \RuntimeException ('Application getApplication() query problem');
+                    throw new \RuntimeException ('ConfigurationService: Error executing getApplication Query');
                 }
 
-                Services::Registry()->set('Configuration', 'application_id', (int)$item->id);
-                Services::Registry()->set('Configuration', 'application_catalog_type_id', (int)$item->catalog_type_id);
-                Services::Registry()->set('Configuration', 'application_name', $item->name);
-                Services::Registry()->set('Configuration', 'application_path', $item->path);
-                Services::Registry()->set('Configuration', 'application_description', $item->description);
+                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_id', (int)$item->id);
+                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_catalog_type_id', (int)$item->catalog_type_id);
+                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_name', $item->name);
+                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_path', $item->path);
+                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_description', $item->description);
 
                 $parameters = Services::Registry()->getArray('ApplicationDatasourceParameters');
                 $profiler_service = 0;
 
                 foreach ($parameters as $key => $value) {
 
-                    if (substr($key, 0, strlen('database')) == 'database') {
-                    } else {
+                    $existing = Services::Registry()->get(CONFIGURATION_LITERAL, $key);
 
-                        $existing = Services::Registry()->get('Configuration', $key);
+                    if ($existing === 0 || trim($existing) == '' || $existing === null || $existing === false) {
 
-                        if ($existing === 0 || trim($existing) == '' || $existing === null || $existing === false) {
-
-                            if ($value === 0 || trim($value) == '' || $value === null) {
-                            } else {
-                                Services::Registry()->set('Configuration', $key, $value);
-                            }
+                        if ($value === 0 || trim($value) == '' || $value === null) {
+                        } else {
+                            Services::Registry()->set(CONFIGURATION_LITERAL, $key, $value);
                         }
                     }
                 }
@@ -401,10 +375,10 @@ Class ConfigurationService
                 $metadata = Services::Registry()->getArray('ApplicationDatasourceMetadata');
 
                 foreach ($metadata as $key => $value) {
-                    Services::Registry()->set('Configuration', 'metadata_' . $key, $value);
+                    Services::Registry()->set(CONFIGURATION_LITERAL, 'metadata_' . $key, $value);
                 }
 
-                Services::Registry()->delete('Configuration', 'database*');
+                Services::Registry()->delete(CONFIGURATION_LITERAL, 'database*');
 
             } catch (\Exception $e) {
                 echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
@@ -412,9 +386,9 @@ Class ConfigurationService
             }
         }
 
-        Services::Registry()->sort('Configuration');
+        Services::Registry()->sort(CONFIGURATION_LITERAL);
 
-        if ((int)Services::Registry()->get('Configuration', 'profiler_service') == 1) {
+        if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_service') == 1) {
             Services::Profiler()->initiate();
         }
 
@@ -433,44 +407,44 @@ Class ConfigurationService
      */
     protected function setSitePaths()
     {
-        Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
-        $path = Services::Registry()->get('Configuration', 'application_path', '');
-        Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
+        Services::Registry()->set(CONFIGURATION_LITERAL, 'site_base_url', BASE_URL);
+        $path = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_path', '');
+        Services::Registry()->set(CONFIGURATION_LITERAL, 'application_base_url', BASE_URL . $path);
 
         if (defined('SITE_NAME')) {
         } else {
             define('SITE_NAME',
-            Services::Registry()->get('Configuration', 'site_name', SITE_ID));
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'site_name', SITE_ID));
         }
 
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
             define('SITE_CACHE_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'system_cache_folder', 'cache'));
+                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_cache_folder', 'cache'));
         }
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
 
             define('SITE_LOGS_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'system_logs_folder', 'logs'));
+                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_logs_folder', 'logs'));
         }
 
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
             define('SITE_MEDIA_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'system_media_folder', 'media'));
+                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_media_folder', 'media'));
         }
         if (defined('SITE_MEDIA_URL')) {
         } else {
             define('SITE_MEDIA_URL', SITE_BASE_URL_RESOURCES
-                . '/' . Services::Registry()->get('Configuration', 'system_media_url', 'media'));
+                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_media_url', 'media'));
         }
 
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
             define('SITE_TEMP_FOLDER', SITE_BASE_PATH
                 . '/' . Services::Registry()->get(
-                'Configuration',
+                CONFIGURATION_LITERAL,
                 'system_temp_folder',
                 SITE_BASE_PATH . '/temp'
             ));
@@ -479,33 +453,7 @@ Class ConfigurationService
         if (defined('SITE_TEMP_URL')) {
         } else {
             define('SITE_TEMP_URL', SITE_BASE_URL_RESOURCES
-                . '/' . Services::Registry()->get('Configuration', 'system_temp_url', 'temp'));
-        }
-
-        return true;
-    }
-
-    /**
-     * Get action ids and values to load into registry (to save a read on various plugins)
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function getActions()
-    {
-        $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Actions');
-        $controller->setDataobject();
-
-        $items = $controller->getData(QUERY_OBJECT_LIST);
-        if ($items === false) {
-            throw new \RuntimeException ('Application getApplication() getActions Query failed');
-        }
-
-        Services::Registry()->createRegistry('Actions');
-        foreach ($items as $item) {
-            Services::Registry()->set('Actions', $item->title, (int)$item->id);
+                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_temp_url', 'temp'));
         }
 
         return true;
@@ -564,16 +512,16 @@ Class ConfigurationService
     {
         $model_type = ucfirst(strtolower($model_type));
         $model_name = ucfirst(strtolower($model_name));
-        $ModelRegistry = $model_name . $model_type;
+        $model_registry = $model_name . $model_type;
 
-        if ($model_type == 'Dataobject') {
-            return ConfigurationService::getDataobject('Dataobject', $model_name);
+        if ($model_type == DATA_OBJECT_LITERAL) {
+            return ConfigurationService::getDataobject(DATA_OBJECT_LITERAL, $model_name);
         }
 
         if (class_exists('Services')) {
-            $exists = Services::Registry()->exists($ModelRegistry);
+            $exists = Services::Registry()->exists($model_registry);
             if ($exists === true) {
-                return $ModelRegistry;
+                return $model_registry;
             }
         }
 
@@ -592,40 +540,40 @@ Class ConfigurationService
             // FAIL
         }
 
-        Services::Registry()->createRegistry($ModelRegistry);
+        Services::Registry()->createRegistry($model_registry);
 
-        ConfigurationService::inheritDefinition($ModelRegistry, $xml);
+        ConfigurationService::inheritDefinition($model_registry, $xml);
 
-        ConfigurationService::setModelRegistry($ModelRegistry, $xml);
+        ConfigurationService::setModelRegistry($model_registry, $xml);
 
-        $data_object = Services::Registry()->get($ModelRegistry, 'data_object', '');
+        $data_object = Services::Registry()->get($model_registry, 'data_object', '');
 
         if ($data_object == '') {
-            $data_object = 'Database';
-            Services::Registry()->set($ModelRegistry, 'data_object', $data_object);
+            $data_object = DATABASE_LITERAL;
+            Services::Registry()->set($model_registry, 'data_object', $data_object);
         }
 
-        $dataObjectRegistry = ucfirst(strtolower($data_object)) . 'Dataobject';
+        $dataObjectRegistry = ucfirst(strtolower($data_object)) . DATA_OBJECT_LITERAL;
 
         if (Services::Registry()->exists($dataObjectRegistry)) {
         } else {
-            ConfigurationService::getDataobject('Dataobject', $data_object);
+            ConfigurationService::getDataobject(DATA_OBJECT_LITERAL, $data_object);
         }
 
         foreach (Services::Registry()->get($dataObjectRegistry) as $key => $value) {
-            Services::Registry()->set($ModelRegistry, 'data_object_' . $key, (string)$value);
+            Services::Registry()->set($model_registry, 'data_object_' . $key, (string)$value);
         }
 
         ConfigurationService::setElementsRegistry(
-            $ModelRegistry,
+            $model_registry,
             $xml,
-            'fields',
+            FIELDS_MODEL_TYPE,
             'field',
             self::$valid_field_attributes
         );
 
         ConfigurationService::setElementsRegistry(
-            $ModelRegistry,
+            $model_registry,
             $xml,
             'joins',
             'join',
@@ -633,7 +581,7 @@ Class ConfigurationService
         );
 
         ConfigurationService::setElementsRegistry(
-            $ModelRegistry,
+            $model_registry,
             $xml,
             'foreignkeys',
             'foreignkey',
@@ -641,7 +589,7 @@ Class ConfigurationService
         );
 
         ConfigurationService::setElementsRegistry(
-            $ModelRegistry,
+            $model_registry,
             $xml,
             'criteria',
             'where',
@@ -649,7 +597,7 @@ Class ConfigurationService
         );
 
         ConfigurationService::setElementsRegistry(
-            $ModelRegistry,
+            $model_registry,
             $xml,
             'children',
             'child',
@@ -657,7 +605,7 @@ Class ConfigurationService
         );
 
         ConfigurationService::setElementsRegistry(
-            $ModelRegistry,
+            $model_registry,
             $xml,
             'plugins',
             'plugin',
@@ -665,24 +613,24 @@ Class ConfigurationService
         );
 
         ConfigurationService::setElementsRegistry(
-            $ModelRegistry,
+            $model_registry,
             $xml,
             'values',
             'value',
             self::$valid_value_attributes
         );
 
-        ConfigurationService::getCustomFields($xml, $ModelRegistry);
+        ConfigurationService::getCustomFields($xml, $model_registry);
 
-        return $ModelRegistry;
+        return $model_registry;
     }
 
     /**
      * getDataobject loads registry for requested resource
      *
      * Usage:
-     * Services::Configuration()->getDataobject('Dataobject', 'Database');
-     * Services::Configuration()->getDataobject('Dataobject', 'Assets');
+     * Services::Configuration()->getDataobject(DATA_OBJECT_LITERAL, DATABASE_LITERAL);
+     * Services::Configuration()->getDataobject(DATA_OBJECT_LITERAL, DATA_OBJECT_ASSETS);
      *
      * @static
      * @param   string $model_name
@@ -695,13 +643,12 @@ Class ConfigurationService
      */
     public static function getDataobject($model_type, $model_name)
     {
-        $ModelRegistry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-echo         $ModelRegistry . '<br />';
+        $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
         if (class_exists('Services')) {
-            $exists = Services::Registry()->exists($ModelRegistry);
+            $exists = Services::Registry()->exists($model_registry);
             if ($exists === true) {
-                return $ModelRegistry;
+                return $model_registry;
             }
         }
 
@@ -721,13 +668,13 @@ echo         $ModelRegistry . '<br />';
             // FAIL
         }
 
-        Services::Registry()->createRegistry($ModelRegistry);
+        Services::Registry()->createRegistry($model_registry);
 
-        ConfigurationService::setDataobjectRegistry($ModelRegistry, $xml);
+        ConfigurationService::setDataobjectRegistry($model_registry, $xml);
 
-        Services::Registry()->sort($ModelRegistry);
+        Services::Registry()->sort($model_registry);
 
-        return $ModelRegistry;
+        return $model_registry;
     }
 
     /**
@@ -796,7 +743,7 @@ echo         $ModelRegistry . '<br />';
      */
     protected static function setDataobjectRegistry($DataobjectRegistry, $xml)
     {
-        $doArray = Services::Registry()->get('Fields', 'Dataobjectattributes');
+        $doArray = Services::Registry()->get(FIELDS_MODEL_TYPE, 'Dataobjectattributes');
 
         foreach ($xml->attributes() as $key => $value) {
 
@@ -809,8 +756,8 @@ echo         $ModelRegistry . '<br />';
             }
         }
 
-        Services::Registry()->set($DataobjectRegistry, 'data_object', 'Dataobject');
-        Services::Registry()->set($DataobjectRegistry, 'model_type', 'Dataobject');
+        Services::Registry()->set($DataobjectRegistry, 'data_object', DATA_OBJECT_LITERAL);
+        Services::Registry()->set($DataobjectRegistry, 'model_type', DATA_OBJECT_LITERAL);
         Services::Registry()->set(
             $DataobjectRegistry,
             'model_name',
@@ -824,31 +771,31 @@ echo         $ModelRegistry . '<br />';
      * Retrieves base Model Registry data and stores it to the datasource registry
      *
      * @static
-     * @param   $ModelRegistry
+     * @param   $model_registry
      * @param   $xml
      *
      * @return  boolean
      * @since   1.0
      */
-    protected static function setModelRegistry($ModelRegistry, $xml)
+    protected static function setModelRegistry($model_registry, $xml)
     {
-        $modelArray = Services::Registry()->get('Fields', 'Modelattributes');
+        $modelArray = Services::Registry()->get(FIELDS_MODEL_TYPE, 'Modelattributes');
 
         foreach ($xml->attributes() as $key => $value) {
 
             if (in_array($key, $modelArray)) {
-                Services::Registry()->set($ModelRegistry, $key, (string)$value);
+                Services::Registry()->set($model_registry, $key, (string)$value);
             } else {
                 echo 'Failure in ConfigurationService::setModelRegistry for Registry: '
-                    . $ModelRegistry . ' Invalid Attribute: ' . $key;
+                    . $model_registry . ' Invalid Attribute: ' . $key;
                 die;
             }
         }
 
         Services::Registry()->set(
-            $ModelRegistry,
+            $model_registry,
             'model_name',
-            Services::Registry()->get($ModelRegistry, 'name')
+            Services::Registry()->get($model_registry, 'name')
         );
 
         return true;
@@ -858,7 +805,7 @@ echo         $ModelRegistry . '<br />';
      * setElementsRegistry
      *
      * @static
-     * @param   $ModelRegistry
+     * @param   $model_registry
      * @param   $xml
      * @param   $plural
      * @param   $singular
@@ -867,7 +814,7 @@ echo         $ModelRegistry . '<br />';
      * @return  bool
      * @since   1.0
      */
-    protected static function setElementsRegistry($ModelRegistry, $xml, $plural, $singular, $valid_attributes)
+    protected static function setElementsRegistry($model_registry, $xml, $plural, $singular, $valid_attributes)
     {
         if (isset($xml->table->$plural->$singular)) {
         } else {
@@ -890,7 +837,7 @@ echo         $ModelRegistry . '<br />';
                 if (in_array($key, $valid_attributes)) {
                 } else {
                     echo 'In configuration setElementsRegistry ' . ucfirst($plural) . ' Attribute not known '
-                        . $key . ' for ' . $ModelRegistry . '<br />';
+                        . $key . ' for ' . $model_registry . '<br />';
                     die();
                 }
 
@@ -916,9 +863,9 @@ echo         $ModelRegistry . '<br />';
                 $selects[] = $temp[1];
             }
 
-            Services::Registry()->set($ModelRegistry, $plural, $joins);
+            Services::Registry()->set($model_registry, $plural, $joins);
 
-            Services::Registry()->set($ModelRegistry, 'JoinFields', $selects);
+            Services::Registry()->set($model_registry, 'JoinFields', $selects);
 
         } elseif ($plural == 'values') {
 
@@ -942,11 +889,11 @@ echo         $ModelRegistry . '<br />';
 
                     $valuesArray[] = $temp;
                 }
-                Services::Registry()->set($ModelRegistry, 'values', $valuesArray);
+                Services::Registry()->set($model_registry, 'values', $valuesArray);
             }
 
         } else {
-            Services::Registry()->set($ModelRegistry, $plural, $itemArray);
+            Services::Registry()->set($model_registry, $plural, $itemArray);
         }
 
         return true;
@@ -967,15 +914,15 @@ echo         $ModelRegistry . '<br />';
         $joinSelectArray = array();
 
         $joinModel = ucfirst(strtolower($modelJoinArray['model']));
-        $joinRegistry = $joinModel . 'Datasource';
+        $joinRegistry = $joinModel . DATASOURCE_LITERAL;
 
         if (Services::Registry()->exists($joinRegistry) === false) {
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-            $controller->getModelRegistry('Datasource', $joinModel);
+            $controller->getModelRegistry(DATASOURCE_LITERAL, $joinModel);
         }
 
-        $fields = Services::Registry()->get($joinRegistry, 'fields');
+        $fields = Services::Registry()->get($joinRegistry, FIELDS_MODEL_TYPE);
 
         $table = Services::Registry()->get($joinRegistry, 'table_name');
 
@@ -1018,13 +965,13 @@ echo         $ModelRegistry . '<br />';
      *
      * @static
      * @param   $xml
-     * @param   $ModelRegistry
+     * @param   $model_registry
      *
      * @return  object
      * @since   1.0
      * @throws  \RuntimeException
      */
-    protected static function getCustomFields($xml, $ModelRegistry)
+    protected static function getCustomFields($xml, $model_registry)
     {
         $customFieldsArray = array();
 
@@ -1034,7 +981,7 @@ echo         $ModelRegistry . '<br />';
             foreach ($xml->customfields->customfield as $custom_field) {
 
                 $name = (string)$custom_field['name'];
-                $results = ConfigurationService::getCustomFieldsSpecificGroup($ModelRegistry, $custom_field);
+                $results = ConfigurationService::getCustomFieldsSpecificGroup($model_registry, $custom_field);
                 if ($results === false) {
                 } else {
 
@@ -1042,7 +989,7 @@ echo         $ModelRegistry . '<br />';
                     $fieldNames = $results[1];
 
                     ConfigurationService::inheritCustomFieldsSpecificGroup(
-                        $ModelRegistry,
+                        $model_registry,
                         $name,
                         $fieldArray,
                         $fieldNames
@@ -1054,17 +1001,17 @@ echo         $ModelRegistry . '<br />';
         }
 
         /** Include Inherited Groups not matching existing groups */
-        $exists = Services::Registry()->exists($ModelRegistry, 'CustomFieldGroups');
+        $exists = Services::Registry()->exists($model_registry, 'CustomFieldGroups');
 
         if ($exists === true) {
-            $inherited = Services::Registry()->get($ModelRegistry, 'CustomFieldGroups');
+            $inherited = Services::Registry()->get($model_registry, 'CustomFieldGroups');
 
             if (is_array($inherited) && count($inherited) > 0) {
                 foreach ($inherited as $name) {
 
                     if (in_array($name, $customFieldsArray)) {
                     } else {
-                        $results = ConfigurationService::inheritCustomFieldsSpecificGroup($ModelRegistry, $name);
+                        $results = ConfigurationService::inheritCustomFieldsSpecificGroup($model_registry, $name);
                         if ($results === false) {
                         } else {
                             $customFieldsArray[] = $name;
@@ -1074,7 +1021,7 @@ echo         $ModelRegistry . '<br />';
             }
         }
 
-        Services::Registry()->set($ModelRegistry, 'CustomFieldGroups', array_unique($customFieldsArray));
+        Services::Registry()->set($model_registry, 'CustomFieldGroups', array_unique($customFieldsArray));
 
         return;
     }
@@ -1083,13 +1030,13 @@ echo         $ModelRegistry . '<br />';
      * getCustomFieldsSpecificGroup
      *
      * @static
-     * @param   $ModelRegistry
+     * @param   $model_registry
      * @param   $customfield
      *
      * @return  array
      * @since   1.0
      */
-    protected static function getCustomFieldsSpecificGroup($ModelRegistry, $customfield)
+    protected static function getCustomFieldsSpecificGroup($model_registry, $customfield)
     {
         $fieldArray = array();
         $fieldNames = array();
@@ -1105,7 +1052,7 @@ echo         $ModelRegistry . '<br />';
                 if ($key2 == 'fieldset') {
                 } elseif (in_array($key2, self::$valid_field_attributes)) {
                 } else {
-                    echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $ModelRegistry . '<br />';
+                    echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $model_registry . '<br />';
                 }
 
                 if ($key2 == 'name') {
@@ -1132,7 +1079,7 @@ echo         $ModelRegistry . '<br />';
      * Inherited fields are merged in with those specifically defined in model
      *
      * @static
-     * @param   $ModelRegistry
+     * @param   $model_registry
      * @param   $name
      * @param   $fieldArray
      * @param   $fieldNames
@@ -1141,14 +1088,14 @@ echo         $ModelRegistry . '<br />';
      * @since   1.0
      */
     protected static function inheritCustomFieldsSpecificGroup(
-        $ModelRegistry,
+        $model_registry,
         $name,
         $fieldArray = array(),
         $fieldNames = array()
     ) {
 
         $inherit = array();
-        $available = Services::Registry()->get($ModelRegistry, $name, array());
+        $available = Services::Registry()->get($model_registry, $name, array());
 
         if (count($available) > 0) {
             foreach ($available as $row) {
@@ -1166,11 +1113,11 @@ echo         $ModelRegistry . '<br />';
         }
 
         if (is_array($fieldArray) && count($fieldArray) == 0) {
-            Services::Registry()->set($ModelRegistry, $name, array());
+            Services::Registry()->set($model_registry, $name, array());
             return false;
         }
 
-        Services::Registry()->set($ModelRegistry, $name, $fieldArray);
+        Services::Registry()->set($model_registry, $name, $fieldArray);
 
         return $name;
     }
@@ -1179,13 +1126,13 @@ echo         $ModelRegistry . '<br />';
      * Inheritance checking and setup  <model name="XYZ" extends="ThisTable"/>
      *
      * @static
-     * @param   $ModelRegistry
+     * @param   $model_registry
      * @param   $xml
      *
      * @return  void
      * @since   1.0
      */
-    protected static function inheritDefinition($ModelRegistry, $xml)
+    protected static function inheritDefinition($model_registry, $xml)
     {
         $extends = false;
         foreach ($xml->attributes() as $key => $value) {
@@ -1197,7 +1144,7 @@ echo         $ModelRegistry . '<br />';
             return;
         }
 
-        $modelArray = Services::Registry()->get('Fields', 'Modeltypes');
+        $modelArray = Services::Registry()->get(FIELDS_MODEL_TYPE, 'Modeltypes');
 
         $extends_model_name = '';
         $extends_model_type = '';
@@ -1214,7 +1161,7 @@ echo         $ModelRegistry . '<br />';
 
         if ($extends_model_name == '') {
             $extends_model_name = ucfirst(strtolower($extends));
-            $extends_model_type = 'Datasource';
+            $extends_model_type = DATASOURCE_LITERAL;
         }
 
         $inheritModelRegistry = $extends_model_name . $extends_model_type;
@@ -1227,7 +1174,7 @@ echo         $ModelRegistry . '<br />';
             $controller->getModelRegistry($extends_model_type, $extends_model_name);
         }
 
-        Services::Registry()->copy($inheritModelRegistry, $ModelRegistry);
+        Services::Registry()->copy($inheritModelRegistry, $model_registry);
 
         return;
     }
@@ -1260,13 +1207,13 @@ echo         $ModelRegistry . '<br />';
             die;
         }
 
-        if ($model_type == 'Dataobject') {
-            $path = SITE_DATAOBJECT_FOLDER . '/' . $model_name . '.xml';
+        if ($model_type == DATA_OBJECT_LITERAL) {
+            $path = SITE_DATA_OBJECT_FOLDER . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
 
-            $path = SITES_DATAOBJECT_FOLDER . '/' . $model_name . '.xml';
+            $path = SITES_DATA_OBJECT_FOLDER . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
@@ -1321,7 +1268,7 @@ echo         $ModelRegistry . '<br />';
             }
         }
 
-        $modeltypeArray = array('Language', 'Theme', 'System', 'Service');
+        $modeltypeArray = array('Language', 'Theme', SYSTEM_LITERAL, 'Service');
 
         if (in_array($model_type, $modeltypeArray)) {
 
@@ -1341,8 +1288,8 @@ echo         $ModelRegistry . '<br />';
         }
 
         $extension_path = false;
-        if (Services::Registry()->exists('Parameters', 'extension_path')) {
-            $extension_path = Services::Registry()->get('Parameters', 'extension_path');
+        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'extension_path')) {
+            $extension_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path');
         }
 
         $primary_extension_path = false;
@@ -1351,23 +1298,23 @@ echo         $ModelRegistry . '<br />';
         }
 
         $theme_path = false;
-        if (Services::Registry()->exists('Parameters', 'theme_path')) {
-            $theme_path = Services::Registry()->get('Parameters', 'theme_path');
+        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'theme_path')) {
+            $theme_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path');
         }
 
         $page_view_path = false;
-        if (Services::Registry()->exists('Parameters', 'page_view_path')) {
-            $page_view_path = Services::Registry()->get('Parameters', 'page_view_path');
+        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'page_view_path')) {
+            $page_view_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_path');
         }
 
         $template_view_path = false;
-        if (Services::Registry()->exists('Parameters', 'template_view_path')) {
-            $template_view_path = Services::Registry()->get('Parameters', 'template_view_path');
+        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'template_view_path')) {
+            $template_view_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'template_view_path');
         }
 
         $wrap_view_path = false;
-        if (Services::Registry()->exists('Parameters', 'wrap_view_path')) {
-            $wrap_view_path = Services::Registry()->get('Parameters', 'wrap_view_path');
+        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'wrap_view_path')) {
+            $wrap_view_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'wrap_view_path');
         }
 
         /** Search for overrides before standard placement */
@@ -1414,7 +1361,7 @@ echo         $ModelRegistry . '<br />';
             }
         }
 
-        $valid = array(DATALIST_MODEL_NAME, 'Datasource');
+        $valid = array(DATA_OBJECT_DATALIST, DATASOURCE_LITERAL);
 
         if (in_array($model_type, $valid)) {
             $path = ConfigurationService::commonSearch(
@@ -1437,7 +1384,7 @@ echo         $ModelRegistry . '<br />';
 
         /** These are the Dataobjects, other than Database */
         $path = ConfigurationService::commonSearch(
-            'Datasource',
+            DATASOURCE_LITERAL,
             $model_type,
             $extension_path,
             $primary_extension_path,

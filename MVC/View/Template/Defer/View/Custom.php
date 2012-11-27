@@ -5,7 +5,7 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die; ?>
-<include:asset name=Assetsjsdefer/>
+<include:asset name=AssetsJS_DEFER_LITERAL/>
 <include:asset name=Assetsjsdeclarationsdefer/>
     </body>
 </html>

@@ -1,5 +1,5 @@
 /**
-		$files = Services::Filesystem()->folderfiles(PLATFORM_FOLDER . '/' . 'Configuration' . '/' . 'Field');
+		$files = Services::Filesystem()->folderfiles(PLATFORM_FOLDER . '/' . CONFIGURATION_LITERAL . '/' . 'Field');
 		foreach ($files as $file) {
 			echo strtoupper(substr($file, 0, strlen($file) - 4)) . '_LABEL=""' . '<br />';
 			echo strtoupper(substr($file, 0, strlen($file) - 4)) . '_TOOLTIP=""' . '<br />';
@@ -18,7 +18,7 @@ INSERT INTO `molajo_application_extension_instances`(`application_id`, `extensio
 INSERT INTO `molajo_application_extension_instances`(`application_id`, `extension_instance_id`) VALUES (2,10381);
 
 INSERT INTO `molajo_catalog` (`catalog_type_id`, `source_id`, `routable`, `page_type`, `sef_request`, `redirect_to_id`, `view_group_id`, `primary_category_id`, `tinyurl`) VALUES
-(1300, 10381, 1, 'Configuration', 'articles/configuration', 0, 1, 12, '')
+(1300, 10381, 1, CONFIGURATION_LITERAL, 'articles/configuration', 0, 1, 12, '')
 
 {
 "1":{},

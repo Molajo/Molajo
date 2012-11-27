@@ -5,7 +5,7 @@
         <values>
             <value id="Actions" value="Actions"/>
             <value id="Application" value="Application"/>
-            <value id="Authorisation" value="Authorisation"/>
+            <value id="Permissions" value="Permissions"/>
             <value id="Queries" value="Queries"/>
             <value id="Registry" value="Registry"/>
             <value id="Rendering" value="Rendering"/>

@@ -33,7 +33,7 @@ class MenuitemsPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('System', 'Menuitems');
+        $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
         $controller->setDataobject();
 
         $controller->set('get_customfields', 0);
@@ -91,7 +91,7 @@ class MenuitemsPlugin extends Plugin
             $menuitems[] = $row;
         }
 
-        Services::Registry()->set(DATALIST_MODEL_NAME, 'Menuitems', $menuitems);
+        Services::Registry()->set(DATA_OBJECT_DATALIST, MENUITEMS_LITERAL, $menuitems);
 
         return true;
     }

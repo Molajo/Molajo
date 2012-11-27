@@ -55,7 +55,7 @@ class ReferencedataPlugin extends Plugin
 
                     $controllerClass = CONTROLLER_CLASS;
                     $controller = new $controllerClass();
-                    $controller->getModelRegistry('Datasource', $fk->source_model);
+                    $controller->getModelRegistry(DATASOURCE_LITERAL, $fk->source_model);
 
                     $results = $controller->setDataobject();
                     if ($results === false) {

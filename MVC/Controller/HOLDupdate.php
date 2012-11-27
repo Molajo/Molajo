@@ -302,7 +302,7 @@ class HOLDupdate extends Controller
         }
 
         /** ACL **/
-        $results = $this->checkTaskAuthorisation($checkTask = $action);
+        $results = $this->checkTaskPermissions($checkTask = $action);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }

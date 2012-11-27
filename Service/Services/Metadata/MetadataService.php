@@ -81,9 +81,9 @@ Class MetadataService
     {
         $query_results = array();
 
-        $application_html5 = Services::Registry()->get('Configuration', 'application_html5', 1);
+        $application_html5 = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1);
 
-        if ((int) Services::Registry()->get('Configuration', 'application_html5', 1) == 1) {
+        if ((int) Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1) == 1) {
             $end = '>' . chr(10);
         } else {
             $end = '/>' . chr(10);
@@ -100,7 +100,7 @@ Class MetadataService
             $temp = Services::Registry()->get('Metadata', 'title', '');
 			$title = $temp[0];
             if (trim($title) == '') {
-                $title = Services::Registry()->get('Configuration', 'site_name');
+                $title = SITE_NAME;
             }
             $row->title = Services::Filter()->escape_text($title);
 
@@ -117,10 +117,10 @@ Class MetadataService
             Services::Registry()->set('Metadata', 'mimetype', $mimetype);
 
             /** Base URL for Site */
-            $row->base = Services::Registry()->get('Configuration', 'site_base_url');
+            $row->base = SITE_BASE_URL;
 
             /** Last Modified Date */
-            $last_modified = Services::Registry()->get('Parameters', 'modified_datetime');
+            $last_modified = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'modified_datetime');
             if (trim($last_modified) == '') {
                 $last_modified = Services::Date()->getDate();
             }

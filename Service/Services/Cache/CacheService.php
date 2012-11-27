@@ -137,19 +137,19 @@ Class CacheService
 //todo: remove hardcoded types and make it configurable
 //todo: add methods other than file for caching
 
-		if (Services::Registry()->get('Configuration', 'cache_handler', 'file') == 'file') {
+		if (Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_handler', 'file') == 'file') {
 			$this->system_cache_folder = SITE_BASE_PATH . '/'
-				. Services::Registry()->get('Configuration', 'system_cache_folder');
+				. Services::Registry()->get(CONFIGURATION_LITERAL, 'system_cache_folder');
 		} else {
 			return false;
 		}
 
-		$this->cache_service_time = (int)Services::Registry()->get('Configuration', 'cache_time', 900);
+		$this->cache_service_time = (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_time', 900);
 		if ($this->cache_service_time == 0) {
 			$this->cache_service_time = 900;
 		}
 
-		if (Services::Registry()->get('Configuration', 'cache_service') == 0) {
+		if (Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_service') == 0) {
 			$this->cache_service = false;
 			$this->cache_model = 0;
 			$this->cache_page = 0;
@@ -157,10 +157,10 @@ Class CacheService
 			$this->cache_template = 0;
 		} else {
 			$this->cache_service = true;
-			$this->cache_model = Services::Registry()->get('Configuration', 'cache_model');
-			$this->cache_page = Services::Registry()->get('Configuration', 'cache_page');
-			$this->cache_query = Services::Registry()->get('Configuration', 'cache_query');
-			$this->cache_template = Services::Registry()->get('Configuration', 'cache_template');
+			$this->cache_model = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_model');
+			$this->cache_page = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_page');
+			$this->cache_query = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_query');
+			$this->cache_template = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_template');
 		}
 		Services::Registry()->set('cache_service', $this->cache_service);
 

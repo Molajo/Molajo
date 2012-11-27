@@ -3,11 +3,17 @@
     <dataobjecttypes>
         <dataobjecttype>Assets</dataobjecttype>
         <dataobjecttype>Database</dataobjecttype>
+        <dataobjecttype>Datalist</dataobjecttype>
         <dataobjecttype>Dummy</dataobjecttype>
+        <dataobjecttype>Fieldset</dataobjecttype>
         <dataobjecttype>Menu</dataobjecttype>
+        <dataobjecttype>Messages</dataobjecttype>
         <dataobjecttype>Metadata</dataobjecttype>
+        <dataobjecttype>Parameters</dataobjecttype>
+        <dataobjecttype>Primary</dataobjecttype>
         <dataobjecttype>Profiler</dataobjecttype>
         <dataobjecttype>Registry</dataobjecttype>
+        <dataobjecttype>Template</dataobjecttype>
     </dataobjecttypes>
 
     <dataobjectattributes>
@@ -49,7 +55,6 @@
         <modeltype>Messages</modeltype>
         <modeltype>Metadata</modeltype>
         <modeltype>Parameters</modeltype>
-        <modeltype>Plugindata</modeltype>
     </modeltypes>
 
     <modelattributes>

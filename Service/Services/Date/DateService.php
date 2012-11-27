@@ -367,7 +367,7 @@ Class DateService
             }
         }
         if ($offset == '') {
-            $offset = Services::Registry()->get('Configuration', 'language_utc_offset', '');
+            $offset = Services::Registry()->get(CONFIGURATION_LITERAL, 'language_utc_offset', '');
         }
         if ($offset == '') {
             $offset = 'UTC';

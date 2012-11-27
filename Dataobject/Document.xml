@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="Fieldlist"
+        name="Document"
         service_class="Registry"
         service_class_query_method="getData"
-        service_class_query_method_parameter="RESOURCE_REGISTRY_NAME+MODEL_NAME"
+        service_class_query_method_parameter="TEMPLATE_VIEW_NAME"
         process_plugins="1"/>
+
+

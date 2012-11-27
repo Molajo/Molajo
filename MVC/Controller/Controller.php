@@ -132,12 +132,12 @@ class Controller
      *
      * @throws  \RuntimeException
      */
-    public function getModelRegistry($model_type = 'Datasource', $model_name = null, $model_class = 'ReadModel')
+    public function getModelRegistry($model_type = DATASOURCE_LITERAL, $model_name = null, $model_class = 'ReadModel')
     {
         $this->set('data_object_set', 0);
 
         if ($model_type == '') {
-            $model_type = 'Datasource';
+            $model_type = DATASOURCE_LITERAL;
         }
         if ($model_class == '') {
             $model_class = 'ReadModel';
@@ -176,7 +176,7 @@ class Controller
             }
         }
 
-        if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_table_registry') == 0) {
         } else {
             ob_start();
             Services::Registry()->get($model_registry, '*');
@@ -205,7 +205,7 @@ class Controller
         $data_object = Services::Registry()->get($this->get('model_registry'), 'data_object');
         $this->set('data_object', ucfirst(strtolower($data_object)));
 
-        if ($data_object == 'Database') {
+        if ($data_object == DATABASE_LITERAL) {
             $defaults = Services::Registry()->get(FIELDS_MODEL_TYPE, 'ModelattributesDefaults');
             foreach (Services::Registry()->get(FIELDS_MODEL_TYPE, 'Modelattributes') as $key) {
                 if (isset($registry[$key])) {
@@ -238,10 +238,10 @@ class Controller
         if ($this->model->get('data_object') === null
             || $this->model->get('data_object') === false
         ) {
-            $this->model->set('data_object', 'Database');
+            $this->model->set('data_object', DATABASE_LITERAL);
         }
 
-        if ($this->get('data_object') == 'Database') {
+        if ($this->get('data_object') == DATABASE_LITERAL) {
         } else {
             $this->model->db = NULL;
             $this->model->query = NULL;
@@ -250,9 +250,9 @@ class Controller
             return;
         }
 
-        if ($this->model->get('service_class', 'Database') == 'Database') {
+        if ($this->model->get('service_class', DATABASE_LITERAL) == DATABASE_LITERAL) {
 
-            $service_class = $this->get('service_class', 'Database');
+            $service_class = $this->get('service_class', DATABASE_LITERAL);
 
             $this->model->db = Services::$service_class()->connect();
 
@@ -309,7 +309,7 @@ class Controller
             $query_object = QUERY_OBJECT_LIST;
         }
 
-        if ($this->get('data_object') == 'Database') {
+        if ($this->get('data_object') == DATABASE_LITERAL) {
             $this->prepareQuery($query_object);
         }
 
@@ -329,7 +329,7 @@ class Controller
 
 //echo $profiler_message;
 
-        if ($this->get('data_object') == 'Database') {
+        if ($this->get('data_object') == DATABASE_LITERAL) {
 
             if (count($this->plugins) > 0) {
                 $this->onBeforeReadEvent();
@@ -357,14 +357,14 @@ class Controller
                 } elseif ($service_class_query_method_parameter == 'TEMPLATE_VIEW_NAME') {
                     $method_parameter = $this->get('template_view_path_node');
 
-                } elseif ($service_class_query_method_parameter == 'DATAOBJECT_MODEL_TYPE') {
+                } elseif ($service_class_query_method_parameter == 'DATA_OBJECT_LITERAL') {
                     $method_parameter = $this->get('template_view_path_node');
 
                 } else {
                     $method_parameter = $service_class_query_method_parameter;
                 }
 
-                if (strtolower($this->get('model_name')) == 'parameters') {
+                if (strtolower($this->get('model_name')) == DATA_OBJECT_PARAMETERS) {
                     $query_object = QUERY_OBJECT_ITEM;
                 }
 
@@ -397,7 +397,7 @@ class Controller
             );
         }
 
-        if ($this->get('data_object') == 'Database') {
+        if ($this->get('data_object') == DATABASE_LITERAL) {
         } else {
             return $this->query_results;
         }
@@ -410,7 +410,7 @@ class Controller
 
         if ($query_object == QUERY_OBJECT_LIST) {
 
-            if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
+            if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results', 0) == 1) {
                 $message = 'DisplayController->getData Query Results <br /><br />';
 
                 ob_start();
@@ -628,7 +628,7 @@ class Controller
             )
         );
 
-        if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql') == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_sql') == 1) {
             Services::Profiler()->set(
                 'DisplayController->getData SQL Query: <br /><br />'
                     . $this->model->query->__toString(),
@@ -647,7 +647,7 @@ class Controller
 
         if ($query_object == QUERY_OBJECT_RESULT || $query_object == QUERY_OBJECT_DISTINCT) {
 
-            if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results') == 1) {
+            if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results') == 1) {
                 $message = 'DisplayController->getData Query Result <br /><br />';
                 ob_start();
                 echo '<pre>';
@@ -757,7 +757,7 @@ class Controller
             'query' => $this->model->query,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            'parameters' => $this->parameters,
+            DATA_OBJECT_PARAMETERS => $this->parameters,
             'model_name' => $this->get('model_name'),
             'model_type' => $this->get('model_type')
         );
@@ -795,8 +795,8 @@ class Controller
         if (isset($arguments['query'])) {
             $this->model->query = $arguments['query'];
         }
-        if (isset($arguments['parameters'])) {
-            $this->parameters = $arguments['parameters'];
+        if (isset($arguments[DATA_OBJECT_PARAMETERS])) {
+            $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
         }
 
         return true;
@@ -832,7 +832,7 @@ class Controller
 
                 $arguments = array(
                     'model_registry' => $this->get('model_registry'),
-                    'parameters' => $this->parameters,
+                    DATA_OBJECT_PARAMETERS => $this->parameters,
                     'data' => $item,
                     'model_name' => $this->get('model_name'),
                     'model_type' => $this->get('model_type'),
@@ -869,7 +869,7 @@ class Controller
                     VERBOSE
                 );
 
-                $this->parameters = $arguments['parameters'];
+                $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
                 $this->query_results[] = $arguments['data'];
                 $first = false;
             }
@@ -877,7 +877,7 @@ class Controller
 
         $arguments = array(
             'model_registry' => $this->get('model_registry'),
-            'parameters' => $this->parameters,
+            DATA_OBJECT_PARAMETERS => $this->parameters,
             'data' => $this->query_results,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
@@ -912,8 +912,8 @@ class Controller
             VERBOSE
         );
 
-        if (isset($arguments['parameters'])) {
-            $this->parameters = $arguments['parameters'];
+        if (isset($arguments[DATA_OBJECT_PARAMETERS])) {
+            $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
         } else {
             $this->parameters = array();
         }

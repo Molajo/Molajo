@@ -34,7 +34,7 @@ Class ThemeIncluder extends Includer
      */
     public function __construct($name = null, $type = null)
     {
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id', CATALOG_TYPE_THEME);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_id', CATALOG_TYPE_THEME);
         $this->name = $name;
         $this->type = $type;
 
@@ -70,29 +70,29 @@ Class ThemeIncluder extends Includer
     {
         /**  Site */
         $this->loadMediaPlus('',
-            Services::Registry()->get('Parameters', 'asset_priority_site', 100));
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_site', 100));
 
         /** Application */
         $this->loadMediaPlus('/application' . APPLICATION,
-            Services::Registry()->get('Parameters', 'asset_priority_application', 200));
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_application', 200));
 
         /** User */
         $this->loadMediaPlus('/user' . Services::Registry()->get('User', 'id'),
-            Services::Registry()->get('Parameters', 'asset_priority_user', 300));
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_user', 300));
 
         /** Theme */
-        $priority = Services::Registry()->get('Parameters', 'asset_priority_theme', 600);
-        $file_path = Services::Registry()->get('Parameters', 'theme_path');
-        $url_path = Services::Registry()->get('Parameters', 'theme_path_url');
+        $priority = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_theme', 600);
+        $file_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path');
+        $url_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_url');
 
         Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
         /** Page */
-        $priority = Services::Registry()->get('Parameters', 'asset_priority_theme', 600);
-        $file_path = Services::Registry()->get('Parameters', 'page_view_path');
-        $url_path = Services::Registry()->get('Parameters', 'page_view_path_url');
+        $priority = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_theme', 600);
+        $file_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_path');
+        $url_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_path_url');
 
         Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
@@ -100,14 +100,14 @@ Class ThemeIncluder extends Includer
 
         /** Site Favicon */
         Services::Asset()->addLink(
-            $url = Services::Registry()->get('Parameters', 'theme_favicon'),
+            $url = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_favicon'),
             $relation = 'shortcut icon',
             $relation_type = 'image/x-icon',
             $attributes = array()
         );
 
         /** Catalog ID specific */
-        $this->loadMediaPlus('', Services::Registry()->get('Parameters', 'asset_priority_site', 100));
+        $this->loadMediaPlus('', Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_site', 100));
 
         return;
     }

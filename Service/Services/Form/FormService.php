@@ -417,7 +417,7 @@ Class FormService
      */
     protected function get($type, $key = null, $default = null)
     {
-        if ($type == 'parameters') {
+        if ($type == DATA_OBJECT_PARAMETERS) {
             if (isset($this->parameters[$key])) {
                 return $this->parameters[$key];
             }
@@ -442,7 +442,7 @@ Class FormService
     /**
      * setFieldset - Processes a request for a fieldset
      *
-     *  Uses namespace and page link to retrieve configuration file, ex. 'Configuration' + - + "views"
+     *  Uses namespace and page link to retrieve configuration file, ex. CONFIGURATION_LITERAL + - + "views"
      *  Retrieves XML file Configuration_views.xml,
      *  Within for default value processes
      *  {{Page,form_parent*,form_theme*,form_page*}}{{Template,form_template*}}{{Wrap,form_wrap*}}{{Model,form_model*}}{{Page,item_parent* ...
@@ -460,7 +460,7 @@ Class FormService
         } else {
              echo $this->namespace . '_' . strtolower($this->page_link);
             echo '<br>';
-            $configuration = $this->get('parameters', $this->namespace . '_' . strtolower($this->page_link), '');
+            $configuration = $this->get(DATA_OBJECT_PARAMETERS, $this->namespace . '_' . strtolower($this->page_link), '');
             if ($configuration == '') {
                 return false;
             }
@@ -666,7 +666,7 @@ echo '</pre>';
         }
 
         Services::Registry()->set(
-            TEMPLATE_MODEL_NAME,
+            DATA_OBJECT_TEMPLATE,
             $this->fieldset_template_view . $this->namespace . strtolower($this->page_link),
             $fieldSets
         );
@@ -733,7 +733,7 @@ echo '</pre>';
                         $row['fieldset_description'] = $this->fieldset_description;
 
                         //todo defaults
-                        $row['application_default'] = Services::Registry()->get('Configuration', $key);
+                        $row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, $key);
 
                         $input_fields[] = $row;
                     }
@@ -763,7 +763,7 @@ echo '</pre>';
         $fieldValues = array();
         $input_fields = array();
 
-        $fieldArray = Services::Registry()->get($this->model_name . $this->model_type, DATALIST_MODEL_NAME);
+        $fieldArray = Services::Registry()->get($this->model_name . $this->model_type, DATA_OBJECT_DATALIST);
         $customfieldgroups = Services::Registry()->get($this->model_name . $this->model_type, 'customfieldgroups');
 
         foreach ($options as $value) {
@@ -809,7 +809,7 @@ echo '</pre>';
                             }
 
                             foreach ($customfieldgroups as $custom) {
-                                if ($custom == 'parameters') {
+                                if ($custom == DATA_OBJECT_PARAMETERS) {
                                 } else {
                                     $temp = Services::Registry()->get($this->model_name . $this->model_type, $custom);
                                     foreach ($temp as $field) {
@@ -839,7 +839,7 @@ echo '</pre>';
                                 }
 
                                 $row['application_default'] = Services::Registry()->get(
-                                    'Configuration',
+                                    CONFIGURATION_LITERAL,
                                     $field['name']
                                 );
                                 $input_fields[] = $row;
@@ -880,7 +880,7 @@ echo '</pre>';
 
             $row['value'] = $this->metadata_fields($field['name']);
 
-            $row['application_default'] = Services::Registry()->get('Configuration', 'metadata_' . $field['name']);
+            $row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, 'metadata_' . $field['name']);
 
             $input_fields[] = $row;
         }
@@ -924,7 +924,7 @@ echo '</pre>';
             if (trim($compare) == '' || strlen($compare) == 0) {
             } else {
 
-                foreach (Services::Registry()->get('GridMenuitem', 'parameters') as $field) {
+                foreach (Services::Registry()->get('GridMenuitem', DATA_OBJECT_PARAMETERS) as $field) {
 
                     $use = false;
                     if ($field['name'] == $compare) {
@@ -946,7 +946,7 @@ echo '</pre>';
 
                         $row['value'] = Services::Registry()->get('GridMenuitemParameters', $field['name']);
 
-                        $row['application_default'] = Services::Registry()->get('Configuration', $field['name']);
+                        $row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, $field['name']);
                         $input_fields[] = $row;
                     }
                 }
@@ -973,7 +973,7 @@ echo '</pre>';
         $input_fields = array();
 
         /** Fields needed to define new Custom Fields */
-        $entry_fields = Services::Registry()->get('AdminconfigurationTemplate', 'parameters');
+        $entry_fields = Services::Registry()->get('AdminconfigurationTemplate', DATA_OBJECT_PARAMETERS);
 
         if (count($entry_fields) == 0 || $entry_fields === false) {
         } else {
@@ -1022,7 +1022,7 @@ echo '</pre>';
         $custom_fields = array();
         $custom_fields[] = 'metadata';
         $custom_fields[] = 'customfields';
-        $custom_fields[] = 'parameters';
+        $custom_fields[] = DATA_OBJECT_PARAMETERS;
 
         $first = 1;
 
@@ -1351,7 +1351,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1430,7 +1430,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1492,7 +1492,7 @@ echo '</pre>';
         $yes = 0;
         if (strtolower($datalist) == FIELDS_MODEL_TYPE) {
 
-            $list = Services::Registry()->get(DATALIST_MODEL_NAME,
+            $list = Services::Registry()->get(DATA_OBJECT_DATALIST,
                 $this->model_registry_name . FIELDS_STANDARD_MODEL_TYPE
             );
 
@@ -1501,13 +1501,13 @@ echo '</pre>';
             $this->model_registry_name
                 = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
 
-            $list = Services::Registry()->get(DATALIST_MODEL_NAME,
+            $list = Services::Registry()->get(DATA_OBJECT_DATALIST,
                 $this->model_registry_name . FIELDS_STANDARD_MODEL_TYPE
             );
 
         } else {
 
-            $results = Services::Text()->getDatalist($datalist, DATALIST_MODEL_NAME, array());
+            $results = Services::Text()->getDatalist($datalist, DATA_OBJECT_DATALIST, array());
             $list = $results[0]->listitems;
             $multiple = $results[0]->multiple;
             $size = $results[0]->size;
@@ -1562,7 +1562,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1614,7 +1614,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }

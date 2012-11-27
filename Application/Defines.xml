@@ -90,15 +90,16 @@
     <define name="LOG_TYPE_INFO" value="64"/>
     <define name="LOG_TYPE_PROFILER" value="128"/>
 
-    <define name="LOG_OUTPUT_ACTIONS" value="Actions"/>
-    <define name="LOG_OUTPUT_APPLICATION" value="Application"/>
-    <define name="LOG_OUTPUT_AUTHORISATION" value="Authorisation"/>
-    <define name="LOG_OUTPUT_QUERIES" value="Queries"/>
-    <define name="LOG_OUTPUT_REGISTRY" value="Registry"/>
-    <define name="LOG_OUTPUT_RENDERING" value="Rendering"/>
-    <define name="LOG_OUTPUT_ROUTING" value="Routing"/>
-    <define name="LOG_OUTPUT_SERVICES" value="Services"/>
-    <define name="LOG_OUTPUT_PLUGINS" value="Plugins"/>
+    <define name="PROFILER_ACTIONS" value="Actions"/>
+    <define name="PROFILER_APPLICATION" value="Application"/>
+    <define name="PROFILER_AUTHORISATION" value="Permissions"/>
+    <define name="PROFILER_INCLUDES" value="Includes"/>
+    <define name="PROFILER_QUERIES" value="Queries"/>
+    <define name="PROFILER_REGISTRY" value="Registry"/>
+    <define name="PROFILER_RENDERING" value="Rendering"/>
+    <define name="PROFILER_ROUTING" value="Routing"/>
+    <define name="PROFILER_SERVICES" value="Services"/>
+    <define name="PROFILER_PLUGINS" value="Plugins"/>
 
     <define name="VERBOSE" value="1"/>
 
@@ -109,11 +110,11 @@
     <define name="LOG_EMAIL_LOGGER" value="email"/>
     <define name="LOG_CONSOLE_LOGGER" value="console"/>
 
-    <define name="START_INITIALISE" value="Initialise"/>
-    <define name="START_ROUTING" value="Routing"/>
-    <define name="START_AUTHORISATION" value="Authorisation"/>
-    <define name="START_EXECUTE" value="Execute"/>
-    <define name="START_RESPONSE" value="Response"/>
+    <define name="INITIALISE" value="Initialise"/>
+    <define name="ROUTING" value="Routing"/>
+    <define name="AUTHORISATION" value="Permissions"/>
+    <define name="EXECUTE" value="Execute"/>
+    <define name="RESPONSE" value="Response"/>
 
     <define name="AUTHENTICATE_STATUS_SUCCESS" value="1"/>
     <define name="AUTHENTICATE_STATUS_CANCEL" value="2"/>
@@ -127,19 +128,38 @@
     <define name="QUERY_OBJECT_LIST" value="list"/>
     <define name="QUERY_OBJECT_DISTINCT" value="distinct"/>
 
-    <define name="DATABASE_MODEL_TYPE" value="Database"/>
-    <define name="DATAOBJECT_MODEL_TYPE" value="Dataobject"/>
-    <define name="DATALIST_MODEL_NAME" value="Datalist"/>
+    <define name="DATA_OBJECT_LITERAL" value="Dataobject"/>
+    <define name="DATA_SOURCE_LITERAL" value="Datasource"/>
 
-    <define name="PRIMARY_MODEL_NAME" value="Primary"/>
-    <define name="PRIMARY_MODEL_NAME_RESULTS" value="PrimaryResults"/>
-    <define name="TEMPLATE_MODEL_NAME" value="Template"/>
-    <define name="MESSAGES_MODEL_NAME" value="Messages"/>
+    <define name="CONFIGURATION_LITERAL" value="Configuration"/>
+    <define name="MODEL_LITERAL" value="Model"/>
+    <define name="DATABASE_LITERAL" value="Database"/>
+    <define name="MENUITEMS_LITERAL" value="Menuitems"/>
+    <define name="DATA_OBJECT_DATALIST" value="Datalist"/>
+    <define name="DATA_OBJECT_DOCUMENT" value="Document"/>
+    <define name="DATA_OBJECT_DUMMY" value="Dummy"/>
+    <define name="DATA_OBJECT_MESSAGES" value="Messages"/>
+    <define name="DATA_OBJECT_PARAMETERS" value="Parameters"/>
+    <define name="DATA_OBJECT_PERMISSIONS" value="Permissions"/>
+    <define name="DATA_OBJECT_PRIMARY" value="Primary"/>
+    <define name="DATA_OBJECT_PRIMARY_DATA" value="PrimaryData"/>
+    <define name="DATA_OBJECT_TEMPLATE" value="Template"/>
+
+    <define name="SYSTEM_LITERAL" value="System"/>
+    <define name="MODEL_NAME_DATASOURCE" value="Modelname"/>
+
+    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
+    <define name="JS_DEFER_LITERAL" value="Jsdefer"/>
+    <define name="JS_DECLARATIONS_DEFER" value="JsDeclarationsDefer"/>
+    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
+    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
+    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
+    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
+
 
     <define name="FIELDS_MODEL_TYPE" value="Fields"/>
     <define name="FIELDS_STANDARD_MODEL_TYPE" value="Fieldsstandard"/>
     <define name="FIELDS_METADATA_MODEL_TYPE" value="Fieldsmetadata"/>
     <define name="FIELDS_PARAMETERS_MODEL_TYPE" value="Fieldsparameters"/>
     <define name="FIELDS_CUSTOM_MODEL_TYPE" value="Fieldscustom"/>
-
 </defines>

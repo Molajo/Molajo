@@ -32,7 +32,7 @@ class CreateController extends Controller
 
         if (isset($this->data->model_type)) {
         } else {
-            $this->data->model_type = 'Datasource';
+            $this->data->model_type = DATASOURCE_LITERAL;
         }
         if (isset($this->data->model_name)) {
         } else {
@@ -69,7 +69,7 @@ class CreateController extends Controller
 
         if ($valid === true) {
 
-            $fields = Services::Registry()->get($this->model_registry, 'fields');
+            $fields = Services::Registry()->get($this->model_registry, FIELDS_MODEL_TYPE);
 
             if (count($fields) == 0 || $fields === null) {
                 return false;
@@ -135,13 +135,13 @@ class CreateController extends Controller
     {
 
         if (isset($this->data->primary_category_id)) {
-            $results = Services::Authorisation()->verifyTask('Create', $this->data->primary_category_id);
+            $results = Services::Permissions()->verifyTask('Create', $this->data->primary_category_id);
             if ($results === true) {
                 return true;
             }
         }
 
-        $results = Services::Authorisation()->verifyTask('Create', $this->data->catalog_type_id);
+        $results = Services::Permissions()->verifyTask('Create', $this->data->catalog_type_id);
         if ($results === false) {
             //error
             //return false (not yet)
@@ -161,7 +161,7 @@ class CreateController extends Controller
     protected function checkFields()
     {
 
-        $userHTMLFilter = Services::Authorisation()->setHTMLFilter();
+        $userHTMLFilter = Services::Permissions()->setHTMLFilter();
 
         /** Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
@@ -192,7 +192,7 @@ class CreateController extends Controller
         }
 
         /** Standard Field Group */
-        $fields = Services::Registry()->get($this->model_registry, 'fields');
+        $fields = Services::Registry()->get($this->model_registry, FIELDS_MODEL_TYPE);
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -380,7 +380,7 @@ class CreateController extends Controller
 
                 $controllerClass = CONTROLLER_CLASS;
                 $controller = new $controllerClass();
-                $results = $controller->getModelRegistry('Datasource', $source_model);
+                $results = $controller->getModelRegistry(DATASOURCE_LITERAL, $source_model);
                 if ($results === false) {
                     return false;
                 }
@@ -432,7 +432,7 @@ class CreateController extends Controller
             'data' => $this->data,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            'parameters' => $this->parameters,
+            DATA_OBJECT_PARAMETERS => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
@@ -449,7 +449,7 @@ class CreateController extends Controller
 
         Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $this->parameters = $arguments['parameters'];
+        $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
         $this->data = $arguments['data'];
 
         return true;
@@ -474,7 +474,7 @@ class CreateController extends Controller
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $data,
-            'parameters' => $this->parameters,
+            DATA_OBJECT_PARAMETERS => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
@@ -491,7 +491,7 @@ class CreateController extends Controller
 
         Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $this->parameters = $arguments['parameters'];
+        $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
         $data = $arguments['data'];
 
         return $data;

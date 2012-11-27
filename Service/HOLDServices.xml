@@ -25,7 +25,7 @@
     <service name="Language" static="0" startup="load"/>
     <service name="Date" static="1" startup="getInstance"/>
     <service name="Asset" static="0" startup="initialise"/>
-    <service name="Authorisation" static="0" startup="initialise"/>
+    <service name="Permissions" static="0" startup="initialise"/>
     <service name="Metadata" static="0" startup=""/>
     <service name="Image" static="0" startup=""/>
     <service name="Filter" static="0" startup=""/>

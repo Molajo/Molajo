@@ -33,7 +33,7 @@ Class TextService
     public function extension($model_name, $source_path = null, $destination_path = null)
     {
         $controller = new CreateController();
-        $model_registry = ucfirst(strtolower($model_name)) . 'Datasource';
+        $model_registry = ucfirst(strtolower($model_name)) . DATASOURCE_LITERAL;
 
         $data = new \stdClass();
 
@@ -163,7 +163,7 @@ Class TextService
         if ($registry_entry == '') {
             $results = array();
         } else {
-            $results = Services::Registry()->get(DATALIST_MODEL_NAME, $registry_entry, array());
+            $results = Services::Registry()->get(DATA_OBJECT_DATALIST, $registry_entry, array());
             if (count($results) > 0) {
                 return $results;
             }
@@ -178,7 +178,7 @@ Class TextService
         $controller->model->set('model_offset', 0);
         $controller->model->set('model_count', 999999);
 
-        $fields = Services::Registry()->get($model_registry, 'Fields');
+        $fields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
 
         $first = true;
         if (count($fields) < 2) {

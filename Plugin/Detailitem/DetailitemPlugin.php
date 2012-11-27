@@ -30,15 +30,15 @@ class DetailitemPlugin extends Plugin
     public function onBeforeParse()
     {
         return true;
-        if (Services::Registry()->exists('Parameters', 'menuitem_id')) {
-            if ((int) Services::Registry()->get('Parameters', 'menuitem_id') == 0) {
+        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'menuitem_id')) {
+            if ((int) Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'menuitem_id') == 0) {
             } else {
                 return true;
             }
         }
 
-        if (Services::Registry()->exists('Parameters', 'criteria_source_id')) {
-            if ((int) Services::Registry()->get('Parameters', 'criteria_source_id') == 0) {
+        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'criteria_source_id')) {
+            if ((int) Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'criteria_source_id') == 0) {
                 return true; // request for list;
             } else {
                 // request for item is handled by this method
@@ -48,12 +48,12 @@ class DetailitemPlugin extends Plugin
         $this->set('request_model_type', $this->get('model_type'));
         $this->set('request_model_name', $this->get('model_name'));
 
-        $this->set('model_type', DATAOBJECT_MODEL_TYPE);
-        $this->set('model_name', PRIMARY_MODEL_NAME);
+        $this->set('model_type', DATA_OBJECT_LITERAL);
+        $this->set('model_name', DATA_OBJECT_PRIMARY);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
-        $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
-        $this->parameters['model_name'] = PRIMARY_MODEL_NAME;
+        $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
+        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
 
         //$this->getComments();
         return true;
@@ -69,7 +69,7 @@ class DetailitemPlugin extends Plugin
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('Datasource', 'Comments');
+        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'Comments');
         if ($results === false) {
             return false;
         }
@@ -95,7 +95,7 @@ class DetailitemPlugin extends Plugin
 
         die;
 
-        Services::Registry()->set(DATAOBJECT_MODEL_TYPE, DATALIST_MODEL_NAME, $query_results);
+        Services::Registry()->set(DATA_OBJECT_LITERAL, DATA_OBJECT_DATALIST, $query_results);
 
         return true;
     }

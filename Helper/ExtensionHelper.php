@@ -33,43 +33,43 @@ Class ExtensionHelper
      */
     public function getExtension(
         $extension_id,
-        $model_type = 'Datasource',
+        $model_type = DATASOURCE_LITERAL,
         $model_name = 'ExtensionInstances',
         $check_permissions = 0
     ) {
         $item = Helpers::Extension()->get($extension_id, $model_type, $model_name, $check_permissions);
 
         if (count($item) == 0) {
-            Services::Registry()->set('Parameters', 'status_found', false);
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_found', false);
             return false;
         }
 
-        Services::Registry()->set('Parameters', 'extension_id', $item->extensions_id);
-        Services::Registry()->set('Parameters', 'extension_name', $item->extensions_name);
-        Services::Registry()->set('Parameters', 'extension_name_path_node', $item->extensions_name);
-        Services::Registry()->set('Parameters', 'extension_title', $item->title);
-        Services::Registry()->set('Parameters', 'extension_translation_of_id', (int)$item->translation_of_id);
-        Services::Registry()->set('Parameters', 'extension_language', $item->language);
-        Services::Registry()->set('Parameters', 'extension_view_group_id', $item->view_group_id);
-        Services::Registry()->set('Parameters', 'extension_catalog_id', $item->catalog_id);
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->catalog_types_title);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_id', $item->extensions_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_name', $item->extensions_name);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_name_path_node', $item->extensions_name);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_title', $item->title);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_translation_of_id', (int)$item->translation_of_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_language', $item->language);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_view_group_id', $item->view_group_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_id', $item->catalog_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_id', (int)$item->catalog_type_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_title', $item->catalog_types_title);
 
         Services::Registry()->set(
-            'Parameters',
+            DATA_OBJECT_PARAMETERS,
             'extension_path',
             $this->getPath(
                 (int)$item->catalog_type_id,
-                Services::Registry()->get('Parameters', 'extension_name_path_node')
+                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_name_path_node')
             )
         );
 
         Services::Registry()->set(
-            'Parameters',
+            DATA_OBJECT_PARAMETERS,
             'extension_path_url',
             $this->getPathURL(
                 (int)$item->catalog_type_id,
-                Services::Registry()->get('Parameters', 'extension_name_path_node')
+                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_name_path_node')
             )
         );
 
@@ -102,12 +102,12 @@ Class ExtensionHelper
      */
     public function setAuthorisedExtensions(
         $extension_id = 0,
-        $model_type = 'Datasource',
+        $model_type = DATASOURCE_LITERAL,
         $model_name = 'ExtensionInstances',
         $query_object = QUERY_OBJECT_ITEM,
         $catalog_type_id = null
     ) {
-        $results = Helpers::Extension()->get(0, 'Datasource', 'ExtensionInstances', QUERY_OBJECT_LIST, null, 1);
+        $results = Helpers::Extension()->get(0, DATASOURCE_LITERAL, 'ExtensionInstances', QUERY_OBJECT_LIST, null, 1);
 
         if ($results === false || count($results) == 0) {
             echo 'No authorised extensions for user.';
@@ -149,7 +149,7 @@ Class ExtensionHelper
      */
     public function get(
         $extension_id = 0,
-        $model_type = 'Datasource',
+        $model_type = DATASOURCE_LITERAL,
         $model_name = 'ExtensionInstances',
         $query_object = QUERY_OBJECT_ITEM,
         $catalog_type_id = null,
@@ -215,7 +215,7 @@ Class ExtensionHelper
 
         $controller->set('check_view_level_access', $check_permissions);
 
-        if ($model_type == 'Datasource') {
+        if ($model_type == DATASOURCE_LITERAL) {
         } else {
             $controller->model->query->where(
                 $controller->model->db->qn('catalog')
@@ -291,7 +291,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'ExtensionInstances');
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
 
         $controller->set('process_plugins', 0);
@@ -348,7 +348,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'ExtensionInstances');
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
 
         $controller->set('process_plugins', 0);
@@ -397,7 +397,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Extensions');
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Extensions');
         $controller->setDataobject();
 
         $controller->set('process_plugins', 0);
@@ -470,10 +470,10 @@ Class ExtensionHelper
             }
 
             if (file_exists(
-                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+                PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
-                return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
+                return PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node));
             }
 
             return false;
@@ -493,8 +493,8 @@ Class ExtensionHelper
             return false;
 
         }
-        if (file_exists(PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
-            return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
+        if (file_exists(PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+            return PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node));
         }
 
         return false;
@@ -529,7 +529,7 @@ Class ExtensionHelper
             }
 
             if (file_exists(
-                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+                PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
                 return CORE_SYSTEM_URL . '/' . ucfirst(strtolower($node));
@@ -581,7 +581,7 @@ Class ExtensionHelper
             }
 
             if (file_exists(
-                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+                PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
                 return 'Vendor\\Molajo\\System\\' . ucfirst(strtolower($node));
@@ -609,8 +609,8 @@ Class ExtensionHelper
      */
     public function setThemePageView()
     {
-        $theme_id = (int)Services::Registry()->get('Parameters', 'theme_id');
-        $page_view_id = (int)Services::Registry()->get('Parameters', 'page_view_id');
+        $theme_id = (int)Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_id');
+        $page_view_id = (int)Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_id');
 
         Helpers::Theme()->get($theme_id);
 
@@ -627,8 +627,8 @@ Class ExtensionHelper
      */
     public function setTemplateWrapModel()
     {
-        $template_view_id = Services::Registry()->get('Parameters', 'template_view_id');
-        $wrap_view_id = Services::Registry()->get('Parameters', 'wrap_view_id');
+        $template_view_id = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'template_view_id');
+        $wrap_view_id = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'wrap_view_id');
 
         Helpers::View()->get($template_view_id, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 

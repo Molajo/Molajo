@@ -39,11 +39,11 @@ class AjaxPlugin extends Plugin
         }
 
         /** Template  */
-        Services::Registry()->set('Parameters', 'template_view_id', 1342);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'template_view_id', 1342);
         Helpers::View()->get(1342, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         /** Wrap  */
-        Services::Registry()->set('Parameters', 'wrap_view_id', 2090);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'wrap_view_id', 2090);
         Helpers::View()->get(2090, CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         /** Ajax Parser */

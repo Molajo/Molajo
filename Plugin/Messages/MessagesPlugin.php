@@ -29,12 +29,12 @@ class MessagesPlugin extends Plugin
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATAOBJECT_MODEL_TYPE, 'Messages');
+        $controller->getModelRegistry(DATA_OBJECT_LITERAL, 'Messages');
         $controller->setDataobject();
         $messages = $controller->getData(QUERY_OBJECT_LIST);
 
         if (count($messages) == 0 || $messages === false) {
-            Services::Registry()->set(MESSAGES_MODEL_NAME, $this->get('template_view_path_node'), array());
+            Services::Registry()->set(DATA_OBJECT_MESSAGES, $this->get('template_view_path_node'), array());
             return true;
         }
 
@@ -46,8 +46,8 @@ class MessagesPlugin extends Plugin
             $row->message = $message->message;
             $row->type = $message->type;
             $row->code = $message->code;
-            $row->action = Services::Registry()->get('Parameters', 'request_base_url_path') .
-                Services::Registry()->get('Parameters', 'request_url');
+            $row->action = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_base_url_path') .
+                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url');
 
             $row->class = 'alert-box';
             if ($message->type == MESSAGE_TYPE_SUCCESS) {
@@ -69,7 +69,7 @@ class MessagesPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, $this->get('template_view_path_node'), $query_results);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $this->get('template_view_path_node'), $query_results);
 
         return true;
     }

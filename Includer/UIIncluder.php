@@ -44,10 +44,10 @@ class UiIncluder extends Includer
 
                 $find = 'ui' . trim($value);
 
-                $useValue = Services::Registry()->get('Configuration', $find);
+                $useValue = Services::Registry()->get(CONFIGURATION_LITERAL, $find);
 
                 if ((int) $useValue == 0) {
-                    $useValue = Services::Registry()->get('Configuration', $find);
+                    $useValue = Services::Registry()->get(CONFIGURATION_LITERAL, $find);
                 }
             }
             $includer .= ' ' . trim($key) . '=' . trim($useValue);

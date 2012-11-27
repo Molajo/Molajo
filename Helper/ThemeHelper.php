@@ -31,42 +31,42 @@ Class ThemeHelper
     public function get($theme_id = 0)
     {
         if ((int)$theme_id == 0) {
-            $theme_id = Services::Registry()->get('Configuration', 'application_default_theme_id');
+            $theme_id = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_default_theme_id');
         }
 
-        Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_id', (int)$theme_id);
 
         $node = Helpers::Extension()->getExtensionNode((int)$theme_id);
 
-        Services::Registry()->set('Parameters', 'theme_path_node', $node);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_path_node', $node);
 
-        Services::Registry()->set('Parameters', 'theme_path', $this->getPath($node));
-        Services::Registry()->set('Parameters', 'theme_namespace', $this->getNamespace($node));
-        Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($node) . '/index.php');
-        Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
-        Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_path', $this->getPath($node));
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_namespace', $this->getNamespace($node));
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_path_include', $this->getPath($node) . '/index.php');
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_path_url', $this->getPathURL($node));
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_favicon', $this->getFavicon($node));
 
         $item = Helpers::Extension()->get($theme_id, CATALOG_TYPE_THEME_LITERAL, $node, 1);
 
         if (count($item) == 0) {
 
-            if ($theme_id == Helpers::Extension()->getInstanceID(CATALOG_TYPE_THEME, 'System')) {
+            if ($theme_id == Helpers::Extension()->getInstanceID(CATALOG_TYPE_THEME, SYSTEM_LITERAL)) {
                 Services::Error()->set(500, 'System Theme not found');
                 //throw error
                 die();
             }
 
-            $theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_THEME, 'System');
-            Services::Registry()->set('Parameters', 'theme_id', (int)$theme_id);
+            $theme_id = Helpers::Extension()->getInstanceID(CATALOG_TYPE_THEME, SYSTEM_LITERAL);
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_id', (int)$theme_id);
 
             $node = Helpers::Extension()->getExtensionNode((int)$theme_id);
-            Services::Registry()->set('Parameters', 'theme_path_node', $node);
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_path_node', $node);
 
-            Services::Registry()->set('Parameters', 'theme_path', $this->getPath($node));
-            Services::Registry()->set('Parameters', 'theme_namespace', $this->getNamespace($node));
-            Services::Registry()->set('Parameters', 'theme_path_include', $this->getPath($node) . '/index.php');
-            Services::Registry()->set('Parameters', 'theme_path_url', $this->getPathURL($node));
-            Services::Registry()->set('Parameters', 'theme_favicon', $this->getFavicon($node));
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_path', $this->getPath($node));
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_namespace', $this->getNamespace($node));
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_path_include', $this->getPath($node) . '/index.php');
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_path_url', $this->getPathURL($node));
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_favicon', $this->getFavicon($node));
 
             $item = Helpers::Extension()->get($theme_id, CATALOG_TYPE_THEME_LITERAL, $node, 1);
             if (count($item) == 0) {
@@ -76,14 +76,14 @@ Class ThemeHelper
             }
         }
 
-        Services::Registry()->set('Parameters', 'theme_title', $item->title);
-        Services::Registry()->set('Parameters', 'theme_translation_of_id', (int)$item->translation_of_id);
-        Services::Registry()->set('Parameters', 'theme_language', $item->language);
-        Services::Registry()->set('Parameters', 'theme_view_group_id', $item->catalog_view_group_id);
-        Services::Registry()->set('Parameters', 'theme_catalog_id', $item->catalog_id);
-        Services::Registry()->set('Parameters', 'theme_catalog_type_id', (int)$item->catalog_view_group_id);
-        Services::Registry()->set('Parameters', 'theme_catalog_type_title', $item->catalog_types_title);
-        Services::Registry()->set('Parameters', 'theme_model_registry', $item->model_registry);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_title', $item->title);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_translation_of_id', (int)$item->translation_of_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_language', $item->language);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_view_group_id', $item->catalog_view_group_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_catalog_id', $item->catalog_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_catalog_type_id', (int)$item->catalog_view_group_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_catalog_type_title', $item->catalog_types_title);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_model_registry', $item->model_registry);
 
         $customFieldTypes = Services::Registry()->get($item->model_registry, 'CustomFieldGroups');
 

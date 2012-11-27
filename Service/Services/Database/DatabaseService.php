@@ -77,30 +77,37 @@ Class DatabaseService
     /**
      * Connect
      *
-     * @return  Dataobject
+     * @return  object  DatabaseService
      * @since   1.0
      */
     public function connect()
     {
-        if (Services::Registry()->exists('DatabaseDataobject')) {
+        if (defined('DATABASE_SERVICE')) {
         } else {
-            ConfigurationService::getDataobject('Dataobject', 'Database');
+            define('DATABASE_SERVICE', true);
+            ConfigurationService::getDataobject(DATA_OBJECT_LITERAL, DATABASE_LITERAL);
         }
 
         $this->options = array(
-            'driver' => preg_replace('/[^A-Z0-9_\.-]/i', '',
-                Services::Registry()->get('DatabaseDataObject', 'db_type')),
-            'host' => Services::Registry()->get('DatabaseDataObject', 'db_host'),
-            'user' => Services::Registry()->get('DatabaseDataObject', 'db_user'),
-            'password' => Services::Registry()->get('DatabaseDataObject', 'db_password'),
-            'database' => Services::Registry()->get('DatabaseDataObject', 'db'),
-            'prefix' => Services::Registry()->get('DatabaseDataObject', 'db_prefix'),
+            'driver' => preg_replace(
+                '/[^A-Z0-9_\.-]/i',
+                '',
+                Services::Registry()->get(DATABASE_LITERAL, 'db_type')
+            ),
+            'host' => Services::Registry()->get(DATABASE_LITERAL, 'db_host'),
+            'user' => Services::Registry()->get(DATABASE_LITERAL, 'db_user'),
+            'password' => Services::Registry()->get(DATABASE_LITERAL, 'db_password'),
+            'database' => Services::Registry()->get(DATABASE_LITERAL, 'db'),
+            'prefix' => Services::Registry()->get(DATABASE_LITERAL, 'db_prefix'),
             'select' => true
         );
 
-        $this->name = Services::Registry()->get('DatabaseDataObject', 'db_type');
+        $this->name = Services::Registry()->get(DATABASE_LITERAL, 'db_type');
 
-        $data_object_connection_namespace = Services::Registry()->get('DatabaseDataObject', 'data_object_connection_namespace');
+        $data_object_connection_namespace = Services::Registry()->get(
+            DATABASE_LITERAL,
+            'data_object_connection_namespace'
+        );
         if (class_exists($data_object_connection_namespace)) {
         } else {
             throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $this->options['driver']));
@@ -110,7 +117,6 @@ Class DatabaseService
             $this->db = new $data_object_connection_namespace($this->options);
 
         } catch (\Exception $e) {
-
             throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
         }
 
@@ -126,7 +132,7 @@ Class DatabaseService
      */
     public function getQuery()
     {
-        $data_object_query_namespace = Services::Registry()->get('DatabaseDataObject', 'data_object_query_namespace');
+        $data_object_query_namespace = Services::Registry()->get(DATABASE_LITERAL, 'data_object_query_namespace');
         if (class_exists($data_object_query_namespace)) {
         } else {
             throw new \RuntimeException('Database Query class not found');

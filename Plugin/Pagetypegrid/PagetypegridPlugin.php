@@ -69,7 +69,7 @@ class PagetypegridPlugin extends Plugin
 
         $grid_toolbar_buttons = explode(',', $button);
 
-        $permissions = Services::Authorisation()
+        $permissions = Services::Permissions()
             ->verifyTaskList($grid_toolbar_buttons, $this->get('catalog_id')
         );
 
@@ -80,7 +80,7 @@ class PagetypegridPlugin extends Plugin
                 $row = new \stdClass();
                 $row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($buttonname) . '_BUTTON'));
                 $row->action = $buttonname;
-                if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+                if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
                     $row->link = $url . '/' . $row->action;
                 } else {
                     $row->link = $url . '&action=' . $row->action;
@@ -94,7 +94,7 @@ class PagetypegridPlugin extends Plugin
             $row = new \stdClass();
             $row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
             $row->action = 'search';
-            if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+            if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
                 $row->link = $url . '/' . $row->action;
             } else {
                 $row->link = $url . '&action=' . $row->action;
@@ -102,7 +102,7 @@ class PagetypegridPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Toolbar', $query_results);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Toolbar', $query_results);
 
         return true;
     }
@@ -132,7 +132,7 @@ class PagetypegridPlugin extends Plugin
                 //todo: figure out selected value
                 $selected = '';
 
-                $results = Services::Text()->getDatalist($listname, DATALIST_MODEL_NAME, $this->parameters);
+                $results = Services::Text()->getDatalist($listname, DATA_OBJECT_DATALIST, $this->parameters);
 
                 if ($results === false) {
                 } else {
@@ -145,7 +145,7 @@ class PagetypegridPlugin extends Plugin
                         $selected
                     );
 
-                    Services::Registry()->set(DATALIST_MODEL_NAME, $listname, $query_results);
+                    Services::Registry()->set(DATA_OBJECT_DATALIST, $listname, $query_results);
 
                     $row = new \stdClass();
                     $row->listname = $listname;
@@ -154,7 +154,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Gridfilters', $lists);
+        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Gridfilters', $lists);
 
         return true;
     }
@@ -259,16 +259,16 @@ class PagetypegridPlugin extends Plugin
         $this->set('request_model_type', $this->get('model_type'));
         $this->set('request_model_name', $this->get('model_name'));
 
-        $this->set('model_type', DATAOBJECT_MODEL_TYPE);
-        $this->set('model_name', PRIMARY_MODEL_NAME);
+        $this->set('model_type', DATA_OBJECT_LITERAL);
+        $this->set('model_name', DATA_OBJECT_PRIMARY);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
-        $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
-        $this->parameters['model_name'] = PRIMARY_MODEL_NAME;
+        $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
+        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
 
         Services::Registry()->set(
-            PRIMARY_MODEL_NAME,
-            PRIMARY_MODEL_NAME_RESULTS,
+            DATA_OBJECT_PRIMARY,
+            DATA_OBJECT_PRIMARY_DATA,
             $query_results
         );
 
@@ -314,7 +314,7 @@ class PagetypegridPlugin extends Plugin
                 $row->enable = 1;
 
                 Services::Registry()->set(
-                    TEMPLATE_MODEL_NAME,
+                    DATA_OBJECT_TEMPLATE,
                     'Grid' . strtolower($grid_batch_array[$i]),
                     array($row)
                 );

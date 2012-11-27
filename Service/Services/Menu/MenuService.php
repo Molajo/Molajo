@@ -60,7 +60,7 @@ Class MenuService
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $results = $controller->getModelRegistry('Datasource', 'MenuitemsNested');
+        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'MenuitemsNested');
         if ($results === false) {
             return false;
         }
@@ -124,7 +124,7 @@ Class MenuService
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $results = $controller->getModelRegistry('System', 'Menuitems');
+        $results = $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
         if ($results === false) {
             return false;
         }
@@ -190,7 +190,7 @@ Class MenuService
 
             $item->css_class = trim($item->css_class);
 
-            if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+            if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
 				//getApplicationURL($path = '')
                 $item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
             } else {

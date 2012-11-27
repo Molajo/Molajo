@@ -83,10 +83,10 @@ Class UrlService
 	{
 
 		if ((int) $size == 0) {
-			$size = Services::Registry()->get('Configuration', 'gravatar_size', 80);
-			$type = Services::Registry()->get('Configuration', 'gravatar_type', 'mm');
-			$rating = Services::Registry()->get('Configuration', 'gravatar_rating', 'pg');
-			$image = Services::Registry()->get('Configuration', 'gravatar_image', 0);
+			$size = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_size', 80);
+			$type = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_type', 'mm');
+			$rating = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_rating', 'pg');
+			$image = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_image', 0);
 		}
 
 		/**

@@ -36,24 +36,24 @@ Class ContentHelper
     {
         $item = $this->get($id, $model_type, $model_name, QUERY_OBJECT_ITEM);
         if (count($item) == 0) {
-            return Services::Registry()->set('Parameters', 'status_found', false);
+            return Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_found', false);
         }
 
-        Services::Registry()->set('Parameters', 'extension_instance_id', (int)$item->id);
-        Services::Registry()->set('Parameters', 'extension_title', $item->title);
-        Services::Registry()->set('Parameters', 'extension_translation_of_id', (int)$item->translation_of_id);
-        Services::Registry()->set('Parameters', 'extension_language', $item->language);
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id', (int)$item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'extension_modified_datetime', $item->modified_datetime);
-        Services::Registry()->set('Parameters', 'extension_catalog_type_title', $item->catalog_types_title);
-        Services::Registry()->set('Parameters', 'catalog_type_id', $item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'content_type', (int)$item->page_type);
-        Services::Registry()->set('Parameters', 'primary_category_id', $item->catalog_primary_category_id);
-        Services::Registry()->set('Parameters', 'source_id', (int)$item->id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_instance_id', (int)$item->id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_title', $item->title);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_translation_of_id', (int)$item->translation_of_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_language', $item->language);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_id', (int)$item->catalog_type_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_modified_datetime', $item->modified_datetime);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_title', $item->catalog_types_title);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_type_id', $item->catalog_type_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'content_type', (int)$item->page_type);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'primary_category_id', $item->catalog_primary_category_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'source_id', (int)$item->id);
 
         $this->setParameters(
             QUERY_OBJECT_LIST,
-            $item->model_registry . 'Parameters',
+            $item->model_registry . DATA_OBJECT_PARAMETERS,
             $item->model_registry . 'Metadata'
         );
 
@@ -70,7 +70,7 @@ Class ContentHelper
      */
     public function getRouteItem($id, $model_type, $model_name)
     {
-        if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == ACTION_VIEW) {
+        if (strtolower(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action')) == ACTION_VIEW) {
             $page_type_namespace = 'item';
         } else {
             $page_type_namespace = 'form';
@@ -78,12 +78,12 @@ Class ContentHelper
 
         $item = $this->get($id, $model_type, $model_name, $page_type_namespace);
         if (count($item) == 0) {
-            return Services::Registry()->set('Parameters', 'status_found', false);
+            return Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_found', false);
         }
 
         Services::Registry()->set(
-            PRIMARY_MODEL_NAME,
-            PRIMARY_MODEL_NAME_RESULTS,
+            DATA_OBJECT_PRIMARY,
+            DATA_OBJECT_PRIMARY_DATA,
             array($item)
         );
 
@@ -95,17 +95,17 @@ Class ContentHelper
             $extension_instance_catalog_type_id = (int)$item->catalog_catalog_type_id;
         }
 
-        Services::Registry()->set('Parameters', 'extension_instance_id', $extension_instance_id);
-        Services::Registry()->set('Parameters', 'extension_catalog_type_id', $extension_instance_catalog_type_id);
-        Services::Registry()->set('Parameters', 'criteria_extension_instance_id', (int)$extension_instance_id);
-        Services::Registry()->set('Parameters', 'criteria_source_id', (int)$item->id);
-        Services::Registry()->set('Parameters', 'criteria_catalog_type_id', (int)$item->catalog_type_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_instance_id', $extension_instance_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_id', $extension_instance_catalog_type_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'criteria_extension_instance_id', (int)$extension_instance_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'criteria_source_id', (int)$item->id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'criteria_catalog_type_id', (int)$item->catalog_type_id);
 
         $this->getResourceExtensionParameters((int)$extension_instance_id);
 
         $this->setParameters(
             $page_type_namespace,
-            $item->model_registry . 'Parameters',
+            $item->model_registry . DATA_OBJECT_PARAMETERS,
             $item->model_registry . 'Metadata',
             'ResourcesSystem'
         );
@@ -115,12 +115,12 @@ Class ContentHelper
             $page_type_namespace . '_parent_menu_id'
         );
 
-        Services::Registry()->set('Parameters', 'parent_menu_id', $parent_menu_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'parent_menu_id', $parent_menu_id);
 
         $this->setExtensionPaths();
 
         if ($page_type_namespace == 'form') {
-            Services::Registry()->set('Parameters', 'page_type', PAGE_TYPE_EDIT);
+            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'page_type', PAGE_TYPE_EDIT);
         }
 
         return true;
@@ -135,55 +135,55 @@ Class ContentHelper
     public function getRouteMenuitem()
     {
         $item = $this->get(
-            Services::Registry()->get('Parameters', 'catalog_source_id'),
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_source_id'),
             CATALOG_TYPE_MENUITEM_LITERAL,
-            Services::Registry()->get('Parameters', 'catalog_page_type'),
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_page_type'),
             CATALOG_TYPE_MENUITEM_LITERAL
         );
 
         if (count($item) == 0) {
-            return Services::Registry()->set('Parameters', 'status_found', false);
+            return Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_found', false);
         }
 
-        Services::Registry()->set('Parameters', 'menuitem_lvl', (int)$item->lvl);
-        Services::Registry()->set('Parameters', 'menuitem_title', $item->title);
-        Services::Registry()->set('Parameters', 'menuitem_parent_id', $item->parent_id);
-        Services::Registry()->set('Parameters', 'menuitem_translation_of_id', (int)$item->translation_of_id);
-        Services::Registry()->set('Parameters', 'menuitem_language', $item->language);
-        Services::Registry()->set('Parameters', 'menuitem_catalog_type_id', (int)$item->catalog_type_id);
-        Services::Registry()->set('Parameters', 'menuitem_catalog_type_title', $item->catalog_types_title);
-        Services::Registry()->set('Parameters', 'menuitem_modified_datetime', $item->modified_datetime);
-        Services::Registry()->set('Parameters', 'menu_id', (int)$item->extension_id);
-        Services::Registry()->set('Parameters', 'menu_title', $item->extensions_name);
-        Services::Registry()->set('Parameters', 'menu_extension_id', (int)$item->extensions_id);
-        Services::Registry()->set('Parameters', 'menu_path_node', $item->extensions_name);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_lvl', (int)$item->lvl);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_title', $item->title);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_parent_id', $item->parent_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_translation_of_id', (int)$item->translation_of_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_language', $item->language);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_catalog_type_id', (int)$item->catalog_type_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_catalog_type_title', $item->catalog_types_title);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_modified_datetime', $item->modified_datetime);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menu_id', (int)$item->extension_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menu_title', $item->extensions_name);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menu_extension_id', (int)$item->extensions_id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menu_path_node', $item->extensions_name);
 
-        $registry = Services::Registry()->get('Parameters', 'catalog_page_type')
+        $registry = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_page_type')
             . CATALOG_TYPE_MENUITEM_LITERAL;
 
-        Services::Registry()->set('Parameters', 'criteria_source_id',
-            (int)Services::Registry()->get($registry . 'Parameters', 'criteria_source_id')
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'criteria_source_id',
+            (int)Services::Registry()->get($registry . DATA_OBJECT_PARAMETERS, 'criteria_source_id')
         );
-        Services::Registry()->set('Parameters', 'criteria_catalog_type_id',
-            (int)Services::Registry()->get($registry . 'Parameters', 'criteria_catalog_type_id')
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'criteria_catalog_type_id',
+            (int)Services::Registry()->get($registry . DATA_OBJECT_PARAMETERS, 'criteria_catalog_type_id')
         );
-        Services::Registry()->set('Parameters', 'criteria_extension_instance_id',
-            (int)Services::Registry()->get($registry . 'Parameters', 'criteria_extension_instance_id')
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'criteria_extension_instance_id',
+            (int)Services::Registry()->get($registry . DATA_OBJECT_PARAMETERS, 'criteria_extension_instance_id')
         );
 
-        Services::Registry()->copy($registry . 'Parameters', 'Parameters');
+        Services::Registry()->copy($registry . DATA_OBJECT_PARAMETERS, DATA_OBJECT_PARAMETERS);
         Services::Registry()->copy($registry . 'Metadata', 'Metadata');
 
         $this->setParameters(
             strtolower(CATALOG_TYPE_MENUITEM_LITERAL),
-            $registry . 'Parameters',
+            $registry . DATA_OBJECT_PARAMETERS,
             $registry . 'Metadata'
         );
 
         /** Must be after parameter set so as to not strip off menuitem */
-        Services::Registry()->set('Parameters', 'menuitem_id', (int)$item->id);
-        Services::Registry()->set('Parameters', 'page_type',
-            Services::Registry()->get('Parameters', 'catalog_page_type')
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'menuitem_id', (int)$item->id);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'page_type',
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_page_type')
         );
 
         $this->setExtensionPaths();
@@ -202,7 +202,7 @@ Class ContentHelper
      * @return  array  An object containing an array of data
      * @since   1.0
      */
-    public function get($id = 0, $model_type = 'Datasource', $model_name = 'Content', $page_type = '')
+    public function get($id = 0, $model_type = DATASOURCE_LITERAL, $model_name = 'Content', $page_type = '')
     {
         Services::Profiler()->set(
             'ContentHelper->get '
@@ -244,7 +244,7 @@ Class ContentHelper
      *  Extension and Application defaults applied following item values
      *
      * @param   string  $page_type_namespace (ex. item, list, menuitem)
-     * @param   string  $parameter_namespace (ex. $item->model_registry . 'Parameters')
+     * @param   string  $parameter_namespace (ex. $item->model_registry . DATA_OBJECT_PARAMETERS)
      * @param   string  $metadata_namespace (ex. $item->model_registry . 'Metadata')
      * @param   string  $resource_namespace For extension (ex. ResourcesSystem)
      *
@@ -257,10 +257,10 @@ Class ContentHelper
         $metadata_namespace,
         $resource_namespace = ''
     ) {
-        Services::Registry()->set('Parameters', 'page_type', $page_type_namespace);
+        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'page_type', $page_type_namespace);
 
         /** Retrieve array of Extension Instances Authorised for User  */
-        Helpers::Extension()->setAuthorisedExtensions(0, 'Datasource', 'ExtensionInstances', QUERY_OBJECT_LIST);
+        Helpers::Extension()->setAuthorisedExtensions(0, DATASOURCE_LITERAL, 'ExtensionInstances', QUERY_OBJECT_LIST);
 
         /** I. Priority 1 - Item parameter values (be it an item, menu item, list) */
         $newParameters = Services::Registry()->get($parameter_namespace, $page_type_namespace . '*');
@@ -282,30 +282,30 @@ Class ContentHelper
         if ($resource_namespace == '') {
         } else {
 
-            $newParameters = Services::Registry()->get($resource_namespace . 'Parameters', $page_type_namespace . '*');
+            $newParameters = Services::Registry()->get($resource_namespace . DATA_OBJECT_PARAMETERS, $page_type_namespace . '*');
             if (is_array($newParameters) && count($newParameters) > 0) {
                 $this->processParameterSet($newParameters, $page_type_namespace);
             }
 
-            $newParameters = Services::Registry()->get($resource_namespace . 'Parameters', 'criteria*');
+            $newParameters = Services::Registry()->get($resource_namespace . DATA_OBJECT_PARAMETERS, 'criteria*');
             if (is_array($newParameters) && count($newParameters) > 0) {
                 $this->processParameterSet($newParameters, $page_type_namespace);
             }
 
-            $newParameters = Services::Registry()->get($resource_namespace . 'Parameters', 'enable*');
+            $newParameters = Services::Registry()->get($resource_namespace . DATA_OBJECT_PARAMETERS, 'enable*');
             if (is_array($newParameters) && count($newParameters) > 0) {
                 $this->processParameterSet($newParameters, $page_type_namespace);
             }
         }
 
         /** III. Finally, Application level defaults */
-        $applicationDefaults = Services::Registry()->get('Configuration', $page_type_namespace . '*');
+        $applicationDefaults = Services::Registry()->get(CONFIGURATION_LITERAL, $page_type_namespace . '*');
         if (count($applicationDefaults) > 0) {
             $this->processParameterSet($applicationDefaults, $page_type_namespace);
         }
 
         /** Merge in the rest */
-        Services::Registry()->merge($parameter_namespace, 'Parameters', true);
+        Services::Registry()->merge($parameter_namespace, DATA_OBJECT_PARAMETERS, true);
 
         /** Metadata defaulting */
         Services::Registry()->merge($metadata_namespace, 'Metadata');
@@ -315,11 +315,11 @@ Class ContentHelper
             Services::Registry()->merge($resource_namespace . 'Metadata', 'Metadata', true);
         }
 
-        Services::Registry()->merge('Configuration', 'Parameters', true);
+        Services::Registry()->merge(CONFIGURATION_LITERAL, DATA_OBJECT_PARAMETERS, true);
 
         /** Hold parameters while registry is used during Theme and View assignment */
         $savedParameters = array();
-        $temp = Services::Registry()->getArray('Parameters');
+        $temp = Services::Registry()->getArray(DATA_OBJECT_PARAMETERS);
         if (is_array($temp) && count($temp) > 0) {
             foreach ($temp as $key => $value) {
                 if ($value === 0 || trim($value) == '' || $value === null) {
@@ -337,25 +337,25 @@ Class ContentHelper
         /** Merge held parameters back in */
         if (is_array($savedParameters) && count($savedParameters) > 0) {
             foreach ($savedParameters as $key => $value) {
-                Services::Registry()->set('Parameters', $key, $value);
+                Services::Registry()->set(DATA_OBJECT_PARAMETERS, $key, $value);
             }
         }
 
-        Services::Registry()->sort('Parameters');
+        Services::Registry()->sort(DATA_OBJECT_PARAMETERS);
         Services::Registry()->sort('Metadata');
 
         /** Remove standard patterns no longer needed  */
-        Services::Registry()->delete('Parameters', 'list*');
-        Services::Registry()->delete('Parameters', 'item*');
-        Services::Registry()->delete('Parameters', 'form*');
-        Services::Registry()->delete('Parameters', 'menuitem*');
+        Services::Registry()->delete(DATA_OBJECT_PARAMETERS, 'list*');
+        Services::Registry()->delete(DATA_OBJECT_PARAMETERS, 'item*');
+        Services::Registry()->delete(DATA_OBJECT_PARAMETERS, 'form*');
+        Services::Registry()->delete(DATA_OBJECT_PARAMETERS, 'menuitem*');
 
         /** Copy some configuration data */
-        $fields = Services::Registry()->get('Configuration', 'application*');
+        $fields = Services::Registry()->get(CONFIGURATION_LITERAL, 'application*');
         if (count($fields) === 0 || $fields === false) {
         } else {
             foreach ($fields as $key => $value) {
-                Services::Registry()->set('Parameters', $key, $value);
+                Services::Registry()->set(DATA_OBJECT_PARAMETERS, $key, $value);
             }
         }
 
@@ -383,12 +383,12 @@ Class ContentHelper
                 $copy_to = $key;
             }
 
-            $existing = Services::Registry()->get('Parameters', $copy_to);
+            $existing = Services::Registry()->get(DATA_OBJECT_PARAMETERS, $copy_to);
 
             if ($existing === 0 || trim($existing) == '' || $existing === null || $existing === false) {
                 if ($value === 0 || trim($value) == '' || $value === null) {
                 } else {
-                    Services::Registry()->set('Parameters', $copy_to, $value);
+                    Services::Registry()->set(DATA_OBJECT_PARAMETERS, $copy_to, $value);
                 }
             }
         }
@@ -403,45 +403,45 @@ Class ContentHelper
     public function setExtensionPaths()
     {
         Services::Registry()->set(
-            'Parameters',
+            DATA_OBJECT_PARAMETERS,
             'extension_name_path_node',
-            Services::Registry()->get('Parameters', 'model_name')
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'model_name')
         );
 
-        if (Services::Registry()->get('Parameters', 'model_type') == 'Resource') {
+        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'model_type') == 'Resource') {
             $cattype = CATALOG_TYPE_RESOURCE;
         } else {
-            $cattype = Services::Registry()->get('Parameters', 'criteria_catalog_type_id');
+            $cattype = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'criteria_catalog_type_id');
         }
 
         Services::Registry()->set(
-            'Parameters',
+            DATA_OBJECT_PARAMETERS,
             'extension_path',
             Helpers::Extension()->getPath(
                 $cattype,
-                Services::Registry()->get('Parameters', 'extension_name_path_node')
+                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_name_path_node')
             )
         );
 
         Services::Registry()->set(
-            'Parameters',
+            DATA_OBJECT_PARAMETERS,
             'extension_path_url',
             Helpers::Extension()->getPathURL(
                 $cattype,
-                Services::Registry()->get('Parameters', 'extension_name_path_node')
+                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_name_path_node')
             )
         );
 
         Services::Registry()->set(
-            'Parameters',
+            DATA_OBJECT_PARAMETERS,
             'extension_namespace',
             Helpers::Extension()->getNamespace(
                 $cattype,
-                Services::Registry()->get('Parameters', 'extension_name_path_node')
+                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_name_path_node')
             )
         );
 
-        Services::Registry()->sort('Parameters');
+        Services::Registry()->sort(DATA_OBJECT_PARAMETERS);
 
         return true;
     }
@@ -458,7 +458,7 @@ Class ContentHelper
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'CatalogTypes');
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'CatalogTypes');
         $controller->setDataobject();
 
         $controller->set('process_plugins', 0);
@@ -487,7 +487,7 @@ Class ContentHelper
      *
      * Populates these registries (ex. Model Type Resource and Model Name Articles):
      *      Model => Services::Registry()->get('ArticlesResource', '*');
-     *      Parameter Fields => Services::Registry()->get('ArticlesResource', 'Parameters')
+     *      Parameter Fields => Services::Registry()->get('ArticlesResource', DATA_OBJECT_PARAMETERS)
      *
      * @param   string  $model_type
      * @param   string  $model_name
@@ -526,7 +526,7 @@ Class ContentHelper
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('System', 'Resources');
+        $controller->getModelRegistry(SYSTEM_LITERAL, 'Resources');
         $controller->setDataobject();
 
         $controller->set('id', (int)$id);
@@ -584,7 +584,7 @@ Class ContentHelper
         $controller->model->query->where(
             $controller->model->db->qn($prefix)
                 . '.'
-                . $controller->model->db->qn('parameters')
+                . $controller->model->db->qn(DATA_OBJECT_PARAMETERS)
                 . ' = '
                 . $controller->model->db->q('%' . $value . '%')
         );

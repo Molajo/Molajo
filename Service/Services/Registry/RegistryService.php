@@ -181,10 +181,10 @@ Class RegistryService
         $this->registry[$namespace] = array();
 
         /** Log it */
-        if ($this->exists('ProfilerService')) {
+        if ($this->exists(DATA_OBJECT_PROFILER)) {
         } else {
 
-            if (Services::Registry()->get('ProfilerService', 'on') === true) {
+            if (Services::Registry()->get(DATA_OBJECT_PROFILER, 'on') === true) {
 
                 if ($this->profiler_available === false) {
 
@@ -200,7 +200,6 @@ Class RegistryService
         }
 
         /** Return new registry */
-
         return $this->registry[$namespace];
     }
 
@@ -214,10 +213,10 @@ Class RegistryService
      * echo Services::Registry()->get('*');
      *
      * Returns a formatted dump of all registries:
-     * echo Services::Registry()->get('Configuration', '*');
+     * echo Services::Registry()->get(CONFIGURATION_LITERAL, '*');
      *
      * Returns all entries that begin with Theme:
-     * echo Services::Registry()->get('Configuration', 'theme*');
+     * echo Services::Registry()->get(CONFIGURATION_LITERAL, 'theme*');
      *
      * @param string $namespace
      * @param string $key

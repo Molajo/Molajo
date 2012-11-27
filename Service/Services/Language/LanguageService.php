@@ -147,7 +147,7 @@ Class LanguageService
             return true;
         }
 
-        if (Services::Registry()->get('Configuration', 'profiler_collect_missing_language_strings') == '1') {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_collect_missing_language_strings') == '1') {
         } else {
             return true;
         }
@@ -164,7 +164,7 @@ Class LanguageService
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $results = $controller->getModelRegistry('System', 'Languagestrings');
+        $results = $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings');
         if ($results === false) {
             return false;
         }
@@ -295,7 +295,7 @@ Class LanguageService
 			}
 		}
 
-		$language = Services::Registry()->get('Configuration', CATALOG_TYPE_LANGUAGE_LITERAL);
+		$language = Services::Registry()->get(CONFIGURATION_LITERAL, CATALOG_TYPE_LANGUAGE_LITERAL);
 		Services::Registry()->set('Languages', 'Default', $language);
 		if (in_array($language, $installed)) {
 			return $language;
@@ -356,7 +356,7 @@ Class LanguageService
 	{
 		$controllerClass = CONTROLLER_CLASS;
 		$controller = new $controllerClass();
-		$controller->getModelRegistry('System', 'Languagestrings');
+		$controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings');
         $controller->setDataobject();
 
         $controller->set('check_view_level_access', 0);
@@ -438,7 +438,7 @@ Class LanguageService
     protected function getInstalledLanguages()
     {
         $helper = new ExtensionHelper();
-        $installed = $helper->get(0, 'Datasource', 'Languageservice', QUERY_OBJECT_LIST, CATALOG_TYPE_LANGUAGE);
+        $installed = $helper->get(0, DATASOURCE_LITERAL, 'Languageservice', QUERY_OBJECT_LIST, CATALOG_TYPE_LANGUAGE);
         if ($installed === false || count($installed) == 0) {
             //throw error
 			echo 'No Language Installed';

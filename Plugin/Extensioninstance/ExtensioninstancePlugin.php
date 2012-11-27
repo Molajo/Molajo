@@ -43,7 +43,7 @@ class ExtensioninstancePlugin extends Plugin
         /** Check if the Extension Instance already exists */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'ExtensionInstances');
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
 
         $primary_prefix = $controller->get('primary_prefix', 'a');
@@ -69,7 +69,7 @@ class ExtensioninstancePlugin extends Plugin
         /** Next, see if the Extension node exists */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Extensions');
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Extensions');
         $controller->setDataobject();
 
         $controller->model->query->select($controller->model->db->qn('a.id'));
@@ -234,7 +234,7 @@ class ExtensioninstancePlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $controller->getModelRegistry('Datasource', $this->data->title);
+        $controller->getModelRegistry(DATASOURCE_LITERAL, $this->data->title);
 
         $results = $controller->setDataobject();
         if ($results === false) {
@@ -319,7 +319,7 @@ class ExtensioninstancePlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $results = $controller->getModelRegistry('Datasource', 'ExtensionInstances');
+        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'ExtensionInstances');
         if ($results === false) {
             return false;
         }

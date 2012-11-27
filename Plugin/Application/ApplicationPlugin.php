@@ -22,7 +22,7 @@ class ApplicationPlugin extends Plugin
     /**
      * Prepares Application Menus
      *
-     * Note: Services::Registry()->get('Parameters') is valid during this method.
+     * Note: Services::Registry()->get(DATA_OBJECT_PARAMETERS) is valid during this method.
      *  Following, Services::Registry()->get('RequestParameters') should be used
      *
      * @return  boolean
@@ -74,16 +74,16 @@ class ApplicationPlugin extends Plugin
      */
     protected function urls()
     {
-        $url = Services::Registry()->get('Configuration', 'application_base_url');
+        $url = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url');
         Services::Registry()->set('Page', 'home_url', $url);
 
-        $url = Services::Registry()->get('Parameters', 'request_base_url_path') .
-            Services::Registry()->get('Parameters', 'request_url');
+        $url = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_base_url_path') .
+            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url');
         Services::Registry()->set('Page', 'page_url', $url);
         Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
 
         $resource = $this->get('extension_name_path_node', '');
-        $url = Services::Registry()->get('Configuration', 'application_base_url') . '/' . strtolower($resource);
+        $url = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url') . '/' . strtolower($resource);
         Services::Registry()->set('Page', 'resource_url', $url);
 
         //todo: add links for prev and next
@@ -150,7 +150,7 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageTitle($item_indicator = 0)
     {
-        $title = Services::Registry()->get('Configuration', 'application_name');
+        $title = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_name');
         if ($title == '') {
             $title = '<strong> Molajo</strong> ' . Services::Language()->translate(APPLICATION_NAME);
         }
@@ -193,8 +193,8 @@ class ApplicationPlugin extends Plugin
         $query_results[] = $row;
 
         $row = new \stdClass();
-        $row->link_text = Services::Language()->translate('CONFIGURATION');
-        $row->link = Services::Registry()->get('Page', 'resource_url') . '/' . 'configuration';
+        $row->link_text = Services::Language()->translate(CONFIGURATION_LITERAL);
+        $row->link = Services::Registry()->get('Page', 'resource_url') . '/' . CONFIGURATION_LITERAL;
         $row->current = $configuration_current;
         $query_results[] = $row;
 
@@ -219,7 +219,7 @@ class ApplicationPlugin extends Plugin
     {
         if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
 
-            if (strtolower(Services::Registry()->get('Parameters', 'request_action')) == ACTION_VIEW) {
+            if (strtolower(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action')) == ACTION_VIEW) {
                 $actions = $this->setItemActions();
             } else {
                 $actions = $this->setEditActions();
@@ -376,8 +376,8 @@ class ApplicationPlugin extends Plugin
         }
 
         $data = Services::Registry()->get(
-            PRIMARY_MODEL_NAME,
-            PRIMARY_MODEL_NAME_RESULTS
+            DATA_OBJECT_PRIMARY,
+            DATA_OBJECT_PRIMARY_DATA
         );
 
         $type = strtolower(Services::Registry()->get('Page', 'page_type'));
@@ -402,7 +402,7 @@ class ApplicationPlugin extends Plugin
                 $title .= ': ';
             }
 
-            $title .= Services::Registry()->get('Configuration', 'site_name');
+            $title .= SITE_NAME;
 
             Services::Metadata()->set('title', $title);
         }

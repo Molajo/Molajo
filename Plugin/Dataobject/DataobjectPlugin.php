@@ -44,7 +44,7 @@ class DataobjectPlugin extends Plugin
 		}
 
 		$resourceFiles = Services::Filesystem()->folderFiles(
-			Services::Registry()->get('Parameters', 'extension_path') . '/Dataobject'
+			Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path') . '/Dataobject'
 		);
 
 		if (count($resourceFiles) == 0 || $resourceFiles === false) {
@@ -66,7 +66,7 @@ class DataobjectPlugin extends Plugin
 			$dataobject[] = $row;
 		}
 
-		Services::Registry()->set(DATALIST_MODEL_NAME, 'Dataobjects', $dataobject);
+		Services::Registry()->set(DATA_OBJECT_DATALIST, 'Dataobjects', $dataobject);
 
 		return true;
 	}

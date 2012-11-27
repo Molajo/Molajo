@@ -77,7 +77,7 @@ Class LogService
         $this->loggers[] = LOG_EMAIL_LOGGER;
         $this->loggers[] = LOG_CONSOLE_LOGGER;
 
-        if (Services::Registry()->get('ProfilerService', 'CurrentPhase') == START_INITIALISE) {
+        if (Services::Registry()->get(DATA_OBJECT_PROFILER, 'CurrentPhase') == INITIALISE) {
             $response = Services::Profiler()->setProfilerLogger();
             if ($response === false) {
                 Services::Profiler()->setConfigurationComplete();
@@ -125,10 +125,10 @@ Class LogService
      * 4. Email
      *
      * $this->options['sender'] = array(
-     *     Services::Registry()->get('Configuration', 'mailer_mail_from'),
-     *     Services::Registry()->get('Configuration', 'mailer_mail_from_name')
+     *     Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from'),
+     *     Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from_name')
      * };
-     * $this->options['recipient'] = Services::Registry()->get('Configuration', 'mailer_mail_from_email_address');
+     * $this->options['recipient'] = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from_email_address');
      * $this->options['subject'] = Services::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
      * $this->options['mailer'] = Services::Mail();
      *

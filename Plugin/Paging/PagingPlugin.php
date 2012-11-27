@@ -113,7 +113,7 @@ class PagingPlugin extends Plugin
 
         $query_results[] = $row;
 
-        Services::Registry()->set(PRIMARY_MODEL_NAME, 'Paging', $query_results);
+        Services::Registry()->set(DATA_OBJECT_PRIMARY, 'Paging', $query_results);
 
         /** Paging */
         $query_results = array();
@@ -152,7 +152,7 @@ class PagingPlugin extends Plugin
         }
 
         Services::Registry()->set(
-            TEMPLATE_MODEL_NAME,
+            DATA_OBJECT_TEMPLATE,
             $this->get('template_view_path_node'),
             $query_results);
 
@@ -170,7 +170,7 @@ class PagingPlugin extends Plugin
         $controller = new $controllerClass();
 
         $results = $controller->getModelRegistry(
-            $this->get('model_type', 'Datasource'),
+            $this->get('model_type', DATASOURCE_LITERAL),
             $this->get('model_name')
         );
         if ($results === false) {
@@ -201,7 +201,7 @@ class PagingPlugin extends Plugin
         $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         $this->model_registry = ucfirst(strtolower($this->get('model_name')))
-            . ucfirst(strtolower($this->get('model_type', 'Datasource')));
+            . ucfirst(strtolower($this->get('model_type', DATASOURCE_LITERAL)));
 
         if ($item === false || count($item) == 0) {
             return false;

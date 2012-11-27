@@ -136,13 +136,13 @@ class Plugin
             array('model_registry',
                 'model_type',
                 'model_name',
-                'parameters',
+                DATA_OBJECT_PARAMETERS,
                 'query',
                 'db',
                 'data',
                 'null_date',
                 'now',
-                'fields',
+                FIELDS_MODEL_TYPE,
                 'customfieldgroups',
                 'rendered_output'))
             && (isset($this->$key))
@@ -176,18 +176,18 @@ class Plugin
         if (in_array($key, array('model_registry',
             'model_type',
             'model_name',
-            'parameters',
+            DATA_OBJECT_PARAMETERS,
             'query',
             'db',
             'data',
             'null_date',
             'now',
-            'fields',
+            FIELDS_MODEL_TYPE,
             'customfieldgroups',
             'rendered_output'))
         ) {
 
-            if ($key == 'parameters') {
+            if ($key == DATA_OBJECT_PARAMETERS) {
                 foreach ($value as $k => $v) {
                     $this->parameters[$k] = $v;
                 }
@@ -214,7 +214,7 @@ class Plugin
         $this->fields = array();
 
         /** process normal fields */
-        $fields = Services::Registry()->get($this->model_registry, 'fields');
+        $fields = Services::Registry()->get($this->model_registry, FIELDS_MODEL_TYPE);
         if (is_array($fields) && count($fields) > 0) {
             $this->processFieldType($type = '', $fields);
         }
@@ -598,7 +598,7 @@ class Plugin
     }
 
     /**
-     * After Route and Authorisation,  the Theme/Page are parsed
+     * After Route and Permissions,  the Theme/Page are parsed
      *
      * @return  boolean
      * @since   1.0

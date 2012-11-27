@@ -45,7 +45,7 @@ class ItemuserpermissionsPlugin extends Plugin
         $actionsArray = explode(',', $actions);
 
         /** User Permissions */
-        $permissions = Services::Authorisation()
+        $permissions = Services::Permissions()
             ->verifyTaskList($actionsArray, $this->data->catalog_id);
 
         /** Append onto row */

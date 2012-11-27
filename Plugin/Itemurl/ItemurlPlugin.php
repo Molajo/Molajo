@@ -39,7 +39,7 @@ class ItemurlPlugin extends Plugin
             return true;
         }
 
-		if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+		if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
 
 			if (isset($this->data->catalog_sef_request)) {
 				$newFieldValue = Services::Url()->getApplicationURL($this->data->catalog_sef_request);

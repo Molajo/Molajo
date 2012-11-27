@@ -54,7 +54,7 @@ Class InstallService
     public function content()
     {
         $copy_model_name = 'Content';
-        $copy_model_type = 'Datasource';
+        $copy_model_type = DATASOURCE_LITERAL;
         $copy_extension_instance_id = 2;
         $copy_catalog_type_id = 10000;
 
@@ -108,7 +108,7 @@ Class InstallService
         $email_address[] = 'MaryKline@example.com';
         $website[] = 'http://example.com/';
 
-        $fields = Services::Registry()->get($model_registry, 'fields');
+        $fields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -160,13 +160,13 @@ Class InstallService
         $data->status_prior_to_version = 0;
         $data->protected = 0;
         $data->model_name = $item_model_name;
-        $data->model_type = 'Datasource';
+        $data->model_type = DATASOURCE_LITERAL;
 
 //Services::Text()->addImage(200, 300, 'cat');
 
         $data->parameters = array();
-        Services::Registry()->sort($model_registry . 'Parameters');
-        $parameters = Services::Registry()->getArray($model_registry . 'Parameters');
+        Services::Registry()->sort($model_registry . DATA_OBJECT_PARAMETERS);
+        $parameters = Services::Registry()->getArray($model_registry . DATA_OBJECT_PARAMETERS);
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
 
@@ -287,7 +287,7 @@ Class InstallService
     public function testCreateExtension($extension_name, $model_name, $source_path = null, $destination_path = null)
     {
         $controller = new CreateController();
-        $model_registry = ucfirst(strtolower($model_name)) . 'Datasource';
+        $model_registry = ucfirst(strtolower($model_name)) . DATASOURCE_LITERAL;
 
         $data = new \stdClass();
         $data->title = $extension_name;
@@ -310,7 +310,7 @@ Class InstallService
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $controller->getModelRegistry('Catalogtypes', 'Datasource');
+        $controller->getModelRegistry('Catalogtypes', DATASOURCE_LITERAL);
 
         $results = $controller->setDataobject();
         if ($results === false) {
@@ -377,7 +377,7 @@ Class InstallService
             'model_registry' => $model_registry,
             'db' => '',
             'data' => $query_results,
-            'parameters' => $parameters,
+            DATA_OBJECT_PARAMETERS => $parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );

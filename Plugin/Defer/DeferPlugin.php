@@ -34,32 +34,22 @@ class DeferPlugin extends Plugin
         /** JS */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
+        $controller->getModelRegistry(DATA_OBJECT_ASSETS, JS_DEFER_LITERAL);
+        $controller->setDataobject();
 
-        $results = $controller->getModelRegistry('Assets', 'JsDefer');
-        if ($results === false) {
-            return false;
-        }
+        $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
-
-        $query_results = $controller->getData();
-
-        Services::Registry()->set('Assets', 'jsdefer', $query_results);
+        Services::Registry()->set(DATA_OBJECT_ASSETS, JS_DEFER_LITERAL, $query_results);
 
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('dbo', 'Assets');
-        if ($results === false) {
-            return false;
-        }
-        $controller->set('model_parameter', 'JsDeclarationsDefer');
-        $query_results = $controller->getData('getAssets');
+        $controller->getModelRegistry(DATA_OBJECT_ASSETS, JS_DECLARATIONS_DEFER);
 
-        Services::Registry()->set('Assets', 'jsdeclarationsdefer', $query_results);
+        $controller->set('model_parameter', JS_DECLARATIONS_DEFER);
+        $query_results = $controller->getData(QUERY_OBJECT_LIST);
+
+        Services::Registry()->set(DATA_OBJECT_ASSETS, JS_DECLARATIONS_DEFER, $query_results);
 
         return true;
     }

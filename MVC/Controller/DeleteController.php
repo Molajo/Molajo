@@ -56,7 +56,7 @@ class DeleteController extends Controller
 
         if ($valid === true) {
 
-            $this->connect('Datasource', $this->data->model_name, 'DeleteModel');
+            $this->connect(DATASOURCE_LITERAL, $this->data->model_name, 'DeleteModel');
             $results = $this->model->delete($this->data, $this->model_registry);
 
             if ($results === false) {
@@ -105,7 +105,7 @@ class DeleteController extends Controller
     public function getDeleteData()
     {
         $hold_model_name = $this->data->model_name;
-        $this->connect('Datasource', $hold_model_name);
+        $this->connect(DATASOURCE_LITERAL, $hold_model_name);
 
         $this->set('use_special_joins', 0);
         $name_key = $this->get('name_key');
@@ -141,7 +141,7 @@ class DeleteController extends Controller
             return false;
         }
 
-        $fields = Services::Registry()->get($this->model_registry, 'fields');
+        $fields = Services::Registry()->get($this->model_registry, FIELDS_MODEL_TYPE);
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -187,7 +187,7 @@ class DeleteController extends Controller
     protected function verifyPermissions()
     {
         //todo - figure out what joining isn't working, get catalog id
-        //$results = Services::Authorisation()->verifyTask('Delete', $this->data->catalog_id);
+        //$results = Services::Permissions()->verifyTask('Delete', $this->data->catalog_id);
         //if ($results === false) {
         //error
         //return false (not yet)
@@ -215,7 +215,7 @@ class DeleteController extends Controller
             'data' => $this->data,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            'parameters' => $this->parameters,
+            DATA_OBJECT_PARAMETERS => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
@@ -232,7 +232,7 @@ class DeleteController extends Controller
         Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         /** Process results */
-        $this->parameters = $arguments['parameters'];
+        $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
         $this->data = $arguments['data'];
 
         return true;
@@ -257,7 +257,7 @@ class DeleteController extends Controller
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $this->data,
-            'parameters' => $this->parameters,
+            DATA_OBJECT_PARAMETERS => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
@@ -274,7 +274,7 @@ class DeleteController extends Controller
         Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         /** Process results */
-        $this->parameters = $arguments['parameters'];
+        $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
         $this->data = $arguments['data'];
 
         return true;

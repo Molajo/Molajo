@@ -197,7 +197,7 @@ Class ImageService
         }
 
         /** retrieve image folder for original images */
-        $images = Services::Registry()->get('Configuration', 'system_media_folder', 'media/images');
+        $images = Services::Registry()->get(CONFIGURATION_LITERAL, 'system_media_folder', 'media/images');
 
         /** folders */
         if (Services::Filesystem()->folderExists(SITE_BASE_PATH . '/' . $images)) {
@@ -222,7 +222,7 @@ Class ImageService
     private function getResizedImage()
     {
         /** retrieve image folder for resized images */
-        $images = Services::Registry()->get('Configuration', 'image_thumb_folder', '/media/images/thumbs');
+        $images = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumb_folder', '/media/images/thumbs');
 
         /** folders */
         if (Services::Filesystem()->folderExists(SITE_BASE_PATH . '/' . $images)) {
@@ -248,20 +248,20 @@ Class ImageService
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 'thumbnail') {
-            $width = Services::Registry()->get('Configuration', 'image_thumbnail_width', 50);
-            $height = Services::Registry()->get('Configuration', 'image_thumbnail_height', 50);
+            $width = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumbnail_width', 50);
+            $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumbnail_height', 50);
 
         } elseif ($this->size == 'small') {
-            $width = Services::Registry()->get('Configuration', 'image_small_width', 100);
-            $height = Services::Registry()->get('Configuration', 'image_small_height', 100);
+            $width = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_small_width', 100);
+            $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_small_height', 100);
 
         } elseif ($this->size == 'medium') {
-            $width = Services::Registry()->get('Configuration', 'image_medium_width', 300);
-            $height = Services::Registry()->get('Configuration', 'image_medium_height', 300);
+            $width = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_medium_width', 300);
+            $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_medium_height', 300);
 
         } elseif ($this->size == 'large') {
-            $width = Services::Registry()->get('Configuration', 'image_large_width', 500);
-            $height = Services::Registry()->get('Configuration', 'image_large_height', 500);
+            $width = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_large_width', 500);
+            $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_large_height', 500);
 
         } else {
             $this->width = imagesx($this->image);

@@ -48,7 +48,7 @@ class DisplayController extends Controller
             echo '</pre>';
         }
 
-        if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results', 0) == 1) {
 
             $profiler_message = 'DisplayController->execute '
                 . ' <br />Includer: ' . $this->get('includer_type', '')
@@ -214,7 +214,7 @@ class DisplayController extends Controller
 
                 $arguments = array(
                     'model_registry' => $this->model_registry,
-                    'parameters' => $this->parameters,
+                    DATA_OBJECT_PARAMETERS => $this->parameters,
                     'data' => $item,
                     'model_type' => $this->get('model_type'),
                     'model_name' => $this->get('model_name')
@@ -231,7 +231,7 @@ class DisplayController extends Controller
                     return false;
                 }
 
-                $this->parameters = $arguments['parameters'];
+                $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
                 $this->query_results[] = $arguments['data'];
 
                 if ($this->parameters['even_or_odd'] == 'odd') {
@@ -256,7 +256,7 @@ class DisplayController extends Controller
     {
         $arguments = array(
             'model_registry' => $this->model_registry,
-            'parameters' => $this->parameters,
+            DATA_OBJECT_PARAMETERS => $this->parameters,
             'rendered_output' => $rendered_output,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
