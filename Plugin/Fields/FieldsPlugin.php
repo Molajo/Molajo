@@ -222,21 +222,11 @@ class FieldsPlugin extends Plugin
         asort($parametersFieldArray);
         asort($customFieldArray);
 
-        Services::Registry()->set(RESOURCELIST_MODEL_NAME,
-            $model_registry . FIELDS_MODEL_TYPE,
-            $fieldArray);
-		Services::Registry()->set(RESOURCELIST_MODEL_NAME,
-            $model_registry . FIELDSSTANDARD_MODEL_TYPE,
-            $standardFieldArray);
-        Services::Registry()->set(RESOURCELIST_MODEL_NAME,
-            $model_registry . FIELDSMETADATA_MODEL_TYPE,
-            $metadataFieldArray);
-        Services::Registry()->set(RESOURCELIST_MODEL_NAME,
-            $model_registry . FIELDSPARAMETERS_MODEL_TYPE,
-            $parametersFieldArray);
-        Services::Registry()->set(RESOURCELIST_MODEL_NAME,
-            $model_registry . FIELDSCUSTOM_MODEL_TYPE,
-            $customFieldArray);
+        Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_MODEL_TYPE, $fieldArray);
+		Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_STANDARD_MODEL_TYPE, $standardFieldArray);
+        Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_METADATA_MODEL_TYPE, $metadataFieldArray);
+        Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_PARAMETERS_MODEL_TYPE, $parametersFieldArray);
+        Services::Registry()->set(DATALIST_MODEL_NAME, $model_registry . FIELDS_CUSTOM_MODEL_TYPE, $customFieldArray);
 
         return true;
     }

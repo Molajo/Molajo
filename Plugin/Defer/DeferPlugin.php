@@ -47,7 +47,7 @@ class DeferPlugin extends Plugin
 
         $query_results = $controller->getData();
 
-        Services::Registry()->set('Plugindata', 'jsdefer', $query_results);
+        Services::Registry()->set('Assets', 'jsdefer', $query_results);
 
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
@@ -59,7 +59,7 @@ class DeferPlugin extends Plugin
         $controller->set('model_parameter', 'JsDeclarationsDefer');
         $query_results = $controller->getData('getAssets');
 
-        Services::Registry()->set('Plugindata', 'jsdeclarationsdefer', $query_results);
+        Services::Registry()->set('Assets', 'jsdeclarationsdefer', $query_results);
 
         return true;
     }

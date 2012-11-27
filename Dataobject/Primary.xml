@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-        name="Plugindata"
+        name="Primary"
         service_class="Registry"
         service_class_query_method="getData"
-        service_class_query_method_parameter="PrimaryQueryResults"
+        service_class_query_method_parameter="PrimaryResults"
         process_plugins="1"/>

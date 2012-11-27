@@ -82,8 +82,8 @@ Class ContentHelper
         }
 
         Services::Registry()->set(
-            PRIMARY_QUERY_RESULTS_MODEL_NAME,
-            PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS,
+            PRIMARY_MODEL_NAME,
+            PRIMARY_MODEL_NAME_RESULTS,
             array($item)
         );
 

@@ -69,7 +69,7 @@ class MessagesPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, $this->get('template_view_path_node'), $query_results);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, $this->get('template_view_path_node'), $query_results);
 
         return true;
     }

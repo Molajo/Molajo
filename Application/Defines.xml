@@ -127,17 +127,19 @@
     <define name="QUERY_OBJECT_LIST" value="list"/>
     <define name="QUERY_OBJECT_DISTINCT" value="distinct"/>
 
-    <define name="DATALIST_MODEL_NAME" value="Datalist"/>
+    <define name="DATABASE_MODEL_TYPE" value="Database"/>
     <define name="DATAOBJECT_MODEL_TYPE" value="Dataobject"/>
-    <define name="FIELDS_MODEL_TYPE" value="Fields"/>
-    <define name="FIELDSSTANDARD_MODEL_TYPE" value="Fieldsstandard"/>
-    <define name="FIELDSMETADATA_MODEL_TYPE" value="Fieldsmetadata"/>
-    <define name="FIELDSPARAMETERS_MODEL_TYPE" value="Fieldsparameters"/>
-    <define name="FIELDSCUSTOM_MODEL_TYPE" value="Fieldscustom"/>
-    <define name="RESOURCELIST_MODEL_NAME" value="Resourcelist"/>
+    <define name="DATALIST_MODEL_NAME" value="Datalist"/>
+
+    <define name="PRIMARY_MODEL_NAME" value="Primary"/>
+    <define name="PRIMARY_MODEL_NAME_RESULTS" value="PrimaryResults"/>
+    <define name="TEMPLATE_MODEL_NAME" value="Template"/>
     <define name="MESSAGES_MODEL_NAME" value="Messages"/>
-    <define name="PRIMARY_QUERY_RESULTS_MODEL_NAME" value="PrimaryQuery"/>
-    <define name="PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS" value="PrimaryQueryResults"/>
-    <define name="TEMPLATEVIEWNAME_MODEL_NAME" value="Templateviewname"/>
+
+    <define name="FIELDS_MODEL_TYPE" value="Fields"/>
+    <define name="FIELDS_STANDARD_MODEL_TYPE" value="Fieldsstandard"/>
+    <define name="FIELDS_METADATA_MODEL_TYPE" value="Fieldsmetadata"/>
+    <define name="FIELDS_PARAMETERS_MODEL_TYPE" value="Fieldsparameters"/>
+    <define name="FIELDS_CUSTOM_MODEL_TYPE" value="Fieldscustom"/>
 
 </defines>

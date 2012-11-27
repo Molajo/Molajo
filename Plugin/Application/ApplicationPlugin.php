@@ -376,8 +376,8 @@ class ApplicationPlugin extends Plugin
         }
 
         $data = Services::Registry()->get(
-            PRIMARY_QUERY_RESULTS_MODEL_NAME,
-            PRIMARY_QUERY_RESULTS_MODEL_NAME_RESULTS
+            PRIMARY_MODEL_NAME,
+            PRIMARY_MODEL_NAME_RESULTS
         );
 
         $type = strtolower(Services::Registry()->get('Page', 'page_type'));

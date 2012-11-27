@@ -26,7 +26,7 @@ class FormselectlistPlugin extends Plugin
      */
     public function onBeforeInclude()
     {
-        $results = Services::Registry()->get(TEMPLATEVIEWNAME_MODEL_NAME, $this->get('template_view_path_node'));
+        $results = Services::Registry()->get(TEMPLATE_MODEL_NAME, $this->get('template_view_path_node'));
         if (count($results) > 0) {
             return true;
         }
@@ -62,14 +62,14 @@ class FormselectlistPlugin extends Plugin
         }
 
         $this->set('model_type', DATAOBJECT_MODEL_TYPE);
-        $this->set('model_name', TEMPLATEVIEWNAME_MODEL_NAME);
+        $this->set('model_name', TEMPLATE_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
-        $this->parameters['model_name'] = TEMPLATEVIEWNAME_MODEL_NAME;
+        $this->parameters['model_name'] = TEMPLATE_MODEL_NAME;
 
         Services::Registry()->set(
-            TEMPLATEVIEWNAME_MODEL_NAME,
+            TEMPLATE_MODEL_NAME,
             $this->get('template_view_path_node'),
             $query_results
         );
@@ -85,7 +85,7 @@ class FormselectlistPlugin extends Plugin
      */
     public function onAfterInclude()
     {
-        Services::Registry()->delete(TEMPLATEVIEWNAME_MODEL_NAME, $this->get('template_view_path_node'));
+        Services::Registry()->delete(TEMPLATE_MODEL_NAME, $this->get('template_view_path_node'));
         return $this;
     }
 }

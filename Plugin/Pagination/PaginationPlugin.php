@@ -118,7 +118,7 @@ class PaginationPlugin extends Plugin
 
         $query_results[] = $row;
 
-        Services::Registry()->set('Plugindata', 'Paging', $query_results);
+        Services::Registry()->set(PRIMARY_MODEL_NAME, 'Paging', $query_results);
 
         /** Paging */
         $query_results = array();
@@ -156,7 +156,7 @@ class PaginationPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Pagination', $query_results);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Pagination', $query_results);
 
         return true;
     }

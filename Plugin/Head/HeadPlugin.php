@@ -47,7 +47,7 @@ class HeadPlugin extends Plugin
         $controller->set('model_parameter', 'Js');
         $query_results = $controller->getData('getAssets');
 
-        Services::Registry()->set('Plugindata', 'js', $query_results);
+        Services::Registry()->set('Assets', 'js', $query_results);
 
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
@@ -65,7 +65,7 @@ class HeadPlugin extends Plugin
         $controller->set('model_parameter', 'JsDeclarations');
         $query_results = $controller->getData('getAssets');
 
-        Services::Registry()->set('Plugindata', 'jsdeclarations', $query_results);
+        Services::Registry()->set('Assets', 'jsdeclarations', $query_results);
 
         return true;
     }

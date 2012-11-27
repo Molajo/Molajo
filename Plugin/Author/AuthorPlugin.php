@@ -41,16 +41,16 @@ class AuthorPlugin extends Plugin
             return true;
         }
 
-        if (Services::Registry()->exists(TEMPLATEVIEWNAME_MODEL_NAME, 'Author' . $fieldValue)) {
+        if (Services::Registry()->exists(TEMPLATE_MODEL_NAME, 'Author' . $fieldValue)) {
 
-            $authorArray = Services::Registry()->get(TEMPLATEVIEWNAME_MODEL_NAME, 'Author' . $fieldValue);
+            $authorArray = Services::Registry()->get(TEMPLATE_MODEL_NAME, 'Author' . $fieldValue);
 
             foreach ($authorArray[0] as $key => $value) {
                 $new_field_name = $key;
                 $this->saveField(null, $new_field_name, $value);
             }
 
-            Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Author', $authorArray);
+            Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Author', $authorArray);
             return true;
         }
 
@@ -88,8 +88,8 @@ class AuthorPlugin extends Plugin
             }
         }
         $authorArray[] = $row;
-        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Author' . $fieldValue, $authorArray);
-        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Author', $authorArray);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Author' . $fieldValue, $authorArray);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Author', $authorArray);
 
         return true;
     }

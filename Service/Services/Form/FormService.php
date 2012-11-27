@@ -666,7 +666,7 @@ echo '</pre>';
         }
 
         Services::Registry()->set(
-            'Plugindata',
+            TEMPLATE_MODEL_NAME,
             $this->fieldset_template_view . $this->namespace . strtolower($this->page_link),
             $fieldSets
         );
@@ -1351,7 +1351,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set('Plugindata', $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1430,7 +1430,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set('Plugindata', $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1491,20 +1491,22 @@ echo '</pre>';
 
         $yes = 0;
         if (strtolower($datalist) == FIELDS_MODEL_TYPE) {
-            $list = Services::Registry()->get(
-                RESOURCELIST_MODEL_NAME,
-                $this->model_registry_name . FIELDSSTANDARD_MODEL_TYPE
+
+            $list = Services::Registry()->get(DATALIST_MODEL_NAME,
+                $this->model_registry_name . FIELDS_STANDARD_MODEL_TYPE
             );
 
-        } elseif (strtolower($datalist) == strtolower(FIELDSSTANDARD_MODEL_TYPE)) {
+        } elseif (strtolower($datalist) == strtolower(FIELDS_STANDARD_MODEL_TYPE)) {
+
             $this->model_registry_name
                 = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
-            $list = Services::Registry()->get(
-                RESOURCELIST_MODEL_NAME,
-                $this->model_registry_name . FIELDSSTANDARD_MODEL_TYPE
+
+            $list = Services::Registry()->get(DATALIST_MODEL_NAME,
+                $this->model_registry_name . FIELDS_STANDARD_MODEL_TYPE
             );
 
         } else {
+
             $results = Services::Text()->getDatalist($datalist, DATALIST_MODEL_NAME, array());
             $list = $results[0]->listitems;
             $multiple = $results[0]->multiple;
@@ -1560,7 +1562,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set('Plugindata', $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1612,7 +1614,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set('Plugindata', $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }

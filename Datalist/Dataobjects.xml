@@ -1,6 +1,5 @@
 <datalist name="Dataobjects">
     <model
         name="Dataobjects"
-        extends="PlugindataDataobjects"
         registry_entry="Dataobjects"/>
 </datalist>

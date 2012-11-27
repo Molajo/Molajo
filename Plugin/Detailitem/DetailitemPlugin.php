@@ -49,11 +49,11 @@ class DetailitemPlugin extends Plugin
         $this->set('request_model_name', $this->get('model_name'));
 
         $this->set('model_type', DATAOBJECT_MODEL_TYPE);
-        $this->set('model_name', PRIMARY_QUERY_RESULTS_MODEL_NAME);
+        $this->set('model_name', PRIMARY_MODEL_NAME);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATAOBJECT_MODEL_TYPE;
-        $this->parameters['model_name'] = PRIMARY_QUERY_RESULTS_MODEL_NAME;
+        $this->parameters['model_name'] = PRIMARY_MODEL_NAME;
 
         //$this->getComments();
         return true;
@@ -95,7 +95,7 @@ class DetailitemPlugin extends Plugin
 
         die;
 
-        Services::Registry()->set('Plugindata', 'PrimaryRequestComments', $query_results);
+        Services::Registry()->set(DATAOBJECT_MODEL_TYPE, DATALIST_MODEL_NAME, $query_results);
 
         return true;
     }

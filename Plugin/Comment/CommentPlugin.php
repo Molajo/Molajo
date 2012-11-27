@@ -76,7 +76,7 @@ class CommentPlugin extends Plugin
         );
 
         Services::Registry()->set(
-            TEMPLATEVIEWNAME_MODEL_NAME,
+            TEMPLATE_MODEL_NAME,
             $this->get('template_view_path_node'),
             $results);
 
@@ -285,14 +285,14 @@ class CommentPlugin extends Plugin
             array()
         );
 
-        $this->set('model_type', 'Plugindata');
+        $this->set('model_type', 'xxxx');
         $this->set('model_name', 'Edit');
         $this->set('model_query_object', QUERY_OBJECT_ITEM);
 
-        $this->parameters['model_type'] = 'Plugindata';
+        $this->parameters['model_type'] = 'xxxx';
         $this->parameters['model_name'] = 'Edit';
 
-        Services::Registry()->set(TEMPLATEVIEWNAME_MODEL_NAME, 'Commentform', $tabs);
+        Services::Registry()->set(TEMPLATE_MODEL_NAME, 'Commentform', $tabs);
 
         return true;
     }

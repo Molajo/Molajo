@@ -113,7 +113,7 @@ class PagingPlugin extends Plugin
 
         $query_results[] = $row;
 
-        Services::Registry()->set('Plugindata', 'Paging', $query_results);
+        Services::Registry()->set(PRIMARY_MODEL_NAME, 'Paging', $query_results);
 
         /** Paging */
         $query_results = array();
@@ -152,7 +152,7 @@ class PagingPlugin extends Plugin
         }
 
         Services::Registry()->set(
-            TEMPLATEVIEWNAME_MODEL_NAME,
+            TEMPLATE_MODEL_NAME,
             $this->get('template_view_path_node'),
             $query_results);
 

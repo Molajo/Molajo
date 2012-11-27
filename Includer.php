@@ -248,12 +248,6 @@ class Includer
             } elseif ($name == 'model_type') {
                 Services::Registry()->set('Parameters', 'model_type', $value);
 
-            } elseif ($name == 'model_parameter_np'
-                || $name == 'parameter_np') {
-                Services::Registry()->set('Parameters', 'model_type', 'PlugindataNoplugins');
-                Services::Registry()->set('Parameters', 'model_name', $value);
-                Services::Registry()->set('Parameters', 'model_query_object', QUERY_OBJECT_LIST);
-
             } elseif ($name == 'model_query_object'
                 || $name == 'query_object') {
                 Services::Registry()->set('Parameters', 'model_query_object', $value);
