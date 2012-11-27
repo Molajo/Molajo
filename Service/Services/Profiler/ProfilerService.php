@@ -77,7 +77,7 @@ Class ProfilerService
     protected $profiler_output_options = array();
 
     /**
-     * Begin profilerging with this phase
+     * Begin profiling with this phase
      *
      * @var    object
      * @since  1.0
@@ -85,7 +85,7 @@ Class ProfilerService
     protected $profiler_start_with;
 
     /**
-     * End profilerging with this phase
+     * End profiling with this phase
      *
      * @var    object
      * @since  1.0
@@ -111,7 +111,7 @@ Class ProfilerService
     /**
      * Phase Array
      *
-     * @var array
+     * @var    array
      * @since  1.0
      */
     protected $phase_array = array(
@@ -125,7 +125,7 @@ Class ProfilerService
     /**
      * Phase List
      *
-     * @var array
+     * @var    array
      * @since  1.0
      */
     protected $phase_array_list = array(
@@ -142,7 +142,7 @@ Class ProfilerService
      *   Before that process is complete, profiler entries are held to see if profiler is activated, and
      *   if so, what log should be used. Once that information is available, the class then operates normally.
      *
-     * @var array
+     * @var    array
      * @since  1.0
      */
     protected $configuration_complete = false;
@@ -158,8 +158,8 @@ Class ProfilerService
     /**
      * Log Type
      *
-     * @var   string
-     * @since 1.0
+     * @var    string
+     * @since  1.0
      */
     const log_type = 'profilerservice';
 
@@ -167,8 +167,8 @@ Class ProfilerService
      * getInstance initiated by the Services Class
      *
      * @static
-     * @return bool|object
-     * @since  1.0
+     * @return  bool|object
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -182,7 +182,7 @@ Class ProfilerService
     /**
      * Class constructor.
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function __construct()
@@ -197,10 +197,10 @@ Class ProfilerService
     /**
      * Sets profiler message that is routed to the selected logger
      *
-     * @param string $message
-     * @param string $output_type Application,Authorisation,Queries,Rendering,Routing,Services,Plugins
+     * @param   string  $message
+     * @param   string  $output_type Application,Authorisation,Queries,Rendering,Routing,Services,Plugins
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function set($message, $output_type = '', $verbose = 0)
@@ -293,7 +293,6 @@ Class ProfilerService
                 );
 
             } else {
-
                 $this->holdEntries($elapsed, $memory, $memory_difference, $output_type . ': ' . trim($message));
             }
 
@@ -358,7 +357,6 @@ Class ProfilerService
 
         if ($results === false) {
             $this->on = 0;
-
             return $this;
         }
 
@@ -472,7 +470,7 @@ Class ProfilerService
      *     All that remains to be initiated is the Date Service. Once that is complete, the class
      *     switches over to normal logging (if it is so configured).
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function setConfigurationComplete()
@@ -485,7 +483,7 @@ Class ProfilerService
     /**
      * setEmailLogger
      *
-     * @return bool
+     * @return  bool
      */
     protected function setEmailLogger()
     {
@@ -502,7 +500,7 @@ Class ProfilerService
     /**
      * setFormattedtextLogger
      *
-     * @return bool
+     * @return  bool
      */
     protected function setFormattedtextLogger()
     {
@@ -530,7 +528,7 @@ Class ProfilerService
     /**
      * setDatabaseLogger
      *
-     * @return bool
+     * @return  bool
      */
     protected function setDatabaseLogger()
     {
@@ -544,7 +542,8 @@ Class ProfilerService
     /**
      * setMessagesLogger
      *
-     * @return bool
+     * @return  bool
+     * @since   1.0
      */
     protected function setMessagesLogger()
     {
@@ -557,7 +556,8 @@ Class ProfilerService
     /**
      * setFirephpLogger
      *
-     * @return bool
+     * @return  bool
+     * @since   1.0
      */
     protected function setFirephpLogger()
     {
@@ -570,7 +570,8 @@ Class ProfilerService
     /**
      * setEchoLogger
      *
-     * @return bool
+     * @return  bool
+     * @since   1.0
      */
     protected function setEchoLogger()
     {
@@ -583,7 +584,7 @@ Class ProfilerService
     /**
      * Get the current time from: http://php.net/manual/en/function.microtime.php
      *
-     * @return float
+     * @return  float
      * @since   1.0
      */
     public static function getMicrotimeFloat()
@@ -594,55 +595,13 @@ Class ProfilerService
     }
 
     /**
-     * get console log
-     *
-     * @return array console log entries
-     *
-     * @since   1.0
-     */
-    public function get($option = null)
-    {
-        if ($option == 'db') {
-            return $this;
-
-        } elseif ($option == 'count') {
-            return Services::Log()->get($option);
-
-        } else {
-
-            return Services::Log()->get();
-        }
-
-    }
-
-    /**
-     *     Dummy functions to pass service off as a DBO to interact with model
-     */
-    public function getNullDate()
-    {
-        return $this;
-    }
-
-    public function getQuery()
-    {
-        return $this;
-    }
-
-    public function toSql()
-    {
-        return $this;
-    }
-
-    /**
      * getProfiler
      *
-     * @return array
-     *
+     * @return   array
      * @since    1.0
      */
     public function getProfiler()
     {
-
         $query_results = array();
 
         $messages = $this->get();
@@ -666,4 +625,19 @@ Class ProfilerService
         return $query_results;
     }
 
+    /**
+     * get console log
+     *
+     * @return  array console log entries
+     * @since   1.0
+     */
+    public function get($option = null)
+    {
+        if ($option == 'count') {
+            return Services::Log()->get($option);
+
+        } else {
+            return Services::Log()->get();
+        }
+    }
 }

@@ -9,5 +9,5 @@
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_PROFILER_DESCRIPTION</description>
-    <model name="Profiler" extends="TemplateviewsSystem"/>
+    <model name="Profiler" process_plugins="0" extends="TemplateviewsSystem"/>
 </extension>

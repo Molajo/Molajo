@@ -65,8 +65,8 @@ Class ProfilerIncluder extends Includer
         Services::Registry()->merge('Configuration', 'Parameters', true);
 
         /** DBO  */
-        Services::Registry()->set('Parameters', 'model_type', 'Profiler');
-        Services::Registry()->set('Parameters', 'model_type', 'Profiler');
+        Services::Registry()->set('Parameters', 'model_type', DATAOBJECT_MODEL_TYPE);
+        Services::Registry()->set('Parameters', 'model_name', 'Profiler');
         Services::Registry()->set('Parameters', 'model_query_object', QUERY_OBJECT_LIST);
 
         /** Cleanup */

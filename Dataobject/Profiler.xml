@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
         name="Profiler"
-        service_class_query_method="getData"
         service_class="Profiler"
-        process_plugins="1"/>
+        service_class_query_method="getProfiler"
+        service_class_query_method_parameter="TEMPLATE_VIEW_NAME"
+        process_plugins="0"/>
 
