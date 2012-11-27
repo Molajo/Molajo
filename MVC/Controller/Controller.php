@@ -151,7 +151,7 @@ class Controller
         $this->set('model_name', $model_name);
         $this->set('model_registry', $model_registry);
 
-echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_registry . '<br />';
+//echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_registry . '<br />';
         $profiler_message = '';
 
         if (Services::Registry()->exists($model_registry) === true) {
@@ -291,10 +291,9 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
         if ($this->get('data_object') === false
             || $this->get('data_object') === null
         ) {
-            echo 'Data Object for Model Registry: '
-                . $this->get('model_registry') . ' could not be loaded. <br />';
-            //throw error
-            die;
+            throw new \RuntimeException ('Data Object for Model Registry: '
+                . $this->get('model_registry')
+                . ' could not be loaded.');
         }
 
         $query_object = strtolower($query_object);
@@ -327,7 +326,8 @@ echo 'Type: ' . $model_type . ' Name: ' . $model_name . ' Registry: ' . $model_r
                 . ' <br />Registry Entry (Datalist parameter): ' . $this->get('registry_entry')
                 . ' <br />Template View: ' . $this->get('template_view_path_node')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
-echo $profiler_message;
+
+//echo $profiler_message;
 
         if ($this->get('data_object') == 'Database') {
 
@@ -343,14 +343,11 @@ echo $profiler_message;
                 $this->query_results = array();
 
             } else {
+
                 $method_parameter = NULL;
                 $service_class = $this->get('service_class');
                 $service_class_query_method = $this->get('service_class_query_method');
                 $service_class_query_method_parameter = $this->get('service_class_query_method_parameter');
-
-                //if ($service_class_query_method_parameter == 'DATALIST_NAME') {
-                  //  $method_parameter = $this->get('datalist');
-
 
                 $model_name = $this->get('model_name');
 
@@ -382,7 +379,7 @@ echo $profiler_message;
                         $query_object
                     );
 
-                if (strtolower($method_parameter) == 'articlesresourcefields') {
+                if (strtolower($method_parameter) == 'articlesresourcefieldsxxxxxxxxxxx') {
                     echo $query_object;
                     echo '<pre>';
                     echo count($this->query_results);
@@ -398,12 +395,6 @@ echo $profiler_message;
                 $this->get('model_offset'),
                 $this->get('model_count')
             );
-        }
-
-        if (strtolower($this->get('template_view_path_node')) == 'gridorderingXXX') {
-            echo '<pre>';
-            echo count($this->query_results);
-            echo '</pre>';
         }
 
         if ($this->get('data_object') == 'Database') {
@@ -549,7 +540,6 @@ echo $profiler_message;
         if ($query_object == QUERY_OBJECT_ITEM
             || $query_object == QUERY_OBJECT_RESULT
         ) {
-
             $id_key_value = (int)$this->get('id', 0);
             $name_key_value = (string)$this->get('name_key_value', '');
 

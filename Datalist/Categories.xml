@@ -12,5 +12,10 @@
             <include field="id"/>
             <include field="title"/>
         </fields>
+        <criteria>
+            <where name="a.protected"
+                   connector="!="
+                   value="2"/>
+        </criteria>
     </table>
 </model>

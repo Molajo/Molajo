@@ -26,12 +26,15 @@ class FormselectlistPlugin extends Plugin
      */
     public function onBeforeInclude()
     {
-        $results = Registry()->get(TEMPLATEVIEWNAME_MODEL_NAME, $this->get('template_view_path_node'));
+        $results = Services::Registry()->get(TEMPLATEVIEWNAME_MODEL_NAME, $this->get('template_view_path_node'));
         if (count($results) > 0) {
             return true;
         }
 
-        $datalist = Services::Registry()->get('Parameters', 'datalist');
+        $datalist = Services::Registry()->get('Parameters', 'datalist', '');
+        if ($datalist == '') {
+            return true;
+        }
 
         $query_results = Services::Registry()->get(DATALIST_MODEL_NAME, $datalist);
 
@@ -72,5 +75,17 @@ class FormselectlistPlugin extends Plugin
         );
 
         return true;
+    }
+
+    /**
+     * Remove Registry just rendered
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function onAfterInclude()
+    {
+        Services::Registry()->delete(TEMPLATEVIEWNAME_MODEL_NAME, $this->get('template_view_path_node'));
+        return $this;
     }
 }

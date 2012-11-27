@@ -414,12 +414,7 @@ echo str_replace('#__', 'molajo_', $string);
 echo '</pre><br /><br />';
 */
         $cache_key = $this->query->__toString();
-        if ($cache_key == '') {
-            echo '<pre>';
-            var_dump($this);
-            echo '</pre>';
-            die;
-        }
+
         $cached_output = Services::Cache()->get('Query', $cache_key);
 
         if ($query_object == QUERY_OBJECT_LIST) {

@@ -113,8 +113,6 @@ Class TextService
             $multiple = 0;
             $size = 0;
         }
-        echo $model_registry .'<br />';
-        Services::Registry()->get($model_registry, '*');
 
         $values = Services::Registry()->get($model_registry, 'values', array());
         if ($values === false || count($values) === 0) {
@@ -180,12 +178,8 @@ Class TextService
         $controller->model->set('model_offset', 0);
         $controller->model->set('model_count', 999999);
 
-echo $model_registry . '<br />';
-
         $fields = Services::Registry()->get($model_registry, 'Fields');
-echo '<pre>';
-var_dump($fields);
-echo '</pre>';
+
         $first = true;
         if (count($fields) < 2) {
 
@@ -357,9 +351,7 @@ echo '</pre>';
         }
 
         foreach ($items as $item) {
-echo '<pre>';
-var_dump($item);
-echo '</pre>';
+
             $row = new \stdClass();
 
             $row->listname = $listname;

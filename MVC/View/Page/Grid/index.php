@@ -7,7 +7,6 @@ use Molajo\Service\Services;
  *     <include:template name=Toolbar/>
  */
 defined('MOLAJO') or die; ?>
-xyz
 <include:template name=Formbegin/>
 <include:template name=Gridfilters wrap=nav wrap_class=grid-filters role=nav/>
 <section class="grid">

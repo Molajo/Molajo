@@ -133,10 +133,7 @@ class PagetypegridPlugin extends Plugin
                 $selected = '';
 
                 $results = Services::Text()->getDatalist($listname, DATALIST_MODEL_NAME, $this->parameters);
-                echo $listname . '<br />';
-                echo '<pre>';
-                var_dump($results);
-                echo '</pre>';
+
                 if ($results === false) {
                 } else {
 
