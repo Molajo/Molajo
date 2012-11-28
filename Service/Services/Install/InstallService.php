@@ -54,7 +54,7 @@ Class InstallService
     public function content()
     {
         $copy_model_name = 'Content';
-        $copy_model_type = DATASOURCE_LITERAL;
+        $copy_model_type = DATA_SOURCE_LITERAL;
         $copy_extension_instance_id = 2;
         $copy_catalog_type_id = 10000;
 
@@ -160,7 +160,7 @@ Class InstallService
         $data->status_prior_to_version = 0;
         $data->protected = 0;
         $data->model_name = $item_model_name;
-        $data->model_type = DATASOURCE_LITERAL;
+        $data->model_type = DATA_SOURCE_LITERAL;
 
 //Services::Text()->addImage(200, 300, 'cat');
 
@@ -287,7 +287,7 @@ Class InstallService
     public function testCreateExtension($extension_name, $model_name, $source_path = null, $destination_path = null)
     {
         $controller = new CreateController();
-        $model_registry = ucfirst(strtolower($model_name)) . DATASOURCE_LITERAL;
+        $model_registry = ucfirst(strtolower($model_name)) . DATA_SOURCE_LITERAL;
 
         $data = new \stdClass();
         $data->title = $extension_name;
@@ -310,7 +310,7 @@ Class InstallService
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $controller->getModelRegistry('Catalogtypes', DATASOURCE_LITERAL);
+        $controller->getModelRegistry('Catalogtypes', DATA_SOURCE_LITERAL);
 
         $results = $controller->setDataobject();
         if ($results === false) {

@@ -202,7 +202,7 @@ Class ContentHelper
      * @return  array  An object containing an array of data
      * @since   1.0
      */
-    public function get($id = 0, $model_type = DATASOURCE_LITERAL, $model_name = 'Content', $page_type = '')
+    public function get($id = 0, $model_type = DATA_SOURCE_LITERAL, $model_name = 'Content', $page_type = '')
     {
         Services::Profiler()->set(
             'ContentHelper->get '
@@ -260,7 +260,7 @@ Class ContentHelper
         Services::Registry()->set(PARAMETERS_LITERAL, 'page_type', $page_type_namespace);
 
         /** Retrieve array of Extension Instances Authorised for User  */
-        Helpers::Extension()->setAuthorisedExtensions(0, DATASOURCE_LITERAL, 'ExtensionInstances', QUERY_OBJECT_LIST);
+        Helpers::Extension()->setAuthorisedExtensions(0, DATA_SOURCE_LITERAL, 'ExtensionInstances', QUERY_OBJECT_LIST);
 
         /** I. Priority 1 - Item parameter values (be it an item, menu item, list) */
         $newParameters = Services::Registry()->get($parameter_namespace, $page_type_namespace . '*');
@@ -458,7 +458,7 @@ Class ContentHelper
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'CatalogTypes');
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'CatalogTypes');
         $controller->setDataobject();
 
         $controller->set('process_plugins', 0);

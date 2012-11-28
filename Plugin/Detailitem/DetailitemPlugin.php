@@ -69,7 +69,7 @@ class DetailitemPlugin extends Plugin
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'Comments');
+        $results = $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Comments');
         if ($results === false) {
             return false;
         }

@@ -11,7 +11,7 @@ use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
-//todo: remove hard-coded prefixes and replace with prefixes defined in model
+//todo: remove hard-coded prefixes (a.) and replace with prefixes defined in model
 
 /**
  * Permissions
@@ -23,7 +23,7 @@ defined('MOLAJO') or die;
 Class PermissionsService
 {
     /**
-     * Get action ids and values to load into registry
+     * Load various permissions data (list of actions, actions to permissions and controllers)
      *
      * @return  null
      * @since   1.0
@@ -31,25 +31,31 @@ Class PermissionsService
      */
     public function initialise()
     {
+        /** Permission Actions: Authenticate, Create, Read, Update, Publish, Delete */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Actions');
-
         $controller->setDataobject();
-
         $items = $controller->getData(QUERY_OBJECT_LIST);
         if ($items === false) {
             throw new \RuntimeException ('Permissions: getActions Query failed.');
         }
 
-        $actions = array();
+        $permission_actions = array();
+        $permission_action_ids = array();
+
+        $title = 'none';
+        $permission_actions[0] = $title;
+        $permission_action_ids[$title] = 0;
         foreach ($items as $item) {
-            $actions[$item->title] = (int)$item->id;
+            $title = strtolower($item->title);
+            $permission_actions[$item->id] = $title;
+            $permission_action_ids[$title] = $item->id;
         }
-        Services::Registry()->set(PERMISSIONS_LITERAL, 'actions', $actions);
+        Services::Registry()->set(PERMISSIONS_LITERAL, 'actions', $permission_actions);
 
+        /** Verb Actions (Order Up, Order Down, Feature) to Permission Actions */
         $actions = Services::Configuration()->getFile('Application', 'Actions');
-
         if (count($actions) == 0) {
             throw new \Exception('Permissions: Actions Table not found.');
         }
@@ -59,29 +65,29 @@ Class PermissionsService
         $action_to_controller = array();
 
         foreach ($actions->action as $t) {
-            $urlActions[] = (string)$t['name'];
-            $action_to_authorisation[(string)$t['name']] = (string)$t['authorisation'];
-            $action_to_controller[(string)$t['name']] = (string)$t['controller'];
+            $name = (string)$t['name'];
+            $urlActions[] = $name;
+            $action_to_authorisation[$name] = (string)$t['authorisation'];
+            $action_to_controller[$name] = (string)$t['controller'];
         }
 
         Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation', $action_to_authorisation);
         Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_controller', $action_to_controller);
-
         sort($urlActions);
-        Services::Registry()->loadArray(PERMISSIONS_LITERAL, 'urlActions', $urlActions);
+        Services::Registry()->set(PERMISSIONS_LITERAL, 'urlActions', $urlActions);
 
+        /** Bridges the Verb Action (Order Up, Order Down) to the Permission Action (Read, Update) to the ID (1, 2, etc.) */
         $action_to_authorisation_id = array();
-        foreach ($actions as $title => $id) {
-            $action_to_authorisation_id[$title] = (int)$id;
+        foreach ($action_to_authorisation as $action => $authorisation) {
+            $action_to_authorisation_id[$action] = $permission_action_ids[$authorisation];
         }
-
         Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation_id', $action_to_authorisation_id);
 
         return true;
     }
 
     /**
-     * Check if the Site is authorised for this Application
+     * Check if the Site has permission to utilise this Application
      *
      * Usage:
      * $results = Services::Permissions()->verifySiteApplication();
@@ -102,21 +108,33 @@ Class PermissionsService
         $controller->model->query->where($controller->model->db->qn('a.site_id') . ' = ' . (int)SITE_ID);
         $controller->model->query->where($controller->model->db->qn('a.application_id') . ' = ' . (int)APPLICATION_ID);
 
-        $application_id = $controller->getData(QUERY_OBJECT_RESULT);
-
-        if ($application_id === false) {
-            Services::Response()->setHeader(
-                'Status',
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'error_403_message', 'Not Authorised.'),
-                403
-            );
-        }
-
-        return $application_id;
+        return $controller->getData(QUERY_OBJECT_RESULT);
     }
 
     /**
-     * Using the Request Task, retrieve the Controller
+     * Using the Request Task (Verb Action, like Tag, or Order Up), retrieve the Permissions Action (ex. Update)
+     *
+     * Example usage:
+     * $request_action = Services::Permissions()->getTaskAction($task);
+     *
+     * @param   $task
+     *
+     * @return  string
+     * @since   1.0
+     */
+    public function getTaskAction($task)
+    {
+        $temp = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
+
+        if (isset($temp[$task])) {
+            return $temp[$task];
+        }
+
+        throw new \Exception ('Route: Action/Authorisation not defined by Permission Registry');
+    }
+
+    /**
+     * Using the Request Task (Verb Action, like Tag, or Order Up), retrieve the Controller
      *
      * Example usage:
      * $controller = Services::Permissions()->getTaskController($action);
@@ -128,14 +146,13 @@ Class PermissionsService
      */
     public function getTaskController($action)
     {
-        $actionArray = $this->request->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
-        $controller = $this->request->get(PERMISSIONS_LITERAL, 'action_to_controller');
+        $temp = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_controller');
 
-        if (isset($actionArray[$action]) && isset($controller[$actionArray[$action]])) {
-            return $controller[$actionArray[$action]];
-        } else {
-            throw new \Exception(PERMISSIONS_LITERAL . ': Action ' . $action . ' and associated controller not defined');
+        if (isset($temp[$action])) {
+            return $temp[$action];
         }
+
+        throw new \Exception ('Route: Action/Controller not defined by Permission Registry');
     }
 
     /**

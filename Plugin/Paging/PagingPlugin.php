@@ -170,7 +170,7 @@ class PagingPlugin extends Plugin
         $controller = new $controllerClass();
 
         $results = $controller->getModelRegistry(
-            $this->get('model_type', DATASOURCE_LITERAL),
+            $this->get('model_type', DATA_SOURCE_LITERAL),
             $this->get('model_name')
         );
         if ($results === false) {
@@ -201,7 +201,7 @@ class PagingPlugin extends Plugin
         $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         $this->model_registry = ucfirst(strtolower($this->get('model_name')))
-            . ucfirst(strtolower($this->get('model_type', DATASOURCE_LITERAL)));
+            . ucfirst(strtolower($this->get('model_type', DATA_SOURCE_LITERAL)));
 
         if ($item === false || count($item) == 0) {
             return false;

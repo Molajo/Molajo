@@ -33,7 +33,7 @@ Class TextService
     public function extension($model_name, $source_path = null, $destination_path = null)
     {
         $controller = new CreateController();
-        $model_registry = ucfirst(strtolower($model_name)) . DATASOURCE_LITERAL;
+        $model_registry = ucfirst(strtolower($model_name)) . DATA_SOURCE_LITERAL;
 
         $data = new \stdClass();
 

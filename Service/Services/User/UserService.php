@@ -33,7 +33,7 @@ Class UserService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, USER_LITERAL);
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, USER_LITERAL);
         $controller->setDataobject();
 
         $controller->set('id', $this->id);

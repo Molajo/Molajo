@@ -248,9 +248,9 @@ Class Application
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', $override_parse_final);
 
         if ($results === true) {
-            if (PROFILER_ON) {
+            //if (defined(PROFILER_ON)) {
                 Services::Profiler()->set('Application Schedule Event onAfterInitialise', PROFILER_PLUGINS);
-            }
+            //}
             $results = Services::Event()->scheduleEvent('onAfterInitialise');
             if (is_array($results)) {
                 $results = true;
@@ -258,9 +258,9 @@ Class Application
         }
 
         if ($results === false) {
-            if (PROFILER_ON) {
+            //if (is_defined(PROFILER_ON)) {
                 Services::Profiler()->set('Initialise failed', PROFILER_APPLICATION);
-            }
+            //}
             throw new \Exception('Initialisation failed');
         }
 
@@ -333,9 +333,9 @@ Class Application
 //$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
 //$results = Services::Install()->testDeleteExtension('Test', 'Resources');
 
-        if (PROFILER_ON) {
+        //if (defined(PROFILER_ON)) {
             Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
-        }
+       // }
 
         $results = Services::Route()->process(
             $this->requested_resource_for_route,
@@ -351,9 +351,9 @@ Class Application
         if ($results === false
             || Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1
         ) {
-            if (PROFILER_ON) {
+//            if (is_defined(PROFILER_ON)) {
                 Services::Profiler()->set('Route failed', PROFILER_APPLICATION);
-            }
+  //          }
             throw new \Exception('Route failed');
         }
 
@@ -361,15 +361,15 @@ Class Application
             && Services::Redirect()->url === null
             && (int)Services::Redirect()->code == 0
         ) {
-            if (PROFILER_ON) {
+            //if (is_defined(PROFILER_ON)) {
                 Services::Profiler()->set('Route succeeded', PROFILER_APPLICATION);
-            }
+            //}
             return true;
         }
 
-        if (PROFILER_ON) {
+     //   if (is_defined(PROFILER_ON)) {
             Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, PROFILER_APPLICATION);
-        }
+       // }
 
         return true;
     }
@@ -382,13 +382,13 @@ Class Application
      */
     protected function onAfterRouteEvent()
     {
-        if (PROFILER_ON) {
+       // if (is_defined(PROFILER_ON)) {
             Services::Profiler()->set(
                 'Application Schedules onAfterRoute',
                 PROFILER_PLUGINS,
                 VERBOSE
             );
-        }
+      //  }
 
         $arguments = array(
             'parameters' => Services::Registry()->getArray(PARAMETERS_LITERAL),
@@ -409,7 +409,7 @@ Class Application
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
         Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return true;
@@ -426,9 +426,9 @@ Class Application
      */
     protected function authorise()
     {
-        if (PROFILER_ON) {
+//        if (is_defined(PROFILER_ON)) {
             Services::Profiler()->set(AUTHORISATION, PROFILER_APPLICATION);
-        }
+  //      }
 
         $results = Services::Event()->scheduleEvent('onAfterAuthorise');
         if (is_array($results)) {
@@ -443,10 +443,10 @@ Class Application
             throw new \Exception('onAfterRouteEvent Failed');
         }
 
-        if ($results === false) {
+//        if ($results === false) {
             Services::Profiler()->set('Authorise failed', PROFILER_APPLICATION);
             throw new \Exception('Permissions Failed', 403);
-        }
+  //      }
 
         Services::Profiler()->set('Authorise succeeded', PROFILER_APPLICATION);
 
@@ -946,11 +946,14 @@ Class Application
     protected function verifySiteApplication()
     {
         $authorise = Services::Permissions()->verifySiteApplication();
+
         if ($authorise === false) {
-            //todo: redirect to error page
-            $message = '304: ' . BASE_URL;
-            echo $message;
-            die;
+
+            Services::Response()->setHeader(
+                'Status',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'error_403_message', 'Not Authorised.'),
+                403
+            );
         }
 
         return true;

@@ -59,7 +59,7 @@ Class MenuService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'MenuitemsNested');
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'MenuitemsNested');
         $controller->setDataobject();
 
         $controller->model->query->where($controller->model->db->qn('current_menuitem.id')

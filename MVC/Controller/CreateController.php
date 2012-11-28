@@ -32,7 +32,7 @@ class CreateController extends Controller
 
         if (isset($this->data->model_type)) {
         } else {
-            $this->data->model_type = DATASOURCE_LITERAL;
+            $this->data->model_type = DATA_SOURCE_LITERAL;
         }
         if (isset($this->data->model_name)) {
         } else {
@@ -380,7 +380,7 @@ class CreateController extends Controller
 
                 $controllerClass = CONTROLLER_CLASS;
                 $controller = new $controllerClass();
-                $results = $controller->getModelRegistry(DATASOURCE_LITERAL, $source_model);
+                $results = $controller->getModelRegistry(DATA_SOURCE_LITERAL, $source_model);
                 if ($results === false) {
                     return false;
                 }

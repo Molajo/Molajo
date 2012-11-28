@@ -36,7 +36,7 @@ class CatalogPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Catalog');
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
 
         $controller->set('get_customfields', 0);
@@ -252,7 +252,7 @@ class CatalogPlugin extends Plugin
     {
         $data = new \stdClass();
         $data->model_name = 'UserActivity';
-        $data->model_table = DATASOURCE_LITERAL;
+        $data->model_table = DATA_SOURCE_LITERAL;
         $data->catalog_id = $id;
         $data->action_id = $action_id;
 
@@ -277,7 +277,7 @@ class CatalogPlugin extends Plugin
     {
         $data = new \stdClass();
         $data->model_name = 'CatalogActivity';
-        $data->model_table = DATASOURCE_LITERAL;
+        $data->model_table = DATA_SOURCE_LITERAL;
         $data->catalog_id = $id;
         $data->action_id = $action_id;
 

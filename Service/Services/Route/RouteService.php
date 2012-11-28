@@ -122,9 +122,7 @@ Class RouteService
             return false;
         }
 
-        $this->getRouteParameters();
-
-        return true;
+        return $this->getRouteParameters();
     }
 
     /**
@@ -311,7 +309,10 @@ Class RouteService
     }
 
     /**
-     * Retrieve non-route values for SEF URLs
+     * Retrieve non-route values for SEF URLs:
+     *
+     *  1.  Tasks (Tag, Favoriate, Order Up) to Permission Actions (Insert, View, Delete, etc)
+     *  2.  Filters (Tag, Category, Page, Author, etc.) not used for Route
      *
      * @return  boolean
      * @since   1.0
@@ -320,25 +321,22 @@ Class RouteService
     {
         $path = Services::Registry()->get(PARAMETERS_LITERAL, 'request_url');
 
-		/** Actions */
+		/** Tasks (Tag, Favorite, Order Up) to Permission Actions (Insert, View, Delete, etc) */
         $urlParts = explode('/', $path);
         if (count($urlParts) == 0) {
             return true;
         }
 
-//todo - separate display action from other (ex. tag)
-
-        $actions = Services::Registry()->get(PERMISSIONS_LITERAL, 'urlActions');
+        $urlActions = Services::Registry()->get(PERMISSIONS_LITERAL, 'urlActions');
 
         $path = '';
-        $action = '';
+        $task = '';
         $action_target = '';
 
         foreach ($urlParts as $slug) {
-
-            if ($action == '') {
-                if (in_array($slug, $actions)) {
-                    $action = $slug;
+            if ($task == '') {
+                if (in_array($slug, $urlActions)) {
+                    $task = $slug;
                 } else {
                     if (trim($path) == '') {
                     } else {
@@ -352,29 +350,22 @@ Class RouteService
             }
         }
 
-		if ($action == '') {
-			$action = ACTION_VIEW;
+		if ($task == '') {
+			$task = ACTION_VIEW;
 		}
 
-		Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', $action);
+        /** Map Action Verb (Tag, Favorite, etc.) to Permission Action (Update, Delete, etc.) */
+		Services::Registry()->set(PARAMETERS_LITERAL, 'request_task',
+            $task);
 
-		Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_target', $action_target);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_target',
+            $action_target);
 
-        $temp = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
-        if (isset($temp[$action])) {
-            $action_permission = $temp[$action];
-        } else {
-            throw new \Exception ('Route: Action not defined by Permissions');
-        }
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', $action_permission);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller',
+            Services::Permissions()->getTaskController($task));
 
-        $temp = Services::Registry()->get(PERMISSIONS_LITERAL, 'request_authorisation');
-        if (isset($temp[$action])) {
-            $action_controller = $temp[$action];
-        } else {
-            throw new \Exception ('Route: Action not defined by Permissions');
-        }
-		Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller', $action_controller);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action',
+            Services::Permissions()->getTaskAction($task));
 
 		if ($path == Services::Registry()->get(PARAMETERS_LITERAL, 'request_url')) {
 		} else {
@@ -382,14 +373,13 @@ Class RouteService
 			return true;
 		}
 
-	/** Request Non-routing Parameters */
-
+	    /** Extract Non-routing Parameters from Route-able Request */
 		$urlParts = explode('/', $path);
 		if (count($urlParts) == 0) {
 			return true;
 		}
 
-		$filters = array(STRUCTURE_LITERAL,'category','author');
+		$filters = array('page','category','author', 'tag');
 
 		$path = '';
 		$filterArray =  '';
@@ -429,16 +419,16 @@ Class RouteService
     /**
      * filterInput
      *
-     * @param string $name        Name of input field
-     * @param string $field_value Value of input field
-     * @param string $dataType    Datatype of input field
-     * @param int    $null        0 or 1 - is null allowed
-     * @param string $default     Default value, optional
+     * @param   string  $name         Name of input field
+     * @param   string  $field_value  Value of input field
+     * @param   string  $dataType     Datatype of input field
+     * @param   int     $null         0 or 1 - is null allowed
+     * @param   string  $default      Default value, optional
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      *
-     * @throws /Exception
+     * @throws  /Exception
      */
     protected function filterInput($name, $value, $dataType, $null, $default)
     {
@@ -453,13 +443,11 @@ Class RouteService
     }
 
     /**
-     * Retrieve the Menu Item, Content, Extension and Primary Category Parameters for Route
+     * For Item, List, or Menu Item, retrieve Parameter data needed to generate page
      *
-     * Determine the Theme and Page Values
-     *
-     * @return  null
+     * @return  boolean
      * @since   1.0
-     * @throws /Exception
+     * @throws  /Exception
      */
     protected function getRouteParameters()
     {
@@ -478,27 +466,19 @@ Class RouteService
         if (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_LIST
         ) {
             $response = Helpers::Content()->getRouteList($id, $model_type, $model_name);
-
             if ($response === false) {
-                Services::Error()->set(500, 'Extension not found');
                 return false;
             }
 
         } elseif (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_ITEM) {
-
             $response = Helpers::Content()->getRouteItem($id, $model_type, $model_name);
-
             if ($response === false) {
-                Services::Error()->set(500, 'Content not found');
                 return false;
             }
 
         } else {
-
             $response = Helpers::Content()->getRouteMenuitem();
-
             if ($response === false) {
-                Services::Error()->set(500, 'Menu Item not found');
                 return false;
             }
         }

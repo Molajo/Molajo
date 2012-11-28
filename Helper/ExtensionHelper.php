@@ -33,7 +33,7 @@ Class ExtensionHelper
      */
     public function getExtension(
         $extension_id,
-        $model_type = DATASOURCE_LITERAL,
+        $model_type = DATA_SOURCE_LITERAL,
         $model_name = 'ExtensionInstances',
         $check_permissions = 0
     ) {
@@ -102,12 +102,12 @@ Class ExtensionHelper
      */
     public function setAuthorisedExtensions(
         $extension_id = 0,
-        $model_type = DATASOURCE_LITERAL,
+        $model_type = DATA_SOURCE_LITERAL,
         $model_name = 'ExtensionInstances',
         $query_object = QUERY_OBJECT_ITEM,
         $catalog_type_id = null
     ) {
-        $results = Helpers::Extension()->get(0, DATASOURCE_LITERAL, 'ExtensionInstances', QUERY_OBJECT_LIST, null, 1);
+        $results = Helpers::Extension()->get(0, DATA_SOURCE_LITERAL, 'ExtensionInstances', QUERY_OBJECT_LIST, null, 1);
 
         if ($results === false || count($results) == 0) {
             echo 'No authorised extensions for user.';
@@ -149,7 +149,7 @@ Class ExtensionHelper
      */
     public function get(
         $extension_id = 0,
-        $model_type = DATASOURCE_LITERAL,
+        $model_type = DATA_SOURCE_LITERAL,
         $model_name = 'ExtensionInstances',
         $query_object = QUERY_OBJECT_ITEM,
         $catalog_type_id = null,
@@ -196,6 +196,7 @@ Class ExtensionHelper
         }
 
         if (strtolower($query_object) == QUERY_OBJECT_LIST) {
+
             $controller->set('model_offset', 0);
             $controller->set('model_count', 999999);
             $controller->set('use_pagination', 0);
@@ -215,7 +216,7 @@ Class ExtensionHelper
 
         $controller->set('check_view_level_access', $check_permissions);
 
-        if ($model_type == DATASOURCE_LITERAL) {
+        if ($model_type == DATA_SOURCE_LITERAL) {
         } else {
             $controller->model->query->where(
                 $controller->model->db->qn('catalog')
@@ -291,7 +292,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'ExtensionInstances');
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
 
         $controller->set('process_plugins', 0);
@@ -348,7 +349,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'ExtensionInstances');
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
 
         $controller->set('process_plugins', 0);
@@ -397,7 +398,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Extensions');
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensions');
         $controller->setDataobject();
 
         $controller->set('process_plugins', 0);

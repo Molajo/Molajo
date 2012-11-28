@@ -191,9 +191,9 @@ Class LanguageService
     /**
      * Loads language strings into registry
      *
-     * @param   string $language, optional
+     * @param   string  $language, optional
      *
-     * @return     bool
+     * @return  bool
      * @since   1.0
      */
     protected function loadLanguageStrings($language = null)
@@ -435,7 +435,7 @@ Class LanguageService
     protected function getInstalledLanguages()
     {
         $helper = new ExtensionHelper();
-        $installed = $helper->get(0, DATASOURCE_LITERAL, 'Languageservice', QUERY_OBJECT_LIST, CATALOG_TYPE_LANGUAGE);
+        $installed = $helper->get(0, DATA_SOURCE_LITERAL, 'Languageservice', QUERY_OBJECT_LIST, CATALOG_TYPE_LANGUAGE);
         if ($installed === false || count($installed) == 0) {
             throw new Exception('Languages: No languages installed');
         }
@@ -449,20 +449,20 @@ Class LanguageService
 
             $row->id = $language->extension_id;
             $row->title = $language->subtitle;
-            $row->tag = $language->parameters_tag;
-            $tagArray[] = $language->parameters_tag;
-            $row->locale = $language->parameters_locale;
+            $row->tag = $language->tag;
+            $row->locale = $language->locale;
 
-            if ($language->parameters_rtl == 1) {
-                $row->rtl = $language->parameters_rtl;
+            if ($language->rtl == 1) {
+                $row->rtl = $language->rtl;
                 $row->direction = 'rtl';
             } else {
-                $row->rtl = $language->parameters_rtl;
+                $row->rtl = $language->rtl;
                 $row->direction = '';
             }
-            $row->first_day = $language->parameters_first_day;
+            $row->first_day = $language->first_day;
 
             $languageList[] = $row;
+            $tagArray[] = $language->tag;
         }
 
         Services::Registry()->createRegistry(LANGUAGES_LITERAL);

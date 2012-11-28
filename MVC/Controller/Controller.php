@@ -132,12 +132,12 @@ class Controller
      *
      * @throws  \RuntimeException
      */
-    public function getModelRegistry($model_type = DATASOURCE_LITERAL, $model_name = null, $model_class = 'ReadModel')
+    public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null, $model_class = 'ReadModel')
     {
         $this->set('data_object_set', 0);
 
         if ($model_type == '') {
-            $model_type = DATASOURCE_LITERAL;
+            $model_type = DATA_SOURCE_LITERAL;
         }
         if ($model_class == '') {
             $model_class = 'ReadModel';
