@@ -214,7 +214,7 @@ class DisplayController extends Controller
 
                 $arguments = array(
                     'model_registry' => $this->model_registry,
-                    DATA_OBJECT_PARAMETERS => $this->parameters,
+                    PARAMETERS_LITERAL => $this->parameters,
                     'data' => $item,
                     'model_type' => $this->get('model_type'),
                     'model_name' => $this->get('model_name')
@@ -231,7 +231,7 @@ class DisplayController extends Controller
                     return false;
                 }
 
-                $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
+                $this->parameters = $arguments[PARAMETERS_LITERAL];
                 $this->query_results[] = $arguments['data'];
 
                 if ($this->parameters['even_or_odd'] == 'odd') {
@@ -256,7 +256,7 @@ class DisplayController extends Controller
     {
         $arguments = array(
             'model_registry' => $this->model_registry,
-            DATA_OBJECT_PARAMETERS => $this->parameters,
+            PARAMETERS_LITERAL => $this->parameters,
             'rendered_output' => $rendered_output,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')

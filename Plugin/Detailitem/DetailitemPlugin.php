@@ -30,15 +30,15 @@ class DetailitemPlugin extends Plugin
     public function onBeforeParse()
     {
         return true;
-        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'menuitem_id')) {
-            if ((int) Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'menuitem_id') == 0) {
+        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'menuitem_id')) {
+            if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'menuitem_id') == 0) {
             } else {
                 return true;
             }
         }
 
-        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'criteria_source_id')) {
-            if ((int) Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'criteria_source_id') == 0) {
+        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'criteria_source_id')) {
+            if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_source_id') == 0) {
                 return true; // request for list;
             } else {
                 // request for item is handled by this method
@@ -49,11 +49,11 @@ class DetailitemPlugin extends Plugin
         $this->set('request_model_name', $this->get('model_name'));
 
         $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', DATA_OBJECT_PRIMARY);
+        $this->set('model_name', PRIMARY_LITERAL);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
+        $this->parameters['model_name'] = PRIMARY_LITERAL;
 
         //$this->getComments();
         return true;
@@ -95,7 +95,7 @@ class DetailitemPlugin extends Plugin
 
         die;
 
-        Services::Registry()->set(DATA_OBJECT_LITERAL, DATA_OBJECT_DATALIST, $query_results);
+        Services::Registry()->set(DATA_OBJECT_LITERAL, DATALIST_LITERAL, $query_results);
 
         return true;
     }

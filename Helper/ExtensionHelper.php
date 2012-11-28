@@ -40,40 +40,40 @@ Class ExtensionHelper
         $item = Helpers::Extension()->get($extension_id, $model_type, $model_name, $check_permissions);
 
         if (count($item) == 0) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_found', false);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'status_found', false);
             return false;
         }
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_id', $item->extensions_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_name', $item->extensions_name);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_name_path_node', $item->extensions_name);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_title', $item->title);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_translation_of_id', (int)$item->translation_of_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_language', $item->language);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_view_group_id', $item->view_group_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_id', $item->catalog_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_id', (int)$item->catalog_type_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_title', $item->catalog_types_title);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_id', $item->extensions_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_name', $item->extensions_name);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_name_path_node', $item->extensions_name);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_title', $item->title);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_translation_of_id', (int)$item->translation_of_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_language', $item->language);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_view_group_id', $item->view_group_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_catalog_id', $item->catalog_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_catalog_type_id', (int)$item->catalog_type_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_catalog_type_title', $item->catalog_types_title);
 
         Services::Registry()->set(
-            DATA_OBJECT_PARAMETERS,
+            PARAMETERS_LITERAL,
             'extension_path',
             $this->getPath(
                 (int)$item->catalog_type_id,
-                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_name_path_node')
+                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node')
             )
         );
 
         Services::Registry()->set(
-            DATA_OBJECT_PARAMETERS,
+            PARAMETERS_LITERAL,
             'extension_path_url',
             $this->getPathURL(
                 (int)$item->catalog_type_id,
-                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_name_path_node')
+                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node')
             )
         );
 
-        $customFieldTypes = Services::Registry()->get($item->model_registry, 'CustomFieldGroups');
+        $customFieldTypes = Services::Registry()->get($item->model_registry, CUSTOMFIELDGROUPS_LITERAL);
 
         if (count($customFieldTypes) > 0) {
             foreach ($customFieldTypes as $customFieldName) {
@@ -609,8 +609,8 @@ Class ExtensionHelper
      */
     public function setThemePageView()
     {
-        $theme_id = (int)Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_id');
-        $page_view_id = (int)Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_id');
+        $theme_id = (int)Services::Registry()->get(PARAMETERS_LITERAL, 'theme_id');
+        $page_view_id = (int)Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_id');
 
         Helpers::Theme()->get($theme_id);
 
@@ -627,8 +627,8 @@ Class ExtensionHelper
      */
     public function setTemplateWrapModel()
     {
-        $template_view_id = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'template_view_id');
-        $wrap_view_id = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'wrap_view_id');
+        $template_view_id = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_id');
+        $wrap_view_id = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_id');
 
         Helpers::View()->get($template_view_id, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 

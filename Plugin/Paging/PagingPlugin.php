@@ -113,7 +113,7 @@ class PagingPlugin extends Plugin
 
         $query_results[] = $row;
 
-        Services::Registry()->set(DATA_OBJECT_PRIMARY, 'Paging', $query_results);
+        Services::Registry()->set(PRIMARY_LITERAL, 'Paging', $query_results);
 
         /** Paging */
         $query_results = array();
@@ -152,7 +152,7 @@ class PagingPlugin extends Plugin
         }
 
         Services::Registry()->set(
-            DATA_OBJECT_TEMPLATE,
+            TEMPLATE_LITERAL,
             $this->get('template_view_path_node'),
             $query_results);
 

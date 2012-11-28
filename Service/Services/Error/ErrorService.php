@@ -24,26 +24,25 @@ Class ErrorService
     /**
      * 500 Set routing for an error condition
      *
-     * @param             $code
-     * @param null|string $message
+     * @param   integer  $code
+     * @param   null|string  $message
      *
-     * @return null
-     *
+     * @return  null
      * @since   1.0
      */
     public function set($code, $message = 'Internal server error')
     {
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'error_status', true);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', true);
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action', ACTION_VIEW);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action_authorisation', 'read'); //for now
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_controller', 'read');
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', ACTION_VIEW);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_authorisation', 'read'); //for now
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller', 'read');
 
         /** default error theme and page */
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_id',
+        Services::Registry()->set(PARAMETERS_LITERAL, 'theme_id',
             Services::Registry()->get(CONFIGURATION_LITERAL, 'error_theme_id')
         );
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'page_view_id',
+        Services::Registry()->set(PARAMETERS_LITERAL, 'page_view_id',
             Services::Registry()->get(CONFIGURATION_LITERAL, 'error_page_view_id')
         );
 
@@ -66,7 +65,7 @@ Class ErrorService
                 ->set($message, MESSAGE_TYPE_ERROR, 500);
         }
 
-        Services::Registry()->merge(CONFIGURATION_LITERAL, DATA_OBJECT_PARAMETERS, true);
+        Services::Registry()->merge(CONFIGURATION_LITERAL, PARAMETERS_LITERAL, true);
 
         Helpers::Extension()->setThemePageView();
 
@@ -76,8 +75,7 @@ Class ErrorService
     /**
      * 503 Offline
      *
-     * @return null
-     *
+     * @return  null
      * @since   1.0
      */
     protected function error503()
@@ -94,11 +92,11 @@ Class ErrorService
             503
         );
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'theme_id',
+        Services::Registry()->set(PARAMETERS_LITERAL, 'theme_id',
             Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_theme_id', 0)
         );
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'page_view_id',
+        Services::Registry()->set(PARAMETERS_LITERAL, 'page_view_id',
             Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_page_view_id', 0)
         );
     }
@@ -106,8 +104,7 @@ Class ErrorService
     /**
      * 403 Not Authorised
      *
-     * @return null
-     *
+     * @return  null
      * @since   1.0
      */
     protected function error403()
@@ -126,8 +123,7 @@ Class ErrorService
     /**
      * 404 Page Not Found
      *
-     * @return null
-     *
+     * @return  null
      * @since   1.0
      */
     protected function error404()

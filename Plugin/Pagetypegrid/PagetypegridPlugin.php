@@ -102,7 +102,7 @@ class PagetypegridPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Toolbar', $query_results);
+        Services::Registry()->set(TEMPLATE_LITERAL, 'Toolbar', $query_results);
 
         return true;
     }
@@ -132,7 +132,7 @@ class PagetypegridPlugin extends Plugin
                 //todo: figure out selected value
                 $selected = '';
 
-                $results = Services::Text()->getDatalist($listname, DATA_OBJECT_DATALIST, $this->parameters);
+                $results = Services::Text()->getDatalist($listname, DATALIST_LITERAL, $this->parameters);
 
                 if ($results === false) {
                 } else {
@@ -145,7 +145,7 @@ class PagetypegridPlugin extends Plugin
                         $selected
                     );
 
-                    Services::Registry()->set(DATA_OBJECT_DATALIST, $listname, $query_results);
+                    Services::Registry()->set(DATALIST_LITERAL, $listname, $query_results);
 
                     $row = new \stdClass();
                     $row->listname = $listname;
@@ -154,7 +154,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Gridfilters', $lists);
+        Services::Registry()->set(TEMPLATE_LITERAL, 'Gridfilters', $lists);
 
         return true;
     }
@@ -260,15 +260,15 @@ class PagetypegridPlugin extends Plugin
         $this->set('request_model_name', $this->get('model_name'));
 
         $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', DATA_OBJECT_PRIMARY);
+        $this->set('model_name', PRIMARY_LITERAL);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
+        $this->parameters['model_name'] = PRIMARY_LITERAL;
 
         Services::Registry()->set(
-            DATA_OBJECT_PRIMARY,
-            DATA_OBJECT_PRIMARY_DATA,
+            PRIMARY_LITERAL,
+            DATA_LITERAL,
             $query_results
         );
 
@@ -314,7 +314,7 @@ class PagetypegridPlugin extends Plugin
                 $row->enable = 1;
 
                 Services::Registry()->set(
-                    DATA_OBJECT_TEMPLATE,
+                    TEMPLATE_LITERAL,
                     'Grid' . strtolower($grid_batch_array[$i]),
                     array($row)
                 );

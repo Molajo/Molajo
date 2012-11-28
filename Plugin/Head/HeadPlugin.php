@@ -34,7 +34,7 @@ class HeadPlugin extends Plugin
         /** JS */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('dbo', DATA_OBJECT_ASSETS);
+        $results = $controller->getModelRegistry('dbo', ASSETS_LITERAL);
         if ($results === false) {
             return false;
         }
@@ -47,12 +47,12 @@ class HeadPlugin extends Plugin
         $controller->set('model_parameter', 'Js');
         $query_results = $controller->getData('getAssets');
 
-        Services::Registry()->set(DATA_OBJECT_ASSETS, 'js', $query_results);
+        Services::Registry()->set(ASSETS_LITERAL, 'js', $query_results);
 
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('dbo', DATA_OBJECT_ASSETS);
+        $results = $controller->getModelRegistry('dbo', ASSETS_LITERAL);
         if ($results === false) {
             return false;
         }
@@ -65,7 +65,7 @@ class HeadPlugin extends Plugin
         $controller->set('model_parameter', 'JsDeclarations');
         $query_results = $controller->getData('getAssets');
 
-        Services::Registry()->set(DATA_OBJECT_ASSETS, 'jsdeclarations', $query_results);
+        Services::Registry()->set(ASSETS_LITERAL, 'jsdeclarations', $query_results);
 
         return true;
     }

@@ -334,7 +334,7 @@ To display a very long list of the parameters used to select and process the Que
 
 #### To display all named pairs within a specific Namespace ####
 
-    <?php echo Molajo::Services()->get(DATA_OBJECT_PARAMETERS, '*');  ?>
+    <?php echo Molajo::Services()->get(PARAMETERS_LITERAL, '*');  ?>
 
 It is a good idea to become familiar with what options are available as this knowledge will help you tap into the flexibility and strength Molajo can offer.
 
@@ -342,13 +342,13 @@ It is a good idea to become familiar with what options are available as this kno
 
 To display just one parameter, follow this example which displays the CSS Class for the current Item Template View:
 
-    <?php echo Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'item_template_view_css_class'); ?>
+    <?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'item_template_view_css_class'); ?>
 
 #### To display a list of parameters that relate to a specific topic ####
 
 Namespacing is used to help separate parameters in order to make it easier to work with such a complex dataset. In addition, the Registry has been developed to display all entries that follow a specified value, as shown in this example:
 
-    <?php echo Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'item_*'); ?>
+    <?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'item_*'); ?>
 
 This will return a wealth of information about the Item Theme, Page, Template, Wrap, and Model, including the primary key for these entities and the names. In addition, the location from which the View was used is defined to assist with override questions. Also, the model name, type and query object describe the input criteria used to construct and execute the query that is currently used to render this View. It will be worthwhile to explore use of the Registry to understand and better control Molajo processing.
 

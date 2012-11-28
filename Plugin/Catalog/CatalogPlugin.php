@@ -117,7 +117,7 @@ class CatalogPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set(DATA_OBJECT_DATALIST, 'Catalog', $catalogArray);
+        Services::Registry()->set(DATALIST_LITERAL, 'Catalog', $catalogArray);
 
         return true;
     }

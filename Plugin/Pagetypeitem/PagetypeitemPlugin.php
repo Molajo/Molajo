@@ -42,11 +42,11 @@ class PagetypeitemPlugin extends Plugin
         $this->set('request_model_name', $this->get('model_name'));
 
         $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', DATA_OBJECT_PRIMARY);
+        $this->set('model_name', PRIMARY_LITERAL);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
+        $this->parameters['model_name'] = PRIMARY_LITERAL;
 
         /** ContentHelper already placed data already in registry */
         return true;

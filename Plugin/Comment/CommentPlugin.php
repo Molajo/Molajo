@@ -76,7 +76,7 @@ class CommentPlugin extends Plugin
         );
 
         Services::Registry()->set(
-            DATA_OBJECT_TEMPLATE,
+            TEMPLATE_LITERAL,
             $this->get('template_view_path_node'),
             $results);
 
@@ -88,7 +88,7 @@ class CommentPlugin extends Plugin
      *
      * If comments are required for content that is not the primary request, the parent variables
      * can be defined on the include statement, as shown below:
-     * <include:template name=Comment wrap=none parent_model_type=<?php echo Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_model_type'); ?> parent_model_name=<?php echo Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_model_name'); ?> parent_source_id=<?php echo Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_source_id'); ?>/>
+     * <include:template name=Comment wrap=none parent_model_type=<?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_type'); ?> parent_model_name=<?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_name'); ?> parent_source_id=<?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_source_id'); ?>/>
      *      Note: Include statements must not break on multiple lines
      *
      * @return  array|bool
@@ -292,7 +292,7 @@ class CommentPlugin extends Plugin
         $this->parameters['model_type'] = 'xxxx';
         $this->parameters['model_name'] = 'Edit';
 
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Commentform', $tabs);
+        Services::Registry()->set(TEMPLATE_LITERAL, 'Commentform', $tabs);
 
         return true;
     }

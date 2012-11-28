@@ -172,14 +172,11 @@ Class ConfigurationService
      */
     protected function getFieldProperties()
     {
-        Services::Registry()->createRegistry(FIELDS_MODEL_TYPE);
+        Services::Registry()->createRegistry('Fields');
 
-        $xml = ConfigurationService::getFile('Application', FIELDS_MODEL_TYPE);
+        $xml = ConfigurationService::getFile('Application', 'Fields');
         if ($xml === false) {
-            //throw error
-            //error
-            echo 'Cannot find Field File ';
-            die;
+            throw new \Exception('Configuration: getFieldProperties File not found.');
         }
 
         ConfigurationService::loadFieldProperties($xml, 'dataobjecttypes', 'dataobjecttype');
@@ -280,7 +277,7 @@ Class ConfigurationService
 
         $typeArray = array();
         $typeDefaultArray = array();
-        foreach ( $xml->$plural->$singular as $type) {
+        foreach ($xml->$plural->$singular as $type) {
             $typeArray[] = (string)$type['name'];
             $typeDefaultArray[(string)$type['name']] = (string)$type['default'];
         }
@@ -299,20 +296,28 @@ Class ConfigurationService
      *
      * @return  array
      * @since   1.0
+     * @throws  \Exception
      */
     protected function loadDatalists($datalistsArray, $folder)
     {
-        $dirRead = dir($folder);
 
-        $path = $dirRead->path;
+        try {
 
-        while (false !== ($entry = $dirRead->read())) {
-            if (is_dir($path . '/' . $entry)) {
-            } else {
-                $datalistsArray[] = substr($entry, 0, strlen($entry) - 4);
+            $dirRead = dir($folder);
+
+            $path = $dirRead->path;
+
+            while (false !== ($entry = $dirRead->read())) {
+                if (is_dir($path . '/' . $entry)) {
+                } else {
+                    $datalistsArray[] = substr($entry, 0, strlen($entry) - 4);
+                }
             }
+            $dirRead->close();
+
+        } catch (\Exception $e) {
+            throw new \Exception('Configuration: Exception caught in loadDatalists: ', $e->getMessage());
         }
-        $dirRead->close();
 
         return $datalistsArray;
     }
@@ -320,8 +325,9 @@ Class ConfigurationService
     /**
      * Get the application data and store it in the registry
      *
-     * @return  boolean
+     * @return  ConfigurationService
      * @since   1.0
+     * @throws  \Exception
      */
     protected function getApplication()
     {
@@ -347,11 +353,15 @@ Class ConfigurationService
 
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
                 if ($item === false) {
-                    throw new \RuntimeException ('ConfigurationService: Error executing getApplication Query');
+                    throw new \Exception ('ConfigurationService: Error executing getApplication Query');
                 }
 
                 Services::Registry()->set(CONFIGURATION_LITERAL, 'application_id', (int)$item->id);
-                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_catalog_type_id', (int)$item->catalog_type_id);
+                Services::Registry()->set(
+                    CONFIGURATION_LITERAL,
+                    'application_catalog_type_id',
+                    (int)$item->catalog_type_id
+                );
                 Services::Registry()->set(CONFIGURATION_LITERAL, 'application_name', $item->name);
                 Services::Registry()->set(CONFIGURATION_LITERAL, 'application_path', $item->path);
                 Services::Registry()->set(CONFIGURATION_LITERAL, 'application_description', $item->description);
@@ -378,11 +388,8 @@ Class ConfigurationService
                     Services::Registry()->set(CONFIGURATION_LITERAL, 'metadata_' . $key, $value);
                 }
 
-                Services::Registry()->delete(CONFIGURATION_LITERAL, 'database*');
-
             } catch (\Exception $e) {
-                echo 'Application will die. Exception caught in Configuration: ', $e->getMessage(), "\n";
-                die;
+                throw new \Exception('Configuration: Exception caught in Configuration: ', $e->getMessage());
             }
         }
 
@@ -408,6 +415,7 @@ Class ConfigurationService
     protected function setSitePaths()
     {
         Services::Registry()->set(CONFIGURATION_LITERAL, 'site_base_url', BASE_URL);
+
         $path = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_path', '');
         Services::Registry()->set(CONFIGURATION_LITERAL, 'application_base_url', BASE_URL . $path);
 
@@ -466,7 +474,7 @@ Class ConfigurationService
      * Services::Configuration()->getFile('Application', 'defines');
      *
      * or - in classes where usage can happen before the service is activated:
-     * ConfigurationService::getFile($model_type, $model_name);
+     *      ConfigurationService::getFile($model_type, $model_name);
      *
      * @static
      * @param   string $model_name
@@ -474,15 +482,10 @@ Class ConfigurationService
      *
      * @return  object $xml
      * @since   1.0
-     *
-     * @throws  \RuntimeException
      */
     public static function getFile($model_type, $model_name)
     {
         $path_and_file = ConfigurationService::locateFile($model_type, $model_name);
-        if ($path_and_file === false) {
-            // FAIL
-        }
 
         $xml_string = ConfigurationService::readXMLFile($path_and_file);
 
@@ -506,7 +509,7 @@ Class ConfigurationService
      * @return  string Name of the Model Registry object
      * @since   1.0
      *
-     * @throws  \RuntimeException
+     * @throws  \Exception
      */
     public static function getModel($model_type, $model_name)
     {
@@ -515,7 +518,7 @@ Class ConfigurationService
         $model_registry = $model_name . $model_type;
 
         if ($model_type == DATA_OBJECT_LITERAL) {
-            return ConfigurationService::getDataobject(DATA_OBJECT_LITERAL, $model_name);
+            return ConfigurationService::getDataobject($model_type, $model_name);
         }
 
         if (class_exists('Services')) {
@@ -527,7 +530,9 @@ Class ConfigurationService
 
         $path_and_file = ConfigurationService::locateFile($model_type, $model_name);
         if ($path_and_file === false) {
-            // FAIL
+            throw new \Exception('Configuration: Cannot find XML file for Model Type: '
+                . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
+
         }
         $xml_string = ConfigurationService::readXMLFile($path_and_file);
 
@@ -537,7 +542,8 @@ Class ConfigurationService
         if (isset($xml->model)) {
             $xml = $xml->model;
         } else {
-            // FAIL
+            throw new \Exception('Configuration: Cannot process XML file for Model Type: '
+                . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
         }
 
         Services::Registry()->createRegistry($model_registry);
@@ -567,7 +573,7 @@ Class ConfigurationService
         ConfigurationService::setElementsRegistry(
             $model_registry,
             $xml,
-            FIELDS_MODEL_TYPE,
+            'fields',
             'field',
             self::$valid_field_attributes
         );
@@ -630,7 +636,7 @@ Class ConfigurationService
      *
      * Usage:
      * Services::Configuration()->getDataobject(DATA_OBJECT_LITERAL, DATABASE_LITERAL);
-     * Services::Configuration()->getDataobject(DATA_OBJECT_LITERAL, DATA_OBJECT_ASSETS);
+     * Services::Configuration()->getDataobject(DATA_OBJECT_LITERAL, ASSETS_LITERAL);
      *
      * @static
      * @param   string $model_name
@@ -639,7 +645,7 @@ Class ConfigurationService
      * @return  string Name of the Dataobject Registry object
      * @since   1.0
      *
-     * @throws  \RuntimeException
+     * @throws  \Exception
      */
     public static function getDataobject($model_type, $model_name)
     {
@@ -654,7 +660,8 @@ Class ConfigurationService
 
         $path_and_file = ConfigurationService::locateFile($model_type, $model_name);
         if ($path_and_file === false) {
-            // FAIL
+            throw new \Exception('Configuration: getDataobject method Cannot find XML file for Model Type: '
+                . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
         }
 
         $xml_string = ConfigurationService::readXMLFile($path_and_file);
@@ -665,7 +672,9 @@ Class ConfigurationService
         if (isset($xml->model)) {
             $xml = $xml->model;
         } else {
-            // FAIL
+            throw new \Exception('Configuration: getDataobject method Cannot process XML file for Model Type: '
+                . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
+
         }
 
         Services::Registry()->createRegistry($model_registry);
@@ -732,7 +741,7 @@ Class ConfigurationService
     }
 
     /**
-     * Retrieve base Dataobject Registry data and store it to the registry
+     * Store Data Object Definitions into Registry
      *
      * @static
      * @param   $DataobjectRegistry
@@ -740,6 +749,7 @@ Class ConfigurationService
      *
      * @return  boolean
      * @since   1.0
+     * @throws  \Exception
      */
     protected static function setDataobjectRegistry($DataobjectRegistry, $xml)
     {
@@ -750,9 +760,8 @@ Class ConfigurationService
             if (in_array($key, $doArray)) {
                 Services::Registry()->set($DataobjectRegistry, $key, (string)$value);
             } else {
-                echo 'Failure in ConfigurationService::setDataobjectRegistry for Registry: '
-                    . $DataobjectRegistry . ' Invalid Attribute: ' . $key;
-                die;
+                throw new \Exception ('Configuration: setDataobjectRegistry encountered Invalid Dataobject Attributes '
+                    . $key);
             }
         }
 
@@ -768,7 +777,7 @@ Class ConfigurationService
     }
 
     /**
-     * Retrieves base Model Registry data and stores it to the datasource registry
+     * Store Model Registry data into Registry
      *
      * @static
      * @param   $model_registry
@@ -786,9 +795,7 @@ Class ConfigurationService
             if (in_array($key, $modelArray)) {
                 Services::Registry()->set($model_registry, $key, (string)$value);
             } else {
-                echo 'Failure in ConfigurationService::setModelRegistry for Registry: '
-                    . $model_registry . ' Invalid Attribute: ' . $key;
-                die;
+                throw new \Exception ('CONFIGURATION: setModelRegistry encountered Invalid Model Attribute ' . $key);
             }
         }
 
@@ -802,7 +809,7 @@ Class ConfigurationService
     }
 
     /**
-     * setElementsRegistry
+     * Define elements for Data Model to Registry
      *
      * @static
      * @param   $model_registry
@@ -836,9 +843,8 @@ Class ConfigurationService
 
                 if (in_array($key, $valid_attributes)) {
                 } else {
-                    echo 'In configuration setElementsRegistry ' . ucfirst($plural) . ' Attribute not known '
-                        . $key . ' for ' . $model_registry . '<br />';
-                    die();
+                    throw new \Exception ('CONFIGURATION: setElementsRegistry encountered Invalid Model Attribute '
+                        . $key . ' for ' . $model_registry);
                 }
 
                 $itemAttributesArray[$key] = $value;
@@ -975,7 +981,6 @@ Class ConfigurationService
     {
         $customFieldsArray = array();
 
-        /** Process Custom Fields defined within the model */
         if (count($xml->customfields->customfield) > 0) {
 
             foreach ($xml->customfields->customfield as $custom_field) {
@@ -1001,10 +1006,10 @@ Class ConfigurationService
         }
 
         /** Include Inherited Groups not matching existing groups */
-        $exists = Services::Registry()->exists($model_registry, 'CustomFieldGroups');
+        $exists = Services::Registry()->exists($model_registry, CUSTOMFIELDGROUPS_LITERAL);
 
         if ($exists === true) {
-            $inherited = Services::Registry()->get($model_registry, 'CustomFieldGroups');
+            $inherited = Services::Registry()->get($model_registry, CUSTOMFIELDGROUPS_LITERAL);
 
             if (is_array($inherited) && count($inherited) > 0) {
                 foreach ($inherited as $name) {
@@ -1021,13 +1026,13 @@ Class ConfigurationService
             }
         }
 
-        Services::Registry()->set($model_registry, 'CustomFieldGroups', array_unique($customFieldsArray));
+        Services::Registry()->set($model_registry, CUSTOMFIELDGROUPS_LITERAL, array_unique($customFieldsArray));
 
         return;
     }
 
     /**
-     * getCustomFieldsSpecificGroup
+     * Load Custom Fields for a specific Group -- this is called once for each custom field type for a Model
      *
      * @static
      * @param   $model_registry
@@ -1052,7 +1057,8 @@ Class ConfigurationService
                 if ($key2 == 'fieldset') {
                 } elseif (in_array($key2, self::$valid_field_attributes)) {
                 } else {
-                    echo 'Field attribute not known ' . $key2 . ':' . $value2 . ' for ' . $model_registry . '<br />';
+                    throw new \Exception ('CONFIGURATION: getCustomFieldsSpecificGroup Invalid Field attribute '
+                        . $key2 . ':' . $value2 . ' for ' . $model_registry);
                 }
 
                 if ($key2 == 'name') {
@@ -1062,6 +1068,7 @@ Class ConfigurationService
 
                 $fieldAttributesArray[$key2] = $value2;
             }
+
             $fieldAttributesArray['field_inherited'] = 0;
 
             $fieldArray[] = $fieldAttributesArray;
@@ -1098,9 +1105,13 @@ Class ConfigurationService
         $available = Services::Registry()->get($model_registry, $name, array());
 
         if (count($available) > 0) {
+
             foreach ($available as $row) {
+
                 foreach ($row as $field => $fieldvalue) {
+
                     if ($field == 'name') {
+
                         if (in_array($fieldvalue, $fieldNames)) {
                         } else {
                             $row['field_inherited'] = 1;
@@ -1193,7 +1204,6 @@ Class ConfigurationService
     {
         $model_type = trim(ucfirst(strtolower($model_type)));
         $model_name = trim(ucfirst(strtolower($model_name)));
-//echo '<br/> ' . $model_type . ' ' . $model_name . '<br /> ';
 
         $path = false;
 
@@ -1202,9 +1212,7 @@ Class ConfigurationService
             if (file_exists($path)) {
                 return $path;
             }
-            //throw error
-            echo 'ConfigurationService::locateFile() Cannot find Application Sites File ';
-            die;
+            throw new \Exception ('CONFIGURATION: locateFile() Cannot find Sites XML File.');
         }
 
         if ($model_type == DATA_OBJECT_LITERAL) {
@@ -1212,20 +1220,16 @@ Class ConfigurationService
             if (file_exists($path)) {
                 return $path;
             }
-
             $path = SITES_DATA_OBJECT_FOLDER . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
-
             $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
-
-            //throw error
-            echo 'ConfigurationService::locateFile() Cannot find ' . $model_type . ' for ' . $model_name;
-            die;
+            throw new \Exception ('CONFIGURATION: locateFile() Cannot find Model Type '
+                . $model_type . ' Model Name ' . $model_name);
         }
 
         if ($model_type == 'Parse') {
@@ -1237,10 +1241,8 @@ Class ConfigurationService
             if (file_exists($path)) {
                 return $path;
             }
-
-            //throw error
-            echo 'ConfigurationService::locateFile() Cannot find Application Services File ';
-            die;
+            throw new \Exception ('CONFIGURATION: locateFile() Cannot find Model Type '
+                . $model_type . ' Model Name ' . $model_name);
         }
 
         $modeltypeArray = array('Application', 'Service', 'Field', 'Include', 'Includer');
@@ -1253,10 +1255,8 @@ Class ConfigurationService
             if (file_exists($path)) {
                 return $path;
             }
-
-            //throw error
-            echo 'ConfigurationService::locateFile() Cannot find Model Type: ' . $model_type . ' Model Name ' . $model_name;
-            die;
+            throw new \Exception ('CONFIGURATION: locateFile() Cannot find Model Type '
+                . $model_type . ' Model Name ' . $model_name);
         }
 
         if ($model_type == 'Resource') {
@@ -1268,17 +1268,15 @@ Class ConfigurationService
             }
         }
 
-        $modeltypeArray = array('Language', 'Theme', SYSTEM_LITERAL, 'Service');
+        $modeltypeArray = array('Language', 'Theme', 'System', 'Service');
 
         if (in_array($model_type, $modeltypeArray)) {
-
             $path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
             if (file_exists($path)) {
                 return $path;
             } else {
                 $path = false;
             }
-
             $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
             if (file_exists($path)) {
                 return $path;
@@ -1288,8 +1286,8 @@ Class ConfigurationService
         }
 
         $extension_path = false;
-        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'extension_path')) {
-            $extension_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path');
+        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'extension_path')) {
+            $extension_path = Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path');
         }
 
         $primary_extension_path = false;
@@ -1298,23 +1296,23 @@ Class ConfigurationService
         }
 
         $theme_path = false;
-        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'theme_path')) {
-            $theme_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path');
+        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'theme_path')) {
+            $theme_path = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path');
         }
 
         $page_view_path = false;
-        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'page_view_path')) {
-            $page_view_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_path');
+        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'page_view_path')) {
+            $page_view_path = Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_path');
         }
 
         $template_view_path = false;
-        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'template_view_path')) {
-            $template_view_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'template_view_path');
+        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'template_view_path')) {
+            $template_view_path = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path');
         }
 
         $wrap_view_path = false;
-        if (Services::Registry()->exists(DATA_OBJECT_PARAMETERS, 'wrap_view_path')) {
-            $wrap_view_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'wrap_view_path');
+        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'wrap_view_path')) {
+            $wrap_view_path = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_path');
         }
 
         /** Search for overrides before standard placement */
@@ -1361,7 +1359,7 @@ Class ConfigurationService
             }
         }
 
-        $valid = array(DATA_OBJECT_DATALIST, DATASOURCE_LITERAL);
+        $valid = array('Dataobject', 'Datasource');
 
         if (in_array($model_type, $valid)) {
             $path = ConfigurationService::commonSearch(
@@ -1384,7 +1382,7 @@ Class ConfigurationService
 
         /** These are the Dataobjects, other than Database */
         $path = ConfigurationService::commonSearch(
-            DATASOURCE_LITERAL,
+            'Datasource',
             $model_type,
             $extension_path,
             $primary_extension_path,
@@ -1399,9 +1397,8 @@ Class ConfigurationService
         } else {
             return $path;
         }
-        echo 'File not found for Model Type: ' . $model_type . ' Name: ' . $model_name;
-        die;
-        throw new \RuntimeException('File not found for Model Type: ' . $model_type . ' Name: ' . $model_name);
+
+        throw new \Exception('File not found for Model Type: ' . $model_type . ' Name: ' . $model_name);
     }
 
     /**
@@ -1543,20 +1540,6 @@ Class ConfigurationService
             }
         }
 
-        /** Common Exit to Help with Testing and Debugging
-        $message = '<br /><br />Model Type: '  . $model_type
-        . ' <br />Model Name: ' . $model_name
-        . ' <br />Extension Path: ' . $extension_path
-        . ' <br />Primary Extension Path: ' . $primary_extension_path
-        . ' <br />Theme Path: ' . $theme_path
-        . ' <br />Page View Path: ' . $page_view_path
-        . ' <br />Template View Path: ' . $template_view_path
-        . ' <br />Wrap Path: ' . $wrap_view_path
-        . ' <br />View Path: ' . $view_path_portion
-        . ' <br />File or Folder: ' . $file_or_folder
-        . ' <br />RESULTS : ' . $path . '<br />';
-
-        echo $message;  */
         return $path;
     }
 
@@ -1574,17 +1557,15 @@ Class ConfigurationService
     {
         if (file_exists($path_and_file)) {
         } else {
-            echo 'Error in ConfigurationService. File not found for ' . $path_and_file;
-
-            return false;
-            //throw new \RuntimeException('File not found: ' . $path_and_file);
+            throw new \Exception('Configuration: readXMLFile File not found: ' . $path_and_file);
         }
 
         try {
             return file_get_contents($path_and_file);
 
         } catch (\Exception $e) {
-            throw new \RuntimeException ('Failure reading File: ' . $path_and_file . ' ' . $e->getMessage());
+            throw new \Exception('Configuration: readXMLFile Failure reading File: '
+                . $path_and_file . ' ' . $e->getMessage());
         }
     }
 }

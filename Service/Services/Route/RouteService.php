@@ -35,32 +35,32 @@ Class RouteService
      */
     public function process($requested_resource_for_route, $base_url_path_for_application)
     {
-        Services::Registry()->createRegistry(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->createRegistry('Metadata');
+        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+        Services::Registry()->createRegistry(METADATA_LITERAL);
         Services::Registry()->deleteRegistry('Plugin');
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_catalog_id', 0);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_found', '');
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_authorised', '');
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'redirect_to_id', 0);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id', 0);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'status_found', '');
+        Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', '');
+        Services::Registry()->set(PARAMETERS_LITERAL, 'redirect_to_id', 0);
 
         $url_request = $requested_resource_for_route;
         if (substr($url_request, 0, 1) == '/') {
             $url_request = substr($url_request, 1);
         }
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_url', $url_request);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_base_url_path', $base_url_path_for_application);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_catalog_id', 0);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $url_request);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_base_url_path', $base_url_path_for_application);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id', 0);
 
         /** Overrides */
         if ((int) Services::Registry()->get('Override', 'catalog_id') > 0) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_catalog_id',
+            Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id',
                 (int) Services::Registry()->get('Override', 'catalog_id'));
         }
 
         if (Services::Registry()->get('Override', 'url_request', '') == '') {
         } else {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_url',
+            Services::Registry()->set(PARAMETERS_LITERAL, 'request_url',
                 Services::Registry()->get('Override', 'url_request'));
         }
 
@@ -89,19 +89,19 @@ Class RouteService
         $continue = Helpers::Catalog()->getRouteCatalog();
 
         /** 404 */
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'status_found') === false) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'status_found') === false) {
             Services::Error()->set(404);
             Services::Profiler()->set('Application::Route() 404', 'Route');
             return false;
         }
 
         /** URL Change Redirect from Catalog */
-        if ((int) Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'redirect_to_id', 0) == 0) {
+        if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'redirect_to_id', 0) == 0) {
         } else {
 
             Services::Response()->redirect(
                 Helpers::Catalog()->getURL(
-                    Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'redirect_to_id', 0)
+                    Services::Registry()->get(PARAMETERS_LITERAL, 'redirect_to_id', 0)
                 ), 301
             );
 
@@ -113,7 +113,7 @@ Class RouteService
         /** Redirect to Logon */
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'application_logon_requirement', 0) > 0
             && Services::Registry()->get('User', 'guest', true) === true
-            && Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_catalog_id')
+            && Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id')
                 <> Services::Registry()->get(CONFIGURATION_LITERAL, 'application_logon_requirement', 0)
         ) {
             Services::Response()->redirect(
@@ -140,15 +140,15 @@ Class RouteService
      */
     protected function checkHome()
     {
-        $path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url');
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'home', 0);
+        $path = Services::Registry()->get(PARAMETERS_LITERAL, 'request_url');
+        Services::Registry()->set(PARAMETERS_LITERAL, 'home', 0);
 
         if (strlen($path) == 0 || trim($path) == '') {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_url', '');
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_catalog_id',
+            Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', '');
+            Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id',
                 Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0));
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_home', true);
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'home', 1);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', true);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'home', 1);
 
             return true;
 
@@ -169,13 +169,13 @@ Class RouteService
         }
 
         /** populate value used in query  */
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_url', $path);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
 
         /** home: duplicate content - redirect */
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url', '') == 'index.php'
-            || Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url', '') == 'index.php/'
-            || Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url', '') == 'index.php?'
-            || Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url', '') == '/index.php/'
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php'
+            || Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php/'
+            || Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php?'
+            || Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == '/index.php/'
         ) {
             Services::Redirect()->set('', 301);
 
@@ -183,13 +183,13 @@ Class RouteService
         }
 
         /** Home */
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url', '') == ''
-            && (int) Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_catalog_id', 0) == 0
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == ''
+            && (int) Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id', 0) == 0
         ) {
 
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_catalog_id',
+            Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id',
                 Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0));
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_home', true);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', true);
         }
 
         return true;
@@ -240,7 +240,7 @@ Class RouteService
      */
     protected function getResource()
     {
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_non_route_parameters', '');
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_non_route_parameters', '');
 
         $method = Services::Request()->get('method');
 
@@ -279,22 +279,22 @@ Class RouteService
             }
         }
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action', $action);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action_authorisation', $controller); //for now
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_controller', $controller);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', $action);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_authorisation', $controller); //for now
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller', $controller);
 
         /** Retrieve ID, unless already set for Home or Override  */
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_catalog_id') > 0) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id') > 0) {
         } else {
             $value = (int) Services::Request()->get('id');
             if ($value == 0) {
             } else {
-                Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_catalog_id', $value);
+                Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id', $value);
             }
         }
 
         /** URL Type */
-        $sef = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'sef_url', 1);
+        $sef = Services::Registry()->get(PARAMETERS_LITERAL, 'sef_url', 1);
         if ($sef == 1) {
             $this->getResourceSEF();
         } else {
@@ -323,7 +323,7 @@ Class RouteService
      */
     protected function getResourceSEF()
     {
-        $path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url');
+        $path = Services::Registry()->get(PARAMETERS_LITERAL, 'request_url');
 
 		/** Actions */
         $urlParts = explode('/', $path);
@@ -333,7 +333,7 @@ Class RouteService
 
 //todo - separate display action from other (ex. tag)
 
-        $actions = Services::Registry()->get(DATA_OBJECT_PERMISSIONS, 'urlActions');
+        $actions = Services::Registry()->get(PERMISSIONS_LITERAL, 'urlActions');
 
         $path = '';
         $action = '';
@@ -361,29 +361,29 @@ Class RouteService
 			$action = ACTION_VIEW;
 		}
 
-		Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action', $action);
+		Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', $action);
 
-		Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action_target', $action_target);
+		Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_target', $action_target);
 
-        $temp = Services::Registry()->get(DATA_OBJECT_PERMISSIONS, 'action_to_authorisation');
+        $temp = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
         if (isset($temp[$action])) {
             $action_permission = $temp[$action];
         } else {
             throw new \Exception ('Route: Action not defined by Permissions');
         }
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_action', $action_permission);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', $action_permission);
 
-        $temp = Services::Registry()->get(DATA_OBJECT_PERMISSIONS, 'request_authorisation');
+        $temp = Services::Registry()->get(PERMISSIONS_LITERAL, 'request_authorisation');
         if (isset($temp[$action])) {
             $action_controller = $temp[$action];
         } else {
             throw new \Exception ('Route: Action not defined by Permissions');
         }
-		Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_controller', $action_controller);
+		Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller', $action_controller);
 
-		if ($path == Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url')) {
+		if ($path == Services::Registry()->get(PARAMETERS_LITERAL, 'request_url')) {
 		} else {
-			Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_url', $path);
+			Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
 			return true;
 		}
 
@@ -419,14 +419,14 @@ Class RouteService
 			}
 		}
 
-		Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_filters', $filterArray);
+		Services::Registry()->set(PARAMETERS_LITERAL, 'request_filters', $filterArray);
 
-		if ($path == Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url')) {
+		if ($path == Services::Registry()->get(PARAMETERS_LITERAL, 'request_url')) {
 		} else {
-			Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'request_url', $path);
+			Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
 		}
 
-		Services::Registry()->sort(DATA_OBJECT_PARAMETERS);
+		Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return true;
     }
@@ -475,12 +475,12 @@ Class RouteService
             define('ROUTE', true);
         }
 
-        $catalog_type_id = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_type_id');
-        $id = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_source_id');
-        $catalog_extension_instance_id = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_extension_instance_id');
-        $catalog_page_type = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_page_type');
-        $model_type = ucfirst(strtolower(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_model_type')));
-        $model_name = ucfirst(strtolower(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_model_name')));
+        $catalog_type_id = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_type_id');
+        $id = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_source_id');
+        $catalog_extension_instance_id = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_extension_instance_id');
+        $catalog_page_type = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_page_type');
+        $model_type = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_type')));
+        $model_name = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_name')));
 
         if (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_LIST
         ) {

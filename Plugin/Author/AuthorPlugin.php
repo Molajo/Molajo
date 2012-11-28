@@ -41,16 +41,16 @@ class AuthorPlugin extends Plugin
             return true;
         }
 
-        if (Services::Registry()->exists(DATA_OBJECT_TEMPLATE, 'Author' . $fieldValue)) {
+        if (Services::Registry()->exists(TEMPLATE_LITERAL, 'Author' . $fieldValue)) {
 
-            $authorArray = Services::Registry()->get(DATA_OBJECT_TEMPLATE, 'Author' . $fieldValue);
+            $authorArray = Services::Registry()->get(TEMPLATE_LITERAL, 'Author' . $fieldValue);
 
             foreach ($authorArray[0] as $key => $value) {
                 $new_field_name = $key;
                 $this->saveField(null, $new_field_name, $value);
             }
 
-            Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Author', $authorArray);
+            Services::Registry()->set(TEMPLATE_LITERAL, 'Author', $authorArray);
             return true;
         }
 
@@ -88,8 +88,8 @@ class AuthorPlugin extends Plugin
             }
         }
         $authorArray[] = $row;
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Author' . $fieldValue, $authorArray);
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, 'Author', $authorArray);
+        Services::Registry()->set(TEMPLATE_LITERAL, 'Author' . $fieldValue, $authorArray);
+        Services::Registry()->set(TEMPLATE_LITERAL, 'Author', $authorArray);
 
         return true;
     }

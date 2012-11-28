@@ -35,7 +35,7 @@ class FieldsPlugin extends Plugin
         $extended_literal = ' (' . Services::Language()->translate('extended') . ')';
         $parameter_literal = ' (' . Services::Language()->translate('parameter') . ')';
         $customfield_literal = ' (' . Services::Language()->translate('customfield') . ')';
-        $metadata_literal = ' (' . Services::Language()->translate('metadata') . ')';
+        $metadata_literal = ' (' . Services::Language()->translate(METADATA_LITERAL) . ')';
 
         $model_name = $this->get('model_name');
         $model_type = $this->get('model_type');
@@ -175,7 +175,8 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $customfields = Services::Registry()->get($model_registry, 'Customfields');
+//$exists = Services::Registry()->exists($model_registry, CUSTOMFIELDGROUPS_LITERAL);
+        $customfields = Services::Registry()->get($model_registry, CUSTOMFIELDS_LITERAL);
         $customFieldArray = array();
         if (count($customfields) > 0) {
             foreach ($customfields as $field) {
@@ -189,7 +190,7 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $parameters = Services::Registry()->get($model_registry, DATA_OBJECT_PARAMETERS);
+        $parameters = Services::Registry()->get($model_registry, PARAMETERS_LITERAL);
         $parametersArray = array();
         if (count($parameters) > 0) {
             foreach ($parameters as $field) {
@@ -202,13 +203,13 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $metadata = Services::Registry()->get($model_registry, 'Metadata');
+        $metadata = Services::Registry()->get($model_registry, METADATA_LITERAL);
         $metadataArray = array();
         if (count($metadata) > 0) {
             foreach ($metadata as $field) {
                 $row = new \stdClass();
-                $row->id = 'metadata' . '_' . $field['name'];
-                $row->value = 'metadata' . '_' . $field['name'] . $metadata_literal;
+                $row->id = METADATA_LITERAL . '_' . $field['name'];
+                $row->value = METADATA_LITERAL . '_' . $field['name'] . $metadata_literal;
 
                 $fieldArray[] = $row;
                 $standardArray[] = $row;
@@ -222,15 +223,15 @@ class FieldsPlugin extends Plugin
         asort($parametersArray);
         asort($customFieldArray);
 
-        Services::Registry()->set(DATA_OBJECT_DATALIST, $model_registry . FIELDS_MODEL_TYPE, $fieldArray);
-        Services::Registry()->set(DATA_OBJECT_DATALIST, $model_registry . FIELDS_STANDARD_MODEL_TYPE, $standardArray);
-        Services::Registry()->set(DATA_OBJECT_DATALIST, $model_registry . FIELDS_METADATA_MODEL_TYPE, $metadataArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_MODEL_TYPE, $fieldArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_STANDARD_MODEL_TYPE, $standardArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_METADATA_MODEL_TYPE, $metadataArray);
         Services::Registry()->set(
-            DATA_OBJECT_DATALIST,
+            DATALIST_LITERAL,
             $model_registry . FIELDS_PARAMETERS_MODEL_TYPE,
             $parametersArray
         );
-        Services::Registry()->set(DATA_OBJECT_DATALIST, $model_registry . FIELDS_CUSTOM_MODEL_TYPE, $customFieldArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_CUSTOM_MODEL_TYPE, $customFieldArray);
 
         return true;
     }

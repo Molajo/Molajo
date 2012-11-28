@@ -113,51 +113,25 @@ Class ParseService
 
         $this->final_indicator = false;
 
-        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_include'))) {
+        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme not found');
 
             return false;
         }
 
-        /** Load Theme, Page, and Request Override Plugins */
-        $themePlugins = Services::Filesystem()->folderFolders(
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path') . '/' . 'Plugin'
+        /** Load Theme and Page Override Plugins */
+        Services::Events()->registerPlugins(
+            Services::Registry()->getPath(CATALOG_TYPE_THEME, 'theme_path'),
+            Helpers::Extensions()->getNamespace(CATALOG_TYPE_THEME, 'theme_path')
         );
 
-        if (count($themePlugins) == 0 || $themePlugins === false) {
-        } else {
-            $this->registerPlugins(
-                $themePlugins,
-                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_namespace')
-            );
-        }
-
-        $pagePlugins = Services::Filesystem()->folderFolders(
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_path') . '/' . 'Plugin'
+        Services::Events()->registerPlugins(
+            Services::Registry()->getPath(CATALOG_TYPE_PAGE_VIEW, 'page_view_path_node'),
+            Helpers::Extensions()->getNamespace(CATALOG_TYPE_PAGE_VIEW, 'page_view_path_node')
         );
 
-        if (count($pagePlugins) == 0 || $pagePlugins === false) {
-        } else {
-            $this->registerPlugins(
-                $pagePlugins,
-                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_namespace')
-            );
-        }
-
-        $extensionPlugins = Services::Filesystem()->folderFolders(
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path') . '/' . 'Plugin'
-        );
-
-        if (count($extensionPlugins) == 0 || $extensionPlugins === false) {
-        } else {
-            $this->registerPlugins(
-                $extensionPlugins,
-                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_namespace')
-            );
-        }
-
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'error_status', 0) == 1) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
         } else {
             //todo - pass in lists of includes to the plugins for possible change
             $this->onBeforeParseEvent();
@@ -165,23 +139,23 @@ Class ParseService
 
         /** Save Route Parameters */
         Services::Registry()->createRegistry('RouteParameters');
-        Services::Registry()->copy(DATA_OBJECT_PARAMETERS, 'RouteParameters');
+        Services::Registry()->copy(PARAMETERS_LITERAL, 'RouteParameters');
 
         $renderedOutput = $this->renderLoop();
 
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'error_status', 0) == 1) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
         } else {
-            Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-            Services::Registry()->createRegistry(DATA_OBJECT_PARAMETERS);
-            Services::Registry()->copy('RouteParameters', DATA_OBJECT_PARAMETERS);
+            Services::Registry()->delete(PARAMETERS_LITERAL);
+            Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+            Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL);
             $renderedOutput = $this->onAfterParsebodyEvent($renderedOutput);
         }
 
         $this->sequence = $this->final;
         $this->exclude_until_final = array();
-        Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->createRegistry(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->copy('RouteParameters', DATA_OBJECT_PARAMETERS);
+        Services::Registry()->delete(PARAMETERS_LITERAL);
+        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL);
 
         $bodyOutput = $renderedOutput;
 
@@ -194,47 +168,27 @@ Class ParseService
             // fail
         }
 
-		if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'error_status', 0) == 1) {
+		if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
 		} else {
 			$renderedOutput = $this->onBeforeDocumentheadEvent($renderedOutput);
 		}
 
         $renderedOutput = $this->renderLoop($renderedOutput);
 
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'error_status', 0) == 1) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
         } else {
             $renderedOutput = $this->onAfterDocumentheadEvent($renderedOutput);
         }
 
-		if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'error_status', 0) == 1) {
+		if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
 		} else {
-			Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-			Services::Registry()->createRegistry(DATA_OBJECT_PARAMETERS);
-			Services::Registry()->copy('RouteParameters', DATA_OBJECT_PARAMETERS);
+			Services::Registry()->delete(PARAMETERS_LITERAL);
+			Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+			Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL);
 			$renderedOutput = $this->onAfterParseEvent($renderedOutput);
 		}
 
 		return $renderedOutput;
-    }
-
-    /**
-     * registerPlugins for Theme, Page, and Request Extension (overrides Core and Plugin folder)
-     *
-     * @param   $plugins array of folder names
-     * @param   $path
-     *
-     * @return  void
-     * @since   1.0
-     */
-    protected function registerPlugins($plugins, $path)
-    {
-        foreach ($plugins as $folder) {
-
-            Services::Event()->registerPlugin(
-                $folder . 'Plugin',
-                $path . '\\Plugin\\' . $folder . '\\' . $folder . 'Plugin'
-            );
-        }
     }
 
     /**
@@ -263,14 +217,14 @@ Class ParseService
             $first = true;
             Services::Profiler()->set(
                 'ParseService renderLoop Parse Body using Theme:'
-                    . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_include')
+                    . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include')
                     . ' and Page View: '
-                    . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'page_view_path_include'),
+                    . Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_path_include'),
                 LOG_OUTPUT_RENDERING
             );
 
             ob_start();
-            require Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_include');
+            require Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include');
             $renderedOutput = ob_get_contents();
             ob_end_clean();
 
@@ -457,14 +411,14 @@ Class ParseService
 
                     $replace[] = "<include:" . $parsedRequests['replace'] . "/>";
 
-                    Services::Registry()->deleteRegistry(DATA_OBJECT_PARAMETERS);
-                    Services::Registry()->createRegistry(DATA_OBJECT_PARAMETERS);
+                    Services::Registry()->deleteRegistry(PARAMETERS_LITERAL);
+                    Services::Registry()->createRegistry(PARAMETERS_LITERAL);
 
                     if ($includeName == 'request') {
-                        Services::Registry()->copy('RouteParameters', DATA_OBJECT_PARAMETERS);
-                        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_primary', true);
+                        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL);
+                        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_primary', true);
                     } else {
-                        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_primary', false);
+                        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_primary', false);
                     }
 
                     $class = 'Molajo\\Includer\\';
@@ -518,24 +472,24 @@ echo '<br />';
         Services::Profiler()->set('ParseService onBeforeParse', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         $arguments = array(
-            DATA_OBJECT_PARAMETERS => Services::Registry()->getArray(DATA_OBJECT_PARAMETERS),
-            'model_type' => Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'model_type'),
-            'model_name' => Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'model_name'),
+            PARAMETERS_LITERAL => Services::Registry()->getArray(PARAMETERS_LITERAL),
+            'model_type' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
+            'model_name' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_name'),
             'data' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent('onBeforeParse', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'error_status', 1);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
             Services::Profiler()->set('ParseService onBeforeParsebody failed', LOG_OUTPUT_PLUGINS);
             return false;
         }
 
-        Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->createRegistry(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->loadArray(DATA_OBJECT_PARAMETERS, $arguments[DATA_OBJECT_PARAMETERS]);
-        Services::Registry()->sort(DATA_OBJECT_PARAMETERS);
+        Services::Registry()->delete(PARAMETERS_LITERAL);
+        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return true;
     }
@@ -552,24 +506,24 @@ echo '<br />';
     {
         Services::Profiler()->set('ParseService onAfterParsebody', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $parameters = Services::Registry()->getArray(DATA_OBJECT_PARAMETERS);
+        $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            DATA_OBJECT_PARAMETERS => $parameters,
+            PARAMETERS_LITERAL => $parameters,
             'rendered_output' => $renderedOutput
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterParsebody', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'error_status', 1);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
             Services::Profiler()->set('ParseService onAfterParsebody failed', LOG_OUTPUT_PLUGINS);
             return false;
         }
 
-        Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->loadArray(DATA_OBJECT_PARAMETERS, $arguments[DATA_OBJECT_PARAMETERS]);
-        Services::Registry()->sort(DATA_OBJECT_PARAMETERS);
+        Services::Registry()->delete(PARAMETERS_LITERAL);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->sort(PARAMETERS_LITERAL);
 
         $renderedOutput = $arguments['rendered_output'];
 
@@ -588,23 +542,23 @@ echo '<br />';
 	{
         Services::Profiler()->set('ParseService onBeforeDocumenthead', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $parameters = Services::Registry()->getArray(DATA_OBJECT_PARAMETERS);
+        $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            DATA_OBJECT_PARAMETERS => $parameters,
+            PARAMETERS_LITERAL => $parameters,
             'rendered_output' => $renderedOutput
         );
 
         $arguments = Services::Event()->scheduleEvent('onBeforeDocumenthead', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'error_status', 1);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
             Services::Profiler()->set('ParseService onBeforeDocumenthead failed', LOG_OUTPUT_PLUGINS);
             return false;
         }
 
-        Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->loadArray(DATA_OBJECT_PARAMETERS, $arguments[DATA_OBJECT_PARAMETERS]);
+        Services::Registry()->delete(PARAMETERS_LITERAL);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
 
         $renderedOutput = $arguments['rendered_output'];
 
@@ -621,23 +575,23 @@ echo '<br />';
     {
         Services::Profiler()->set('ParseService onAfterDocumenthead', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $parameters = Services::Registry()->getArray(DATA_OBJECT_PARAMETERS);
+        $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            DATA_OBJECT_PARAMETERS => $parameters,
+            PARAMETERS_LITERAL => $parameters,
             'rendered_output' => $renderedOutput
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterDocumenthead', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'error_status', 1);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
             Services::Profiler()->set('ParseService onAfterDocumenthead failed', LOG_OUTPUT_PLUGINS);
             return false;
         }
 
-        Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->loadArray(DATA_OBJECT_PARAMETERS, $arguments[DATA_OBJECT_PARAMETERS]);
+        Services::Registry()->delete(PARAMETERS_LITERAL);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
 
         $renderedOutput = $arguments['rendered_output'];
 
@@ -654,23 +608,23 @@ echo '<br />';
     {
         Services::Profiler()->set('ParseService onAfterParse', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $parameters = Services::Registry()->getArray(DATA_OBJECT_PARAMETERS);
+        $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            DATA_OBJECT_PARAMETERS => $parameters,
+            PARAMETERS_LITERAL => $parameters,
             'rendered_output' => $renderedOutput
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterParse', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'error_status', 1);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
             Services::Profiler()->set('ParseService onAfterParse failed', LOG_OUTPUT_PLUGINS);
             return false;
         }
 
-        Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->loadArray(DATA_OBJECT_PARAMETERS, $arguments[DATA_OBJECT_PARAMETERS]);
+        Services::Registry()->delete(PARAMETERS_LITERAL);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
 
         $renderedOutput = $arguments['rendered_output'];
 

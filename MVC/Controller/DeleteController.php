@@ -165,7 +165,7 @@ class DeleteController extends Controller
         $this->data->model_name = $hold_model_name;
 
         /** Process each field namespace  */
-        $customFieldTypes = Services::Registry()->get($this->model_registry, 'CustomFieldGroups');
+        $customFieldTypes = Services::Registry()->get($this->model_registry, CUSTOMFIELDGROUPS_LITERAL);
 
         if (count($customFieldTypes) > 0) {
             foreach ($customFieldTypes as $customFieldName) {
@@ -215,7 +215,7 @@ class DeleteController extends Controller
             'data' => $this->data,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            DATA_OBJECT_PARAMETERS => $this->parameters,
+            PARAMETERS_LITERAL => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
@@ -232,7 +232,7 @@ class DeleteController extends Controller
         Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         /** Process results */
-        $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
+        $this->parameters = $arguments[PARAMETERS_LITERAL];
         $this->data = $arguments['data'];
 
         return true;
@@ -257,7 +257,7 @@ class DeleteController extends Controller
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $this->data,
-            DATA_OBJECT_PARAMETERS => $this->parameters,
+            PARAMETERS_LITERAL => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
@@ -274,7 +274,7 @@ class DeleteController extends Controller
         Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
         /** Process results */
-        $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
+        $this->parameters = $arguments[PARAMETERS_LITERAL];
         $this->data = $arguments['data'];
 
         return true;

@@ -22,17 +22,15 @@ Class ClientService
     /**
      * __construct
      *
-     * @param integer $identifier
-     *
-     * @return object
+     * @return  object
      * @since   1.0
      */
     public function setRegistry()
     {
-        Services::Registry()->createRegistry('Client');
+        Services::Registry()->createRegistry(CLIENT_LITERAL);
 
         $this->get_ip_address();
-
+        $this->isAjax();
         $this->get_client();
 
         return $this;
@@ -41,7 +39,7 @@ Class ClientService
     /**
      * get (possible) ip_address for Client
      *
-     * @return object
+     * @return  object
      * @since   1.0
      */
     public function get_ip_address()
@@ -59,15 +57,17 @@ Class ClientService
             $ip_address = $_SERVER['HTTP_CLIENT_IP'];
         }
 
-        Services::Registry()->set('Client', 'ip_address', $ip_address);
+        Services::Registry()->set(CLIENT_LITERAL, 'ip_address', $ip_address);
 
         return $this;
     }
 
     /**
-     *     isAjax - returns true for Ajax calls
+     * Tests to determine if Request is an Ajax call
+     *
+     * @return  ClientService
+     * @since   1.0
      */
-
     public function isAjax()
     {
         $ajax = 0;
@@ -79,7 +79,7 @@ Class ClientService
             }
         }
 
-        Services::Registry()->set('Client', 'Ajax', $ajax);
+        Services::Registry()->set(CLIENT_LITERAL, 'Ajax', $ajax);
 
         return $this;
     }
@@ -87,10 +87,10 @@ Class ClientService
     /**
      * get (very rough and not very reliable) client information
      *
-     * - might be useful for very high-level guess about desktop versus mobile
+     * - might be *somewhat* (maybe better than nothing) for very high-level guess about desktop versus mobile
      *   in those cases where it's critical to handle the payload or interface differently
      *
-     * @return object
+     * @return  object
      * @since   1.0
      */
     public function get_client()
@@ -99,7 +99,7 @@ Class ClientService
 
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             $platform = 'unknown';
-            $desktop = 1;
+            $desktop = 0;
             $browser = 'unknown';
             $browser_version = 'unknown';
 
@@ -120,7 +120,7 @@ Class ClientService
                 $platform = 'unknown';
             }
 
-            Services::Registry()->set('Client', 'platform', $platform);
+            Services::Registry()->set(CLIENT_LITERAL, 'platform', $platform);
 
             /** Desktop approximation */
             if ($platform == 'unknown') {
@@ -129,13 +129,30 @@ Class ClientService
                 $desktop = 1;
             }
 
-            Services::Registry()->set('Client', 'desktop', $desktop);
+            Services::Registry()->set(CLIENT_LITERAL, 'desktop', $desktop);
 
             /** Browser and Version Approximation */
-            $browsers = array('firefox', 'msie', 'opera', 'chrome', 'safari',
-                'mozilla', 'seamonkey', 'konqueror', 'netscape',
-                'gecko', 'navigator', 'mosaic', 'lynx', 'amaya',
-                'omniweb', 'avant', 'camino', 'flock', 'aol');
+            $browsers = array(
+                'firefox',
+                'msie',
+                'opera',
+                'chrome',
+                'safari',
+                'mozilla',
+                'seamonkey',
+                'konqueror',
+                'netscape',
+                'gecko',
+                'navigator',
+                'mosaic',
+                'lynx',
+                'amaya',
+                'omniweb',
+                'avant',
+                'camino',
+                'flock',
+                'aol'
+            );
 
             $browser = '';
             $browser_version = '';
@@ -149,11 +166,11 @@ Class ClientService
             }
         }
 
-        Services::Registry()->set('Client', 'browser', $browser);
+        Services::Registry()->set(CLIENT_LITERAL, 'browser', $browser);
 
-        Services::Registry()->set('Client', 'browser_version', $browser_version);
+        Services::Registry()->set(CLIENT_LITERAL, 'browser_version', $browser_version);
 
-        Services::Registry()->set('Client', 'user_agent', $user_agent);
+        Services::Registry()->set(CLIENT_LITERAL, 'user_agent', $user_agent);
 
         return $this;
     }

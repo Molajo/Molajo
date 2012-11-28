@@ -571,8 +571,8 @@ echo '</pre><br /><br />';
                 Services::Registry()->set($useModelRegistry, $name, $setValue);
 
             } else {
-                if (strtolower($customFieldName) == DATA_OBJECT_PARAMETERS
-                    || strtolower($customFieldName) == 'metadata'
+                if (strtolower($customFieldName) == PARAMETERS_LITERAL
+                    || strtolower($customFieldName) == METADATA_LITERAL
                 ) {
                     $name = strtolower($customFieldName) . '_' . $name;
                 }

@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
 /**
  * Date
  *
- * @package       Molajo
- * @subpackage    Service
- * @since         1.0
+ * @package     Molajo
+ * @subpackage  Service
+ * @since       1.0
  */
 Class DateService
 {
@@ -184,7 +184,7 @@ Class DateService
      */
     public function getDayName($day_number, $abbreviation = false)
     {
-        switch ((int) $day_number) {
+        switch ((int)$day_number) {
             case 1:
                 if ($abbreviation === true) {
                     return Services::Language()->translate('DATE_MON');
@@ -248,7 +248,7 @@ Class DateService
      */
     public function getMonthName($month_number, $abbreviation = false)
     {
-        switch ((int) $month_number) {
+        switch ((int)$month_number) {
             case 1:
                 if ($abbreviation === true) {
                     return Services::Language()->translate('DATE_JAN');

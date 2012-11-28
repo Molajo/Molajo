@@ -39,7 +39,7 @@ class PagetypeconfigurationPlugin extends Plugin
         $pages = explode('{{', $temp);
 
         /** Determine Current Page of Set */
-        $temp = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_filters', array());
+        $temp = Services::Registry()->get(PARAMETERS_LITERAL, 'request_filters', array());
         $filters = explode(',', $temp);
 
         $page = 1;
@@ -121,15 +121,15 @@ class PagetypeconfigurationPlugin extends Plugin
         $this->set('request_model_name', $this->get('model_name'));
 
         $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', DATA_OBJECT_PRIMARY);
+        $this->set('model_name', PRIMARY_LITERAL);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
+        $this->parameters['model_name'] = PRIMARY_LITERAL;
 
         Services::Registry()->set(
-            DATA_OBJECT_PRIMARY,
-            DATA_OBJECT_PRIMARY_DATA,
+            PRIMARY_LITERAL,
+            DATA_LITERAL,
             $current_page
         );
 
@@ -164,7 +164,7 @@ class PagetypeconfigurationPlugin extends Plugin
 
         /** Parameters */
         $parameters = Services::Registry()->getArray('ResourcesSystemParameters');
-        $array2 = Services::Registry()->getArray(DATA_OBJECT_PARAMETERS);
+        $array2 = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         foreach ($array2 as $key => $value) {
             if (substr($key, 0, strlen(CONFIGURATION_LITERAL)) == CONFIGURATION_LITERAL) {
@@ -172,16 +172,16 @@ class PagetypeconfigurationPlugin extends Plugin
             }
         }
 
-        $form->set(DATA_OBJECT_PARAMETERS, $parameters);
-        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', DATA_OBJECT_PARAMETERS));
+        $form->set(PARAMETERS_LITERAL, $parameters);
+        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', PARAMETERS_LITERAL));
 
         /** Metadata */
-        $form->set('metadata', Services::Registry()->getArray('ResourcesSystemMetadata'));
-        $form->set('metadata_fields', Services::Registry()->get('ResourcesSystem', 'metadata'));
+        $form->set(METADATA_LITERAL, Services::Registry()->getArray('ResourcesSystemMetadata'));
+        $form->set('metadata_fields', Services::Registry()->get('ResourcesSystem', METADATA_LITERAL));
 
         /** Customfields */
-        $form->set('customfields', Services::Registry()->getArray('ResourcesSystemCustomfields'));
-        $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', 'customfields'));
+        $form->set(CUSTOMFIELDS_LITERAL, Services::Registry()->getArray('ResourcesSystemCustomfields'));
+        $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', CUSTOMFIELDS_LITERAL));
 
         /** Build Fieldsets and Fields */
         return $form->execute($current_page);

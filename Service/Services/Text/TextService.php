@@ -163,7 +163,7 @@ Class TextService
         if ($registry_entry == '') {
             $results = array();
         } else {
-            $results = Services::Registry()->get(DATA_OBJECT_DATALIST, $registry_entry, array());
+            $results = Services::Registry()->get(DATALIST_LITERAL, $registry_entry, array());
             if (count($results) > 0) {
                 return $results;
             }

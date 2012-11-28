@@ -52,19 +52,19 @@ class PagetypeeditPlugin extends Plugin
 
         $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));
 
-        $form->set('data', Services::Registry()->get(DATA_OBJECT_LITERAL, DATA_OBJECT_PRIMARY));
+        $form->set('data', Services::Registry()->get(DATA_OBJECT_LITERAL, PRIMARY_LITERAL));
 
         /** Parameters */
-        $form->set(DATA_OBJECT_PARAMETERS, Services::Registry()->getArray('ResourcesSystemParameters'));
-        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', DATA_OBJECT_PARAMETERS));
+        $form->set(PARAMETERS_LITERAL, Services::Registry()->getArray('ResourcesSystemParameters'));
+        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', PARAMETERS_LITERAL));
 
         /** Metadata */
-        $form->set('metadata', Services::Registry()->getArray('ResourcesSystemMetadata'));
-        $form->set('metadata_fields', Services::Registry()->get('ResourcesSystem', 'metadata'));
+        $form->set(METADATA_LITERAL, Services::Registry()->getArray('ResourcesSystemMetadata'));
+        $form->set('metadata_fields', Services::Registry()->get('ResourcesSystem', METADATA_LITERAL));
 
         /** Customfields */
-        $form->set('customfields', Services::Registry()->getArray('ResourcesSystemCustomfields'));
-        $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', 'customfields'));
+        $form->set(CUSTOMFIELDS_LITERAL, Services::Registry()->getArray('ResourcesSystemCustomfields'));
+        $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', CUSTOMFIELDS_LITERAL));
 echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
 
         /** Build Fieldsets and Fields */
@@ -80,15 +80,15 @@ echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
         $this->set('request_model_name', $this->get('model_name'));
 
         $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', DATA_OBJECT_PRIMARY);
+        $this->set('model_name', PRIMARY_LITERAL);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
+        $this->parameters['model_name'] = PRIMARY_LITERAL;
 
         Services::Registry()->set(
-            DATA_OBJECT_PRIMARY,
-            DATA_OBJECT_PRIMARY_DATA,
+            PRIMARY_LITERAL,
+            DATA_LITERAL,
             $current_page
         );
 

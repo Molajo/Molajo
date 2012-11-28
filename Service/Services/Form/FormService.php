@@ -216,8 +216,11 @@ Class FormService
      *      Single Page {{Editor,editor}}
      *      Multi Pages {{Basic,basic}}{{Access,access}}{{Metadata,metadata}}{{Fields,customfields,Customfields}} ...
      *
-     * @return array
-     * @since  1.0
+     * @param   $element
+     * @param   $value
+     *
+     * @return  object  FormService
+     * @since   1.0
      */
     public function set($element, $value)
     {
@@ -229,10 +232,10 @@ Class FormService
     /**
      * Set the value of a specified property
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param   string  $key
+     * @param   mixed   $value
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function setArray($type, $key, $value = null)
@@ -245,7 +248,7 @@ Class FormService
     /**
      * Create Single or Multi-page(or tab) Form
      *
-     * @param string $pages_array - The request for a single or set of page form fieldsets to be generated
+     * @param   string  $pages_array - The request for a single or set of page form fieldsets to be generated
      *  Examples:
      *      Single Page {{Editor,editor}}
      *      Multi Pages {{Basic,basic}}{{Access,access}}{{Metadata,metadata}}{{Fields,customfields,Customfields}} ...
@@ -359,8 +362,10 @@ Class FormService
     /**
      * Get Form Page Fieldsets
      *
-     * @param $pages
-     * @return array
+     * @param   $pages
+     *
+     * @return  array
+     * @since   1.0
      */
     public function getPages($pages, $page_count)
     {
@@ -417,17 +422,17 @@ Class FormService
      */
     protected function get($type, $key = null, $default = null)
     {
-        if ($type == DATA_OBJECT_PARAMETERS) {
+        if ($type == PARAMETERS_LITERAL) {
             if (isset($this->parameters[$key])) {
                 return $this->parameters[$key];
             }
 
-        } elseif ($type == 'metadata') {
+        } elseif ($type == METADATA_LITERAL) {
             if (isset($this->metadata[$key])) {
                 return $this->metadata[$key];
             }
 
-        } elseif ($type == 'customfields') {
+        } elseif ($type == CUSTOMFIELDS_LITERAL) {
             if (isset($this->customfields[$key])) {
                 return $this->customfields[$key];
             }
@@ -454,13 +459,13 @@ Class FormService
     {
         $configurationArray = array();
 
-        if ($this->page_link == 'noformfields') {
+        if ($this->page_link == NOFORMFIELDS_LITERAL) {
             $configuration = '{{' . $this->page_link . ',' . strtolower($this->page_link) . '}}';
 
         } else {
-             echo $this->namespace . '_' . strtolower($this->page_link);
+            echo $this->namespace . '_' . strtolower($this->page_link);
             echo '<br>';
-            $configuration = $this->get(DATA_OBJECT_PARAMETERS, $this->namespace . '_' . strtolower($this->page_link), '');
+            $configuration = $this->get(PARAMETERS_LITERAL, $this->namespace . '_' . strtolower($this->page_link), '');
             if ($configuration == '') {
                 return false;
             }
@@ -575,7 +580,7 @@ Class FormService
 
                 $temp = array();
 
-                if ($this->namespace == 'noformfields') {
+                if ($this->namespace == NOFORMFIELDS_LITERAL) {
 
                     /** Only titles and name of view to be included (view will take care of data retrieval) */
                     $row = new \stdClass();
@@ -608,9 +613,9 @@ Class FormService
                         $temp = $this->getParameters($options);
                     }
                 }
-echo '<pre>';
-var_dump($temp);
-echo '</pre>';
+                echo '<pre>';
+                var_dump($temp);
+                echo '</pre>';
 
                 if ($this->namespace == 'edit') { //but find better way
                 }
@@ -666,7 +671,7 @@ echo '</pre>';
         }
 
         Services::Registry()->set(
-            DATA_OBJECT_TEMPLATE,
+            TEMPLATE_LITERAL,
             $this->fieldset_template_view . $this->namespace . strtolower($this->page_link),
             $fieldSets
         );
@@ -676,6 +681,8 @@ echo '</pre>';
 
     /**
      * Retrieves field definitions and current settings for requested parameters
+     *
+     * @param   string  $options
      *
      * @return  string
      * @since   1.0
@@ -753,7 +760,7 @@ echo '</pre>';
     /**
      * Retrieves Custom Fields created for this Resource
      *
-     * @param   string $options - Value used as a prefix to extract parameters which start with that value
+     * @param   string  $options - Value used as a prefix to extract parameters which start with that value
      *
      * @return  string
      * @since   1.0
@@ -763,8 +770,11 @@ echo '</pre>';
         $fieldValues = array();
         $input_fields = array();
 
-        $fieldArray = Services::Registry()->get($this->model_name . $this->model_type, DATA_OBJECT_DATALIST);
-        $customfieldgroups = Services::Registry()->get($this->model_name . $this->model_type, 'customfieldgroups');
+        $fieldArray = Services::Registry()->get($this->model_name . $this->model_type, DATALIST_LITERAL);
+        $customfieldgroups = Services::Registry()->get(
+            $this->model_name . $this->model_type,
+            CUSTOMFIELDGROUPS_LITERAL
+        );
 
         foreach ($options as $value) {
 
@@ -809,7 +819,7 @@ echo '</pre>';
                             }
 
                             foreach ($customfieldgroups as $custom) {
-                                if ($custom == DATA_OBJECT_PARAMETERS) {
+                                if ($custom == PARAMETERS_LITERAL) {
                                 } else {
                                     $temp = Services::Registry()->get($this->model_name . $this->model_type, $custom);
                                     foreach ($temp as $field) {
@@ -860,7 +870,7 @@ echo '</pre>';
     /**
      * Retrieves Metadata definitions and current configuration values
      *
-     * @param   string $options - Value used as a prefix to extract parameters which start with that value
+     * @param   string  $options Value used as a prefix to extract parameters which start with that value
      *
      * @return  string
      * @since   1.0
@@ -880,7 +890,10 @@ echo '</pre>';
 
             $row['value'] = $this->metadata_fields($field['name']);
 
-            $row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, 'metadata_' . $field['name']);
+            $row['application_default'] = Services::Registry()->get(
+                CONFIGURATION_LITERAL,
+                'metadata_' . $field['name']
+            );
 
             $input_fields[] = $row;
         }
@@ -895,7 +908,7 @@ echo '</pre>';
     /**
      * Retrieves Metadata definitions and current configuration values
      *
-     * @param  string $options - Value used as a prefix to extract parameters which start with that value
+     * @param  string $options Value used as a prefix to extract parameters which start with that value
      *
      * @return  string
      * @since   1.0
@@ -924,7 +937,7 @@ echo '</pre>';
             if (trim($compare) == '' || strlen($compare) == 0) {
             } else {
 
-                foreach (Services::Registry()->get('GridMenuitem', DATA_OBJECT_PARAMETERS) as $field) {
+                foreach (Services::Registry()->get('GridMenuitem', PARAMETERS_LITERAL) as $field) {
 
                     $use = false;
                     if ($field['name'] == $compare) {
@@ -963,9 +976,9 @@ echo '</pre>';
     /**
      * Retrieves Metadata definitions and current configuration values
      *
-     * @param  string $options - Value used as a prefix to extract parameters which start with that value
+     * @param   string  $options - Value used as a prefix to extract parameters which start with that value
      *
-     * @return array
+     * @return  array
      * @since   1.0
      */
     protected function getCustomfields($options)
@@ -973,7 +986,7 @@ echo '</pre>';
         $input_fields = array();
 
         /** Fields needed to define new Custom Fields */
-        $entry_fields = Services::Registry()->get('AdminconfigurationTemplate', DATA_OBJECT_PARAMETERS);
+        $entry_fields = Services::Registry()->get('AdminconfigurationTemplate', PARAMETERS_LITERAL);
 
         if (count($entry_fields) == 0 || $entry_fields === false) {
         } else {
@@ -1020,13 +1033,14 @@ echo '</pre>';
         $this->model_registry_name = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
 
         $custom_fields = array();
-        $custom_fields[] = 'metadata';
-        $custom_fields[] = 'customfields';
-        $custom_fields[] = DATA_OBJECT_PARAMETERS;
+        $custom_fields[] = METADATA_LITERAL;
+        $custom_fields[] = CUSTOMFIELDS_LITERAL;
+        $custom_fields[] = PARAMETERS_LITERAL;
 
         $first = 1;
 
-        $temp = Services::Registry()->get($this->model_registry_name, 'customfieldgroups');
+        $temp = Services::Registry()->get($this->model_registry_name, CUSTOMFIELDGROUPS_LITERAL);
+
         if (count($custom_fields) == 0) {
         } else {
             foreach ($temp as $item) {
@@ -1090,10 +1104,10 @@ echo '</pre>';
      *  1. Fieldsets: collection of the names of fields to be used to create field-specific include statements
      *  2. Fields: Field-specific registries which define attributes input to the template field creation view
      *
-     * @param $input_fields
+     * @param   string  $input_fields
      *
-     * @return array
-     * @since  1.0
+     * @return  array
+     * @since   1.0
      */
     protected function setFields($input_fields)
     {
@@ -1185,7 +1199,7 @@ echo '</pre>';
 
             $row->type = $field['type'];
 
-            /** todo: better mapping approach (fields.xml?) for dapagease types to HTML5/form field types */
+            /** todo: better mapping approach (fields.xml?) for database types to HTML5/form field types */
             if ($row->type == 'text') {
                 $row->type = 'textarea';
             }
@@ -1252,10 +1266,7 @@ echo '</pre>';
                     break;
 
                 default:
-                    echo 'FORMSERVICE: WHAT IS THIS TYPE? (changing to text) ' . $row->type . ' Name: ' . $row->name . '<br />';
-                    $row->type = 'text';
-                    $row->view = 'forminput';
-                    break;
+                    throw new \Exception('Form: Unidentified Type: ' . $row->type . ' for Name: ' . $row->name);
             }
 
             if (isset($field['datalist'])) {
@@ -1279,6 +1290,11 @@ echo '</pre>';
 
             /** Branch to form-field type logic where Registry will be created for this formfield */
             switch ($row->view) {
+
+                case 'formcheckbox':
+                    $row->name = $this->setCheckboxField($field, $row);
+                    break;
+
                 case 'formradio':
                     $row->name = $this->setRadioField($field, $row);
                     break;
@@ -1310,11 +1326,11 @@ echo '</pre>';
     /**
      * setInputField field
      *
-     * @param $field
-     * @param $row_start
+     * @param   $field
+     * @param   $row_start
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     protected function setInputField($field, $row_start)
     {
@@ -1351,19 +1367,33 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
 
     /**
+     * setCheckboxField field
+     *
+     * @param   $field
+     * @param   $row_start
+     *
+     * @return  string
+     * @since   1.0
+     */
+    protected function setCheckboxField($field, $row_start)
+    {
+
+    }
+
+    /**
      * setRadioField field
      *
-     * @param $field
-     * @param $row_start
+     * @param   $field
+     * @param   $row_start
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     protected function setRadioField($field, $row_start)
     {
@@ -1430,7 +1460,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1438,11 +1468,11 @@ echo '</pre>';
     /**
      * setSelectField field
      *
-     * @param $field
-     * @param $row_start
+     * @param   $field
+     * @param   $row_start
      *
-     * @return mixed|string
-     * @somce  1.0
+     * @return  mixed|string
+     * @somce   1.0
      */
     protected function setSelectField($field, $row_start)
     {
@@ -1492,7 +1522,8 @@ echo '</pre>';
         $yes = 0;
         if (strtolower($datalist) == FIELDS_MODEL_TYPE) {
 
-            $list = Services::Registry()->get(DATA_OBJECT_DATALIST,
+            $list = Services::Registry()->get(
+                DATALIST_LITERAL,
                 $this->model_registry_name . FIELDS_STANDARD_MODEL_TYPE
             );
 
@@ -1501,13 +1532,14 @@ echo '</pre>';
             $this->model_registry_name
                 = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
 
-            $list = Services::Registry()->get(DATA_OBJECT_DATALIST,
+            $list = Services::Registry()->get(
+                DATALIST_LITERAL,
                 $this->model_registry_name . FIELDS_STANDARD_MODEL_TYPE
             );
 
         } else {
 
-            $results = Services::Text()->getDatalist($datalist, DATA_OBJECT_DATALIST, array());
+            $results = Services::Text()->getDatalist($datalist, DATALIST_LITERAL, array());
             $list = $results[0]->listitems;
             $multiple = $results[0]->multiple;
             $size = $results[0]->size;
@@ -1562,7 +1594,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1570,7 +1602,11 @@ echo '</pre>';
     /**
      * setTextareaField field
      *
-     * @return array
+     * @param   string  $field
+     * @param   string  $row_start
+     *
+     * @return  mixed
+     * @since   1.0
      */
     protected function setTextareaField($field, $row_start)
     {
@@ -1614,7 +1650,7 @@ echo '</pre>';
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(DATA_OBJECT_TEMPLATE, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }

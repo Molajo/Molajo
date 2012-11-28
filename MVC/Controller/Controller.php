@@ -364,7 +364,7 @@ class Controller
                     $method_parameter = $service_class_query_method_parameter;
                 }
 
-                if (strtolower($this->get('model_name')) == DATA_OBJECT_PARAMETERS) {
+                if (strtolower($this->get('model_name')) == PARAMETERS_LITERAL) {
                     $query_object = QUERY_OBJECT_ITEM;
                 }
 
@@ -691,7 +691,7 @@ class Controller
             if ((int)$this->get('get_customfields') == 0) {
             } else {
 
-                $customFieldTypes = Services::Registry()->get($this->get('model_registry'), 'CustomFieldGroups');
+                $customFieldTypes = Services::Registry()->get($this->get('model_registry'), CUSTOMFIELDGROUPS_LITERAL);
 
                 if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
                 } else {
@@ -757,7 +757,7 @@ class Controller
             'query' => $this->model->query,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            DATA_OBJECT_PARAMETERS => $this->parameters,
+            PARAMETERS_LITERAL => $this->parameters,
             'model_name' => $this->get('model_name'),
             'model_type' => $this->get('model_type')
         );
@@ -795,8 +795,8 @@ class Controller
         if (isset($arguments['query'])) {
             $this->model->query = $arguments['query'];
         }
-        if (isset($arguments[DATA_OBJECT_PARAMETERS])) {
-            $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
+        if (isset($arguments[PARAMETERS_LITERAL])) {
+            $this->parameters = $arguments[PARAMETERS_LITERAL];
         }
 
         return true;
@@ -832,7 +832,7 @@ class Controller
 
                 $arguments = array(
                     'model_registry' => $this->get('model_registry'),
-                    DATA_OBJECT_PARAMETERS => $this->parameters,
+                    PARAMETERS_LITERAL => $this->parameters,
                     'data' => $item,
                     'model_name' => $this->get('model_name'),
                     'model_type' => $this->get('model_type'),
@@ -869,7 +869,7 @@ class Controller
                     VERBOSE
                 );
 
-                $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
+                $this->parameters = $arguments[PARAMETERS_LITERAL];
                 $this->query_results[] = $arguments['data'];
                 $first = false;
             }
@@ -877,7 +877,7 @@ class Controller
 
         $arguments = array(
             'model_registry' => $this->get('model_registry'),
-            DATA_OBJECT_PARAMETERS => $this->parameters,
+            PARAMETERS_LITERAL => $this->parameters,
             'data' => $this->query_results,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
@@ -912,8 +912,8 @@ class Controller
             VERBOSE
         );
 
-        if (isset($arguments[DATA_OBJECT_PARAMETERS])) {
-            $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
+        if (isset($arguments[PARAMETERS_LITERAL])) {
+            $this->parameters = $arguments[PARAMETERS_LITERAL];
         } else {
             $this->parameters = array();
         }

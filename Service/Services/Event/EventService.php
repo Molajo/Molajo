@@ -13,26 +13,61 @@ defined('MOLAJO') or die;
 /**
  * Event Service
  *
- * To list all Events:
- *      Services::Registry()->get('Events', '*');
+ * List All Events:
+ *      $eventArray = Services::Registry()->get(EVENTS_LITERAL, 'events');
  *
- * To see what Plugins fire for a specific event:
- *      Services::Registry()->get('onBeforeRead', '*');
+ * List Plugins for a Specific Event:
+ *      $pluginArray = Services::Registry()->get(EVENTS_LITERAL, 'onBeforeRead');
  *
- * To Schedule an Event:
+ * Schedule an Event:
  *      Services::Event()->scheduleEvent('onAfterDelete', $arguments, $selections);
  *
- * To override a Plugin: copy the plugin folder into an extension (i.e., Resource, View, Theme, etc.),
- *      When that extension is current, Molajo will locate the override and register it with this command:
+ * Override a Plugin:
+ *      Copy the Plugin folder into an Extension (i.e., Resource, View, Theme, etc.) and make changes,
+ *      When that extension is in use, Molajo will locate the override and register it with this command:
  *
- *      Services::Event()->registerPlugin('AliasPlugin', 'Extension\\Resource\\Articles\\AliasPlugin');
+ *      Services::Event()->registerPlugins(PLATFORM_FOLDER . '/' . 'Plugin', 'Molajo\\Plugin\\');
+ *      Services::Event()->registerPlugin('Extension', 'Extension\\Resource\\Articles\\AliasPlugin');
  *
  * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */
+
 Class EventService
 {
+    /**
+     * Events discovered within Plugins
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $eventArray;
+
+    /**
+     * Events and an array of Plugins for each Event
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $event_pluginArray;
+
+    /**
+     * List of Plugins
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $pluginArray;
+
+    /**
+     * List of Events for each Plugin
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $plugin_eventArray;
+
     /**
      * Initialise Event Service - Register installed Plugins for Events
      *
@@ -41,43 +76,14 @@ Class EventService
      */
     public function initialise()
     {
-        Services::Registry()->createRegistry('Events');
+        Services::Registry()->createRegistry(EVENTS_LITERAL);
+
+        Services::Registry()->set(EVENTS_LITERAL, 'Plugins', array());
+        Services::Registry()->set(EVENTS_LITERAL, 'PluginEvents', array());
+        Services::Registry()->set(EVENTS_LITERAL, 'Events', array());
+        Services::Registry()->set(EVENTS_LITERAL, 'EventPlugins', array());
 
         $this->registerInstalledPlugins();
-    }
-
-    /**
-     * Instantiate the Plugin class, register it to listen to each event for which it has a method,
-     *  and save the path and name for possible use later
-     *
-     * This method is used for registering normal events defined in core and extension plugins
-     *
-     * Can be used within extensions to schedule new custom events
-     *
-     * Usage:
-     * Services::Event()->registerPlugin('AliasPlugin', 'Molajo\\Plugin\\Alias\\AliasPlugin');
-     *
-     * @param   string  $pluginName
-     * @param   string  $pluginClass
-     *
-     * @return  object
-     * @since   1.0
-     */
-    public function registerPlugin($pluginName, $pluginClass)
-    {
-        $events = get_class_methods($pluginClass);
-
-        if (count($events) > 0) {
-            foreach ($events as $event) {
-                if (substr($event, 0, 2) == 'on') {
-                    $reflectionMethod = new \ReflectionMethod(new $pluginClass, $event);
-                    $results = $reflectionMethod->getDeclaringClass();
-                    if ($results->name == $pluginClass) {
-                        $this->registerPluginEvent($pluginName, $pluginClass, $event);
-                    }
-                }
-            }
-        }
 
         return $this;
     }
@@ -106,9 +112,9 @@ Class EventService
      */
     public function scheduleEvent($event, $arguments = array(), $selections = array())
     {
-        Services::Profiler()->set('EventService->scheduleEvent ' . $event, LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('Event: scheduleEvent ' . $event, LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $registrations = Services::Registry()->getArray($event);
+        $registrations = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
 
         if (count($registrations) == 0) {
             Services::Profiler()->set(
@@ -150,6 +156,7 @@ Class EventService
             if (isset($registrations[$pluginClass])) {
 
                 if (method_exists($registrations[$pluginClass], $event)) {
+
                     $results = $this->processPluginClass($registrations[$pluginClass], $event, $arguments);
                     if ($results === false) {
                         return false;
@@ -166,8 +173,8 @@ Class EventService
                         LOG_OUTPUT_PLUGINS
                     );
 
-                    return false;
-                    //throw error
+                    throw new \Exception('Events: scheduleEvent identified Class ' . $pluginClass
+                        . ' that does not exist');
                 }
             }
         }
@@ -178,13 +185,14 @@ Class EventService
     /**
      * Instantiate the Plugin Class, use attributes from schedule request to establish initial property values
      * Execute each qualified plugin, one at a time, until a false is encountered or all plugins are processed.
-     * Return attributes to requestor.
+     * Return attributes to requester.
      *
-     * @param   $class
-     * @param   $event
+     * @param   string  $class
+     * @param   string  $event
      *
      * @return  array|bool
      * @since   1.0
+     * @throws  \Exception
      */
     protected function processPluginClass($class, $event, $arguments)
     {
@@ -201,9 +209,7 @@ Class EventService
                 LOG_OUTPUT_PLUGINS
             );
 
-            echo '<br />Could not Instantiate Plugin Class: ' . $pluginClass;
-            die;
-            //throw error
+            throw new \Exception('Event: processPluginClass could not Instantiate Plugin Class: ' . $pluginClass);
         }
 
         if (count($arguments) > 0) {
@@ -234,12 +240,8 @@ Class EventService
                 LOG_OUTPUT_PLUGINS
             );
 
-            echo '<br />Error from : ' . $pluginClass . ' for <br />';
-            echo '<pre>';
-            var_dump($arguments);
-            echo '</pre>';
-            //throw error
-            die;
+            throw new \Exception('Event: processPluginClass failed for Plugin Class: '
+                . $pluginClass . ' Event ' . $event);
 
         } else {
 
@@ -254,44 +256,111 @@ Class EventService
     }
 
     /**
-     * Automatically registers all Plugins in the Core, and then Extension (which can override Core), folders
-     *
-     * Extensions can override Plugins by including a like-named folder in a Plugin directory within the extension
-     *
-     * The application will find and register the overrides when the extension is used.
+     * Registers all Plugins in the Core and Extensions Folders
      *
      * @return  object
      * @since   1.0
      */
     protected function registerInstalledPlugins()
     {
-        Services::Profiler()->set('EventService->registerInstalledPlugins ', LOG_OUTPUT_PLUGINS, VERBOSE);
+        $this->eventArray = array();
+        $this->event_pluginArray = array();
+        $this->pluginArray = array();
+        $this->plugin_eventArray = array();
 
-        $plugins = Services::Filesystem()->folderFolders(PLATFORM_FOLDER . '/' . 'Plugin');
+        $this->registerPlugins(PLATFORM_FOLDER . '/' . 'Plugin', 'Molajo\\Plugin\\');
+        $this->registerPlugins(PLATFORM_FOLDER . '/' . 'Plugin', 'Molajo\\Plugin\\');
 
-        $pluginClass = 'Molajo\\Plugin\\Plugin\\Plugin';
+        return $this;
 
-        $temp = new $pluginClass();
+    }
+
+    /**
+     * Registers all Plugins in the folder
+     *
+     * Extensions can override Plugins by including a like-named folder in a Plugin directory within the extension
+     *
+     * The application will find and register the overrides when the extension is used.
+     *
+     * Usage:
+     * Services::Event()->registerPlugin('Molajo\\Plugin');
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function registerPlugins($folder = '', $namespace = '')
+    {
+        Services::Profiler()->set('EventService->registerPlugins for: ' . $folder, LOG_OUTPUT_PLUGINS, VERBOSE);
+
+        if ($folder == '') {
+            throw new \Exception ('Event: No folder sent into RegisterPlugins');
+        }
+        if ($namespace == '') {
+            throw new \Exception ('Event: No namespace sent into RegisterPlugins');
+        }
+        $folder .= '/' . 'Plugin';
+        $namespace .= '\\Plugin\\';
+
+        $this->pluginArray = Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
+        $this->plugin_eventArray = Services::Registry()->get(EVENTS_LITERAL, 'PluginEvents');
+        $this->eventArray = Services::Registry()->get(EVENTS_LITERAL, 'Events');
+        $this->event_pluginArray = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
+
+        $plugins = Services::Filesystem()->folderFolders($folder);
 
         foreach ($plugins as $folder) {
+
             if (substr(strtolower($folder), 0, 4) == 'hold') {
 
             } else {
+
                 $pluginName = $folder . 'Plugin';
-                $pluginClass = 'Molajo\\Plugin\\' . $folder . '\\' . $pluginName;
-                $this->registerPlugin($pluginName, $pluginClass);
+                $pluginClass = $namespace . $folder . '\\' . $pluginName;
+
+                try {
+
+                    $this->registerPlugin($pluginName, $pluginClass);
+
+                } catch (\Exception $e) {
+
+                    throw new \Exception('Events: Registration Failed for Plugin '
+                        . $pluginName . ' and Class ' . $pluginClass);
+                }
+
             }
         }
 
-        $plugins = Services::Filesystem()->folderFolders(EXTENSIONS . '/' . 'Plugin');
+        Services::Registry()->set(EVENTS_LITERAL, 'Plugins', $this->pluginArray);
+        Services::Registry()->set(EVENTS_LITERAL, 'PluginEvents', $this->plugin_eventArray);
+        Services::Registry()->set(EVENTS_LITERAL, 'Events', $this->eventArray);
+        Services::Registry()->set(EVENTS_LITERAL, 'EventPlugins', $this->event_pluginArray);
 
-        foreach ($plugins as $folder) {
-            if (substr(strtolower($folder), 0, 4) == 'hold') {
+        return $this;
+    }
 
-            } else {
-                $pluginName = $folder . 'Plugin';
-                $pluginClass = 'Extension\\Plugin\\' . $folder . '\\' . $pluginName;
-                $this->registerPlugin($pluginName, $pluginClass);
+    /**
+     * Instantiate the Plugin class, register it to listen to each event for which it has a method,
+     *  and save the path and name for possible use later
+     *
+     * @param   string  $pluginName
+     * @param   string  $pluginClass
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function registerPlugin($pluginName, $pluginClass)
+    {
+        $events = get_class_methods($pluginClass);
+
+        if (count($events) > 0) {
+            foreach ($events as $event) {
+                if (substr($event, 0, 2) == 'on') {
+                    $reflectionMethod = new \ReflectionMethod(new $pluginClass, $event);
+                    $results = $reflectionMethod->getDeclaringClass();
+                    if ($results->name == $pluginClass) {
+                        $this->registerPluginEvent($pluginName, $pluginClass, $event);
+                    }
+                }
             }
         }
 
@@ -325,27 +394,37 @@ Class EventService
             VERBOSE
         );
 
-        $exists = Services::Registry()->exists('Events', $event);
+        /** Plugins */
+        $this->pluginArray[$pluginName] = $pluginClass;
 
-        if ($exists === true) {
-            $count = Services::Registry()->get('Events', $event);
-            $count++;
-
+        /** Plugin Events */
+        $this->plugin_eventArray = array();
+        if (isset($this->plugin_eventArray[$pluginName])) {
         } else {
-            Services::Registry()->createRegistry($event);
-            $count = 1;
+            $this->plugin_eventArray[$pluginName] = array();
         }
 
-        Services::Registry()->set('Events', $event, $count);
-        Services::Registry()->set($event, $pluginName, $pluginClass);
-
-        $exists = Services::Registry()->exists('Plugins');
-        if ($exists === true) {
-        } else {
-            Services::Registry()->createRegistry('Plugins');
+        $existing = $this->plugin_eventArray[$pluginName];
+        if (is_array($existing)) {
+            array_merge($existing, array($pluginName));
         }
 
-        Services::Registry()->set('Plugins', $pluginName, 1);
+        /** Events */
+        if (in_array($event, $this->eventArray)) {
+        } else {
+            $this->eventArray[] = $event;
+        }
+
+        /** Event Plugins */
+        if (isset($this->event_pluginArray[$event])) {
+        } else {
+            $this->event_pluginArray[$event] = array();
+        }
+
+        $existing = $this->event_pluginArray[$event];
+        if (is_array($existing)) {
+            array_merge($existing, array($pluginName));
+        }
 
         return $this;
     }

@@ -165,8 +165,8 @@ Class InstallService
 //Services::Text()->addImage(200, 300, 'cat');
 
         $data->parameters = array();
-        Services::Registry()->sort($model_registry . DATA_OBJECT_PARAMETERS);
-        $parameters = Services::Registry()->getArray($model_registry . DATA_OBJECT_PARAMETERS);
+        Services::Registry()->sort($model_registry . PARAMETERS_LITERAL);
+        $parameters = Services::Registry()->getArray($model_registry . PARAMETERS_LITERAL);
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
 
@@ -189,8 +189,8 @@ Class InstallService
         }
 
         $data->metadata = array();
-        Services::Registry()->sort($model_registry . 'Metadata');
-        $parameters = Services::Registry()->getArray($model_registry . 'Metadata');
+        Services::Registry()->sort($model_registry . METADATA_LITERAL);
+        $parameters = Services::Registry()->getArray($model_registry . METADATA_LITERAL);
 
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
@@ -205,8 +205,8 @@ Class InstallService
         for ($i = 0; $i < 3; $i++) {
 
             $data->customfields = array();
-            Services::Registry()->sort($model_registry . 'Customfields');
-            $customfields = Services::Registry()->getArray($model_registry . 'Customfields');
+            Services::Registry()->sort($model_registry . CUSTOMFIELDS_LITERAL);
+            $customfields = Services::Registry()->getArray($model_registry . CUSTOMFIELDS_LITERAL);
 
             if (count($customfields) > 0) {
                 foreach ($customfields as $key => $value) {
@@ -377,7 +377,7 @@ Class InstallService
             'model_registry' => $model_registry,
             'db' => '',
             'data' => $query_results,
-            DATA_OBJECT_PARAMETERS => $parameters,
+            PARAMETERS_LITERAL => $parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );

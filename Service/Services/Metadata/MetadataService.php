@@ -64,7 +64,7 @@ Class MetadataService
      */
     public function set($name, $content, $label = 'name')
     {
-        Services::Registry()->set('Metadata', $name, array($content, $label));
+        Services::Registry()->set(METADATA_LITERAL, $name, array($content, $label));
 
         return;
     }
@@ -97,7 +97,7 @@ Class MetadataService
             $row = new \stdClass();
 
             /** Title */
-            $temp = Services::Registry()->get('Metadata', 'title', '');
+            $temp = Services::Registry()->get(METADATA_LITERAL, 'title', '');
 			$title = $temp[0];
             if (trim($title) == '') {
                 $title = SITE_NAME;
@@ -105,22 +105,22 @@ Class MetadataService
             $row->title = Services::Filter()->escape_text($title);
 
 			/** Dont print as metadata */
-			Services::Registry()->delete('Metadata', 'title');
+			Services::Registry()->delete(METADATA_LITERAL, 'title');
 
             /** Mime Type */
-            $mimetype = Services::Registry()->get('Metadata', 'mimetype', '');
+            $mimetype = Services::Registry()->get(METADATA_LITERAL, 'mimetype', '');
             if (trim($mimetype) == '') {
                 $mimetype = 'text/html';
             }
             $row->mimetype = Services::Filter()->escape_text($mimetype);
 
-            Services::Registry()->set('Metadata', 'mimetype', $mimetype);
+            Services::Registry()->set(METADATA_LITERAL, 'mimetype', $mimetype);
 
             /** Base URL for Site */
             $row->base = SITE_BASE_URL;
 
             /** Last Modified Date */
-            $last_modified = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'modified_datetime');
+            $last_modified = Services::Registry()->get(PARAMETERS_LITERAL, 'modified_datetime');
             if (trim($last_modified) == '') {
                 $last_modified = Services::Date()->getDate();
             }
@@ -143,9 +143,9 @@ Class MetadataService
             $row->end = $end;
             $query_results[] = $row;
 
-        } elseif (strtolower($model_type) == 'metadata') {
+        } elseif (strtolower($model_type) == METADATA_LITERAL) {
 
-            $metadata = Services::Registry()->get('Metadata');
+            $metadata = Services::Registry()->get(METADATA_LITERAL);
 
             if (count($metadata) > 0) {
 

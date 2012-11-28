@@ -8,6 +8,6 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <div class="portlet-header">
-    <h4><?php echo Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'criteria_title'); ?></h4>
+    <h4><?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_title'); ?></h4>
 </div>
 <div class="portlet-content">

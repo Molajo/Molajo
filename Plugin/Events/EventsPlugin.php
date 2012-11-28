@@ -31,35 +31,50 @@ class EventsPlugin extends Plugin
             return true;
         }
 
-        Services::Registry()->sort('Events');
-        $events = Services::Registry()->get('Events');
+        $events = array('onAfterInitialise',
+            'onAfterRoute',
+            'onAfterAuthorise',
+            'onBeforeParse',
+            'onBeforeInclude',
+            'onBeforeRead',
+            'onAfterRead',
+            'onAfterReadall',
+            'onBeforeviewRender',
+            'onAfterviewRender',
+            'onAfterInclude',
+            'onAfterParsebody',
+            'onBeforeDocumenthead',
+            'onAfterDocumenthead',
+            'onAfterParse',
+            'onAfterExecute',
+            'onAfterResponse',
+            'onBeforecreate',
+            'onAftercreate',
+            'onBeforeupdate',
+            'onAfterupdate',
+            'onBeforedelete',
+            'onAfterdelete',
+            'onBeforelogon',
+            'onBeforelogout'
+        );
 
         $eventArray = array();
-
-        foreach ($events as $key => $value) {
+        foreach ($events as $key) {
 
             $row = new \stdClass();
 
-            if (strtolower(substr($key, 0, strlen('onbefore'))) == 'onbefore') {
-                $eventName = substr($key, strlen('onbefore'), strlen($key));
-                $formatted = 'onBefore' . ucfirst(strtolower($eventName));
-
-            } elseif (strtolower(substr($key, 0, strlen('onafter'))) == 'onafter') {
-                $eventName = substr($key, strlen('onafter'), strlen($key));
-                $formatted = 'onAfter' . ucfirst(strtolower($eventName));
-
-            } else {
-                $eventName = substr($key, strlen('on'), strlen($key));
-                $formatted = 'on' . ucfirst(strtolower($eventName));
-            }
-
             $row->id = $key;
-            $row->value = trim($formatted);
+            $row->value = trim($key);
 
             $eventArray[] = $row;
         }
 
-        Services::Registry()->set(DATA_OBJECT_DATALIST, 'Events', $eventArray);
+        Services::Registry()->set(DATALIST_LITERAL, EVENTS_LITERAL, $eventArray);
+
+        Services::Registry()->set(EVENTS_LITERAL, 'Plugins', $this->pluginArray);
+        Services::Registry()->set(EVENTS_LITERAL, 'PluginEvents', $this->plugin_eventArray);
+        Services::Registry()->set(EVENTS_LITERAL, 'Events', $this->eventArray);
+        Services::Registry()->set(EVENTS_LITERAL, 'EventPlugins', $this->event_pluginArray);
 
         return true;
     }

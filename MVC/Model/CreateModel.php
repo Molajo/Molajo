@@ -34,7 +34,7 @@ class CreateModel extends Model
 
         /** Prepare Data from Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
-            $model_registry, 'customfieldgroups', array());
+            $model_registry, CUSTOMFIELDGROUPS_LITERAL, array());
 
         if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
 

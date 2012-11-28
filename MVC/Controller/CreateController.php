@@ -165,7 +165,7 @@ class CreateController extends Controller
 
         /** Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
-            $this->model_registry, 'customfieldgroups', array());
+            $this->model_registry, CUSTOMFIELDGROUPS_LITERAL, array());
 
         if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
 
@@ -432,7 +432,7 @@ class CreateController extends Controller
             'data' => $this->data,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            DATA_OBJECT_PARAMETERS => $this->parameters,
+            PARAMETERS_LITERAL => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
@@ -449,7 +449,7 @@ class CreateController extends Controller
 
         Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
+        $this->parameters = $arguments[PARAMETERS_LITERAL];
         $this->data = $arguments['data'];
 
         return true;
@@ -474,7 +474,7 @@ class CreateController extends Controller
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $data,
-            DATA_OBJECT_PARAMETERS => $this->parameters,
+            PARAMETERS_LITERAL => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
@@ -491,7 +491,7 @@ class CreateController extends Controller
 
         Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', LOG_OUTPUT_PLUGINS, VERBOSE);
 
-        $this->parameters = $arguments[DATA_OBJECT_PARAMETERS];
+        $this->parameters = $arguments[PARAMETERS_LITERAL];
         $data = $arguments['data'];
 
         return $data;

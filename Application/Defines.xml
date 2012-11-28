@@ -17,7 +17,6 @@
     <define name="CATALOG_TYPE_SITE" value="1000"/>
     <define name="CATALOG_TYPE_APPLICATION" value="2000"/>
     <define name="CATALOG_TYPE_USER" value="3000"/>
-
     <define name="CATALOG_TYPE_SERVICE" value="4000"/>
     <define name="CATALOG_TYPE_PLUGIN" value="5000"/>
     <define name="CATALOG_TYPE_FIELD" value="5500"/>
@@ -128,38 +127,37 @@
     <define name="QUERY_OBJECT_LIST" value="list"/>
     <define name="QUERY_OBJECT_DISTINCT" value="distinct"/>
 
+    <define name="ASSETS_LITERAL" value="Assets"/>
+    <define name="CLIENT_LITERAL" value="Client"/>
+    <define name="CONFIGURATION_LITERAL" value="Configuration"/>
+    <define name="CUSTOMFIELDS_LITERAL" value="Customfields"/>
+    <define name="CUSTOMFIELDGROUPS_LITERAL" value="Customfieldgroups"/>
+    <define name="CSS_DECLARATIONS_LITERAL" value="CssDeclarations"/>
+    <define name="CSS_LITERAL" value="Css"/>
+    <define name="DATA_LITERAL" value="Data"/>
     <define name="DATA_OBJECT_LITERAL" value="Dataobject"/>
     <define name="DATA_SOURCE_LITERAL" value="Datasource"/>
-
-    <define name="CONFIGURATION_LITERAL" value="Configuration"/>
-    <define name="MODEL_LITERAL" value="Model"/>
     <define name="DATABASE_LITERAL" value="Database"/>
-    <define name="MENUITEMS_LITERAL" value="Menuitems"/>
-    <define name="DATA_OBJECT_DATALIST" value="Datalist"/>
-    <define name="DATA_OBJECT_DOCUMENT" value="Document"/>
-    <define name="DATA_OBJECT_DUMMY" value="Dummy"/>
-    <define name="DATA_OBJECT_MESSAGES" value="Messages"/>
-    <define name="DATA_OBJECT_PARAMETERS" value="Parameters"/>
-    <define name="DATA_OBJECT_PERMISSIONS" value="Permissions"/>
-    <define name="DATA_OBJECT_PRIMARY" value="Primary"/>
-    <define name="DATA_OBJECT_PRIMARY_DATA" value="PrimaryData"/>
-    <define name="DATA_OBJECT_TEMPLATE" value="Template"/>
-
-    <define name="SYSTEM_LITERAL" value="System"/>
-    <define name="MODEL_NAME_DATASOURCE" value="Modelname"/>
-
-    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
-    <define name="JS_DEFER_LITERAL" value="Jsdefer"/>
-    <define name="JS_DECLARATIONS_DEFER" value="JsDeclarationsDefer"/>
-    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
-    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
-    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
-    <define name="DATA_OBJECT_ASSETS" value="Assets"/>
-
-
-    <define name="FIELDS_MODEL_TYPE" value="Fields"/>
-    <define name="FIELDS_STANDARD_MODEL_TYPE" value="Fieldsstandard"/>
-    <define name="FIELDS_METADATA_MODEL_TYPE" value="Fieldsmetadata"/>
-    <define name="FIELDS_PARAMETERS_MODEL_TYPE" value="Fieldsparameters"/>
+    <define name="DATALIST_LITERAL" value="Datalist"/>
+    <define name="DOCUMENT_LITERAL" value="Document"/>
+    <define name="DUMMY_LITERAL" value="Dummy"/>
     <define name="FIELDS_CUSTOM_MODEL_TYPE" value="Fieldscustom"/>
+    <define name="FIELDS_METADATA_MODEL_TYPE" value="Fieldsmetadata"/>
+    <define name="FIELDS_MODEL_TYPE" value="Fields"/>
+    <define name="FIELDS_PARAMETERS_MODEL_TYPE" value="Fieldsparameters"/>
+    <define name="FIELDS_STANDARD_MODEL_TYPE" value="Fieldsstandard"/>
+    <define name="JS_DECLARATIONS_DEFER_LITERAL" value="JsDeclarationsDefer"/>
+    <define name="JS_DEFER_LITERAL" value="Jsdefer"/>
+    <define name="JS_LITERAL" value="Js"/>
+    <define name="LINKS_LITERAL" value="Links"/>
+    <define name="MENUITEMS_LITERAL" value="Menuitems"/>
+    <define name="MESSAGES_LITERAL" value="Messages"/>
+    <define name="METADATA_LITERAL" value="Metadata"/>
+    <define name="MODEL_LITERAL" value="Model"/>
+    <define name="NOFORMFIELDS_LITERAL" value="Noformfields"/>
+    <define name="PARAMETERS_LITERAL" value="Parameters"/>
+    <define name="PERMISSIONS_LITERAL" value="Permissions"/>
+    <define name="PRIMARY_LITERAL" value="Primary"/>
+    <define name="SYSTEM_LITERAL" value="System"/>
+    <define name="TEMPLATE_LITERAL" value="Template"/>
 </defines>

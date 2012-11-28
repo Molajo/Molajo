@@ -353,7 +353,7 @@ Class Application
         }
 
         if ($results === false
-            || Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'error_status', 0) == 1
+            || Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1
         ) {
             if (PROFILER_ON) {
                 Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
@@ -395,9 +395,9 @@ Class Application
         }
 
         $arguments = array(
-            DATA_OBJECT_PARAMETERS => Services::Registry()->getArray(DATA_OBJECT_PARAMETERS),
-            'model_type' => Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'model_type'),
-            'model_name' => Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'model_name'),
+            PARAMETERS_LITERAL => Services::Registry()->getArray(PARAMETERS_LITERAL),
+            'model_type' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
+            'model_name' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_name'),
             'data' => array()
         );
 
@@ -411,10 +411,10 @@ Class Application
             throw new \Exception('onAfterRouteEvent Failed');
         }
 
-        Services::Registry()->delete(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->createRegistry(DATA_OBJECT_PARAMETERS);
-        Services::Registry()->loadArray(DATA_OBJECT_PARAMETERS, $arguments[DATA_OBJECT_PARAMETERS]);
-        Services::Registry()->sort(DATA_OBJECT_PARAMETERS);
+        Services::Registry()->delete(PARAMETERS_LITERAL);
+        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return true;
     }
@@ -465,7 +465,7 @@ Class Application
      */
     protected function execute()
     {
-        $action = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action', ACTION_VIEW);
+        $action = Services::Registry()->get(PARAMETERS_LITERAL, 'request_action', ACTION_VIEW);
         if (trim($action) == '') {
             $action = ACTION_VIEW;
         }
@@ -514,15 +514,15 @@ Class Application
      */
     protected function display()
     {
-        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_include'))) {
+        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme Not found');
             echo 'Theme not found - application stopped before parse. Parameters follow:';
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, '*');
+            Services::Registry()->get(PARAMETERS_LITERAL, '*');
             die;
         }
 
-        $parms = Services::Registry()->getArray(DATA_OBJECT_PARAMETERS);
+        $parms = Services::Registry()->getArray(PARAMETERS_LITERAL);
         $page_request = Services::Cache()->get('page', implode('', $parms));
 
         if ($page_request === false) {
@@ -555,10 +555,10 @@ Class Application
 // what parameters
 
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
-            $url = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_url_sef_request');
+            $url = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_url_sef_request');
 
         } else {
-            $url = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_url_request');
+            $url = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_url_request');
         }
 
         Services::Redirect()->redirect(Services::Url()->getApplicationURL($url), '301')->send();

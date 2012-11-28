@@ -31,7 +31,7 @@ class PagetypedashboardPlugin extends Plugin
             return true;
         }
 
-        $portletOptions = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'dashboard_portlet');
+        $portletOptions = Services::Registry()->get(PARAMETERS_LITERAL, 'dashboard_portlet');
         if (trim($portletOptions) == '') {
             return true;
         }
@@ -66,15 +66,15 @@ class PagetypedashboardPlugin extends Plugin
         $this->set('request_model_name', $this->get('model_name'));
 
         $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', DATA_OBJECT_PRIMARY);
+        $this->set('model_name', PRIMARY_LITERAL);
         $this->set('model_query_object', QUERY_OBJECT_LIST);
 
         $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = DATA_OBJECT_PRIMARY;
+        $this->parameters['model_name'] = PRIMARY_LITERAL;
 
         Services::Registry()->set(
-            DATA_OBJECT_PRIMARY,
-            DATA_OBJECT_PRIMARY_DATA,
+            PRIMARY_LITERAL,
+            DATA_LITERAL,
             $tabs
         );
 
@@ -125,7 +125,7 @@ class PagetypedashboardPlugin extends Plugin
      */
     protected function setOptions()
     {
-        $results = Services::Text()->getDatalist('Portlets', DATA_OBJECT_DATALIST, $this->parameters);
+        $results = Services::Text()->getDatalist('Portlets', DATALIST_LITERAL, $this->parameters);
         if ($results === false) {
             return true;
         }
@@ -163,7 +163,7 @@ class PagetypedashboardPlugin extends Plugin
 
             $query_results[] = $row;
         }
-        Services::Registry()->set(DATA_OBJECT_DATALIST, 'Portlets', $query_results);
+        Services::Registry()->set(DATALIST_LITERAL, 'Portlets', $query_results);
 
         return true;
     }

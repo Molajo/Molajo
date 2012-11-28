@@ -136,14 +136,14 @@ class Plugin
             array('model_registry',
                 'model_type',
                 'model_name',
-                DATA_OBJECT_PARAMETERS,
+                PARAMETERS_LITERAL,
                 'query',
                 'db',
                 'data',
                 'null_date',
                 'now',
                 FIELDS_MODEL_TYPE,
-                'customfieldgroups',
+                CUSTOMFIELDGROUPS_LITERAL,
                 'rendered_output'))
             && (isset($this->$key))
         ) {
@@ -176,18 +176,18 @@ class Plugin
         if (in_array($key, array('model_registry',
             'model_type',
             'model_name',
-            DATA_OBJECT_PARAMETERS,
+            PARAMETERS_LITERAL,
             'query',
             'db',
             'data',
             'null_date',
             'now',
             FIELDS_MODEL_TYPE,
-            'customfieldgroups',
+            CUSTOMFIELDGROUPS_LITERAL,
             'rendered_output'))
         ) {
 
-            if ($key == DATA_OBJECT_PARAMETERS) {
+            if ($key == PARAMETERS_LITERAL) {
                 foreach ($value as $k => $v) {
                     $this->parameters[$k] = $v;
                 }
@@ -220,7 +220,7 @@ class Plugin
         }
 
         /** "Custom" field groups and fields */
-        $this->customfieldgroups = Services::Registry()->get($this->model_registry, 'customfieldgroups', array());
+        $this->customfieldgroups = Services::Registry()->get($this->model_registry, CUSTOMFIELDGROUPS_LITERAL, array());
 
         if (is_array($this->customfieldgroups) && count($this->customfieldgroups) > 0) {
 

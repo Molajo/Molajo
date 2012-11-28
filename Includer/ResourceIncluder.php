@@ -27,15 +27,15 @@ class ResourceIncluder extends Includer
      */
     public function __construct($name = null, $type = null)
     {
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_id', CATALOG_TYPE_RESOURCE);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_catalog_type_id', CATALOG_TYPE_RESOURCE);
 
 		$this->name = $name;
 		$this->type = $type;
 
 		Services::Registry()->createRegistry('Include');
 
-		Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'includer_name', $this->name);
-		Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'includer_type', $this->type);
+		Services::Registry()->set(PARAMETERS_LITERAL, 'includer_name', $this->name);
+		Services::Registry()->set(PARAMETERS_LITERAL, 'includer_type', $this->type);
 
         return;
     }
@@ -70,7 +70,7 @@ class ResourceIncluder extends Includer
 
 		/** only load media if there was rendered output */
 		if ($rendered_output == ''
-			&& Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'criteria_display_view_on_no_results') == 0
+			&& Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_display_view_on_no_results') == 0
 		) {
 		} else {
 			$this->loadMedia();
@@ -89,19 +89,19 @@ class ResourceIncluder extends Includer
     protected function getExtension()
     {
         /** Include and Parameter Registries are already loaded for Primary Resource */
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_primary') === true) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'extension_primary') === true) {
             return;
         }
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_instance_id',
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_instance_id',
             Helpers::Extension()->getInstanceID(
-                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_id'),
-                Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_title')
+                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_catalog_type_id'),
+                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_title')
             )
         );
 
         $response = Helpers::Extension()->getExtension(
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_instance_id'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'extension_instance_id'),
             DATASOURCE_LITERAL,
             'ExtensionInstances'
         );
@@ -123,21 +123,21 @@ class ResourceIncluder extends Includer
     protected function loadMedia()
     {
         /** Primary Category */
-        $this->loadMediaPlus('/category' . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_category_id'),
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_primary_category', 700));
+        $this->loadMediaPlus('/category' . Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_category_id'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_primary_category', 700));
 
         /** Menu Item */
-        $this->loadMediaPlus('/menuitem' . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'menu_item_id'),
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_menuitem', 800));
+        $this->loadMediaPlus('/menuitem' . Services::Registry()->get(PARAMETERS_LITERAL, 'menu_item_id'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_menuitem', 800));
 
         /** Source */
-        $this->loadMediaPlus('/source/' . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_title')
-                . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'criteria_source_id'),
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_item', 900));
+        $this->loadMediaPlus('/source/' . Services::Registry()->get(PARAMETERS_LITERAL, 'extension_title')
+                . Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_source_id'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_item', 900));
 
         /** Resource */
-        $this->loadMediaPlus('/resource/' . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_title'),
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'asset_priority_extension', 900));
+        $this->loadMediaPlus('/resource/' . Services::Registry()->get(PARAMETERS_LITERAL, 'extension_title'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_extension', 900));
 
         return true;
     }
@@ -154,8 +154,8 @@ class ResourceIncluder extends Includer
     {
 
         /** Theme */
-        $file_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path');
-        $url_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_url');
+        $file_path = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path');
+        $url_path = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_url');
         $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
         $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);

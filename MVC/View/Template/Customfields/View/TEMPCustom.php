@@ -20,14 +20,14 @@ if ($this->row->new_fieldset == '1') {
     <?php if ($this->row->fieldset_title == 'Create') { ?>
 <fieldset class="two-up">
 <legend><?php echo $this->row->fieldset_title; ?></legend>
-    <?php if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'application_help') == 1) { ?>
+    <?php if (Services::Registry()->get(PARAMETERS_LITERAL, 'application_help') == 1) { ?>
         <p><?php echo $this->row->fieldset_description; ?></p>
     <?php } ?>
     <ol>
     <?php } else { ?>
 <fieldset>
 <legend><?php echo $this->row->fieldset_title; ?></legend>
-<?php if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'application_help') == 1) { ?>
+<?php if (Services::Registry()->get(PARAMETERS_LITERAL, 'application_help') == 1) { ?>
     <p><?php echo $this->row->fieldset_description; ?></p>
 <?php } ?>
 <table class="responsive">

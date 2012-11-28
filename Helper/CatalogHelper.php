@@ -29,16 +29,19 @@ Class CatalogHelper
     public function getRouteCatalog()
     {
         $item = $this->get(
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_catalog_id'),
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url')
+            Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'request_url')
         );
 
         if (count($item) == 0 || (int)$item->id == 0 || (int)$item->enabled == 0) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_found', false);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'status_found', false);
             Services::Profiler()->set(
                 'CatalogHelper->getRouteCatalog 404 - Not Found '
-                    . ' Requested Catalog ID: ' . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_catalog_id')
-                    . ' Requested URL Query: ' . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url'),
+                    . ' Requested Catalog ID: ' . Services::Registry()->get(
+                    PARAMETERS_LITERAL,
+                    'request_catalog_id'
+                )
+                    . ' Requested URL Query: ' . Services::Registry()->get(PARAMETERS_LITERAL, 'request_url'),
                 LOG_OUTPUT_ROUTING,
                 0
             );
@@ -55,31 +58,35 @@ Class CatalogHelper
                 0
             );
 
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'redirect_to_id', (int)$item->redirect_to_id);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'redirect_to_id', (int)$item->redirect_to_id);
 
             return false;
         }
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_id', (int)$item->id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_type_id', (int)$item->catalog_type_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_type', $item->b_title);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_url_sef_request', $item->sef_request);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_url_request', $item->catalog_url_request);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_page_type', $item->page_type);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_view_group_id', (int)$item->view_group_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_category_id', (int)$item->primary_category_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_extension_instance_id', $item->extension_instance_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_model_type', $item->b_model_type);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_model_name', $item->b_model_name);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_alias', $item->b_alias);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_source_id', (int)$item->source_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_id', (int)$item->id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_type_id', (int)$item->catalog_type_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_type', $item->b_title);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_url_sef_request', $item->sef_request);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_url_request', $item->catalog_url_request);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_page_type', $item->page_type);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_view_group_id', (int)$item->view_group_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_category_id', (int)$item->primary_category_id);
+        Services::Registry()->set(
+            PARAMETERS_LITERAL,
+            'catalog_extension_instance_id',
+            $item->extension_instance_id
+        );
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_model_type', $item->b_model_type);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_model_name', $item->b_model_name);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_alias', $item->b_alias);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_source_id', (int)$item->source_id);
 
-        if ((int)Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_id')
+        if ((int)Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_id')
             == (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id')
         ) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_home', 1);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', 1);
         } else {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'catalog_home', 0);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', 0);
         }
 
         return true;

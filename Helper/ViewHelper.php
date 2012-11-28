@@ -55,48 +55,48 @@ Class ViewHelper
             }
         }
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_id', (int)$id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_path_node', $node);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_path', $this->getPath($node, $type));
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_id', (int)$id);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_path_node', $node);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_path', $this->getPath($node, $type));
         Services::Registry()->set(
-            DATA_OBJECT_PARAMETERS,
+            PARAMETERS_LITERAL,
             $type . '_view_path_include',
             $this->getPath($node, $type) . '/index.php'
         );
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_path_url', $this->getPathURL($node, $type));
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_namespace', $this->getNamespace($node, $type));
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_path_url', $this->getPathURL($node, $type));
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_namespace', $this->getNamespace($node, $type));
 
         $item = Helpers::Extension()->get($id, $type, $node, 1);
         if (count($item) == 0 || $item === false) {
             return false;
         }
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_title', $item->title);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_translation_of_id', (int)$item->translation_of_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_language', $item->language);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_view_group_id', $item->catalog_view_group_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_catalog_id', $item->catalog_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_catalog_type_id', (int)$item->catalog_type_id);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_catalog_type_title', $item->catalog_types_title);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, $type . '_view_model_registry', $item->model_registry);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_title', $item->title);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_translation_of_id', (int)$item->translation_of_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_language', $item->language);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_view_group_id', $item->catalog_view_group_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_catalog_id', $item->catalog_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_catalog_type_id', (int)$item->catalog_type_id);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_catalog_type_title', $item->catalog_types_title);
+        Services::Registry()->set(PARAMETERS_LITERAL, $type . '_view_model_registry', $item->model_registry);
 
         if ($type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
-            $this->setParameters(CATALOG_TYPE_PAGE_VIEW_LITERAL, $item->model_registry . DATA_OBJECT_PARAMETERS);
+            $this->setParameters(CATALOG_TYPE_PAGE_VIEW_LITERAL, $item->model_registry . PARAMETERS_LITERAL);
 
         } elseif ($type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL) {
 
-            $this->setParameters('template', $item->model_registry . DATA_OBJECT_PARAMETERS);
-            $this->setParameters('wrap', $item->model_registry . DATA_OBJECT_PARAMETERS);
-            $this->setParameters('cache', $item->model_registry . DATA_OBJECT_PARAMETERS);
-            $this->setParameters('model', $item->model_registry . DATA_OBJECT_PARAMETERS);
-            $this->setParameters('criteria', $item->model_registry . DATA_OBJECT_PARAMETERS);
+            $this->setParameters('template', $item->model_registry . PARAMETERS_LITERAL);
+            $this->setParameters('wrap', $item->model_registry . PARAMETERS_LITERAL);
+            $this->setParameters('cache', $item->model_registry . PARAMETERS_LITERAL);
+            $this->setParameters('model', $item->model_registry . PARAMETERS_LITERAL);
+            $this->setParameters('criteria', $item->model_registry . PARAMETERS_LITERAL);
 
         } else {
-            $this->setParameters('wrap', $item->model_registry . DATA_OBJECT_PARAMETERS);
+            $this->setParameters('wrap', $item->model_registry . PARAMETERS_LITERAL);
         }
 
-        Services::Registry()->delete($item->model_registry . DATA_OBJECT_PARAMETERS, $type . '_view_id');
-        Services::Registry()->copy($item->model_registry . DATA_OBJECT_PARAMETERS, DATA_OBJECT_PARAMETERS);
+        Services::Registry()->delete($item->model_registry . PARAMETERS_LITERAL, $type . '_view_id');
+        Services::Registry()->copy($item->model_registry . PARAMETERS_LITERAL, PARAMETERS_LITERAL);
 
         return true;
     }
@@ -136,11 +136,11 @@ Class ViewHelper
     protected function processParameterSet($parameterSet)
     {
         foreach ($parameterSet as $key => $value) {
-            $existing = Services::Registry()->get(DATA_OBJECT_PARAMETERS, $key);
+            $existing = Services::Registry()->get(PARAMETERS_LITERAL, $key);
             if ($existing === 0 || trim($existing) == '' || $existing == null) {
                 if ($value === 0 || trim($value) == '' || $value == null) {
                 } else {
-                    Services::Registry()->set(DATA_OBJECT_PARAMETERS, $key, $value);
+                    Services::Registry()->set(PARAMETERS_LITERAL, $key, $value);
                 }
             }
         }
@@ -192,12 +192,12 @@ Class ViewHelper
 
         $plus = '/View/' . $type . '/' . ucfirst(strtolower($node));
 
-        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path') . $plus . '/Configuration.xml')) {
-            return Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path') . $plus;
+        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path') . $plus . '/Configuration.xml')) {
+            return Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path') . $plus;
         }
 
-        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path') . $plus . '/Configuration.xml')) {
-            return Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path') . $plus;
+        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path') . $plus . '/Configuration.xml')) {
+            return Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path') . $plus;
         }
 
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
@@ -233,12 +233,12 @@ Class ViewHelper
 
         $plus = '/View/' . $type . '/' . ucfirst(strtolower($node));
 
-        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path') . $plus . '/Configuration.xml')) {
-            return Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_url') . $plus;
+        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path') . $plus . '/Configuration.xml')) {
+            return Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_url') . $plus;
         }
 
-        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path') . $plus . '/Configuration.xml')) {
-            return Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path_url') . $plus;
+        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path') . $plus . '/Configuration.xml')) {
+            return Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path_url') . $plus;
         }
 
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
@@ -274,12 +274,12 @@ Class ViewHelper
 
         $plus = 'View\\' . $type . '\\' . ucfirst(strtolower($node));
 
-        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path') . $plus . '/Configuration.xml')) {
-            return 'Extension\\Theme\\' . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'theme_path_node') . '\\' . $plus;
+        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path') . $plus . '/Configuration.xml')) {
+            return 'Extension\\Theme\\' . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_node') . '\\' . $plus;
         }
 
-        if (file_exists(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_path') . $plus . '/Configuration.xml')) {
-            return 'Extension\\Resource\\' . Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'extension_title') . '\\' . $plus;
+        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path') . $plus . '/Configuration.xml')) {
+            return 'Extension\\Resource\\' . Services::Registry()->get(PARAMETERS_LITERAL, 'extension_title') . '\\' . $plus;
         }
 
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {

@@ -12,9 +12,7 @@ use Molajo\Service\Services\Configuration\ConfigurationService;
 defined('MOLAJO') or die;
 
 /**
- * Database
- *
- * Used by the model
+ * Database Connection
  *
  * @package     Molajo
  * @subpackage  Service
@@ -75,10 +73,11 @@ Class DatabaseService
     }
 
     /**
-     * Connect
+     * Connect to Database
      *
-     * @return  object  DatabaseService
+     * @return mixed
      * @since   1.0
+     * @throws \RuntimeException
      */
     public function connect()
     {
@@ -108,6 +107,7 @@ Class DatabaseService
             DATABASE_LITERAL,
             'data_object_connection_namespace'
         );
+
         if (class_exists($data_object_connection_namespace)) {
         } else {
             throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $this->options['driver']));
@@ -126,13 +126,14 @@ Class DatabaseService
     /**
      * Get the current query object for the current database connection
      *
-     * @return  Database Query Object
+     * @return  object
      * @since   1.0
      * @throws  \RuntimeException
      */
     public function getQuery()
     {
         $data_object_query_namespace = Services::Registry()->get(DATABASE_LITERAL, 'data_object_query_namespace');
+
         if (class_exists($data_object_query_namespace)) {
         } else {
             throw new \RuntimeException('Database Query class not found');

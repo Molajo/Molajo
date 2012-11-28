@@ -65,7 +65,7 @@ Class CacheService
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $cache_page = '';
+	protected $cache_type_page = '';
 
 	/**
 	 * Cache Templates
@@ -73,7 +73,7 @@ Class CacheService
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $cache_template = '';
+	protected $cache_type_template = '';
 
 	/**
 	 * Cache Queries
@@ -81,7 +81,7 @@ Class CacheService
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $cache_query = '';
+	protected $cache_type_query = '';
 
 	/**
 	 * Cache Queries
@@ -89,7 +89,7 @@ Class CacheService
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $cache_model = '';
+	protected $cache_type_model = '';
 
 	/**
 	 * Count Queries
@@ -118,7 +118,8 @@ Class CacheService
 	/**
 	 * Class constructor
 	 *
-	 * @since  1.0
+	 * @since   1.0
+     * @return  object
 	 */
 	public function __construct()
 	{
@@ -130,12 +131,13 @@ Class CacheService
 	/**
 	 * Initialise Cache when activated
 	 *
-	 * @since  1.0
-	 */
-	public function initialise()
+	 * @since   1.0
+     * @return  bool|CacheService
+     */
+    public function initialise()
 	{
 //todo: remove hardcoded types and make it configurable
-//todo: add methods other than file for caching
+//todo: add classes other than file for caching
 
 		if (Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_handler', 'file') == 'file') {
 			$this->system_cache_folder = SITE_BASE_PATH . '/'
@@ -145,23 +147,25 @@ Class CacheService
 		}
 
 		$this->cache_service_time = (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_time', 900);
+
 		if ($this->cache_service_time == 0) {
 			$this->cache_service_time = 900;
 		}
 
 		if (Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_service') == 0) {
 			$this->cache_service = false;
-			$this->cache_model = 0;
-			$this->cache_page = 0;
-			$this->cache_query = 0;
-			$this->cache_template = 0;
+			$this->cache_type_model = 0;
+			$this->cache_type_page = 0;
+			$this->cache_type_query = 0;
+			$this->cache_type_template = 0;
 		} else {
 			$this->cache_service = true;
-			$this->cache_model = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_model');
-			$this->cache_page = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_page');
-			$this->cache_query = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_query');
-			$this->cache_template = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_template');
+			$this->cache_type_model = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_type_model');
+			$this->cache_type_page = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_type_page');
+			$this->cache_type_query = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_type_query');
+			$this->cache_type_template = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_type_template');
 		}
+
 		Services::Registry()->set('cache_service', $this->cache_service);
 
 		$this->valid_types = array();
@@ -281,7 +285,7 @@ Class CacheService
 	/**
 	 * Determine if cache exists for this object
 	 *
-	 * @param   string $key md5 name uniquely identifying content
+	 * @param   string  $key md5 name uniquely identifying content
 	 *
 	 * @return  boolean The option value.
 	 * @since   1.0
@@ -304,7 +308,7 @@ Class CacheService
 	/**
 	 * Verify type of cache
 	 *
-	 * @param  string $type
+	 * @param   string $type
 	 *
 	 * @return  bool
 	 * @since   1.0
@@ -339,7 +343,9 @@ Class CacheService
 			$this->flush_cache($type);
 
 		} else {
-			$files = Services::Filesystem()->folderFiles($this->system_cache_folder . '/' . $type);
+
+            $files = Services::Filesystem()->folderFiles($this->system_cache_folder . '/' . $type);
+
 			if (count($files) > 0) {
 				foreach ($files as $file) {
 					$this->checkExpired($type, $file);
@@ -353,7 +359,7 @@ Class CacheService
 	/**
 	 * Remove cache for specified $key value
 	 *
-	 * @param string $key md5 name uniquely identifying content
+	 * @param  string  $key md5 name uniquely identifying content
 	 *
 	 * @return  object
 	 * @since   1.0
@@ -387,6 +393,7 @@ Class CacheService
 		foreach ($this->valid_types as $t) {
 
 			if ($type == '' || $type == $t) {
+
 				$files = Services::Filesystem()->folderFiles($this->system_cache_folder . '/' . $t . '/');
 
 				if (count($files) == 0 || $files === false) {
@@ -404,9 +411,9 @@ Class CacheService
 	/**
 	 * Remove cache for specified $key value
 	 *
-	 * @param string $key md5 name uniquely identifying content
+	 * @param   string  $key md5 name uniquely identifying content
 	 *
-	 * @return object
+	 * @return  object
 	 * @since   1.0
 	 */
 	protected function delete($type, $key)

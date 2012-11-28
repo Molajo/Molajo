@@ -11,6 +11,8 @@ use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
+//todo: remove hard-coded prefixes and replace with prefixes defined in model
+
 /**
  * Permissions
  *
@@ -25,7 +27,7 @@ Class PermissionsService
      *
      * @return  null
      * @since   1.0
-     * @throws   \Exception
+     * @throws  \Exception
      */
     public function initialise()
     {
@@ -36,14 +38,14 @@ Class PermissionsService
 
         $items = $controller->getData(QUERY_OBJECT_LIST);
         if ($items === false) {
-            throw new \RuntimeException ('Configuration: getActions Query failed.');
+            throw new \RuntimeException ('Permissions: getActions Query failed.');
         }
 
         $actions = array();
         foreach ($items as $item) {
             $actions[$item->title] = (int)$item->id;
         }
-        Services::Registry()->set(DATA_OBJECT_PERMISSIONS, 'actions', $actions);
+        Services::Registry()->set(PERMISSIONS_LITERAL, 'actions', $actions);
 
         $actions = Services::Configuration()->getFile('Application', 'Actions');
 
@@ -56,23 +58,23 @@ Class PermissionsService
         $action_to_controller = array();
 
         foreach ($actions->action as $t) {
-            $urlActions[] = (string) $t['name'];
-            $action_to_authorisation[(string) $t['name']] = (string) $t['authorisation'];
-            $action_to_controller[(string) $t['name']] = (string) $t['controller'];
+            $urlActions[] = (string)$t['name'];
+            $action_to_authorisation[(string)$t['name']] = (string)$t['authorisation'];
+            $action_to_controller[(string)$t['name']] = (string)$t['controller'];
         }
 
-        Services::Registry()->set(DATA_OBJECT_PERMISSIONS, 'action_to_authorisation', $action_to_authorisation);
-        Services::Registry()->set(DATA_OBJECT_PERMISSIONS, 'action_to_controller', $action_to_controller);
+        Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation', $action_to_authorisation);
+        Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_controller', $action_to_controller);
 
         sort($urlActions);
-        Services::Registry()->loadArray(DATA_OBJECT_PERMISSIONS, 'urlActions', $urlActions);
+        Services::Registry()->loadArray(PERMISSIONS_LITERAL, 'urlActions', $urlActions);
 
         $action_to_authorisation_id = array();
         foreach ($actions as $title => $id) {
-            $action_to_authorisation_id[$title] = (int) $id;
+            $action_to_authorisation_id[$title] = (int)$id;
         }
 
-        Services::Registry()->set(DATA_OBJECT_PERMISSIONS, 'action_to_authorisation_id', $action_to_authorisation_id);
+        Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation_id', $action_to_authorisation_id);
 
         return true;
     }
@@ -83,39 +85,28 @@ Class PermissionsService
      * Usage:
      * $results = Services::Permissions()->verifySiteApplication();
      *
-     * @param mixed $application_id if valid, or false
+     * @param   mixed $application_id if valid, or false
      *
-     * @return boolean
-     * @since  1.0
+     * @return  boolean
+     * @since   1.0
      */
     public function verifySiteApplication()
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATASOURCE_LITERAL, 'Siteapplications');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->setDataobject();
 
         $controller->model->query->select($controller->model->db->qn('a.application_id'));
-        $controller->model->query->where($controller->model->db->qn('a.site_id') . ' = ' . (int) SITE_ID);
-        $controller->model->query->where($controller->model->db->qn('a.application_id') . ' = ' . (int) APPLICATION_ID);
+        $controller->model->query->where($controller->model->db->qn('a.site_id') . ' = ' . (int)SITE_ID);
+        $controller->model->query->where($controller->model->db->qn('a.application_id') . ' = ' . (int)APPLICATION_ID);
 
         $application_id = $controller->getData(QUERY_OBJECT_RESULT);
 
         if ($application_id === false) {
-            //todo: finish the response action/test
-
-            Services::Response()->setHeader('Status', '403 Not Authorised', 'true');
-
-            Services::Message()->set(
+            Services::Response()->setHeader(
+                'Status',
                 Services::Registry()->get(CONFIGURATION_LITERAL, 'error_403_message', 'Not Authorised.'),
-                MESSAGE_TYPE_ERROR,
                 403
             );
         }
@@ -129,39 +120,43 @@ Class PermissionsService
      * Example usage:
      * $controller = Services::Permissions()->getTaskController($action);
      *
-     * @param $action
+     * @param   $action
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function getTaskController($action)
     {
-        $action = $this->request->get('action_to_authorisation', $action);
-        $controller = $this->request->get('action_to_controller', $action);
+        $actionArray = $this->request->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
+        $controller = $this->request->get(PERMISSIONS_LITERAL, 'action_to_controller');
 
-        return $controller;
+        if (isset($actionArray[$action]) && isset($controller[$actionArray[$action]])) {
+            return $controller[$actionArray[$action]];
+        } else {
+            throw new \Exception(PERMISSIONS_LITERAL . ': Action ' . $action . ' and associated controller not defined');
+        }
     }
 
     /**
-     * For the list of actions (actions), determine if the user is authorised for the specific catalog id;
-     * Useful for button bars, links, and other User Interface Presentation Logic
+     * Verifies Permissions for a set of Actions for the specified Catalog ID
+     *      Useful for question "What can the logged on User do with this set of Articles (or Article)?"
      *
      * Example usage:
      * $permissions = Services::Permissions()->verifyTaskList($actionsArray, $item->catalog_id);
      *
-     * @param array  $actionlist
-     * @param string $catalog_id
+     * @param   array   $actionlist
+     * @param   string  $catalog_id
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function verifyTaskList($actionlist = array(), $catalog_id = 0)
     {
         if (count($actionlist) == 0) {
-            return false;
+            throw new \Exception(PERMISSIONS_LITERAL . ': Empty Action List sent into verifyTasklist');
         }
         if ($catalog_id == 0) {
-            return false;
+            throw new \Exception(PERMISSIONS_LITERAL . ': No Catalog ID sent into verifyTaskList');
         }
 
         $actionPermissions = array();
@@ -174,42 +169,41 @@ Class PermissionsService
     }
 
     /**
-     * Verify user authorization for the Request Action and Catalog ID
+     * Verify User Permissions for the Action and Catalog ID
      *
      * Example usage:
-     * $permissions = Services::Permissions()->verifyAction();
+     *  $permissions = Services::Permissions()->verifyAction();
      *
-     * @return boolean
-     * @since    1.0
+     * @return  boolean
+     * @since   1.0
      */
     public function verifyAction()
     {
-        /** 403: verifyTask handles redirecting to error page */
-        if (in_array(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'catalog_view_group_id'),
-            Services::Registry()->get('User', 'ViewGroups'))
+        if (in_array(
+            Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_view_group_id'),
+            Services::Registry()->get('User', 'ViewGroups')
+        )
         ) {
-            Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_authorised', true);
+            Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', true);
 
         } else {
-            return Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_authorised', false);
+            return Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', false);
         }
 
-        /** display view verified in getCatalog */
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action', ACTION_VIEW) == ACTION_VIEW
-            && Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'status_authorised') === true
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_action', ACTION_VIEW) == ACTION_VIEW
+            && Services::Registry()->get(PARAMETERS_LITERAL, 'status_authorised') === true
         ) {
             return true;
         }
 
-        /** verify other actions */
         $authorised = $this->verifyTask(
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action'),
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_catalog_id')
+            Services::Registry()->get(PARAMETERS_LITERAL, 'request_action'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id')
         );
 
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'status_authorised', $authorised);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', $authorised);
 
-        if (Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'status_authorised') === true) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'status_authorised') === true) {
             return true;
 
         } else {
@@ -220,109 +214,92 @@ Class PermissionsService
     }
 
     /**
-     * Verifies permission for a user to perform a specific action on a specific catalog number
-     * Could be used to determine if an "Edit Article" link is warranted.
+     * Verifies permission for a user to perform a specific action on a specific catalog id
+     *      Useful for question "Can the logged on User Edit this Article (or content in this Resource)?"
      *
      * Example usage:
      * Services::Permissions()->verifyTask($action, $catalog_id);
      *
-     * @param string $action
-     * @param string $catalog_id
+     * @param   string  $action
+     * @param   string  $catalog_id
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function verifyTask($action, $catalog_id)
     {
-        return true;
-
         if ($action == 'login') {
             return $this->verifyLogin('login', $catalog_id);
         }
+//todo: hash store results for later reuse
+        $authorisationArray = $this->request->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
+        $authorisationIdArray = $this->request->get(PERMISSIONS_LITERAL, 'action_to_authorisation_id');
 
-        /** Retrieve ACL Action for this Task */
-        $action = Services::Registry()->get('action_to_authorisation', $action);
-        $action_id = Services::Registry()->get('action_to_authorisation_id', $action);
+        $action = $authorisationArray[$action];
+        $action_id = $authorisationIdArray[$action];
 
-        if (trim($action) == '' || (int) $action_id == 0 || trim($action) == '') {
-            //Echo 'PermissionsServices::verifyTask '
-            //         . ' Task: ' . $action
-            //         . ' Action: ' . $action
-            //         . ' Action ID: ' . $action_id;
-            //throw error
+        if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
+            throw new \Exception(PARAMETERS_LITERAL . ': Required value Action not provided for verifyTask method.');
         }
 
-        //todo: amy fill database with real sample action permissions
+        if (trim($catalog_id) == '' || (int)$catalog_id == 0 || trim($catalog_id) == '') {
+            throw new \Exception(PARAMETERS_LITERAL . ': Required value Catalog ID not provided for verifyTask method.');
+        }
 
-        /** check for permission */
         $action_id = 3;
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'Grouppermissions');
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Grouppermissions');
+        $controller->setDataobject();
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
-        $controller->model->query->select($controller->model->db->qn('a.id'));
-        $controller->model->query->where($controller->model->db->qn('a.catalog_id') . ' = ' . (int) $catalog_id);
-        $controller->model->query->where($controller->model->db->qn('a.action_id') . ' = ' . (int) $action_id);
-        $controller->model->query->where($controller->model->db->qn('a.group_id')
+        $controller->model->query->select(
+            $controller->model->db->qn('a.id')
+        );
+        $controller->model->query->where(
+            $controller->model->db->qn('a.catalog_id') . ' = ' . (int)$catalog_id
+        );
+        $controller->model->query->where(
+            $controller->model->db->qn('a.action_id') . ' = ' . (int)$action_id
+        );
+        $controller->model->query->where(
+            $controller->model->db->qn('a.group_id')
                 . ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
         );
 
         $count = $controller->getData(QUERY_OBJECT_RESULT);
         if ($count > 0) {
             return true;
-
         } else {
-            //echo 'PermissionsServices::verifyTask No Query Results  '
-            //       . ' Task: ' . $action
-            //       . ' Action: ' . $action
-            //       . ' Action ID: ' . $action_id;
-            //throwerrror
             return false;
         }
     }
 
     /**
-     * verifyLogin
-     *
      * Verifies permission for a user to logon to a specific application
      *
      * Example usage:
      * Services::Permissions()->verifyLogin('login', $catalog_id);
      *
-     * @param $key
-     * @param $action
+     * @param   $key
+     * @param   $action
      *
-     * @param  null $catalog
-     * @return bool
+     * @param   null  $catalog
+     * @return  bool
      */
     public function verifyLogin($user_id)
     {
-        if ((int) $user_id == 0) {
+        if ((int)$user_id == 0) {
             return false;
         }
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'Userapplications');
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Userapplications');
+        $controller->setDataobject();
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
-
-        $controller->model->query->where('a.application_id = ' . (int) APPLICATION_ID);
-        $controller->model->query->where('a.user_id = ' . (int) $user_id);
+        $controller->model->query->where('a.application_id = ' . (int)APPLICATION_ID);
+        $controller->model->query->where('a.user_id = ' . (int)$user_id);
 
         $count = $controller->model->getData(QUERY_OBJECT_RESULT);
 
@@ -334,8 +311,7 @@ Class PermissionsService
     }
 
     /**
-     *
-     * Used by queries to append criteria needed to implement view access
+     * Appends View Access criteria to Query when Model check_view_level_access is set to 1
      *
      * Example usage:
      *  Services::Permissions()->setQueryViewAccess(
@@ -348,12 +324,12 @@ Class PermissionsService
      *     )
      * );
      *
-     * @param array $query
-     * $param  array       $db
-     * @param Registry $parameters
+     * @param   array $query
+     * @param   array $db
+     * @param   array $parameters
      *
-     * @return boolean
-     * @since      1.0
+     * @return  array
+     * @since   1.0
      */
     public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
     {
@@ -417,23 +393,20 @@ Class PermissionsService
             $db->qn($parameters['catalog_prefix']) .
                 '.' .
                 $db->qn('redirect_to_id') .
-                ' = 0');
+                ' = 0'
+        );
 
         return $query;
     }
 
     /**
-     * setHTMLFilter
-     *
-     * Returns false if there is one group that the user belongs to
-     *  authorized to save content without an HTML filter, otherwise
-     *  it returns true
+     * Determines if User Content must be filtered
      *
      * Example usage:
      * $userHTMLFilter = Services::Permissions()->setHTMLFilter();
      *
-     * @return bool
-     * @since  1.0
+     * @return  bool
+     * @since   1.0
      */
     public function setHTMLFilter()
     {

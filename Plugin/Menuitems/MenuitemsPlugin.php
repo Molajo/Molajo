@@ -91,7 +91,7 @@ class MenuitemsPlugin extends Plugin
             $menuitems[] = $row;
         }
 
-        Services::Registry()->set(DATA_OBJECT_DATALIST, MENUITEMS_LITERAL, $menuitems);
+        Services::Registry()->set(DATALIST_LITERAL, MENUITEMS_LITERAL, $menuitems);
 
         return true;
     }

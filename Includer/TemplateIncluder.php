@@ -29,9 +29,9 @@ Class TemplateIncluder extends Includer
      */
     public function __construct($name = null, $type = null)
     {
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'extension_catalog_type_id', 0);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_catalog_type_id', 0);
         parent::__construct($name, $type);
-        Services::Registry()->set(DATA_OBJECT_PARAMETERS, 'criteria_html_display_filter', false);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'criteria_html_display_filter', false);
 
         return $this;
     }
@@ -44,14 +44,14 @@ Class TemplateIncluder extends Includer
      */
     protected function loadViewMedia()
     {
-        if ($this->type == 'asset' || $this->type == 'metadata') {
+        if ($this->type == 'asset' || $this->type == METADATA_LITERAL) {
             return $this;
         }
 
-        $priority = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'criteria_media_priority_other_extension', 400);
+        $priority = Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_media_priority_other_extension', 400);
 
-        $file_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'template_view_path');
-        $url_path = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'template_view_path_url');
+        $file_path = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path');
+        $url_path = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path_url');
 
         Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);

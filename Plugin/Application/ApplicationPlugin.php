@@ -22,7 +22,7 @@ class ApplicationPlugin extends Plugin
     /**
      * Prepares Application Menus
      *
-     * Note: Services::Registry()->get(DATA_OBJECT_PARAMETERS) is valid during this method.
+     * Note: Services::Registry()->get(PARAMETERS_LITERAL) is valid during this method.
      *  Following, Services::Registry()->get('RequestParameters') should be used
      *
      * @return  boolean
@@ -77,8 +77,8 @@ class ApplicationPlugin extends Plugin
         $url = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url');
         Services::Registry()->set('Page', 'home_url', $url);
 
-        $url = Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_base_url_path') .
-            Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_url');
+        $url = Services::Registry()->get(PARAMETERS_LITERAL, 'request_base_url_path') .
+            Services::Registry()->get(PARAMETERS_LITERAL, 'request_url');
         Services::Registry()->set('Page', 'page_url', $url);
         Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
 
@@ -219,7 +219,7 @@ class ApplicationPlugin extends Plugin
     {
         if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
 
-            if (strtolower(Services::Registry()->get(DATA_OBJECT_PARAMETERS, 'request_action')) == ACTION_VIEW) {
+            if (strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'request_action')) == ACTION_VIEW) {
                 $actions = $this->setItemActions();
             } else {
                 $actions = $this->setEditActions();
@@ -365,10 +365,10 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageMeta()
     {
-        $title = Services::Registry()->get('Metadata', 'title', '');
-        $description = Services::Registry()->get('Metadata', 'description', '');
-        $author = Services::Registry()->get('Metadata', 'author', '');
-        $robots = Services::Registry()->get('Metadata', 'robots', '');
+        $title = Services::Registry()->get(METADATA_LITERAL, 'title', '');
+        $description = Services::Registry()->get(METADATA_LITERAL, 'description', '');
+        $author = Services::Registry()->get(METADATA_LITERAL, 'author', '');
+        $robots = Services::Registry()->get(METADATA_LITERAL, 'robots', '');
 
         if ($title == '' || $description == '' || $author == '' || $robots == '') {
         } else {
@@ -376,8 +376,8 @@ class ApplicationPlugin extends Plugin
         }
 
         $data = Services::Registry()->get(
-            DATA_OBJECT_PRIMARY,
-            DATA_OBJECT_PRIMARY_DATA
+            PRIMARY_LITERAL,
+            DATA_LITERAL
         );
 
         $type = strtolower(Services::Registry()->get('Page', 'page_type'));
