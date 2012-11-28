@@ -37,7 +37,7 @@ Class RouteService
     {
         Services::Registry()->createRegistry(PARAMETERS_LITERAL);
         Services::Registry()->createRegistry(METADATA_LITERAL);
-        Services::Registry()->deleteRegistry('Plugin');
+        Services::Registry()->deleteRegistry(PLUGIN_LITERAL);
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id', 0);
         Services::Registry()->set(PARAMETERS_LITERAL, 'status_found', '');
@@ -53,33 +53,31 @@ Class RouteService
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id', 0);
 
         /** Overrides */
-        if ((int) Services::Registry()->get('Override', 'catalog_id') > 0) {
+        if ((int) Services::Registry()->get(OVERRIDE_LITERAL, 'catalog_id') > 0) {
             Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id',
-                (int) Services::Registry()->get('Override', 'catalog_id'));
+                (int) Services::Registry()->get(OVERRIDE_LITERAL, 'catalog_id'));
         }
 
-        if (Services::Registry()->get('Override', 'url_request', '') == '') {
+        if (Services::Registry()->get(OVERRIDE_LITERAL, 'url_request', '') == '') {
         } else {
             Services::Registry()->set(PARAMETERS_LITERAL, 'request_url',
-                Services::Registry()->get('Override', 'url_request'));
+                Services::Registry()->get(OVERRIDE_LITERAL, 'url_request'));
         }
 
-        /** Check for duplicate content URL for Home (and redirect, if found) */
         $continue = $this->checkHome();
         if ($continue === false) {
             Services::Profiler()->set('Route checkHome() Redirect to Real Home', 'Route');
             return false;
         }
-
-        /** See if Application is in Offline Mode */
+//todo: define groups who can logon in offline mode
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_switch', 0) == 1) {
             Services::Error()->set(503);
             Services::Profiler()->set('Application::Route() Direct to Offline Mode', 'Route');
             return false;
         }
 
-        /** Identify Resource and sub-resource values */
         $continue = $this->getResource();
+
         if ($continue === false) {
             Services::Profiler()->set('Route getResource() Failed', 'Route');
             return false;
@@ -112,7 +110,7 @@ Class RouteService
 
         /** Redirect to Logon */
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'application_logon_requirement', 0) > 0
-            && Services::Registry()->get('User', 'guest', true) === true
+            && Services::Registry()->get(USER_LITERAL, 'guest', true) === true
             && Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id')
                 <> Services::Registry()->get(CONFIGURATION_LITERAL, 'application_logon_requirement', 0)
         ) {
@@ -132,11 +130,11 @@ Class RouteService
     /**
      * Determine if URL is duplicate content for home (and issue redirect, if necessary)
      *
-     * @param string $path Stripped of Host, Folder, and Application
+     * @param   string  $path Stripped of Host, Folder, and Application
      *                         ex. index.php?option=login or access/groups
      *
-     * @return boolean
-     * @since  1.0
+     * @return  boolean
+     * @since   1.0
      */
     protected function checkHome()
     {
@@ -144,6 +142,7 @@ Class RouteService
         Services::Registry()->set(PARAMETERS_LITERAL, 'home', 0);
 
         if (strlen($path) == 0 || trim($path) == '') {
+
             Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', '');
             Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id',
                 Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0));
@@ -154,7 +153,6 @@ Class RouteService
 
         } else {
 
-            /** duplicate content: URLs without the .html */
             if ((int) Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef_suffix', 1) == 1
                 && substr($path, -11) == '/index.html'
             ) {
@@ -168,10 +166,8 @@ Class RouteService
             }
         }
 
-        /** populate value used in query  */
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
 
-        /** home: duplicate content - redirect */
         if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php'
             || Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php/'
             || Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php?'
@@ -182,7 +178,6 @@ Class RouteService
             return false;
         }
 
-        /** Home */
         if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == ''
             && (int) Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id', 0) == 0
         ) {
@@ -235,7 +230,7 @@ Class RouteService
      *
      * Response http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     protected function getResource()
@@ -394,7 +389,7 @@ Class RouteService
 			return true;
 		}
 
-		$filters = array('page','category','author');
+		$filters = array(STRUCTURE_LITERAL,'category','author');
 
 		$path = '';
 		$filterArray =  '';
@@ -451,8 +446,7 @@ Class RouteService
             $value = Services::Filter()->filter($value, $dataType, $null, $default);
 
         } catch (\Exception $e) {
-            //echo $e->getMessage() . ' ' . $name;
-            return false;
+            throw new \Exception('Route: Error in Filtering of Input Field: ' . $name . ' ' . $e->getMessage());
         }
 
         return $value;
@@ -463,9 +457,8 @@ Class RouteService
      *
      * Determine the Theme and Page Values
      *
-     * @return null
+     * @return  null
      * @since   1.0
-     *
      * @throws /Exception
      */
     protected function getRouteParameters()
@@ -503,6 +496,7 @@ Class RouteService
         } else {
 
             $response = Helpers::Content()->getRouteMenuitem();
+
             if ($response === false) {
                 Services::Error()->set(500, 'Menu Item not found');
                 return false;

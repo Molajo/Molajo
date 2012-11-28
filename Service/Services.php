@@ -145,7 +145,7 @@ Class Services
             $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
 
             $connectionSucceeded = null;
-
+            echo $serviceClass . '<br />';
             try {
                 $connection = $this->getClassInstance($serviceClass);
 
@@ -164,7 +164,7 @@ Class Services
         }
 
         foreach ($this->message as $message) {
-            Services::Profiler()->set($message, LOG_OUTPUT_SERVICES, VERBOSE);
+            Services::Profiler()->set($message, PROFILER_SERVICES, VERBOSE);
         }
 
         return true;

@@ -157,7 +157,9 @@ Class ConfigurationService
     public function __construct()
     {
         $this->getFieldProperties();
+
         $this->getApplication();
+
         $this->setSitePaths();
 
         return $this;
@@ -300,7 +302,6 @@ Class ConfigurationService
      */
     protected function loadDatalists($datalistsArray, $folder)
     {
-
         try {
 
             $dirRead = dir($folder);
@@ -333,51 +334,52 @@ Class ConfigurationService
     {
         if (APPLICATION == 'installation') {
 
-            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_id', 0);
-            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_catalog_type_id', CATALOG_TYPE_APPLICATION);
-            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_name', APPLICATION);
-            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_description', APPLICATION);
-            Services::Registry()->set(CONFIGURATION_LITERAL, 'application_path', APPLICATION);
+            Services::Registry()->set('Configuration', 'application_id', 0);
+            Services::Registry()->set('Configuration', 'application_catalog_type_id', CATALOG_TYPE_APPLICATION);
+            Services::Registry()->set('Configuration', 'application_name', APPLICATION);
+            Services::Registry()->set('Configuration', 'application_description', APPLICATION);
+            Services::Registry()->set('Configuration', 'application_path', APPLICATION);
 
         } else {
-
+;
             try {
                 $profiler_service = 0;
 
                 $controllerClass = CONTROLLER_CLASS;
                 $controller = new $controllerClass();
-                $controller->getModelRegistry(DATASOURCE_LITERAL, 'Application');
+                $controller->getModelRegistry('Datasource', 'Application');
                 $controller->setDataobject();
 
                 $controller->set('name_key_value', APPLICATION);
 
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
+
                 if ($item === false) {
                     throw new \Exception ('ConfigurationService: Error executing getApplication Query');
                 }
 
-                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_id', (int)$item->id);
+                Services::Registry()->set('Configuration', 'application_id', (int)$item->id);
                 Services::Registry()->set(
-                    CONFIGURATION_LITERAL,
+                    'Configuration',
                     'application_catalog_type_id',
                     (int)$item->catalog_type_id
                 );
-                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_name', $item->name);
-                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_path', $item->path);
-                Services::Registry()->set(CONFIGURATION_LITERAL, 'application_description', $item->description);
+                Services::Registry()->set('Configuration', 'application_name', $item->name);
+                Services::Registry()->set('Configuration', 'application_path', $item->path);
+                Services::Registry()->set('Configuration', 'application_description', $item->description);
 
                 $parameters = Services::Registry()->getArray('ApplicationDatasourceParameters');
                 $profiler_service = 0;
 
                 foreach ($parameters as $key => $value) {
 
-                    $existing = Services::Registry()->get(CONFIGURATION_LITERAL, $key);
+                    $existing = Services::Registry()->get('Configuration', $key);
 
                     if ($existing === 0 || trim($existing) == '' || $existing === null || $existing === false) {
 
                         if ($value === 0 || trim($value) == '' || $value === null) {
                         } else {
-                            Services::Registry()->set(CONFIGURATION_LITERAL, $key, $value);
+                            Services::Registry()->set('Configuration', $key, $value);
                         }
                     }
                 }
@@ -385,17 +387,17 @@ Class ConfigurationService
                 $metadata = Services::Registry()->getArray('ApplicationDatasourceMetadata');
 
                 foreach ($metadata as $key => $value) {
-                    Services::Registry()->set(CONFIGURATION_LITERAL, 'metadata_' . $key, $value);
+                    Services::Registry()->set('Configuration', 'metadata_' . $key, $value);
                 }
 
             } catch (\Exception $e) {
-                throw new \Exception('Configuration: Exception caught in Configuration: ', $e->getMessage());
+                throw new \Exception('Configuration: Exception caught in Configuration: '. $e->getMessage());
             }
         }
 
-        Services::Registry()->sort(CONFIGURATION_LITERAL);
+        Services::Registry()->sort('Configuration');
 
-        if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_service') == 1) {
+        if ((int)Services::Registry()->get('Configuration', 'profiler_service') == 1) {
             Services::Profiler()->initiate();
         }
 
@@ -414,45 +416,45 @@ Class ConfigurationService
      */
     protected function setSitePaths()
     {
-        Services::Registry()->set(CONFIGURATION_LITERAL, 'site_base_url', BASE_URL);
+        Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
 
-        $path = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_path', '');
-        Services::Registry()->set(CONFIGURATION_LITERAL, 'application_base_url', BASE_URL . $path);
+        $path = Services::Registry()->get('Configuration', 'application_path', '');
+        Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
 
         if (defined('SITE_NAME')) {
         } else {
             define('SITE_NAME',
-            Services::Registry()->get(CONFIGURATION_LITERAL, 'site_name', SITE_ID));
+            Services::Registry()->get('Configuration', 'site_name', SITE_ID));
         }
 
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
             define('SITE_CACHE_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_cache_folder', 'cache'));
+                . '/' . Services::Registry()->get('Configuration', 'system_cache_folder', 'cache'));
         }
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
 
             define('SITE_LOGS_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_logs_folder', 'logs'));
+                . '/' . Services::Registry()->get('Configuration', 'system_logs_folder', 'logs'));
         }
 
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
             define('SITE_MEDIA_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_media_folder', 'media'));
+                . '/' . Services::Registry()->get('Configuration', 'system_media_folder', 'media'));
         }
         if (defined('SITE_MEDIA_URL')) {
         } else {
             define('SITE_MEDIA_URL', SITE_BASE_URL_RESOURCES
-                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_media_url', 'media'));
+                . '/' . Services::Registry()->get('Configuration', 'system_media_url', 'media'));
         }
 
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
             define('SITE_TEMP_FOLDER', SITE_BASE_PATH
                 . '/' . Services::Registry()->get(
-                CONFIGURATION_LITERAL,
+                'Configuration',
                 'system_temp_folder',
                 SITE_BASE_PATH . '/temp'
             ));
@@ -461,7 +463,7 @@ Class ConfigurationService
         if (defined('SITE_TEMP_URL')) {
         } else {
             define('SITE_TEMP_URL', SITE_BASE_URL_RESOURCES
-                . '/' . Services::Registry()->get(CONFIGURATION_LITERAL, 'system_temp_url', 'temp'));
+                . '/' . Services::Registry()->get('Configuration', 'system_temp_url', 'temp'));
         }
 
         return true;
@@ -517,7 +519,7 @@ Class ConfigurationService
         $model_name = ucfirst(strtolower($model_name));
         $model_registry = $model_name . $model_type;
 
-        if ($model_type == DATA_OBJECT_LITERAL) {
+        if ($model_type == 'Dataobject') {
             return ConfigurationService::getDataobject($model_type, $model_name);
         }
 
@@ -534,16 +536,19 @@ Class ConfigurationService
                 . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
 
         }
+
         $xml_string = ConfigurationService::readXMLFile($path_and_file);
 
         $results = ConfigurationService::getIncludeCode($xml_string, $model_name);
 
         $xml = simplexml_load_string($results);
+        if ($xml === false) {
+            throw new \Exception('Configuration: getModel cannot process XML file for Model Type: '
+                . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
+        }
+
         if (isset($xml->model)) {
             $xml = $xml->model;
-        } else {
-            throw new \Exception('Configuration: Cannot process XML file for Model Type: '
-                . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
         }
 
         Services::Registry()->createRegistry($model_registry);
@@ -555,15 +560,15 @@ Class ConfigurationService
         $data_object = Services::Registry()->get($model_registry, 'data_object', '');
 
         if ($data_object == '') {
-            $data_object = DATABASE_LITERAL;
+            $data_object = 'Database';
             Services::Registry()->set($model_registry, 'data_object', $data_object);
         }
 
-        $dataObjectRegistry = ucfirst(strtolower($data_object)) . DATA_OBJECT_LITERAL;
+        $dataObjectRegistry = ucfirst(strtolower($data_object)) . 'Dataobject';
 
         if (Services::Registry()->exists($dataObjectRegistry)) {
         } else {
-            ConfigurationService::getDataobject(DATA_OBJECT_LITERAL, $data_object);
+            ConfigurationService::getDataobject('Dataobject', $data_object);
         }
 
         foreach (Services::Registry()->get($dataObjectRegistry) as $key => $value) {
@@ -614,7 +619,7 @@ Class ConfigurationService
             $model_registry,
             $xml,
             'plugins',
-            'plugin',
+            'Plugin',
             self::$valid_plugin_attributes
         );
 
@@ -635,8 +640,8 @@ Class ConfigurationService
      * getDataobject loads registry for requested resource
      *
      * Usage:
-     * Services::Configuration()->getDataobject(DATA_OBJECT_LITERAL, DATABASE_LITERAL);
-     * Services::Configuration()->getDataobject(DATA_OBJECT_LITERAL, ASSETS_LITERAL);
+     * Services::Configuration()->getDataobject('Dataobject', 'Database');
+     * Services::Configuration()->getDataobject('Dataobject', 'Assets');
      *
      * @static
      * @param   string $model_name
@@ -669,12 +674,13 @@ Class ConfigurationService
         $results = ConfigurationService::getIncludeCode($xml_string, $model_name);
 
         $xml = simplexml_load_string($results);
+        if ($xml === false) {
+            throw new \Exception('Configuration: getDataobject cannot process XML file for Model Type: '
+                . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
+        }
+
         if (isset($xml->model)) {
             $xml = $xml->model;
-        } else {
-            throw new \Exception('Configuration: getDataobject method Cannot process XML file for Model Type: '
-                . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
-
         }
 
         Services::Registry()->createRegistry($model_registry);
@@ -765,8 +771,8 @@ Class ConfigurationService
             }
         }
 
-        Services::Registry()->set($DataobjectRegistry, 'data_object', DATA_OBJECT_LITERAL);
-        Services::Registry()->set($DataobjectRegistry, 'model_type', DATA_OBJECT_LITERAL);
+        Services::Registry()->set($DataobjectRegistry, 'data_object', 'Dataobject');
+        Services::Registry()->set($DataobjectRegistry, 'model_type', 'Dataobject');
         Services::Registry()->set(
             $DataobjectRegistry,
             'model_name',
@@ -920,12 +926,12 @@ Class ConfigurationService
         $joinSelectArray = array();
 
         $joinModel = ucfirst(strtolower($modelJoinArray['model']));
-        $joinRegistry = $joinModel . DATASOURCE_LITERAL;
+        $joinRegistry = $joinModel . 'Datasource';
 
         if (Services::Registry()->exists($joinRegistry) === false) {
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-            $controller->getModelRegistry(DATASOURCE_LITERAL, $joinModel);
+            $controller->getModelRegistry('Datasource', $joinModel);
         }
 
         $fields = Services::Registry()->get($joinRegistry, FIELDS_MODEL_TYPE);
@@ -1006,10 +1012,10 @@ Class ConfigurationService
         }
 
         /** Include Inherited Groups not matching existing groups */
-        $exists = Services::Registry()->exists($model_registry, CUSTOMFIELDGROUPS_LITERAL);
+        $exists = Services::Registry()->exists($model_registry, 'Customfieldgroups');
 
         if ($exists === true) {
-            $inherited = Services::Registry()->get($model_registry, CUSTOMFIELDGROUPS_LITERAL);
+            $inherited = Services::Registry()->get($model_registry, 'Customfieldgroups');
 
             if (is_array($inherited) && count($inherited) > 0) {
                 foreach ($inherited as $name) {
@@ -1026,7 +1032,7 @@ Class ConfigurationService
             }
         }
 
-        Services::Registry()->set($model_registry, CUSTOMFIELDGROUPS_LITERAL, array_unique($customFieldsArray));
+        Services::Registry()->set($model_registry, 'Customfieldgroups', array_unique($customFieldsArray));
 
         return;
     }
@@ -1172,7 +1178,7 @@ Class ConfigurationService
 
         if ($extends_model_name == '') {
             $extends_model_name = ucfirst(strtolower($extends));
-            $extends_model_type = DATASOURCE_LITERAL;
+            $extends_model_type = 'Datasource';
         }
 
         $inheritModelRegistry = $extends_model_name . $extends_model_type;
@@ -1215,7 +1221,7 @@ Class ConfigurationService
             throw new \Exception ('CONFIGURATION: locateFile() Cannot find Sites XML File.');
         }
 
-        if ($model_type == DATA_OBJECT_LITERAL) {
+        if ($model_type == 'Dataobject') {
             $path = SITE_DATA_OBJECT_FOLDER . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
@@ -1286,8 +1292,8 @@ Class ConfigurationService
         }
 
         $extension_path = false;
-        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'extension_path')) {
-            $extension_path = Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path');
+        if (Services::Registry()->exists('Parameters', 'extension_path')) {
+            $extension_path = Services::Registry()->get('Parameters', 'extension_path');
         }
 
         $primary_extension_path = false;
@@ -1296,23 +1302,23 @@ Class ConfigurationService
         }
 
         $theme_path = false;
-        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'theme_path')) {
-            $theme_path = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path');
+        if (Services::Registry()->exists('Parameters', 'theme_path')) {
+            $theme_path = Services::Registry()->get('Parameters', 'theme_path');
         }
 
         $page_view_path = false;
-        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'page_view_path')) {
-            $page_view_path = Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_path');
+        if (Services::Registry()->exists('Parameters', 'page_view_path')) {
+            $page_view_path = Services::Registry()->get('Parameters', 'page_view_path');
         }
 
         $template_view_path = false;
-        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'template_view_path')) {
-            $template_view_path = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path');
+        if (Services::Registry()->exists('Parameters', 'template_view_path')) {
+            $template_view_path = Services::Registry()->get('Parameters', 'template_view_path');
         }
 
         $wrap_view_path = false;
-        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'wrap_view_path')) {
-            $wrap_view_path = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_path');
+        if (Services::Registry()->exists('Parameters', 'wrap_view_path')) {
+            $wrap_view_path = Services::Registry()->get('Parameters', 'wrap_view_path');
         }
 
         /** Search for overrides before standard placement */
@@ -1564,6 +1570,7 @@ Class ConfigurationService
             return file_get_contents($path_and_file);
 
         } catch (\Exception $e) {
+
             throw new \Exception('Configuration: readXMLFile Failure reading File: '
                 . $path_and_file . ' ' . $e->getMessage());
         }

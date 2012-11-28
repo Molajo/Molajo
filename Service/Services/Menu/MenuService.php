@@ -31,8 +31,8 @@ Class MenuService
      * getInstance
      *
      * @static
-     * @return bool|object
-     * @since  1.0
+     * @return  bool|object
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -46,9 +46,9 @@ Class MenuService
     /**
      * Retrieves an array of active menuitems, including the current menuitem and its parents
      *
-     * @param int $current_menuitem_id
+     * @param   int  $current_menuitem_id
      *
-     * @return array|bool
+     * @return  array|bool
      * @since   1.0
      */
     public function getMenuBreadcrumbIds($current_menuitem_id)
@@ -59,16 +59,8 @@ Class MenuService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'MenuitemsNested');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry(DATASOURCE_LITERAL, 'MenuitemsNested');
+        $controller->setDataobject();
 
         $controller->model->query->where($controller->model->db->qn('current_menuitem.id')
             . ' = ' . (int) $current_menuitem_id);
@@ -112,27 +104,18 @@ Class MenuService
     /**
      * Retrieve requested menu, format data, build link, verify ACL
      *
-     * @param int $menu_id
-     * @param int $current_menu_item
+     * @param   int  $menu_id
+     * @param   int  $current_menu_item
      *
-     * @return array|bool
+     * @return  array|bool
      * @since   1.0
      */
     public function get($menu_id, $current_menu_item = 0, $bread_crumbs = array())
     {
-
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
+        $controller->setDataobject();
 
         $controller->model->query->select($controller->model->db->qn('a.id'));
         $controller->model->query->select($controller->model->db->qn('a.extension_id'));
@@ -191,7 +174,6 @@ Class MenuService
             $item->css_class = trim($item->css_class);
 
             if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
-				//getApplicationURL($path = '')
                 $item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
             } else {
                 $item->url = Services::Url()->getApplicationURL('index.php?id=' . (int) $item->id);

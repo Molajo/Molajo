@@ -362,8 +362,8 @@ Class DateService
 
         if ($server_or_user_utc == 'server') {
         } else {
-            if (Services::Registry()->exists('User')) {
-                $offset = Services::Registry()->get('User', 'timezone', '');
+            if (Services::Registry()->exists(USER_LITERAL)) {
+                $offset = Services::Registry()->get(USER_LITERAL, 'timezone', '');
             }
         }
         if ($offset == '') {

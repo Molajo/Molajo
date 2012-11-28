@@ -23,14 +23,15 @@ Class UrlService
     /**
      * getURL Retrieves URL based on Catalog ID
      *
-     * @param integer $catalog_id
+     * @param   integer $catalog_id
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function getURL($catalog_id)
     {
         $url = Helpers::Catalog()->getURL($catalog_id);
+
         if ($url === false || $url == null) {
             return false;
         }
@@ -41,10 +42,10 @@ Class UrlService
     /**
      * getCatalogID Retrieves Catalog ID for the SEF URL
      *
-     * @param integer $catalog_id
+     * @param   integer $catalog_id
      *
-     * @return string
-     * @since  1.0
+     * @return  string
+     * @since   1.0
      */
     public function getCatalogID($url)
     {
@@ -54,9 +55,9 @@ Class UrlService
     /**
      * getApplicationURL - pass in non-application, non-base URL portion, returns full URL
      *
-     * @param string $path
+     * @param   string $path
      *
-     * @return string
+     * @return  string
      * @since   1.0
      */
     public function getApplicationURL($path = '')
@@ -67,16 +68,15 @@ Class UrlService
 	/**
 	 * Get either a Gravatar URL or complete image tag for a specified email address.
 	 *
-	 * @param string  $email
-	 * @param string  $size       Size in pixels, defaults to 80px [ 1 - 512 ]
-	 * @param string  $type       Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-	 * @param string  $rating     Maximum rating (inclusive) [ g | pg | r | x ]
-	 * @param boolean $image      True to return a complete IMG tag False for just the URL
-	 * @param array   $attributes Optional, additional key/value attributes to include in the IMG tag
+	 * @param   string  $email
+	 * @param   string  $size        Size in pixels, defaults to 80px [ 1 - 512 ]
+	 * @param   string  $type        Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+	 * @param   string  $rating      Maximum rating (inclusive) [ g | pg | r | x ]
+	 * @param   boolean $image       True to return a complete IMG tag False for just the URL
+	 * @param   array   $attributes  Optional, additional key/value attributes to include in the IMG tag
 	 *
-	 * @return Linked image or URL
-	 *
-	 * @source http://gravatar.com/site/implement/images/php/
+	 * @return  mixed
+	 * @since   1.0
 	 */
 	public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g',
 								$image = false, $attributes = array(), $align = 'left')
@@ -118,7 +118,7 @@ Class UrlService
      *
      * @param   $email_address
      *
-     * @return string
+     * @return  string
      * @since   1.0
      */
     public function obfuscateEmail($email_address)
@@ -135,9 +135,9 @@ Class UrlService
     /**
      * Add links to a generic text field when URLs are found
      *
-     * @param string $text_field
+     * @param   string $text_field
      *
-     * @return string
+     * @return  string
      */
     public function addLinks($text_field)
     {
@@ -145,7 +145,6 @@ Class UrlService
 
         $text_field = preg_replace($pattern, " <a href='$1'>$1</a>", $text_field);
 
-        // fix URLs without protocols
         $text_field = preg_replace("/href=\"www/", "href=\"http://www", $text_field);
 
         return $text_field;
@@ -156,9 +155,10 @@ Class UrlService
      *
      * todo: pick one of these two (previous and this one)
      *
-     * @param string $url_field
+     * @param   string $url_field
      *
-     * @return linked value
+     * @return  string
+     * @since   1.0
      */
     public function createWebLinks($url_field)
     {
@@ -168,9 +168,10 @@ Class UrlService
     /**
      * checkURLExternal - determines if it is a local site or external link
      *
-     * @param string $url_field
+     * @param  string   $url_field
      *
-     * @return boolean
+     * @return  boolean
+     * @since   1.0
      */
     public function checkURLExternal($url_field)
     {
@@ -190,9 +191,10 @@ Class UrlService
     /**
      * getHost - retrieves host from the URL
      *
-     * @param string $url_field
+     * @param   string $url_field
      *
-     * @return boolean
+     * @return  boolean
+     * @since   1.0
      */
     public function getHost($url_field)
     {
@@ -204,9 +206,10 @@ Class UrlService
     /**
      * retrieveURLContents - issues request with link via curl
      *
-     * @param string $url_field
+     * @param   string $url_field
      *
-     * @return boolean
+     * @return  boolean
+     * @since   1.0
      */
     public function retrieveURLContents($url_field)
     {
@@ -214,11 +217,12 @@ Class UrlService
     }
 
     /**
-     * addTrailingSlash
+     * addTrailingSlash - $url = Services::Url()->addTrailingSlash ($url_field);
      *
-     * @param object $url_field
+     * @param   object  $url_field
      *
-     * $url = Services::Url()->addTrailingSlash ($url_field);
+     * @return  string
+     * @since   1.0
      */
     public function addTrailingSlash($url_field)
     {
@@ -226,11 +230,12 @@ Class UrlService
     }
 
     /**
-     * removeTrailingSlash
+     * removeTrailingSlash - $url = Services::Url()->removeTrailingSlash ($url_field);
      *
      * @param object $url_field
      *
-     * $url = Services::Url()->removeTrailingSlash ($url_field);
+     * @return  string
+     * @since   1.0
      */
     public function removeTrailingSlash($url_field)
     {

@@ -138,7 +138,7 @@ Class LanguageService
      */
     public function logUntranslatedStrings()
     {
-        if (Services::Registry()->get('User', 'username') == 'admin') {
+        if (Services::Registry()->get(USER_LITERAL, 'username') == 'admin') {
         } else {
             return true;
         }
@@ -266,7 +266,7 @@ Class LanguageService
 
         /** todo: Retrieve from Session, if installed */
 
-        $language = Services::Registry()->get('User', CATALOG_TYPE_LANGUAGE_LITERAL, '');
+        $language = Services::Registry()->get(USER_LITERAL, CATALOG_TYPE_LANGUAGE_LITERAL, '');
         if (in_array($language, $installed)) {
             return $language;
         }

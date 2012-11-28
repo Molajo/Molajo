@@ -71,11 +71,11 @@ class Includer
         Services::Registry()->set(PARAMETERS_LITERAL, 'includer_name', $this->name);
         Services::Registry()->set(PARAMETERS_LITERAL, 'includer_type', $this->type);
 
-        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL, 'Criteria*');
-        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL, 'Enable*');
-        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL, 'Request*');
-        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL, 'Theme*');
-        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL, 'Page*');
+        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL, 'Criteria*');
+        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL, 'Enable*');
+        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL, 'Request*');
+        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL, 'Theme*');
+        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL, 'Page*');
 
         return;
     }
@@ -583,19 +583,19 @@ class Includer
      */
     protected function onBeforeIncludeEvent()
     {
-        Services::Profiler()->set('IncludeService onBeforeInclude', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('IncludeService onBeforeInclude', PROFILER_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            PARAMETERS_LITERAL => $parameters
+            'parameters' => $parameters
         );
 
         $arguments = Services::Event()->scheduleEvent('onBeforeInclude', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
-            Services::Profiler()->set('IncludeService onBeforeInclude failed', LOG_OUTPUT_PLUGINS);
+            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
+            Services::Profiler()->set('IncludeService onBeforeInclude failed', PROFILER_PLUGINS);
             return false;
         }
 
@@ -627,7 +627,7 @@ class Includer
         $message .= ob_get_contents();
         ob_end_clean();
 
-        Services::Profiler()->set($message, LOG_OUTPUT_RENDERING, VERBOSE);
+        Services::Profiler()->set($message, PROFILER_RENDERING, VERBOSE);
 
         $controller = new DisplayController();
         $controller->set('id', (int)Services::Registry()->get(PARAMETERS_LITERAL, 'source_id'));
@@ -661,20 +661,20 @@ class Includer
      */
     protected function onAfterIncludeEvent($rendered_output)
     {
-        Services::Profiler()->set('IncludeService onAfterInclude', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('IncludeService onAfterInclude', PROFILER_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            PARAMETERS_LITERAL => $parameters,
+            'parameters' => $parameters,
             'rendered_output' => $rendered_output
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterInclude', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
-            Services::Profiler()->set('IncludeService onAfterInclude failed', LOG_OUTPUT_PLUGINS);
+            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
+            Services::Profiler()->set('IncludeService onAfterInclude failed', PROFILER_PLUGINS);
             return false;
         }
 

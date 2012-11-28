@@ -160,7 +160,7 @@ Class ProfilerService
      * @var    string
      * @since  1.0
      */
-    const log_type = DATA_OBJECT_PROFILER;
+    const log_type = PROFILER_LITERAL;
 
     /**
      * getInstance initiated by the Services Class
@@ -205,10 +205,10 @@ Class ProfilerService
     public function set($message, $output_type = '', $verbose = 0)
     {
         if (in_array($message, $this->phase_array_list)) {
-            Services::Registry()->set(DATA_OBJECT_PROFILER, 'CurrentPhase', $message);
+            Services::Registry()->set(PROFILER_LITERAL, 'CurrentPhase', $message);
         }
 
-        $current_phase = Services::Registry()->get(DATA_OBJECT_PROFILER, 'CurrentPhase');
+        $current_phase = Services::Registry()->get(PROFILER_LITERAL, 'CurrentPhase');
 
         if (in_array($current_phase, $this->phase_array_list)) {
         } else {
@@ -384,9 +384,9 @@ Class ProfilerService
             $this->verbose = 0;
         }
 
-        Services::Registry()->set(DATA_OBJECT_PROFILER, 'CurrentPhase', INITIALISE);
+        Services::Registry()->set(PROFILER_LITERAL, 'CurrentPhase', INITIALISE);
 
-        $this->set(INITIALISE, LOG_OUTPUT_APPLICATION);
+        $this->set(INITIALISE, PROFILER_APPLICATION);
 
         return true;
     }
@@ -400,15 +400,15 @@ Class ProfilerService
     protected function setProfilerOutputOptions()
     {
         $outputOptions = array(
-            LOG_OUTPUT_ACTIONS,
-            LOG_OUTPUT_APPLICATION,
-            LOG_OUTPUT_AUTHORISATION,
-            LOG_OUTPUT_QUERIES,
-            LOG_OUTPUT_REGISTRY,
-            LOG_OUTPUT_RENDERING,
-            LOG_OUTPUT_ROUTING,
-            LOG_OUTPUT_SERVICES,
-            LOG_OUTPUT_PLUGINS
+            PROFILER_ACTIONS,
+            PROFILER_APPLICATION,
+            PROFILER_AUTHORISATION,
+            PROFILER_QUERIES,
+            PROFILER_REGISTRY,
+            PROFILER_RENDERING,
+            PROFILER_ROUTING,
+            PROFILER_SERVICES,
+            PROFILER_PLUGINS
         );
 
         $temp = Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output');

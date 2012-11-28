@@ -377,7 +377,7 @@ Class InstallService
             'model_registry' => $model_registry,
             'db' => '',
             'data' => $query_results,
-            PARAMETERS_LITERAL => $parameters,
+            'parameters' => $parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );

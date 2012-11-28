@@ -24,7 +24,7 @@ class AjaxPlugin extends Plugin
      *    Adapt the Parse Include File Parameters to only generate the Request
      *     Adapt the Template and Wrap Parameters to generate consumable output
      *
-     * @return void
+     * @return  void
      * @since   1.0
      */
     public function onBeforeParse()
@@ -47,8 +47,8 @@ class AjaxPlugin extends Plugin
         Helpers::View()->get(2090, CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         /** Ajax Parser */
-        Services::Registry()->set('Override', 'parse_sequence', 'Ajax_sequence');
-        Services::Registry()->set('Override', 'parse_final', 'Ajax_final');
+        Services::Registry()->set(OVERRIDE_LITERAL, 'parse_sequence', 'Ajax_sequence');
+        Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', 'Ajax_final');
 
         return true;
     }

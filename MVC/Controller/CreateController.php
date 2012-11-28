@@ -203,7 +203,7 @@ class CreateController extends Controller
             return false;
         }
 
-        Services::Profiler()->set('CreateController::checkFields Filter::Success: ' . $valid, LOG_OUTPUT_ACTIONS);
+        Services::Profiler()->set('CreateController::checkFields Filter::Success: ' . $valid, PROFILER_ACTIONS);
 
         return $valid;
     }
@@ -315,7 +315,7 @@ class CreateController extends Controller
             $this->data->$customFieldName = $fieldArray;
         }
 
-        Services::Profiler()->set('CreateController::checkFields Filter::Success: ' . $valid, LOG_OUTPUT_ACTIONS);
+        Services::Profiler()->set('CreateController::checkFields Filter::Success: ' . $valid, PROFILER_ACTIONS);
 
         return $valid;
     }
@@ -432,22 +432,22 @@ class CreateController extends Controller
             'data' => $this->data,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            PARAMETERS_LITERAL => $this->parameters,
+            'parameters' => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', PROFILER_PLUGINS, VERBOSE);
 
         $arguments = Services::Event()->scheduleEvent('onBeforeCreate', $arguments, $this->plugins);
 
         if ($arguments === false) {
-            Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
+            Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', PROFILER_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
 
         $this->parameters = $arguments[PARAMETERS_LITERAL];
         $this->data = $arguments['data'];
@@ -474,22 +474,22 @@ class CreateController extends Controller
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $data,
-            PARAMETERS_LITERAL => $this->parameters,
+            'parameters' => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', PROFILER_PLUGINS, VERBOSE);
 
         $arguments = Services::Event()->scheduleEvent('onAfterCreate', $arguments, $this->plugins);
 
         if ($arguments === false) {
-            Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
+            Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', PROFILER_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
 
         $this->parameters = $arguments[PARAMETERS_LITERAL];
         $data = $arguments['data'];

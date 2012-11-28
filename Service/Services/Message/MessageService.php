@@ -27,7 +27,7 @@ Class MessageService
      */
     public function initialise()
     {
-        return Services::Registry()->createRegistry('Systemmessages');
+        return Services::Registry()->createRegistry(SYSTEM_MESSAGES_LITERAL);
     }
 
     /**
@@ -38,8 +38,6 @@ Class MessageService
      */
     public function getMessages()
     {
-        $query_results = array();
-
         $messages = $this->get();
 
         if (count($messages) == 0) {
@@ -52,14 +50,14 @@ Class MessageService
     /**
      * get application messages
      *
-     * @param   null $option
+     * @param   null  $option
      *
      * @return  int|array|MessageService
      * @since   1.0
      */
-    public function get($option = null)
+    public function get()
     {
-        return Services::Registry()->getArray('Systemmessages', 'Systemmessages');
+        return Services::Registry()->getArray(SYSTEM_MESSAGES_LITERAL, SYSTEM_MESSAGES_LITERAL);
     }
 
     /**
@@ -88,7 +86,7 @@ Class MessageService
             $type = MESSAGE_TYPE_SUCCESS;
         }
 
-        $messageArray = Services::Registry()->getArray('Systemmessages', 'Systemmessages');
+        $messageArray = Services::Registry()->getArray(SYSTEM_MESSAGES_LITERAL, SYSTEM_MESSAGES_LITERAL);
 
         $row = new \stdClass();
 
@@ -98,7 +96,7 @@ Class MessageService
 
         $messageArray[] = $row;
 
-        Services::Registry()->set('Systemmessages', 'Systemmessages', $messageArray);
+        Services::Registry()->set(SYSTEM_MESSAGES_LITERAL, SYSTEM_MESSAGES_LITERAL, $messageArray);
 
         return true;
     }

@@ -109,7 +109,7 @@ class UseractivityPlugin extends Plugin
         if ($results === false) {
             return false;
         }
-        $controller->set('user_id', Services::Registry()->set('User', 'id'));
+        $controller->set('user_id', Services::Registry()->set(USER_LITERAL, 'id'));
         $controller->set('action_id', $action_id);
         $controller->set('catalog_id', $this->data->catalog_id);
         $controller->set('activity_datetime', null);

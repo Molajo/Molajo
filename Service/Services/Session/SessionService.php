@@ -47,8 +47,8 @@ Class SessionService
      * getInstance
      *
      * @static
-     * @return object
-     * @since  1.0
+     * @return  object
+     * @since   1.0
      */
     public static function getInstance()
     {

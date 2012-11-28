@@ -119,12 +119,8 @@ Class Application
 
         /** 2. Route */
         try {
-            if ($results === true) {
-                $results = $this->route();
-            }
-            if ($results === false) {
-                return false;
-            }
+            $this->route();
+
         } catch (\Exception $e) {
             throw new \Exception('Route Error: ' . $e->getMessage(), $e->getCode(), $e);
         }
@@ -246,14 +242,14 @@ Class Application
         // Services::Profiler()
         // ->set('Services::Session()->create complete, 'Application');
 
-        Services::Registry()->set('Override', 'url_request', $override_url_request);
-        Services::Registry()->set('Override', 'catalog_id', $override_catalog_id);
-        Services::Registry()->set('Override', 'parse_sequence', $override_parse_sequence);
-        Services::Registry()->set('Override', 'parse_final', $override_parse_final);
+        Services::Registry()->set(OVERRIDE_LITERAL, 'url_request', $override_url_request);
+        Services::Registry()->set(OVERRIDE_LITERAL, 'catalog_id', $override_catalog_id);
+        Services::Registry()->set(OVERRIDE_LITERAL, 'parse_sequence', $override_parse_sequence);
+        Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', $override_parse_final);
 
         if ($results === true) {
             if (PROFILER_ON) {
-                Services::Profiler()->set('Application Schedule Event onAfterInitialise', LOG_OUTPUT_PLUGINS);
+                Services::Profiler()->set('Application Schedule Event onAfterInitialise', PROFILER_PLUGINS);
             }
             $results = Services::Event()->scheduleEvent('onAfterInitialise');
             if (is_array($results)) {
@@ -263,12 +259,12 @@ Class Application
 
         if ($results === false) {
             if (PROFILER_ON) {
-                Services::Profiler()->set('Initialise failed', LOG_OUTPUT_APPLICATION);
+                Services::Profiler()->set('Initialise failed', PROFILER_APPLICATION);
             }
             throw new \Exception('Initialisation failed');
         }
 
-        Services::Profiler()->set('Initialise succeeded', LOG_OUTPUT_APPLICATION);
+        Services::Profiler()->set('Initialise succeeded', PROFILER_APPLICATION);
 
         return true;
     }
@@ -338,7 +334,7 @@ Class Application
 //$results = Services::Install()->testDeleteExtension('Test', 'Resources');
 
         if (PROFILER_ON) {
-            Services::Profiler()->set(ROUTING, LOG_OUTPUT_APPLICATION);
+            Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
         }
 
         $results = Services::Route()->process(
@@ -353,10 +349,10 @@ Class Application
         }
 
         if ($results === false
-            || Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1
+            || Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1
         ) {
             if (PROFILER_ON) {
-                Services::Profiler()->set('Route failed', LOG_OUTPUT_APPLICATION);
+                Services::Profiler()->set('Route failed', PROFILER_APPLICATION);
             }
             throw new \Exception('Route failed');
         }
@@ -366,13 +362,13 @@ Class Application
             && (int)Services::Redirect()->code == 0
         ) {
             if (PROFILER_ON) {
-                Services::Profiler()->set('Route succeeded', LOG_OUTPUT_APPLICATION);
+                Services::Profiler()->set('Route succeeded', PROFILER_APPLICATION);
             }
             return true;
         }
 
         if (PROFILER_ON) {
-            Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, LOG_OUTPUT_APPLICATION);
+            Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, PROFILER_APPLICATION);
         }
 
         return true;
@@ -389,13 +385,13 @@ Class Application
         if (PROFILER_ON) {
             Services::Profiler()->set(
                 'Application Schedules onAfterRoute',
-                LOG_OUTPUT_PLUGINS,
+                PROFILER_PLUGINS,
                 VERBOSE
             );
         }
 
         $arguments = array(
-            PARAMETERS_LITERAL => Services::Registry()->getArray(PARAMETERS_LITERAL),
+            'parameters' => Services::Registry()->getArray(PARAMETERS_LITERAL),
             'model_type' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
             'model_name' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_name'),
             'data' => array()
@@ -406,7 +402,7 @@ Class Application
         if ($arguments === false) {
             Services::Profiler()->set(
                 'Application->onAfterRouteEvent ' . ' failure ',
-                LOG_OUTPUT_PLUGINS
+                PROFILER_PLUGINS
             );
             throw new \Exception('onAfterRouteEvent Failed');
         }
@@ -431,7 +427,7 @@ Class Application
     protected function authorise()
     {
         if (PROFILER_ON) {
-            Services::Profiler()->set(AUTHORISATION, LOG_OUTPUT_APPLICATION);
+            Services::Profiler()->set(AUTHORISATION, PROFILER_APPLICATION);
         }
 
         $results = Services::Event()->scheduleEvent('onAfterAuthorise');
@@ -442,17 +438,17 @@ Class Application
         if ($results === false) {
             Services::Profiler()->set(
                 'onAfterAuthorise Failed',
-                LOG_OUTPUT_PLUGINS
+                PROFILER_PLUGINS
             );
             throw new \Exception('onAfterRouteEvent Failed');
         }
 
         if ($results === false) {
-            Services::Profiler()->set('Authorise failed', LOG_OUTPUT_APPLICATION);
+            Services::Profiler()->set('Authorise failed', PROFILER_APPLICATION);
             throw new \Exception('Permissions Failed', 403);
         }
 
-        Services::Profiler()->set('Authorise succeeded', LOG_OUTPUT_APPLICATION);
+        Services::Profiler()->set('Authorise succeeded', PROFILER_APPLICATION);
 
         return true;
     }
@@ -478,7 +474,7 @@ Class Application
         }
 
         if ($results === true) {
-            Services::Profiler()->set('Application Schedule Event onAfterExecute', LOG_OUTPUT_PLUGINS);
+            Services::Profiler()->set('Application Schedule Event onAfterExecute', PROFILER_PLUGINS);
 
             $results = Services::Event()->scheduleEvent('onAfterExecute');
             if (is_array($results)) {
@@ -487,12 +483,12 @@ Class Application
         }
 
         if ($results === false) {
-            Services::Profiler()->set('Execute ' . $action . ' failed', LOG_OUTPUT_APPLICATION);
+            Services::Profiler()->set('Execute ' . $action . ' failed', PROFILER_APPLICATION);
             throw new \Exception('Execute ' . $action . ' Failed', 500);
             return false;
         }
 
-        Services::Profiler()->set('Execute ' . $action . ' succeeded', LOG_OUTPUT_APPLICATION);
+        Services::Profiler()->set('Execute ' . $action . ' succeeded', PROFILER_APPLICATION);
 
         return true;
     }
@@ -517,17 +513,17 @@ Class Application
         if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme Not found');
-            echo 'Theme not found - application stopped before parse. Parameters follow:';
-            Services::Registry()->get(PARAMETERS_LITERAL, '*');
-            die;
+            throw new \Exception('Theme not found '
+                . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'));
         }
 
         $parms = Services::Registry()->getArray(PARAMETERS_LITERAL);
-        $page_request = Services::Cache()->get('page', implode('', $parms));
+
+        $page_request = Services::Cache()->get(STRUCTURE_LITERAL, implode('', $parms));
 
         if ($page_request === false) {
             $results = Services::Parse()->process();
-            Services::Cache()->set('page', implode('', $parms), $results);
+            Services::Cache()->set(STRUCTURE_LITERAL, implode('', $parms), $results);
         } else {
             $results = $page_request;
         }
@@ -574,14 +570,14 @@ Class Application
      */
     protected function response()
     {
-        Services::Profiler()->set(RESPONSE, LOG_OUTPUT_APPLICATION);
+        Services::Profiler()->set(RESPONSE, PROFILER_APPLICATION);
 
         if (Services::Redirect()->url === null
             && (int)Services::Redirect()->code == 0
         ) {
 
             Services::Profiler()
-                ->set('Response Code 200', LOG_OUTPUT_APPLICATION);
+                ->set('Response Code 200', PROFILER_APPLICATION);
 
             Services::Response()
                 ->setContent($this->rendered_output)
@@ -597,7 +593,7 @@ Class Application
                 ->set(
                 'Response Code:' . Services::Redirect()->code
                     . 'Redirect to: ' . Services::Redirect()->url
-                    . LOG_OUTPUT_APPLICATION
+                    . PROFILER_APPLICATION
             );
 
             Services::Redirect()
@@ -608,7 +604,7 @@ Class Application
         }
 
         if ($results == 200) {
-            Services::Profiler()->set('Application Schedule Event onAfterResponse', LOG_OUTPUT_PLUGINS);
+            Services::Profiler()->set('Application Schedule Event onAfterResponse', PROFILER_PLUGINS);
             $results = Services::Event()->scheduleEvent('onAfterResponse');
             if (is_array($results)) {
                 $results = true;
@@ -620,7 +616,7 @@ Class Application
         Services::Language()->logUntranslatedStrings();
 
         Services::Profiler()
-            ->set('Response exit ' . $results, LOG_OUTPUT_APPLICATION);
+            ->set('Response exit ' . $results, PROFILER_APPLICATION);
 
         return true;
     }

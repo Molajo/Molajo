@@ -59,7 +59,7 @@ class PagetypegridPlugin extends Plugin
      */
     protected function setToolbar()
     {
-        $url = Services::Registry()->get('Page', 'page_url');
+        $url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
 
         $button = $this->get('grid_toolbar_buttons');
 
@@ -289,13 +289,13 @@ class PagetypegridPlugin extends Plugin
         $temp = $this->get('grid_batch_array', '');
 
         if ($temp == '') {
-            Services::Registry()->set('Navigation', 'SectionSubmenu', array());
+            Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', array());
             return true;
         }
 
         $grid_batch_array = explode(',', $temp);
         if (count($grid_batch_array) == 0) {
-            Services::Registry()->set('Navigation', 'SectionSubmenu', array());
+            Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', array());
             return true;
         }
 
@@ -337,7 +337,7 @@ class PagetypegridPlugin extends Plugin
                     $row->current = 0;
                 }
                 $row->title = ucfirst(strtolower($item));
-                $row->url = Services::Registry()->get('Page', 'page_url') . '#lk' . strtolower($item);
+                $row->url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url') . '#lk' . strtolower($item);
 
                 $pageArray[] = $row;
 
@@ -345,7 +345,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set('Navigation', 'SectionSubmenu', $pageArray);
+        Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', $pageArray);
 
         return true;
     }

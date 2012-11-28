@@ -8,7 +8,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$action = Services::Registry()->get('Page', 'page_url');
+$action = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
 ?>
 
 <h3>Effect 7: Accordion</h3>

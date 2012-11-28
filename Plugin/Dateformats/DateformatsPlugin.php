@@ -44,7 +44,7 @@ class DateformatsPlugin extends Plugin
                     $modifiedByField = $this->getField('modified_by');
                     $modifiedByValue = $this->getFieldValue($modifiedByField);
                     if ($modifiedByValue === false) {
-                        $this->saveField($modifiedByField, 'modified_by', Services::Registry()->get('User', 'id'));
+                        $this->saveField($modifiedByField, 'modified_by', Services::Registry()->get(USER_LITERAL, 'id'));
                     }
 
                 } elseif ($fieldValue === false
@@ -57,14 +57,14 @@ class DateformatsPlugin extends Plugin
                         $createdByField = $this->getField('created_by');
                         $createdByValue = $this->getFieldValue($createdByField);
                         if ($createdByValue === false) {
-                            $this->saveField($createdByField, 'created_by', Services::Registry()->get('User', 'id'));
+                            $this->saveField($createdByField, 'created_by', Services::Registry()->get(USER_LITERAL, 'id'));
                         }
 
                     } elseif ($name == 'activity_datetime') {
                         $createdByField = $this->getField('user_id');
                         $createdByValue = $this->getFieldValue($createdByField);
                         if ($createdByValue === false) {
-                            $this->saveField($createdByField, 'user_id', Services::Registry()->get('User', 'id'));
+                            $this->saveField($createdByField, 'user_id', Services::Registry()->get(USER_LITERAL, 'id'));
                         }
 
                     }

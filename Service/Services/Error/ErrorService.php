@@ -32,7 +32,7 @@ Class ErrorService
      */
     public function set($code, $message = 'Internal server error')
     {
-        Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', true);
+        Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, true);
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', ACTION_VIEW);
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_authorisation', 'read'); //for now

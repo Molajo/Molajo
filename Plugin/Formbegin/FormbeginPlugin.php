@@ -32,11 +32,11 @@ class FormbeginPlugin extends Plugin
             return true;
         }
 
-        $pageUrl = Services::Registry()->get('Page', 'page_url');
+        $pageUrl = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
 
         $form_action = $this->get('form_action', '');
         if ($form_action == '' || $form_action === null) {
-            $form_action = ' action="' . Services::Registry()->get('Page', 'page_url') . '"';
+            $form_action = ' action="' . Services::Registry()->get(STRUCTURE_LITERAL, 'page_url') . '"';
         } else {
             $form_action = ' action="' . $form_action . '"';
         }
@@ -50,7 +50,7 @@ class FormbeginPlugin extends Plugin
 
         $form_name = $this->get('form_name');
         if ($form_name == '' || $form_name === null) {
-            $form_name = ' name="' . Services::Registry()->get('RouteParameters', 'template_view_path_node') . '"';
+            $form_name = ' name="' . Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'template_view_path_node') . '"';
         } else {
             $form_name = ' name="' . $form_name . '"';
         }
@@ -59,7 +59,7 @@ class FormbeginPlugin extends Plugin
         if ($form_id == '' || $form_id === null) {
             $temp = $this->get('form_name', '');
             if ($temp == '' || $temp === null) {
-                $form_id = ' id="' . Services::Registry()->get('RouteParameters', 'template_view_path_node') . '"';
+                $form_id = ' id="' . Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'template_view_path_node') . '"';
             } else {
                 $form_id = ' id="' . $temp . '"';
             }

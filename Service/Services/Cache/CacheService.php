@@ -169,10 +169,10 @@ Class CacheService
 		Services::Registry()->set('cache_service', $this->cache_service);
 
 		$this->valid_types = array();
-		$this->valid_types[] = 'model';
-		$this->valid_types[] = 'page';
-		$this->valid_types[] = 'query';
-		$this->valid_types[] = 'template';
+		$this->valid_types[] = 'type_model';
+		$this->valid_types[] = 'type_page';
+		$this->valid_types[] = 'type_query';
+		$this->valid_types[] = 'type_template';
 
 		foreach ($this->valid_types as $type) {
 			$this->initialise_folders($type);

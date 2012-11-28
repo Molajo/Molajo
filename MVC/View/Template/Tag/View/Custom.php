@@ -7,7 +7,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$action = Services::Registry()->get('Page', 'page_url'); ?>
+$action = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url'); ?>
 <label>Tag</label>
 <div class="row">
     <div class="five columns">

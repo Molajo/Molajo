@@ -213,7 +213,7 @@ class Model
             return true;
         }
 
-        if (Services::Registry()->get('User', 'username') == 'admin') {
+        if (Services::Registry()->get(USER_LITERAL, 'username') == 'admin') {
         } else {
             return true;
         }

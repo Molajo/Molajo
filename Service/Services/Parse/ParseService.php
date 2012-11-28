@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
 /**
  * Parse
  *
- * @package    Molajo
- * @subpackage Parse
- * @since      1.0
+ * @package     Molajo
+ * @subpackage  Parse
+ * @since       1.0
  */
 Class ParseService
 {
@@ -77,30 +77,30 @@ Class ParseService
      */
     public function process()
     {
-        Services::Profiler()->set('ParseService->process Started', LOG_OUTPUT_RENDERING);
+        Services::Profiler()->set('ParseService->process Started', PROFILER_RENDERING);
 
-        $overrideIncludesPageXML = Services::Registry()->get('Override', 'parse_sequence', false);
-        $overrideIncludesFinalXML = Services::Registry()->get('Override', 'parse_final', false);
+        $overrideIncludesPageXML = Services::Registry()->get(OVERRIDE_LITERAL, 'parse_sequence', false);
+        $overrideIncludesFinalXML = Services::Registry()->get(OVERRIDE_LITERAL, 'parse_final', false);
 
         if ($overrideIncludesPageXML === false) {
-            $sequence = Services::Configuration()->getFile('Parse', 'Parse_sequence');
+            $sequence = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_sequence');
         } else {
             $sequence = $overrideIncludesPageXML;
         }
 
         foreach ($sequence->include as $next) {
-            $this->sequence[] = (string) $next;
+            $this->sequence[] = (string)$next;
         }
 
         if ($overrideIncludesFinalXML === false) {
-            $final = Services::Configuration()->getFile('Parse', 'Parse_final');
+            $final = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_final');
         } else {
             $final = $overrideIncludesFinalXML;
         }
 
         foreach ($final->include as $next) {
-            $sequence = (string) $next;
-            $this->final[] = (string) $next;
+            $sequence = (string)$next;
+            $this->final[] = (string)$next;
 
             if (stripos($sequence, ':')) {
                 $includeName = substr($sequence, 0, strpos($sequence, ':'));
@@ -116,79 +116,70 @@ Class ParseService
         if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme not found');
-
             return false;
         }
 
-        /** Load Theme and Page Override Plugins */
-        Services::Events()->registerPlugins(
-            Services::Registry()->getPath(CATALOG_TYPE_THEME, 'theme_path'),
-            Helpers::Extensions()->getNamespace(CATALOG_TYPE_THEME, 'theme_path')
-        );
-
-        Services::Events()->registerPlugins(
-            Services::Registry()->getPath(CATALOG_TYPE_PAGE_VIEW, 'page_view_path_node'),
-            Helpers::Extensions()->getNamespace(CATALOG_TYPE_PAGE_VIEW, 'page_view_path_node')
-        );
-
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
         } else {
             //todo - pass in lists of includes to the plugins for possible change
             $this->onBeforeParseEvent();
         }
 
         /** Save Route Parameters */
-        Services::Registry()->createRegistry('RouteParameters');
-        Services::Registry()->copy(PARAMETERS_LITERAL, 'RouteParameters');
+        Services::Registry()->createRegistry(ROUTE_PARAMETERS_LITERAL);
+        Services::Registry()->copy(PARAMETERS_LITERAL, ROUTE_PARAMETERS_LITERAL);
 
         $renderedOutput = $this->renderLoop();
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
         } else {
             Services::Registry()->delete(PARAMETERS_LITERAL);
             Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-            Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL);
+            Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL);
+
             $renderedOutput = $this->onAfterParsebodyEvent($renderedOutput);
         }
 
         $this->sequence = $this->final;
         $this->exclude_until_final = array();
+
         Services::Registry()->delete(PARAMETERS_LITERAL);
         Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL);
+        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL);
 
         $bodyOutput = $renderedOutput;
 
         $class = 'Molajo\\Includer\\ThemeIncluder';
 
         if (class_exists($class)) {
-            $rc = new $class ('theme');
+            $rc = new $class (THEME_LITERAL);
             $results = $rc->process();
         } else {
-            // fail
+            throw new \Exception('Parse: Instantiating ThemeIncluder Class failed');
         }
 
-		if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
-		} else {
-			$renderedOutput = $this->onBeforeDocumentheadEvent($renderedOutput);
-		}
+        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
+        } else {
+            $renderedOutput = $this->onBeforeDocumentheadEvent($renderedOutput);
+        }
 
         $renderedOutput = $this->renderLoop($renderedOutput);
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
+        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
         } else {
             $renderedOutput = $this->onAfterDocumentheadEvent($renderedOutput);
         }
 
-		if (Services::Registry()->get(PARAMETERS_LITERAL, 'error_status', 0) == 1) {
-		} else {
-			Services::Registry()->delete(PARAMETERS_LITERAL);
-			Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-			Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL);
-			$renderedOutput = $this->onAfterParseEvent($renderedOutput);
-		}
+        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
+        } else {
+            Services::Registry()->delete(PARAMETERS_LITERAL);
+            Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+            Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL);
 
-		return $renderedOutput;
+            $renderedOutput = $this->onAfterParseEvent($renderedOutput);
+        }
+
+        return $renderedOutput;
     }
 
     /**
@@ -220,7 +211,7 @@ Class ParseService
                     . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include')
                     . ' and Page View: '
                     . Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_path_include'),
-                LOG_OUTPUT_RENDERING
+                PROFILER_RENDERING
             );
 
             ob_start();
@@ -232,8 +223,9 @@ Class ParseService
 
             $first = false;
             $final = true;
-            Services::Profiler()->set('ParseService renderLoop Parse Document Head ',
-                LOG_OUTPUT_RENDERING
+            Services::Profiler()->set(
+                'ParseService renderLoop Parse Document Head ',
+                PROFILER_RENDERING
             );
         }
 
@@ -367,7 +359,7 @@ Class ParseService
         $includeDisplay = ob_get_contents();
         ob_end_clean();
 
-        Services::Profiler()->set($includeDisplay, LOG_OUTPUT_RENDERING);
+        Services::Profiler()->set($includeDisplay, PROFILER_RENDERING);
 
         return;
     }
@@ -375,10 +367,10 @@ Class ParseService
     /**
      * Invoke extension-specific includer for include statement
      *
-     * @param bool $first
-     * @param $renderedOutput
+     * @param   bool    $first
+     * @param   string  $renderedOutput
      *
-     * @return  string rendered output
+     * @return  string  rendered output
      * @since   1.0
      */
     protected function callIncluder($first = false, $renderedOutput)
@@ -388,7 +380,6 @@ Class ParseService
 
         foreach ($this->sequence as $sequence) {
 
-            /** if necessary, split includer name and type (ex. request:resource and defer:head) */
             if (stripos($sequence, ':')) {
                 $includeName = substr($sequence, 0, strpos($sequence, ':'));
                 $includerType = substr($sequence, strpos($sequence, ':') + 1, 999);
@@ -415,7 +406,7 @@ Class ParseService
                     Services::Registry()->createRegistry(PARAMETERS_LITERAL);
 
                     if ($includeName == 'request') {
-                        Services::Registry()->copy('RouteParameters', PARAMETERS_LITERAL);
+                        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL);
                         Services::Registry()->set(PARAMETERS_LITERAL, 'extension_primary', true);
                     } else {
                         Services::Registry()->set(PARAMETERS_LITERAL, 'extension_primary', false);
@@ -428,9 +419,11 @@ Class ParseService
                         $rc = new $class ($includerType, $includeName);
 
                     } else {
-                        Services::Profiler()->set('ParseService callIncluder failed instantiating class ' . $class,
-                            LOG_OUTPUT_RENDERING);
-                        // ERROR
+                        Services::Profiler()->set(
+                            'ParseService callIncluder failed instantiating class ' . $class,
+                            PROFILER_RENDERING
+                        );
+                        throw new \Exception('Parse: Includer Failed Instantiating Class' . $class);
                     }
 
                     ob_start();
@@ -440,16 +433,21 @@ Class ParseService
                     echo '</pre>';
                     $includeDisplay = ob_get_contents();
                     ob_end_clean();
-echo $includeDisplay;
-                    Services::Profiler()->set($includeDisplay,
-                        LOG_OUTPUT_RENDERING
+                    echo $includeDisplay;
+                    Services::Profiler()->set(
+                        $includeDisplay,
+                        PROFILER_RENDERING
                     );
 
                     $output = trim($rc->process($attributes));
-echo '<br />';
-echo $output;
-echo '<br />';
-                    Services::Profiler()->set('ParseService->callIncluder rendered output ' . $output, LOG_OUTPUT_RENDERING, VERBOSE);
+                    echo '<br />';
+                    echo $output;
+                    echo '<br />';
+                    Services::Profiler()->set(
+                        'ParseService->callIncluder rendered output ' . $output,
+                        PROFILER_RENDERING,
+                        VERBOSE
+                    );
 
                     $with[] = $output;
                 }
@@ -469,10 +467,10 @@ echo '<br />';
      */
     protected function onBeforeParseEvent()
     {
-        Services::Profiler()->set('ParseService onBeforeParse', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('ParseService onBeforeParse', PROFILER_PLUGINS, VERBOSE);
 
         $arguments = array(
-            PARAMETERS_LITERAL => Services::Registry()->getArray(PARAMETERS_LITERAL),
+            'parameters' => Services::Registry()->getArray(PARAMETERS_LITERAL),
             'model_type' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
             'model_name' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_name'),
             'data' => array()
@@ -481,8 +479,8 @@ echo '<br />';
         $arguments = Services::Event()->scheduleEvent('onBeforeParse', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
-            Services::Profiler()->set('ParseService onBeforeParsebody failed', LOG_OUTPUT_PLUGINS);
+            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
+            Services::Profiler()->set('ParseService onBeforeParsebody failed', PROFILER_PLUGINS);
             return false;
         }
 
@@ -504,20 +502,20 @@ echo '<br />';
      */
     protected function onAfterParsebodyEvent($renderedOutput)
     {
-        Services::Profiler()->set('ParseService onAfterParsebody', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('ParseService onAfterParsebody', PROFILER_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            PARAMETERS_LITERAL => $parameters,
+            'parameters' => $parameters,
             'rendered_output' => $renderedOutput
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterParsebody', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
-            Services::Profiler()->set('ParseService onAfterParsebody failed', LOG_OUTPUT_PLUGINS);
+            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
+            Services::Profiler()->set('ParseService onAfterParsebody failed', PROFILER_PLUGINS);
             return false;
         }
 
@@ -530,30 +528,30 @@ echo '<br />';
         return $renderedOutput;
     }
 
-	/**
-	 * Schedule Event onBeforeDocumenthead Event
-	 *
+    /**
+     * Schedule Event onBeforeDocumenthead Event
+     *
      * @param   string  $renderedOutput
      *
      * @return  string  rendered output
      * @since   1.0
      */
-	protected function onBeforeDocumentheadEvent($renderedOutput)
-	{
-        Services::Profiler()->set('ParseService onBeforeDocumenthead', LOG_OUTPUT_PLUGINS, VERBOSE);
+    protected function onBeforeDocumentheadEvent($renderedOutput)
+    {
+        Services::Profiler()->set('ParseService onBeforeDocumenthead', PROFILER_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            PARAMETERS_LITERAL => $parameters,
+            'parameters' => $parameters,
             'rendered_output' => $renderedOutput
         );
 
         $arguments = Services::Event()->scheduleEvent('onBeforeDocumenthead', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
-            Services::Profiler()->set('ParseService onBeforeDocumenthead failed', LOG_OUTPUT_PLUGINS);
+            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
+            Services::Profiler()->set('ParseService onBeforeDocumenthead failed', PROFILER_PLUGINS);
             return false;
         }
 
@@ -563,7 +561,7 @@ echo '<br />';
         $renderedOutput = $arguments['rendered_output'];
 
         return $renderedOutput;
-	}
+    }
 
     /**
      * Schedule Event onAfterDocumentheadEvent Event
@@ -573,20 +571,20 @@ echo '<br />';
      */
     protected function onAfterDocumentheadEvent($renderedOutput)
     {
-        Services::Profiler()->set('ParseService onAfterDocumenthead', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('ParseService onAfterDocumenthead', PROFILER_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            PARAMETERS_LITERAL => $parameters,
+            'parameters' => $parameters,
             'rendered_output' => $renderedOutput
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterDocumenthead', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
-            Services::Profiler()->set('ParseService onAfterDocumenthead failed', LOG_OUTPUT_PLUGINS);
+            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
+            Services::Profiler()->set('ParseService onAfterDocumenthead failed', PROFILER_PLUGINS);
             return false;
         }
 
@@ -606,20 +604,20 @@ echo '<br />';
      */
     protected function onAfterParseEvent($renderedOutput)
     {
-        Services::Profiler()->set('ParseService onAfterParse', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('ParseService onAfterParse', PROFILER_PLUGINS, VERBOSE);
 
         $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         $arguments = array(
-            PARAMETERS_LITERAL => $parameters,
+            'parameters' => $parameters,
             'rendered_output' => $renderedOutput
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterParse', $arguments);
 
         if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'error_status', 1);
-            Services::Profiler()->set('ParseService onAfterParse failed', LOG_OUTPUT_PLUGINS);
+            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
+            Services::Profiler()->set('ParseService onAfterParse failed', PROFILER_PLUGINS);
             return false;
         }
 

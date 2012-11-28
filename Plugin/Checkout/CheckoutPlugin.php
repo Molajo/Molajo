@@ -72,7 +72,7 @@ class CheckoutPlugin extends Plugin
             return true;
         }
 // or super admin
-        if ($this->model->checked_out == Services::Registry()->get('User', 'id')) {
+        if ($this->model->checked_out == Services::Registry()->get(USER_LITERAL, 'id')) {
 
         } else {
             // redirect error

@@ -5,6 +5,7 @@
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo;
+
 use Molajo\Application;
 
 defined('MOLAJO') or die;

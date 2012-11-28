@@ -104,9 +104,9 @@ class CommentPlugin extends Plugin
             || $parent_model_name == ''
             || $parent_source_id == 0
         ) {
-            $parent_model_type = Services::Registry()->get('RouteParameters', 'request_model_type');
-            $parent_model_name = Services::Registry()->get('RouteParameters', 'request_model_name');
-            $parent_source_id = (int)Services::Registry()->get('RouteParameters', 'criteria_source_id');
+            $parent_model_type = Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'request_model_type');
+            $parent_model_name = Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'request_model_name');
+            $parent_source_id = (int)Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'criteria_source_id');
         }
 
         if ($parent_model_type == ''
@@ -274,7 +274,7 @@ class CommentPlugin extends Plugin
         */
 
         $tabs = Services::Form()->setPageArray(
-            SYSTEM_LITERAL,
+            'System',
             'Comments',
             'Comments',
             $page_array,

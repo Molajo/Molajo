@@ -8,7 +8,7 @@ use Molajo\Service\Services;
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
-$action = Services::Registry()->get('Page', 'page_url');
+$action = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
 if ($this->row->enable == 1) { ?>
 <div class="grid-feature grid-batch">
     <ol class="grid-batch">

@@ -31,8 +31,8 @@ Class PasswordService
      * getInstance
      *
      * @static
-     * @return bool|object
-     * @since  1.0
+     * @return  bool|object
+     * @since   1.0
      */
     public static function getInstance()
     {

@@ -88,12 +88,12 @@ class PagetypeapplicationPlugin extends Plugin
                 }
                 $row->id = $i;
                 $row->title = substr($item, 0, strpos($item, ','));
-                $row->url = Services::Registry()->get('Page', 'page_url') . '/page/' . $i;
+                $row->url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url') . '/page/' . $i;
 
                 $pageArray[] = $row;
             }
         }
-        Services::Registry()->set('Navigation', 'SectionSubmenu', $pageArray);
+        Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', $pageArray);
 
         /** Even tho links are created to each form page, generate Form for the current page, only */
         $current_page = '{{' . $pages[$page_number];

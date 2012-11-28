@@ -66,7 +66,7 @@ class DisplayController extends Controller
             ob_end_clean();
 
             Services::Profiler()->set('Controller->onAfterExecute ' . $profiler_message,
-                LOG_OUTPUT_PLUGINS, VERBOSE);
+                PROFILER_PLUGINS, VERBOSE);
         }
 
         if (count($this->query_results) == 0
@@ -214,20 +214,20 @@ class DisplayController extends Controller
 
                 $arguments = array(
                     'model_registry' => $this->model_registry,
-                    PARAMETERS_LITERAL => $this->parameters,
+                    'parameters' => $this->parameters,
                     'data' => $item,
                     'model_type' => $this->get('model_type'),
                     'model_name' => $this->get('model_name')
                 );
 
                 Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender',
-                    LOG_OUTPUT_PLUGINS, VERBOSE);
+                    PROFILER_PLUGINS, VERBOSE);
 
                 $arguments = Services::Event()->scheduleEvent('onBeforeViewRender', $arguments);
 
                 if ($arguments === false) {
                     Services::Profiler()->set('DisplayController->onBeforeViewRender Schedules onBeforeViewRender',
-                        LOG_OUTPUT_PLUGINS, VERBOSE);
+                        PROFILER_PLUGINS, VERBOSE);
                     return false;
                 }
 
@@ -256,20 +256,20 @@ class DisplayController extends Controller
     {
         $arguments = array(
             'model_registry' => $this->model_registry,
-            PARAMETERS_LITERAL => $this->parameters,
+            'parameters' => $this->parameters,
             'rendered_output' => $rendered_output,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
 
         Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender',
-            LOG_OUTPUT_PLUGINS, VERBOSE);
+            PROFILER_PLUGINS, VERBOSE);
 
         $arguments = Services::Event()->scheduleEvent('onAfterViewRender', $arguments);
 
         if ($arguments === false) {
             Services::Profiler()->set('DisplayController->onAfterViewRender Schedules onAfterViewRender',
-                LOG_OUTPUT_PLUGINS, VERBOSE);
+                PROFILER_PLUGINS, VERBOSE);
             return false;
         }
 

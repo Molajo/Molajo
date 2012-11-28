@@ -64,7 +64,7 @@ Class RedirectService
         }
 
         Services::Profiler()->set('Redirect Services Set URL: ' . $this->url
-                . ' Status Code: ' . $this->code, LOG_OUTPUT_APPLICATION
+                . ' Status Code: ' . $this->code, PROFILER_APPLICATION
         );
 
         return;
@@ -73,8 +73,8 @@ Class RedirectService
     /**
      * redirect
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @since  1.0
+     * @return  \Symfony\Component\HttpFoundation\RedirectResponse
+     * @since   1.0
      */
     public function redirect($url = null, $code = null)
     {
@@ -87,7 +87,7 @@ Class RedirectService
             $this->code = $code;
         }
         Services::Profiler()->set('RedirectServices::redirect to: ' . $this->url
-            . ' Status Code: ' . $this->code, LOG_OUTPUT_APPLICATION);
+            . ' Status Code: ' . $this->code, PROFILER_APPLICATION);
 
         return new RedirectResponse($this->url, $this->code);
     }

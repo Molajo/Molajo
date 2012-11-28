@@ -26,7 +26,7 @@ class AuthorPlugin extends Plugin
      *
      * Retrieves Author Information for Item
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
@@ -41,16 +41,20 @@ class AuthorPlugin extends Plugin
             return true;
         }
 
-        if (Services::Registry()->exists(TEMPLATE_LITERAL, 'Author' . $fieldValue)) {
+        if (Services::Registry()->exists(TEMPLATE_LITERAL, $this->get('template_view_path_node') . $fieldValue)) {
 
-            $authorArray = Services::Registry()->get(TEMPLATE_LITERAL, 'Author' . $fieldValue);
+            $authorArray = Services::Registry()->get(
+                TEMPLATE_LITERAL,
+                $this->get('template_view_path_node') . $fieldValue
+            );
 
             foreach ($authorArray[0] as $key => $value) {
                 $new_field_name = $key;
                 $this->saveField(null, $new_field_name, $value);
             }
 
-            Services::Registry()->set(TEMPLATE_LITERAL, 'Author', $authorArray);
+            Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node'), $authorArray);
+
             return true;
         }
 
@@ -81,15 +85,18 @@ class AuthorPlugin extends Plugin
 
             } else {
 
-                $new_field_name = 'author' . '_' . $key;
+                $new_field_name = $this->get('template_view_path_node') . '_' . $key;
+
                 $this->saveField(null, $new_field_name, $value);
 
                 $row->$new_field_name = $value;
             }
         }
+
         $authorArray[] = $row;
-        Services::Registry()->set(TEMPLATE_LITERAL, 'Author' . $fieldValue, $authorArray);
-        Services::Registry()->set(TEMPLATE_LITERAL, 'Author', $authorArray);
+
+        Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node') . $fieldValue, $authorArray);
+        Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node'), $authorArray);
 
         return true;
     }

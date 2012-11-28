@@ -33,7 +33,8 @@ Class PermissionsService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Actions');
+        $controller->getModelRegistry('Datasource', 'Actions');
+
         $controller->setDataobject();
 
         $items = $controller->getData(QUERY_OBJECT_LIST);
@@ -94,7 +95,7 @@ Class PermissionsService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Siteapplications');
+        $controller->getModelRegistry('Datasource', 'Siteapplications');
         $controller->setDataobject();
 
         $controller->model->query->select($controller->model->db->qn('a.application_id'));
@@ -181,7 +182,7 @@ Class PermissionsService
     {
         if (in_array(
             Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_view_group_id'),
-            Services::Registry()->get('User', 'ViewGroups')
+            Services::Registry()->get(USER_LITERAL, 'ViewGroups')
         )
         ) {
             Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', true);
@@ -250,7 +251,7 @@ Class PermissionsService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Grouppermissions');
+        $controller->getModelRegistry('Datasource', 'Grouppermissions');
         $controller->setDataobject();
 
         $controller->model->query->select(
@@ -264,7 +265,7 @@ Class PermissionsService
         );
         $controller->model->query->where(
             $controller->model->db->qn('a.group_id')
-                . ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
+                . ' IN (' . implode(', ', Services::Registry()->get(USER_LITERAL, 'Groups')) . ')'
         );
 
         $count = $controller->getData(QUERY_OBJECT_RESULT);
@@ -295,7 +296,7 @@ Class PermissionsService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATASOURCE_LITERAL, 'Userapplications');
+        $controller->getModelRegistry('Datasource', 'Userapplications');
         $controller->setDataobject();
 
         $controller->model->query->where('a.application_id = ' . (int)APPLICATION_ID);
@@ -381,7 +382,7 @@ Class PermissionsService
                 APPLICATION_ID
         );
 
-        $vg = implode(',', array_unique(Services::Registry()->get('User', 'ViewGroups')));
+        $vg = implode(',', array_unique(Services::Registry()->get(USER_LITERAL, 'ViewGroups')));
 
         $query->where(
             $db->qn($parameters['catalog_prefix']) .
@@ -412,7 +413,7 @@ Class PermissionsService
     {
         $groups = Services::Registry()->get(CONFIGURATION_LITERAL, 'user_disable_filter_for_groups');
         $groupArray = explode(',', $groups);
-        $userGroups = Services::Registry()->get('User', 'groups');
+        $userGroups = Services::Registry()->get(USER_LITERAL, 'groups');
 
         foreach ($groupArray as $single) {
             if (in_array($single, $userGroups)) {

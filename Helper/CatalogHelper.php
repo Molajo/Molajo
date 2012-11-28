@@ -42,7 +42,7 @@ Class CatalogHelper
                     'request_catalog_id'
                 )
                     . ' Requested URL Query: ' . Services::Registry()->get(PARAMETERS_LITERAL, 'request_url'),
-                LOG_OUTPUT_ROUTING,
+                PROFILER_ROUTING,
                 0
             );
 
@@ -54,7 +54,7 @@ Class CatalogHelper
             Services::Profiler()->set(
                 'CatalogHelper->getRouteCatalog Redirect to ID '
                     . (int)$item->redirect_to_id,
-                LOG_OUTPUT_ROUTING,
+                PROFILER_ROUTING,
                 0
             );
 

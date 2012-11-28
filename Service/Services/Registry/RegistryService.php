@@ -67,7 +67,7 @@ Class RegistryService
      * getInstance
      *
      * @static
-     * @return bool|object
+     * @return  bool|object
      * @since   1.0
      */
     public static function getInstance()
@@ -82,12 +82,11 @@ Class RegistryService
     /**
      * Initialise known namespaces for application
      *
-     * @return object
+     * @return  object
      * @since   1.0
      */
     public function initialise()
     {
-        /** store all registries in this object  */
         $this->registry = array();
         $this->registryKeys = array();
 
@@ -120,19 +119,15 @@ Class RegistryService
             return false;
         }
 
-        /** Namespace check that makes it to this point is true */
         if ($key === null) {
             return true;
         }
 
-        /** Request for element within namespace */
         $thisNamespace = $this->registry[$namespace];
-
         if (count($thisNamespace) == 0) {
             return false;
         }
 
-        /** Look for the key value requested */
         $key = strtolower($key);
         if (isset($thisNamespace[$key])) {
             return true;
@@ -153,16 +148,15 @@ Class RegistryService
      * Usage:
      * Services::Registry()->createRegistry('Name Space');
      *
-     * @param $namespace
+     * @param   $namespace
      *
-     * @return array
+     * @return  array
      */
     public function createRegistry($namespace)
     {
         $namespace = strtolower($namespace);
         if ($namespace == 'db') {
-            return false;
-            // reserved word -- throw error
+            throw new \Exception ('Registry: Namespace ' . $namespace . ' is a reserved word.');
         }
 
         if (isset($this->registryKeys[$namespace])) {
@@ -174,22 +168,18 @@ Class RegistryService
             return $this->registry[$namespace];
         }
 
-        /** Keys array */
         $this->registryKeys[] = $namespace;
 
-        /** Namespace array */
         $this->registry[$namespace] = array();
 
-        /** Log it */
-        if ($this->exists(DATA_OBJECT_PROFILER)) {
+        if ($this->exists(PROFILER_LITERAL)) {
         } else {
 
-            if (Services::Registry()->get(DATA_OBJECT_PROFILER, 'on') === true) {
+            if (Services::Registry()->get(PROFILER_LITERAL, 'on') === true) {
 
                 if ($this->profiler_available === false) {
 
                     $this->profiler_available = true;
-                    /* Catch up logging Registries created before Profiler Service started */
                     foreach ($this->registryKeys as $ns) {
                         Services::Profiler()->set('Create Registry ' . $ns, 'Registry');
                     }
@@ -218,11 +208,11 @@ Class RegistryService
      * Returns all entries that begin with Theme:
      * echo Services::Registry()->get(CONFIGURATION_LITERAL, 'theme*');
      *
-     * @param string $namespace
-     * @param string $key
-     * @param mixed  $default
+     * @param   string  $namespace
+     * @param   string  $key
+     * @param   mixed   $default
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function get($namespace = null, $key = null, $default = null)
@@ -269,36 +259,27 @@ Class RegistryService
             return true;
         }
 
-        /** No sense in fighting it. */
         $key = strtolower($key);
 
-        /** Does registry exist? If not, create it. */
         if (in_array($namespace, $this->registryKeys)) {
         } else {
             $this->createRegistry($namespace);
         }
 
-        /** If it doesn't exist, we have problems. */
         if (isset($this->registry[$namespace])) {
         } else {
-            //todo: throw error
-            echo '<br />Registry: ' . $namespace . ' could not be created.';
-
-            return false;
+            throw new \Exception('Registry: Namespace ' . $namespace . ' could not be created.');
         }
 
-        /** Retrieve the registry for the namespace */
         $array = $this->registry[$namespace];
         if (is_array($array)) {
         } else {
             $array = array();
         }
 
-        /** Look for the key value requested */
         if (isset($array[$key])) {
 
         } else {
-            /** Create the entry, if not found, and set it to default */
             $array[$key] = $default;
             $this->registry[$namespace] = $array;
         }
@@ -312,13 +293,13 @@ Class RegistryService
      * Usage:
      * Services::Registry()->set('Name Space', 'key_name', $value);
      *
-     * @param string  $namespace
-     * @param string  $key
-     * @param mixed   $default
-     * @param boolean $match     - used as a security precaution to ensure only named parameters
+     * @param   string   $namespace
+     * @param   string   $key
+     * @param   mixed    $default
+     * @param   boolean  $match     - used as a security precaution to ensure only named parameters
      *                             are updated via <include /> statement overrides
      *
-     * @return Registry
+     * @return  Registry
      * @since   1.0
      */
     public function set($namespace, $key, $value = null, $match = false)
@@ -327,11 +308,12 @@ Class RegistryService
 
         if (is_string($key)) {
             $key = strtolower($key);
+
         } elseif (is_bool($key)) {
         } else {
             echo '<pre>';
             var_dump($key);
-            throw new \Exception ($namespace. ' Key must be a string.');
+            throw new \Exception ('Registry: Namespace ' . $namespace. ' Invalid Key Value - must be a string.');
         }
 
         if ($key == '') {
@@ -346,13 +328,10 @@ Class RegistryService
             }
         }
 
-        /** Get the Registry (or create it) */
         $array = $this->getRegistry($namespace);
 
-        /** Set the value for the key */
         $array[$key] = $value;
 
-        /** Save the registry */
         $this->registry[$namespace] = $array;
 
         return $this;
@@ -366,10 +345,10 @@ Class RegistryService
      * Usage:
      * Services::Registry()->copy('namespace-x', 'to-namespace-y');
      *
-     * @param  $copyThis
-     * @param  $intoThis
+     * @param   $copyThis
+     * @param   $intoThis
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function copy($copyThis, $intoThis, $value = null)
@@ -377,10 +356,8 @@ Class RegistryService
         $copyThis = strtolower($copyThis);
         $intoThis = strtolower($intoThis);
 
-        /** Get (or create) the Registry that will be copied */
         $copy = $this->getRegistry($copyThis);
 
-        /** Copy all */
         if ($value == null) {
             if (count($copy) > 0) {
                 foreach ($copy as $key => $value) {
@@ -391,17 +368,18 @@ Class RegistryService
             return $this;
         }
 
-        /** Copy a single item or prefix copy */
         $searchfor = '';
         if ($value == '*' || strpos($value, '*')) {
             $searchfor = substr($value, 0, strrpos($value, '*'));
             $exactMatch = false;
+
         } else {
             $searchfor = $value;
             $exactMatch = true;
         }
 
         if (count($copy > 0)) {
+
             foreach ($copy as $key => $value) {
                 $use = false;
                 $test = substr($key, 0, strlen($searchfor));
@@ -441,13 +419,10 @@ Class RegistryService
         $mergeThis = strtolower($mergeThis);
         $intoThis = strtolower($intoThis);
 
-        /** Get (or create) the Registry that will be merged into the other */
         $mergeArray = $this->getRegistry($mergeThis);
 
-        /** Get (or create) the Registry that will be copied to */
         $intoArray = $this->getRegistry($intoThis);
 
-        /** Merge */
         if (count($mergeArray > 0)) {
         } else {
             return $this;
@@ -471,7 +446,6 @@ Class RegistryService
                 $existingValue = $this->get($intoThis, $key, '');
 
                 if (trim($existingValue) == '') {
-//					echo $mergeThis.' '.$intoThis.' '.$key.' '.$value.'<br />';
                     $this->set($intoThis, $key, $value);
                 }
 
@@ -490,16 +464,15 @@ Class RegistryService
      * Usage:
      * Services::Registry()->sort('namespace');
      *
-     * @param  namespace
+     * @param   namespace
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
      */
     public function sort($namespace)
     {
         $namespace = strtolower($namespace);
 
-        /** Get (or create) the Registry that will be merged into the other */
         $sort = $this->getRegistry($namespace);
 
         ksort($sort);
@@ -515,29 +488,28 @@ Class RegistryService
      * Usage:
      * Services::Registry()->rename($namespace);
      *
-     * @param  $namespace
-     * @param  $newname
+     * @param   $namespace
+     * @param   $newname
      *
-     * @return Registry
+     * @return  Registry
      * @since   1.0
      */
     public function rename($namespace, $newname)
     {
         $namespace = strtolower($namespace);
+
         $newname = strtolower($newname);
 
-        /** Retrieve existing contents, sort it. */
         $existing = $this->getRegistry($namespace);
+
         ksort($existing);
 
-        /** Delete the new and old namespaces */
         $this->deleteRegistry($namespace);
+
         $this->deleteRegistry($newname);
 
-        /** create the new namespace */
         $this->createRegistry($newname);
 
-        /** Populate the new namespace with saved data */
         $this->registry[$newname] = $existing;
 
         return $this;
@@ -549,10 +521,10 @@ Class RegistryService
      * Usage:
      * Services::Registry()->delete('Name Space', 'key_name');
      *
-     * @param string $namespace
-     * @param string $key
+     * @param   string  $namespace
+     * @param   string  $key
      *
-     * @return Registry
+     * @return  Registry
      * @since   1.0
      */
     public function delete($namespace, $key = null)
@@ -564,19 +536,15 @@ Class RegistryService
             return false;
         }
 
-        /** Get the registry */
         $nsArray = $this->getRegistry($namespace);
 
-        /** Can't delete if it doesn't exist */
         if (count($nsArray > 0)) {
         } else {
             return $this;
         }
 
-        /** Delete it */
         $this->deleteRegistry($namespace);
 
-        /** Recreate it */
         $this->createRegistry($namespace);
 
         $searchfor = '';
@@ -615,9 +583,10 @@ Class RegistryService
     /**
      * Delete a Registry for specified Namespace
      *
-     * @param $namespace
+     * @param  $namespace
      *
      * @return array
+     * @since  1.0
      */
     public function deleteRegistry($namespace)
     {
@@ -625,7 +594,6 @@ Class RegistryService
 
         $namespace = strtolower($namespace);
 
-        /** retrieve existing keys */
         $existing = $this->registryKeys;
         $keep = array();
         foreach ($existing as $key => $value) {
@@ -643,7 +611,6 @@ Class RegistryService
 
         sort($keep);
 
-        /** save all but deleted registry */
         $tempRegistry = $this->registry;
 
         $this->registry = array();
@@ -663,24 +630,21 @@ Class RegistryService
      * Usage:
      * Services::Registry()->getArray('Name Space');
      *
-     * @param string $namespace
+     * @param   string $namespace
      * @param   boolean @keyOnly set to true to retrieve key names
      *
-     * @return array
+     * @return  array
      * @since   1.0
      */
     public function getArray($namespace, $keyOnly = false)
     {
-        /** Get the Registry */
         $namespace = strtolower($namespace);
         $array = $this->getRegistry($namespace);
 
-        /** full registry array requested */
         if ($keyOnly === false) {
             return $array;
         }
 
-        /* Key only */
         $keyArray = array();
         foreach ($array as $key => $value) {
             $keyArray[] = $key;
@@ -703,11 +667,9 @@ Class RegistryService
      */
     public function loadArray($namespace, $array = array())
     {
-        /** Get the Registry that will be copied */
         $namespace = strtolower($namespace);
         $this->getRegistry($namespace);
 
-        /** Save the new registry */
         $this->registry[$namespace] = $array;
 
         return $this;
@@ -720,9 +682,10 @@ Class RegistryService
      *
      * Services::Registry()->get('Name Space');
      *
-     * @param $namespace
+     * @param   $namespace
      *
-     * @return array
+     * @return  array
+     * @since   1.0
      */
     protected function getRegistry($namespace)
     {
@@ -771,9 +734,9 @@ Class RegistryService
      *
      * Use '*' in the key to retrieve all values starting with a specific phrase (ex. 'model')
      *
-     * @param   string  $registry  Name of registry, for the MVC this is the $model_name
-     * @param   string  $key       Key of the named pair
-     * @param   $query_object      Result, Item, or List
+     * @param   string  $registry      Name of registry, for the MVC this is the $model_name
+     * @param   string  $key           Key of the named pair
+     * @param   string  $query_object  Result, Item, or List
      *
      * @return  array
      * @since   1.0

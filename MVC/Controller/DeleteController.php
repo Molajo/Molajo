@@ -215,21 +215,21 @@ class DeleteController extends Controller
             'data' => $this->data,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            PARAMETERS_LITERAL => $this->parameters,
+            'parameters' => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', PROFILER_PLUGINS, VERBOSE);
 
         $arguments = Services::Event()->scheduleEvent('onBeforeDelete', $arguments, $this->plugins);
         if ($arguments === false) {
-            Services::Profiler()->set('DeleteController->onBeforeDelete failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
+            Services::Profiler()->set('DeleteController->onBeforeDelete failed.', PROFILER_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', PROFILER_PLUGINS, VERBOSE);
 
         /** Process results */
         $this->parameters = $arguments[PARAMETERS_LITERAL];
@@ -257,21 +257,21 @@ class DeleteController extends Controller
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
             'data' => $this->data,
-            PARAMETERS_LITERAL => $this->parameters,
+            'parameters' => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', PROFILER_PLUGINS, VERBOSE);
 
         $arguments = Services::Event()->scheduleEvent('onAfterDelete', $arguments, $this->plugins);
         if ($arguments === false) {
-            Services::Profiler()->set('DeleteController->onAfterDelete failed.', LOG_OUTPUT_PLUGINS, VERBOSE);
+            Services::Profiler()->set('DeleteController->onAfterDelete failed.', PROFILER_PLUGINS, VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', PROFILER_PLUGINS, VERBOSE);
 
         /** Process results */
         $this->parameters = $arguments[PARAMETERS_LITERAL];

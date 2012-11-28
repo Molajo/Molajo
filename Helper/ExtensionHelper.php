@@ -155,10 +155,10 @@ Class ExtensionHelper
         $catalog_type_id = null,
         $check_permissions = 0
     ) {
-        if (Services::Registry()->get('CurrentPhase') == 'LOG_OUTPUT_ROUTING') {
-            $phase = LOG_OUTPUT_ROUTING;
+        if (Services::Registry()->get('CurrentPhase') == 'PROFILER_ROUTING') {
+            $phase = PROFILER_ROUTING;
         } else {
-            $phase = LOG_OUTPUT_RENDERING;
+            $phase = PROFILER_RENDERING;
         }
 
         $controllerClass = CONTROLLER_CLASS;

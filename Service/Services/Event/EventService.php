@@ -26,7 +26,7 @@ defined('MOLAJO') or die;
  *      Copy the Plugin folder into an Extension (i.e., Resource, View, Theme, etc.) and make changes,
  *      When that extension is in use, Molajo will locate the override and register it with this command:
  *
- *      Services::Event()->registerPlugins(PLATFORM_FOLDER . '/' . 'Plugin', 'Molajo\\Plugin\\');
+ *      Services::Event()->registerPlugins(PLATFORM_FOLDER . '/' . PLUGIN_LITERAL, 'Molajo\\Plugin\\');
  *      Services::Event()->registerPlugin('Extension', 'Extension\\Resource\\Articles\\AliasPlugin');
  *
  * @package     Molajo
@@ -112,14 +112,14 @@ Class EventService
      */
     public function scheduleEvent($event, $arguments = array(), $selections = array())
     {
-        Services::Profiler()->set('Event: scheduleEvent ' . $event, LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('Event: scheduleEvent ' . $event, PROFILER_PLUGINS, VERBOSE);
 
         $registrations = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
 
         if (count($registrations) == 0) {
             Services::Profiler()->set(
                 'EventService->schedule Event ' . $event . ' has no registrations, exiting',
-                LOG_OUTPUT_PLUGINS,
+                PROFILER_PLUGINS,
                 VERBOSE
             );
 
@@ -143,7 +143,7 @@ Class EventService
             $selections = array();
             if (count($registrations) > 0) {
                 foreach ($registrations as $key => $value) {
-                    $temp = substr($key, 0, strlen($key) - strlen('Plugin'));
+                    $temp = substr($key, 0, strlen($key) - strlen(PLUGIN_LITERAL));
                     $selections[] = $temp;
                 }
             }
@@ -151,7 +151,7 @@ Class EventService
 
         foreach ($selections as $selection) {
 
-            $pluginClass = strtolower($selection) . 'plugin';
+            $pluginClass = strtolower($selection) . PLUGIN_LITERAL;
 
             if (isset($registrations[$pluginClass])) {
 
@@ -170,7 +170,7 @@ Class EventService
                         'EventService->schedule Event '
                             . $event . ' Class does not exist '
                             . $registrations[$pluginClass],
-                        LOG_OUTPUT_PLUGINS
+                        PROFILER_PLUGINS
                     );
 
                     throw new \Exception('Events: scheduleEvent identified Class ' . $pluginClass
@@ -206,7 +206,7 @@ Class EventService
             Services::Profiler()->set(
                 'EventService->schedule Event ' . $event
                     . ' Instantiating Class ' . $pluginClass . ' Failed',
-                LOG_OUTPUT_PLUGINS
+                PROFILER_PLUGINS
             );
 
             throw new \Exception('Event: processPluginClass could not Instantiate Plugin Class: ' . $pluginClass);
@@ -224,7 +224,7 @@ Class EventService
         Services::Profiler()->set(
             'EventService->schedule Event ' . $event
                 . ' calling ' . $pluginClass . ' ' . $event,
-            LOG_OUTPUT_PLUGINS,
+            PROFILER_PLUGINS,
             VERBOSE
         );
 
@@ -237,7 +237,7 @@ Class EventService
                     . $event . ' Plugin Class '
                     . $class
                     . ' Failed. ',
-                LOG_OUTPUT_PLUGINS
+                PROFILER_PLUGINS
             );
 
             throw new \Exception('Event: processPluginClass failed for Plugin Class: '
@@ -268,8 +268,8 @@ Class EventService
         $this->pluginArray = array();
         $this->plugin_eventArray = array();
 
-        $this->registerPlugins(PLATFORM_FOLDER . '/' . 'Plugin', 'Molajo\\Plugin\\');
-        $this->registerPlugins(PLATFORM_FOLDER . '/' . 'Plugin', 'Molajo\\Plugin\\');
+        $this->registerPlugins(PLATFORM_FOLDER . '/' . PLUGIN_LITERAL, 'Molajo\\Plugin\\');
+        $this->registerPlugins(PLATFORM_FOLDER . '/' . PLUGIN_LITERAL, 'Molajo\\Plugin\\');
 
         return $this;
 
@@ -290,7 +290,7 @@ Class EventService
      */
     public function registerPlugins($folder = '', $namespace = '')
     {
-        Services::Profiler()->set('EventService->registerPlugins for: ' . $folder, LOG_OUTPUT_PLUGINS, VERBOSE);
+        Services::Profiler()->set('EventService->registerPlugins for: ' . $folder, PROFILER_PLUGINS, VERBOSE);
 
         if ($folder == '') {
             throw new \Exception ('Event: No folder sent into RegisterPlugins');
@@ -298,7 +298,7 @@ Class EventService
         if ($namespace == '') {
             throw new \Exception ('Event: No namespace sent into RegisterPlugins');
         }
-        $folder .= '/' . 'Plugin';
+        $folder .= '/' . PLUGIN_LITERAL;
         $namespace .= '\\Plugin\\';
 
         $this->pluginArray = Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
@@ -314,7 +314,7 @@ Class EventService
 
             } else {
 
-                $pluginName = $folder . 'Plugin';
+                $pluginName = $folder . PLUGIN_LITERAL;
                 $pluginClass = $namespace . $folder . '\\' . $pluginName;
 
                 try {
@@ -390,7 +390,7 @@ Class EventService
                 . 'Plugin: ' . $pluginName
                 . ' Class: ' . $pluginClass
                 . ' Event: ' . $event,
-            LOG_OUTPUT_PLUGINS,
+            PROFILER_PLUGINS,
             VERBOSE
         );
 

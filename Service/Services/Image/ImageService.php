@@ -141,7 +141,7 @@ Class ImageService
             $this->type = 'crop';
         }
 
-        /** retrieve filename and perform acl check */
+        /** retrieve filename and perform Permissions Verification */
 //		$results = $this->getImage();
 //		if ($results === false) {
 //			return false;

@@ -156,7 +156,7 @@ class CatalogPlugin extends Plugin
     /**
      * Post-update processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterUpdate()
@@ -183,7 +183,7 @@ class CatalogPlugin extends Plugin
     /**
      * Pre-update processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeUpdate()
@@ -197,7 +197,7 @@ class CatalogPlugin extends Plugin
      * @param   $this->data
      * @param   $model
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onBeforeDelete()
@@ -245,7 +245,7 @@ class CatalogPlugin extends Plugin
     /**
      * Log user updates
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function logUserActivity($id, $action_id)
@@ -270,7 +270,7 @@ class CatalogPlugin extends Plugin
     /**
      * Pre-update processing
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function logCatalogActivity($id, $action_id)

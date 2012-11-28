@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Response.html
  *
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */

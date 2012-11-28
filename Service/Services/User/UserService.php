@@ -24,26 +24,17 @@ Class UserService
      *
      * Retrieve User Information (both authenticated and guest)
      *
-     * @return User
+     * @return  User
      * @since   1.0
      */
     public function load($id = 0)
     {
         $this->id = 1;
 
-        /** Retrieve User Data  */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $results = $controller->getModelRegistry(DATASOURCE_LITERAL, 'User');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry(DATASOURCE_LITERAL, USER_LITERAL);
+        $controller->setDataobject();
 
         $controller->set('id', $this->id);
 		$controller->set('get_customfields', 2);
@@ -51,8 +42,9 @@ Class UserService
 		$controller->set('process_plugins', 1);
 
         $item = $controller->getData(QUERY_OBJECT_ITEM);
+
         if ($item === false || count($item) == 0) {
-            throw new \RuntimeException ('User load() query problem');
+            throw new \RuntimeException ('User: Load User Query Failed');
         }
 
 		unset($item->customfields);
@@ -60,7 +52,6 @@ Class UserService
 		unset($item->parameters);
 		unset($item->password);
 
-        /** User Applications */
         $applications = array();
         $x = $item->Userapplications;
         foreach ($x as $app) {
@@ -70,7 +61,6 @@ Class UserService
 
         unset($item->Userapplications);
 
-        /** User Groups */
         $temp = array();
         $x = $item->Usergroups;
         foreach ($x as $group) {
@@ -94,7 +84,6 @@ Class UserService
 		sort($temp);
 		$groups = array_unique($temp);
 
-        /** User View Groups */
         $temp = array();
         $x = $item->Userviewgroups;
         foreach ($x as $vg) {
@@ -112,34 +101,32 @@ Class UserService
 
         unset($item->Userviewgroups);
 
-        /** Initialize */
-        Services::Registry()->createRegistry('User');
+        Services::Registry()->createRegistry(USER_LITERAL);
 
-        /** Retrieve each field */
         foreach (get_object_vars($item) as $key => $value) {
-            Services::Registry()->set('User', $key, $value);
+            Services::Registry()->set(USER_LITERAL, $key, $value);
         }
-        Services::Registry()->sort('User');
+        Services::Registry()->sort(USER_LITERAL);
 
         if ($this->id == 0) {
-            Services::Registry()->set('User', 'public', 1);
-            Services::Registry()->set('User', 'guest', 1);
-            Services::Registry()->set('User', 'registered', 0);
+            Services::Registry()->set(USER_LITERAL, 'public', 1);
+            Services::Registry()->set(USER_LITERAL, 'guest', 1);
+            Services::Registry()->set(USER_LITERAL, 'registered', 0);
         } else {
-            Services::Registry()->set('User', 'public', 1);
-            Services::Registry()->set('User', 'guest', 0);
-            Services::Registry()->set('User', 'registered', 1);
+            Services::Registry()->set(USER_LITERAL, 'public', 1);
+            Services::Registry()->set(USER_LITERAL, 'guest', 0);
+            Services::Registry()->set(USER_LITERAL, 'registered', 1);
         }
 
         if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $groups)) {
-            Services::Registry()->set('User', 'administrator', 1);
+            Services::Registry()->set(USER_LITERAL, 'administrator', 1);
         } else {
-            Services::Registry()->set('User', 'administrator', 0);
+            Services::Registry()->set(USER_LITERAL, 'administrator', 0);
         }
 
-        Services::Registry()->set('User', 'Applications', $applications);
-        Services::Registry()->set('User', 'Groups', $groups);
-        Services::Registry()->set('User', 'ViewGroups', $viewGroups);
+        Services::Registry()->set(USER_LITERAL, 'Applications', $applications);
+        Services::Registry()->set(USER_LITERAL, 'Groups', $groups);
+        Services::Registry()->set(USER_LITERAL, 'ViewGroups', $viewGroups);
 
 		unset($m);
 		unset($item);
@@ -147,7 +134,7 @@ Class UserService
 		unset($groups);
 		unset($viewGroups);
 
-		Services::Registry()->sort('User');
+		Services::Registry()->sort(USER_LITERAL);
 
         return $this;
     }

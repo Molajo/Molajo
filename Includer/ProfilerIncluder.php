@@ -66,7 +66,7 @@ Class ProfilerIncluder extends Includer
 
         /** DBO  */
         Services::Registry()->set(PARAMETERS_LITERAL, 'model_type', DATA_OBJECT_LITERAL);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'model_name', DATA_OBJECT_PROFILER);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'model_name', PROFILER_LITERAL);
         Services::Registry()->set(PARAMETERS_LITERAL, 'model_query_object', QUERY_OBJECT_LIST);
 
         /** Cleanup */

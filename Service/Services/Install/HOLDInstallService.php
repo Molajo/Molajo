@@ -70,7 +70,7 @@ Class InstallService
                 case 'language':
                     break;
 
-                case 'plugin':
+                case PLUGIN_LITERAL:
                     break;
 
                 default:

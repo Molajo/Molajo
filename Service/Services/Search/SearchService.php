@@ -21,14 +21,14 @@ Class SearchService
 {
     /**
      * @static
-     * @var    object
-     * @since  1.0
+     * @var     object
+     * @since   1.0
      */
     protected static $instance;
 
     /**
      * @static
-     * @return bool|object
+     * @return  bool|object
      * @since   1.0
      */
     public static function getInstance()
@@ -43,8 +43,8 @@ Class SearchService
     /**
      * Class constructor.
      *
-     * @return boolean
-     * @since  1.0
+     * @return  boolean
+     * @since   1.0
      */
     public function __construct()
     {

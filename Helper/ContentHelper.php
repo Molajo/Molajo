@@ -210,7 +210,7 @@ Class ContentHelper
                 . ' Model Type: ' . $model_type
                 . ' Model Name: ' . $model_name
                 . ' Page Type : ' . $page_type,
-            LOG_OUTPUT_ROUTING,
+            PROFILER_ROUTING,
             VERBOSE
         );
 

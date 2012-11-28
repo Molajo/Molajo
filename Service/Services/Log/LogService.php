@@ -77,11 +77,10 @@ Class LogService
         $this->loggers[] = LOG_EMAIL_LOGGER;
         $this->loggers[] = LOG_CONSOLE_LOGGER;
 
-        if (Services::Registry()->get(DATA_OBJECT_PROFILER, 'CurrentPhase') == INITIALISE) {
+        if (Services::Registry()->get(PROFILER_LITERAL, 'CurrentPhase') == INITIALISE) {
             $response = Services::Profiler()->setProfilerLogger();
             if ($response === false) {
                 Services::Profiler()->setConfigurationComplete();
-
                 return $this;
             }
             $this->setLog($response['options'], $response['priority'], $response['types']);
@@ -172,7 +171,7 @@ Class LogService
     public function addEntry($message, $priority = 0, $type = '', $date = '')
     {
         /** Message */
-        $message = (string) $message;
+        $message = (string)$message;
 
         /** Priority */
         if (in_array($priority, $this->priorities)) {
@@ -181,11 +180,11 @@ Class LogService
         }
 
         /** Type */
-        $type = (string) strtolower(preg_replace('/[^A-Z0-9_\.-]/i', '', $type));
+        $type = (string)strtolower(preg_replace('/[^A-Z0-9_\.-]/i', '', $type));
 
         /** Date */
         $date = Services::Date()->getDate($date);
-          echo $message .' ' . $priority . ' ' . $type . ' ' . $date . '<br />';
+
         /** Log it */
         try {
             if ($type == 'console') {
@@ -195,6 +194,7 @@ Class LogService
                 $class = 'JPlatform\\log\\JLog';
                 $class::add($message, $priority, $type, $date);
             }
+
         } catch (\Exception $e) {
             throw new \RuntimeException('Log entry failed for ' . $message . 'Error: ' . $e->getMessage());
         }
@@ -205,15 +205,13 @@ Class LogService
     /**
      * set Entry
      *
-     * @return array console log entries
+     * @param   $message
+     * @param   $priority
+     * @param   $type
+     * @param   $date
      *
-     * @param $message
-     * @param $priority
-     * @param $type
-     * @param $date
-     *
-     * @return int|LogService
-     * @since  1.0
+     * @return  int|LogService
+     * @since   1.0
      */
     public function set($message, $priority, $type, $date)
     {
@@ -228,20 +226,14 @@ Class LogService
     /**
      * get console log
      *
-     * @return mixed| object, integer, array console log entries
-     *
+     * @return  mixed| object, integer, array console log entries
      * @since   1.0
      */
     public function get($option = null)
     {
-        if ($option == 'db') {
-            return $this;
-
-        } elseif ($option == 'count') {
+        if ($option == 'count') {
             $array = Services::Registry()->getArray('LogProfiler');
-
             return count($array);
-
         }
 
         return Services::Registry()->getArray('LogProfiler');

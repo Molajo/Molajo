@@ -184,7 +184,7 @@ class Controller
             ob_end_clean();
         }
 
-        Services::Profiler()->set($profiler_message, LOG_OUTPUT_QUERIES, VERBOSE);
+        Services::Profiler()->set($profiler_message, PROFILER_QUERIES, VERBOSE);
 
         return $this;
     }
@@ -216,6 +216,7 @@ class Controller
             }
 
         }  else {
+
             $defaults = Services::Registry()->get(FIELDS_MODEL_TYPE, 'DataObjectAttributeDefaults');
             foreach (Services::Registry()->get(FIELDS_MODEL_TYPE, 'DataObjectAttributes') as $key) {
                 if (isset($registry[$key])) {
@@ -253,9 +254,7 @@ class Controller
         if ($this->model->get('service_class', DATABASE_LITERAL) == DATABASE_LITERAL) {
 
             $service_class = $this->get('service_class', DATABASE_LITERAL);
-
             $this->model->db = Services::$service_class()->connect();
-
             $this->model->set('query', Services::$service_class()->getQuery());
             $this->model->set('null_date', $this->model->db->getNullDate());
 
@@ -421,7 +420,7 @@ class Controller
                 $message .= ob_get_contents();
                 ob_end_clean();
 
-                Services::Profiler()->set($message, LOG_OUTPUT_QUERIES);
+                Services::Profiler()->set($message, PROFILER_QUERIES);
             }
 
             return $this->query_results;
@@ -519,7 +518,7 @@ class Controller
         $temp2 = array_unique($temp);
 
         foreach ($temp2 as $plugin) {
-            if ((int)Services::Registry()->get('Plugins', $plugin . 'Plugin') > 0) {
+            if ((int)Services::Registry()->get('Plugins', $plugin . PLUGIN_LITERAL) > 0) {
                 $this->plugins[] = $plugin;
             }
         }
@@ -632,7 +631,7 @@ class Controller
             Services::Profiler()->set(
                 'DisplayController->getData SQL Query: <br /><br />'
                     . $this->model->query->__toString(),
-                LOG_OUTPUT_RENDERING
+                PROFILER_RENDERING
             );
         }
 
@@ -655,7 +654,7 @@ class Controller
                 echo '</pre><br /><br />';
                 $message .= ob_get_contents();
                 ob_end_clean();
-                Services::Profiler()->set($message, LOG_OUTPUT_QUERIES);
+                Services::Profiler()->set($message, PROFILER_QUERIES);
             }
 
             $this->query_results = $query_results;
@@ -757,7 +756,7 @@ class Controller
             'query' => $this->model->query,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
-            PARAMETERS_LITERAL => $this->parameters,
+            'parameters' => $this->parameters,
             'model_name' => $this->get('model_name'),
             'model_type' => $this->get('model_type')
         );
@@ -766,7 +765,7 @@ class Controller
             'DisplayController->onBeforeReadEvent '
                 . $this->get('model_registry')
                 . ' Schedules onBeforeRead',
-            LOG_OUTPUT_PLUGINS,
+            PROFILER_PLUGINS,
             VERBOSE
         );
 
@@ -777,7 +776,7 @@ class Controller
                 'DisplayController->onBeforeReadEvent '
                     . $this->get('model_registry')
                     . ' failure ',
-                LOG_OUTPUT_PLUGINS
+                PROFILER_PLUGINS
             );
 
             return false;
@@ -787,7 +786,7 @@ class Controller
             'DisplayController->onBeforeReadEvent '
                 . $this->get('model_registry')
                 . ' successful ',
-            LOG_OUTPUT_PLUGINS,
+            PROFILER_PLUGINS,
             VERBOSE
         );
 
@@ -832,7 +831,7 @@ class Controller
 
                 $arguments = array(
                     'model_registry' => $this->get('model_registry'),
-                    PARAMETERS_LITERAL => $this->parameters,
+                    'parameters' => $this->parameters,
                     'data' => $item,
                     'model_name' => $this->get('model_name'),
                     'model_type' => $this->get('model_type'),
@@ -843,7 +842,7 @@ class Controller
                     'DisplayController->onAfterReadEvent '
                         . $this->get('model_registry')
                         . ' Schedules onAfterRead',
-                    LOG_OUTPUT_PLUGINS,
+                    PROFILER_PLUGINS,
                     VERBOSE
                 );
 
@@ -855,7 +854,7 @@ class Controller
                         'DisplayController->onAfterRead '
                             . $this->get('model_registry')
                             . ' failure ',
-                        LOG_OUTPUT_PLUGINS
+                        PROFILER_PLUGINS
                     );
 
                     return false;
@@ -865,7 +864,7 @@ class Controller
                     'DisplayController->onAfterReadEvent '
                         . $this->get('model_registry')
                         . ' successful ',
-                    LOG_OUTPUT_PLUGINS,
+                    PROFILER_PLUGINS,
                     VERBOSE
                 );
 
@@ -877,7 +876,7 @@ class Controller
 
         $arguments = array(
             'model_registry' => $this->get('model_registry'),
-            PARAMETERS_LITERAL => $this->parameters,
+            'parameters' => $this->parameters,
             'data' => $this->query_results,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
@@ -887,7 +886,7 @@ class Controller
             'DisplayController->onAfterReadEventAll '
                 . $this->get('model_registry')
                 . ' Schedules onAfterReadall',
-            LOG_OUTPUT_PLUGINS,
+            PROFILER_PLUGINS,
             VERBOSE
         );
 
@@ -898,7 +897,7 @@ class Controller
                 'DisplayController->onAfterReadall '
                     . $this->get('model_registry')
                     . ' failure ',
-                LOG_OUTPUT_PLUGINS
+                PROFILER_PLUGINS
             );
 
             return false;
@@ -908,7 +907,7 @@ class Controller
             'DisplayController->onAfterReadEventAll '
                 . $this->get('model_registry')
                 . ' successful ',
-            LOG_OUTPUT_PLUGINS,
+            PROFILER_PLUGINS,
             VERBOSE
         );
 

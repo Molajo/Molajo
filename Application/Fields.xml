@@ -82,7 +82,7 @@
         <modelattribute name="model_count" default="15"/>
         <modelattribute name="model_offset" default="0"/>
         <modelattribute name="multiple" default="0"/>
-        <modelattribute name="size" default=""/>
+        <modelattribute name="size" default="1"/>
     </modelattributes>
 
     <datatypes>

@@ -20,46 +20,11 @@ use Molajo\Service\Services;
 Class MetadataService
 {
     /**
-     * get application Metadata
+     * Retrieve header and metadata information
      *
-     * @return array Application Metadata
+     * @param   $model_type - head or metadata
      *
-     * @since   1.0
-     */
-    public function get($option = null)
-    {
-        if ($option == 'db') {
-            return $this;
-
-        } elseif ($option == 'count') {
-            return count($this);
-
-        } else {
-            return $this;
-        }
-    }
-
-    public function getNullDate()
-    {
-        return $this;
-    }
-
-    public function getQuery()
-    {
-        return $this;
-    }
-
-    public function toSql()
-    {
-        return $this;
-    }
-
-    /**
-     * getMetadata - retrieve header and metadata information
-     *
-     * @param  $model_type - head, defer, metadata
-     *
-     * @return array
+     * @return  array
      * @since   1.0
      */
     public function set($name, $content, $label = 'name')
@@ -70,11 +35,11 @@ Class MetadataService
     }
 
     /**
-     * getMetadata - retrieve header and metadata information
+     * Retrieve header and metadata information
      *
-     * @param  $model_type - head, defer, metadata
+     * @param   $model_type - head, metadata
      *
-     * @return array
+     * @return  array
      * @since   1.0
      */
     public function getMetadata($model_type)
@@ -91,12 +56,10 @@ Class MetadataService
 
         if (strtolower($model_type) == 'head') {
 
-            /** Create recordset for view */
             $query_results = array();
 
             $row = new \stdClass();
 
-            /** Title */
             $temp = Services::Registry()->get(METADATA_LITERAL, 'title', '');
 			$title = $temp[0];
             if (trim($title) == '') {
@@ -104,10 +67,8 @@ Class MetadataService
             }
             $row->title = Services::Filter()->escape_text($title);
 
-			/** Dont print as metadata */
 			Services::Registry()->delete(METADATA_LITERAL, 'title');
 
-            /** Mime Type */
             $mimetype = Services::Registry()->get(METADATA_LITERAL, 'mimetype', '');
             if (trim($mimetype) == '') {
                 $mimetype = 'text/html';
@@ -116,31 +77,28 @@ Class MetadataService
 
             Services::Registry()->set(METADATA_LITERAL, 'mimetype', $mimetype);
 
-            /** Base URL for Site */
             $row->base = SITE_BASE_URL;
 
-            /** Last Modified Date */
             $last_modified = Services::Registry()->get(PARAMETERS_LITERAL, 'modified_datetime');
             if (trim($last_modified) == '') {
                 $last_modified = Services::Date()->getDate();
             }
             $row->last_modified = Services::Filter()->escape_text($last_modified);
 
-            /** Base URL */
             $row->base_url = BASE_URL;
 
-            /** Language */
             $row->language_direction = 'lft';
             if ($row->language_direction == 'lft') {
                 $row->language_direction = '';
             } else {
                 $row->language_direction = ' dir="rtl"';
             }
+            //todo: figure out what it's like this
             $row->language = 'en';
 
-            /** HTML5 */
             $row->application_html5 = $application_html5;
             $row->end = $end;
+
             $query_results[] = $row;
 
         } elseif (strtolower($model_type) == METADATA_LITERAL) {
@@ -173,10 +131,7 @@ Class MetadataService
         } else {
             $row = new \stdClass();
 
-            /** Metadata */
             $row->name = 'dummy row';
-
-            /** HTML5 */
             $row->application_html5 = $application_html5;
             $row->end = $end;
 
