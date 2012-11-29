@@ -70,9 +70,6 @@ class EventsPlugin extends Plugin
         }
         /**
         Services::Registry()->get(DATALIST_LITERAL, EVENTS_LITERAL);
-
-        Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
-        Services::Registry()->get(EVENTS_LITERAL, 'PluginEvents');
         Services::Registry()->get(EVENTS_LITERAL, 'Events');
         Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
         **/
