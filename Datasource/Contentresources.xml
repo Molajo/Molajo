@@ -4,12 +4,12 @@
         process_plugins="1"
         extends="ContentDatasource">
     <table>
-        <children>
-            <child name="Comments" type="Resources" join="parent_id"/>
-        </children>
         <plugins>
             <include name="Contentplugins"/>
         </plugins>
+        <children>
+            <child name="Comments" type="Resources" join="parent_id"/>
+        </children>
     </table>
     <customfields>
         <customfield name="customfields">

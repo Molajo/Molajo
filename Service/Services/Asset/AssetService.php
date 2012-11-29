@@ -425,7 +425,7 @@ Class AssetService
     public function addJSDeclarations($content, $priority = 500, $defer = 0, $mimetype = 'text/javascript')
     {
         if ($defer == 1) {
-            $js = Services::Registry()->get(ASSETS_LITERAL, JS_DECLARATIONS_DEFER, array());
+            $js = Services::Registry()->get(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, array());
         } else {
             $js = Services::Registry()->get(ASSETS_LITERAL, JS_DECLARATIONS, array());
         }
@@ -446,7 +446,7 @@ Class AssetService
         $js[] = $row;
 
         if ($defer == 1) {
-            Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER, $js);
+            Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, $js);
         } else {
             Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS, $js);
         }

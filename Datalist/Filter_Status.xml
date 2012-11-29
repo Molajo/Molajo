@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-       name="Filter_Status"
+       name="Filter_status"
        primary_key="id"
        name_key="value"
        multiple="1"

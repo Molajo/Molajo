@@ -24,12 +24,12 @@ defined('MOLAJO') or die; ?>
 
         <td<?php echo $class ?><?php echo $nowrap; ?>><?php
             if ($column == 'title') {
-                echo '<a href="' . $this->row->catalog_id_url . '">';
+               // echo '<a href="' . $this->row->catalog_id_url . '">';
                 echo $this->row->$column;
                 echo '</a>';
 
             } elseif ($column == 'username') {
-                    echo '<a href="' . $this->row->catalog_id_url . '">';
+                //    echo '<a href="' . $this->row->catalog_id_url . '">';
                     echo $this->row->$column;
                     echo '</a>';
 

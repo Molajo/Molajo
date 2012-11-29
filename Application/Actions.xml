@@ -4,7 +4,7 @@
     <action name="copy" authorisation="create" controller="create"/>
     <action name="draft" authorisation="create" controller="create"/>
 
-    <action name="view" authorisation="read" controller="read"/>
+    <action name="read" authorisation="read" controller="read"/>
     <action name="edit" authorisation="read" controller="read"/>
 
     <action name="save" authorisation="update" controller="update"/>

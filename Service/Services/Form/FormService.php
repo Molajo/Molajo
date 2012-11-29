@@ -1520,21 +1520,21 @@ Class FormService
         $datalist = $field['datalist'];
 
         $yes = 0;
-        if (strtolower($datalist) == FIELDS_MODEL_TYPE) {
+        if (strtolower($datalist) == FIELDS_LITERAL) {
 
             $list = Services::Registry()->get(
                 DATALIST_LITERAL,
-                $this->model_registry_name . FIELDS_STANDARD_MODEL_TYPE
+                $this->model_registry_name . FIELDS_STANDARD_LITERAL
             );
 
-        } elseif (strtolower($datalist) == strtolower(FIELDS_STANDARD_MODEL_TYPE)) {
+        } elseif (strtolower($datalist) == strtolower(FIELDS_STANDARD_LITERAL)) {
 
             $this->model_registry_name
                 = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
 
             $list = Services::Registry()->get(
                 DATALIST_LITERAL,
-                $this->model_registry_name . FIELDS_STANDARD_MODEL_TYPE
+                $this->model_registry_name . FIELDS_STANDARD_LITERAL
             );
 
         } else {

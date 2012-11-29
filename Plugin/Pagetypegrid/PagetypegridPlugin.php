@@ -26,10 +26,10 @@ class PagetypegridPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-		if (strtolower($this->get('page_type')) == strtolower(PAGE_TYPE_GRID)) {
-		} else {
-			return true;
-		}
+        if (strtolower($this->get('page_type')) == strtolower(PAGE_TYPE_GRID)) {
+        } else {
+            return true;
+        }
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
@@ -63,17 +63,20 @@ class PagetypegridPlugin extends Plugin
 
         $button = $this->get('grid_toolbar_buttons');
 
-        if ($button == '#') {
-            $button = 'new,edit,publish,feature,archive,checkin,restore,delete,trash,options';
+        if ($button == '#' || $button == '') {
+            $button = 'create,read,edit,publish,feature,archive,checkin,restore,delete,trash';
         }
 
         $grid_toolbar_buttons = explode(',', $button);
 
         $permissions = Services::Permissions()
-            ->verifyTaskList($grid_toolbar_buttons, $this->get('catalog_id')
+            ->verifyTaskList(
+            $grid_toolbar_buttons,
+            $this->get('catalog_id')
         );
 
         $query_results = array();
+
         foreach ($grid_toolbar_buttons as $buttonname) {
 
             if ($permissions[$buttonname] === true) {
@@ -90,7 +93,6 @@ class PagetypegridPlugin extends Plugin
         }
 
         if ($this->get('grid_search', 1) == 1) {
-
             $row = new \stdClass();
             $row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
             $row->action = 'search';
@@ -117,10 +119,10 @@ class PagetypegridPlugin extends Plugin
     {
         $grid_list = array();
 
-        for ($i=1; $i < 11; $i++) {
+        for ($i = 1; $i < 11; $i++) {
             if ($this->get('grid_list' . $i, '') == '') {
             } else {
-                $grid_list[] = $this->get('grid_list'. $i);
+                $grid_list[] = $this->get('grid_list' . $i);
             }
         }
 
@@ -171,7 +173,7 @@ class PagetypegridPlugin extends Plugin
     {
         $grid_columns = array();
 
-        for ($i=1; $i < 16; $i++) {
+        for ($i = 1; $i < 16; $i++) {
             $item = $this->get('grid_column' . $i);
             if (trim($item) == '') {
             } else {
@@ -211,11 +213,11 @@ class PagetypegridPlugin extends Plugin
                 . $orderingDirection
         );
 
-        $offset = (int) $this->get('grid_offset');
-        Services::Registry()->set(PAGE_TYPE_GRID, 'Offset', (int) $offset);
+        $offset = (int)$this->get('grid_offset');
+        Services::Registry()->set(PAGE_TYPE_GRID, 'Offset', (int)$offset);
         $controller->set('model_offset', $offset);
 
-        $itemsPerPage = (int) $this->get('grid_items_per_page');
+        $itemsPerPage = (int)$this->get('grid_items_per_page');
         if ((int)$itemsPerPage == 0) {
             $itemsPerPage = 15;
         }
@@ -225,6 +227,10 @@ class PagetypegridPlugin extends Plugin
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
+echo '<pre>';
+var_dump($query_results);
+echo '</pre>';
+        die;
         $gridItems = array();
 
         $name_key = $controller->get('name_key');
@@ -233,9 +239,7 @@ class PagetypegridPlugin extends Plugin
 
             foreach ($query_results as $item) {
                 $row = new \stdClass();
-
                 $row = $item;
-
                 $name = $item->$name_key;
 
                 if (isset($item->lvl)) {
@@ -243,7 +247,7 @@ class PagetypegridPlugin extends Plugin
                     $gridItems = $query_results;
                     break;
                 }
-                $lvl = (int) $item->lvl - 1;
+                $lvl = (int)$item->lvl - 1;
 
                 if ($lvl > 0) {
                     for ($i = 0; $i < $lvl; $i++) {
@@ -266,11 +270,7 @@ class PagetypegridPlugin extends Plugin
         $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
         $this->parameters['model_name'] = PRIMARY_LITERAL;
 
-        Services::Registry()->set(
-            PRIMARY_LITERAL,
-            DATA_LITERAL,
-            $query_results
-        );
+        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
 
         return true;
     }
@@ -300,11 +300,11 @@ class PagetypegridPlugin extends Plugin
         }
 
         $grid_batch = array();
-        for ($i=0; $i < count($grid_batch_array); $i++) {
+        for ($i = 0; $i < count($grid_batch_array); $i++) {
 
-            $enable = (int) $this->get('grid_batch_' . strtolower($grid_batch_array[$i]));
+            $enable = (int)$this->get('grid_batch_' . strtolower($grid_batch_array[$i]));
 
-            if ((int) $enable == 0) {
+            if ((int)$enable == 0) {
             } else {
 
                 $grid_batch[] = strtolower($grid_batch_array[$i]);

@@ -208,7 +208,7 @@ Class PermissionsService
             return Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', false);
         }
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_action', ACTION_VIEW) == ACTION_VIEW
+        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_action', ACTION_READ) == ACTION_READ
             && Services::Registry()->get(PARAMETERS_LITERAL, 'status_authorised') === true
         ) {
             return true;
@@ -249,9 +249,12 @@ Class PermissionsService
         if ($action == 'login') {
             return $this->verifyLogin('login', $catalog_id);
         }
+        //todo:
+        return true;
+
 //todo: hash store results for later reuse
-        $authorisationArray = $this->request->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
-        $authorisationIdArray = $this->request->get(PERMISSIONS_LITERAL, 'action_to_authorisation_id');
+        $authorisationArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
+        $authorisationIdArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation_id');
 
         $action = $authorisationArray[$action];
         $action_id = $authorisationIdArray[$action];

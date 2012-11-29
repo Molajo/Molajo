@@ -250,11 +250,11 @@ Class RouteService
             $controller = 'delete';
 
         } else {
-            $action = ACTION_VIEW;
+            $action = ACTION_READ;
             $controller = 'read';
         }
 
-        if ($action == ACTION_VIEW) {
+        if ($action == ACTION_READ) {
             $post_variables = array();
 
         } else {
@@ -351,7 +351,7 @@ Class RouteService
         }
 
 		if ($task == '') {
-			$task = ACTION_VIEW;
+			$task = ACTION_READ;
 		}
 
         /** Map Action Verb (Tag, Favorite, etc.) to Permission Action (Update, Delete, etc.) */

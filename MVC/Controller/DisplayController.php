@@ -231,7 +231,7 @@ class DisplayController extends Controller
                     return false;
                 }
 
-                $this->parameters = $arguments[PARAMETERS_LITERAL];
+                $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
                 $this->query_results[] = $arguments['data'];
 
                 if ($this->parameters['even_or_odd'] == 'odd') {

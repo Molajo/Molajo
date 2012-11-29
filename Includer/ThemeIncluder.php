@@ -154,14 +154,14 @@ Class ThemeIncluder extends Includer
      */
     protected function loadPlugins()
     {
-        Services::Events()->registerPlugins(
-            Services::Registry()->getPath(CATALOG_TYPE_THEME, 'theme_path'),
-            Helpers::Extensions()->getNamespace(CATALOG_TYPE_THEME, 'theme_path')
+        Services::Event()->registerPlugins(
+            Helpers::Extension()->getPath(CATALOG_TYPE_THEME, 'theme_path'),
+            Helpers::Extension()->getNamespace(CATALOG_TYPE_THEME, 'theme_path')
         );
 
-        Services::Events()->registerPlugins(
-            Services::Registry()->getPath(CATALOG_TYPE_PAGE_VIEW, 'page_view_path_node'),
-            Helpers::Extensions()->getNamespace(CATALOG_TYPE_PAGE_VIEW, 'page_view_path_node')
+        Services::Event()->registerPlugins(
+            Helpers::Extension()->getPath(CATALOG_TYPE_PAGE_VIEW, 'page_view_path_node'),
+            Helpers::Extension()->getNamespace(CATALOG_TYPE_PAGE_VIEW, 'page_view_path_node')
         );
 
         return;

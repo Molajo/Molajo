@@ -140,12 +140,11 @@ Class Services
             $static_indicator = (int)$service->attributes()->static;
             $name = (string)$service->attributes()->name;
             $startup = (string)$service->attributes()->startup;
-            $store_connection = (int)$service->attributes()->store_connection;
 
             $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
 
             $connectionSucceeded = null;
-            echo $serviceClass . '<br />';
+
             try {
                 $connection = $this->getClassInstance($serviceClass);
 
@@ -154,7 +153,7 @@ Class Services
                     $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
                 }
 
-                if ($store_connection == 1 || $static_indicator == 1) {
+                if ($static_indicator == 1) {
                     $this->set($name . 'Service', $connection, $connectionSucceeded);
                 }
 

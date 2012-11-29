@@ -68,14 +68,14 @@ class EventsPlugin extends Plugin
 
             $eventArray[] = $row;
         }
+        /**
+        Services::Registry()->get(DATALIST_LITERAL, EVENTS_LITERAL);
 
-        Services::Registry()->set(DATALIST_LITERAL, EVENTS_LITERAL, $eventArray);
-
-        Services::Registry()->set(EVENTS_LITERAL, 'Plugins', $this->pluginArray);
-        Services::Registry()->set(EVENTS_LITERAL, 'PluginEvents', $this->plugin_eventArray);
-        Services::Registry()->set(EVENTS_LITERAL, 'Events', $this->eventArray);
-        Services::Registry()->set(EVENTS_LITERAL, 'EventPlugins', $this->event_pluginArray);
-
+        Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
+        Services::Registry()->get(EVENTS_LITERAL, 'PluginEvents');
+        Services::Registry()->get(EVENTS_LITERAL, 'Events');
+        Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
+        **/
         return true;
     }
 }

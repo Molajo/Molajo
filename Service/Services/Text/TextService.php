@@ -178,7 +178,7 @@ Class TextService
         $controller->model->set('model_offset', 0);
         $controller->model->set('model_count', 999999);
 
-        $fields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
+        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
 
         $first = true;
         if (count($fields) < 2) {

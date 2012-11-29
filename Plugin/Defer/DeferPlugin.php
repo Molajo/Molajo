@@ -44,12 +44,12 @@ class DeferPlugin extends Plugin
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(ASSETS_LITERAL, JS_DECLARATIONS_DEFER);
+        $controller->getModelRegistry(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL);
 
-        $controller->set('model_parameter', JS_DECLARATIONS_DEFER);
+        $controller->set('model_parameter', JS_DECLARATIONS_DEFER_LITERAL);
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
-        Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER, $query_results);
+        Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, $query_results);
 
         return true;
     }

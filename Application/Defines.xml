@@ -7,7 +7,7 @@
 
     <define name="ACTION_LOGIN" value="login"/>
     <define name="ACTION_CREATE" value="create"/>
-    <define name="ACTION_VIEW" value="view"/>
+    <define name="ACTION_READ" value="read"/>
     <define name="ACTION_EDIT" value="edit"/>
     <define name="ACTION_UPDATE" value="update"/>
     <define name="ACTION_PUBLISH" value="publish"/>
@@ -143,11 +143,11 @@
     <define name="DUMMY_LITERAL" value="Dummy"/>
     <define name="EVENTS_LITERAL" value="Events"/>
     <define name="ERROR_STATUS_LITERAL" value="error_status"/>
-    <define name="FIELDS_CUSTOM_MODEL_TYPE" value="Fieldscustom"/>
-    <define name="FIELDS_METADATA_MODEL_TYPE" value="Fieldsmetadata"/>
-    <define name="FIELDS_MODEL_TYPE" value="Fields"/>
-    <define name="FIELDS_PARAMETERS_MODEL_TYPE" value="Fieldsparameters"/>
-    <define name="FIELDS_STANDARD_MODEL_TYPE" value="Fieldsstandard"/>
+    <define name="FIELDS_CUSTOM_LITERAL" value="Fieldscustom"/>
+    <define name="FIELDS_METADATA_LITERAL" value="Fieldsmetadata"/>
+    <define name="FIELDS_LITERAL" value="Fields"/>
+    <define name="FIELDS_PARAMETERS_LITERAL" value="Fieldsparameters"/>
+    <define name="FIELDS_STANDARD_LITERAL" value="Fieldsstandard"/>
     <define name="JS_DECLARATIONS_LITERAL" value="JsDeclarations"/>
     <define name="JS_DECLARATIONS_DEFER_LITERAL" value="JsDeclarationsDefer"/>
     <define name="JS_DEFER_LITERAL" value="Jsdefer"/>

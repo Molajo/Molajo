@@ -70,7 +70,7 @@ Class ContentHelper
      */
     public function getRouteItem($id, $model_type, $model_name)
     {
-        if (strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'request_action')) == ACTION_VIEW) {
+        if (strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'request_action')) == ACTION_READ) {
             $page_type_namespace = 'item';
         } else {
             $page_type_namespace = 'form';

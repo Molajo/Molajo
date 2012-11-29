@@ -20,16 +20,10 @@ defined('MOLAJO') or die;
  */
 class StatusPlugin extends Plugin
 {
-
     /**
-     * After-read processing
+     * Provides Text for Status ID
      *
-     * Provides the Url for any catalog_id field in the recordset
-     *
-     * @param   $this->data
-     * @param   $model
-     *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()

@@ -519,19 +519,25 @@ class Includer
      */
     protected function loadPlugins()
     {
-        Services::Events()->registerPlugins(
-            Services::Registry()->getPath(CATALOG_TYPE_RESOURCE, 'extension_name_path_node'),
-            Helpers::Extensions()->getNamespace(CATALOG_TYPE_RESOURCE, 'extension_name_path_node')
+        $node = Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node');
+
+        Services::Event()->registerPlugins(
+            Helpers::Extension()->getPath(CATALOG_TYPE_RESOURCE, $node),
+            Helpers::Extension()->getNamespace(CATALOG_TYPE_RESOURCE, $node)
         );
 
-        Services::Events()->registerPlugins(
-            Services::Registry()->getPath(CATALOG_TYPE_TEMPLATE_VIEW, 'template_view_path_node'),
-            Helpers::Extensions()->getNamespace(CATALOG_TYPE_TEMPLATE_VIEW, 'template_view_path_node')
+        $node = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path_node');
+
+        Services::Event()->registerPlugins(
+            Helpers::Extension()->getPath(CATALOG_TYPE_TEMPLATE_VIEW, $node),
+            Helpers::Extension()->getNamespace(CATALOG_TYPE_TEMPLATE_VIEW, $node)
         );
 
-        Services::Events()->registerPlugins(
-            Services::Registry()->getPath(CATALOG_TYPE_WRAP_VIEW, 'wrap_view_path_node'),
-            Helpers::Extensions()->getNamespace(CATALOG_TYPE_WRAP_VIEW, 'wrap_view_path_node')
+        $node = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_path_node');
+
+        Services::Event()->registerPlugins(
+            Helpers::Extension()->getPath(CATALOG_TYPE_WRAP_VIEW, $node),
+            Helpers::Extension()->getNamespace(CATALOG_TYPE_WRAP_VIEW, $node)
         );
 
         return;
@@ -600,7 +606,7 @@ class Includer
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return true;
@@ -627,6 +633,8 @@ class Includer
         $message .= ob_get_contents();
         ob_end_clean();
 
+        echo $message;
+
         Services::Profiler()->set($message, PROFILER_RENDERING, VERBOSE);
 
         $controller = new DisplayController();
@@ -640,9 +648,7 @@ class Includer
                     $controller->set($key, $value);
                 }
             }
-
             $results = $controller->execute();
-
             Services::Cache()->set(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, implode('', $parms), $results);
         } else {
             $results = $cached_output;
@@ -679,7 +685,7 @@ class Includer
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return $rendered_output;

@@ -170,8 +170,8 @@ Class Application
         $override_parse_final = false
     ) {
 
-        set_exception_handler(array($this, 'handleException'));
-        set_error_handler(array($this, 'createExceptionFromError'), E_ALL);
+        set_exception_handler(array($this, 'exception_handler'));
+        set_error_handler(array($this, 'error_handler'), E_ALL);
 
         $results = version_compare(PHP_VERSION, '5.3', '<');
         if ($results == 1) {
@@ -237,8 +237,8 @@ Class Application
 
         /** LAZY LOAD Session */
         //Services::Session()->create(
-        //        Services::Session()->getHash(get_class($this))
-        //  );
+        //    Services::Session()->getHash(get_class($this))
+        //);
         // Services::Profiler()
         // ->set('Services::Session()->create complete, 'Application');
 
@@ -248,9 +248,11 @@ Class Application
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', $override_parse_final);
 
         if ($results === true) {
-            //if (defined(PROFILER_ON)) {
+
+            if (defined(PROFILER_ON)) {
                 Services::Profiler()->set('Application Schedule Event onAfterInitialise', PROFILER_PLUGINS);
-            //}
+            }
+
             $results = Services::Event()->scheduleEvent('onAfterInitialise');
             if (is_array($results)) {
                 $results = true;
@@ -272,46 +274,36 @@ Class Application
     /**
      * Custom PHP Exception Handler for Molajo
      *
-     * @param   null  $title
-     * @param   null  $message
-     * @param   null  $code
-     * @param   int   $display_file
-     * @param   int   $display_line
-     * @param   int   $display_stack_trace
-     * @param   int   $terminate
+     * @param   object \Exception
      *
      * @return  void
      * @since   1.0
      */
-    public function handleException($title = null, $message = null, $code = null,
-        $display_file = 1, $display_line = 1, $display_stack_trace = 1, $terminate = 1)
+    public function exception_handler(\Exception $e)
     {
-        $x = Services::Exception();
-
-        $x->formatMessage($title, $message, $code,
-            $display_file, $display_line, $display_stack_trace, $terminate);
+        $class = 'Molajo\\Service\\Services\\Exception\\ExceptionService';
+        $connect = new $class($e->getMessage(), $e->getCode(), $e);
+        $connect->getPrevious();
+        $connect->formatMessage();
     }
 
     /**
      * Custom PHP Error Handler - turns Errors into PHP Exceptions
      *
-     * @param   $errno
-     * @param   $errstr
-     * @param   $errfile
-     * @param   $errline
+     * @param   $code
+     * @param   $message
+     * @param   $file
+     * @param   $line
      *
      * @throws  \ErrorException
      * @since   1.0
      */
-    public function createExceptionFromError($errno, $errstr, $errfile, $errline )
+    public function error_handler($code, $message, $file, $line)
     {
-        echo '<strong>PHP Error</strong><br />';
-        echo '<strong>Message: </strong>' . $errstr . '<br />';
-        echo '<strong>Code: </strong>' . $errno . '<br />';
-        echo '<strong>File: </strong>' . $errfile . '<br />';
-        echo '<strong>Line: </strong>' . $errline . '<br />';
-        die;
-        //throw new \Exception('PHP Error');
+        if (0 == error_reporting()) {
+            return;
+        }
+        throw new \ErrorException($message, 0, $code, $file, $line);
     }
 
     /**
@@ -443,10 +435,10 @@ Class Application
             throw new \Exception('onAfterRouteEvent Failed');
         }
 
-//        if ($results === false) {
+        if ($results === false) {
             Services::Profiler()->set('Authorise failed', PROFILER_APPLICATION);
             throw new \Exception('Permissions Failed', 403);
-  //      }
+        }
 
         Services::Profiler()->set('Authorise succeeded', PROFILER_APPLICATION);
 
@@ -461,13 +453,14 @@ Class Application
      */
     protected function execute()
     {
-        $action = Services::Registry()->get(PARAMETERS_LITERAL, 'request_action', ACTION_VIEW);
+        $action = Services::Registry()->get(PARAMETERS_LITERAL, 'request_action', ACTION_READ);
+
         if (trim($action) == '') {
-            $action = ACTION_VIEW;
+            $action = ACTION_READ;
         }
 
         $action = strtolower($action);
-        if ($action == ACTION_VIEW || $action == ACTION_EDIT || $action == ACTION_CREATE) {
+        if ($action == ACTION_READ || $action == ACTION_EDIT || $action == ACTION_CREATE) {
             $results = $this->display();
         } else {
             $results = $this->action();

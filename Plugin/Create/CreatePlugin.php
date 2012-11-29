@@ -379,7 +379,7 @@ class CreatePlugin extends Plugin
         echo $controller->model->query->__toString();
         echo '<br /><br /><br />';
          */
-        $fields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
+        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
         if (count($fields) == 0 || $fields === null) {
             return false;
         }

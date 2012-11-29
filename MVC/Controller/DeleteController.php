@@ -141,7 +141,7 @@ class DeleteController extends Controller
             return false;
         }
 
-        $fields = Services::Registry()->get($this->model_registry, FIELDS_MODEL_TYPE);
+        $fields = Services::Registry()->get($this->model_registry, FIELDS_LITERAL);
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -232,7 +232,7 @@ class DeleteController extends Controller
         Services::Profiler()->set('DeleteController->onBeforeDeleteEvent succeeded.', PROFILER_PLUGINS, VERBOSE);
 
         /** Process results */
-        $this->parameters = $arguments[PARAMETERS_LITERAL];
+        $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
         $this->data = $arguments['data'];
 
         return true;
@@ -274,7 +274,7 @@ class DeleteController extends Controller
         Services::Profiler()->set('DeleteController->onAfterDelete succeeded.', PROFILER_PLUGINS, VERBOSE);
 
         /** Process results */
-        $this->parameters = $arguments[PARAMETERS_LITERAL];
+        $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
         $this->data = $arguments['data'];
 
         return true;

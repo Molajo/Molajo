@@ -40,7 +40,6 @@ class ResourceIncluder extends Includer
         return;
     }
 
-
 	/**
 	 * process
 	 *
@@ -66,6 +65,8 @@ class ResourceIncluder extends Includer
 
 		$this->loadPlugins();
 
+        $this->onBeforeIncludeEvent();
+
 		$rendered_output = $this->invokeMVC();
 
 		/** only load media if there was rendered output */
@@ -77,7 +78,8 @@ class ResourceIncluder extends Includer
 			$this->loadViewMedia();
 		}
 
-		return $rendered_output;
+        $rendered_output = $this->onAfterIncludeEvent($rendered_output);
+        return $rendered_output;
 	}
 
     /**
@@ -117,7 +119,7 @@ class ResourceIncluder extends Includer
      *
      * Loads Media Files for Site, Application, User, and Theme
      *
-     * @return bool
+     * @return  bool
      * @since   1.0
      */
     protected function loadMedia()

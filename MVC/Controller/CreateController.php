@@ -69,7 +69,7 @@ class CreateController extends Controller
 
         if ($valid === true) {
 
-            $fields = Services::Registry()->get($this->model_registry, FIELDS_MODEL_TYPE);
+            $fields = Services::Registry()->get($this->model_registry, FIELDS_LITERAL);
 
             if (count($fields) == 0 || $fields === null) {
                 return false;
@@ -192,7 +192,7 @@ class CreateController extends Controller
         }
 
         /** Standard Field Group */
-        $fields = Services::Registry()->get($this->model_registry, FIELDS_MODEL_TYPE);
+        $fields = Services::Registry()->get($this->model_registry, FIELDS_LITERAL);
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -449,7 +449,7 @@ class CreateController extends Controller
 
         Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
 
-        $this->parameters = $arguments[PARAMETERS_LITERAL];
+        $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
         $this->data = $arguments['data'];
 
         return true;
@@ -491,7 +491,7 @@ class CreateController extends Controller
 
         Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
 
-        $this->parameters = $arguments[PARAMETERS_LITERAL];
+        $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
         $data = $arguments['data'];
 
         return $data;

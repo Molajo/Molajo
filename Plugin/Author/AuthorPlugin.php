@@ -20,7 +20,6 @@ defined('MOLAJO') or die;
  */
 class AuthorPlugin extends Plugin
 {
-
     /**
      * After-read processing
      *

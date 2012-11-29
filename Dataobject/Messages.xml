@@ -3,5 +3,5 @@
         name="Messages"
         service_class="Message"
         service_class_query_method="get"
-        service_class_query_method_parameter="TEMPLATE_VIEW_NAME"
+        service_class_query_method_parameter="MODEL_LITERAL"
         process_plugins="1"/>

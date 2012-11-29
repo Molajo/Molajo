@@ -34,7 +34,7 @@ Class ErrorService
     {
         Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, true);
 
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', ACTION_VIEW);
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', ACTION_READ);
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_authorisation', 'read'); //for now
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller', 'read');
 

@@ -108,7 +108,7 @@ Class InstallService
         $email_address[] = 'MaryKline@example.com';
         $website[] = 'http://example.com/';
 
-        $fields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
+        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
         if (count($fields) == 0 || $fields === null) {
             return false;
         }

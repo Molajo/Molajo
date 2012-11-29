@@ -3,7 +3,7 @@
         name="Document"
         service_class="Registry"
         service_class_query_method="getData"
-        service_class_query_method_parameter="TEMPLATE_VIEW_NAME"
+        service_class_query_method_parameter="MODEL_LITERAL"
         process_plugins="1"/>
 
 

@@ -52,7 +52,7 @@ class FieldsPlugin extends Plugin
         $fieldArray = array();
         $standardArray = array();
 
-        $normalFields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
+        $normalFields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
 
         $status = 0;
 
@@ -223,15 +223,15 @@ class FieldsPlugin extends Plugin
         asort($parametersArray);
         asort($customFieldArray);
 
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_MODEL_TYPE, $fieldArray);
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_STANDARD_MODEL_TYPE, $standardArray);
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_METADATA_MODEL_TYPE, $metadataArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_LITERAL, $fieldArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_STANDARD_LITERAL, $standardArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_METADATA_LITERAL, $metadataArray);
         Services::Registry()->set(
             DATALIST_LITERAL,
-            $model_registry . FIELDS_PARAMETERS_MODEL_TYPE,
+            $model_registry . FIELDS_PARAMETERS_LITERAL,
             $parametersArray
         );
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_CUSTOM_MODEL_TYPE, $customFieldArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_CUSTOM_LITERAL, $customFieldArray);
 
         return true;
     }

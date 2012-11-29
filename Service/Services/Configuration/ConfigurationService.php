@@ -193,27 +193,27 @@ Class ConfigurationService
 
         ConfigurationService::loadFieldProperties($xml, 'queryelements', 'queryelement');
 
-        $list = Services::Registry()->get(FIELDS_MODEL_TYPE, 'queryelements');
+        $list = Services::Registry()->get(FIELDS_LITERAL, 'queryelements');
         foreach ($list as $item) {
             $field = explode(',', $item);
             ConfigurationService::loadFieldProperties($xml, $field[0], $field[1]);
         }
 
-        self::$valid_dataobject_types = Services::Registry()->get(FIELDS_MODEL_TYPE, 'dataobjecttypes');
-        self::$valid_dataobject_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'dataobjectattributes');
+        self::$valid_dataobject_types = Services::Registry()->get(FIELDS_LITERAL, 'dataobjecttypes');
+        self::$valid_dataobject_attributes = Services::Registry()->get(FIELDS_LITERAL, 'dataobjectattributes');
 
-        self::$valid_model_types = Services::Registry()->get(FIELDS_MODEL_TYPE, 'modeltypes');
-        self::$valid_model_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'modelattributes');
+        self::$valid_model_types = Services::Registry()->get(FIELDS_LITERAL, 'modeltypes');
+        self::$valid_model_attributes = Services::Registry()->get(FIELDS_LITERAL, 'modelattributes');
 
-        self::$valid_data_types = Services::Registry()->get(FIELDS_MODEL_TYPE, 'datatypes');
-        self::$valid_field_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, FIELDS_MODEL_TYPE);
+        self::$valid_data_types = Services::Registry()->get(FIELDS_LITERAL, 'datatypes');
+        self::$valid_field_attributes = Services::Registry()->get(FIELDS_LITERAL, FIELDS_LITERAL);
 
-        self::$valid_join_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'joins');
-        self::$valid_foreignkey_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'foreignkeys');
-        self::$valid_criteria_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'criterion');
-        self::$valid_children_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'children');
-        self::$valid_plugin_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'plugins');
-        self::$valid_value_attributes = Services::Registry()->get(FIELDS_MODEL_TYPE, 'values');
+        self::$valid_join_attributes = Services::Registry()->get(FIELDS_LITERAL, 'joins');
+        self::$valid_foreignkey_attributes = Services::Registry()->get(FIELDS_LITERAL, 'foreignkeys');
+        self::$valid_criteria_attributes = Services::Registry()->get(FIELDS_LITERAL, 'criterion');
+        self::$valid_children_attributes = Services::Registry()->get(FIELDS_LITERAL, 'children');
+        self::$valid_plugin_attributes = Services::Registry()->get(FIELDS_LITERAL, 'plugins');
+        self::$valid_value_attributes = Services::Registry()->get(FIELDS_LITERAL, 'values');
 
         $datalistsArray = array();
         $extensionArray = array();
@@ -223,7 +223,7 @@ Class ConfigurationService
         sort($datalistsArray);
         $datalistsArray = array_unique($datalistsArray);
 
-        Services::Registry()->set(FIELDS_MODEL_TYPE, 'Datalists', $datalistsArray);
+        Services::Registry()->set(FIELDS_LITERAL, 'Datalists', $datalistsArray);
 
         return;
     }
@@ -255,7 +255,7 @@ Class ConfigurationService
             $typeArray[] = (string)$type;
         }
 
-        Services::Registry()->set(FIELDS_MODEL_TYPE, $plural, $typeArray);
+        Services::Registry()->set(FIELDS_LITERAL, $plural, $typeArray);
 
         return true;
     }
@@ -284,8 +284,8 @@ Class ConfigurationService
             $typeDefaultArray[(string)$type['name']] = (string)$type['default'];
         }
 
-        Services::Registry()->set(FIELDS_MODEL_TYPE, $plural, $typeArray);
-        Services::Registry()->set(FIELDS_MODEL_TYPE, $plural . 'Defaults', $typeDefaultArray);
+        Services::Registry()->set(FIELDS_LITERAL, $plural, $typeArray);
+        Services::Registry()->set(FIELDS_LITERAL, $plural . 'Defaults', $typeDefaultArray);
 
         return true;
     }
@@ -619,7 +619,7 @@ Class ConfigurationService
             $model_registry,
             $xml,
             'plugins',
-            'Plugin',
+            'plugin',
             self::$valid_plugin_attributes
         );
 
@@ -759,7 +759,7 @@ Class ConfigurationService
      */
     protected static function setDataobjectRegistry($DataobjectRegistry, $xml)
     {
-        $doArray = Services::Registry()->get(FIELDS_MODEL_TYPE, 'Dataobjectattributes');
+        $doArray = Services::Registry()->get(FIELDS_LITERAL, 'Dataobjectattributes');
 
         foreach ($xml->attributes() as $key => $value) {
 
@@ -794,7 +794,7 @@ Class ConfigurationService
      */
     protected static function setModelRegistry($model_registry, $xml)
     {
-        $modelArray = Services::Registry()->get(FIELDS_MODEL_TYPE, 'Modelattributes');
+        $modelArray = Services::Registry()->get(FIELDS_LITERAL, 'Modelattributes');
 
         foreach ($xml->attributes() as $key => $value) {
 
@@ -934,7 +934,7 @@ Class ConfigurationService
             $controller->getModelRegistry('Datasource', $joinModel);
         }
 
-        $fields = Services::Registry()->get($joinRegistry, FIELDS_MODEL_TYPE);
+        $fields = Services::Registry()->get($joinRegistry, FIELDS_LITERAL);
 
         $table = Services::Registry()->get($joinRegistry, 'table_name');
 
@@ -1161,7 +1161,7 @@ Class ConfigurationService
             return;
         }
 
-        $modelArray = Services::Registry()->get(FIELDS_MODEL_TYPE, 'Modeltypes');
+        $modelArray = Services::Registry()->get(FIELDS_LITERAL, 'Modeltypes');
 
         $extends_model_name = '';
         $extends_model_type = '';
@@ -1365,7 +1365,7 @@ Class ConfigurationService
             }
         }
 
-        $valid = array('Dataobject', 'Datasource');
+        $valid = array('Datalist', 'Dataobject', 'Datasource');
 
         if (in_array($model_type, $valid)) {
             $path = ConfigurationService::commonSearch(

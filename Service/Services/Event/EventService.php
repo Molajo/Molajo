@@ -114,7 +114,12 @@ Class EventService
     {
         Services::Profiler()->set('Event: scheduleEvent ' . $event, PROFILER_PLUGINS, VERBOSE);
 
-        $registrations = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
+        $temp = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
+        if (isset($temp[$event])) {
+            $registrations = $temp[$event];
+        } else {
+            $registrations = array();
+        }
 
         if (count($registrations) == 0) {
             Services::Profiler()->set(
@@ -122,12 +127,10 @@ Class EventService
                 PROFILER_PLUGINS,
                 VERBOSE
             );
-
             return $arguments;
         }
 
         if (is_array($selections)) {
-
         } else {
             if (trim($selections) == '') {
                 $selections = array();
@@ -139,42 +142,39 @@ Class EventService
         }
 
         if (count($selections) > 0) {
+
         } else {
-            $selections = array();
-            if (count($registrations) > 0) {
-                foreach ($registrations as $key => $value) {
-                    $temp = substr($key, 0, strlen($key) - strlen(PLUGIN_LITERAL));
-                    $selections[] = $temp;
-                }
-            }
+            $selections = $registrations;
         }
+
+        if (count($selections) == 0) {
+            Services::Profiler()->set(
+                'EventService->schedule Event ' . $event . ' has no matching registrations, exiting',
+                PROFILER_PLUGINS,
+                VERBOSE
+            );
+            return $arguments;
+        }
+
+        $pluginListing = Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
+        $events = Services::Registry()->get(EVENTS_LITERAL, 'PluginEvents');
 
         foreach ($selections as $selection) {
 
-            $pluginClass = strtolower($selection) . PLUGIN_LITERAL;
 
-            if (isset($registrations[$pluginClass])) {
+            $pluginClass = ucfirst(strtolower($selection)) . PLUGIN_LITERAL;
 
-                if (method_exists($registrations[$pluginClass], $event)) {
+            if (isset($pluginListing[$pluginClass])) {
 
-                    $results = $this->processPluginClass($registrations[$pluginClass], $event, $arguments);
+                if (method_exists($pluginListing[$pluginClass], $event)) {
+
+                    $results = $this->processPluginClass($pluginListing[$pluginClass], $event, $arguments);
+
                     if ($results === false) {
                         return false;
                     }
 
                     $arguments = $results;
-
-                } else {
-
-                    Services::Profiler()->set(
-                        'EventService->schedule Event '
-                            . $event . ' Class does not exist '
-                            . $registrations[$pluginClass],
-                        PROFILER_PLUGINS
-                    );
-
-                    throw new \Exception('Events: scheduleEvent identified Class ' . $pluginClass
-                        . ' that does not exist');
                 }
             }
         }
@@ -240,9 +240,6 @@ Class EventService
                 PROFILER_PLUGINS
             );
 
-            throw new \Exception('Event: processPluginClass failed for Plugin Class: '
-                . $pluginClass . ' Event ' . $event);
-
         } else {
 
             if (count($arguments) > 0) {
@@ -268,11 +265,10 @@ Class EventService
         $this->pluginArray = array();
         $this->plugin_eventArray = array();
 
-        $this->registerPlugins(PLATFORM_FOLDER . '/' . PLUGIN_LITERAL, 'Molajo\\Plugin\\');
-        $this->registerPlugins(PLATFORM_FOLDER . '/' . PLUGIN_LITERAL, 'Molajo\\Plugin\\');
+        $this->registerPlugins(EXTENSIONS, 'Extension');
+        $this->registerPlugins(PLATFORM_FOLDER, 'Molajo');
 
         return $this;
-
     }
 
     /**
@@ -295,11 +291,13 @@ Class EventService
         if ($folder == '') {
             throw new \Exception ('Event: No folder sent into RegisterPlugins');
         }
+
         if ($namespace == '') {
             throw new \Exception ('Event: No namespace sent into RegisterPlugins');
         }
+
         $folder .= '/' . PLUGIN_LITERAL;
-        $namespace .= '\\Plugin\\';
+        $namespace .= '\\' . PLUGIN_LITERAL . '\\';
 
         $this->pluginArray = Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
         $this->plugin_eventArray = Services::Registry()->get(EVENTS_LITERAL, 'PluginEvents');
@@ -308,8 +306,11 @@ Class EventService
 
         $plugins = Services::Filesystem()->folderFolders($folder);
 
-        foreach ($plugins as $folder) {
+        if (count($plugins) == 0 || $plugins === false) {
+            return true;
+        }
 
+        foreach ($plugins as $folder) {
             if (substr(strtolower($folder), 0, 4) == 'hold') {
 
             } else {
@@ -318,7 +319,6 @@ Class EventService
                 $pluginClass = $namespace . $folder . '\\' . $pluginName;
 
                 try {
-
                     $this->registerPlugin($pluginName, $pluginClass);
 
                 } catch (\Exception $e) {
@@ -326,7 +326,6 @@ Class EventService
                     throw new \Exception('Events: Registration Failed for Plugin '
                         . $pluginName . ' and Class ' . $pluginClass);
                 }
-
             }
         }
 
@@ -351,6 +350,7 @@ Class EventService
     protected function registerPlugin($pluginName, $pluginClass)
     {
         $events = get_class_methods($pluginClass);
+        $reflectionEvents = array();
 
         if (count($events) > 0) {
             foreach ($events as $event) {
@@ -359,6 +359,13 @@ Class EventService
                     $results = $reflectionMethod->getDeclaringClass();
                     if ($results->name == $pluginClass) {
                         $this->registerPluginEvent($pluginName, $pluginClass, $event);
+                        $reflectionEvents[] = $event;
+
+
+                        if (in_array($event, $this->eventArray)) {
+                        } else {
+                            $this->eventArray[] = $event;
+                        }
                     }
                 }
             }
@@ -406,14 +413,9 @@ Class EventService
 
         $existing = $this->plugin_eventArray[$pluginName];
         if (is_array($existing)) {
-            array_merge($existing, array($pluginName));
+            $this->plugin_eventArray = array_merge($existing, array($pluginName));
         }
 
-        /** Events */
-        if (in_array($event, $this->eventArray)) {
-        } else {
-            $this->eventArray[] = $event;
-        }
 
         /** Event Plugins */
         if (isset($this->event_pluginArray[$event])) {
@@ -423,7 +425,7 @@ Class EventService
 
         $existing = $this->event_pluginArray[$event];
         if (is_array($existing)) {
-            array_merge($existing, array($pluginName));
+            $this->event_pluginArray[$event] = array_merge($existing, array($pluginName));
         }
 
         return $this;

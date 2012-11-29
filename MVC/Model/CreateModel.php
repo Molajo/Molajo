@@ -76,7 +76,7 @@ class CreateModel extends Model
         }
 
         /** Build Insert Statement */
-        $fields = Services::Registry()->get($model_registry, FIELDS_MODEL_TYPE);
+        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
 
         $insertSQL = 'INSERT INTO ' . $this->db->qn($table_name) . ' ( ';
         $valuesSQL = ' VALUES ( ';

@@ -486,7 +486,7 @@ Class ParseService
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
         Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return true;
@@ -520,7 +520,7 @@ Class ParseService
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         $renderedOutput = $arguments['rendered_output'];
@@ -556,7 +556,7 @@ Class ParseService
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
 
         $renderedOutput = $arguments['rendered_output'];
 
@@ -589,7 +589,7 @@ Class ParseService
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
 
         $renderedOutput = $arguments['rendered_output'];
 
@@ -622,7 +622,7 @@ Class ParseService
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
 
         $renderedOutput = $arguments['rendered_output'];
 

@@ -12,7 +12,7 @@
     <model
             name="Menuitems"
             criteria_catalog_type_id="11000"
-            process_plugins="0"
+            process_plugins="1"
             criteria_extension_instance_id="11000"
             extends="RenderDatasource">
         <table>

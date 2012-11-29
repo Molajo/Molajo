@@ -94,7 +94,7 @@ class UseractivityPlugin extends Plugin
         /** Retrieve Key for Action  */
         $action_id = Services::Registry()->get(
             'Actions',
-            $this->get('action', ACTION_VIEW)
+            $this->get('action', ACTION_READ)
         );
 
         /** Retrieve User Data  */

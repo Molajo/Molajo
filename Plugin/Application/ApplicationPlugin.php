@@ -126,7 +126,6 @@ class ApplicationPlugin extends Plugin
         $menu_id = $bread_crumbs[0]->extension_id;
 
         $query_results = Services::Menu()->get($menu_id, $current_menu_item, $bread_crumbs);
-
         if ($query_results == false || count($query_results) == 0) {
             $menuname = '';
         } else {
@@ -219,7 +218,7 @@ class ApplicationPlugin extends Plugin
     {
         if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
 
-            if (strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'request_action')) == ACTION_VIEW) {
+            if (strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'request_action')) == ACTION_READ) {
                 $actions = $this->setItemActions();
             } else {
                 $actions = $this->setEditActions();
@@ -272,11 +271,11 @@ class ApplicationPlugin extends Plugin
         $actions = array();
         $actions[] = 'create';
         $actions[] = 'copy';
-        $actions[] = ACTION_VIEW;
+        $actions[] = ACTION_READ;
         $actions[] = 'edit';
 
         // editing item
-        $actions[] = ACTION_VIEW;
+        $actions[] = ACTION_READ;
         $actions[] = 'copy';
         $actions[] = 'draft';
         $actions[] = 'save';
@@ -375,10 +374,7 @@ class ApplicationPlugin extends Plugin
             return true;
         }
 
-        $data = Services::Registry()->get(
-            PRIMARY_LITERAL,
-            DATA_LITERAL
-        );
+        $data = Services::Registry()->get(PRIMARY_LITERAL, DATA_LITERAL);
 
         $type = strtolower(Services::Registry()->get(STRUCTURE_LITERAL, 'page_type'));
         $type = strtolower($type);

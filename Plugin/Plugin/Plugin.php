@@ -129,27 +129,27 @@ class Plugin
      */
     public function get($key, $default = null)
     {
-
         $value = null;
 
         if (in_array($key,
             array('model_registry',
                 'model_type',
                 'model_name',
-                PARAMETERS_LITERAL,
+                'parameters',
                 'query',
                 'db',
                 'data',
                 'null_date',
                 'now',
-                FIELDS_MODEL_TYPE,
-                CUSTOMFIELDGROUPS_LITERAL,
+                'fields',
+                'customfieldgroups',
                 'rendered_output'))
             && (isset($this->$key))
         ) {
             $value = $this->$key;
 
         } else {
+
             if (isset($this->parameters[$key])) {
                 $value = $this->parameters[$key];
             }
@@ -176,18 +176,18 @@ class Plugin
         if (in_array($key, array('model_registry',
             'model_type',
             'model_name',
-            PARAMETERS_LITERAL,
+            'parameters',
             'query',
             'db',
             'data',
             'null_date',
             'now',
-            FIELDS_MODEL_TYPE,
-            CUSTOMFIELDGROUPS_LITERAL,
+            'fields',
+            'customfieldgroup',
             'rendered_output'))
         ) {
 
-            if ($key == PARAMETERS_LITERAL) {
+            if ($key == 'parameters') {
                 foreach ($value as $k => $v) {
                     $this->parameters[$k] = $v;
                 }
@@ -214,7 +214,7 @@ class Plugin
         $this->fields = array();
 
         /** process normal fields */
-        $fields = Services::Registry()->get($this->model_registry, FIELDS_MODEL_TYPE);
+        $fields = Services::Registry()->get($this->model_registry, FIELDS_LITERAL);
         if (is_array($fields) && count($fields) > 0) {
             $this->processFieldType($type = '', $fields);
         }

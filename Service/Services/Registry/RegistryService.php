@@ -313,6 +313,7 @@ Class RegistryService
         } else {
             echo '<pre>';
             var_dump($key);
+            return false;
             throw new \Exception ('Registry: Namespace ' . $namespace. ' Invalid Key Value - must be a string.');
         }
 

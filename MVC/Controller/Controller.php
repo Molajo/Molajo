@@ -206,8 +206,8 @@ class Controller
         $this->set('data_object', ucfirst(strtolower($data_object)));
 
         if ($data_object == DATABASE_LITERAL) {
-            $defaults = Services::Registry()->get(FIELDS_MODEL_TYPE, 'ModelattributesDefaults');
-            foreach (Services::Registry()->get(FIELDS_MODEL_TYPE, 'Modelattributes') as $key) {
+            $defaults = Services::Registry()->get(FIELDS_LITERAL, 'ModelattributesDefaults');
+            foreach (Services::Registry()->get(FIELDS_LITERAL, 'Modelattributes') as $key) {
                 if (isset($registry[$key])) {
                     $this->set($key, $registry[$key]);
                 } else {
@@ -217,8 +217,8 @@ class Controller
 
         }  else {
 
-            $defaults = Services::Registry()->get(FIELDS_MODEL_TYPE, 'DataObjectAttributeDefaults');
-            foreach (Services::Registry()->get(FIELDS_MODEL_TYPE, 'DataObjectAttributes') as $key) {
+            $defaults = Services::Registry()->get(FIELDS_LITERAL, 'DataObjectAttributeDefaults');
+            foreach (Services::Registry()->get(FIELDS_LITERAL, 'DataObjectAttributes') as $key) {
                 if (isset($registry[$key])) {
                     $this->set($key, $registry[$key]);
                 } else {
@@ -326,7 +326,6 @@ class Controller
                 . ' <br />Template View: ' . $this->get('template_view_path_node')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins') . '<br /><br />';
 
-//echo $profiler_message;
 
         if ($this->get('data_object') == DATABASE_LITERAL) {
 
@@ -344,32 +343,35 @@ class Controller
             } else {
 
                 $method_parameter = NULL;
+
                 $service_class = $this->get('service_class');
                 $service_class_query_method = $this->get('service_class_query_method');
                 $service_class_query_method_parameter = $this->get('service_class_query_method_parameter');
 
                 $model_name = $this->get('model_name');
 
-                if ($service_class_query_method_parameter == 'REGISTRY_ENTRY') {
-                    $method_parameter = $this->get('registry_entry');
+                if ($model_name == PRIMARY_LITERAL) {
+                    $method_parameter = DATA_LITERAL;
 
-                } elseif ($service_class_query_method_parameter == 'TEMPLATE_VIEW_NAME') {
+                } elseif ($service_class_query_method_parameter == 'TEMPLATE_LITERAL') {
                     $method_parameter = $this->get('template_view_path_node');
 
-                } elseif ($service_class_query_method_parameter == 'DATA_OBJECT_LITERAL') {
-                    $method_parameter = $this->get('template_view_path_node');
+                } elseif ($service_class_query_method_parameter == 'MODEL_LITERAL') {
+                    $method_parameter = $this->get('model_name');
 
                 } else {
                     $method_parameter = $service_class_query_method_parameter;
                 }
 
-                if (strtolower($this->get('model_name')) == PARAMETERS_LITERAL) {
-                    $query_object = QUERY_OBJECT_ITEM;
-                }
-
                 if (count($this->plugins) > 0) {
                     $this->onBeforeReadEvent();
                 }
+
+                echo 'Class: ' . $service_class . ' Method ' . $service_class_query_method
+                        . ' Model Name ' . $model_name
+                        . ' Method parameter ' .  $method_parameter
+                        . ' Query Object ' . $query_object . '<br /><br />';
+
 
                 $this->query_results = Services::$service_class()
                     ->$service_class_query_method(
@@ -377,14 +379,6 @@ class Controller
                         $method_parameter,
                         $query_object
                     );
-
-                if (strtolower($method_parameter) == 'articlesresourcefieldsxxxxxxxxxxx') {
-                    echo $query_object;
-                    echo '<pre>';
-                    echo count($this->query_results);
-                    var_dump($this->query_results);
-                    echo '</pre>';
-                }
             }
         }
 
@@ -446,6 +440,7 @@ class Controller
      */
     protected function getPluginList($query_object)
     {
+
         $this->plugins = array();
 
         if (defined('APPLICATION_ID')) {
@@ -515,13 +510,7 @@ class Controller
 
         $temp[] = 'Application';
 
-        $temp2 = array_unique($temp);
-
-        foreach ($temp2 as $plugin) {
-            if ((int)Services::Registry()->get('Plugins', $plugin . PLUGIN_LITERAL) > 0) {
-                $this->plugins[] = $plugin;
-            }
-        }
+        $this->plugins = array_unique($temp);
 
         return;
     }
@@ -548,7 +537,7 @@ class Controller
         }
 
         $this->model->setBaseQuery(
-            Services::Registry()->get($this->get('model_registry'), FIELDS_MODEL_TYPE),
+            Services::Registry()->get($this->get('model_registry'), FIELDS_LITERAL),
             $this->get('table_name'),
             $this->get('primary_prefix'),
             $this->get('primary_key'),
@@ -794,8 +783,8 @@ class Controller
         if (isset($arguments['query'])) {
             $this->model->query = $arguments['query'];
         }
-        if (isset($arguments[PARAMETERS_LITERAL])) {
-            $this->parameters = $arguments[PARAMETERS_LITERAL];
+        if (isset($arguments[strtolower(PARAMETERS_LITERAL)])) {
+            $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
         }
 
         return true;
@@ -868,7 +857,7 @@ class Controller
                     VERBOSE
                 );
 
-                $this->parameters = $arguments[PARAMETERS_LITERAL];
+                $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
                 $this->query_results[] = $arguments['data'];
                 $first = false;
             }
@@ -911,8 +900,8 @@ class Controller
             VERBOSE
         );
 
-        if (isset($arguments[PARAMETERS_LITERAL])) {
-            $this->parameters = $arguments[PARAMETERS_LITERAL];
+        if (isset($arguments[strtolower(PARAMETERS_LITERAL)])) {
+            $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
         } else {
             $this->parameters = array();
         }
