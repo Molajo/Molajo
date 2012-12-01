@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 namespace Molajo\Helper;
@@ -60,7 +60,7 @@ Class ExtensionHelper
             'extension_path',
             $this->getPath(
                 (int)$item->catalog_type_id,
-                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node')
+                Services::Registry()->get('parameters', 'extension_name_path_node')
             )
         );
 
@@ -69,7 +69,7 @@ Class ExtensionHelper
             'extension_path_url',
             $this->getPathURL(
                 (int)$item->catalog_type_id,
-                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node')
+                Services::Registry()->get('parameters', 'extension_name_path_node')
             )
         );
 
@@ -611,8 +611,8 @@ Class ExtensionHelper
      */
     public function setThemePageView()
     {
-        $theme_id = (int)Services::Registry()->get(PARAMETERS_LITERAL, 'theme_id');
-        $page_view_id = (int)Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_id');
+        $theme_id = (int)Services::Registry()->get('parameters', 'theme_id');
+        $page_view_id = (int)Services::Registry()->get('parameters', 'page_view_id');
 
         Helpers::Theme()->get($theme_id);
 
@@ -629,8 +629,8 @@ Class ExtensionHelper
      */
     public function setTemplateWrapModel()
     {
-        $template_view_id = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_id');
-        $wrap_view_id = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_id');
+        $template_view_id = Services::Registry()->get('parameters', 'template_view_id');
+        $wrap_view_id = Services::Registry()->get('parameters', 'wrap_view_id');
 
         Helpers::View()->get($template_view_id, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 

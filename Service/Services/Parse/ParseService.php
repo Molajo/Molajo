@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Parse;
@@ -113,13 +113,13 @@ Class ParseService
 
         $this->final_indicator = false;
 
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'))) {
+        if (file_exists(Services::Registry()->get('parameters', 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme not found');
             return false;
         }
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
+        if (Services::Registry()->get('parameters', ERROR_STATUS_LITERAL, 0) == 1) {
         } else {
             //todo - pass in lists of includes to the plugins for possible change
             $this->onBeforeParseEvent();
@@ -131,7 +131,7 @@ Class ParseService
 
         $renderedOutput = $this->renderLoop();
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
+        if (Services::Registry()->get('parameters', ERROR_STATUS_LITERAL, 0) == 1) {
         } else {
             Services::Registry()->delete(PARAMETERS_LITERAL);
             Services::Registry()->createRegistry(PARAMETERS_LITERAL);
@@ -158,19 +158,19 @@ Class ParseService
             throw new \Exception('Parse: Instantiating ThemeIncluder Class failed');
         }
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
+        if (Services::Registry()->get('parameters', ERROR_STATUS_LITERAL, 0) == 1) {
         } else {
             $renderedOutput = $this->onBeforeDocumentheadEvent($renderedOutput);
         }
 
         $renderedOutput = $this->renderLoop($renderedOutput);
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
+        if (Services::Registry()->get('parameters', ERROR_STATUS_LITERAL, 0) == 1) {
         } else {
             $renderedOutput = $this->onAfterDocumentheadEvent($renderedOutput);
         }
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1) {
+        if (Services::Registry()->get('parameters', ERROR_STATUS_LITERAL, 0) == 1) {
         } else {
             Services::Registry()->delete(PARAMETERS_LITERAL);
             Services::Registry()->createRegistry(PARAMETERS_LITERAL);
@@ -208,14 +208,14 @@ Class ParseService
             $first = true;
             Services::Profiler()->set(
                 'ParseService renderLoop Parse Body using Theme:'
-                    . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include')
+                    . Services::Registry()->get('parameters', 'theme_path_include')
                     . ' and Page View: '
-                    . Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_path_include'),
+                    . Services::Registry()->get('parameters', 'page_view_path_include'),
                 PROFILER_RENDERING
             );
 
             ob_start();
-            require Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include');
+            require Services::Registry()->get('parameters', 'theme_path_include');
             $renderedOutput = ob_get_contents();
             ob_end_clean();
 
@@ -473,9 +473,9 @@ echo '<br />';
         Services::Profiler()->set('ParseService onBeforeParse', PROFILER_PLUGINS, VERBOSE);
 
         $arguments = array(
-            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
-            'model_type' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
-            'model_name' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_name'),
+            'parameters' => Services::Registry()->get('parameters'),
+            'model_type' => Services::Registry()->get('parameters', 'model_type'),
+            'model_name' => Services::Registry()->get('parameters', 'model_name'),
             'data' => array()
         );
 
@@ -489,7 +489,7 @@ echo '<br />';
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
         Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return true;
@@ -523,7 +523,7 @@ echo '<br />';
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         $renderedOutput = $arguments['rendered_output'];
@@ -559,7 +559,7 @@ echo '<br />';
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
 
         $renderedOutput = $arguments['rendered_output'];
 
@@ -592,7 +592,7 @@ echo '<br />';
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
 
         $renderedOutput = $arguments['rendered_output'];
 
@@ -625,7 +625,7 @@ echo '<br />';
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
 
         $renderedOutput = $arguments['rendered_output'];
 

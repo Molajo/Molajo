@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\Extensioninstance;
@@ -95,7 +95,7 @@ class ExtensioninstancePlugin extends Plugin
         /** Create a new Catalog Type */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry();
+        $controller->getModelRegistry('x', 'y');
         $controller->setDataobject();
 
         /** Catalog Types */
@@ -267,7 +267,7 @@ class ExtensioninstancePlugin extends Plugin
         /** Delete allowed - get rid of ACL info */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry();
+        $controller->getModelRegistry('x', 'y');
 
         $results = $controller->setDataobject();
         if ($results === false) {

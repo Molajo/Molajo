@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\MVC\Controller;
@@ -231,7 +231,7 @@ class DisplayController extends Controller
                     return false;
                 }
 
-                $this->parameters = $arguments[strtolower(PARAMETERS_LITERAL)];
+                $this->parameters = $arguments['parameters'];
                 $this->query_results[] = $arguments['data'];
 
                 if ($this->parameters['even_or_odd'] == 'odd') {

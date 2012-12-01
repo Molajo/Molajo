@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Includer;
@@ -48,22 +48,22 @@ Class HeadIncluder extends Includer
 
         if ($this->type == 'defer') {
 
-            if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_id', 0) == 0) {
+            if ((int) Services::Registry()->get('parameters', 'template_view_id', 0) == 0) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'template_view_id',
                     Services::Registry()->get(CONFIGURATION_LITERAL, 'defer_template_view_id'));
             }
 
-            if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_id', 0) == 0) {
+            if ((int) Services::Registry()->get('parameters', 'wrap_view_id', 0) == 0) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_id',
                     Services::Registry()->get(CONFIGURATION_LITERAL, 'defer_wrap_view_id'));
             }
 
         } else {
-            if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_id', 0) == 0) {
+            if ((int) Services::Registry()->get('parameters', 'template_view_id', 0) == 0) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'template_view_id',
                     Services::Registry()->get(CONFIGURATION_LITERAL, 'head_template_view_id'));
             }
-            if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_id', 0) == 0) {
+            if ((int) Services::Registry()->get('parameters', 'wrap_view_id', 0) == 0) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_id',
                     Services::Registry()->get(CONFIGURATION_LITERAL, 'head_wrap_view_id'));
             }
@@ -87,7 +87,7 @@ Class HeadIncluder extends Includer
         }
 
         /** Template  */
-        Helpers::View()->get(Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_id'),
+        Helpers::View()->get(Services::Registry()->get('parameters', 'template_view_id'),
             CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         /** Merge Parameters in (Pre-wrap) */
@@ -97,10 +97,10 @@ Class HeadIncluder extends Includer
             }
         }
         /** Default Wrap if needed */
-        $wrap_view_id = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_id');
+        $wrap_view_id = Services::Registry()->get('parameters', 'wrap_view_id');
         Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_path_node',
                     Helpers::Extension()->getExtensionNode((int) $wrap_view_id));
-        $wrap_view_title = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_path_node');
+        $wrap_view_title = Services::Registry()->get('parameters', 'wrap_view_path_node');
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_title', $wrap_view_title);
         Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_path',

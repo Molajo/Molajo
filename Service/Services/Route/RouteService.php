@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Route;
@@ -87,19 +87,19 @@ Class RouteService
         $continue = Helpers::Catalog()->getRouteCatalog();
 
         /** 404 */
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'status_found') === false) {
+        if (Services::Registry()->get('parameters', 'status_found') === false) {
             Services::Error()->set(404);
             Services::Profiler()->set('Application::Route() 404', 'Route');
             return false;
         }
 
         /** URL Change Redirect from Catalog */
-        if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'redirect_to_id', 0) == 0) {
+        if ((int) Services::Registry()->get('parameters', 'redirect_to_id', 0) == 0) {
         } else {
 
             Services::Response()->redirect(
                 Helpers::Catalog()->getURL(
-                    Services::Registry()->get(PARAMETERS_LITERAL, 'redirect_to_id', 0)
+                    Services::Registry()->get('parameters', 'redirect_to_id', 0)
                 ), 301
             );
 
@@ -111,7 +111,7 @@ Class RouteService
         /** Redirect to Logon */
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'application_logon_requirement', 0) > 0
             && Services::Registry()->get(USER_LITERAL, 'guest', true) === true
-            && Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id')
+            && Services::Registry()->get('parameters', 'request_catalog_id')
                 <> Services::Registry()->get(CONFIGURATION_LITERAL, 'application_logon_requirement', 0)
         ) {
             Services::Response()->redirect(
@@ -136,7 +136,7 @@ Class RouteService
      */
     protected function checkHome()
     {
-        $path = Services::Registry()->get(PARAMETERS_LITERAL, 'request_url');
+        $path = Services::Registry()->get('parameters', 'request_url');
         Services::Registry()->set(PARAMETERS_LITERAL, 'home', 0);
 
         if (strlen($path) == 0 || trim($path) == '') {
@@ -166,18 +166,18 @@ Class RouteService
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php'
-            || Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php/'
-            || Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == 'index.php?'
-            || Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == '/index.php/'
+        if (Services::Registry()->get('parameters', 'request_url', '') == 'index.php'
+            || Services::Registry()->get('parameters', 'request_url', '') == 'index.php/'
+            || Services::Registry()->get('parameters', 'request_url', '') == 'index.php?'
+            || Services::Registry()->get('parameters', 'request_url', '') == '/index.php/'
         ) {
             Services::Redirect()->set('', 301);
 
             return false;
         }
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_url', '') == ''
-            && (int) Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id', 0) == 0
+        if (Services::Registry()->get('parameters', 'request_url', '') == ''
+            && (int) Services::Registry()->get('parameters', 'request_catalog_id', 0) == 0
         ) {
 
             Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id',
@@ -277,7 +277,7 @@ Class RouteService
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller', $controller);
 
         /** Retrieve ID, unless already set for Home or Override  */
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id') > 0) {
+        if (Services::Registry()->get('parameters', 'request_catalog_id') > 0) {
         } else {
             $value = (int) Services::Request()->get('id');
             if ($value == 0) {
@@ -287,7 +287,7 @@ Class RouteService
         }
 
         /** URL Type */
-        $sef = Services::Registry()->get(PARAMETERS_LITERAL, 'sef_url', 1);
+        $sef = Services::Registry()->get('parameters', 'sef_url', 1);
         if ($sef == 1) {
             $this->getResourceSEF();
         } else {
@@ -319,7 +319,7 @@ Class RouteService
      */
     protected function getResourceSEF()
     {
-        $path = Services::Registry()->get(PARAMETERS_LITERAL, 'request_url');
+        $path = Services::Registry()->get('parameters', 'request_url');
 
 		/** Tasks (Tag, Favorite, Order Up) to Permission Actions (Insert, View, Delete, etc) */
         $urlParts = explode('/', $path);
@@ -367,7 +367,7 @@ Class RouteService
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_action',
             Services::Permissions()->getTaskAction($task));
 
-		if ($path == Services::Registry()->get(PARAMETERS_LITERAL, 'request_url')) {
+		if ($path == Services::Registry()->get('parameters', 'request_url')) {
 		} else {
 			Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
 			return true;
@@ -406,7 +406,7 @@ Class RouteService
 
 		Services::Registry()->set(PARAMETERS_LITERAL, 'request_filters', $filterArray);
 
-		if ($path == Services::Registry()->get(PARAMETERS_LITERAL, 'request_url')) {
+		if ($path == Services::Registry()->get('parameters', 'request_url')) {
 		} else {
 			Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
 		}
@@ -456,12 +456,12 @@ Class RouteService
             define('ROUTE', true);
         }
 
-        $catalog_type_id = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_type_id');
-        $id = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_source_id');
-        $catalog_extension_instance_id = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_extension_instance_id');
-        $catalog_page_type = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_page_type');
-        $model_type = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_type')));
-        $model_name = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_name')));
+        $catalog_type_id = Services::Registry()->get('parameters', 'catalog_type_id');
+        $id = Services::Registry()->get('parameters', 'catalog_source_id');
+        $catalog_extension_instance_id = Services::Registry()->get('parameters', 'catalog_extension_instance_id');
+        $catalog_page_type = Services::Registry()->get('parameters', 'catalog_page_type');
+        $model_type = ucfirst(strtolower(Services::Registry()->get('parameters', 'catalog_model_type')));
+        $model_name = ucfirst(strtolower(Services::Registry()->get('parameters', 'catalog_model_name')));
 
         if (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_LIST
         ) {

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Helper;
@@ -136,7 +136,7 @@ Class ViewHelper
     protected function processParameterSet($parameterSet)
     {
         foreach ($parameterSet as $key => $value) {
-            $existing = Services::Registry()->get(PARAMETERS_LITERAL, $key);
+            $existing = Services::Registry()->get('parameters', $key);
             if ($existing === 0 || trim($existing) == '' || $existing == null) {
                 if ($value === 0 || trim($value) == '' || $value == null) {
                 } else {
@@ -192,12 +192,12 @@ Class ViewHelper
 
         $plus = '/View/' . $type . '/' . ucfirst(strtolower($node));
 
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path') . $plus . '/Configuration.xml')) {
-            return Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path') . $plus;
+        if (file_exists(Services::Registry()->get('parameters', 'theme_path') . $plus . '/Configuration.xml')) {
+            return Services::Registry()->get('parameters', 'theme_path') . $plus;
         }
 
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path') . $plus . '/Configuration.xml')) {
-            return Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path') . $plus;
+        if (file_exists(Services::Registry()->get('parameters', 'extension_path') . $plus . '/Configuration.xml')) {
+            return Services::Registry()->get('parameters', 'extension_path') . $plus;
         }
 
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
@@ -233,12 +233,12 @@ Class ViewHelper
 
         $plus = '/View/' . $type . '/' . ucfirst(strtolower($node));
 
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path') . $plus . '/Configuration.xml')) {
-            return Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_url') . $plus;
+        if (file_exists(Services::Registry()->get('parameters', 'theme_path') . $plus . '/Configuration.xml')) {
+            return Services::Registry()->get('parameters', 'theme_path_url') . $plus;
         }
 
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path') . $plus . '/Configuration.xml')) {
-            return Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path_url') . $plus;
+        if (file_exists(Services::Registry()->get('parameters', 'extension_path') . $plus . '/Configuration.xml')) {
+            return Services::Registry()->get('parameters', 'extension_path_url') . $plus;
         }
 
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
@@ -274,12 +274,12 @@ Class ViewHelper
 
         $plus = 'View\\' . $type . '\\' . ucfirst(strtolower($node));
 
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path') . $plus . '/Configuration.xml')) {
-            return 'Extension\\Theme\\' . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_node') . '\\' . $plus;
+        if (file_exists(Services::Registry()->get('parameters', 'theme_path') . $plus . '/Configuration.xml')) {
+            return 'Extension\\Theme\\' . Services::Registry()->get('parameters', 'theme_path_node') . '\\' . $plus;
         }
 
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'extension_path') . $plus . '/Configuration.xml')) {
-            return 'Extension\\Resource\\' . Services::Registry()->get(PARAMETERS_LITERAL, 'extension_title') . '\\' . $plus;
+        if (file_exists(Services::Registry()->get('parameters', 'extension_path') . $plus . '/Configuration.xml')) {
+            return 'Extension\\Resource\\' . Services::Registry()->get('parameters', 'extension_title') . '\\' . $plus;
         }
 
         if (file_exists(EXTENSIONS_VIEWS . '/' . $type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {

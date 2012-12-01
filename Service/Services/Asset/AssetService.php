@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Asset;
@@ -60,7 +60,7 @@ Class AssetService
      *
      * Services::Asset()->addLink(
      *   $url = EXTENSIONS_THEMES_URL
-     *      . '/' . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_node')
+     *      . '/' . Services::Registry()->get('parameters', 'theme_path_node')
      *      . '/' . 'images/apple-touch-icon-114x114.png',
      *   $relation = 'apple-touch-icon-precomposed',
      *   $relation_type = 'rel',

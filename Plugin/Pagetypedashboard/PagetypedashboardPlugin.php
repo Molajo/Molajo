@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\Pagetypedashboard;
@@ -31,7 +31,7 @@ class PagetypedashboardPlugin extends Plugin
             return true;
         }
 
-        $portletOptions = Services::Registry()->get(PARAMETERS_LITERAL, 'dashboard_portlet');
+        $portletOptions = Services::Registry()->get('parameters', 'dashboard_portlet');
         if (trim($portletOptions) == '') {
             return true;
         }

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Filter;
@@ -663,7 +663,7 @@ Class FilterService
         $config = HTMLPurifier\HTMLPurifier_Config::createDefault();
         //var_dump($config);
 
-        if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'application_html5', 1) == 1) {
+        if ((int) Services::Registry()->get('parameters', 'application_html5', 1) == 1) {
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
             //not supported $config->set('HTML.Doctype', 'HTML5');
         } else {

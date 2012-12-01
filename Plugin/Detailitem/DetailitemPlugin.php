@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\Detailitem;
@@ -31,14 +31,14 @@ class DetailitemPlugin extends Plugin
     {
         return true;
         if (Services::Registry()->exists(PARAMETERS_LITERAL, 'menuitem_id')) {
-            if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'menuitem_id') == 0) {
+            if ((int) Services::Registry()->get('parameters', 'menuitem_id') == 0) {
             } else {
                 return true;
             }
         }
 
         if (Services::Registry()->exists(PARAMETERS_LITERAL, 'criteria_source_id')) {
-            if ((int) Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_source_id') == 0) {
+            if ((int) Services::Registry()->get('parameters', 'criteria_source_id') == 0) {
                 return true; // request for list;
             } else {
                 // request for item is handled by this method

@@ -2,20 +2,20 @@
 use Molajo\Service\Services;
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 
 defined('MOLAJO') or die;
 
-$class = Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_css_class');
+$class = Services::Registry()->get('parameters', 'page_view_css_class');
 if (trim($class) == '') {
     $class = '';
 } else {
     $class = ' class="' . htmlspecialchars($class) . '"';
 }
 
-$id = Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_css_id');
+$id = Services::Registry()->get('parameters', 'page_view_css_id');
 if (trim($id) == '') {
     $id = '';
 } else {

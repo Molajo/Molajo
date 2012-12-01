@@ -3,7 +3,7 @@ use Molajo\Service\Services;
 
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined("MOLAJO") or die;
@@ -20,14 +20,14 @@ if ($this->row->new_fieldset == '1') {
     <?php if ($this->row->fieldset_title == 'Create') { ?>
 <fieldset class="two-up">
 <legend><?php echo $this->row->fieldset_title; ?></legend>
-    <?php if (Services::Registry()->get(PARAMETERS_LITERAL, 'application_help') == 1) { ?>
+    <?php if (Services::Registry()->get('parameters', 'application_help') == 1) { ?>
         <p><?php echo $this->row->fieldset_description; ?></p>
     <?php } ?>
     <ol>
     <?php } else { ?>
 <fieldset>
 <legend><?php echo $this->row->fieldset_title; ?></legend>
-<?php if (Services::Registry()->get(PARAMETERS_LITERAL, 'application_help') == 1) { ?>
+<?php if (Services::Registry()->get('parameters', 'application_help') == 1) { ?>
     <p><?php echo $this->row->fieldset_description; ?></p>
 <?php } ?>
 <table class="responsive">

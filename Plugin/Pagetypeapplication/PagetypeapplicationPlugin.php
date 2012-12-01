@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\Pagetypeapplication;
@@ -47,7 +47,7 @@ class PagetypeapplicationPlugin extends Plugin
         $pages = explode('{{', $temp);
 
         /** Determine Current Page of Set */
-        $temp = Services::Registry()->get(PARAMETERS_LITERAL, 'request_filters', array());
+        $temp = Services::Registry()->get('parameters', 'request_filters', array());
         $filters = explode(',', $temp);
 
         $page = 1;

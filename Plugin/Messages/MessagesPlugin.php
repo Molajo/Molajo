@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\Messages;
@@ -46,8 +46,8 @@ class MessagesPlugin extends Plugin
             $row->message = $message->message;
             $row->type = $message->type;
             $row->code = $message->code;
-            $row->action = Services::Registry()->get(PARAMETERS_LITERAL, 'request_base_url_path') .
-                Services::Registry()->get(PARAMETERS_LITERAL, 'request_url');
+            $row->action = Services::Registry()->get('parameters', 'request_base_url_path') .
+                Services::Registry()->get('parameters', 'request_url');
 
             $row->class = 'alert-box';
             if ($message->type == MESSAGE_TYPE_SUCCESS) {

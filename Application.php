@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo;
@@ -340,7 +340,7 @@ Class Application
         }
 
         if ($results === false
-            || Services::Registry()->get(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 0) == 1
+            || Services::Registry()->get('parameters', ERROR_STATUS_LITERAL, 0) == 1
         ) {
 //            if (is_defined(PROFILER_ON)) {
                 Services::Profiler()->set('Route failed', PROFILER_APPLICATION);
@@ -374,9 +374,9 @@ Class Application
     protected function onAfterRouteEvent()
     {
         $arguments = array(
-            'parameters' => Services::Registry()->getArray(PARAMETERS_LITERAL),
-            'model_type' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
-            'model_name' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_name'),
+            'parameters' => Services::Registry()->getArray('parameters'),
+            'model_type' => Services::Registry()->get('parameters', 'model_type'),
+            'model_name' => Services::Registry()->get('parameters', 'model_name'),
             'data' => array()
         );
 
@@ -385,10 +385,10 @@ Class Application
             return false;
         }
 
-        Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
-        Services::Registry()->sort(PARAMETERS_LITERAL);
+        Services::Registry()->delete('parameters');
+        Services::Registry()->createRegistry('parameters');
+        Services::Registry()->loadArray('parameters', $arguments['parameters']);
+        Services::Registry()->sort('parameters');
 
         return true;
     }
@@ -427,7 +427,7 @@ Class Application
      */
     protected function execute()
     {
-        $action = Services::Registry()->get(PARAMETERS_LITERAL, 'request_action', ACTION_READ);
+        $action = Services::Registry()->get('parameters', 'request_action', ACTION_READ);
 
         if (trim($action) == '') {
             $action = ACTION_READ;
@@ -477,14 +477,14 @@ Class Application
      */
     protected function display()
     {
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'))) {
+        if (file_exists(Services::Registry()->get('parameters', 'theme_path_include'))) {
         } else {
             Services::Error()->set(500, 'Theme Not found');
             throw new \Exception('Theme not found '
-                . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'));
+                . Services::Registry()->get('parameters', 'theme_path_include'));
         }
 
-        $parms = Services::Registry()->getArray(PARAMETERS_LITERAL);
+        $parms = Services::Registry()->getArray('parameters');
 
         $page_request = Services::Cache()->get(STRUCTURE_LITERAL, implode('', $parms));
 
@@ -518,10 +518,10 @@ Class Application
 // what parameters
 
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
-            $url = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_url_sef_request');
+            $url = Services::Registry()->get('parameters', 'catalog_url_sef_request');
 
         } else {
-            $url = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_url_request');
+            $url = Services::Registry()->get('parameters', 'catalog_url_request');
         }
 
         Services::Redirect()->redirect(Services::Url()->getApplicationURL($url), '301')->send();

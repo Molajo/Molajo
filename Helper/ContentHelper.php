@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Helper;
@@ -71,7 +71,7 @@ Class ContentHelper
      */
     public function getRouteItem($id, $model_type, $model_name)
     {
-        if (strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'request_action')) == ACTION_READ) {
+        if (strtolower(Services::Registry()->get('parameters', 'request_action')) == ACTION_READ) {
             $page_type_namespace = 'item';
         } else {
             $page_type_namespace = 'form';
@@ -136,9 +136,9 @@ Class ContentHelper
     public function getRouteMenuitem()
     {
         $item = $this->get(
-            Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_source_id'),
+            Services::Registry()->get('parameters', 'catalog_source_id'),
             CATALOG_TYPE_MENUITEM_LITERAL,
-            Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_page_type'),
+            Services::Registry()->get('parameters', 'catalog_page_type'),
             CATALOG_TYPE_MENUITEM_LITERAL
         );
 
@@ -159,7 +159,7 @@ Class ContentHelper
         Services::Registry()->set(PARAMETERS_LITERAL, 'menu_extension_id', (int)$item->extensions_id);
         Services::Registry()->set(PARAMETERS_LITERAL, 'menu_path_node', $item->extensions_name);
 
-        $registry = Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_page_type')
+        $registry = Services::Registry()->get('parameters', 'catalog_page_type')
             . CATALOG_TYPE_MENUITEM_LITERAL;
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'criteria_source_id',
@@ -184,19 +184,19 @@ Class ContentHelper
         /** Must be after parameter set so as to not strip off menuitem */
         Services::Registry()->set(PARAMETERS_LITERAL, 'menuitem_id', (int)$item->id);
         Services::Registry()->set(PARAMETERS_LITERAL, 'page_type',
-            Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_page_type')
+            Services::Registry()->get('parameters', 'catalog_page_type')
         );
 
         $this->setExtensionPaths();
-        var_dump(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')   );
+        var_dump(Services::Registry()->get('parameters', 'model_type'),
+            Services::Registry()->get('parameters', 'model_name')   );
 
         /** Retrieve Model Registry for Resource */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry(
-            Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')
+            Services::Registry()->get('parameters', 'model_type'),
+            Services::Registry()->get('parameters', 'model_name')
         );
 
         return true;
@@ -394,7 +394,7 @@ Class ContentHelper
                 $copy_to = $key;
             }
 
-            $existing = Services::Registry()->get(PARAMETERS_LITERAL, $copy_to);
+            $existing = Services::Registry()->get('parameters', $copy_to);
 
             if ($existing === 0 || trim($existing) == '' || $existing === null || $existing === false) {
                 if ($value === 0 || trim($value) == '' || $value === null) {
@@ -416,13 +416,13 @@ Class ContentHelper
         Services::Registry()->set(
             PARAMETERS_LITERAL,
             'extension_name_path_node',
-            Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')
+            Services::Registry()->get('parameters', 'model_name')
         );
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'model_type') == 'Resource') {
+        if (Services::Registry()->get('parameters', 'model_type') == 'Resource') {
             $cattype = CATALOG_TYPE_RESOURCE;
         } else {
-            $cattype = Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_catalog_type_id');
+            $cattype = Services::Registry()->get('parameters', 'criteria_catalog_type_id');
         }
 
         Services::Registry()->set(
@@ -430,7 +430,7 @@ Class ContentHelper
             'extension_path',
             Helpers::Extension()->getPath(
                 $cattype,
-                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node')
+                Services::Registry()->get('parameters', 'extension_name_path_node')
             )
         );
 
@@ -439,7 +439,7 @@ Class ContentHelper
             'extension_path_url',
             Helpers::Extension()->getPathURL(
                 $cattype,
-                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node')
+                Services::Registry()->get('parameters', 'extension_name_path_node')
             )
         );
 
@@ -448,7 +448,7 @@ Class ContentHelper
             'extension_namespace',
             Helpers::Extension()->getNamespace(
                 $cattype,
-                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node')
+                Services::Registry()->get('parameters', 'extension_name_path_node')
             )
         );
 

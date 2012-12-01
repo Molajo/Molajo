@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\Comment;
@@ -88,7 +88,7 @@ class CommentPlugin extends Plugin
      *
      * If comments are required for content that is not the primary request, the parent variables
      * can be defined on the include statement, as shown below:
-     * <include:template name=Comment wrap=none parent_model_type=<?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_type'); ?> parent_model_name=<?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_name'); ?> parent_source_id=<?php echo Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_source_id'); ?>/>
+     * <include:template name=Comment wrap=none parent_model_type=<?php echo Services::Registry()->get('parameters', 'catalog_model_type'); ?> parent_model_name=<?php echo Services::Registry()->get('parameters', 'catalog_model_name'); ?> parent_source_id=<?php echo Services::Registry()->get('parameters', 'catalog_source_id'); ?>/>
      *      Note: Include statements must not break on multiple lines
      *
      * @return  array|bool

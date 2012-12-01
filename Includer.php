@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo;
@@ -114,7 +114,7 @@ class Includer
         $rendered_output = $this->invokeMVC();
 
         if ($rendered_output == ''
-            && Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_display_view_on_no_results') == 0
+            && Services::Registry()->get('parameters', 'criteria_display_view_on_no_results') == 0
         ) {
         } else {
             $this->loadMedia();
@@ -284,7 +284,7 @@ class Includer
         $template_title = '';
 
         $saveTemplate = array();
-        $temp = Services::Registry()->get(PARAMETERS_LITERAL, 'template*');
+        $temp = Services::Registry()->get('parameters', 'template*');
 
         if (is_array($temp) && count($temp) > 0) {
             foreach ($temp as $key => $value) {
@@ -307,10 +307,10 @@ class Includer
         }
 
         $saveWrap = array();
-        $temp = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap*');
-        $temp2 = Services::Registry()->get(PARAMETERS_LITERAL, 'model*');
+        $temp = Services::Registry()->get('parameters', 'wrap*');
+        $temp2 = Services::Registry()->get('parameters', 'model*');
         $temp3 = array_merge($temp, $temp2);
-        $temp2 = Services::Registry()->get(PARAMETERS_LITERAL, 'data*');
+        $temp2 = Services::Registry()->get('parameters', 'data*');
         $temp = array_merge($temp2, $temp3);
 
         if (is_array($temp) && count($temp) > 0) {
@@ -376,10 +376,10 @@ class Includer
      */
     protected function setTemplateRenderCriteria($saveTemplate)
     {
-        $template_id = (int)Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_id');
+        $template_id = (int)Services::Registry()->get('parameters', 'template_view_id');
 
         if ((int)$template_id == 0) {
-            $template_title = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path_node');
+            $template_title = Services::Registry()->get('parameters', 'template_view_path_node');
             if (trim($template_title) == '') {
             } else {
                 $template_id = Helpers::Extension()
@@ -434,10 +434,10 @@ class Includer
         $wrap_id = 0;
         $wrap_title = '';
 
-        $wrap_id = (int)Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_id');
+        $wrap_id = (int)Services::Registry()->get('parameters', 'wrap_view_id');
 
         if ((int)$wrap_id == 0) {
-            $wrap_title = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_path_node', '');
+            $wrap_title = Services::Registry()->get('parameters', 'wrap_view_path_node', '');
             if (trim($wrap_title) == '') {
                 $wrap_title = 'None';
             }
@@ -456,10 +456,10 @@ class Includer
         }
 
         $saveWrap = array();
-        $temp = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap*');
-        $temp2 = Services::Registry()->get(PARAMETERS_LITERAL, 'model*');
+        $temp = Services::Registry()->get('parameters', 'wrap*');
+        $temp2 = Services::Registry()->get('parameters', 'model*');
         $temp3 = array_merge($temp, $temp2);
-        $temp2 = Services::Registry()->get(PARAMETERS_LITERAL, 'data*');
+        $temp2 = Services::Registry()->get('parameters', 'data*');
         $temp = array_merge($temp2, $temp3);
 
         if (is_array($temp) && count($temp) > 0) {
@@ -519,21 +519,21 @@ class Includer
      */
     protected function loadPlugins()
     {
-        $node = Services::Registry()->get(PARAMETERS_LITERAL, 'extension_name_path_node');
+        $node = Services::Registry()->get('parameters', 'extension_name_path_node');
 
         Services::Event()->registerPlugins(
             Helpers::Extension()->getPath(CATALOG_TYPE_RESOURCE, $node),
             Helpers::Extension()->getNamespace(CATALOG_TYPE_RESOURCE, $node)
         );
 
-        $node = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path_node');
+        $node = Services::Registry()->get('parameters', 'template_view_path_node');
 
         Services::Event()->registerPlugins(
             Helpers::Extension()->getPath(CATALOG_TYPE_TEMPLATE_VIEW, $node),
             Helpers::Extension()->getNamespace(CATALOG_TYPE_TEMPLATE_VIEW, $node)
         );
 
-        $node = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_path_node');
+        $node = Services::Registry()->get('parameters', 'wrap_view_path_node');
 
         Services::Event()->registerPlugins(
             Helpers::Extension()->getPath(CATALOG_TYPE_WRAP_VIEW, $node),
@@ -562,17 +562,17 @@ class Includer
      */
     protected function loadViewMedia()
     {
-        $priority = Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_media_priority_other_extension', 400);
+        $priority = Services::Registry()->get('parameters', 'criteria_media_priority_other_extension', 400);
 
-        $file_path = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path');
-        $url_path = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path_url');
+        $file_path = Services::Registry()->get('parameters', 'template_view_path');
+        $url_path = Services::Registry()->get('parameters', 'template_view_path_url');
 
         $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
         $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
-        $file_path = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_path');
-        $url_path = Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_path_url');
+        $file_path = Services::Registry()->get('parameters', 'wrap_view_path');
+        $url_path = Services::Registry()->get('parameters', 'wrap_view_path_url');
 
         $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
@@ -606,7 +606,7 @@ class Includer
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return true;
@@ -625,11 +625,11 @@ class Includer
         $message = 'Includer->invokeMVC '
             . 'Name ' . $this->name
             . ' Type: ' . $this->type
-            . ' Template: ' . Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_title');
+            . ' Template: ' . Services::Registry()->get('parameters', 'template_view_title');
 
         $message .= ' Parameters:<br />';
         ob_start();
-        $message .= Services::Registry()->get(PARAMETERS_LITERAL, '*');
+        $message .= Services::Registry()->get('parameters', '*');
         $message .= ob_get_contents();
         ob_end_clean();
 
@@ -638,7 +638,7 @@ class Includer
         Services::Profiler()->set($message, PROFILER_RENDERING, VERBOSE);
 
         $controller = new DisplayController();
-        $controller->set('id', (int)Services::Registry()->get(PARAMETERS_LITERAL, 'source_id'));
+        $controller->set('id', (int)Services::Registry()->get('parameters', 'source_id'));
         $parms = Services::Registry()->getArray(PARAMETERS_LITERAL);
         $cached_output = Services::Cache()->get(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, implode('', $parms));
 
@@ -685,7 +685,7 @@ class Includer
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[strtolower(PARAMETERS_LITERAL)]);
+        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
         Services::Registry()->sort(PARAMETERS_LITERAL);
 
         return $rendered_output;

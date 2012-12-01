@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Helper;
@@ -29,8 +29,8 @@ Class CatalogHelper
     public function getRouteCatalog()
     {
         $item = $this->get(
-            Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'request_url')
+            Services::Registry()->get('parameters', 'request_catalog_id'),
+            Services::Registry()->get('parameters', 'request_url')
         );
 
         if (count($item) == 0 || (int)$item->id == 0 || (int)$item->enabled == 0) {
@@ -41,7 +41,7 @@ Class CatalogHelper
                     PARAMETERS_LITERAL,
                     'request_catalog_id'
                 )
-                    . ' Requested URL Query: ' . Services::Registry()->get(PARAMETERS_LITERAL, 'request_url'),
+                    . ' Requested URL Query: ' . Services::Registry()->get('parameters', 'request_url'),
                 PROFILER_ROUTING,
                 0
             );
@@ -81,7 +81,7 @@ Class CatalogHelper
         Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_alias', $item->b_alias);
         Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_source_id', (int)$item->source_id);
 
-        if ((int)Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_id')
+        if ((int)Services::Registry()->get('parameters', 'catalog_id')
             == (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id')
         ) {
             Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', 1);

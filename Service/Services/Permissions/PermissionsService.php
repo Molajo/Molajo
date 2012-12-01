@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Permissions;
@@ -198,7 +198,7 @@ Class PermissionsService
     public function verifyAction()
     {
         if (in_array(
-            Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_view_group_id'),
+            Services::Registry()->get('parameters', 'catalog_view_group_id'),
             Services::Registry()->get(USER_LITERAL, 'ViewGroups')
         )
         ) {
@@ -208,20 +208,20 @@ Class PermissionsService
             return Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', false);
         }
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'request_action', ACTION_READ) == ACTION_READ
-            && Services::Registry()->get(PARAMETERS_LITERAL, 'status_authorised') === true
+        if (Services::Registry()->get('parameters', 'request_action', ACTION_READ) == ACTION_READ
+            && Services::Registry()->get('parameters', 'status_authorised') === true
         ) {
             return true;
         }
 
         $authorised = $this->verifyTask(
-            Services::Registry()->get(PARAMETERS_LITERAL, 'request_action'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'request_catalog_id')
+            Services::Registry()->get('parameters', 'request_action'),
+            Services::Registry()->get('parameters', 'request_catalog_id')
         );
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', $authorised);
 
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'status_authorised') === true) {
+        if (Services::Registry()->get('parameters', 'status_authorised') === true) {
             return true;
 
         } else {

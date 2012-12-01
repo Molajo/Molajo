@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\Application;
@@ -22,7 +22,7 @@ class ApplicationPlugin extends Plugin
     /**
      * Prepares Application Menus
      *
-     * Note: Services::Registry()->get(PARAMETERS_LITERAL) is valid during this method.
+     * Note: Services::Registry()->get('parameters') is valid during this method.
      *  Following, Services::Registry()->get('RequestParameters') should be used
      *
      * @return  boolean
@@ -77,8 +77,8 @@ class ApplicationPlugin extends Plugin
         $url = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url');
         Services::Registry()->set(STRUCTURE_LITERAL, 'home_url', $url);
 
-        $url = Services::Registry()->get(PARAMETERS_LITERAL, 'request_base_url_path') .
-            Services::Registry()->get(PARAMETERS_LITERAL, 'request_url');
+        $url = Services::Registry()->get('parameters', 'request_base_url_path') .
+            Services::Registry()->get('parameters', 'request_url');
         Services::Registry()->set(STRUCTURE_LITERAL, 'page_url', $url);
         Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
 
@@ -218,7 +218,7 @@ class ApplicationPlugin extends Plugin
     {
         if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
 
-            if (strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'request_action')) == ACTION_READ) {
+            if (strtolower(Services::Registry()->get('parameters', 'request_action')) == ACTION_READ) {
                 $actions = $this->setItemActions();
             } else {
                 $actions = $this->setEditActions();

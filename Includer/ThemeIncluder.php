@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Includer;
@@ -69,38 +69,38 @@ Class ThemeIncluder extends Includer
     protected function loadMedia()
     {
         $this->loadMediaPlus('',
-            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_site', 100));
+            Services::Registry()->get('parameters', 'asset_priority_site', 100));
 
         $this->loadMediaPlus('/application' . APPLICATION,
-            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_application', 200));
+            Services::Registry()->get('parameters', 'asset_priority_application', 200));
 
         $this->loadMediaPlus('/user' . Services::Registry()->get(USER_LITERAL, 'id'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_user', 300));
+            Services::Registry()->get('parameters', 'asset_priority_user', 300));
 
-        $priority = Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_theme', 600);
-        $file_path = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path');
-        $url_path = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_url');
+        $priority = Services::Registry()->get('parameters', 'asset_priority_theme', 600);
+        $file_path = Services::Registry()->get('parameters', 'theme_path');
+        $url_path = Services::Registry()->get('parameters', 'theme_path_url');
 
         Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
-        $priority = Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_theme', 600);
-        $file_path = Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_path');
-        $url_path = Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_path_url');
+        $priority = Services::Registry()->get('parameters', 'asset_priority_theme', 600);
+        $file_path = Services::Registry()->get('parameters', 'page_view_path');
+        $url_path = Services::Registry()->get('parameters', 'page_view_path_url');
 
         Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
 
         Services::Asset()->addLink(
-            $url = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_favicon'),
+            $url = Services::Registry()->get('parameters', 'theme_favicon'),
             $relation = 'shortcut icon',
             $relation_type = 'image/x-icon',
             $attributes = array()
         );
 
-        $this->loadMediaPlus('', Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_site', 100));
+        $this->loadMediaPlus('', Services::Registry()->get('parameters', 'asset_priority_site', 100));
 
         return;
     }

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Includer;
@@ -48,10 +48,10 @@ Class TemplateIncluder extends Includer
             return $this;
         }
 
-        $priority = Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_media_priority_other_extension', 400);
+        $priority = Services::Registry()->get('parameters', 'criteria_media_priority_other_extension', 400);
 
-        $file_path = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path');
-        $url_path = Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_path_url');
+        $file_path = Services::Registry()->get('parameters', 'template_view_path');
+        $url_path = Services::Registry()->get('parameters', 'template_view_path_url');
 
         Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);

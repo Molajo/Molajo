@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\Author;
@@ -22,7 +22,7 @@ class AuthorPlugin extends Plugin
 {
     /**
      * After-read processing
-     *
+     * todo: move to it's own include
      * Retrieves Author Information for Item
      *
      * @return  boolean

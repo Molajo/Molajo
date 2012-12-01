@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Includer;
@@ -71,7 +71,7 @@ class ResourceIncluder extends Includer
 
 		/** only load media if there was rendered output */
 		if ($rendered_output == ''
-			&& Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_display_view_on_no_results') == 0
+			&& Services::Registry()->get('parameters', 'criteria_display_view_on_no_results') == 0
 		) {
 		} else {
 			$this->loadMedia();
@@ -91,19 +91,19 @@ class ResourceIncluder extends Includer
     protected function getExtension()
     {
         /** Include and Parameter Registries are already loaded for Primary Resource */
-        if (Services::Registry()->get(PARAMETERS_LITERAL, 'extension_primary') === true) {
+        if (Services::Registry()->get('parameters', 'extension_primary') === true) {
             return;
         }
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'extension_instance_id',
             Helpers::Extension()->getInstanceID(
-                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_catalog_type_id'),
-                Services::Registry()->get(PARAMETERS_LITERAL, 'extension_title')
+                Services::Registry()->get('parameters', 'extension_catalog_type_id'),
+                Services::Registry()->get('parameters', 'extension_title')
             )
         );
 
         $response = Helpers::Extension()->getExtension(
-            Services::Registry()->get(PARAMETERS_LITERAL, 'extension_instance_id'),
+            Services::Registry()->get('parameters', 'extension_instance_id'),
             DATA_SOURCE_LITERAL,
             'ExtensionInstances'
         );
@@ -125,21 +125,21 @@ class ResourceIncluder extends Includer
     protected function loadMedia()
     {
         /** Primary Category */
-        $this->loadMediaPlus('/category' . Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_category_id'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_primary_category', 700));
+        $this->loadMediaPlus('/category' . Services::Registry()->get('parameters', 'catalog_category_id'),
+            Services::Registry()->get('parameters', 'asset_priority_primary_category', 700));
 
         /** Menu Item */
-        $this->loadMediaPlus('/menuitem' . Services::Registry()->get(PARAMETERS_LITERAL, 'menu_item_id'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_menuitem', 800));
+        $this->loadMediaPlus('/menuitem' . Services::Registry()->get('parameters', 'menu_item_id'),
+            Services::Registry()->get('parameters', 'asset_priority_menuitem', 800));
 
         /** Source */
-        $this->loadMediaPlus('/source/' . Services::Registry()->get(PARAMETERS_LITERAL, 'extension_title')
-                . Services::Registry()->get(PARAMETERS_LITERAL, 'criteria_source_id'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_item', 900));
+        $this->loadMediaPlus('/source/' . Services::Registry()->get('parameters', 'extension_title')
+                . Services::Registry()->get('parameters', 'criteria_source_id'),
+            Services::Registry()->get('parameters', 'asset_priority_item', 900));
 
         /** Resource */
-        $this->loadMediaPlus('/resource/' . Services::Registry()->get(PARAMETERS_LITERAL, 'extension_title'),
-            Services::Registry()->get(PARAMETERS_LITERAL, 'asset_priority_extension', 900));
+        $this->loadMediaPlus('/resource/' . Services::Registry()->get('parameters', 'extension_title'),
+            Services::Registry()->get('parameters', 'asset_priority_extension', 900));
 
         return true;
     }
@@ -156,8 +156,8 @@ class ResourceIncluder extends Includer
     {
 
         /** Theme */
-        $file_path = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path');
-        $url_path = Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_url');
+        $file_path = Services::Registry()->get('parameters', 'theme_path');
+        $url_path = Services::Registry()->get('parameters', 'theme_path_url');
         $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
         $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);

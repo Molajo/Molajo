@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Plugin\UIFoundation;
@@ -133,7 +133,7 @@ class FoundationuiPlugin extends Plugin
 			htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
 		);
 		$buttonIcon = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
-		$linkURL = '/admin/' . Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_alias');
+		$linkURL = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
 		$buttonArray = 'button_title:'
 			. trim($buttonTitle)
 			. ','
@@ -206,7 +206,7 @@ class FoundationuiPlugin extends Plugin
 			htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
 		);
 		$buttonIcon = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
-		$linkURL = '/admin/' . Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_alias');
+		$linkURL = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
 		$buttonArray = 'button_title:'
 			. trim($buttonTitle)
 			. ','
@@ -343,7 +343,7 @@ class FoundationuiPlugin extends Plugin
 			htmlentities(Services::Language()->translate('Add Portlet'), ENT_COMPAT, 'UTF-8')
 		);
 		$buttonIcon = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
-		$linkURL = '/admin/' . Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_alias');
+		$linkURL = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
 		$buttonArray = 'button_title:'
 			. trim($buttonTitle)
 			. ','

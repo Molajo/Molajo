@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Molajo
- * @copyright  2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Includer;
@@ -55,10 +55,10 @@ Class MessageIncluder extends Includer
         Services::Registry()->set(PARAMETERS_LITERAL, 'criteria_display_view_on_no_results', 0);
 
         /** Template  */
-        Helpers::View()->get(Services::Registry()->get(PARAMETERS_LITERAL, 'template_view_id'), CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+        Helpers::View()->get(Services::Registry()->get('parameters', 'template_view_id'), CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         /** Wrap  */
-        Helpers::View()->get(Services::Registry()->get(PARAMETERS_LITERAL, 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);
+        Helpers::View()->get(Services::Registry()->get('parameters', 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         /** Merge Configuration in */
         Services::Registry()->merge(CONFIGURATION_LITERAL, PARAMETERS_LITERAL, true);
