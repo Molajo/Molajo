@@ -43,8 +43,8 @@ class plgContentMap extends JPlugin
             $img = '';
 
             // look for images in template if available
-            $starImageOn = JHtml::_('image', 'system/rating_star.png', NULL, NULL, true);
-            $starImageOff = JHtml::_('image', 'system/rating_star_blank.png', NULL, NULL, true);
+            $starImageOn = JHtml::_('image', 'system/rating_star.png', null, null, true);
+            $starImageOff = JHtml::_('image', 'system/rating_star_blank.png', null, null, true);
 
             for ($i = 0; $i < $rating; $i++) {
                 $img .= $starImageOn;

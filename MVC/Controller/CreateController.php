@@ -303,7 +303,7 @@ class CreateController extends Controller
                 } catch (\Exception $e) {
 
                     echo 'CreateController::checkFields Filter Failed ';
-                    echo 'Fieldname: ' . $name . ' Value: ' . $value . ' Type: ' . $type . ' Null: ' . $null . ' Default: ' . $default . '<br /> ';
+                    echo 'Fieldname: ' . $name . ' Value: ' . $value . ' Type: ' . $type . ' null: ' . $null . ' Default: ' . $default . '<br /> ';
                     die;
                 }
             }

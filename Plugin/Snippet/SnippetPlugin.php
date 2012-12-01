@@ -21,13 +21,16 @@ class SnippetPlugin extends Plugin
 {
 
     /**
-     * Parses the Content Text into a snippet, stripped of HTML tags
+     * Parses field types of Text into snippets, stripped of HTML tags, forced to a specific length
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
     {
+        if ($this->model_registry_name == 'UsersSystem') {
+
+        }
         $fields = $this->retrieveFieldsByType('text');
 
         $snippetLength = $this->get('criteria_snippet_length', 200);
@@ -40,16 +43,17 @@ class SnippetPlugin extends Plugin
 
                 $fieldValue = $this->getFieldValue($field);
 
-                if ($fieldValue === false) {
+                if ($fieldValue === false || $fieldValue === null) {
                 } else {
 
                     $newFieldValue = substr(strip_tags($fieldValue), 0, $snippetLength);
+
                     if (trim($newFieldValue) == trim(strip_tags($fieldValue))) {
                     } else {
                         $newFieldValue .= '...';
                     }
 
-                    if ($newFieldValue === false) {
+                    if ($newFieldValue === false || $newFieldValue === null) {
                     } else {
 
                         $newFieldName = $name . '_' . 'snippet';

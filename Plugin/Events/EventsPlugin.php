@@ -54,9 +54,18 @@ class EventsPlugin extends Plugin
             'onAfterupdate',
             'onBeforedelete',
             'onAfterdelete',
+            'onAfterlogon',
             'onBeforelogon',
+            'onAfterlogout',
             'onBeforelogout'
         );
+
+        foreach (Services::Registry()->get(EVENTS_LITERAL, 'Events') as $e) {
+            if (in_array(strtolower($e), array_map('strtolower', $events))) {
+            } else {
+                $events[] = $e;
+            }
+        }
 
         $eventArray = array();
         foreach ($events as $key) {
@@ -70,7 +79,7 @@ class EventsPlugin extends Plugin
         }
         /**
         Services::Registry()->get(DATALIST_LITERAL, EVENTS_LITERAL);
-        Services::Registry()->get(EVENTS_LITERAL, 'Events');
+
         Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
         **/
         return true;

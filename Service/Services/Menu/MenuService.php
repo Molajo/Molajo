@@ -117,6 +117,11 @@ Class MenuService
         $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
         $controller->setDataobject();
 
+        $controller->set('get_customfields', 0);
+        $controller->set('use_special_joins', 0);
+        $controller->set('process_plugins', 0);
+        $controller->set('check_view_level_access', 1);
+
         $controller->model->query->select($controller->model->db->qn('a.id'));
         $controller->model->query->select($controller->model->db->qn('a.extension_id'));
         $controller->model->query->select($controller->model->db->qn('a.catalog_type_id'));
@@ -144,7 +149,7 @@ Class MenuService
         $controller->set('model_count', 999999);
 		$controller->set('get_customfields', 2);
 		$controller->set('use_special_joins', 1);
-		$controller->set('process_plugins', 1);
+		$controller->set('process_plugins', 0);
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
         if ($query_results === false) {

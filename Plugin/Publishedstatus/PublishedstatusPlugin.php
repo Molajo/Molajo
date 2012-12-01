@@ -36,7 +36,7 @@ class PublishedstatusPlugin extends Plugin
             return true;
         }
 
-        $fields = $this->get($this->model_registry, FIELDS_LITERAL);
+        $fields = $this->get($this->model_registry_name, FIELDS_LITERAL);
         if ($fields == false) {
             return true;
         }

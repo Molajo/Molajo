@@ -63,7 +63,7 @@ Class ThemeIncluder extends Includer
      *
      * Loads Media Files for Site, Application, User, and Theme
      *
-     * @return  boolean True, if the file has successfully loaded.
+     * @return  boolean true, if the file has successfully loaded.
      * @since   1.0
      */
     protected function loadMedia()
@@ -110,7 +110,7 @@ Class ThemeIncluder extends Includer
      *
      * Loads Media Files for Site, Application, User, and Theme
      *
-     * @return  boolean  True, if the file has successfully loaded.
+     * @return  boolean  true, if the file has successfully loaded.
      * @since   1.0
      */
     protected function loadMediaPlus($plus = '', $priority = 500)

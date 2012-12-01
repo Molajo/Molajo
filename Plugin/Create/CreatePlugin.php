@@ -404,20 +404,20 @@ class CreatePlugin extends Plugin
         $data->model_name = 'Grid';
 
         /** Overlay for this extension */
-        $data->id = NULL;
+        $data->id = null;
         $data->title = $this->data->title;
         $data->alias = Services::Filter()->filter($this->data->title, 'alias', 0, $this->data->title);
 
-        $data->start_publishing_datetime = NULL;
-        $data->stop_publishing_datetime = NULL;
-        $data->created_datetime = NULL;
+        $data->start_publishing_datetime = null;
+        $data->stop_publishing_datetime = null;
+        $data->created_datetime = null;
         $data->created_by = 0;
-        $data->modified_datetime = NULL;
+        $data->modified_datetime = null;
         $data->modified_by = 0;
-        $data->checked_out_datetime = NULL;
+        $data->checked_out_datetime = null;
         $data->checked_out_by = 0;
         $data->catalog_id = 0;
-        $data->catalog_sef_request = NULL;
+        $data->catalog_sef_request = null;
         $data->version = 1;
         $data->version_of_id = 0;
         $data->status_prior_to_version = 0;

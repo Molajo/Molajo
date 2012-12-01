@@ -427,22 +427,25 @@ Class ParseService
                     }
 
                     ob_start();
-                    echo 'ParseService->callIncluder invoking class ' . $class . ' Attributes: ' . '<br />';
+                    echo 'Parse Includer invoking class ' . $class . ' Attributes: ' . '<br />';
                     echo '<pre>';
                     var_dump($attributes);
                     echo '</pre>';
                     $includeDisplay = ob_get_contents();
                     ob_end_clean();
-                    echo $includeDisplay;
-                    Services::Profiler()->set(
-                        $includeDisplay,
-                        PROFILER_RENDERING
-                    );
+
+echo '<br />';
+echo $includeDisplay;
+echo '<br />';
 
                     $output = trim($rc->process($attributes));
-                    echo '<br />';
-                    echo $output;
-                    echo '<br />';
+                    Services::Profiler()->set($includeDisplay, PROFILER_RENDERING);
+
+echo '<br />';
+echo $output;
+echo '<br />';
+
+
                     Services::Profiler()->set(
                         'ParseService->callIncluder rendered output ' . $output,
                         PROFILER_RENDERING,
@@ -470,7 +473,7 @@ Class ParseService
         Services::Profiler()->set('ParseService onBeforeParse', PROFILER_PLUGINS, VERBOSE);
 
         $arguments = array(
-            'parameters' => Services::Registry()->getArray(PARAMETERS_LITERAL),
+            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'model_type' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
             'model_name' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_name'),
             'data' => array()

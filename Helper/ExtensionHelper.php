@@ -107,6 +107,7 @@ Class ExtensionHelper
         $query_object = QUERY_OBJECT_ITEM,
         $catalog_type_id = null
     ) {
+
         $results = Helpers::Extension()->get(0, DATA_SOURCE_LITERAL, 'ExtensionInstances', QUERY_OBJECT_LIST, null, 1);
 
         if ($results === false || count($results) == 0) {

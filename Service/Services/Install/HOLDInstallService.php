@@ -97,7 +97,7 @@ Class InstallService
     /**
      * Custom install method
      *
-     * @return boolean True on success
+     * @return boolean true on success
      *
      * @since   1.0
      */
@@ -111,7 +111,7 @@ Class InstallService
      *
      * This is really a shell for the install system
      *
-     * @return boolean True on success.
+     * @return boolean true on success.
      *
      * @since   1.0
      */
@@ -161,7 +161,7 @@ Class InstallService
      *
      * @param integer $id The id of the module to uninstall
      *
-     * @return boolean True on success
+     * @return boolean true on success
      *
      * @since   1.0
      */
@@ -420,7 +420,7 @@ Class InstallService
      * @param string $package   Path to the uploaded package file
      * @param string $resultdir Path to the unpacked extension
      *
-     * @return boolean True on success
+     * @return boolean true on success
      *
      * @since   1.0
      */

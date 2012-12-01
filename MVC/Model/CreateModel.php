@@ -127,10 +127,10 @@ class CreateModel extends Model
         $value = '';
 
         if ($type == 'identity') {
-            $value = 'NULL';
+            $value = 'null';
 
         } elseif ($input === null) {
-            $value = 'NULL';
+            $value = 'null';
 
         } elseif ($type == 'integer'
             || $type == 'binary'

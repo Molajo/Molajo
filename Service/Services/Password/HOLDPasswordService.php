@@ -29,7 +29,7 @@ Class PasswordService
      *
      * @param string $activated Activation string
      *
-     * @return boolean True on success
+     * @return boolean true on success
      * @since   1.0
      */
     public static function activateUser($activation)

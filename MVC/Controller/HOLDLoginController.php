@@ -160,7 +160,7 @@ class HOLDLoginController extends Controller
      * @param integer $user_id The user to load - Can be an integer or string - If string, it is converted to ID automatically
      * @param array   $options Array('application_id' => array of client id's)
      *
-     * @return boolean True on success
+     * @return boolean true on success
      *
      * @since   1.0
      */

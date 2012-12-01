@@ -6,6 +6,7 @@
  */
 namespace Molajo\Service\Services\User;
 
+use Molajo\Helpers;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -135,6 +136,8 @@ Class UserService
 		unset($viewGroups);
 
 		Services::Registry()->sort(USER_LITERAL);
+
+        Helpers::Extension()->setAuthorisedExtensions();
 
         return $this;
     }

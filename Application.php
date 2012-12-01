@@ -283,7 +283,6 @@ Class Application
     {
         $class = 'Molajo\\Service\\Services\\Exception\\ExceptionService';
         $connect = new $class($e->getMessage(), $e->getCode(), $e);
-        $connect->getPrevious();
         $connect->formatMessage();
     }
 
@@ -374,14 +373,6 @@ Class Application
      */
     protected function onAfterRouteEvent()
     {
-       // if (is_defined(PROFILER_ON)) {
-            Services::Profiler()->set(
-                'Application Schedules onAfterRoute',
-                PROFILER_PLUGINS,
-                VERBOSE
-            );
-      //  }
-
         $arguments = array(
             'parameters' => Services::Registry()->getArray(PARAMETERS_LITERAL),
             'model_type' => Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
@@ -390,13 +381,8 @@ Class Application
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterRoute', $arguments);
-
         if ($arguments === false) {
-            Services::Profiler()->set(
-                'Application->onAfterRouteEvent ' . ' failure ',
-                PROFILER_PLUGINS
-            );
-            throw new \Exception('onAfterRouteEvent Failed');
+            return false;
         }
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
@@ -418,21 +404,9 @@ Class Application
      */
     protected function authorise()
     {
-//        if (is_defined(PROFILER_ON)) {
-            Services::Profiler()->set(AUTHORISATION, PROFILER_APPLICATION);
-  //      }
-
         $results = Services::Event()->scheduleEvent('onAfterAuthorise');
         if (is_array($results)) {
             $results = true;
-        }
-
-        if ($results === false) {
-            Services::Profiler()->set(
-                'onAfterAuthorise Failed',
-                PROFILER_PLUGINS
-            );
-            throw new \Exception('onAfterRouteEvent Failed');
         }
 
         if ($results === false) {

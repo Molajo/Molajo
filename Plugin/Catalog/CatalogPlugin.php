@@ -108,7 +108,7 @@ class CatalogPlugin extends Plugin
                     if ($item->id == $application_home_catalog_id) {
                         $item->value = trim($item->value . ' ' . Services::Language()->translate('Home'));
                         $catalogArray[] = $item;
-                    } elseif (trim($item->value) == '' || $item->value === NULL) {
+                    } elseif (trim($item->value) == '' || $item->value === null) {
                         unset ($item);
                     } else {
                         $catalogArray[] = $item;

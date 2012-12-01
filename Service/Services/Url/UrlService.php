@@ -72,7 +72,7 @@ Class UrlService
 	 * @param   string  $size        Size in pixels, defaults to 80px [ 1 - 512 ]
 	 * @param   string  $type        Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
 	 * @param   string  $rating      Maximum rating (inclusive) [ g | pg | r | x ]
-	 * @param   boolean $image       True to return a complete IMG tag False for just the URL
+	 * @param   boolean $image       true to return a complete IMG tag false for just the URL
 	 * @param   array   $attributes  Optional, additional key/value attributes to include in the IMG tag
 	 *
 	 * @return  mixed

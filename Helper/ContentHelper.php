@@ -16,9 +16,9 @@ defined('MOLAJO') or die;
  *
  * Retrieves Item, List, or Menu Item Parameters for Route from Content, Extension, and Menu Item
  *
- * @package      Molajo
- * @subpackage   Helper
- * @since        1.0
+ * @package     Molajo
+ * @subpackage  Helper
+ * @since       1.0
  */
 Class ContentHelper
 {
@@ -35,6 +35,7 @@ Class ContentHelper
     public function getRouteList($id, $model_type, $model_name)
     {
         $item = $this->get($id, $model_type, $model_name, QUERY_OBJECT_ITEM);
+
         if (count($item) == 0) {
             return Services::Registry()->set(PARAMETERS_LITERAL, 'status_found', false);
         }
@@ -187,6 +188,16 @@ Class ContentHelper
         );
 
         $this->setExtensionPaths();
+        var_dump(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')   );
+
+        /** Retrieve Model Registry for Resource */
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry(
+            Services::Registry()->get(PARAMETERS_LITERAL, 'model_type'),
+            Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')
+        );
 
         return true;
     }
@@ -550,7 +561,7 @@ Class ContentHelper
      * @param   string  $page_type
      * @param   string  $extension_instance_id
      *
-     * @return  mixed   False, or an object containing an array of basic resource info, parameters in registry
+     * @return  mixed   false, or an object containing an array of basic resource info, parameters in registry
      * @since   1.0
      */
     public function getResourceMenuitemParameters($page_type, $extension_instance_id)

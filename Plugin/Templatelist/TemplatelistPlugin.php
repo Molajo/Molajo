@@ -21,7 +21,7 @@ class TemplatelistPlugin extends Plugin
     /**
      * Prepares data for the Administrator Grid  - run TemplatelistPlugin after AdminmenuPlugin
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterReadAll()
@@ -31,86 +31,80 @@ class TemplatelistPlugin extends Plugin
             return true;
         }
 
-		if (isset($this->parameters['list_model_name'])) {
-		} else {
-			return false;
-		}
-		$model_name = $this->parameters['list_model_name'];
+        if (isset($this->parameters['list_model_name'])) {
+        } else {
+            return false;
+        }
+        $model_name = $this->parameters['list_model_name'];
 
-		if (isset($this->parameters['list_model_type'])) {
-			$model_type = $this->parameters['list_model_type'];
-		} else {
-			$model_type = CATALOG_TYPE_RESOURCE_LITERAL;
-		}
-		if ($model_type == '')  {
-			$model_type = CATALOG_TYPE_RESOURCE_LITERAL;
-		}
+        if (isset($this->parameters['list_model_type'])) {
+            $model_type = $this->parameters['list_model_type'];
+        } else {
+            $model_type = CATALOG_TYPE_RESOURCE_LITERAL;
+        }
+        if ($model_type == '') {
+            $model_type = CATALOG_TYPE_RESOURCE_LITERAL;
+        }
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
+        $controller->getModelRegistry($model_type, $model_name);
+        $controller->setDataobject();
 
-        $results = $controller->getModelRegistry($model_type, $model_name);
-        if ($results === false) {
-            return false;
+        $primary_prefix = $controller->get('primary_prefix', 'a');
+
+        if (isset($this->parameters['list_ordering'])) {
+            $ordering = $this->parameters['list_ordering'];
+        } else {
+            $ordering = '';
         }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
+        if (isset($this->parameters['list_model_ordering_direction'])) {
+            $direction = $this->parameters['list_model_ordering_direction'];
+        } else {
+            $direction = 'ASC';
         }
-
-		$primary_prefix = $controller->get('primary_prefix', 'a');
-
-		if (isset($this->parameters['list_ordering'])) {
-			$ordering = $this->parameters['list_ordering'];
-		} else {
-			$ordering = '';
-		}
-		if (isset($this->parameters['list_model_ordering_direction'])) {
-			$direction = $this->parameters['list_model_ordering_direction'];
-		} else {
-			$direction = 'ASC';
-		}
 
         if ($ordering == '' || $ordering === null) {
         } else {
-			if ($direction == '' || $direction === null) {
-				$controller->model->query->order($controller->model->db->qn($ordering));
-			} else {
-				$controller->model->query->order($controller->model->db->qn($ordering)
-					. ' ' . $controller->model->db->qn($direction));
-			}
-		}
+            if ($direction == '' || $direction === null) {
+                $controller->model->query->order($controller->model->db->qn($ordering));
+            } else {
+                $controller->model->query->order(
+                    $controller->model->db->qn($ordering)
+                        . ' ' . $controller->model->db->qn($direction)
+                );
+            }
+        }
 
-		if (isset($this->parameters['list_model_offset'])) {
-			$offset = $this->parameters['list_model_offset'];
-		} else {
-			$offset = 0;
-		}
+        if (isset($this->parameters['list_model_offset'])) {
+            $offset = $this->parameters['list_model_offset'];
+        } else {
+            $offset = 0;
+        }
 
-		if (isset($this->parameters['list_model_count'])) {
-			$count = $this->parameters['list_model_count'];
-		} else {
-			$count = 0;
-		}
-		if ($count == 0) {
-			if (isset($this->parameters['list_model_use_pagination'])) {
-				$pagination = $this->parameters['list_model_use_pagination'];
-			} else {
-				$pagination = 0;
-			}
-		} else {
-			$pagination = 1;
-		}
+        if (isset($this->parameters['list_model_count'])) {
+            $count = $this->parameters['list_model_count'];
+        } else {
+            $count = 0;
+        }
+        if ($count == 0) {
+            if (isset($this->parameters['list_model_use_pagination'])) {
+                $pagination = $this->parameters['list_model_use_pagination'];
+            } else {
+                $pagination = 0;
+            }
+        } else {
+            $pagination = 1;
+        }
 
-		if ($pagination == 1) {
-		} else {
-			$pagination = 0;
-		}
+        if ($pagination == 1) {
+        } else {
+            $pagination = 0;
+        }
 
         $controller->set('model_offset', $offset);
         $controller->set('model_count', $count);
-		$controller->set('use_pagination', $pagination);
+        $controller->set('use_pagination', $pagination);
 
         $this->data = $controller->getData(QUERY_OBJECT_LIST);
 

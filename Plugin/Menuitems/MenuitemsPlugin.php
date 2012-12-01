@@ -36,10 +36,12 @@ class MenuitemsPlugin extends Plugin
         $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
         $controller->setDataobject();
 
-        $controller->set('get_customfields', 0);
-        $controller->set('use_special_joins', 0);
+        $controller->set('check_view_level_access', 1);
+        $controller->set('model_offset', 0);
+        $controller->set('model_count', 999999);
+        $controller->set('get_customfields', 2);
+        $controller->set('use_special_joins', 1);
         $controller->set('process_plugins', 0);
-        $controller->set('check_view_level_access', 0);
 
         $controller->model->query->select(
             $controller->model->db->qn($controller->get('primary_prefix'))

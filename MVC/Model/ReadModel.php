@@ -49,6 +49,7 @@ class ReadModel extends Model
         $query_object,
         $criteria_array = array()
     ) {
+
         if ($this->query->select == null) {
 
             if ($query_object == QUERY_OBJECT_RESULT) {
@@ -356,7 +357,7 @@ class ReadModel extends Model
                 . ' = ' . (int) $extension_instance_id);
         }
 
-        if ($status === NULL) {
+        if ($status === null) {
         } else {
             $this->query->where($this->db->qn($primary_prefix . '.' . 'status')
                     . ' IN ' .

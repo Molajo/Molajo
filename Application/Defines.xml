@@ -121,6 +121,7 @@
 
     <define name="CONTROLLER_CLASS" value="Molajo\MVC\Controller\Controller"/>
     <define name="HELPER_FILES" value="Molajo\Helper\"/>
+    <define name="MODEL_CLASS" value="Molajo\MVC\Model\"/>
 
     <define name="QUERY_OBJECT_RESULT" value="result"/>
     <define name="QUERY_OBJECT_ITEM" value="item"/>

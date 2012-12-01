@@ -100,7 +100,7 @@ class ExtensioninstancePlugin extends Plugin
 
         /** Catalog Types */
         $sql = 'INSERT INTO ' . $controller->model->db->qn('#__catalog_types');
-        $sql .= ' VALUES ( NULL, '
+        $sql .= ' VALUES ( null, '
             . $controller->model->db->q($this->data->title)
             . ', 0, '
             . $controller->model->db->q($this->data->title)
@@ -191,7 +191,7 @@ class ExtensioninstancePlugin extends Plugin
         $controller = new CreateController();
 
         $data = new \stdClass();
-        $data->catalog_type_id = Services::Registry()->get($this->model_registry, 'catalog_type_id');
+        $data->catalog_type_id = Services::Registry()->get($this->model_registry_name, 'catalog_type_id');
         $data->source_id = $id;
         $data->view_group_id = 1;
         $data->extension_instance_id = $id;

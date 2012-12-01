@@ -75,9 +75,9 @@ Class DatabaseService
     /**
      * Connect to Database
      *
-     * @return mixed
+     * @return  mixed
      * @since   1.0
-     * @throws \RuntimeException
+     * @throws  \RuntimeException
      */
     public function connect()
     {
@@ -103,18 +103,19 @@ Class DatabaseService
 
         $this->name = Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'db_type');
 
-        $data_object_connection_namespace = Services::Registry()->get(
+        $service_class_connection_namespace =
+            Services::Registry()->get(
             DATABASE_LITERAL.DATA_OBJECT_LITERAL,
-            'data_object_connection_namespace'
+            'service_class_connection_namespace'
         );
 
-        if (class_exists($data_object_connection_namespace)) {
+        if (class_exists($service_class_connection_namespace)) {
         } else {
             throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $this->options['driver']));
         }
 
         try {
-            $this->db = new $data_object_connection_namespace($this->options);
+            $this->db = new $service_class_connection_namespace($this->options);
 
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
@@ -130,15 +131,20 @@ Class DatabaseService
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function getQuery()
+    public function getQuery($db)
     {
-        $data_object_query_namespace = Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'data_object_query_namespace');
+        $this->db = $db;
 
-        if (class_exists($data_object_query_namespace)) {
+        $service_class_query_namespace =
+            Services::Registry()->get(
+                DATABASE_LITERAL.DATA_OBJECT_LITERAL,
+                'service_class_query_namespace');
+
+        if (class_exists($service_class_query_namespace)) {
         } else {
-            throw new \RuntimeException('Database Query class not found');
+            throw new \RuntimeException('Database: Query Class not found');
         }
 
-        return new $data_object_query_namespace($this->db);
+        return new $service_class_query_namespace($this->db);
     }
 }

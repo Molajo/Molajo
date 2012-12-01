@@ -253,7 +253,7 @@ class Model
                         `customfields`, `parameters`, `metadata`,
                         `language`, `translation_of_id`, `ordering`)
 
-                VALUES (NULL, 0, 6250, 6250, "
+                VALUES (null, 0, 6250, 6250, "
                     . $this->db->q($value) . ",
                 '', 'languagestrings',
                 LOWER(REPLACE("
@@ -301,7 +301,7 @@ class Model
                             `customfields`, `parameters`, `metadata`,
                             `language`, `translation_of_id`, `ordering`)
 
-                    SELECT NULL as `id`, `site_id`, `extension_instance_id`, `catalog_type_id`,
+                    SELECT null as `id`, `site_id`, `extension_instance_id`, `catalog_type_id`,
                             `title`, `subtitle`, 'languagestrings/en-gb', `alias`, `content_text`,
                             `protected`, `featured`, `stickied`, `status`,
                             `start_publishing_datetime`, `stop_publishing_datetime`,
@@ -341,7 +341,7 @@ class Model
 						`source_id`, `enabled`, `redirect_to_id`, `sef_request`, `page_type`,
 						`extension_instance_id`, `view_group_id`, `primary_category_id`)
 
-				SELECT NULL as `id`, `b`.`id`, `a`.`catalog_type_id`,
+				SELECT null as `id`, `b`.`id`, `a`.`catalog_type_id`,
 					`a`.`id`, 1, 0, CONCAT(`a`.`path`, '/', `a`.`alias`),
 					'item', `a`.`extension_instance_id`, 1, 12
 

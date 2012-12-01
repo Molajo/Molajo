@@ -7,7 +7,7 @@
         password=""
         db="molajo"
         db_prefix="molajo_"
-        data_object_connection_namespace="JPlatform\database\driver\JDatabaseDriverMysqli"
+        service_class_connection_namespace="JPlatform\database\driver\JDatabaseDriverMysqli"
         service_class_query_method="JPlatform\database\query\JDatabaseQueryMysqli"
         service_class="Database"
         process_plugins="1"/>

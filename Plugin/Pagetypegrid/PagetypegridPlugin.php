@@ -34,6 +34,7 @@ class PagetypegridPlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+
         $controller->setDataobject();
 
         $controller->set('get_customfields', 2);
@@ -61,13 +62,13 @@ class PagetypegridPlugin extends Plugin
     {
         $url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
 
-        $button = $this->get('grid_toolbar_buttons');
+        $list = $this->get('grid_toolbar_buttons');
 
-        if ($button == '#' || $button == '') {
-            $button = 'create,read,edit,publish,feature,archive,checkin,restore,delete,trash';
+        if ($list == '#' || $list == '') {
+            $list = 'create,read,edit,publish,feature,archive,checkin,restore,delete,trash';
         }
 
-        $grid_toolbar_buttons = explode(',', $button);
+        $grid_toolbar_buttons = explode(',', $list);
 
         $permissions = Services::Permissions()
             ->verifyTaskList(
@@ -77,30 +78,36 @@ class PagetypegridPlugin extends Plugin
 
         $query_results = array();
 
-        foreach ($grid_toolbar_buttons as $buttonname) {
+        foreach ($grid_toolbar_buttons as $button) {
 
-            if ($permissions[$buttonname] === true) {
+            if ($permissions[$button] === true) {
                 $row = new \stdClass();
-                $row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($buttonname) . '_BUTTON'));
-                $row->action = $buttonname;
+
+                $row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($button) . '_BUTTON'));
+                $row->action = $button;
+
                 if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
                     $row->link = $url . '/' . $row->action;
                 } else {
                     $row->link = $url . '&action=' . $row->action;
                 }
+
                 $query_results[] = $row;
             }
         }
 
         if ($this->get('grid_search', 1) == 1) {
             $row = new \stdClass();
+
             $row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
             $row->action = 'search';
+
             if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
                 $row->link = $url . '/' . $row->action;
             } else {
                 $row->link = $url . '&action=' . $row->action;
             }
+
             $query_results[] = $row;
         }
 
@@ -227,10 +234,6 @@ class PagetypegridPlugin extends Plugin
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
-echo '<pre>';
-var_dump($query_results);
-echo '</pre>';
-        die;
         $gridItems = array();
 
         $name_key = $controller->get('name_key');
@@ -313,15 +316,10 @@ echo '</pre>';
                 $row->selected = '';
                 $row->enable = 1;
 
-                Services::Registry()->set(
-                    TEMPLATE_LITERAL,
-                    'Grid' . strtolower($grid_batch_array[$i]),
-                    array($row)
-                );
+                Services::Registry()->set(TEMPLATE_LITERAL, 'Grid' . strtolower($grid_batch_array[$i]), array($row));
             }
         }
 
-        /** Submenu: Links to various Form Pages (Tabs) - ex. Batch Options */
         $pageArray = array();
         $i = 0;
 

@@ -349,7 +349,6 @@ Class ConfigurationService
                 $controller = new $controllerClass();
                 $controller->getModelRegistry('Datasource', 'Application');
                 $controller->setDataobject();
-
                 $controller->set('name_key_value', APPLICATION);
 
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
@@ -379,6 +378,7 @@ Class ConfigurationService
 
                         if ($value === 0 || trim($value) == '' || $value === null) {
                         } else {
+                            echo $key . ' ' . $value . ' <br /> ';
                             Services::Registry()->set('Configuration', $key, $value);
                         }
                     }
@@ -568,7 +568,9 @@ Class ConfigurationService
 
         if (Services::Registry()->exists($dataObjectRegistry)) {
         } else {
-            ConfigurationService::getDataobject('Dataobject', $data_object);
+            $controllerClass = CONTROLLER_CLASS;
+            $controller = new $controllerClass();
+            $controller->getModelRegistry('Dataobject', $data_object);
         }
 
         foreach (Services::Registry()->get($dataObjectRegistry) as $key => $value) {
@@ -630,6 +632,7 @@ Class ConfigurationService
             'value',
             self::$valid_value_attributes
         );
+
 
         ConfigurationService::getCustomFields($xml, $model_registry);
 
@@ -759,11 +762,11 @@ Class ConfigurationService
      */
     protected static function setDataobjectRegistry($DataobjectRegistry, $xml)
     {
+
         $doArray = Services::Registry()->get(FIELDS_LITERAL, 'Dataobjectattributes');
 
         foreach ($xml->attributes() as $key => $value) {
-
-            if (in_array($key, $doArray)) {
+            if (in_array((string) $key, $doArray)) {
                 Services::Registry()->set($DataobjectRegistry, $key, (string)$value);
             } else {
                 throw new \Exception ('Configuration: setDataobjectRegistry encountered Invalid Dataobject Attributes '

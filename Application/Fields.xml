@@ -18,8 +18,7 @@
 
     <dataobjectattributes>
         <dataobjectattribute name="name" default=""/>
-        <dataobjectattribute name="data_object_connection_namespace" default=""/>
-        <dataobjectattribute name="data_object_query_namespace" default=""/>
+        <dataobjectattribute name="data_object_type" default=""/>
         <dataobjectattribute name="db" default=""/>
         <dataobjectattribute name="db_prefix" default=""/>
         <dataobjectattribute name="db_type" default="mysqli"/>
@@ -29,6 +28,8 @@
         <dataobjectattribute name="service_class" default="Registry"/>
         <dataobjectattribute name="service_class_query_method" default="getData"/>
         <dataobjectattribute name="service_class_query_method_parameter" default="Parameters"/>
+        <dataobjectattribute name="service_class_connection_namespace" default="JPlatform\database\driver\JDatabaseDriverMysqli"/>
+        <dataobjectattribute name="service_class_query_namespace" default="JPlatform\database\query\JDatabaseQueryMysqli"/>
         <dataobjectattribute name="process_plugins" default=""/>
     </dataobjectattributes>
 
@@ -59,13 +60,16 @@
 
     <modelattributes>
         <modelattribute name="name" default=""/>
+        <modelattribute name="data_object" default=" "/>
         <modelattribute name="table_name" default=""/>
         <modelattribute name="primary_key" default="id"/>
         <modelattribute name="primary_key_value" default=""/>
         <modelattribute name="name_key" default="title"/>
         <modelattribute name="name_key_value" default=""/>
         <modelattribute name="primary_prefix" default="a"/>
-        <modelattribute name="data_object" default="Database"/>
+        <modelattribute name="model_name" default=""/>
+        <modelattribute name="model_type" default=""/>
+        <modelattribute name="model_registry" default=""/>
         <modelattribute name="extends" default=""/>
         <modelattribute name="registry_entry" default=""/>
         <modelattribute name="criteria_catalog_type_id" default=""/>

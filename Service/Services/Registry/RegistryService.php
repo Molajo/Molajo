@@ -218,14 +218,30 @@ Class RegistryService
     public function get($namespace = null, $key = null, $default = null)
     {
         $namespace = strtolower($namespace);
-        $key = strtolower($key);
+
+        if ($key === null) {
+
+        } elseif (is_array($key)) {
+            throw new \RuntimeException
+            ('Registry: Key associated with Namespace: ' . $namespace . ' is array, must be string.');
+        } elseif (is_object($key)) {
+            throw new \RuntimeException
+            ('Registry: Key associated with Namespace: ' . $namespace . ' is an object, must be string.');
+        } else {
+            $key = strtolower($key);
+        }
 
         if ($namespace == 'db') {
             return $this;
         }
 
         if ($namespace == '*') {
-            return $this->listRegistry('*');
+            if ($key === null) {
+                return $this->listRegistry(false);
+            } else {
+                return $this->listRegistry(true);
+            }
+
 
         } elseif ($key == null) {
             return $this->getRegistry($namespace);
@@ -711,9 +727,9 @@ Class RegistryService
      * @return  mixed|boolean or array
      * @since   1.0
      */
-    public function listRegistry($include_entries = false)
+    public function listRegistry($expand = false)
     {
-        if ($include_entries === true) {
+        if ($expand === false) {
             echo '<pre>';
             var_dump($this->registryKeys);
             echo '</pre>';
@@ -749,7 +765,7 @@ Class RegistryService
         $key = strtolower($key);
         $query_results = array();
 
-        if ($key === NULL || $key == '*') {
+        if ($key === null || $key == '*') {
             $results = $this->get($registry);
 
         } elseif ($query_object == QUERY_OBJECT_RESULT) {

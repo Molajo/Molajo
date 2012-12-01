@@ -633,7 +633,7 @@ class Includer
         $message .= ob_get_contents();
         ob_end_clean();
 
-        echo $message;
+        //echo $message;
 
         Services::Profiler()->set($message, PROFILER_RENDERING, VERBOSE);
 
