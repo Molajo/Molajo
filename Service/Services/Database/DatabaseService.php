@@ -45,6 +45,14 @@ Class DatabaseService
     protected $db;
 
     /**
+     * Model Registry
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $model_registry = array();
+
+    /**
      * Retrieve Site and Application data, set constants and paths
      *
      * @param   null  $configuration_file
@@ -54,22 +62,45 @@ Class DatabaseService
      */
     public function __construct()
     {
-        $this->connect();
-
         return $this;
     }
 
     /**
-     * get
+     * get property
      *
      * @param   $value
      *
      * @return  mixed
      * @since   1.0
      */
-    public function get($value)
+    public function get($key)
     {
-        return $this->$value;
+        if (isset($this->model_registry['data_object_' . $key])) {
+            return $this->model_registry['data_object_' . $key];
+        }
+
+        return $this->$key;
+    }
+
+    /**
+     * set property
+     *
+     * @param   string  $key
+     * @param   varies  $value
+     * @param   null    $property
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value, $property = null)
+    {
+        if ($property == 'model_registry') {
+            $this->model_registry[$key] = $value;
+            return $this->model_registry[$key];
+        }
+
+        $this->$key = $value;
+        return $this->$key;
     }
 
     /**
@@ -79,35 +110,32 @@ Class DatabaseService
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function connect()
+    public function connect($model_registry)
     {
+        $this->set('model_registry', $model_registry);
+
         if (defined('DATABASE_SERVICE')) {
         } else {
             define('DATABASE_SERVICE', true);
-            ConfigurationService::getDataobject(DATA_OBJECT_LITERAL, DATABASE_LITERAL);
         }
 
         $this->options = array(
             'driver' => preg_replace(
                 '/[^A-Z0-9_\.-]/i',
                 '',
-                Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'db_type')
+                $this->get('db_type')
             ),
-            'host' => Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'db_host'),
-            'user' => Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'db_user'),
-            'password' => Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'db_password'),
-            'database' => Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'db'),
-            'prefix' => Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'db_prefix'),
+            'host' => $this->get('db_host'),
+            'user' => $this->get('db_user'),
+            'password' => $this->get('db_password'),
+            'database' => $this->get('db'),
+            'prefix' => $this->get('db_prefix'),
             'select' => true
         );
 
-        $this->name = Services::Registry()->get(DATABASE_LITERAL.DATA_OBJECT_LITERAL, 'db_type');
+        $this->name = $this->get('db_type');
 
-        $service_class_connection_namespace =
-            Services::Registry()->get(
-            DATABASE_LITERAL.DATA_OBJECT_LITERAL,
-            'service_class_connection_namespace'
-        );
+        $service_class_connection_namespace =  $this->get('service_class_connection_namespace');
 
         if (class_exists($service_class_connection_namespace)) {
         } else {
@@ -131,14 +159,11 @@ Class DatabaseService
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function getQuery($db)
+    public function getQuery()
     {
-        $this->db = $db;
+        //$this->db = $db;
 
-        $service_class_query_namespace =
-            Services::Registry()->get(
-                DATABASE_LITERAL.DATA_OBJECT_LITERAL,
-                'service_class_query_namespace');
+        $service_class_query_namespace = $this->get('service_class_query_namespace');
 
         if (class_exists($service_class_query_namespace)) {
         } else {

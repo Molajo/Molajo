@@ -38,9 +38,19 @@ class Plugin
     protected $plugin_event;
 
     /**
-     * Instance of Model Properties from Controller/Model
+     * Instance of Model
      *
      * Access to data like model_name, model_type, query, db, null_date, and now
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $model;
+
+    /**
+     * Instance of Model Properties from Controller/Model
+     *
+     * Access to data like table_name, primary_key, get_customfields, data_object, fields, customfields
      *
      * @var    object
      * @since  1.0
@@ -64,6 +74,14 @@ class Plugin
     protected $query_results;
 
     /**
+     * For onAfterRead Event, indicates the first row of (possibly) many returned for the Query
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $first;
+
+    /**
      * Used in Create, Update, Delete operations
      *
      * @var    object
@@ -80,43 +98,68 @@ class Plugin
     protected $rendered_output;
 
     /**
+     * List of named Plugin Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $property_array = array(
+        'plugin_class',
+        'plugin_event',
+        'model',
+        'model_registry',
+        'parameters',
+        'query_results',
+        'data',
+        'rendered_output, first'
+    );
+
+    /**
      * Get the current value (or default) of the specified property
      *
      * @param   string  $key
      * @param   mixed   $default
+     * @param   string  $property
      *
      * @return  mixed
      * @since   1.0
      */
-    public function get($key, $default = null)
+    public function get($key, $default = null, $property = 'parameters')
     {
         $value = null;
 
-        if (in_array($key,
-            array('plugin_class',
-                 'event',
-                'model_registry',
-                'model',
-                'parameters',
-                'query_results',
-                'data',
-                'rendered_output'))
-            && (isset($this->$key))
-        ) {
+        // echo 'Key ' . $key . '<br /> ';
+        // echo '$default ' . $default . '<br /> ';
+        // echo '$property ' . $property . '<br /> ';
+
+        if (in_array($key, $this->property_array)) {
             $value = $this->$key;
+            return $value;
+        }
 
-        } else {
-
+        if ($property == 'parameters') {
             if (isset($this->parameters[$key])) {
-                $value = $this->parameters[$key];
+                return $this->parameters[$key];
             }
+            $this->parameters[$key] = $default;
+            return $this->parameters[$key];
         }
 
-        if ($value === null) {
-            return $default;
+        if ($property == 'model_registry') {
+            if (isset($this->model_registry[$key])) {
+                return $this->model_registry[$key];
+            }
+            $this->model_registry[$key] = $default;
+            return $this->model_registry[$key];
         }
 
-        return $value;
+        if ($property == 'model') {
+            return $this->model->$key;
+        }
+
+        throw new \OutOfRangeException('Plugin: ' . $this->plugin_class .
+            ' Event ' . $this->plugin_event .
+            ' attempting to get value for unknown key: ' . $key);
     }
 
     /**
@@ -125,130 +168,52 @@ class Plugin
      * Initially, the setter is used by the plugin_event processPluginClass method
      *  to establish initial property values sent in by the scheduling method
      *
+     * Changes to data will be used collected and used by the MVC
+     *
      * @param   string  $key
      * @param   mixed   $value
      *
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null)
+    public function set($key, $value = null, $property = 'parameters')
     {
-        if (in_array($key,
-            array('plugin_class',
-                'plugin_event',
-                'model_registry',
-                'model',
-                'parameters',
-                'query_results',
-                'data',
-                'rendered_output'))
-        ) {
+        if (in_array($key, $this->property_array)) {
+            $this->$key = $value;
+            return $this->$key;
+        }
 
-            if ($key == 'parameters') {
-
-                foreach ($value as $k => $v) {
-
-                    if (is_string($k)) {
-                        $this->parameters[$k] = $v;
-
-                    } else {
-                        echo '<pre>';
-                        var_dump($k);
-                        echo '</pre>';
-                        die;
-                        throw new \RuntimeException('Invalid Key for Parameter Array');
-                    }
-                }
-
-            } else {
-                $this->$key = $value;
-            }
-
-        } else {
+        if ($property == 'parameters') {
             $this->parameters[$key] = $value;
+            return $this->parameters[$key];
         }
 
-        return;
-    }
-
-    /**
-     * Unload fields for plugin use
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    public function setFields()
-    {
-        $this->fields = array();
-
-        if ($this->model_name == null || $this->model_type == null) {
-        }  else {
-            $this->model_name = ucfirst(strtolower($this->model_name));
-            $this->model_type = ucfirst(strtolower($this->model_type));
+        if ($property == 'model_registry') {
+            $this->model_registry[$key] = $value;
+            return $this->model_registry[$key];
         }
 
-        if ($this->model_registry_name === null) {
-            if ($this->model_name == null || $this->model_type == null) {
-                return $this;
-            } else {
-                $this->model_registry_name = $this->model_name  . $this->model_type;
-            }
+        if ($property == 'model') {
+            $this->model->$key = $value;
+            return $this->model->$key;
         }
 
-        $fields = Services::Registry()->get($this->model_registry_name, FIELDS_LITERAL);
-
-        if (count($fields) == 0) {
-            return true;
-        }
-        $this->processFieldType($type = '', $fields);
-
-        $this->customfieldgroups = Services::Registry()->get($this->model_registry_name, CUSTOMFIELDGROUPS_LITERAL, array());
-
-        if (is_array($this->customfieldgroups) && count($this->customfieldgroups) > 0) {
-            foreach ($this->customfieldgroups as $customFieldName) {
-                $customFieldName = strtolower($customFieldName);
-                $fields = Services::Registry()->get($this->model_registry_name, $customFieldName);
-                $this->processFieldType($customFieldName, $fields);
-            }
-        }
-
-        /** join fields */
-        $joinfields = Services::Registry()->get($this->model_registry_name, 'JoinFields');
-        if (is_array($joinfields) && count($joinfields) > 0) {
-            $this->processFieldType('JoinFields', $joinfields);
-        }
-
-        /** foreign keys */
-        $foreignkeys = Services::Registry()->get($this->model_registry_name, 'foreignkeys');
-        if (is_array($foreignkeys) && count($foreignkeys) > 0) {
-            $this->processFieldType('foreignkeys', $foreignkeys);
-        }
-
-        /** children */
-        $childkeys = Services::Registry()->get($this->model_registry_name, 'children');
-        if (is_array($childkeys) && count($childkeys) > 0) {
-            $this->processFieldType('children', $childkeys);
-        }
-
-         echo $this->plugin_event . ' ' . $this->model_registry_name . ' '
-             . $this->plugin_class . ' ' . count($this->fields) . ' '
-             . 'Process Plugins ' . Services::Registry()->get($this->model_registry_name, 'process_plugins')
-             . '<br /> ';
-
-        return $this;
+        throw new \OutOfRangeException('Plugin: ' . $this->plugin_class .
+            ' Event ' . $this->plugin_event .
+            ' attempting to set value for unknown property: ' . $key);
     }
 
     /**
      * retrieveFieldsByType processes an array of fields, populating the class property
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function retrieveFieldsByType($type)
     {
         $results = array();
 
-        foreach ($this->fields as $field) {
+        foreach ($this->model->fields as $field) {
 
             if ($field->type == $type) {
                 $results[] = $field;
@@ -261,14 +226,14 @@ class Plugin
     /**
      * getField by name
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function getField($name)
     {
-        foreach ($this->fields as $field) {
+        foreach ($this->model->fields as $field) {
 
-            if ((int) $field->foreignkey = 0) {
+            if ((int)$field->foreignkey = 0) {
 
             } else {
                 if ($field->as_name == '') {
@@ -315,6 +280,7 @@ class Plugin
             return $this->data->$name;
 
         } elseif (isset($field->customfield)) {
+            //todo: review this - it seems unnecessary
             if (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
                 return Services::Registry()->get($this->get('model_name') . $field->customfield, $name);
             }
@@ -378,182 +344,22 @@ class Plugin
         return;
     }
 
+
     /**
-     * processFieldType processes an array of fields, populating the class property
+     * Triggered by Controller after Data Object is set for Model Registry
      *
-     * @param   $type
-     * @param   $fields
-     *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
-    public function processFieldType($type, $fields)
+    public function onAfterSetDataobject()
     {
-        foreach ($fields as $key => $value) {
-
-            $row = new \stdClass();
-
-            /** Name */
-            if (isset($fields[$key]['name'])) {
-                if ($type == 'foreignkeys') {
-                    $row->name = 'fk_' . $fields[$key]['name'];
-                } else {
-                    $row->name = $fields[$key]['name'];
-                }
-            } else {
-                $row->name = 'Unknown';
-            }
-
-            /** As Name */
-            if (isset($fields[$key]['as_name'])) {
-                $row->as_name = $fields[$key]['as_name'];
-            } else {
-                $row->as_name = '';
-            }
-
-            /** Alias */
-            if (isset($fields[$key]['alias'])) {
-                $row->alias = $fields[$key]['alias'];
-            } else {
-                $row->alias = '';
-            }
-
-            /** Datatype */
-            if (isset($fields[$key]['type'])) {
-                $row->type = $fields[$key]['type'];
-            } else {
-                $row->type = 'char';
-            }
-
-            /** Default */
-            if (isset($fields[$key]['default'])) {
-                $row->default = $fields[$key]['default'];
-            } else {
-                $row->default = '';
-            }
-
-            /** File */
-            if (isset($fields[$key]['file'])) {
-                $row->file = $fields[$key]['file'];
-            } else {
-                $row->file = 'file';
-            }
-
-            /** Identity */
-            if (isset($fields[$key]['identity'])) {
-                $row->identity = $fields[$key]['identity'];
-            } else {
-                $row->identity = 'identity';
-            }
-
-            /** Length */
-            if (isset($fields[$key]['length'])) {
-                $row->length = $fields[$key]['length'];
-            } else {
-                $row->length = '';
-            }
-
-            /** Minimum */
-            if (isset($fields[$key]['minimum'])) {
-                $row->minimum = $fields[$key]['minimum'];
-            } else {
-                $row->minimum = '';
-            }
-
-            /** Maximum */
-            if (isset($fields[$key]['maximum'])) {
-                $row->maximum = $fields[$key]['maximum'];
-            } else {
-                $row->maximum = '';
-            }
-
-            /** null */
-            if (isset($fields[$key]['null'])) {
-                $row->null = $fields[$key]['null'];
-            } else {
-                $row->null = false;
-            }
-
-            /** Required */
-            if (isset($fields[$key]['required'])) {
-                $row->required = $fields[$key]['required'];
-            } else {
-                $row->required = '0';
-            }
-
-            /** Shape */
-            if (isset($fields[$key]['shape'])) {
-                $row->shape = $fields[$key]['shape'];
-            } else {
-                $row->shape = '0';
-            }
-
-            /** Size */
-            if (isset($fields[$key]['size'])) {
-                $row->size = $fields[$key]['size'];
-            } else {
-                $row->size = '0';
-            }
-
-            /** Table */
-            if (isset($fields[$key]['table_name'])) {
-                $row->table = $fields[$key]['table_name'];
-            } else {
-                $row->table = '';
-            }
-
-            /** Unique */
-            if (isset($fields[$key]['unique'])) {
-                $row->unique = $fields[$key]['unique'];
-            } else {
-                $row->unique = '0';
-            }
-
-            /** Values */
-            if (isset($fields[$key]['values'])) {
-                $row->values = $fields[$key]['values'];
-            } else {
-                $row->values = '';
-            }
-
-            if ($type == '') {
-                $row->customfield = '';
-                $row->foreignkey = 0;
-
-            } elseif ($type == 'foreignkeys') {
-                $row->customfield = '';
-                $row->foreignkey = 1;
-                $row->type = $type;
-
-            } else {
-                $row->customfield = $type;
-                $row->foreignkey = 0;
-            }
-
-            /** Source ID */
-            if (isset($fields[$key]['source_id'])) {
-                $row->source_id = $fields[$key]['source_id'];
-            } else {
-                $row->source_id = '0';
-            }
-
-            /** Source Model */
-            if (isset($fields[$key]['source_model'])) {
-                $row->source_model = $fields[$key]['source_model'];
-            } else {
-                $row->source_model = '';
-            }
-
-            $this->fields[] = $row;
-        }
-
-        return;
+        return true;
     }
 
     /**
      * Runs before Route and after Services and Helpers have been instantiated
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterInitialise()
@@ -564,7 +370,7 @@ class Plugin
     /**
      * Scheduled after Route has been determined. Parameters contain all instruction to produce primary request.
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterRoute()
@@ -575,7 +381,7 @@ class Plugin
     /**
      * Scheduled after core Authorise to augment, change authorisation process or override a failed test
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterAuthorise()
@@ -584,9 +390,9 @@ class Plugin
     }
 
     /**
-     * After Route and Permissions,  the Theme/Page are parsed
+     * After Route and Permissions, the Theme/Page are parsed
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onBeforeParse()
@@ -597,7 +403,7 @@ class Plugin
     /**
      * Pre-read processing
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onBeforeRead()
@@ -608,7 +414,7 @@ class Plugin
     /**
      * Post-read processing - one row at a time
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterRead()
@@ -619,7 +425,7 @@ class Plugin
     /**
      * Post-read processing - all rows at one time from query_results
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterReadall()
@@ -630,7 +436,7 @@ class Plugin
     /**
      * After the Read Query has executed but Before Query results are injected into the View
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onBeforeViewRender()
@@ -642,7 +448,7 @@ class Plugin
     /**
      * After the View has been rendered but before the output has been passed back to the Includer
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterViewRender()
@@ -653,7 +459,7 @@ class Plugin
     /**
      * Document parsing and rendering for document body complete, document head has not started
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterParseBody()
@@ -664,7 +470,7 @@ class Plugin
     /**
      * After list of Head Include tags has been loaded and before the parsing begins
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onBeforeDocumentHead()
@@ -675,7 +481,7 @@ class Plugin
     /**
      * After all document parsing, body and head, has been accomplished and include tags replaced with rendered output
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterParse()
@@ -686,7 +492,7 @@ class Plugin
     /**
      * plugin_event fires after execute for both display and non-display task
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterExecute()
@@ -697,7 +503,7 @@ class Plugin
     /**
      * Plugin that fires after all views are rendered
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterResponse()
@@ -708,7 +514,7 @@ class Plugin
     /**
      * Pre-create processing
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onBeforeCreate()
@@ -719,7 +525,7 @@ class Plugin
     /**
      * Post-create processing
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterCreate()
@@ -730,7 +536,7 @@ class Plugin
     /**
      * Before update processing
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onBeforeUpdate()
@@ -741,7 +547,7 @@ class Plugin
     /**
      * After update processing
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterUpdate()
@@ -752,7 +558,7 @@ class Plugin
     /**
      * Pre-delete processing
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onBeforeDelete()
@@ -763,7 +569,7 @@ class Plugin
     /**
      * Post-delete processing
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
      */
     public function onAfterDelete()

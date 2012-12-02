@@ -11,7 +11,7 @@ use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
 
-/**SE
+/**
  * @package     Molajo
  * @subpackage  Plugin
  * @since       1.0
@@ -26,32 +26,31 @@ class DataobjectPlugin extends Plugin
      */
     public function onAfterSetDataobject()
     {
-
-        if ($this->model_registry['data_object'] == DATABASE_LITERAL) {
+        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
         } else {
             return true;
         }
 
-        if ($this->model_registry['data_object_service_class'] == '') {
-            $this->model_registry['data_object_service_class'] = DATABASE_LITERAL;
+        if ($this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry') == '') {
+            $this->set('data_object_service_class', DATABASE_LITERAL, 'model_registry');
         }
 
-        if ($this->model_registry['data_object_service_class'] == DATABASE_LITERAL) {
+        if ($this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
 
-            $service_class = $this->model_registry['data_object_service_class'];
+            $service_class = $this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry');
 
-            $this->model->db = Services::$service_class()->connect();
+            $db = Services::$service_class()->connect($this->get('model_registry'));
 
-            $this->model->set('query', $this->model->db->getQuery($this->model->db));
-
-            $this->model->set('null_date', $this->model->db->getNullDate());
+            $this->set('db', $db, 'model');
+            $this->set('query', $this->get('db', '', 'model')->getQuery(), 'model');
+            $this->set('null_date', $this->get('db', '', 'model')->getNullDate(), 'model');
 
             try {
-                $this->model->set('now', Services::Date()->getDate());
+                $this->set('now', Services::Date()->getDate(), 'model');
 
             } catch (\Exception $e) {
                 // ignore error due to Date Service activation later in sequence for some use
-                $this->model->set('now', $this->model->get('null_date'));
+                $this->set('now', $this->get('model')->get('null_date'), 'model');
             }
         }
 

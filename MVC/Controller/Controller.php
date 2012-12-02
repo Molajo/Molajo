@@ -125,7 +125,7 @@ class Controller
      * @return  mixed
      * @since   1.0
      */
-    public function get($key, $default = null, $property = 'parameters')
+    public function get($key, $default = null, $property = '')
     {
         if ($property == 'parameters') {
             if (isset($this->parameters[$key])) {
@@ -145,7 +145,6 @@ class Controller
             $this->model_registry[$key] = $default;
 
             return $this->model_registry[$key];
-
         }
 
         if (isset($this->$key)) {
@@ -196,6 +195,7 @@ class Controller
     {
         $this->set('data_object_set', 0);
 
+
         if ($model_type === null) {
             $model_type = DATA_SOURCE_LITERAL;
         }
@@ -215,7 +215,6 @@ class Controller
             $profiler_message = ' Registry ' . $this->model_registry_name . ' retrieved from Registry.';
 
         } else {
-
             $cached_output = Services::Cache()->get('Model', $this->model_registry_name);
 
             if ($cached_output === false) {
@@ -230,7 +229,6 @@ class Controller
                 $profiler_message = ' Registry ' . $this->model_registry_name . ' processed by Configuration Service';
 
             } else {
-
                 Services::Registry()->createRegistry($this->model_registry_name);
                 Services::Registry()->loadArray($this->model_registry_name, $cached_output);
                 $profiler_message = ' Registry ' . $this->model_registry_name . ' loaded from Cache. ';
@@ -783,35 +781,30 @@ class Controller
      *
      *  - Plugins cannot be selected for the data object -- use criteria within the plugin event method
      *
-     * @return  boolean
+     * @return  void
      * @since   1.0
      */
     protected function onAfterSetDataobjectEvent()
     {
         $arguments = array(
-            'model_registry' => $this->get('model_registry'),
             'model' => $this->get('model'),
-            'parameters' => $this->get('parameters')
+            'model_registry' => $this->get('model_registry'),
+            'parameters' => $this->get('parameters'),
+            'query_results' => array(),
+            'data' => array(),
+            'rendered_output' => array(),
+            'first' => null
         );
 
-        $arguments = Services::Event()->scheduleEvent('onAfterSetDataobject', $arguments, array());
+        $arguments = Services::Event()->scheduleEvent(
+            'onAfterSetDataobject',
+            $arguments,
+            $this->get('plugins', array())
+        );
 
-        if ($arguments === false) {
-            throw new \Exception('Controller: onAfterSetDataobject Failed for Data Object: '
-                . $this->get('data_object', DATABASE_LITERAL, 'model_registry'));
-        }
+        $this->setPluginResultProperties($arguments);
 
-        if (isset($arguments['parameters'])) {
-            $this->set('parameters', $arguments['parameters']);
-        }
-        if (isset($arguments['model'])) {
-            $this->set('model', $arguments['model']);
-        }
-        if (isset($arguments['model_registry'])) {
-            $this->set('model_registry', $arguments['model_registry']);
-        }
-
-        return true;
+        return;
     }
 
     /**
@@ -823,7 +816,7 @@ class Controller
      *
      * - Examples: Publishedstatus
      *
-     * @return  boolean
+     * @return  void
      * @since   1.0
      */
     protected function onBeforeReadEvent()
@@ -831,33 +824,28 @@ class Controller
         if (count($this->get('plugins', array())) == 0
             || (int)$this->get('process_plugins', 1, 'model_registry') == 0
         ) {
-            return true;
+            return;
         }
 
         $arguments = array(
-            'model_registry' => $this->get('model_registry'),
             'model' => $this->get('model'),
-            'parameters' => $this->get('parameters')
+            'model_registry' => $this->get('model_registry'),
+            'parameters' => $this->get('parameters'),
+            'query_results' => array(),
+            'data' => array(),
+            'rendered_output' => array(),
+            'first' => null
         );
 
-        $arguments = Services::Event()->scheduleEvent('onBeforeRead', $arguments, array());
+        $arguments = Services::Event()->scheduleEvent(
+            'onBeforeRead',
+            $arguments,
+            $this->get('plugins', $this->get('plugins'))
+        );
 
-        if ($arguments === false) {
-            throw new \Exception('Controller: onBeforeRead Failed for Model Registry: '
-                . $this->get('model_registry', DATABASE_LITERAL, 'model_registry'));
-        }
+        $this->setPluginResultProperties($arguments);
 
-        if (isset($arguments['parameters'])) {
-            $this->set('parameters', $arguments['parameters']);
-        }
-        if (isset($arguments['model'])) {
-            $this->set('model', $arguments['model']);
-        }
-        if (isset($arguments['model_registry'])) {
-            $this->set('model_registry', $arguments['model_registry']);
-        }
-
-        return true;
+        return;
     }
 
     /**
@@ -875,7 +863,7 @@ class Controller
      *
      * - Use Event carefully as it has perhaps the most potential to negatively impact performance.
      *
-     * @return  bool
+     * @return  void
      * @since   1.0
      */
     protected function onAfterReadEvent()
@@ -883,7 +871,7 @@ class Controller
         if (count($this->get('plugins', array())) == 0
             || (int)$this->get('process_plugins', 1, 'model_registry') == 0
         ) {
-            return true;
+            return;
         }
 
         $items = $this->query_results;
@@ -896,32 +884,28 @@ class Controller
             foreach ($items as $item) {
 
                 $arguments = array(
-                    'model_registry' => $this->get('model_registry'),
                     'model' => $this->get('model'),
+                    'model_registry' => $this->get('model_registry'),
                     'parameters' => $this->get('parameters'),
+                    'query_results' => $item,
+                    'data' => array(),
+                    'rendered_output' => array(),
                     'first' => $first
                 );
 
                 $arguments = Services::Event()->scheduleEvent(
-                    'onAfterRead', $arguments, $this->get('plugins', array()));
+                    'onAfterRead',
+                    $arguments,
+                    $this->get('plugins', $this->get('plugins'))
+                );
 
-                if ($arguments === false) {
-                    return false;
-                }
-
-                if (isset($arguments['parameters'])) {
-                    $this->set('parameters', $arguments['parameters']);
-                }
-                if (isset($arguments['model'])) {
-                    $this->set('model', $arguments['model']);
-                }
-                if (isset($arguments['model_registry'])) {
-                    $this->set('model_registry', $arguments['model_registry']);
-                }
+                $this->setPluginResultProperties($arguments);
 
                 $first = false;
             }
         }
+
+        return;
     }
 
     /**
@@ -934,37 +918,71 @@ class Controller
      *
      *  - Examples: CssclassandidsPlugin, Pagination, Paging, Useractivity
      *
-     * @return  bool
+     * @return  void
      * @since   1.0
      */
     protected function onAfterReadallEvent()
     {
         $arguments = array(
-            'model_registry' => $this->get('model_registry'),
             'model' => $this->get('model'),
-            'parameters' => $this->get('parameters')
+            'model_registry' => $this->get('model_registry'),
+            'parameters' => $this->get('parameters'),
+            'query_results' => $this->get('query_results'),
+            'data' => array(),
+            'rendered_output' => array(),
+            'first' => null
         );
 
-        $this->set('parameters', array());
-        $this->set('model_registry', array());
-        $this->set('query_results', array());
-
-
         $arguments = Services::Event()->scheduleEvent(
-            'onAfterReadall', $arguments, $this->get('plugins', array()));
+            'onAfterReadall',
+            $arguments,
+            $this->get('plugins', $this->get('plugins'))
+        );
 
-        if ($arguments === false) {
-            return false;
-        }
+        $this->setPluginResultProperties($arguments);
 
-        if (isset($arguments['parameters'])) {
-            $this->set('parameters', $arguments['parameters']);
-        }
+        return;
+    }
+
+    /**
+     * Common code for setting the controller properties, given various events
+     *
+     * @param   $arguments
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function setPluginResultProperties($arguments)
+    {
         if (isset($arguments['model'])) {
             $this->set('model', $arguments['model']);
+        } else {
+            $this->set('model', array());
         }
         if (isset($arguments['model_registry'])) {
             $this->set('model_registry', $arguments['model_registry']);
+        } else {
+            $this->set('model_registry', array());
+        }
+        if (isset($arguments['parameters'])) {
+            $this->set('parameters', $arguments['parameters']);
+        } else {
+            $this->set('parameters', array());
+        }
+        if (isset($arguments['query_results'])) {
+            $this->set('query_results', $arguments['query_results']);
+        } else {
+            $this->set('query_results', array());
+        }
+        if (isset($arguments['data'])) {
+            $this->set('data', $arguments['data']);
+        } else {
+            $this->set('data', array());
+        }
+        if (isset($arguments['rendered_output'])) {
+            $this->set('rendered_output', $arguments['rendered_output']);
+        } else {
+            $this->set('rendered_output', array());
         }
 
         return true;

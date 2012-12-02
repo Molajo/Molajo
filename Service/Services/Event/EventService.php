@@ -62,6 +62,17 @@ Class EventService
     protected $eventPluginArray;
 
     /**
+     * List of named Plugin Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $property_array = array(
+        'plugin_class', 'plugin_event', 'model', 'model_registry', 'parameters',
+        'query_results', 'data', 'rendered_output', 'first'
+    );
+
+    /**
      * Initialise Event Service - Register Core and Extension Plugins for Events
      *
      * @return  boolean
@@ -109,10 +120,14 @@ Class EventService
         $event = strtolower($event);
 
         if (Services::Registry()->get(EVENTS_LITERAL, DATABASE_LITERAL) === true) {
+
             $eventList = Services::Registry()->get(EVENTS_LITERAL, 'Events', array());
             $registered = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins', array());
             $pluginList = Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
+
         } else {
+
+            //todo: provide startup parameters - remove hardcoding
             $selections = array();
             $eventList = array('onaftersetdataobject');
 
@@ -120,6 +135,7 @@ Class EventService
             $row->event = 'onaftersetdataobject';
             $row->plugin = 'dataobjectplugin';
             $this->eventPluginArray[] = $row;
+
             $registered = $this->eventPluginArray;
 
             $this->pluginArray['dataobjectplugin'] = 'Molajo\Plugin\Dataobject\DataobjectPlugin';
@@ -170,7 +186,6 @@ Class EventService
                 }
                 $arguments = $results;
             }
-
         }
 
         Services::Profiler()->set('Event: Finished EventSchedule for Event: ' . $event, PROFILER_PLUGINS, VERBOSE);
@@ -186,7 +201,7 @@ Class EventService
      * Execute each qualified plugin, one at a time, until all have been processed.
      * Return arguments, which could contain changed data, to the calling class.
      *
-     * @param   string  $pluginClass  namespaced
+     * @param   string  $pluginClass  includes namespace
      * @param   string  $event
      * @param   array   $arguments
      *
@@ -205,26 +220,41 @@ Class EventService
 
         Services::Profiler()->set('Event:' . $event . ' firing Plugin: ' . $pluginClass, PROFILER_PLUGINS, VERBOSE);
 
-        $plugin->set('class', $pluginClass);
-        $plugin->set('event', $event);
+        $plugin->set('plugin_class', $pluginClass);
+        $plugin->set('plugin_event', $event);
 
         if (count($arguments) > 0) {
 
-            foreach ($arguments as $propertyKey => $propertyValue) {
-                $plugin->set($propertyKey, $propertyValue);
+            foreach ($arguments as $key => $value) {
+
+                if (in_array($key, $this->property_array)) {
+                    $plugin->set($key, $value);
+
+                } else {
+                    throw new \OutOfRangeException('Event: ' . $event .
+                        ' Plugin ' . $pluginClass .
+                        ' attempting to set value for unknown property: ' . $key);
+                }
             }
-
-            $plugin->setFields();
-
         }
+
 //ECHO 'Event:' . $event . ' firing Plugin: ' . $pluginClass . '<br />';
         $results = $plugin->$event();
 
         if ($results === false) {
         } else {
             if (count($arguments) > 0) {
-                foreach ($arguments as $propertyKey => $propertyValue) {
-                    $arguments[$propertyKey] = $plugin->get($propertyKey);
+
+                foreach ($arguments as $key => $value) {
+
+                    if (in_array($key, $this->property_array)) {
+                        $arguments[$key] = $plugin->get($key);
+
+                    } else {
+                        throw new \OutOfRangeException('Event: ' . $event .
+                            ' Plugin ' . $pluginClass .
+                            ' attempting to set value for unknown property: ' . $key);
+                    }
                 }
             }
         }

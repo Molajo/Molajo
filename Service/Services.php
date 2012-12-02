@@ -229,7 +229,6 @@ Class Services
      */
     private function set($key, $value = null, $connectionSucceeded = true)
     {
-
         $i = count($this->message);
 
         if ($value == null || $connectionSucceeded === false) {
