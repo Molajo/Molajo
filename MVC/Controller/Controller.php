@@ -22,7 +22,7 @@ class Controller
 {
     /**
      * Model Registry Name - only used to share data between getModelRegistry and setDataobject
-     *  All model data contained within the $model_registry array
+     *  property is unset in setDataobject - all model data should be accessed via the $model_registry
      *
      * @var    object
      * @since  1.0
@@ -199,7 +199,6 @@ class Controller
         if ($model_type === null) {
             $model_type = DATA_SOURCE_LITERAL;
         }
-
         $model_type = ucfirst(strtolower($model_type));
         $this->set('model_type', $model_type, 'model_registry');
 
@@ -207,7 +206,6 @@ class Controller
         $this->set('model_name', $model_name, 'model_registry');
 
         $this->set('model_registry_name', $model_name . $model_type, 'model_registry');
-
         $this->model_registry_name = $this->get('model_registry_name', '', 'model_registry');
 
         unset($model_name);
@@ -292,7 +290,6 @@ class Controller
             $this->set('data_object_data_object_type', 'other', 'model_registry');
             $this->set('model_class', 'other', 'model_registry');
         }
-
         $data_object_type = $this->get('data_object_data_object_type', null, 'model_registry');
 
         $this->set('data_object_type', $data_object_type, 'model_registry');
@@ -314,29 +311,29 @@ class Controller
         }
 
         if ($this->get('use_pagination', null, 'model_registry') === null) {
-            $this->set('use_pagination', 1);
+            $this->set('use_pagination', 1, 'model_registry');
         }
         if ($this->get('model_offset', null, 'model_registry') === null) {
-            $this->set('model_offset', 0);
+            $this->set('model_offset', 0, 'model_registry');
         }
         if ($this->get('model_count', null, 'model_registry') === null) {
-            $this->set('model_count', 15);
+            $this->set('model_count', 15, 'model_registry');
         }
         if ($this->get('primary_prefix', null, 'model_registry') === null) {
-            $this->set('primary_prefix', 'a');
+            $this->set('primary_prefix', 'a', 'model_registry');
         }
         if ($this->get('use_pagination', null, 'model_registry') === null) {
-            $this->set('use_pagination', 1);
+            $this->set('use_pagination', 1, 'model_registry');
         }
         if ($this->get('template_view_model_registry', null, 'model_registry') === null) {
-            $this->set('template_view_model_registry', 1);
+            $this->set('template_view_model_registry', 1, 'model_registry');
         }
-
-        $this->get($this->model_registry_name, '*');
 
         unset($this->model_registry_name);
 
         $this->onAfterSetDataobjectEvent();
+        Services::Registry()->get($this->model_registry_name, '*');
+        die;
 
         return;
     }
@@ -899,30 +896,27 @@ class Controller
             foreach ($items as $item) {
 
                 $arguments = array(
-                    'model_registry' => $this->model_registry,
-                    'parameters' => $this->parameters,
-                    'model' => $this->model,
+                    'model_registry' => $this->get('model_registry'),
+                    'model' => $this->get('model'),
+                    'parameters' => $this->get('parameters'),
                     'first' => $first
                 );
 
                 $arguments = Services::Event()->scheduleEvent(
-                    'onAfterRead',
-                    $arguments,
-                    $this->get('plugins', array())
-                );
+                    'onAfterRead', $arguments, $this->get('plugins', array()));
 
                 if ($arguments === false) {
                     return false;
                 }
 
-                if (isset($arguments['model_registry'])) {
-                    $this->model_registry = $arguments['model_registry'];
-                }
                 if (isset($arguments['parameters'])) {
-                    $this->parameters = $arguments['parameters'];
+                    $this->set('parameters', $arguments['parameters']);
                 }
                 if (isset($arguments['model'])) {
-                    $this->model = $arguments['model'];
+                    $this->set('model', $arguments['model']);
+                }
+                if (isset($arguments['model_registry'])) {
+                    $this->set('model_registry', $arguments['model_registry']);
                 }
 
                 $first = false;
@@ -946,31 +940,31 @@ class Controller
     protected function onAfterReadallEvent()
     {
         $arguments = array(
-            'model_registry' => $this->model_registry,
-            'parameters' => $this->parameters,
-            'data' => $this->query_results
+            'model_registry' => $this->get('model_registry'),
+            'model' => $this->get('model'),
+            'parameters' => $this->get('parameters')
         );
 
-        $this->parameters = array();
-        $this->model_registry = array();
-        $this->query_results = array();
+        $this->set('parameters', array());
+        $this->set('model_registry', array());
+        $this->set('query_results', array());
 
-        $arguments = Services::Event()->scheduleEvent('onAfterReadall', $arguments, $this->get('plugins', array()));
+
+        $arguments = Services::Event()->scheduleEvent(
+            'onAfterReadall', $arguments, $this->get('plugins', array()));
 
         if ($arguments === false) {
             return false;
         }
 
-        if (isset($arguments['model_registry'])) {
-            $this->model_registry = $arguments['model_registry'];
-        }
-
         if (isset($arguments['parameters'])) {
-            $this->parameters = $arguments['parameters'];
+            $this->set('parameters', $arguments['parameters']);
         }
-
-        if (isset($arguments['data'])) {
-            $this->query_results = $arguments['data'];
+        if (isset($arguments['model'])) {
+            $this->set('model', $arguments['model']);
+        }
+        if (isset($arguments['model_registry'])) {
+            $this->set('model_registry', $arguments['model_registry']);
         }
 
         return true;

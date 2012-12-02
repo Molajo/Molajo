@@ -154,6 +154,7 @@ Class Services
                 }
 
                 if ($static_indicator == 1) {
+
                     $this->set($name . 'Service', $connection, $connectionSucceeded);
                 }
 
@@ -218,15 +219,17 @@ Class Services
      *
      * Set indicator of Service availability in Registry
      *
-     * @param   string $key
-     * @param   null   $value
-     * @param   bool   $connectionSucceeded
+     * @param   string  $key
+     * @param   null    $value
+     * @param   bool    $connectionSucceeded
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \Exception
      */
     private function set($key, $value = null, $connectionSucceeded = true)
     {
+
         $i = count($this->message);
 
         if ($value == null || $connectionSucceeded === false) {

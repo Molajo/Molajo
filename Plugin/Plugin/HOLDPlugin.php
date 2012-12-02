@@ -22,30 +22,52 @@ defined('MOLAJO') or die;
 class Plugin
 {
     /**
-     * Plugin currently activated
+     * Called Class
      *
      * @var    string
      * @since  1.0
      */
-    protected $plugin_class;
+    protected $class;
 
     /**
-     * Event current scheduled
+     * Event Processing
      *
      * @var    string
      * @since  1.0
      */
-    protected $plugin_event;
+    protected $event;
 
     /**
      * Instance of Model Properties from Controller/Model
-     *
-     * Access to data like model_name, model_type, query, db, null_date, and now
      *
      * @var    object
      * @since  1.0
      */
     protected $model_registry;
+
+    /**
+     * Registry Name - can be used to retrieve table parameters
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $model_registry_name;
+
+    /**
+     * Model type
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $model_type;
+
+    /**
+     * Model name
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $model_name;
 
     /**
      * Parameters set by the Includer and used in the MVC to render output or process data
@@ -56,20 +78,60 @@ class Plugin
     protected $parameters = array();
 
     /**
-     * Data from Query Results
+     * Query Object from Model
      *
      * @var    object
      * @since  1.0
      */
-    protected $query_results;
+    protected $query;
 
     /**
-     * Used in Create, Update, Delete operations
+     * db object (for escaping fields)
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $db;
+
+    /**
+     * Query Results
      *
      * @var    object
      * @since  1.0
      */
     protected $data;
+
+    /**
+     * null_date
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $null_date;
+
+    /**
+     * now
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $now;
+
+    /**
+     * Fields - name and type
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $fields;
+
+    /**
+     * Custom Field Groups for this Data
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $customfieldgroups;
 
     /**
      * Used in post-render View plugins, contains output rendered from view
@@ -80,7 +142,7 @@ class Plugin
     protected $rendered_output;
 
     /**
-     * Get the current value (or default) of the specified property
+     * Get the current value (or default) of the specified Model property
      *
      * @param   string  $key
      * @param   mixed   $default
@@ -93,13 +155,20 @@ class Plugin
         $value = null;
 
         if (in_array($key,
-            array('plugin_class',
+            array('class',
                  'event',
                 'model_registry',
                 'model',
+                'model_type',
+                'model_name',
                 'parameters',
-                'query_results',
+                'query',
+                'db',
                 'data',
+                'null_date',
+                'now',
+                'fields',
+                'customfieldgroups',
                 'rendered_output'))
             && (isset($this->$key))
         ) {
@@ -122,7 +191,7 @@ class Plugin
     /**
      * Set the value of a property
      *
-     * Initially, the setter is used by the plugin_event processPluginClass method
+     * Initially, the setter is used by the Event processPluginClass method
      *  to establish initial property values sent in by the scheduling method
      *
      * @param   string  $key
@@ -134,14 +203,21 @@ class Plugin
     public function set($key, $value = null)
     {
         if (in_array($key,
-            array('plugin_class',
-                'plugin_event',
-                'model_registry',
+            array('class',
+                'event',
                 'model',
-                'parameters',
-                'query_results',
-                'data',
-                'rendered_output'))
+                'model_registry',
+            'model_type',
+            'model_name',
+            'parameters',
+            'query',
+            'db',
+            'data',
+            'null_date',
+            'now',
+            'fields',
+            'customfieldgroup',
+            'rendered_output'))
         ) {
 
             if ($key == 'parameters') {
@@ -230,8 +306,8 @@ class Plugin
             $this->processFieldType('children', $childkeys);
         }
 
-         echo $this->plugin_event . ' ' . $this->model_registry_name . ' '
-             . $this->plugin_class . ' ' . count($this->fields) . ' '
+         echo $this->event . ' ' . $this->model_registry_name . ' '
+             . $this->class . ' ' . count($this->fields) . ' '
              . 'Process Plugins ' . Services::Registry()->get($this->model_registry_name, 'process_plugins')
              . '<br /> ';
 
@@ -296,6 +372,7 @@ class Plugin
      */
     public function getFieldValue($field)
     {
+
         if (is_object($field)) {
         } else {
             return false;
@@ -381,14 +458,12 @@ class Plugin
     /**
      * processFieldType processes an array of fields, populating the class property
      *
-     * @param   $type
-     * @param   $fields
-     *
      * @return  boolean
      * @since   1.0
      */
     public function processFieldType($type, $fields)
     {
+
         foreach ($fields as $key => $value) {
 
             $row = new \stdClass();
@@ -684,7 +759,7 @@ class Plugin
     }
 
     /**
-     * plugin_event fires after execute for both display and non-display task
+     * Event fires after execute for both display and non-display task
      *
      * @return  boolean
      * @since   1.0
