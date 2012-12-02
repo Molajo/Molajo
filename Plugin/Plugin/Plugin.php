@@ -111,7 +111,8 @@ class Plugin
         'parameters',
         'query_results',
         'data',
-        'rendered_output, first'
+        'rendered_output',
+        'first'
     );
 
     /**
@@ -124,7 +125,7 @@ class Plugin
      * @return  mixed
      * @since   1.0
      */
-    public function get($key, $default = null, $property = 'parameters')
+    public function get($key, $default = null, $property = '')
     {
         $value = null;
 
@@ -176,7 +177,7 @@ class Plugin
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null, $property = 'parameters')
+    public function set($key, $value = null, $property = '')
     {
         if (in_array($key, $this->property_array)) {
             $this->$key = $value;

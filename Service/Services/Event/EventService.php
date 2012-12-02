@@ -228,7 +228,7 @@ Class EventService
             foreach ($arguments as $key => $value) {
 
                 if (in_array($key, $this->property_array)) {
-                    $plugin->set($key, $value);
+                    $plugin->set($key, $value, '');
 
                 } else {
                     throw new \OutOfRangeException('Event: ' . $event .
@@ -248,7 +248,7 @@ Class EventService
                 foreach ($arguments as $key => $value) {
 
                     if (in_array($key, $this->property_array)) {
-                        $arguments[$key] = $plugin->get($key);
+                        $arguments[$key] = $plugin->get($key, '', '');
 
                     } else {
                         throw new \OutOfRangeException('Event: ' . $event .

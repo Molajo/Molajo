@@ -39,10 +39,10 @@ class DataobjectPlugin extends Plugin
 
             $service_class = $this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry');
 
-            $db = Services::$service_class()->connect($this->get('model_registry'));
+            $this->set('db', Services::$service_class()->connect($this->get('model_registry')), 'model');
 
-            $this->set('db', $db, 'model');
-            $this->set('query', $this->get('db', '', 'model')->getQuery(), 'model');
+            $this->set('query', $this->get('db', '', 'model')->getQuery($this->get('db', '', 'model')), 'model');
+
             $this->set('null_date', $this->get('db', '', 'model')->getNullDate(), 'model');
 
             try {

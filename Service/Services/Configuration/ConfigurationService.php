@@ -341,7 +341,7 @@ Class ConfigurationService
             Services::Registry()->set('Configuration', 'application_path', APPLICATION);
 
         } else {
-;
+
             try {
                 $profiler_service = 0;
 
@@ -349,10 +349,13 @@ Class ConfigurationService
                 $controller = new $controllerClass();
                 $controller->getModelRegistry('Datasource', 'Application');
                 $controller->setDataobject();
-                $controller->set('name_key_value', APPLICATION);
+                $controller->set('name_key_value', APPLICATION, 'model_registry');
 
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
-
+                 echo '<pre>';
+                var_dump($item);
+                echo 'end of the line';
+                die;
                 if ($item === false) {
                     throw new \Exception ('ConfigurationService: Error executing getApplication Query');
                 }

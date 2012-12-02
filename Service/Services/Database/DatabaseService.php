@@ -159,10 +159,8 @@ Class DatabaseService
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function getQuery()
+    public function getQuery($db)
     {
-        //$this->db = $db;
-
         $service_class_query_namespace = $this->get('service_class_query_namespace');
 
         if (class_exists($service_class_query_namespace)) {
@@ -170,6 +168,6 @@ Class DatabaseService
             throw new \RuntimeException('Database: Query Class not found');
         }
 
-        return new $service_class_query_namespace($this->db);
+        return new $service_class_query_namespace($db);
     }
 }
