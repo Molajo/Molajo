@@ -33,7 +33,7 @@ Class ProfilerService
      * @var    boolean
      * @since  1.0
      */
-    protected $on;
+    public $on;
 
     /**
      * Time the Profiler Service was started, used to calculate time between operations
@@ -204,6 +204,9 @@ Class ProfilerService
      */
     public function set($message, $output_type = '', $verbose = 0)
     {
+        if ((int)$this->on == 0) {
+            return;
+        }
         if (in_array($message, $this->phase_array_list)) {
             Services::Registry()->set(PROFILER_LITERAL, 'CurrentPhase', $message);
         }
@@ -337,13 +340,24 @@ Class ProfilerService
     }
 
     /**
-     * Configuration invokes this method to initiate the profiler service if so configured
+     * Configuration invokes this method to initialise the profiler service (on or off)
      *
      * @return  boolean
      * @since   1.0
      */
-    public function initiate()
+    public function initialise()
     {
+        if ((int)Services::Registry()->get('Configuration', 'profiler_service') == 1) {
+            $this->on = 1;
+            define('PROFILER_ON', true);
+            Services::Registry()->set(PROFILER_LITERAL, 'on', true);
+        } else {
+            $this->on = 0;
+            define('PROFILER_ON', false);
+            Services::Registry()->set(PROFILER_LITERAL, 'on', false);
+            return $this;
+        }
+
         $this->hold_for_date_service_startup = array();
 
         $this->setProfilerOutputOptions();
@@ -355,6 +369,7 @@ Class ProfilerService
         if ($results === false) {
             $this->on = 0;
             define('PROFILER_ON', false);
+            Services::Registry()->set(PROFILER_LITERAL, 'on', false);
             return $this;
         } else {
             define('PROFILER_ON', true);

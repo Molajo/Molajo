@@ -283,8 +283,13 @@ Class RegistryService
         $namespace = $this->editNamespace($namespace);
 
         if ($this->exists($namespace)) {
-            throw new \RuntimeException
-            ('Registry: Cannot create Namespace ' . $namespace . ' because it already exists.');
+
+            if (isset($this->registryKeys[$namespace])) {
+                throw new \RuntimeException
+                    ('Registry: Cannot create Namespace ' . $namespace . ' because it already exists.');
+            } else {
+                return $this->registry[$namespace];
+            }
         }
 
         if ($namespace == 'db' || $namespace == '*') {
@@ -387,20 +392,37 @@ Class RegistryService
         } elseif ($key == null) {
             return $this->getRegistry($namespace);
 
-        } elseif ($key == '*' || strpos($key, '*')) {
+        } elseif ($key == '*' || strrpos($key, '*')) {
             $sort = $this->getRegistry($namespace);
 
             if ($key == '*') {
                 $selected = $sort;
             } else {
-                $selected = array();
+                //todo - combine all the wildcard logic
+                if (substr($key, 0, 1) == '*') {
+                    $selected = array();
+                    $searchfor = substr($key, 1, (strrpos($key, '*') - 1));
+                    foreach ($sort as $key => $value) {
+                        if ($key == $searchfor) {
+                            $match = true;
+                        } else {
+                            $match = strpos($key, $searchfor);
+                        }
+                        if ($match) {
+                            $selected[$key] = $value;
+                        }
+                    }
 
-                $searchfor = substr($key, 0, strrpos($key, '*'));
+                } else {
+                    $selected = array();
 
-                foreach ($sort as $key => $value) {
-                    $match = substr($key, 0, strlen($searchfor));
-                    if (strtolower($match) == strtolower($searchfor)) {
-                        $selected[$key] = $value;
+                    $searchfor = substr($key, 0, strrpos($key, '*'));
+
+                    foreach ($sort as $key => $value) {
+                        $match = substr($key, 0, strlen($searchfor));
+                        if (strtolower($match) == strtolower($searchfor)) {
+                            $selected[$key] = $value;
+                        }
                     }
                 }
             }
@@ -725,9 +747,7 @@ Class RegistryService
         $namespace = $this->editNamespace($namespace);
 
         if ($this->exists($namespace)) {
-        } else {
-            throw new \RuntimeException
-            ('Registry: Cannot delete an entry from Namespace ' . $namespace . ' since it does not exist.');
+            return $this;
         }
 
         if ($this->checkLock($namespace)) {
@@ -798,8 +818,7 @@ Class RegistryService
 
         if ($this->exists($namespace)) {
         } else {
-            throw new \RuntimeException
-            ('Registry: Cannot delete an entry from Namespace ' . $namespace . ' since it does not exist.');
+            return $this;
         }
 
         $namespace = strtolower($namespace);
@@ -940,10 +959,10 @@ Class RegistryService
 
         $namespace = $this->editNamespace($namespace);
 
-        if ($this->exists($namespace)) {
-            throw new \RuntimeException
-            ('Registry: Namespace ' . $namespace . ' already exists. Cannot use existing namespace with loadArray.');
-        }
+        //if ($this->exists($namespace)) {
+        //    throw new \RuntimeException
+        //    ('Registry: Namespace ' . $namespace . ' already exists. Cannot use existing namespace with loadArray.');
+       // }
 
         $this->getRegistry($namespace);
 
@@ -1068,7 +1087,7 @@ Class RegistryService
         if ($namespace === null) {
             $namespace = '*';
 
-        } elseif (is_string($namespace)) {
+        } elseif (is_string($namespace) || is_numeric($namespace)) {
             $namespace = strtolower($namespace);
             $namespace = trim($namespace);
 
@@ -1093,11 +1112,14 @@ Class RegistryService
     {
         if ($key === null) {
 
-        } elseif (is_string($key)) {
+        } elseif (is_string($key) || is_numeric($key)) {
             $key = strtolower($key);
             $key = trim($key);
 
         } else {
+            echo '<pre>';
+            var_dump($key);
+            echo '</pre>';
             throw new \RuntimeException
             ('Registry: Key associated with Namespace: ' . $namespace . ' is not a string.');
         }

@@ -27,7 +27,7 @@ class PagetypeeditPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        if (strtolower($this->get('page_type')) == 'edit') {
+        if (strtolower($this->get('page_type', '', 'parameters')) == 'edit') {
         } else {
             return true;
         }
@@ -42,7 +42,7 @@ class PagetypeeditPlugin extends Plugin
         $form = Services::Form();
 
         /** Set Input */
-        $form->set('namespace', strtolower($this->get('page_type')));
+        $form->set('namespace', strtolower($this->get('page_type', '', 'parameters')));
 
         $form->set('model_type', $this->get('model_type'));
         $form->set('model_name', $this->get('model_name'));

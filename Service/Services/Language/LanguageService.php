@@ -421,7 +421,7 @@ Class LanguageService
         );
 
         $controller->set('model_offset', 0, 'model_registry');
-        $controller->set('model_count', 99999);
+        $controller->set('model_count', 999999, 'model_registry');
 
         return $controller->getData(QUERY_OBJECT_LIST);
     }

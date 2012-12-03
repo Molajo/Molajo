@@ -102,14 +102,14 @@ class FoundationuiPlugin extends Plugin
 	 */
 	protected function setButtonArray()
 	{
-		if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
+		if ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
 
 			return $this->setItemButtons();
 
-		} elseif ($this->get('page_type') == QUERY_OBJECT_ITEM) {
+		} elseif ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
 			return $this->setEditButtons();
 
-		} elseif ($this->get('page_type') == QUERY_OBJECT_LIST) {
+		} elseif ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_LIST) {
 			return $this->setListButtons();
 		}
 

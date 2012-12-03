@@ -191,13 +191,13 @@ class PaginationPlugin extends Plugin
         $controller->set('get_item_children', 0);
 
         $controller->model->query->select($controller->model->db->qn('a')
-            . '.' . $controller->model->db->qn($controller->get('primary_key', 'id')));
+            . '.' . $controller->model->db->qn($controller->get('primary_key', 'id', 'model_registry')));
 
         $controller->model->query->select($controller->model->db->qn('a')
             . '.' . $controller->model->db->qn($controller->get('name_key', 'title')));
 
         $controller->model->query->where($controller->model->db->qn('a')
-            . '.' . $controller->model->db->qn($controller->get('primary_key', 'id')
+            . '.' . $controller->model->db->qn($controller->get('primary_key', 'id', 'model_registry')
             . ' = ' . (int) $this->parameters['catalog_source_id']));
 
 //todo ordering

@@ -76,7 +76,8 @@ Class EventService
         'query_results',
         'data',
         'rendered_output',
-        'first'
+        'include_parse_sequence',
+        'include_parse_exclude_until_final'
     );
 
     /**
@@ -139,8 +140,10 @@ Class EventService
             $eventList = array('onconnectdatabase');
 
             $row = new \stdClass();
+
             $row->event = 'onconnectdatabase';
             $row->plugin = 'dataobjectplugin';
+
             $this->eventPluginArray[] = $row;
 
             $registered = $this->eventPluginArray;
@@ -229,7 +232,9 @@ Class EventService
 
         $plugin->set('plugin_class', $pluginClass);
         $plugin->set('plugin_event', $event);
-ECHO '<br /><br/>Event :' . $event . ' firing Plugin: ' . $pluginClass . '<br />';
+
+ECHO '<br /><br/>XYZEvent :' . $event . ' firing Plugin: ' . $pluginClass . '<br />';
+
         if (count($arguments) > 0) {
 
             foreach ($arguments as $key => $value) {

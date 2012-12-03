@@ -27,7 +27,7 @@ class PagetypeapplicationPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        if (strtolower($this->get('page_type')) == PAGE_TYPE_APPLICATION) {
+        if (strtolower($this->get('page_type', '', 'parameters')) == PAGE_TYPE_APPLICATION) {
         } else {
             return true;
         }
@@ -121,7 +121,7 @@ class PagetypeapplicationPlugin extends Plugin
 
         $pageFieldsets = $form->setPageArray(
             $current_page,
-            strtolower($this->get('page_type')),
+            strtolower($this->get('page_type', '', 'parameters')),
             $resource_model_type,
             $resource_model_name,
             $this->parameters['criteria_extension_instance_id'],

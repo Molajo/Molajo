@@ -26,7 +26,7 @@ class PagetypeitemPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-		if (strtolower($this->get('page_type')) == QUERY_OBJECT_ITEM) {
+		if (strtolower($this->get('page_type', '', 'parameters')) == QUERY_OBJECT_ITEM) {
 		} else {
 			return true;
 		}

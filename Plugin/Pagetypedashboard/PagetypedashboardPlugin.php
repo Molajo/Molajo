@@ -26,7 +26,7 @@ class PagetypedashboardPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        if (strtolower($this->get('page_type')) == 'dashboard') {
+        if (strtolower($this->get('page_type', '', 'parameters')) == 'dashboard') {
         } else {
             return true;
         }

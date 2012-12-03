@@ -27,7 +27,7 @@ class PagetypeconfigurationPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        if (strtolower($this->get('page_type')) == PAGE_TYPE_CONFIGURATION) {
+        if (strtolower($this->get('page_type', '', 'parameters')) == PAGE_TYPE_CONFIGURATION) {
         } else {
             return true;
         }
@@ -150,7 +150,7 @@ class PagetypeconfigurationPlugin extends Plugin
         );
 
         /** Set Input */
-        $form->set('namespace', strtolower($this->get('page_type')));
+        $form->set('namespace', strtolower($this->get('page_type', '', 'parameters')));
 
         $form->set('model_type', $this->get('model_type'));
         $form->set('model_name', $this->get('model_name'));

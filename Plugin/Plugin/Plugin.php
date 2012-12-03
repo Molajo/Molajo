@@ -74,14 +74,6 @@ class Plugin
     protected $query_results;
 
     /**
-     * For onAfterRead Event, indicates the first row of (possibly) many returned for the Query
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $first;
-
-    /**
      * Used in Create, Update, Delete operations
      *
      * @var    object
@@ -98,6 +90,26 @@ class Plugin
     protected $rendered_output;
 
     /**
+     * Include statements to be processed by parser in order of sequence processed
+     *
+     * Available in: onBeforeParseEvent and onBeforeDocumentHeadEvent
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $include_parse_sequence;
+
+    /**
+     * Includes statements excluded until final run (empty during final run)
+     *
+     * Available in: onBeforeParseEvent and onBeforeDocumentHeadEvent
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $include_parse_exclude_until_final;
+
+    /**
      * List of named Plugin Properties
      *
      * @var    object
@@ -112,7 +124,8 @@ class Plugin
         'query_results',
         'data',
         'rendered_output',
-        'first'
+        'include_parse_sequence',
+        'include_parse_exclude_until_final'
     );
 
     /**
@@ -133,7 +146,7 @@ class Plugin
         // echo '$default ' . $default . '<br /> ';
         // echo '$property ' . $property . '<br /> ';
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->property_array) && $property == '') {
             $value = $this->$key;
             return $value;
         }
@@ -179,7 +192,7 @@ class Plugin
      */
     public function set($key, $value = null, $property = '')
     {
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->property_array) && $property == '') {
             $this->$key = $value;
             return $this->$key;
         }

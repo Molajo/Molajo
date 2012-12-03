@@ -214,7 +214,7 @@ Class CatalogHelper
         $controller->setDataobject();
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-        $key = $controller->get('primary_key', 'id');
+        $key = $controller->get('primary_key', 'id', 'model_registry');
 
         $controller->model->query->select(
             $controller->model->db->qn($prefix)
@@ -265,7 +265,7 @@ Class CatalogHelper
 
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
-        $key = $controller->get('primary_key', 'id');
+        $key = $controller->get('primary_key', 'id', 'model_registry');
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
@@ -321,7 +321,7 @@ Class CatalogHelper
             $controller->setDataobject();
 
             $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-            $key = $controller->get('primary_key', 'id');
+            $key = $controller->get('primary_key', 'id', 'model_registry');
 
             $controller->model->query->select(
                 $controller->model->db->qn($prefix)
@@ -362,7 +362,7 @@ Class CatalogHelper
         $controller->setDataobject();
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-        $key = $controller->get('primary_key', 'id');
+        $key = $controller->get('primary_key', 'id', 'model_registry');
 
         $controller->model->query->select(
             $controller->model->db->qn($prefix)

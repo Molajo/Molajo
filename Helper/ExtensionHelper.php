@@ -156,7 +156,6 @@ Class ExtensionHelper
         $catalog_type_id = null,
         $check_permissions = 0
     ) {
-
         if (Services::Registry()->get('CurrentPhase') == 'PROFILER_ROUTING') {
             $phase = PROFILER_ROUTING;
         } else {
@@ -230,16 +229,18 @@ Class ExtensionHelper
             );
         }
 
+        /** All Extension Rows available to avoid additional queries */
         if (Services::Registry()->exists('AuthorisedExtensions') === true) {
 
             if (strtolower($query_object) == QUERY_OBJECT_ITEM && (int)$extension_id > 0) {
                 $saved = Services::Registry()->get('AuthorisedExtensions', $extension_id, '');
                 if (is_object($saved)) {
                     $controller->set('get_customfields', 1, 'model_registry');
-                    $query_results = $controller->addCustomFields(array($saved), QUERY_OBJECT_ITEM, 1);
-                    $query_results->model_registry = ucfirst(strtolower($model_name)) . ucfirst(
+                    $temp = $controller->addCustomFields(array($saved), QUERY_OBJECT_ITEM, 1);
+                    $temp[0]->model_registry = ucfirst(strtolower($model_name)) . ucfirst(
                         strtolower($model_type)
                     );
+                    $query_results = $temp[0];
                     return $query_results;
                 }
             }
@@ -497,7 +498,9 @@ Class ExtensionHelper
             return false;
 
         }
-        if (file_exists(PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')) {
+        if (file_exists(
+            PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml')
+        ) {
             return PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node));
         }
 
@@ -617,7 +620,6 @@ Class ExtensionHelper
         $page_view_id = (int)Services::Registry()->get('parameters', 'page_view_id');
 
         Helpers::Theme()->get($theme_id);
-
         Helpers::View()->get($page_view_id, CATALOG_TYPE_PAGE_VIEW_LITERAL);
 
         return true;

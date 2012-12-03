@@ -26,7 +26,7 @@ class PagetypegridPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        if (strtolower($this->get('page_type')) == strtolower(PAGE_TYPE_GRID)) {
+        if (strtolower($this->get('page_type', '', 'parameters')) == strtolower(PAGE_TYPE_GRID)) {
         } else {
             return true;
         }
@@ -202,7 +202,7 @@ class PagetypegridPlugin extends Plugin
 
         $ordering = $this->get('grid_ordering');
         if ($ordering == '' || $ordering === null) {
-            $ordering = $controller->get('primary_key', 'id');
+            $ordering = $controller->get('primary_key', 'id', 'model_registry');
         }
         Services::Registry()->set(PAGE_TYPE_GRID, 'Tableordering', $ordering);
 

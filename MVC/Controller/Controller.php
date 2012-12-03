@@ -21,13 +21,12 @@ defined('MOLAJO') or die;
 class Controller
 {
     /**
-     * Model Registry Name - only used to share data between getModelRegistry and setDataobject
-     *  property is unset in setDataobject - all model data should be accessed via the $model_registry
+     * Model Registry Name
      *
      * @var    object
      * @since  1.0
      */
-    private $model_registry_name;
+    protected $model_registry_name;
 
     /**
      * Model Instance - db, query connection, date defaults, etc.
@@ -93,6 +92,31 @@ class Controller
      */
     protected $data_object_set;
 
+
+    /**
+     * Used in DisplayView to render output (file path for includes)
+     *
+     * @var    boolean
+     * @since  1.0
+     */
+    protected $view_path;
+
+    /**
+     * Used in DisplayView to render output (URL for assets)
+     *
+     * @var    boolean
+     * @since  1.0
+     */
+    protected $view_path_url;
+
+    /**
+     * Rendered Output
+     *
+     * @var    boolean
+     * @since  1.0
+     */
+    protected $rendered_output;
+
     /**
      * List of Controller Properties
      *
@@ -109,7 +133,9 @@ class Controller
         'data',
         'plugins',
         'rendered_output',
-        'data_object_set'
+        'data_object_set',
+        'view_path',
+        'view_path_url'
     );
 
     /**
@@ -149,7 +175,7 @@ class Controller
     {
 //        echo 'GET $key ' . $key . ' ' . ' Property ' . $property . '<br />';
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->property_array) && $property == '') {
             $value = $this->$key;
             return $value;
         }
@@ -195,7 +221,7 @@ class Controller
     {
 //echo 'SET $key ' . $key . ' ' . ' Property ' . $property . '<br />';
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->property_array) && $property == '') {
             $this->$key = $value;
             return $this->$key;
         }
@@ -216,7 +242,7 @@ class Controller
         }
 
         throw new \OutOfRangeException('Controller: '
-            . ' attempting to set value for unknown property: ' . $key);
+            . ' is attempting to set value for unknown property: ' . $key);
     }
 
     /**
@@ -366,6 +392,7 @@ class Controller
         }
 
         $this->onConnectDatabaseEvent();
+
         return;
     }
 
@@ -402,7 +429,6 @@ class Controller
         }
 
         $profiler_message =
-
             ' <br />Data Object: ' . $this->get('data_object', DATABASE_LITERAL, 'model_registry')
                 . ' <br />Model Type: ' . $this->get('model_type', DATA_SOURCE_LITERAL, 'model_registry')
                 . ' <br />Model Name: ' . $this->get('model_name', '', 'model_registry')
@@ -519,7 +545,6 @@ class Controller
         }
 
         if (is_array($this->query_results)) {
-
             return $this->query_results[0];
         }
 
@@ -804,11 +829,6 @@ class Controller
      */
     protected function onConnectDatabaseEvent()
     {
-        echo '<br />';
-        echo 'in onConnectDatabaseEvent' . '<br />';
-        echo $this->model_registry_name;
-        echo '<br />';
-
         $arguments = array(
             'model' => $this->get('model'),
             'model_registry' => $this->get('model_registry'),
@@ -816,7 +836,8 @@ class Controller
             'query_results' => array(),
             'data' => array(),
             'rendered_output' => array(),
-            'first' => null
+            'include_parse_sequence' => null,
+            'include_parse_exclude_until_final' => null
         );
 
         $arguments = Services::Event()->scheduleEvent(
@@ -844,13 +865,6 @@ class Controller
      */
     protected function onBeforeReadEvent()
     {
-        echo '<br />';
-        echo 'in onBeforeReadEvent' . '<br />';
-        echo $this->model_registry_name;
-        echo '<pre>';
-        var_dump($this->get('plugins'));
-        echo '</pre>';
-
         if (count($this->get('plugins', array())) == 0
             || (int)$this->get('process_plugins', 1, 'model_registry') == 0
         ) {
@@ -864,7 +878,8 @@ class Controller
             'query_results' => array(),
             'data' => array(),
             'rendered_output' => array(),
-            'first' => null
+            'include_parse_sequence' => null,
+            'include_parse_exclude_until_final' => null
         );
 
         $arguments = Services::Event()->scheduleEvent(
@@ -913,6 +928,8 @@ class Controller
         } else {
             foreach ($items as $item) {
 
+                $this->set('first', $first, 'parameters');
+
                 $arguments = array(
                     'model' => $this->get('model'),
                     'model_registry' => $this->get('model_registry'),
@@ -920,7 +937,8 @@ class Controller
                     'query_results' => $item,
                     'data' => array(),
                     'rendered_output' => array(),
-                    'first' => $first
+                    'include_parse_sequence' => null,
+                    'include_parse_exclude_until_final' => null
                 );
 
                 $arguments = Services::Event()->scheduleEvent(
@@ -960,7 +978,8 @@ class Controller
             'query_results' => $this->get('query_results'),
             'data' => array(),
             'rendered_output' => array(),
-            'first' => null
+            'include_parse_sequence' => null,
+            'include_parse_exclude_until_final' => null
         );
 
         $arguments = Services::Event()->scheduleEvent(
@@ -985,39 +1004,39 @@ class Controller
     protected function setPluginResultProperties($arguments)
     {
         if (isset($arguments['model'])) {
-            $this->set('model', $arguments['model']);
+            $this->set('model', $arguments['model'], '');
         } else {
-            $this->set('model', array());
+            $this->set('model', array(), '');
         }
 
         if (isset($arguments['model_registry'])) {
-            $this->set('model_registry', $arguments['model_registry']);
+            $this->set('model_registry', $arguments['model_registry'], '');
         } else {
-            $this->set('model_registry', array());
+            $this->set('model_registry', array(), '');
         }
 
         if (isset($arguments['parameters'])) {
-            $this->set('parameters', $arguments['parameters']);
+            $this->set('parameters', $arguments['parameters'], '');
         } else {
-            $this->set('parameters', array());
+            $this->set('parameters', array(), '');
         }
 
         if (isset($arguments['query_results'])) {
-            $this->set('query_results', $arguments['query_results']);
+            $this->set('query_results', $arguments['query_results'], '');
         } else {
-            $this->set('query_results', array());
+            $this->set('query_results', array(), '');
         }
 
         if (isset($arguments['data'])) {
-            $this->set('data', $arguments['data']);
+            $this->set('data', $arguments['data'], '');
         } else {
-            $this->set('data', array());
+            $this->set('data', array(), '');
         }
 
         if (isset($arguments['rendered_output'])) {
-            $this->set('rendered_output', $arguments['rendered_output']);
+            $this->set('rendered_output', $arguments['rendered_output'], '');
         } else {
-            $this->set('rendered_output', array());
+            $this->set('rendered_output', array(), '');
         }
 
         return true;

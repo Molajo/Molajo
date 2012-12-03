@@ -30,12 +30,12 @@ class ApplicationPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        $current_menuitem_id = (int)$this->get('menuitem_id');
+        $current_menuitem_id = (int)$this->get('menuitem_id', 0, 'parameters');
 
         $item_indicator = 0;
         if ((int)$current_menuitem_id == 0) {
             $item_indicator = 1;
-            $current_menuitem_id = (int)$this->get('parent_menu_id');
+            $current_menuitem_id = (int)$this->get('parent_menu_id', 0, 'parameters');
         }
 
         if ((int)$current_menuitem_id == 0) {
@@ -155,10 +155,10 @@ class ApplicationPlugin extends Plugin
         }
         Services::Registry()->set(STRUCTURE_LITERAL, 'HeaderTitle', $title);
 
-        Services::Registry()->set(STRUCTURE_LITERAL, 'page_type', $this->get('page_type'));
+        Services::Registry()->set(STRUCTURE_LITERAL, 'page_type', $this->get('page_type', '', 'parameters'));
 
-        $heading1 = $this->get('criteria_title');
-        $page_type = $this->get('page_type');
+        $heading1 = $this->get('criteria_title', '', 'parameters');
+        $page_type = $this->get('page_type', '', 'parameters');
         if ($page_type == 'Grid') {
             $page_type = QUERY_OBJECT_LIST;
         }
@@ -216,7 +216,7 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageEligibleActions()
     {
-        if ($this->get('page_type') == QUERY_OBJECT_ITEM) {
+        if ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
 
             if (strtolower(Services::Registry()->get('parameters', 'request_action')) == ACTION_READ) {
                 $actions = $this->setItemActions();
@@ -224,7 +224,7 @@ class ApplicationPlugin extends Plugin
                 $actions = $this->setEditActions();
             }
 
-        } elseif ($this->get('page_type') == QUERY_OBJECT_LIST) {
+        } elseif ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_LIST) {
             $actions = $this->setListActions();
 
         } else {

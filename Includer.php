@@ -55,6 +55,14 @@ class Includer
     protected $attributes = array();
 
     /**
+     * From the MVC to be processed by Plugins and passed back to Includer
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $rendered_output = null;
+
+    /**
      * @param   string  $name
      * @param   string  $type
      *
@@ -121,8 +129,9 @@ class Includer
             $this->loadViewMedia();
         }
 
-        $rendered_output = $this->onAfterIncludeEvent($rendered_output);
-        return $rendered_output;
+        $this->onAfterIncludeEvent();
+
+        return $this->rendered_output;
     }
 
     /**
@@ -191,7 +200,8 @@ class Includer
             } elseif ($name == 'template_view_css_id'
                 || $name == 'template_css_id'
                 || $name == 'template_id'
-                || $name == 'id') {
+                || $name == 'id'
+            ) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'template_view_css_id', $value);
 
             } elseif ($name == 'template_view_css_class'
@@ -204,7 +214,8 @@ class Includer
             } elseif ($name == strtolower(CATALOG_TYPE_WRAP_VIEW_LITERAL)
                 || $name == 'wrap_view_title'
                 || $name == 'wrap_view'
-                || $name == 'wrap_title') {
+                || $name == 'wrap_title'
+            ) {
 
                 $value = ucfirst(strtolower(trim($value)));
                 $wrap_id = Helpers::Extension()
@@ -218,22 +229,26 @@ class Includer
 
             } elseif ($name == 'wrap_view_css_id'
                 || $name == 'wrap_css_id'
-                || $name == 'wrap_id') {
+                || $name == 'wrap_id'
+            ) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_css_id', $value);
 
             } elseif ($name == 'wrap_view_css_class'
                 || $name == 'wrap_css_class'
-                || $name == 'wrap_class') {
+                || $name == 'wrap_class'
+            ) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_css_class', str_replace(',', ' ', $value));
 
             } elseif ($name == 'wrap_view_role'
                 || $name == 'wrap_role'
-                || $name == 'role') {
+                || $name == 'role'
+            ) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_role', str_replace(',', ' ', $value));
 
             } elseif ($name == 'wrap_view_property'
                 || $name == 'wrap_property'
-                || $name == 'property') {
+                || $name == 'property'
+            ) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_property', str_replace(',', ' ', $value));
 
             } elseif ($name == 'datalist') {
@@ -249,7 +264,8 @@ class Includer
                 Services::Registry()->set(PARAMETERS_LITERAL, 'model_type', $value);
 
             } elseif ($name == 'model_query_object'
-                || $name == 'query_object') {
+                || $name == 'query_object'
+            ) {
                 Services::Registry()->set(PARAMETERS_LITERAL, 'model_query_object', $value);
 
             } else {
@@ -291,14 +307,16 @@ class Includer
 
                 if ($key == 'template_view_id'
                     || $key == 'template_view_path_node'
-                    || $key == 'template_view_title') {
+                    || $key == 'template_view_title'
+                ) {
 
                 } elseif (is_array($value)) {
                     $saveTemplate[$key] = $value;
 
                 } elseif ($value === 0
                     || trim($value) == ''
-                    || $value === null) {
+                    || $value === null
+                ) {
 
                 } else {
                     $saveTemplate[$key] = $value;
@@ -582,37 +600,6 @@ class Includer
     }
 
     /**
-     * Schedule Event onBeforeInclude Event
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function onBeforeIncludeEvent()
-    {
-        Services::Profiler()->set('IncludeService onBeforeInclude', PROFILER_PLUGINS, VERBOSE);
-
-        $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
-
-        $arguments = array(
-            'parameters' => $parameters
-        );
-
-        $arguments = Services::Event()->scheduleEvent('onBeforeInclude', $arguments);
-
-        if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
-            Services::Profiler()->set('IncludeService onBeforeInclude failed', PROFILER_PLUGINS);
-            return false;
-        }
-
-        Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
-        Services::Registry()->sort(PARAMETERS_LITERAL);
-
-        return true;
-    }
-
-    /**
      * Instantiate the Controller and execute action method, receive rendered output from Controller
      *
      * @return  mixed
@@ -633,61 +620,98 @@ class Includer
         $message .= ob_get_contents();
         ob_end_clean();
 
-        //echo $message;
+        echo $message;
 
         Services::Profiler()->set($message, PROFILER_RENDERING, VERBOSE);
 
         $controller = new DisplayController();
-        $controller->set('primary_key_value', (int)Services::Registry()->get('parameters', 'source_id'), 'model_registry');
+        $controller->set(
+            'primary_key_value',
+            (int)Services::Registry()->get('parameters', 'source_id'),
+            'model_registry'
+        );
         $parms = Services::Registry()->getArray(PARAMETERS_LITERAL);
         $cached_output = Services::Cache()->get(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, implode('', $parms));
 
         if ($cached_output === false) {
             if (count($parms) > 0) {
                 foreach ($parms as $key => $value) {
-                    $controller->set($key, $value);
+                    $controller->set($key, $value, 'parameters');
                 }
             }
-            $results = $controller->execute();
-            Services::Cache()->set(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, implode('', $parms), $results);
+            $this->rendered_output = $controller->execute();
+            Services::Cache()->set(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, implode('', $parms), $this->rendered_output);
         } else {
-            $results = $cached_output;
+            $this->rendered_output = $cached_output;
         }
 
-        return $results;
+        return;
     }
 
     /**
-     * Schedule Event onAfterIncludeEvent Event
+     * Schedule Event onBeforeIncludeEvent
      *
-     * @param   $rendered_output
-     *
-     * @return  bool
+     * @return  boolean
      * @since   1.0
      */
-    protected function onAfterIncludeEvent($rendered_output)
+    protected function onBeforeIncludeEvent()
     {
-        Services::Profiler()->set('IncludeService onAfterInclude', PROFILER_PLUGINS, VERBOSE);
+        return $this->triggerEvent('onBeforeInclude');
+    }
 
-        $parameters = Services::Registry()->getArray(PARAMETERS_LITERAL);
+    /**
+     * Schedule Event onAfterParseEvent Event
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function onAfterIncludeEvent()
+    {
+        return $this->triggerEvent('onAfterInclude');
+    }
+
+    /**
+     * Common Method for Includer Events
+     *
+     * @param   string  $event_name
+     * @param   string  $renderedOutput
+     *
+     * @return  string  rendered output
+     * @since   1.0
+     */
+    protected function triggerEvent($eventName)
+    {
+        $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
+            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
 
         $arguments = array(
-            'parameters' => $parameters,
-            'rendered_output' => $rendered_output
+            'model' => null,
+            'model_registry' => $model_registry,
+            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
+            'query_results' => array(),
+            'data' => array(),
+            'rendered_output' => $this->rendered_output,
+            'include_parse_sequence' => null,
+            'include_parse_exclude_until_final' => null
         );
 
-        $arguments = Services::Event()->scheduleEvent('onAfterInclude', $arguments);
+        $arguments = Services::Event()->scheduleEvent(
+            $eventName,
+            $arguments,
+            array()
+        );
 
-        if ($arguments === false) {
-            Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, 1);
-            Services::Profiler()->set('IncludeService onAfterInclude failed', PROFILER_PLUGINS);
-            return false;
+        if (isset($arguments[PARAMETERS_LITERAL])) {
+            Services::Registry()->delete(PARAMETERS_LITERAL);
+            Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+            Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+            Services::Registry()->sort(PARAMETERS_LITERAL);
         }
 
-        Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments['parameters']);
-        Services::Registry()->sort(PARAMETERS_LITERAL);
+        if (isset($arguments['rendered_output'])) {
+            $this->rendered_output = $arguments['rendered_output'];
+        }
 
-        return $rendered_output;
+        return;
     }
 }

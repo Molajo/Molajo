@@ -26,7 +26,7 @@ class PagetypelistPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-		if (strtolower($this->get('page_type')) == QUERY_OBJECT_LIST) {
+		if (strtolower($this->get('page_type', '', 'parameters')) == QUERY_OBJECT_LIST) {
 		} else {
 			return true;
 		}
@@ -84,8 +84,8 @@ class PagetypelistPlugin extends Plugin
      */
     public function onBeforeViewRender()
     {
-        if (strtolower($this->get('page_type')) == QUERY_OBJECT_LIST
-            || strtolower($this->get('page_type')) == 'grid'
+        if (strtolower($this->get('page_type', '', 'parameters')) == QUERY_OBJECT_LIST
+            || strtolower($this->get('page_type', '', 'parameters')) == 'grid'
         ) {
         } else {
             return true;

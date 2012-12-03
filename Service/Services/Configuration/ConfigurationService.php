@@ -385,11 +385,7 @@ Class ConfigurationService
         }
 
         Services::Registry()->sort('Configuration');
-
-        if ((int)Services::Registry()->get('Configuration', 'profiler_service') == 1) {
-            Services::Profiler()->initiate();
-        }
-
+        Services::Profiler()->initialise();
         Services::Cache()->initialise();
 
         return $this;

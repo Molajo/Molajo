@@ -82,11 +82,7 @@ Class ContentHelper
             return Services::Registry()->set(PARAMETERS_LITERAL, 'status_found', false);
         }
 
-        Services::Registry()->set(
-            PRIMARY_LITERAL,
-            DATA_LITERAL,
-            array($item)
-        );
+        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, array($item));
 
         if (isset($item->extension_instance_id)) {
             $extension_instance_id = (int)$item->extension_instance_id;
@@ -123,8 +119,6 @@ Class ContentHelper
         if ($page_type_namespace == 'form') {
             Services::Registry()->set(PARAMETERS_LITERAL, 'page_type', PAGE_TYPE_EDIT);
         }
-
-        return true;
     }
 
     /**
@@ -188,8 +182,6 @@ Class ContentHelper
         );
 
         $this->setExtensionPaths();
-        var_dump(Services::Registry()->get('parameters', 'model_type'),
-            Services::Registry()->get('parameters', 'model_name')   );
 
         /** Retrieve Model Registry for Resource */
         $controllerClass = CONTROLLER_CLASS;
@@ -239,13 +231,16 @@ Class ContentHelper
             $controller->set('get_customfields', 1, 'model_registry');
         }
 
+        $controller->set('get_customfields', 1, 'model_registry');
+
         /** Regardless of page_type, this query returns only one row */
         $item = $controller->getData(QUERY_OBJECT_ITEM);
+
         if ($item === false || $item === null || count($item) == 0) {
             return array();
         }
 
-        $item->model_registry = $controller->get('model_registry');
+        $item->model_registry = $controller->get('model_registry_name');
 
         return $item;
     }
@@ -269,9 +264,6 @@ Class ContentHelper
         $resource_namespace = ''
     ) {
         Services::Registry()->set(PARAMETERS_LITERAL, 'page_type', $page_type_namespace);
-
-        /** Retrieve array of Extension Instances Authorised for User  */
-        Helpers::Extension()->setAuthorisedExtensions(0, DATA_SOURCE_LITERAL, 'ExtensionInstances', QUERY_OBJECT_LIST);
 
         /** I. Priority 1 - Item parameter values (be it an item, menu item, list) */
         $newParameters = Services::Registry()->get($parameter_namespace, $page_type_namespace . '*');

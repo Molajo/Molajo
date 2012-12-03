@@ -215,6 +215,9 @@ Class LogService
      */
     public function set($message, $priority, $type, $date)
     {
+        if ((int)Services::Profiler()->on == 0) {
+            return;
+        }
         if (Services::Registry()->exists('LogProfiler')) {
         } else {
             Services::Registry()->create('LogProfiler');

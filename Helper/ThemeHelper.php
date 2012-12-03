@@ -46,7 +46,9 @@ Class ThemeHelper
         Services::Registry()->set(PARAMETERS_LITERAL, 'theme_path_url', $this->getPathURL($node));
         Services::Registry()->set(PARAMETERS_LITERAL, 'theme_favicon', $this->getFavicon($node));
 
-        $item = Helpers::Extension()->get($theme_id, CATALOG_TYPE_THEME_LITERAL, $node, 1);
+        $item = Helpers::Extension()->get(
+            $theme_id, CATALOG_TYPE_THEME_LITERAL, $node, QUERY_OBJECT_ITEM, CATALOG_TYPE_THEME, 1
+        );
 
         if (count($item) == 0) {
 
