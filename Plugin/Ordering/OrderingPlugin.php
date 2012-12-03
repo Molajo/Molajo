@@ -69,9 +69,9 @@ class OrderingPlugin extends Plugin
                 . ' = ' . (int) $catalog_type_id);
 
             $controller->set('use_special_joins', 0);
-            $controller->set('check_view_level_access', 0);
-            $controller->set('process_plugins', 0);
-            $controller->set('get_customfields', 0);
+            $controller->set('check_view_level_access', 0, 'model_registry');
+            $controller->set('process_plugins', 0, 'model_registry');
+            $controller->set('get_customfields', 0, 'model_registry');
 
             $ordering = $controller->getData(QUERY_OBJECT_RESULT);
 

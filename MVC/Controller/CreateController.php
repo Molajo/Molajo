@@ -390,11 +390,11 @@ class CreateController extends Controller
                 $controller->model->query->where($controller->model->db->qn($source_id)
                     . ' = ' . (int) $this->data->$name);
 
-                $controller->set('get_customfields', 0);
+                $controller->set('get_customfields', 0, 'model_registry');
                 $controller->set('get_item_children', 0);
                 $controller->set('use_special_joins', 0);
-                $controller->set('check_view_level_access', 0);
-                $controller->set('process_plugins', 0);
+                $controller->set('check_view_level_access', 0, 'model_registry');
+                $controller->set('process_plugins', 0, 'model_registry');
 
                 $value = $controller->getData(QUERY_OBJECT_RESULT);
 

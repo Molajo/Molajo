@@ -29,7 +29,7 @@ class FeedPlugin extends Plugin
     public function onAfterReadall()
     {
        return true;
-        if (strtolower($this->get('template_view_path_node')) == 'feed') {
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'feed') {
         } else {
             return true;
         }

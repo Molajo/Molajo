@@ -34,7 +34,7 @@ class MessagesPlugin extends Plugin
         $messages = $controller->getData(QUERY_OBJECT_LIST);
 
         if (count($messages) == 0 || $messages === false) {
-            Services::Registry()->set(MESSAGES_LITERAL, $this->get('template_view_path_node'), array());
+            Services::Registry()->set(MESSAGES_LITERAL, $this->get('template_view_path_node', '', 'parameters'), array());
             return true;
         }
 
@@ -69,7 +69,7 @@ class MessagesPlugin extends Plugin
             $query_results[] = $row;
         }
 
-        Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node'), $query_results);
+        Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters'), $query_results);
 
         return true;
     }

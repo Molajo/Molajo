@@ -26,7 +26,7 @@ class TemplatelistPlugin extends Plugin
      */
     public function onAfterReadAll()
     {
-        if (strtolower($this->get('template_view_path_node')) == QUERY_OBJECT_LIST) {
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == QUERY_OBJECT_LIST) {
         } else {
             return true;
         }
@@ -51,7 +51,7 @@ class TemplatelistPlugin extends Plugin
         $controller->getModelRegistry($model_type, $model_name);
         $controller->setDataobject();
 
-        $primary_prefix = $controller->get('primary_prefix', 'a');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         if (isset($this->parameters['list_ordering'])) {
             $ordering = $this->parameters['list_ordering'];

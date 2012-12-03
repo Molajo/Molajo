@@ -364,8 +364,8 @@ class CreatePlugin extends Plugin
         $model_registry = 'GridMenuitem';
 
         $name_key = $controller->get('name_key');
-        $primary_key = $controller->get('primary_key');
-        $primary_prefix = $controller->get('primary_prefix', 'a');
+        $primary_key = $controller->get('primary_key', 'id', 'model_registry');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->where($controller->model->db->qn($primary_prefix)
             . '.' . $controller->model->db->qn('extension_instance_id') . ' = 100 ');

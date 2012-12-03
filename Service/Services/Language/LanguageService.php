@@ -162,7 +162,7 @@ Class LanguageService
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings');
         $controller->setDataobject();
 
-        $controller->set('check_view_level_access', 0);
+        $controller->set('check_view_level_access', 0, 'model_registry');
         $controller->model->insertLanguageString($translated);
 
         return true;
@@ -351,8 +351,8 @@ Class LanguageService
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings');
         $controller->setDataobject();
 
-        $controller->set('check_view_level_access', 0);
-        $primary_prefix = $controller->get('primary_prefix', 'a');
+        $controller->set('check_view_level_access', 0, 'model_registry');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->select(
             $controller->model->db->qn($primary_prefix)
@@ -420,7 +420,7 @@ Class LanguageService
                 . $controller->model->db->qn('title')
         );
 
-        $controller->set('model_offset', 0);
+        $controller->set('model_offset', 0, 'model_registry');
         $controller->set('model_count', 99999);
 
         return $controller->getData(QUERY_OBJECT_LIST);

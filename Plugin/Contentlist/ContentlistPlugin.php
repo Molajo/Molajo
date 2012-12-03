@@ -29,7 +29,7 @@ class ContentlistPlugin extends Plugin
     public function onAfterReadall()
     {
 
-        if (strtolower($this->get('template_view_path_node')) == 'contentlist') {
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'contentlist') {
         } else {
             return true;
         }
@@ -40,11 +40,11 @@ class ContentlistPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->setDataobject($this->get('model_type'), $this->get('model_name'));
 
-        $controller->set('get_customfields', 2);
-        $controller->set('use_special_joins', 1);
-        $controller->set('process_plugins', 1);
+        $controller->set('get_customfields', 2, 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 1, 'model_registry');
 
-        $prefix = $controller->get('primary_prefix', 'a');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $criteria_status = $this->parameters['criteria_status'];
         $criteria_status = '1,2';
@@ -81,7 +81,7 @@ class ContentlistPlugin extends Plugin
         }
         $controller->model->query->order($controller->model->db->qn($ordering) . ' ' . $direction);
 
-        $controller->set('model_offset', 0);
+        $controller->set('model_offset', 0, 'model_registry');
         $count = $this->parameters['criteria_count'];
         if ((int) $count == 0) {
             $count = 5;

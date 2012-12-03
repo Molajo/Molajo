@@ -26,7 +26,7 @@ class FormselectlistPlugin extends Plugin
      */
     public function onBeforeInclude()
     {
-        $results = Services::Registry()->get(TEMPLATE_LITERAL, $this->get('template_view_path_node'));
+        $results = Services::Registry()->get(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters'));
         if (count($results) > 0) {
             return true;
         }
@@ -70,7 +70,7 @@ class FormselectlistPlugin extends Plugin
 
         Services::Registry()->set(
             TEMPLATE_LITERAL,
-            $this->get('template_view_path_node'),
+            $this->get('template_view_path_node', '', 'parameters'),
             $query_results
         );
 
@@ -85,7 +85,7 @@ class FormselectlistPlugin extends Plugin
      */
     public function onAfterInclude()
     {
-        Services::Registry()->delete(TEMPLATE_LITERAL, $this->get('template_view_path_node'));
+        Services::Registry()->delete(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters'));
         return $this;
     }
 }

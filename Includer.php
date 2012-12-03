@@ -638,7 +638,7 @@ class Includer
         Services::Profiler()->set($message, PROFILER_RENDERING, VERBOSE);
 
         $controller = new DisplayController();
-        $controller->set('id', (int)Services::Registry()->get('parameters', 'source_id'));
+        $controller->set('primary_key_value', (int)Services::Registry()->get('parameters', 'source_id'), 'model_registry');
         $parms = Services::Registry()->getArray(PARAMETERS_LITERAL);
         $cached_output = Services::Cache()->get(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, implode('', $parms));
 

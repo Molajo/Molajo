@@ -39,58 +39,58 @@ class CatalogPlugin extends Plugin
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
 
-        $controller->set('get_customfields', 0);
+        $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('use_special_joins', 0);
-        $controller->set('process_plugins', 0);
+        $controller->set('process_plugins', 0, 'model_registry');
 
         $controller->model->query->select(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('id')
         );
         $controller->model->query->select(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('sef_request')
                 . ' AS value '
         );
 
         $controller->model->query->where(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('redirect_to_id')
                 . ' = 0'
         );
         $controller->model->query->where(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('enabled')
                 . ' = 1'
         );
         $controller->model->query->where(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('page_type')
                 . ' <> '
                 . $controller->model->db->q('Link')
         );
         $controller->model->query->where(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' = ' . CATALOG_TYPE_MENUITEM
                 . ' OR ' .
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' > ' . CATALOG_TYPE_TAG
         );
         $controller->model->query->where(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('application_id')
                 . ' = ' . (int) APPLICATION_ID
         );
 
         $controller->model->query->order(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('sef_request')
         );
 
-        $controller->set('model_offset', 0);
-        $controller->set('model_count', 99999);
+        $controller->set('model_offset', 0, 'model_registry');
+        $controller->set('model_count', 99999, 'model_registry');
 
         $query_results = $controller->getData(QUERY_OBJECT_DISTINCT);
 

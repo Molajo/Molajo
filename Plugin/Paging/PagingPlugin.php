@@ -28,7 +28,7 @@ class PagingPlugin extends Plugin
      */
     public function onBeforeInclude()
     {
-        if (strtolower($this->get('template_view_path_node')) == 'paging') {
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'paging') {
         } else {
             return true;
         }
@@ -153,7 +153,7 @@ class PagingPlugin extends Plugin
 
         Services::Registry()->set(
             TEMPLATE_LITERAL,
-            $this->get('template_view_path_node'),
+            $this->get('template_view_path_node', '', 'parameters'),
             $query_results);
 
         return true;
@@ -182,9 +182,9 @@ class PagingPlugin extends Plugin
             return false;
         }
 
-        $controller->set('get_customfields', 0);
+        $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('use_special_joins', 0);
-        $controller->set('process_plugins', 0);
+        $controller->set('process_plugins', 0, 'model_registry');
         $controller->set('get_item_children', 0);
 
         $controller->model->query->select($controller->model->db->qn('a')

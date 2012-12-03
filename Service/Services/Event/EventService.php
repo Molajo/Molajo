@@ -68,8 +68,15 @@ Class EventService
      * @since  1.0
      */
     protected $property_array = array(
-        'plugin_class', 'plugin_event', 'model', 'model_registry', 'parameters',
-        'query_results', 'data', 'rendered_output', 'first'
+        'plugin_class',
+        'plugin_event',
+        'model',
+        'model_registry',
+        'parameters',
+        'query_results',
+        'data',
+        'rendered_output',
+        'first'
     );
 
     /**
@@ -129,10 +136,10 @@ Class EventService
 
             //todo: provide startup parameters - remove hardcoding
             $selections = array();
-            $eventList = array('onaftersetdataobject');
+            $eventList = array('onconnectdatabase');
 
             $row = new \stdClass();
-            $row->event = 'onaftersetdataobject';
+            $row->event = 'onconnectdatabase';
             $row->plugin = 'dataobjectplugin';
             $this->eventPluginArray[] = $row;
 
@@ -222,7 +229,7 @@ Class EventService
 
         $plugin->set('plugin_class', $pluginClass);
         $plugin->set('plugin_event', $event);
-
+ECHO '<br /><br/>Event :' . $event . ' firing Plugin: ' . $pluginClass . '<br />';
         if (count($arguments) > 0) {
 
             foreach ($arguments as $key => $value) {
@@ -238,7 +245,7 @@ Class EventService
             }
         }
 
-//ECHO 'Event:' . $event . ' firing Plugin: ' . $pluginClass . '<br />';
+
         $results = $plugin->$event();
 
         if ($results === false) {
@@ -405,8 +412,10 @@ Class EventService
 
         $authorised = 0;
         if ($test > 0) {
-            $authorised = Services::Registry()->get('AuthorisedExtensionsByInstanceTitle',
-                substr($pluginName, 0, strlen($pluginName) - strlen(PLUGIN_LITERAL)) . CATALOG_TYPE_PLUGIN);
+            $authorised = Services::Registry()->get(
+                'AuthorisedExtensionsByInstanceTitle',
+                substr($pluginName, 0, strlen($pluginName) - strlen(PLUGIN_LITERAL)) . CATALOG_TYPE_PLUGIN
+            );
         } else {
             $authorised = 1; // some plugin usage occurs before the authorisation table is ready
         }
@@ -447,8 +456,12 @@ Class EventService
             $this->eventPluginArray[] = $row;
         }
 
-        Services::Profiler()->set('Event: Registered Plugin ' . $pluginName . ' to listen for Event ' . $event
-                . ' will execute at Namespace ' . $pluginClass, PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set(
+            'Event: Registered Plugin ' . $pluginName . ' to listen for Event ' . $event
+                . ' will execute at Namespace ' . $pluginClass,
+            PROFILER_PLUGINS,
+            VERBOSE
+        );
 
         return $this;
     }

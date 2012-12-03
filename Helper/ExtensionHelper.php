@@ -156,6 +156,7 @@ Class ExtensionHelper
         $catalog_type_id = null,
         $check_permissions = 0
     ) {
+
         if (Services::Registry()->get('CurrentPhase') == 'PROFILER_ROUTING') {
             $phase = PROFILER_ROUTING;
         } else {
@@ -167,8 +168,8 @@ Class ExtensionHelper
         $controller->getModelRegistry($model_type, $model_name);
         $controller->setDataobject();
 
-        $primary_prefix = $controller->get('primary_prefix');
-        $primary_key = $controller->get('primary_key');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
+        $primary_key = $controller->get('primary_key', 'id', 'model_registry');
 
         if ((int)$extension_id == 0) {
         } else {
@@ -180,7 +181,7 @@ Class ExtensionHelper
                     . ' = '
                     . (int)$extension_id
             );
-            $controller->set('process_plugins', 0);
+            $controller->set('process_plugins', 0, 'model_registry');
             $query_object = QUERY_OBJECT_ITEM;
         }
 
@@ -198,11 +199,11 @@ Class ExtensionHelper
 
         if (strtolower($query_object) == QUERY_OBJECT_LIST) {
 
-            $controller->set('model_offset', 0);
-            $controller->set('model_count', 999999);
-            $controller->set('use_pagination', 0);
-            $controller->set('use_special_joins', 1);
-            $controller->set('get_customfields', 2);
+            $controller->set('model_offset', 0, 'model_registry');
+            $controller->set('model_count', 999999, 'model_registry');
+            $controller->set('use_pagination', 0, 'model_registry');
+            $controller->set('use_special_joins', 1, 'model_registry');
+            $controller->set('get_customfields', 2, 'model_registry');
 
             $controller->model->query->where(
                 $controller->model->db->qn($primary_prefix)
@@ -215,9 +216,10 @@ Class ExtensionHelper
             );
         }
 
-        $controller->set('check_view_level_access', $check_permissions);
+        $controller->set('check_view_level_access', $check_permissions, 'model_registry');
 
         if ($model_type == DATA_SOURCE_LITERAL) {
+
         } else {
             $controller->model->query->where(
                 $controller->model->db->qn('catalog')
@@ -233,7 +235,7 @@ Class ExtensionHelper
             if (strtolower($query_object) == QUERY_OBJECT_ITEM && (int)$extension_id > 0) {
                 $saved = Services::Registry()->get('AuthorisedExtensions', $extension_id, '');
                 if (is_object($saved)) {
-                    $controller->set('get_customfields', 1);
+                    $controller->set('get_customfields', 1, 'model_registry');
                     $query_results = $controller->addCustomFields(array($saved), QUERY_OBJECT_ITEM, 1);
                     $query_results->model_registry = ucfirst(strtolower($model_name)) . ucfirst(
                         strtolower($model_type)
@@ -296,8 +298,8 @@ Class ExtensionHelper
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
 
-        $controller->set('process_plugins', 0);
-        $prefix = $controller->get('primary_prefix', 'a');
+        $controller->set('process_plugins', 0, 'model_registry');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->select(
             $controller->model->db->qn($prefix)
@@ -353,8 +355,8 @@ Class ExtensionHelper
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
 
-        $controller->set('process_plugins', 0);
-        $prefix = $controller->get('primary_prefix', 'a');
+        $controller->set('process_plugins', 0, 'model_registry');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->select(
             $controller->model->db->qn($prefix)
@@ -402,7 +404,7 @@ Class ExtensionHelper
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensions');
         $controller->setDataobject();
 
-        $controller->set('process_plugins', 0);
+        $controller->set('process_plugins', 0, 'model_registry');
 
         $controller->model->query->select(
             $controller->model->db->qn('a')

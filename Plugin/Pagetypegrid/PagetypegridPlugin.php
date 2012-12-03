@@ -37,9 +37,9 @@ class PagetypegridPlugin extends Plugin
 
         $controller->setDataobject();
 
-        $controller->set('get_customfields', 2);
-        $controller->set('use_special_joins', 1);
-        $controller->set('process_plugins', 1);
+        $controller->set('get_customfields', 2, 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 1, 'model_registry');
 
         $this->setToolbar();
 
@@ -193,7 +193,7 @@ class PagetypegridPlugin extends Plugin
         $list = $this->get('criteria_catalog_type_id');
 
         $controller->model->query->where(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' IN (' . $list . ')'
         );
@@ -214,7 +214,7 @@ class PagetypegridPlugin extends Plugin
         Services::Registry()->set(PAGE_TYPE_GRID, 'Orderingdirection', $orderingDirection);
 
         $controller->model->query->order(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn($ordering)
                 . ' '
                 . $orderingDirection

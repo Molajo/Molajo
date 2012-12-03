@@ -68,8 +68,8 @@ Class MenuService
 
         $controller->model->query->order('a.lft DESC');
 
-        $controller->set('model_offset', 0);
-        $controller->set('model_count', 999999);
+        $controller->set('model_offset', 0, 'model_registry');
+        $controller->set('model_count', 999999, 'model_registry');
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
@@ -117,10 +117,10 @@ Class MenuService
         $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
         $controller->setDataobject();
 
-        $controller->set('get_customfields', 0);
+        $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('use_special_joins', 0);
-        $controller->set('process_plugins', 0);
-        $controller->set('check_view_level_access', 1);
+        $controller->set('process_plugins', 0, 'model_registry');
+        $controller->set('check_view_level_access', 1, 'model_registry');
 
         $controller->model->query->select($controller->model->db->qn('a.id'));
         $controller->model->query->select($controller->model->db->qn('a.extension_id'));
@@ -145,11 +145,11 @@ Class MenuService
 
         $controller->model->query->order('a.lft');
 
-        $controller->set('model_offset', 0);
-        $controller->set('model_count', 999999);
-		$controller->set('get_customfields', 2);
-		$controller->set('use_special_joins', 1);
-		$controller->set('process_plugins', 0);
+        $controller->set('model_offset', 0, 'model_registry');
+        $controller->set('model_count', 999999, 'model_registry');
+		$controller->set('get_customfields', 2, 'model_registry');
+		$controller->set('use_special_joins', 1, 'model_registry');
+		$controller->set('process_plugins', 0, 'model_registry');
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
         if ($query_results === false) {

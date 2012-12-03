@@ -66,12 +66,12 @@ Class InstallService
 
         $controller->set('get_item_children', 0);
         $controller->set('use_special_joins', 0);
-        $controller->set('check_view_level_access', 1);
-        $controller->set('process_plugins', 0);
+        $controller->set('check_view_level_access', 1, 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
 
         $name_key = $controller->get('name_key');
-        $primary_key = $controller->get('primary_key');
-        $primary_prefix = $controller->get('primary_prefix', 'a');
+        $primary_key = $controller->get('primary_key', 'id', 'model_registry');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->where($controller->model->db->qn($primary_prefix)
             . '.' . $controller->model->db->qn('extension_instance_id')
@@ -317,7 +317,7 @@ Class InstallService
             return false;
         }
 
-        $primary_prefix = $controller->get('primary_prefix', 'a');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->select($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('id'));
         $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('model_name')

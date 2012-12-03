@@ -30,13 +30,8 @@ class PublishedstatusPlugin extends Plugin
      */
     public function onBeforeRead()
     {
-        if (isset($this->parameters['action'])
-            && $this->parameters['action'] == 'delete'
-        ) {
-            return true;
-        }
 
-        $fields = $this->get($this->model_registry_name, FIELDS_LITERAL);
+        $fields = $this->get($this->model_registry_name, FIELDS_LITERAL, 'model_registry');
         if ($fields == false) {
             return true;
         }

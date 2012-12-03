@@ -26,9 +26,9 @@ class CommentPlugin extends Plugin
      */
     public function onBeforeInclude()
     {
-        if (strtolower($this->get('template_view_path_node')) == 'comment' ||
-            strtolower($this->get('template_view_path_node')) == 'comments' ||
-            strtolower($this->get('template_view_path_node')) == 'commentform'
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'comment' ||
+            strtolower($this->get('template_view_path_node', '', 'parameters')) == 'comments' ||
+            strtolower($this->get('template_view_path_node', '', 'parameters')) == 'commentform'
         ) {
         } else {
             return true;
@@ -48,9 +48,9 @@ class CommentPlugin extends Plugin
         $controller->getModelRegistry(CATALOG_TYPE_RESOURCE_LITERAL, 'Comments');
         $controller->setDataobject();
 
-        $controller->set('get_customfields', 2);
-        $controller->set('use_special_joins', 1);
-        $controller->set('check_view_level_access', 1);
+        $controller->set('get_customfields', 2, 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('check_view_level_access', 1, 'model_registry');
 
         $parentController = new $controllerClass();
         $parentController->getModelRegistry($parent_model_type, $parent_model_name);
@@ -65,7 +65,7 @@ class CommentPlugin extends Plugin
         );
         $this->set('parent_comments_open', $open);
 
-        $method = 'get' . ucfirst(strtolower($this->get('template_view_path_node')));
+        $method = 'get' . ucfirst(strtolower($this->get('template_view_path_node', '', 'parameters')));
 
         $results = $this->$method(
             $controller,
@@ -77,7 +77,7 @@ class CommentPlugin extends Plugin
 
         Services::Registry()->set(
             TEMPLATE_LITERAL,
-            $this->get('template_view_path_node'),
+            $this->get('template_view_path_node', '', 'parameters'),
             $results);
 
         return true;
@@ -142,7 +142,7 @@ class CommentPlugin extends Plugin
         $parent_model_name,
         $parent_source_id
     ) {
-        $primary_prefix = $controller->get('primary_prefix');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->select('count(*)');
         $controller->model->query->where(
@@ -199,7 +199,7 @@ class CommentPlugin extends Plugin
         $parent_source_id
     ) {
 
-        $primary_prefix = $controller->get('primary_prefix');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->set('root', (int)$parent_source_id);
 
@@ -319,7 +319,7 @@ class CommentPlugin extends Plugin
 
         $primary_prefix = $parentController->get('primary_prefix');
 
-        $parentController->set('id', (int)$parent_source_id);
+        $parentController->set('primary_key_value', (int)$parent_source_id, 'model_registry');
 
         $parentController->model->query->select(
             $parentController->model->db->qn($primary_prefix)

@@ -80,8 +80,8 @@ class DetailitemPlugin extends Plugin
         }
 
         $controller->model->query->where('a.root = ' . $this->get('id'));
-        $controller->set('model_offset', 0);
-        $controller->set('model_count', 10);
+        $controller->set('model_offset', 0, 'model_registry');
+        $controller->set('model_count', 15, 'model_registry');
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 

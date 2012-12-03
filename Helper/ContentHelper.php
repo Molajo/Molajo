@@ -230,13 +230,13 @@ Class ContentHelper
         $controller->getModelRegistry($model_type, $model_name);
         $controller->setDataobject(QUERY_OBJECT_ITEM);
 
-        $controller->set('id', (int)$id);
-        $controller->set('process_plugins', 1);
+        $controller->set('primary_key_value', (int)$id, 'model_registry');
+        $controller->set('process_plugins', 1, 'model_registry');
 
         if ($page_type == QUERY_OBJECT_ITEM) {
-            $controller->set('get_customfields', 2);
+            $controller->set('get_customfields', 2, 'model_registry');
         } else {
-            $controller->set('get_customfields', 1);
+            $controller->set('get_customfields', 1, 'model_registry');
         }
 
         /** Regardless of page_type, this query returns only one row */
@@ -472,9 +472,9 @@ Class ContentHelper
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'CatalogTypes');
         $controller->setDataobject();
 
-        $controller->set('process_plugins', 0);
-        $controller->set('get_customfields', 0);
-        $prefix = $controller->get('primary_prefix', 'a');
+        $controller->set('process_plugins', 0, 'model_registry');
+        $controller->set('get_customfields', 0, 'model_registry');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->where(
             $controller->model->db->qn($prefix)
@@ -511,8 +511,8 @@ Class ContentHelper
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
 
-        $controller->set('process_plugins', 0);
-        $controller->set('get_customfields', 1);
+        $controller->set('process_plugins', 0, 'model_registry');
+        $controller->set('get_customfields', 1, 'model_registry');
 
         $controller->getModelRegistry($model_type, $model_name);
         return $controller->setDataobject();
@@ -540,10 +540,10 @@ Class ContentHelper
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Resources');
         $controller->setDataobject();
 
-        $controller->set('id', (int)$id);
-        $controller->set('process_plugins', 0);
-        $controller->set('get_customfields', 1);
-        $controller->set('check_view_level_access', 0);
+        $controller->set('primary_key_value', (int)$id, 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
+        $controller->set('get_customfields', 1, 'model_registry');
+        $controller->set('check_view_level_access', 0, 'model_registry');
 
         return $controller->getData(QUERY_OBJECT_ITEM);
     }
@@ -573,7 +573,7 @@ Class ContentHelper
         $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, $page_type);
         $controller->setDataobject();
 
-        $prefix = $controller->get('primary_prefix', 'a');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->where(
             $controller->model->db->qn($prefix)

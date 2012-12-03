@@ -3,6 +3,7 @@
         name="User"
         table_name="#__users"
         primary_key="id"
+        primary_key_value=""
         name_key="username"
         primary_prefix="a"
         get_customfields="2"

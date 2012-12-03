@@ -352,7 +352,7 @@ class Plugin
      * @return  bool
      * @since   1.0
      */
-    public function onAfterSetDataobject()
+    public function onConnectDatabase()
     {
         return true;
     }

@@ -39,16 +39,16 @@ class FoundationuiPlugin extends Plugin
     public function onBeforeViewRender()
     {
 
-        if (strtolower($this->get('template_view_path_node')) == 'uibuttonfoundation') {
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'uibuttonfoundation') {
             $this->button_general();
 
-        } elseif (strtolower($this->get('template_view_path_node')) == 'uibuttongroupfoundation') {
+        } elseif (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'uibuttongroupfoundation') {
             $this->button_group();
 
-        } elseif (strtolower($this->get('template_view_path_node')) == 'uibuttondropdownfoundation') {
+        } elseif (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'uibuttondropdownfoundation') {
             $this->button_dropdown();
 
-        } elseif (strtolower($this->get('template_view_path_node')) == 'uinavigationtabfoundation') {
+        } elseif (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'uinavigationtabfoundation') {
             $this->tab();
 
         } else {

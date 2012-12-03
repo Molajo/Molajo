@@ -46,12 +46,12 @@ class ExtensioninstancePlugin extends Plugin
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
 
-        $primary_prefix = $controller->get('primary_prefix', 'a');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
-        $controller->set('get_customfields', '0');
-        $controller->set('get_item_children', '0');
-        $controller->set('use_special_joins', '0');
-        $controller->set('check_view_level_access', '0');
+        $controller->set('get_customfields', 0, 'model_registry');
+        $controller->set('get_item_children', 0, 'model_registry');
+        $controller->set('use_special_joins', 0, 'model_registry');
+        $controller->set('check_view_level_access', 0, 'model_registry');
 
         $controller->model->query->select($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('id'));
         $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('title')
@@ -241,12 +241,12 @@ class ExtensioninstancePlugin extends Plugin
             return false;
         }
 
-        $primary_prefix = $controller->get('primary_prefix', 'a');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
-        $controller->set('get_customfields', '0');
-        $controller->set('get_item_children', '0');
-        $controller->set('use_special_joins', '0');
-        $controller->set('check_view_level_access', '0');
+        $controller->set('get_customfields', 0, 'model_registry');
+        $controller->set('get_item_children', 0, 'model_registry');
+        $controller->set('use_special_joins', 0, 'model_registry');
+        $controller->set('check_view_level_access', 0, 'model_registry');
 
         if (isset($this->parameters['criteria_catalog_type_id'])) {
             $temp = (int) $this->parameters['criteria_catalog_type_id'];
@@ -329,11 +329,11 @@ class ExtensioninstancePlugin extends Plugin
             return false;
         }
 
-        $controller->set('get_customfields', 0);
+        $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('get_item_children', 0);
         $controller->set('use_special_joins', 0);
-        $controller->set('check_view_level_access', 0);
-        $controller->set('process_plugins', 0);
+        $controller->set('check_view_level_access', 0, 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
 
         $controller->model->query->select('COUNT(*)');
         $controller->model->query->from($controller->model->db->qn('#__extension_instances'));

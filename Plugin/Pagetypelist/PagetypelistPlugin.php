@@ -47,9 +47,9 @@ class PagetypelistPlugin extends Plugin
             return false;
         }
 
-        $controller->set('get_customfields', 2);
-        $controller->set('use_special_joins', 1);
-        $controller->set('check_view_level_access', 1);
+        $controller->set('get_customfields', 2, 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('check_view_level_access', 1, 'model_registry');
 
         $controller->set('model_offset', $this->get('model_offset', 0));
         $controller->set('model_count', $this->get('model_count', 5));

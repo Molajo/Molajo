@@ -27,7 +27,7 @@ class FormbeginPlugin extends Plugin
      */
     public function onAfterReadAll()
     {
-        if (strtolower($this->get('template_view_path_node')) == 'formbegin') {
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'formbegin') {
         } else {
             return true;
         }

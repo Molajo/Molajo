@@ -146,15 +146,19 @@ Class Services
             $connectionSucceeded = null;
 
             try {
+                echo 'starting connection ' . $serviceClass . '<br />';
                 $connection = $this->getClassInstance($serviceClass);
 
-                if (trim($startup) == '') {
+                if (trim($startup) == '' || ($static_indicator == 1 && $startup == 'getInstance')) {
                 } else {
                     $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
                 }
 
-                if ($static_indicator == 1) {
+                echo $serviceClass;
+                echo '<br />';
 
+                if ($static_indicator == 1) {
+                    echo 'now static';
                     $this->set($name . 'Service', $connection, $connectionSucceeded);
                 }
 

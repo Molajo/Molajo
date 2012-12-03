@@ -169,8 +169,8 @@ Class TextService
             }
         }
 
-        $primary_prefix = $controller->get('primary_prefix');
-        $primary_key = $controller->get('primary_key');
+        $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
+        $primary_key = $controller->get('primary_key', 'id', 'model_registry');
         $name_key = $controller->get('name_key');
 
         $model_registry = $controller->get('model_registry');
@@ -257,7 +257,7 @@ Class TextService
 
         $query_object = QUERY_OBJECT_DISTINCT;
 
-        $offset = $controller->set('model_offset', 0);
+        $offset = $controller->set('model_offset', 0, 'model_registry');
         $count = $controller->set('model_count', 9999999);
 
         return $controller->getData($query_object);

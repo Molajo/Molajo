@@ -35,7 +35,7 @@ class Controller
      * @var    object
      * @since  1.0
      */
-    protected $model;
+    public $model;
 
     /**
      * Model Registry - data source/object fields and definitions
@@ -160,7 +160,6 @@ class Controller
             }
             $this->parameters[$key] = $default;
             return $this->parameters[$key];
-
         }
 
         if ($property == 'model_registry') {
@@ -194,7 +193,7 @@ class Controller
      */
     public function set($key, $value = null, $property = '')
     {
-//        echo 'SET $key ' . $key . ' ' . ' Property ' . $property . '<br />';
+//echo 'SET $key ' . $key . ' ' . ' Property ' . $property . '<br />';
 
         if (in_array($key, $this->property_array)) {
             $this->$key = $value;
@@ -366,10 +365,7 @@ class Controller
             $this->set('template_view_model_registry', 1, 'model_registry');
         }
 
-        $this->set('model_registry_name', NULL);
-
-        $this->onAfterSetDataobjectEvent();
-
+        $this->onConnectDatabaseEvent();
         return;
     }
 
@@ -402,16 +398,15 @@ class Controller
         $this->set('query_object', $query_object, 'model_registry');
 
         if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
-            $this->prepareQuery($this->get('query_object', QUERY_OBJECT_LIST, 'model_registry'));
+            $this->prepareQuery($this->get('query_object', '', 'model_registry'));
         }
-
 
         $profiler_message =
 
             ' <br />Data Object: ' . $this->get('data_object', DATABASE_LITERAL, 'model_registry')
                 . ' <br />Model Type: ' . $this->get('model_type', DATA_SOURCE_LITERAL, 'model_registry')
                 . ' <br />Model Name: ' . $this->get('model_name', '', 'model_registry')
-                . ' <br />Model Query Object: ' . $this->get('query_object', QUERY_OBJECT_LIST, 'model_registry')
+                . ' <br />Model Query Object: ' . $this->get('query_object', '', 'model_registry')
                 . ' <br />Template View: ' . $this->get('template_view_path_node', '', 'parameters')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins', 1, 'model_registry')
                 . '<br /><br />';
@@ -422,7 +417,7 @@ class Controller
                 $this->onBeforeReadEvent();
             }
 
-            $this->runQuery($this->get('data_object', DATABASE_LITERAL, 'model_registry'));
+            $this->runQuery($this->get('query_object', '', 'model_registry'));
 
         } else {
 
@@ -466,39 +461,39 @@ class Controller
                     . ' Method ' . $service_class_query_method
                     . ' Model Name ' . $this->get('model_name', '', 'model_registry')
                     . ' Method parameter ' . $method_parameter
-                    . ' Query Object ' . $this->get('data_object', DATABASE_LITERAL, 'model_registry');
+                    . ' Query Object ' . $this->get('query_object', '', 'model_registry');
 
-                echo $profiler_message . '<br /><br />';
+//echo $profiler_message . '<br /><br />';
 
                 $this->query_results = Services::$service_class()
                     ->$service_class_query_method(
                     $this->get('model_name', '', 'model_registry'),
                     $method_parameter,
-                    $this->get('data_object', DATABASE_LITERAL, 'model_registry')
+                    $this->get('query_object', '', 'model_registry')
                 );
             }
         }
 
-        if (count($this->get('plugins', array())) > 0) {
-            $this->onAfterReadEvent(
-                $this->get('use_pagination', 1, 'model_registry'),
-                $this->get('model_offset', 0, 'model_registry'),
-                $this->get('model_count', 15, 'model_registry')
-            );
+        /** if (count($this->get('plugins', array())) > 0) {
+        $this->onAfterReadEvent(
+        $this->get('use_pagination', 1, 'model_registry'),
+        $this->get('model_offset', 0, 'model_registry'),
+        $this->get('model_count', 15, 'model_registry')
+        );
         }
-
+         */
         if ($this->get('data_object_type', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
         } else {
             return $this->query_results;
         }
 
-        if ($this->get('query_object', QUERY_OBJECT_LIST, 'model_registry') == QUERY_OBJECT_RESULT
-            || $this->get('query_object', QUERY_OBJECT_LIST, 'model_registry') == QUERY_OBJECT_DISTINCT
+        if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_RESULT
+            || $this->get('query_object', '', 'model_registry') == QUERY_OBJECT_DISTINCT
         ) {
             return $this->query_results;
         }
 
-        if ($this->get('query_object', QUERY_OBJECT_LIST, 'model_registry') == QUERY_OBJECT_LIST) {
+        if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_LIST) {
 
             if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results', 0) == 1) {
 
@@ -522,7 +517,9 @@ class Controller
         if (count($this->query_results) === 0 || $this->query_results === false) {
             return array();
         }
+
         if (is_array($this->query_results)) {
+
             return $this->query_results[0];
         }
 
@@ -539,12 +536,11 @@ class Controller
     {
         $this->set('plugins', array());
 
-        if (defined('APPLICATION_ID')) {
-        } else {
-            return;
+        if (defined('DATABASE_SERVICE')) {
+            return true;
         }
 
-        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == QUERY_OBJECT_RESULT) {
+        if ($this->get('query_object', QUERY_OBJECT_RESULT, 'model_registry') == QUERY_OBJECT_RESULT) {
             return;
         }
 
@@ -580,7 +576,7 @@ class Controller
         }
 
         $plugins = array_merge($modelPlugins, $templatePlugins);
-        if (is_array($temp)) {
+        if (is_array($plugins)) {
         } else {
             $plugins = array();
         }
@@ -625,15 +621,16 @@ class Controller
             $this->get('primary_key_value', 0, 'model_registry'),
             $this->get('name_key', null, 'model_registry'),
             $this->get('name_key_value', null, 'model_registry'),
-            $this->get('data_object', DATABASE_LITERAL, 'model_registry'),
+            $this->get('query_object', '', 'model_registry'),
             $this->get('model_registry_name', null, 'model_registry')
         );
 
-        if ((int)$this->model_registry['check_view_level_access'] == 1) {
+
+        if ((int)$this->get('check_view_level_access', 0, 'model_registry') == 1) {
             $this->model->checkPermissions(
                 $this->get('primary_prefix', 'a', 'model_registry'),
-                $this->get('primary_key_value', 0, 'model_registry'),
-                $this->get('data_object', DATABASE_LITERAL, 'model_registry')
+                $this->get('primary_key', 'id', 'model_registry'),
+                $this->get('query_object', '', 'model_registry')
             );
         }
 
@@ -643,7 +640,7 @@ class Controller
                 $this->model->useSpecialJoins(
                     $joins,
                     $this->get('primary_prefix', 'a', 'model_registry'),
-                    $this->get('data_object', DATABASE_LITERAL, 'model_registry')
+                    $this->get('query_object', '', 'model_registry')
                 );
             }
         }
@@ -667,12 +664,12 @@ class Controller
     {
         $this->set(
             'pagination_total',
-                (int)$this->model->getQueryResults(
-                        $this->get('data_object', DATABASE_LITERAL, 'model_registry'),
-                        $this->get('model_offset', 0, 'model_registry'),
-                        $this->get('model_count', 15, 'model_registry'),
-                        $this->model_registry['use_pagination']
-                    ),
+            (int)$this->model->getQueryResults(
+                $this->get('query_object', '', 'model_registry'),
+                $this->get('model_offset', 0, 'model_registry'),
+                $this->get('model_count', 15, 'model_registry'),
+                $this->get('use_pagination', 1, 'model_registry')
+            ),
             'parameters'
         );
 
@@ -688,14 +685,15 @@ class Controller
         /** Retrieve query results from Model */
         $query_results = $this->model->get('query_results');
 
+        /**
         echo '<br /><br /><pre>';
         echo $this->model->query->__toString();
         echo '<br /><br />';
         var_dump($query_results);
         echo '</pre><br /><br />';
-
-        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == QUERY_OBJECT_RESULT
-            || $this->get('data_object', DATABASE_LITERAL, 'model_registry') == QUERY_OBJECT_DISTINCT
+         */
+        if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_RESULT
+            || $this->get('query_object', '', 'model_registry') == QUERY_OBJECT_DISTINCT
         ) {
 
             if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results') == 1) {
@@ -717,7 +715,7 @@ class Controller
         $this->query_results =
             $this->addCustomFields(
                 $query_results,
-                $this->get('data_object', DATABASE_LITERAL, 'model_registry')
+                $this->get('query_object', '', 'model_registry')
             );
 
         return;
@@ -734,9 +732,11 @@ class Controller
      */
     public function addCustomFields($query_results, $external = 0)
     {
-        if (count($this->get('data_object', DATABASE_LITERAL, 'model_registry')) > 0) {
+        $customFieldTypes = $this->get(strtolower(CUSTOMFIELDGROUPS_LITERAL), array(), 'model_registry');
+
+        if (count($customFieldTypes) > 0) {
         } else {
-            return false;
+            return $query_results;
         }
 
         $q = array();
@@ -746,19 +746,21 @@ class Controller
             if ((int)$this->get('get_customfields', 1, 'model_registry') == 0) {
             } else {
 
-                $customFieldTypes = $this->get(CUSTOMFIELDGROUPS_LITERAL, array(), 'model_registry');
+                $customFieldTypes = $this->get(strtolower(CUSTOMFIELDGROUPS_LITERAL), array(), 'model_registry');
 
                 if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
                 } else {
 
                     foreach ($customFieldTypes as $customFieldName) {
+
                         $results =
                             $this->model->addCustomFields(
+                                $this->get('model_registry_name', '', 'model_registry'),
                                 $customFieldName,
                                 $this->get($customFieldName, array(), 'model_registry'),
                                 $this->get('get_customfields', 1, 'model_registry'),
                                 $results,
-                                $this->get('data_object', DATABASE_LITERAL, 'model_registry')
+                                $this->get('query_object', QUERY_OBJECT_ITEM, 'model_registry')
                             );
                     }
                 }
@@ -770,13 +772,12 @@ class Controller
                     if (count($children) > 0) {
                         $results = $this->model->addItemChildren(
                             $children,
-                            (int)$this->get('primary_key', 0, 'model_registry'),
+                            (int)$this->get('primary_key_value', 0, 'model_registry'),
                             $results
                         );
                     }
                 }
             }
-
             $q[] = $results;
         }
 
@@ -792,7 +793,7 @@ class Controller
     }
 
     /**
-     * Schedule onAfterSetDataobject Event
+     * Schedule onConnectDatabase Event
      *
      *  - Connection to Data Object complete - the model instance and model registry passed into Event
      *
@@ -801,8 +802,13 @@ class Controller
      * @return  void
      * @since   1.0
      */
-    protected function onAfterSetDataobjectEvent()
+    protected function onConnectDatabaseEvent()
     {
+        echo '<br />';
+        echo 'in onConnectDatabaseEvent' . '<br />';
+        echo $this->model_registry_name;
+        echo '<br />';
+
         $arguments = array(
             'model' => $this->get('model'),
             'model_registry' => $this->get('model_registry'),
@@ -814,7 +820,7 @@ class Controller
         );
 
         $arguments = Services::Event()->scheduleEvent(
-            'onAfterSetDataobject',
+            'onConnectDatabase',
             $arguments,
             $this->get('plugins', array())
         );
@@ -838,6 +844,13 @@ class Controller
      */
     protected function onBeforeReadEvent()
     {
+        echo '<br />';
+        echo 'in onBeforeReadEvent' . '<br />';
+        echo $this->model_registry_name;
+        echo '<pre>';
+        var_dump($this->get('plugins'));
+        echo '</pre>';
+
         if (count($this->get('plugins', array())) == 0
             || (int)$this->get('process_plugins', 1, 'model_registry') == 0
         ) {
@@ -853,8 +866,7 @@ class Controller
             'rendered_output' => array(),
             'first' => null
         );
-                      echo 'here';
-        die;
+
         $arguments = Services::Event()->scheduleEvent(
             'onBeforeRead',
             $arguments,

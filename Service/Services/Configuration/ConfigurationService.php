@@ -156,10 +156,10 @@ Class ConfigurationService
      */
     public function __construct()
     {
+        echo 'In Configuration __construct';
+
         $this->getFieldProperties();
-
         $this->getApplication();
-
         $this->setSitePaths();
 
         return $this;
@@ -352,10 +352,7 @@ Class ConfigurationService
                 $controller->set('name_key_value', APPLICATION, 'model_registry');
 
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
-                 echo '<pre>';
-                var_dump($item);
-                echo 'end of the line';
-                die;
+
                 if ($item === false) {
                     throw new \Exception ('ConfigurationService: Error executing getApplication Query');
                 }
@@ -370,28 +367,17 @@ Class ConfigurationService
                 Services::Registry()->set('Configuration', 'application_path', $item->path);
                 Services::Registry()->set('Configuration', 'application_description', $item->description);
 
-                $parameters = Services::Registry()->getArray('ApplicationDatasourceParameters');
                 $profiler_service = 0;
 
+                $parameters = Services::Registry()->getArray('ApplicationDatasourceParameters');
                 foreach ($parameters as $key => $value) {
-
-                    $existing = Services::Registry()->get('Configuration', $key);
-
-                    if ($existing === 0 || trim($existing) == '' || $existing === null || $existing === false) {
-
-                        if ($value === 0 || trim($value) == '' || $value === null) {
-                        } else {
-                            echo $key . ' ' . $value . ' <br /> ';
-                            Services::Registry()->set('Configuration', $key, $value);
-                        }
-                    }
+                    Services::Registry()->set('Configuration', $key, $value);
                 }
 
-                $metadata = Services::Registry()->getArray('ApplicationDatasourceMetadata');
-
-                foreach ($metadata as $key => $value) {
-                    Services::Registry()->set('Configuration', 'metadata_' . $key, $value);
-                }
+                //$metadata = Services::Registry()->getArray('ApplicationDatasourceMetadata');
+                //foreach ($metadata as $key => $value) {
+                //    Services::Registry()->set('Configuration', 'metadata_' . $key, $value);
+                //}
 
             } catch (\Exception $e) {
                 throw new \Exception('Configuration: Exception caught in Configuration: '. $e->getMessage());

@@ -166,7 +166,7 @@ Class CacheService
 			$this->cache_type_template = Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_type_template');
 		}
 
-		Services::Registry()->set('cache_service', $this->cache_service);
+		Services::Registry()->set('cache_service', 'on' , $this->cache_service);
 
 		$this->valid_types = array();
 		$this->valid_types[] = 'type_model';
@@ -187,7 +187,7 @@ Class CacheService
 			$this->loadCacheKeys($type);
 		}
 
-		Services::Registry()->set('cache_service', true);
+		Services::Registry()->set('cache_service', 'on', true);
 
 		return $this;
 	}

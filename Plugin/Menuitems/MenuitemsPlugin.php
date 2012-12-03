@@ -36,40 +36,40 @@ class MenuitemsPlugin extends Plugin
         $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
         $controller->setDataobject();
 
-        $controller->set('check_view_level_access', 1);
-        $controller->set('model_offset', 0);
-        $controller->set('model_count', 999999);
-        $controller->set('get_customfields', 2);
-        $controller->set('use_special_joins', 1);
-        $controller->set('process_plugins', 0);
+        $controller->set('check_view_level_access', 1, 'model_registry');
+        $controller->set('model_offset', 0, 'model_registry');
+        $controller->set('model_count', 999999, 'model_registry');
+        $controller->set('get_customfields', 2, 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
 
         $controller->model->query->select(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('title')
         );
         $controller->model->query->select(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('id')
         );
         $controller->model->query->select(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('lvl')
         );
 
         $controller->model->query->where(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('status')
                 . ' IN (0,1,2)'
         );
 
         $controller->model->query->order(
-            $controller->model->db->qn($controller->get('primary_prefix'))
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('root') . ', '
-                . $controller->model->db->qn($controller->get('primary_prefix'))
+                . $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('lft')
         );
 
-        $controller->set('model_offset', 0);
+        $controller->set('model_offset', 0, 'model_registry');
         $controller->set('model_count', 99999);
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);

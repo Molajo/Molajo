@@ -40,11 +40,11 @@ class AuthorPlugin extends Plugin
             return true;
         }
 
-        if (Services::Registry()->exists(TEMPLATE_LITERAL, $this->get('template_view_path_node') . $fieldValue)) {
+        if (Services::Registry()->exists(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters') . $fieldValue)) {
 
             $authorArray = Services::Registry()->get(
                 TEMPLATE_LITERAL,
-                $this->get('template_view_path_node') . $fieldValue
+                $this->get('template_view_path_node', '', 'parameters') . $fieldValue
             );
 
             foreach ($authorArray[0] as $key => $value) {
@@ -52,7 +52,7 @@ class AuthorPlugin extends Plugin
                 $this->saveField(null, $new_field_name, $value);
             }
 
-            Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node'), $authorArray);
+            Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters'), $authorArray);
 
             return true;
         }
@@ -62,8 +62,8 @@ class AuthorPlugin extends Plugin
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Users');
         $controller->setDataobject();
 
-        $controller->set('id', (int) $fieldValue);
-        $controller->set('get_item_children', 0);
+        $controller->set('primary_key_value', (int) $fieldValue, 'model_registry');
+        $controller->set('get_item_children', 0, 'model_registry');
 
         $item = $controller->getData(QUERY_OBJECT_ITEM);
 
@@ -84,7 +84,7 @@ class AuthorPlugin extends Plugin
 
             } else {
 
-                $new_field_name = $this->get('template_view_path_node') . '_' . $key;
+                $new_field_name = $this->get('template_view_path_node', '', 'parameters') . '_' . $key;
 
                 $this->saveField(null, $new_field_name, $value);
 
@@ -94,8 +94,8 @@ class AuthorPlugin extends Plugin
 
         $authorArray[] = $row;
 
-        Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node') . $fieldValue, $authorArray);
-        Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node'), $authorArray);
+        Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters') . $fieldValue, $authorArray);
+        Services::Registry()->set(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters'), $authorArray);
 
         return true;
     }

@@ -132,11 +132,11 @@ Class CatalogHelper
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
 
-        $controller->set('use_special_joins', 1);
-        $controller->set('process_plugins', 0);
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
 
-        $prefix = $controller->get('primary_prefix', 'a');
-        $key = $controller->get('primary_key');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
+        $key = $controller->get('primary_key', 'id', 'model_registry');
 
         if ((int)$catalog_id > 0) {
             $controller->model->query->where(
@@ -213,7 +213,7 @@ Class CatalogHelper
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
 
-        $prefix = $controller->get('primary_prefix', 'a');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $key = $controller->get('primary_key', 'id');
 
         $controller->model->query->select(
@@ -263,11 +263,11 @@ Class CatalogHelper
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
 
-        $controller->set('use_special_joins', 1);
-        $controller->set('process_plugins', 0);
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
         $key = $controller->get('primary_key', 'id');
 
-        $prefix = $controller->get('primary_prefix', 'a');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
         $controller->model->query->select(
             $controller->model->db->qn($prefix)
@@ -320,7 +320,7 @@ Class CatalogHelper
             $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
             $controller->setDataobject();
 
-            $prefix = $controller->get('primary_prefix', 'a');
+            $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
             $key = $controller->get('primary_key', 'id');
 
             $controller->model->query->select(
@@ -361,7 +361,7 @@ Class CatalogHelper
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
 
-        $prefix = $controller->get('primary_prefix', 'a');
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $key = $controller->get('primary_key', 'id');
 
         $controller->model->query->select(

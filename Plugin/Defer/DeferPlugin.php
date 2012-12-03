@@ -26,7 +26,7 @@ class DeferPlugin extends Plugin
      */
     public function onBeforeRead()
     {
-        if (strtolower($this->get('template_view_path_node')) == 'defer') {
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'defer') {
         } else {
             return true;
         }
@@ -46,7 +46,7 @@ class DeferPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL);
 
-        $controller->set('model_parameter', JS_DECLARATIONS_DEFER_LITERAL);
+        $controller->set('model_parameter', JS_DECLARATIONS_DEFER_LITERAL, 'parameters');
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, $query_results);

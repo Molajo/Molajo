@@ -24,7 +24,7 @@ class DataobjectPlugin extends Plugin
      * @return  boolean
      * @since   1.0
      */
-    public function onAfterSetDataobject()
+    public function onConnectDatabase()
     {
         if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
         } else {

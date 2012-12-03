@@ -26,7 +26,7 @@ class HeadPlugin extends Plugin
      */
     public function onBeforeRead()
     {
-        if (strtolower($this->get('template_view_path_node')) == 'head') {
+        if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'head') {
         } else {
             return true;
         }
@@ -34,17 +34,10 @@ class HeadPlugin extends Plugin
         /** JS */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('dbo', ASSETS_LITERAL);
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('dbo', ASSETS_LITERAL);
+        $controller->setDataobject();
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
-
-        $controller->set('model_parameter', 'Js');
+        $controller->set('model_parameter', 'Js', 'model_registry');
         $query_results = $controller->getData('getAssets');
 
         Services::Registry()->set(ASSETS_LITERAL, 'js', $query_results);
@@ -52,17 +45,10 @@ class HeadPlugin extends Plugin
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry('dbo', ASSETS_LITERAL);
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('dbo', ASSETS_LITERAL);
+        $controller->setDataobject();
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
-
-        $controller->set('model_parameter', 'JsDeclarations');
+        $controller->set('model_parameter', 'JsDeclarations', 'model_registry');
         $query_results = $controller->getData('getAssets');
 
         Services::Registry()->set(ASSETS_LITERAL, 'jsdeclarations', $query_results);

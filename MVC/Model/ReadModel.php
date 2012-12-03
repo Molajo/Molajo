@@ -98,9 +98,11 @@ class ReadModel extends Model
         }
 
         if ($this->query->from == null) {
-            $this->query->from($this->db->qn($table_name)
+            $this->query->from(
+                $this->db->qn($table_name)
                     . ' as '
-                    . $this->db->qn($primary_prefix));
+                    . $this->db->qn($primary_prefix)
+            );
         }
 
         if ($this->query->where == null) {
@@ -341,7 +343,7 @@ class ReadModel extends Model
      * @return  ReadModel
      * @since   1.0
      */
-    public function setModelCriteria($catalog_type_id, $extension_instance_id, $primary_prefix, $status = null )
+    public function setModelCriteria($catalog_type_id, $extension_instance_id, $primary_prefix, $status = null)
     {
         if ((int)$catalog_type_id == 0) {
         } else {
@@ -350,20 +352,20 @@ class ReadModel extends Model
                     . ' = ' . (int)$catalog_type_id
             );
         }
-/**
+        /**
         if ((int) $extension_instance_id == 0) {
         } else {
-            $this->query->where($this->db->qn($primary_prefix . '.' . 'extension_instance_id')
-                . ' = ' . (int) $extension_instance_id);
+        $this->query->where($this->db->qn($primary_prefix . '.' . 'extension_instance_id')
+        . ' = ' . (int) $extension_instance_id);
         }
 
         if ($status === null) {
         } else {
-            $this->query->where($this->db->qn($primary_prefix . '.' . 'status')
-                    . ' IN ' .
-                    ' (' . $status . ') ');
+        $this->query->where($this->db->qn($primary_prefix . '.' . 'status')
+        . ' IN ' .
+        ' (' . $status . ') ');
         }
-*/
+         */
         return $this;
     }
 
@@ -383,9 +385,10 @@ class ReadModel extends Model
         $this->query_results = array();
 
         if ($query_object == QUERY_OBJECT_RESULT ||
-            $query_object == QUERY_OBJECT_ITEM   ||
-            $query_object == QUERY_OBJECT_LIST   ||
-            $query_object == QUERY_OBJECT_DISTINCT ) {
+            $query_object == QUERY_OBJECT_ITEM ||
+            $query_object == QUERY_OBJECT_LIST ||
+            $query_object == QUERY_OBJECT_DISTINCT
+        ) {
         } else {
             $query_object = QUERY_OBJECT_LIST;
         }
@@ -407,13 +410,13 @@ class ReadModel extends Model
                 $use_pagination = 1;
             }
         }
-/**
-echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination . '<br />';
-echo '<br /><br /><pre>';
-$string = $this->query->__toString();
-echo str_replace('#__', 'molajo_', $string);
-echo '</pre><br /><br />';
-*/
+        /**
+        echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination . '<br />';
+        echo '<br /><br /><pre>';
+        $string = $this->query->__toString();
+        echo str_replace('#__', 'molajo_', $string);
+        echo '</pre><br /><br />';
+         */
         $cache_key = $this->query->__toString();
 
         $cached_output = Services::Cache()->get('Query', $cache_key);
@@ -493,7 +496,7 @@ echo '</pre><br /><br />';
     /**
      * Populate query results with custom fields and values
      *
-     * @param   string  $model_name
+     * @param   string  $model_registry_name
      * @param   string  $customFieldName
      * @param   array   $fields
      * @param   string  $retrieval_method
@@ -504,21 +507,20 @@ echo '</pre><br /><br />';
      * @since   1.0
      */
     public function addCustomFields(
-        $model_registry,
+        $model_registry_name,
         $customFieldName,
         $fields,
         $retrieval_method,
         $query_results,
         $query_object
     ) {
+
         $customFieldName = strtolower($customFieldName);
-        $useModelRegistry = $model_registry . ucfirst($customFieldName);
+        $useModelRegistry = $model_registry_name . ucfirst($customFieldName);
 
         /** See if there are query results for this Custom Field Group */
         if (is_object($query_results) && isset($query_results->$customFieldName)) {
-
             $jsonData = $query_results->$customFieldName;
-
             $data = json_decode($jsonData);
 
             /** test for application-specific values */
@@ -550,34 +552,37 @@ echo '</pre><br /><br />';
         /** Process each of the Custom Field Group Definitions for Query Results or defaults */
         foreach ($fields as $f) {
 
-            $name = $f['name'];
-            $name = strtolower($name);
+            //todo: remove hack testing name - addition elements added on in controller incorrectly show in this array
+            if (isset($f['name'])) {
+                $name = $f['name'];
+                $name = strtolower($name);
 
-            $default = null;
-            if (isset($f['default'])) {
-                $default = $f['default'];
-            }
-
-            if ($default == '') {
                 $default = null;
-            }
-
-            if (isset($lookup[$name])) {
-                $setValue = $lookup[$name];
-            } else {
-                $setValue = $default;
-            }
-
-            if ($retrieval_method == 1 && $query_object == QUERY_OBJECT_ITEM) {
-                Services::Registry()->set($useModelRegistry, $name, $setValue);
-
-            } else {
-                if (strtolower($customFieldName) == PARAMETERS_LITERAL
-                    || strtolower($customFieldName) == METADATA_LITERAL
-                ) {
-                    $name = strtolower($customFieldName) . '_' . $name;
+                if (isset($f['default'])) {
+                    $default = $f['default'];
                 }
-                $query_results->$name = $setValue;
+
+                if ($default == '') {
+                    $default = null;
+                }
+
+                if (isset($lookup[$name])) {
+                    $setValue = $lookup[$name];
+                } else {
+                    $setValue = $default;
+                }
+
+                if ($retrieval_method == 1 && $query_object == QUERY_OBJECT_ITEM) {
+                    Services::Registry()->set($useModelRegistry, $name, $setValue);
+
+                } else {
+                    if (strtolower($customFieldName) == PARAMETERS_LITERAL
+                        || strtolower($customFieldName) == METADATA_LITERAL
+                    ) {
+                        $name = strtolower($customFieldName) . '_' . $name;
+                    }
+                    $query_results->$name = $setValue;
+                }
             }
         }
 
@@ -608,11 +613,12 @@ echo '</pre><br /><br />';
 
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
+
             $controller->getModelRegistry($model_type, $model_name);
             $controller->setDataobject();
 
             $join = (string)$child['join'];
-            $joinPrimaryPrefix = $controller->get('primary_prefix');
+            $joinPrimaryPrefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
             $controller->model->query->where(
                 $controller->model->db->qn($joinPrimaryPrefix . '.' . $join)

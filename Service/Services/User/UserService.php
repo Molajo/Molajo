@@ -37,13 +37,12 @@ Class UserService
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, USER_LITERAL);
         $controller->setDataobject();
 
-        $controller->set('id', $this->id);
-		$controller->set('get_customfields', 2);
-		$controller->set('use_special_joins', 1);
-		$controller->set('process_plugins', 1);
+        $controller->set('primary_key_value', $this->id, 'model_registry');
+		$controller->set('get_customfields', 2, 'model_registry');
+		$controller->set('use_special_joins', 1, 'model_registry');
+		$controller->set('process_plugins', 1, 'model_registry');
 
         $item = $controller->getData(QUERY_OBJECT_ITEM);
-
         if ($item === false || count($item) == 0) {
             throw new \RuntimeException ('User: Load User Query Failed');
         }
@@ -55,8 +54,10 @@ Class UserService
 
         $applications = array();
         $x = $item->Userapplications;
-        foreach ($x as $app) {
-            $applications[] = $app->application_id;
+        if (count($x) > 0) {
+            foreach ($x as $app) {
+                $applications[] = $app->application_id;
+            }
         }
 		array_unique($applications);
 
@@ -64,8 +65,10 @@ Class UserService
 
         $temp = array();
         $x = $item->Usergroups;
-        foreach ($x as $group) {
-            $temp[] = $group->group_id;
+        if (count($x) > 0) {
+            foreach ($x as $group) {
+                $temp[] = $group->group_id;
+            }
         }
 
         if (in_array(SYSTEM_GROUP_PUBLIC, $temp)) {
