@@ -62,6 +62,11 @@ class MenuitemsPlugin extends Plugin
                 . '.' . $controller->model->db->qn('status')
                 . ' IN (0,1,2)'
         );
+        $controller->model->query->where(
+            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
+                . '.' . $controller->model->db->qn('catalog_type_id')
+                . ' = ' . CATALOG_TYPE_MENUITEM
+        );
 
         $controller->model->query->order(
             $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
@@ -71,7 +76,7 @@ class MenuitemsPlugin extends Plugin
         );
 
         $controller->set('model_offset', 0, 'model_registry');
-        $controller->set('model_count', 99999);
+        $controller->set('model_count', 99999, 'model_registry');
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 

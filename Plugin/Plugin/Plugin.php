@@ -295,8 +295,8 @@ class Plugin
 
         } elseif (isset($field->customfield)) {
             //todo: review this - it seems unnecessary
-            if (Services::Registry()->exists($this->get('model_name') . $field->customfield, $name)) {
-                return Services::Registry()->get($this->get('model_name') . $field->customfield, $name);
+            if (Services::Registry()->exists($this->get('model_name', '', 'parameters') . $field->customfield, $name)) {
+                return Services::Registry()->get($this->get('model_name', '', 'parameters') . $field->customfield, $name);
             }
         }
 

@@ -34,11 +34,14 @@ class ContentlistPlugin extends Plugin
             return true;
         }
 
-        return true;
         /** Retrieve Data */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->setDataobject($this->get('model_type'), $this->get('model_name'));
+        $controller->getModelRegistry(
+            $this->get('model_type', '', 'parameters'),
+            $this->get('model_name', '', 'parameters')
+        );
+        $controller->setDataobject();
         $controller->connectDatabase();
 
         $controller->set('get_customfields', 2, 'model_registry');
@@ -47,7 +50,7 @@ class ContentlistPlugin extends Plugin
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
-        $criteria_status = $this->parameters['criteria_status'];
+        $criteria_status = $this->get('criteria_status', '', 'parameters');
         $criteria_status = '1,2';
         if ($criteria_status == '') {
         } else {

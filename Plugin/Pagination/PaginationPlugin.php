@@ -173,7 +173,7 @@ class PaginationPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', DATA_SOURCE_LITERAL),
-            $this->get('model_name')
+            $this->get('model_name', '', 'parameters')
         );
         $controller->setDataobject();
         $controller->connectDatabase();
@@ -196,7 +196,7 @@ class PaginationPlugin extends Plugin
 //todo ordering
         $item = $controller->getData(QUERY_OBJECT_ITEM);
 
-        $this->model_registry_name = ucfirst(strtolower($this->get('model_name')))
+        $this->model_registry_name = ucfirst(strtolower($this->get('model_name', '', 'parameters')))
             . ucfirst(strtolower($this->get('model_type', DATA_SOURCE_LITERAL)));
 
         if ($item === false || count($item) == 0) {

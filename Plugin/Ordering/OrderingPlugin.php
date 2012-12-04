@@ -50,7 +50,7 @@ class OrderingPlugin extends Plugin
 
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-            $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+            $controller->getModelRegistry($this->get('model_type', '', 'parameters'), $this->get('model_name', '', 'parameters'));
             $controller->setDataobject();
             $controller->connectDatabase();
 

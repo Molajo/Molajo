@@ -31,15 +31,15 @@ class PagetypeitemPlugin extends Plugin
 			return true;
 		}
 
-		$resource_model_type = $this->get('model_type');
-		$resource_model_name = $this->get('model_name');
+		$resource_model_type = $this->get('model_type', '', 'parameters');
+		$resource_model_name = $this->get('model_name', '', 'parameters');
 
-        $resource_table_registry = ucfirst(strtolower($this->get('model_name')))
-            . ucfirst(strtolower($this->get('model_type')));
+        $resource_table_registry = ucfirst(strtolower($this->get('model_name', '', 'parameters')))
+            . ucfirst(strtolower($this->get('model_type', '', 'parameters')));
 
 
-        $controller->set('request_model_type', $this->get('model_type'), 'model_registry');
-        $controller->set('request_model_name', $this->get('model_name'), 'model_registry');
+        $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
+        $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
 
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');

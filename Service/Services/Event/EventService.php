@@ -151,9 +151,7 @@ Class EventService
             $this->eventPluginArray[] = $row;
 
             $registered = $this->eventPluginArray;
-
             $this->pluginArray['dataobjectplugin'] = 'Molajo\Plugin\Dataobject\DataobjectPlugin';
-
             $pluginList = $this->pluginArray;
         }
 

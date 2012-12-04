@@ -31,29 +31,29 @@ class PagetypelistPlugin extends Plugin
 			return true;
 		}
 
-        $resource_table_registry = ucfirst(strtolower($this->get('model_name')))
-            . ucfirst(strtolower($this->get('model_type')));
+        $resource_table_registry = ucfirst(strtolower($this->get('model_name', '', 'parameters')))
+            . ucfirst(strtolower($this->get('model_type', '', 'parameters')));
 
         /** Get Actual Data for matching to Fields */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+        $controller->getModelRegistry($this->get('model_type', '', 'parameters'), $this->get('model_name', '', 'parameters'));
         $controller->setDataobject();
         $controller->connectDatabase();
 
         $controller->set('get_customfields', 2, 'model_registry');
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('check_view_level_access', 1, 'model_registry');
-
-        $controller->set('model_offset', $this->get('model_offset', 0));
-        $controller->set('model_count', $this->get('model_count', 5));
+/**
+        $controller->set('model_offset', $this->get('model_offset', 0), 'model_registry');
+        $controller->set('model_count', $this->get('model_count', 5), 'model_registry');
         $controller->set('use_pagination', $this->get('model_use_pagination', 1));
-
+*/
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
-
-        $controller->set('request_model_type', $this->get('model_type'), 'model_registry');
-        $controller->set('request_model_name', $this->get('model_name'), 'model_registry');
-
+/**
+        $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
+        $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
+*/
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
@@ -61,11 +61,7 @@ class PagetypelistPlugin extends Plugin
         $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
 
-        Services::Registry()->set(
-            PRIMARY_LITERAL,
-            DATA_LITERAL,
-            $query_results
-        );
+        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
 
         return true;
     }
@@ -85,7 +81,7 @@ class PagetypelistPlugin extends Plugin
             return true;
         }
 
-        if ((int) $this->parameters['total_rows'] == 0
+        if ((int) $this->get('total_rows', 0, 'parameters') == 0
             || $this->data === false
             || $this->data == null
         ) {
@@ -98,7 +94,7 @@ class PagetypelistPlugin extends Plugin
         }
 
         /** first row */
-        if ($this->parameters['row_count'] == 1) {
+        if ($this->get('row_count', 0, 'parameters') == 1) {
             $value = 'first';
         } else {
             $value = '';
@@ -106,7 +102,7 @@ class PagetypelistPlugin extends Plugin
         $this->saveField(null, 'first_row', $value);
 
         /** last row */
-        if ($this->parameters['row_count'] == $this->parameters['total_rows']) {
+        if ($this->get('row_count', 0, 'parameters') == $this->get('total_rows', 0, 'parameters')) {
             $value = 'last';
         } else {
             $value = '';
@@ -114,10 +110,10 @@ class PagetypelistPlugin extends Plugin
         $this->saveField(null, 'last_row', $value);
 
         /** total_rows */
-        $this->saveField(null, 'total_rows', $this->parameters['total_rows']);
+        $this->saveField(null, 'total_rows', $this->get('total_rows', 0, 'parameters'));
 
         /** even_or_odd_row */
-        $this->saveField(null, 'even_or_odd_row', $this->parameters['even_or_odd']);
+        $this->saveField(null, 'even_or_odd_row', $this->get('even_or_odd', 0, 'parameters'));
 
         /** grid_row_class */
         $value = ' class="' .

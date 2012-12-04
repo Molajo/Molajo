@@ -32,27 +32,20 @@ class FieldsPlugin extends Plugin
             return true;
         }
 
+        $model_name = $this->get('model_name', '', 'parameters');
+        $model_type = $this->get('model_type', '', 'parameters');
+
+        $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+
         $extended_literal = ' (' . Services::Language()->translate('extended') . ')';
         $parameter_literal = ' (' . Services::Language()->translate('parameter') . ')';
         $customfield_literal = ' (' . Services::Language()->translate('customfield') . ')';
         $metadata_literal = ' (' . Services::Language()->translate(METADATA_LITERAL) . ')';
 
-        $model_name = $this->get('model_name');
-        $model_type = $this->get('model_type');
-
-        $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-
-        if (Services::Registry()->exists($model_registry) === true) {
-        } else {
-            Helpers::Content()->getResourceContentParameters($model_type, $model_name);
-        }
-
-        $primary_prefix = Services::Registry()->get($model_registry, 'primary_prefix');
-
         $fieldArray = array();
         $standardArray = array();
 
-        $normalFields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
+        $normalFields = $this->get(strtolower(FIELDS_LITERAL), array(), 'model_registry');
 
         $status = 0;
 
@@ -155,7 +148,7 @@ class FieldsPlugin extends Plugin
             $fieldArray[] = $row;
         }
 
-        $joins = Services::Registry()->get($model_registry, 'joins');
+        $joins = $this->get('joins', array(), 'model_registry');
 
         if (count($joins) > 0) {
             foreach ($joins as $field) {
@@ -176,7 +169,7 @@ class FieldsPlugin extends Plugin
         }
 
 //$exists = Services::Registry()->exists($model_registry, CUSTOMFIELDGROUPS_LITERAL);
-        $customfields = Services::Registry()->get($model_registry, CUSTOMFIELDS_LITERAL);
+        $customfields = $this->get(strtolower(CUSTOMFIELDS_LITERAL), array(), 'model_registry');
         $customFieldArray = array();
         if (count($customfields) > 0) {
             foreach ($customfields as $field) {
@@ -190,7 +183,7 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $parameters = Services::Registry()->get($model_registry, PARAMETERS_LITERAL);
+        $parameters = $this->get(strtolower(PARAMETERS_LITERAL), array(), 'model_registry');
         $parametersArray = array();
         if (count($parameters) > 0) {
             foreach ($parameters as $field) {
@@ -203,8 +196,7 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $metadata = Services::Registry()->get($model_registry, METADATA_LITERAL);
-        $metadataArray = array();
+        $metadata = $this->get(strtolower(METADATA_LITERAL), array(), 'model_registry');
         if (count($metadata) > 0) {
             foreach ($metadata as $field) {
                 $row = new \stdClass();

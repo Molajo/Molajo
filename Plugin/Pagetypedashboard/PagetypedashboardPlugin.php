@@ -51,8 +51,8 @@ class PagetypedashboardPlugin extends Plugin
         $page_array = $this->get('dashboard_page_array');
 
         $tabs = Services::Form()->setPageArray(
-            $this->get('model_type'),
-            $this->get('model_name'),
+            $this->get('model_type', '', 'parameters'),
+            $this->get('model_name', '', 'parameters'),
             $namespace,
             $page_array,
             'dahboard_page_',
@@ -62,8 +62,8 @@ class PagetypedashboardPlugin extends Plugin
             null
         );
 
-        $controller->set('request_model_type', $this->get('model_type'), 'model_registry');
-        $controller->set('request_model_name', $this->get('model_name'), 'model_registry');
+        $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
+        $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
 
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
@@ -100,7 +100,7 @@ class PagetypedashboardPlugin extends Plugin
 
         Services::Registry()->set('xxxx', 'PortletOptions', $portletIncludes);
 
-        if ($this->get('model_type') == '' || $this->get('model_name') == '') {
+        if ($this->get('model_type', '', 'parameters') == '' || $this->get('model_name', '', 'parameters') == '') {
             return true;
         }
 

@@ -491,10 +491,6 @@ Class ParseService
             'include_parse_exclude_until_final' => $this->exclude_until_final
         );
 
-echo '<pre>';
-var_dump($arguments);
-echo '</pre>';
-die;
         $arguments = Services::Event()->scheduleEvent($eventName, $arguments, array());
 
         if (isset($arguments['include_parse_sequence'])) {

@@ -686,7 +686,7 @@ class Includer
 
         $arguments = array(
             'model' => null,
-            'model_registry' => $model_registry,
+            'model_registry' => Services::Registry()->get($model_registry),
             'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'query_results' => array(),
             'data' => array(),

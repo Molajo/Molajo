@@ -33,7 +33,7 @@ class PagetypegridPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+        $controller->getModelRegistry($this->get('model_type', '', 'parameters'), $this->get('model_name', '', 'parameters'));
         $controller->setDataobject();
         $controller->connectDatabase();
 
@@ -62,7 +62,7 @@ class PagetypegridPlugin extends Plugin
     {
         $url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
 
-        $list = $this->get('grid_toolbar_buttons');
+        $list = $this->get('grid_toolbar_buttons', '', 'parameters');
 
         if ($list == '#' || $list == '') {
             $list = 'create,read,edit,publish,feature,archive,checkin,restore,delete,trash';
@@ -73,7 +73,7 @@ class PagetypegridPlugin extends Plugin
         $permissions = Services::Permissions()
             ->verifyTaskList(
             $grid_toolbar_buttons,
-            $this->get('catalog_id')
+            $this->get('catalog_id', '', 'permissions')
         );
 
         $query_results = array();
@@ -127,9 +127,9 @@ class PagetypegridPlugin extends Plugin
         $grid_list = array();
 
         for ($i = 1; $i < 11; $i++) {
-            if ($this->get('grid_list' . $i, '') == '') {
+            if ($this->get('grid_list' . $i, '', 'parameters') == '') {
             } else {
-                $grid_list[] = $this->get('grid_list' . $i);
+                $grid_list[] = $this->get('grid_list' . $i, '', 'parameters');
             }
         }
 
@@ -190,7 +190,7 @@ class PagetypegridPlugin extends Plugin
 
         Services::Registry()->set(PAGE_TYPE_GRID, 'TableColumns', $grid_columns);
 
-        $list = $this->get('criteria_catalog_type_id');
+        $list = $this->get('criteria_catalog_type_id', '', 'parameters');
 
         $controller->model->query->where(
             $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
@@ -220,23 +220,23 @@ class PagetypegridPlugin extends Plugin
                 . $orderingDirection
         );
 
-        $offset = (int)$this->get('grid_offset');
+        $offset = (int)$this->get('grid_offset', '', 'parameters');
         Services::Registry()->set(PAGE_TYPE_GRID, 'Offset', (int)$offset);
-        $controller->set('model_offset', $offset);
+        $controller->set('model_offset', $offset, 'parameters');
 
-        $itemsPerPage = (int)$this->get('grid_items_per_page');
+        $itemsPerPage = (int)$this->get('grid_items_per_page', '', 'parameters');
         if ((int)$itemsPerPage == 0) {
             $itemsPerPage = 15;
         }
         Services::Registry()->set(PAGE_TYPE_GRID, 'ItemsPerPage', $itemsPerPage);
 
-        $controller->set('model_count', $itemsPerPage);
+        $controller->set('model_count', $itemsPerPage, 'model_registry');
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         $gridItems = array();
 
-        $name_key = $controller->get('name_key');
+        $name_key = $controller->get('name_key', '', 'parameters');
 
         if (count($query_results) > 0) {
 
@@ -263,8 +263,12 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        $controller->set('request_model_type', $this->get('model_type'), 'model_registry');
-        $controller->set('request_model_name', $this->get('model_name'), 'model_registry');
+        $controller->set('request_model_type',
+            $this->get('model_type', '', 'parameters'),
+            'model_registry');
+        $controller->set('request_model_name',
+            $this->get('model_name', '', 'parameters'),
+            'model_registry');
 
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
@@ -289,7 +293,7 @@ class PagetypegridPlugin extends Plugin
      */
     protected function setBatch()
     {
-        $temp = $this->get('grid_batch_array', '');
+        $temp = $this->get('grid_batch_array', '', 'parameters');
 
         if ($temp == '') {
             Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', array());

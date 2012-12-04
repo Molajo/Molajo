@@ -32,14 +32,24 @@ class PagetypeconfigurationPlugin extends Plugin
             return true;
         }
 
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry($this->get('model_type', '', 'parameters'), $this->get('model_name', '', 'parameters'));
+        $controller->setDataobject();
+        $controller->connectDatabase();
+
+        $controller->set('get_customfields', 2, 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 1, 'model_registry');
+
         /** Array - All Pages in Set
         2, {{Access,noformfields}}{{Editor,editor}}{{Grid,grid}}{{Form,form}}{{Item,item}}{{List,list}}
          */
-        $temp = $this->get('configuration_array');
+        $temp = $this->get('configuration_array', '', 'parameters');
         $pages = explode('{{', $temp);
 
         /** Determine Current Page of Set */
-        $temp = Services::Registry()->get('parameters', 'request_filters', array());
+        $temp = $this->get('request_filters', array(), 'parameters');
         $filters = explode(',', $temp);
 
         $page = 1;
@@ -117,8 +127,8 @@ class PagetypeconfigurationPlugin extends Plugin
             $pageFieldsets[0]->page_count
         );
 
-        $controller->set('request_model_type', $this->get('model_type'), 'model_registry');
-        $controller->set('request_model_name', $this->get('model_name'), 'model_registry');
+        $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
+        $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
 
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
@@ -152,10 +162,10 @@ class PagetypeconfigurationPlugin extends Plugin
         /** Set Input */
         $form->set('namespace', strtolower($this->get('page_type', '', 'parameters')));
 
-        $form->set('model_type', $this->get('model_type'));
-        $form->set('model_name', $this->get('model_name'));
+        $form->set('model_type', $this->get('model_type', '', 'parameters'));
+        $form->set('model_name', $this->get('model_name', '', 'parameters'));
         $form->set('model_registry_name',
-            ucfirst(strtolower($this->get('model_name'))) . ucfirst(strtolower($this->get('model_type')))
+            ucfirst(strtolower($this->get('model_name', '', 'parameters'))) . ucfirst(strtolower($this->get('model_type', '', 'parameters')))
         );
 
         $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));

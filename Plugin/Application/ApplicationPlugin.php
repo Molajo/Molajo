@@ -82,7 +82,7 @@ class ApplicationPlugin extends Plugin
         Services::Registry()->set(STRUCTURE_LITERAL, 'page_url', $url);
         Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
 
-        $resource = $this->get('extension_name_path_node', '');
+        $resource = $this->get('extension_name_path_node', '', 'parameters');
         $url = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url') . '/' . strtolower($resource);
         Services::Registry()->set(STRUCTURE_LITERAL, 'resource_url', $url);
 
