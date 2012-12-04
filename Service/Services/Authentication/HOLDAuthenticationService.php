@@ -3,7 +3,7 @@
  * @package     Joomla.Platform
  * @subpackage  User
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 defined('MOLAJO') or die;
