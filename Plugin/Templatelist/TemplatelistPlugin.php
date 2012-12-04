@@ -50,6 +50,7 @@ class TemplatelistPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name);
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 

@@ -64,8 +64,8 @@ Class InstallService
 
         $model_registry = $copy_model_name . $copy_model_type;
 
-        $controller->set('get_item_children', 0);
-        $controller->set('use_special_joins', 0);
+        $controller->set('get_item_children', 0, 'model_registry');
+        $controller->set('use_special_joins', 0, 'model_registry');
         $controller->set('check_view_level_access', 1, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
 

@@ -36,8 +36,9 @@ class HeadPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry('dbo', ASSETS_LITERAL);
         $controller->setDataobject();
-
+        $controller->connectDatabase();
         $controller->set('model_parameter', 'Js', 'model_registry');
+
         $query_results = $controller->getData('getAssets');
 
         Services::Registry()->set(ASSETS_LITERAL, 'js', $query_results);
@@ -47,6 +48,7 @@ class HeadPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry('dbo', ASSETS_LITERAL);
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('model_parameter', 'JsDeclarations', 'model_registry');
         $query_results = $controller->getData('getAssets');

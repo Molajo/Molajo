@@ -56,12 +56,12 @@ class ApplicationPlugin extends Plugin
     }
 
     /**
-     * Prepares Application Menus
+     * Prepare Page Metadata prior to parsing document head
      *
      * @return  boolean
      * @since   1.0
      */
-    public function onBeforeDocumenthead()
+    public function onBeforeParseHead()
     {
         $this->setPageMeta();
     }

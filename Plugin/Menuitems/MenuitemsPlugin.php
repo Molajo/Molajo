@@ -35,6 +35,7 @@ class MenuitemsPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL);
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('check_view_level_access', 1, 'model_registry');
         $controller->set('model_offset', 0, 'model_registry');

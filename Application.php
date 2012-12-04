@@ -15,8 +15,6 @@ use Molajo\Helpers;
 defined('MOLAJO') or die;
 
 /**
- * Application
- *
  * Front Controller for the Molajo Application
  *
  * 1. Initialise
@@ -109,25 +107,56 @@ Class Application
         $override_parse_final = false
     ) {
 
+        $this->request = new RequestService();
+
+        $this->setBaseURL();
+
+        $this->setDefines();
+
         /** 1. Initialise */
-        $results = $this->initialise(
-            $override_url_request,
-            $override_catalog_id,
-            $override_parse_sequence,
-            $override_parse_final
-        );
+        try {
+                Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
+
+            $results = $this->initialise(
+                $override_url_request,
+                $override_catalog_id,
+                $override_parse_sequence,
+                $override_parse_final
+            );
+
+            $this->onAfterInitialiseEvent();
+
+        } catch (\Exception $e) {
+
+            throw new \Exception('Initialise Error: ' . $e->getMessage(), $e->getCode(), $e);
+        }
 
         /** 2. Route */
         try {
+
+            if (defined(PROFILER_ON)) {
+                Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
+            }
+
             $this->route();
 
+            $this->onAfterRouteEvent();
+
         } catch (\Exception $e) {
+
             throw new \Exception('Route Error: ' . $e->getMessage(), $e->getCode(), $e);
         }
 
         /** 3. Authorise */
         try {
+
+            if (defined(PROFILER_ON)) {
+                Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
+            }
+
             $this->authorise();
+
+            $this->onAfterAuthoriseEvent();
 
         } catch (\Exception $e) {
             throw new \Exception('Permissions Error: ' . $e->getMessage(), $e->getCode(), $e);
@@ -137,6 +166,8 @@ Class Application
         try {
             $this->execute();
 
+            $this->onAfterExecuteEvent();
+
         } catch (\Exception $e) {
             throw new \Exception('Execute Error: ' . $e->getMessage(), $e->getCode(), $e);
         }
@@ -144,6 +175,8 @@ Class Application
         /** 5. Response */
         try {
             $this->response();
+
+            $this->onAfterResponseEvent();
 
         } catch (\Exception $e) {
             throw new \Exception('Response Error: ' . $e->getMessage(), $e->getCode(), $e);
@@ -178,101 +211,35 @@ Class Application
             throw new \Exception('PHP version: ' . PHP_VERSION . ' does not meet 5.3 minimum.', 500);
         }
 
-        /** Request */
-        $this->request = new RequestService();
+        $this->setSite();
 
-        /** HTTP class */
-        $results = $this->setBaseURL();
-        if ($results === false) {
-            return false;
-        }
+        $this->setApplication();
 
-        /** PHP constants */
-        $results = $this->setDefines();
-        if ($results === false) {
-            return false;
-        }
+        $this->installCheck();
 
-        /** Site determination and paths */
-        $results = $this->setSite();
-        if ($results === false) {
-            return false;
-        }
+        Application::Services()->initiate();
 
-        /** Application determination and paths */
-        $results = $this->setApplication();
-        if ($results === false) {
-            return false;
-        }
+        $this->sslCheck();
 
-        /** Installation check */
-        $results = $this->installCheck();
-        if ($results === false) {
-            return false;
-        }
+        $this->verifySiteApplication();
 
-        /** Services */
-        $results = Application::Services()->initiate();
-        if ($results === false) {
-            return false;
-        }
-
-        /** SSL */
-        $results = $this->sslCheck();
-        if ($results === false) {
-            return false;
-        }
-
-        /** Site authorised for application */
-        $results = $this->verifySiteApplication();
-        if ($results === false) {
-            return false;
-        }
-
-        /** Helpers */
-        $results = Application::Helpers();
-        if ($results === false) {
-            return false;
-        }
+        Application::Helpers();
 
         /** LAZY LOAD Session */
         //Services::Session()->create(
         //    Services::Session()->getHash(get_class($this))
         //);
-        // Services::Profiler()
-        // ->set('Services::Session()->create complete, 'Application');
 
         Services::Registry()->set(OVERRIDE_LITERAL, 'url_request', $override_url_request);
         Services::Registry()->set(OVERRIDE_LITERAL, 'catalog_id', $override_catalog_id);
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_sequence', $override_parse_sequence);
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', $override_parse_final);
 
-        if ($results === true) {
-
-            if (defined(PROFILER_ON)) {
-                Services::Profiler()->set('Application Schedule Event onAfterInitialise', PROFILER_PLUGINS);
-            }
-
-            $results = Services::Event()->scheduleEvent('onAfterInitialise');
-            if (is_array($results)) {
-                $results = true;
-            }
-        }
-
-        if ($results === false) {
-            //if (is_defined(PROFILER_ON)) {
-                Services::Profiler()->set('Initialise failed', PROFILER_APPLICATION);
-            //}
-            throw new \Exception('Initialisation failed');
-        }
-
-        Services::Profiler()->set('Initialise succeeded', PROFILER_APPLICATION);
-
         return true;
     }
 
     /**
-     * Custom PHP Exception Handler for Molajo
+     * Exception Handler
      *
      * @param   object \Exception
      *
@@ -287,7 +254,7 @@ Class Application
     }
 
     /**
-     * Custom PHP Error Handler - turns Errors into PHP Exceptions
+     * PHP Error Handler - throw PHP Errors as PHP Exceptions
      *
      * @param   $code
      * @param   $message
@@ -303,6 +270,30 @@ Class Application
             return;
         }
         throw new \ErrorException($message, 0, $code, $file, $line);
+    }
+
+    /**
+     * Schedule Event onAfterInitialise
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function onAfterInitialiseEvent()
+    {
+        $arguments = array(
+            'model' => null,
+            'model_registry' => array(),
+            'parameters' => array(),
+            'query_results' => array(),
+            'data' => array(),
+            'rendered_output' => array(),
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
+        );
+
+        $arguments = Services::Event()->scheduleEvent('onAfterInitialise', $arguments, array());
+
+        return true;
     }
 
     /**
@@ -324,43 +315,21 @@ Class Application
 //$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
 //$results = Services::Install()->testDeleteExtension('Test', 'Resources');
 
-        //if (defined(PROFILER_ON)) {
-            Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
-       // }
-
         $results = Services::Route()->process(
             $this->requested_resource_for_route,
             $this->base_url_path_for_application
         );
 
-        if (Services::Redirect()->url === null
-            && (int)Services::Redirect()->code == 0
-        ) {
-            $results = $this->onAfterRouteEvent();
-        }
-
-        if ($results === false
-            || Services::Registry()->get('parameters', ERROR_STATUS_LITERAL, 0) == 1
-        ) {
-//            if (is_defined(PROFILER_ON)) {
-                Services::Profiler()->set('Route failed', PROFILER_APPLICATION);
-  //          }
-            throw new \Exception('Route failed');
-        }
-
         if ($results === true
             && Services::Redirect()->url === null
             && (int)Services::Redirect()->code == 0
         ) {
-            //if (is_defined(PROFILER_ON)) {
-                Services::Profiler()->set('Route succeeded', PROFILER_APPLICATION);
-            //}
             return true;
         }
 
-     //   if (is_defined(PROFILER_ON)) {
+        if (is_defined(PROFILER_ON)) {
             Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, PROFILER_APPLICATION);
-       // }
+        }
 
         return true;
     }
@@ -373,28 +342,53 @@ Class Application
      */
     protected function onAfterRouteEvent()
     {
+        $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
+            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
+
         $arguments = array(
-            'parameters' => Services::Registry()->getArray('parameters'),
-            'model_type' => Services::Registry()->get('parameters', 'model_type'),
-            'model_name' => Services::Registry()->get('parameters', 'model_name'),
-            'data' => array()
+            'model' => null,
+            'model_registry' => $model_registry,
+            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
+            'query_results' => array(),
+            'data' => array(),
+            'rendered_output' => array(),
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
         );
 
-        $arguments = Services::Event()->scheduleEvent('onAfterRoute', $arguments);
-        if ($arguments === false) {
-            return false;
-        }
+        $arguments = Services::Event()->scheduleEvent('onAfterRoute', $arguments, array());
 
-        Services::Registry()->delete('parameters');
-        Services::Registry()->createRegistry('parameters');
-        Services::Registry()->loadArray('parameters', $arguments['parameters']);
-        Services::Registry()->sort('parameters');
+        if (isset($arguments[PARAMETERS_LITERAL])) {
+            Services::Registry()->delete(PARAMETERS_LITERAL);
+            Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+            Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+            Services::Registry()->sort(PARAMETERS_LITERAL);
+        }
 
         return true;
     }
 
     /**
-     * Verify user authorization
+     * Authorise
+     *
+     * Standard Permissions Verification using action/task and catalog id for logged on user
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function authorise()
+    {
+        $permissions = Services::Permissions()->verifyAction(
+
+        );
+        //todo: verify 403
+
+
+        return true;
+    }
+
+    /**
+     * Schedule onAfterAuthoriseEvent
      *
      * OnAfterAuthorise Event is invoked regardless of normal authorisation results (fail or succeed)
      *      in order to allow overriding the finding and/or providing other methods of authorisation
@@ -402,19 +396,30 @@ Class Application
      * @return  boolean
      * @since   1.0
      */
-    protected function authorise()
+    protected function onAfterAuthoriseEvent()
     {
-        $results = Services::Event()->scheduleEvent('onAfterAuthorise');
-        if (is_array($results)) {
-            $results = true;
-        }
+        $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
+            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
 
-        if ($results === false) {
-            Services::Profiler()->set('Authorise failed', PROFILER_APPLICATION);
-            throw new \Exception('Permissions Failed', 403);
-        }
+        $arguments = array(
+            'model' => null,
+            'model_registry' => $model_registry,
+            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
+            'query_results' => array(),
+            'data' => array(),
+            'rendered_output' => array(),
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
+        );
 
-        Services::Profiler()->set('Authorise succeeded', PROFILER_APPLICATION);
+        $arguments = Services::Event()->scheduleEvent('onAfterAuthoriseEvent', $arguments, array());
+
+        if (isset($arguments[PARAMETERS_LITERAL])) {
+            Services::Registry()->delete(PARAMETERS_LITERAL);
+            Services::Registry()->createRegistry(PARAMETERS_LITERAL);
+            Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
+            Services::Registry()->sort(PARAMETERS_LITERAL);
+        }
 
         return true;
     }
@@ -530,6 +535,31 @@ Class Application
     }
 
     /**
+     * Schedule Event onAfterInitialise
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function onAfterExecuteEvent()
+    {
+
+        $arguments = array(
+            'model' => null,
+            'model_registry' => array(),
+            'parameters' => array(),
+            'query_results' => array(),
+            'data' => array(),
+            'rendered_output' => array(),
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
+        );
+
+        $arguments = Services::Event()->scheduleEvent('onAfterExecute', $arguments, array());
+
+        return true;
+    }
+
+    /**
      * Return HTTP response
      *
      * @return  object
@@ -571,11 +601,6 @@ Class Application
         }
 
         if ($results == 200) {
-            Services::Profiler()->set('Application Schedule Event onAfterResponse', PROFILER_PLUGINS);
-            $results = Services::Event()->scheduleEvent('onAfterResponse');
-            if (is_array($results)) {
-                $results = true;
-            }
         } else {
             throw new \Exception('Response failed', $results);
         }
@@ -584,6 +609,30 @@ Class Application
 
         Services::Profiler()
             ->set('Response exit ' . $results, PROFILER_APPLICATION);
+
+        return true;
+    }
+
+    /**
+     * Schedule Event onAfterInitialise
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function onAfterResponseEvent()
+    {
+        $arguments = array(
+            'model' => null,
+            'model_registry' => array(),
+            'parameters' => array(),
+            'query_results' => array(),
+            'data' => array(),
+            'rendered_output' => array(),
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
+        );
+
+        $arguments = Services::Event()->scheduleEvent('onAfterResponse', $arguments, array());
 
         return true;
     }

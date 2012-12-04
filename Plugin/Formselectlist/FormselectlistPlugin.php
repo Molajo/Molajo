@@ -61,11 +61,11 @@ class FormselectlistPlugin extends Plugin
             );
         }
 
-        $this->set('model_type', DATA_OBJECT_LITERAL);
+        $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
         $this->set('model_name', TEMPLATE_LITERAL);
-        $this->set('model_query_object', QUERY_OBJECT_LIST);
+        $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
-        $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
+        $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
         $this->parameters['model_name'] = TEMPLATE_LITERAL;
 
         Services::Registry()->set(

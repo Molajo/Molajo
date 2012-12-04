@@ -356,11 +356,9 @@ class CreatePlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, 'Grid');
+        $controller->setDataobject();
+        $controller->connectDatabase();
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
         $model_registry = 'GridMenuitem';
 
         $name_key = $controller->get('name_key');

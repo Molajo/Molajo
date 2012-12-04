@@ -31,10 +31,13 @@ class EventsPlugin extends Plugin
             return true;
         }
 
-        $events = array('onAfterInitialise',
+        $events = array(
+            'onAfterInitialise',
+            'onConnectDatabase',
             'onAfterRoute',
             'onAfterAuthorise',
             'onBeforeParse',
+            'onBeforeParseHead',
             'onBeforeInclude',
             'onBeforeRead',
             'onAfterRead',
@@ -42,9 +45,6 @@ class EventsPlugin extends Plugin
             'onBeforeviewRender',
             'onAfterviewRender',
             'onAfterInclude',
-            'onAfterParsebody',
-            'onBeforeDocumenthead',
-            'onAfterDocumenthead',
             'onAfterParse',
             'onAfterExecute',
             'onAfterResponse',
@@ -63,6 +63,7 @@ class EventsPlugin extends Plugin
         foreach (Services::Registry()->get(EVENTS_LITERAL, 'Events') as $e) {
             if (in_array(strtolower($e), array_map('strtolower', $events))) {
             } else {
+                echo $e . '<br />';
                 $events[] = $e;
             }
         }
@@ -77,11 +78,9 @@ class EventsPlugin extends Plugin
 
             $eventArray[] = $row;
         }
-        /**
-        Services::Registry()->get(DATALIST_LITERAL, EVENTS_LITERAL);
 
-        Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
-        **/
+        Services::Registry()->set(DATALIST_LITERAL, 'EventsList', $eventArray);
+
         return true;
     }
 }

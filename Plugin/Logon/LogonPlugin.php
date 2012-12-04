@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Logon;
 
-use Molajo\Plugin\Plugin\Plugin;;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('MOLAJO') or die;
 

@@ -96,6 +96,10 @@ Class EventService
 
         $this->registerInstalledPlugins();
 
+        Services::Registry()->set(EVENTS_LITERAL, 'on', true);
+
+        echo '<br />' . EVENTS_LITERAL . ' SERVICE on ' . '<br /> ';
+
         return $this;
     }
 
@@ -127,7 +131,7 @@ Class EventService
 
         $event = strtolower($event);
 
-        if (Services::Registry()->get(EVENTS_LITERAL, DATABASE_LITERAL) === true) {
+        if (Services::Registry()->get(EVENTS_LITERAL, 'on') === true) {
 
             $eventList = Services::Registry()->get(EVENTS_LITERAL, 'Events', array());
             $registered = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins', array());
@@ -183,7 +187,9 @@ Class EventService
             Services::Profiler()->set('EventService: ' . $event . ' has no registrations', PROFILER_PLUGINS, VERBOSE);
             return $arguments;
         }
-
+echo 'EVENT ' . '<br /> ' . '<pre>';
+var_dump($scheduledEventPlugins);
+echo '<br />';
         foreach ($scheduledEventPlugins as $selection) {
 
             $pluginClass = $selection->pluginClass;

@@ -94,6 +94,14 @@ class Controller
 
 
     /**
+     * Used to ensure dataobject is connected to the database
+     *
+     * @var    boolean
+     * @since  1.0
+     */
+    protected $connect_database_set;
+
+    /**
      * Used in DisplayView to render output (file path for includes)
      *
      * @var    boolean
@@ -134,21 +142,20 @@ class Controller
         'plugins',
         'rendered_output',
         'data_object_set',
+        'connect_database_set',
         'view_path',
         'view_path_url'
     );
 
     /**
-     * All properties are used in the controller and passed into the model and events
-     *
-     * Exceptions: data_object_set and model_registry_name. both of which proved a temporary
-     *      state value between the getModelRegistry and setDataobject methods
+     * Most properties are used in the controller and passed into the model and events
      */
     public function __construct()
     {
         /** Temporary and Internal */
         $this->model_registry_name = null;
         $this->data_object_set = 0;
+        $this->connect_database_set = 0;
 
         /** Shared with Model and Passed into Events/Plugins */
         $this->parameters = array();
@@ -259,6 +266,7 @@ class Controller
     public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null)
     {
         $this->set('data_object_set', 0);
+        $this->set('connect_database_set', 0);
 
         if ($model_type === null) {
             $model_type = DATA_SOURCE_LITERAL;
@@ -356,7 +364,20 @@ class Controller
 
         $this->set('data_object_type', $data_object_type, 'model_registry');
 
-        if (strtolower($data_object_type) == strtolower(DATABASE_LITERAL)) {
+    }
+
+    /**
+     * Method to connect data object to database for query development and execution
+     *
+     * @return  void
+     * @since   1.0
+     * @throws  \RuntimeException
+     */
+    public function connectDatabase()
+    {
+        $this->set('connect_database_set', 1);
+
+        if (strtolower($this->get('data_object_type', '', 'model_registry')) == strtolower(DATABASE_LITERAL)) {
 
             if ($this->get('model_class', null, 'model_registry') === null) {
                 $this->set('model_class', 'ReadModel', 'model_registry');
@@ -411,6 +432,10 @@ class Controller
             $this->setDataobject();
         }
 
+        if ($this->get('connect_database_set') == 0) {
+            $this->connectDatabase();
+        }
+
         $query_object = strtolower($query_object);
 
         if (in_array(
@@ -436,6 +461,7 @@ class Controller
                 . ' <br />Template View: ' . $this->get('template_view_path_node', '', 'parameters')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins', 1, 'model_registry')
                 . '<br /><br />';
+echo $profiler_message;
 
         if ($this->get('data_object_type', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
 

@@ -61,6 +61,7 @@ class AuthorPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Users');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('primary_key_value', (int) $fieldValue, 'model_registry');
         $controller->set('get_item_children', 0, 'model_registry');

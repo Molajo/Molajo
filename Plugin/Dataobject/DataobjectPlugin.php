@@ -70,9 +70,7 @@ class DataobjectPlugin extends Plugin
             return true;
         }
 
-        $files = Services::Filesystem()->folderFiles(
-            PLATFORM_FOLDER . '/Dataobject'
-        );
+        $files = Services::Filesystem()->folderFiles(PLATFORM_FOLDER . '/Dataobject');
 
         if (count($files) === 0 || $files === false) {
             $dataobjectLists = array();
@@ -81,7 +79,8 @@ class DataobjectPlugin extends Plugin
         }
 
         $resourceFiles = Services::Filesystem()->folderFiles(
-            Services::Registry()->get('parameters', 'extension_path') . '/Dataobject'
+            $this->get('extension_path', '', 'parameters')
+                . '/Dataobject'
         );
 
         if (count($resourceFiles) == 0 || $resourceFiles === false) {

@@ -76,15 +76,15 @@ echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
             $pageFieldsets[0]->page_count
         );
 
-        $this->set('request_model_type', $this->get('model_type'));
-        $this->set('request_model_name', $this->get('model_name'));
+        $controller->set('request_model_type', $this->get('model_type'), 'model_registry');
+        $controller->set('request_model_name', $this->get('model_name'), 'model_registry');
 
-        $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', PRIMARY_LITERAL);
-        $this->set('model_query_object', QUERY_OBJECT_LIST);
+        $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
+        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
+        $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
-        $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = PRIMARY_LITERAL;
+        $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
+        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
 
         Services::Registry()->set(
             PRIMARY_LITERAL,

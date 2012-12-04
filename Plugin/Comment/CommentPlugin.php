@@ -47,6 +47,7 @@ class CommentPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_RESOURCE_LITERAL, 'Comments');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('get_customfields', 2, 'model_registry');
         $controller->set('use_special_joins', 1, 'model_registry');
@@ -55,6 +56,7 @@ class CommentPlugin extends Plugin
         $parentController = new $controllerClass();
         $parentController->getModelRegistry($parent_model_type, $parent_model_name);
         $parentController->setDataobject();
+        $parentController->connectDatabase();
 
         $open = $this->getCommentsOpen(
             $controller,

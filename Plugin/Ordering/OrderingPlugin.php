@@ -50,16 +50,11 @@ class OrderingPlugin extends Plugin
 
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-            $results = $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
-            if ($results === false) {
-                return false;
-            }
+            $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+            $controller->setDataobject();
+            $controller->connectDatabase();
 
-            $results = $controller->setDataobject();
-            if ($results === false) {
-                return false;
-            }
-            $primary_prefix = $this->get('primary_prefix');
+            $primary_prefix = $controller->set('primary_prefix', 0, 'model_registry');
 
             $catalog_type_idField = $this->getField('catalog_type_id');
             $catalog_type_id = $this->getFieldValue($catalog_type_idField);
@@ -68,7 +63,7 @@ class OrderingPlugin extends Plugin
             $controller->model->query->where($this->db->qn($primary_prefix) . '.' . $this->db->qn('catalog_type_id')
                 . ' = ' . (int) $catalog_type_id);
 
-            $controller->set('use_special_joins', 0);
+            $controller->set('use_special_joins', 0, 'model_registry');
             $controller->set('check_view_level_access', 0, 'model_registry');
             $controller->set('process_plugins', 0, 'model_registry');
             $controller->set('get_customfields', 0, 'model_registry');

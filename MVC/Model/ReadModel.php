@@ -603,6 +603,8 @@ class ReadModel extends Model
      */
     public function addItemChildren($children, $id, $query_results)
     {
+        $controllerClass = CONTROLLER_CLASS;
+
         foreach ($children as $child) {
 
             $model_name = (string)$child['name'];
@@ -611,11 +613,10 @@ class ReadModel extends Model
             $model_type = (string)$child['type'];
             $model_type = ucfirst(strtolower($model_type));
 
-            $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-
             $controller->getModelRegistry($model_type, $model_name);
             $controller->setDataobject();
+            $controller->connectDatabase();
 
             $join = (string)$child['join'];
             $joinPrimaryPrefix = $controller->get('primary_prefix', 'a', 'model_registry');
@@ -626,8 +627,9 @@ class ReadModel extends Model
             );
 
             $results = $controller->getData(QUERY_OBJECT_LIST);
-
             $query_results->$model_name = $results;
+
+            unset ($controller);
         }
 
         return $query_results;

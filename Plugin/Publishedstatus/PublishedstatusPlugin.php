@@ -55,7 +55,7 @@ class PublishedstatusPlugin extends Plugin
             return true;
         }
 
-        $primary_prefix = $this->get('primary_prefix');
+        $primary_prefix = $controller->set('primary_prefix', 0, 'model_registry');
 
         $this->query->where($this->db->qn($primary_prefix)
             . '.' . $this->db->qn('status')

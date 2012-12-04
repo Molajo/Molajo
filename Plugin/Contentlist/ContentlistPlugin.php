@@ -39,6 +39,7 @@ class ContentlistPlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->setDataobject($this->get('model_type'), $this->get('model_name'));
+        $controller->connectDatabase();
 
         $controller->set('get_customfields', 2, 'model_registry');
         $controller->set('use_special_joins', 1, 'model_registry');

@@ -92,7 +92,7 @@ class Plugin
     /**
      * Include statements to be processed by parser in order of sequence processed
      *
-     * Available in: onBeforeParseEvent and onBeforeDocumentHeadEvent
+     * Available in: onBeforeParseEvent and onBeforeParseHead
      *
      * @var    array
      * @since  1.0
@@ -102,7 +102,7 @@ class Plugin
     /**
      * Includes statements excluded until final run (empty during final run)
      *
-     * Available in: onBeforeParseEvent and onBeforeDocumentHeadEvent
+     * Available in: onBeforeParseEvent and onBeforeParseHead
      *
      * @var    array
      * @since  1.0
@@ -352,7 +352,6 @@ class Plugin
         if (isset($this->data->$new_field_name)) {
             return;
         }
-
         $this->data->$new_field_name = $value;
 
         return;
@@ -415,6 +414,28 @@ class Plugin
     }
 
     /**
+     * After the body render is complete and before the document head rendering starts
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onBeforeParseHead()
+    {
+        return true;
+    }
+
+    /**
+     * On after parsing and rendering is complete
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onAfterParse()
+    {
+        return true;
+    }
+
+    /**
      * Pre-read processing
      *
      * @return  bool
@@ -466,39 +487,6 @@ class Plugin
      * @since   1.0
      */
     public function onAfterViewRender()
-    {
-        return true;
-    }
-
-    /**
-     * Document parsing and rendering for document body complete, document head has not started
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function onAfterParseBody()
-    {
-        return true;
-    }
-
-    /**
-     * After list of Head Include tags has been loaded and before the parsing begins
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function onBeforeDocumentHead()
-    {
-        return true;
-    }
-
-    /**
-     * After all document parsing, body and head, has been accomplished and include tags replaced with rendered output
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function onAfterParse()
     {
         return true;
     }

@@ -56,11 +56,9 @@ class ReferencedataPlugin extends Plugin
                     $controllerClass = CONTROLLER_CLASS;
                     $controller = new $controllerClass();
                     $controller->getModelRegistry(DATA_SOURCE_LITERAL, $fk->source_model);
-
-                    $results = $controller->setDataobject();
-                    if ($results === false) {
-                        return false;
-                    }
+                    $controller->connectDatabase();
+                    $controller->setDataobject();
+                    $controller->connectDatabase();
 
                     $controller->set('get_customfields', 0, 'model_registry');
                     $controller->set('get_item_children', 0, 'model_registry');

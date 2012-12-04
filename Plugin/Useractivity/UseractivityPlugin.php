@@ -100,19 +100,14 @@ class UseractivityPlugin extends Plugin
         /** Retrieve User Data  */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'UserActivity');
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'UserActivity');
+        $controller->setDataobject();
+        $controller->connectDatabase();
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
         $controller->set('user_id', Services::Registry()->set(USER_LITERAL, 'id'));
-        $controller->set('action_id', $action_id);
-        $controller->set('catalog_id', $this->data->catalog_id);
-        $controller->set('activity_datetime', null);
+        $controller->set('action_id', $action_id, 'parameters');
+        $controller->set('catalog_id', $this->data->catalog_id, 'parameters');
+        $controller->set('activity_datetime', null, 'parameters');
 
         $results = $controller->getData('create');
 

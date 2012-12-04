@@ -18,75 +18,73 @@ defined('MOLAJO') or die;
  */
 class DatalistPlugin extends Plugin
 {
-	/**
-	 * Prepares list of Datalist Lists
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onAfterRoute()
-	{
-		if (APPLICATION_ID == 2) {
-		} else {
-			return true;
-		}
+    /**
+     * Prepares list of Datalist Lists
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function onAfterRoute()
+    {
+        if (APPLICATION_ID == 2) {
+        } else {
+            return true;
+        }
 
-		$files = Services::Filesystem()->folderFiles(
-			PLATFORM_FOLDER . '/Datalist'
-		);
+        $files = Services::Filesystem()->folderFiles(PLATFORM_FOLDER . '/Datalist');
+        if (count($files) === 0 || $files === false) {
+            $dataLists = array();
+        } else {
+            $dataLists = $this->processFiles($files);
+        }
 
-		if (count($files) === 0 || $files === false) {
-			$dataLists = array();
-		} else {
-			$datalistLists = $this->processFiles($files);
-		}
+        $resourceFiles = Services::Filesystem()->folderFiles(
+            $this->get('extension_path', '', 'parameters')
+                . '/Datalist'
+        );
 
-		$resourceFiles = Services::Filesystem()->folderFiles(
-			Services::Registry()->get('parameters', 'extension_path') . '/Datalist'
-		);
+        if (count($resourceFiles) == 0 || $resourceFiles === false) {
+            $resourceLists = array();
+        } else {
+            $resourceLists = $this->processFiles($resourceFiles);
+        }
 
-		if (count($resourceFiles) == 0 || $resourceFiles === false) {
-			$resourceLists = array();
-		} else {
-			$resourceLists = $this->processFiles($resourceFiles);
-		}
+        $new = array_merge($dataLists, $resourceLists);
+        $newer = array_unique($new);
+        sort($newer);
 
-		$new = array_merge($datalistLists, $resourceLists);
-		$newer = array_unique($new);
-		sort($newer);
+        $datalist = array();
 
-		$datalist = array();
+        foreach ($newer as $file) {
+            $row = new \stdClass();
+            $row->value = $file;
+            $row->id = $file;
+            $datalist[] = $row;
+        }
 
-		foreach ($newer as $file) {
-			$row = new \stdClass();
-			$row->value = $file;
-			$row->id = $file;
-			$datalist[] = $row;
-		}
+        Services::Registry()->set(DATALIST_LITERAL, 'Datalists', $datalist);
 
-		Services::Registry()->set(DATALIST_LITERAL, 'Datalists', $datalist);
+        return true;
+    }
 
-		return true;
-	}
+    /**
+     * Prepares list of Datalist Lists
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    protected function processFiles($files)
+    {
+        $fileList = array();
 
-	/**
-	 * Prepares list of Datalist Lists
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	protected function processFiles($files)
-	{
-		$fileList = array();
+        foreach ($files as $file) {
 
-		foreach ($files as $file) {
+            $length = strlen($file) - strlen('.xml');
+            $value = substr($file, 0, $length);
 
-			$length = strlen($file) - strlen('.xml');
-			$value = substr($file, 0, $length);
+            $fileList[] = $value;
+        }
 
-			$fileList[] = $value;
-		}
-
-		return $fileList;
-	}
+        return $fileList;
+    }
 }

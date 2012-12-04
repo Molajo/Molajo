@@ -101,6 +101,7 @@ Class TextService
         $controller = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name);
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $multiple = (int)Services::Registry()->get($model_registry, 'multiple');
         $size = (int)Services::Registry()->get($model_registry, 'size');
@@ -171,14 +172,14 @@ Class TextService
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $primary_key = $controller->get('primary_key', 'id', 'model_registry');
-        $name_key = $controller->get('name_key');
+        $name_key = $controller->get('name_key', '', 'data_registry');
 
         $model_registry = $controller->get('model_registry');
 
-        $controller->model->set('model_offset', 0);
-        $controller->model->set('model_count', 999999);
+        $controller->model->set('model_offset', 0, 'data_registry');
+        $controller->model->set('model_count', 999999, 'data_registry');
 
-        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
+        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL, 'data_registry');
 
         $first = true;
         if (count($fields) < 2) {

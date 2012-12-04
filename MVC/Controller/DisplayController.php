@@ -37,6 +37,7 @@ class DisplayController extends Controller
         );
 
         $this->setDataobject();
+        $this->connectDatabase();
 
         $value = Services::Registry()->get(
             $this->get('template_view_model_registry', '', 'parameters'),

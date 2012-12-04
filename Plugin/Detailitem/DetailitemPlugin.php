@@ -29,31 +29,18 @@ class DetailitemPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        return true;
-        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'menuitem_id')) {
-            if ((int) Services::Registry()->get('parameters', 'menuitem_id') == 0) {
+        if ($this->get('menuitem_id', PRIMARY_LITERAL, 'parameters')) {
+            if ((int) $this->get('menuitem_id', PRIMARY_LITERAL, 'parameters') == 0) {
             } else {
                 return true;
             }
         }
 
-        if (Services::Registry()->exists(PARAMETERS_LITERAL, 'criteria_source_id')) {
-            if ((int) Services::Registry()->get('parameters', 'criteria_source_id') == 0) {
+            if ((int) $this->get('criteria_source_id', PRIMARY_LITERAL, 'parameters') == 0) {
                 return true; // request for list;
             } else {
                 // request for item is handled by this method
             }
-        }
-
-        $this->set('request_model_type', $this->get('model_type'));
-        $this->set('request_model_name', $this->get('model_name'));
-
-        $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', PRIMARY_LITERAL);
-        $this->set('model_query_object', QUERY_OBJECT_LIST);
-
-        $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = PRIMARY_LITERAL;
 
         //$this->getComments();
         return true;
@@ -69,15 +56,9 @@ class DetailitemPlugin extends Plugin
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Comments');
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Comments');
+        $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->model->query->where('a.root = ' . $this->get('id'));
         $controller->set('model_offset', 0, 'model_registry');

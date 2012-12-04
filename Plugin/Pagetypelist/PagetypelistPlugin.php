@@ -37,15 +37,9 @@ class PagetypelistPlugin extends Plugin
         /** Get Actual Data for matching to Fields */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
-        if ($results === false) {
-            return false;
-        }
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry($this->get('model_type'), $this->get('model_name'));
+        $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('get_customfields', 2, 'model_registry');
         $controller->set('use_special_joins', 1, 'model_registry');
@@ -57,15 +51,15 @@ class PagetypelistPlugin extends Plugin
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
 
-        $this->set('request_model_type', $this->get('model_type'));
-        $this->set('request_model_name', $this->get('model_name'));
+        $controller->set('request_model_type', $this->get('model_type'), 'model_registry');
+        $controller->set('request_model_name', $this->get('model_name'), 'model_registry');
 
-        $this->set('model_type', DATA_OBJECT_LITERAL);
-        $this->set('model_name', PRIMARY_LITERAL);
-        $this->set('model_query_object', QUERY_OBJECT_LIST);
+        $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
+        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
+        $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
-        $this->parameters['model_type'] = DATA_OBJECT_LITERAL;
-        $this->parameters['model_name'] = PRIMARY_LITERAL;
+        $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
+        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
 
         Services::Registry()->set(
             PRIMARY_LITERAL,

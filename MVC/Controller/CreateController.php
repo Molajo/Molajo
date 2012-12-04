@@ -380,10 +380,7 @@ class CreateController extends Controller
 
                 $controllerClass = CONTROLLER_CLASS;
                 $controller = new $controllerClass();
-                $results = $controller->getModelRegistry(DATA_SOURCE_LITERAL, $source_model);
-                if ($results === false) {
-                    return false;
-                }
+                $controller->getModelRegistry(DATA_SOURCE_LITERAL, $source_model);
 
                 $controller->model->query->select('COUNT(*)');
                 $controller->model->query->from($controller->model->db->qn($controller->get('table_name')));
@@ -391,8 +388,8 @@ class CreateController extends Controller
                     . ' = ' . (int) $this->data->$name);
 
                 $controller->set('get_customfields', 0, 'model_registry');
-                $controller->set('get_item_children', 0);
-                $controller->set('use_special_joins', 0);
+                $controller->set('get_item_children', 0, 'model_registry');
+                $controller->set('use_special_joins', 0, 'model_registry');
                 $controller->set('check_view_level_access', 0, 'model_registry');
                 $controller->set('process_plugins', 0, 'model_registry');
 

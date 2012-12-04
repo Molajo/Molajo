@@ -38,9 +38,10 @@ class CatalogPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('get_customfields', 0, 'model_registry');
-        $controller->set('use_special_joins', 0);
+        $controller->set('use_special_joins', 0, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
 
         $controller->model->query->select(
@@ -207,6 +208,8 @@ class CatalogPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry('x', 'y');
         $controller->setDataobject();
+        $controller->connectDatabase();
+        $controller->connectDatabase();
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_categories');
         $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;

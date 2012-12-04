@@ -91,18 +91,33 @@ Class ParseService
         $overrideIncludesFinalXML = Services::Registry()->get(OVERRIDE_LITERAL, 'parse_final', false);
 
         if ($overrideIncludesPageXML === false) {
-            $this->sequence = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_sequence');
+            $sequence = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_sequence');
         } else {
-            $this->sequence = $overrideIncludesPageXML;
+            $sequence = $overrideIncludesPageXML;
+        }
+        foreach ($sequence->include as $next) {
+            $this->sequence[] = (string)$next;
         }
 
         if ($overrideIncludesFinalXML === false) {
-            $hold_final = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_final');
+            $final = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_final');
         } else {
-            $hold_final = $overrideIncludesFinalXML;
+            $final = $overrideIncludesFinalXML;
         }
-        $this->exclude_until_final = $hold_final;
-        $this->final = false;
+
+        foreach ($final->include as $next) {
+            $sequence = (string)$next;
+            $this->final[] = (string)$next;
+
+            if (stripos($sequence, ':')) {
+                $includeName = substr($sequence, 0, strpos($sequence, ':'));
+            } else {
+                $includeName = $sequence;
+            }
+
+            $this->exclude_until_final[] = $includeName;
+        }
+        $this->final_indicator = false;
 
         if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'))) {
         } else {
@@ -112,42 +127,15 @@ Class ParseService
 
         $this->onBeforeParseEvent();
 
-        foreach ($this->sequence->include as $next) {
-            $this->sequence[] = (string)$next;
-        }
-
-        foreach ($this->final->include as $next) {
-            $this->sequence = (string)$next;
-            $this->final[] = (string)$next;
-
-            if (stripos($this->sequence, ':')) {
-                $includeName = substr($this->sequence, 0, strpos($this->sequence, ':'));
-            } else {
-                $includeName = $this->sequence;
-            }
-
-            $this->exclude_until_final[] = $includeName;
-        }
-
-        $this->final_indicator = false;
-
         /** Save Route Parameters */
         Services::Registry()->createRegistry(ROUTE_PARAMETERS_LITERAL);
         Services::Registry()->copy(PARAMETERS_LITERAL, ROUTE_PARAMETERS_LITERAL);
 
         $this->renderLoop();
 
-        Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL);
-        $this->sequence = array();
-        $this->final = array();
-
-        $this->onAfterParsebodyEvent();
-
-        $this->sequence = $this->hold_final;
-        $this->final = array();
+        $this->sequence = $this->final;
         $this->exclude_until_final = array();
+        $this->final_indicator = true;
 
         Services::Registry()->delete(PARAMETERS_LITERAL);
         Services::Registry()->createRegistry(PARAMETERS_LITERAL);
@@ -162,15 +150,9 @@ Class ParseService
             throw new \Exception('Parse: Instantiating ThemeIncluder Class failed');
         }
 
-        $this->onBeforeDocumentheadEvent();
+        $this->onBeforeParseHead();
 
         $this->renderLoop();
-
-        $this->onAfterDocumentheadEvent();
-
-        Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL);
 
         $this->onAfterParseEvent();
 
@@ -465,36 +447,13 @@ Class ParseService
     }
 
     /**
-     * Schedule Event onAfterParseBodyEvent
+     * Schedule Event onBeforeParseHeadEvent
      *
-     * @return  void
      * @since   1.0
      */
-    protected function onAfterParseBodyEvent()
+    protected function onBeforeParseHeadEvent()
     {
-        return $this->triggerEvent('onAfterParseBody');
-    }
-
-    /**
-     * Schedule Event onBeforeDocumentHeadEvent
-     *
-     * @return  void
-     * @since   1.0
-     */
-    protected function onBeforeDocumentHeadEvent()
-    {
-        return $this->triggerEvent('onBeforeDocumentHead');
-    }
-
-    /**
-     * Schedule Event onAfterDocumentHeadEvent
-     *
-     * @return  void
-     * @since   1.0
-     */
-    protected function onAfterDocumentHeadEvent()
-    {
-        return $this->triggerEvent('onAfterDocumentHead');
+        return $this->triggerEvent('onBeforeParseHead');
     }
 
     /**
@@ -524,7 +483,7 @@ Class ParseService
         $arguments = array(
             'model' => null,
             'model_registry' => $model_registry,
-            PARAMETERS_LITERAL => Services::Registry()->get(PARAMETERS_LITERAL),
+            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'query_results' => array(),
             'data' => array(),
             'rendered_output' => $this->rendered_output,

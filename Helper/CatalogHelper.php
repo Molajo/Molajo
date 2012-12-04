@@ -131,6 +131,7 @@ Class CatalogHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
@@ -212,6 +213,7 @@ Class CatalogHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $key = $controller->get('primary_key', 'id', 'model_registry');
@@ -262,6 +264,7 @@ Class CatalogHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
@@ -319,6 +322,7 @@ Class CatalogHelper
             $controller = new $controllerClass();
             $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
             $controller->setDataobject();
+            $controller->connectDatabase();
 
             $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
             $key = $controller->get('primary_key', 'id', 'model_registry');
@@ -360,6 +364,7 @@ Class CatalogHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $key = $controller->get('primary_key', 'id', 'model_registry');

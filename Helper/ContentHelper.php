@@ -221,6 +221,7 @@ Class ContentHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name);
         $controller->setDataobject(QUERY_OBJECT_ITEM);
+        $controller->connectDatabase();
 
         $controller->set('primary_key_value', (int)$id, 'model_registry');
         $controller->set('process_plugins', 1, 'model_registry');
@@ -463,6 +464,7 @@ Class ContentHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'CatalogTypes');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('process_plugins', 0, 'model_registry');
         $controller->set('get_customfields', 0, 'model_registry');
@@ -531,6 +533,7 @@ Class ContentHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Resources');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('primary_key_value', (int)$id, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
@@ -564,6 +567,7 @@ Class ContentHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, $page_type);
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 

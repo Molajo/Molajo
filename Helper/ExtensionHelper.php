@@ -166,6 +166,7 @@ Class ExtensionHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name);
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $primary_key = $controller->get('primary_key', 'id', 'model_registry');
@@ -197,7 +198,6 @@ Class ExtensionHelper
         }
 
         if (strtolower($query_object) == QUERY_OBJECT_LIST) {
-
             $controller->set('model_offset', 0, 'model_registry');
             $controller->set('model_count', 999999, 'model_registry');
             $controller->set('use_pagination', 0, 'model_registry');
@@ -298,6 +298,7 @@ Class ExtensionHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('process_plugins', 0, 'model_registry');
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
@@ -355,6 +356,7 @@ Class ExtensionHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('process_plugins', 0, 'model_registry');
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
@@ -404,6 +406,7 @@ Class ExtensionHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensions');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('process_plugins', 0, 'model_registry');
 

@@ -349,10 +349,10 @@ Class ConfigurationService
                 $controller = new $controllerClass();
                 $controller->getModelRegistry('Datasource', 'Application');
                 $controller->setDataobject();
+                $controller->connectDatabase();
+
                 $controller->set('name_key_value', APPLICATION, 'model_registry');
-
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
-
                 if ($item === false) {
                     throw new \Exception ('ConfigurationService: Error executing getApplication Query');
                 }

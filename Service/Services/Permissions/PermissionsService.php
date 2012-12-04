@@ -36,6 +36,8 @@ Class PermissionsService
         $controller = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Actions');
         $controller->setDataobject();
+        $controller->connectDatabase();
+
         $items = $controller->getData(QUERY_OBJECT_LIST);
         if ($items === false) {
             throw new \RuntimeException ('Permissions: getActions Query failed.');
@@ -103,6 +105,7 @@ Class PermissionsService
         $controller = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Siteapplications');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->model->query->select($controller->model->db->qn('a.application_id'));
         $controller->model->query->where($controller->model->db->qn('a.site_id') . ' = ' . (int)SITE_ID);

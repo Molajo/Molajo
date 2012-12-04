@@ -173,19 +173,14 @@ class PagingPlugin extends Plugin
             $this->get('model_type', DATA_SOURCE_LITERAL),
             $this->get('model_name')
         );
-        if ($results === false) {
-            return false;
-        }
 
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('get_customfields', 0, 'model_registry');
-        $controller->set('use_special_joins', 0);
+        $controller->set('use_special_joins', 0, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
-        $controller->set('get_item_children', 0);
+        $controller->set('get_item_children', 0, 'model_registry');
 
         $controller->model->query->select($controller->model->db->qn('a')
             . '.' . $controller->model->db->qn($controller->get('primary_key', 'id', 'model_registry')));

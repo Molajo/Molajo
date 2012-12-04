@@ -161,6 +161,7 @@ Class LanguageService
         $controller = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('check_view_level_access', 0, 'model_registry');
         $controller->model->insertLanguageString($translated);
@@ -350,6 +351,7 @@ Class LanguageService
         $controller = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings');
         $controller->setDataobject();
+        $controller->connectDatabase();
 
         $controller->set('check_view_level_access', 0, 'model_registry');
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
