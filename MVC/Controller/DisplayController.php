@@ -135,16 +135,18 @@ class DisplayController extends Controller
     }
 
     /**
-     * Two ways that Template Views can be rendered:
+     * Two ways Template Views are rendered:
      *
      * 1. If there is a Custom.php file in the Template View folder, then all query
      *      results are pushed into the View using the $this->query_results array/object.
-     *      The Custom.php View must handle it's own loop iteration, if necessary
+     *      The Custom.php View must handle it's own loop iteration, if necessary, and
+     *      reference the results set via an index , ex. $this->query_results[0]->name
      *
-     * 2. If there is a Header.php, and/or Body.php, and/or Footer.php Template View(s)
-     *      then data is injected into the View, one row at a time, using the $this->row object.
+     * 2. Otherwise, the Header.php, and/or Body.php, and/or Footer.php Template View(s)
+     *      are used, with data injected into the View, one row at a time. within the views,
+     *      data is referenced using the $this->row object, ex. $this->row->name
      *      Header.php (if existing) - used one time for the first row in the resultset
-     *      Body.php (if existing) - injected with $this->row for each row within $this->query_results
+     *      Body.php (if existing) - once for each row within the query results
      *      Footer.php (if existing) - used one time for the last row in the resultset
      *
      * @return  string
@@ -156,13 +158,13 @@ class DisplayController extends Controller
 
         ob_start();
 
-        /** 1. view handles loop and event processing */
+        /** 1. view responsible for loop processing */
         if (file_exists($this->get('view_path') . '/View/Custom.php')) {
             include $this->get('view_path') . '/View/Custom.php';
 
         } else {
 
-            /** 2. controller manages loop and event processing */
+            /** 2. controller manages loop */
             $totalRows = count($this->query_results);
 
             if (count($this->query_results) > 0) {
@@ -195,7 +197,16 @@ class DisplayController extends Controller
     }
 
     /**
-     * Schedule Event onBeforeViewRender Event - could update query_results objects
+     * Schedule Event onBeforeViewRender Event
+     *
+     * Useful for preprocessing of input prior to rendering or evaluation of content for
+     *  possible inclusion of related information. Include statements could be added to
+     *  the input, images resized, links to keywords added, blockquotes, and so on.
+     *
+     *  Method runs one time for each input row to View. All data is passed prior to View
+     *  rendering, making it possible to build summary information (ex. build a graph summarizing
+     *  detail), or to cancel the View (empty the input, set display view on no input to false)
+     *  due to certain conditions in the data.
      *
      * @return  bool
      * @since   1.0
@@ -231,7 +242,7 @@ class DisplayController extends Controller
                     'model_registry' => $this->get('model_registry'),
                     'parameters' => $this->get('parameters'),
                     'query_results' => $item,
-                    'data' => array(),
+                    'row' => array(),
                     'rendered_output' => array(),
                     'include_parse_sequence' => null,
                     'include_parse_exclude_until_final' => null
@@ -259,7 +270,12 @@ class DisplayController extends Controller
     }
 
     /**
-     * Schedule Event onAfterViewRender Event - can update rendered results
+     * Schedule Event onAfterViewRender Event
+     *
+     * Processing follows completion of the entire View rendering. Can be used to add
+     *  include statement or additional information. Good place for micros-statistics,
+     *  logging, hit counts at the View level, rather than page-level. The output for
+     *  the View can be omitted from display by setting rendered_output to null.
      *
      * @return  bool
      * @since   1.0
@@ -271,7 +287,7 @@ class DisplayController extends Controller
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->get('parameters'),
             'query_results' => $this->query_results,
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => $this->get('rendered_output'),
             'include_parse_sequence' => null,
             'include_parse_exclude_until_final' => null

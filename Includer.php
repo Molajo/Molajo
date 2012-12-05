@@ -689,7 +689,7 @@ class Includer
             'model_registry' => Services::Registry()->get($model_registry),
             'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => $this->rendered_output,
             'include_parse_sequence' => null,
             'include_parse_exclude_until_final' => null

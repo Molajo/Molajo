@@ -285,7 +285,7 @@ Class Application
             'model_registry' => array(),
             'parameters' => array(),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -350,7 +350,7 @@ Class Application
             'model_registry' => $model_registry,
             'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -406,7 +406,7 @@ Class Application
             'model_registry' => $model_registry,
             'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -548,7 +548,7 @@ Class Application
             'model_registry' => array(),
             'parameters' => array(),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -626,7 +626,7 @@ Class Application
             'model_registry' => array(),
             'parameters' => array(),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()

@@ -860,7 +860,7 @@ echo $profiler_message;
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->get('parameters'),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => array(),
             'include_parse_sequence' => null,
             'include_parse_exclude_until_final' => null
@@ -902,7 +902,7 @@ echo $profiler_message;
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->get('parameters'),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => array(),
             'include_parse_sequence' => null,
             'include_parse_exclude_until_final' => null
@@ -961,7 +961,7 @@ echo $profiler_message;
                     'model_registry' => $this->get('model_registry'),
                     'parameters' => $this->get('parameters'),
                     'query_results' => $item,
-                    'data' => array(),
+                    'row' => array(),
                     'rendered_output' => array(),
                     'include_parse_sequence' => null,
                     'include_parse_exclude_until_final' => null
@@ -1002,7 +1002,7 @@ echo $profiler_message;
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->get('parameters'),
             'query_results' => $this->get('query_results'),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => array(),
             'include_parse_sequence' => null,
             'include_parse_exclude_until_final' => null

@@ -485,7 +485,7 @@ Class ParseService
             'model_registry' => $model_registry,
             'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'query_results' => array(),
-            'data' => array(),
+            'row' => array(),
             'rendered_output' => $this->rendered_output,
             'include_parse_sequence' => $this->sequence,
             'include_parse_exclude_until_final' => $this->exclude_until_final
