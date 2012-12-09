@@ -104,9 +104,7 @@ class UseractivityPlugin extends Plugin
         /** Retrieve User Data  */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'UserActivity');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'UserActivity', 1);
 
         $controller->set('user_id', Services::Registry()->set(USER_LITERAL, 'id'));
         $controller->set('action_id', $action_id, 'parameters');

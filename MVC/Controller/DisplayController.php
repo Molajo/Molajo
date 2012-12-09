@@ -34,12 +34,9 @@ class DisplayController extends Controller
 
         $this->getModelRegistry(
             $this->get('model_type', '', 'parameters'),
-            $this->get('model_name', '', 'parameters')
+            $this->get('model_name', '', 'parameters'),
+            1
         );
-
-        $this->setDataobject();
-
-        $this->connectDatabase();
 
         $value = Services::Registry()->get(
             $this->get('template_view_model_registry', '', 'parameters'),

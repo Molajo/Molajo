@@ -29,9 +29,7 @@ class MessagesPlugin extends Plugin
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATA_OBJECT_LITERAL, 'Messages');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(DATA_OBJECT_LITERAL, 'Messages', 1);
         $messages = $controller->getData(QUERY_OBJECT_LIST);
 
         if (count($messages) == 0 || $messages === false) {

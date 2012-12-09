@@ -120,6 +120,10 @@ Class ThemeService
         $this->final_indicator = false;
 
         $this->getResource();
+        if ($this->rendered_output === false) {
+        } else {
+            return $this->rendered_output;
+        }
 
         Services::Registry()->createRegistry(ROUTE_PARAMETERS_LITERAL);
         Services::Registry()->copy(PARAMETERS_LITERAL, ROUTE_PARAMETERS_LITERAL);
@@ -148,31 +152,38 @@ Class ThemeService
      *  and render the Theme which contains <include statements to be parsed
      *  then used to invoke includers and render output
      *
-     * @throws \Exception
+     * @returns  void
+     * @since    1.0
+     * @throws   \Exception
      */
     protected function getResource()
     {
-        Services::Profiler()->set('Theme: starting ResourceIncluder which will render Theme',
-            PROFILER_RENDERING);
+        Services::Profiler()->set('Theme: Resource Includer started', PROFILER_RENDERING);
 
-        //todo - how to override?
+        //todo - how to override? should includers be pre-defined like plugins?
         $class = 'Molajo\\Service\\Services\\Theme\\Includer\\ResourceIncluder';
         if (class_exists($class)) {
             $rc = new $class ('Resource', 'Resource');
 
         } else {
-            Services::Profiler()->set('Theme: failed instantiating ResourceIncluder Class ' . $class,
-                PROFILER_RENDERING);
             throw new \Exception('Theme: Includer Failed Instantiating Class' . $class);
+        }
+
+        $this->rendered_output = $rc->getPrimaryData();
+
+        if ($this->rendered_output === false) {
+        } else {
+            Services::Profiler()->set('Theme: Page cache returned from Resource Includer', PROFILER_RENDERING);
+            return;
         }
 
         $this->onBeforeParseEvent();
 
+        $this->rendered_output = $rc->process(array());
+
         ob_start();
-        echo 'Theme: Includer Class ' . $class . ' Attributes: ' . '<br />';
-        $this->rendered_results = $rc->process(array());
-        Services::Profiler()->set('Theme: Rendered ' . $this->rendered_results, PROFILER_RENDERING, VERBOSE);
-        echo $this->rendered_results;
+        Services::Profiler()->set('Theme: Resource ' . $this->rendered_output, PROFILER_RENDERING, VERBOSE);
+        echo $this->rendered_output;
         $includeDisplay = ob_get_contents();
         ob_end_clean();
 
@@ -276,7 +287,7 @@ Class ThemeService
                     if ($include_type == '') {
                         $include_type = $part;
 
-                        /** Exclude the final include types (will be empty during document head processsing) */
+                        /** Exclude the final include types (will be empty during document head processing) */
                         if (in_array($part, $this->exclude_until_final)) {
                             $skipped_final_include_type = true;
 
@@ -376,8 +387,11 @@ Class ThemeService
                         $rc = new $class ($include_type, $include_name);
 
                     } else {
-                        Services::Profiler()->set('Theme: callIncluder failed instantiating class '
-                                . $class, PROFILER_RENDERING);
+                        Services::Profiler()->set(
+                            'Theme: callIncluder failed instantiating class '
+                                . $class,
+                            PROFILER_RENDERING
+                        );
                         throw new \Exception('Theme: Includer Failed Instantiating Class' . $class);
                     }
 
@@ -390,10 +404,10 @@ Class ThemeService
                     ob_end_clean();
 
                     Services::Profiler()->set($includeDisplay, PROFILER_RENDERING);
-echo $includeDisplay;
+                    echo $includeDisplay;
                     $output = trim($rc->process($attributes));
                     Services::Profiler()->set('Theme: Rendered ' . $output, PROFILER_RENDERING);
-echo $output;
+                    echo $output;
 
                     $with[] = $output;
                 }
@@ -408,11 +422,16 @@ echo $output;
     /**
      * Schedule Event onBeforeParseEvent
      *
-     * Event runs before any output is rendered, including the Theme file, and has access to the
-     *  parameters that contain instruction for the primary Resource, Theme, Page, Template, etc.
-     *  which can be changed by the Plugin.
+     * Event runs before any output is rendered (including the Theme file),
      *
-     * Could be used to change primary parameters or the Primary Data registry.
+     *  The include and exclude values that will be processed by the parsing/rendering process are available
+     *  to the plugin, as are the parameters for the primary resource, theme, page, template, etc., and
+     *  and the Primary Data Registry, all of which can be modified or used by plugins.
+     *
+     * Page Type Plugins are scheduled for this event (List, Item, Edit, and the Menu Item Page Types)
+     *
+     * In general, this event is good for building data that is relevant to the entire page,
+     *  like the Application Plugin which sets Page Registry data (ex. current and home URL, menu, metadata, etc.)
      *
      * @return  void
      * @since   1.0
@@ -427,6 +446,13 @@ echo $output;
     /**
      * Schedule Event onBeforeParseHeadEvent
      *
+     * Event runs after the body of the document is fully developed.
+     *
+     * The include and exclude values that will be processed by the parsing/rendering process are available
+     *  to the plugin. All metadata, document links, and assets have been defined and can be modified by plugins.
+     *  Rendered content for the document body is available to event plugins.
+     *
+     * @return  void
      * @since   1.0
      */
     protected function onBeforeParseHeadEvent()
@@ -437,6 +463,8 @@ echo $output;
     /**
      * Schedule Event onAfterParseEvent Event
      *
+     * Event runs after the entire document has been rendered. The rendered content is available to event plugins.
+     *
      * @return  void
      * @since   1.0
      */
@@ -446,7 +474,7 @@ echo $output;
     }
 
     /**
-     * Common Method for all Parse Events
+     * Common Method for all Theme Service Events
      *
      * @param   string  $event_name
      *
@@ -487,8 +515,7 @@ echo $output;
         if (isset($arguments['query_results'])) {
             Services::Registry()->delete(PRIMARY_LITERAL, DATA_LITERAL);
             Services::Registry()->createRegistry(PRIMARY_LITERAL, DATA_LITERAL);
-            Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
-            Services::Registry()->sort(PARAMETERS_LITERAL);
+            Services::Registry()->loadArray(PRIMARY_LITERAL, DATA_LITERAL, $arguments[$query_results]);
         }
 
         if (isset($arguments['rendered_output'])) {

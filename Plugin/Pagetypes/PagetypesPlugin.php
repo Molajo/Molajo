@@ -24,41 +24,23 @@ class PagetypesPlugin extends Plugin
      * @return  boolean
      * @since   1.0
      */
-    public function OnBeforeInclude()
+    public function onAfterRoute()
     {
-        $folders = Services::Filesystem()->folderFolders(
-            EXTENSIONS . '/Menuitem'
-        );
-
+        $folders = Services::Filesystem()->folderFolders(EXTENSIONS . '/Menuitem');
         if (count($folders) === 0 || $folders === false) {
-            $menuitemLists = array();
+            $page_type_list = array();
         } else {
             $page_type_list = $folders;
         }
 
-		$folders = Services::Filesystem()->folderFolders(
-			PLATFORM_FOLDER . '/Menuitem'
-		);
-
+		$folders = Services::Filesystem()->folderFolders(PLATFORM_FOLDER . '/Menuitem');
 		if (count($folders) === 0 || $folders === false) {
 		} else {
 			$new = array_merge($page_type_list, $folders);
 			$page_type_list = $new;
 		}
 
-        $resourceFolders = Services::Filesystem()->folderFolders(
-            $this->get('extension_path', '', 'parameters') . '/Menuitem'
-        );
-
-        if (count($resourceFolders) === 0 || $resourceFolders === false) {
-            $resourceLists = array();
-        } else {
-            $resourceLists = $resourceFolders;
-        }
-
-        $new = array_merge($page_type_list, $resourceLists);
-
-        $newer = array_unique($new);
+        $newer = array_unique($page_type_list);
         sort($newer);
 
         $page_types = array();

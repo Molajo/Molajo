@@ -35,19 +35,19 @@ class ResourceIncluder extends Includer
 		Services::Registry()->set(PARAMETERS_LITERAL, 'includer_name', $this->name);
 		Services::Registry()->set(PARAMETERS_LITERAL, 'includer_type', $this->type);
 
-        $this->getPrimaryData();
-
         return $this;
     }
 
     /**
-     * For Item, List, or Menu Item, retrieve Parameter data needed to generate page
+     * For Item, List, or Menu Item, retrieve Parameter data needed to generate page.
      *
-     * @return   void
+     * Once parameters are available, page cache is returned, if avaiable.
+     *
+     * @return   mixed | false or string (page cache)
      * @since    1.0
      * @throws   /Exception
      */
-    protected function getPrimaryData()
+    public function getPrimaryData()
     {
         $catalog_id = Services::Registry()->get('parameters', 'catalog_id');
         $id = Services::Registry()->get('parameters', 'catalog_source_id');
@@ -61,6 +61,7 @@ class ResourceIncluder extends Includer
 
         } elseif (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_ITEM) {
             $response = Helpers::Content()->getRouteItem($id, $model_type, $model_name);
+
         } else {
             $response = Helpers::Content()->getRouteMenuitem();
         }
@@ -73,7 +74,7 @@ class ResourceIncluder extends Includer
 
         $this->getPageCache();
 
-        return;
+        return $this->rendered_output;
     }
 
     /**
@@ -98,7 +99,7 @@ class ResourceIncluder extends Includer
             return;
         }
 
-        $this->rendered_results = $results;
+        $this->rendered_output = $results;
         return;
     }
 

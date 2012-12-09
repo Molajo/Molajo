@@ -164,9 +164,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry($model_type, $model_name);
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry($model_type, $model_name, 1);
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $primary_key = $controller->get('primary_key', 'id', 'model_registry');

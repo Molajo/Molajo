@@ -88,13 +88,13 @@ Class MessageService
 
         $messageArray = Services::Registry()->getArray(SYSTEM_MESSAGES_LITERAL, SYSTEM_MESSAGES_LITERAL);
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->message = $message;
-        $row->type = $type;
-        $row->code = $code;
+        $temp_row->message = $message;
+        $temp_row->type = $type;
+        $temp_row->code = $code;
 
-        $messageArray[] = $row;
+        $messageArray[] = $temp_row;
 
         Services::Registry()->set(SYSTEM_MESSAGES_LITERAL, SYSTEM_MESSAGES_LITERAL, $messageArray);
 

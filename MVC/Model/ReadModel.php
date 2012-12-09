@@ -614,9 +614,7 @@ class ReadModel extends Model
             $model_type = ucfirst(strtolower($model_type));
 
             $controller = new $controllerClass();
-            $controller->getModelRegistry($model_type, $model_name);
-            $controller->setDataobject();
-            $controller->connectDatabase();
+            $controller->getModelRegistry($model_type, $model_name, 1);
 
             $join = (string)$child['join'];
             $joinPrimaryPrefix = $controller->get('primary_prefix', 'a', 'model_registry');

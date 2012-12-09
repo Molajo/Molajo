@@ -346,10 +346,7 @@ Class ConfigurationService
 
                 $controllerClass = CONTROLLER_CLASS;
                 $controller = new $controllerClass();
-                $controller->getModelRegistry('Datasource', 'Application');
-                $controller->setDataobject();
-                $controller->connectDatabase();
-
+                $controller->getModelRegistry('Datasource', 'Application', 1);
                 $controller->set('name_key_value', APPLICATION, 'model_registry');
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
                 if ($item === false) {
@@ -558,7 +555,7 @@ Class ConfigurationService
         } else {
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-            $controller->getModelRegistry('Dataobject', $data_object);
+            $controller->getModelRegistry('Dataobject', $data_object, 0);
         }
 
         foreach (Services::Registry()->get($dataObjectRegistry) as $key => $value) {
@@ -620,7 +617,6 @@ Class ConfigurationService
             'value',
             self::$valid_value_attributes
         );
-
 
         ConfigurationService::getCustomFields($xml, $model_registry);
 
@@ -879,16 +875,16 @@ Class ConfigurationService
                 foreach ($itemArray as $value) {
 
                     if (is_array($value)) {
-                        $row = $value;
+                        $temp_row = $value;
                     } else {
                         $valueVars = get_object_vars($value);
-                        $row = ($valueVars["@attributes"]);
+                        $temp_row = ($valueVars["@attributes"]);
                     }
 
                     $temp = new \stdClass();
 
-                    $temp->id = $row['id'];
-                    $temp->value = $row['value'];
+                    $temp->id = $temp_row['id'];
+                    $temp->value = $temp_row['value'];
 
                     $valuesArray[] = $temp;
                 }
@@ -922,7 +918,7 @@ Class ConfigurationService
         if (Services::Registry()->exists($joinRegistry) === false) {
             $controllerClass = CONTROLLER_CLASS;
             $controller = new $controllerClass();
-            $controller->getModelRegistry('Datasource', $joinModel);
+            $controller->getModelRegistry('Datasource', $joinModel, 0);
         }
 
         $fields = Services::Registry()->get($joinRegistry, FIELDS_LITERAL);
@@ -1103,16 +1099,16 @@ Class ConfigurationService
 
         if (count($available) > 0) {
 
-            foreach ($available as $row) {
+            foreach ($available as $temp_row) {
 
-                foreach ($row as $field => $fieldvalue) {
+                foreach ($temp_row as $field => $fieldvalue) {
 
                     if ($field == 'name') {
 
                         if (in_array($fieldvalue, $fieldNames)) {
                         } else {
-                            $row['field_inherited'] = 1;
-                            $fieldArray[] = $row;
+                            $temp_row['field_inherited'] = 1;
+                            $fieldArray[] = $temp_row;
                             $fieldNames[] = $fieldvalue;
                         }
                     }
@@ -1179,7 +1175,7 @@ Class ConfigurationService
         } else {
             $controller_class = CONTROLLER_CLASS;
             $controller = new $controller_class();
-            $controller->getModelRegistry($extends_model_type, $extends_model_name);
+            $controller->getModelRegistry($extends_model_type, $extends_model_name, 0);
         }
 
         Services::Registry()->copy($inheritModelRegistry, $model_registry);

@@ -656,14 +656,14 @@ Class ProfilerService
 
         foreach ($messages as $message) {
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->date = $message['date'];
-            $row->priority = $message['priority'];
-            $row->type = $message['type'];
-            $row->message = $message['message'];
+            $temp_row->date = $message['date'];
+            $temp_row->priority = $message['priority'];
+            $temp_row->type = $message['type'];
+            $temp_row->message = $message['message'];
 
-            $query_results[] = $row;
+            $query_results[] = $temp_row;
         }
 
         return $query_results;

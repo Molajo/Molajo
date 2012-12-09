@@ -34,9 +34,7 @@ Class UserService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, USER_LITERAL);
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, USER_LITERAL, 1);
 
         $controller->set('primary_key_value', $this->id, 'model_registry');
 		$controller->set('get_customfields', 2, 'model_registry');

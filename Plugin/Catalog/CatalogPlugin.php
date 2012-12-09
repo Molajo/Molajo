@@ -36,9 +36,7 @@ class CatalogPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
 
         $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('use_special_joins', 0, 'model_registry');
@@ -206,10 +204,7 @@ class CatalogPlugin extends Plugin
         /** todo - fix empty setModelRegistry */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('x', 'y');
-        $controller->setDataobject();
-        $controller->connectDatabase();
-        $controller->connectDatabase();
+        $controller->getModelRegistry('x', 'y', 1);
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_categories');
         $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->row->id;

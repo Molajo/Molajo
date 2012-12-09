@@ -58,14 +58,14 @@ Class MetadataService
 
             $query_results = array();
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
             $temp = Services::Registry()->get(METADATA_LITERAL, 'title', '');
 			$title = $temp[0];
             if (trim($title) == '') {
                 $title = SITE_NAME;
             }
-            $row->title = Services::Filter()->escape_text($title);
+            $temp_row->title = Services::Filter()->escape_text($title);
 
 			Services::Registry()->delete(METADATA_LITERAL, 'title');
 
@@ -73,33 +73,33 @@ Class MetadataService
             if (trim($mimetype) == '') {
                 $mimetype = 'text/html';
             }
-            $row->mimetype = Services::Filter()->escape_text($mimetype);
+            $temp_row->mimetype = Services::Filter()->escape_text($mimetype);
 
             Services::Registry()->set(METADATA_LITERAL, 'mimetype', $mimetype);
 
-            $row->base = SITE_BASE_URL;
+            $temp_row->base = SITE_BASE_URL;
 
             $last_modified = Services::Registry()->get('parameters', 'modified_datetime');
             if (trim($last_modified) == '') {
                 $last_modified = Services::Date()->getDate();
             }
-            $row->last_modified = Services::Filter()->escape_text($last_modified);
+            $temp_row->last_modified = Services::Filter()->escape_text($last_modified);
 
-            $row->base_url = BASE_URL;
+            $temp_row->base_url = BASE_URL;
 
-            $row->language_direction = 'lft';
-            if ($row->language_direction == 'lft') {
-                $row->language_direction = '';
+            $temp_row->language_direction = 'lft';
+            if ($temp_row->language_direction == 'lft') {
+                $temp_row->language_direction = '';
             } else {
-                $row->language_direction = ' dir="rtl"';
+                $temp_row->language_direction = ' dir="rtl"';
             }
             //todo: figure out what it's like this
-            $row->language = 'en';
+            $temp_row->language = 'en';
 
-            $row->application_html5 = $application_html5;
-            $row->end = $end;
+            $temp_row->application_html5 = $application_html5;
+            $temp_row->end = $end;
 
-            $query_results[] = $row;
+            $query_results[] = $temp_row;
 
         } elseif (strtolower($model_type) == METADATA_LITERAL) {
 
@@ -109,33 +109,33 @@ Class MetadataService
 
                 foreach ($metadata as $name => $content) {
 
-                    $row = new \stdClass();
+                    $temp_row = new \stdClass();
 
-                    $row->name = Services::Filter()->escape_text($name);
+                    $temp_row->name = Services::Filter()->escape_text($name);
 
                     if (is_array($content)) {
-                        $row->content = Services::Filter()->escape_text($content[0]);
-                        $row->label = $content[1];
+                        $temp_row->content = Services::Filter()->escape_text($content[0]);
+                        $temp_row->label = $content[1];
                     } else {
-                        $row->content = Services::Filter()->escape_text($content);
-                        $row->label = 'name';
+                        $temp_row->content = Services::Filter()->escape_text($content);
+                        $temp_row->label = 'name';
                     }
 
                     /** HTML5 */
-                    $row->application_html5 = $application_html5;
-                    $row->end = $end;
+                    $temp_row->application_html5 = $application_html5;
+                    $temp_row->end = $end;
 
-                    $query_results[] = $row;
+                    $query_results[] = $temp_row;
                 }
             }
         } else {
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->name = 'dummy row';
-            $row->application_html5 = $application_html5;
-            $row->end = $end;
+            $temp_row->name = 'dummy row';
+            $temp_row->application_html5 = $application_html5;
+            $temp_row->end = $end;
 
-            $query_results[] = $row;
+            $query_results[] = $temp_row;
         }
 
         return $query_results;

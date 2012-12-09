@@ -211,7 +211,8 @@ Class ContentHelper
         $controller = new $controllerClass();
         $controller->getModelRegistry(
             Services::Registry()->get('parameters', 'model_type'),
-            Services::Registry()->get('parameters', 'model_name')
+            Services::Registry()->get('parameters', 'model_name'),
+            0
         );
 
         return true;
@@ -239,9 +240,7 @@ Class ContentHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $results = $controller->getModelRegistry($model_type, $model_name);
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry($model_type, $model_name, 1);
 
         $controller->set('primary_key_value', (int)$id, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
@@ -477,9 +476,7 @@ Class ContentHelper
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'CatalogTypes');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'CatalogTypes', 1);
 
         $controller->set('process_plugins', 0, 'model_registry');
         $controller->set('get_customfields', 0, 'model_registry');
@@ -519,11 +516,11 @@ Class ContentHelper
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
+        $controller->getModelRegistry($model_type, $model_name, 0);
 
         $controller->set('process_plugins', 0, 'model_registry');
         $controller->set('get_customfields', 1, 'model_registry');
 
-        $controller->getModelRegistry($model_type, $model_name);
         return $controller->setDataobject();
     }
 
@@ -546,9 +543,7 @@ Class ContentHelper
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Resources');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(SYSTEM_LITERAL, 'Resources', 1);
 
         $controller->set('primary_key_value', (int)$id, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
@@ -580,9 +575,7 @@ Class ContentHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, $page_type);
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, $page_type, 1);
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 

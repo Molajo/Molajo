@@ -60,7 +60,7 @@ Class InstallService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry($copy_model_type, $copy_model_name);
+        $controller->getModelRegistry($copy_model_type, $copy_model_name, 1);
 
         $model_registry = $copy_model_name . $copy_model_type;
 
@@ -309,13 +309,8 @@ Class InstallService
         /** Get Catalog Type ID */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-
-        $controller->getModelRegistry('Catalogtypes', DATA_SOURCE_LITERAL);
-
-        $results = $controller->setDataobject();
-        if ($results === false) {
-            return false;
-        }
+        $controller->getModelRegistry('Catalogtypes', DATA_SOURCE_LITERAL, 1);
+        $controller->setDataobject();
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 

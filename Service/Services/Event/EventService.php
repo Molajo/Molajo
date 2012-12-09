@@ -140,14 +140,14 @@ Class EventService
             $selections = array();
             $eventList = array('onconnectdatabase');
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->event = 'onconnectdatabase';
-            $row->plugin = 'dataobjectplugin';
-            $row->model_name = 'dataobject';
-            $row->model_type = 'Plugin';
+            $temp_row->event = 'onconnectdatabase';
+            $temp_row->plugin = 'dataobjectplugin';
+            $temp_row->model_name = 'dataobject';
+            $temp_row->model_type = 'Plugin';
 
-            $this->eventPluginArray[] = $row;
+            $this->eventPluginArray[] = $temp_row;
 
             $registered = $this->eventPluginArray;
             $this->pluginArray['dataobjectplugin'] = 'Molajo\Plugin\Dataobject\DataobjectPlugin';
@@ -171,16 +171,17 @@ Class EventService
         foreach ($registered as $x) {
 
             if ($x->event == $event) {
+
                 if (count($compareSelection) == 0
                     || in_array(strtolower($x->plugin), $compareSelection)
                 ) {
-                    $row = $x;
+                    $temp_row = $x;
 
-                    $row->plugin_class = $pluginList[$x->plugin];
-                    $row->model_name = $x->model_name;
-                    $row->model_type = $x->model_type;
+                    $temp_row->plugin_class = $pluginList[$x->plugin];
+                    $temp_row->model_name = $x->model_name;
+                    $temp_row->model_type = $x->model_type;
 
-                    $scheduledEventPlugins[] = $row;
+                    $scheduledEventPlugins[] = $temp_row;
                 }
             }
         }
@@ -259,8 +260,6 @@ Class EventService
             }
         }
 
-echo '<br /> ' . $event . '       ' . $plugin_class . '<br /> ';
-
         $results = $plugin->$event();
 
         if ($results === false) {
@@ -272,7 +271,7 @@ echo '<br /> ' . $event . '       ' . $plugin_class . '<br /> ';
                 foreach ($arguments as $key => $value) {
 
                     if (in_array($key, $this->property_array)) {
-                        $arguments[$key] = $plugin->get($key, '', '');
+                        $arguments[$key] = $plugin->get($key);
 
                     } else {
                         throw new \OutOfRangeException('Event: ' . $event .
@@ -296,8 +295,8 @@ echo '<br /> ' . $event . '       ' . $plugin_class . '<br /> ';
     {
         Services::Profiler()->set('Event: registerInstalledPlugins for Extension and Core', PROFILER_PLUGINS, VERBOSE);
 
-        $this->registerPlugins(PLATFORM_FOLDER, 'Molajo');
-        $this->registerPlugins(EXTENSIONS, 'Extension');
+        $this->registerPlugins(PLATFORM_FOLDER, 'Molajo', 1);
+        $this->registerPlugins(EXTENSIONS, 'Extension', 1);
 
         sort($this->eventArray);
         sort($this->pluginArray);
@@ -319,7 +318,7 @@ echo '<br /> ' . $event . '       ' . $plugin_class . '<br /> ';
      * @return  object
      * @since   1.0
      */
-    public function registerPlugins($folder = '', $namespace = '')
+    public function registerPlugins($folder = '', $namespace = '', $core = 0)
     {
         Services::Profiler()->set('Event: registerPlugins for Namespace' . $namespace, PROFILER_PLUGINS, VERBOSE);
 
@@ -351,6 +350,16 @@ echo '<br /> ' . $event . '       ' . $plugin_class . '<br /> ';
 
                 $plugin_name = $folder . PLUGIN_LITERAL;
                 $plugin_class = $namespace . $folder . '\\' . $plugin_name;
+
+                $model_registry = ucfirst(strtolower($folder)) . 'Plugin';
+
+                /** Overrides - rebuild registry for overridden locations/values */
+                if (Services::Registry()->exists($model_registry) && (int) $core == 0) {
+                    Services::Registry()->deleteRegistry($model_registry);
+                    $controllerClass = CONTROLLER_CLASS;
+                    $controller = new $controllerClass();
+                    $controller->getModelRegistry('Plugin', ucfirst(strtolower($folder)), 0);
+                }
 
                 try {
                     $this->registerPlugin($plugin_name, $plugin_class);
@@ -468,29 +477,27 @@ echo '<br /> ' . $event . '       ' . $plugin_class . '<br /> ';
         if ($found === true) {
         } else {
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->event = $event;
-            $row->plugin = $plugin_name;
-            $row->model_name = strtolower(substr($plugin_name, 0, strlen($plugin_name) - strlen(PLUGIN_LITERAL)));
-            $row->model_type = 'Plugin';
+            $temp_row->event = $event;
+            $temp_row->plugin = $plugin_name;
+            $temp_row->model_name = strtolower(substr($plugin_name, 0, strlen($plugin_name) - strlen(PLUGIN_LITERAL)));
+            $temp_row->model_type = 'Plugin';
 
-            $model_registry = ucfirst(strtolower($row->model_name)) . ucfirst(strtolower($row->model_type));
-            $row->model_registry = $model_registry;
+            $model_registry = ucfirst(strtolower($temp_row->model_name)) . ucfirst(strtolower($temp_row->model_type));
+            $temp_row->model_registry = $model_registry;
             if (Services::Registry()->exists($model_registry)) {
-                Services::Registry()->deleteRegistry($model_registry);
+            } else {
+                $controllerClass = CONTROLLER_CLASS;
+                $controller = new $controllerClass();
+                $controller->getModelRegistry($temp_row->model_type, $temp_row->model_name, 0);
             }
-
-            $controllerClass = CONTROLLER_CLASS;
-            $controller = new $controllerClass();
-            $controller->getModelRegistry($row->model_type, $row->model_name);
-
-            $this->eventPluginArray[] = $row;
+            $this->eventPluginArray[] = $temp_row;
         }
 
-        Services::Profiler()->set(
-            'Event: Registered Plugin ' . $plugin_name . ' to listen for Event ' . $event
-                . ' will execute at Namespace ' . $plugin_class,
+        Services::Profiler()->set('Event: Plugin ' . $plugin_name
+                . ' scheduled for Event: ' . $event
+                . ' will execute from namespace ' . $plugin_class,
             PROFILER_PLUGINS,
             VERBOSE
         );

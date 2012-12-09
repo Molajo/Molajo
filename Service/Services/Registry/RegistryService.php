@@ -1072,13 +1072,13 @@ Class RegistryService
             }
         }
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
         if (count($results) > 0) {
             foreach ($results as $key => $value) {
-                $row->$key = $value;
+                $temp_row->$key = $value;
             }
         }
-        $query_results[] = $row;
+        $query_results[] = $temp_row;
         return $query_results;
     }
 

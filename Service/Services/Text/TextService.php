@@ -99,9 +99,7 @@ Class TextService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry($model_type, $model_name);
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry($model_type, $model_name, 1);
 
         $multiple = (int)Services::Registry()->get($model_registry, 'multiple');
         $size = (int)Services::Registry()->get($model_registry, 'size');
@@ -121,13 +119,13 @@ Class TextService
         } else {
             $query_results = array();
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->listitems = $values;
-            $row->multiple = $multiple;
-            $row->size = $size;
+            $temp_row->listitems = $values;
+            $temp_row->multiple = $multiple;
+            $temp_row->size = $size;
 
-            $query_results[] = $row;
+            $query_results[] = $temp_row;
 
             return $query_results;
         }
@@ -136,13 +134,13 @@ Class TextService
 
         $query_results = array();
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->listitems = $values;
-        $row->multiple = $multiple;
-        $row->size = $size;
+        $temp_row->listitems = $values;
+        $temp_row->multiple = $multiple;
+        $temp_row->size = $size;
 
-        $query_results[] = $row;
+        $query_results[] = $temp_row;
 
         return $query_results;
     }
@@ -353,29 +351,29 @@ Class TextService
 
         foreach ($items as $item) {
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->listname = $listname;
-            $row->id = $item->id;
-            $row->value = $item->value;
+            $temp_row->listname = $listname;
+            $temp_row->id = $item->id;
+            $temp_row->value = $item->value;
 
-            if ($row->id == $selected) {
-                $row->selected = ' selected ';
+            if ($temp_row->id == $selected) {
+                $temp_row->selected = ' selected ';
             } else {
-                $row->selected = '';
+                $temp_row->selected = '';
             }
 
-            $row->multiple = '';
+            $temp_row->multiple = '';
 
             if ($multiple == 1) {
-                $row->multiple = ' multiple ';
+                $temp_row->multiple = ' multiple ';
                 if ((int)$size == 0) {
-                    $row->multiple .= 'size=5 ';
+                    $temp_row->multiple .= 'size=5 ';
                 } else {
-                    $row->multiple .= 'size=' . (int)$size;
+                    $temp_row->multiple .= 'size=' . (int)$size;
                 }
             }
-            $query_results[] = $row;
+            $query_results[] = $temp_row;
         }
 
         return $query_results;

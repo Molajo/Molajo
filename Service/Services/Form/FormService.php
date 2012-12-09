@@ -342,19 +342,19 @@ Class FormService
         /** expand into a single row */
         $pagesExpanded = array();
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->page_count = $pageCount;
-        $row->page_array = '';
+        $temp_row->page_count = $pageCount;
+        $temp_row->page_array = '';
 
         if ($pageCount === 0) {
-            $row->page_array = null;
+            $temp_row->page_array = null;
         } else {
             foreach ($pages as $page) {
-                $row->page_array .= trim($page);
+                $temp_row->page_array .= trim($page);
             }
         }
-        $pagesExpanded[] = $row;
+        $pagesExpanded[] = $temp_row;
 
         return $pagesExpanded;
     }
@@ -397,15 +397,15 @@ Class FormService
                 $pairs[$temp[0]] = $temp[1];
             }
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
             foreach ($pairs as $key => $value) {
-                $row->$key = $value;
-                $row->current_page_number = $current_page_number;
-                $row->current_page_number_word = $current_page_number_word;
-                $row->total_page_count = $page_count;
+                $temp_row->$key = $value;
+                $temp_row->current_page_number = $current_page_number;
+                $temp_row->current_page_number_word = $current_page_number_word;
+                $temp_row->total_page_count = $page_count;
             }
-            $page_array[] = $row;
+            $page_array[] = $temp_row;
         }
 
         return $page_array;
@@ -583,26 +583,26 @@ Class FormService
                 if ($this->namespace == NOFORMFIELDS_LITERAL) {
 
                     /** Only titles and name of view to be included (view will take care of data retrieval) */
-                    $row = new \stdClass();
+                    $temp_row = new \stdClass();
 
-                    $row->page_title = $this->page_title;
-                    $row->page_title_extended = $this->page_title_extended;
-                    $row->page_description = $this->page_description;
-                    $row->page_link =
+                    $temp_row->page_title = $this->page_title;
+                    $temp_row->page_title_extended = $this->page_title_extended;
+                    $temp_row->page_description = $this->page_description;
+                    $temp_row->page_link =
                         ucfirst(strtolower($this->fieldset_template_view . $this->namespace . $this->page_link));
 
-                    $row->page_subtitle = $this->page_subtitle;
-                    $row->page_subtitle_description = $this->page_subtitle_description;
+                    $temp_row->page_subtitle = $this->page_subtitle;
+                    $temp_row->page_subtitle_description = $this->page_subtitle_description;
                     if ($this->page_subtitle == '') {
-                        $row->page_subtitle_first_row = 0;
+                        $temp_row->page_subtitle_first_row = 0;
                     } else {
-                        $row->page_subtitle_first_row = $page_subtitle_first_row;
+                        $temp_row->page_subtitle_first_row = $page_subtitle_first_row;
                     }
 
-                    $row->fieldset_title = $this->fieldset_title;
-                    $row->fieldset_description = $this->fieldset_description;
+                    $temp_row->fieldset_title = $this->fieldset_title;
+                    $temp_row->fieldset_description = $this->fieldset_description;
 
-                    $temp[] = $row;
+                    $temp[] = $temp_row;
 
                 } else {
 
@@ -717,32 +717,32 @@ Class FormService
 
                     if ($use === true) {
 
-                        $row = array();
+                        $temp_row = array();
                         foreach ($this->parameter_fields as $field) {
 
                             if ($field['name'] == $key) {
-                                $row = $field;
+                                $temp_row = $field;
                                 break;
                             }
                         }
 
-                        $row['name'] = $key;
-                        $row['value'] = $value;
+                        $temp_row['name'] = $key;
+                        $temp_row['value'] = $value;
 
-                        $row['page_title'] = $this->page_title;
-                        $row['page_description'] = $this->page_description;
+                        $temp_row['page_title'] = $this->page_title;
+                        $temp_row['page_description'] = $this->page_description;
 
-                        $row['page_subtitle'] = $this->page_subtitle;
-                        $row['page_subtitle_description'] = $this->page_subtitle_description;
-                        $row['page_subtitle_first_row'] = 0;
+                        $temp_row['page_subtitle'] = $this->page_subtitle;
+                        $temp_row['page_subtitle_description'] = $this->page_subtitle_description;
+                        $temp_row['page_subtitle_first_row'] = 0;
 
-                        $row['fieldset_title'] = $this->fieldset_title;
-                        $row['fieldset_description'] = $this->fieldset_description;
+                        $temp_row['fieldset_title'] = $this->fieldset_title;
+                        $temp_row['fieldset_description'] = $this->fieldset_description;
 
                         //todo defaults
-                        $row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, $key);
+                        $temp_row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, $key);
 
-                        $input_fields[] = $row;
+                        $input_fields[] = $temp_row;
                     }
                 }
             }
@@ -806,13 +806,13 @@ Class FormService
                         if ($field_name == '') {
                         } else {
 
-                            $row = '';
+                            $temp_row = '';
 
                             foreach ($fieldArray as $field) {
                                 foreach ($field as $key => $value) {
                                     if ($key == 'name' && $value == $field_name) {
-                                        $row = $field;
-                                        $row['customfield'] = '';
+                                        $temp_row = $field;
+                                        $temp_row['customfield'] = '';
                                         break;
                                     }
                                 }
@@ -825,8 +825,8 @@ Class FormService
                                     foreach ($temp as $field) {
                                         foreach ($field as $key => $value) {
                                             if ($key == 'name' && $value == $field_name) {
-                                                $row = $field;
-                                                $row['customfield'] = $custom;
+                                                $temp_row = $field;
+                                                $temp_row['customfield'] = $custom;
                                                 break;
                                             }
                                         }
@@ -834,25 +834,25 @@ Class FormService
                                 }
                             }
 
-                            if ($row == '') {
+                            if ($temp_row == '') {
                             } else {
 
-                                $row['page_title'] = $this->page_title;
-                                $row['page_description'] = $this->page_description;
-                                $row['fieldset_title'] = $this->fieldset_title;
-                                $row['fieldset_description'] = $this->fieldset_description;
+                                $temp_row['page_title'] = $this->page_title;
+                                $temp_row['page_description'] = $this->page_description;
+                                $temp_row['fieldset_title'] = $this->fieldset_title;
+                                $temp_row['fieldset_description'] = $this->fieldset_description;
 
                                 if (isset($this->row->$field_name)) {
-                                    $row['value'] = $this->row->$field_name;
+                                    $temp_row['value'] = $this->row->$field_name;
                                 } else {
-                                    $row['value'] = null;
+                                    $temp_row['value'] = null;
                                 }
 
-                                $row['application_default'] = Services::Registry()->get(
+                                $temp_row['application_default'] = Services::Registry()->get(
                                     CONFIGURATION_LITERAL,
                                     $field['name']
                                 );
-                                $input_fields[] = $row;
+                                $input_fields[] = $temp_row;
                             }
                         }
                     }
@@ -881,21 +881,21 @@ Class FormService
 
         foreach ($this->metadata_fields as $field) {
 
-            $row = $field;
+            $temp_row = $field;
 
-            $row['page_title'] = $this->page_title;
-            $row['page_description'] = $this->page_description;
-            $row['fieldset_title'] = $this->fieldset_title;
-            $row['fieldset_description'] = $this->fieldset_description;
+            $temp_row['page_title'] = $this->page_title;
+            $temp_row['page_description'] = $this->page_description;
+            $temp_row['fieldset_title'] = $this->fieldset_title;
+            $temp_row['fieldset_description'] = $this->fieldset_description;
 
-            $row['value'] = $this->metadata_fields($field['name']);
+            $temp_row['value'] = $this->metadata_fields($field['name']);
 
-            $row['application_default'] = Services::Registry()->get(
+            $temp_row['application_default'] = Services::Registry()->get(
                 CONFIGURATION_LITERAL,
                 'metadata_' . $field['name']
             );
 
-            $input_fields[] = $row;
+            $input_fields[] = $temp_row;
         }
 
         if (count($input_fields) > 0) {
@@ -950,17 +950,17 @@ Class FormService
                     }
                     if ($use === true) {
 
-                        $row = $field;
+                        $temp_row = $field;
 
-                        $row['page_title'] = $this->page_title;
-                        $row['page_description'] = $this->page_description;
-                        $row['fieldset_title'] = $this->fieldset_title;
-                        $row['fieldset_description'] = $this->fieldset_description;
+                        $temp_row['page_title'] = $this->page_title;
+                        $temp_row['page_description'] = $this->page_description;
+                        $temp_row['fieldset_title'] = $this->fieldset_title;
+                        $temp_row['fieldset_description'] = $this->fieldset_description;
 
-                        $row['value'] = Services::Registry()->get('GridMenuitemParameters', $field['name']);
+                        $temp_row['value'] = Services::Registry()->get('GridMenuitemParameters', $field['name']);
 
-                        $row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, $field['name']);
-                        $input_fields[] = $row;
+                        $temp_row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, $field['name']);
+                        $input_fields[] = $temp_row;
                     }
                 }
             }
@@ -1016,16 +1016,16 @@ Class FormService
                         )
                     );
 
-                    $row = $field;
-                    $row['page_title'] = $this->page_title;
-                    $row['page_description'] = $this->page_description;
-                    $row['fieldset_title'] = $this->fieldset_title;
-                    $row['fieldset_description'] = $this->fieldset_description;
-                    $row['value'] = null;
-                    $row['first_following'] = 0;
-                    $row['customfield_type'] = 'Create';
+                    $temp_row = $field;
+                    $temp_row['page_title'] = $this->page_title;
+                    $temp_row['page_description'] = $this->page_description;
+                    $temp_row['fieldset_title'] = $this->fieldset_title;
+                    $temp_row['fieldset_description'] = $this->fieldset_description;
+                    $temp_row['value'] = null;
+                    $temp_row['first_following'] = 0;
+                    $temp_row['customfield_type'] = 'Create';
 
-                    $input_fields[] = $row;
+                    $input_fields[] = $temp_row;
                 }
             }
         }
@@ -1116,40 +1116,40 @@ Class FormService
 
         foreach ($input_fields as $field) {
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->page_title = $field['page_title'];
-            $row->page_description = $field['page_description'];
-            $row->fieldset_title = $field['fieldset_title'];
-            $row->fieldset_description = $field['fieldset_description'];
+            $temp_row->page_title = $field['page_title'];
+            $temp_row->page_description = $field['page_description'];
+            $temp_row->fieldset_title = $field['fieldset_title'];
+            $temp_row->fieldset_description = $field['fieldset_description'];
 
-            $row->field_id = $field['name'];
-            $row->id = $field['name'];
-            $row->name = $field['name'];
-            $row->label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
-            $row->tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
-            $row->placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
+            $temp_row->field_id = $field['name'];
+            $temp_row->id = $field['name'];
+            $temp_row->name = $field['name'];
+            $temp_row->label = Services::Language()->translate(strtoupper($field['name'] . '_LABEL'));
+            $temp_row->tooltip = Services::Language()->translate(strtoupper($field['name'] . '_TOOLTIP'));
+            $temp_row->placeholder = Services::Language()->translate(strtoupper($field['name'] . '_PLACEHOLDER'));
 
             if (isset($field['locked']) && $field['locked'] == 1) {
-                $row->disabled = 1;
+                $temp_row->disabled = 1;
             } else {
-                $row->disabled = 0;
+                $temp_row->disabled = 0;
             }
 
             if (isset($field['value'])) {
             } else {
                 $field['value'] = null;
             }
-            $row->value = $field['value'];
+            $temp_row->value = $field['value'];
 
             if (isset($field['null'])) {
             } else {
                 $field['null'] = 0;
             }
             if ((int)$field['null'] === 1) {
-                $row->required = Services::Language()->translate('N');
+                $temp_row->required = Services::Language()->translate('N');
             } else {
-                $row->required = Services::Language()->translate('Y');
+                $temp_row->required = Services::Language()->translate('Y');
             }
 
             if (isset($field['hidden'])) {
@@ -1158,9 +1158,9 @@ Class FormService
             }
 
             if ((int)$field['hidden'] === 1) {
-                $row->hidden = Services::Language()->translate('Y');
+                $temp_row->hidden = Services::Language()->translate('Y');
             } else {
-                $row->hidden = Services::Language()->translate('N');
+                $temp_row->hidden = Services::Language()->translate('N');
             }
 
             if (isset($field['application_default'])) {
@@ -1176,19 +1176,19 @@ Class FormService
             if (($field['application_default'] === null || $field['application_default'] == ' ')
                 && ($field['default'] === null || $field['default'] == ' ')
             ) {
-                $row->default_message = Services::Language()->translate('No default value defined.');
-                $row->default = null;
+                $temp_row->default_message = Services::Language()->translate('No default value defined.');
+                $temp_row->default = null;
 
             } elseif ($field['application_default'] === null || $field['application_default'] == ' ') {
 
-                $row->default_message = Services::Language()->translate('Field-level default: ')
+                $temp_row->default_message = Services::Language()->translate('Field-level default: ')
                     . $field['default'];
-                $row->default = $field['default'];
+                $temp_row->default = $field['default'];
 
             } else {
-                $row->default_message = Services::Language()->translate('Application configured default: ')
+                $temp_row->default_message = Services::Language()->translate('Application configured default: ')
                     . $field['application_default'];
-                $row->default = $field['application_default'];
+                $temp_row->default = $field['application_default'];
             }
 
             if (isset($field['type'])) {
@@ -1197,48 +1197,48 @@ Class FormService
                 $field['type'] = 'char';
             }
 
-            $row->type = $field['type'];
+            $temp_row->type = $field['type'];
 
             /** todo: better mapping approach (fields.xml?) for database types to HTML5/form field types */
-            if ($row->type == 'text') {
-                $row->type = 'textarea';
+            if ($temp_row->type == 'text') {
+                $temp_row->type = 'textarea';
             }
 
-            if ($row->type == 'char') {
-                $row->type = 'text';
+            if ($temp_row->type == 'char') {
+                $temp_row->type = 'text';
             }
 
-            if ($row->type == 'integer') {
-                $row->type = 'number';
+            if ($temp_row->type == 'integer') {
+                $temp_row->type = 'number';
             }
 
-            if ($row->type == 'catalog_id') {
-                $row->type = 'number';
+            if ($temp_row->type == 'catalog_id') {
+                $temp_row->type = 'number';
             }
 
-            if ($row->type == 'ip_address') {
-                $row->type = 'text';
+            if ($temp_row->type == 'ip_address') {
+                $temp_row->type = 'text';
             }
 
-            if ($row->type == 'userid') {
-                $row->type = 'number';
+            if ($temp_row->type == 'userid') {
+                $temp_row->type = 'number';
             }
 
             if (isset($field['hidden']) && $field['hidden'] == 1) {
-                $row->type = 'hidden';
-                $row->hidden = 1;
+                $temp_row->type = 'hidden';
+                $temp_row->hidden = 1;
             } else {
-                $row->hidden = 0;
+                $temp_row->hidden = 0;
             }
 
-            switch ($row->type) {
+            switch ($temp_row->type) {
                 case 'datetime':
-                    $row->type = 'date';
-                    $row->view = 'forminput';
+                    $temp_row->type = 'date';
+                    $temp_row->view = 'forminput';
                     break;
 
                 case 'boolean':
-                    $row->view = 'formradio';
+                    $temp_row->view = 'formradio';
                     break;
 
                 case 'audio':
@@ -1258,65 +1258,65 @@ Class FormService
                 case 'text':
                 case 'time':
                 case 'url':
-                    $row->view = 'forminput';
+                    $temp_row->view = 'forminput';
                     break;
 
                 case 'textarea':
-                    $row->view = 'formtextarea';
+                    $temp_row->view = 'formtextarea';
                     break;
 
                 default:
-                    throw new \Exception('Form: Unidentified Type: ' . $row->type . ' for Name: ' . $row->name);
+                    throw new \Exception('Form: Unidentified Type: ' . $temp_row->type . ' for Name: ' . $temp_row->name);
             }
 
             if (isset($field['datalist'])) {
-                $row->view = 'formselect';
-                $row->datalist = $field['datalist'];
+                $temp_row->view = 'formselect';
+                $temp_row->datalist = $field['datalist'];
             } else {
-                $row->datalist = '';
+                $temp_row->datalist = '';
             }
 
             /** Changes to field needed in following methods */
-            $field['type'] = $row->type;
+            $field['type'] = $temp_row->type;
 
             if (isset($field['null'])) {
             } else {
                 $field['null'] = 0;
             }
 
-            $field['disabled'] = $row->disabled;
-            $field['default'] = $row->default;
-            $field['hidden'] = $row->hidden;
+            $field['disabled'] = $temp_row->disabled;
+            $field['default'] = $temp_row->default;
+            $field['hidden'] = $temp_row->hidden;
 
             /** Branch to form-field type logic where Registry will be created for this formfield */
-            switch ($row->view) {
+            switch ($temp_row->view) {
 
                 case 'formcheckbox':
-                    $row->name = $this->setCheckboxField($field, $row);
+                    $temp_row->name = $this->setCheckboxField($field, $temp_row);
                     break;
 
                 case 'formradio':
-                    $row->name = $this->setRadioField($field, $row);
+                    $temp_row->name = $this->setRadioField($field, $temp_row);
                     break;
 
                 case 'formselect':
-                    $row->name = $this->setSelectField($field, $row);
+                    $temp_row->name = $this->setSelectField($field, $temp_row);
                     break;
 
                 case 'formtextarea':
-                    $row->name = $this->setTextareaField($field, $row);
+                    $temp_row->name = $this->setTextareaField($field, $temp_row);
                     break;
 
                 default:
-                    $row->name = $this->setInputField($field, $row);
+                    $temp_row->name = $this->setInputField($field, $temp_row);
                     break;
             }
 
             if (isset($field['first_following'])) {
-                $row->first_following = $field['first_following'];
+                $temp_row->first_following = $field['first_following'];
             }
 
-            $fieldset[] = $row;
+            $fieldset[] = $temp_row;
         }
 
         /** Fieldset returned to be used to create template includes for field registries created below */
@@ -1327,12 +1327,12 @@ Class FormService
      * setInputField field
      *
      * @param   $field
-     * @param   $row_start
+     * @param   $temp_row_start
      *
      * @return  string
      * @since   1.0
      */
-    protected function setInputField($field, $row_start)
+    protected function setInputField($field, $temp_row_start)
     {
         $fieldRecordset = array();
 
@@ -1352,19 +1352,19 @@ Class FormService
         $iterate['value'] = $field['value'];
 
         foreach ($iterate as $key => $value) {
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            foreach ($row_start as $rkey => $rvalue) {
-                $row->$rkey = $rvalue;
+            foreach ($temp_row_start as $rkey => $rvalue) {
+                $temp_row->$rkey = $rvalue;
             }
 
-            $row->key = $key;
-            $row->value = $value;
+            $temp_row->key = $key;
+            $temp_row->value = $value;
 
-            $fieldRecordset[] = $row;
+            $fieldRecordset[] = $temp_row;
         }
 
-        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
+        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $temp_row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
         Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
@@ -1376,12 +1376,12 @@ Class FormService
      * setCheckboxField field
      *
      * @param   $field
-     * @param   $row_start
+     * @param   $temp_row_start
      *
      * @return  string
      * @since   1.0
      */
-    protected function setCheckboxField($field, $row_start)
+    protected function setCheckboxField($field, $temp_row_start)
     {
 
     }
@@ -1390,12 +1390,12 @@ Class FormService
      * setRadioField field
      *
      * @param   $field
-     * @param   $row_start
+     * @param   $temp_row_start
      *
      * @return  string
      * @since   1.0
      */
-    protected function setRadioField($field, $row_start)
+    protected function setRadioField($field, $temp_row_start)
     {
         $fieldRecordset = array();
 
@@ -1406,58 +1406,58 @@ Class FormService
         }
 
         /** Yes */
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        foreach ($row_start as $rkey => $rvalue) {
-            $row->$rkey = $rvalue;
+        foreach ($temp_row_start as $rkey => $rvalue) {
+            $temp_row->$rkey = $rvalue;
         }
 
         if ($field['value'] == null) {
-            $field['value'] = $row->default;
+            $field['value'] = $temp_row->default;
         }
 
-        $row->required = $required;
-        $row->id = 1;
-        $row->id_label = Services::Language()->translate('Yes');
+        $temp_row->required = $required;
+        $temp_row->id = 1;
+        $temp_row->id_label = Services::Language()->translate('Yes');
         if ((int)$field['value'] === 1) {
-            $row->checked = ' checked';
+            $temp_row->checked = ' checked';
         } else {
-            $row->checked = '';
+            $temp_row->checked = '';
         }
 
         if ($field['disabled'] == 1) {
-            $row->disabled = ' disabled';
+            $temp_row->disabled = ' disabled';
         } else {
-            $row->disabled = '';
+            $temp_row->disabled = '';
         }
 
-        $fieldRecordset[] = $row;
+        $fieldRecordset[] = $temp_row;
 
         /** No */
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        foreach ($row_start as $rkey => $rvalue) {
-            $row->$rkey = $rvalue;
+        foreach ($temp_row_start as $rkey => $rvalue) {
+            $temp_row->$rkey = $rvalue;
         }
 
-        $row->required = $required;
-        $row->id = 0;
-        $row->id_label = Services::Language()->translate('No');
+        $temp_row->required = $required;
+        $temp_row->id = 0;
+        $temp_row->id_label = Services::Language()->translate('No');
         if ((int)$field['value'] === 0) {
-            $row->checked = ' checked';
+            $temp_row->checked = ' checked';
         } else {
-            $row->checked = '';
+            $temp_row->checked = '';
         }
 
         if ($field['disabled'] == 1) {
-            $row->disabled = ' disabled';
+            $temp_row->disabled = ' disabled';
         } else {
-            $row->disabled = '';
+            $temp_row->disabled = '';
         }
 
-        $fieldRecordset[] = $row;
+        $fieldRecordset[] = $temp_row;
 
-        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
+        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $temp_row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
         Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
@@ -1469,12 +1469,12 @@ Class FormService
      * setSelectField field
      *
      * @param   $field
-     * @param   $row_start
+     * @param   $temp_row_start
      *
      * @return  mixed|string
      * @somce   1.0
      */
-    protected function setSelectField($field, $row_start)
+    protected function setSelectField($field, $temp_row_start)
     {
         $fieldRecordset = array();
 
@@ -1556,42 +1556,42 @@ Class FormService
         if (count($items) == 0 || $items === false) {
         } else {
             foreach ($items as $item) {
-                $row = new \stdClass();
+                $temp_row = new \stdClass();
 
-                foreach ($row_start as $rkey => $rvalue) {
-                    $row->$rkey = $rvalue;
+                foreach ($temp_row_start as $rkey => $rvalue) {
+                    $temp_row->$rkey = $rvalue;
                 }
 
-                $row->datalist = $datalist;
-                $row->required = $required;
-                $row->disabled = $disabled;
-                $row->multiple = $multiple;
-                $row->size = $size;
+                $temp_row->datalist = $datalist;
+                $temp_row->required = $required;
+                $temp_row->disabled = $disabled;
+                $temp_row->multiple = $multiple;
+                $temp_row->size = $size;
 
-                $row->id = $item->id;
-                $row->value = $item->value;
+                $temp_row->id = $item->id;
+                $temp_row->value = $item->value;
 
-                if (in_array($row->id, $selectedArray)) {
-                    $row->selected = ' selected';
+                if (in_array($temp_row->id, $selectedArray)) {
+                    $temp_row->selected = ' selected';
                     if ($default_setting == 0) {
                     } else {
                         $item->value .= ' (' . Services::Language()->translate('Default') . ')';
                     }
                 } else {
-                    $row->selected = '';
+                    $temp_row->selected = '';
                 }
 
-                $fieldRecordset[] = $row;
+                $fieldRecordset[] = $temp_row;
             }
         }
 
-        if (isset($row)) {
+        if (isset($temp_row)) {
         } else {
             return false;
         }
 
         /** Field Dataset */
-        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
+        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $temp_row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
         Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
@@ -1603,12 +1603,12 @@ Class FormService
      * setTextareaField field
      *
      * @param   string  $field
-     * @param   string  $row_start
+     * @param   string  $temp_row_start
      *
      * @return  mixed
      * @since   1.0
      */
-    protected function setTextareaField($field, $row_start)
+    protected function setTextareaField($field, $temp_row_start)
     {
         $fieldRecordset = array();
 
@@ -1633,21 +1633,21 @@ Class FormService
         $selected = $field['value'];
 
         foreach ($iterate as $key => $value) {
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            foreach ($row_start as $rkey => $rvalue) {
-                $row->$rkey = $rvalue;
+            foreach ($temp_row_start as $rkey => $rvalue) {
+                $temp_row->$rkey = $rvalue;
             }
 
-            $row->selected = $selected;
-            $row->key = $key;
-            $row->value = $value;
+            $temp_row->selected = $selected;
+            $temp_row->key = $key;
+            $temp_row->value = $value;
 
-            $fieldRecordset[] = $row;
+            $fieldRecordset[] = $temp_row;
         }
 
         /** Field Dataset */
-        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $row->name;
+        $ModelRegistry = $this->namespace . strtolower($this->page_link) . $temp_row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
         Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);

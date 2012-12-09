@@ -507,9 +507,7 @@ Class RouteService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
 
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');

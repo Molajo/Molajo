@@ -33,10 +33,11 @@ class PagetypegridPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry($this->get('model_type', '', 'parameters'), $this->get('model_name', '', 'parameters'));
-        $controller->setDataobject();
-        $controller->connectDatabase();
-
+        $controller->getModelRegistry(
+            $this->get('model_type', '', 'parameters'),
+            $this->get('model_name', '', 'parameters'),
+            1
+        );
         $controller->set('get_customfields', 2, 'model_registry');
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('process_plugins', 1, 'model_registry');

@@ -24,11 +24,15 @@ class PagetypeitemPlugin extends Plugin
      * Switches the model registry for an item since the Content Query already retrieved the data
      *  and saved it into the registry
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
-    public function onBeforeInclude()
+    public function onBeforeParse()
     {
+        echo '<pre>';
+        var_dump($this->parameters);
+        echo '</pre>';
+        die;
         if (strtolower($this->get('catalog_page_type', '', 'parameters')) == strtolower(PAGE_TYPE_ITEM)) {
         } else {
             return true;
@@ -47,7 +51,11 @@ class PagetypeitemPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry($this->get('model_type', '', 'parameters'), $this->get('model_name', '', 'parameters'));
+        $controller->getModelRegistry(
+            $this->get('model_type', '', 'parameters'),
+            $this->get('model_name', '', 'parameters'),
+            0
+        );
 
         Services::Registry()->merge(
             $model_name . $model_type,

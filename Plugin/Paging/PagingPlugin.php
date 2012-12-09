@@ -96,7 +96,8 @@ class PagingPlugin extends Plugin
 
         $results = $controller->getModelRegistry(
             $this->get('model_type', DATA_SOURCE_LITERAL),
-            $this->get('model_name', '', 'parameters')
+            $this->get('model_name', '', 'parameters'),
+            1
         );
 
         $controller->setDataobject();

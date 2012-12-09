@@ -85,15 +85,6 @@ class Controller
     protected $rendered_output;
 
     /**
-     * Used to ensure all getData requests have first been processed by getDataobject
-     *
-     * @var    boolean
-     * @since  1.0
-     */
-    protected $data_object_set;
-
-
-    /**
      * Used to ensure dataobject is connected to the database
      *
      * @var    boolean
@@ -132,7 +123,6 @@ class Controller
         'row',
         'plugins',
         'rendered_output',
-        'data_object_set',
         'connect_database_set',
         'view_path',
         'view_path_url'
@@ -254,11 +244,10 @@ class Controller
      *
      * @throws  \RuntimeException
      */
-    public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null)
+    public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null, $connect = 0)
     {
 echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
 
-        $this->set('data_object_set', 0);
         $this->set('connect_database_set', 0);
 
         if ($model_type === null) {
@@ -300,40 +289,6 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
             }
         }
 
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_table_registry') == 0) {
-        } else {
-            ob_start();
-            Services::Registry()->get($this->model_registry_name, '*');
-            $profiler_message .= ob_get_contents();
-            ob_end_clean();
-        }
-
-        Services::Profiler()->set($profiler_message, PROFILER_QUERIES, VERBOSE);
-
-        return $this;
-    }
-
-    /**
-     * setDataobject using the Model Registry to set important model indicators for the Controller
-     *
-     * @return  void
-     * @since   1.0
-     * @throws  \RuntimeException
-     */
-    public function setDataobject()
-    {
-        $this->set('data_object_set', 1);
-
-        if ($this->get('model_registry_name') === null) {
-            throw new \RuntimeException('Controller: Required value missing for $model_registry');
-        }
-
-        if (Services::Registry()->exists($this->get('model_registry_name')) === true) {
-        } else {
-            throw new \RuntimeException('Controller: setDataobject failed Registry does not exist for '
-                . $this->get('model_registry_name'));
-        }
-
         $this->set('model_registry', Services::Registry()->get($this->get('model_registry_name')));
 
         /** Only to ensure this redundant data is the same - it is a handy data element to retain */
@@ -349,7 +304,24 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
 
         $this->set('data_object_type', $data_object_type, 'model_registry');
 
-        return;
+        if ($connect == 1) {
+            $this->connectDatabase();
+        }
+
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_table_registry') == 0) {
+        } else {
+            ob_start();
+            echo $this->get('model_registry_name');
+            echo '<pre>';
+            var_dump($this->get('model_registry'));
+            echo '</pre>';
+            $profiler_message .= ob_get_contents();
+            ob_end_clean();
+        }
+
+        Services::Profiler()->set($profiler_message, PROFILER_QUERIES, VERBOSE);
+
+        return $this;
     }
 
     /**
@@ -414,10 +386,6 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
      */
     public function getData($query_object = QUERY_OBJECT_LIST)
     {
-        if ($this->get('data_object_set') == 0) {
-            $this->setDataobject();
-        }
-
         if ($this->get('connect_database_set') == 0) {
             $this->connectDatabase();
         }
@@ -855,6 +823,7 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
         $page_type = $this->get('catalog_page_type', '', 'parameters');
         if ($page_type == '') {
         } else {
+            echo 'Pagetype' . strtolower($page_type) . '<br />';
             $plugins[] = 'Pagetype' . strtolower($page_type);
         }
 

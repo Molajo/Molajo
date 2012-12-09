@@ -84,14 +84,14 @@ Class AssetService
         if (trim($url) == '') {
             return $this;
         }
-        $links = Services::Registry()->get(ASSETS_LITERAL, LINKS_LITERAL, array());
+        $temp_links = Services::Registry()->get(ASSETS_LITERAL, LINKS_LITERAL, array());
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->url = $url;
-        $row->relation = Services::Filter()->escape_text($relation);
-        $row->relation_type = Services::Filter()->escape_text($relation_type);
-        $row->attributes = '';
+        $temp_row->url = $url;
+        $temp_row->relation = Services::Filter()->escape_text($relation);
+        $temp_row->relation_type = Services::Filter()->escape_text($relation_type);
+        $temp_row->attributes = '';
 
         $temp = trim(implode(' ', $attributes));
         if (trim($temp) == '') {
@@ -101,17 +101,17 @@ Class AssetService
         if (is_array($temp) && count($temp) > 0) {
             foreach ($temp as $pair) {
                 $split = explode(',', $pair);
-                $row->attributes .= ' ' . $split[0]
+                $temp_row->attributes .= ' ' . $split[0]
                     . '="'
                     . Services::Filter()->escape_text($split[1])
                     . '"';
             }
         }
-        $row->priority = $priority;
+        $temp_row->priority = $priority;
 
-        $links[] = $row;
+        $temp_links[] = $temp_row;
 
-        Services::Registry()->set(ASSETS_LITERAL, LINKS_LITERAL, $links);
+        Services::Registry()->set(ASSETS_LITERAL, LINKS_LITERAL, $temp_links);
 
         $priorities = Services::Registry()->get(ASSETS_LITERAL, LINKS_LITERAL . 'Priorities');
 
@@ -219,16 +219,16 @@ Class AssetService
             }
         }
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->url = $url;
-        $row->priority = $priority;
-        $row->mimetype = $mimetype;
-        $row->media = $media;
-        $row->conditional = $conditional;
-        $row->attributes = trim(implode(' ', $attributes));
+        $temp_row->url = $url;
+        $temp_row->priority = $priority;
+        $temp_row->mimetype = $mimetype;
+        $temp_row->media = $media;
+        $temp_row->conditional = $conditional;
+        $temp_row->attributes = trim(implode(' ', $attributes));
 
-        $css[] = $row;
+        $css[] = $temp_row;
 
         Services::Registry()->set(ASSETS_LITERAL, CSS_LITERAL, $css);
 
@@ -271,13 +271,13 @@ Class AssetService
             }
         }
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->mimetype = $mimetype;
-        $row->content = $content;
-        $row->priority = $priority;
+        $temp_row->mimetype = $mimetype;
+        $temp_row->content = $content;
+        $temp_row->priority = $priority;
 
-        $css[] = $row;
+        $css[] = $temp_row;
 
         Services::Registry()->set(ASSETS_LITERAL, CSS_DECLARATIONS_LITERAL, $css);
 
@@ -370,15 +370,15 @@ Class AssetService
             }
         }
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->url = $url;
-        $row->priority = $priority;
-        $row->mimetype = $mimetype;
-        $row->async = $async;
-        $row->defer = $defer;
+        $temp_row->url = $url;
+        $temp_row->priority = $priority;
+        $temp_row->mimetype = $mimetype;
+        $temp_row->async = $async;
+        $temp_row->defer = $defer;
 
-        $js[] = $row;
+        $js[] = $temp_row;
 
         if ($defer == 1) {
             Services::Registry()->set(ASSETS_LITERAL, JS_DEFER_LITERAL, $js);
@@ -436,14 +436,14 @@ Class AssetService
             }
         }
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->content = $content;
-        $row->mimetype = $mimetype;
-        $row->defer = $defer;
-        $row->priority = $priority;
+        $temp_row->content = $content;
+        $temp_row->mimetype = $mimetype;
+        $temp_row->defer = $defer;
+        $temp_row->priority = $priority;
 
-        $js[] = $row;
+        $js[] = $temp_row;
 
         if ($defer == 1) {
             Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, $js);
@@ -497,9 +497,9 @@ Class AssetService
      */
     public function setPriority($type, $url, $priority)
     {
-        $rows = Services::Registry()->get(ASSETS_LITERAL, $type);
+        $temp_rows = Services::Registry()->get(ASSETS_LITERAL, $type);
 
-        if (is_array($rows) && count($rows) > 0) {
+        if (is_array($temp_rows) && count($temp_rows) > 0) {
         } else {
             return array();
         }
@@ -508,17 +508,17 @@ Class AssetService
 
         $query_results = array();
 
-        foreach ($rows as $row) {
+        foreach ($temp_rows as $temp_row) {
 
-            if (isset($row->url)) {
+            if (isset($temp_row->url)) {
 
-                if ($row->url == $url) {
+                if ($temp_row->url == $url) {
                     echo $priority;
-                    $row->priority = $priority;
+                    $temp_row->priority = $priority;
                     $update = true;
                 }
             }
-            $query_results[] = $row;
+            $query_results[] = $temp_row;
         }
 
         if ($update === true) {
@@ -527,10 +527,10 @@ Class AssetService
             $priorityType = $type . 'Priorities';
 
             $priorities = array();
-            foreach ($rows as $row) {
-                if (in_array($row->priority, $priorities)) {
+            foreach ($temp_rows as $temp_row) {
+                if (in_array($temp_row->priority, $priorities)) {
                 } else {
-                    $priorities[] = $row->priority;
+                    $priorities[] = $temp_row->priority;
                 }
             }
 
@@ -557,20 +557,20 @@ Class AssetService
      */
     public function remove($type, $url)
     {
-        $rows = Services::Registry()->get(ASSETS_LITERAL, $type);
-        if (is_array($rows) && count($rows) > 0) {
+        $temp_rows = Services::Registry()->get(ASSETS_LITERAL, $type);
+        if (is_array($temp_rows) && count($temp_rows) > 0) {
         } else {
             return array();
         }
 
         $update = false;
         $query_results = array();
-        foreach ($rows as $row) {
-            if (isset($row->url)) {
-                if ($row->url == $url) {
+        foreach ($temp_rows as $temp_row) {
+            if (isset($temp_row->url)) {
+                if ($temp_row->url == $url) {
                     $update = true;
                 } else {
-                    $query_results[] = $row;
+                    $query_results[] = $temp_row;
                 }
             }
         }
@@ -581,10 +581,10 @@ Class AssetService
             $priorityType = $type . 'Priorities';
 
             $priorities = array();
-            foreach ($rows as $row) {
-                if (in_array($row->priority, $priorities)) {
+            foreach ($temp_rows as $temp_row) {
+                if (in_array($temp_row->priority, $priorities)) {
                 } else {
-                    $priorities[] = $row->priority;
+                    $priorities[] = $temp_row->priority;
                 }
             }
 
@@ -607,9 +607,9 @@ Class AssetService
     {
         $priorityType = $type . 'Priorities';
 
-        $rows = Services::Registry()->get(ASSETS_LITERAL, $type);
+        $temp_rows = Services::Registry()->get(ASSETS_LITERAL, $type);
 
-        if (is_array($rows) && count($rows) > 0) {
+        if (is_array($temp_rows) && count($temp_rows) > 0) {
         } else {
             return array();
         }
@@ -628,22 +628,22 @@ Class AssetService
 
         foreach ($priorities as $priority) {
 
-            foreach ($rows as $row) {
+            foreach ($temp_rows as $temp_row) {
 
                 $include = false;
 
-                if (isset($row->priority)) {
-                    if ($row->priority == $priority) {
+                if (isset($temp_row->priority)) {
+                    if ($temp_row->priority == $priority) {
                         $include = true;
                     }
                 }
 
                 if ($include === false) {
                 } else {
-                    $row->application_html5 = $application_html5;
-                    $row->end = $end;
-                    $row->page_mime_type = Services::Registry()->get(METADATA_LITERAL, 'mimetype');
-                    $query_results[] = $row;
+                    $temp_row->application_html5 = $application_html5;
+                    $temp_row->end = $end;
+                    $temp_row->page_mime_type = Services::Registry()->get(METADATA_LITERAL, 'mimetype');
+                    $query_results[] = $temp_row;
                 }
             }
         }

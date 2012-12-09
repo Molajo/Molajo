@@ -159,9 +159,7 @@ Class LanguageService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings', 1);
 
         $controller->set('check_view_level_access', 0, 'model_registry');
         $controller->model->insertLanguageString($translated);
@@ -349,9 +347,7 @@ Class LanguageService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings', 1);
 
         $controller->set('check_view_level_access', 0, 'model_registry');
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
@@ -447,23 +443,23 @@ Class LanguageService
 
         foreach ($installed as $language) {
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->id = $language->extension_id;
-            $row->title = $language->subtitle;
-            $row->tag = $language->tag;
-            $row->locale = $language->locale;
+            $temp_row->id = $language->extension_id;
+            $temp_row->title = $language->subtitle;
+            $temp_row->tag = $language->tag;
+            $temp_row->locale = $language->locale;
 
             if ($language->rtl == 1) {
-                $row->rtl = $language->rtl;
-                $row->direction = 'rtl';
+                $temp_row->rtl = $language->rtl;
+                $temp_row->direction = 'rtl';
             } else {
-                $row->rtl = $language->rtl;
-                $row->direction = '';
+                $temp_row->rtl = $language->rtl;
+                $temp_row->direction = '';
             }
-            $row->first_day = $language->first_day;
+            $temp_row->first_day = $language->first_day;
 
-            $languageList[] = $row;
+            $languageList[] = $temp_row;
             $tagArray[] = $language->tag;
         }
 

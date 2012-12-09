@@ -178,10 +178,9 @@ class PaginationPlugin extends Plugin
         $controller = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', DATA_SOURCE_LITERAL),
-            $this->get('model_name', '', 'parameters')
+            $this->get('model_name', '', 'parameters'),
+            1
         );
-        $controller->setDataobject();
-        $controller->connectDatabase();
 
         $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('use_special_joins', 0, 'model_registry');

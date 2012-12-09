@@ -34,9 +34,7 @@ Class PermissionsService
         /** Permission Actions: Authenticate, Create, Read, Update, Publish, Delete */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Actions');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry('Datasource', 'Actions', 1);
 
         $items = $controller->getData(QUERY_OBJECT_LIST);
         if ($items === false) {
@@ -103,9 +101,7 @@ Class PermissionsService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Siteapplications');
-        $controller->setDataobject();
-        $controller->connectDatabase();
+        $controller->getModelRegistry('Datasource', 'Siteapplications', 1);
 
         $controller->model->query->select($controller->model->db->qn('a.application_id'));
         $controller->model->query->where($controller->model->db->qn('a.site_id') . ' = ' . (int)SITE_ID);
@@ -274,8 +270,7 @@ Class PermissionsService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Grouppermissions');
-        $controller->setDataobject();
+        $controller->getModelRegistry('Datasource', 'Grouppermissions', 1);
 
         $controller->model->query->select(
             $controller->model->db->qn('a.id')
@@ -319,8 +314,7 @@ Class PermissionsService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Userapplications');
-        $controller->setDataobject();
+        $controller->getModelRegistry('Datasource', 'Userapplications', 1);
 
         $controller->model->query->where('a.application_id = ' . (int)APPLICATION_ID);
         $controller->model->query->where('a.user_id = ' . (int)$user_id);
