@@ -29,8 +29,8 @@ class CreatePlugin extends Plugin
      */
     public function onAfterCreate()
     {
-        if ($this->data->catalog_type_id >= CATALOG_TYPE_BEGIN
-            AND $this->data->catalog_type_id <= CATALOG_TYPE_END
+        if ($this->row->catalog_type_id >= CATALOG_TYPE_BEGIN
+            AND $this->row->catalog_type_id <= CATALOG_TYPE_END
 ) {
         } else {
             return true;
@@ -73,7 +73,7 @@ class CreatePlugin extends Plugin
         }
 
         /** Determine Destination Folder for target location */
-        $destinationFolder = $this->getDestinationFolder($catalog_type, $this->data->title);
+        $destinationFolder = $this->getDestinationFolder($catalog_type, $this->row->title);
         if ($destinationFolder === false) {
             return false;
         }
@@ -86,7 +86,7 @@ class CreatePlugin extends Plugin
 
         /** Traverse Folders */
         $replace = ucfirst(strtolower('Samples'));
-        $with = ucfirst(strtolower($this->data->title));
+        $with = ucfirst(strtolower($this->row->title));
 
         $results = $this->traverseFolders($destinationFolder, $replace, $with, $catalog_type_id);
         if ($results === false) {
@@ -99,7 +99,7 @@ class CreatePlugin extends Plugin
     /**
      * Post-delete processing
      *
-     * @param   $this->data
+     * @param   $this->row
      * @param   $model
      *
      * @return boolean
@@ -108,7 +108,7 @@ class CreatePlugin extends Plugin
     public function onAfterDelete()
     {
         /** Determine Destination Folder for target location */
-        $destinationFolder = $this->getFolderToDelete(CATALOG_TYPE_RESOURCE_LITERAL, $this->data->title);
+        $destinationFolder = $this->getFolderToDelete(CATALOG_TYPE_RESOURCE_LITERAL, $this->row->title);
         if ($destinationFolder === false) {
             return false;
         }
@@ -403,8 +403,8 @@ class CreatePlugin extends Plugin
 
         /** Overlay for this extension */
         $data->id = null;
-        $data->title = $this->data->title;
-        $data->alias = Services::Filter()->filter($this->data->title, 'alias', 0, $this->data->title);
+        $data->title = $this->row->title;
+        $data->alias = Services::Filter()->filter($this->row->title, 'alias', 0, $this->row->title);
 
         $data->start_publishing_datetime = null;
         $data->stop_publishing_datetime = null;
@@ -437,17 +437,17 @@ class CreatePlugin extends Plugin
             foreach ($parameters as $key => $value) {
 
                 if ($key == 'criteria_title') {
-                    $data->parameters[$key] = $this->data->title;
+                    $data->parameters[$key] = $this->row->title;
 
                     //todo get rid of one of these variables
                 } elseif ($key == 'criteria_catalog_type_id') {
-                    $data->parameters[$key] = $this->data->catalog_type_id;
+                    $data->parameters[$key] = $this->row->catalog_type_id;
 
                 } elseif ($key == 'criteria_extension_instance_id') {
-                    $data->parameters[$key] = $this->data->id;
+                    $data->parameters[$key] = $this->row->id;
 
                 } elseif ($key == 'model_name') {
-                    $data->parameters[$key] = $this->data->title;
+                    $data->parameters[$key] = $this->row->title;
                     $data->model_name = 'Grid';
                     $data->model_type = CATALOG_TYPE_MENUITEM_LITERAL;
 
@@ -464,7 +464,7 @@ class CreatePlugin extends Plugin
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
                 if ($key == 'title') {
-                    $data->metadata[$key] = $this->data->title;
+                    $data->metadata[$key] = $this->row->title;
                 } else {
                     $data->metadata[$key] = '';
                 }
@@ -485,13 +485,13 @@ class CreatePlugin extends Plugin
         $controller = new CreateController();
 
         $data2 = new \stdClass();
-        $data2->catalog_type_id = $this->data->catalog_type_id;
+        $data2->catalog_type_id = $this->row->catalog_type_id;
         $data2->source_id = $this->id;
         $data2->view_group_id = 1;
         $data2->extension_instance_id = $this->id;
         $data2->model_name = 'Catalog';
-        $data2->sef_request = $this->data->alias;
-        $data2->page_type = $this->data->page_type;
+        $data2->sef_request = $this->row->alias;
+        $data2->page_type = $this->row->page_type;
         $data2->routable = 1;
 
         $controller->data = $data2;

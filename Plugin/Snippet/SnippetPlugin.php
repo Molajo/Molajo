@@ -28,18 +28,20 @@ class SnippetPlugin extends Plugin
      */
     public function onAfterRead()
     {
-        if ($this->model_registry_name == 'UsersSystem') {
-
+        if (defined('ROUTE')) {
+        } else {
+            return true;
         }
+
         $fields = $this->retrieveFieldsByType('text');
 
-        $snippetLength = $this->get('criteria_snippet_length', 200);
+        $snippetLength = $this->get('criteria_snippet_length', 200, 'parameters');
 
         if (is_array($fields) && count($fields) > 0) {
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
 
                 $fieldValue = $this->getFieldValue($field);
 

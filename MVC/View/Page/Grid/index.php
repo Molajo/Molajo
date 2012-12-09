@@ -18,7 +18,7 @@ defined('MOLAJO') or die; ?>
     <include:template name=Gridfeature/>
     <include:template name=Gridsticky/>
     <include:template name=Gridcheckin/>
-    <include:request role=main/>
+    <include:template name=Grid role=main/>
     <include:template name=Pagination wrap=nav wrap_class=pagination/>
 </section>
 <include:template name=Formend/>

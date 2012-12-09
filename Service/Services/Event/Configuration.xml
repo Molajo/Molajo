@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="Service" version="1.0" extends="ServicesSystem">
     <name>SERVICE_EVENT_NAME</name>
-    <author>Molajo Team</author>
+    <author>Amy Stephen</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU GPL v 2, or later and MIT, see License folder</license>
-    <author_email>collaborate@molajo.org</author_email>
-    <author_url>http://molajo.org</author_url>
+    <author_email>hello@niambie.org</author_email>
+    <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>SERVICE_EVENT_DESCRIPTION</description>
+    <model
+            name="Event"
+            criteria_catalog_type_id="4000"
+            criteria_extension_instance_id="4100"
+            extends="ServicesSystem">
+
+        <customfields>
+            <customfield name="customfields">
+                <field name="startup_event_list" type="text" null="1" default=""/>
+                <field name="startup_plugin_name" type="text" null="1" default=""/>
+                <field name="startup_plugin_class" type="text" null="1" default=""/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

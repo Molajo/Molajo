@@ -249,8 +249,8 @@ Class PermissionsService
      */
     public function verifyTask($action, $catalog_id)
     {
-        if ($action == 'login') {
-            return $this->verifyLogin('login', $catalog_id);
+        if ($action == 'signin') {
+            return $this->verifySignin('signin', $catalog_id);
         }
         //todo:
         return true;
@@ -300,10 +300,10 @@ Class PermissionsService
     }
 
     /**
-     * Verifies permission for a user to logon to a specific application
+     * Verifies permission for a user to signin to a specific application
      *
      * Example usage:
-     * Services::Permissions()->verifyLogin('login', $catalog_id);
+     * Services::Permissions()->verifySignin('signin', $catalog_id);
      *
      * @param   $key
      * @param   $action
@@ -311,7 +311,7 @@ Class PermissionsService
      * @param   null  $catalog
      * @return  bool
      */
-    public function verifyLogin($user_id)
+    public function verifySignin($user_id)
     {
         if ((int)$user_id == 0) {
             return false;

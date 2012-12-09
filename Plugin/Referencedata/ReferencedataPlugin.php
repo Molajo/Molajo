@@ -22,12 +22,12 @@ class ReferencedataPlugin extends Plugin
     /**
      * Retrieve textual values for primary keys
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
     {
-
+        return;
         $fkFields = $this->retrieveFieldsByType('foreignkeys');
 
         if (count($fkFields) == 0 || $fkFields === false || $fkFields == null) {
@@ -51,7 +51,7 @@ class ReferencedataPlugin extends Plugin
                 if ($fieldValue === false) {
                 } else {
 
-                    $new_name = $field->name . '_value';
+                    $new_name = $field['name'] . '_value';
 
                     $controllerClass = CONTROLLER_CLASS;
                     $controller = new $controllerClass();

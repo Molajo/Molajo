@@ -43,41 +43,41 @@ class MessagesPlugin extends Plugin
             return true;
         }
 
-        $query_results = array();
+        $temp_query_results = array();
         foreach ($messages as $message) {
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->message = $message->message;
-            $row->type = $message->type;
-            $row->code = $message->code;
-            $row->action = Services::Registry()->get('parameters', 'request_base_url_path') .
+            $temp_row->message = $message->message;
+            $temp_row->type = $message->type;
+            $temp_row->code = $message->code;
+            $temp_row->action = Services::Registry()->get('parameters', 'request_base_url_path') .
                 Services::Registry()->get('parameters', 'request_url');
 
-            $row->class = 'alert-box';
+            $temp_row->class = 'alert-box';
             if ($message->type == MESSAGE_TYPE_SUCCESS) {
-                $row->heading = Services::Language()->translate('Success');
-                $row->class .= ' success';
+                $temp_row->heading = Services::Language()->translate('Success');
+                $temp_row->class .= ' success';
 
             } elseif ($message->type == MESSAGE_TYPE_WARNING) {
-                $row->heading = Services::Language()->translate('Warning');
-                $row->class .= ' warning';
+                $temp_row->heading = Services::Language()->translate('Warning');
+                $temp_row->class .= ' warning';
 
             } elseif ($message->type == MESSAGE_TYPE_ERROR) {
-                $row->heading = Services::Language()->translate('Error');
-                $row->class .= ' alert';
+                $temp_row->heading = Services::Language()->translate('Error');
+                $temp_row->class .= ' alert';
 
             } else {
-                $row->heading = Services::Language()->translate('Information');
-                $row->class .= ' secondary';
+                $temp_row->heading = Services::Language()->translate('Information');
+                $temp_row->class .= ' secondary';
             }
-            $query_results[] = $row;
+            $temp_query_results[] = $temp_row;
         }
 
         Services::Registry()->set(
             TEMPLATE_LITERAL,
             $this->get('template_view_path_node', '', 'parameters'),
-            $query_results
+            $temp_query_results
         );
 
         return true;

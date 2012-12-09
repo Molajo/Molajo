@@ -195,7 +195,7 @@ class UpdateController extends Controller
         JRequest::checkToken() or die;
 
         /** initialise */
-        $results = $this->initialise($this->data['action']);
+        $results = $this->initialise($this->row['action']);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -210,7 +210,7 @@ class UpdateController extends Controller
         }
 
         /** context **/
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $action;
+        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $action;
 
         /** ids **/
         $idArray = JRequest::getVar('cid', array(), '', 'array');

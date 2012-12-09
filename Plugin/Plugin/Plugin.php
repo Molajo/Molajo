@@ -74,12 +74,12 @@ class Plugin
     protected $query_results;
 
     /**
-     * Used in Create, Update, Delete operations
+     * Used for single resultsset display and in Create, Update, Delete operations
      *
      * @var    object
      * @since  1.0
      */
-    protected $data;
+    protected $temp_row;
 
     /**
      * Used in post-render View plugins, contains output rendered from view
@@ -110,6 +110,14 @@ class Plugin
     protected $include_parse_exclude_until_final;
 
     /**
+     * Build from Model Registry
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $model_registry_name;
+
+    /**
      * List of named Plugin Properties
      *
      * @var    object
@@ -120,9 +128,10 @@ class Plugin
         'plugin_event',
         'model',
         'model_registry',
+        'model_registry_name',
         'parameters',
         'query_results',
-        'data',
+        'row',
         'rendered_output',
         'include_parse_sequence',
         'include_parse_exclude_until_final'
@@ -141,10 +150,6 @@ class Plugin
     public function get($key, $default = null, $property = '')
     {
         $value = null;
-
-        // echo 'Key ' . $key . '<br /> ';
-        // echo '$default ' . $default . '<br /> ';
-        // echo '$property ' . $property . '<br /> ';
 
         if (in_array($key, $this->property_array) && $property == '') {
             $value = $this->$key;
@@ -194,6 +199,12 @@ class Plugin
     {
         if (in_array($key, $this->property_array) && $property == '') {
             $this->$key = $value;
+
+            if ($key == 'model_registry') {
+                if (isset($this->model_registry['model_registry_name'])) {
+                    $this->set('model_registry_name', $this->model_registry['model_registry_name'], 'model_registry');
+                }
+            }
             return $this->$key;
         }
 
@@ -227,9 +238,8 @@ class Plugin
     {
         $results = array();
 
-        foreach ($this->model->fields as $field) {
-
-            if ($field->type == $type) {
+        foreach ($this->model_registry['fields'] as $field) {
+            if ($field['type'] == $type) {
                 $results[] = $field;
             }
         }
@@ -245,21 +255,22 @@ class Plugin
      */
     public function getField($name)
     {
-        foreach ($this->model->fields as $field) {
 
-            if ((int)$field->foreignkey = 0) {
+        foreach ($this->model_registry['fields'] as $field) {
 
-            } else {
-                if ($field->as_name == '') {
-                    if ($field->name == $name) {
+            //if ((int)$field['foreignkey'] = 0) {
+
+            //} else {
+            //    if ($field['as_name'] == '') {
+                    if ($field['name'] == $name) {
                         return $field;
                     }
-                } else {
-                    if ($field->as_name == $name) {
-                        return $field;
-                    }
-                }
-            }
+            //    } else {
+            //        if ($field['foreignkey'] == $name) {
+            //            return $field;
+           //         }
+           //     }
+          //  }
         }
 
         return false;
@@ -275,23 +286,23 @@ class Plugin
      */
     public function getFieldValue($field)
     {
-        if (is_object($field)) {
+        if (is_array($field)) {
         } else {
             return false;
         }
 
-        if (isset($field->as_name)) {
-            if ($field->as_name == '') {
-                $name = $field->name;
-            } else {
-                $name = $field->as_name;
-            }
-        } else {
-            $name = $field->name;
-        }
+//        if (isset($field['as_name'])) {
+//            if ($field['as_name'] == '') {
+                $name = $field['name'];
+//            } else {
+//                $name = $field['as_name'];
+//            }
+//        } else {
+//            $name = $field['name'];
+//        }
 
-        if (isset($this->data->$name)) {
-            return $this->data->$name;
+        if (isset($this->row->$name)) {
+            return $this->row->$name;
 
         } elseif (isset($field->customfield)) {
             //todo: review this - it seems unnecessary
@@ -315,24 +326,24 @@ class Plugin
      */
     public function saveField($field, $new_field_name, $value)
     {
-        if (is_object($field)) {
-            $name = $field->name;
+        if (is_array($field)) {
+            $name = $field['name'];
         } else {
             $name = $new_field_name;
         }
 
-        if (isset($this->data->$name)) {
-            $this->data->$name = $value;
+        if (isset($this->row->$name)) {
+            $this->row->$name = $value;
 
         } elseif (isset($this->parameters[$name])) {
             $this->parameters[$name] = $value;
 
         } else {
-            if (is_object($this->data)) {
+            if (is_object($this->row)) {
             } else {
-                $this->data = new \stdClass();
+                $this->row = new \stdClass();
             }
-            $this->data->$new_field_name = $value;
+            $this->row->$new_field_name = $value;
         }
 
         return;
@@ -349,10 +360,10 @@ class Plugin
      */
     public function saveForeignKeyValue($new_field_name, $value)
     {
-        if (isset($this->data->$new_field_name)) {
+        if (isset($this->row->$new_field_name)) {
             return;
         }
-        $this->data->$new_field_name = $value;
+        $this->row->$new_field_name = $value;
 
         return;
     }
@@ -474,7 +485,7 @@ class Plugin
      * @return  bool
      * @since   1.0
      */
-    public function onBeforeViewRender()
+    public function onBeforeRenderView()
     {
         return true;
     }
@@ -486,7 +497,7 @@ class Plugin
      * @return  bool
      * @since   1.0
      */
-    public function onAfterViewRender()
+    public function onAfterRenderView()
     {
         return true;
     }
@@ -575,6 +586,50 @@ class Plugin
      * @since   1.0
      */
     public function onAfterDelete()
+    {
+        return true;
+    }
+
+    /**
+     * Before logging in processing
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onBeforeSignin()
+    {
+        return true;
+    }
+
+    /**
+     * After Logging in event
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onAfterSignin()
+    {
+        return true;
+    }
+
+    /**
+     * Before logging out processing
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onBeforesignout()
+    {
+        return true;
+    }
+
+    /**
+     * After Logging out event
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onAftersignout()
     {
         return true;
     }

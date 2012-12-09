@@ -32,7 +32,7 @@ class IpaddressPlugin extends Plugin
 
         if (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $field) {
-                $this->saveField($field, $field->name, Services::Registry()->get(CLIENT_LITERAL, 'ip_address', ''));
+                $this->saveField($field, $field['name'], Services::Registry()->get(CLIENT_LITERAL, 'ip_address', ''));
             }
         }
 

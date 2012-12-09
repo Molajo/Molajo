@@ -29,6 +29,10 @@ class UseractivityPlugin extends Plugin
      */
     public function onAfterRead()
     {
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
         if ($this->get('criteria_log_user_view_activity', 0) == 1) {
             return $this->setUserActivityLog();
         }
@@ -106,7 +110,7 @@ class UseractivityPlugin extends Plugin
 
         $controller->set('user_id', Services::Registry()->set(USER_LITERAL, 'id'));
         $controller->set('action_id', $action_id, 'parameters');
-        $controller->set('catalog_id', $this->data->catalog_id, 'parameters');
+        $controller->set('catalog_id', $this->row->catalog_id, 'parameters');
         $controller->set('activity_datetime', null, 'parameters');
 
         $results = $controller->getData('create');

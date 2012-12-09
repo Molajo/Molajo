@@ -32,8 +32,8 @@ class EventsPlugin extends Plugin
         }
 
         $events = array(
-            'onAfterInitialise',
             'onConnectDatabase',
+            'onAfterInitialise',
             'onAfterRoute',
             'onAfterAuthorise',
             'onBeforeParse',
@@ -42,8 +42,8 @@ class EventsPlugin extends Plugin
             'onBeforeRead',
             'onAfterRead',
             'onAfterReadall',
-            'onBeforeviewRender',
-            'onAfterviewRender',
+            'onBeforeRenderview',
+            'onAfterRenderview',
             'onAfterInclude',
             'onAfterParse',
             'onAfterExecute',
@@ -54,16 +54,15 @@ class EventsPlugin extends Plugin
             'onAfterupdate',
             'onBeforedelete',
             'onAfterdelete',
-            'onAfterlogon',
-            'onBeforelogon',
-            'onAfterlogout',
-            'onBeforelogout'
+            'onAftersignin',
+            'onBeforesignin',
+            'onAftersignout',
+            'onBeforesignout'
         );
 
         foreach (Services::Registry()->get(EVENTS_LITERAL, 'Events') as $e) {
             if (in_array(strtolower($e), array_map('strtolower', $events))) {
             } else {
-                echo $e . '<br />';
                 $events[] = $e;
             }
         }
@@ -71,12 +70,12 @@ class EventsPlugin extends Plugin
         $eventArray = array();
         foreach ($events as $key) {
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->id = $key;
-            $row->value = trim($key);
+            $temp_row->id = $key;
+            $temp_row->value = trim($key);
 
-            $eventArray[] = $row;
+            $eventArray[] = $temp_row;
         }
 
         Services::Registry()->set(DATALIST_LITERAL, 'EventsList', $eventArray);

@@ -47,7 +47,7 @@ class PagetypesPlugin extends Plugin
 		}
 
         $resourceFolders = Services::Filesystem()->folderFolders(
-            Services::Registry()->get('parameters', 'extension_path') . '/Menuitem'
+            $this->get('extension_path', '', 'parameters') . '/Menuitem'
         );
 
         if (count($resourceFolders) === 0 || $resourceFolders === false) {
@@ -63,10 +63,10 @@ class PagetypesPlugin extends Plugin
 
         $page_types = array();
         foreach ($newer as $item) {
-            $row = new \stdClass();
-            $row->value = $item;
-            $row->id = $item;
-            $page_types[] = $row;
+            $temp_row = new \stdClass();
+            $temp_row->value = $item;
+            $temp_row->id = $item;
+            $page_types[] = $temp_row;
         }
 
         Services::Registry()->set(DATALIST_LITERAL, 'Pagetypes', $page_types);

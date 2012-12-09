@@ -31,47 +31,40 @@ class FormselectlistPlugin extends Plugin
             return true;
         }
 
-        $datalist = Services::Registry()->get('parameters', 'datalist', '');
+        $datalist = $this->get('datalist', '', 'parameters');
         if ($datalist == '') {
             return true;
         }
 
-        $query_results = Services::Registry()->get(DATALIST_LITERAL, $datalist);
+        $temp_query_results = Services::Registry()->get(DATALIST_LITERAL, $datalist);
 
-        if (count($query_results) > 0) {
+        if (count($temp_query_results) > 0) {
 
         } else {
             if ($datalist === false || trim($datalist) == '') {
                 return true;
             }
 
-            $results = Services::Text()->getDatalist($datalist, DATALIST_LITERAL, $this->parameters);
+            $results = Services::Text()->getDatalist($datalist, DATALIST_LITERAL, $this->get('parameters'));
             if ($results === false) {
                 return true;
             }
 
-            $selected = $this->get('selected', null);
+            $selected = $this->get('selected', null, 'parameters');
 
-            $query_results = Services::Text()->buildSelectlist(
+            $temp_query_results = Services::Text()->buildSelectlist(
                 $datalist,
                 $results[0]->listitems,
                 $results[0]->multiple,
                 $results[0]->size,
-                $this->get('selected', null)
+                $this->get('selected', null, 'parameters')
             );
         }
-
-        $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
-        $this->set('model_name', TEMPLATE_LITERAL);
-        $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
-
-        $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
-        $this->parameters['model_name'] = TEMPLATE_LITERAL;
 
         Services::Registry()->set(
             TEMPLATE_LITERAL,
             $this->get('template_view_path_node', '', 'parameters'),
-            $query_results
+            $temp_query_results
         );
 
         return true;

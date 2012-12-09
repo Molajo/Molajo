@@ -30,19 +30,19 @@ class CreateController extends Controller
     {
         /** tokens */
 
-        if (isset($this->data->model_type)) {
+        if (isset($this->row->model_type)) {
         } else {
-            $this->data->model_type = DATA_SOURCE_LITERAL;
+            $this->row->model_type = DATA_SOURCE_LITERAL;
         }
-        if (isset($this->data->model_name)) {
+        if (isset($this->row->model_name)) {
         } else {
             return false;
         }
 
-        $this->connect($this->data->model_type, $this->data->model_name, 'CreateModel');
-        if (isset($this->data->catalog_type_id) && (int) $this->data->catalog_type_id > 0) {
+        $this->connect($this->row->model_type, $this->row->model_name, 'CreateModel');
+        if (isset($this->row->catalog_type_id) && (int) $this->row->catalog_type_id > 0) {
         } else {
-            $this->data->catalog_type_id = Services::Registry()->get($this->model_registry, 'catalog_type_id');
+            $this->row->catalog_type_id = Services::Registry()->get($this->model_registry, 'catalog_type_id');
         }
 
         $results = $this->verifyPermissions();
@@ -79,8 +79,8 @@ class CreateController extends Controller
             foreach ($fields as $f) {
                 foreach ($f as $key => $value) {
                     if ($key == 'name') {
-                        if (isset($this->data->$value)) {
-                            $data->$value = $this->data->$value;
+                        if (isset($this->row->$value)) {
+                            $data->$value = $this->row->$value;
                         } else {
                             $data->$value = null;
                         }
@@ -104,11 +104,11 @@ class CreateController extends Controller
 
         /** redirect */
         if ($valid === true) {
-            if ($this->get('redirect_on_success', '') == '') {
+            if ($this->get('redirect_on_success', '', 'parameters') == '') {
 
             } else {
                 Services::Redirect()->url
-                    = Services::Url()->getURL($this->get('redirect_on_success'));
+                    = Services::Url()->get(null, null, $this->get('redirect_on_success', '', 'parameters'));
                 Services::Redirect()->code == 303;
             }
 
@@ -117,7 +117,7 @@ class CreateController extends Controller
 
             } else {
                 Services::Redirect()->url
-                    = Services::Url()->getURL($this->get('redirect_on_failure'));
+                    = Services::Url()->get(null, null, $this->get('redirect_on_failure', '', 'parameters'));
                 Services::Redirect()->code == 303;
             }
         }
@@ -134,14 +134,14 @@ class CreateController extends Controller
     protected function verifyPermissions()
     {
 
-        if (isset($this->data->primary_category_id)) {
-            $results = Services::Permissions()->verifyTask('Create', $this->data->primary_category_id);
+        if (isset($this->row->primary_category_id)) {
+            $results = Services::Permissions()->verifyTask('Create', $this->row->primary_category_id);
             if ($results === true) {
                 return true;
             }
         }
 
-        $results = Services::Permissions()->verifyTask('Create', $this->data->catalog_type_id);
+        $results = Services::Permissions()->verifyTask('Create', $this->row->catalog_type_id);
         if ($results === false) {
             //error
             //return false (not yet)
@@ -173,9 +173,9 @@ class CreateController extends Controller
 
                 /** For this Custom Field Group (ex. Parameters, metadata, etc.) */
                 $customFieldName = strtolower($customFieldName);
-                if (isset($this->data->$customFieldName)) {
+                if (isset($this->row->$customFieldName)) {
                 } else {
-                    $this->data->$customFieldName = '';
+                    $this->row->$customFieldName = '';
                 }
 
                 /** Retrieve Field Definitions from Registry (XML) */
@@ -226,7 +226,7 @@ class CreateController extends Controller
         } else {
             $fieldArray = array();
             $inputArray = array();
-            $inputArray = $this->data->$customFieldName;
+            $inputArray = $this->row->$customFieldName;
         }
 
         foreach ($fields as $f) {
@@ -265,8 +265,8 @@ class CreateController extends Controller
             /** Retrieve value from data */
             if ($customFieldName == '') {
 
-                if (isset($this->data->$name)) {
-                    $value = $this->data->$name;
+                if (isset($this->row->$name)) {
+                    $value = $this->row->$name;
                 } else {
                     $value = null;
                 }
@@ -293,7 +293,7 @@ class CreateController extends Controller
                     $value = Services::Filter()->filter($value, $type, $null, $default);
 
                     if ($customFieldName == '') {
-                        $this->data->$name = trim($value);
+                        $this->row->$name = trim($value);
 
                     } else {
 
@@ -312,7 +312,7 @@ class CreateController extends Controller
         if ($customFieldName == '') {
         } else {
             ksort($fieldArray);
-            $this->data->$customFieldName = $fieldArray;
+            $this->row->$customFieldName = $fieldArray;
         }
 
         Services::Profiler()->set('CreateController::checkFields Filter::Success: ' . $valid, PROFILER_ACTIONS);
@@ -367,7 +367,7 @@ class CreateController extends Controller
             }
 
             /** Retrieve Model Foreign Key Definitions */
-            if (isset($this->data->$name)) {
+            if (isset($this->row->$name)) {
             } else {
                 if ((int) $required == 0) {
                     return true;
@@ -376,7 +376,7 @@ class CreateController extends Controller
                 return false;
             }
 
-            if (isset($this->data->$name)) {
+            if (isset($this->row->$name)) {
 
                 $controllerClass = CONTROLLER_CLASS;
                 $controller = new $controllerClass();
@@ -385,7 +385,7 @@ class CreateController extends Controller
                 $controller->model->query->select('COUNT(*)');
                 $controller->model->query->from($controller->model->db->qn($controller->get('table_name')));
                 $controller->model->query->where($controller->model->db->qn($source_id)
-                    . ' = ' . (int) $this->data->$name);
+                    . ' = ' . (int) $this->row->$name);
 
                 $controller->set('get_customfields', 0, 'model_registry');
                 $controller->set('get_item_children', 0, 'model_registry');
@@ -426,7 +426,7 @@ class CreateController extends Controller
         $arguments = array(
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
-            'data' => $this->data,
+            'data' => $this->row,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
             'parameters' => $this->parameters,
@@ -447,7 +447,7 @@ class CreateController extends Controller
         Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
 
         $this->parameters = $arguments['parameters'];
-        $this->data = $arguments['data'];
+        $this->row = $arguments['row'];
 
         return true;
     }
@@ -489,7 +489,7 @@ class CreateController extends Controller
         Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
 
         $this->parameters = $arguments['parameters'];
-        $data = $arguments['data'];
+        $data = $arguments['row'];
 
         return $data;
     }

@@ -11,22 +11,22 @@ use Molajo\Service\Services;
 defined('MOLAJO') or die;
 
 /**
- * Login
+ * Signin
  *
  * @package      Molajo
  * @subpackage   Controller
  * @since        1.0
  */
-class HOLDLoginController extends Controller
+class HOLDSigninController extends Controller
 {
     /**
-     * login
+     * signin
      *
      * Method to log in a user.
      *
      * @return void
      */
-    public function login()
+    public function signin()
     {
         /**
          *  Retrieve Form Fields
@@ -38,7 +38,7 @@ class HOLDLoginController extends Controller
             'password' => JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW)
         );
 
-        $options = array('action' => 'login');
+        $options = array('action' => 'signin');
 
         /** security check: internal URL only */
         $return = JRequest::getVar('return', '', 'method', 'base64');
@@ -54,13 +54,13 @@ class HOLDLoginController extends Controller
         }
 
         /**
-         *  Authenticate, Authorize and Execute After Login Plugins
+         *  Authenticate, Authorize and Execute After Signin Plugins
          */
         $userObject = Services::Authentication()->authenticate($credentials, $options);
 
         if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
-            $this->_loginFailed('authenticate', $userObject, $options);
+            $this->_signinFailed('authenticate', $userObject, $options);
 
             return;
         }
@@ -68,19 +68,19 @@ class HOLDLoginController extends Controller
         Services::Authentication()->authorise($userObject, (array) $options);
         if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
-            $this->_loginFailed('authorise', $userObject, $options);
+            $this->_signinFailed('authorise', $userObject, $options);
 
             return;
         }
 
-        Services::Authentication()->onUserLogin($userObject, (array) $options);
+        Services::Authentication()->onUserSignin($userObject, (array) $options);
         if (isset($options['remember']) && $options['remember']) {
 
             // Create the encryption key, apply extra hardening using the user agent string.
             $agent = $_SERVER['HTTP_USER_AGENT'];
 
             // Ignore empty and crackish user agents
-            if ($agent != '' && $agent != 'JLOGIN_REMEMBER') {
+            if ($agent != '' && $agent != 'JSIGNIN_REMEMBER') {
                 $key = MolajoUtility::getHash($agent);
                 $crypt = new MolajoSimpleCrypt($key);
                 $rcookie = $crypt->encrypt(serialize($credentials));
@@ -90,7 +90,7 @@ class HOLDLoginController extends Controller
                 $cookie_domain = $this->getConfig('cookie_domain', '');
                 $cookie_path = $this->getConfig('cookie_path', '/');
                 setcookie(
-                    MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime,
+                    MolajoUtility::getHash('JSIGNIN_REMEMBER'), $rcookie, $lifetime,
                     $cookie_path, $cookie_domain
                 );
             }
@@ -101,19 +101,19 @@ class HOLDLoginController extends Controller
     }
 
     /**
-     * _loginFailed
+     * _signinFailed
      *
-     * Handles failed login attempts
+     * Handles failed signin attempts
      *
      * @param $response
      * @param array $options
      * @return
      */
-    protected function _loginFailed($type, $response, $options = Array())
+    protected function _signinFailed($type, $response, $options = Array())
     {
 //        MolajoPluginHelper::getPlugin(USER_LITERAL);
 //        if ($type == 'authenticate') {
-//            Services::Event()->scheduleEvent('onUserLoginFailure', array($response, $options));
+//            Services::Event()->scheduleEvent('onUserSigninFailure', array($response, $options));
 //        } else {
 //            Services::Event()->scheduleEvent('onUserPermissionsFailure', array($response, $options));
 //        }
@@ -122,13 +122,13 @@ class HOLDLoginController extends Controller
     }
 
     /**
-     * logout
+     * signout
      *
      * Method to log out a user.
      *
      * @return void
      */
-    public function logout()
+    public function signout()
     {
         JRequest::checkToken('default') or die;
 
@@ -137,9 +137,9 @@ class HOLDLoginController extends Controller
             'application_id' => ($user_id) ? 0 : 1
         );
 
-        $result = Application::logout($user_id, $options);
+        $result = Application::signout($user_id, $options);
         if (!MolajoError::isError($result)) {
-            $this->model = $this->getModel('login');
+            $this->model = $this->getModel('signin');
             $return = $this->model->getState('return');
             Services::Response()->redirect($return);
         }
@@ -148,12 +148,12 @@ class HOLDLoginController extends Controller
     }
 
     /**
-     * Logout authentication function.
+     * Signout authentication function.
      *
-     * Passed the current user information to the onUserLogout event and reverts the current
+     * Passed the current user information to the onUserSignout event and reverts the current
      * session record back to 'anonymous' parameters.
      * If any of the authentication plugins did not successfully complete
-     * the logout routine then the whole method fails.  Any errors raised
+     * the signout routine then the whole method fails.  Any errors raised
      * should be done in the plugin as this provides the ability to give
      * much more information about why the routine may have failed.
      *
@@ -164,7 +164,7 @@ class HOLDLoginController extends Controller
      *
      * @since   1.0
      */
-    public function logout2($user_id = null, $options = array())
+    public function signout2($user_id = null, $options = array())
     {
         // Initialise variables.
         $retval = false;
@@ -184,8 +184,8 @@ class HOLDLoginController extends Controller
         // Import the user plugin group.
 //        MolajoPluginHelper::importPlugin(USER_LITERAL);
 
-        // OK, the credentials are built. Lets fire the onLogout event.
-//        $results = Services::Event()->scheduleEvent('onUserLogout', array($parameters, $options));
+        // OK, the credentials are built. Lets fire the onSignout event.
+//        $results = Services::Event()->scheduleEvent('onUserSignout', array($parameters, $options));
 
         // Check if any of the plugins failed. If none did, success.
 
@@ -194,13 +194,13 @@ class HOLDLoginController extends Controller
         // Use domain and path set in config for cookie if it exists.
         $cookie_domain = $this->getConfig('cookie_domain', '');
         $cookie_path = $this->getConfig('cookie_path', '/');
-        setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
+        setcookie(MolajoUtility::getHash('JSIGNIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
         return true;
 //        }
 
-        // Plugin onUserLoginFailure Event.
-//        Services::Event()->scheduleEvent('onUserLogoutFailure', array($parameters));
+        // Plugin onUserSigninFailure Event.
+//        Services::Event()->scheduleEvent('onUserSignoutFailure', array($parameters));
         return false;
     }
 }

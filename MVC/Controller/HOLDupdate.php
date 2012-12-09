@@ -245,7 +245,7 @@ class HOLDupdate extends Controller
 
         /** Preparation: Save form or version data **/
         Services::User()->setUserState(JRequest::getInt('datakey'), $data);
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $action . '.' . JRequest::getInt('datakey');
+        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $action . '.' . JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
         if ((int) $this->get('id')) {
@@ -410,7 +410,7 @@ class HOLDupdate extends Controller
         }
 
         /** Preparation: Save form or version data **/
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . 'delete';
+        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . 'delete';
 
         /** only trashed and version items can be deleted **/
         if ($this->model->status == STATUS_TRASHED || $this->model->status == STATUS_VERSION) {

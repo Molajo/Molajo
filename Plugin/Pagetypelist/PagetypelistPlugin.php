@@ -49,7 +49,7 @@ class PagetypelistPlugin extends Plugin
         $controller->set('model_count', $this->get('model_count', 5), 'model_registry');
         $controller->set('use_pagination', $this->get('model_use_pagination', 1));
 */
-        $query_results = $controller->getData(QUERY_OBJECT_LIST);
+        $temp_query_results = $controller->getData(QUERY_OBJECT_LIST);
 /**
         $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
         $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
@@ -61,7 +61,7 @@ class PagetypelistPlugin extends Plugin
         $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
 
-        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
+        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $temp_query_results);
 
         return true;
     }
@@ -72,7 +72,7 @@ class PagetypelistPlugin extends Plugin
      * @return boolean
      * @since   1.0
      */
-    public function onBeforeViewRender()
+    public function onBeforeRenderView()
     {
         if (strtolower($this->get('page_type', '', 'parameters')) == QUERY_OBJECT_LIST
             || strtolower($this->get('page_type', '', 'parameters')) == 'grid'
@@ -82,13 +82,13 @@ class PagetypelistPlugin extends Plugin
         }
 
         if ((int) $this->get('total_rows', 0, 'parameters') == 0
-            || $this->data === false
-            || $this->data == null
+            || $this->row === false
+            || $this->row == null
         ) {
             return true;
         }
 
-        if (is_object($this->data)) {
+        if (is_object($this->row)) {
         } else {
             return true;
         }
@@ -117,9 +117,9 @@ class PagetypelistPlugin extends Plugin
 
         /** grid_row_class */
         $value = ' class="' .
-            trim(trim($this->data->first_row)
-                    . ' ' . trim($this->data->even_or_odd_row)
-                    . ' ' . trim($this->data->last_row))
+            trim(trim($this->row->first_row)
+                    . ' ' . trim($this->row->even_or_odd_row)
+                    . ' ' . trim($this->row->last_row))
             . '"';
 
         $this->saveField(null, 'grid_row_class', $value);

@@ -34,7 +34,7 @@ class Model
     /**
      * Database query object
      *
-     * Public to allow setting of partial query values
+     * Public to allow setting of partial query values within plugins
      *
      * @var    object
      * @since  1.0
@@ -52,7 +52,7 @@ class Model
     public $null_date;
 
     /**
-     * Today's CCYY-MM-DD 00:00:00 Used in queries to determine date validity
+     * Today's CCYY-MM-DD 00:00:00 Used in queries to determine published date qualification
      *
      * Public to access property during query development
      *

@@ -26,6 +26,11 @@ class TemplatelistPlugin extends Plugin
      */
     public function onAfterReadAll()
     {
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
+
         if (strtolower($this->get('template_view_path_node', '', 'parameters')) == QUERY_OBJECT_LIST) {
         } else {
             return true;
@@ -107,7 +112,7 @@ class TemplatelistPlugin extends Plugin
         $controller->set('model_count', $count);
         $controller->set('use_pagination', $pagination);
 
-        $this->data = $controller->getData(QUERY_OBJECT_LIST);
+        $this->row = $controller->getData(QUERY_OBJECT_LIST);
 
         return true;
     }

@@ -17,15 +17,18 @@ defined('MOLAJO') or die;
  */
 class MockimagePlugin extends Plugin
 {
-
     /**
      * Adds mock images in text, where requested
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
     {
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
 
         $fields = $this->retrieveFieldsByType('text');
 
@@ -33,7 +36,7 @@ class MockimagePlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
 
                 $fieldValue = $this->getFieldValue($field);
 

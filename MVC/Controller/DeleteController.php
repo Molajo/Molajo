@@ -30,7 +30,7 @@ class DeleteController extends Controller
     {
         /** tokens */
 
-        if (isset($this->data->model_name)) {
+        if (isset($this->row->model_name)) {
         } else {
             return false;
         }
@@ -56,37 +56,39 @@ class DeleteController extends Controller
 
         if ($valid === true) {
 
-            $this->connect(DATA_SOURCE_LITERAL, $this->data->model_name, 'DeleteModel');
-            $results = $this->model->delete($this->data, $this->model_registry);
+            $this->connect(DATA_SOURCE_LITERAL, $this->row->model_name, 'DeleteModel');
+            $results = $this->model->delete($this->row, $this->model_registry);
 
             if ($results === false) {
             } else {
-                $this->data->id = $results;
+                $this->row->id = $results;
                 $results = $this->onAfterDeleteEvent();
                 if ($results === false) {
                     return false;
                     //error
                 }
-                $results = $this->data->id;
+                $results = $this->row->id;
             }
         }
 
         /** redirect */
         if ($valid === true) {
-            if ($this->get('redirect_on_success', '') == '') {
+            if ($this->get('redirect_on_success', '', 'parameters') == '') {
 
             } else {
                 Services::Redirect()->url
-                    = Services::Url()->getURL($this->get('redirect_on_success'));
+                    = Services::Url()->get(null, null, $this->get('redirect_on_success', '', 'parameters'));
+
                 Services::Redirect()->code == 303;
             }
 
         } else {
-            if ($this->get('redirect_on_failure', '') == '') {
+            if ($this->get('redirect_on_failure', '', 'parameters') == '') {
 
             } else {
                 Services::Redirect()->url
-                    = Services::Url()->getURL($this->get('redirect_on_failure'));
+                    = Services::Url()->get(null, null, $this->get('redirect_on_failure', '', 'parameters'));
+
                 Services::Redirect()->code == 303;
             }
         }
@@ -104,7 +106,7 @@ class DeleteController extends Controller
      */
     public function getDeleteData()
     {
-        $hold_model_name = $this->data->model_name;
+        $hold_model_name = $this->row->model_name;
         $this->connect(DATA_SOURCE_LITERAL, $hold_model_name);
 
         $this->set('use_special_joins', 0);
@@ -112,23 +114,23 @@ class DeleteController extends Controller
         $primary_key = $this->get('primary_key');
         $primary_prefix = $this->get('primary_prefix', 'a');
 
-        if (isset($this->data->$primary_key)) {
+        if (isset($this->row->$primary_key)) {
             $this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($primary_key)
-                . ' = ' . $this->model->db->q($this->data->$primary_key));
+                . ' = ' . $this->model->db->q($this->row->$primary_key));
 
-        } elseif (isset($this->data->$name_key)) {
+        } elseif (isset($this->row->$name_key)) {
             $this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($name_key)
-                . ' = ' . $this->model->db->q($this->data->$name_key));
+                . ' = ' . $this->model->db->q($this->row->$name_key));
 
         } else {
             //only deletes single rows
             return false;
         }
 
-        if (isset($this->data->catalog_type_id)) {
+        if (isset($this->row->catalog_type_id)) {
             $this->model->query->where($this->model->db->qn($primary_prefix)
                 . '.' . $this->model->db->qn('catalog_type_id')
-                . ' = ' . $this->model->db->q($this->data->catalog_type_id));
+                . ' = ' . $this->model->db->q($this->row->catalog_type_id));
         }
 
         $item = $this->getData(QUERY_OBJECT_ITEM);
@@ -146,23 +148,23 @@ class DeleteController extends Controller
             return false;
         }
 
-        $this->data = new \stdClass();
+        $this->row = new \stdClass();
         foreach ($fields as $f) {
             foreach ($f as $key => $value) {
                 if ($key == 'name') {
                     if (isset($item->$value)) {
-                        $this->data->$value = $item->$value;
+                        $this->row->$value = $item->$value;
                     } else {
-                        $this->data->$value = null;
+                        $this->row->$value = null;
                     }
                 }
             }
         }
 
         if (isset($item->catalog_id)) {
-            $this->data->catalog_id = $item->catalog_id;
+            $this->row->catalog_id = $item->catalog_id;
         }
-        $this->data->model_name = $hold_model_name;
+        $this->row->model_name = $hold_model_name;
 
         /** Process each field namespace  */
         $customFieldTypes = Services::Registry()->get($this->model_registry, CUSTOMFIELDGROUPS_LITERAL);
@@ -187,7 +189,7 @@ class DeleteController extends Controller
     protected function verifyPermissions()
     {
         //todo - figure out what joining isn't working, get catalog id
-        //$results = Services::Permissions()->verifyTask('Delete', $this->data->catalog_id);
+        //$results = Services::Permissions()->verifyTask('Delete', $this->row->catalog_id);
         //if ($results === false) {
         //error
         //return false (not yet)
@@ -212,7 +214,7 @@ class DeleteController extends Controller
         $arguments = array(
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
-            'data' => $this->data,
+            'data' => $this->row,
             'null_date' => $this->model->null_date,
             'now' => $this->model->now,
             'parameters' => $this->parameters,
@@ -233,7 +235,7 @@ class DeleteController extends Controller
 
         /** Process results */
         $this->parameters = $arguments['parameters'];
-        $this->data = $arguments['data'];
+        $this->row = $arguments['row'];
 
         return true;
     }
@@ -256,7 +258,7 @@ class DeleteController extends Controller
         $arguments = array(
             'model_registry' => $this->model_registry,
             'db' => $this->model->db,
-            'data' => $this->data,
+            'data' => $this->row,
             'parameters' => $this->parameters,
             'model_type' => $this->get('model_type'),
             'model_name' => $this->get('model_name')
@@ -275,7 +277,7 @@ class DeleteController extends Controller
 
         /** Process results */
         $this->parameters = $arguments['parameters'];
-        $this->data = $arguments['data'];
+        $this->row = $arguments['row'];
 
         return true;
     }

@@ -26,7 +26,7 @@ class ItemurlPlugin extends Plugin
      *
      * Provides the Url for any catalog_id field in the recordset
      *
-     * @param   $this->data
+     * @param   $this->row
      * @param   $model
      *
      * @return boolean
@@ -34,30 +34,26 @@ class ItemurlPlugin extends Plugin
      */
     public function onAfterRead()
     {
-        if (defined('ROUTE')) {
-        } else {
-            return true;
-        }
 
 		if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
 
-			if (isset($this->data->catalog_sef_request)) {
-				$newFieldValue = Services::Url()->getApplicationURL($this->data->catalog_sef_request);
+			if (isset($this->row->catalog_sef_request)) {
+				$newFieldValue = Services::Url()->getApplicationURL($this->row->catalog_sef_request);
 				$this->saveField(null, 'catalog_id_url', $newFieldValue);
 
-			} elseif (isset($this->data->sef_request)) {
-				$newFieldValue = Services::Url()->getApplicationURL($this->data->sef_request);
+			} elseif (isset($this->row->sef_request)) {
+				$newFieldValue = Services::Url()->getApplicationURL($this->row->sef_request);
 				$this->saveField(null, 'catalog_id_url', $newFieldValue);
 
-			} elseif (isset($this->data->catalog_id)) {
-				$newFieldValue = Services::Url()->getUrl($this->data->catalog_id);
+			} elseif (isset($this->row->catalog_id)) {
+				$newFieldValue = Services::Url()->getUrl($this->row->catalog_id);
 				$this->saveField(null, 'catalog_id_url', $newFieldValue);
 			}
 
 		} else {
 
-			if (isset($this->data->catalog_id)) {
-				$newFieldValue = Services::Url()->getUrl($this->data->catalog_id);
+			if (isset($this->row->catalog_id)) {
+				$newFieldValue = Services::Url()->getUrl($this->row->catalog_id);
 				$this->saveField(null, 'catalog_id_url', $newFieldValue);
 			}
 
@@ -70,7 +66,7 @@ class ItemurlPlugin extends Plugin
             foreach ($fields as $field) {
 
                 if ($field->as_name == '') {
-                    $name = $field->name;
+                    $name = $field['name'];
                 } else {
                     $name = $field->as_name;
                 }

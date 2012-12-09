@@ -26,33 +26,27 @@ class ItemuserpermissionsPlugin extends Plugin
      * Use with Grid to determine permissions for buttons and items
      * Validate action-level user permissions on each row - relies upon catalog_id
      *
-     * @param   $this->data
-     * @param   $model
-     *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
     {
-        if (isset($this->data->catalog_id)) {
+        if (isset($this->row->catalog_id)) {
         } else {
             return false;
         }
 
-        /** Resource Buttons */
-        $actions = $this->get('toolbar_buttons');
+        $actions = $this->get('toolbar_buttons', '', 'parameters');
 
         $actionsArray = explode(',', $actions);
 
-        /** User Permissions */
         $permissions = Services::Permissions()
-            ->verifyTaskList($actionsArray, $this->data->catalog_id);
+            ->verifyTaskList($actionsArray, $this->row->catalog_id);
 
-        /** Append onto row */
         foreach ($actionsArray as $action) {
             if ($permissions[$action] === true) {
                 $field = $action . 'Permission';
-                $this->data->$field = $permissions[$action];
+                $this->row->$field = $permissions[$action];
             }
         }
 

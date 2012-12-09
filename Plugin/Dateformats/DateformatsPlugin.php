@@ -34,12 +34,13 @@ class DateformatsPlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
+
                 $fieldValue = $this->getFieldValue($field);
 
                 if ($name == 'modified_datetime') {
 
-                    $this->saveField($field, $name, $this->now);
+                    $this->saveField($field, $name, $this->model->now);
 
                     $modifiedByField = $this->getField('modified_by');
                     $modifiedByValue = $this->getFieldValue($modifiedByField);
@@ -51,7 +52,7 @@ class DateformatsPlugin extends Plugin
                     || $fieldValue == '0000-00-00 00:00:00'
                 ) {
 
-                    $this->saveField($field, $name, $this->now);
+                    $this->saveField($field, $name, $this->model->now);
 
                     if ($name == 'created_datetime') {
                         $createdByField = $this->getField('created_by');
@@ -98,7 +99,7 @@ class DateformatsPlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
 
                 /** Retrieves the actual field value from the 'normal' or special field */
                 $fieldValue = $this->getFieldValue($field);

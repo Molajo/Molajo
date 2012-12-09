@@ -82,22 +82,22 @@ class PagetypeconfigurationPlugin extends Plugin
             if ($item == '') {
             } else {
                 $i++;
-                $row = new \stdClass();
-                $row->id = $i;
+                $temp_row = new \stdClass();
+                $temp_row->id = $i;
                 if ($i == $page_number) {
-                    $row->current = 1;
+                    $temp_row->current = 1;
                 } else {
-                    $row->current = 0;
+                    $temp_row->current = 0;
                 }
 
-                $row->id = $i;
-                $row->title = substr($item, 0, strpos($item, ','));
-                $row->url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url') . '/page/' . $i;
+                $temp_row->id = $i;
+                $temp_row->title = substr($item, 0, strpos($item, ','));
+                $temp_row->url = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/page/' . $i;
 
-                $pageArray[] = $row;
+                $pageArray[] = $temp_row;
             }
         }
-        Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', $pageArray);
+        Services::Registry()->set(PAGE_LITERAL, 'SectionSubmenu', $pageArray);
 
         /** Even tho links are created to each form page, generate Form for the current page, only */
         $current_page = '{{' . $pages[$page_number];

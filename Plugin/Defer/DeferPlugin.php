@@ -38,9 +38,9 @@ class DeferPlugin extends Plugin
         $controller->setDataobject();
         $controller->connectDatabase();
 
-        $query_results = $controller->getData(QUERY_OBJECT_LIST);
+        $temp_query_results = $controller->getData(QUERY_OBJECT_LIST);
 
-        Services::Registry()->set(ASSETS_LITERAL, JS_DEFER_LITERAL, $query_results);
+        Services::Registry()->set(ASSETS_LITERAL, JS_DEFER_LITERAL, $temp_query_results);
 
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
@@ -49,9 +49,9 @@ class DeferPlugin extends Plugin
         $controller->set('model_parameter', JS_DECLARATIONS_DEFER_LITERAL, 'parameters');
         $controller->connectDatabase();
 
-        $query_results = $controller->getData(QUERY_OBJECT_LIST);
+        $temp_query_results = $controller->getData(QUERY_OBJECT_LIST);
 
-        Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, $query_results);
+        Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, $temp_query_results);
 
         return true;
     }

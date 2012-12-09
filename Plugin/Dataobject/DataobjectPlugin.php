@@ -36,15 +36,10 @@ class DataobjectPlugin extends Plugin
         }
 
         if ($this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
-
             $service_class = $this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry');
-
             $this->set('db', Services::$service_class()->connect($this->get('model_registry')), 'model');
-
             $this->set('query', $this->get('db', '', 'model')->getQuery($this->get('db', '', 'model')), 'model');
-
             $this->set('null_date', $this->get('db', '', 'model')->getNullDate(), 'model');
-
             try {
                 $this->set('now', Services::Date()->getDate(), 'model');
 
@@ -96,13 +91,13 @@ class DataobjectPlugin extends Plugin
         $dataobject = array();
 
         foreach ($newer as $file) {
-            $row = new \stdClass();
-            $row->value = $file;
-            $row->id = $file;
-            $dataobject[] = $row;
+            $temp_row = new \stdClass();
+            $temp_row->value = $file;
+            $temp_row->id = $file;
+            $dataobject[] = $temp_row;
         }
 
-        Services::Registry()->set(DATALIST_LITERAL, 'Dataobjects', $dataobject);
+        Services::Registry()->set(DATALIST_LITERAL, 'Dataobject', $dataobject);
 
         return true;
     }

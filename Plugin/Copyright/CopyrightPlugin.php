@@ -26,6 +26,10 @@ class CopyrightPlugin extends Plugin
      */
     public function onAfterRead()
     {
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
         $current_year = Services::Date()->getDate()->format('Y');
 
         $first_year_field = $this->getField('copyright_first_year');

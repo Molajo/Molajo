@@ -25,7 +25,7 @@ class EmailPlugin extends Plugin
      *
      * Retrieves Author Information for Item
      *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
@@ -36,7 +36,7 @@ class EmailPlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
                 $new_name = $name . '_' . 'obfuscated';
 
                 /** Retrieves the actual field value from the 'normal' or special field */
@@ -50,7 +50,7 @@ class EmailPlugin extends Plugin
                     if ($newFieldValue === false) {
                     } else {
 
-                        if (strtolower($this->get('model_query_object')) == QUERY_OBJECT_ITEM) {
+                        if (strtolower($this->get('model_query_object', '', 'parameters')) == QUERY_OBJECT_ITEM) {
                         } else {
                             return true;
                         }
@@ -67,7 +67,7 @@ class EmailPlugin extends Plugin
     /**
      * Pre-update processing
      *
-     * @param   $this->data
+     * @param   $this->row
      * @param   $model
      *
      * @return boolean

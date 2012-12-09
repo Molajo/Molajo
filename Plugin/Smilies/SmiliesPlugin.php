@@ -26,13 +26,18 @@ class SmiliesPlugin extends Plugin
      */
     public function onAfterRead()
     {
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
+
         $fields = $this->retrieveFieldsByType('text');
 
         if (is_array($fields) && count($fields) > 0) {
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
 
                 $fieldValue = $this->getFieldValue($field);
 

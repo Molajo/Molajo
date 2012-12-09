@@ -382,6 +382,11 @@ Class RegistryService
         $namespace = $this->editNamespace($namespace);
         $key = $this->editNamespaceKey($namespace, $key);
 
+        if ($this->exists($namespace) === true) {
+        } else {
+            return false;
+        }
+
         if ($namespace == '*') {
             if ($key === null) {
                 return $this->listRegistry(false);
@@ -499,7 +504,9 @@ Class RegistryService
             throw new \RuntimeException ('Registry: Namespace is required for Set.');
         }
         if ($key == '') {
-            throw new \RuntimeException ('Registry: Key is required for Set. Namespace: ' . $namespace);
+           // throw new \RuntimeException ('Registry: Key is required for Set. Namespace: ' . $namespace);
+            echo 'Registry: Key is required for Set. Namespace: ' . $namespace;
+            return;
         }
 
         /** Match requirement for security to ensure only named parameters are updated */
@@ -657,6 +664,7 @@ Class RegistryService
             ('Registry: Target Namespace: ' . $target_registry . ' for Merge is locked. May not add entries.');
         }
 
+
         $searchfor = '';
         if ($filter == null || trim($filter) == '' || $filter == '*') {
         } else {
@@ -664,20 +672,26 @@ Class RegistryService
             $searchfor = strtolower(trim($searchfor));
         }
 
-        $copy = $this->getRegistry($source_registry);
-        foreach ($copy as $key => $value) {
+        $target = $this->getRegistry($target_registry);
+        $source = $this->getRegistry($source_registry);
+        foreach ($source as $key => $value) {
 
             $match = 0;
 
-            if ($searchfor == '') {
-                $match = 1;
+            if (is_null($value)) {
+                //skip it.
+            } elseif ($searchfor == '') {
+               $match = 1;
 
             } elseif (trim(substr(strtolower($key), 0, strlen(strtolower($searchfor)))) == trim($searchfor)) {
                 $match = 1;
             }
 
             if ($match == 1) {
-                if (isset($target_registry[$key])) {
+                if (isset($target[$key])) {
+                    if ($target[$key] === null) {
+                        $this->set($target_registry, $key, $value);
+                    }
                 } else {
                     $this->set($target_registry, $key, $value);
                 }
@@ -686,11 +700,11 @@ Class RegistryService
             if ($remove_from_source == 1) {
                 $this->delete($source_registry, $key);
             }
+        }
 
-            if (count($this->getRegistry($source_registry)) > 0) {
-            } else {
-                return $this->deleteRegistry($source_registry);
-            }
+        if (count($this->getRegistry($source_registry)) > 0) {
+        } else {
+            return $this->deleteRegistry($source_registry);
         }
 
         return true;
@@ -710,17 +724,12 @@ Class RegistryService
      */
     public function sort($namespace)
     {
-        $source_registry = $this->editNamespace($namespace);
+        $namespace = $this->editNamespace($namespace);
 
         if ($this->exists($namespace)) {
         } else {
             throw new \RuntimeException
-            ('Registry: Cannot sort Namespace ' . $source_registry . ' since it does not exist.');
-        }
-
-        if ($this->checkLock($namespace)) {
-            throw new \RuntimeException
-            ('Registry: Cannot sort Namespace: ' . $namespace . ' since it has been locked.');
+            ('Registry: Cannot sort Namespace ' . $namespace . ' since it does not exist.');
         }
 
         $sort = $this->getRegistry($namespace);
@@ -868,7 +877,7 @@ Class RegistryService
      */
     public function rename($namespace, $new_namespace)
     {
-        $source_registry = $this->editNamespace($namespace);
+        $namespace = $this->editNamespace($namespace);
 
         if ($this->exists($namespace)) {
         } else {

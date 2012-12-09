@@ -93,7 +93,7 @@ class CatalogPlugin extends Plugin
         $controller->set('model_offset', 0, 'model_registry');
         $controller->set('model_count', 99999, 'model_registry');
 
-        $query_results = $controller->getData(QUERY_OBJECT_DISTINCT);
+        $temp_query_results = $controller->getData(QUERY_OBJECT_DISTINCT);
 
         $catalogArray = array();
 
@@ -102,10 +102,10 @@ class CatalogPlugin extends Plugin
 
         if ($application_home_catalog_id === 0) {
         } else {
-            if (count($query_results) == 0 || $query_results === false) {
+            if (count($temp_query_results) == 0 || $temp_query_results === false) {
             } else {
 
-                foreach ($query_results as $item) {
+                foreach ($temp_query_results as $item) {
                     if ($item->id == $application_home_catalog_id) {
                         $item->value = trim($item->value . ' ' . Services::Language()->translate('Home'));
                         $catalogArray[] = $item;
@@ -131,7 +131,7 @@ class CatalogPlugin extends Plugin
      */
     public function onAfterCreate()
     {
-        $id = $this->data->id;
+        $id = $this->row->id;
         if ((int) $id == 0) {
             return false;
         }
@@ -163,7 +163,7 @@ class CatalogPlugin extends Plugin
     public function onAfterUpdate()
     {
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_user_update_activity', 1) == 1) {
-            $results = $this->logUserActivity($this->data->id,
+            $results = $this->logUserActivity($this->row->id,
                 Services::Registry()->get('Actions', ACTION_DELETE));
             if ($results === false) {
                 return false;
@@ -171,7 +171,7 @@ class CatalogPlugin extends Plugin
         }
 
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_catalog_update_activity', 1) == 1) {
-            $results = $this->logCatalogActivity($this->data->id,
+            $results = $this->logCatalogActivity($this->row->id,
                 Services::Registry()->get('Actions', ACTION_DELETE));
             if ($results === false) {
                 return false;
@@ -195,7 +195,7 @@ class CatalogPlugin extends Plugin
     /**
      * Pre-delete processing
      *
-     * @param   $this->data
+     * @param   $this->row
      * @param   $model
      *
      * @return  boolean
@@ -212,12 +212,12 @@ class CatalogPlugin extends Plugin
         $controller->connectDatabase();
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_categories');
-        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->row->id;
         $controller->model->db->setQuery($sql);
         $controller->model->db->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_activity');
-        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->data->id;
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->row->id;
         $controller->model->db->setQuery($sql);
         $controller->model->db->execute();
 

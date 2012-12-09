@@ -31,7 +31,11 @@ class DatalistPlugin extends Plugin
             return true;
         }
 
-        $files = Services::Filesystem()->folderFiles(PLATFORM_FOLDER . '/Datalist');
+        if (Services::Registry()->exists(DATALIST_LITERAL, 'Datalists')) {
+            return true;
+        }
+
+        $files = Services::Filesystem()->folderFiles(PLATFORM_MVC . '/Model/Datalist');
         if (count($files) === 0 || $files === false) {
             $dataLists = array();
         } else {
@@ -40,7 +44,7 @@ class DatalistPlugin extends Plugin
 
         $resourceFiles = Services::Filesystem()->folderFiles(
             $this->get('extension_path', '', 'parameters')
-                . '/Datalist'
+                . '/Model/Datalist'
         );
 
         if (count($resourceFiles) == 0 || $resourceFiles === false) {
@@ -56,10 +60,10 @@ class DatalistPlugin extends Plugin
         $datalist = array();
 
         foreach ($newer as $file) {
-            $row = new \stdClass();
-            $row->value = $file;
-            $row->id = $file;
-            $datalist[] = $row;
+            $temp_row = new \stdClass();
+            $temp_row->value = $file;
+            $temp_row->id = $file;
+            $datalist[] = $temp_row;
         }
 
         Services::Registry()->set(DATALIST_LITERAL, 'Datalists', $datalist);

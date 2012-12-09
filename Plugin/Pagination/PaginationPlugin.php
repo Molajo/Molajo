@@ -29,18 +29,18 @@ class PaginationPlugin extends Plugin
     public function onAfterReadall()
     {
 
-        if ((int) $this->get('use_pagination') > 0) {
-        } else {
-            return true;
-        }
-
         if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'pagination') {
             return true;
         }
 
+        if ((int) $this->get('use_pagination', 0, 'parameters') > 0) {
+        } else {
+            return true;
+        }
+
         /** initialise */
-        $url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
-        $query_results = array();
+        $url = Services::Registry()->get(PAGE_LITERAL, 'page_url');
+        $temp_query_results = array();
 
         /** pagination_total: number of items */
         if ((int) $this->get('pagination_total') > 1) {
@@ -49,20 +49,23 @@ class PaginationPlugin extends Plugin
         }
 
         /** model_count: max number of rows to display per page */
-        if ((int) $this->get('model_count') > 0) {
+        if ((int) $this->get('model_count', 0, 'parameters') > 0) {
         } else {
             $this->set('model_count', 10);
         }
 
         /** model_offset: offset of 0 means skip 0 rows, then start with row 1 */
-        if ((int) $this->get('model_offset') > 1) {
+        if ((int) $this->get('model_offset', 0, 'parameters') > 1) {
         } else {
-            $this->set('model_offset', 0);
+            $this->set('model_offset', 0, 'parameters');
         }
 
         /** current_page */
-        $current_page = ($this->get('model_offset') / $this->get('model_count')) + 1;
-        if ($this->get('model_offset') % $this->get('model_count')) {
+        $current_page = ($this->get('model_offset', 0, 'parameters')
+            / $this->get('model_count', 0, 'parameters')) + 1;
+
+        if ($this->get('model_offset', 0, 'parameters')
+            % $this->get('model_count', 0, 'parameters')) {
             $current_page++;
         }
 
@@ -76,9 +79,11 @@ class PaginationPlugin extends Plugin
         }
 
         /** total pages */
-        $total_pages = (int) $this->get('pagination_total') / (int) $this->get('model_count');
+        $total_pages = (int) $this->get('pagination_total', 0, 'parameters')
+            / (int) $this->get('model_count', 0, 'parameters');
 
-        if ((int) $this->get('pagination_total') % $this->get('model_count') > 0) {
+        if ((int) $this->get('pagination_total', 0, 'parameters')
+            % $this->get('model_count', 0, 'parameters') > 0) {
             $total_pages++;
         }
 
@@ -99,64 +104,64 @@ class PaginationPlugin extends Plugin
         $last_link = $url . '/page/' . (int) $total_pages;
 
         /** Paging */
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->total_items = (int) $this->get('pagination_total');
-        $row->total_items_per_page = (int) $this->get('model_count');
+        $temp_row->total_items = (int) $this->get('pagination_total', 0, 'parameters');
+        $temp_row->total_items_per_page = (int) $this->get('model_count', 0, 'parameters');
 
-        $row->first_page = $first_page;
-        $row->first_link = $first_link;
+        $temp_row->first_page = $first_page;
+        $temp_row->first_link = $first_link;
 
-        $row->previous_page = $previous_page;
-        $row->prev_link = $prev_link;
+        $temp_row->previous_page = $previous_page;
+        $temp_row->prev_link = $prev_link;
 
-        $row->next_page = $next_page;
-        $row->next_link = $next_link;
+        $temp_row->next_page = $next_page;
+        $temp_row->next_link = $next_link;
 
-        $row->last_page = $last_page;
-        $row->last_link = $last_link;
+        $temp_row->last_page = $last_page;
+        $temp_row->last_link = $last_link;
 
-        $query_results[] = $row;
+        $temp_query_results[] = $temp_row;
 
-        Services::Registry()->set(PRIMARY_LITERAL, 'Paging', $query_results);
+        Services::Registry()->set(PRIMARY_LITERAL, 'Paging', $temp_query_results);
 
         /** Paging */
-        $query_results = array();
+        $temp_query_results = array();
         if ($total_pages > 10) {
             $total_pages = 10;
         }
         for ($i = 1; $i < $total_pages; $i++) {
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->total_items = (int) $this->get('pagination_total');
-            $row->total_items_per_page = (int) $this->get('model_count');
+            $temp_row->total_items = (int) $this->get('pagination_total', 0, 'parameters');
+            $temp_row->total_items_per_page = (int) $this->get('model_count', 0, 'parameters');
 
-            $row->first_page = $first_page;
-            $row->first_link = $first_link;
+            $temp_row->first_page = $first_page;
+            $temp_row->first_link = $first_link;
 
-            $row->previous_page = $previous_page;
-            $row->prev_link = $prev_link;
+            $temp_row->previous_page = $previous_page;
+            $temp_row->prev_link = $prev_link;
 
             if ($i == $current_page) {
-                $row->current = 1;
+                $temp_row->current = 1;
             } else {
-                $row->current = 0;
+                $temp_row->current = 0;
             }
 
-            $row->link = $url . '/page/' . $i;
-            $row->link_text = ' ' . (int) $i;
+            $temp_row->link = $url . '/page/' . $i;
+            $temp_row->link_text = ' ' . (int) $i;
 
-            $row->next_page = $next_page;
-            $row->next_link = $next_link;
+            $temp_row->next_page = $next_page;
+            $temp_row->next_link = $next_link;
 
-            $row->last_page = $last_page;
-            $row->last_link = $last_link;
+            $temp_row->last_page = $last_page;
+            $temp_row->last_link = $last_link;
 
-            $query_results[] = $row;
+            $temp_query_results[] = $temp_row;
         }
 
-        Services::Registry()->set(TEMPLATE_LITERAL, 'Pagination', $query_results);
+        Services::Registry()->set(TEMPLATE_LITERAL, 'Pagination', $temp_query_results);
 
         return true;
     }

@@ -47,23 +47,20 @@ class ImagesPlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
 
-                /** Retrieves the actual field value from the 'normal' or special field */
                 $fieldValue = $this->getFieldValue($field);
 
                 if ($fieldValue === false) {
 
                 } else {
 
-                    /** formats the date for CCYYMMDD */
                     $newFieldValue = Services::Date()->convertCCYYMMDD($fieldValue);
 
                     if ($newFieldValue === false) {
                         $ccyymmdd = false;
                     } else {
 
-                        /** Creates the new 'normal' or special field and populates the value */
                         $ccyymmdd = $newFieldValue;
                         $new_name = $name . '_ccyymmdd';
                         $this->saveField(null, $new_name, $newFieldValue);

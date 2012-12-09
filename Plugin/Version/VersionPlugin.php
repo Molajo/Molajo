@@ -29,7 +29,7 @@ class VersionPlugin extends Plugin
     public function onBeforeCreate()
     {
         $field = $this->getField('version');
-        $name = $field->name;
+        $name = $field['name'];
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue === false
             || $fieldValue == ''
@@ -39,7 +39,7 @@ class VersionPlugin extends Plugin
         }
 
         $field = $this->getField('version_of_id');
-        $name = $field->name;
+        $name = $field['name'];
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue === false
             || $fieldValue == ''
@@ -49,7 +49,7 @@ class VersionPlugin extends Plugin
         }
 
         $field = $this->getField('status_prior_to_version');
-        $name = $field->name;
+        $name = $field['name'];
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue === false
             || $fieldValue == ''
@@ -70,7 +70,7 @@ class VersionPlugin extends Plugin
     public function onBeforeUpdate()
     {
         $field = $this->getField('version');
-        $name = $field->name;
+        $name = $field['name'];
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue === false
             || $fieldValue == ''
@@ -80,12 +80,12 @@ class VersionPlugin extends Plugin
         }
 
         $field = $this->getField('status_prior_to_version');
-        $name = $field->name;
+        $name = $field['name'];
         $fieldValue = $this->getFieldValue($field);
         if ($fieldValue === false
             || $fieldValue == ''
 ) {
-            $newFieldValue = $this->data->status;
+            $newFieldValue = $this->row->status;
             $this->saveField($field, $name, $newFieldValue);
         }
 

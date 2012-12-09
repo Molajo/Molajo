@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Application"
+        table_name="#__applications"
+        primary_key="id"
+        name_key="name"
+        primary_prefix="a"
+        get_customfields="1"
+        get_item_children="0"
+        use_special_joins="1"
+        check_view_level_access="0"
+        process_plugins="0"
+        criteria_catalog_type_id="2000"
+        use_pagination="0"
+        data_object="Database">
+
+    <table>
+        <fields>
+            <include field="id_pk"/>
+            <include field="catalog_type_id"/>
+            <include field="name"/>
+            <include field="path"/>
+            <include field="description"/>
+            <include field="customfields"/>
+            <include field="parameters"/>
+            <include field="metadata"/>
+        </fields>
+
+        <foreignkeys>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+        </foreignkeys>
+
+        <joins>
+            <join model="Catalog"
+                  alias="catalog"
+                  select="catalog_type_id,source_id,sef_request,view_group_id,redirect_to_id"
+                  jointo="application_id,source_id,catalog_type_id"
+                  joinwith="APPLICATION_ID,id,catalog_type_id"/>
+        </joins>
+
+        <children>
+            <child name="SiteApplications" type="Datasource" join="application_id"/>
+            <child name="ApplicationExtensionInstances" type="Datasource" join="application_id"/>
+            <child name="UserApplications" type="Datasource" join="application_id"/>
+            <child name="Sessions" type="Datasource" join="application_id"/>
+            <child name="ApplicationExtensionInstances" type="Datasource" join="application_id"/>
+        </children>
+
+        <plugins>
+            <plugin name="Application"/>
+            <plugin name="Customfields"/>
+            <plugin name="Metadata"/>
+            <plugin name="Parameters"/>
+        </plugins>
+    </table>
+
+    <customfields>
+
+        <customfield name="parameters">
+
+            <include field="application_name"/>
+            <include field="application_home_catalog_id"/>
+            <include field="application_default_theme_id"/>
+            <include field="application_signin_requirement"/>
+            <include field="application_help"/>
+            <include field="application_google_analytics_code"/>
+            <include field="application_html5"/>
+
+            <include name="ParametersUrl"/>
+            <include name="ParametersEnable"/>
+            <include name="ParametersLanguage"/>
+
+            <include name="ParametersFolders"/>
+            <include name="ParametersMailer"/>
+            <include name="ParametersCache"/>
+            <include name="ParametersSession"/>
+            <include name="ParametersCookie"/>
+            <include name="ParametersLog"/>
+
+            <include name="ParametersUserDefaults"/>
+            <include name="ParametersGravatar"/>
+            <include name="ParametersImage"/>
+
+            <include name="ParametersViews"/>
+
+            <include name="ParametersForm"/>
+            <include name="ParametersFormModel"/>
+            <include name="ParametersItem"/>
+            <include name="ParametersItemModel"/>
+            <include name="ParametersList"/>
+            <include name="ParametersListModel"/>
+            <include name="ParametersMenuitem"/>
+            <include name="ParametersMenuitemModel"/>
+
+            <include name="ParametersProfiler"/>
+
+            <include name="ParametersUserInterface"/>
+        </customfield>
+    </customfields>
+</model>

@@ -60,7 +60,7 @@ class PagetypegridPlugin extends Plugin
      */
     protected function setToolbar()
     {
-        $url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
+        $url = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 
         $list = $this->get('grid_toolbar_buttons', '', 'parameters');
 
@@ -76,42 +76,42 @@ class PagetypegridPlugin extends Plugin
             $this->get('catalog_id', '', 'permissions')
         );
 
-        $query_results = array();
+        $temp_query_results = array();
 
         foreach ($grid_toolbar_buttons as $button) {
 
             if ($permissions[$button] === true) {
-                $row = new \stdClass();
+                $temp_row = new \stdClass();
 
-                $row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($button) . '_BUTTON'));
-                $row->action = $button;
+                $temp_row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($button) . '_BUTTON'));
+                $temp_row->action = $button;
 
                 if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
-                    $row->link = $url . '/' . $row->action;
+                    $temp_row->link = $url . '/' . $temp_row->action;
                 } else {
-                    $row->link = $url . '&action=' . $row->action;
+                    $temp_row->link = $url . '&action=' . $temp_row->action;
                 }
 
-                $query_results[] = $row;
+                $temp_query_results[] = $temp_row;
             }
         }
 
         if ($this->get('grid_search', 1) == 1) {
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
-            $row->action = 'search';
+            $temp_row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
+            $temp_row->action = 'search';
 
             if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
-                $row->link = $url . '/' . $row->action;
+                $temp_row->link = $url . '/' . $temp_row->action;
             } else {
-                $row->link = $url . '&action=' . $row->action;
+                $temp_row->link = $url . '&action=' . $temp_row->action;
             }
 
-            $query_results[] = $row;
+            $temp_query_results[] = $temp_row;
         }
 
-        Services::Registry()->set(TEMPLATE_LITERAL, 'Toolbar', $query_results);
+        Services::Registry()->set(TEMPLATE_LITERAL, 'Toolbar', $temp_query_results);
 
         return true;
     }
@@ -146,7 +146,7 @@ class PagetypegridPlugin extends Plugin
                 if ($results === false) {
                 } else {
 
-                    $query_results = Services::Text()->buildSelectlist(
+                    $temp_query_results = Services::Text()->buildSelectlist(
                         $listname,
                         $results[0]->listitems,
                         $results[0]->multiple,
@@ -154,11 +154,11 @@ class PagetypegridPlugin extends Plugin
                         $selected
                     );
 
-                    Services::Registry()->set(DATALIST_LITERAL, $listname, $query_results);
+                    Services::Registry()->set(DATALIST_LITERAL, $listname, $temp_query_results);
 
-                    $row = new \stdClass();
-                    $row->listname = $listname;
-                    $lists[] = $row;
+                    $temp_row = new \stdClass();
+                    $temp_row->listname = $listname;
+                    $lists[] = $temp_row;
                 }
             }
         }
@@ -232,22 +232,22 @@ class PagetypegridPlugin extends Plugin
 
         $controller->set('model_count', $itemsPerPage, 'model_registry');
 
-        $query_results = $controller->getData(QUERY_OBJECT_LIST);
+        $temp_query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         $gridItems = array();
 
         $name_key = $controller->get('name_key', '', 'parameters');
 
-        if (count($query_results) > 0) {
+        if (count($temp_query_results) > 0) {
 
-            foreach ($query_results as $item) {
-                $row = new \stdClass();
-                $row = $item;
+            foreach ($temp_query_results as $item) {
+                $temp_row = new \stdClass();
+                $temp_row = $item;
                 $name = $item->$name_key;
 
                 if (isset($item->lvl)) {
                 } else {
-                    $gridItems = $query_results;
+                    $gridItems = $temp_query_results;
                     break;
                 }
                 $lvl = (int)$item->lvl - 1;
@@ -257,9 +257,9 @@ class PagetypegridPlugin extends Plugin
                         $name = ' ..' . $name;
                     }
                 }
-                $row->$name_key = $name;
+                $temp_row->$name_key = $name;
 
-                $gridItems[] = $row;
+                $gridItems[] = $temp_row;
             }
         }
 
@@ -274,10 +274,7 @@ class PagetypegridPlugin extends Plugin
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
-        $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
-        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
-
-        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
+        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $temp_query_results);
 
         return true;
     }
@@ -296,13 +293,13 @@ class PagetypegridPlugin extends Plugin
         $temp = $this->get('grid_batch_array', '', 'parameters');
 
         if ($temp == '') {
-            Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', array());
+            Services::Registry()->set(PAGE_LITERAL, 'SectionSubmenu', array());
             return true;
         }
 
         $grid_batch_array = explode(',', $temp);
         if (count($grid_batch_array) == 0) {
-            Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', array());
+            Services::Registry()->set(PAGE_LITERAL, 'SectionSubmenu', array());
             return true;
         }
 
@@ -316,11 +313,11 @@ class PagetypegridPlugin extends Plugin
 
                 $grid_batch[] = strtolower($grid_batch_array[$i]);
 
-                $row = new \stdClass();
-                $row->selected = '';
-                $row->enable = 1;
+                $temp_row = new \stdClass();
+                $temp_row->selected = '';
+                $temp_row->enable = 1;
 
-                Services::Registry()->set(TEMPLATE_LITERAL, 'Grid' . strtolower($grid_batch_array[$i]), array($row));
+                Services::Registry()->set(TEMPLATE_LITERAL, 'Grid' . strtolower($grid_batch_array[$i]), array($temp_row));
             }
         }
 
@@ -330,24 +327,24 @@ class PagetypegridPlugin extends Plugin
         foreach ($grid_batch as $item) {
             if ($item == '') {
             } else {
-                $row = new \stdClass();
+                $temp_row = new \stdClass();
 
-                $row->id = strtolower($item);
+                $temp_row->id = strtolower($item);
                 if ($i == 0) {
-                    $row->current = 1;
+                    $temp_row->current = 1;
                 } else {
-                    $row->current = 0;
+                    $temp_row->current = 0;
                 }
-                $row->title = ucfirst(strtolower($item));
-                $row->url = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url') . '#lk' . strtolower($item);
+                $temp_row->title = ucfirst(strtolower($item));
+                $temp_row->url = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '#lk' . strtolower($item);
 
-                $pageArray[] = $row;
+                $pageArray[] = $temp_row;
 
                 $i++;
             }
         }
 
-        Services::Registry()->set(STRUCTURE_LITERAL, 'SectionSubmenu', $pageArray);
+        Services::Registry()->set(PAGE_LITERAL, 'SectionSubmenu', $pageArray);
 
         return true;
     }

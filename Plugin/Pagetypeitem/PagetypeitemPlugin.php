@@ -8,6 +8,8 @@ namespace Molajo\Plugin\Pagetypeitem;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Plugin\Pagetypeconfiguration;
+use Molajo\Service\Services;
+
 
 defined('MOLAJO') or die;
 
@@ -19,37 +21,43 @@ defined('MOLAJO') or die;
 class PagetypeitemPlugin extends Plugin
 {
     /**
-     * Prepares data for Pagetypeitem
+     * Switches the model registry for an item since the Content Query already retrieved the data
+     *  and saved it into the registry
      *
      * @return boolean
      * @since   1.0
      */
-    public function onBeforeParse()
+    public function onBeforeInclude()
     {
-		if (strtolower($this->get('page_type', '', 'parameters')) == QUERY_OBJECT_ITEM) {
-		} else {
-			return true;
-		}
+        if (strtolower($this->get('catalog_page_type', '', 'parameters')) == strtolower(PAGE_TYPE_ITEM)) {
+        } else {
+            return true;
+        }
 
-		$resource_model_type = $this->get('model_type', '', 'parameters');
-		$resource_model_name = $this->get('model_name', '', 'parameters');
+        $model_type = ucfirst(strtolower($this->get('model_type', '', 'parameters')));
+        $model_name = ucfirst(strtolower($this->get('model_name', '', 'parameters')));
 
-        $resource_table_registry = ucfirst(strtolower($this->get('model_name', '', 'parameters')))
-            . ucfirst(strtolower($this->get('model_type', '', 'parameters')));
+        $this->set('request_model_type', $model_type, 'parameters');
+        $this->set('request_model_name', $this->get('model_name', '', 'parameters'), 'parameters');
+        $this->set('request_model_registry', $model_name . $model_type, 'parameters');
 
+        $this->set('model_name', ucfirst(strtolower(PRIMARY_LITERAL)), 'parameters');
+        $this->set('model_type', ucfirst(strtolower(DATA_OBJECT_LITERAL)), 'parameters');
+        $this->set('model_registry', ucfirst(strtolower(PRIMARY_LITERAL)).ucfirst(strtolower(DATA_OBJECT_LITERAL)), 'parameters');
 
-        $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
-        $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry($this->get('model_type', '', 'parameters'), $this->get('model_name', '', 'parameters'));
 
-        $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
-        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
-        $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
+        Services::Registry()->merge(
+            $model_name . $model_type,
+            ucfirst(strtolower(PRIMARY_LITERAL)).ucfirst(strtolower(DATA_OBJECT_LITERAL)),
+            false, 0
+        );
 
-        $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
-        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
+        $this->set('model_query_object', QUERY_OBJECT_ITEM, 'parameters');
+        $this->set('page_type', PAGE_TYPE_ITEM, 'parameters');
 
-        /** ContentHelper already placed data already in registry */
         return true;
     }
-
 }

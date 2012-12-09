@@ -26,8 +26,9 @@ class CsrftokenPlugin extends Plugin
      * @return boolean
      * @since   1.0
      */
-    public function onAfterViewRender()
+    public function onAfterRenderView()
     {
+        return;
         $rendered = $this->get('rendered_output');
 
         if ($rendered === null
@@ -90,7 +91,7 @@ class CsrftokenPlugin extends Plugin
     /**
      * Pre-update processing
      *
-     * @param   $this->data
+     * @param   $this->row
      * @param   $model
      *
      * @return boolean

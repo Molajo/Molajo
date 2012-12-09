@@ -142,6 +142,11 @@ Class Application
 
             $this->onAfterRouteEvent();
 
+            if (defined('ROUTE')) {
+            } else {
+                define('ROUTE', true);
+            }
+
         } catch (\Exception $e) {
 
             throw new \Exception('Route Error: ' . $e->getMessage(), $e->getCode(), $e);
@@ -285,7 +290,7 @@ Class Application
             'model_registry' => array(),
             'parameters' => array(),
             'query_results' => array(),
-            'row' => array(),
+            'row' => null,
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -304,7 +309,7 @@ Class Application
      * - Checks for 'Application Offline Mode', sets a 503 error and registry values for View
      * - For 'Page not found', sets 404 error and registry values for Error Template/View
      * - For defined redirect with Catalog, issues 301 Redirect to new URL
-     * - For 'Logon requirement' situations, issues 303 redirect to configured login page
+     * - For 'signin requirement' situations, issues 303 redirect to configured signin page
      *
      * @return  boolean
      * @since   1.0
@@ -327,7 +332,7 @@ Class Application
             return true;
         }
 
-        if (is_defined(PROFILER_ON)) {
+        if (defined(PROFILER_ON)) {
             Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, PROFILER_APPLICATION);
         }
 
@@ -337,20 +342,25 @@ Class Application
     /**
      * Schedule Event onAfterRoute
      *
+     * onAfterRoute can be used to retrieve supplementary data, like datalists, for data that is not
+     *  dependent upon having all page parameters to produce.
+     *
+     * Could be used to influence the resource data that will be used to determine page parameters
+     *
      * @return  boolean
      * @since   1.0
      */
     protected function onAfterRouteEvent()
     {
-        $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
-            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
+        $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_name')))
+            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_type')));
 
         $arguments = array(
             'model' => null,
-            'model_registry' => $model_registry,
+            'model_registry' => Services::Registry()->get($model_registry),
             'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'query_results' => array(),
-            'row' => array(),
+            'row' => null,
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -403,10 +413,10 @@ Class Application
 
         $arguments = array(
             'model' => null,
-            'model_registry' => $model_registry,
+            'model_registry' => Services::Registry()->get($model_registry),
             'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
             'query_results' => array(),
-            'row' => array(),
+            'row' => null,
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -468,9 +478,9 @@ Class Application
     /**
      * Executes a view action
      *
-     * 1. Parse: recursively parses theme and then rendered output for <include:type statements
+     * 1. Theme: recursively parses theme and then rendered output for <include:type statements
      *
-     * 2. Includer: each include statement is processed by the associated extension includer
+     * 2. Theme Includer: each include statement is processed by the associated extension includer
      *      which retrieves data needed by the MVC, passing control and data into the Controller
      *
      * 3. MVC: executes actions, invoking model processing and rendering of views
@@ -482,24 +492,7 @@ Class Application
      */
     protected function display()
     {
-        if (file_exists(Services::Registry()->get('parameters', 'theme_path_include'))) {
-        } else {
-            Services::Error()->set(500, 'Theme Not found');
-            throw new \Exception('Theme not found '
-                . Services::Registry()->get('parameters', 'theme_path_include'));
-        }
-
-        $parms = Services::Registry()->getArray('parameters');
-
-        $page_request = Services::Cache()->get(STRUCTURE_LITERAL, implode('', $parms));
-
-        if ($page_request === false) {
-            $results = Services::Parse()->process();
-            Services::Cache()->set(STRUCTURE_LITERAL, implode('', $parms), $results);
-        } else {
-            $results = $page_request;
-        }
-
+        $results = Services::Theme()->process();
         $this->rendered_output = $results;
 
         return true;
@@ -535,20 +528,19 @@ Class Application
     }
 
     /**
-     * Schedule Event onAfterInitialise
+     * Schedule Event onAfterExecute
      *
      * @return  boolean
      * @since   1.0
      */
     protected function onAfterExecuteEvent()
     {
-
         $arguments = array(
             'model' => null,
             'model_registry' => array(),
             'parameters' => array(),
             'query_results' => array(),
-            'row' => array(),
+            'row' => null,
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -614,7 +606,7 @@ Class Application
     }
 
     /**
-     * Schedule Event onAfterInitialise
+     * Schedule Event onAfterResponse
      *
      * @return  boolean
      * @since   1.0
@@ -626,7 +618,7 @@ Class Application
             'model_registry' => array(),
             'parameters' => array(),
             'query_results' => array(),
-            'row' => array(),
+            'row' => null,
             'rendered_output' => array(),
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
@@ -648,7 +640,6 @@ Class Application
      */
     protected function setBaseURL()
     {
-
         if (defined('BASE_URL')) {
         } else {
             /**

@@ -842,8 +842,8 @@ Class FormService
                                 $row['fieldset_title'] = $this->fieldset_title;
                                 $row['fieldset_description'] = $this->fieldset_description;
 
-                                if (isset($this->data->$field_name)) {
-                                    $row['value'] = $this->data->$field_name;
+                                if (isset($this->row->$field_name)) {
+                                    $row['value'] = $this->row->$field_name;
                                 } else {
                                     $row['value'] = null;
                                 }

@@ -30,13 +30,14 @@ class MockdataPlugin extends Plugin
      */
     public function onAfterRead()
     {
+        return;
         $fields = $this->retrieveFieldsByType('text');
 
         if (is_array($fields) && count($fields) > 0) {
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
 
                 $fieldValue = $this->getFieldValue($field);
 

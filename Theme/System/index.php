@@ -9,7 +9,5 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die; ?>
 <include:head/>
-<?php if (file_exists(Services::Registry()->get('parameters', 'page_view_path_include'))) {
-        include Services::Registry()->get('parameters', 'page_view_path_include');
-} ?>
+<include:page name=<?php echo $this->row->page_name; ?>/>
 <include:defer/>

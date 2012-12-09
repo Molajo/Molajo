@@ -8,7 +8,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$pageURL = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
+$pageURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 ?>
 <article class="<?php //echo trim('comment' . ' ' . $this->row->first_row . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd_row  . ' ' . $this->row->css_class); ?>"
          id="<?php echo $this->row->alias; ?>">

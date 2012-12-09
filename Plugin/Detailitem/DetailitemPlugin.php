@@ -22,7 +22,7 @@ class DetailitemPlugin extends Plugin
 {
 
     /**
-     * Prepares Data for non-menuitem single content item requests
+     * Prepares standard, in addition to Primary Data already captured in the Theme Resource Includer.
      *
      * @return boolean
      * @since   1.0
@@ -47,7 +47,7 @@ class DetailitemPlugin extends Plugin
     }
 
     /**
-     * Grid Query: results stored in Plugin registry
+     * Standard
      *
      * @return bool
      * @since   1.0
@@ -64,10 +64,10 @@ class DetailitemPlugin extends Plugin
         $controller->set('model_offset', 0, 'model_registry');
         $controller->set('model_count', 15, 'model_registry');
 
-        $query_results = $controller->getData(QUERY_OBJECT_LIST);
+        $temp_query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         echo '<pre><br /><br />';
-        var_dump($query_results);
+        var_dump($temp_query_results);
         echo '<br /><br /></pre>';
 
         echo '<br /><br />';
@@ -76,7 +76,7 @@ class DetailitemPlugin extends Plugin
 
         die;
 
-        Services::Registry()->set(DATA_OBJECT_LITERAL, DATALIST_LITERAL, $query_results);
+        Services::Registry()->set(DATA_OBJECT_LITERAL, DATALIST_LITERAL, $temp_query_results);
 
         return true;
     }

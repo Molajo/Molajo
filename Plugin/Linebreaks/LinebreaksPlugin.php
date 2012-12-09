@@ -23,10 +23,7 @@ class LinebreaksPlugin extends Plugin
     /**
      * Changes line breaks to break tags
      *
-     * @param   $this->data
-     * @param   $model
-     *
-     * @return boolean
+     * @return  boolean
      * @since   1.0
      */
     public function onAfterRead()
@@ -37,7 +34,7 @@ class LinebreaksPlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                $name = $field->name;
+                $name = $field['name'];
 
                 $fieldValue = $this->getFieldValue($field);
 

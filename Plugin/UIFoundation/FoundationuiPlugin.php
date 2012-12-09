@@ -36,7 +36,7 @@ class FoundationuiPlugin extends Plugin
      * @return boolean
      * @since   1.0
      */
-    public function onBeforeViewRender()
+    public function onBeforeRenderView()
     {
 
         if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'uibuttonfoundation') {
@@ -73,23 +73,23 @@ class FoundationuiPlugin extends Plugin
 			$buttonCount = count($buttonArray);
 		}
 
-		$query_results = array();
+		$temp_query_results = array();
 
-		$row = new \stdClass();
-		$row->button_count = $buttonCount;
-		$row->button_array = '';
+		$temp_row = new \stdClass();
+		$temp_row->button_count = $buttonCount;
+		$temp_row->button_array = '';
 
 		if ($buttonCount === 0) {
-			$row->button_array = null;
+			$temp_row->button_array = null;
 		} else {
 			foreach ($buttonArray as $button) {
-				$row->button_array .= trim($button);
+				$temp_row->button_array .= trim($button);
 			}
 		}
 
-		$query_results[] = $row;
+		$temp_query_results[] = $temp_row;
 
-		Services::Registry()->set('Plugindata', 'Toolbar', $query_results);
+		Services::Registry()->set('Plugindata', 'Toolbar', $temp_query_results);
 
 		return true;
 	}
@@ -153,7 +153,7 @@ class FoundationuiPlugin extends Plugin
 			htmlentities(Services::Language()->translate('Edit'), ENT_COMPAT, 'UTF-8')
 		);
 		$buttonIcon = htmlentities('icon-edit', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url') . '/edit';
+		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/edit';
 		$buttonArray = 'button_title:'
 			. trim($buttonTitle)
 			. ','
@@ -173,7 +173,7 @@ class FoundationuiPlugin extends Plugin
 			htmlentities(Services::Language()->translate('Delete'), ENT_COMPAT, 'UTF-8')
 		);
 		$buttonIcon = htmlentities('icon-trash', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url') . '/delete';
+		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/delete';
 		$buttonArray = 'button_title:'
 			. trim($buttonTitle)
 			. ','
@@ -227,7 +227,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
-		$linkURL = $linkURL = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
+		$linkURL = $linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -249,7 +249,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
+		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -286,7 +286,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:resource-options', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
-		$linkURL = $linkURL = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
+		$linkURL = $linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -308,7 +308,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
+		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -364,7 +364,7 @@ class FoundationuiPlugin extends Plugin
 		);
 		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
 		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
+		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 		$buttonArray = 'button_title:'
 			. $buttonTitle
 			. ','
@@ -391,9 +391,9 @@ class FoundationuiPlugin extends Plugin
      */
     protected function button_general()
     {
-        $button_type = $this->data->button_type;
-        $button_size = $this->data->button_size;
-        $button_shape = $this->data->button_shape;
+        $button_type = $this->row->button_type;
+        $button_size = $this->row->button_size;
+        $button_shape = $this->row->button_shape;
 
         $button_class = trim($button_type);
         $button_class = trim($button_class) . ' ' . trim($button_shape);
@@ -416,10 +416,10 @@ class FoundationuiPlugin extends Plugin
     protected function button_group()
     {
 
-        $button_type = $this->data->button_group_type;
-        $button_size = $this->data->button_group_size;
-        $button_shape = $this->data->button_group_shape;
-        $button_class = str_replace(',', ' ', $this->data->button_group_class);
+        $button_type = $this->row->button_group_type;
+        $button_size = $this->row->button_group_size;
+        $button_shape = $this->row->button_group_shape;
+        $button_class = str_replace(',', ' ', $this->row->button_group_class);
 
         $button_group_class = trim($button_type);
         $button_group_class = trim($button_group_class) . ' ' . trim($button_shape);
@@ -430,7 +430,7 @@ class FoundationuiPlugin extends Plugin
         $button_group_class = ' class="' . htmlspecialchars(trim($button_group_class), ENT_NOQUOTES, 'UTF-8') . '"';
         $this->saveField(null, 'button_group_class', $button_group_class);
 
-        $button_array = $this->getButtons($this->data->button_group_array);
+        $button_array = $this->getButtons($this->row->button_group_array);
         $this->saveField(null, 'button_group_array', $button_array);
 
         return true;
@@ -444,10 +444,10 @@ class FoundationuiPlugin extends Plugin
      */
     protected function button_dropdown()
     {
-        $button_type = $this->data->button_dropdown_type;
-        $button_size = $this->data->button_dropdown_size;
-        $button_shape = $this->data->button_dropdown_shape;
-        $button_class = str_replace(',', ' ', $this->data->button_dropdown_class);
+        $button_type = $this->row->button_dropdown_type;
+        $button_size = $this->row->button_dropdown_size;
+        $button_shape = $this->row->button_dropdown_shape;
+        $button_class = str_replace(',', ' ', $this->row->button_dropdown_class);
 
         $button_dropdown_class = trim($button_type);
         $button_dropdown_class = trim($button_dropdown_class) . ' ' . trim($button_shape);
@@ -459,7 +459,7 @@ class FoundationuiPlugin extends Plugin
 
         $this->saveField(null, 'button_dropdown_class', $button_dropdown_class);
 
-        $button_array = $this->getButtons($this->data->button_group_array);
+        $button_array = $this->getButtons($this->row->button_group_array);
         $this->saveField(null, 'button_group_array', $button_array);
 
         return true;
@@ -498,7 +498,7 @@ class FoundationuiPlugin extends Plugin
      */
     protected function page()
     {
-        $page_array = $this->getPages($this->data->page_array);
+        $page_array = $this->getPages($this->row->page_array);
         $this->saveField(null, 'page_array', $page_array);
 
         return true;
@@ -535,11 +535,11 @@ class FoundationuiPlugin extends Plugin
                 $pairs[$temp[0]] = $temp[1];
             }
 
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
             foreach ($pairs as $key=>$value) {
-                $row->$key = $value;
+                $temp_row->$key = $value;
             }
-            $page_array[] = $row;
+            $page_array[] = $temp_row;
         }
 
         return $page_array;

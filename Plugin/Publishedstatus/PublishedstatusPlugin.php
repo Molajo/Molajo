@@ -22,57 +22,49 @@ class PublishedstatusPlugin extends Plugin
     /**
      * Pre-read processing
      *
-     * @param   $this->data
-     * @param   $model
-     *
      * @return boolean
      * @since   1.0
      */
     public function onBeforeRead()
     {
-
-        $fields = $this->get($this->model_registry_name, FIELDS_LITERAL, 'model_registry');
-        if ($fields == false) {
-            return true;
-        }
-        if (is_array($fields)) {
+        if ($this->get('data_object', '', 'model_registry') == 'Database') {
         } else {
+            return true;;
+        }
+
+        $field = $this->getField('start_publishing_datetime');
+        if ($field === false) {
             return true;
         }
 
-        if (in_array('start_publishing_datetime', $fields)) {
-        } else {
+        $field = $this->getField('stop_publishing_datetime');
+        if ($field === false) {
             return true;
         }
 
-        if (in_array('stop_publishing_datetime', $fields)) {
-        } else {
+        $field = $this->getField('status');
+        if ($field === false) {
             return true;
         }
 
-        if (in_array('status', $fields)) {
-        } else {
-            return true;
-        }
+        $primary_prefix = $this->get('primary_prefix', 0, 'model_registry');
 
-        $primary_prefix = $controller->set('primary_prefix', 0, 'model_registry');
-
-        $this->query->where($this->db->qn($primary_prefix)
-            . '.' . $this->db->qn('status')
+        $this->model->query->where($this->model->db->qn($primary_prefix)
+            . '.' . $this->model->db->qn('status')
             . ' > ' . STATUS_UNPUBLISHED);
 
-        $this->query->where('(' . $this->db->qn($primary_prefix)
-                . '.' . $this->db->qn('start_publishing_datetime')
-                . ' = ' . $this->db->q($this->null_date)
-                . ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('start_publishing_datetime')
-                . ' <= ' . $this->db->q($this->now) . ')'
+        $this->model->query->where('(' . $this->model->db->qn($primary_prefix)
+                . '.' . $this->model->db->qn('start_publishing_datetime')
+                . ' = ' . $this->model->db->q($this->model->null_date)
+                . ' OR ' . $this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn('start_publishing_datetime')
+                . ' <= ' . $this->model->db->q($this->model->now) . ')'
         );
 
-        $this->query->where('(' . $this->db->qn($primary_prefix)
-                . '.' . $this->db->qn('stop_publishing_datetime')
-                . ' = ' . $this->db->q($this->null_date)
-                . ' OR ' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('stop_publishing_datetime')
-                . ' >= ' . $this->db->q($this->now) . ')'
+        $this->model->query->where('(' . $this->model->db->qn($primary_prefix)
+                . '.' . $this->model->db->qn('stop_publishing_datetime')
+                . ' = ' . $this->model->db->q($this->model->null_date)
+                . ' OR ' . $this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn('stop_publishing_datetime')
+                . ' >= ' . $this->model->db->q($this->model->now) . ')'
         );
 
         return true;
@@ -81,7 +73,7 @@ class PublishedstatusPlugin extends Plugin
     /**
      * Post-create processing
      *
-     * @param $this->data, $model
+     * @param $this->row, $model
      *
      * @return boolean
      * @since   1.0
@@ -95,7 +87,7 @@ class PublishedstatusPlugin extends Plugin
     /**
      * Pre-update processing
      *
-     * @param   $this->data
+     * @param   $this->row
      * @param   $model
      *
      * @return boolean
@@ -112,7 +104,7 @@ class PublishedstatusPlugin extends Plugin
     /**
      * Post-update processing
      *
-     * @param   $this->data
+     * @param   $this->row
      * @param   $model
      *
      * @return boolean

@@ -12,7 +12,7 @@ defined('MOLAJO') or die; ?>
 
 <h6><?php echo Services::Language()->translate('Written by'); ?>
     <a href="#">
-        <?php echo $this->row->author_full_name; ?>
+        <?php echo $this->row->created_by_full_name; ?>
     </a>
     <?php echo Services::Language()->translate(' on '); ?>
     <?php echo $this->row->start_publishing_datetime_day_name
@@ -49,4 +49,3 @@ if ($this->row->image3 == '') {
 <?php }
 
 echo $this->row->content_text_fulltext;
-

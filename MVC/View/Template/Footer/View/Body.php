@@ -8,7 +8,7 @@ use Molajo\Service\Services;
  */
 defined('MOLAJO') or die;
 
-$homeURL = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url'); ?>
+$homeURL = Services::Registry()->get(PAGE_LITERAL, 'home_url'); ?>
 <p>
     <?php echo $this->row->copyright_statement ?>
     <a href="<?php echo $this->row->link; ?>">

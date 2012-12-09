@@ -148,22 +148,22 @@ class PagetypedashboardPlugin extends Plugin
             //throw exception
         }
 
-        $query_results = array();
+        $temp_query_results = array();
 
         foreach ($list as $item) {
 
-            $row = new \stdClass();
-            $row->id = $item->id;
-            $row->value = Services::Language()->translate(
+            $temp_row = new \stdClass();
+            $temp_row->id = $item->id;
+            $temp_row->value = Services::Language()->translate(
                 ucfirst(strtolower(substr($item->value, 7, strlen($item->value))))
             );
-            $row->selected = '';
-            $row->multiple = '';
-            $row->listname = 'Portlets';
+            $temp_row->selected = '';
+            $temp_row->multiple = '';
+            $temp_row->listname = 'Portlets';
 
-            $query_results[] = $row;
+            $temp_query_results[] = $temp_row;
         }
-        Services::Registry()->set(DATALIST_LITERAL, 'Portlets', $query_results);
+        Services::Registry()->set(DATALIST_LITERAL, 'Portlets', $temp_query_results);
 
         return true;
     }

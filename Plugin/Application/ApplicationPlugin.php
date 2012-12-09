@@ -19,11 +19,20 @@ defined('MOLAJO') or die;
  */
 class ApplicationPlugin extends Plugin
 {
+
     /**
-     * Prepares Application Menus
+     * Override Page Metadata prior to parsing document head
      *
-     * Note: Services::Registry()->get('parameters') is valid during this method.
-     *  Following, Services::Registry()->get('RequestParameters') should be used
+     * @return  boolean
+     * @since   1.0
+     */
+    public function onBeforeParseHead()
+    {
+
+    }
+
+    /**
+     * Prepares Page Information, such as document metadata, page and home URLs, breadcrumbs, and menus/menu items
      *
      * @return  boolean
      * @since   1.0
@@ -52,18 +61,9 @@ class ApplicationPlugin extends Plugin
 
         $this->setPageEligibleActions();
 
-        return true;
-    }
-
-    /**
-     * Prepare Page Metadata prior to parsing document head
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function onBeforeParseHead()
-    {
         $this->setPageMeta();
+
+        return true;
     }
 
     /**
@@ -75,16 +75,15 @@ class ApplicationPlugin extends Plugin
     protected function urls()
     {
         $url = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url');
-        Services::Registry()->set(STRUCTURE_LITERAL, 'home_url', $url);
+        Services::Registry()->set(PAGE_LITERAL, 'home_url', $url);
 
-        $url = Services::Registry()->get('parameters', 'request_base_url_path') .
-            Services::Registry()->get('parameters', 'request_url');
-        Services::Registry()->set(STRUCTURE_LITERAL, 'page_url', $url);
+        $url = $this->get('request_base_url_path', '', 'parameters') . $this->get('request_url', '', 'parameters');
+        Services::Registry()->set(PAGE_LITERAL, 'page_url', $url);
         Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
 
         $resource = $this->get('extension_name_path_node', '', 'parameters');
-        $url = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url') . '/' . strtolower($resource);
-        Services::Registry()->set(STRUCTURE_LITERAL, 'resource_url', $url);
+        $url = Services::Registry()->get(PAGE_LITERAL, 'home_url') . '/' . strtolower($resource);
+        Services::Registry()->set(PAGE_LITERAL, 'resource_url', $url);
 
         //todo: add links for prev and next
 
@@ -101,7 +100,7 @@ class ApplicationPlugin extends Plugin
     {
         $bread_crumbs = Services::Menu()->getMenuBreadcrumbIds($current_menuitem_id);
 
-        Services::Registry()->set(STRUCTURE_LITERAL, 'Breadcrumbs', $bread_crumbs);
+        Services::Registry()->set(PAGE_LITERAL, 'Breadcrumbs', $bread_crumbs);
 
         return true;
     }
@@ -114,10 +113,10 @@ class ApplicationPlugin extends Plugin
      */
     protected function setMenu($current_menu_item = 0)
     {
-        $bread_crumbs = Services::Registry()->get(STRUCTURE_LITERAL, 'Breadcrumbs');
+        $bread_crumbs = Services::Registry()->get(PAGE_LITERAL, 'Breadcrumbs');
 
         $menuname = '';
-        $query_results = array();
+        $temp_query_results = array();
 
         if ($bread_crumbs == false || count($bread_crumbs) == 0) {
             return true;
@@ -125,18 +124,18 @@ class ApplicationPlugin extends Plugin
 
         $menu_id = $bread_crumbs[0]->extension_id;
 
-        $query_results = Services::Menu()->get($menu_id, $current_menu_item, $bread_crumbs);
-        if ($query_results == false || count($query_results) == 0) {
+        $temp_query_results = Services::Menu()->get($menu_id, $current_menu_item, $bread_crumbs);
+        if ($temp_query_results == false || count($temp_query_results) == 0) {
             $menuname = '';
         } else {
-            $menuname = $query_results[0]->extensions_name;
+            $menuname = $temp_query_results[0]->extensions_name;
         }
 
         if ($menuname == '') {
             return true;
         }
 
-        Services::Registry()->set(STRUCTURE_LITERAL, $menuname, $query_results);
+        Services::Registry()->set(PAGE_LITERAL, $menuname, $temp_query_results);
 
         return true;
     }
@@ -151,11 +150,11 @@ class ApplicationPlugin extends Plugin
     {
         $title = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_name');
         if ($title == '') {
-            $title = '<strong> Molajo</strong> ' . Services::Language()->translate(APPLICATION_NAME);
+            $title = 'Molajo ' . Services::Language()->translate(APPLICATION_NAME);
         }
-        Services::Registry()->set(STRUCTURE_LITERAL, 'HeaderTitle', $title);
+        Services::Registry()->set(PAGE_LITERAL, 'HeaderTitle', $title);
 
-        Services::Registry()->set(STRUCTURE_LITERAL, 'page_type', $this->get('page_type', '', 'parameters'));
+        Services::Registry()->set(PAGE_LITERAL, 'page_type', $this->get('page_type', '', 'parameters'));
 
         $heading1 = $this->get('criteria_title', '', 'parameters');
         $page_type = $this->get('page_type', '', 'parameters');
@@ -178,32 +177,32 @@ class ApplicationPlugin extends Plugin
 //		$request_action = $this->get('request_action');
         $heading2 = ucfirst(strtolower($page_type));
 
-        Services::Registry()->set(STRUCTURE_LITERAL, 'heading1', $heading1);
-        Services::Registry()->set(STRUCTURE_LITERAL, 'heading2', $heading2);
+        Services::Registry()->set(PAGE_LITERAL, 'heading1', $heading1);
+        Services::Registry()->set(PAGE_LITERAL, 'heading2', $heading2);
 
         $resource_menu_item = array();
 
-        Services::Registry()->get(STRUCTURE_LITERAL, 'resource_url');
+        Services::Registry()->get(PAGE_LITERAL, 'resource_url');
 
-        $row = new \stdClass();
-        $row->link_text = Services::Language()->translate('GRID');
-        $row->link = Services::Registry()->get(STRUCTURE_LITERAL, 'resource_url');
-        $row->current = $list_current;
-        $query_results[] = $row;
+        $temp_row = new \stdClass();
+        $temp_row->link_text = Services::Language()->translate('GRID');
+        $temp_row->link = Services::Registry()->get(PAGE_LITERAL, 'resource_url');
+        $temp_row->current = $list_current;
+        $temp_query_results[] = $temp_row;
 
-        $row = new \stdClass();
-        $row->link_text = Services::Language()->translate(CONFIGURATION_LITERAL);
-        $row->link = Services::Registry()->get(STRUCTURE_LITERAL, 'resource_url') . '/' . CONFIGURATION_LITERAL;
-        $row->current = $configuration_current;
-        $query_results[] = $row;
+        $temp_row = new \stdClass();
+        $temp_row->link_text = Services::Language()->translate(CONFIGURATION_LITERAL);
+        $temp_row->link = Services::Registry()->get(PAGE_LITERAL, 'resource_url') . '/' . CONFIGURATION_LITERAL;
+        $temp_row->current = $configuration_current;
+        $temp_query_results[] = $temp_row;
 
-        $row = new \stdClass();
-        $row->link_text = Services::Language()->translate('NEW');
-        $row->link = Services::Registry()->get(STRUCTURE_LITERAL, 'resource_url') . '/' . 'new';
-        $row->current = $new_current;
-        $query_results[] = $row;
+        $temp_row = new \stdClass();
+        $temp_row->link_text = Services::Language()->translate('NEW');
+        $temp_row->link = Services::Registry()->get(PAGE_LITERAL, 'resource_url') . '/' . 'new';
+        $temp_row->current = $new_current;
+        $temp_query_results[] = $temp_row;
 
-        Services::Registry()->set(STRUCTURE_LITERAL, 'PageSubmenu', $query_results);
+        Services::Registry()->set(PAGE_LITERAL, 'PageSubmenu', $temp_query_results);
 
         return true;
     }
@@ -218,7 +217,8 @@ class ApplicationPlugin extends Plugin
     {
         if ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
 
-            if (strtolower(Services::Registry()->get('parameters', 'request_action')) == ACTION_READ) {
+            if (strtolower(Services::Registry()->get('parameters', 'request_action', ACTION_READ, 'parameters'))
+                == ACTION_READ) {
                 $actions = $this->setItemActions();
             } else {
                 $actions = $this->setEditActions();
@@ -237,23 +237,23 @@ class ApplicationPlugin extends Plugin
             $actionCount = count($actions);
         }
 
-        $query_results = array();
+        $temp_query_results = array();
 
-        $row = new \stdClass();
-        $row->action_count = $actionCount;
-        $row->action_array = '';
+        $temp_row = new \stdClass();
+        $temp_row->action_count = $actionCount;
+        $temp_row->action_array = '';
 
         if ($actionCount === 0) {
-            $row->action_array = null;
+            $temp_row->action_array = null;
         } else {
             foreach ($actions as $action) {
-                $row->action_array .= trim($action);
+                $temp_row->action_array .= trim($action);
             }
         }
 
-        $query_results[] = $row;
+        $temp_query_results[] = $temp_row;
 
-        Services::Registry()->set(STRUCTURE_LITERAL, 'PageEligibleActions', $query_results);
+        Services::Registry()->set(PAGE_LITERAL, 'PageEligibleActions', $temp_query_results);
 
         return true;
     }
@@ -357,7 +357,7 @@ class ApplicationPlugin extends Plugin
     }
 
     /**
-     * Set Page Meta Data
+     * Set Page Meta Data during onBeforeParse, can be modified at any point during the document body rendering
      *
      * @return  boolean
      * @since   1.0
@@ -374,23 +374,18 @@ class ApplicationPlugin extends Plugin
             return true;
         }
 
-        $data = Services::Registry()->get(PRIMARY_LITERAL, DATA_LITERAL);
-
-        $type = strtolower(Services::Registry()->get(STRUCTURE_LITERAL, 'page_type'));
+        $type = strtolower(Services::Registry()->get(PAGE_LITERAL, 'page_type'));
         $type = strtolower($type);
 
         if (trim($title) == '') {
             if ($type == QUERY_OBJECT_ITEM) {
-                if (isset($data[0]->title)) {
-                    $title = $data[0]->title;
+                if (isset($this->query_results[0]->title)) {
+                    $title = $this->query_results[0]->title;
                 }
-            }
-            if ($title == '') {
-                $title = Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'criteria_title', '');
             }
 
             if ($title == '') {
-                $title = Services::Registry()->set(STRUCTURE_LITERAL, 'HeaderTitle', '');
+                $title = Services::Registry()->set(PAGE_LITERAL, 'HeaderTitle', '');
             }
 
             if ($title == '') {
@@ -407,11 +402,11 @@ class ApplicationPlugin extends Plugin
 
             if ($type == QUERY_OBJECT_ITEM) {
 
-                if (isset($data[0]->description)) {
-                    $description = $data[0]->description;
+                if (isset($this->query_results[0]->description)) {
+                    $description = $this->query_results[0]->description;
 
-                } elseif (isset($data[0]->content_text_snippet)) {
-                    $description = $data[0]->content_text_snippet;
+                } elseif (isset($this->query_results[0]->content_text_snippet)) {
+                    $description = $this->query_results[0]->content_text_snippet;
                 }
             }
 
@@ -422,8 +417,8 @@ class ApplicationPlugin extends Plugin
 
             if ($type == QUERY_OBJECT_ITEM) {
 
-                if (isset($data[0]->author_full_name)) {
-                    $author = $data[0]->author_full_name;
+                if (isset($this->query_results[0]->author_full_name)) {
+                    $author = $this->query_results[0]->author_full_name;
                     Services::Metadata()->set('author', $author);
                 }
             }

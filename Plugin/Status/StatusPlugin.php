@@ -28,6 +28,11 @@ class StatusPlugin extends Plugin
      */
     public function onAfterRead()
     {
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
+
         $statusField = $this->getField('status');
 
         if ($statusField === false) {

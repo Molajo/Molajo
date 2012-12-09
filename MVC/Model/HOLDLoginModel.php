@@ -9,13 +9,13 @@ namespace Molajo\MVC\Model;
 defined('MOLAJO') or die;
 
 /**
- * Login Model
+ * Signin Model
  *
  * @package    Molajo
  * @subpackage  Model
  * @since       1.0
  */
-class HOLDLoginModel extends DisplayModel
+class HOLDSigninModel extends DisplayModel
 {
     /**
      * __construct
@@ -77,7 +77,7 @@ class HOLDLoginModel extends DisplayModel
     }
 
     /**
-     * Get the redirect URI after login.
+     * Get the redirect URI after signin.
      *
      * @return string
      */
@@ -85,7 +85,7 @@ class HOLDLoginModel extends DisplayModel
     {
         $uri = Molajo::getURI();
         $return = 'index.php' . $uri->toString(array('query'));
-        if ($return != 'index.php?option=login') {
+        if ($return != 'index.php?option=signin') {
             return base64_encode($return);
         } else {
             return base64_encode('index.php');

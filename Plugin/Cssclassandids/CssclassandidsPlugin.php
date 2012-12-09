@@ -27,11 +27,9 @@ class CssclassandidsPlugin extends Plugin
     public function onAfterRead()
     {
 
-        $count = count($this->data);
-
-        if ((int) $count == 0
-            || $this->data === false
-            || $this->data == null
+        if ((int) count($this->row) == 0
+            || $this->row === false
+            || $this->row == null
         ) {
             return true;
         }
@@ -39,23 +37,18 @@ class CssclassandidsPlugin extends Plugin
         /** class */
         $class = '';
 
-        $class_field = $this->getField('css_class');
-        if ($class_field === false) {
-            $class_field_value = '';
-        } else {
-            $class_field_value = $this->getFieldValue($class_field);
-        }
+        $class_field = $this->get('css_class', '', 'parameters');
 
-        $view_css_class = $this->get('template_view_css_class');
-           echo $view_css_class;
-        $current_field = $this->getField('current');
+        $view_css_class = $this->get('template_view_css_class', '', 'parameters');
+
+        $current_field = $this->get('current', '', 'parameters');
         if ($current_field === false) {
             $current_field_value = '';
         } else {
-            $current_field_value = $this->getFieldValue($current_field);
+            $current_field_value = $this->get($current_field, '', 'parameters');
         }
 
-        $class .= ' ' . trim($class_field_value) . ' ' . trim($view_css_class) . ' ' . trim($current_field_value);
+        $class .= ' ' . trim($class_field) . ' ' . trim($view_css_class) . ' ' . trim($current_field_value);
 
         if (trim($class) == '') {
             $class = '';
@@ -68,14 +61,14 @@ class CssclassandidsPlugin extends Plugin
         /** id */
         $id = '';
 
-        $id_field = $this->getField('css_id');
-        if ($id_field === false) {
+        $id_field = $this->get('css_id', '', 'parameters');
+        if ($id_field === '') {
             $id_field_value = '';
         } else {
             $id_field_value = $this->getFieldValue($id_field);
         }
 
-        $view_css_id = $this->get('template_view_css_id');
+        $view_css_id = $this->get('template_view_css_id', '', 'parameters');
 
         $id .= ' ' . trim($id_field_value) . ' ' . trim($view_css_id);
 

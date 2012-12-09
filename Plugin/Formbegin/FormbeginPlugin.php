@@ -32,11 +32,11 @@ class FormbeginPlugin extends Plugin
             return true;
         }
 
-        $pageUrl = Services::Registry()->get(STRUCTURE_LITERAL, 'page_url');
+        $pageUrl = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 
         $form_action = $this->get('form_action', '');
         if ($form_action == '' || $form_action === null) {
-            $form_action = ' action="' . Services::Registry()->get(STRUCTURE_LITERAL, 'page_url') . '"';
+            $form_action = ' action="' . Services::Registry()->get(PAGE_LITERAL, 'page_url') . '"';
         } else {
             $form_action = ' action="' . $form_action . '"';
         }
@@ -82,20 +82,20 @@ class FormbeginPlugin extends Plugin
         }
 
         /** Build Query Results for View */
-        $query_results = array();
+        $temp_query_results = array();
 
-        $row = new \stdClass();
+        $temp_row = new \stdClass();
 
-        $row->form_action = $form_action;
-        $row->form_method = $form_method;
-        $row->form_name = $form_name;
-        $row->form_id = $form_id;
-        $row->form_class = $form_class;
-        $row->form_attributes = $formAttributes;
+        $temp_row->form_action = $form_action;
+        $temp_row->form_method = $form_method;
+        $temp_row->form_name = $form_name;
+        $temp_row->form_id = $form_id;
+        $temp_row->form_class = $form_class;
+        $temp_row->form_attributes = $formAttributes;
 
-        $query_results[] = $row;
+        $temp_query_results[] = $temp_row;
 
-        $this->data = $query_results;
+        $this->row = $temp_query_results;
 
         return true;
     }

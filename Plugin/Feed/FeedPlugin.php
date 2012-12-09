@@ -29,6 +29,7 @@ class FeedPlugin extends Plugin
     public function onAfterReadall()
     {
        return true;
+
         if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'feed') {
         } else {
             return true;
@@ -58,20 +59,20 @@ class FeedPlugin extends Plugin
             array_push($feed, $item);
         }
 
-        $query_results = array();
+        $temp_query_results = array();
 
         for ($x = 0; $x < $count; $x++) {
-            $row = new \stdClass();
+            $temp_row = new \stdClass();
 
-            $row->title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
-            $row->link = $feed[$x]['link'];
-            $row->description = $feed[$x]['desc'];
-            $row->published_date = date('l F d, Y', strtotime($feed[$x]['date']));
+            $temp_row->title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
+            $temp_row->link = $feed[$x]['link'];
+            $temp_row->description = $feed[$x]['desc'];
+            $temp_row->published_date = date('l F d, Y', strtotime($feed[$x]['date']));
 
-            $query_results[] = $row;
+            $temp_query_results[] = $temp_row;
         }
 
-        $this->data = $query_results;
+        $this->row = $temp_query_results;
 
         return true;
     }

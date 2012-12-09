@@ -31,12 +31,14 @@ class DisplayController extends Controller
      */
     public function execute()
     {
+
         $this->getModelRegistry(
             $this->get('model_type', '', 'parameters'),
             $this->get('model_name', '', 'parameters')
         );
 
         $this->setDataobject();
+
         $this->connectDatabase();
 
         $value = Services::Registry()->get(
@@ -46,17 +48,11 @@ class DisplayController extends Controller
         $this->set('process_template_plugins', $value, 'model_registry');
         $this->getData($this->get('model_query_object', '', 'parameters'));
 
-        if (strtolower($this->get('extension_title', '', 'parameters')) == 'commentsXXXXXXX') {
-            echo '<pre>';
-            var_dump($this->query_results);
-            echo '</pre>';
-        }
-
         if (PROFILER_ON
             && Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results', 0) == 1
         ) {
 
-            $profiler_message = 'DisplayController->execute '
+            $profiler_message = 'DisplayController: Execute method input '
                 . ' <br />Includer: ' . $this->get('includer_type', '', 'parameters')
                 . ' <br />Model Type: ' . $this->get('model_type', '', 'parameters')
                 . ' <br />Model Name: ' . $this->get('model_name', '', 'parameters')
@@ -71,11 +67,7 @@ class DisplayController extends Controller
             $profiler_message .= ob_get_contents();
             ob_end_clean();
 
-            Services::Profiler()->set(
-                'Controller->onAfterExecute ' . $profiler_message,
-                PROFILER_PLUGINS,
-                VERBOSE
-            );
+            Services::Profiler()->set($profiler_message, PROFILER_RENDERING, VERBOSE);
         }
 
         if (count($this->query_results) == 0
@@ -95,22 +87,21 @@ class DisplayController extends Controller
             $this->view_path = $this->get('template_view_path', '', 'parameters');
             $this->view_path_url = $this->get('template_view_path_url', '', 'parameters');
 
-            $this->onBeforeViewRender();
+            $this->renderView();
 
-            $this->set('rendered_output', $this->renderView());
-
-            $this->onAfterViewRender();
+            $this->onAfterRenderView();
         }
 
         if ($this->get('wrap_view_path_node', '', 'parameters') == '') {
-            return $this->rendered_output;
         } else {
-            return $this->wrapView();
+           // $this->wrapView();
         }
+
+        return $this->rendered_output;
     }
 
     /**
-     * Wrap View for wrapping Template View Rendered Output
+     * Wrap Template View Rendered Output using specified Wrap View
      *
      * @return  string
      * @since   1.0
@@ -118,15 +109,10 @@ class DisplayController extends Controller
     public function wrapView()
     {
         $this->query_results = array();
-
-        $temp = new \stdClass();
+        $this->query_results[] = $this->rendered_output;
 
         $this->set('view_css_id', $this->get('wrap_view_css_id', '', 'parameters'), 'parameters');
         $this->set('view_css_class', $this->get('wrap_view_css_class', '', 'parameters'), 'parameters');
-
-        $temp->content = $this->rendered_output;
-
-        $this->query_results[] = $this->rendered_output;
 
         $this->set('view_path', $this->get('wrap_view_path', '', 'parameters'));
         $this->set('view_path_url', $this->get('wrap_view_path_url', '', 'parameters'));
@@ -141,6 +127,12 @@ class DisplayController extends Controller
      *      results are pushed into the View using the $this->query_results array/object.
      *      The Custom.php View must handle it's own loop iteration, if necessary, and
      *      reference the results set via an index , ex. $this->query_results[0]->name
+     *
+     *      Note: neither onBeforeRenderView or onAfterRenderView are scheduled for Custom.php Views.
+     *      The View can schedule this Event prior to the rendering for each row using:
+     *          <?php $this->onBeforeRenderView(); ?>
+     *      And following the rendering of the View for the row, using:
+     *          <?php $this->onBeforeRenderView(); ?>
      *
      * 2. Otherwise, the Header.php, and/or Body.php, and/or Footer.php Template View(s)
      *      are used, with data injected into the View, one row at a time. within the views,
@@ -165,12 +157,28 @@ class DisplayController extends Controller
         } else {
 
             /** 2. controller manages loop */
-            $totalRows = count($this->query_results);
+            $total_rows = count($this->query_results);
+            $row_count = 1;
+            $first = 1;
+            $even_or_odd = 'odd';
 
             if (count($this->query_results) > 0) {
 
-                $first = true;
                 foreach ($this->query_results as $this->row) {
+
+                    if ($row_count == $total_rows) {
+                        $last_row = 1;
+                    } else {
+                        $last_row = 0;
+                    }
+
+                    $this->set('row_count', $row_count, 'parameters');
+                    $this->set('even_or_odd', $even_or_odd, 'parameters');
+                    $this->set('total_rows', $total_rows, 'parameters');
+                    $this->set('last_row', $last_row, 'parameters');
+                    $this->set('first', $first, 'parameters');
+
+                    $this->onBeforeRenderView();
 
                     if ($first === true) {
                         $first = false;
@@ -182,10 +190,23 @@ class DisplayController extends Controller
                     if (file_exists($this->get('view_path') . '/View/Body.php')) {
                         include $this->get('view_path') . '/View/Body.php';
                     }
-                }
 
-                if (file_exists($this->get('view_path') . '/View/Footer.php')) {
-                    include $this->get('view_path') . '/View/Footer.php';
+                    if ($even_or_odd == 'odd') {
+                        $even_or_odd = 'even';
+                    } else {
+                        $even_or_odd = 'odd';
+                    }
+
+                    $row_count++;
+                    $first = 0;
+
+                    if ($last_row == 1) {
+                        if (file_exists($this->get('view_path') . '/View/Footer.php')) {
+                            include $this->get('view_path') . '/View/Footer.php';
+                        }
+                    }
+
+                    $this->onAfterRenderView();
                 }
             }
         }
@@ -193,100 +214,71 @@ class DisplayController extends Controller
         $output = ob_get_contents();
         ob_end_clean();
 
-        return $output;
+        $this->rendered_output = $output;
+
+        return;
     }
 
     /**
-     * Schedule Event onBeforeViewRender Event
+     * Schedule Event onBeforeRenderView Event
      *
      * Useful for preprocessing of input prior to rendering or evaluation of content for
      *  possible inclusion of related information. Include statements could be added to
      *  the input, images resized, links to keywords added, blockquotes, and so on.
      *
-     *  Method runs one time for each input row to View. All data is passed prior to View
-     *  rendering, making it possible to build summary information (ex. build a graph summarizing
-     *  detail), or to cancel the View (empty the input, set display view on no input to false)
-     *  due to certain conditions in the data.
+     *  Method runs one time for each input row to View.
+     *
+     *  Not available to custom.php file Views since the Controller does not manage the looping
+     *  in that case.
      *
      * @return  bool
      * @since   1.0
      */
-    protected function onBeforeViewRender()
-    {
-        $items = $this->query_results;
-        $total_rows = count($items);
-        $row_count = 1;
-        $this->query_results = array();
-
-        $first = 1;
-        $even_or_odd = 'odd';
-
-        if (count($items) == 0) {
-        } else {
-            foreach ($items as $item) {
-
-                if ($row_count == $total_rows) {
-                    $last_row = 1;
-                } else {
-                    $last_row = 0;
-                }
-
-                $this->set('row_count', $row_count, 'parameters');
-                $this->set('even_or_odd', $even_or_odd, 'parameters');
-                $this->set('total_rows', $total_rows, 'parameters');
-                $this->set('last_row', $last_row, 'parameters');
-                $this->set('first', $first, 'parameters');
-
-                $arguments = array(
-                    'model' => $this->get('model'),
-                    'model_registry' => $this->get('model_registry'),
-                    'parameters' => $this->get('parameters'),
-                    'query_results' => $item,
-                    'row' => array(),
-                    'rendered_output' => array(),
-                    'include_parse_sequence' => null,
-                    'include_parse_exclude_until_final' => null
-                );
-
-                $arguments = Services::Event()->scheduleEvent(
-                    'onBeforeViewRender',
-                    $arguments,
-                    $this->get('plugins', $this->get('plugins'))
-                );
-
-                $this->setPluginResultProperties($arguments);
-
-                if ($even_or_odd == 'odd') {
-                    $even_or_odd = 'even';
-                } else {
-                    $even_or_odd = 'odd';
-                }
-                $row_count++;
-                $first = 0;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Schedule Event onAfterViewRender Event
-     *
-     * Processing follows completion of the entire View rendering. Can be used to add
-     *  include statement or additional information. Good place for micros-statistics,
-     *  logging, hit counts at the View level, rather than page-level. The output for
-     *  the View can be omitted from display by setting rendered_output to null.
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function onAfterViewRender()
+    protected function onBeforeRenderView()
     {
         $arguments = array(
             'model' => $this->get('model'),
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->get('parameters'),
-            'query_results' => $this->query_results,
+            'query_results' => array(),
+            'row' => $this->row,
+            'rendered_output' => null,
+            'include_parse_sequence' => null,
+            'include_parse_exclude_until_final' => null
+        );
+
+        $arguments = Services::Event()->scheduleEvent(
+            'onBeforeRenderView',
+            $arguments,
+            $this->get('plugins')
+        );
+
+        $this->setPluginResultProperties($arguments);
+
+        return true;
+    }
+
+    /**
+     * Schedule Event onAfterRenderView Event
+     *
+     * Processing follows completion of a single row rendering. Can be used to add
+     *  include statement or additional information.
+     *
+     *  Method runs one time for each input row to View.
+     *
+     *  Not available to custom.php file Views since the Controller does not manage the looping
+     *  in that case.
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function onAfterRenderView()
+    {
+        $arguments = array(
+            'model' => $this->get('model'),
+            'model_registry' => $this->get('model_registry'),
+            'parameters' => $this->get('parameters'),
+            'query_results' => array(),
             'row' => array(),
             'rendered_output' => $this->get('rendered_output'),
             'include_parse_sequence' => null,
@@ -294,9 +286,9 @@ class DisplayController extends Controller
         );
 
         $arguments = Services::Event()->scheduleEvent(
-            'onAfterViewRender',
+            'onAfterRenderView',
             $arguments,
-            $this->get('plugins', $this->get('plugins'))
+            $this->get('plugins')
         );
 
         $this->setPluginResultProperties($arguments);

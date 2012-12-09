@@ -129,10 +129,7 @@ Class Services
         $services = ConfigurationService::getFile('Service', 'Services');
 
         if ($services === false) {
-            //throw error
-            //error
-            echo 'Cannot file Services File ';
-            die;
+            throw new \RuntimeException('Cannot find Services File ');
         }
 
         foreach ($services->service as $service) {
@@ -146,7 +143,7 @@ Class Services
             $connectionSucceeded = null;
 
             try {
-                echo 'starting connection ' . $serviceClass . '<br />';
+
                 $connection = $this->getClassInstance($serviceClass);
 
                 if (trim($startup) == '' || ($static_indicator == 1 && $startup == 'getInstance')) {
@@ -154,11 +151,7 @@ Class Services
                     $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
                 }
 
-                echo $serviceClass;
-                echo '<br />';
-
                 if ($static_indicator == 1) {
-                    echo 'now static';
                     $this->set($name . 'Service', $connection, $connectionSucceeded);
                 }
 
@@ -177,8 +170,8 @@ Class Services
     /**
      * Get Class Instance
      *
-     * @param   string  $entry
-     * @param   $folder $entry
+     * @param   string   $entry
+     * @param   $folder  $entry
      *
      * @return  mixed
      * @since   1.0

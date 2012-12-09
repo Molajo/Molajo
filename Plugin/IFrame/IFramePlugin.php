@@ -39,14 +39,12 @@ class IFramePlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                /** retrieve each text field */
-                $name = $field->name;
+                $name = $field['name'];
                 $fieldValue = $this->getFieldValue($field);
 
                 if ($fieldValue === false) {
                 } else {
 
-                    /** search for iframe statements */
                     preg_match_all('/<iframe.+?src="(.+?)".+?<\/iframe>/', $fieldValue, $matches);
 
                     if (count($matches) == 0) {

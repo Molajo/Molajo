@@ -156,8 +156,6 @@ Class ConfigurationService
      */
     public function __construct()
     {
-        echo 'In Configuration __construct';
-
         $this->getFieldProperties();
         $this->getApplication();
         $this->setSitePaths();
@@ -217,8 +215,8 @@ Class ConfigurationService
 
         $datalistsArray = array();
         $extensionArray = array();
-        $datalistsArray = ConfigurationService::loadDatalists($datalistsArray, PLATFORM_FOLDER . '/Datalist');
-        $extensionArray = ConfigurationService::loadDatalists($datalistsArray, EXTENSIONS . '/Datalist');
+        $datalistsArray = ConfigurationService::loadDatalists($datalistsArray, PLATFORM_MVC . '/Model/Datalist');
+        $extensionArray = ConfigurationService::loadDatalists($datalistsArray, EXTENSIONS . '/Model/Datalist');
         array_merge($datalistsArray, $extensionArray);
         sort($datalistsArray);
         $datalistsArray = array_unique($datalistsArray);
@@ -314,10 +312,11 @@ Class ConfigurationService
                     $datalistsArray[] = substr($entry, 0, strlen($entry) - 4);
                 }
             }
+
             $dirRead->close();
 
         } catch (\Exception $e) {
-            throw new \Exception('Configuration: Exception caught in loadDatalists: ', $e->getMessage());
+            throw new \Exception('Configuration: Cannot find Datalists file for folder: ' . $folder);
         }
 
         return $datalistsArray;
@@ -541,6 +540,10 @@ Class ConfigurationService
         ConfigurationService::inheritDefinition($model_registry, $xml);
 
         ConfigurationService::setModelRegistry($model_registry, $xml);
+
+        Services::Registry()->set($model_registry, 'model_name', $model_name);
+        Services::Registry()->set($model_registry, 'model_type', $model_type);
+        Services::Registry()->set($model_registry, 'model_registry_name', $model_registry);
 
         $data_object = Services::Registry()->get($model_registry, 'data_object', '');
 
@@ -789,7 +792,7 @@ Class ConfigurationService
             if (in_array($key, $modelArray)) {
                 Services::Registry()->set($model_registry, $key, (string)$value);
             } else {
-                throw new \Exception ('CONFIGURATION: setModelRegistry encountered Invalid Model Attribute ' . $key);
+                throw new \Exception ('Configuration: setModelRegistry encountered Invalid Model Attribute ' . $key);
             }
         }
 
@@ -837,7 +840,7 @@ Class ConfigurationService
 
                 if (in_array($key, $valid_attributes)) {
                 } else {
-                    throw new \Exception ('CONFIGURATION: setElementsRegistry encountered Invalid Model Attribute '
+                    throw new \Exception ('Configuration: setElementsRegistry encountered Invalid Model Attribute '
                         . $key . ' for ' . $model_registry);
                 }
 
@@ -1051,7 +1054,7 @@ Class ConfigurationService
                 if ($key2 == 'fieldset') {
                 } elseif (in_array($key2, self::$valid_field_attributes)) {
                 } else {
-                    throw new \Exception ('CONFIGURATION: getCustomFieldsSpecificGroup Invalid Field attribute '
+                    throw new \Exception ('Configuration: getCustomFieldsSpecificGroup Invalid Field attribute '
                         . $key2 . ':' . $value2 . ' for ' . $model_registry);
                 }
 
@@ -1206,7 +1209,7 @@ Class ConfigurationService
             if (file_exists($path)) {
                 return $path;
             }
-            throw new \Exception ('CONFIGURATION: locateFile() Cannot find Sites XML File.');
+            throw new \Exception ('Configuration: locateFile() Cannot find Sites XML File.');
         }
 
         if ($model_type == 'Dataobject') {
@@ -1218,38 +1221,52 @@ Class ConfigurationService
             if (file_exists($path)) {
                 return $path;
             }
-            $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+            $path = PLATFORM_MVC . '/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
-            throw new \Exception ('CONFIGURATION: locateFile() Cannot find Model Type '
+            throw new \Exception ('Configuration: locateFile() Cannot find Data Object for Model Type '
                 . $model_type . ' Model Name ' . $model_name);
         }
 
         if ($model_type == 'Parse') {
-            $path = EXTENSIONS . '/Service/Services/Parse/' . $model_name . '.xml';
+            $path = EXTENSIONS . '/Theme/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
-            $path = PLATFORM_FOLDER . '/Service/Services/Parse/' . $model_name . '.xml';
+            $path = PLATFORM_FOLDER . '/Service/Services/Theme/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
-            throw new \Exception ('CONFIGURATION: locateFile() Cannot find Model Type '
+            throw new \Exception ('Configuration: locateFile() Cannot find Parse File Model Type '
                 . $model_type . ' Model Name ' . $model_name);
         }
 
-        $modeltypeArray = array('Application', 'Service', 'Field', 'Include', 'Includer');
+        if ($model_type == 'Includer') {
+            $path = EXTENSIONS . '/Theme/Includer/' . $model_name . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            }
+            $path = PLATFORM_FOLDER . '/Service/Services/Theme/' . $model_name . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            }
+            throw new \Exception ('Configuration: locateFile() Cannot find Theme Includer File Model Type '
+                . $model_type . ' Model Name ' . $model_name);
+        }
+
+        $modeltypeArray = array('Application', 'Datalist', 'Datasource', 'Field', 'Include');
         if (in_array($model_type, $modeltypeArray)) {
-            $path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '.xml';
+            $path = EXTENSIONS . '/Model/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
-            $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+
+            $path = PLATFORM_MVC . '/Model/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             }
-            throw new \Exception ('CONFIGURATION: locateFile() Cannot find Model Type '
+            throw new \Exception ('Configuration: locateFile() Cannot find Model Type '
                 . $model_type . ' Model Name ' . $model_name);
         }
 
@@ -1262,16 +1279,35 @@ Class ConfigurationService
             }
         }
 
-        $modeltypeArray = array('Language', 'Theme', 'System', 'Service');
+        $modeltypeArray = array('Service');
 
         if (in_array($model_type, $modeltypeArray)) {
-            $path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+
+            $path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             } else {
                 $path = false;
             }
-            $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '/Configuration.xml';
+            $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            } else {
+                $path = false;
+            }
+        }
+
+        $modeltypeArray = array('Theme', 'System');
+
+        if (in_array($model_type, $modeltypeArray)) {
+
+            $path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '/' . 'Configuration.xml';
+            if (file_exists($path)) {
+                return $path;
+            } else {
+                $path = false;
+            }
+            $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '/' . 'Configuration.xml';
             if (file_exists($path)) {
                 return $path;
             } else {

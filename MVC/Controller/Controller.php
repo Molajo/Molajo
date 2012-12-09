@@ -61,20 +61,12 @@ class Controller
     protected $query_results = array();
 
     /**
-     * Single set of $query_results - used in CUD operations
+     * Single set of $query_results and used in create, update, delete operations
      *
      * @var    object
      * @since  1.0
      */
     protected $row;
-
-    /**
-     * Used to build Create, Update, Delete data structures - public
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $data = array();
 
     /**
      * Plugins specified in the table registry for the model registry
@@ -83,6 +75,14 @@ class Controller
      * @since  1.0
      */
     protected $plugins = array();
+
+    /**
+     * Rendered Output
+     *
+     * @var    boolean
+     * @since  1.0
+     */
+    protected $rendered_output;
 
     /**
      * Used to ensure all getData requests have first been processed by getDataobject
@@ -118,14 +118,6 @@ class Controller
     protected $view_path_url;
 
     /**
-     * Rendered Output
-     *
-     * @var    boolean
-     * @since  1.0
-     */
-    protected $rendered_output;
-
-    /**
      * List of Controller Properties
      *
      * @var    object
@@ -138,7 +130,6 @@ class Controller
         'parameters',
         'query_results',
         'row',
-        'data',
         'plugins',
         'rendered_output',
         'data_object_set',
@@ -154,7 +145,7 @@ class Controller
     {
         /** Temporary and Internal */
         $this->model_registry_name = null;
-        $this->data_object_set = 0;
+        $this->row_object_set = 0;
         $this->connect_database_set = 0;
 
         /** Shared with Model and Passed into Events/Plugins */
@@ -162,8 +153,7 @@ class Controller
         $this->model = array();
         $this->model_registry = array();
         $this->query_results = array();
-        $this->row = null;
-        $this->data = array();
+        $this->row = array();
         $this->get('plugins', array());
 
         return $this;
@@ -253,7 +243,8 @@ class Controller
     }
 
     /**
-     * Prepares data needed for the model using the model registry
+     * getModelRegistry retrieves Model Registry data first by seeing if it's already available in the Registry,
+     *  if not, then seeing if it is available in Cache, and finally by building it from source in Configuration
      *
      * @param   string  $model_type
      * @param   null    $model_name
@@ -265,6 +256,8 @@ class Controller
      */
     public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null)
     {
+echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
+
         $this->set('data_object_set', 0);
         $this->set('connect_database_set', 0);
 
@@ -321,9 +314,7 @@ class Controller
     }
 
     /**
-     * Connects to the Dataobject
-     *
-     *  getModelRegistry retrieves the Model Registry from the Configuration, Cache, or the Registry
+     * setDataobject using the Model Registry to set important model indicators for the Controller
      *
      * @return  void
      * @since   1.0
@@ -339,19 +330,13 @@ class Controller
 
         if (Services::Registry()->exists($this->get('model_registry_name')) === true) {
         } else {
-            throw new \RuntimeException('Controller: Load $model_registry using getModelRegistry');
+            throw new \RuntimeException('Controller: setDataobject failed Registry does not exist for '
+                . $this->get('model_registry_name'));
         }
 
-        $load = Services::Registry()->get($this->get('model_registry_name'));
+        $this->set('model_registry', Services::Registry()->get($this->get('model_registry_name')));
 
-        $this->set('model_registry', array());
-
-        if (count($load) > 0) {
-            foreach ($load as $key => $value) {
-                $this->set($key, $value, 'model_registry');
-            }
-        }
-
+        /** Only to ensure this redundant data is the same - it is a handy data element to retain */
         $this->set('model_registry_name', $this->get('model_registry_name'), 'model_registry');
 
         if (isset($this->model_registry['data_object_data_object_type'])) {
@@ -364,6 +349,7 @@ class Controller
 
         $this->set('data_object_type', $data_object_type, 'model_registry');
 
+        return;
     }
 
     /**
@@ -436,6 +422,8 @@ class Controller
             $this->connectDatabase();
         }
 
+        $this->getPluginList();
+
         $query_object = strtolower($query_object);
 
         if (in_array(
@@ -461,9 +449,12 @@ class Controller
                 . ' <br />Template View: ' . $this->get('template_view_path_node', '', 'parameters')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins', 1, 'model_registry')
                 . '<br /><br />';
-echo $profiler_message;
 
-        if ($this->get('data_object_type', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
+//        if (defined('ROUTE')) {
+//            echo $profiler_message;
+//        }
+
+        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
 
             if (count($this->get('plugins', array())) > 0) {
                 $this->onBeforeReadEvent();
@@ -477,29 +468,25 @@ echo $profiler_message;
                 $this->query_results = array();
 
             } else {
-                $service_class = $this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry');
-                $service_class_query_method = $this->get(
-                    'data_object_service_class_query_method',
-                    '',
-                    'model_registry'
-                );
+                $service_class = $this->get('service_class', DATABASE_LITERAL, 'model_registry');
+                $service_class_query_method = $this->get('service_class_query_method',  '', 'model_registry');
 
                 if ($this->get('model_name', '', 'model_registry') == PRIMARY_LITERAL) {
                     $method_parameter = DATA_LITERAL;
 
-                } elseif ($this->get('data_object_service_class_query_method_parameter', '', 'model_registry')
+                } elseif ($this->get('service_class_query_method_parameter', '', 'model_registry')
                     == 'TEMPLATE_LITERAL'
                 ) {
                     $method_parameter = $this->get('template_view_path_node', '', 'parameters');
 
-                } elseif ($this->get('data_object_service_class_query_method_parameter', '', 'model_registry')
+                } elseif ($this->get('service_class_query_method_parameter', '', 'model_registry')
                     == 'MODEL_LITERAL'
                 ) {
                     $method_parameter = $this->get('model_name', '', 'model_registry');
 
                 } else {
                     $method_parameter = $this->get(
-                        'data_object_service_class_query_method_parameter',
+                        'service_class_query_method_parameter',
                         '',
                         'model_registry'
                     );
@@ -526,14 +513,20 @@ echo $profiler_message;
             }
         }
 
-        /** if (count($this->get('plugins', array())) > 0) {
-        $this->onAfterReadEvent(
-        $this->get('use_pagination', 1, 'model_registry'),
-        $this->get('model_offset', 0, 'model_registry'),
-        $this->get('model_count', 15, 'model_registry')
-        );
+        if (count($this->get('plugins', array())) > 0) {
+            $this->onAfterReadEvent(
+                $this->get('use_pagination', 1, 'model_registry'),
+                $this->get('model_offset', 0, 'model_registry'),
+                $this->get('model_count', 15, 'model_registry')
+            );
         }
-         */
+        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
+        } else {
+        //echo '<pre>';
+        //var_dump($this->query_results);
+        //echo '</pre><br /><br />';
+        //die;
+        }
         if ($this->get('data_object_type', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
         } else {
             return $this->query_results;
@@ -578,85 +571,6 @@ echo $profiler_message;
     }
 
     /**
-     * Get the list of potential plugins identified with this model registry
-     *
-     * @return  void
-     * @since   1.0
-     */
-    protected function getPluginList()
-    {
-        $this->set('plugins', array());
-
-        if (defined('DATABASE_SERVICE')) {
-            return true;
-        }
-
-        if ($this->get('query_object', QUERY_OBJECT_RESULT, 'model_registry') == QUERY_OBJECT_RESULT) {
-            return;
-        }
-
-        $modelPlugins = array();
-        if ((int)$this->get('process_plugins', 1, 'model_registry') == 1) {
-
-            $modelPlugins = $this->get('plugins', array(), 'model_registry');
-
-            if (is_array($modelPlugins)) {
-            } else {
-                $modelPlugins = array();
-            }
-        }
-
-        $templatePlugins = array();
-        if ((int)$this->get('process_template_plugins', 1, 'model_registry')) {
-
-            if ((int)$this->get('process_template_plugins', 1, 'model_registry') == 0) {
-                $temp = array();
-
-            } else {
-                $templatePlugins = Services::Registry()->get(
-                    $this->get('process_template_plugins', 1, 'model_registry'),
-                    'plugins',
-                    array()
-                );
-
-                if (is_array($templatePlugins)) {
-                } else {
-                    $templatePlugins = array();
-                }
-            }
-        }
-
-        $plugins = array_merge($modelPlugins, $templatePlugins);
-        if (is_array($plugins)) {
-        } else {
-            $plugins = array();
-        }
-
-        $page_type = $this->get('criteria_catalog_page_type', '', 'parameters');
-        if ($page_type == '') {
-        } else {
-            $plugins[] = 'Pagetype' . strtolower($page_type);
-        }
-
-        $template = $this->get('template_view_path_node', '', 'parameters');
-        if ($template == '') {
-        } else {
-            $plugins[] = $template;
-        }
-
-        if ((int)$this->get('process_plugins', 1, 'model_registry') == 0 && count($plugins) == 0) {
-            $this->get('plugins', array());
-            return;
-        }
-
-        $plugins[] = 'Application';
-
-        $this->set('plugins', $plugins);
-
-        return;
-    }
-
-    /**
      * Prepare query object for standard dbo queries
      *
      * @return  bool
@@ -664,6 +578,12 @@ echo $profiler_message;
      */
     protected function prepareQuery()
     {
+        $key = $this->get('primary_key_value', 0, 'model_registry');
+        if ($key === 0) {
+            $key = $this->get('criteria_source_id', 0, 'parameters');
+        }
+        $this->set('primary_key_value', $key, 'model_registry');
+
         $this->model->setBaseQuery(
             $this->get(strtolower(FIELDS_LITERAL), array(), 'model_registry'),
             $this->get('table_name', null, 'model_registry'),
@@ -701,7 +621,13 @@ echo $profiler_message;
             $this->get('criteria_extension_instance_id', '', 'parameters'),
             $this->get('primary_prefix', 'a', 'model_registry')
         );
-
+/**
+        echo '<br /><br /><pre>';
+        $this->get('model_registry_name');
+        echo '<br /><br /><pre>';
+        echo $this->model->query->__toString();
+        echo '<br /><br />';
+*/
         return;
     }
 
@@ -757,9 +683,7 @@ echo $profiler_message;
                 ob_end_clean();
                 Services::Profiler()->set($message, PROFILER_QUERIES);
             }
-
             $this->query_results = $query_results;
-
             return;
         }
 
@@ -817,9 +741,7 @@ echo $profiler_message;
                 }
 
                 if ((int)$this->get('get_item_children', 1, 'model_registry') == 1) {
-
                     $children = $this->get('children', array(), 'model_registry');
-
                     if (count($children) > 0) {
                         $results = $this->model->addItemChildren(
                             $children,
@@ -860,7 +782,7 @@ echo $profiler_message;
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->get('parameters'),
             'query_results' => array(),
-            'row' => array(),
+            'row' => null,
             'rendered_output' => array(),
             'include_parse_sequence' => null,
             'include_parse_exclude_until_final' => null
@@ -873,6 +795,83 @@ echo $profiler_message;
         );
 
         $this->setPluginResultProperties($arguments);
+
+        return;
+    }
+
+    /**
+     * Get the list of potential plugins identified with this model registry
+     *
+     * @return  void
+     * @since   1.0
+     */
+    protected function getPluginList()
+    {
+        $this->set('plugins', array());
+
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
+
+        if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_RESULT) {
+            return;
+        }
+
+        $modelPlugins = array();
+        if ((int)$this->get('process_plugins', 1, 'model_registry') > 0) {
+
+            $modelPlugins = $this->get('plugins', array(), 'model_registry');
+
+            if (is_array($modelPlugins)) {
+            } else {
+                $modelPlugins = array();
+            }
+        }
+
+        $templatePlugins = array();
+
+        if ((int)$this->get('process_template_plugins', 1, 'model_registry') > 0) {
+
+            $name = $this->get('template_view_path_node', '', 'parameters');
+
+            if ($name == '') {
+            } else {
+                $templatePlugins = Services::Registry()->get(ucfirst(strtolower($name)).'Templates', 'plugins');
+
+                if (is_array($templatePlugins)) {
+                } else {
+                    $templatePlugins = array();
+                }
+            }
+        }
+
+        $plugins = array_merge($modelPlugins, $templatePlugins);
+        if (is_array($plugins)) {
+        } else {
+            $plugins = array();
+        }
+
+        $page_type = $this->get('catalog_page_type', '', 'parameters');
+        if ($page_type == '') {
+        } else {
+            $plugins[] = 'Pagetype' . strtolower($page_type);
+        }
+
+        $template = $this->get('template_view_path_node', '', 'parameters');
+        if ($template == '') {
+        } else {
+            $plugins[] = $template;
+        }
+
+        if ((int)$this->get('process_plugins', 1, 'model_registry') == 0 && count($plugins) == 0) {
+            $this->get('plugins', array());
+            return;
+        }
+
+        $plugins[] = 'Application';
+
+        $this->set('plugins', $plugins);
 
         return;
     }
@@ -891,6 +890,11 @@ echo $profiler_message;
      */
     protected function onBeforeReadEvent()
     {
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
+
         if (count($this->get('plugins', array())) == 0
             || (int)$this->get('process_plugins', 1, 'model_registry') == 0
         ) {
@@ -902,7 +906,7 @@ echo $profiler_message;
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->get('parameters'),
             'query_results' => array(),
-            'row' => array(),
+            'row' => null,
             'rendered_output' => array(),
             'include_parse_sequence' => null,
             'include_parse_exclude_until_final' => null
@@ -911,7 +915,7 @@ echo $profiler_message;
         $arguments = Services::Event()->scheduleEvent(
             'onBeforeRead',
             $arguments,
-            $this->get('plugins', $this->get('plugins'))
+            $this->get('plugins')
         );
 
         $this->setPluginResultProperties($arguments);
@@ -945,14 +949,14 @@ echo $profiler_message;
             return;
         }
 
-        $items = $this->query_results;
+        $rows = $this->query_results;
         $this->query_results = array();
 
         $first = true;
 
-        if (count($items) == 0) {
+        if (count($rows) == 0) {
         } else {
-            foreach ($items as $item) {
+            foreach ($rows as $row) {
 
                 $this->set('first', $first, 'parameters');
 
@@ -960,8 +964,8 @@ echo $profiler_message;
                     'model' => $this->get('model'),
                     'model_registry' => $this->get('model_registry'),
                     'parameters' => $this->get('parameters'),
-                    'query_results' => $item,
-                    'row' => array(),
+                    'query_results' => array(),
+                    'row' => $row,
                     'rendered_output' => array(),
                     'include_parse_sequence' => null,
                     'include_parse_exclude_until_final' => null
@@ -970,7 +974,7 @@ echo $profiler_message;
                 $arguments = Services::Event()->scheduleEvent(
                     'onAfterRead',
                     $arguments,
-                    $this->get('plugins', $this->get('plugins'))
+                    $this->get('plugins')
                 );
 
                 $this->setPluginResultProperties($arguments);
@@ -997,12 +1001,17 @@ echo $profiler_message;
      */
     protected function onAfterReadallEvent()
     {
+        if (defined('ROUTE')) {
+        } else {
+            return true;
+        }
+
         $arguments = array(
             'model' => $this->get('model'),
             'model_registry' => $this->get('model_registry'),
             'parameters' => $this->get('parameters'),
             'query_results' => $this->get('query_results'),
-            'row' => array(),
+            'row' => null,
             'rendered_output' => array(),
             'include_parse_sequence' => null,
             'include_parse_exclude_until_final' => null
@@ -1011,7 +1020,7 @@ echo $profiler_message;
         $arguments = Services::Event()->scheduleEvent(
             'onAfterReadall',
             $arguments,
-            $this->get('plugins', $this->get('plugins'))
+            $this->get('plugins')
         );
 
         $this->setPluginResultProperties($arguments);
@@ -1047,16 +1056,18 @@ echo $profiler_message;
             $this->set('parameters', array(), '');
         }
 
-        if (isset($arguments['query_results'])) {
-            $this->set('query_results', $arguments['query_results'], '');
+        if (isset($arguments['row']) && $arguments['row'] !== null) {
+            $this->query_results[] = $arguments['row'];
+            $this->set('query_results', $this->query_results, '');
+            $this->set('row', $arguments['row'], '');
+
+        } elseif (isset($arguments['query_results'])) {
+            $this->set('query_results', $this->query_results, '');
+            $this->set('row', null, '');
+
         } else {
             $this->set('query_results', array(), '');
-        }
-
-        if (isset($arguments['data'])) {
-            $this->set('data', $arguments['data'], '');
-        } else {
-            $this->set('data', array(), '');
+            $this->set('row', null, '');
         }
 
         if (isset($arguments['rendered_output'])) {

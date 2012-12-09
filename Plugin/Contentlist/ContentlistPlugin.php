@@ -58,7 +58,7 @@ class ContentlistPlugin extends Plugin
                 . ' IN (' . $criteria_status . ')');
         }
 
-        $this->data = $controller->getData(QUERY_OBJECT_LIST);
+        $this->row = $controller->getData(QUERY_OBJECT_LIST);
 
         return true;
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="Plugin" version="1.0">
     <name>IMAGES_PLUGIN_NAME</name>
-    <author>Molajo Team</author>
+    <author>Amy Stephen</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
     <license>GNU GPL v 2, or later and MIT, see License folder</license>
-    <author_email>collaborate@molajo.org</author_email>
-    <author_url>http://molajo.org</author_url>
+    <author_email>hello@niambie.org</author_email>
+    <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>IMAGES_PLUGIN_DESCRIPTION</description>
     <model name="Images" extends="PluginsSystem"/>

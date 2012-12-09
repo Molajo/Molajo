@@ -78,11 +78,11 @@ class MenuitemsPlugin extends Plugin
         $controller->set('model_offset', 0, 'model_registry');
         $controller->set('model_count', 99999, 'model_registry');
 
-        $query_results = $controller->getData(QUERY_OBJECT_LIST);
+        $temp_query_results = $controller->getData(QUERY_OBJECT_LIST);
 
         $menuitems = array();
-        foreach ($query_results as $item) {
-            $row = new \stdClass();
+        foreach ($temp_query_results as $item) {
+            $temp_row = new \stdClass();
 
             $name = $item->title;
             $lvl = (int) $item->lvl - 1;
@@ -93,10 +93,10 @@ class MenuitemsPlugin extends Plugin
                 }
             }
 
-            $row->id = $item->id;
-            $row->value = trim($name);
+            $temp_row->id = $item->id;
+            $temp_row->value = trim($name);
 
-            $menuitems[] = $row;
+            $menuitems[] = $temp_row;
         }
 
         Services::Registry()->set(DATALIST_LITERAL, MENUITEMS_LITERAL, $menuitems);

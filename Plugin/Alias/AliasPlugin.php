@@ -34,7 +34,7 @@ class AliasPlugin extends Plugin
     /**
      * Pre-update processing
      *
-     * @param   $this->data
+     * @param   $this->row
      * @param   $model
      *
      * @return boolean

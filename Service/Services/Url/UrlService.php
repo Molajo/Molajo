@@ -7,7 +7,6 @@
 namespace Molajo\Service\Services\Url;
 
 use Molajo\Service\Services;
-use Molajo\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -20,36 +19,165 @@ defined('MOLAJO') or die;
  */
 Class UrlService
 {
+
     /**
-     * getURL Retrieves URL based on Catalog ID
+     * Retrieves URL for a Catalog Type/Source ID or a Catalog ID
      *
-     * @param   integer $catalog_id
+     * @param   null  $catalog_type_id
+     * @param   null  $source_id
+     * @param   null  $catalog_id
      *
      * @return  string
      * @since   1.0
      */
-    public function getURL($catalog_id)
+    public function get($catalog_type_id = null, $source_id = null, $catalog_id = null)
     {
-        $url = Helpers::Catalog()->getURL($catalog_id);
-
-        if ($url === false || $url == null) {
-            return false;
+        if ($catalog_id == Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0)) {
+            return '';
         }
 
-        return $this->getApplicationURL($url);
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
+
+            $controllerClass = CONTROLLER_CLASS;
+            $controller = new $controllerClass();
+            $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
+            $controller->setDataobject();
+            $controller->connectDatabase();
+
+            $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
+            $key = $controller->get('primary_key', 'id', 'model_registry');
+            $controller->set('process_plugins', 0, 'model_registry');
+
+            $controller->model->query->select(
+                $controller->model->db->qn($prefix)
+                    . '.'
+                    . $controller->model->db->qn('sef_request')
+            );
+
+            $controller->model->query->where(
+                $controller->model->db->qn($prefix)
+                    . '.'
+                    . $controller->model->db->qn($key)
+                    . ' = '
+                    . (int)$catalog_id
+            );
+
+            $url = $controller->getData(QUERY_OBJECT_RESULT);
+
+        } else {
+            $url = 'index.php?id=' . (int)$catalog_id;
+        }
+
+        return $url;
     }
 
     /**
-     * getCatalogID Retrieves Catalog ID for the SEF URL
+     * Retrieves Catalog ID for the specified Catalog Type ID and Source ID
      *
-     * @param   integer $catalog_id
+     * @param   null $catalog_type_id
+     * @param   null $source_id
      *
-     * @return  string
+     * @return  bool|mixed
      * @since   1.0
      */
-    public function getCatalogID($url)
+    public function getCatalogID($catalog_type_id, $source_id = null, $url_sef_request = null)
     {
-        return Helpers::Catalog()->getIDUsingSEFURL($url);
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
+        $controller->setDataobject();
+        $controller->connectDatabase();
+
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
+        $key = $controller->get('primary_key', 'id', 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
+
+        $controller->model->query->select(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn($key)
+        );
+
+        if ($url_sef_request === null) {
+            $controller->model->query->where(
+                $controller->model->db->qn($prefix)
+                    . '.' . $controller->model->db->qn('catalog_type_id')
+                    . ' = '
+                    . (int)$catalog_type_id
+            );
+
+            $controller->model->query->where(
+                $controller->model->db->qn($prefix)
+                    . '.'
+                    . $controller->model->db->qn('source_id')
+                    . ' = '
+                    . (int)$source_id
+            );
+
+        } else {
+
+            $controller->model->query->where(
+                $controller->model->db->qn($prefix)
+                    . '.'
+                    . $controller->model->db->qn('sef_request')
+                    . ' = '
+                    . $controller->model->db->q($url_sef_request)
+            );
+        }
+
+        $controller->model->query->where(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn('application_id')
+                . ' = '
+                . $controller->model->db->q(APPLICATION_ID)
+        );
+
+        return $controller->getData(QUERY_OBJECT_RESULT);
+    }
+
+    /**
+     * Retrieves Redirect URL for a specific Catalog id
+     *
+     * @param   integer  $catalog_id
+     *
+     * @return  string   URL
+     * @since   1.0
+     */
+    public function getRedirectURL($catalog_id)
+    {
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog');
+        $controller->setDataobject();
+        $controller->connectDatabase();
+
+        $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
+        $key = $controller->get('primary_key', 'id', 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
+
+        $controller->model->query->select(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn('redirect_to_id')
+        );
+
+        $controller->model->query->where(
+            $controller->model->db->qn($prefix)
+                . '.'
+                . $controller->model->db->qn($key)
+                . ' = '
+                . (int)$catalog_id
+        );
+
+        $catalog_id = $controller->getData(QUERY_OBJECT_RESULT);
+
+        if ((int)$catalog_id == 0) {
+            return false;
+        }
+
+        return $this->get(null, null, $catalog_id);
     }
 
     /**
@@ -65,55 +193,61 @@ Class UrlService
         return BASE_URL . APPLICATION_URL_PATH . $path;
     }
 
-	/**
-	 * Get either a Gravatar URL or complete image tag for a specified email address.
-	 *
-	 * @param   string  $email
-	 * @param   string  $size        Size in pixels, defaults to 80px [ 1 - 512 ]
-	 * @param   string  $type        Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-	 * @param   string  $rating      Maximum rating (inclusive) [ g | pg | r | x ]
-	 * @param   boolean $image       true to return a complete IMG tag false for just the URL
-	 * @param   array   $attributes  Optional, additional key/value attributes to include in the IMG tag
-	 *
-	 * @return  mixed
-	 * @since   1.0
-	 */
-	public function getGravatar($email, $size = 0, $type = 'mm', $rating = 'g',
-								$image = false, $attributes = array(), $align = 'left')
-	{
+    /**
+     * Get either a Gravatar URL or complete image tag for a specified email address.
+     *
+     * @param   string  $email
+     * @param   string  $size        Size in pixels, defaults to 80px [ 1 - 512 ]
+     * @param   string  $type        Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+     * @param   string  $rating      Maximum rating (inclusive) [ g | pg | r | x ]
+     * @param   boolean $image       true to return a complete IMG tag false for just the URL
+     * @param   array   $attributes  Optional, additional key/value attributes to include in the IMG tag
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function getGravatar(
+        $email,
+        $size = 0,
+        $type = 'mm',
+        $rating = 'g',
+        $image = false,
+        $attributes = array(),
+        $align = 'left'
+    ) {
 
-		if ((int) $size == 0) {
-			$size = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_size', 80);
-			$type = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_type', 'mm');
-			$rating = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_rating', 'pg');
-			$image = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_image', 0);
-		}
+        if ((int)$size == 0) {
+            $size = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_size', 80);
+            $type = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_type', 'mm');
+            $rating = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_rating', 'pg');
+            $image = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_image', 0);
+        }
 
-		/**
-		if ($align == 'right') {
-		$css = '.gravatar { float:right; margin: 0 0 15px 15px; }';
-		} else {
-		$css = '.gravatar { float:left; margin: 0 15px 15px 0; }';
-		}
-		Services::Asset()->addCssDeclaration($css, 'text/css');
-		 */
-		$url = 'http://www.gravatar.com/avatar/';
-		$url .= md5(strtolower(trim($email)));
-		$url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;
-		if ($image) {
-			$url = '<img class="gravatar" src="' . $url . '"';
-			if (count($attributes) > 0) {
-				foreach ($attributes as $key => $val) {
-					$url .= ' ' . $key . '="' . $val . '"';
-				}
-			}
-			$url .= ' />';
-		}
+        /**
+        if ($align == 'right') {
+        $css = '.gravatar { float:right; margin: 0 0 15px 15px; }';
+        } else {
+        $css = '.gravatar { float:left; margin: 0 15px 15px 0; }';
+        }
+        Services::Asset()->addCssDeclaration($css, 'text/css');
+         */
+        $url = 'http://www.gravatar.com/avatar/';
+        $url .= md5(strtolower(trim($email)));
+        $url .= '?s=' . $size . '&d=' . $type . '&r=' . $rating;
+        if ($image) {
+            $url = '<img class="gravatar" src="' . $url . '"';
+            if (count($attributes) > 0) {
+                foreach ($attributes as $key => $val) {
+                    $url .= ' ' . $key . '="' . $val . '"';
+                }
+            }
+            $url .= ' />';
+        }
 
-		return $url;
-	}
+        return $url;
+    }
 
-	/**
+    /**
      * obfuscate Email
      *
      * @param   $email_address
@@ -162,7 +296,11 @@ Class UrlService
      */
     public function createWebLinks($url_field)
     {
-        return preg_replace('#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is', '\\1<a href="\\2">\\2</a>', $url_field);
+        return preg_replace(
+            '#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is',
+            '\\1<a href="\\2">\\2</a>',
+            $url_field
+        );
     }
 
     /**
@@ -268,7 +406,11 @@ Class UrlService
 
         } elseif ($shortener == '4') {
 
-            $bitlyURL = file_get_contents("http://api.bit.ly/v3/shorten" . "&login=" . $username . "&apiKey=" . $apikey . "&longUrl=" . urlencode($longurl) . "&format=json");
+            $bitlyURL = file_get_contents(
+                "http://api.bit.ly/v3/shorten" . "&signin=" . $username . "&apiKey=" . $apikey . "&longUrl=" . urlencode(
+                    $longurl
+                ) . "&format=json"
+            );
             $bitlyContent = json_decode($bitlyURL, true);
             $bitlyError = $bitlyContent["errorCode"];
             if ($bitlyError == 0) {
