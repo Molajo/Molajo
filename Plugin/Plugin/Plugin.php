@@ -7,6 +7,10 @@
 namespace Molajo\Plugin\Plugin;
 
 use Molajo\Service\Services;
+use Molajo\Service\Services\Theme\Helper\ContentHelper;
+use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
+use Molajo\Service\Services\Theme\Helper\ThemeHelper;
+use Molajo\Service\Services\Theme\Helper\ViewHelper;
 
 defined('MOLAJO') or die;
 
@@ -136,6 +140,28 @@ class Plugin
         'include_parse_sequence',
         'include_parse_exclude_until_final'
     );
+
+    /**
+     * Helpers
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $contentHelper;
+    protected $extensionHelper;
+    protected $themeHelper;
+    protected $viewHelper;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->contentHelper = new ContentHelper();
+        $this->extensionHelper = new ExtensionHelper();
+        $this->themeHelper = new ThemeHelper();
+        $this->viewHelper = new ViewHelper();
+    }
 
     /**
      * Get the current value (or default) of the specified property

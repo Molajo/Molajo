@@ -7,8 +7,6 @@
 namespace Molajo\Plugin\Pagetypeedit;
 
 use Molajo\Plugin\Plugin\Plugin;
-use Molajo\Service\Services;
-use Molajo\Helpers;
 
 defined('MOLAJO') or die;
 

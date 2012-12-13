@@ -8,6 +8,8 @@ namespace Molajo\Service\Services\Theme\Includer;
 
 use Molajo\Service\Services;
 use Molajo\Service\Services\Theme\Includer;
+use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
+use Molajo\Service\Services\Theme\Helper\ViewHelper;
 
 defined('MOLAJO') or die;
 
@@ -21,60 +23,108 @@ defined('MOLAJO') or die;
 Class TemplateIncluder extends Includer
 {
     /**
-     * @param string $name
-     * @param string $type
+     * Helpers
      *
-     * @return null
+     * @var    object
+     * @since  1.0
+     */
+    protected $extensionHelper;
+    protected $viewHelper;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->extensionHelper = new ExtensionHelper();
+        $this->viewHelper = new ViewHelper();
+    }
+
+    /**
+     * Uses Attributes and Extension Definitions to:
+     *
+     * 1. Determine which Template has been requested
+     * 2. Set Parameter Values for the Template, Wrap, and Model
+     *
+     * @return  bool
      * @since   1.0
      */
-    public function __construct($name = null, $type = null)
+    protected function setRenderCriteria()
     {
-        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_catalog_type_id', 0);
-        parent::__construct($name, $type);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'criteria_html_display_filter', false);
+        // get id for name - or name for id
+        if ($this->get('name', null) === null) {
+            throw new \Exception ('TemplateIncluder: No Name provided for Template Include');
+        }
 
-        if (file_exists(Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include'))) {
-        } else {
-            Services::Error()->set(500, 'Theme not found');
+        if (is_numeric($this->get('name')) {
+            $template_id = $this->extensionHelper->getId(CATALOG_TYPE_TEMPLATE_VIEW, $this->get('name'));
+        }
+
+        $template_id = (int)Services::Registry()->get('parameters', 'template_view_id');
+
+        if ((int)$template_id == 0) {
+            $template_title = Services::Registry()->get('parameters', 'template_view_path_node');
+            if (trim($template_title) == '') {
+            } else {
+                $template_id = $this->extensionHelper
+                    ->getId(CATALOG_TYPE_TEMPLATE_VIEW, $template_title);
+                Services::Registry()->set('include', 'template_view_id', $template_id);
+            }
+        }
+
+        if ((int)$template_id == 0) {
+            $template_id = $this->viewHelper->getDefault(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+            Services::Registry()->set('include', 'template_view_id', $template_id);
+        }
+
+        if ((int)$template_id == 0) {
             return false;
         }
-        $class = 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder';
 
-        if (class_exists($class)) {
-            $rc = new $class (THEME_LITERAL);
-            $results = $rc->process();
-        } else {
-            throw new \Exception('Parse: Instantiating ThemeIncluder Class failed');
+        $this->viewHelper->get($template_id, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+
+        if (is_array($saveTemplate) && count($saveTemplate) > 0) {
+            foreach ($saveTemplate as $key => $value) {
+                Services::Registry()->set('include', $key, $value);
+            }
         }
 
+        // extract parameters and populate $this->set('thing', value, 'parameters);
+        // loop thru parameter names and overaly with matching attributes
 
+        // get model
+        $fields = Services::Registry()->get(CONFIGURATION_LITERAL, 'application*');
+        if (count($fields) === 0 || $fields === false) {
+        } else {
+            foreach ($fields as $key => $value) {
+                Services::Registry()->set('include', $key, $value);
+            }
+        }
 
+        $fields = Services::Registry()->getArray('Tempattributes');
+        if (count($fields) === 0 || $fields === false) {
+        } else {
+            foreach ($fields as $key => $value) {
+                Services::Registry()->set('include', $key, $value);
+            }
+        }
 
+        $message = 'Includer: Render Criteria '
+            . 'Name ' . strtolower($this->name)
+            . ' Type ' . $this->type
+            . ' Template ' . Services::Registry()->get('include', 'template_view_title')
+            . ' Model Type ' . Services::Registry()->get('include', 'model_type')
+            . ' Model Name ' . Services::Registry()->get('include', 'model_name');
 
+        Services::Profiler()->set($message, PROFILER_RENDERING, VERBOSE);
 
-
-        $first = true;
-
-        Services::Profiler()->set(
-            'ParseService renderLoop Parse Body using Theme:'
-                . Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include')
-                . ' and Page View: '
-                . Services::Registry()->get(PARAMETERS_LITERAL, 'page_view_path_include'),
-            PROFILER_RENDERING
-        );
-
-        ob_start();
-        require Services::Registry()->get(PARAMETERS_LITERAL, 'theme_path_include');
-        $this->rendered_output = ob_get_contents();
-        ob_end_clean();
-
-        return $this;
+        return true;
     }
 
     /**
      * Loads Media CSS and JS files for Template and Template Views
      *
-     * @return object
+     * @return  object
      * @since   1.0
      */
     protected function loadViewMedia()
@@ -83,10 +133,10 @@ Class TemplateIncluder extends Includer
             return $this;
         }
 
-        $priority = Services::Registry()->get('parameters', 'criteria_media_priority_other_extension', 400);
+        $priority = Services::Registry()->get('include', 'criteria_media_priority_other_extension', 400);
 
-        $file_path = Services::Registry()->get('parameters', 'template_view_path');
-        $url_path = Services::Registry()->get('parameters', 'template_view_path_url');
+        $file_path = Services::Registry()->get('include', 'template_view_path');
+        $url_path = Services::Registry()->get('include', 'template_view_path_url');
 
         Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);

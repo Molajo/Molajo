@@ -6,7 +6,6 @@
  */
 namespace Molajo\Plugin\Ajax;
 
-use Molajo\Helpers;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
@@ -40,10 +39,10 @@ class AjaxPlugin extends Plugin
 /**
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'template_view_id', 1342);
-        Helpers::View()->get(1342, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+        $this->viewHelper->get(1342, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_id', 2090);
-        Helpers::View()->get(2090, CATALOG_TYPE_WRAP_VIEW_LITERAL);
+        $this->viewHelper->get(2090, CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_sequence', 'Ajax_sequence');
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', 'Ajax_final');

@@ -29,42 +29,10 @@ class PagetypeitemPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        echo '<pre>';
-        var_dump($this->parameters);
-        echo '</pre>';
-        die;
         if (strtolower($this->get('catalog_page_type', '', 'parameters')) == strtolower(PAGE_TYPE_ITEM)) {
         } else {
             return true;
         }
-
-        $model_type = ucfirst(strtolower($this->get('model_type', '', 'parameters')));
-        $model_name = ucfirst(strtolower($this->get('model_name', '', 'parameters')));
-
-        $this->set('request_model_type', $model_type, 'parameters');
-        $this->set('request_model_name', $this->get('model_name', '', 'parameters'), 'parameters');
-        $this->set('request_model_registry', $model_name . $model_type, 'parameters');
-
-        $this->set('model_name', ucfirst(strtolower(PRIMARY_LITERAL)), 'parameters');
-        $this->set('model_type', ucfirst(strtolower(DATA_OBJECT_LITERAL)), 'parameters');
-        $this->set('model_registry', ucfirst(strtolower(PRIMARY_LITERAL)).ucfirst(strtolower(DATA_OBJECT_LITERAL)), 'parameters');
-
-        $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
-        $controller->getModelRegistry(
-            $this->get('model_type', '', 'parameters'),
-            $this->get('model_name', '', 'parameters'),
-            0
-        );
-
-        Services::Registry()->merge(
-            $model_name . $model_type,
-            ucfirst(strtolower(PRIMARY_LITERAL)).ucfirst(strtolower(DATA_OBJECT_LITERAL)),
-            false, 0
-        );
-
-        $this->set('model_query_object', QUERY_OBJECT_ITEM, 'parameters');
-        $this->set('page_type', PAGE_TYPE_ITEM, 'parameters');
 
         return true;
     }

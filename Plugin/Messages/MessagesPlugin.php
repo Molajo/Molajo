@@ -42,6 +42,7 @@ class MessagesPlugin extends Plugin
         }
 
         $temp_query_results = array();
+
         foreach ($messages as $message) {
 
             $temp_row = new \stdClass();

@@ -259,7 +259,7 @@ Class EventService
                 }
             }
         }
-
+//        echo $event .' ' . $plugin_class  . '<br />';
         $results = $plugin->$event();
 
         if ($results === false) {
@@ -338,7 +338,6 @@ Class EventService
         $this->eventPluginArray = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
 
         $plugins = Services::Filesystem()->folderFolders($folder);
-
         if (count($plugins) == 0 || $plugins === false) {
             return true;
         }
@@ -447,7 +446,7 @@ Class EventService
         }
 
         if ($authorised == 0) {
-            throw new \Exception ('User not authorised for ' . $plugin_name);
+            return;
         }
 
         $event = strtolower($event);

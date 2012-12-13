@@ -8,7 +8,6 @@ namespace Molajo\Plugin\Pagetypeconfiguration;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
-use Molajo\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -156,7 +155,7 @@ class PagetypeconfigurationPlugin extends Plugin
      */
     protected function getResourceConfiguration($form, $current_page)
     {
-        Helpers::Content()->getResourceExtensionParameters(
+        $this->contentHelper->getResourceExtensionParameters(
             (int) $this->parameters['criteria_extension_instance_id']
         );
 

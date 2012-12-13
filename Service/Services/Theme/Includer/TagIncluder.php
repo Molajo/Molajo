@@ -25,7 +25,7 @@ Class TagIncluder extends Includer
      * @return mixed
      * @since   1.0
      */
-    public function __construct($name = null, $type = null)
+    public function __construct($include_name = null, $include_type = null)
     {
         return 'still need to do Tag Includer';
     }

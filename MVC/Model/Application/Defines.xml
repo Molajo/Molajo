@@ -160,9 +160,8 @@
     <define name="MESSAGES_LITERAL" value="Messages"/>
     <define name="METADATA_LITERAL" value="Metadata"/>
     <define name="MODEL_LITERAL" value="Model"/>
-    <define name="PAGE_LITERAL" value="Navigation"/>
+    <define name="PAGE_LITERAL" value="Page"/>
     <define name="NOFORMFIELDS_LITERAL" value="Noformfields"/>
-    <define name="OVERRIDE_LITERAL" value="Override"/>
     <define name="PARAMETERS_LITERAL" value="Parameters"/>
     <define name="PARSE_LITERAL" value="Parse"/>
     <define name="PERMISSIONS_LITERAL" value="Permissions"/>
@@ -170,7 +169,6 @@
     <define name="PRIMARY_LITERAL" value="Primary"/>
     <define name="PROFILER_LITERAL" value="Profiler"/>
     <define name="ROUTE_PARAMETERS_LITERAL" value="RouteParameters"/>
-    <define name="PAGE_LITERAL" value="Structure"/>
     <define name="SYSTEM_LITERAL" value="System"/>
     <define name="SYSTEM_MESSAGES_LITERAL" value="Systemmessages"/>
     <define name="TEMPLATE_LITERAL" value="Template"/>

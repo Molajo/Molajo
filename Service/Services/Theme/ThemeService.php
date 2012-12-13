@@ -119,11 +119,13 @@ Class ThemeService
 
         $this->final_indicator = false;
 
-        $this->getResource();
-        if ($this->rendered_output === false) {
-        } else {
-            return $this->rendered_output;
-        }
+        $this->getTheme();
+
+        //todo: fix for page cache;
+//        if ($this->rendered_output === false) {
+//        } else {
+//            return $this->rendered_output;
+//        }
 
         Services::Registry()->createRegistry(ROUTE_PARAMETERS_LITERAL);
         Services::Registry()->copy(PARAMETERS_LITERAL, ROUTE_PARAMETERS_LITERAL);
@@ -156,46 +158,47 @@ Class ThemeService
      * @since    1.0
      * @throws   \Exception
      */
-    protected function getResource()
+    protected function getTheme()
     {
-        Services::Profiler()->set('Theme: Resource Includer started', PROFILER_RENDERING);
+        Services::Profiler()->set('Theme: Theme Includer started', PROFILER_RENDERING);
 
         //todo - how to override? should includers be pre-defined like plugins?
-        $class = 'Molajo\\Service\\Services\\Theme\\Includer\\ResourceIncluder';
+        $class = 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder';
         if (class_exists($class)) {
-            $rc = new $class ('Resource', 'Resource');
+            $themeIncluder = new $class ('Theme', 'Initialise');
 
         } else {
-            throw new \Exception('Theme: Includer Failed Instantiating Class' . $class);
+            throw new \Exception('Theme: Includer Failure Instantiating Class' . $class);
         }
 
-        $this->rendered_output = $rc->getPrimaryData();
+        $this->rendered_output = $themeIncluder->setPrimaryData();
 
         if ($this->rendered_output === false) {
+            $this->rendered_output = array();
         } else {
-            Services::Profiler()->set('Theme: Page cache returned from Resource Includer', PROFILER_RENDERING);
+            Services::Profiler()->set('Theme: Page cache returned from Theme Includer', PROFILER_RENDERING);
             return;
         }
 
         $this->onBeforeParseEvent();
 
-        $this->rendered_output = $rc->process(array());
+        $this->rendered_output = $themeIncluder->process(array());
 
-        ob_start();
-        Services::Profiler()->set('Theme: Resource ' . $this->rendered_output, PROFILER_RENDERING, VERBOSE);
-        echo $this->rendered_output;
-        $includeDisplay = ob_get_contents();
-        ob_end_clean();
+//        ob_start();
+//        Services::Profiler()->set('Theme: Includer rendered ' . $this->rendered_output, PROFILER_RENDERING, VERBOSE);
+//        echo $this->rendered_output;
+//        $includeDisplay = ob_get_contents();
+//        ob_end_clean();
 
         return;
     }
 
     /**
-     * renderLoop is executed two times:
+     * renderLoop is initiated two times:
      *
      * 1. Renders Document Body
      *
-     *  - Parses Theme output rendered in getResource, looking for set of <include:type statements
+     *  - Parses Theme output rendered in getTheme, looking for set of <include:type statements
      *  - Passes control to Theme Includer Type Class, capturing the rendered output from processing
      *  - Process is recursive until no more includes found
      *
@@ -215,7 +218,6 @@ Class ThemeService
             $loop++;
 
             $this->include_request = array();
-
             $this->parseIncludeRequests();
 
             if (count($this->include_request) == 0) {
@@ -377,8 +379,6 @@ Class ThemeService
 
                     $replace[] = "<include:" . $parsed['replace'] . "/>";
 
-                    Services::Registry()->deleteRegistry(PARAMETERS_LITERAL);
-                    Services::Registry()->createRegistry(PARAMETERS_LITERAL);
 //todo figureout overrides
                     $class = 'Molajo\\Service\\Services\\Theme\\Includer\\';
                     $class .= ucfirst($include_type) . 'Includer';
@@ -387,11 +387,6 @@ Class ThemeService
                         $rc = new $class ($include_type, $include_name);
 
                     } else {
-                        Services::Profiler()->set(
-                            'Theme: callIncluder failed instantiating class '
-                                . $class,
-                            PROFILER_RENDERING
-                        );
                         throw new \Exception('Theme: Includer Failed Instantiating Class' . $class);
                     }
 
@@ -404,10 +399,9 @@ Class ThemeService
                     ob_end_clean();
 
                     Services::Profiler()->set($includeDisplay, PROFILER_RENDERING);
-                    echo $includeDisplay;
+
                     $output = trim($rc->process($attributes));
                     Services::Profiler()->set('Theme: Rendered ' . $output, PROFILER_RENDERING);
-                    echo $output;
 
                     $with[] = $output;
                 }
@@ -439,6 +433,10 @@ Class ThemeService
     protected function onBeforeParseEvent()
     {
         $query_results = $this->triggerEvent('onBeforeParse', Services::Registry()->get(PRIMARY_LITERAL, DATA_LITERAL));
+
+        Services::Registry()->delete(PRIMARY_LITERAL, DATA_LITERAL);
+        Services::Registry()->createRegistry(PRIMARY_LITERAL);
+        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
 
         return Services::Registry()->get(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
     }
@@ -478,13 +476,17 @@ Class ThemeService
      *
      * @param   string  $event_name
      *
-     * @return  void
+     * @return  array
      * @since   1.0
      */
     protected function triggerEvent($eventName, $query_results = null)
     {
         $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
             . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
+
+        if ($query_results === null) {
+            $query_results = array();
+        }
 
         $arguments = array(
             'model' => null,
@@ -497,7 +499,7 @@ Class ThemeService
             'include_parse_exclude_until_final' => $this->exclude_until_final
         );
 
-        $arguments = Services::Event()->scheduleEvent($eventName, $arguments, array());
+        $arguments = Services::Event()->scheduleEvent($eventName, $arguments, $this->getPluginList());
 
         if (isset($arguments['model_registry'])) {
             Services::Registry()->delete($model_registry);
@@ -511,13 +513,6 @@ Class ThemeService
             Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
             Services::Registry()->sort(PARAMETERS_LITERAL);
         }
-
-        if (isset($arguments['query_results'])) {
-            Services::Registry()->delete(PRIMARY_LITERAL, DATA_LITERAL);
-            Services::Registry()->createRegistry(PRIMARY_LITERAL, DATA_LITERAL);
-            Services::Registry()->loadArray(PRIMARY_LITERAL, DATA_LITERAL, $arguments[$query_results]);
-        }
-
         if (isset($arguments['rendered_output'])) {
             $this->rendered_output = $arguments['rendered_output'];
         }
@@ -531,5 +526,73 @@ Class ThemeService
         }
 
         return $query_results;
+    }
+
+    /**
+     * Get the list of potential plugins identified with this model registry
+     *
+     * @return  void
+     * @since   1.0
+     */
+    protected function getPluginList()
+    {
+        $model_registry_name = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
+            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
+
+        $plugins = array();
+
+        $modelPlugins = array();
+
+        if ((int) Services::Registry()->get($model_registry_name, 'process_plugins') > 0) {
+            $modelPlugins = Services::Registry()->get($model_registry_name, 'plugins');
+
+            if (is_array($modelPlugins)) {
+            } else {
+                $modelPlugins = array();
+            }
+        }
+
+        $templatePlugins = array();
+
+        if ((int)Services::Registry()->get($model_registry_name, 'process_template_plugins') > 0) {
+            $name = Services::Registry()->get($model_registry_name, 'template_view_path_node');
+            if ($name == '') {
+            } else {
+                $templatePlugins = Services::Registry()->get(ucfirst(strtolower($name)).'Templates', 'plugins');
+
+                if (is_array($templatePlugins)) {
+                } else {
+                    $templatePlugins = array();
+                }
+            }
+        }
+
+        $plugins = array_merge($modelPlugins, $templatePlugins);
+        if (is_array($plugins)) {
+        } else {
+            $plugins = array();
+        }
+
+        $page_type = Services::Registry()->get('Parameters', 'catalog_page_type');
+        if ($page_type == '') {
+        } else {
+            $plugins[] = 'Pagetype' . strtolower($page_type);
+        }
+
+        $template = Services::Registry()->get('Parameters', 'template_view_path_node');
+        if ($template == '') {
+        } else {
+            $plugins[] = $template;
+        }
+
+        if ((int)Services::Registry()->get($model_registry_name, 'process_plugins') == 0
+            && count($plugins) == 0) {
+            $this->get('plugins', array());
+            return;
+        }
+
+        $plugins[] = 'Application';
+
+        return $plugins;
     }
 }

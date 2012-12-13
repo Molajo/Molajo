@@ -6,7 +6,6 @@
  */
 namespace Molajo\Service\Services\Error;
 
-use Molajo\Helpers;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -35,8 +34,8 @@ Class ErrorService
         Services::Registry()->set(PARAMETERS_LITERAL, ERROR_STATUS_LITERAL, true);
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', ACTION_READ);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_authorisation', 'read'); //for now
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller', 'read');
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_task_permission', 'read'); //for now
+        Services::Registry()->set(PARAMETERS_LITERAL, 'request_task_controller', 'read');
 
         /** default error theme and page */
         Services::Registry()->set(PARAMETERS_LITERAL, 'theme_id',
@@ -67,7 +66,7 @@ Class ErrorService
 
         Services::Registry()->merge(CONFIGURATION_LITERAL, PARAMETERS_LITERAL, true);
 
-        Helpers::Extension()->setThemePageView();
+        $this->extensionHelper->setThemePageView();
 
         return true;
     }

@@ -10,8 +10,6 @@ use Molajo\Service\Services;
 use Molajo\Service\Services\Request\RequestService;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 
-use Molajo\Helpers;
-
 defined('MOLAJO') or die;
 
 /**
@@ -36,14 +34,6 @@ Class Application
      * @since  1.0
      */
     protected static $services = null;
-
-    /**
-     * Application::Helpers
-     *
-     * @var    object  Helper
-     * @since  1.0
-     */
-    protected $helpers = null;
 
     /**
      * $request
@@ -90,6 +80,51 @@ Class Application
     protected $exception_handler = null;
 
     /**
+     * Stores an array of key/value Parameters settings from Route
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $parameters = array();
+
+    /**
+     * List of Route Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $property_array = array(
+        'catalog_alias',
+        'catalog_category_id',
+        'catalog_extension_instance_id',
+        'catalog_home',
+        'catalog_id',
+        'catalog_model_name',
+        'catalog_model_type',
+        'catalog_page_type',
+        'catalog_source_id',
+        'catalog_type',
+        'catalog_type_id',
+        'catalog_url_request',
+        'catalog_url_sef_request',
+        'catalog_view_group_id',
+        'parameters',
+        'redirect_to_id',
+        'request_action',
+        'request_base_url_path',
+        'request_catalog_id',
+        'request_filters',
+        'request_non_route_parameters',
+        'request_post_variables',
+        'request_task',
+        'request_task_controller',
+        'request_task_permission',
+        'request_task_values',
+        'request_url',
+        'status_authorised',
+        'status_found');
+
+    /**
      * Override normal processing with these parameters
      *
      * @param   string  $override_url_request
@@ -118,8 +153,6 @@ Class Application
                 Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
 
             $results = $this->initialise(
-                $override_url_request,
-                $override_catalog_id,
                 $override_parse_sequence,
                 $override_parse_final
             );
@@ -138,7 +171,7 @@ Class Application
                 Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
             }
 
-            $this->route();
+            $this->route($override_url_request, $override_catalog_id);
 
             $this->onAfterRouteEvent();
 
@@ -169,7 +202,8 @@ Class Application
 
         /** 4. Execute */
         try {
-            $this->execute();
+
+            $this->execute($override_parse_sequence, $override_parse_final);
 
             $this->onAfterExecuteEvent();
 
@@ -191,6 +225,53 @@ Class Application
     }
 
     /**
+     * Get the current value (or default) of the specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function get($key = null, $default = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->property_array)) {
+        } else {
+            throw new \OutOfRangeException('Application: is attempting to get value for unknown key: ' . $key);
+        }
+
+        if (isset($this->parameters[$key])) {
+            return $this->parameters[$key];
+        }
+        $this->parameters[$key] = $default;
+        return $this->parameters[$key];
+    }
+
+    /**
+     * Set the value of a specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function set($key, $value = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->property_array)) {
+        } else {
+            throw new \OutOfRangeException('Application: is attempting to set value for unknown key: ' . $key);
+        }
+
+        $this->parameters[$key] = $value;
+        return $this->parameters[$key];
+    }
+
+    /**
      * Initialise Site, Application, and Services
      *
      * @param   string  $override_url_request
@@ -202,8 +283,6 @@ Class Application
      * @since   1.0
      */
     protected function initialise(
-        $override_url_request = false,
-        $override_catalog_id = false,
         $override_parse_sequence = false,
         $override_parse_final = false
     ) {
@@ -228,17 +307,10 @@ Class Application
 
         $this->verifySiteApplication();
 
-        Application::Helpers();
-
         /** LAZY LOAD Session */
         //Services::Session()->create(
         //    Services::Session()->getHash(get_class($this))
         //);
-
-        Services::Registry()->set(OVERRIDE_LITERAL, 'url_request', $override_url_request);
-        Services::Registry()->set(OVERRIDE_LITERAL, 'catalog_id', $override_catalog_id);
-        Services::Registry()->set(OVERRIDE_LITERAL, 'parse_sequence', $override_parse_sequence);
-        Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', $override_parse_final);
 
         return true;
     }
@@ -304,31 +376,47 @@ Class Application
     /**
      * Evaluates HTTP Request to determine routing requirements, including:
      *
-     * - Normal page request: populates Registry for Request
+     * - Normal page request: returns array of route parameters
      * - Issues redirect request for "home" duplicate content (i.e., http://example.com/index.php, etc.)
      * - Checks for 'Application Offline Mode', sets a 503 error and registry values for View
      * - For 'Page not found', sets 404 error and registry values for Error Template/View
      * - For defined redirect with Catalog, issues 301 Redirect to new URL
-     * - For 'signin requirement' situations, issues 303 redirect to configured signin page
+     * - For 'log on requirement' situations, issues 303 redirect to configured signin page
+     *
+     * @param   $override_url_request
+     * @param   $override_catalog_id
      *
      * @return  boolean
      * @since   1.0
      */
-    protected function route()
+
+    /**
+     * @return bool
+     */
+    protected function route($override_url_request, $override_catalog_id)
     {
 //$results = Services::Install()->content();
 //$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
 //$results = Services::Install()->testDeleteExtension('Test', 'Resources');
 
-        $results = Services::Route()->process(
+        $class = 'Molajo\\Service\\Services\\Route\\RouteService';
+        $route = new $class();
+
+        $route = $route->process(
             $this->requested_resource_for_route,
-            $this->base_url_path_for_application
+            $this->base_url_path_for_application,
+            $override_url_request,
+            $override_catalog_id
         );
 
-        if ($results === true
-            && Services::Redirect()->url === null
+        if (Services::Redirect()->url === null
             && (int)Services::Redirect()->code == 0
         ) {
+            $this->parameters = $route;
+            echo '<pre>';
+            var_dump($this->parameters);
+            echo '</pre>';
+            die;
             return true;
         }
 
@@ -987,27 +1075,5 @@ Class Application
         }
 
         return self::$services;
-    }
-
-    /**
-     * Application::Helpers
-     *
-     * @return  Helpers
-     * @throws  \RuntimeException
-     * @since   1.0
-     */
-    public function Helpers()
-    {
-        if ($this->helpers) {
-        } else {
-            try {
-                $this->helpers = new Helpers();
-            } catch (\Exception $e) {
-                echo 'Instantiate Helpers Exception : ', $e->getMessage(), "\n";
-                die;
-            }
-        }
-
-        return $this->helpers;
     }
 }

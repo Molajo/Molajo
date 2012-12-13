@@ -123,9 +123,9 @@ class Controller
         'row',
         'plugins',
         'rendered_output',
-        'connect_database_set',
         'view_path',
-        'view_path_url'
+        'view_path_url',
+        'connect_database_set'
     );
 
     /**
@@ -134,16 +134,15 @@ class Controller
     public function __construct()
     {
         /** Temporary and Internal */
-        $this->model_registry_name = null;
-        $this->row_object_set = 0;
-        $this->connect_database_set = 0;
+        $this->set('model_registry_name', null);
+        $this->set('connect_database_set', 0);
 
         /** Shared with Model and Passed into Events/Plugins */
-        $this->parameters = array();
-        $this->model = array();
-        $this->model_registry = array();
-        $this->query_results = array();
-        $this->row = array();
+        $this->set('parameters', array());
+        $this->set('model', array());
+        $this->set('model_registry', array());
+        $this->set('query_results', array());
+        $this->set('row', array());
         $this->get('plugins', array());
 
         return $this;
@@ -246,7 +245,7 @@ class Controller
      */
     public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null, $connect = 0)
     {
-echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
+//echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
 
         $this->set('connect_database_set', 0);
 
@@ -289,10 +288,10 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
             }
         }
 
-        $this->set('model_registry', Services::Registry()->get($this->get('model_registry_name')));
+        $this->set('model_registry', Services::Registry()->get($this->model_registry_name));
 
         /** Only to ensure this redundant data is the same - it is a handy data element to retain */
-        $this->set('model_registry_name', $this->get('model_registry_name'), 'model_registry');
+        $this->set('model_registry_name', $this->model_registry_name, 'model_registry');
 
         if (isset($this->model_registry['data_object_data_object_type'])) {
 
@@ -418,8 +417,7 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins', 1, 'model_registry')
                 . '<br /><br />';
 
-//        if (defined('ROUTE')) {
-//            echo $profiler_message;
+//        echo $profiler_message;
 //        }
 
         if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
@@ -437,7 +435,7 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
 
             } else {
                 $service_class = $this->get('service_class', DATABASE_LITERAL, 'model_registry');
-                $service_class_query_method = $this->get('service_class_query_method',  '', 'model_registry');
+                $service_class_query_method = $this->get('service_class_query_method', '', 'model_registry');
 
                 if ($this->get('model_name', '', 'model_registry') == PRIMARY_LITERAL) {
                     $method_parameter = DATA_LITERAL;
@@ -490,10 +488,10 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
         }
         if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
         } else {
-        //echo '<pre>';
-        //var_dump($this->query_results);
-        //echo '</pre><br /><br />';
-        //die;
+            //echo '<pre>';
+            //var_dump($this->query_results);
+            //echo '</pre><br /><br />';
+            //die;
         }
         if ($this->get('data_object_type', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
         } else {
@@ -589,13 +587,13 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
             $this->get('criteria_extension_instance_id', '', 'parameters'),
             $this->get('primary_prefix', 'a', 'model_registry')
         );
-/**
+        /**
         echo '<br /><br /><pre>';
         $this->get('model_registry_name');
         echo '<br /><br /><pre>';
         echo $this->model->query->__toString();
         echo '<br /><br />';
-*/
+         */
         return;
     }
 
@@ -779,7 +777,7 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
 
         if (defined('ROUTE')) {
         } else {
-            return true;
+            return;
         }
 
         if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_RESULT) {
@@ -805,7 +803,7 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
 
             if ($name == '') {
             } else {
-                $templatePlugins = Services::Registry()->get(ucfirst(strtolower($name)).'Templates', 'plugins');
+                $templatePlugins = Services::Registry()->get(ucfirst(strtolower($name)) . 'Templates', 'plugins');
 
                 if (is_array($templatePlugins)) {
                 } else {
@@ -823,7 +821,6 @@ echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
         $page_type = $this->get('catalog_page_type', '', 'parameters');
         if ($page_type == '') {
         } else {
-            echo 'Pagetype' . strtolower($page_type) . '<br />';
             $plugins[] = 'Pagetype' . strtolower($page_type);
         }
 

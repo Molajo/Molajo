@@ -31,50 +31,64 @@ class DisplayController extends Controller
      */
     public function execute()
     {
-
         $this->getModelRegistry(
             $this->get('model_type', '', 'parameters'),
             $this->get('model_name', '', 'parameters'),
             1
         );
 
-        $value = Services::Registry()->get(
-            $this->get('template_view_model_registry', '', 'parameters'),
-            'process_plugins'
-        );
-        $this->set('process_template_plugins', $value, 'model_registry');
-        $this->getData($this->get('model_query_object', '', 'parameters'));
+        /** The Theme Includer renders the Theme Include File -- no additional data required */
+        if (strtolower($this->get('includer_name', '', 'parameters')) == strtolower(CATALOG_TYPE_THEME_LITERAL)) {
 
-        if (PROFILER_ON
-            && Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results', 0) == 1
-        ) {
+        } else {
 
-            $profiler_message = 'DisplayController: Execute method input '
-                . ' <br />Includer: ' . $this->get('includer_type', '', 'parameters')
-                . ' <br />Model Type: ' . $this->get('model_type', '', 'parameters')
-                . ' <br />Model Name: ' . $this->get('model_name', '', 'parameters')
-                . ' <br />Model Query Object: ' . $this->get('model_query_object', '', 'parameters')
-                . ' <br />Template Path: ' . $this->get('template_view_path', '', 'parameters')
-                . ' <br />Wrap Path: ' . $this->get('wrap_view_path', '', 'parameters');
+            $value = Services::Registry()->get($this->get('template_view_model_registry', '', 'parameters'),
+                'process_plugins'
+            );
 
-            ob_start();
-            echo '<pre>';
-            var_dump($this->query_results);
-            echo '</pre>';
-            $profiler_message .= ob_get_contents();
-            ob_end_clean();
+            $this->set('process_template_plugins', $value, 'model_registry');
 
-            Services::Profiler()->set($profiler_message, PROFILER_RENDERING, VERBOSE);
+            $this->getData($this->get('model_query_object', '', 'parameters'));
+
+            if (PROFILER_ON
+                && Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results', 0) == 1
+            ) {
+
+                $profiler_message = 'DisplayController: Execute method input '
+                    . ' <br />Includer: ' . $this->get('includer_type', '', 'parameters')
+                    . ' <br />Model Type: ' . $this->get('model_type', '', 'parameters')
+                    . ' <br />Model Name: ' . $this->get('model_name', '', 'parameters')
+                    . ' <br />Model Query Object: ' . $this->get('model_query_object', '', 'parameters')
+                    . ' <br />Template Path: ' . $this->get('template_view_path', '', 'parameters')
+                    . ' <br />Wrap Path: ' . $this->get('wrap_view_path', '', 'parameters');
+
+                ob_start();
+                echo '<pre>';
+                var_dump($this->query_results);
+                echo '</pre>';
+                $profiler_message .= ob_get_contents();
+                ob_end_clean();
+
+                Services::Profiler()->set($profiler_message, PROFILER_RENDERING, VERBOSE);
+            }
+
+            if (count($this->query_results) == 0
+                && (int)$this->get('criteria_display_view_on_no_results', 0) == 0
+            ) {
+                return '';
+            }
         }
 
-        if (count($this->query_results) == 0
-            && (int)$this->get('criteria_display_view_on_no_results', 0) == 0
-        ) {
-            return '';
-        }
+        if (strtolower($this->get('includer_name', '', 'parameters'))
+            == strtolower(CATALOG_TYPE_THEME_LITERAL)) {
 
-        if (strtolower($this->get('includer_name', '', 'parameters')) == CATALOG_TYPE_WRAP_VIEW_LITERAL) {
+            $this->renderTheme();
+
+        } else if (strtolower($this->get('includer_name', '', 'parameters'))
+            == strtolower(CATALOG_TYPE_WRAP_VIEW_LITERAL)) {
+
             $this->rendered_output = $this->query_results;
+            $this->wrapView();
 
         } else {
 
@@ -87,11 +101,11 @@ class DisplayController extends Controller
             $this->renderView();
 
             $this->onAfterRenderView();
-        }
 
-        if ($this->get('wrap_view_path_node', '', 'parameters') == '') {
-        } else {
-           // $this->wrapView();
+            if ($this->get('wrap_view_path_node', '', 'parameters') == '') {
+            } else {
+               $this->wrapView();
+            }
         }
 
         return $this->rendered_output;
@@ -115,6 +129,37 @@ class DisplayController extends Controller
         $this->set('view_path_url', $this->get('wrap_view_path_url', '', 'parameters'));
 
         return $this->renderView();
+    }
+
+    /**
+     * RenderTheme is first output rendered, driven by Theme Includer, and the source of
+     *  include statements during parsing. All rendered output is recursively scanned for include statements.
+     *  For that reason, <include:type values can be embedded into Views and content.
+     *
+     * @return  string
+     * @since   1.0
+     */
+    protected function renderTheme()
+    {
+        $file_path = Services::Registry()->get('parameters', 'theme_path_include');
+
+        if (file_exists($file_path)) {
+        } else {
+            $name = Services::Registry()->get('parameters', 'theme_path_node');
+            throw new \RuntimeException('DisplayController: Theme '. $name . ' not found at ' . $file_path);
+        }
+
+        $this->row = new \stdClass();
+        $this->row->page_name = Services::Registry()->get('parameters', 'page_view_path_node');
+
+        ob_start();
+        include $file_path;
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        $this->rendered_output = $output;
+
+        return;
     }
 
     /**

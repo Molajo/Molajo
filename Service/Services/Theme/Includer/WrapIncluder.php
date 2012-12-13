@@ -27,11 +27,11 @@ Class WrapIncluder extends Includer
      * @return null
      * @since   1.0
      */
-    public function __construct($name = null, $type = null)
+    public function __construct($include_name = null, $include_type = null)
     {
-        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_catalog_type_id', 0);
-        parent::__construct($name, $type);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'criteria_html_display_filter', false);
+        Services::Registry()->set('include', 'extension_catalog_type_id', 0);
+        parent::__construct($include_name, $include_type);
+        Services::Registry()->set('include', 'criteria_html_display_filter', false);
 
         return $this;
     }
@@ -44,10 +44,10 @@ Class WrapIncluder extends Includer
      */
     protected function loadViewMedia()
     {
-        $priority = Services::Registry()->get('parameters', 'criteria_media_priority_other_extension', 400);
+        $priority = Services::Registry()->get('include', 'criteria_media_priority_other_extension', 400);
 
-        $file_path = Services::Registry()->get('parameters', 'wrap_view_path');
-        $url_path = Services::Registry()->get('parameters', 'wrap_view_path_url');
+        $file_path = Services::Registry()->get('include', 'wrap_view_path');
+        $url_path = Services::Registry()->get('include', 'wrap_view_path_url');
 
         Services::Asset()->addCssFolder($file_path, $url_path, $priority);
         Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);

@@ -8,14 +8,11 @@
     <action name="edit" authorisation="read" controller="read"/>
 
     <action name="save" authorisation="update" controller="update"/>
-
-
-    <action name="tag" authorisation="update" controller="update"/>
-
     <action name="cancel" authorisation="none" controller="update"/>
 
     <action name="archive" authorisation="publish" controller="update"/>
     <action name="categorize" authorisation="publish" controller="update"/>
+    <action name="tag" authorisation="publish" controller="update"/>
     <action name="checkin" authorisation="publish" controller="update"/>
     <action name="feature" authorisation="publish" controller="update"/>
     <action name="orderdown" authorisation="publish" controller="update"/>

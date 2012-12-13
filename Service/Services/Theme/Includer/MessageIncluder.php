@@ -28,11 +28,11 @@ Class MessageIncluder extends Includer
      * @return null
      * @since   1.0
      */
-    public function __construct($name = null, $type = null)
+    public function __construct($include_name = null, $include_type = null)
     {
-        Services::Registry()->set(PARAMETERS_LITERAL, 'extension_catalog_type_id', 0);
-        parent::__construct($name, $type);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'criteria_html_display_filter', false);
+        Services::Registry()->set('include', 'extension_catalog_type_id', 0);
+        parent::__construct($include_name, $include_type);
+        Services::Registry()->set('include', 'criteria_html_display_filter', false);
 
         return $this;
     }
@@ -47,34 +47,34 @@ Class MessageIncluder extends Includer
      */
     protected function setRenderCriteria()
     {
-        Services::Registry()->set(PARAMETERS_LITERAL, 'template_view_id',
+        Services::Registry()->set('include', 'template_view_id',
             Services::Registry()->get(CONFIGURATION_LITERAL, 'message_template_view_id'));
-        Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_id',
+        Services::Registry()->set('include', 'wrap_view_id',
             Services::Registry()->get(CONFIGURATION_LITERAL, 'message_wrap_view_id'));
 
-        Services::Registry()->set(PARAMETERS_LITERAL, 'criteria_display_view_on_no_results', 0);
+        Services::Registry()->set('include', 'criteria_display_view_on_no_results', 0);
 
         /** Template  */
-        Helpers::View()->get(Services::Registry()->get('parameters', 'template_view_id'), CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+        $this->viewHelper->get(Services::Registry()->get('include', 'template_view_id'), CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
 
         /** Wrap  */
-        Helpers::View()->get(Services::Registry()->get('parameters', 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);
+        $this->viewHelper->get(Services::Registry()->get('include', 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         /** Merge Configuration in */
-        Services::Registry()->merge(CONFIGURATION_LITERAL, PARAMETERS_LITERAL, true);
+        Services::Registry()->merge(CONFIGURATION_LITERAL, 'include', true);
 
         /** DBO  */
-        Services::Registry()->set(PARAMETERS_LITERAL, 'model_type', DATA_OBJECT_LITERAL);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'model_name', 'Messages');
-        Services::Registry()->set(PARAMETERS_LITERAL, 'model_query_object', QUERY_OBJECT_LIST);
+        Services::Registry()->set('include', 'model_type', DATA_OBJECT_LITERAL);
+        Services::Registry()->set('include', 'model_name', 'Messages');
+        Services::Registry()->set('include', 'model_query_object', QUERY_OBJECT_LIST);
 
         /** Cleanup */
-        Services::Registry()->delete(PARAMETERS_LITERAL, 'item*');
-        Services::Registry()->delete(PARAMETERS_LITERAL, 'list*');
-        Services::Registry()->delete(PARAMETERS_LITERAL, 'form*');
+        Services::Registry()->delete('include', 'item*');
+        Services::Registry()->delete('include', 'list*');
+        Services::Registry()->delete('include', 'form*');
 
         /** Sort */
-        Services::Registry()->sort(PARAMETERS_LITERAL);
+        Services::Registry()->sort('include');
 
         return true;
     }

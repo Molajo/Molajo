@@ -21,55 +21,135 @@ defined('MOLAJO') or die;
 Class RouteService
 {
     /**
-     * Using the Services::Request()->get('requested_resource_for_route') constant:
+     * Stores an array of key/value Parameters settings
      *
-     *  - retrieve the catalog record
-     *  - set registry values needed to fulfill the page request
+     * @var    array
+     * @since  1.0
+     */
+    protected $parameters = array();
+
+    /**
+     * List of Route Properties
      *
-     * @param   $requested_resource_for_route
-     * @param   $base_url_path_for_application
+     * @var    object
+     * @since  1.0
+     */
+    protected $property_array = array(
+      'catalog_alias',
+      'catalog_category_id',
+      'catalog_extension_instance_id',
+      'catalog_home',
+      'catalog_id',
+      'catalog_model_name',
+      'catalog_model_type',
+      'catalog_page_type',
+      'catalog_source_id',
+      'catalog_type',
+      'catalog_type_id',
+      'catalog_url_request',
+      'catalog_url_sef_request',
+      'catalog_view_group_id',
+      'parameters',
+      'redirect_to_id',
+      'request_action',
+      'request_base_url_path',
+      'request_catalog_id',
+      'request_filters',
+      'request_non_route_parameters',
+      'request_post_variables',
+      'request_task',
+      'request_task_controller',
+      'request_task_permission',
+      'request_task_values',
+      'request_url',
+      'status_authorised',
+      'status_found');
+
+    /**
+     * Get the current value (or default) of the specified key
      *
-     * @return  bool
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
      * @since   1.0
      */
-    public function process($requested_resource_for_route, $base_url_path_for_application)
+    public function get($key = null, $default = null)
     {
-        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->createRegistry(METADATA_LITERAL);
-        Services::Registry()->deleteRegistry(PLUGIN_LITERAL);
+        $key = strtolower($key);
 
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id', 0);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'status_found', '');
-        Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', '');
-        Services::Registry()->set(PARAMETERS_LITERAL, 'redirect_to_id', 0);
-
-        $url_request = $requested_resource_for_route;
-        if (substr($url_request, 0, 1) == '/') {
-            $url_request = substr($url_request, 1);
+        if (in_array($key, $this->property_array)) {
+        } else {
+            throw new \OutOfRangeException('Route: is attempting to get value for unknown key: ' . $key);
         }
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $url_request);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_base_url_path', $base_url_path_for_application);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id', 0);
+
+        if (isset($this->parameters[$key])) {
+            return $this->parameters[$key];
+        }
+        $this->parameters[$key] = $default;
+        return $this->parameters[$key];
+    }
+
+    /**
+     * Set the value of a specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->property_array)) {
+        } else {
+            throw new \OutOfRangeException('Route: is attempting to set value for unknown key: ' . $key);
+        }
+
+        $this->parameters[$key] = $value;
+        return $this->parameters[$key];
+    }
+
+    /**
+     * Retrieve catalog entry and values needed to route the request
+     *
+     * @param   string  $requested_resource_for_route
+     * @param   string  $base_url_path_for_application
+     * @param   string  $override_url_request
+     * @param   string  $override_catalog_id
+     *
+     * @return  array|bool
+     * @since   1.0
+     */
+    public function process($requested_resource_for_route, $base_url_path_for_application,
+        $override_url_request = null, $override_catalog_id = null)
+    {
+        $this->set('request_catalog_id', 0);
+        $this->set('status_found', '');
+        $this->set('status_authorised', '');
+        $this->set('redirect_to_id', 0);
+
+        if (substr($requested_resource_for_route, 0, 1) == '/') {
+            $requested_resource_for_route = substr($requested_resource_for_route, 1);
+        }
+        $this->set('request_url', $requested_resource_for_route);
+        $this->set('request_base_url_path', $base_url_path_for_application);
+        $this->set('request_catalog_id', 0);
 
         /** Overrides */
-        if ((int)Services::Registry()->get(OVERRIDE_LITERAL, 'catalog_id') > 0) {
-            Services::Registry()->set(
-                PARAMETERS_LITERAL,
-                'request_catalog_id',
-                (int)Services::Registry()->get(OVERRIDE_LITERAL, 'catalog_id')
-            );
+        if ((int)$override_catalog_id > 0) {
+            $this->set('request_catalog_id', (int)$override_catalog_id);
         }
 
-        if (Services::Registry()->get(OVERRIDE_LITERAL, 'url_request', '') == '') {
+        if ($override_url_request == '') {
         } else {
-            Services::Registry()->set(
-                PARAMETERS_LITERAL,
-                'request_url',
-                Services::Registry()->get(OVERRIDE_LITERAL, 'url_request')
-            );
+            $this->set('request_url', $override_url_request);
         }
 
         $continue = $this->checkHome();
+
         if ($continue === false) {
             Services::Profiler()->set('Route checkHome() Redirect to Real Home', 'Route');
             return false;
@@ -92,46 +172,37 @@ Class RouteService
         $continue = $this->getRouteCatalog();
 
         /** 404 */
-        if (Services::Registry()->get('parameters', 'status_found') === false) {
+        if ($this->get('status_found') === false) {
             Services::Error()->set(404);
             Services::Profiler()->set('Application::Route() 404', 'Route');
             return false;
         }
 
         /** URL Change Redirect from Catalog */
-        if ((int)Services::Registry()->get('parameters', 'redirect_to_id', 0) == 0) {
+        if ((int)$this->get('redirect_to_id', 0) == 0) {
         } else {
-
-            Services::Response()->redirect(
-                Services::Url()->get(
-                    0,
-                    0,
-                    Services::Registry()->get('parameters', 'redirect_to_id', 0)
-                ),
-                301
-            );
-
+            Services::Response()->redirect(Services::Url()->get(0, 0,  $this->get('redirect_to_id', 0)), 301);
             Services::Profiler()->set('Application::Route() Redirect', 'Route');
-
             return false;
         }
 
         /** Redirect to signin */
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'application_signin_requirement', 0) > 0
             && Services::Registry()->get(USER_LITERAL, 'guest', true) === true
-            && Services::Registry()->get('parameters', 'request_catalog_id')
+            && $this->get('request_catalog_id')
                 <> Services::Registry()->get(CONFIGURATION_LITERAL, 'application_signin_requirement', 0)
         ) {
             Services::Response()->redirect(
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_signin_requirement', 0)
-                ,
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_signin_requirement', 0),
                 303
             );
             Services::Profiler()->set('Route::Redirect to signin', 'Route');
             return false;
         }
 
-        return $this;
+        $sort = $this->parameters;
+        ksort($sort);
+        return $sort;
     }
 
     /**
@@ -145,59 +216,48 @@ Class RouteService
      */
     protected function checkHome()
     {
-        $path = Services::Registry()->get('parameters', 'request_url');
-        Services::Registry()->set(PARAMETERS_LITERAL, 'home', 0);
+        $path = $this->get('request_url');
+        $this->set('catalog_home', 0);
 
         if (strlen($path) == 0 || trim($path) == '') {
-
-            Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', '');
-            Services::Registry()->set(
-                PARAMETERS_LITERAL,
-                'request_catalog_id',
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0)
-            );
-            Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', true);
-            Services::Registry()->set(PARAMETERS_LITERAL, 'home', 1);
+            $this->set('request_url', '');
+            $this->set('request_catalog_id',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0));
+            $this->set('catalog_home', 1);
 
             return true;
 
         } else {
 
             if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef_suffix', 1) == 1
-                && substr($path, -11) == '/index.html'
-            ) {
+                    && substr($path, -11) == '/index.html') {
                 $path = substr($path, 0, (strlen($path) - 11));
             }
 
             if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef_suffix', 1) == 1
-                && substr($path, -5) == '.html'
-            ) {
+                    && substr($path, -5) == '.html') {
                 $path = substr($path, 0, (strlen($path) - 5));
             }
         }
 
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
+        $this->set('request_url', $path);
 
-        if (Services::Registry()->get('parameters', 'request_url', '') == 'index.php'
-            || Services::Registry()->get('parameters', 'request_url', '') == 'index.php/'
-            || Services::Registry()->get('parameters', 'request_url', '') == 'index.php?'
-            || Services::Registry()->get('parameters', 'request_url', '') == '/index.php/'
-        ) {
+        if ($this->get('request_url', '') == 'index.php'
+            || $this->get('request_url', '') == 'index.php/'
+            || $this->get('request_url', '') == 'index.php?'
+            || $this->get('request_url', '') == '/index.php/') {
+
             Services::Redirect()->set('', 301);
 
             return false;
         }
 
-        if (Services::Registry()->get('parameters', 'request_url', '') == ''
-            && (int)Services::Registry()->get('parameters', 'request_catalog_id', 0) == 0
-        ) {
+        if ($this->get('request_url', '') == ''
+            && (int)$this->get('request_catalog_id', 0) == 0) {
 
-            Services::Registry()->set(
-                PARAMETERS_LITERAL,
-                'request_catalog_id',
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0)
-            );
-            Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', true);
+            $this->set('request_catalog_id',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0));
+            $this->set('catalog_home', true);
         }
 
         return true;
@@ -220,26 +280,26 @@ Class RouteService
      *
      * Routing - operate on the collection
      *
-     * GET /people/1
+     * GET /resource/1
      *
-     * GET /articles - list
-     * GET /articles/new - form for new article
-     * GET /articles/1/edit - form for edit article 1
+     * GET /resource - list
+     * GET /resource/new - form for new resource
+     * GET /resource/1/edit - form for edit resource 1
      *
-     * POST /articles - create new article
-     * PUT /articles/1,3,4 - update articles 1,3,4
-     * PUT /articles/1 - update article record 1
-     * DELETE /articles/1 - delete the record with 1 for a primary key
+     * POST /resource - create new resource
+     * PUT /resource/1,3,4 - update resource 1,3,4
+     * PUT /resource/1 - update resource record 1
+     * DELETE /resource/1 - delete the record with 1 for a primary key
      *
      * To compensate for browser limitations
      *
-     * POST /articles/1?_method=DELETE
-     * POST /articles/1?_method=PUT
+     * POST /resource/1?_method=DELETE
+     * POST /resource/1?_method=PUT
      *
      * Follow a relationship:
-     * GET /articles/1/comments
-     * GET /articles/1/comments/new
-     * POST /articles/1/comments (new comment save)
+     * GET /resource/1/comments
+     * GET /resource/1/comments/new
+     * POST /resource/1/comments (new comment save)
      *
      * Response http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success
      *
@@ -248,73 +308,57 @@ Class RouteService
      */
     protected function getResource()
     {
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_non_route_parameters', '');
+        $this->set('request_non_route_parameters', '');
 
         $method = Services::Request()->get('method');
+        $method = strtolower($method);
 
-        if ($method == 'POST') {
+        if ($method == 'post') {
             $action = 'create';
-            $controller = 'create';
 
-        } elseif ($method == 'PUT') {
+        } elseif ($method == 'put') {
             $action = 'update';
-            $controller = 'update';
 
-        } elseif ($method == 'DELETE') {
+        } elseif ($method == 'delete') {
             $action = 'delete';
-            $controller = 'delete';
 
         } else {
-            $action = ACTION_READ;
-            $controller = 'read';
+            $action = 'read';
         }
+        $this->set('request_action', $action);
 
-        if ($action == ACTION_READ) {
+        if ($action == 'read') {
             $post_variables = array();
-
+            $this->getReadVariables();
         } else {
-            //todo retrieve post variables
             $post_variables = Services::Request()->get('post_variables');
-
-            if (count($post_variables) == 0
-                || $post_variables === false
-            ) {
-            } else {
-                $i = 0;
-                foreach ($post_variables as $key => $value) {
-                    echo $key . ' ' . $value . '<br />';
-                    //Services::Request()->set($key, $value);
-                }
-            }
+            $this->getTaskVariables();
         }
+        $this->set('request_post_variables', $post_variables);
 
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action', $action);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_action_authorisation', $controller); //for now
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_controller', $controller);
-
-        /** Retrieve ID, unless already set for Home or Override  */
-        if (Services::Registry()->get('parameters', 'request_catalog_id') > 0) {
+        if ($this->get('request_catalog_id') > 0) {
         } else {
             $value = (int)Services::Request()->get('id');
             if ($value == 0) {
             } else {
-                Services::Registry()->set(PARAMETERS_LITERAL, 'request_catalog_id', $value);
+                $this->set('request_catalog_id', $value);
             }
         }
 
-        /** URL Type */
-        $sef = Services::Registry()->get('parameters', 'sef_url', 1);
+        /**
+        todo: test with non-sef URLs
+        $sef = Services::Registry()->get(CONFIGURATION_LITERAL, 'sef_url', 1);
         if ($sef == 1) {
             $this->getResourceSEF();
         } else {
             $this->getResourceExtensionParameters();
         }
-
+        */
         return true;
     }
 
     /**
-     * Retrieve non-route values from parameter URL
+     * Read Action: Retrieve non-route values from parameter URL
      *
      * @return  bool
      * @since   1.0
@@ -327,87 +371,19 @@ Class RouteService
     /**
      * Retrieve non-route values for SEF URLs:
      *
-     *  1.  Tasks (Tag, Favoriate, Order Up) to Permission Actions (Insert, View, Delete, etc)
-     *  2.  Filters (Tag, Category, Page, Author, etc.) not used for Route
-     *
      * @return  boolean
      * @since   1.0
      */
-    protected function getResourceSEF()
+    protected function getReadVariables()
     {
-        $path = Services::Registry()->get('parameters', 'request_url');
+        $path = $this->get('request_url');
 
-        /** Tasks (Tag, Favorite, Order Up) to Permission Actions (Insert, View, Delete, etc) */
         $urlParts = explode('/', $path);
         if (count($urlParts) == 0) {
             return true;
         }
 
-        $urlActions = Services::Registry()->get(PERMISSIONS_LITERAL, 'urlActions');
-
-        $path = '';
-        $task = '';
-        $action_target = '';
-
-        foreach ($urlParts as $slug) {
-            if ($task == '') {
-                if (in_array($slug, $urlActions)) {
-                    $task = $slug;
-                } else {
-                    if (trim($path) == '') {
-                    } else {
-                        $path .= '/';
-                    }
-                    $path .= $slug;
-                }
-            } else {
-                $action_target = $slug;
-                break;
-            }
-        }
-
-        if ($task == '') {
-            $task = ACTION_READ;
-        }
-
-        /** Map Action Verb (Tag, Favorite, etc.) to Permission Action (Update, Delete, etc.) */
-        Services::Registry()->set(
-            PARAMETERS_LITERAL,
-            'request_task',
-            $task
-        );
-
-        Services::Registry()->set(
-            PARAMETERS_LITERAL,
-            'request_action_target',
-            $action_target
-        );
-
-        Services::Registry()->set(
-            PARAMETERS_LITERAL,
-            'request_controller',
-            Services::Permissions()->getTaskController($task)
-        );
-
-        Services::Registry()->set(
-            PARAMETERS_LITERAL,
-            'request_action',
-            Services::Permissions()->getTaskAction($task)
-        );
-
-        if ($path == Services::Registry()->get('parameters', 'request_url')) {
-        } else {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
-            return true;
-        }
-
-        /** Extract Non-routing Parameters from Route-able Request */
-        $urlParts = explode('/', $path);
-        if (count($urlParts) == 0) {
-            return true;
-        }
-
-        $filters = array('page', 'category', 'author', 'tag');
+        $filters = Services::Registry()->get(PERMISSIONS_LITERAL, 'filters');
 
         $path = '';
         $filterArray = '';
@@ -427,21 +403,93 @@ Class RouteService
                     $path .= $slug;
                 }
             } else {
-                $filterArray .= $filter . ':' . $slug . ',';
+                if ($filterArray == '') {
+                } else {
+                   $filterArray .= ';';
+                }
+                $filterArray .= $filter . ':' . $slug;
                 $filter = '';
             }
         }
 
-        Services::Registry()->set(PARAMETERS_LITERAL, 'request_filters', $filterArray);
+        $this->set('request_filters', $filterArray);
 
-        if ($path == Services::Registry()->get('parameters', 'request_url')) {
+        /** Map Action Verb (Tag, Favorite, etc.) to Permission Action (Update, Delete, etc.) */
+        $this->set('request_task', 'read');
+        $this->set('request_task_values', '');
+
+        $authorisationArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
+        $authorisation = $authorisationArray['read'];
+        $this->set('request_task_permission', $authorisation);
+
+        $controllerArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_controller');
+        $x = $controllerArray['read'];
+        $this->set('request_task_controller', $x);
+
+        if ($path == $this->get('request_url')) {
         } else {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'request_url', $path);
+            $this->set('request_url', $path);
         }
 
-        Services::Registry()->sort(PARAMETERS_LITERAL);
-
         return true;
+    }
+
+    /**
+     * For non-read actions, retrieve task and values
+     *
+     * @return  void
+     * @since   1.0
+     */
+    protected function getTaskVariables()
+    {
+        $path = $this->get('request_url');
+
+        $urlParts = explode('/', $path);
+        if (count($urlParts) == 0) {
+            return true;
+        }
+
+        $tasks = Services::Registry()->get(PERMISSIONS_LITERAL, 'tasks');
+
+        $path = '';
+        $task = '';
+        $action_target = '';
+
+        foreach ($urlParts as $slug) {
+            if ($task == '') {
+                if (in_array($slug, $tasks)) {
+                    $task = $slug;
+                } else {
+                    if (trim($path) == '') {
+                    } else {
+                        $path .= '/';
+                    }
+                    $path .= $slug;
+                }
+            } else {
+                $action_target = $slug;
+                break;
+            }
+        }
+
+        /** Map Action Verb (Tag, Favorite, etc.) to Permission Action (Update, Delete, etc.) */
+        $this->set('request_task', $task);
+        $this->set('request_task_values', $action_target);
+
+        $authorisationArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
+        $authorisation = $authorisationArray[$task];
+        $this->set('request_task_permission', $authorisation);
+
+        $controllerArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_controller');
+        $x = $controllerArray[$task];
+        $this->set('request_task_controller', $x);
+
+        if ($path == $this->get('request_url')) {
+        } else {
+            $this->set('request_url', $path);
+        }
+
+        return;
     }
 
     /**
@@ -500,8 +548,8 @@ Class RouteService
                 $catalog_type_id = 0;
          */
 
-        $catalog_id = Services::Registry()->get('parameters', 'request_catalog_id');
-        $url_sef_request = Services::Registry()->get('parameters', 'request_url');
+        $catalog_id = $this->get('request_catalog_id');
+        $url_sef_request = $this->get('request_url');
         $catalog_type_id = 0;
         $source_id = 0;
 
@@ -572,16 +620,12 @@ Class RouteService
         }
 
         if (count($item) == 0 || (int)$item->id == 0 || (int)$item->enabled == 0) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'status_found', false);
+            $this->set('status_found', false);
             Services::Profiler()->set(
                 'Route: getRouteCatalog 404 - Not Found '
-                    . ' Requested Catalog ID: ' . Services::Registry()->get(
-                    PARAMETERS_LITERAL,
-                    'request_catalog_id'
-                )
-                    . ' Requested URL Query: ' . Services::Registry()->get('parameters', 'request_url'),
-                PROFILER_ROUTING,
-                0
+                    . ' Requested Catalog ID: ' . $this->get('request_catalog_id')
+                    . ' Requested URL Query: ' . $this->get('request_url'),
+                PROFILER_ROUTING, 0
             );
 
             return false;
@@ -590,41 +634,35 @@ Class RouteService
         if ((int)$item->redirect_to_id == 0) {
         } else {
             Services::Profiler()->set(
-                'Route: getRouteCatalog Redirect to ID '
-                    . (int)$item->redirect_to_id,
-                PROFILER_ROUTING,
-                0
+                'Route: getRouteCatalog Redirect to ID ' . (int)$item->redirect_to_id,
+                PROFILER_ROUTING, 0
             );
 
-            Services::Registry()->set(PARAMETERS_LITERAL, 'redirect_to_id', (int)$item->redirect_to_id);
+            $this->set('redirect_to_id', (int)$item->redirect_to_id);
 
             return false;
         }
 
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_id', (int)$item->id);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_type_id', (int)$item->catalog_type_id);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_type', $item->b_title);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_url_sef_request', $item->sef_request);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_url_request', $item->catalog_url_request);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_page_type', $item->page_type);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_view_group_id', (int)$item->view_group_id);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_category_id', (int)$item->primary_category_id);
-        Services::Registry()->set(
-            PARAMETERS_LITERAL,
-            'catalog_extension_instance_id',
-            $item->extension_instance_id
-        );
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_model_type', $item->b_model_type);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_model_name', $item->b_model_name);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_alias', $item->b_alias);
-        Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_source_id', (int)$item->source_id);
+        $this->set('catalog_id', (int)$item->id);
+        $this->set('catalog_type_id', (int)$item->catalog_type_id);
+        $this->set('catalog_type', $item->b_title);
+        $this->set('catalog_url_sef_request', $item->sef_request);
+        $this->set('catalog_url_request', $item->catalog_url_request);
+        $this->set('catalog_page_type', $item->page_type);
+        $this->set('catalog_view_group_id', (int)$item->view_group_id);
+        $this->set('catalog_category_id', (int)$item->primary_category_id);
+        $this->set('catalog_extension_instance_id', $item->extension_instance_id);
+        $this->set('catalog_model_type', $item->b_model_type);
+        $this->set('catalog_model_name', $item->b_model_name);
+        $this->set('catalog_alias', $item->b_alias);
+        $this->set('catalog_source_id', (int)$item->source_id);
 
-        if ((int)Services::Registry()->get('parameters', 'catalog_id')
+        if ((int)$this->get('catalog_id')
             == (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id')
         ) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', 1);
+            $this->set('catalog_home', 1);
         } else {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'catalog_home', 0);
+            $this->set('catalog_home', 0);
         }
 
         return true;

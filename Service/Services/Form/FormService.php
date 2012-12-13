@@ -6,7 +6,6 @@
  */
 namespace Molajo\Service\Services\Form;
 
-use Molajo\Helpers;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -918,7 +917,7 @@ Class FormService
         if (Services::Registry()->exists('GridMenuitem') === true) {
         } else {
 
-            $item = Helpers::Content()->getResourceMenuitemParameters('Grid', $this->extension_instance_id);
+            $item = $this->contentHelper->getResourceMenuitemParameters('Grid', $this->extension_instance_id);
 
             if ($item === false || count($item) == 0) {
                 return false;

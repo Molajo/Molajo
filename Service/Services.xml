@@ -14,4 +14,5 @@
     <service name="Language" static="0" startup="load"/>
     <service name="Date" static="1" startup="getInstance"/>
     <service name="Asset" static="0" startup="initialise"/>
+    <service name="Metadata" static="0" startup="initialise"/>
 </services>

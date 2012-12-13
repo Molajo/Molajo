@@ -6,7 +6,7 @@
  */
 namespace Molajo\Service\Services\User;
 
-use Molajo\Helpers;
+use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;
@@ -139,8 +139,45 @@ Class UserService
 
 		Services::Registry()->sort(USER_LITERAL);
 
-        Helpers::Extension()->setAuthorisedExtensions();
+        $this->setAuthorisedExtensions();
 
         return $this;
+    }
+    /**
+     * Retrieve all Extensions the logged on User is authorised to use. The Extension Helper will use this
+     *  registry to avoid a new read when processing requests for Themes, Views, Plugins, Services, etc.
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function setAuthorisedExtensions()
+    {
+        $this->extensionHelper = new ExtensionHelper();
+        $results = $this->extensionHelper->get(0, null, null, null, 1);
+        if ($results === false || count($results) == 0) {
+            throw new \Exception('User: No authorised Extension Instances.');
+        }
+
+        Services::Registry()->createRegistry('AuthorisedExtensions');
+        Services::Registry()->createRegistry('AuthorisedExtensionsByInstanceTitle');
+
+        foreach ($results as $extension) {
+
+            Services::Registry()->set('AuthorisedExtensions', $extension->id, $extension);
+
+            if ($extension->catalog_type_id == CATALOG_TYPE_MENUITEM) {
+            } else {
+                $key = trim($extension->title) . $extension->catalog_type_id;
+                Services::Registry()->set('AuthorisedExtensionsByInstanceTitle', $key, $extension->id);
+            }
+        }
+
+        Services::Registry()->sort('AuthorisedExtensions');
+        Services::Registry()->sort('AuthorisedExtensionsByInstanceTitle');
+
+        Services::Registry()->lock('AuthorisedExtensions');
+        Services::Registry()->lock('AuthorisedExtensionsByInstanceTitle');
+
+        return true;
     }
 }

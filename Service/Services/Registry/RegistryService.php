@@ -55,7 +55,6 @@ Class RegistryService
      * @since  1.0
      */
     protected $registry = array();
-
     protected $reserved_names = array();
     protected $namespace_permissions = array();
 
@@ -209,12 +208,6 @@ Class RegistryService
             throw new \RuntimeException ('Registry: Namespace in Lock Request does not exist.');
         }
 
-        $namespaces = $this->registryLocks;
-
-        if (in_array($namespace, $namespaces)) {
-            return true;
-        }
-
         $this->registryLocks[$namespace] = true;
 
         return true;
@@ -241,9 +234,7 @@ Class RegistryService
             return false;
         }
 
-        $namespaces = $this->registryLocks;
-
-        if (in_array($namespace, $namespaces)) {
+        if (isset($this->registryLocks[$namespace])) {
             return true;
         }
 
@@ -554,6 +545,10 @@ Class RegistryService
         $target_registry = $this->editNamespace($target_registry);
 
         if ($this->checkLock($target_registry)) {
+            echo '<pre>';
+            echo $source_registry ;
+            echo '</pre>';
+            die;
             throw new \RuntimeException
             ('Registry: Target Namespace: ' . $target_registry . ' is locked. May not copy into it.');
         }
@@ -568,8 +563,8 @@ Class RegistryService
 
         if ($filter == null || $filter == '*') {
             if (count($copy) > 0) {
-                foreach ($copy as $key => $filter) {
-                    $this->set($target_registry, $key, $filter);
+                foreach ($copy as $key => $value) {
+                    $this->set($target_registry, $key, $value);
                 }
             }
             return $this;
@@ -587,7 +582,7 @@ Class RegistryService
 
         if (count($copy > 0)) {
 
-            foreach ($copy as $key => $filter) {
+            foreach ($copy as $key => $value) {
                 $use = false;
                 $test = substr($key, 0, strlen($searchfor));
                 if (strtolower($test) == strtolower($searchfor)) {
@@ -600,7 +595,7 @@ Class RegistryService
                     }
                 }
                 if ($use === true) {
-                    $this->set($target_registry, $key, $filter);
+                    $this->set($target_registry, $key, $value);
                 }
             }
         }
@@ -1050,7 +1045,8 @@ Class RegistryService
     public function getData($registry, $key = null, $query_object = false)
     {
         $registry = strtolower($registry);
-
+echo $registry;
+        die;
         $key = strtolower($key);
         $query_results = array();
 

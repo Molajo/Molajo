@@ -7,8 +7,6 @@
 namespace Molajo\Plugin\Pagetypeapplication;
 
 use Molajo\Plugin\Plugin\Plugin;
-use Molajo\Service\Services;
-use Molajo\Helpers;
 
 defined('MOLAJO') or die;
 
@@ -35,7 +33,7 @@ class PagetypeapplicationPlugin extends Plugin
         $resource_model_type = $this->get('model_type', '', 'parameters');
         $resource_model_name = $this->get('model_name', '', 'parameters');
 
-        Helpers::Content()->getResourceExtensionParameters(
+        $this->contentHelper->getResourceExtensionParameters(
             (int) $this->get('criteria_extension_instance_id', 0, 'parameters')
         );
 

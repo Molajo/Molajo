@@ -60,21 +60,21 @@ Class PermissionsService
             throw new \Exception('Permissions: Actions Table not found.');
         }
 
-        $urlActions = array();
+        $tasks = array();
         $action_to_authorisation = array();
         $action_to_controller = array();
 
         foreach ($actions->action as $t) {
             $name = (string)$t['name'];
-            $urlActions[] = $name;
+            $tasks[] = $name;
             $action_to_authorisation[$name] = (string)$t['authorisation'];
             $action_to_controller[$name] = (string)$t['controller'];
         }
 
         Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation', $action_to_authorisation);
         Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_controller', $action_to_controller);
-        sort($urlActions);
-        Services::Registry()->set(PERMISSIONS_LITERAL, 'urlActions', $urlActions);
+        sort($tasks);
+        Services::Registry()->set(PERMISSIONS_LITERAL, 'tasks', $tasks);
 
         /** Bridges the Verb Action (Order Up, Order Down) to the Permission Action (Read, Update) to the ID (1, 2, etc.) */
         $action_to_authorisation_id = array();
@@ -82,6 +82,20 @@ Class PermissionsService
             $action_to_authorisation_id[$action] = $permission_action_ids[$authorisation];
         }
         Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation_id', $action_to_authorisation_id);
+
+        /** Not sure where else to place this */
+        $filtersFile = Services::Configuration()->getFile('Application', 'Filters');
+        if (count($filtersFile) == 0) {
+            throw new \Exception('Permissions: Filters Table not found.');
+        }
+
+        $filters = array();
+        foreach ($filtersFile->filter as $f) {
+            $name = (string)$f['name'];
+            $filters[] = $name;
+        }
+        sort($filters);
+        Services::Registry()->set(PERMISSIONS_LITERAL, 'filters', $filters);
 
         return true;
     }

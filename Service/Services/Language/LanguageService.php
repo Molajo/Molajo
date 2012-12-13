@@ -7,7 +7,7 @@
 namespace Molajo\Service\Services\Language;
 
 use Molajo\Service\Services;
-use Molajo\Helper\ExtensionHelper;
+use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 
 defined('MOLAJO') or die;
 
@@ -33,6 +33,22 @@ defined('MOLAJO') or die;
  */
 Class LanguageService
 {
+    /**
+     * Helpers
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $extensionHelper;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->extensionHelper = new ExtensionHelper();
+    }
+
     /**
      * Load language file for specific language
      *
@@ -432,8 +448,7 @@ Class LanguageService
      */
     protected function getInstalledLanguages()
     {
-        $helper = new ExtensionHelper();
-        $installed = $helper->get(0, DATA_SOURCE_LITERAL, 'Languageservice', QUERY_OBJECT_LIST, CATALOG_TYPE_LANGUAGE);
+        $installed = $this->extensionHelper->get(0, CATALOG_TYPE_LANGUAGE, DATA_SOURCE_LITERAL, 'Languageservice');
         if ($installed === false || count($installed) == 0) {
             throw new Exception('Languages: No languages installed');
         }
