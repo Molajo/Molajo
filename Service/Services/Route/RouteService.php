@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Route Service
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Route;
 
@@ -12,11 +14,23 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * Route Service
+ * The Route Service determines application actions to be taken as a result of the Request.
+ * First, it determines what action is requested: Create, Read, Update, Delete, or Login.
  *
- * @package     Niambie
- * @license     GNU GPL v 2, or later and MIT
- * @since       1.0
+ * For read requests, filter values are removed from the URL. These values are defined in the
+ * Application Filters file and can be changed, as needed.
+ *
+ * For non-read requests, the task and related values, are removed from the URL. These values
+ * are defined in the Application Actions file.
+ *
+ * For the remaining portion of the Request URL, a query against the Catalog Table is made
+ * to retrieve Route information to determine if an item, list, or menuitem was requested and
+ * what the basic parameters were for that request.
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class RouteService
 {
@@ -57,6 +71,7 @@ Class RouteService
         if (isset($this->parameters[$key])) {
             return $this->parameters[$key];
         }
+
         $this->parameters[$key] = $default;
         return $this->parameters[$key];
     }
@@ -94,9 +109,12 @@ Class RouteService
      * @return  array|bool
      * @since   1.0
      */
-    public function process($route_properties_array, $requested_resource_for_route,
-        $base_url_path_for_application, $override_catalog_id = null)
-    {
+    public function process(
+        $route_properties_array,
+        $requested_resource_for_route,
+        $base_url_path_for_application,
+        $override_catalog_id = null
+    ) {
         $this->route_properties_array = $route_properties_array;
 
         $this->set('request_catalog_id', 0);
@@ -150,7 +168,7 @@ Class RouteService
         /** URL Change Redirect from Catalog */
         if ((int)$this->get('redirect_to_id', 0) == 0) {
         } else {
-            Services::Response()->redirect(Services::Url()->get(0, 0,  $this->get('redirect_to_id', 0)), 301);
+            Services::Response()->redirect(Services::Url()->get(0, 0, $this->get('redirect_to_id', 0)), 301);
             Services::Profiler()->set('Application::Route() Redirect', 'Route');
             return false;
         }
@@ -177,9 +195,6 @@ Class RouteService
     /**
      * Determine if URL is duplicate content for home (and issue redirect, if necessary)
      *
-     * @param   string  $path Stripped of Host, Folder, and Application
-     *                         ex. index.php?option=login or access/groups
-     *
      * @return  boolean
      * @since   1.0
      */
@@ -190,8 +205,10 @@ Class RouteService
 
         if (strlen($path) == 0 || trim($path) == '') {
             $this->set('request_url', '');
-            $this->set('request_catalog_id',
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0));
+            $this->set(
+                'request_catalog_id',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0)
+            );
             $this->set('catalog_home', 1);
 
             return true;
@@ -199,12 +216,14 @@ Class RouteService
         } else {
 
             if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef_suffix', 1) == 1
-                    && substr($path, -11) == '/index.html') {
+                && substr($path, -11) == '/index.html'
+            ) {
                 $path = substr($path, 0, (strlen($path) - 11));
             }
 
             if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef_suffix', 1) == 1
-                    && substr($path, -5) == '.html') {
+                && substr($path, -5) == '.html'
+            ) {
                 $path = substr($path, 0, (strlen($path) - 5));
             }
         }
@@ -214,7 +233,8 @@ Class RouteService
         if ($this->get('request_url', '') == 'index.php'
             || $this->get('request_url', '') == 'index.php/'
             || $this->get('request_url', '') == 'index.php?'
-            || $this->get('request_url', '') == '/index.php/') {
+            || $this->get('request_url', '') == '/index.php/'
+        ) {
 
             Services::Redirect()->set('', 301);
 
@@ -222,10 +242,13 @@ Class RouteService
         }
 
         if ($this->get('request_url', '') == ''
-            && (int)$this->get('request_catalog_id', 0) == 0) {
+            && (int)$this->get('request_catalog_id', 0) == 0
+        ) {
 
-            $this->set('request_catalog_id',
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0));
+            $this->set(
+                'request_catalog_id',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id', 0)
+            );
             $this->set('catalog_home', true);
         }
 
@@ -318,11 +341,11 @@ Class RouteService
         @todo test with non-sef URLs
         $sef = Services::Registry()->get(CONFIGURATION_LITERAL, 'sef_url', 1);
         if ($sef == 1) {
-            $this->getResourceSEF();
+        $this->getResourceSEF();
         } else {
-            $this->getResourceExtensionParameters();
+        $this->getResourceExtensionParameters();
         }
-        */
+         */
         return true;
     }
 
@@ -374,7 +397,7 @@ Class RouteService
             } else {
                 if ($filterArray == '') {
                 } else {
-                   $filterArray .= ';';
+                    $filterArray .= ';';
                 }
                 $filterArray .= $filter . ':' . $slug;
                 $filter = '';
@@ -465,7 +488,7 @@ Class RouteService
      * filterInput
      *
      * @param   string  $name         Name of input field
-     * @param   string  $field_value  Value of input field
+     * @param   string  $value        Value of input field
      * @param   string  $dataType     Datatype of input field
      * @param   int     $null         0 or 1 - is null allowed
      * @param   string  $default      Default value, optional
@@ -594,7 +617,8 @@ Class RouteService
                 'Route: getRouteCatalog 404 - Not Found '
                     . ' Requested Catalog ID: ' . $this->get('request_catalog_id')
                     . ' Requested URL Query: ' . $this->get('request_url'),
-                PROFILER_ROUTING, 0
+                PROFILER_ROUTING,
+                0
             );
 
             return false;
@@ -604,7 +628,8 @@ Class RouteService
         } else {
             Services::Profiler()->set(
                 'Route: getRouteCatalog Redirect to ID ' . (int)$item->redirect_to_id,
-                PROFILER_ROUTING, 0
+                PROFILER_ROUTING,
+                0
             );
 
             $this->set('redirect_to_id', (int)$item->redirect_to_id);
@@ -623,8 +648,10 @@ Class RouteService
         $this->set('catalog_extension_instance_id', $item->extension_instance_id);
         $this->set('catalog_model_type', $item->b_model_type);
         $this->set('catalog_model_name', $item->b_model_name);
-        $this->set('catalog_model_registry_name',
-            ucfirst(strtolower($item->b_model_name)) . ucfirst(strtolower($item->b_model_type)));
+        $this->set(
+            'catalog_model_registry_name',
+            ucfirst(strtolower($item->b_model_name)) . ucfirst(strtolower($item->b_model_type))
+        );
         $this->set('catalog_alias', $item->b_alias);
         $this->set('catalog_source_id', (int)$item->source_id);
 
