@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -12,13 +12,13 @@ use Molajo\MVC\Controller\CreateController;
 use Molajo\MVC\Controller\DeleteController;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Extension Instances
  *
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class ExtensioninstancePlugin extends Plugin
@@ -92,7 +92,7 @@ class ExtensioninstancePlugin extends Plugin
 
         /** If Extension Node does not exist */
 
-        //todo decide if another query is warranted for verifying existence of catalog type
+        //@todo decide if another query is warranted for verifying existence of catalog type
 
         /** Create a new Catalog Type */
         $controllerClass = CONTROLLER_CLASS;

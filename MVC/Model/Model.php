@@ -1,23 +1,24 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Base Model
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Model;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Model
+ * Primary Model with property definitions for interacting with model registries, creating and executing queries
  *
- * Base Molajo Model
- *
- * @package       Molajo
- * @subpackage    Model
- * @since         1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class Model
 {
@@ -78,6 +79,8 @@ class Model
     public $parameters = array();
 
     /**
+     * Class Constructor
+     *
      * @return  object
      * @since   1.0
      */
@@ -139,9 +142,9 @@ class Model
     /**
      * Pass input to Filter Service which handles each data element according to datatype
      *
-     * @param   string  $name
-     * @param   string  $field_value
-     * @param   string  $dataType
+     * @param   string  $name        Name of Field
+     * @param   string  $value       Value of View
+     * @param   string  $dataType    Field Data Type
      * @param   int     $null        0 or 1 - is null allowed
      * @param   string  $default     Default value, optional
      *
@@ -154,7 +157,7 @@ class Model
             $value = Services::Filter()->filter($value, $dataType, $null, $default);
 
         } catch (\Exception $e) {
-            //todo: errors
+            //@todo errors
             echo $e->getMessage() . ' ' . $name;
         }
 
@@ -200,7 +203,7 @@ class Model
     /**
      * insertLanguageString
      *
-     * todo: move this into normal CRUD operations
+     * @todo move this into normal CRUD operations
      *
      * @param   array $translated
      *

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="Plugin" version="1.0">
-    <name>SIGNIN_PLUGIN_NAME</name>
+    <name>LOGOUT_PLUGIN_NAME</name>
     <author>Amy Stephen</author>
     <create_date>August 2012</create_date>
     <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
@@ -8,6 +8,6 @@
     <author_email>hello@niambie.org</author_email>
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
-    <description>SIGNIN_PLUGIN_DESCRIPTION</description>
-    <model name="signin" extends="PluginsSystem"/>
+    <description>LOGOUT_PLUGIN_DESCRIPTION</description>
+    <model name="Logout" extends="PluginsSystem"/>
 </extension>

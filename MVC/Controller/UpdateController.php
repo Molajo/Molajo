@@ -1,30 +1,28 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Update Controller
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Controller;
 
 use Molajo\Service\Services;
+use Molajo\MVC\Controller\Controller;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Update List Controller
+ * The update controller handles all update tasks, such as reorder, checkin, sticky, feature, archive, and
+ * normal update row processing by interacting with associated model registry data and HTTP post variables
+ * to edit, filter, and save data, verifying foreign key restraints, expected values, permissions, etc.
+ * In addition, the update controller schedules before and after update events.
  *
- * Handles the standard list actions, typically applied to multiple items
- *
- * Tasks processed:
- * - Order: reorder, orderup, orderdown, saveorder
- * - Checkin: checkin and checkout
- * - Sticky: sticky and unsticky
- * - Feature: feature and unfeature
- * - State: archive, publish, unpublish, spam, trash (Note: version is automatic with save and delete)
- *
- * @package       Molajo
- * @subpackage  Controller
- * @since       1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class UpdateController extends Controller
 {

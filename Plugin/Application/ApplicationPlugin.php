@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -10,11 +10,11 @@ use Molajo\Application;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class ApplicationPlugin extends Plugin
@@ -85,7 +85,7 @@ class ApplicationPlugin extends Plugin
         $url = Services::Registry()->get(PAGE_LITERAL, 'home_url') . '/' . strtolower($resource);
         Services::Registry()->set(PAGE_LITERAL, 'resource_url', $url);
 
-        //todo: add links for prev and next
+        //@todo add links for prev and next
 
         return true;
     }

@@ -1,22 +1,27 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Delete Controller
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Controller;
 
 use Molajo\Service\Services;
 use Molajo\MVC\Controller;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Delete
+ * The delete controller uses model registry data and HTTP post variables to verifying foreign key restraints,
+ * and permissions, etc, archive version history, and delete data. The delete controller also schedules the
+ * before and after delete event.
  *
- * @package     Molajo
- * @subpackage  Controller
- * @since       1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class DeleteController extends Controller
 {
@@ -98,8 +103,6 @@ class DeleteController extends Controller
 
     /**
      * Retrieve data to be deleted
-     *
-     * @param string $connect
      *
      * @return bool|mixed
      * @since  1.0
@@ -188,7 +191,7 @@ class DeleteController extends Controller
      */
     protected function verifyPermissions()
     {
-        //todo - figure out what joining isn't working, get catalog id
+        //@todo - figure out what joining isn't working, get catalog id
         //$results = Services::Permissions()->verifyTask('Delete', $this->row->catalog_id);
         //if ($results === false) {
         //error

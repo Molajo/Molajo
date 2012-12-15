@@ -1,19 +1,20 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Theme;
 
 use Molajo\Service\Services;
+use Molajo\Service\Services\Theme\Helper\ContentHelper;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Theme
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Theme
  * @since       1.0
  */
@@ -68,40 +69,62 @@ Class ThemeService
     protected $rendered_output = null;
 
     /**
+     * Stores an array of key/value Parameters settings
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $parameters = array();
+
+    /**
+     * List of Route Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $property_array = array();
+
+    //@todo - how to override this class and includers and mvc. should these be pre-defined like plugins?
+
+    /**
      * Load sequence.xml file contents into array for determining processing order
      *
      * Invoke Theme Includer to load page metadata, and theme language and media resources
      *
-     * Retrieve Theme and Page View to initiate the iterative process of parsing rendered output
-     * for <include:type/> statements and then looping through all include requests
+     * Render Theme, parse output for <include:type/> statements, pass to
+     *  include renderer, continuing until no more <include:type/> statements are found
      *
-     * When no more <include:type/> statements are found in the rendered output,
-     * process sets the Responder body and completes
+     * @param  array       $route_property_array   valid property names from route
+     * @param  array       $parameters               key value pairs
+     * @param  null|array  $override_parse_sequence  override file with body include statements in processing order
+     * @param  null|array  $override_parse_final     override file with head include statements in processing order
      *
      * @return  string
      * @since   1.0
      */
-    public function process()
+    public function process($route_property_array, $parameters,
+        $override_parse_sequence = null, $override_parse_final = null)
     {
-        Services::Profiler()->set('Theme: Started', PROFILER_RENDERING);
+        Services::Profiler()->set('Theme Service: Started', PROFILER_RENDERING);
 
-        $overrideIncludesPageXML = Services::Registry()->get(OVERRIDE_LITERAL, 'parse_sequence', false);
-        $overrideIncludesFinalXML = Services::Registry()->get(OVERRIDE_LITERAL, 'parse_final', false);
+        $this->property_array = $route_property_array;
 
-        if ($overrideIncludesPageXML === false) {
+        $this->parameters = $parameters;
+
+        if ($override_parse_sequence === null) {
             $sequence = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_sequence');
         } else {
-            $sequence = $overrideIncludesPageXML;
+            $sequence = Services::Configuration()->getFile(PARSE_LITERAL, $override_parse_sequence);
         }
 
         foreach ($sequence->include as $next) {
             $this->sequence[] = (string)$next;
         }
 
-        if ($overrideIncludesFinalXML === false) {
+        if ($override_parse_final === null) {
             $final = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_final');
         } else {
-            $final = $overrideIncludesFinalXML;
+            $final = Services::Configuration()->getFile(PARSE_LITERAL, $override_parse_final);
         }
 
         foreach ($final->include as $next) {
@@ -119,26 +142,18 @@ Class ThemeService
 
         $this->final_indicator = false;
 
-        $this->getTheme();
+        $this->setPageParameters();
 
-        //todo: fix for page cache;
-//        if ($this->rendered_output === false) {
-//        } else {
-//            return $this->rendered_output;
-//        }
-
-        Services::Registry()->createRegistry(ROUTE_PARAMETERS_LITERAL);
-        Services::Registry()->copy(PARAMETERS_LITERAL, ROUTE_PARAMETERS_LITERAL);
+        $cache = $this->getTheme();
+        if ($cache === true) {
+            return $this->rendered_output;
+        }
 
         $this->renderLoop();
 
         $this->sequence = $this->final;
         $this->exclude_until_final = array();
         $this->final_indicator = true;
-
-        Services::Registry()->delete(PARAMETERS_LITERAL);
-        Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-        Services::Registry()->copy(ROUTE_PARAMETERS_LITERAL, PARAMETERS_LITERAL);
 
         $this->onBeforeParseHeadEvent();
 
@@ -150,61 +165,139 @@ Class ThemeService
     }
 
     /**
-     * Before parsing, determine rendering instructions for the routed requested
-     *  and render the Theme which contains <include statements to be parsed
-     *  then used to invoke includers and render output
+     * Get the current value (or default) of the specified key
      *
-     * @returns  void
-     * @since    1.0
-     * @throws   \Exception
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
+     * @since   1.0
      */
-    protected function getTheme()
+    protected function get($key = null, $default = null)
     {
-        Services::Profiler()->set('Theme: Theme Includer started', PROFILER_RENDERING);
+        $key = strtolower($key);
 
-        //todo - how to override? should includers be pre-defined like plugins?
-        $class = 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder';
-        if (class_exists($class)) {
-            $themeIncluder = new $class ('Theme', 'Initialise');
-
+        if (in_array($key, $this->property_array)) {
         } else {
-            throw new \Exception('Theme: Includer Failure Instantiating Class' . $class);
+            throw new \OutOfRangeException('Theme Service: is attempting to get value for unknown key: ' . $key);
         }
 
-        $this->rendered_output = $themeIncluder->setPrimaryData();
+        if (isset($this->parameters[$key])) {
+            return $this->parameters[$key];
+        }
+        $this->parameters[$key] = $default;
+        return $this->parameters[$key];
+    }
 
-        if ($this->rendered_output === false) {
-            $this->rendered_output = array();
+    /**
+     * Set the value of a specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function set($key, $value = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->property_array)) {
         } else {
-            Services::Profiler()->set('Theme: Page cache returned from Theme Includer', PROFILER_RENDERING);
-            return;
+            throw new \OutOfRangeException('Theme Service: is attempting to set value for unknown key: ' . $key);
         }
 
-        $this->onBeforeParseEvent();
+        $this->parameters[$key] = $value;
+        return $this->parameters[$key];
+    }
 
-        $this->rendered_output = $themeIncluder->process(array());
+    /**
+     * Set Item, List, or Menu Item Parameter data needed to generate page.
+     *
+     * @return   void
+     * @since    1.0
+     * @throws   /Exception
+     */
+    public function setPageParameters()
+    {
+        $catalog_id = $this->get('catalog_id');
+        $catalog_page_type = $this->get('catalog_page_type');
 
-//        ob_start();
-//        Services::Profiler()->set('Theme: Includer rendered ' . $this->rendered_output, PROFILER_RENDERING, VERBOSE);
-//        echo $this->rendered_output;
-//        $includeDisplay = ob_get_contents();
-//        ob_end_clean();
+        $contentHelper = new ContentHelper();
+        $contentHelper->initialise($this->property_array, $this->parameters);
+
+        if (strtolower(trim($catalog_page_type)) == strtolower(QUERY_OBJECT_LIST)) {
+            $response = $contentHelper->getRouteList();
+
+        } elseif (strtolower(trim($catalog_page_type)) == strtolower(QUERY_OBJECT_ITEM)) {
+            $response = $contentHelper->getRouteItem();
+
+        } else {
+            $response = $contentHelper->getRouteMenuitem();
+        }
+
+        if ($response === false) {
+            throw new \Exception('Theme Service: Could not identify Primary Data for Catalog ID ' . $catalog_id);
+        }
+
+        $this->parameters = $response[0];
+echo '<pre>';
+var_dump($this->parameters);
+echo '</pre>';
+        $this->property_array = $response[1];
+echo '<pre>';
+var_dump($this->property_array);
+echo '</pre>';
+        die;
 
         return;
     }
 
     /**
-     * renderLoop is initiated two times:
+     * Render Theme to provide input for parser to look for <include:type/> statements
+     *
+     * Returns true when cached page available in $this->rendered_output
+     *
+     * @returns  bool
+     * @since    1.0
+     * @throws   \Exception
+     */
+    protected function getTheme()
+    {
+        $this->getIncluderClass('Theme', 'Theme', array());
+
+        $this->onBeforeParseEvent();
+
+        $this->rendered_output = $themeIncluder->process(array());
+        $this->parameters = $themeIncluder->parameters;
+
+        if (defined(PROFILER_ON)) {
+            ob_start();
+            Services::Profiler()->set('Theme Service: Includer rendered ' . $this->rendered_output, PROFILER_RENDERING, VERBOSE);
+            echo $this->rendered_output;
+            $includeDisplay = ob_get_contents();
+            ob_end_clean();
+        }
+
+        return $cache;
+    }
+
+    /**
+     * renderLoop is initiated twice:
      *
      * 1. Renders Document Body
      *
-     *  - Parses Theme output rendered in getTheme, looking for set of <include:type statements
-     *  - Passes control to Theme Includer Type Class, capturing the rendered output from processing
+     *  - Theme output rendered in getTheme is parsed for <include:type/> statements
+     *  - Control passed to Includer Type Class which determines parameters for processing and passes
+     *      control to the MVC for rendering output
      *  - Process is recursive until no more includes found
      *
      * 2. Renders Document Head
      *
-     *  - Same process as is used for the document body with new set of defined <include:type statements
+     *  - Same process using a new set of defined <include:type/> statements for the document head
+     *
+     *  Since rendered output is parsed until no more <include:type/> statements are discovered, the
+     *  STOP_LOOP value is a precaution against an endless loop in the event a view includes itself.
      *
      * @return  void
      * @since   1.0
@@ -218,20 +311,14 @@ Class ThemeService
             $loop++;
 
             $this->include_request = array();
-            $this->parseIncludeRequests();
+            $this->getIncludeRequests();
 
             if (count($this->include_request) == 0) {
                 break;
             }
 
-            $this->callIncluder();
+            $this->processIncludeRequests();
 
-            /**
-             *  Rendered output is parsed from $this->rendered_output until <include /> statements are
-             *  no longer discovered. The STOP_LOOP value is a provision to ensure an endless loop does
-             *  not result from including
-             *  a view within itself.
-             */
             if ($loop > STOP_LOOP) {
                 break;
             }
@@ -242,15 +329,15 @@ Class ThemeService
     }
 
     /**
-     * Parse rendered output for include statements
+     * Parses the rendered output, looking for <include:type/> statements.
      *
-     * Note: Attribute pairs may NOT contain spaces. To include multiple values, separate with a comma:
-     *  ex. class=one,two,three
+     * Note: Attribute pairs may NOT contain spaces. Escape, if needed: ex. value=This&nbsp;thing
+     *  To include multiple values, separate with a comma: ex. class=one,two,three
      *
      * @return  array
      * @since   1.0
      */
-    protected function parseIncludeRequests()
+    protected function processIncludeRequestsRequests()
     {
         $matches = array();
         $this->include_request = array();
@@ -332,7 +419,7 @@ Class ThemeService
         }
 
         ob_start();
-        echo 'Theme: parseIncludeRequests found the following includes:<br />';
+        echo 'Theme Service: processIncludeRequestsRequests found the following includes:<br />';
         foreach ($this->include_request as $request) {
             echo $request['replace'] . '<br />';
         }
@@ -346,11 +433,12 @@ Class ThemeService
 
     /**
      * Instantiate Theme Includer Class and pass in attributes for rendering of include
+     *  and replaces the <include:type/> with output results in $this->rendered_output
      *
      * @return  void
      * @since   1.0
      */
-    protected function callIncluder($first = false)
+    protected function processIncludeRequests()
     {
         $replace = array();
         $with = array();
@@ -379,29 +467,7 @@ Class ThemeService
 
                     $replace[] = "<include:" . $parsed['replace'] . "/>";
 
-//todo figureout overrides
-                    $class = 'Molajo\\Service\\Services\\Theme\\Includer\\';
-                    $class .= ucfirst($include_type) . 'Includer';
-
-                    if (class_exists($class)) {
-                        $rc = new $class ($include_type, $include_name);
-
-                    } else {
-                        throw new \Exception('Theme: Includer Failed Instantiating Class' . $class);
-                    }
-
-                    ob_start();
-                    echo 'Theme: Includer Class ' . $class . ' Attributes: ' . '<br />';
-                    echo '<pre>';
-                    var_dump($attributes);
-                    echo '</pre>';
-                    $includeDisplay = ob_get_contents();
-                    ob_end_clean();
-
-                    Services::Profiler()->set($includeDisplay, PROFILER_RENDERING);
-
-                    $output = trim($rc->process($attributes));
-                    Services::Profiler()->set('Theme: Rendered ' . $output, PROFILER_RENDERING);
+                    $output = $this->getIncluderClass ($include_type, $include_name, $attributes);
 
                     $with[] = $output;
                 }
@@ -411,6 +477,46 @@ Class ThemeService
         $this->rendered_output = str_replace($replace, $with, $this->rendered_output);
 
         return;
+    }
+
+    /**
+     * Pass control to Includer Class to render <include:type/>
+     *
+     * @param   $include_type
+     * @param   $include_name
+     * @param   $attributes
+     *
+     * @return  string
+     * @since   1.0
+     * @throws  \Exception
+     */
+    protected function getIncluderClass($include_type, $include_name, $attributes)
+    {
+        if (defined(PROFILER_ON)) {
+            Services::Profiler()->set('Theme Service: getIncluderClass ' .
+                ' include_type: ' . $include_type .
+                ' include_name: ' . $include_name .
+                ' attributes: ' . implode(' ', $attributes) .
+                PROFILER_RENDERING);
+        }
+
+        $class = 'Molajo\\Service\\Services\\Theme\\Includer\\';
+        $class .= ucfirst($include_type) . 'Includer';
+
+        if (class_exists($class)) {
+            $rc = new $class ($this->property_array, $this->parameters, $include_type, $include_name, $attributes);
+
+        } else {
+            throw new \Exception('Theme Service: Includer Failed Instantiating Class' . $class);
+        }
+
+        $rendered_output = trim($rc->process());
+
+        if (defined(PROFILER_ON)) {
+            Services::Profiler()->set('Theme Service: Rendered ' . $rendered_output, PROFILER_RENDERING, VERBOSE);
+        }
+
+        return $rendered_output;
     }
 
     /**
@@ -438,7 +544,7 @@ Class ThemeService
         Services::Registry()->createRegistry(PRIMARY_LITERAL);
         Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
 
-        return Services::Registry()->get(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
+        return Services::Registry()->get(PRIMARY_LITERAL, DATA_LITERAL);
     }
 
     /**
@@ -475,23 +581,21 @@ Class ThemeService
      * Common Method for all Theme Service Events
      *
      * @param   string  $event_name
+     * @param   string  $query_results
      *
-     * @return  array
+     * @return  array|null
      * @since   1.0
      */
     protected function triggerEvent($eventName, $query_results = null)
     {
-        $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
-            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
-
         if ($query_results === null) {
             $query_results = array();
         }
 
         $arguments = array(
             'model' => null,
-            'model_registry' => Services::Registry()->get($model_registry),
-            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
+            'model_registry' => Services::Registry()->get($this->get('model_registry_name')),
+            'parameters' => $this->parameters,
             'query_results' => $query_results,
             'row' => array(),
             'rendered_output' => $this->rendered_output,
@@ -502,16 +606,14 @@ Class ThemeService
         $arguments = Services::Event()->scheduleEvent($eventName, $arguments, $this->getPluginList());
 
         if (isset($arguments['model_registry'])) {
-            Services::Registry()->delete($model_registry);
-            Services::Registry()->createRegistry($model_registry);
-            Services::Registry()->loadArray($model_registry, $arguments['model_registry']);
+            Services::Registry()->delete($this->get('model_registry_name'));
+            Services::Registry()->createRegistry($this->get('model_registry_name'));
+            Services::Registry()->loadArray($this->get('model_registry_name'), $arguments['model_registry']);
         }
 
-        if (isset($arguments[PARAMETERS_LITERAL])) {
-            Services::Registry()->delete(PARAMETERS_LITERAL);
-            Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-            Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
-            Services::Registry()->sort(PARAMETERS_LITERAL);
+        if (isset($arguments['parameters'])) {
+            ksort($arguments['parameters']);
+            $this->parameters = $arguments['parameters'];
         }
         if (isset($arguments['rendered_output'])) {
             $this->rendered_output = $arguments['rendered_output'];
@@ -523,6 +625,8 @@ Class ThemeService
 
         if (isset($arguments['include_parse_exclude_until_final'])) {
             $this->exclude_until_final = $arguments['include_parse_exclude_until_final'];
+        } else {
+            $this->exclude_until_final = array();
         }
 
         return $query_results;
@@ -531,13 +635,12 @@ Class ThemeService
     /**
      * Get the list of potential plugins identified with this model registry
      *
-     * @return  void
+     * @return  array
      * @since   1.0
      */
     protected function getPluginList()
     {
-        $model_registry_name = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
-            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
+        $model_registry_name = $this->get('model_registry_name');
 
         $plugins = array();
 
@@ -573,13 +676,13 @@ Class ThemeService
             $plugins = array();
         }
 
-        $page_type = Services::Registry()->get('Parameters', 'catalog_page_type');
+        $page_type = $this->get('catalog_page_type');
         if ($page_type == '') {
         } else {
             $plugins[] = 'Pagetype' . strtolower($page_type);
         }
 
-        $template = Services::Registry()->get('Parameters', 'template_view_path_node');
+        $template = $this->get('template_view_path_node');
         if ($template == '') {
         } else {
             $plugins[] = $template;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,11 +9,11 @@ namespace Molajo\Plugin\Pagetypegrid;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class PagetypegridPlugin extends Plugin
@@ -139,7 +139,7 @@ class PagetypegridPlugin extends Plugin
 
             foreach ($grid_list as $listname) {
 
-                //todo: figure out selected value
+                //@todo figure out selected value
                 $selected = '';
 
                 $results = Services::Text()->getDatalist($listname, DATALIST_LITERAL, $this->parameters);

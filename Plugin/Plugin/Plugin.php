@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -12,14 +12,14 @@ use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 use Molajo\Service\Services\Theme\Helper\ThemeHelper;
 use Molajo\Service\Services\Theme\Helper\ViewHelper;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Plugin
  *
  * Base class for Plugins
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Model
  * @since       1.0
  */
@@ -101,7 +101,7 @@ class Plugin
      * @var    array
      * @since  1.0
      */
-    protected $include_parse_sequence;
+    protected $include_parse_sequence = array();
 
     /**
      * Includes statements excluded until final run (empty during final run)
@@ -111,7 +111,7 @@ class Plugin
      * @var    array
      * @since  1.0
      */
-    protected $include_parse_exclude_until_final;
+    protected $include_parse_exclude_until_final = array();
 
     /**
      * Build from Model Registry
@@ -157,10 +157,10 @@ class Plugin
      */
     public function __construct()
     {
-        $this->contentHelper = new ContentHelper();
-        $this->extensionHelper = new ExtensionHelper();
-        $this->themeHelper = new ThemeHelper();
-        $this->viewHelper = new ViewHelper();
+       $this->contentHelper = new ContentHelper();
+       $this->extensionHelper = new ExtensionHelper();
+       $this->themeHelper = new ThemeHelper();
+       $this->viewHelper = new ViewHelper();
     }
 
     /**
@@ -331,7 +331,7 @@ class Plugin
             return $this->row->$name;
 
         } elseif (isset($field->customfield)) {
-            //todo: review this - it seems unnecessary
+            //@todo review this - it seems unnecessary
             if (Services::Registry()->exists($this->get('model_name', '', 'parameters') . $field->customfield, $name)) {
                 return Services::Registry()->get($this->get('model_name', '', 'parameters') . $field->customfield, $name);
             }
@@ -622,7 +622,7 @@ class Plugin
      * @return  bool
      * @since   1.0
      */
-    public function onBeforeSignin()
+    public function onBeforeLogin()
     {
         return true;
     }
@@ -633,7 +633,7 @@ class Plugin
      * @return  bool
      * @since   1.0
      */
-    public function onAfterSignin()
+    public function onAfterLogin()
     {
         return true;
     }
@@ -644,7 +644,7 @@ class Plugin
      * @return  bool
      * @since   1.0
      */
-    public function onBeforesignout()
+    public function onBeforelogout()
     {
         return true;
     }
@@ -655,7 +655,7 @@ class Plugin
      * @return  bool
      * @since   1.0
      */
-    public function onAftersignout()
+    public function onAfterlogout()
     {
         return true;
     }

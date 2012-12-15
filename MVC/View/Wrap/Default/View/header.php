@@ -1,12 +1,12 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 if ((int) Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1) == 1
     && ($this->parameters['wrap_view_title'] == 'Article'

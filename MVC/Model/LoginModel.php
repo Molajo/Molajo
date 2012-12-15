@@ -1,35 +1,21 @@
 <?php
-/**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
- */
 namespace Molajo\MVC\Model;
 
-defined('MOLAJO') or die;
+use Molajo\Service\Services;
+
+defined('NIAMBIE') or die;
 
 /**
- * Signin Model
+ * As instructed by the Login Controller. the Login Model retrieves user data to verify the credentials
+ *  provided by the user during system login activities. This model also updates user data for login information.
  *
- * @package    Molajo
- * @subpackage  Model
- * @since       1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
-class HOLDSigninModel extends DisplayModel
+class LoginModel extends DisplayModel
 {
-    /**
-     * __construct
-     *
-     * Constructor.
-     *
-     * @param  $id
-     * @since  1.0
-     */
-    public function __construct()
-    {
-        return parent::__construct();
-    }
-
     /**
      * populateState
      *
@@ -77,7 +63,7 @@ class HOLDSigninModel extends DisplayModel
     }
 
     /**
-     * Get the redirect URI after signin.
+     * Get the redirect URI after login.
      *
      * @return string
      */
@@ -85,7 +71,7 @@ class HOLDSigninModel extends DisplayModel
     {
         $uri = Molajo::getURI();
         $return = 'index.php' . $uri->toString(array('query'));
-        if ($return != 'index.php?option=signin') {
+        if ($return != 'index.php?option=login') {
             return base64_encode($return);
         } else {
             return base64_encode('index.php');

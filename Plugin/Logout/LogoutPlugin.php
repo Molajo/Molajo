@@ -1,43 +1,43 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Plugin\Signout;
+namespace Molajo\Plugin\Logout;
 
 use Molajo\Plugin\Plugin\Plugin;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Signout
+ * Logout
  *
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
-class SignoutPlugin extends Plugin
+class LogoutPlugin extends Plugin
 {
 
     /**
-     * Before Authenticating the Signout Process
+     * Before Authenticating the Logout Process
      *
      * @return  boolean
      * @since   1.0
      */
-    public function onBeforeSignout()
+    public function onBeforeLogout()
     {
         return false;
     }
 
     /**
-     * After Authenticating the Signout Process
+     * After Authenticating the Logout Process
      *
      * @return  boolean
      * @since   1.0
      */
-    public function onAfterSignout()
+    public function onAfterLogout()
     {
         return false;
     }

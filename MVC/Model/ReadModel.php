@@ -1,22 +1,25 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Read Model
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Model;
 
 use Molajo\Application;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * ReadModel
+ * Read Model is driven by the primary Controller to use with model registries, to create and execute DB queries
  *
- * @package     Molajo
- * @subpackage  Model
- * @since       1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class ReadModel extends Model
 {
@@ -372,7 +375,7 @@ class ReadModel extends Model
     /**
      * getQueryResults - Execute query and returns an associative array of data elements
      *
-     * @param   string   $query_object: result, item, list, distinct
+     * @param   string   $query_object - four valid values: result, item, list, distinct
      * @param   int      $offset
      * @param   int      $count
      * @param   boolean  $use_pagination
@@ -552,7 +555,7 @@ class ReadModel extends Model
         /** Process each of the Custom Field Group Definitions for Query Results or defaults */
         foreach ($fields as $f) {
 
-            //todo: remove hack testing name - addition elements added on in controller incorrectly show in this array
+            //@todo remove hack testing name - addition elements added on in controller incorrectly show in this array
             if (isset($f['name'])) {
                 $name = $f['name'];
                 $name = strtolower($name);

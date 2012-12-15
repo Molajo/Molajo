@@ -29,6 +29,6 @@
 
     <action name="delete" authorisation="delete" controller="delete"/>
 
-    <action name="signin" authorisation="signin" controller="authenticate"/>
-    <action name="signout" authorisation="signin" controller="authenticate"/>
+    <action name="login" authorisation="login" controller="authenticate"/>
+    <action name="logout" authorisation="login" controller="authenticate"/>
 </actions>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,12 +9,12 @@ namespace Molajo\Service\Services\User;
 use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * User
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */

@@ -1,11 +1,11 @@
 <?php
 use Molajo\Service\Services;
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-defined('MOLAJO') or die; ?>
+defined('NIAMBIE') or die; ?>
 <div class="grid-ordering grid-batch">
     <ol class="grid-batch">
         <li><strong><?php echo Services::Language()->translate('Order Results'); ?></strong></li>

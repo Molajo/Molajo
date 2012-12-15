@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\Theme\Helper;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * ExtensionHelper
@@ -45,9 +45,13 @@ Class ExtensionHelper
      * @return  bool
      * @since   1.0
      */
-    public function get($extension_instance_id = 0, $catalog_type = null, $model_type = null, $model_name = null,
-        $check_permissions = null)
-    {
+    public function get(
+        $extension_instance_id = 0,
+        $catalog_type = null,
+        $model_type = null,
+        $model_name = null,
+        $check_permissions = null
+    ) {
         if (((int)$catalog_type == 0 && trim($catalog_type) == '') || is_null($catalog_type)) {
             $catalog_type_id = 0;
         } elseif (is_numeric($catalog_type)) {
@@ -116,7 +120,8 @@ Class ExtensionHelper
 
         if (strtolower($query_object) == strtolower(QUERY_OBJECT_LIST)
             && $model_type == DATA_SOURCE_LITERAL
-            && $model_name == 'Extensioninstances') {
+            && $model_name == 'Extensioninstances'
+        ) {
 
             $controller->set('model_offset', 0, 'model_registry');
             $controller->set('model_count', 999999, 'model_registry');
@@ -346,11 +351,12 @@ Class ExtensionHelper
      *
      * @param   string  $catalog_type  Numeric or textual key for View Catalog Type
      * @param   string  $node          Extension Name (folder name) for Extension Instance ID
+     * @param   string  $registry      Registry for storing results
      *
      * @return  string
      * @since   1.0
      */
-    public function getPath($catalog_type, $node)
+    public function getPath($catalog_type, $node, $registry = null)
     {
         if (is_numeric($catalog_type)) {
             $catalog_type = $this->getType(0, $catalog_type);
@@ -362,6 +368,10 @@ Class ExtensionHelper
         }
 
         $catalog_type = ucfirst(strtolower($catalog_type));
+
+        if ($registry === null) {
+            $registry = 'parameters';
+        }
 
         if ($catalog_type == CATALOG_TYPE_RESOURCE_LITERAL) {
             if (file_exists(
@@ -410,12 +420,12 @@ Class ExtensionHelper
 
             $plus = '/View/' . $catalog_type . '/' . ucfirst(strtolower($node));
 
-            if (file_exists(Services::Registry()->get('parameters', 'theme_path') . $plus . '/Configuration.xml')) {
-                return Services::Registry()->get('parameters', 'theme_path') . $plus;
+            if (file_exists(Services::Registry()->get($registry, 'theme_path') . $plus . '/Configuration.xml')) {
+                return Services::Registry()->get($registry, 'theme_path') . $plus;
             }
 
-            if (file_exists(Services::Registry()->get('parameters', 'extension_path') . $plus . '/Configuration.xml')) {
-                return Services::Registry()->get('parameters', 'extension_path') . $plus;
+            if (file_exists(Services::Registry()->get($registry, 'extension_path') . $plus . '/Configuration.xml')) {
+                return Services::Registry()->get($registry, 'extension_path') . $plus;
             }
 
             if (file_exists(
@@ -449,12 +459,13 @@ Class ExtensionHelper
      * Return URL path for Extension
      *
      * @param   string  $catalog_type  Numeric or textual key for View Catalog Type
-     * @param   $node
+     * @param   string  $node          Folder name of extension
+     * @param   string  $registry      Registry for storing results
      *
      * @return  mixed
      * @since   1.0
      */
-    public function getPathURL($catalog_type, $node)
+    public function getPathURL($catalog_type, $node, $registry =  null)
     {
         if (is_numeric($catalog_type)) {
             $catalog_type = $this->getType(0, $catalog_type);
@@ -466,6 +477,10 @@ Class ExtensionHelper
         }
 
         $catalog_type = ucfirst(strtolower($catalog_type));
+
+        if ($registry === null) {
+            $registry = 'parameters';
+        }
 
         if ($catalog_type == CATALOG_TYPE_RESOURCE_LITERAL) {
             if (file_exists(
@@ -515,12 +530,12 @@ Class ExtensionHelper
 
             $plus = '/View/' . $catalog_type . '/' . ucfirst(strtolower($node));
 
-            if (file_exists(Services::Registry()->get('parameters', 'theme_path') . $plus . '/Configuration.xml')) {
-                return Services::Registry()->get('parameters', 'theme_path_url') . $plus;
+            if (file_exists(Services::Registry()->get($registry, 'theme_path') . $plus . '/Configuration.xml')) {
+                return Services::Registry()->get($registry, 'theme_path_url') . $plus;
             }
 
-            if (file_exists(Services::Registry()->get('parameters', 'extension_path') . $plus . '/Configuration.xml')) {
-                return Services::Registry()->get('parameters', 'extension_path_url') . $plus;
+            if (file_exists(Services::Registry()->get($registry, 'extension_path') . $plus . '/Configuration.xml')) {
+                return Services::Registry()->get($registry, 'extension_path_url') . $plus;
             }
 
             if (file_exists(
@@ -546,12 +561,13 @@ Class ExtensionHelper
      * Return namespace for extension
      *
      * @param   string  $catalog_type  Numeric or textual key for View Catalog Type
-     * @param   $node
+     * @param   string  $node          Folder name of extension
+     * @param   string  $registry      Registry for storing results
      *
      * @return  bool|string
      * @since   1.0
      */
-    public function getNamespace($catalog_type, $node)
+    public function getNamespace($catalog_type, $node, $registry = null)
     {
         if (is_numeric($catalog_type)) {
             $catalog_type = $this->getType(0, $catalog_type);
@@ -560,6 +576,10 @@ Class ExtensionHelper
         if ($catalog_type === false) {
             throw new \RuntimeException
             ('ExtensionHelper: Invalid Catalog Type Value: ' . $catalog_type . ' sent in to getPath');
+        }
+
+        if ($registry === null) {
+            $registry = 'parameters';
         }
 
         $catalog_type = ucfirst(strtolower($catalog_type));
@@ -610,31 +630,29 @@ Class ExtensionHelper
             || $catalog_type == CATALOG_TYPE_WRAP_VIEW_LITERAL
         ) {
 
-            $plus = 'View\\' . $catalog_type . '\\' . ucfirst(strtolower($node));
+            $plus = '/View/' . $catalog_type . '/' . ucfirst(strtolower($node));
+            $plusNS = 'View\\' . $catalog_type . '\\' . ucfirst(strtolower($node));
 
-            if (file_exists(Services::Registry()->get('parameters', 'theme_path') . $plus . '/Configuration.xml')) {
-                return 'Extension\\Theme\\' . Services::Registry()->get('parameters', 'theme_path_node') . '\\' . $plus;
+            if (file_exists(Services::Registry()->get($registry, 'theme_path') . $plus . '/Configuration.xml')) {
+                return 'Extension\\Theme\\' . Services::Registry()->get($registry, 'theme_path_node') . '\\' . $plusNS;
             }
 
-            if (file_exists(Services::Registry()->get('parameters', 'extension_path') . $plus . '/Configuration.xml')) {
-                return 'Extension\\Resource\\' . Services::Registry()->get(
-                    'parameters',
-                    'extension_title'
-                ) . '\\' . $plus;
+            if (file_exists(Services::Registry()->get($registry, 'extension_path') . $plus . '/Configuration.xml')) {
+                return 'Extension\\Resource\\' . Services::Registry()->get($registry, 'extension_title') . '\\' . $plusNS;
             }
 
             if (file_exists(
                 EXTENSIONS_VIEWS . '/' . $catalog_type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
-                return 'Extension\\' . $plus;
+                return 'Extension\\' . $plusNS;
             }
 
             if (file_exists(
                 CORE_VIEWS . '/' . $catalog_type . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
-                return 'Molajo\\MVC\\' . $plus;
+                return 'Molajo\\MVC\\' . $plusNS;
             }
 
         }
@@ -646,16 +664,18 @@ Class ExtensionHelper
     /**
      * Retrieve Favicon Path from Theme Folder
      *
-     * @param   string  $node
+     * Note: Expects theme_path to already be set in the $registry
+     *
+     * @param   string  $registry      Registry for storing results
      *
      * @return  mixed
      * @since   1.0
      */
-    public function getFavicon($node)
+    public function getFavicon($registry)
     {
-        $path = EXTENSIONS_THEMES . '/' . ucfirst(strtolower($node)) . '/images/';
+        $path = Services::Registry()->get($registry, 'theme_path') . '/images/';
         if (file_exists($path . 'favicon.ico')) {
-            return EXTENSIONS_THEMES_URL . '/' . ucfirst(strtolower($node)) . '/images/favicon.ico';
+            Services::Registry()->get($registry, 'theme_path_url') . '/images/favicon.ico';
         }
 
         $path = BASE_FOLDER;

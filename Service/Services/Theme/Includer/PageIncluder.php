@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -11,12 +11,12 @@ use Molajo\Service\Services;
 use Molajo\Service\Services\Page\Includer;
 use Molajo\MVC\Controller\DisplayController;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Page
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Includer
  * @since       1.0
  */

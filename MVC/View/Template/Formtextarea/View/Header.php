@@ -2,12 +2,12 @@
 use Molajo\Service\Services;
 
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  * echo Services::Language()->translate('No textareaion')
  */
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 $tooltip_css_class = 'has-tip';
 ?>
 <span class="<?php echo $tooltip_css_class; ?>" title="<?php echo $this->row->tooltip; ?>"><label for="<?php echo $this->row->id; ?>"><?php echo $this->row->label; ?></label></span><textarea <?php

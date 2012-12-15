@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,11 +8,11 @@ namespace Molajo\Plugin\Pagetypeedit;
 
 use Molajo\Plugin\Plugin\Plugin;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class PagetypeeditPlugin extends Plugin
@@ -33,7 +33,7 @@ class PagetypeeditPlugin extends Plugin
         $resource_model_type = $this->get('model_type', '', 'parameters');
         $resource_model_name = $this->get('model_name', '', 'parameters');
 
-        //todo - submenu
+        //@todo - submenu
         Services::Registry()->set(PAGE_LITERAL, 'SectionSubmenu', array());
 
         /** Form Service */

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,12 +9,12 @@ namespace Molajo\Service\Services\Configuration;
 use Molajo\Application;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Configuration
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */
@@ -486,19 +486,24 @@ Class ConfigurationService
      * ConfigurationService::getModel($model_type, $model_name);
      *
      * @static
-     * @param   string $model_name
-     * @param   string $model_type
+     * @param   string  $model_name
+     * @param   string  $model_type
+     * @param   string  $parameter_registry
      *
-     * @return  string Name of the Model Registry object
+     * @return  string  Name of the Model Registry object
      * @since   1.0
      *
      * @throws  \Exception
      */
-    public static function getModel($model_type, $model_name)
+    public static function getModel($model_type, $model_name, $parameter_registry)
     {
         $model_type = ucfirst(strtolower($model_type));
         $model_name = ucfirst(strtolower($model_name));
         $model_registry = $model_name . $model_type;
+
+        if ($parameter_registry === null) {
+            $parameter_registry = 'parameters';
+        }
 
         if ($model_type == 'Dataobject') {
             return ConfigurationService::getDataobject($model_type, $model_name);
@@ -511,7 +516,7 @@ Class ConfigurationService
             }
         }
 
-        $path_and_file = ConfigurationService::locateFile($model_type, $model_name);
+        $path_and_file = ConfigurationService::locateFile($model_type, $model_name, $parameter_registry);
         if ($path_and_file === false) {
             throw new \Exception('Configuration: Cannot find XML file for Model Type: '
                 . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
@@ -1189,14 +1194,22 @@ Class ConfigurationService
      * Usage:
      * Services::Configuration()->locateFile('Application', 'defines');
      *
-     * @return  mixed object or void
+     * @param   string  $model_type
+     * @param   string  $model_name
+     * @param   string  $parameter_registry
+     *
+     * @return  string
      * @since   1.0
-     * @throws  \RuntimeException
+     * @throws  \Exception
      */
-    protected static function locateFile($model_type, $model_name)
+    protected static function locateFile($model_type, $model_name, $parameter_registry = null)
     {
         $model_type = trim(ucfirst(strtolower($model_type)));
         $model_name = trim(ucfirst(strtolower($model_name)));
+
+        if ($parameter_registry === null) {
+            $parameter_registry = 'parameters';
+        }
 
         $path = false;
 
@@ -1312,8 +1325,8 @@ Class ConfigurationService
         }
 
         $extension_path = false;
-        if (Services::Registry()->exists('Parameters', 'extension_path')) {
-            $extension_path = Services::Registry()->get('Parameters', 'extension_path');
+        if (Services::Registry()->exists($parameter_registry, 'extension_path')) {
+            $extension_path = Services::Registry()->get($parameter_registry, 'extension_path');
         }
 
         $primary_extension_path = false;
@@ -1322,23 +1335,23 @@ Class ConfigurationService
         }
 
         $theme_path = false;
-        if (Services::Registry()->exists('Parameters', 'theme_path')) {
-            $theme_path = Services::Registry()->get('Parameters', 'theme_path');
+        if (Services::Registry()->exists($parameter_registry, 'theme_path')) {
+            $theme_path = Services::Registry()->get($parameter_registry, 'theme_path');
         }
 
         $page_view_path = false;
-        if (Services::Registry()->exists('Parameters', 'page_view_path')) {
-            $page_view_path = Services::Registry()->get('Parameters', 'page_view_path');
+        if (Services::Registry()->exists($parameter_registry, 'page_view_path')) {
+            $page_view_path = Services::Registry()->get($parameter_registry, 'page_view_path');
         }
 
         $template_view_path = false;
-        if (Services::Registry()->exists('Parameters', 'template_view_path')) {
-            $template_view_path = Services::Registry()->get('Parameters', 'template_view_path');
+        if (Services::Registry()->exists($parameter_registry, 'template_view_path')) {
+            $template_view_path = Services::Registry()->get($parameter_registry, 'template_view_path');
         }
 
         $wrap_view_path = false;
-        if (Services::Registry()->exists('Parameters', 'wrap_view_path')) {
-            $wrap_view_path = Services::Registry()->get('Parameters', 'wrap_view_path');
+        if (Services::Registry()->exists($parameter_registry, 'wrap_view_path')) {
+            $wrap_view_path = Services::Registry()->get($parameter_registry, 'wrap_view_path');
         }
 
         /** Search for overrides before standard placement */

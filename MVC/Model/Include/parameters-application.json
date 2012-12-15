@@ -2,7 +2,7 @@
     "application_name":"Molajo Administrator",
     "application_home_catalog_id":"1072",
     "application_default_theme_id":"7010",
-    "application_signin_requirement":"1",
+    "application_login_requirement":"1",
     "application_help":"1",
     "application_google_analytics_code":"xxxx",
     "application_html5":"1",

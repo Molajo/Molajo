@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 $application_html5 = $this->row->application_html5;
 $end = $this->row->end;
 if (trim($this->row->content) == '') {

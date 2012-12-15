@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,13 +9,13 @@ namespace Molajo\Service\Services\Route;
 use Molajo\Application;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Route Service
  *
- * @package     Molajo
- * @subpackage  Route
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 Class RouteService
@@ -34,36 +34,7 @@ Class RouteService
      * @var    object
      * @since  1.0
      */
-    protected $property_array = array(
-      'catalog_alias',
-      'catalog_category_id',
-      'catalog_extension_instance_id',
-      'catalog_home',
-      'catalog_id',
-      'catalog_model_name',
-      'catalog_model_type',
-      'catalog_page_type',
-      'catalog_source_id',
-      'catalog_type',
-      'catalog_type_id',
-      'catalog_url_request',
-      'catalog_url_sef_request',
-      'catalog_view_group_id',
-      'parameters',
-      'redirect_to_id',
-      'request_action',
-      'request_base_url_path',
-      'request_catalog_id',
-      'request_filters',
-      'request_non_route_parameters',
-      'request_post_variables',
-      'request_task',
-      'request_task_controller',
-      'request_task_permission',
-      'request_task_values',
-      'request_url',
-      'status_authorised',
-      'status_found');
+    protected $route_properties_array = array();
 
     /**
      * Get the current value (or default) of the specified key
@@ -78,7 +49,7 @@ Class RouteService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->route_properties_array)) {
         } else {
             throw new \OutOfRangeException('Route: is attempting to get value for unknown key: ' . $key);
         }
@@ -103,7 +74,7 @@ Class RouteService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->route_properties_array)) {
         } else {
             throw new \OutOfRangeException('Route: is attempting to set value for unknown key: ' . $key);
         }
@@ -115,17 +86,19 @@ Class RouteService
     /**
      * Retrieve catalog entry and values needed to route the request
      *
-     * @param   string  $requested_resource_for_route
-     * @param   string  $base_url_path_for_application
-     * @param   string  $override_url_request
-     * @param   string  $override_catalog_id
+     * @param   string  $route_properties_array         Valid parameter keys
+     * @param   string  $requested_resource_for_route   Routable portion of Request (ex. articles/article-1)
+     * @param   string  $base_url_path_for_application  Base for URL (ex. http://example.com/administrator)
+     * @param   string  $override_catalog_id            Use instead of $requested_resource_for_route
      *
      * @return  array|bool
      * @since   1.0
      */
-    public function process($requested_resource_for_route, $base_url_path_for_application,
-        $override_url_request = null, $override_catalog_id = null)
+    public function process($route_properties_array, $requested_resource_for_route,
+        $base_url_path_for_application, $override_catalog_id = null)
     {
+        $this->route_properties_array = $route_properties_array;
+
         $this->set('request_catalog_id', 0);
         $this->set('status_found', '');
         $this->set('status_authorised', '');
@@ -134,6 +107,7 @@ Class RouteService
         if (substr($requested_resource_for_route, 0, 1) == '/') {
             $requested_resource_for_route = substr($requested_resource_for_route, 1);
         }
+
         $this->set('request_url', $requested_resource_for_route);
         $this->set('request_base_url_path', $base_url_path_for_application);
         $this->set('request_catalog_id', 0);
@@ -143,18 +117,13 @@ Class RouteService
             $this->set('request_catalog_id', (int)$override_catalog_id);
         }
 
-        if ($override_url_request == '') {
-        } else {
-            $this->set('request_url', $override_url_request);
-        }
-
         $continue = $this->checkHome();
 
         if ($continue === false) {
             Services::Profiler()->set('Route checkHome() Redirect to Real Home', 'Route');
             return false;
         }
-//todo: define groups who can signin in offline mode
+//@todo define groups who can login in offline mode
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_switch', 0) == 1) {
             Services::Error()->set(503);
             Services::Profiler()->set('Application::Route() Direct to Offline Mode', 'Route');
@@ -169,7 +138,7 @@ Class RouteService
         }
 
         /**  Get Route Information: Catalog  */
-        $continue = $this->getRouteCatalog();
+        $this->getRouteCatalog();
 
         /** 404 */
         if ($this->get('status_found') === false) {
@@ -186,17 +155,17 @@ Class RouteService
             return false;
         }
 
-        /** Redirect to signin */
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'application_signin_requirement', 0) > 0
+        /** Redirect to login */
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'application_login_requirement', 0) > 0
             && Services::Registry()->get(USER_LITERAL, 'guest', true) === true
             && $this->get('request_catalog_id')
-                <> Services::Registry()->get(CONFIGURATION_LITERAL, 'application_signin_requirement', 0)
+                <> Services::Registry()->get(CONFIGURATION_LITERAL, 'application_login_requirement', 0)
         ) {
             Services::Response()->redirect(
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_signin_requirement', 0),
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'application_login_requirement', 0),
                 303
             );
-            Services::Profiler()->set('Route::Redirect to signin', 'Route');
+            Services::Profiler()->set('Route::Redirect to login', 'Route');
             return false;
         }
 
@@ -209,7 +178,7 @@ Class RouteService
      * Determine if URL is duplicate content for home (and issue redirect, if necessary)
      *
      * @param   string  $path Stripped of Host, Folder, and Application
-     *                         ex. index.php?option=signin or access/groups
+     *                         ex. index.php?option=login or access/groups
      *
      * @return  boolean
      * @since   1.0
@@ -346,7 +315,7 @@ Class RouteService
         }
 
         /**
-        todo: test with non-sef URLs
+        @todo test with non-sef URLs
         $sef = Services::Registry()->get(CONFIGURATION_LITERAL, 'sef_url', 1);
         if ($sef == 1) {
             $this->getResourceSEF();
@@ -654,6 +623,8 @@ Class RouteService
         $this->set('catalog_extension_instance_id', $item->extension_instance_id);
         $this->set('catalog_model_type', $item->b_model_type);
         $this->set('catalog_model_name', $item->b_model_name);
+        $this->set('catalog_model_registry_name',
+            ucfirst(strtolower($item->b_model_name)) . ucfirst(strtolower($item->b_model_type)));
         $this->set('catalog_alias', $item->b_alias);
         $this->set('catalog_source_id', (int)$item->source_id);
 

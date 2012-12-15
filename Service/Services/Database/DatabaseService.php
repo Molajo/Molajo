@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,12 +9,12 @@ namespace Molajo\Service\Services\Database;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Database Connection
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */

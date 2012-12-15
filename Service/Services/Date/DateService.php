@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,12 +8,12 @@ namespace Molajo\Service\Services\Date;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Date
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */
@@ -440,7 +440,7 @@ Class DateService
      * @return  string  CCYY-MM-DD
      * @since   1.0
      */
-//todo: Amy - redo to generate a set of dates in a model, combine with other data, pass to a view for rendering
+//@todo Amy - redo to generate a set of dates in a model, combine with other data, pass to a view for rendering
 
     /**
      * @param   $month

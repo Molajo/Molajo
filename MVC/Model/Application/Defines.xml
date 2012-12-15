@@ -5,7 +5,7 @@
     <define name="CRLF" value="\n"/>
     <define name="TAB" value="\t"/>
 
-    <define name="ACTION_SIGNIN" value="signin"/>
+    <define name="ACTION_LOGIN" value="login"/>
     <define name="ACTION_CREATE" value="create"/>
     <define name="ACTION_READ" value="read"/>
     <define name="ACTION_EDIT" value="edit"/>

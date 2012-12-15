@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,13 +8,13 @@ namespace Molajo\Plugin\Checkin;
 
 use Molajo\Plugin\Plugin\Plugin;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Checkin
  *
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class CheckinPlugin extends Plugin

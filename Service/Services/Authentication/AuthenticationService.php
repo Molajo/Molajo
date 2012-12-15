@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,12 +8,12 @@ namespace Molajo\Service\Services\Authentication;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Authentication
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Services
  * @since       1.0
  */

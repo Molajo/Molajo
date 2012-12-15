@@ -1,22 +1,27 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Create Controller
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Controller;
 
 use Molajo\Service\Services;
 use Molajo\MVC\Controller\Controller;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Create
+ * The create controller uses model registry data and HTTP post variables to edit, filter, and save
+ * data, verifying foreign key restraints, expected values, permissions, etc. In addition, the create
+ * controller schedules before and after create events.
  *
- * @package     Molajo
- * @subpackage  Controller
- * @since       1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class CreateController extends Controller
 {
@@ -455,7 +460,9 @@ class CreateController extends Controller
     /**
      * Schedule Event onAfterCreateEvent Event
      *
-     * @return boolean
+     * @param   $data
+     *
+     * @return  boolean
      * @since   1.0
      */
     protected function onAfterCreateEvent($data)

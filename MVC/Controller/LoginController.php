@@ -1,32 +1,37 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Login Controller
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Controller;
 
 use Molajo\Service\Services;
+use Molajo\MVC\Controller\Controller;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Signin
+ * The login controller verifies user and user credentials to access the site and application.
+ * In addition, the login controller schedules before and after login events.
  *
- * @package      Molajo
- * @subpackage   Controller
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-class HOLDSigninController extends Controller
+class LoginController extends Controller
 {
     /**
-     * signin
+     * login
      *
      * Method to log in a user.
      *
      * @return void
      */
-    public function signin()
+    public function login()
     {
         /**
          *  Retrieve Form Fields
@@ -38,7 +43,7 @@ class HOLDSigninController extends Controller
             'password' => JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW)
         );
 
-        $options = array('action' => 'signin');
+        $options = array('action' => 'login');
 
         /** security check: internal URL only */
         $return = JRequest::getVar('return', '', 'method', 'base64');
@@ -54,13 +59,13 @@ class HOLDSigninController extends Controller
         }
 
         /**
-         *  Authenticate, Authorize and Execute After Signin Plugins
+         *  Authenticate, Authorize and Execute After Login Plugins
          */
         $userObject = Services::Authentication()->authenticate($credentials, $options);
 
         if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
-            $this->_signinFailed('authenticate', $userObject, $options);
+            $this->_loginFailed('authenticate', $userObject, $options);
 
             return;
         }
@@ -68,19 +73,19 @@ class HOLDSigninController extends Controller
         Services::Authentication()->authorise($userObject, (array) $options);
         if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
-            $this->_signinFailed('authorise', $userObject, $options);
+            $this->_loginFailed('authorise', $userObject, $options);
 
             return;
         }
 
-        Services::Authentication()->onUserSignin($userObject, (array) $options);
+        Services::Authentication()->onUserLogin($userObject, (array) $options);
         if (isset($options['remember']) && $options['remember']) {
 
             // Create the encryption key, apply extra hardening using the user agent string.
             $agent = $_SERVER['HTTP_USER_AGENT'];
 
             // Ignore empty and crackish user agents
-            if ($agent != '' && $agent != 'JSIGNIN_REMEMBER') {
+            if ($agent != '' && $agent != 'JLOGIN_REMEMBER') {
                 $key = MolajoUtility::getHash($agent);
                 $crypt = new MolajoSimpleCrypt($key);
                 $rcookie = $crypt->encrypt(serialize($credentials));
@@ -90,7 +95,7 @@ class HOLDSigninController extends Controller
                 $cookie_domain = $this->getConfig('cookie_domain', '');
                 $cookie_path = $this->getConfig('cookie_path', '/');
                 setcookie(
-                    MolajoUtility::getHash('JSIGNIN_REMEMBER'), $rcookie, $lifetime,
+                    MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime,
                     $cookie_path, $cookie_domain
                 );
             }
@@ -101,19 +106,19 @@ class HOLDSigninController extends Controller
     }
 
     /**
-     * _signinFailed
+     * _loginFailed
      *
-     * Handles failed signin attempts
+     * Handles failed login attempts
      *
      * @param $response
      * @param array $options
      * @return
      */
-    protected function _signinFailed($type, $response, $options = Array())
+    protected function _loginFailed($type, $response, $options = Array())
     {
 //        MolajoPluginHelper::getPlugin(USER_LITERAL);
 //        if ($type == 'authenticate') {
-//            Services::Event()->scheduleEvent('onUserSigninFailure', array($response, $options));
+//            Services::Event()->scheduleEvent('onUserLoginFailure', array($response, $options));
 //        } else {
 //            Services::Event()->scheduleEvent('onUserPermissionsFailure', array($response, $options));
 //        }
@@ -122,13 +127,13 @@ class HOLDSigninController extends Controller
     }
 
     /**
-     * signout
+     * logout
      *
      * Method to log out a user.
      *
      * @return void
      */
-    public function signout()
+    public function logout()
     {
         JRequest::checkToken('default') or die;
 
@@ -137,9 +142,9 @@ class HOLDSigninController extends Controller
             'application_id' => ($user_id) ? 0 : 1
         );
 
-        $result = Application::signout($user_id, $options);
+        $result = Application::logout($user_id, $options);
         if (!MolajoError::isError($result)) {
-            $this->model = $this->getModel('signin');
+            $this->model = $this->getModel('login');
             $return = $this->model->getState('return');
             Services::Response()->redirect($return);
         }
@@ -148,12 +153,12 @@ class HOLDSigninController extends Controller
     }
 
     /**
-     * Signout authentication function.
+     * Logout authentication function.
      *
-     * Passed the current user information to the onUserSignout event and reverts the current
+     * Passed the current user information to the onUserLogout event and reverts the current
      * session record back to 'anonymous' parameters.
      * If any of the authentication plugins did not successfully complete
-     * the signout routine then the whole method fails.  Any errors raised
+     * the logout routine then the whole method fails.  Any errors raised
      * should be done in the plugin as this provides the ability to give
      * much more information about why the routine may have failed.
      *
@@ -164,7 +169,7 @@ class HOLDSigninController extends Controller
      *
      * @since   1.0
      */
-    public function signout2($user_id = null, $options = array())
+    public function logout2($user_id = null, $options = array())
     {
         // Initialise variables.
         $retval = false;
@@ -184,8 +189,8 @@ class HOLDSigninController extends Controller
         // Import the user plugin group.
 //        MolajoPluginHelper::importPlugin(USER_LITERAL);
 
-        // OK, the credentials are built. Lets fire the onSignout event.
-//        $results = Services::Event()->scheduleEvent('onUserSignout', array($parameters, $options));
+        // OK, the credentials are built. Lets fire the onLogout event.
+//        $results = Services::Event()->scheduleEvent('onUserLogout', array($parameters, $options));
 
         // Check if any of the plugins failed. If none did, success.
 
@@ -194,13 +199,32 @@ class HOLDSigninController extends Controller
         // Use domain and path set in config for cookie if it exists.
         $cookie_domain = $this->getConfig('cookie_domain', '');
         $cookie_path = $this->getConfig('cookie_path', '/');
-        setcookie(MolajoUtility::getHash('JSIGNIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
+        setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
         return true;
 //        }
 
-        // Plugin onUserSigninFailure Event.
-//        Services::Event()->scheduleEvent('onUserSignoutFailure', array($parameters));
+        // Plugin onUserLoginFailure Event.
+//        Services::Event()->scheduleEvent('onUserLogoutFailure', array($parameters));
         return false;
+    }
+
+
+    /**
+     * Schedule Before Login Event
+     *
+     * @return void
+     */
+    public function onBeforeLoginEvent()
+    {
+    }
+
+    /**
+     * Schedule After Logout Event
+     *
+     * @return void
+     */
+    public function onAfterLogoutEvent()
+    {
     }
 }

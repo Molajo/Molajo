@@ -1,42 +1,42 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-namespace Molajo\Plugin\signin;
+namespace Molajo\Plugin\login;
 
 use Molajo\Plugin\Plugin\Plugin;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * signin
+ * login
  *
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
-class SigninPlugin extends Plugin
+class LoginPlugin extends Plugin
 {
     /**
-     * Before Authenticating the Signin Process
+     * Before Authenticating the Login Process
      *
      * @return  boolean
      * @since   1.0
      */
-    public function onBeforeSignin()
+    public function onBeforeLogin()
     {
         return false;
     }
 
     /**
-     * After Authenticating the Signin Process
+     * After Authenticating the Login Process
      *
      * @return  boolean
      * @since   1.0
      */
-    public function onAfterSignin()
+    public function onAfterLogin()
     {
         return false;
     }

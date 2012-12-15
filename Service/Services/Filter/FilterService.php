@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -10,15 +10,15 @@ use HTMLPurifier\HTMLPurifier;
 use HTMLPurifier\HTMLPurifier_Config;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
-//todo SIMPLIFY these options to what Molajo really needs.
-//todo Hook back up HTML Purifier
+//@todo SIMPLIFY these options to what Molajo really needs.
+//@todo Hook back up HTML Purifier
 
 /**
  * Filter
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  *
@@ -481,7 +481,7 @@ Class FilterService
                                 $default = null)
     {
 
-        //todo: get html filters back on
+        //@todo get html filters back on
         return true;
 
         if ($default == null) {

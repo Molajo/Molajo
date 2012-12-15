@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,15 +8,15 @@ namespace Molajo\Service\Services\Registry;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
-//todo: consider API and minimize interface points
-//todo: limit access by class
+//@todo consider API and minimize interface points
+//@todo limit access by class
 /**
  * Registry
  * Named pair storage with local or global persistence
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Services
  * @since       1.0
  */
@@ -325,7 +325,6 @@ Class RegistryService
 
     Services::Registry()->createRegistry('Dog');
 
-
     echo Services::Registry()->get('Unit', 'Test2');
     $array = Services::Registry()->get('Unit', 'Test*');
     var_dump($array);
@@ -394,7 +393,7 @@ Class RegistryService
             if ($key == '*') {
                 $selected = $sort;
             } else {
-                //todo - combine all the wildcard logic
+                //@todo - combine all the wildcard logic
                 if (substr($key, 0, 1) == '*') {
                     $selected = array();
                     $searchfor = substr($key, 1, (strrpos($key, '*') - 1));

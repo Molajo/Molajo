@@ -1,22 +1,15 @@
 <?php
-/**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
- */
 namespace Molajo\Service;
 
 use Molajo\Application;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
-//todo make it easy to tell if a service is running or not
-//todo acl per service
+//@todo make it easy to tell if a service is running or not
+//@todo acl per service
 
 /**
- * Service
- *
  * The Services Class serves as a facade and has been put in place for these reasons:
  *
  *  1) Simplify application interface for services for frontend developers
@@ -30,12 +23,13 @@ defined('MOLAJO') or die;
  *         of application utilities that provide basic functionality which can be supplied by different
  *         vendors without requiring change to the application itself
  *
- * @return  boolean
- * @since   1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class Services
 {
-
     /**
      * Stores messages locally until the Profiler Service has been activated
      *

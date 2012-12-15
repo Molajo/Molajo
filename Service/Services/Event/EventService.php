@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\Event;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Event Service
@@ -29,7 +29,7 @@ defined('MOLAJO') or die;
  *      Services::Event()->registerPlugin(PLATFORM_FOLDER . '/' . PLUGIN_LITERAL, 'Molajo\\Plugin\\');
  *      Services::Event()->registerPlugin('Extension', 'Extension\\Resource\\Articles\\AliasPlugin');
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */
@@ -136,7 +136,7 @@ Class EventService
 
         } else {
 
-            //todo: provide startup parameters - remove hardcoding
+            //@todo provide startup parameters - remove hardcoding
             $selections = array();
             $eventList = array('onconnectdatabase');
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,13 +9,13 @@ namespace Molajo\Plugin\Pagination;
 use Molajo\Service\Services;
 use Molajo\Plugin\Plugin\Plugin;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Pagination
  *
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class PaginationPlugin extends Plugin
@@ -197,7 +197,7 @@ class PaginationPlugin extends Plugin
             . '.' . $controller->model->db->qn($controller->get('primary_key', 'id', 'model_registry')
             . ' = ' . (int) $this->parameters['catalog_source_id']));
 
-//todo ordering
+//@todo ordering
         $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         $this->model_registry_name = ucfirst(strtolower($this->get('model_name', '', 'parameters')))

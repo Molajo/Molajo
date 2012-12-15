@@ -1,15 +1,14 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Theme\Helper;
 
 use Molajo\Service\Services;
-use Molajo\Helpers;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * View Helper
@@ -39,18 +38,26 @@ Class ViewHelper
     /**
      * Retrieve View
      *
-     * @param   $value         Numeric Key, Title, or Node (Extension Name)
-     *                         If no value sent in, the default for Catalog Type will be used
-     * @param   $catalog_type  Numeric or textual key for View Catalog Type
+     * @param   string  $value         Numeric Key, Title, or Node (Extension Name)
+     *                                 If no value sent in, the default for Catalog Type will be used
+     * @param   string  $catalog_type  Numeric or textual key for View Catalog Type
+     * @param   string  $registry      Registry to store results in, or 'parameters' default
      *
      * @return  bool
      * @since   1.0
      */
-    public function get($value = null, $catalog_type)
+
+    public function get($value = null, $catalog_type, $registry = null)
     {
+        if ($registry === null) {
+            $registry = strtolower(PARAMETERS_LITERAL);
+        }
+
         if ($catalog_type == CATALOG_TYPE_PAGE_VIEW
             || $catalog_type == CATALOG_TYPE_TEMPLATE_VIEW
-            || $catalog_type == CATALOG_TYPE_WRAP_VIEW) {
+            || $catalog_type == CATALOG_TYPE_WRAP_VIEW
+        ) {
+
             $catalog_type = $this->extensionHelper->getType(0, $catalog_type);
         }
 
@@ -58,8 +65,10 @@ Class ViewHelper
 
         if ($catalog_type == CATALOG_TYPE_PAGE_VIEW_LITERAL
             || $catalog_type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL
-            || $catalog_type == CATALOG_TYPE_WRAP_VIEW_LITERAL) {
+            || $catalog_type == CATALOG_TYPE_WRAP_VIEW_LITERAL
+        ) {
         } else {
+
             throw new \RuntimeException('ViewHelper: Catalog Type for View is Invalid: ' . $catalog_type);
         }
 
@@ -86,56 +95,85 @@ Class ViewHelper
             }
         }
 
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_id', (int)$id);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_path_node', $node);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_path',
-            $this->extensionHelper->getPath($node, $catalog_type));
+        Services::Registry()->set($registry, $catalog_type . '_view_id', (int)$id);
+        Services::Registry()->set($registry, $catalog_type . '_view_path_node', $node);
         Services::Registry()->set(
-            PARAMETERS_LITERAL,
-            $catalog_type . '_view_path_include',
-            $this->getPath($node, $catalog_type) . '/index.php'
+            $registry,
+            $catalog_type . '_view_path',
+            $this->extensionHelper->getPath($catalog_type, $node, $registry)
         );
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_path_url',
-            $this->extensionHelper->getPathURL($node, $catalog_type));
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_namespace',
-            $this->extensionHelper->getNamespace($node, $catalog_type));
+        Services::Registry()->set(
+            $registry,
+            $catalog_type . '_view_path_include',
+            $this->extensionHelper->getPath($catalog_type, $node, $registry) . '/index.php'
+        );
+        Services::Registry()->set(
+            $registry,
+            $catalog_type . '_view_path_url',
+            $this->extensionHelper->getPathURL($catalog_type, $node, $registry)
+        );
+        Services::Registry()->set(
+            $registry,
+            $catalog_type . '_view_namespace',
+            $this->extensionHelper->getNamespace($catalog_type, $node, $registry)
+        );
 
-        $item = $this->extensionHelper->get($id, $catalog_type, $node, 1);
+        /** Load View Model before extension query to use $registry value for Theme search */
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry($catalog_type, $node, 1, $registry);
+
+        $item = $this->extensionHelper->get($id, null, $catalog_type, $node, 1);
         if (count($item) == 0 || $item === false) {
             return false;
         }
 
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_title', $item->title);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_translation_of_id',
-            (int)$item->translation_of_id);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_language', $item->language);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_view_group_id',
-            $item->catalog_view_group_id);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_catalog_id', $item->catalog_id);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_catalog_type_id',
-            (int)$item->catalog_type_id);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_catalog_type_title',
-            $item->catalog_types_title);
-        Services::Registry()->set(PARAMETERS_LITERAL, $catalog_type . '_view_model_registry',
-            $item->model_registry);
+        Services::Registry()->set($registry, $catalog_type . '_view_title', $item->title);
+        Services::Registry()->set(
+            $registry,
+            $catalog_type . '_view_translation_of_id',
+            (int)$item->translation_of_id
+        );
+        Services::Registry()->set($registry, $catalog_type . '_view_language', $item->language);
+        Services::Registry()->set(
+            $registry,
+            $catalog_type . '_view_view_group_id',
+            $item->catalog_view_group_id
+        );
+        Services::Registry()->set($registry, $catalog_type . '_view_catalog_id', $item->catalog_id);
+        Services::Registry()->set(
+            $registry,
+            $catalog_type . '_view_catalog_type_id',
+            (int)$item->catalog_type_id
+        );
+        Services::Registry()->set(
+            $registry,
+            $catalog_type . '_view_catalog_type_title',
+            $item->catalog_types_title
+        );
+        Services::Registry()->set(
+            $registry,
+            $catalog_type . '_view_model_registry',
+            $item->model_registry
+        );
 
         if ($catalog_type == CATALOG_TYPE_PAGE_VIEW_LITERAL) {
-            $this->setParameters(CATALOG_TYPE_PAGE_VIEW_LITERAL, $item->model_registry . PARAMETERS_LITERAL);
+            $this->setParameters(CATALOG_TYPE_PAGE_VIEW_LITERAL, $item->model_registry . 'Parameters', $registry);
 
         } elseif ($catalog_type == CATALOG_TYPE_TEMPLATE_VIEW_LITERAL) {
 
-            $this->setParameters('template', $item->model_registry . PARAMETERS_LITERAL);
-            $this->setParameters('wrap', $item->model_registry . PARAMETERS_LITERAL);
-            $this->setParameters('cache', $item->model_registry . PARAMETERS_LITERAL);
-            $this->setParameters('model', $item->model_registry . PARAMETERS_LITERAL);
-            $this->setParameters('criteria', $item->model_registry . PARAMETERS_LITERAL);
+            $this->setParameters('template', $item->model_registry . 'Parameters', $registry);
+            $this->setParameters('wrap', $item->model_registry . 'Parameters', $registry);
+            $this->setParameters('cache', $item->model_registry . 'Parameters', $registry);
+            $this->setParameters('model', $item->model_registry . 'Parameters', $registry);
+            $this->setParameters('criteria', $item->model_registry . 'Parameters', $registry);
 
         } else {
-            $this->setParameters('wrap', $item->model_registry . PARAMETERS_LITERAL);
+            $this->setParameters('wrap', $item->model_registry . 'Parameters', $registry);
         }
 
-        Services::Registry()->delete($item->model_registry . PARAMETERS_LITERAL, $catalog_type . '_view_id');
-        Services::Registry()->copy($item->model_registry . PARAMETERS_LITERAL, PARAMETERS_LITERAL);
+        Services::Registry()->delete($item->model_registry . 'Parameters', $catalog_type . '_view_id');
+        Services::Registry()->copy($item->model_registry . 'Parameters', $registry);
 
         return true;
     }
@@ -149,16 +187,16 @@ Class ViewHelper
      * @return  bool
      * @since   1.0
      */
-    public function setParameters($requestTypeNamespace, $parameterNamespace)
+    public function setParameters($requestTypeNamespace, $parameterNamespace, $registry)
     {
         $newParameters = Services::Registry()->get($parameterNamespace, $requestTypeNamespace . '*');
         if (is_array($newParameters) && count($newParameters) > 0) {
-            $this->processParameterSet($newParameters);
+            $this->processParameterSet($newParameters, $registry);
         }
 
         $applicationDefaults = Services::Registry()->get(CONFIGURATION_LITERAL, $requestTypeNamespace . '*');
         if (count($applicationDefaults) > 0) {
-            $this->processParameterSet($applicationDefaults);
+            $this->processParameterSet($applicationDefaults, $registry);
         }
 
         return true;
@@ -172,14 +210,14 @@ Class ViewHelper
      * @return  $bool
      * @since   1.0
      */
-    protected function processParameterSet($parameterSet)
+    protected function processParameterSet($parameterSet, $registry)
     {
         foreach ($parameterSet as $key => $value) {
-            $existing = Services::Registry()->get('parameters', $key);
+            $existing = Services::Registry()->get($registry, $key);
             if ($existing === 0 || trim($existing) == '' || $existing == null) {
                 if ($value === 0 || trim($value) == '' || $value == null) {
                 } else {
-                    Services::Registry()->set(PARAMETERS_LITERAL, $key, $value);
+                    Services::Registry()->set($registry, $key, $value);
                 }
             }
         }

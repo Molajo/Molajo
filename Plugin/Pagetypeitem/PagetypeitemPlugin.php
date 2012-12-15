@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -11,11 +11,11 @@ use Molajo\Plugin\Pagetypeconfiguration;
 use Molajo\Service\Services;
 
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class PagetypeitemPlugin extends Plugin

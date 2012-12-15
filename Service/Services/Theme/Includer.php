@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -13,12 +13,12 @@ use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 use Molajo\Service\Services\Theme\Helper\ThemeHelper;
 use Molajo\Service\Services\Theme\Helper\ViewHelper;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Includer
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Extension
  * @since       1.0
  */
@@ -645,7 +645,7 @@ class Includer
         $cache_key = implode('', $controller->set('include', Services::Registry()->getArray('parameters')));
         $cached_output = Services::Cache()->get(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, $cache_key);
 
-//todo: check parameter to see if individual item should be cached
+//@todo check parameter to see if individual item should be cached
         if ($cached_output === false) {
 
             $this->rendered_output = $controller->execute();
@@ -757,8 +757,8 @@ class Includer
             'query_results' => array(),
             'row' => null,
             'rendered_output' => $this->rendered_output,
-            'include_parse_sequence' => null,
-            'include_parse_exclude_until_final' => null
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent(

@@ -1,21 +1,18 @@
 <?php
-/**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
- */
 namespace Molajo\MVC\Model;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Delete
+ * As instructed by the Delete Controller. the Delete Model uses model registry data to prepare
+ * data, create and run SQL statements needed to delete data.
  *
- * @package     Molajo
- * @subpackage  Model
- * @since       1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class DeleteModel extends Model
 {

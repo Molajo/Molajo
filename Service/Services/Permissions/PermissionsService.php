@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,14 +9,14 @@ namespace Molajo\Service\Services\Permissions;
 use Molajo\Application;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
-//todo: remove hard-coded prefixes (a.) and replace with prefixes defined in model
+//@todo remove hard-coded prefixes (a.) and replace with prefixes defined in model
 
 /**
  * Permissions
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Services
  * @since       1.0
  */
@@ -259,13 +259,13 @@ Class PermissionsService
      */
     public function verifyTask($action, $catalog_id)
     {
-        if ($action == 'signin') {
-            return $this->verifySignin('signin', $catalog_id);
+        if ($action == 'login') {
+            return $this->verifyLogin('login', $catalog_id);
         }
-        //todo:
+        //@todo
         return true;
 
-//todo: hash store results for later reuse
+//@todo hash store results for later reuse
         $authorisationArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
         $authorisationIdArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation_id');
 
@@ -309,10 +309,10 @@ Class PermissionsService
     }
 
     /**
-     * Verifies permission for a user to signin to a specific application
+     * Verifies permission for a user to login to a specific application
      *
      * Example usage:
-     * Services::Permissions()->verifySignin('signin', $catalog_id);
+     * Services::Permissions()->verifyLogin('login', $catalog_id);
      *
      * @param   $key
      * @param   $action
@@ -320,7 +320,7 @@ Class PermissionsService
      * @param   null  $catalog
      * @return  bool
      */
-    public function verifySignin($user_id)
+    public function verifyLogin($user_id)
     {
         if ((int)$user_id == 0) {
             return false;

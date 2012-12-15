@@ -61,7 +61,7 @@
             <include field="application_name"/>
             <include field="application_home_catalog_id"/>
             <include field="application_default_theme_id"/>
-            <include field="application_signin_requirement"/>
+            <include field="application_login_requirement"/>
             <include field="application_help"/>
             <include field="application_google_analytics_code"/>
             <include field="application_html5"/>

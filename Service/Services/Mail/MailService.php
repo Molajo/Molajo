@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\Mail;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Mail
@@ -29,7 +29,7 @@ defined('MOLAJO') or die;
  *
  * Services::Mail()->send();
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */
@@ -227,7 +227,7 @@ Class MailService
         /** User */
 
         /** authorization event */
-        //todo: what is the catalog id of a service?
+        //@todo what is the catalog id of a service?
         //$results = Services::Permissions()->verifyTask('email', $catalog_id);
         return $permission;
     }

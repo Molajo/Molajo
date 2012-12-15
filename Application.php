@@ -1,19 +1,14 @@
 <?php
-/**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
- */
 namespace Molajo;
 
 use Molajo\Service\Services;
 use Molajo\Service\Services\Request\RequestService;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Front Controller for the Molajo Application
+ * Front Controller for the Niambie Application
  *
  * 1. Initialise
  * 2. Route
@@ -21,9 +16,12 @@ defined('MOLAJO') or die;
  * 4. Execute (Display or Action)
  * 5. Respond
  *
- * @package     Molajo
- * @subpackage  Application
- * @since       1.0
+ * In addition the Application Frontend Controller schedules onAfter events for each of the above.
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class Application
 {
@@ -36,9 +34,9 @@ Class Application
     protected static $services = null;
 
     /**
-     * $request
+     * RequestService
      *
-     * @var    object  Request
+     * @var    object
      * @since  1.0
      */
     protected $request = null;
@@ -88,12 +86,12 @@ Class Application
     protected $parameters = array();
 
     /**
-     * List of Route Properties
+     * List of Properties from Route
      *
      * @var    object
      * @since  1.0
      */
-    protected $property_array = array(
+    protected $route_properties_array = array(
         'catalog_alias',
         'catalog_category_id',
         'catalog_extension_instance_id',
@@ -101,6 +99,7 @@ Class Application
         'catalog_id',
         'catalog_model_name',
         'catalog_model_type',
+        'catalog_model_registry_name',
         'catalog_page_type',
         'catalog_source_id',
         'catalog_type',
@@ -122,7 +121,8 @@ Class Application
         'request_task_values',
         'request_url',
         'status_authorised',
-        'status_found');
+        'status_found'
+    );
 
     /**
      * Override normal processing with these parameters
@@ -136,12 +136,11 @@ Class Application
      * @since   1.0
      */
     public function process(
-        $override_url_request = false,
-        $override_catalog_id = false,
-        $override_parse_sequence = false,
-        $override_parse_final = false
+        $override_url_request = null,
+        $override_catalog_id = null,
+        $override_parse_sequence = null,
+        $override_parse_final = null
     ) {
-
         $this->request = new RequestService();
 
         $this->setBaseURL();
@@ -150,7 +149,7 @@ Class Application
 
         /** 1. Initialise */
         try {
-                Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
+            Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
 
             $results = $this->initialise(
                 $override_parse_sequence,
@@ -171,7 +170,11 @@ Class Application
                 Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
             }
 
-            $this->route($override_url_request, $override_catalog_id);
+            if ($override_url_request === null) {
+            } else {
+                $this->requested_resource_for_route = $override_url_request;
+            }
+            $this->route($override_catalog_id);
 
             $this->onAfterRouteEvent();
 
@@ -237,7 +240,7 @@ Class Application
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->route_properties_array)) {
         } else {
             throw new \OutOfRangeException('Application: is attempting to get value for unknown key: ' . $key);
         }
@@ -262,7 +265,7 @@ Class Application
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->route_properties_array)) {
         } else {
             throw new \OutOfRangeException('Application: is attempting to set value for unknown key: ' . $key);
         }
@@ -274,18 +277,11 @@ Class Application
     /**
      * Initialise Site, Application, and Services
      *
-     * @param   string  $override_url_request
-     * @param   string  $override_catalog_id
-     * @param   string  $override_parse_sequence
-     * @param   string  $override_parse_final
-     *
      * @return  boolean
      * @since   1.0
      */
-    protected function initialise(
-        $override_parse_sequence = false,
-        $override_parse_final = false
-    ) {
+    protected function initialise()
+    {
 
         set_exception_handler(array($this, 'exception_handler'));
         set_error_handler(array($this, 'error_handler'), E_ALL);
@@ -363,7 +359,7 @@ Class Application
             'parameters' => array(),
             'query_results' => array(),
             'row' => null,
-            'rendered_output' => array(),
+            'rendered_output' => null,
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
         );
@@ -381,19 +377,14 @@ Class Application
      * - Checks for 'Application Offline Mode', sets a 503 error and registry values for View
      * - For 'Page not found', sets 404 error and registry values for Error Template/View
      * - For defined redirect with Catalog, issues 301 Redirect to new URL
-     * - For 'log on requirement' situations, issues 303 redirect to configured signin page
+     * - For 'log on requirement' situations, issues 303 redirect to configured login page
      *
-     * @param   $override_url_request
      * @param   $override_catalog_id
      *
      * @return  boolean
      * @since   1.0
      */
-
-    /**
-     * @return bool
-     */
-    protected function route($override_url_request, $override_catalog_id)
+    protected function route($override_catalog_id = null)
     {
 //$results = Services::Install()->content();
 //$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
@@ -403,9 +394,9 @@ Class Application
         $route = new $class();
 
         $route = $route->process(
+            $this->route_properties_array,
             $this->requested_resource_for_route,
             $this->base_url_path_for_application,
-            $override_url_request,
             $override_catalog_id
         );
 
@@ -413,10 +404,7 @@ Class Application
             && (int)Services::Redirect()->code == 0
         ) {
             $this->parameters = $route;
-            echo '<pre>';
-            var_dump($this->parameters);
-            echo '</pre>';
-            die;
+
             return true;
         }
 
@@ -440,27 +428,21 @@ Class Application
      */
     protected function onAfterRouteEvent()
     {
-        $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_name')))
-            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'catalog_model_type')));
-
         $arguments = array(
             'model' => null,
-            'model_registry' => Services::Registry()->get($model_registry),
-            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
+            'model_registry' => Services::Registry()->get($this->get('catalog_model_registry_name')),
+            'parameters' => $this->parameters,
             'query_results' => array(),
             'row' => null,
-            'rendered_output' => array(),
+            'rendered_output' => null,
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterRoute', $arguments, array());
 
-        if (isset($arguments[PARAMETERS_LITERAL])) {
-            Services::Registry()->delete(PARAMETERS_LITERAL);
-            Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-            Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
-            Services::Registry()->sort(PARAMETERS_LITERAL);
+        if (isset($arguments['parameters'])) {
+            $this->parameters = $arguments['parameters'];
         }
 
         return true;
@@ -476,10 +458,8 @@ Class Application
      */
     protected function authorise()
     {
-        $permissions = Services::Permissions()->verifyAction(
-
-        );
-        //todo: verify 403
+        $permissions = Services::Permissions()->verifyAction();
+        //@todo verify 403
 
 
         return true;
@@ -496,27 +476,21 @@ Class Application
      */
     protected function onAfterAuthoriseEvent()
     {
-        $model_registry = ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_name')))
-            . ucfirst(strtolower(Services::Registry()->get(PARAMETERS_LITERAL, 'model_type')));
-
         $arguments = array(
             'model' => null,
-            'model_registry' => Services::Registry()->get($model_registry),
-            'parameters' => Services::Registry()->get(PARAMETERS_LITERAL),
+            'model_registry' => Services::Registry()->get($this->get('catalog_model_registry_name')),
+            'parameters' => $this->parameters,
             'query_results' => array(),
             'row' => null,
-            'rendered_output' => array(),
+            'rendered_output' => null,
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterAuthoriseEvent', $arguments, array());
 
-        if (isset($arguments[PARAMETERS_LITERAL])) {
-            Services::Registry()->delete(PARAMETERS_LITERAL);
-            Services::Registry()->createRegistry(PARAMETERS_LITERAL);
-            Services::Registry()->loadArray(PARAMETERS_LITERAL, $arguments[PARAMETERS_LITERAL]);
-            Services::Registry()->sort(PARAMETERS_LITERAL);
+        if (isset($arguments['parameters'])) {
+            $this->parameters = $arguments['parameters'];
         }
 
         return true;
@@ -528,9 +502,9 @@ Class Application
      * @return  boolean
      * @since   1.0
      */
-    protected function execute()
+    protected function execute($override_parse_sequence, $override_parse_final)
     {
-        $action = Services::Registry()->get('parameters', 'request_action', ACTION_READ);
+        $action = $this->get('request_action');
 
         if (trim($action) == '') {
             $action = ACTION_READ;
@@ -538,7 +512,7 @@ Class Application
 
         $action = strtolower($action);
         if ($action == ACTION_READ || $action == ACTION_EDIT || $action == ACTION_CREATE) {
-            $results = $this->display();
+            $results = $this->display($override_parse_sequence, $override_parse_final);
         } else {
             $results = $this->action();
         }
@@ -564,7 +538,7 @@ Class Application
     }
 
     /**
-     * Executes a view action
+     * Executes read action -- unless page cache is available, in which case it is simply returned
      *
      * 1. Theme: recursively parses theme and then rendered output for <include:type statements
      *
@@ -578,12 +552,50 @@ Class Application
      * @since   1.0
      * @return  Application
      */
-    protected function display()
+    protected function display($override_parse_sequence, $override_parse_final)
     {
-        $results = Services::Theme()->process();
+        $results = $this->getPageCache();
+
+        if ($results === false) {
+            $results = Services::Theme()->process(
+                $this->route_properties_array,
+                $this->parameters,
+                $override_parse_sequence,
+                $override_parse_final
+            );
+        }
+
         $this->rendered_output = $results;
 
+        $this->setPageCache();
+
         return true;
+    }
+
+    /**
+     * Retrieve page from Page Cache, if cache is enabled and the page is available
+     *
+     * @todo provide script to create a full HTML website with pre-rendered pages using catalog query
+     *
+     * @return  mixed | false or string
+     * @since   1.0
+     */
+    protected function getPageCache()
+    {
+        return Services::Cache()->get(PAGE_LITERAL, serialize($this->parameters));
+    }
+
+    /**
+     * Set Page Cache if caching is enabled for Page
+     *
+     * Note: Make certain parameters only contain route values when setting cache
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function setPageCache()
+    {
+        return Services::Cache()->set(PAGE_LITERAL, $this->rendered_output, serialize($this->parameters));
     }
 
     /**
@@ -604,10 +616,10 @@ Class Application
 // what parameters
 
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
-            $url = Services::Registry()->get('parameters', 'catalog_url_sef_request');
+            $url = $this->get('catalog_url_sef_request');
 
         } else {
-            $url = Services::Registry()->get('parameters', 'catalog_url_request');
+            $url = $this->get('catalog_url_request');
         }
 
         Services::Redirect()->redirect(Services::Url()->getApplicationURL($url), '301')->send();
@@ -629,7 +641,7 @@ Class Application
             'parameters' => array(),
             'query_results' => array(),
             'row' => null,
-            'rendered_output' => array(),
+            'rendered_output' => null,
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
         );
@@ -707,7 +719,7 @@ Class Application
             'parameters' => array(),
             'query_results' => array(),
             'row' => null,
-            'rendered_output' => array(),
+            'rendered_output' => null,
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
         );
@@ -994,7 +1006,7 @@ Class Application
         ) {
             return true;
         }
-//todo - install		/** Redirect to Installation Application */
+//@todo - install		/** Redirect to Installation Application */
         $redirect = BASE_URL . 'installation/';
         header('Location: ' . $redirect);
 

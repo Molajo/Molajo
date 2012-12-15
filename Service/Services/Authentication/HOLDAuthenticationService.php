@@ -6,10 +6,10 @@
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * This is the status code returned when the authentication is success (permit signin)
+ * This is the status code returned when the authentication is success (permit login)
  * @deprecated Use MolajoAuthentication::STATUS_SUCCESS
  */
 define('JAUTHENTICATE_STATUS_SUCCESS', 1);
@@ -21,7 +21,7 @@ define('JAUTHENTICATE_STATUS_SUCCESS', 1);
 define('JAUTHENTICATE_STATUS_CANCEL', 2);
 
 /**
- * This is the status code returned when the authentication failed (prevent signin if no success)
+ * This is the status code returned when the authentication failed (prevent login if no success)
  * @deprecated Use MolajoAuthentication::STATUS_FAILURE
  */
 define('JAUTHENTICATE_STATUS_FAILURE', 4);
@@ -37,7 +37,7 @@ Class AuthenticationService
 {
     // Shared success status
     /**
-     * This is the status code returned when the authentication is success (permit signin)
+     * This is the status code returned when the authentication is success (permit login)
      * @const  STATUS_SUCCESS successful response
      * @since  11.2
      */
@@ -52,30 +52,30 @@ Class AuthenticationService
     const STATUS_CANCEL = 2;
 
     /**
-     * This is the status code returned when the authentication failed (prevent signin if no success)
+     * This is the status code returned when the authentication failed (prevent login if no success)
      * @const  STATUS_FAILURE failed request
      * @since  11.2
      */
     const STATUS_FAILURE = 4;
 
-    // These are for authorisation purposes (can the user signin)
+    // These are for authorisation purposes (can the user login)
     /**
-     * This is the status code returned when the account has expired (prevent signin)
-     * @const  STATUS_EXPIRED an expired account (will prevent signin)
+     * This is the status code returned when the account has expired (prevent login)
+     * @const  STATUS_EXPIRED an expired account (will prevent login)
      * @since  11.2
      */
     const STATUS_EXPIRED = 8;
 
     /**
-     * This is the status code returned when the account has been denied (prevent signin)
-     * @const  STATUS_DENIED denied request (will prevent signin)
+     * This is the status code returned when the account has been denied (prevent login)
+     * @const  STATUS_DENIED denied request (will prevent login)
      * @since  11.2
      */
     const STATUS_DENIED = 16;
 
     /**
      * This is the status code returned when the account doesn't exist (not an error)
-     * @const  STATUS_UNKNOWN unknown account (won't permit or prevent signin)
+     * @const  STATUS_UNKNOWN unknown account (won't permit or prevent login)
      * @since  11.2
      */
     const STATUS_UNKNOWN = 32;
@@ -121,7 +121,7 @@ Class AuthenticationService
     }
 
     /**
-     * Finds out if a set of signin credentials are valid by asking all observing
+     * Finds out if a set of login credentials are valid by asking all observing
      * objects to run their respective authentication routines.
      *
      * @param array $credentials Array holding the user credentials
@@ -188,13 +188,13 @@ Class AuthenticationService
     }
 
     /**
-     * onUserSignin
+     * onUserLogin
      *
      * @param $user
      * @param  array                   $options
      * @return JAuthenticationResponse
      */
-    public function onUserSignin($user, $options = array())
+    public function onUserLogin($user, $options = array())
     {
         /** user plugins */
         $plugins = MolajoPluginHelper::getPlugin(USER_LITERAL);
@@ -216,7 +216,7 @@ Class AuthenticationService
                 continue;
             }
 
-            $response = $plugin->onUserSignin($user, $options);
+            $response = $plugin->onUserLogin($user, $options);
 
             if ($response === true) {
             } else {
@@ -228,7 +228,7 @@ Class AuthenticationService
     }
 
     /**
-     * Authorises that a particular user should be able to signin
+     * Authorises that a particular user should be able to login
      *
      * @access public
      * @param MolajoAuthenticationResponse username of the user to authorise
@@ -255,17 +255,17 @@ Class AuthenticationService
                         case MolajoAuthentication::STATUS_EXPIRED:
                             $response->status = STATUS_EXPIRED;
 
-                            return MolajoError::raiseWarning('102002', Services::Language()->translate('JLIB_SIGNIN_EXPIRED'));
+                            return MolajoError::raiseWarning('102002', Services::Language()->translate('JLIB_LOGIN_EXPIRED'));
                             break;
                         case MolajoAuthentication::STATUS_DENIED:
                             $response->status = STATUS_DENIED;
 
-                            return MolajoError::raiseWarning('102003', Services::Language()->translate('JLIB_SIGNIN_DENIED'));
+                            return MolajoError::raiseWarning('102003', Services::Language()->translate('JLIB_LOGIN_DENIED'));
                             break;
                         default:
                             $response->status = STATUS_FAILURE;
 
-                            return MolajoError::raiseWarning('102004', Services::Language()->translate('JLIB_SIGNIN_AUTHORISATION'));
+                            return MolajoError::raiseWarning('102004', Services::Language()->translate('JLIB_LOGIN_AUTHORISATION'));
                             break;
                     }
                 }

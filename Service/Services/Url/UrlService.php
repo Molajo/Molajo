@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,12 +8,12 @@ namespace Molajo\Service\Services\Url;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * URL
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */
@@ -281,7 +281,7 @@ Class UrlService
     /**
      * createWebLinks - marks up a link into an <a href link
      *
-     * todo: pick one of these two (previous and this one)
+     * @todo pick one of these two (previous and this one)
      *
      * @param   string $url_field
      *
@@ -390,7 +390,7 @@ Class UrlService
         $shortener = 1;
 
         if ($shortener == '1') {
-            return $longurl; // todo: create local short url
+            return $longurl; // @todo create local short url
 
         } elseif ($shortener == '2') {
             return (implode('', file('http://tinyurl.com/api-create.php?url=' . urlencode($longurl))));
@@ -401,7 +401,7 @@ Class UrlService
         } elseif ($shortener == '4') {
 
             $bitlyURL = file_get_contents(
-                "http://api.bit.ly/v3/shorten" . "&signin=" . $username . "&apiKey=" . $apikey . "&longUrl=" . urlencode(
+                "http://api.bit.ly/v3/shorten" . "&login=" . $username . "&apiKey=" . $apikey . "&longUrl=" . urlencode(
                     $longurl
                 ) . "&format=json"
             );

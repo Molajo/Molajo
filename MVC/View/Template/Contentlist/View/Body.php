@@ -3,11 +3,11 @@ use Molajo\Service\Services;
 
 /**
  *
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-defined('MOLAJO') or die; ?>
+defined('NIAMBIE') or die; ?>
 <p>
     <a href="<?php echo $this->row->catalog_id_url; ?>"><strong><?php echo $this->row->title; ?></strong></a>
     <?php if ($this->parameters['display_snippet'] == 1) {

@@ -1,7 +1,7 @@
 <include field="access_administrator_groups"/>
 <include field="access_create_groups"/>
 <include field="access_delete_groups"/>
-<include field="access_signin_groups"/>
+<include field="access_login_groups"/>
 <include field="access_publish_groups"/>
 <include field="access_read_groups"/>
 <include field="access_update_groups"/>

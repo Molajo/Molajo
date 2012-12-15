@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,11 +9,11 @@ namespace Molajo\Plugin\Events;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class EventsPlugin extends Plugin
@@ -54,10 +54,10 @@ class EventsPlugin extends Plugin
             'onAfterupdate',
             'onBeforedelete',
             'onAfterdelete',
-            'onAftersignin',
-            'onBeforesignin',
-            'onAftersignout',
-            'onBeforesignout'
+            'onAfterlogin',
+            'onBeforelogin',
+            'onAfterlogout',
+            'onBeforelogout'
         );
 
         foreach (Services::Registry()->get(EVENTS_LITERAL, 'Events') as $e) {

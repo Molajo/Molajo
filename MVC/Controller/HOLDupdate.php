@@ -1,30 +1,22 @@
 <?php
-/**
- * @package    Molajo
- * @subpackage  Controller
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
- */
 namespace Molajo\MVC\Controller;
 
-defined('MOLAJO') or die;
+use Molajo\Service\Services;
+use Molajo\MVC\Controller;
+
+defined('NIAMBIE') or die;
 
 /**
- * Update Controller
+ * The delete controller uses model registry data and HTTP post variables to verifying foreign key restraints,
+ * and permissions, etc, archive version history, and delete data. The delete controller also schedules the
+ * before and after delete event.
  *
- * Handles the standard single-item save, delete, and cancel actions
- *
- * Cancel: cancel and close
- * Save: apply, create, save, saveascopy, saveandnew, restore
- * Delete: delete
- *
- * Called from the Multiple Controller for batch (copy, move) and delete
- *
- * @package    Molajo
- * @subpackage  Controller
- * @since       1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
-class HOLDupdate extends Controller
+class DeleteController extends Controller
 {
     /**
      * cancelItem

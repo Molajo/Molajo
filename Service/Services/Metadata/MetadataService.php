@@ -1,19 +1,19 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Metadata;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 use Molajo\Service\Services;
 
 /**
  * Metadata
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Services
  * @since       1.0
  */
@@ -40,8 +40,6 @@ Class MetadataService
     public function set($name, $content, $label = 'name')
     {
         Services::Registry()->set(METADATA_LITERAL, $name, array($content, $label));
-
-        Services::Registry()->createRegistry(METADATA_LITERAL);
 
         return;
     }
@@ -133,7 +131,7 @@ Class MetadataService
         } else {
             $temp_row->language_direction = ' dir="rtl"';
         }
-        //todo: get language from language services
+        //@todo get language from language services
         $temp_row->language = 'en';
 
         $temp_row->application_html5 = $application_html5;
@@ -192,7 +190,7 @@ Class MetadataService
         } else {
             $temp_row->language_direction = ' dir="rtl"';
         }
-        //todo: figure out what it's like this
+        //@todo figure out what it's like this
         $temp_row->language = 'en';
 
         $temp_row->application_html5 = $application_html5;

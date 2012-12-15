@@ -1,13 +1,14 @@
 <?php
-use Molajo\Service\Services;
-
 /**
- * @package    Molajo
+ * Theme Index.php file that is included in the DisplayController, providing the source for
+ * parsing for <include:type/> statements.
+ *
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  * <include:profiler/>
  */
-defined('MOLAJO') or die; ?>
+defined('NIAMBIE') or die; ?>
 <include:head/>
 <include:page name=<?php echo $this->row->page_name; ?>/>
 <include:defer/>

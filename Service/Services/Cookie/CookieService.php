@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -10,14 +10,14 @@ use Molajo\Service\Services;
 
 use Symfony\Component\HttpFoundation\Cookie;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Redirect
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Cookie.html
  *
- * @package    Molajo
+ * @package    Niambie
  * @subpackage  Services
  * @since           1.0
  */

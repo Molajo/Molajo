@@ -20,7 +20,7 @@ Actions
 
 Applied to any and all data within the system. Actions are defined within the #__actions Table.
 
-Signin
+Login
 Create
 Read
 Update
@@ -50,9 +50,9 @@ Editors - ability to update any content on the site but not publish content.
 Authors - ability to create content and to edit their own content until it has been published. Cannot
 publish or remove content.
 
-The above roles have signin permissions to the site and administrator applications.
+The above roles have login permissions to the site and administrator applications.
 
-Member - registered with the system, has ability to signin and manage a personal profile.
+Member - registered with the system, has ability to login and manage a personal profile.
 
 Guest - visitor not logged on. Can be used to customize a membership website, as needed.
 
@@ -133,14 +133,14 @@ Site Category - Administrator Group
 -- -- -- -- Primary Data Category - Publisher, Editor and Author Groups
 -- -- -- -- Response Element Category - Registered Group
 
-signin to Application 2 - Administrator - Author and above
-signin to Application 1 - Registered
+login to Application 2 - Administrator - Author and above
+login to Application 1 - Registered
 
 View Access Groups
 
 Standard Groups are combined into entities called 'View Access Groups' which are associated with View
 access Permissions. These special system groups are not directly managed by the user but rather created
-behind the scenes for each unique combination of groups used when assigning View permissions. These
+behind the scenes for each unique combination of groups used when asloging View permissions. These
 groups are for better performance in that a single value can be joined by the database during
 execution of the display queries.
 

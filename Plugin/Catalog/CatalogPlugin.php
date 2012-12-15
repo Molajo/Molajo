@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -10,13 +10,13 @@ use Molajo\Plugin\Plugin\Plugin;
 use Molajo\MVC\Controller\CreateController;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Catalog
  *
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class CatalogPlugin extends Plugin
@@ -201,7 +201,7 @@ class CatalogPlugin extends Plugin
      */
     public function onBeforeDelete()
     {
-        /** todo - fix empty setModelRegistry */
+        /** @todo - fix empty setModelRegistry */
         $controllerClass = CONTROLLER_CLASS;
         $controller = new $controllerClass();
         $controller->getModelRegistry('x', 'y', 1);

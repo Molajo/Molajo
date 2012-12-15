@@ -3,11 +3,11 @@ use Molajo\Service\Services;
 
 /**
  *
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 $action = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 if ($this->row->enable == 1) { ?>
 <div class="grid-checkin grid-batch">

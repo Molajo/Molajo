@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -9,12 +9,12 @@ namespace Molajo\Service\Services\Language;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * LanguageService
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Language
  * @since       1.0
  *
@@ -279,7 +279,7 @@ Class LanguageService
             return $language;
         }
 
-        /** todo: Retrieve from Session, if installed */
+        /** @todo Retrieve from Session, if installed */
 
         $language = Services::Registry()->get(USER_LITERAL, CATALOG_TYPE_LANGUAGE_LITERAL, '');
         if (in_array($language, $installed)) {

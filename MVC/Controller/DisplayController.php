@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Display Controller
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Controller;
 
@@ -10,21 +12,23 @@ use Molajo\Application;
 use Molajo\Service\Services;
 use Molajo\MVC\Controller\Controller;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Display
+ * The display controller uses parameter values provided by the Theme Includer to render output for
+ * specified model, theme, page view, template view, and/or wrap view values. The display controller
+ * schedules events for before and after view rendering.
  *
- * @package     Molajo
- * @subpackage  Controller
- * @since       1.0
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class DisplayController extends Controller
 {
     /**
-     * Interact with the model to connect with data object, run query, schedule events, push
-     *  data into Template View and then push rendered results into Wrap View,
-     *  returning rendered output to Includer
+     * Interact with the model to connect to a data object, execute a query, schedule events, render theme
+     *  output, push data into the views and returned rendered output to Theme Includer.
      *
      * @return  string  Rendered output
      * @since   1.0
@@ -188,7 +192,7 @@ class DisplayController extends Controller
      */
     protected function renderView()
     {
-//todo when close to done - do encoding - bring in filters given field definitions
+//@todo when close to done - do encoding - bring in filters given field definitions
 
         ob_start();
 
@@ -285,8 +289,8 @@ class DisplayController extends Controller
             'query_results' => array(),
             'row' => $this->row,
             'rendered_output' => null,
-            'include_parse_sequence' => null,
-            'include_parse_exclude_until_final' => null
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent(
@@ -323,8 +327,8 @@ class DisplayController extends Controller
             'query_results' => array(),
             'row' => array(),
             'rendered_output' => $this->get('rendered_output'),
-            'include_parse_sequence' => null,
-            'include_parse_exclude_until_final' => null
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent(

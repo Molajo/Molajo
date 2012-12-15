@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -10,13 +10,13 @@ use Molajo\Plugin\Plugin\Plugin;
 use Molajo\MVC\Controller\CreateController;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Create
  *
- * @package     Molajo
- * @subpackage  Plugin
+ * @package     Niambie
+ * @license     GNU GPL v 2, or later and MIT
  * @since       1.0
  */
 class CreatePlugin extends Plugin
@@ -339,7 +339,7 @@ class CreatePlugin extends Plugin
         $body = str_replace(ucfirst(strtolower($replace)), ucfirst(strtolower($with)), $body);
         $body = str_replace('xxxxx', $catalog_type_id, $body);
 
-        //todo get the ftp stream stuff working -
+        //@todo get the ftp stream stuff working -
         Services::Filesystem()->fileWrite($file, $body);
 
         return true;
@@ -439,7 +439,7 @@ class CreatePlugin extends Plugin
                 if ($key == 'criteria_title') {
                     $data->parameters[$key] = $this->row->title;
 
-                    //todo get rid of one of these variables
+                    //@todo get rid of one of these variables
                 } elseif ($key == 'criteria_catalog_type_id') {
                     $data->parameters[$key] = $this->row->catalog_type_id;
 
@@ -544,7 +544,7 @@ class CreatePlugin extends Plugin
         }
 
         echo 'after delete';
-        //todo - test to see if the folder is there since a false is returned from j!
+        //@todo - test to see if the folder is there since a false is returned from j!
 //		if ($results === false) {
 //			//error copying source to destination
 //			return false;

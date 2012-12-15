@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,12 +8,12 @@ namespace Molajo\Service\Services\Form;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Form
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */
@@ -738,7 +738,7 @@ Class FormService
                         $temp_row['fieldset_title'] = $this->fieldset_title;
                         $temp_row['fieldset_description'] = $this->fieldset_description;
 
-                        //todo defaults
+                        //@todo defaults
                         $temp_row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, $key);
 
                         $input_fields[] = $temp_row;
@@ -1198,7 +1198,7 @@ Class FormService
 
             $temp_row->type = $field['type'];
 
-            /** todo: better mapping approach (fields.xml?) for database types to HTML5/form field types */
+            /** @todo better mapping approach (fields.xml?) for database types to HTML5/form field types */
             if ($temp_row->type == 'text') {
                 $temp_row->type = 'textarea';
             }

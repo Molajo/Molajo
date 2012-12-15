@@ -1,12 +1,12 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Redirect;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 use Molajo\Service\Services;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/RedirectResponse.html
  *
- * @package    Molajo
+ * @package    Niambie
  * @subpackage  Services
  * @since           1.0
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeMemcachedSessionHandler;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Session
@@ -21,7 +21,7 @@ defined('MOLAJO') or die;
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Session.html
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Services
  * @since       1.0
  */

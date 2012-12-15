@@ -1,21 +1,25 @@
 <?php
 /**
- * @package    Molajo
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Primary Controller
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Controller;
 
 use Molajo\Service\Services\Configuration\ConfigurationService;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
- * Controller
+ * Primary controller responsible to retrieve configuration for model registries, interact with models,
+ * data objects, and perform event scheduling for data object connectivity and before and after read.
  *
- * @package      Molajo
- * @subpackage   Controller
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */
 class Controller
@@ -153,6 +157,7 @@ class Controller
      *
      * @param   string  $key
      * @param   mixed   $default
+     * @param   string  $property
      *
      * @return  mixed
      * @since   1.0
@@ -198,7 +203,8 @@ class Controller
      * Set the value of a Model property
      *
      * @param   string  $key
-     * @param   mixed   $value
+     * @param   string  $value
+     * @param   string  $property
      *
      * @return  mixed
      * @since   1.0
@@ -237,13 +243,16 @@ class Controller
      *
      * @param   string  $model_type
      * @param   null    $model_name
+     * @param   int     $connect
+     * @param   null    $parameter_registry
      *
-     * @return  bool
+     * @return  object  Controller
      * @since   1.0
      *
      * @throws  \RuntimeException
      */
-    public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null, $connect = 0)
+    public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null, $connect = 0,
+        $parameter_registry = null)
     {
 //echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
 
@@ -251,6 +260,9 @@ class Controller
 
         if ($model_type === null) {
             $model_type = DATA_SOURCE_LITERAL;
+        }
+        if ($parameter_registry === null) {
+            $parameter_registry = 'parameters';
         }
         $model_type = ucfirst(strtolower($model_type));
         $this->set('model_type', $model_type, 'model_registry');
@@ -274,7 +286,8 @@ class Controller
 
                 ConfigurationService::getModel(
                     $this->get('model_type', '', 'model_registry'),
-                    $this->get('model_name', '', 'model_registry')
+                    $this->get('model_name', '', 'model_registry'),
+                    $parameter_registry
                 );
 
                 $cache_it = Services::Registry()->getArray($this->model_registry_name, false);
@@ -562,7 +575,6 @@ class Controller
             $this->get('model_registry_name', null, 'model_registry')
         );
 
-
         if ((int)$this->get('check_view_level_access', 0, 'model_registry') == 1) {
             $this->model->checkPermissions(
                 $this->get('primary_prefix', 'a', 'model_registry'),
@@ -587,13 +599,13 @@ class Controller
             $this->get('criteria_extension_instance_id', '', 'parameters'),
             $this->get('primary_prefix', 'a', 'model_registry')
         );
-        /**
-        echo '<br /><br /><pre>';
-        $this->get('model_registry_name');
-        echo '<br /><br /><pre>';
-        echo $this->model->query->__toString();
-        echo '<br /><br />';
-         */
+
+        //echo '<br /><br /><pre>';
+        //$this->get('model_registry_name');
+        //echo '<br /><br /><pre>';
+        //echo $this->model->query->__toString();
+        //echo '<br /><br />';
+
         return;
     }
 
@@ -721,7 +733,7 @@ class Controller
         }
 
         /** Just hijacking this to build registry special fields for specific extension (from saved extension registry) */
-        /** todo: figure out what the heck i meant by this (or, more likely, just make certain it isn't used and pull it. */
+        /** @todo figure out what the heck i meant by this (or, more likely, just make certain it isn't used and pull it. */
         if ($external == 1) {
             if (is_array($q)) {
                 return $q[0];
@@ -749,9 +761,9 @@ class Controller
             'parameters' => $this->get('parameters'),
             'query_results' => array(),
             'row' => null,
-            'rendered_output' => array(),
-            'include_parse_sequence' => null,
-            'include_parse_exclude_until_final' => null
+            'rendered_output' => null,
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent(
@@ -873,9 +885,9 @@ class Controller
             'parameters' => $this->get('parameters'),
             'query_results' => array(),
             'row' => null,
-            'rendered_output' => array(),
-            'include_parse_sequence' => null,
-            'include_parse_exclude_until_final' => null
+            'rendered_output' => null,
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent(
@@ -932,9 +944,9 @@ class Controller
                     'parameters' => $this->get('parameters'),
                     'query_results' => array(),
                     'row' => $row,
-                    'rendered_output' => array(),
-                    'include_parse_sequence' => null,
-                    'include_parse_exclude_until_final' => null
+                    'rendered_output' => null,
+                    'include_parse_sequence' => array(),
+                    'include_parse_exclude_until_final' => array()
                 );
 
                 $arguments = Services::Event()->scheduleEvent(
@@ -978,9 +990,9 @@ class Controller
             'parameters' => $this->get('parameters'),
             'query_results' => $this->get('query_results'),
             'row' => null,
-            'rendered_output' => array(),
-            'include_parse_sequence' => null,
-            'include_parse_exclude_until_final' => null
+            'rendered_output' => null,
+            'include_parse_sequence' => array(),
+            'include_parse_exclude_until_final' => array()
         );
 
         $arguments = Services::Event()->scheduleEvent(

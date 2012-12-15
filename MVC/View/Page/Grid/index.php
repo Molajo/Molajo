@@ -1,12 +1,11 @@
 <?php
-use Molajo\Service\Services;
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  *     <include:template name=Toolbar/>
  */
-defined('MOLAJO') or die; ?>
+defined('NIAMBIE') or die; ?>
 <include:template name=Formbegin/>
 <include:template name=Gridfilters wrap=nav wrap_class=grid-filters role=nav/>
 <section class="grid">

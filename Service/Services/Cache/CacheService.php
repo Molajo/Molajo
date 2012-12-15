@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Molajo
+ * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
@@ -8,12 +8,12 @@ namespace Molajo\Service\Services\Cache;
 
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Cache
  *
- * @package     Molajo
+ * @package     Niambie
  * @subpackage  Services
  * @since       1.0
  */
@@ -136,8 +136,8 @@ Class CacheService
      */
     public function initialise()
 	{
-//todo: remove hardcoded types and make it configurable
-//todo: add classes other than file for caching
+//@todo remove hardcoded types and make it configurable
+//@todo add classes other than file for caching
 
 		if (Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_handler', 'file') == 'file') {
 			$this->system_cache_folder = SITE_BASE_PATH . '/'
