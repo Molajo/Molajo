@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Base Plugin Class
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Plugin\Plugin;
 
@@ -15,13 +17,22 @@ use Molajo\Service\Services\Theme\Helper\ViewHelper;
 defined('NIAMBIE') or die;
 
 /**
- * Plugin
+ * Base Plugin for all other Plugins.
  *
- * Base class for Plugins
+ * At various points in the Application, processes schedule Events and provide input parameters
+ * to the Event Manager which triggers each registered Event, one at a time, using those values
+ * to establish initial values for properties in this class.
  *
- * @package     Niambie
- * @subpackage  Model
- * @since       1.0
+ * As each triggered Plugin finishes, the Event Service retrieves the class properties, returning
+ * the values to the scheduling process.
+ *
+ * The base plugin takes care of getting and setting values and providing connectivity to Helper
+ * functions and other commonly used data and connections.
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class Plugin
 {
@@ -83,7 +94,7 @@ class Plugin
      * @var    object
      * @since  1.0
      */
-    protected $temp_row;
+    protected $row;
 
     /**
      * Used in post-render View plugins, contains output rendered from view
@@ -142,25 +153,51 @@ class Plugin
     );
 
     /**
-     * Helpers
+     * Content Helper
      *
      * @var    object
      * @since  1.0
      */
     protected $contentHelper;
+
+    /**
+     * Extension Helper
+     *
+     * @var    object
+     * @since  1.0
+     */
     protected $extensionHelper;
+
+    /**
+     * Theme Helper
+     *
+     * @var    object
+     * @since  1.0
+     */
     protected $themeHelper;
+
+    /**
+     * View Helper
+     *
+     * @var    object
+     * @since  1.0
+     */
     protected $viewHelper;
 
     /**
-     * Constructor
+     * Class Constructor
+     *
+     * @return  void
+     * @since   1.0
      */
     public function __construct()
     {
-       $this->contentHelper = new ContentHelper();
-       $this->extensionHelper = new ExtensionHelper();
-       $this->themeHelper = new ThemeHelper();
-       $this->viewHelper = new ViewHelper();
+        $this->contentHelper = new ContentHelper();
+        $this->extensionHelper = new ExtensionHelper();
+        $this->themeHelper = new ThemeHelper();
+        $this->viewHelper = new ViewHelper();
+
+        return;
     }
 
     /**
@@ -216,7 +253,8 @@ class Plugin
      * Changes to data will be used collected and used by the MVC
      *
      * @param   string  $key
-     * @param   mixed   $value
+     * @param   string  $value
+     * @param   string  $property
      *
      * @return  mixed
      * @since   1.0
@@ -255,9 +293,11 @@ class Plugin
     }
 
     /**
-     * retrieveFieldsByType processes an array of fields, populating the class property
+     * Retrieve Fields for a specified Datatype
      *
-     * @return  bool
+     * @param   string  $type
+     *
+     * @return  array
      * @since   1.0
      */
     public function retrieveFieldsByType($type)
@@ -274,7 +314,9 @@ class Plugin
     }
 
     /**
-     * getField by name
+     * Get Field Definition for specific Field Name
+     *
+     * @param   string  $name
      *
      * @return  bool
      * @since   1.0
@@ -288,15 +330,15 @@ class Plugin
 
             //} else {
             //    if ($field['as_name'] == '') {
-                    if ($field['name'] == $name) {
-                        return $field;
-                    }
+            if ($field['name'] == $name) {
+                return $field;
+            }
             //    } else {
             //        if ($field['foreignkey'] == $name) {
             //            return $field;
-           //         }
-           //     }
-          //  }
+            //         }
+            //     }
+            //  }
         }
 
         return false;
@@ -319,7 +361,7 @@ class Plugin
 
 //        if (isset($field['as_name'])) {
 //            if ($field['as_name'] == '') {
-                $name = $field['name'];
+        $name = $field['name'];
 //            } else {
 //                $name = $field['as_name'];
 //            }
@@ -333,7 +375,10 @@ class Plugin
         } elseif (isset($field->customfield)) {
             //@todo review this - it seems unnecessary
             if (Services::Registry()->exists($this->get('model_name', '', 'parameters') . $field->customfield, $name)) {
-                return Services::Registry()->get($this->get('model_name', '', 'parameters') . $field->customfield, $name);
+                return Services::Registry()->get(
+                    $this->get('model_name', '', 'parameters') . $field->customfield,
+                    $name
+                );
             }
         }
 

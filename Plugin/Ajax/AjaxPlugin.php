@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Ajax Plugin
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Plugin\Ajax;
 
@@ -12,9 +14,12 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * @package     Niambie
- * @license     GNU GPL v 2, or later and MIT
- * @since       1.0
+ * Determines if an Ajax request was made, If so, rendering sequence and options are modified
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class AjaxPlugin extends Plugin
 {
@@ -28,10 +33,18 @@ class AjaxPlugin extends Plugin
      */
     public function onBeforeParse()
     {
+        echo 'yes';
+        die;
         if (APPLICATION_ID == 2) {
         } else {
             return true;
         }
+
+        $view = $this->viewHelper->get(0, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+        echo '<pre>';
+        var_dump($view);
+        echo '</pre>';
+        die;
 
         if ((int) Services::Registry()->get(CLIENT_LITERAL, 'Ajax') == 0) {
             return true;
@@ -39,7 +52,7 @@ class AjaxPlugin extends Plugin
 /**
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'template_view_id', 1342);
-        $this->viewHelper->get(1342, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_id', 2090);
         $this->viewHelper->get(2090, CATALOG_TYPE_WRAP_VIEW_LITERAL);

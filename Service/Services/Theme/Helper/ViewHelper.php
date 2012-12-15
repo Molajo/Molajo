@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Theme Service View Helper
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Helper;
 
@@ -11,11 +13,12 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * View Helper
+ * The View Helper provides access to Page View, Template View, and Wrap View data.
  *
- * @package       Molajo
- * @subpackage    Helper
- * @since         1.0
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class ViewHelper
 {
@@ -181,8 +184,9 @@ Class ViewHelper
     /**
      * Retrieves parameter set (form, item, list, or menuitem) and populates Parameters registry
      *
-     * @param   $requestTypeNamespace
-     * @param   $parameterNamespace
+     * @param   string  $requestTypeNamespace
+     * @param   string  $parameterNamespace
+     * @param   string  $registry
      *
      * @return  bool
      * @since   1.0
@@ -205,14 +209,15 @@ Class ViewHelper
     /**
      * processParameterSet iterates a new parameter set to determine whether or not it should be applied
      *
-     * @param   $parameterSet
+     * @param   string  $parameter_set
+     * @param   string  $registry
      *
-     * @return  $bool
+     * @return  void
      * @since   1.0
      */
-    protected function processParameterSet($parameterSet, $registry)
+    protected function processParameterSet($parameter_set, $registry)
     {
-        foreach ($parameterSet as $key => $value) {
+        foreach ($parameter_set as $key => $value) {
             $existing = Services::Registry()->get($registry, $key);
             if ($existing === 0 || trim($existing) == '' || $existing == null) {
                 if ($value === 0 || trim($value) == '' || $value == null) {

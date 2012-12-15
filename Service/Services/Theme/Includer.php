@@ -1,5 +1,7 @@
 <?php
 /**
+ * Theme Service Includer Base Class
+ *
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
@@ -16,16 +18,27 @@ use Molajo\Service\Services\Theme\Helper\ViewHelper;
 defined('NIAMBIE') or die;
 
 /**
- * Includer
+ * The Includer acts as the base class for a set of classes which gather the input parameters needed
+ * to generate a specific <include:type name=statement/>, passing on the parameters to the MVC for rendering
+ * and then returning the rendered results to the Theme Service.
  *
- * @package     Niambie
- * @subpackage  Extension
- * @since       1.0
+ * The Theme Service Includer schedules onBeforeInclude and onAfterInclude Events
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class Includer
 {
     /**
-     * Include Name: Head, Message, Profiler, Tag, Page, Template, Theme, Wrap
+     * Include Name
+     *
+     * Values include Head, Message, Page, Profiler, Tag, Template, Theme, and Wrap
+     *
+     * <include:head/>
+     * <include:template name=template-name/>
+     * <include:message/>
      *
      * @var    string
      * @since  1.0
@@ -33,7 +46,10 @@ class Includer
     protected $include_name = null;
 
     /**
-     * Include Type: same as name or type in name:type pairs
+     * Include Type
+     *
+     * Type is only different than name in type:name pairs where type is an alias of name
+     * Asset and metadata types are an alias of template; defer type is an alias of head
      *
      * @var    string
      * @since  1.0
@@ -41,9 +57,9 @@ class Includer
     protected $include_type = null;
 
     /**
-     * Name: from attributes
+     * Name - from attributes
      *
-     * Include types that require a name value: Page, Template, Wrap
+     * <include:template name=this-value/>
      *
      * @var    string
      * @since  1.0
@@ -51,7 +67,9 @@ class Includer
     protected $name = null;
 
     /**
-     * Attributes - parsing process extracts from include statement, creating an array
+     * Attributes - extracted from include statement and placed into an array by parsing process
+     *
+     * <include:template name=this-value all=the rest=of-this goes=into-attributes as=named-pairs/>
      *
      * @var    string
      * @since  1.0
@@ -117,34 +135,59 @@ class Includer
     );
 
     /**
-     * Helpers
+     * Content Helper
      *
      * @var    object
      * @since  1.0
      */
     protected $contentHelper;
+
+    /**
+     * Extension Helper
+     *
+     * @var    object
+     * @since  1.0
+     */
     protected $extensionHelper;
+
+    /**
+     * Theme Helper
+     *
+     * @var    object
+     * @since  1.0
+     */
     protected $themeHelper;
+
+    /**
+     * View Helper
+     *
+     * @var    object
+     * @since  1.0
+     */
     protected $viewHelper;
 
     /**
+     * Class Constructor
+     *
      * @param   string  $include_name
      * @param   string  $include_type
+     * @param   string  $tag
+     * @param   string  $parameters
      *
-     * @return  object
+     * @return  object  Includer
      * @since   1.0
      */
-    public function __construct($include_name = null, $include_type = null)
+    public function __construct($include_name = null, $include_type = null, $tag = null, $parameters = array())
     {
-        $this->set('include_name', $include_name);
-        $this->set('include_type', $include_type);
-        $this->set('name', null);
-        $this->set('attributes', array());
-        $this->set('tag', null);
-        $this->set('parameters', null);
-        $this->set('model_registry_name', null);
-        $this->set('model_registry', null);
-        $this->set('rendered_output', null);
+        $this->set('', 'include_name', $include_name);
+        $this->set('', 'include_type', $include_type);
+        $this->set('', 'name', null);
+        $this->set('', 'attributes', array());
+        $this->set('', 'tag', $tag);
+        $this->set('', 'parameters', $parameters);
+        $this->set('', 'model_registry_name', null);
+        $this->set('', 'model_registry', null);
+        $this->set('', 'rendered_output', null);
 
         $this->contentHelper = new ContentHelper();
         $this->extensionHelper = new ExtensionHelper();
@@ -155,15 +198,16 @@ class Includer
     }
 
     /**
-     * Get the current value (or default) of the specified property
+     * Get the  value (or default) of the specified property and key
      *
+     * @param   string  $property
      * @param   string  $key
      * @param   mixed   $default
      *
      * @return  mixed
      * @since   1.0
      */
-    public function get($key, $default = null, $property = '')
+    protected function get($property = '', $key, $default = null)
     {
 //        echo 'GET $key ' . $key . ' ' . ' Property ' . $property . '<br />';
 
@@ -196,19 +240,20 @@ class Includer
             return $this->attributes[$key];
         }
 
-        throw new \OutOfRangeException('Includer: get for unknown key: ' . $key . ' and property: ' . $property);
+        throw new \OutOfRangeException('Includer: get for unknown property: ' . $property . ' and key: ' . $key);
     }
 
     /**
-     * Set the value of the specified property
+     * Set the value of the specified property and key
      *
+     * @param   string  $property
      * @param   string  $key
      * @param   mixed   $value
      *
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null, $property = '')
+    protected function set($property = '', $key, $value = null)
     {
 //echo 'SET $key ' . $key . ' ' . ' Property ' . $property . '<br />';
 
@@ -236,28 +281,27 @@ class Includer
     }
 
     /**
-     * Includer Process
+     * Includer controller executes steps in sequence needed:
      *
-     * - Processes Attributes from <include statement
-     * - Schedules Before Include Event
-     * - Determines Rendering Criteria by defining Theme, Model and View Parameters
-     * - Instantiates Controller to retrieve input data and render View
-     * - Loads Plugin Overrides
-     * - Schedules After Include Event
-     * - Returns Rendered Output to Parse for <include:type /> replacement
+     * - getAttributes - extracts extension name and other parameters defined on the <include:type/> statement
+     * - setExtensionParameters - for the specific type of includer, retrieve parameters needed for rendering
+     * - loadPlugins - load Plugin Overrides in Extension folder
+     * - onBeforeIncludeEvent - Schedule on Before Include Event
+     * - renderOutput - passes parameters to MVC and receives rendered output
+     * - loadAssets - loads CSS and JS files for rendered output
+     * - onAfterIncludeEvent - Schedule After Include Event
+     * - Returns Rendered Output to the Theme Service which will parse output for additional <include:type />
      *
-     * @param   $attributes <include:type attr1=x attr2=y attr3=z ... />
+     * @param   array   $attributes <include:type name=x the=rest are=attributes/>
      *
      * @return  mixed
      * @since   1.0
      */
-    public function process($attributes = array())
+    public function process($attributes)
     {
         $this->getAttributes($attributes);
 
-        $this->getExtension();
-
-        $results = $this->setRenderCriteria();
+        $results = $this->setExtensionParameters();
         if ($results === false) {
             return false;
         }
@@ -415,32 +459,6 @@ class Includer
      * @since   1.0
      */
     protected function getExtension()
-    {
-        return;
-    }
-
-    /**
-     * Theme
-     *
-     * Retrieve extension information after looking up the ID in the extension-specific includer
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function getTheme()
-    {
-        return;
-    }
-
-    /**
-     * Page
-     *
-     * Retrieve extension information after looking up the ID in the extension-specific includer
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function getPage()
     {
         return;
     }
@@ -625,6 +643,13 @@ class Includer
         return;
     }
 
+    /**
+     *  Instantiate Controller Class and pass in Parameters, Model Registry and Name and
+     *  Include Name and Type. The MVC will render the output, and send it back to this method.
+     *
+     *  @return  void
+     *  @since   1.0
+     */
     protected function renderOutput()
     {
         $model_registry_name = ucfirst(strtolower(Services::Registry()->get('parameters', 'model_name')))
@@ -742,10 +767,10 @@ class Includer
      *
      * @param   string  $event_name
      *
-     * @return  string  rendered output
+     * @return  string  void
      * @since   1.0
      */
-    protected function triggerEvent($eventName)
+    protected function triggerEvent($event_name)
     {
         $model_registry_name = ucfirst(strtolower(Services::Registry()->get('parameters', 'model_name')))
             . ucfirst(strtolower(Services::Registry()->get('parameters', 'model_type')));
@@ -762,7 +787,7 @@ class Includer
         );
 
         $arguments = Services::Event()->scheduleEvent(
-            $eventName,
+            $event_name,
             $arguments,
             array()
         );

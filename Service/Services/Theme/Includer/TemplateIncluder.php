@@ -1,45 +1,30 @@
 <?php
 /**
+ * Theme Service Template Includer
+ *
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
  */
 namespace Molajo\Service\Services\Theme\Includer;
 
-use Molajo\Service\Services;
 use Molajo\Service\Services\Theme\Includer;
-use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
-use Molajo\Service\Services\Theme\Helper\ViewHelper;
 
 defined('NIAMBIE') or die;
 
 /**
- * Template
+ * The Template Includer prepares parameter values needed by the MVC to render the requested
+ * Template and Wrap for the specific <include:type name=statement/> parsed by the Theme Service.
+ * Once all parameter values have been determined, the data is passed to the MVC for rendering and
+ * the rendered result is passed back through the Template Includer to the Theme Service.
  *
- * @package     Niambie
- * @subpackage  Includer
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class TemplateIncluder extends Includer
 {
-    /**
-     * Helpers
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $extensionHelper;
-    protected $viewHelper;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->extensionHelper = new ExtensionHelper();
-        $this->viewHelper = new ViewHelper();
-    }
-
     /**
      * Uses Attributes and Extension Definitions to:
      *

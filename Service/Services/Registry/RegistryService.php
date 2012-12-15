@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Registry Service
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Registry;
 
@@ -12,13 +14,16 @@ defined('NIAMBIE') or die;
 
 //@todo consider API and minimize interface points
 //@todo limit access by class
+//protected $reserved_names = array();
+//protected $namespace_permissions = array();
+
 /**
- * Registry
- * Named pair storage with local or global persistence
+ * Named pair storage by Namespace with local or global persistence
  *
- * @package     Niambie
- * @subpackage  Services
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class RegistryService
 {
@@ -55,8 +60,6 @@ Class RegistryService
      * @since  1.0
      */
     protected $registry = array();
-    protected $reserved_names = array();
-    protected $namespace_permissions = array();
 
     /**
      * $instance
@@ -277,7 +280,7 @@ Class RegistryService
 
             if (isset($this->registryKeys[$namespace])) {
                 throw new \RuntimeException
-                    ('Registry: Cannot create Namespace ' . $namespace . ' because it already exists.');
+                ('Registry: Cannot create Namespace ' . $namespace . ' because it already exists.');
             } else {
                 return $this->registry[$namespace];
             }
@@ -473,7 +476,7 @@ Class RegistryService
      *
      * @param   string   $namespace
      * @param   string   $key
-     * @param   mixed    $default
+     * @param   mixed    $value
      * @param   boolean  $match     - used as a security precaution to ensure only named parameters
      *                             are updated via <include /> statement overrides
      *
@@ -494,7 +497,7 @@ Class RegistryService
             throw new \RuntimeException ('Registry: Namespace is required for Set.');
         }
         if ($key == '') {
-           // throw new \RuntimeException ('Registry: Key is required for Set. Namespace: ' . $namespace);
+            // throw new \RuntimeException ('Registry: Key is required for Set. Namespace: ' . $namespace);
             echo 'Registry: Key is required for Set. Namespace: ' . $namespace;
             return;
         }
@@ -544,16 +547,14 @@ Class RegistryService
         $target_registry = $this->editNamespace($target_registry);
 
         if ($this->checkLock($target_registry)) {
-            echo '<pre>';
-            echo $source_registry ;
-            echo '</pre>';
-            die;
             throw new \RuntimeException
             ('Registry: Target Namespace: ' . $target_registry . ' is locked. May not copy into it.');
         }
 
         if ($this->exists($source_registry)) {
         } else {
+            echo $source_registry . ' does not exist but was requested during a copy ' . '<br /> ';
+            return;
             throw new \RuntimeException
             ('Registry: Namespace ' . $source_registry . ' requested as source of copy does not exist.');
         }
@@ -675,7 +676,7 @@ Class RegistryService
             if (is_null($value)) {
                 //skip it.
             } elseif ($searchfor == '') {
-               $match = 1;
+                $match = 1;
 
             } elseif (trim(substr(strtolower($key), 0, strlen(strtolower($searchfor)))) == trim($searchfor)) {
                 $match = 1;
@@ -750,6 +751,7 @@ Class RegistryService
         $namespace = $this->editNamespace($namespace);
 
         if ($this->exists($namespace)) {
+        } else {
             return $this;
         }
 
@@ -945,8 +947,8 @@ Class RegistryService
      * Usage:
      * Services::Registry()->loadArray('Namespace', $array);
      *
-     * @param   string   $name   name of registry to use or create
-     * @param   boolean  $array  key and value pairs to load
+     * @param   string   $namespace  name of registry to use or create
+     * @param   boolean  $array      key and value pairs to load
      *
      * @return  array
      * @since   1.0
@@ -965,7 +967,7 @@ Class RegistryService
         //if ($this->exists($namespace)) {
         //    throw new \RuntimeException
         //    ('Registry: Namespace ' . $namespace . ' already exists. Cannot use existing namespace with loadArray.');
-       // }
+        // }
 
         $this->getRegistry($namespace);
 
@@ -1004,7 +1006,7 @@ Class RegistryService
      * Usage:
      * Services::Registry()->listRegistry();
      *
-     * @param boolean $all true - returns the entire list and each registry
+     * @param boolean $expand  true - returns the entire list and each registry
      *                         false - returns a list of registry names, only
      *
      * @return  mixed|boolean or array
@@ -1044,8 +1046,7 @@ Class RegistryService
     public function getData($registry, $key = null, $query_object = false)
     {
         $registry = strtolower($registry);
-echo $registry;
-        die;
+
         $key = strtolower($key);
         $query_results = array();
 
@@ -1081,7 +1082,6 @@ echo $registry;
      * Used internally for data validation of namespace element
      *
      * @param    string  $namespace
-     * @param    string  $operation
      *
      * @return   string
      * @throws   \RuntimeException

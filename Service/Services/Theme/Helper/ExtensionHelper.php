@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * Theme Service Extension Helper
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Helper;
 
@@ -11,16 +13,26 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * ExtensionHelper
+ * Extension Helper provides an interface to different types of extension information, like:
  *
- * @package       Molajo
- * @subpackage    Helper
- * @since         1.0
+ * - generating a list of extensions for which the site visitor is authorised to view;
+ * - returning a list of language strings to be for site interface translation;
+ * - query for a specific extension, be it a resource, view, language, or theme, etc.
+ * - determine the path, URL path, or namespace for an extension
+ * - return the path to the Favicon
+ * - translate the catalog type id to text, and visa versa
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class ExtensionHelper
 {
     /**
-     * get Extension
+     * Primary interface to extension information enabling queries for a single extension,
+     * all extensions the site visitor is authorised to view, or all extensions of a specific catalog
+     * type, etc.
      *
      * Usage:
      *
@@ -173,7 +185,7 @@ Class ExtensionHelper
      * Note: All Extension queries first check the Registry of all Extensions for which the user is authorised.
      *
      * @param   $catalog_type  Numeric or textual key for View Catalog Type
-     * @param   $title
+     * @param   $title         Title of the Extension Instance
      *
      * @return  bool|mixed
      * @since   1.0
@@ -232,7 +244,7 @@ Class ExtensionHelper
      *
      * Note: All Extension queries first check the Registry of all Extensions for which the user is authorised.
      *
-     * @param   $extension_instance_id
+     * @param   $extension_instance_id  Primary key for the Extension Instance
      *
      * @return  bool|mixed
      * @since   1.0
@@ -285,7 +297,7 @@ Class ExtensionHelper
      * Note: The Extension Instance Title might be different than the Node since each Extension can be used
      *  multiple times as instances.
      *
-     * @param   $extension_instance_id
+     * @param   $extension_instance_id  Primary key for the Extension Instance
      *
      * @return  bool|mixed
      * @since   1.0
@@ -465,7 +477,7 @@ Class ExtensionHelper
      * @return  mixed
      * @since   1.0
      */
-    public function getPathURL($catalog_type, $node, $registry =  null)
+    public function getPathURL($catalog_type, $node, $registry = null)
     {
         if (is_numeric($catalog_type)) {
             $catalog_type = $this->getType(0, $catalog_type);
@@ -638,7 +650,10 @@ Class ExtensionHelper
             }
 
             if (file_exists(Services::Registry()->get($registry, 'extension_path') . $plus . '/Configuration.xml')) {
-                return 'Extension\\Resource\\' . Services::Registry()->get($registry, 'extension_title') . '\\' . $plusNS;
+                return 'Extension\\Resource\\' . Services::Registry()->get(
+                    $registry,
+                    'extension_title'
+                ) . '\\' . $plusNS;
             }
 
             if (file_exists(

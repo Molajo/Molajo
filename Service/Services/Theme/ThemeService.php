@@ -1,5 +1,7 @@
 <?php
 /**
+ * Theme Service
+ *
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @license    GNU GPL v 2, or later and MIT, see License folder
@@ -12,11 +14,31 @@ use Molajo\Service\Services\Theme\Helper\ContentHelper;
 defined('NIAMBIE') or die;
 
 /**
- * Theme
+ * The Theme Service passes the information retrieved in Route to the Content Helper
+ * which retrieves additional information about the request, including the Theme,
+ * Page, Template, and Wrap Views associated with the primary request.
  *
- * @package     Niambie
- * @subpackage  Theme
- * @since       1.0
+ * Next, the Theme Includer passes the request to the MVC which renders the Theme Index.php file.
+ * The output from that process is used as initial input to the parsing process in this class
+ * which parses rendered output for <include:type/> statements.
+ *
+ * Each include statement is processed by its associated Includer class in order to assemble the
+ * parameter values needed by the MVC to render the output. After rendering the MVC passes the
+ * rendered output back to the Includer, which passes it back to this class.
+ *
+ * Once returned, the rendered output is again parsed for possible new <include:type/> statements.
+ * This recursive rendering and parsing process continues until no more includes are found.
+ *
+ * Once complete, the Theme Service passes the rendered output back to the Application Front
+ * Controller class, which sends the results as an HTTP Response back to the requester, thus
+ * concluding the request to response task.
+ *
+ * The Theme Service schedules onBeforeParse, onBeforeParseHead, and onAfterParse Events.
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class ThemeService
 {
@@ -142,9 +164,11 @@ Class ThemeService
 
         $this->final_indicator = false;
 
-        $this->setPageParameters();
+        $this->setThemeParameters();
 
-        $cache = $this->getTheme();
+        $this->onBeforeParseEvent();
+
+        $cache = $this->renderTheme();
         if ($cache === true) {
             return $this->rendered_output;
         }
@@ -218,13 +242,13 @@ Class ThemeService
      * @since    1.0
      * @throws   /Exception
      */
-    public function setPageParameters()
+    public function setThemeParameters()
     {
         $catalog_id = $this->get('catalog_id');
         $catalog_page_type = $this->get('catalog_page_type');
 
         $contentHelper = new ContentHelper();
-        $contentHelper->initialise($this->property_array, $this->parameters);
+        $contentHelper->initialise($this->parameters);
 
         if (strtolower(trim($catalog_page_type)) == strtolower(QUERY_OBJECT_LIST)) {
             $response = $contentHelper->getRouteList();
@@ -241,14 +265,7 @@ Class ThemeService
         }
 
         $this->parameters = $response[0];
-echo '<pre>';
-var_dump($this->parameters);
-echo '</pre>';
         $this->property_array = $response[1];
-echo '<pre>';
-var_dump($this->property_array);
-echo '</pre>';
-        die;
 
         return;
     }
@@ -262,11 +279,9 @@ echo '</pre>';
      * @since    1.0
      * @throws   \Exception
      */
-    protected function getTheme()
+    protected function renderTheme()
     {
         $this->getIncluderClass('Theme', 'Theme', array());
-
-        $this->onBeforeParseEvent();
 
         $this->rendered_output = $themeIncluder->process(array());
         $this->parameters = $themeIncluder->parameters;
@@ -287,7 +302,7 @@ echo '</pre>';
      *
      * 1. Renders Document Body
      *
-     *  - Theme output rendered in getTheme is parsed for <include:type/> statements
+     *  - Theme output rendered in renderTheme is parsed for <include:type/> statements
      *  - Control passed to Includer Type Class which determines parameters for processing and passes
      *      control to the MVC for rendering output
      *  - Process is recursive until no more includes found
@@ -586,7 +601,7 @@ echo '</pre>';
      * @return  array|null
      * @since   1.0
      */
-    protected function triggerEvent($eventName, $query_results = null)
+    protected function triggerEvent($event_name, $query_results = null)
     {
         if ($query_results === null) {
             $query_results = array();
@@ -603,7 +618,7 @@ echo '</pre>';
             'include_parse_exclude_until_final' => $this->exclude_until_final
         );
 
-        $arguments = Services::Event()->scheduleEvent($eventName, $arguments, $this->getPluginList());
+        $arguments = Services::Event()->scheduleEvent($event_name, $arguments, $this->getPluginList());
 
         if (isset($arguments['model_registry'])) {
             Services::Registry()->delete($this->get('model_registry_name'));

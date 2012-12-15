@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Language Service
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Language;
 
@@ -12,11 +14,7 @@ use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 defined('NIAMBIE') or die;
 
 /**
- * LanguageService
- *
- * @package     Niambie
- * @subpackage  Language
- * @since       1.0
+ * Language Services supporting translations for the User Interface
  *
  * Get specific information about languages:
  *
@@ -28,8 +26,14 @@ defined('NIAMBIE') or die;
  *
  * Translate a language string:
  *      Services::Language()->translate($string);
+ *
  * Insert strings found in code but not in database - initiated by the Applications cLass after render
  *      Services::Language()->logUntranslatedStrings();
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class LanguageService
 {
@@ -186,7 +190,7 @@ Class LanguageService
     /**
      * Log requests for translations that could not be processed
      *
-     * @param   $string
+     * @param   string  $string
      *
      * @return  void
      * @since   1.0
@@ -206,7 +210,7 @@ Class LanguageService
     /**
      * Loads language strings into registry
      *
-     * @param   string  $language, optional
+     * @param   null  $language
      *
      * @return  bool
      * @since   1.0
@@ -262,7 +266,7 @@ Class LanguageService
     /**
      * Determine language to be used as current
      *
-     * @param   string $language, optional
+     * @param   null|string  $language
      *
      * @return  null/string
      * @since   1.0
@@ -355,6 +359,8 @@ Class LanguageService
 
     /**
      * Get language strings from database
+     *
+     * @param   $language
      *
      * @return  bool
      * @since   1.0

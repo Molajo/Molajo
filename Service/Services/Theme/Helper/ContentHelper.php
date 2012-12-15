@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Theme Service Content Helper
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Helper;
 
@@ -14,24 +16,46 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * Content Helper
- *
  * Retrieves Item, List, or Menu Item Parameters for Route from Content, Extension, and Menu Item
  *
- * @package     Niambie
- * @subpackage  Helper
- * @since       1.0
+ * Also, provides a number of methods that can be useful for plugins:
+ *
+ *  - getResourceCatalogTypes -  Get Category Type information for Resource
+ *  - getResourceContentParameters - Get Parameter and Custom Fields for Resource Content
+ *      (no data, just field definitions)
+ *  - getResourceExtensionParameters - Get Parameters for Resource
+ *  - getResourceMenuitemParameters($page_type, $extension_instance_id) Get Menuitem Content
+ *      Parameters for Resource
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class ContentHelper
 {
     /**
-     * Helpers
+     * Extension Helper
      *
      * @var    object
      * @since  1.0
      */
     protected $extensionHelper;
+
+    /**
+     * Theme Helper
+     *
+     * @var    object
+     * @since  1.0
+     */
     protected $themeHelper;
+
+    /**
+     * View Helper
+     *
+     * @var    object
+     * @since  1.0
+     */
     protected $viewHelper;
 
     /**
@@ -52,10 +76,14 @@ Class ContentHelper
 
     /**
      * Initialise parameter settings for Page Parameter Queries
+     *
+     * @param   array  $parameters
+     *
+     * @return  ContentHelper
+     * @since   1.0
      */
-    public function initialise($property_array, $parameters)
+    public function initialise($parameters)
     {
-        $this->property_array = $property_array;
         $this->parameters = $parameters;
         $this->extensionHelper = new ExtensionHelper();
         $this->themeHelper = new ThemeHelper();
@@ -77,14 +105,10 @@ Class ContentHelper
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
-        } else {
-            $this->property_array[] = $key;
-        }
-
         if (isset($this->parameters[$key])) {
             return $this->parameters[$key];
         }
+
         $this->parameters[$key] = $default;
         return $this->parameters[$key];
     }
@@ -101,11 +125,6 @@ Class ContentHelper
     protected function set($key, $value = null)
     {
         $key = strtolower($key);
-
-        if (in_array($key, $this->property_array)) {
-        } else {
-            $this->property_array[] = $key;
-        }
 
         $this->parameters[$key] = $value;
         return $this->parameters[$key];
@@ -158,6 +177,7 @@ Class ContentHelper
         }
 
         $this->set('extension_name_path_node', $this->get('catalog_model_name'));
+        $this->set('model_registry_name', $item->model_registry_name);
 
         $this->setParameters(
             $page_type_namespace,
@@ -191,8 +211,12 @@ Class ContentHelper
 
         $parameters = $this->parameters;
         ksort($parameters);
+
+        $this->property_array = array();
+        foreach ($parameters as $key=>$value) {
+            $this->property_array[] = $key;
+        }
         $property_array = $this->property_array;
-        ksort($property_array);
 
         return array($parameters, $property_array);
     }
@@ -245,6 +269,7 @@ Class ContentHelper
 
         $parameters = $this->parameters;
         ksort($parameters);
+
         $property_array = $this->property_array;
         ksort($property_array);
 
@@ -402,40 +427,40 @@ Class ContentHelper
         $this->set('page_type', $page_type_namespace);
 
         /** I. Priority 1 - Item level (Item, List, Menu Item) */
-        $newParameters = Services::Registry()->get($parameter_namespace, $page_type_namespace . '*');
-        if (is_array($newParameters) && count($newParameters) > 0) {
-            $this->processParameterSet($newParameters, $page_type_namespace);
+        $parameter_set = Services::Registry()->get($parameter_namespace, $page_type_namespace . '*');
+        if (is_array($parameter_set) && count($parameter_set) > 0) {
+            $this->processParameterSet($parameter_set, $page_type_namespace);
         }
 
-        $newParameters = Services::Registry()->get($parameter_namespace, 'criteria*');
-        if (is_array($newParameters) && count($newParameters) > 0) {
-            $this->processParameterSet($newParameters, $page_type_namespace);
+        $parameter_set = Services::Registry()->get($parameter_namespace, 'criteria*');
+        if (is_array($parameter_set) && count($parameter_set) > 0) {
+            $this->processParameterSet($parameter_set, $page_type_namespace);
         }
 
-        $newParameters = Services::Registry()->get($parameter_namespace, 'enable*');
-        if (is_array($newParameters) && count($newParameters) > 0) {
-            $this->processParameterSet($newParameters, $page_type_namespace);
+        $parameter_set = Services::Registry()->get($parameter_namespace, 'enable*');
+        if (is_array($parameter_set) && count($parameter_set) > 0) {
+            $this->processParameterSet($parameter_set, $page_type_namespace);
         }
 
         /** II. Priority 2 - Extension level defaults */
         if ($resource_namespace === null) {
         } else {
 
-            $newParameters = Services::Registry()->get($resource_namespace . PARAMETERS_LITERAL,
+            $parameter_set = Services::Registry()->get($resource_namespace . PARAMETERS_LITERAL,
                 $page_type_namespace . '*');
 
-            if (is_array($newParameters) && count($newParameters) > 0) {
-                $this->processParameterSet($newParameters, $page_type_namespace);
+            if (is_array($parameter_set) && count($parameter_set) > 0) {
+                $this->processParameterSet($parameter_set, $page_type_namespace);
             }
 
-            $newParameters = Services::Registry()->get($resource_namespace . PARAMETERS_LITERAL, 'criteria*');
-            if (is_array($newParameters) && count($newParameters) > 0) {
-                $this->processParameterSet($newParameters, $page_type_namespace);
+            $parameter_set = Services::Registry()->get($resource_namespace . PARAMETERS_LITERAL, 'criteria*');
+            if (is_array($parameter_set) && count($parameter_set) > 0) {
+                $this->processParameterSet($parameter_set, $page_type_namespace);
             }
 
-            $newParameters = Services::Registry()->get($resource_namespace . PARAMETERS_LITERAL, 'enable*');
-            if (is_array($newParameters) && count($newParameters) > 0) {
-                $this->processParameterSet($newParameters, $page_type_namespace);
+            $parameter_set = Services::Registry()->get($resource_namespace . PARAMETERS_LITERAL, 'enable*');
+            if (is_array($parameter_set) && count($parameter_set) > 0) {
+                $this->processParameterSet($parameter_set, $page_type_namespace);
             }
         }
 
@@ -487,9 +512,10 @@ Class ContentHelper
 
         /** Remove standard patterns no longer needed  */
         Services::Registry()->delete($random, 'list*');
-        Services::Registry()->delete($random, 'item*');
+
         Services::Registry()->delete($random, 'form*');
         Services::Registry()->delete($random, 'menuitem*');
+        Services::Registry()->delete($random, 'item*');
 
         /** Copy some configuration data */
         $fields = Services::Registry()->get(CONFIGURATION_LITERAL, 'application*');
@@ -514,15 +540,15 @@ Class ContentHelper
     /**
      * Iterates parameter set to determine whether or not value should be applied
      *
-     * @param   $parameterSet
+     * @param   $parameter_set
      * @param   $page_type_namespace
      *
      * @return  void
      * @since   1.0
      */
-    protected function processParameterSet($parameterSet, $page_type_namespace)
+    protected function processParameterSet($parameter_set, $page_type_namespace)
     {
-        foreach ($parameterSet as $key => $value) {
+        foreach ($parameter_set as $key => $value) {
 
             $copy_from = $key;
 

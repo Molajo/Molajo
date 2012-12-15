@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Theme Service Theme Helper
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Helper;
 
@@ -12,16 +14,18 @@ use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 defined('NIAMBIE') or die;
 
 /**
- * ThemeHelper
+ * Theme Helper retrieves values needed to render the selected Theme index.php file, load plugins
+ * in the Theme folder and load assets defined by the Theme.
  *
- * @package       Molajo
- * @subpackage    Helper
- * @since         1.0
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class ThemeHelper
 {
     /**
-     * Helpers
+     * Extension Helper
      *
      * @var    object
      * @since  1.0
@@ -29,6 +33,8 @@ Class ThemeHelper
     protected $extensionHelper;
 
     /**
+     * Class Constructor
+     *
      * @return  void
      * @since   1.0
      */
@@ -40,7 +46,8 @@ Class ThemeHelper
     }
 
     /**
-     * Get requested theme data
+     * Get information for rendering the specified Theme index.php file. Calling process sends in the
+     * name of the Registry to use when storing results. Defaults to "Parameters" registry.
      *
      * @param   int      $theme_id
      * @param   string   $registry

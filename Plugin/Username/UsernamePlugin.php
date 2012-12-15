@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Username Plugin
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Plugin\Username;
 
@@ -11,15 +13,16 @@ use Molajo\Plugin\Plugin\Plugin;
 defined('NIAMBIE') or die;
 
 /**
- * Username
+ * Username Plugin that runs on before Create, Update and After Update to handle pre and post
+ * update processing for the Username Field.
  *
- * @package     Niambie
- * @license     GNU GPL v 2, or later and MIT
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class UsernamePlugin extends Plugin
 {
-
     /**
      * Pre-create processing
      *

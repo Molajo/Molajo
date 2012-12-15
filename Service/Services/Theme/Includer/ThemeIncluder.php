@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * Theme Service Theme Includer
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Includer;
 
@@ -13,19 +15,24 @@ use Molajo\MVC\Controller\DisplayController;
 defined('NIAMBIE') or die;
 
 /**
- * Theme
+ * The Theme Includer sets parameter values needed to render the Theme Index.php file which
+ * is used to seed the process which parses rendered output for <include:type/> statements.
  *
- * @package     Niambie
- * @subpackage  Includer
- * @since       1.0
+ * In addition, the Theme Includer loads media and Plugins for the Theme.
+ *
+ * @author       Amy Stephen
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 class ThemeIncluder extends Includer
 {
-
     /**
-     * Render and return output
+     * The Theme Includer establishes values needed to render the Theme Index.php file and
+     *  Plugins overriding core and extension plugins are loaded, along with Theme Assets.
      *
-     * @param   $attributes
+     * @param   array $attributes
+     * @return  mixed|null|string
      *
      * @return  mixed
      * @since   1.0
@@ -51,7 +58,7 @@ class ThemeIncluder extends Includer
             Services::Registry()->get('include', 'theme_path'),
             Services::Registry()->get('include', 'theme_namespace')
         );
-return;
+
         Services::Event()->registerPlugins(
             Services::Registry()->get('include', 'page_view_path'),
             Services::Registry()->get('include', 'page_view_namespace')
@@ -79,8 +86,11 @@ return;
 
         $controller = new DisplayController();
         $controller->set('include', Services::Registry()->getArray('include'));
-        $this->set($this->get('extension_catalog_type_id', '', 'parameters'),
-            CATALOG_TYPE_RESOURCE, 'parameters');
+        $this->set(
+            $this->get('extension_catalog_type_id', '', 'parameters'),
+            CATALOG_TYPE_RESOURCE,
+            'parameters'
+        );
 
         $this->rendered_output = $controller->execute();
         echo $this->rendered_output;
@@ -101,27 +111,41 @@ return;
      */
     protected function loadMedia()
     {
-        $this->loadMediaPlus('',
-            Services::Registry()->get('include', 'asset_priority_site', 100));
+        $this->loadMediaPlus(
+            '',
+            Services::Registry()->get('include', 'asset_priority_site', 100)
+        );
 
-        $this->loadMediaPlus('/application' . APPLICATION,
-            Services::Registry()->get('include', 'asset_priority_application', 200));
+        $this->loadMediaPlus(
+            '/application' . APPLICATION,
+            Services::Registry()->get('include', 'asset_priority_application', 200)
+        );
 
-        $this->loadMediaPlus('/user' . Services::Registry()->get(USER_LITERAL, 'id'),
-            Services::Registry()->get('include', 'asset_priority_user', 300));
+        $this->loadMediaPlus(
+            '/user' . Services::Registry()->get(USER_LITERAL, 'id'),
+            Services::Registry()->get('include', 'asset_priority_user', 300)
+        );
 
-        $this->loadMediaPlus('/category' . Services::Registry()->get('include', 'catalog_category_id'),
-            Services::Registry()->get('include', 'asset_priority_primary_category', 700));
+        $this->loadMediaPlus(
+            '/category' . Services::Registry()->get('include', 'catalog_category_id'),
+            Services::Registry()->get('include', 'asset_priority_primary_category', 700)
+        );
 
-        $this->loadMediaPlus('/menuitem' . Services::Registry()->get('include', 'menu_item_id'),
-            Services::Registry()->get('include', 'asset_priority_menuitem', 800));
+        $this->loadMediaPlus(
+            '/menuitem' . Services::Registry()->get('include', 'menu_item_id'),
+            Services::Registry()->get('include', 'asset_priority_menuitem', 800)
+        );
 
-        $this->loadMediaPlus('/source/' . Services::Registry()->get('include', 'extension_title')
+        $this->loadMediaPlus(
+            '/source/' . Services::Registry()->get('include', 'extension_title')
                 . Services::Registry()->get('include', 'criteria_source_id'),
-            Services::Registry()->get('include', 'asset_priority_item', 900));
+            Services::Registry()->get('include', 'asset_priority_item', 900)
+        );
 
-        $this->loadMediaPlus('/resource/' . Services::Registry()->get('include', 'extension_title'),
-            Services::Registry()->get('include', 'asset_priority_extension', 900));
+        $this->loadMediaPlus(
+            '/resource/' . Services::Registry()->get('include', 'extension_title'),
+            Services::Registry()->get('include', 'asset_priority_extension', 900)
+        );
 
         $priority = Services::Registry()->get('include', 'asset_priority_theme', 600);
         $file_path = Services::Registry()->get('include', 'theme_path');
@@ -152,11 +176,12 @@ return;
     }
 
     /**
-     * loadMediaPlus
-     *
      * Loads Media Files for Site, Application, User, and Theme
      *
-     * @return bool
+     * @param   string  $plus
+     * @param   int     $priority
+     *
+     * @return  bool
      * @since   1.0
      */
     protected function loadMediaPlus($plus = '', $priority = 500)

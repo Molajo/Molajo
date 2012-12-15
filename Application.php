@@ -1,4 +1,11 @@
 <?php
+/**
+ * Application Frontend Controller
+ *
+ * @package      Niambie
+ * @license      GPL v 2, or later and MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ */
 namespace Molajo;
 
 use Molajo\Service\Services;
@@ -18,7 +25,7 @@ defined('NIAMBIE') or die;
  *
  * In addition the Application Frontend Controller schedules onAfter events for each of the above.
  *
- * @package      Niambie
+ * @author       Amy Stephen
  * @license      GPL v 2, or later and MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
@@ -282,7 +289,6 @@ Class Application
      */
     protected function initialise()
     {
-
         set_exception_handler(array($this, 'exception_handler'));
         set_error_handler(array($this, 'error_handler'), E_ALL);
 
