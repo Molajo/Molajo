@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * @license    MIT, see License folder
  */
 namespace Molajo\Plugin\Create;
 
@@ -16,7 +16,7 @@ defined('NIAMBIE') or die;
  * Create
  *
  * @package     Niambie
- * @license     GNU GPL v 2, or later and MIT
+ * @license     MIT
  * @since       1.0
  */
 class CreatePlugin extends Plugin

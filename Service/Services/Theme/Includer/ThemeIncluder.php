@@ -3,25 +3,23 @@
  * Theme Service Theme Includer
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Includer;
 
-use Molajo\Service\Services;
 use Molajo\Service\Services\Theme\Includer;
-use Molajo\MVC\Controller\DisplayController;
 
 defined('NIAMBIE') or die;
 
 /**
- * The Theme Includer sets parameter values needed to render the Theme Index.php file which
- * is used to seed the process which parses rendered output for <include:type/> statements.
+ * The Theme Includer sets parameter values needed to render the Theme Index.php file, the results
+ * of which are feed into the parsing rendered output for <include:type/> statements process.
  *
  * In addition, the Theme Includer loads media and Plugins for the Theme.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */
@@ -44,6 +42,42 @@ class ThemeIncluder extends Includer
         $this->renderOutput();
 
         return $this->rendered_output;
+    }
+
+    /**
+     * Set Item, List, or Menu Item Parameter data needed to generate page.
+     *
+     * @return   void
+     * @since    1.0
+     * @throws   /Exception
+     */
+    public function setThemeParameters()
+    {
+        $catalog_id = $this->get('catalog_id');
+        $catalog_page_type = $this->get('catalog_page_type');
+
+        $class = $this->class_array['ContentHelper'];
+        $contentHelper = new $class();
+        $contentHelper->initialise($this->parameters);
+
+        if (strtolower(trim($catalog_page_type)) == strtolower(QUERY_OBJECT_LIST)) {
+            $response = $contentHelper->getRouteList();
+
+        } elseif (strtolower(trim($catalog_page_type)) == strtolower(QUERY_OBJECT_ITEM)) {
+            $response = $contentHelper->getRouteItem();
+
+        } else {
+            $response = $contentHelper->getRouteMenuitem();
+        }
+
+        if ($response === false) {
+            throw new \Exception('Theme Service: Could not identify Primary Data for Catalog ID ' . $catalog_id);
+        }
+
+        $this->parameters = $response[0];
+        $this->property_array = $response[1];
+
+        return;
     }
 
     /**

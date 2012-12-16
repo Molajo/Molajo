@@ -3,14 +3,12 @@
  * Application Frontend Controller
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo;
 
 use Molajo\Service\Services;
-use Molajo\Service\Services\Request\RequestService;
-use Molajo\Service\Services\Configuration\ConfigurationService;
 
 defined('NIAMBIE') or die;
 
@@ -26,7 +24,7 @@ defined('NIAMBIE') or die;
  * In addition the Application Frontend Controller schedules onAfter events for each of the above.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */
@@ -35,6 +33,7 @@ Class Application
     /**
      * Application::Services
      *
+     * @static
      * @var    object  Services
      * @since  1.0
      */
@@ -98,7 +97,7 @@ Class Application
      * @var    object
      * @since  1.0
      */
-    protected $route_properties_array = array(
+    protected $parameters_properties_array = array(
         'catalog_alias',
         'catalog_category_id',
         'catalog_extension_instance_id',
@@ -114,7 +113,6 @@ Class Application
         'catalog_url_request',
         'catalog_url_sef_request',
         'catalog_view_group_id',
-        'parameters',
         'redirect_to_id',
         'request_action',
         'request_base_url_path',
@@ -132,12 +130,59 @@ Class Application
     );
 
     /**
+     * List of Classes and Namespaces passed through application
+     *
+     * Use setClass in base classes to Override Class
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $class_array = array(
+
+        'ConfigurationService' => 'Molajo\\Service\\Services\\Request\\ConfigurationService',
+        'ExceptionService' => 'Molajo\\Service\\Services\\Request\\ExceptionService',
+        'RequestService' => 'Molajo\\Service\\Services\\Request\\RequestService',
+
+        'ContentHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
+        'ExtensionHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ExtensionHelper',
+        'ThemeHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ThemeHelper',
+        'ViewHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ViewHelper',
+
+        'Includer' => 'Molajo\\Service\\Services\\Theme\\Includer',
+        'HeadIncluder' => 'Molajo\\Service\\Services\\Theme\\HeadIncluder',
+        'MessageIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\MessageIncluder',
+        'PageIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\PageIncluder',
+        'ProfilerIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\ProfilerIncluder',
+        'TagIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\TagIncluder',
+        'TemplateIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\TemplateIncluder',
+        'ThemeIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder',
+        'WrapIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\WrapIncluder',
+
+        'Controller' => 'Molajo\\MVC\\Controller\\Controller',
+        'CreateController' => 'Molajo\\MVC\\Controller\\CreateController',
+        'DeleteController' => 'Molajo\\MVC\\Controller\\DeleteController',
+        'DisplayController' => 'Molajo\\MVC\\Controller\\DisplayController',
+        'LoginController' => 'Molajo\\MVC\\Controller\\LoginController',
+        'LogoutController' => 'Molajo\\MVC\\Controller\\LogoutController',
+        'UpdateController' => 'Molajo\\MVC\\Controller\\UpdateController',
+
+        'Model' => 'Molajo\\MVC\\Model\\Model',
+        'CreateModel' => 'Molajo\\MVC\\Model\\CreateModel',
+        'DeleteModel' => 'Molajo\\MVC\\Model\\DeleteModel',
+        'LoginModel' => 'Molajo\\MVC\\Model\\LoginModel',
+        'LogoutModel' => 'Molajo\\MVC\\Model\\LogoutModel',
+        'ReadModel' => 'Molajo\\MVC\\Model\\ReadModel'
+    );
+
+    /**
      * Override normal processing with these parameters
      *
      * @param   string  $override_url_request
      * @param   string  $override_catalog_id
      * @param   string  $override_parse_sequence
      * @param   string  $override_parse_final
+     * @param   string  $override_parameters_properties_array
+     * @param   string  $override_class_array
      *
      * @return  mixed
      * @since   1.0
@@ -146,22 +191,38 @@ Class Application
         $override_url_request = null,
         $override_catalog_id = null,
         $override_parse_sequence = null,
-        $override_parse_final = null
+        $override_parse_final = null,
+        $override_parameters_properties_array = null,
+        $override_class_array = null
     ) {
-        $this->request = new RequestService();
+
+        if ($override_class_array == null) {
+        } else {
+            $this->class_array = $override_class_array;
+        }
+
+        $class = $this->class_array['RequestService'];
+        $this->request = new $class();
 
         $this->setBaseURL();
 
         $this->setDefines();
 
+        if ($override_parameters_properties_array == null) {
+        } else {
+            $this->parameters_properties_array = $override_parameters_properties_array;
+        }
+
+        if ($override_url_request === null) {
+        } else {
+            $this->requested_resource_for_route = $override_url_request;
+        }
+
         /** 1. Initialise */
         try {
             Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
 
-            $results = $this->initialise(
-                $override_parse_sequence,
-                $override_parse_final
-            );
+            $results = $this->initialise();
 
             $this->onAfterInitialiseEvent();
 
@@ -177,10 +238,6 @@ Class Application
                 Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
             }
 
-            if ($override_url_request === null) {
-            } else {
-                $this->requested_resource_for_route = $override_url_request;
-            }
             $this->route($override_catalog_id);
 
             $this->onAfterRouteEvent();
@@ -201,9 +258,7 @@ Class Application
             if (defined(PROFILER_ON)) {
                 Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
             }
-
             $this->authorise();
-
             $this->onAfterAuthoriseEvent();
 
         } catch (\Exception $e) {
@@ -214,7 +269,6 @@ Class Application
         try {
 
             $this->execute($override_parse_sequence, $override_parse_final);
-
             $this->onAfterExecuteEvent();
 
         } catch (\Exception $e) {
@@ -224,7 +278,6 @@ Class Application
         /** 5. Response */
         try {
             $this->response();
-
             $this->onAfterResponseEvent();
 
         } catch (\Exception $e) {
@@ -247,7 +300,7 @@ Class Application
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->route_properties_array)) {
+        if (in_array($key, $this->parameters_properties_array)) {
         } else {
             throw new \OutOfRangeException('Application: is attempting to get value for unknown key: ' . $key);
         }
@@ -255,6 +308,7 @@ Class Application
         if (isset($this->parameters[$key])) {
             return $this->parameters[$key];
         }
+
         $this->parameters[$key] = $default;
         return $this->parameters[$key];
     }
@@ -272,7 +326,7 @@ Class Application
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->route_properties_array)) {
+        if (in_array($key, $this->parameters_properties_array)) {
         } else {
             throw new \OutOfRangeException('Application: is attempting to set value for unknown key: ' . $key);
         }
@@ -327,7 +381,7 @@ Class Application
      */
     public function exception_handler(\Exception $e)
     {
-        $class = 'Molajo\\Service\\Services\\Exception\\ExceptionService';
+        $class = $this->class_array['ExceptionService'];
         $connect = new $class($e->getMessage(), $e->getCode(), $e);
         $connect->formatMessage();
     }
@@ -359,20 +413,7 @@ Class Application
      */
     protected function onAfterInitialiseEvent()
     {
-        $arguments = array(
-            'model' => null,
-            'model_registry' => array(),
-            'parameters' => array(),
-            'query_results' => array(),
-            'row' => null,
-            'rendered_output' => null,
-            'include_parse_sequence' => array(),
-            'include_parse_exclude_until_final' => array()
-        );
-
-        $arguments = Services::Event()->scheduleEvent('onAfterInitialise', $arguments, array());
-
-        return true;
+        return $this->scheduleEvent('onAfterInitialiseEvent');
     }
 
     /**
@@ -392,15 +433,11 @@ Class Application
      */
     protected function route($override_catalog_id = null)
     {
-//$results = Services::Install()->content();
-//$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
-//$results = Services::Install()->testDeleteExtension('Test', 'Resources');
-
-        $class = 'Molajo\\Service\\Services\\Route\\RouteService';
+        $class = $this->class_array['RouteService'];
         $route = new $class();
 
         $route = $route->process(
-            $this->route_properties_array,
+            $this->parameters_properties_array,
             $this->requested_resource_for_route,
             $this->base_url_path_for_application,
             $override_catalog_id
@@ -409,7 +446,8 @@ Class Application
         if (Services::Redirect()->url === null
             && (int)Services::Redirect()->code == 0
         ) {
-            $this->parameters = $route;
+            $this->parameters = $route[0];
+            $this->parameters_properties_array = $route[1];
 
             return true;
         }
@@ -422,36 +460,17 @@ Class Application
     }
 
     /**
-     * Schedule Event onAfterRoute
+     * Schedule onAfterRoute Event
      *
      * onAfterRoute can be used to retrieve supplementary data, like datalists, for data that is not
      *  dependent upon having all page parameters to produce.
-     *
-     * Could be used to influence the resource data that will be used to determine page parameters
      *
      * @return  boolean
      * @since   1.0
      */
     protected function onAfterRouteEvent()
     {
-        $arguments = array(
-            'model' => null,
-            'model_registry' => Services::Registry()->get($this->get('catalog_model_registry_name')),
-            'parameters' => $this->parameters,
-            'query_results' => array(),
-            'row' => null,
-            'rendered_output' => null,
-            'include_parse_sequence' => array(),
-            'include_parse_exclude_until_final' => array()
-        );
-
-        $arguments = Services::Event()->scheduleEvent('onAfterRoute', $arguments, array());
-
-        if (isset($arguments['parameters'])) {
-            $this->parameters = $arguments['parameters'];
-        }
-
-        return true;
+        return $this->scheduleEvent('onAfterRouteEvent');
     }
 
     /**
@@ -472,34 +491,14 @@ Class Application
     }
 
     /**
-     * Schedule onAfterAuthoriseEvent
-     *
-     * OnAfterAuthorise Event is invoked regardless of normal authorisation results (fail or succeed)
-     *      in order to allow overriding the finding and/or providing other methods of authorisation
+     * Schedule onAfterAuthorise Event
      *
      * @return  boolean
      * @since   1.0
      */
     protected function onAfterAuthoriseEvent()
     {
-        $arguments = array(
-            'model' => null,
-            'model_registry' => Services::Registry()->get($this->get('catalog_model_registry_name')),
-            'parameters' => $this->parameters,
-            'query_results' => array(),
-            'row' => null,
-            'rendered_output' => null,
-            'include_parse_sequence' => array(),
-            'include_parse_exclude_until_final' => array()
-        );
-
-        $arguments = Services::Event()->scheduleEvent('onAfterAuthoriseEvent', $arguments, array());
-
-        if (isset($arguments['parameters'])) {
-            $this->parameters = $arguments['parameters'];
-        }
-
-        return true;
+        return $this->scheduleEvent('onAfterAuthoriseEvent');
     }
 
     /**
@@ -564,8 +563,9 @@ Class Application
 
         if ($results === false) {
             $results = Services::Theme()->process(
-                $this->route_properties_array,
                 $this->parameters,
+                $this->parameters_properties_array,
+                $this->class_array,
                 $override_parse_sequence,
                 $override_parse_final
             );
@@ -616,6 +616,9 @@ Class Application
 // -> sessions Services::Message()->set('Status updated', MESSAGE_TYPE_SUCCESS);
 
 // 	What action and Controller (authorisation should be okay)
+//$results = Services::Install()->content();
+//$results = Services::Install()->testCreateExtension('Data Dictionary', 'Resources');
+//$results = Services::Install()->testDeleteExtension('Test', 'Resources');
 
 // what redirect for good and bad
 
@@ -641,20 +644,7 @@ Class Application
      */
     protected function onAfterExecuteEvent()
     {
-        $arguments = array(
-            'model' => null,
-            'model_registry' => array(),
-            'parameters' => array(),
-            'query_results' => array(),
-            'row' => null,
-            'rendered_output' => null,
-            'include_parse_sequence' => array(),
-            'include_parse_exclude_until_final' => array()
-        );
-
-        $arguments = Services::Event()->scheduleEvent('onAfterExecute', $arguments, array());
-
-        return true;
+        return $this->scheduleEvent('onAfterExecuteEvent');
     }
 
     /**
@@ -712,27 +702,107 @@ Class Application
     }
 
     /**
-     * Schedule Event onAfterResponse
+     * Schedule Event onAfterParseEvent Event
      *
-     * @return  boolean
+     * Event runs after the entire document has been rendered. The rendered content is available
+     * to event plugins.
+     *
+     * @return  void
      * @since   1.0
      */
     protected function onAfterResponseEvent()
     {
+        return $this->scheduleEvent('onAfterResponseEvent');
+    }
+
+    /**
+     * Common Method for Scheduling Application Events
+     *
+     * @param   string  $event_name
+     *
+     * @return  void
+     * @since   1.0
+     */
+    protected function scheduleEvent($event_name)
+    {
+        if (isset($this->parameters['model_registry_name'])) {
+            $model_registry_name = $this->parameters['model_registry_name'];
+            $model_registry = Services::Registry()->get($model_registry_name);
+        } else {
+            $model_registry_name = '';
+            $model_registry = array();
+        }
+
         $arguments = array(
             'model' => null,
-            'model_registry' => array(),
-            'parameters' => array(),
+            'model_registry' => $model_registry,
+            'parameters' => $this->parameters,
+            'parameters_properties_array' => $this->parameters_properties_array,
             'query_results' => array(),
             'row' => null,
-            'rendered_output' => null,
+            'rendered_output' => $this->rendered_output,
+            'class_array' => $this->class_array,
             'include_parse_sequence' => array(),
             'include_parse_exclude_until_final' => array()
         );
 
-        $arguments = Services::Event()->scheduleEvent('onAfterResponse', $arguments, array());
+        $arguments = Services::Event()->scheduleEvent(
+            $event_name,
+            $arguments,
+            $this->getPluginList($model_registry_name)
+        );
 
-        return true;
+        if (isset($arguments['class_array'])) {
+            $this->parameters = $arguments['class_array'];
+        }
+
+        if (isset($arguments['parameters'])) {
+            $this->parameters = $arguments['parameters'];
+        }
+
+        if (isset($arguments['parameters_properties_array'])) {
+            $this->parameters = $arguments['parameters_properties_array'];
+        }
+
+        if (isset($this->parameters['model_registry_name'])) {
+            $model_registry_name = $this->parameters['model_registry_name'];
+            if (isset($arguments['model_registry'])) {
+                Services::Registry()->delete($model_registry_name);
+                Services::Registry()->createRegistry($this->get('model_registry_name'));
+                Services::Registry()->loadArray($this->get('model_registry_name'), $arguments['model_registry']);
+            }
+        }
+
+        if (isset($arguments['rendered_output'])) {
+            $this->rendered_output = $arguments['rendered_output'];
+        }
+
+        return;
+    }
+
+    /**
+     * Get the list of potential plugins identified with this model registry
+     *
+     * @return  array
+     * @since   1.0
+     */
+    protected function getPluginList($model_registry_name = null)
+    {
+        $plugins = array();
+
+        if ((int) Services::Registry()->get($model_registry_name, 'process_plugins') > 0) {
+
+            $modelPlugins = Services::Registry()->get($model_registry_name, 'plugins');
+
+            if (is_array($modelPlugins)) {
+            } else {
+                $modelPlugins = array();
+            }
+        }
+
+        $plugins[] = 'Application';
+
+        return $plugins;
     }
 
     /**
@@ -843,7 +913,8 @@ Class Application
         }
 
         /** Defines used to help ensure consistency of literal values in application */
-        $defines = ConfigurationService::getFile('Application', 'Defines');
+        $class = $this->class_array['ConfigurationService'];
+        $defines = $class::getFile('Application', 'Defines');
         foreach ($defines->define as $item) {
             if (defined((string)$item['name'])) {
             } else {
@@ -887,8 +958,8 @@ Class Application
 
         if (defined('SITE_BASE_URL')) {
         } else {
-
-            $sites = ConfigurationService::getFile('Site', 'Sites');
+            $class = $this->class_array['ConfigurationService'];
+            $sites = $class::getFile('Site', 'Sites');
 
             foreach ($sites->site as $single) {
                 if (strtolower((string)$single->site_base_url) == strtolower($site_base_url)) {
@@ -943,7 +1014,8 @@ Class Application
             /* to override - must also define $this->request->get('requested_resource_for_route') */
         } else {
 
-            $apps = ConfigurationService::getFile('Application', 'Applications');
+            $class = $this->class_array['ConfigurationService'];
+            $apps = $class::getFile('Application', 'Applications');
 
             foreach ($apps->application as $app) {
 
@@ -1085,7 +1157,9 @@ Class Application
         if (self::$services) {
         } else {
             try {
-                self::$services = new Services();
+                $class = self::$class_array['Services'];
+
+                self::$services = new $class();
             } catch (\RuntimeException $e) {
                 echo 'Instantiate Service Exception : ', $e->getMessage(), "\n";
                 die;

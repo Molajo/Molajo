@@ -3,7 +3,7 @@
  * Theme Service Content Helper
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Helper;
@@ -28,7 +28,7 @@ defined('NIAMBIE') or die;
  *      Parameters for Resource
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

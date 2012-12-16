@@ -3,7 +3,7 @@
  * Language Service
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Language;
@@ -31,7 +31,7 @@ defined('NIAMBIE') or die;
  *      Services::Language()->logUntranslatedStrings();
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

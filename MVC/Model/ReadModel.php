@@ -3,7 +3,7 @@
  * Read Model
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Model;
@@ -17,7 +17,7 @@ defined('NIAMBIE') or die;
  * Read Model is driven by the primary Controller to use with model registries, to create and execute DB queries
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

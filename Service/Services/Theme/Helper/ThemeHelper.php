@@ -3,7 +3,7 @@
  * Theme Service Theme Helper
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Helper;
@@ -18,7 +18,7 @@ defined('NIAMBIE') or die;
  * in the Theme folder and load assets defined by the Theme.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

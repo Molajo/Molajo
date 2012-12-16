@@ -170,7 +170,7 @@ Extensions available for install are listed in the Install facility and can be q
 
 To share your custom Extension, simply Zip the Extension folder. In that form, it is installable in other Molajo installations.
 
-At this time, only those Extensions listed in the Molajito Github Repository are available for installation in the Administrator Interface. To have your Extension considered for sharing in this manner, post in the Molajo Github Issues queue or in the Molajo Users List. Only free of charge Extensions dual licensed using the GPL v 2, or later and MIT, will be considered. A key factor in deciding whether or not to share an Extension is if it satisfies an unmet need and has been developed in a safe manner withing the guidelines of the API. Extensions which duplicate functionality of existing work will not be considered, but rather developers will be encouraged to collaborate on the Molajito Repository on combining work into one better solution.
+At this time, only those Extensions listed in the Molajito Github Repository are available for installation in the Administrator Interface. To have your Extension considered for sharing in this manner, post in the Molajo Github Issues queue or in the Molajo Users List. Only free of charge Extensions dual licensed using the MIT, will be considered. A key factor in deciding whether or not to share an Extension is if it satisfies an unmet need and has been developed in a safe manner withing the guidelines of the API. Extensions which duplicate functionality of existing work will not be considered, but rather developers will be encouraged to collaborate on the Molajito Repository on combining work into one better solution.
 
 ---
 

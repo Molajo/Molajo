@@ -10,7 +10,7 @@ defined('NIAMBIE') or die;
  * data, create and run SQL statements needed to delete data.
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

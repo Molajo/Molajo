@@ -1,15 +1,15 @@
 {
-    "name": "Molajo/Molajo",
+    "name": "Niambie/Platform",
     "type":"Content Management Framework",
-    "description":"Molajo Content Management Framework",
-    "keywords":["cmf", "framework", "mvc"],
-    "homepage":"http://molajo.org",
-    "license":"GPL v 2, or later, and MIT",
+    "description":"Content Management Framework",
+    "keywords":["cmf", "framework"],
+    "homepage":"http://Niambie.org",
+    "license":"MIT",
     "authors": [
         {
             "name": "Amy Stephen",
             "email": "AmyStephen@gmail.com",
-            "homepage": "http://molajo.org",
+            "homepage": "http://niambie.org",
             "role": "Developer"
         }
     ],

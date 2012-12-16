@@ -4,7 +4,7 @@ use Molajo\Service\Services;
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * @license    MIT, see License folder
  * echo Services::Language()->translate('No textareaion')
  */
 defined('NIAMBIE') or die;

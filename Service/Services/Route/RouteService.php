@@ -3,7 +3,7 @@
  * Route Service
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Route;
@@ -28,7 +28,7 @@ defined('NIAMBIE') or die;
  * what the basic parameters were for that request.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */
@@ -43,12 +43,12 @@ Class RouteService
     protected $parameters = array();
 
     /**
-     * List of Route Properties
+     * List of Known, Valid Parameter Properties
      *
      * @var    object
      * @since  1.0
      */
-    protected $route_properties_array = array();
+    protected $parameters_properties_array = array();
 
     /**
      * Get the current value (or default) of the specified key
@@ -63,7 +63,7 @@ Class RouteService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->route_properties_array)) {
+        if (in_array($key, $this->parameters_properties_array)) {
         } else {
             throw new \OutOfRangeException('Route: is attempting to get value for unknown key: ' . $key);
         }
@@ -89,7 +89,7 @@ Class RouteService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->route_properties_array)) {
+        if (in_array($key, $this->parameters_properties_array)) {
         } else {
             throw new \OutOfRangeException('Route: is attempting to set value for unknown key: ' . $key);
         }
@@ -101,7 +101,7 @@ Class RouteService
     /**
      * Retrieve catalog entry and values needed to route the request
      *
-     * @param   string  $route_properties_array         Valid parameter keys
+     * @param   string  $parameters_properties_array         Valid parameter keys
      * @param   string  $requested_resource_for_route   Routable portion of Request (ex. articles/article-1)
      * @param   string  $base_url_path_for_application  Base for URL (ex. http://example.com/administrator)
      * @param   string  $override_catalog_id            Use instead of $requested_resource_for_route
@@ -110,12 +110,12 @@ Class RouteService
      * @since   1.0
      */
     public function process(
-        $route_properties_array,
+        $parameters_properties_array,
         $requested_resource_for_route,
         $base_url_path_for_application,
         $override_catalog_id = null
     ) {
-        $this->route_properties_array = $route_properties_array;
+        $this->parameters_properties_array = $parameters_properties_array;
 
         $this->set('request_catalog_id', 0);
         $this->set('status_found', '');
@@ -189,7 +189,8 @@ Class RouteService
 
         $sort = $this->parameters;
         ksort($sort);
-        return $sort;
+
+        return array($sort, $this->parameters_properties_array);
     }
 
     /**

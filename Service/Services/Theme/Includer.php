@@ -4,16 +4,11 @@
  *
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * @license    MIT, see License folder
  */
 namespace Molajo\Service\Services\Theme;
 
 use Molajo\Service\Services;
-use Molajo\MVC\Controller\DisplayController;
-use Molajo\Service\Services\Theme\Helper\ContentHelper;
-use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
-use Molajo\Service\Services\Theme\Helper\ThemeHelper;
-use Molajo\Service\Services\Theme\Helper\ViewHelper;
 
 defined('NIAMBIE') or die;
 
@@ -25,7 +20,7 @@ defined('NIAMBIE') or die;
  * The Theme Service Includer schedules onBeforeInclude and onAfterInclude Events
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

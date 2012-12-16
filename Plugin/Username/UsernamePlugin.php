@@ -3,7 +3,7 @@
  * Username Plugin
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Plugin\Username;
@@ -17,7 +17,7 @@ defined('NIAMBIE') or die;
  * update processing for the Username Field.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

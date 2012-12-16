@@ -3,7 +3,7 @@
  * Base Plugin Class
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Plugin\Plugin;
@@ -30,7 +30,7 @@ defined('NIAMBIE') or die;
  * functions and other commonly used data and connections.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

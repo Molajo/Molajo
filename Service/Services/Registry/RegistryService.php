@@ -3,7 +3,7 @@
  * Registry Service
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Registry;
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * Named pair storage by Namespace with local or global persistence
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

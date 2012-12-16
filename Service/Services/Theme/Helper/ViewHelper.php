@@ -3,7 +3,7 @@
  * Theme Service View Helper
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Helper;
@@ -16,7 +16,7 @@ defined('NIAMBIE') or die;
  * The View Helper provides access to Page View, Template View, and Wrap View data.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

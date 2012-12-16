@@ -4,12 +4,11 @@
  *
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * @license    MIT, see License folder
  */
 namespace Molajo\Service\Services\Theme;
 
 use Molajo\Service\Services;
-use Molajo\Service\Services\Theme\Helper\ContentHelper;
 
 defined('NIAMBIE') or die;
 
@@ -36,7 +35,7 @@ defined('NIAMBIE') or die;
  * The Theme Service schedules onBeforeParse, onBeforeParseHead, and onAfterParse Events.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */
@@ -99,14 +98,20 @@ Class ThemeService
     protected $parameters = array();
 
     /**
-     * List of Route Properties
+     * List of Known, Expected Properties for Parameters
      *
      * @var    object
      * @since  1.0
      */
-    protected $property_array = array();
+    protected $parameter_property_array = array();
 
-    //@todo - how to override this class and includers and mvc. should these be pre-defined like plugins?
+    /**
+     * List of Classes
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $class_array = array();
 
     /**
      * Load sequence.xml file contents into array for determining processing order
@@ -116,22 +121,25 @@ Class ThemeService
      * Render Theme, parse output for <include:type/> statements, pass to
      *  include renderer, continuing until no more <include:type/> statements are found
      *
-     * @param  array       $route_property_array   valid property names from route
-     * @param  array       $parameters               key value pairs
-     * @param  null|array  $override_parse_sequence  override file with body include statements in processing order
-     * @param  null|array  $override_parse_final     override file with head include statements in processing order
+     * @param  array       $parameters                  key value pairs
+     * @param  array       $parameter_property_array    valid parameter properties from route
+     * @param  array       $class_array                 array of classes with namespaces
+     * @param  null|array  $override_parse_sequence     override file with body include statements
+     * @param  null|array  $override_parse_final        override file with head include statements
      *
      * @return  string
      * @since   1.0
      */
-    public function process($route_property_array, $parameters,
-        $override_parse_sequence = null, $override_parse_final = null)
+    public function process($parameters, $parameter_property_array,
+        $class_array = array(), $override_parse_sequence = null, $override_parse_final = null)
     {
         Services::Profiler()->set('Theme Service: Started', PROFILER_RENDERING);
 
-        $this->property_array = $route_property_array;
-
         $this->parameters = $parameters;
+
+        $this->parameter_property_array = $parameter_property_array;
+
+        $this->class_array = $class_array;
 
         if ($override_parse_sequence === null) {
             $sequence = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_sequence');
@@ -162,27 +170,29 @@ Class ThemeService
             $this->exclude_until_final[] = $include_name;
         }
 
-        $this->final_indicator = false;
-
-        $this->setThemeParameters();
-
-        $this->onBeforeParseEvent();
-
-        $cache = $this->renderTheme();
+        /** Theme Include */
+        $cache = $this->getIncluderClass('Theme', 'Theme', array());
         if ($cache === true) {
             return $this->rendered_output;
         }
 
+        /** Body */
+        $this->final_indicator = false;
+
+        $this->onBeforeParseEvent();
+
         $this->renderLoop();
 
+        /** Head */
+        $this->final_indicator = true;
         $this->sequence = $this->final;
         $this->exclude_until_final = array();
-        $this->final_indicator = true;
 
         $this->onBeforeParseHeadEvent();
 
         $this->renderLoop();
 
+        /** Rendering is complete */
         $this->onAfterParseEvent();
 
         return $this->rendered_output;
@@ -201,7 +211,7 @@ Class ThemeService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->parameter_property_array)) {
         } else {
             throw new \OutOfRangeException('Theme Service: is attempting to get value for unknown key: ' . $key);
         }
@@ -226,75 +236,13 @@ Class ThemeService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
+        if (in_array($key, $this->parameter_property_array)) {
         } else {
             throw new \OutOfRangeException('Theme Service: is attempting to set value for unknown key: ' . $key);
         }
 
         $this->parameters[$key] = $value;
         return $this->parameters[$key];
-    }
-
-    /**
-     * Set Item, List, or Menu Item Parameter data needed to generate page.
-     *
-     * @return   void
-     * @since    1.0
-     * @throws   /Exception
-     */
-    public function setThemeParameters()
-    {
-        $catalog_id = $this->get('catalog_id');
-        $catalog_page_type = $this->get('catalog_page_type');
-
-        $contentHelper = new ContentHelper();
-        $contentHelper->initialise($this->parameters);
-
-        if (strtolower(trim($catalog_page_type)) == strtolower(QUERY_OBJECT_LIST)) {
-            $response = $contentHelper->getRouteList();
-
-        } elseif (strtolower(trim($catalog_page_type)) == strtolower(QUERY_OBJECT_ITEM)) {
-            $response = $contentHelper->getRouteItem();
-
-        } else {
-            $response = $contentHelper->getRouteMenuitem();
-        }
-
-        if ($response === false) {
-            throw new \Exception('Theme Service: Could not identify Primary Data for Catalog ID ' . $catalog_id);
-        }
-
-        $this->parameters = $response[0];
-        $this->property_array = $response[1];
-
-        return;
-    }
-
-    /**
-     * Render Theme to provide input for parser to look for <include:type/> statements
-     *
-     * Returns true when cached page available in $this->rendered_output
-     *
-     * @returns  bool
-     * @since    1.0
-     * @throws   \Exception
-     */
-    protected function renderTheme()
-    {
-        $this->getIncluderClass('Theme', 'Theme', array());
-
-        $this->rendered_output = $themeIncluder->process(array());
-        $this->parameters = $themeIncluder->parameters;
-
-        if (defined(PROFILER_ON)) {
-            ob_start();
-            Services::Profiler()->set('Theme Service: Includer rendered ' . $this->rendered_output, PROFILER_RENDERING, VERBOSE);
-            echo $this->rendered_output;
-            $includeDisplay = ob_get_contents();
-            ob_end_clean();
-        }
-
-        return $cache;
     }
 
     /**
@@ -326,6 +274,7 @@ Class ThemeService
             $loop++;
 
             $this->include_request = array();
+
             $this->getIncludeRequests();
 
             if (count($this->include_request) == 0) {
@@ -352,7 +301,7 @@ Class ThemeService
      * @return  array
      * @since   1.0
      */
-    protected function processIncludeRequestsRequests()
+    protected function getIncludeRequests()
     {
         $matches = array();
         $this->include_request = array();
@@ -515,11 +464,12 @@ Class ThemeService
                 PROFILER_RENDERING);
         }
 
-        $class = 'Molajo\\Service\\Services\\Theme\\Includer\\';
+        $class = $this->class_array[ucfirst(strtolower($include_type)) . 'Includer'];
         $class .= ucfirst($include_type) . 'Includer';
-
+echo $class;
+        die;
         if (class_exists($class)) {
-            $rc = new $class ($this->property_array, $this->parameters, $include_type, $include_name, $attributes);
+            $rc = new $class ($this->parameter_property_array, $this->parameters, $include_type, $include_name, $attributes);
 
         } else {
             throw new \Exception('Theme Service: Includer Failed Instantiating Class' . $class);
@@ -611,9 +561,11 @@ Class ThemeService
             'model' => null,
             'model_registry' => Services::Registry()->get($this->get('model_registry_name')),
             'parameters' => $this->parameters,
+            'parameter_property_array' => $this->parameter_property_array,
             'query_results' => $query_results,
             'row' => array(),
             'rendered_output' => $this->rendered_output,
+            'class_array' => $this->class_array,
             'include_parse_sequence' => $this->sequence,
             'include_parse_exclude_until_final' => $this->exclude_until_final
         );

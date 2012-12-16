@@ -3,7 +3,7 @@
  * Base Model
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Model;
@@ -16,7 +16,7 @@ defined('NIAMBIE') or die;
  * Primary Model with property definitions for interacting with model registries, creating and executing queries
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

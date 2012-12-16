@@ -3,7 +3,7 @@
  * Ajax Plugin
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Plugin\Ajax;
@@ -17,7 +17,7 @@ defined('NIAMBIE') or die;
  * Determines if an Ajax request was made, If so, rendering sequence and options are modified
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

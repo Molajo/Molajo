@@ -3,7 +3,7 @@
  * Primary Controller
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Controller;
@@ -18,7 +18,7 @@ defined('NIAMBIE') or die;
  * data objects, and perform event scheduling for data object connectivity and before and after read.
  *
  * @author       Amy Stephen
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

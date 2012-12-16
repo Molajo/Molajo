@@ -2,7 +2,7 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    GNU GPL v 2, or later and MIT, see License folder
+ * @license    MIT, see License folder
  */
 namespace Molajo\Plugin\Featured;
 
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
 
 /**
  * @package     Molajo
- * @license     GNU GPL v 2, or later and MIT
+ * @license     MIT
  * @since       1.0
  */
 class FeaturedPlugin extends Plugin

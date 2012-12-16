@@ -10,7 +10,7 @@ defined('NIAMBIE') or die;
  *  provided by the user during system login activities. This model also updates user data for login information.
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

@@ -3,7 +3,7 @@
  * Login Controller
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Controller;
@@ -18,7 +18,7 @@ defined('NIAMBIE') or die;
  * In addition, the login controller schedules before and after login events.
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

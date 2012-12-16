@@ -24,7 +24,7 @@ defined('NIAMBIE') or die;
  *         vendors without requiring change to the application itself
  *
  * @package      Niambie
- * @license      GPL v 2, or later and MIT
+ * @license      MIT
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */
