@@ -19,7 +19,7 @@ defined('NIAMBIE') or die;
  *
  *  3) Reduce interdependence between software within the application
  *
- *  4) Standarise API by removing vendor-specific namespacing/characteristics to establish a basic set
+ *  4) Standarize API by removing vendor-specific namespacing/characteristics to establish a basic set
  *         of application utilities that provide basic functionality which can be supplied by different
  *         vendors without requiring change to the application itself
  *
@@ -110,7 +110,7 @@ Class Services
     }
 
     /**
-     * loads all services defined in the services.xml file
+     * initiates services defined in the services.xml file
      *
      * @return  boolean
      * @since   1.0
@@ -137,7 +137,6 @@ Class Services
             $connectionSucceeded = null;
 
             try {
-
                 $connection = $this->getClassInstance($serviceClass);
 
                 if (trim($startup) == '' || ($static_indicator == 1 && $startup == 'getInstance')) {

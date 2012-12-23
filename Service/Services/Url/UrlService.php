@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\Url;
 
@@ -223,7 +223,7 @@ Class UrlService
         } else {
         $css = '.gravatar { float:left; margin: 0 15px 15px 0; }';
         }
-        Services::Asset()->addCssDeclaration($css, 'text/css');
+        Services::Asset($this->assets)->addCssDeclaration($css, 'text/css');
          */
         $url = 'http://www.gravatar.com/avatar/';
         $url .= md5(strtolower(trim($email)));

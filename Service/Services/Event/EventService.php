@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\Event;
 
@@ -72,9 +72,11 @@ Class EventService
         'model',
         'model_registry',
         'parameters',
+        'parameter_properties_array',
         'query_results',
         'row',
         'rendered_output',
+        'class_array',
         'include_parse_sequence',
         'include_parse_exclude_until_final'
     );
@@ -199,7 +201,7 @@ Class EventService
 
             if (method_exists($plugin_class, $event)) {
 
-                $results = $this->processplugin_class($plugin_class, $event, $arguments, $model_name, $model_type);
+                $results = $this->processPluginClass($plugin_class, $event, $arguments, $model_name, $model_type);
 
                 if ($results === false) {
                     return false;
@@ -231,13 +233,13 @@ Class EventService
      * @since   1.0
      * @throws  \Exception
      */
-    protected function processplugin_class($plugin_class, $event, $arguments = array(), $model_name, $model_type)
+    protected function processPluginClass($plugin_class, $event, $arguments = array(), $model_name, $model_type)
     {
         try {
             $plugin = new $plugin_class();
 
         } catch (\Exception $e) {
-            throw new \Exception('Event: ' . $event . ' processplugin_class failure instantiating: ' . $plugin_class);
+            throw new \Exception('Event: ' . $event . ' processPluginClass failure instantiating: ' . $plugin_class);
         }
 
         Services::Profiler()->set('Event:' . $event . ' firing Plugin: ' . $plugin_class, PROFILER_PLUGINS, VERBOSE);
@@ -260,6 +262,7 @@ Class EventService
             }
         }
 //        echo $event .' ' . $plugin_class  . '<br />';
+        $results = $plugin->initialise();
         $results = $plugin->$event();
 
         if ($results === false) {

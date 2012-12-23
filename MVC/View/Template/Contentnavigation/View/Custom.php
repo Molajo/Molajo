@@ -2,6 +2,15 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
-defined('NIAMBIE') or die;
+defined('NIAMBIE') or die; ?>
+
+<ul>
+    <li class="page-previous">
+        <a href="#">Previous</a>
+    </li>
+    <li class="page-next">
+        <a href="#">Next</a>
+    </li>
+</ul>

@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Plugin\Application;
 
@@ -79,7 +79,7 @@ class ApplicationPlugin extends Plugin
 
         $url = $this->get('request_base_url_path', '', 'parameters') . $this->get('request_url', '', 'parameters');
         Services::Registry()->set(PAGE_LITERAL, 'page_url', $url);
-        Services::Asset()->addLink($url, 'canonical', 'rel', array(), 1);
+        Services::Asset($this->assets)->addLink($url, 'canonical', 'rel', array(), 1);
 
         $resource = $this->get('extension_name_path_node', '', 'parameters');
         $url = Services::Registry()->get(PAGE_LITERAL, 'home_url') . '/' . strtolower($resource);

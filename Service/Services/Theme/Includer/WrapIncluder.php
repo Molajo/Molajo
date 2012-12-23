@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\Theme\Includer;
 
@@ -49,9 +49,9 @@ Class WrapIncluder extends Includer
         $file_path = Services::Registry()->get('include', 'wrap_view_path');
         $url_path = Services::Registry()->get('include', 'wrap_view_path_url');
 
-        Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
 
         return $this;
     }

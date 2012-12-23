@@ -2,6 +2,12 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
-defined('NIAMBIE') or die;
+defined('NIAMBIE') or die; ?>
+<ul class="breadcrumbs">
+    <li><span>Home</span></li>
+    <li><span>Features</span></li>
+    <li><span>Gene Splicing</span></li>
+    <li class="current"><span>Home</span></li>
+</ul>

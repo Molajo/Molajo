@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\Exception;
 
@@ -25,8 +25,6 @@ Class ExceptionService extends \Exception
      * @param   string      $message
      * @param   int         $code
      * @param   \Exception  $this
-     *
-     * Review for stack issue http://fabien.potencier.org/article/9/php-serialization-stack-traces-and-exceptions
      *
      * @return  void
      * @since   1.0
@@ -89,7 +87,7 @@ Class ExceptionService extends \Exception
         if ($display_stack_trace == 1) {
             echo '<strong>Stack Trace: </strong><br />';
             echo '<pre>';
-            echo $this->getTraceAsString();
+            echo  $this->getPrevious()->getTraceAsString();
             echo '</pre>';
         }
 

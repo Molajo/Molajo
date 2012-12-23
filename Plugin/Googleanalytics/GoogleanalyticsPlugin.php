@@ -2,14 +2,14 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Plugin\Googleanalytics;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * @package     Molajo
@@ -42,7 +42,7 @@ class GoogleanalyticsPlugin extends Plugin
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();";
 
-        Services::Asset()->addJSDeclarations($js, 100, 1, 'text/javascript');
+        Services::Asset($this->assets)->addJSDeclarations($js, 100, 1, 'text/javascript');
 
         return true;
     }

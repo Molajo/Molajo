@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\User;
 
@@ -21,8 +21,6 @@ defined('NIAMBIE') or die;
 Class UserService
 {
     /**
-     * load
-     *
      * Retrieve User Information (both authenticated and guest)
      *
      * @return  User
@@ -123,8 +121,10 @@ Class UserService
 
         if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $groups)) {
             Services::Registry()->set(USER_LITERAL, 'administrator', 1);
+            Services::Registry()->set(USER_LITERAL, 'authorised_for_offline_access', 1);
         } else {
             Services::Registry()->set(USER_LITERAL, 'administrator', 0);
+            Services::Registry()->set(USER_LITERAL, 'authorised_for_offline_access', 0);
         }
 
         Services::Registry()->set(USER_LITERAL, 'Applications', $applications);

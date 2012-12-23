@@ -4,7 +4,7 @@ use Molajo\Service\Services;
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 defined("MOLAJO") or die; ?>
 <tr>

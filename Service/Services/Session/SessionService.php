@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\Session;
 
@@ -61,7 +61,6 @@ Class SessionService
 
     public function __construct()
     {
-        return $this;
 
         $session = new Session();
         $session->start();

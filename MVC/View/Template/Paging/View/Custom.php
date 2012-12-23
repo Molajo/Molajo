@@ -5,4 +5,7 @@
  * @license    MIT
  */
 defined('NIAMBIE') or die; ?>
-</<?php echo $headerType; ?>>
+<ul class="pager">
+    <li><a href="#">Previous</a></li>
+    <li><a href="#">Next</a></li>
+</ul>

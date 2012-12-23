@@ -1,6 +1,6 @@
 <?php
 /**
- * Base Plugin Class
+ * Application Frontend Controller
  *
  * @package      Niambie
  * @license      MIT
@@ -9,19 +9,16 @@
 namespace Molajo\Plugin\Plugin;
 
 use Molajo\Service\Services;
-use Molajo\Service\Services\Theme\Helper\ContentHelper;
-use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
-use Molajo\Service\Services\Theme\Helper\ThemeHelper;
-use Molajo\Service\Services\Theme\Helper\ViewHelper;
 
 defined('NIAMBIE') or die;
 
 /**
- * Base Plugin for all other Plugins.
+ * Base Plugin Class
  *
- * At various points in the Application, processes schedule Events and provide input parameters
- * to the Event Manager which triggers each registered Event, one at a time, using those values
- * to establish initial values for properties in this class.
+ * At various points in the Application, Events are Scheduled and data passed to the Event Service.
+ *
+ * The Event Service triggers all Plugins registered for the Event, one at a time, passing the
+ * data into this Plugin.
  *
  * As each triggered Plugin finishes, the Event Service retrieves the class properties, returning
  * the values to the scheduling process.
@@ -29,10 +26,10 @@ defined('NIAMBIE') or die;
  * The base plugin takes care of getting and setting values and providing connectivity to Helper
  * functions and other commonly used data and connections.
  *
- * @author       Amy Stephen
- * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
- * @since        1.0
+ * @author     Amy Stephen
+ * @license    MIT
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class Plugin
 {
@@ -63,6 +60,14 @@ class Plugin
     protected $model;
 
     /**
+     * Build from Model Registry
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $model_registry_name;
+
+    /**
      * Instance of Model Properties from Controller/Model
      *
      * Access to data like table_name, primary_key, get_customfields, data_object, fields, customfields
@@ -79,6 +84,14 @@ class Plugin
      * @since  1.0
      */
     protected $parameters = array();
+
+    /**
+     * List of Valid Parameter Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameter_properties_array = array();
 
     /**
      * Data from Query Results
@@ -105,6 +118,14 @@ class Plugin
     protected $rendered_output;
 
     /**
+     * Class Array - to override a class, modify the namespace for the entry needed
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $class_array;
+
+    /**
      * Include statements to be processed by parser in order of sequence processed
      *
      * Available in: onBeforeParseEvent and onBeforeParseHead
@@ -123,14 +144,6 @@ class Plugin
      * @since  1.0
      */
     protected $include_parse_exclude_until_final = array();
-
-    /**
-     * Build from Model Registry
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $model_registry_name;
 
     /**
      * List of named Plugin Properties
@@ -185,19 +198,41 @@ class Plugin
     protected $viewHelper;
 
     /**
-     * Class Constructor
+     * Initialise Plugin Resources
      *
      * @return  void
      * @since   1.0
      */
-    public function __construct()
+    public function initialise()
     {
-        $this->contentHelper = new ContentHelper();
-        $this->extensionHelper = new ExtensionHelper();
-        $this->themeHelper = new ThemeHelper();
-        $this->viewHelper = new ViewHelper();
+        /** Not available in configuration (todo: put it in there)  */
+        $class = $this->class_array['ContentHelper'];
+        if ($class === '') {
+            $this->contentHelper = new $class();
+        }
+
+        $class = $this->class_array['ExtensionHelper'];
+        if ($class === '') {
+            $this->extensionHelper = new $class();
+        }
+
+        $class = $this->class_array['ThemeHelper'];
+        if ($class === '') {
+            $this->themeHelper = new $class();
+        }
+
+        $class = $this->class_array['ViewHelper'];
+        if ($class === '') {
+            $this->viewHelper = new $class();
+        }
 
         return;
+        echo '<pre>';
+        var_dump($this->class_array);
+        echo '</pre>';
+        die;
+
+
     }
 
     /**

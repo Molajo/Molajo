@@ -32,6 +32,7 @@ defined('NIAMBIE') or die;
  *
  * @author       Amy Stephen
  * @license      MIT
+ * @dependency   RegistryService
  * @copyright    2012 Amy Stephen. All rights reserved.
  * @since        1.0
  */

@@ -4,7 +4,7 @@
  *
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\Theme;
 
@@ -465,9 +465,7 @@ Class ThemeService
         }
 
         $class = $this->class_array[ucfirst(strtolower($include_type)) . 'Includer'];
-        $class .= ucfirst($include_type) . 'Includer';
-echo $class;
-        die;
+
         if (class_exists($class)) {
             $rc = new $class ($this->parameter_property_array, $this->parameters, $include_type, $include_name, $attributes);
 
@@ -572,18 +570,41 @@ echo $class;
 
         $arguments = Services::Event()->scheduleEvent($event_name, $arguments, $this->getPluginList());
 
-        if (isset($arguments['model_registry'])) {
-            Services::Registry()->delete($this->get('model_registry_name'));
-            Services::Registry()->createRegistry($this->get('model_registry_name'));
-            Services::Registry()->loadArray($this->get('model_registry_name'), $arguments['model_registry']);
+        echo $event_name .'<br />';
+        echo '<pre>';
+        var_dump($arguments);
+        echo '</pre>';
+        $arguments = Services::Event()->scheduleEvent(
+            $event_name,
+            $arguments,
+            $this->getPluginList()
+        );
+
+        if (isset($arguments['class_array'])) {
+            $this->parameters = $arguments['class_array'];
         }
 
         if (isset($arguments['parameters'])) {
-            ksort($arguments['parameters']);
             $this->parameters = $arguments['parameters'];
         }
-        if (isset($arguments['rendered_output'])) {
-            $this->rendered_output = $arguments['rendered_output'];
+
+        if (isset($arguments['parameter_properties_array'])) {
+            $this->parameters = $arguments['parameter_properties_array'];
+        }
+
+        if (isset($this->parameters['model_registry_name'])) {
+
+            $model_registry_name = $this->parameters['model_registry_name'];
+
+            if (isset($arguments['model_registry'])) {
+                Services::Registry()->delete($model_registry_name);
+                Services::Registry()->createRegistry($this->get('model_registry_name'));
+                Services::Registry()->loadArray($this->get('model_registry_name'), $arguments['model_registry']);
+            }
+        }
+
+        if (isset($arguments['query_results'])) {
+           $query_results = $arguments['query_results'];
         }
 
         if (isset($arguments['include_parse_sequence'])) {
@@ -594,6 +615,10 @@ echo $class;
             $this->exclude_until_final = $arguments['include_parse_exclude_until_final'];
         } else {
             $this->exclude_until_final = array();
+        }
+
+        if (isset($arguments['rendered_output'])) {
+            $this->rendered_output = $arguments['rendered_output'];
         }
 
         return $query_results;

@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\Page\Includer;
 
@@ -201,19 +201,19 @@ class PageIncluder extends Includer
         $file_path = Services::Registry()->get('include', 'Page_path');
         $url_path = Services::Registry()->get('include', 'Page_path_url');
 
-        Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
 
         $priority = Services::Registry()->get('include', 'asset_priority_Page', 600);
         $file_path = Services::Registry()->get('include', 'page_view_path');
         $url_path = Services::Registry()->get('include', 'page_view_path_url');
 
-        Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
 
-        Services::Asset()->addLink(
+        Services::Asset($this->assets)->addLink(
             $url = Services::Registry()->get('include', 'Page_favicon'),
             $relation = 'shortcut icon',
             $relation_type = 'image/x-icon',
@@ -238,9 +238,9 @@ class PageIncluder extends Includer
         /** Page */
         $file_path = Services::Registry()->get('include', 'Page_path');
         $url_path = Services::Registry()->get('include', 'Page_path_url');
-        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -248,9 +248,9 @@ class PageIncluder extends Includer
         /** Site Specific: Application */
         $file_path = SITE_MEDIA_FOLDER . '/' . APPLICATION . $plus;
         $url_path = SITE_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -258,9 +258,9 @@ class PageIncluder extends Includer
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
         $url_path = SITE_MEDIA_URL . $plus;
-        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, false);
-        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, false);
+        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -268,9 +268,9 @@ class PageIncluder extends Includer
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
         $url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
@@ -278,9 +278,9 @@ class PageIncluder extends Includer
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
         $url_path = SITES_MEDIA_URL . $plus;
-        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

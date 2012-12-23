@@ -4,7 +4,7 @@
  *
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Service\Services\Theme;
 
@@ -721,16 +721,16 @@ class Includer
         $file_path = Services::Registry()->get('parameters', 'template_view_path');
         $url_path = Services::Registry()->get('parameters', 'template_view_path_url');
 
-        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
 
         $file_path = Services::Registry()->get('parameters', 'wrap_view_path');
         $url_path = Services::Registry()->get('parameters', 'wrap_view_path_url');
 
-        $css = Services::Asset()->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = Services::Asset()->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
+        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
 
         return $this;
     }

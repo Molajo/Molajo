@@ -2,14 +2,14 @@
 /**
  * @package    Molajo
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Plugin\Weather;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('MOLAJO') or die;
+defined('NIAMBIE') or die;
 
 /**
  * Weather

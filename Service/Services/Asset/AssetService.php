@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * Asset Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Asset;
 
@@ -11,46 +13,255 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * Asset
+ * The Asset Service is used within the Theme Service, Plugins, and MVC classes to indicate
+ * Asset files, such as CSS, JS, and Links to loaded during the Head and Defer Include Template
+ * Rendering Process.
  *
- * @package     Niambie
- * @subpackage  Service
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class AssetService
 {
     /**
+     * Direction
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $direction = null;
+
+    /**
+     * HTML5
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $html5 = null;
+
+    /**
+     * HTML5
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $mimetype = 'text/html';
+
+    /**
+     * Links
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $links = null;
+
+    /**
+     * Links Priorities
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $links_priorities = null;
+
+    /**
+     * Css
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $css = null;
+
+    /**
+     * CSS Priorities
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $css_priorities = null;
+
+    /**
+     * Css Declarations
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $css_declarations = null;
+
+    /**
+     * CSS Declarations Priorities
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $css_declarations_priorities = null;
+
+    /**
+     * Js
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $js = null;
+
+    /**
+     * Js Priorities
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $js_priorities = null;
+
+    /**
+     * Js Defer
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $js_defer = null;
+
+    /**
+     * Js Defer Priorities
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $js_defer_priorities = null;
+
+    /**
+     * JS Declarations
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $js_declarations = null;
+
+    /**
+     * JS Declarations Priorities
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $js_declarations_priorities = null;
+
+    /**
+     * JS Declarations Defer
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $js_declarations_defer = null;
+
+    /**
+     * JS Declarations Defer Priorities
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $js_declarations_defer_priorities = null;
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameter_properties_array = array(
+        'direction',
+        'html5',
+        'mimetype',
+        'links',
+        'link_priorities',
+        'css',
+        'css_priorities',
+        'css_declarations',
+        'css_declarations_priorities',
+        'js',
+        'js_priorities',
+        'js_defer',
+        'js_defer_priorities',
+        'js_declarations',
+        'js_declarations_priorities',
+        'js_declarations_defer',
+        'js_declarations_defer_priorities'
+    );
+
+    /**
      * Initialise
      *
-     * @return  boolean
+     * @return  null
      * @since   1.0
      */
-    public function Initialise()
+    public function initialise()
     {
-        Services::Registry()->createRegistry(ASSETS_LITERAL);
+        $this->set('links', array());
+        $this->set('link_priorities', array());
 
-        Services::Registry()->set(ASSETS_LITERAL, LINKS_LITERAL, array());
-        Services::Registry()->set(ASSETS_LITERAL, LINKS_LITERAL . 'Priorities', array());
+        $this->set('css', array());
+        $this->set('css_priorities', array());
 
-        Services::Registry()->set(ASSETS_LITERAL, CSS_LITERAL, array());
-        Services::Registry()->set(ASSETS_LITERAL, CSS_LITERAL . 'Priorities', array());
+        $this->set('css_declarations', array());
+        $this->set('css_declarations_priorities', array());
 
-        Services::Registry()->set(ASSETS_LITERAL, CSS_DECLARATIONS_LITERAL, array());
-        Services::Registry()->set(ASSETS_LITERAL, CSS_DECLARATIONS_LITERAL . 'Priorities', array());
+        $this->set('js', array());
+        $this->set('js_priorities', array());
 
-        Services::Registry()->set(ASSETS_LITERAL, JS_LITERAL, array());
-        Services::Registry()->set(ASSETS_LITERAL, JS_LITERAL . 'Priorities', array());
+        $this->set('js_defer', array());
+        $this->set('js_defer_priorities', array());
 
-        Services::Registry()->set(ASSETS_LITERAL, JS_DEFER_LITERAL, array());
-        Services::Registry()->set(ASSETS_LITERAL, JS_DEFER_LITERAL . 'Priorities', array());
+        $this->set('js_declarations', array());
+        $this->set('js_declarations_priorities', array());
 
-        Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_LITERAL, array());
-        Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_LITERAL . 'Priorities', array());
-
-        Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, array());
-        Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL . 'Priorities', array());
+        $this->set('js_declarations_defer', array());
+        $this->set('js_declarations_defer_priorities', array());
 
         return;
+    }
+
+    /**
+     * Get the current value (or default) of the specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function get($key = null, $default = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->parameter_properties_array)) {
+        } else {
+            throw new \OutOfRangeException
+                ('Asset Service: attempting to get value for unknown property: ' . $key);
+        }
+
+        $this->$key = $default;
+        return $this->$$key;
+    }
+
+    /**
+     * Set the value of the specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->parameter_properties_array)) {
+        } else {
+            throw new \OutOfRangeException
+                ('Asset Service: attempting to set value for unknown key: ' . $key);
+        }
+
+        $this->$key = $value;
+        return $this->$key;
     }
 
     /**
@@ -58,7 +269,7 @@ Class AssetService
      *
      * Usage:
      *
-     * Services::Asset()->addLink(
+     * $this->assets->addLink(
      *   $url = EXTENSIONS_THEMES_URL
      *      . '/' . Services::Registry()->get('parameters', 'theme_path_node')
      *      . '/' . 'images/apple-touch-icon-114x114.png',
@@ -70,11 +281,11 @@ Class AssetService
      * Produces:
      * <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
      *
-     * @param   $url
-     * @param   $relation
-     * @param   $relation_type
-     * @param   $attributes
-     * @param   $prioritu
+     * @param   string  $url
+     * @param   string  $relation
+     * @param   string  $relation_type
+     * @param   string  $attributes
+     * @param   string  $priority
      *
      * @return  object
      * @since   1.0
@@ -84,13 +295,14 @@ Class AssetService
         if (trim($url) == '') {
             return $this;
         }
-        $temp_links = Services::Registry()->get(ASSETS_LITERAL, LINKS_LITERAL, array());
+
+        $temp_links = $this->get('links', array());
 
         $temp_row = new \stdClass();
 
         $temp_row->url = $url;
-        $temp_row->relation = Services::Filter()->escape_text($relation);
-        $temp_row->relation_type = Services::Filter()->escape_text($relation_type);
+        $temp_row->relation = $relation;
+        $temp_row->relation_type = $relation_type;
         $temp_row->attributes = '';
 
         $temp = trim(implode(' ', $attributes));
@@ -103,7 +315,7 @@ Class AssetService
                 $split = explode(',', $pair);
                 $temp_row->attributes .= ' ' . $split[0]
                     . '="'
-                    . Services::Filter()->escape_text($split[1])
+                    . $split[1]
                     . '"';
             }
         }
@@ -111,9 +323,9 @@ Class AssetService
 
         $temp_links[] = $temp_row;
 
-        Services::Registry()->set(ASSETS_LITERAL, LINKS_LITERAL, $temp_links);
+        $this->set('links', $temp_links);
 
-        $priorities = Services::Registry()->get(ASSETS_LITERAL, LINKS_LITERAL . 'Priorities');
+        $priorities = $this->get('link_priorities');
 
         if (count($priorities) > 0) {
             if (in_array($priority, $priorities)) {
@@ -124,7 +336,7 @@ Class AssetService
             $priorities[] = $priority;
         }
 
-        Services::Registry()->set(ASSETS_LITERAL, LINKS_LITERAL . 'Priorities', $priorities);
+        $this->set('link_priorities', $priorities);
 
         return $this;
     }
@@ -133,7 +345,7 @@ Class AssetService
      * addCssFolder - Loads the CS located within the folder, as specified by the file path
      *
      * Usage:
-     * Services::Asset()->addCssFolder($file_path, $url_path, $priority);
+     * $this->assets->addCssFolder($file_path, $url_path, $priority);
      *
      * @param   string   $file_path
      * @param   string   $url_path
@@ -144,26 +356,26 @@ Class AssetService
      */
     public function addCssFolder($file_path, $url_path, $priority = 500)
     {
-        if (Services::Filesystem()->folderExists($file_path . '/css')) {
+        if (is_dir($file_path . '/css')) {
         } else {
             return $this;
         }
 
-        $files = Services::Filesystem()->folderFiles($file_path . '/css', '\.css$', false, false);
+        $files = \files($file_path);
 
         if (count($files) > 0) {
 
             foreach ($files as $file) {
                 $add = 0;
                 if (substr($file, 0, 4) == 'ltr_') {
-                    if (Services::Language()->get('direction') == 'rtl') {
+                    if ($this->get('language', 'direction') == 'rtl') {
                     } else {
                         $add = 1;
                     }
 
                 } elseif (substr($file, 0, 4) == 'rtl_') {
 
-                    if (Services::Language()->get('direction') == 'rtl') {
+                    if ($this->get('language', 'direction') == 'rtl') {
                         $add = 1;
                     }
 
@@ -186,7 +398,7 @@ Class AssetService
      * addCss - Adds a linked stylesheet to the page
      *
      * Usage:
-     * Services::Asset()->addCss($url_path . '/template.css');
+     * $this->assets->addCss($url_path . '/template.css');
      *
      * @param   string  $url
      * @param   int     $priority
@@ -206,7 +418,7 @@ Class AssetService
         $conditional = '',
         $attributes = array()
     ) {
-        $css = Services::Registry()->get(ASSETS_LITERAL, 'Css', array());
+        $css = $this->get('css', array());
 
         foreach ($css as $item) {
 
@@ -230,9 +442,9 @@ Class AssetService
 
         $css[] = $temp_row;
 
-        Services::Registry()->set(ASSETS_LITERAL, CSS_LITERAL, $css);
+        $this->set('css', $css);
 
-        $priorities = Services::Registry()->get(ASSETS_LITERAL, CSS_LITERAL . 'Priorities', array());
+        $priorities = $this->get('css_priorities', array());
 
         if (in_array($priority, $priorities)) {
         } else {
@@ -241,7 +453,7 @@ Class AssetService
 
         sort($priorities);
 
-        Services::Registry()->set(ASSETS_LITERAL, CSS_LITERAL . 'Priorities', $priorities);
+        $this->set('css_priorities', $priorities);
 
         return $this;
     }
@@ -250,18 +462,18 @@ Class AssetService
      * addCssDeclaration - Adds a css declaration to the array for later rendering
      *
      * Usage:
-     * Services::Asset()->addCssDeclaration($css_in_here, 'text/css');
+     * $this->assets->addCssDeclaration($css_in_here, 'text/css');
      *
-     * @param   $content
-     * @param   string    $mimetype
-     * @param   int       $priority
+     * @param  string  $content
+     * @param  string  $mimetype
+     * @param  int     $priority
      *
      * @return  object
      * @since   1.0
      */
     public function addCssDeclaration($content, $mimetype = 'text/css', $priority = 500)
     {
-        $css = Services::Registry()->get(ASSETS_LITERAL, CSS_DECLARATIONS_LITERAL);
+        $css = $this->get('css_declarations');
 
         if (is_array($css) && count($css) > 0) {
             foreach ($css as $item) {
@@ -279,9 +491,9 @@ Class AssetService
 
         $css[] = $temp_row;
 
-        Services::Registry()->set(ASSETS_LITERAL, CSS_DECLARATIONS_LITERAL, $css);
+        $this->set('css_declarations', $css);
 
-        $priorities = Services::Registry()->get(ASSETS_LITERAL, CSS_DECLARATIONS_LITERAL . 'Priorities', array());
+        $priorities = $this->get('css_declarations_priorities', array());
 
         if (in_array($priority, $priorities)) {
         } else {
@@ -290,7 +502,7 @@ Class AssetService
 
         sort($priorities);
 
-        Services::Registry()->set(ASSETS_LITERAL, CSS_DECLARATIONS_LITERAL . 'Priorities', $priorities);
+        $this->set('css_declarations_priorities', $priorities);
 
         return $this;
     }
@@ -299,10 +511,12 @@ Class AssetService
      * addJsFolder - Loads the JS Files located within the folder specified by the filepath
      *
      * Usage:
-     * Services::Asset()->addJsFolder($file_path, $url_path, $priority, 0);
+     * $this->assets->addJsFolder($file_path, $url_path, $priority, 0);
      *
-     * @param   $file_path
-     * @param   $url_path
+     * @param   string  $file_path
+     * @param   string  $url_path
+     * @param   int     $priority
+     * @param   int     $defer
      *
      * @return  void
      * @since   1.0
@@ -316,12 +530,12 @@ Class AssetService
             $defer = 0;
         }
 
-        if (Services::Filesystem()->folderExists($file_path . $extra)) {
+        if (is_dir($file_path . $extra)) {
         } else {
             return;
         }
-
-        $files = Services::Filesystem()->folderFiles($file_path . $extra, '\.js$', false, false);
+        // .js
+        $files = \files($file_path . $extra);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
@@ -345,7 +559,7 @@ Class AssetService
      * addJs - Adds a linked script to the page
      *
      * Usage:
-     * Services::Asset()->addJs('http://example.com/test.js', 1000, 1);
+     * $this->assets->addJs('http://example.com/test.js', 1000, 1);
      *
      * @param   string  $url
      * @param   int     $priority
@@ -359,9 +573,9 @@ Class AssetService
     public function addJs($url, $priority = 500, $defer = 0, $mimetype = "text/javascript", $async = false)
     {
         if ($defer == 1) {
-            $js = Services::Registry()->get(ASSETS_LITERAL, JS_DEFER_LITERAL, array());
+            $js = $this->get('js_defer', array());
         } else {
-            $js = Services::Registry()->get(ASSETS_LITERAL, JS_LITERAL, array());
+            $js = $this->get('js', array());
         }
 
         foreach ($js as $item) {
@@ -381,15 +595,15 @@ Class AssetService
         $js[] = $temp_row;
 
         if ($defer == 1) {
-            Services::Registry()->set(ASSETS_LITERAL, JS_DEFER_LITERAL, $js);
+            $this->set('js_defer', $js);
         } else {
-            Services::Registry()->set(ASSETS_LITERAL, JS_LITERAL, $js);
+            $this->set('js', $js);
         }
 
         if ($defer == 1) {
-            $priorities = Services::Registry()->get(ASSETS_LITERAL, JS_DEFER_LITERAL . 'Priorities', $js);
+            $priorities = $this->get('js_defer_priorities', $js);
         } else {
-            $priorities = Services::Registry()->get(ASSETS_LITERAL, JS_LITERAL . 'Priorities', $js);
+            $priorities = $this->get('js_priorities', $js);
         }
 
         if (in_array($priority, $priorities)) {
@@ -400,9 +614,9 @@ Class AssetService
         sort($priorities);
 
         if ($defer == 1) {
-            Services::Registry()->set(ASSETS_LITERAL, JS_DEFER_LITERAL . 'Priorities', $priorities);
+            $this->set('js_defer_priorities', $priorities);
         } else {
-            Services::Registry()->set(ASSETS_LITERAL, JS_LITERAL . 'Priorities', $priorities);
+            $this->set('js_priorities', $priorities);
         }
 
         return $this;
@@ -412,7 +626,7 @@ Class AssetService
      * addJSDeclarations - Adds a js declaration to an array for later rendering
      *
      * Usage:
-     * Services::Asset()->addJSDeclarations($fallback, 'text/javascript', 1000);
+     * $this->assets->addJSDeclarations($fallback, 'text/javascript', 1000);
      *
      * @param   string  $content
      * @param   string  $priority
@@ -425,9 +639,9 @@ Class AssetService
     public function addJSDeclarations($content, $priority = 500, $defer = 0, $mimetype = 'text/javascript')
     {
         if ($defer == 1) {
-            $js = Services::Registry()->get(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, array());
+            $js = $this->get('js_declarations_defer', array());
         } else {
-            $js = Services::Registry()->get(ASSETS_LITERAL, JS_DECLARATIONS, array());
+            $js = $this->get('js_declarations', array());
         }
 
         foreach ($js as $item) {
@@ -446,19 +660,15 @@ Class AssetService
         $js[] = $temp_row;
 
         if ($defer == 1) {
-            Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL, $js);
+            $this->set('js_declarations_defer', $js);
         } else {
-            Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS, $js);
+            $this->set('js_declarations', $js);
         }
 
         if ($defer == 1) {
-            $priorities = Services::Registry()->get(
-                ASSETS_LITERAL,
-                JS_DECLARATIONS_DEFER_LITERAL . 'Priorities',
-                array()
-            );
+            $priorities = $this->get('js_declarations_defer_priorities', array());
         } else {
-            $priorities = Services::Registry()->get(ASSETS_LITERAL, JS_DECLARATIONS_LITERAL . 'Priorities', array());
+            $priorities = $this->get('js_declarations_priorities', array());
         }
 
         if (is_array($priorities)) {
@@ -474,9 +684,9 @@ Class AssetService
         sort($priorities);
 
         if ($defer == 1) {
-            Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL . 'Priorities', $priorities);
+            $this->set('js_declarations_defer_priorities', $priorities);
         } else {
-            Services::Registry()->set(ASSETS_LITERAL, JS_DECLARATIONS_LITERAL . 'Priorities', $priorities);
+            $this->set('js_declarations_priorities', $priorities);
         }
 
         return $this;
@@ -486,20 +696,20 @@ Class AssetService
      * setPriority - use to override the priority of a specific file
      *
      * Usage:
-     * Services::Asset()->setPriority('Css', 'http://example.com/media/1236_grid.css', 1);
+     * $this->assets->setPriority('css', 'http://example.com/media/1236_grid.css', 1);
      *
-     * @param   $type
-     * @param   $url
-     * @param   $priority
+     * @param   string  $type
+     * @param   string  $url
+     * @param   string  $priority
      *
      * @return  array
      * @since   1.0
      */
     public function setPriority($type, $url, $priority)
     {
-        $temp_rows = Services::Registry()->get(ASSETS_LITERAL, $type);
+        $temp = $this->get($type);
 
-        if (is_array($temp_rows) && count($temp_rows) > 0) {
+        if (is_array($temp) && count($temp) > 0) {
         } else {
             return array();
         }
@@ -508,7 +718,7 @@ Class AssetService
 
         $query_results = array();
 
-        foreach ($temp_rows as $temp_row) {
+        foreach ($temp as $temp_row) {
 
             if (isset($temp_row->url)) {
 
@@ -522,12 +732,12 @@ Class AssetService
         }
 
         if ($update === true) {
-            Services::Registry()->set(ASSETS_LITERAL, $type, $query_results);
+            $this->set($type, $query_results);
 
-            $priorityType = $type . 'Priorities';
+            $priorityType = $type . '_priorities';
 
             $priorities = array();
-            foreach ($temp_rows as $temp_row) {
+            foreach ($temp as $temp_row) {
                 if (in_array($temp_row->priority, $priorities)) {
                 } else {
                     $priorities[] = $temp_row->priority;
@@ -536,7 +746,7 @@ Class AssetService
 
             sort($priorities);
 
-            Services::Registry()->set(ASSETS_LITERAL, $priorityType, $priorities);
+            $this->set($priorityType, $priorities);
         }
 
         return $this;
@@ -546,26 +756,25 @@ Class AssetService
      * remove - use to remove a specific Asset
      *
      * Usage:
-     * Services::Asset()->remove('Css', 'http://example.com/media/1236_grid.css');
+     * $this->assets->remove('css', 'http://example.com/media/1236_grid.css');
      *
-     * @param   $type
-     * @param   $url
-     * @param   $priority
+     * @param   string  $type
+     * @param   string  $url
      *
      * @return  array
      * @since   1.0
      */
     public function remove($type, $url)
     {
-        $temp_rows = Services::Registry()->get(ASSETS_LITERAL, $type);
-        if (is_array($temp_rows) && count($temp_rows) > 0) {
+        $temp = $this->get($type);
+        if (is_array($temp) && count($temp) > 0) {
         } else {
             return array();
         }
 
         $update = false;
         $query_results = array();
-        foreach ($temp_rows as $temp_row) {
+        foreach ($temp as $temp_row) {
             if (isset($temp_row->url)) {
                 if ($temp_row->url == $url) {
                     $update = true;
@@ -576,12 +785,12 @@ Class AssetService
         }
 
         if ($update === true) {
-            Services::Registry()->set(ASSETS_LITERAL, $type, $query_results);
+            $this->set($type, $query_results);
 
-            $priorityType = $type . 'Priorities';
+            $priorityType = $type . '_priorities';
 
             $priorities = array();
-            foreach ($temp_rows as $temp_row) {
+            foreach ($temp as $temp_row) {
                 if (in_array($temp_row->priority, $priorities)) {
                 } else {
                     $priorities[] = $temp_row->priority;
@@ -589,16 +798,16 @@ Class AssetService
             }
 
             sort($priorities);
-            Services::Registry()->set(ASSETS_LITERAL, $priorityType, $priorities);
+            $this->set($priorityType, $priorities);
         }
 
         return $this;
     }
 
     /**
-     * Parsing locates include Asset statements and requests data to pass into MVC to render Document
+     * MVC Assets Query producing output for rendering the View
      *
-     * @param   $type
+     * @param   string  $type
      *
      * @return  array
      * @since   1.0
@@ -607,28 +816,27 @@ Class AssetService
     {
         $priorityType = $type . 'Priorities';
 
-        $temp_rows = Services::Registry()->get(ASSETS_LITERAL, $type);
+        $temp = $this->get($type);
 
-        if (is_array($temp_rows) && count($temp_rows) > 0) {
+        if (is_array($temp) && count($temp) > 0) {
         } else {
             return array();
         }
 
-        $application_html5 = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1);
-        if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1) == 1) {
+        if ($this->html5 == 1) {
             $end = '>' . chr(10);
         } else {
             $end = '/>' . chr(10);
         }
 
-        $priorities = Services::Registry()->get(ASSETS_LITERAL, $priorityType);
+        $priorities = $this->get($priorityType);
         sort($priorities);
 
         $query_results = array();
 
         foreach ($priorities as $priority) {
 
-            foreach ($temp_rows as $temp_row) {
+            foreach ($temp as $temp_row) {
 
                 $include = false;
 
@@ -640,9 +848,9 @@ Class AssetService
 
                 if ($include === false) {
                 } else {
-                    $temp_row->application_html5 = $application_html5;
+                    $temp_row->application_html5 = $this->html5;
                     $temp_row->end = $end;
-                    $temp_row->page_mime_type = Services::Registry()->get(METADATA_LITERAL, 'mimetype');
+                    $temp_row->page_mime_type = $this->mimetype;
                     $query_results[] = $temp_row;
                 }
             }

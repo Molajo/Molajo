@@ -23,10 +23,10 @@ defined('NIAMBIE') or die;
  *
  * In addition the Application Frontend Controller schedules onAfter events for each of the above.
  *
- * @author       Amy Stephen
- * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
- * @since        1.0
+ * @author     Amy Stephen
+ * @license    MIT
+ * @copyright  2012 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 Class Application
 {
@@ -38,6 +38,14 @@ Class Application
      * @since  1.0
      */
     protected static $services = null;
+
+    /**
+     * Assets Registry
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $assets = null;
 
     /**
      * RequestService
@@ -97,7 +105,10 @@ Class Application
      * @var    object
      * @since  1.0
      */
-    protected $parameters_properties_array = array(
+    protected $parameter_properties_array = array(
+        'application_login_requirement',
+        'application_home_catalog_id',
+
         'catalog_alias',
         'catalog_category_id',
         'catalog_extension_instance_id',
@@ -113,11 +124,29 @@ Class Application
         'catalog_url_request',
         'catalog_url_sef_request',
         'catalog_view_group_id',
+
+        'configuration_application_login_requirement',
+        'configuration_application_home_catalog_id',
+        'configuration_offline_switch',
+        'configuration_sef_url',
+
+        'error_code',
+        'error_message',
+        'error_theme_id',
+        'error_page_view_id',
         'redirect_to_id',
+
+        'permission_filters',
+        'permission_action_to_authorisation',
+        'permission_action_to_controller',
+        'permission_tasks',
+
         'request_action',
         'request_base_url_path',
         'request_catalog_id',
         'request_filters',
+        'request_id',
+        'request_method',
         'request_non_route_parameters',
         'request_post_variables',
         'request_task',
@@ -125,8 +154,12 @@ Class Application
         'request_task_permission',
         'request_task_values',
         'request_url',
+
         'status_authorised',
-        'status_found'
+        'status_found',
+
+        'user_authorised_for_offline_access',
+        'user_guest'
     );
 
     /**
@@ -139,9 +172,14 @@ Class Application
      */
     protected $class_array = array(
 
-        'ConfigurationService' => 'Molajo\\Service\\Services\\Request\\ConfigurationService',
-        'ExceptionService' => 'Molajo\\Service\\Services\\Request\\ExceptionService',
+        'Service' => 'Molajo\\Service\\Services',
+        'AssetService' => 'Molajo\\Service\\Services\\Asset\\AssetService',
+        'ConfigurationService' => 'Molajo\\Service\\Services\\Configuration\\ConfigurationService',
+        'ExceptionService' => 'Molajo\\Service\\Services\\Exception\\ExceptionService',
+        'MetadataService' => 'Molajo\\Service\\Services\\Metadata\\MetadataService',
         'RequestService' => 'Molajo\\Service\\Services\\Request\\RequestService',
+        'RouteService' => 'Molajo\\Service\\Services\\Route\\RouteService',
+        'ThemeService' => 'Molajo\\Service\\Services\\Theme\\ThemeService',
 
         'ContentHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
         'ExtensionHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ExtensionHelper',
@@ -149,7 +187,7 @@ Class Application
         'ViewHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ViewHelper',
 
         'Includer' => 'Molajo\\Service\\Services\\Theme\\Includer',
-        'HeadIncluder' => 'Molajo\\Service\\Services\\Theme\\HeadIncluder',
+        'HeadIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\HeadIncluder',
         'MessageIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\MessageIncluder',
         'PageIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\PageIncluder',
         'ProfilerIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\ProfilerIncluder',
@@ -181,7 +219,7 @@ Class Application
      * @param   string  $override_catalog_id
      * @param   string  $override_parse_sequence
      * @param   string  $override_parse_final
-     * @param   string  $override_parameters_properties_array
+     * @param   string  $override_parameter_properties_array
      * @param   string  $override_class_array
      *
      * @return  mixed
@@ -192,7 +230,7 @@ Class Application
         $override_catalog_id = null,
         $override_parse_sequence = null,
         $override_parse_final = null,
-        $override_parameters_properties_array = null,
+        $override_parameter_properties_array = null,
         $override_class_array = null
     ) {
 
@@ -208,9 +246,9 @@ Class Application
 
         $this->setDefines();
 
-        if ($override_parameters_properties_array == null) {
+        if ($override_parameter_properties_array == null) {
         } else {
-            $this->parameters_properties_array = $override_parameters_properties_array;
+            $this->parameter_properties_array = $override_parameter_properties_array;
         }
 
         if ($override_url_request === null) {
@@ -220,11 +258,8 @@ Class Application
 
         /** 1. Initialise */
         try {
-            Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
-
-            $results = $this->initialise();
-
-            $this->onAfterInitialiseEvent();
+            $this->initialise();
+            $this->scheduleEvent('onAfterInitialiseEvent');
 
         } catch (\Exception $e) {
 
@@ -233,14 +268,12 @@ Class Application
 
         /** 2. Route */
         try {
-
             if (defined(PROFILER_ON)) {
                 Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
             }
 
             $this->route($override_catalog_id);
-
-            $this->onAfterRouteEvent();
+            $this->scheduleEvent('onAfterRouteEvent');
 
             if (defined('ROUTE')) {
             } else {
@@ -258,8 +291,16 @@ Class Application
             if (defined(PROFILER_ON)) {
                 Services::Profiler()->set(ROUTING, PROFILER_APPLICATION);
             }
-            $this->authorise();
-            $this->onAfterAuthoriseEvent();
+
+            if ($this->get('error_code', 0)) {
+                $this->authorise();
+                $this->scheduleEvent('onAfterAuthoriseEvent');
+
+                if ($this->get('error_code', 0)) {
+                } else {
+                    $this->setError();
+                }
+            }
 
         } catch (\Exception $e) {
             throw new \Exception('Permissions Error: ' . $e->getMessage(), $e->getCode(), $e);
@@ -267,9 +308,8 @@ Class Application
 
         /** 4. Execute */
         try {
-
             $this->execute($override_parse_sequence, $override_parse_final);
-            $this->onAfterExecuteEvent();
+            $this->scheduleEvent('onAfterExecuteEvent');
 
         } catch (\Exception $e) {
             throw new \Exception('Execute Error: ' . $e->getMessage(), $e->getCode(), $e);
@@ -278,7 +318,7 @@ Class Application
         /** 5. Response */
         try {
             $this->response();
-            $this->onAfterResponseEvent();
+            $this->scheduleEvent('onAfterResponseEvent');
 
         } catch (\Exception $e) {
             throw new \Exception('Response Error: ' . $e->getMessage(), $e->getCode(), $e);
@@ -300,7 +340,7 @@ Class Application
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameters_properties_array)) {
+        if (in_array($key, $this->parameter_properties_array)) {
         } else {
             throw new \OutOfRangeException('Application: is attempting to get value for unknown key: ' . $key);
         }
@@ -326,7 +366,7 @@ Class Application
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameters_properties_array)) {
+        if (in_array($key, $this->parameter_properties_array)) {
         } else {
             throw new \OutOfRangeException('Application: is attempting to set value for unknown key: ' . $key);
         }
@@ -338,8 +378,9 @@ Class Application
     /**
      * Initialise Site, Application, and Services
      *
-     * @return  boolean
+     * @return  void
      * @since   1.0
+     * @throws  \Exception
      */
     protected function initialise()
     {
@@ -348,7 +389,7 @@ Class Application
 
         $results = version_compare(PHP_VERSION, '5.3', '<');
         if ($results == 1) {
-            throw new \Exception('PHP version: ' . PHP_VERSION . ' does not meet 5.3 minimum.', 500);
+            throw new \Exception('Application: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
         }
 
         $this->setSite();
@@ -357,7 +398,21 @@ Class Application
 
         $this->installCheck();
 
-        Application::Services()->initiate();
+        Application::Services($this->class_array['Service'])->initiate();
+
+        $class = $this->class_array['AssetService'];
+        $this->assets = new $class();
+        $this->assets->initialise();
+
+        $currentLanguage = Services::Registry()->get(LANGUAGES_LITERAL, 'Default');
+        $this->assets->set('direction',
+            Services::Registry()->get(LANGUAGES_LITERAL . $currentLanguage, 'direction')
+        );
+
+        Services::Registry()->createRegistry(METADATA_LITERAL);
+
+        $this->set('error_theme_id', Services::Registry()->get(CONFIGURATION_LITERAL, 'error_theme_id'));
+        $this->set('error_page_view_id', Services::Registry()->get(CONFIGURATION_LITERAL, 'error_page_view_id'));
 
         $this->sslCheck();
 
@@ -368,13 +423,13 @@ Class Application
         //    Services::Session()->getHash(get_class($this))
         //);
 
-        return true;
+        return;
     }
 
     /**
      * Exception Handler
      *
-     * @param   object \Exception
+     * @param   \Exception $e
      *
      * @return  void
      * @since   1.0
@@ -384,15 +439,17 @@ Class Application
         $class = $this->class_array['ExceptionService'];
         $connect = new $class($e->getMessage(), $e->getCode(), $e);
         $connect->formatMessage();
+
+        return;
     }
 
     /**
      * PHP Error Handler - throw PHP Errors as PHP Exceptions
      *
-     * @param   $code
-     * @param   $message
-     * @param   $file
-     * @param   $line
+     * @param   string  $code
+     * @param   string  $message
+     * @param   string  $file
+     * @param   string  $line
      *
      * @throws  \ErrorException
      * @since   1.0
@@ -406,17 +463,6 @@ Class Application
     }
 
     /**
-     * Schedule Event onAfterInitialise
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function onAfterInitialiseEvent()
-    {
-        return $this->scheduleEvent('onAfterInitialiseEvent');
-    }
-
-    /**
      * Evaluates HTTP Request to determine routing requirements, including:
      *
      * - Normal page request: returns array of route parameters
@@ -424,53 +470,72 @@ Class Application
      * - Checks for 'Application Offline Mode', sets a 503 error and registry values for View
      * - For 'Page not found', sets 404 error and registry values for Error Template/View
      * - For defined redirect with Catalog, issues 301 Redirect to new URL
-     * - For 'log on requirement' situations, issues 303 redirect to configured login page
+     * - For 'log in requirement' situations, issues 303 redirect to configured log in page
      *
-     * @param   $override_catalog_id
+     * @param   string  $override_catalog_id
      *
-     * @return  boolean
+     * @return  void
      * @since   1.0
      */
     protected function route($override_catalog_id = null)
     {
+        $this->set('configuration_application_login_requirement',
+            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'application_login_requirement'));
+        $this->set('configuration_application_home_catalog_id',
+            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id'));
+        $this->set('configuration_offline_switch',
+            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_switch'));
+        $this->set('configuration_sef_url',
+            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'sef_url'));
+
+        $this->set('permission_filters',
+            Services::Registry()->get(PERMISSIONS_LITERAL, 'filters', array()));
+        $this->set('permission_action_to_authorisation',
+            Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation', array()));
+        $this->set('permission_action_to_controller',
+            Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_controller', array()));
+        $this->set('permission_tasks',
+            Services::Registry()->get(PERMISSIONS_LITERAL, 'tasks', array()));
+
+        $this->set('request_id', (int) Services::Request()->get('id', 0));
+        $this->set('request_method', Services::Request()->get('method', 'GET'));
+        $this->set('request_post_variables', Services::Request()->get('post_variables', array()));
+
+        $this->set('user_authorised_for_offline_access',
+            Services::Registry()->get('User', 'authorised_for_offline_access', 0));
+        $this->set('user_guest', Services::Registry()->get('User', 'guest', 1));
+
         $class = $this->class_array['RouteService'];
         $route = new $class();
 
         $route = $route->process(
-            $this->parameters_properties_array,
+            $this->parameters,
+            $this->parameter_properties_array,
             $this->requested_resource_for_route,
             $this->base_url_path_for_application,
             $override_catalog_id
         );
 
-        if (Services::Redirect()->url === null
-            && (int)Services::Redirect()->code == 0
-        ) {
-            $this->parameters = $route[0];
-            $this->parameters_properties_array = $route[1];
+        $this->parameters = $route[0];
+        $this->parameter_properties_array = $route[1];
 
-            return true;
+        if ($this->get('redirect_to_id') == 0
+            && $this->get('error_code') == 0) {
+            return;
         }
 
-        if (defined(PROFILER_ON)) {
-            Services::Profiler()->set('Route redirected ' . Services::Redirect()->url, PROFILER_APPLICATION);
+        if ($this->get('error_code', 0)) {
+            $this->set('error_message', '');
+        } else {
+            $this->setError();
         }
 
-        return true;
-    }
+        if ($this->get('redirect_to_id', 0)) {
+        } else {
+            Services::Redirect()->url = Services::Url()->getRedirectURL((int)$this->get('redirect_to_id'));
+        }
 
-    /**
-     * Schedule onAfterRoute Event
-     *
-     * onAfterRoute can be used to retrieve supplementary data, like datalists, for data that is not
-     *  dependent upon having all page parameters to produce.
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function onAfterRouteEvent()
-    {
-        return $this->scheduleEvent('onAfterRouteEvent');
+        return;
     }
 
     /**
@@ -478,7 +543,7 @@ Class Application
      *
      * Standard Permissions Verification using action/task and catalog id for logged on user
      *
-     * @return  boolean
+     * @return  void
      * @since   1.0
      */
     protected function authorise()
@@ -486,26 +551,87 @@ Class Application
         $permissions = Services::Permissions()->verifyAction();
         //@todo verify 403
 
+        if ($this->get('error_code', 0)) {
+            $this->set('error_message', '');
+        } else {
+            $this->setError();
+        }
 
-        return true;
+        return;
     }
 
     /**
-     * Schedule onAfterAuthorise Event
+     * Establish routing information for Error
      *
-     * @return  boolean
+     * @return  void
      * @since   1.0
      */
-    protected function onAfterAuthoriseEvent()
+    protected function setError()
     {
-        return $this->scheduleEvent('onAfterAuthoriseEvent');
+        if (defined(PROFILER_ON)) {
+            Services::Profiler()->set('Error Code: ' . $this->get('error_code'), PROFILER_APPLICATION);
+        }
+
+        $this->set('request_method', 'get');
+        $this->set('request_action', 'read');
+        $this->set('request_post_variables', array());
+        $this->set('request_filters', array());
+        $this->set('request_task_permission', 'read');
+        $this->set('request_task_controller', 'read');
+
+        if ($this->get('error_code') == 403) {
+            $this->set('error_message',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'error_403_message',
+                    Services::Language()->translate('Not Authorised')
+                )
+            );
+        }
+
+        if ($this->get('error_code') == 404) {
+            $this->set('error_message',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'error_404_message',
+                    Services::Language()->translate('Page not found')
+                )
+            );
+        }
+
+        if ($this->get('error_code') == 500) {
+            if ($this->get('error_message') == '') {
+                $this->set('error_message', Services::Language()->translate('Internal Server Error'));
+            }
+        }
+
+        if ($this->get('error_code') == 503) {
+            $this->set('error_theme_id',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_theme_id')
+            );
+            $this->set('error_page_view_id',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_page_view_id')
+            );
+            $this->set('error_message',
+                Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_message',
+                    Services::Language()->translate
+                    ('This site is not available.<br /> Please check back again soon.')
+                )
+            );
+        }
+
+        Services::Response()->setStatusCode($this->get('error_code'));
+
+        Services::Message()->set($this->get('error_message'), MESSAGE_TYPE_ERROR, $this->get('error_code'));
+
+        return;
     }
 
     /**
      * Execute the action requested
      *
-     * @return  boolean
+     * @param   string  $override_parse_sequence
+     * @param   string  $override_parse_final
+     *
+     * @return  void
      * @since   1.0
+     * @throws  \Exception
      */
     protected function execute($override_parse_sequence, $override_parse_final)
     {
@@ -554,6 +680,9 @@ Class Application
      *
      * Continues until no more <include:type statements are found in the Theme and rendered output
      *
+     * @param   string  $override_parse_sequence
+     * @param   string  $override_parse_final
+     *
      * @since   1.0
      * @return  Application
      */
@@ -561,10 +690,13 @@ Class Application
     {
         $results = $this->getPageCache();
 
+        $class = $this->class_array['ThemeService'];
+        $theme = new $class();
+
         if ($results === false) {
-            $results = Services::Theme()->process(
+            $results = $theme->process(
                 $this->parameters,
-                $this->parameters_properties_array,
+                $this->parameter_properties_array,
                 $this->class_array,
                 $override_parse_sequence,
                 $override_parse_final
@@ -737,7 +869,7 @@ Class Application
             'model' => null,
             'model_registry' => $model_registry,
             'parameters' => $this->parameters,
-            'parameters_properties_array' => $this->parameters_properties_array,
+            'parameter_properties_array' => $this->parameter_properties_array,
             'query_results' => array(),
             'row' => null,
             'rendered_output' => $this->rendered_output,
@@ -760,12 +892,14 @@ Class Application
             $this->parameters = $arguments['parameters'];
         }
 
-        if (isset($arguments['parameters_properties_array'])) {
-            $this->parameters = $arguments['parameters_properties_array'];
+        if (isset($arguments['parameter_properties_array'])) {
+            $this->parameter_properties_array = $arguments['parameter_properties_array'];
         }
 
         if (isset($this->parameters['model_registry_name'])) {
+
             $model_registry_name = $this->parameters['model_registry_name'];
+
             if (isset($arguments['model_registry'])) {
                 Services::Registry()->delete($model_registry_name);
                 Services::Registry()->createRegistry($this->get('model_registry_name'));
@@ -782,6 +916,8 @@ Class Application
 
     /**
      * Get the list of potential plugins identified with this model registry
+     *
+     * @param   null  $model_registry_name
      *
      * @return  array
      * @since   1.0
@@ -929,7 +1065,7 @@ Class Application
     /**
      * Identifies the specific site and sets site paths for use in the application
      *
-     * @return  boolean
+     * @return  null
      * @since   1.0
      */
     protected function setSite()
@@ -1145,21 +1281,22 @@ Class Application
     }
 
     /**
-     * Application::Services
+     * Application::Services is accessed using Services::
+     *
+     * @param   null $class
      *
      * @static
-     * @return  Services
+     * @return  null|object  Services
      * @throws  \RuntimeException
      * @since   1.0
      */
-    public static function Services()
+    public static function Services($class = null)
     {
         if (self::$services) {
         } else {
             try {
-                $class = self::$class_array['Services'];
-
                 self::$services = new $class();
+
             } catch (\RuntimeException $e) {
                 echo 'Instantiate Service Exception : ', $e->getMessage(), "\n";
                 die;

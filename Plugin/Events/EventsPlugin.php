@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT, see License folder
+ * @license    MIT
  */
 namespace Molajo\Plugin\Events;
 
@@ -24,7 +24,7 @@ class EventsPlugin extends Plugin
      * @return  boolean
      * @since   1.0
      */
-    public function onAfterRoute()
+    public function onAfterInitialise()
     {
         if (APPLICATION_ID == 2) {
         } else {
