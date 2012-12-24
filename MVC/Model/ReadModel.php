@@ -8,7 +8,7 @@
  */
 namespace Molajo\MVC\Model;
 
-use Molajo\Application;
+use Molajo\Frontcontroller;
 use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;

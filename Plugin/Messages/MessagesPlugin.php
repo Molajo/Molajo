@@ -8,7 +8,7 @@ namespace Molajo\Plugin\Messages;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
-use Molajo\Application;
+use Molajo\Frontcontroller;
 
 defined('NIAMBIE') or die;
 

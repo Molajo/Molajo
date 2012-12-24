@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Service" version="1.0" extends="ServicesSystem">
+    <name>SERVICE_SITE_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>August 2012</create_date>
+    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@niambie.org</author_email>
+    <author_url>http://niambie.org</author_url>
+    <version>1.0</version>
+    <description>SERVICE_SITE_DESCRIPTION</description>
+</extension>

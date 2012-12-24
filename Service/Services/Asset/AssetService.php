@@ -247,7 +247,7 @@ Class AssetService
         }
 
         $this->$key = $default;
-        return $this->$$key;
+        return $this->$key;
     }
 
     /**

@@ -8,7 +8,7 @@
  */
 namespace Molajo\MVC\Controller;
 
-use Molajo\Application;
+use Molajo\Frontcontroller;
 use Molajo\Service\Services;
 use Molajo\MVC\Controller\Controller;
 

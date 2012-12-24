@@ -6,7 +6,7 @@
  */
 namespace Molajo\Service\Services\Configuration;
 
-use Molajo\Application;
+use Molajo\Frontcontroller;
 use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;
@@ -21,20 +21,12 @@ defined('NIAMBIE') or die;
 Class ConfigurationService
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * Valid Data Object Types
      *
      * @var    array
      * @since  1.0
      */
-    protected static $valid_dataobject_types;
+    protected $valid_dataobject_types;
 
     /**
      * Valid Data Object Attributes
@@ -42,7 +34,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_dataobject_attributes;
+    protected $valid_dataobject_attributes;
 
     /**
      * Valid Model Types
@@ -50,7 +42,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_model_types;
+    protected $valid_model_types;
 
     /**
      * Valid Model Attributes
@@ -58,7 +50,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_model_attributes;
+    protected $valid_model_attributes;
 
     /**
      * Valid Data Types
@@ -66,7 +58,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_data_types;
+    protected $valid_data_types;
 
     /**
      * Valid Query Attributes
@@ -74,7 +66,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_queryelements_attributes;
+    protected $valid_queryelements_attributes;
 
     /**
      * Valid Field Attributes
@@ -82,7 +74,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_field_attributes;
+    protected $valid_field_attributes;
 
     /**
      * Valid Join Attributes
@@ -90,7 +82,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_join_attributes;
+    protected $valid_join_attributes;
 
     /**
      * Valid Foreignkey Attributes
@@ -98,7 +90,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_foreignkey_attributes;
+    protected $valid_foreignkey_attributes;
 
     /**
      * Valid Criteria Attributes
@@ -106,7 +98,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_criteria_attributes;
+    protected $valid_criteria_attributes;
 
     /**
      * Valid Children Attributes
@@ -114,7 +106,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_children_attributes;
+    protected $valid_children_attributes;
 
     /**
      * Valid Plugin Attributes
@@ -122,7 +114,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_plugin_attributes;
+    protected $valid_plugin_attributes;
 
     /**
      * Valid Value Attributes
@@ -130,23 +122,7 @@ Class ConfigurationService
      * @var    array
      * @since  1.0
      */
-    protected static $valid_value_attributes;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return  bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new ConfigurationService();
-        }
-
-        return self::$instance;
-    }
+    protected $valid_value_attributes;
 
     /**
      * Retrieve Site and Application data, set constants and paths
@@ -154,7 +130,7 @@ Class ConfigurationService
      * @return  object
      * @since   1.0
      */
-    public function __construct()
+    public function initialise()
     {
         $this->getFieldProperties();
         $this->getApplication();
@@ -174,49 +150,49 @@ Class ConfigurationService
     {
         Services::Registry()->createRegistry('Fields');
 
-        $xml = ConfigurationService::getFile('Application', 'Fields');
+        $xml = $this->getFile('Application', 'Fields');
         if ($xml === false) {
             throw new \Exception('Configuration: getFieldProperties File not found.');
         }
 
-        ConfigurationService::loadFieldProperties($xml, 'dataobjecttypes', 'dataobjecttype');
+        $this->loadFieldProperties($xml, 'dataobjecttypes', 'dataobjecttype');
 
-        ConfigurationService::loadFieldPropertiesWithAttributes($xml, 'dataobjectattributes', 'dataobjectattribute');
+        $this->loadFieldPropertiesWithAttributes($xml, 'dataobjectattributes', 'dataobjectattribute');
 
-        ConfigurationService::loadFieldProperties($xml, 'modeltypes', 'modeltype');
+        $this->loadFieldProperties($xml, 'modeltypes', 'modeltype');
 
-        ConfigurationService::loadFieldPropertiesWithAttributes($xml, 'modelattributes', 'modelattribute');
+        $this->loadFieldPropertiesWithAttributes($xml, 'modelattributes', 'modelattribute');
 
-        ConfigurationService::loadFieldProperties($xml, 'datatypes', 'datatype');
+        $this->loadFieldProperties($xml, 'datatypes', 'datatype');
 
-        ConfigurationService::loadFieldProperties($xml, 'queryelements', 'queryelement');
+        $this->loadFieldProperties($xml, 'queryelements', 'queryelement');
 
         $list = Services::Registry()->get(FIELDS_LITERAL, 'queryelements');
         foreach ($list as $item) {
             $field = explode(',', $item);
-            ConfigurationService::loadFieldProperties($xml, $field[0], $field[1]);
+            $this->loadFieldProperties($xml, $field[0], $field[1]);
         }
 
-        self::$valid_dataobject_types = Services::Registry()->get(FIELDS_LITERAL, 'dataobjecttypes');
-        self::$valid_dataobject_attributes = Services::Registry()->get(FIELDS_LITERAL, 'dataobjectattributes');
+        $this->valid_dataobject_types = Services::Registry()->get(FIELDS_LITERAL, 'dataobjecttypes');
+        $this->valid_dataobject_attributes = Services::Registry()->get(FIELDS_LITERAL, 'dataobjectattributes');
 
-        self::$valid_model_types = Services::Registry()->get(FIELDS_LITERAL, 'modeltypes');
-        self::$valid_model_attributes = Services::Registry()->get(FIELDS_LITERAL, 'modelattributes');
+        $this->valid_model_types = Services::Registry()->get(FIELDS_LITERAL, 'modeltypes');
+        $this->valid_model_attributes = Services::Registry()->get(FIELDS_LITERAL, 'modelattributes');
 
-        self::$valid_data_types = Services::Registry()->get(FIELDS_LITERAL, 'datatypes');
-        self::$valid_field_attributes = Services::Registry()->get(FIELDS_LITERAL, FIELDS_LITERAL);
+        $this->valid_data_types = Services::Registry()->get(FIELDS_LITERAL, 'datatypes');
+        $this->valid_field_attributes = Services::Registry()->get(FIELDS_LITERAL, FIELDS_LITERAL);
 
-        self::$valid_join_attributes = Services::Registry()->get(FIELDS_LITERAL, 'joins');
-        self::$valid_foreignkey_attributes = Services::Registry()->get(FIELDS_LITERAL, 'foreignkeys');
-        self::$valid_criteria_attributes = Services::Registry()->get(FIELDS_LITERAL, 'criterion');
-        self::$valid_children_attributes = Services::Registry()->get(FIELDS_LITERAL, 'children');
-        self::$valid_plugin_attributes = Services::Registry()->get(FIELDS_LITERAL, 'plugins');
-        self::$valid_value_attributes = Services::Registry()->get(FIELDS_LITERAL, 'values');
+        $this->valid_join_attributes = Services::Registry()->get(FIELDS_LITERAL, 'joins');
+        $this->valid_foreignkey_attributes = Services::Registry()->get(FIELDS_LITERAL, 'foreignkeys');
+        $this->valid_criteria_attributes = Services::Registry()->get(FIELDS_LITERAL, 'criterion');
+        $this->valid_children_attributes = Services::Registry()->get(FIELDS_LITERAL, 'children');
+        $this->valid_plugin_attributes = Services::Registry()->get(FIELDS_LITERAL, 'plugins');
+        $this->valid_value_attributes = Services::Registry()->get(FIELDS_LITERAL, 'values');
 
         $datalistsArray = array();
         $extensionArray = array();
-        $datalistsArray = ConfigurationService::loadDatalists($datalistsArray, PLATFORM_MVC . '/Model/Datalist');
-        $extensionArray = ConfigurationService::loadDatalists($datalistsArray, EXTENSIONS . '/Model/Datalist');
+        $datalistsArray = $this->loadDatalists($datalistsArray, PLATFORM_MVC . '/Model/Datalist');
+        $extensionArray = $this->loadDatalists($datalistsArray, EXTENSIONS . '/Model/Datalist');
         array_merge($datalistsArray, $extensionArray);
         sort($datalistsArray);
         $datalistsArray = array_unique($datalistsArray);
@@ -229,9 +205,9 @@ Class ConfigurationService
     /**
      * loadFieldProperties
      *
-     * @param   $input
-     * @param   $plural
-     * @param   $singular
+     * @param   string  $input
+     * @param   string  $plural
+     * @param   string  $singular
      *
      * @return  bool
      * @since   1.0
@@ -261,9 +237,9 @@ Class ConfigurationService
     /**
      * loadFieldPropertiesWithAttributes
      *
-     * @param   $input
-     * @param   $plural
-     * @param   $singular
+     * @param   string  $input
+     * @param   string  $plural
+     * @param   string  $singular
      *
      * @return  bool
      * @since   1.0
@@ -291,8 +267,8 @@ Class ConfigurationService
     /**
      * loadDatalists
      *
-     * @param   $datalistsArray
-     * @param   $folder
+     * @param   string  $datalistsArray
+     * @param   string  $folder
      *
      * @return  array
      * @since   1.0
@@ -459,20 +435,19 @@ Class ConfigurationService
      * Services::Configuration()->getFile('Application', 'defines');
      *
      * or - in classes where usage can happen before the service is activated:
-     *      ConfigurationService::getFile($model_type, $model_name);
+     *      $this->getFile($model_type, $model_name);
      *
-     * @static
-     * @param   string $model_name
-     * @param   string $model_type
+     * @param   string  $model_name
+     * @param   string  $model_type
      *
-     * @return  object $xml
+     * @return  object  $xml
      * @since   1.0
      */
-    public static function getFile($model_type, $model_name)
+    public function getFile($model_type, $model_name)
     {
-        $path_and_file = ConfigurationService::locateFile($model_type, $model_name);
+        $path_and_file = $this->locateFile($model_type, $model_name);
 
-        $xml_string = ConfigurationService::readXMLFile($path_and_file);
+        $xml_string = $this->readXMLFile($path_and_file);
 
         return simplexml_load_string($xml_string);
     }
@@ -485,9 +460,8 @@ Class ConfigurationService
      *
      * or - in classes where usage can happen before the service is activated:
      *
-     * ConfigurationService::getModel($model_type, $model_name);
+     * $this->getModel($model_type, $model_name);
      *
-     * @static
      * @param   string  $model_name
      * @param   string  $model_type
      * @param   string  $parameter_registry
@@ -497,7 +471,7 @@ Class ConfigurationService
      *
      * @throws  \Exception
      */
-    public static function getModel($model_type, $model_name, $parameter_registry)
+    public function getModel($model_type, $model_name, $parameter_registry)
     {
         $model_type = ucfirst(strtolower($model_type));
         $model_name = ucfirst(strtolower($model_name));
@@ -508,7 +482,7 @@ Class ConfigurationService
         }
 
         if ($model_type == 'Dataobject') {
-            return ConfigurationService::getDataobject($model_type, $model_name);
+            return $this->getDataobject($model_type, $model_name);
         }
 
         if (class_exists('Services')) {
@@ -518,16 +492,16 @@ Class ConfigurationService
             }
         }
 
-        $path_and_file = ConfigurationService::locateFile($model_type, $model_name, $parameter_registry);
+        $path_and_file = $this->locateFile($model_type, $model_name, $parameter_registry);
         if ($path_and_file === false) {
             throw new \Exception('Configuration: Cannot find XML file for Model Type: '
                 . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
 
         }
 
-        $xml_string = ConfigurationService::readXMLFile($path_and_file);
+        $xml_string = $this->readXMLFile($path_and_file);
 
-        $results = ConfigurationService::getIncludeCode($xml_string, $model_name);
+        $results = $this->getIncludeCode($xml_string, $model_name);
 
         $xml = simplexml_load_string($results);
         if ($xml === false) {
@@ -541,9 +515,9 @@ Class ConfigurationService
 
         Services::Registry()->createRegistry($model_registry);
 
-        ConfigurationService::inheritDefinition($model_registry, $xml);
+        $this->inheritDefinition($model_registry, $xml);
 
-        ConfigurationService::setModelRegistry($model_registry, $xml);
+        $this->setModelRegistry($model_registry, $xml);
 
         Services::Registry()->set($model_registry, 'model_name', $model_name);
         Services::Registry()->set($model_registry, 'model_type', $model_type);
@@ -569,63 +543,63 @@ Class ConfigurationService
             Services::Registry()->set($model_registry, 'data_object_' . $key, (string)$value);
         }
 
-        ConfigurationService::setElementsRegistry(
+        $this->setElementsRegistry(
             $model_registry,
             $xml,
             'fields',
             'field',
-            self::$valid_field_attributes
+            $this->valid_field_attributes
         );
 
-        ConfigurationService::setElementsRegistry(
+        $this->setElementsRegistry(
             $model_registry,
             $xml,
             'joins',
             'join',
-            self::$valid_join_attributes
+            $this->valid_join_attributes
         );
 
-        ConfigurationService::setElementsRegistry(
+        $this->setElementsRegistry(
             $model_registry,
             $xml,
             'foreignkeys',
             'foreignkey',
-            self::$valid_foreignkey_attributes
+            $this->valid_foreignkey_attributes
         );
 
-        ConfigurationService::setElementsRegistry(
+        $this->setElementsRegistry(
             $model_registry,
             $xml,
             'criteria',
             'where',
-            self::$valid_criteria_attributes
+            $this->valid_criteria_attributes
         );
 
-        ConfigurationService::setElementsRegistry(
+        $this->setElementsRegistry(
             $model_registry,
             $xml,
             'children',
             'child',
-            self::$valid_children_attributes
+            $this->valid_children_attributes
         );
 
-        ConfigurationService::setElementsRegistry(
+        $this->setElementsRegistry(
             $model_registry,
             $xml,
             'plugins',
             'plugin',
-            self::$valid_plugin_attributes
+            $this->valid_plugin_attributes
         );
 
-        ConfigurationService::setElementsRegistry(
+        $this->setElementsRegistry(
             $model_registry,
             $xml,
             'values',
             'value',
-            self::$valid_value_attributes
+            $this->valid_value_attributes
         );
 
-        ConfigurationService::getCustomFields($xml, $model_registry);
+        $this->getCustomFields($xml, $model_registry);
 
         return $model_registry;
     }
@@ -637,16 +611,15 @@ Class ConfigurationService
      * Services::Configuration()->getDataobject('Dataobject', 'Database');
      * Services::Configuration()->getDataobject('Dataobject', 'Assets');
      *
-     * @static
-     * @param   string $model_name
-     * @param   string $model_type
+     * @param   string  $model_name
+     * @param   string  $model_type
      *
-     * @return  string Name of the Dataobject Registry object
+     * @return  string  Name of the Dataobject Registry object
      * @since   1.0
      *
      * @throws  \Exception
      */
-    public static function getDataobject($model_type, $model_name)
+    public function getDataobject($model_type, $model_name)
     {
         $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
@@ -657,15 +630,15 @@ Class ConfigurationService
             }
         }
 
-        $path_and_file = ConfigurationService::locateFile($model_type, $model_name);
+        $path_and_file = $this->locateFile($model_type, $model_name);
         if ($path_and_file === false) {
             throw new \Exception('Configuration: getDataobject method Cannot find XML file for Model Type: '
                 . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
         }
 
-        $xml_string = ConfigurationService::readXMLFile($path_and_file);
+        $xml_string = $this->readXMLFile($path_and_file);
 
-        $results = ConfigurationService::getIncludeCode($xml_string, $model_name);
+        $results = $this->getIncludeCode($xml_string, $model_name);
 
         $xml = simplexml_load_string($results);
         if ($xml === false) {
@@ -679,7 +652,7 @@ Class ConfigurationService
 
         Services::Registry()->createRegistry($model_registry);
 
-        ConfigurationService::setDataobjectRegistry($model_registry, $xml);
+        $this->setDataobjectRegistry($model_registry, $xml);
 
         Services::Registry()->sort($model_registry);
 
@@ -690,13 +663,13 @@ Class ConfigurationService
      * getIncludeCode parses the xml string repeatedly until all include statements have been processed
      *
      * @static
-     * @param   $xml_string
+     * @param   string  $xml_string
      *
      * @return  mixed
      * @throws  \RuntimeException
      * @since   1.0
      */
-    protected static function getIncludeCode($xml_string, $model_name)
+    protected function getIncludeCode($xml_string, $model_name)
     {
         if (trim($xml_string) == '') {
             return $xml_string;
@@ -724,12 +697,12 @@ Class ConfigurationService
                 $include = $matches[2][$i];
 
                 if (trim(strtolower($matches[1][$i])) == 'field') {
-                    $path_and_file = ConfigurationService::locateFile('Field', $include);
+                    $path_and_file = $this->locateFile('Field', $include);
                 } else {
-                    $path_and_file = ConfigurationService::locateFile('Include', $include);
+                    $path_and_file = $this->locateFile('Include', $include);
                 }
 
-                $withThis = ConfigurationService::readXMLFile($path_and_file);
+                $withThis = $this->readXMLFile($path_and_file);
 
                 $xml_string = str_replace($replaceThis, $withThis, $xml_string);
 
@@ -744,14 +717,14 @@ Class ConfigurationService
      * Store Data Object Definitions into Registry
      *
      * @static
-     * @param   $DataobjectRegistry
-     * @param   $xml
+     * @param   object  $DataobjectRegistry
+     * @param   object  $xml
      *
      * @return  boolean
      * @since   1.0
      * @throws  \Exception
      */
-    protected static function setDataobjectRegistry($DataobjectRegistry, $xml)
+    protected function setDataobjectRegistry($DataobjectRegistry, $xml)
     {
 
         $doArray = Services::Registry()->get(FIELDS_LITERAL, 'Dataobjectattributes');
@@ -780,13 +753,13 @@ Class ConfigurationService
      * Store Model Registry data into Registry
      *
      * @static
-     * @param   $model_registry
-     * @param   $xml
+     * @param   string  $model_registry
+     * @param   object  $xml
      *
      * @return  boolean
      * @since   1.0
      */
-    protected static function setModelRegistry($model_registry, $xml)
+    protected function setModelRegistry($model_registry, $xml)
     {
         $modelArray = Services::Registry()->get(FIELDS_LITERAL, 'Modelattributes');
 
@@ -812,16 +785,16 @@ Class ConfigurationService
      * Define elements for Data Model to Registry
      *
      * @static
-     * @param   $model_registry
-     * @param   $xml
-     * @param   $plural
-     * @param   $singular
-     * @param   $valid_attributes
+     * @param   string  $model_registry
+     * @param   object  $xml
+     * @param   string  $plural
+     * @param   string  $singular
+     * @param   string  $valid_attributes
      *
      * @return  bool
      * @since   1.0
      */
-    protected static function setElementsRegistry($model_registry, $xml, $plural, $singular, $valid_attributes)
+    protected function setElementsRegistry($model_registry, $xml, $plural, $singular, $valid_attributes)
     {
         if (isset($xml->table->$plural->$singular)) {
         } else {
@@ -864,7 +837,7 @@ Class ConfigurationService
             $selects = array();
 
             for ($i = 0; $i < count($itemArray); $i++) {
-                $temp = ConfigurationService::setJoinFields($itemArray[$i]);
+                $temp = $this->setJoinFields($itemArray[$i]);
                 $joins[] = $temp[0];
                 $selects[] = $temp[1];
             }
@@ -909,12 +882,12 @@ Class ConfigurationService
      * setJoinFields - processes one set of join field definitions, updating the registry
      *
      * @static
-     * @param   $itemArray
+     * @param   array  $itemArray
      *
      * @return  array
      * @since   1.0
      */
-    protected static function setJoinFields($modelJoinArray)
+    protected function setJoinFields($modelJoinArray)
     {
         $joinArray = array();
         $joinSelectArray = array();
@@ -970,14 +943,14 @@ Class ConfigurationService
      * getCustomFields extracts field information for all customfield groups
      *
      * @static
-     * @param   $xml
-     * @param   $model_registry
+     * @param   object  $xml
+     * @param   string  $model_registry
      *
      * @return  object
      * @since   1.0
      * @throws  \RuntimeException
      */
-    protected static function getCustomFields($xml, $model_registry)
+    protected function getCustomFields($xml, $model_registry)
     {
         $customFieldsArray = array();
 
@@ -986,14 +959,14 @@ Class ConfigurationService
             foreach ($xml->customfields->customfield as $custom_field) {
 
                 $name = (string)$custom_field['name'];
-                $results = ConfigurationService::getCustomFieldsSpecificGroup($model_registry, $custom_field);
+                $results = $this->getCustomFieldsSpecificGroup($model_registry, $custom_field);
                 if ($results === false) {
                 } else {
 
                     $fieldArray = $results[0];
                     $fieldNames = $results[1];
 
-                    ConfigurationService::inheritCustomFieldsSpecificGroup(
+                    $this->inheritCustomFieldsSpecificGroup(
                         $model_registry,
                         $name,
                         $fieldArray,
@@ -1016,7 +989,7 @@ Class ConfigurationService
 
                     if (in_array($name, $customFieldsArray)) {
                     } else {
-                        $results = ConfigurationService::inheritCustomFieldsSpecificGroup($model_registry, $name);
+                        $results = $this->inheritCustomFieldsSpecificGroup($model_registry, $name);
                         if ($results === false) {
                         } else {
                             $customFieldsArray[] = $name;
@@ -1041,7 +1014,7 @@ Class ConfigurationService
      * @return  array
      * @since   1.0
      */
-    protected static function getCustomFieldsSpecificGroup($model_registry, $customfield)
+    protected function getCustomFieldsSpecificGroup($model_registry, $customfield)
     {
         $fieldArray = array();
         $fieldNames = array();
@@ -1055,7 +1028,7 @@ Class ConfigurationService
             foreach ($fieldAttributes as $key2 => $value2) {
 
                 if ($key2 == 'fieldset') {
-                } elseif (in_array($key2, self::$valid_field_attributes)) {
+                } elseif (in_array($key2, $this->valid_field_attributes)) {
                 } else {
                     throw new \Exception ('Configuration: getCustomFieldsSpecificGroup Invalid Field attribute '
                         . $key2 . ':' . $value2 . ' for ' . $model_registry);
@@ -1085,7 +1058,6 @@ Class ConfigurationService
     /**
      * Inherited fields are merged in with those specifically defined in model
      *
-     * @static
      * @param   $model_registry
      * @param   $name
      * @param   $fieldArray
@@ -1094,7 +1066,7 @@ Class ConfigurationService
      * @return  array
      * @since   1.0
      */
-    protected static function inheritCustomFieldsSpecificGroup(
+    protected function inheritCustomFieldsSpecificGroup(
         $model_registry,
         $name,
         $fieldArray = array(),
@@ -1136,14 +1108,13 @@ Class ConfigurationService
     /**
      * Inheritance checking and setup  <model name="XYZ" extends="ThisTable"/>
      *
-     * @static
      * @param   $model_registry
      * @param   $xml
      *
      * @return  void
      * @since   1.0
      */
-    protected static function inheritDefinition($model_registry, $xml)
+    protected function inheritDefinition($model_registry, $xml)
     {
         $extends = false;
         foreach ($xml->attributes() as $key => $value) {
@@ -1204,7 +1175,7 @@ Class ConfigurationService
      * @since   1.0
      * @throws  \Exception
      */
-    protected static function locateFile($model_type, $model_name, $parameter_registry = null)
+    protected function locateFile($model_type, $model_name, $parameter_registry = null)
     {
         $model_type = trim(ucfirst(strtolower($model_type)));
         $model_name = trim(ucfirst(strtolower($model_name)));
@@ -1359,7 +1330,7 @@ Class ConfigurationService
         /** Search for overrides before standard placement */
         $valid = array('Menuitem', 'Plugin');
         if (in_array($model_type, $valid)) {
-            $path = ConfigurationService::commonSearch(
+            $path = $this->commonSearch(
                 $model_type,
                 $model_name,
                 $extension_path,
@@ -1381,7 +1352,7 @@ Class ConfigurationService
 
         if (in_array($model_type, $valid)) {
 
-            $path = ConfigurationService::commonSearch(
+            $path = $this->commonSearch(
                 $model_type,
                 $model_name,
                 $extension_path,
@@ -1403,7 +1374,7 @@ Class ConfigurationService
         $valid = array('Datalist', 'Dataobject', 'Datasource');
 
         if (in_array($model_type, $valid)) {
-            $path = ConfigurationService::commonSearch(
+            $path = $this->commonSearch(
                 $model_type,
                 $model_name,
                 $extension_path,
@@ -1422,7 +1393,7 @@ Class ConfigurationService
         }
 
         /** These are the Dataobjects, other than Database */
-        $path = ConfigurationService::commonSearch(
+        $path = $this->commonSearch(
             'Datasource',
             $model_type,
             $extension_path,
@@ -1462,7 +1433,7 @@ Class ConfigurationService
      * @return  string
      * @since   1.0
      */
-    protected static function commonSearch(
+    protected function commonSearch(
         $model_type,
         $model_name,
         $extension_path,
@@ -1587,14 +1558,13 @@ Class ConfigurationService
     /**
      * Read XML file and return results
      *
-     * @static
      * @param   $path_and_file
      *
      * @return  bool|object
      * @since   1.0
      * @throws  \RuntimeException
      */
-    protected static function readXMLFile($path_and_file)
+    protected function readXMLFile($path_and_file)
     {
         if (file_exists($path_and_file)) {
         } else {

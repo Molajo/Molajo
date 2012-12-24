@@ -6,7 +6,7 @@
  */
 namespace Molajo\Plugin\Application;
 
-use Molajo\Application;
+use Molajo\Frontcontroller;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 

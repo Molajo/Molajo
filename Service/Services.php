@@ -1,7 +1,7 @@
 <?php
 namespace Molajo\Service;
 
-use Molajo\Application;
+use Molajo\Frontcontroller;
 use Molajo\Service\Services\Configuration\ConfigurationService;
 
 defined('NIAMBIE') or die;
@@ -66,7 +66,7 @@ Class Services
      */
     public static function __callStatic($name, $arguments)
     {
-        return Application::Services()->get($name . 'Service');
+        return Frontcontroller::Services()->get($name . 'Service');
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Application Frontend Controller
+ * Frontend Controller
  *
  * @package      Niambie
  * @license      MIT
@@ -13,7 +13,7 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * Front Controller for the Niambie Application
+ * Front Controller for Niambie
  *
  * 1. Initialise
  * 2. Route
@@ -21,17 +21,17 @@ defined('NIAMBIE') or die;
  * 4. Execute (Display or Action)
  * 5. Respond
  *
- * In addition the Application Frontend Controller schedules onAfter events for each of the above.
+ * In addition, schedules onAfter events after each of the above.
  *
  * @author     Amy Stephen
  * @license    MIT
  * @copyright  2012 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-Class Application
+Class Frontcontroller
 {
     /**
-     * Application::Services
+     * Frontcontroller::Services
      *
      * @static
      * @var    object  Services
@@ -56,12 +56,28 @@ Class Application
     protected $class_metadata = null;
 
     /**
+     * Configuration Service
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $configuration_service = null;
+
+    /**
      * Request Service
      *
      * @var    object
      * @since  1.0
      */
-    protected $request = null;
+    protected $request_service = null;
+
+    /**
+     * Site Service
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $site_service = null;
 
     /**
      * $requested_resource_for_route
@@ -108,7 +124,7 @@ Class Application
     protected $parameters = array();
 
     /**
-     * List of Properties from Route
+     * List of Properties
      *
      * @var    object
      * @since  1.0
@@ -192,12 +208,14 @@ Class Application
     protected $class_array = array(
 
         'Service' => 'Molajo\\Service\\Services',
+        'ApplicationService' => 'Molajo\\Service\\Services\\Application\\ApplicationService',
         'AssetService' => 'Molajo\\Service\\Services\\Asset\\AssetService',
         'ConfigurationService' => 'Molajo\\Service\\Services\\Configuration\\ConfigurationService',
         'ExceptionService' => 'Molajo\\Service\\Services\\Exception\\ExceptionService',
         'MetadataService' => 'Molajo\\Service\\Services\\Metadata\\MetadataService',
         'RequestService' => 'Molajo\\Service\\Services\\Request\\RequestService',
         'RouteService' => 'Molajo\\Service\\Services\\Route\\RouteService',
+        'SiteService' => 'Molajo\\Service\\Services\\Site\\SiteService',
         'ThemeService' => 'Molajo\\Service\\Services\\Theme\\ThemeService',
 
         'ContentHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
@@ -258,31 +276,14 @@ Class Application
             $this->class_array = $override_class_array;
         }
 
-        $class = $this->class_array['RequestService'];
-        $this->request = new $class();
-
-        $this->set('request_id', (int) $this->request->get('id', 0));
-        $this->set('request_method', $this->request->get('method', 'GET'));
-        $this->set('request_mimetype', $this->request->get('mimetype', 'text/html'));
-        $this->set('request_post_variables', $this->request->get('post_variables', array()));
-
-        $this->setBaseURL();
-
-        $this->setDefines();
-
         if ($override_parameter_properties_array == null) {
         } else {
             $this->parameter_properties_array = $override_parameter_properties_array;
         }
 
-        if ($override_url_request === null) {
-        } else {
-            $this->requested_resource_for_route = $override_url_request;
-        }
-
         /** 1. Initialise */
         try {
-            $this->initialise();
+            $this->initialise($override_url_request);
             $this->scheduleEvent('onAfterInitialiseEvent');
 
         } catch (\Exception $e) {
@@ -366,7 +367,7 @@ Class Application
 
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
-            throw new \OutOfRangeException('Application: is attempting to get value for unknown key: ' . $key);
+            throw new \OutOfRangeException('Frontcontroller: is attempting to get value for unknown key: ' . $key);
         }
 
         if (isset($this->parameters[$key])) {
@@ -392,7 +393,7 @@ Class Application
 
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
-            throw new \OutOfRangeException('Application: is attempting to set value for unknown key: ' . $key);
+            throw new \OutOfRangeException('Frontcontroller: is attempting to set value for unknown key: ' . $key);
         }
 
         $this->parameters[$key] = $value;
@@ -406,23 +407,72 @@ Class Application
      * @since   1.0
      * @throws  \Exception
      */
-    protected function initialise()
+    protected function initialise($override_url_request)
     {
         set_exception_handler(array($this, 'exception_handler'));
         set_error_handler(array($this, 'error_handler'), E_ALL);
 
         $results = version_compare(PHP_VERSION, '5.3', '<');
         if ($results == 1) {
-            throw new \Exception('Application: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
+            throw new \Exception('Frontcontroller: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
         }
 
-        $this->setSite();
+        $class = $this->class_array['ConfigurationService'];
+        $this->configuration_service = new $class();
 
-        $this->setApplication();
+        $class = $this->class_array['RequestService'];
+        $this->request_service = new $class();
 
-        $this->installCheck();
+        $this->set('request_id', (int) $this->request_service->get('id', 0));
+        $this->set('request_method', $this->request_service->get('method', 'GET'));
+        $this->set('request_mimetype', $this->request_service->get('mimetype', 'text/html'));
+        $this->set('request_post_variables', $this->request_service->get('post_variables', array()));
 
-        Application::Services($this->class_array['Service'])->initiate();
+        $class = $this->class_array['SiteService'];
+        $this->site = new $class();
+
+        $this->site->set('base_url', $this->request_service->get('base_url'));
+        $this->site->setBaseURL();
+
+        $this->site->set('sites', $this->configuration_service->getFile('Site', 'Sites'));
+        $this->site->set('site_base_url', $this->request_service->get('base_url_path'));
+        $this->site->identifySite();
+
+        $this->site->setStandardDefines();
+
+        $this->site->set('custom_defines', $this->configuration_service->getFile('Application', 'Defines'));
+        $this->site->setCustomDefines();
+
+        $class = $this->class_array['ApplicationService'];
+        $this->application = new $class();
+
+        $p1 = $this->request_service->get('path_info');
+        $t2 = $this->request_service->get('query_string');
+
+        if (trim($t2) == '') {
+            $requestURI = $p1;
+        } else {
+            $requestURI = $p1 . '?' . $t2;
+        }
+
+        $this->application->set('request_uri', substr($requestURI, 1, 9999));
+        $this->application->set('applications', $this->configuration_service->getFile('Application', 'Applications'));
+        $this->application->set('base_url_path_with_scheme',
+            $this->request_service->get('base_url_path_with_scheme', 'text/html'));
+
+        $this->application->setApplication();
+
+        $this->requested_resource_for_route = $this->application->get('requested_resource_for_route');
+        $this->base_url_path_for_application = $this->application->get('base_url_path_for_application');
+
+        if ($override_url_request === null) {
+        } else {
+            $this->requested_resource_for_route = $override_url_request;
+        }
+
+        //todo: it is in site services right now $this->installCheck();
+
+        Frontcontroller::Services($this->class_array['Service'])->initiate();
 
         $this->request_date = Services::Date()->getDate();
 
@@ -984,292 +1034,6 @@ Class Application
     }
 
     /**
-     * Populate BASE_URL using scheme, host, and base URL
-     *
-     * Note: The Application::Request object is used instead of the Application::Request due to where
-     * processing is at this point
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function setBaseURL()
-    {
-        if (defined('BASE_URL')) {
-        } else {
-            /**
-             * BASE_URL - root of the website with a trailing slash
-             */
-            define('BASE_URL', $this->request->get('base_url') . '/');
-        }
-
-        return true;
-    }
-
-    /**
-     * Folders and subfolders can be relocated outside of the Apache htdocs for increased security.
-     * To do so, create a defines file and override the Autoload.php file for the new namespaces.
-     *
-     * Note: SITES contains content that must be accessible by the Website and thus cannot be moved.
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function setDefines()
-    {
-        if (file_exists(BASE_FOLDER . '/defines.php')) {
-            include_once BASE_FOLDER . '/defines.php';
-        }
-
-        if (defined('EXTENSIONS')) {
-        } else {
-            define('EXTENSIONS', BASE_FOLDER . '/Extension');
-        }
-
-        if (defined('EXTENSIONS_MENUITEMS')) {
-        } else {
-            define('EXTENSIONS_MENUITEMS', EXTENSIONS . '/Menuitem');
-        }
-        if (defined('EXTENSIONS_RESOURCES')) {
-        } else {
-            define('EXTENSIONS_RESOURCES', EXTENSIONS . '/Resource');
-        }
-        if (defined('EXTENSIONS_THEMES')) {
-        } else {
-            define('EXTENSIONS_THEMES', EXTENSIONS . '/Theme');
-        }
-        if (defined('EXTENSIONS_VIEWS')) {
-        } else {
-            define('EXTENSIONS_VIEWS', EXTENSIONS . '/View');
-        }
-
-        if (defined('EXTENSIONS_URL')) {
-        } else {
-            define('EXTENSIONS_URL', BASE_URL . 'Extension');
-        }
-        if (defined('EXTENSIONS_THEMES_URL')) {
-        } else {
-            define('EXTENSIONS_THEMES_URL', BASE_URL . 'Extension/Theme');
-        }
-        if (defined('EXTENSIONS_VIEWS_URL')) {
-        } else {
-            define('EXTENSIONS_VIEWS_URL', BASE_URL . 'Extension/View');
-        }
-
-        if (defined('SERVICES')) {
-        } else {
-            define('SERVICES', PLATFORM_FOLDER . '/Service');
-        }
-        if (defined('CORE_THEMES')) {
-        } else {
-            define('CORE_THEMES', PLATFORM_FOLDER . '/Theme');
-        }
-        if (defined('CORE_VIEWS')) {
-        } else {
-            define('CORE_VIEWS', PLATFORM_FOLDER . '/MVC/View');
-        }
-        if (defined('CORE_LANGUAGES')) {
-        } else {
-            define('CORE_LANGUAGES', PLATFORM_FOLDER . '/Language');
-        }
-
-        if (defined('CORE_SYSTEM_URL')) {
-        } else {
-            define('CORE_SYSTEM_URL', BASE_URL . 'Vendor/Molajo/System');
-        }
-        if (defined('CORE_THEMES_URL')) {
-        } else {
-            define('CORE_THEMES_URL', BASE_URL . 'Vendor/Molajo/Theme');
-        }
-        if (defined('CORE_VIEWS_URL')) {
-        } else {
-            define('CORE_VIEWS_URL', BASE_URL . 'Vendor/Molajo/MVC/View');
-        }
-
-        if (defined('SITES')) {
-        } else {
-            define('SITES', BASE_FOLDER . '/Site');
-        }
-
-        /** Defines used to help ensure consistency of literal values in application */
-        $class = $this->class_array['ConfigurationService'];
-        $defines = $class::getFile('Application', 'Defines');
-        foreach ($defines->define as $item) {
-            if (defined((string)$item['name'])) {
-            } else {
-                $value = (string)$item['value'];
-                define((string)$item['name'], $value);
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Identifies the specific site and sets site paths for use in the application
-     *
-     * @return  null
-     * @since   1.0
-     */
-    protected function setSite()
-    {
-        if (defined('SITES')) {
-        } else {
-            define('SITES', BASE_FOLDER . '/Site');
-        }
-
-        if (defined('SITES_MEDIA_FOLDER')) {
-        } else {
-            define('SITES_MEDIA_FOLDER', SITES . '/media');
-        }
-
-        if (defined('SITES_MEDIA_URL')) {
-        } else {
-            define('SITES_MEDIA_URL', BASE_URL . 'Site/media');
-        }
-
-        if (defined('SITES_DATA_OBJECT_FOLDER')) {
-        } else {
-            define('SITES_DATA_OBJECT_FOLDER', BASE_URL . 'Site/media');
-        }
-
-        $site_base_url = $this->request->get('base_url_path');
-
-        if (defined('SITE_BASE_URL')) {
-        } else {
-            $class = $this->class_array['ConfigurationService'];
-            $sites = $class::getFile('Site', 'Sites');
-
-            foreach ($sites->site as $single) {
-                if (strtolower((string)$single->site_base_url) == strtolower($site_base_url)) {
-                    define('SITE_BASE_URL', (string)$single->site_base_url);
-                    define('SITE_BASE_PATH', BASE_FOLDER . (string)$single->site_base_folder);
-                    define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string)$single->site_base_folder);
-                    define('SITE_DATA_OBJECT_FOLDER', SITE_BASE_PATH . '/' . DATA_OBJECT_LITERAL);
-                    define('SITE_ID', $single->id);
-                    define('SITE_NAME', $single->name);
-                    break;
-                }
-            }
-            if (defined('SITE_BASE_URL')) {
-            } else {
-                echo 'Fatal Error: Cannot identify site for: ' . $site_base_url;
-                die;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Identify current application and page request
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function setApplication()
-    {
-        $p1 = $this->request->get('path_info');
-        $t2 = $this->request->get('query_string');
-
-        if (trim($t2) == '') {
-            $requestURI = $p1;
-        } else {
-            $requestURI = $p1 . '?' . $t2;
-        }
-
-        $requestURI = substr($requestURI, 1, 9999);
-
-        /** extract first node for testing as application name  */
-        if (strpos($requestURI, '/')) {
-            $applicationTest = substr($requestURI, 0, strpos($requestURI, '/'));
-        } else {
-            $applicationTest = $requestURI;
-        }
-
-        $requested_resource_for_route = '';
-
-        if (defined('APPLICATION')) {
-            /* to override - must also define $this->request->get('requested_resource_for_route') */
-        } else {
-
-            $class = $this->class_array['ConfigurationService'];
-            $apps = $class::getFile('Application', 'Applications');
-
-            foreach ($apps->application as $app) {
-
-                $xml_name = (string)$app->name;
-                ;
-
-                if (strtolower(trim($xml_name)) == strtolower(trim($applicationTest))) {
-
-                    define('APPLICATION', $app->name);
-                    define('APPLICATION_URL_PATH', APPLICATION . '/');
-                    define('APPLICATION_ID', $app->id);
-
-                    $requested_resource_for_route = substr(
-                        $requestURI,
-                        strlen(APPLICATION) + 1,
-                        strlen($requestURI) - strlen(APPLICATION) + 1
-                    );
-                    break;
-                }
-            }
-
-            if (defined('APPLICATION')) {
-            } else {
-                define('APPLICATION', $apps->default->name);
-                define('APPLICATION_URL_PATH', '');
-                define('APPLICATION_ID', $apps->default->id);
-
-                $requested_resource_for_route = $requestURI;
-            }
-        }
-
-        /*  Page Request used in Application::Request */
-        if (strripos($requested_resource_for_route, '/') == (strlen($requested_resource_for_route) - 1)) {
-            $requested_resource_for_route
-                = substr($requested_resource_for_route, 0, strripos($requested_resource_for_route, '/'));
-        }
-
-        $this->requested_resource_for_route = $requested_resource_for_route;
-
-        $this->base_url_path_for_application
-            = $this->request->get('base_url_path_with_scheme')
-            . '/'
-            . APPLICATION_URL_PATH;
-
-        return true;
-    }
-
-    /**
-     * Determine if the site has already been installed
-     *
-     * return  boolean
-     * @since  1.0
-     */
-    protected function installCheck()
-    {
-        if (defined('SKIP_INSTALL_CHECK')) {
-            return true;
-        }
-
-        if (APPLICATION == 'installation') {
-            return true;
-        }
-
-        if (file_exists(SITE_BASE_PATH . '/Dataobject/Database.xml')
-            && filesize(SITE_BASE_PATH . '/Dataobject/Database.xml') > 10
-        ) {
-            return true;
-        }
-//@todo - install		/** Redirect to Installation Application */
-        $redirect = BASE_URL . 'installation/';
-        header('Location: ' . $redirect);
-
-        exit();
-    }
-
-    /**
      * Check to see if secure access to the application is required by configuration
      *
      * @return  bool
@@ -1281,14 +1045,14 @@ Class Application
 
         if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_force_ssl', 0) > 0) {
 
-            if (($this->request->get('connection')->isSecure() === true)) {
+            if (($this->request_service->get('connection')->isSecure() === true)) {
 
             } else {
 
                 $redirectTo = (string)'https' .
                     substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
                     APPLICATION_URL_PATH .
-                    '/' . $this->request->get('requested_resource_for_route');
+                    '/' . $this->request_service->get('requested_resource_for_route');
 
                 Services::Redirect()
                     ->set($redirectTo, 301);
@@ -1323,7 +1087,7 @@ Class Application
     }
 
     /**
-     * Application::Services is accessed using Services::
+     * Frontcontroller::Services is accessed using Services::
      *
      * @param   null $class
      *
@@ -1340,8 +1104,7 @@ Class Application
                 self::$services = new $class();
 
             } catch (\RuntimeException $e) {
-                echo 'Instantiate Service Exception : ', $e->getMessage(), "\n";
-                die;
+                throw new \Exception('Frontcontroller: Instantiate Service Exception: ', $e->getMessage());
             }
         }
 
