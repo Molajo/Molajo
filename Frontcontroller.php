@@ -189,6 +189,7 @@ Class Frontcontroller
         'request_task_values',
         'request_date',
         'request_url',
+        'request_using_ssl',
 
         'status_authorised',
         'status_found',
@@ -409,17 +410,21 @@ Class Frontcontroller
      */
     protected function initialise($override_url_request)
     {
+        /** Error and Exception Handling */
         set_exception_handler(array($this, 'exception_handler'));
         set_error_handler(array($this, 'error_handler'), E_ALL);
 
+        /** PHP Minimum */
         $results = version_compare(PHP_VERSION, '5.3', '<');
         if ($results == 1) {
             throw new \Exception('Frontcontroller: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
         }
 
+        /** Configuration */
         $class = $this->class_array['ConfigurationService'];
         $this->configuration_service = new $class();
 
+        /** Request */
         $class = $this->class_array['RequestService'];
         $this->request_service = new $class();
 
@@ -427,22 +432,17 @@ Class Frontcontroller
         $this->set('request_method', $this->request_service->get('method', 'GET'));
         $this->set('request_mimetype', $this->request_service->get('mimetype', 'text/html'));
         $this->set('request_post_variables', $this->request_service->get('post_variables', array()));
+        $this->set('request_using_ssl', $this->request_service->get('connection')->isSecure());
 
+        /** Site (Base URLs) */
         $class = $this->class_array['SiteService'];
         $this->site = new $class();
 
         $this->site->set('base_url', $this->request_service->get('base_url'));
         $this->site->setBaseURL();
-
-        $this->site->set('sites', $this->configuration_service->getFile('Site', 'Sites'));
-        $this->site->set('site_base_url', $this->request_service->get('base_url_path'));
-        $this->site->identifySite();
-
         $this->site->setStandardDefines();
 
-        $this->site->set('custom_defines', $this->configuration_service->getFile('Application', 'Defines'));
-        $this->site->setCustomDefines();
-
+        /** Application (Set Application -- Sequence needed for Installation) */
         $class = $this->class_array['ApplicationService'];
         $this->application = new $class();
 
@@ -462,16 +462,28 @@ Class Frontcontroller
 
         $this->application->setApplication();
 
+        /** Site Identification */
+        $this->site->set('sites', $this->configuration_service->getFile('Site', 'Sites'));
+        $this->site->set('site_base_url', $this->request_service->get('base_url_path'));
+
+        $this->site->identifySite();
+
         $this->requested_resource_for_route = $this->application->get('requested_resource_for_route');
+
+        $this->site->set('custom_defines', $this->configuration_service->getFile('Application', 'Defines'));
+        $this->site->setCustomDefines();
+
         $this->base_url_path_for_application = $this->application->get('base_url_path_for_application');
+
+        /** Add Site URL to Application */
+        $this->application->setBaseUrlPathforApplication();
 
         if ($override_url_request === null) {
         } else {
             $this->requested_resource_for_route = $override_url_request;
         }
 
-        //todo: it is in site services right now $this->installCheck();
-
+        /** Servicess */
         Frontcontroller::Services($this->class_array['Service'])->initiate();
 
         $this->request_date = Services::Date()->getDate();
@@ -489,17 +501,23 @@ Class Frontcontroller
             $this->set('application_line_end', ('/>' . chr(10)));
         }
 
+        /** Assets */
         $class = $this->class_array['AssetService'];
         $this->assets_class = new $class();
+
         $this->assets_class->initialise();
+
         $this->assets_class->set('html5', $this->get('application_html5'));
         $this->assets_class->set('line_end', $this->get('application_line_end'));
         $this->assets_class->set('mimetype', $this->get('request_mimetype'));
         $this->assets_class->set('direction', $this->get('language_direction'));
 
+        /** Metadata */
         $class = $this->class_array['MetadataService'];
         $this->metadata_class = new $class();
+
         $this->metadata_class->initialise();
+
         $this->metadata_class->set('language', $this->get('language_current'));
         $this->metadata_class->set('direction', $this->get('language_direction'));
         $this->metadata_class->set('html5', $this->get('application_html5'));
@@ -507,13 +525,20 @@ Class Frontcontroller
         $this->metadata_class->set('mimetype', $this->get('request_mimetype'));
         $this->metadata_class->set('request_date', $this->get('request_date'));
 
+        /** Error Theme and View */
         $this->set('error_theme_id', Services::Registry()->get(CONFIGURATION_LITERAL, 'error_theme_id'));
         $this->set('error_page_view_id', Services::Registry()->get(CONFIGURATION_LITERAL, 'error_page_view_id'));
 
-        $this->sslCheck();
+        /** Redirects if SSL is required */
+        $this->application->set('url_force_ssl',
+            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_force_ssl', 0));
+        $this->application->set('request_using_ssl', $this->get('request_using_ssl'));
+
+        $this->application->sslCheck();
 
         $this->verifySiteApplication();
 
+        //
         /** LAZY LOAD Session */
         //Services::Session()->create(
         //    Services::Session()->getHash(get_class($this))
@@ -1031,37 +1056,6 @@ Class Frontcontroller
         $plugins[] = 'Application';
 
         return $plugins;
-    }
-
-    /**
-     * Check to see if secure access to the application is required by configuration
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function sslCheck()
-    {
-        Services::Registry()->get('ApplicationsParameters');
-
-        if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_force_ssl', 0) > 0) {
-
-            if (($this->request_service->get('connection')->isSecure() === true)) {
-
-            } else {
-
-                $redirectTo = (string)'https' .
-                    substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
-                    APPLICATION_URL_PATH .
-                    '/' . $this->request_service->get('requested_resource_for_route');
-
-                Services::Redirect()
-                    ->set($redirectTo, 301);
-
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**

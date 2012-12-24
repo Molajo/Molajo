@@ -170,8 +170,14 @@ Class SiteService
 
                 if (strtolower((string)$single->site_base_url) == strtolower($this->site_base_url)) {
 
-                    define('SITE_BASE_URL', (string)$single->site_base_url);
                     define('SITE_BASE_PATH', BASE_FOLDER . (string)$single->site_base_folder);
+
+                    if (APPLICATION == 'installation') {
+                    } else {
+                        $this->installCheck();
+                    }
+
+                    define('SITE_BASE_URL', (string)$single->site_base_url);
                     define('SITE_BASE_URL_RESOURCES', SITE_BASE_URL . (string)$single->site_base_folder);
                     define('SITE_DATA_OBJECT_FOLDER', SITE_BASE_PATH . '/' . 'Dataobject');
                     define('SITE_ID', $single->id);
@@ -311,19 +317,14 @@ Class SiteService
     public function installCheck()
     {
         if (defined('SKIP_INSTALL_CHECK')) {
-            return true;
-        }
-
-        if (APPLICATION == 'installation') {
-            return true;
+            return;
         }
 
         if (file_exists(SITE_BASE_PATH . '/Dataobject/Database.xml')
-            && filesize(SITE_BASE_PATH . '/Dataobject/Database.xml') > 10
-        ) {
-            return true;
+            && filesize(SITE_BASE_PATH . '/Dataobject/Database.xml') > 10) {
+            return;
         }
-//@todo - install		/** Redirect to Installation Application */
+
         $redirect = BASE_URL . 'installation/';
         header('Location: ' . $redirect);
 
