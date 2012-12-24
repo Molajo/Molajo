@@ -191,9 +191,9 @@ Class RequestService
 
         $this->set('request_format', $this->symfony_request->getRequestFormat());
 
-        $this->set('mime_type', $this->symfony_request->getMimeType($this->get('request_format')));
+        $this->set('mimetype', $this->symfony_request->getMimeType($this->get('request_format')));
 
-        $this->set('format', $this->symfony_request->getFormat($this->get('mime_type')));
+        $this->set('format', $this->symfony_request->getFormat($this->get('mimetype')));
 
         $this->set('content_type', $this->symfony_request->getContentType());
 

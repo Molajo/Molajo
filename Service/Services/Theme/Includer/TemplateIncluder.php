@@ -114,7 +114,7 @@ Class TemplateIncluder extends Includer
      */
     protected function loadViewMedia()
     {
-        if ($this->type == 'asset' || $this->type == METADATA_LITERAL) {
+        if ($this->type == 'asset' || $this->type == 'metadata') {
             return $this;
         }
 
@@ -123,9 +123,9 @@ Class TemplateIncluder extends Includer
         $file_path = Services::Registry()->get('include', 'template_view_path');
         $url_path = Services::Registry()->get('include', 'template_view_path_url');
 
-        Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
-        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
-        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
+        $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
 
         return $this;
     }

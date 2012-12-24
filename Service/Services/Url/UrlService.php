@@ -223,7 +223,7 @@ Class UrlService
         } else {
         $css = '.gravatar { float:left; margin: 0 15px 15px 0; }';
         }
-        Services::Asset($this->assets)->addCssDeclaration($css, 'text/css');
+        $this->class_asset->addCssDeclaration($css, 'text/css');
          */
         $url = 'http://www.gravatar.com/avatar/';
         $url .= md5(strtolower(trim($email)));

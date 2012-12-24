@@ -323,10 +323,10 @@ Class ContentHelper
             }
         }
 
-        $metadata = Services::Registry()->copy($registry . METADATA_LITERAL);
+        $metadata = Services::Registry()->get($registry . METADATA_LITERAL);
         if (count($metadata) > 0) {
             foreach ($metadata as $key => $value) {
-                Services::Metadata()->set($key, $value);
+                $this->class_metadata->set($key, array($value));
             }
         }
 

@@ -49,9 +49,9 @@ Class WrapIncluder extends Includer
         $file_path = Services::Registry()->get('include', 'wrap_view_path');
         $url_path = Services::Registry()->get('include', 'wrap_view_path_url');
 
-        Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
-        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
-        Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
+        $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
 
         return $this;
     }

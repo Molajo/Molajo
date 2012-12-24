@@ -40,15 +40,23 @@ Class Application
     protected static $services = null;
 
     /**
-     * Assets Registry
+     * Assets Service
      *
      * @var    object
      * @since  1.0
      */
-    protected $assets = null;
+    protected $class_assets = null;
 
     /**
-     * RequestService
+     * Metadata Service
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $class_metadata = null;
+
+    /**
+     * Request Service
      *
      * @var    object
      * @since  1.0
@@ -60,7 +68,7 @@ Class Application
      *
      * ex. articles/article-1/index.php?tag=xyz
      *
-     * @var    object  Request
+     * @var    string
      * @since  1.0
      */
     protected $requested_resource_for_route = null;
@@ -70,7 +78,7 @@ Class Application
      *
      * ex. http://site1/admin/
      *
-     * @var    object  Request
+     * @var    string
      * @since  1.0
      */
     protected $base_url_path_for_application = null;
@@ -108,6 +116,9 @@ Class Application
     protected $parameter_properties_array = array(
         'application_login_requirement',
         'application_home_catalog_id',
+        'application_html5',
+        'application_line_end',
+        'application_mimetype',
 
         'catalog_alias',
         'catalog_category_id',
@@ -125,6 +136,9 @@ Class Application
         'catalog_url_sef_request',
         'catalog_view_group_id',
 
+        'class_assets',
+        'class_metadata',
+
         'configuration_application_login_requirement',
         'configuration_application_home_catalog_id',
         'configuration_offline_switch',
@@ -135,6 +149,9 @@ Class Application
         'error_theme_id',
         'error_page_view_id',
         'redirect_to_id',
+
+        'language_current',
+        'language_direction',
 
         'permission_filters',
         'permission_action_to_authorisation',
@@ -147,12 +164,14 @@ Class Application
         'request_filters',
         'request_id',
         'request_method',
+        'request_mimetype',
         'request_non_route_parameters',
         'request_post_variables',
         'request_task',
         'request_task_controller',
         'request_task_permission',
         'request_task_values',
+        'request_date',
         'request_url',
 
         'status_authorised',
@@ -241,6 +260,11 @@ Class Application
 
         $class = $this->class_array['RequestService'];
         $this->request = new $class();
+
+        $this->set('request_id', (int) $this->request->get('id', 0));
+        $this->set('request_method', $this->request->get('method', 'GET'));
+        $this->set('request_mimetype', $this->request->get('mimetype', 'text/html'));
+        $this->set('request_post_variables', $this->request->get('post_variables', array()));
 
         $this->setBaseURL();
 
@@ -400,16 +424,38 @@ Class Application
 
         Application::Services($this->class_array['Service'])->initiate();
 
+        $this->request_date = Services::Date()->getDate();
+
+        $this->set('language_current',
+            Services::Registry()->get(LANGUAGES_LITERAL, 'Default'));
+        $this->set('language_direction',
+            Services::Registry()->get(LANGUAGES_LITERAL . $this->get('Language_current')));
+
+        $this->set('application_html5', Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1));
+
+        if ($this->get('application_html5') == 1) {
+            $this->set('application_line_end', ('>' . chr(10)));
+        } else {
+            $this->set('application_line_end', ('/>' . chr(10)));
+        }
+
         $class = $this->class_array['AssetService'];
-        $this->assets = new $class();
-        $this->assets->initialise();
+        $this->assets_class = new $class();
+        $this->assets_class->initialise();
+        $this->assets_class->set('html5', $this->get('application_html5'));
+        $this->assets_class->set('line_end', $this->get('application_line_end'));
+        $this->assets_class->set('mimetype', $this->get('request_mimetype'));
+        $this->assets_class->set('direction', $this->get('language_direction'));
 
-        $currentLanguage = Services::Registry()->get(LANGUAGES_LITERAL, 'Default');
-        $this->assets->set('direction',
-            Services::Registry()->get(LANGUAGES_LITERAL . $currentLanguage, 'direction')
-        );
-
-        Services::Registry()->createRegistry(METADATA_LITERAL);
+        $class = $this->class_array['MetadataService'];
+        $this->metadata_class = new $class();
+        $this->metadata_class->initialise();
+        $this->metadata_class->set('language', $this->get('language_current'));
+        $this->metadata_class->set('direction', $this->get('language_direction'));
+        $this->metadata_class->set('html5', $this->get('application_html5'));
+        $this->metadata_class->set('line_end', $this->get('application_line_end'));
+        $this->metadata_class->set('mimetype', $this->get('request_mimetype'));
+        $this->metadata_class->set('request_date', $this->get('request_date'));
 
         $this->set('error_theme_id', Services::Registry()->get(CONFIGURATION_LITERAL, 'error_theme_id'));
         $this->set('error_page_view_id', Services::Registry()->get(CONFIGURATION_LITERAL, 'error_page_view_id'));
@@ -496,10 +542,6 @@ Class Application
             Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_controller', array()));
         $this->set('permission_tasks',
             Services::Registry()->get(PERMISSIONS_LITERAL, 'tasks', array()));
-
-        $this->set('request_id', (int) Services::Request()->get('id', 0));
-        $this->set('request_method', Services::Request()->get('method', 'GET'));
-        $this->set('request_post_variables', Services::Request()->get('post_variables', array()));
 
         $this->set('user_authorised_for_offline_access',
             Services::Registry()->get('User', 'authorised_for_offline_access', 0));

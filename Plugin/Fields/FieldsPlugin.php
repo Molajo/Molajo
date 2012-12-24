@@ -38,7 +38,7 @@ class FieldsPlugin extends Plugin
         $extended_literal = ' (' . Services::Language()->translate('extended') . ')';
         $parameter_literal = ' (' . Services::Language()->translate('parameter') . ')';
         $customfield_literal = ' (' . Services::Language()->translate('customfield') . ')';
-        $metadata_literal = ' (' . Services::Language()->translate(METADATA_LITERAL) . ')';
+        $metadata_literal = ' (' . Services::Language()->translate('metadata') . ')';
 
         $fieldArray = array();
         $standardArray = array();

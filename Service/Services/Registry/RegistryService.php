@@ -915,7 +915,6 @@ Class RegistryService
      *
      * @return  array
      * @since   1.0
-     * @throws  \RuntimeException
      */
     public function getArray($namespace, $key_only = false)
     {
@@ -923,8 +922,7 @@ Class RegistryService
 
         if ($this->exists($namespace)) {
         } else {
-            throw new \RuntimeException
-            ('Registry: Cannot retrieve array from Namespace ' . $namespace . ' since it does not exist.');
+            return array();
         }
 
         $array = $this->getRegistry($namespace);

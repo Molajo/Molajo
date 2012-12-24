@@ -721,16 +721,16 @@ class Includer
         $file_path = Services::Registry()->get('parameters', 'template_view_path');
         $url_path = Services::Registry()->get('parameters', 'template_view_path_url');
 
-        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
 
         $file_path = Services::Registry()->get('parameters', 'wrap_view_path');
         $url_path = Services::Registry()->get('parameters', 'wrap_view_path_url');
 
-        $css = Services::Asset($this->assets)->addCssFolder($file_path, $url_path, $priority);
-        $js = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = Services::Asset($this->assets)->addJsFolder($file_path, $url_path, $priority, 1);
+        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
 
         return $this;
     }

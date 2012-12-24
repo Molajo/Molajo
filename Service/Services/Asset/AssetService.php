@@ -41,7 +41,15 @@ Class AssetService
     protected $html5 = null;
 
     /**
-     * HTML5
+     * Line end
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $line_end = null;
+
+    /**
+     * Mimetype
      *
      * @var    object
      * @since  1.0
@@ -170,6 +178,7 @@ Class AssetService
         'direction',
         'html5',
         'mimetype',
+        'line_end',
         'links',
         'link_priorities',
         'css',
@@ -234,7 +243,7 @@ Class AssetService
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
             throw new \OutOfRangeException
-                ('Asset Service: attempting to get value for unknown property: ' . $key);
+            ('Asset Service: attempting to get value for unknown property: ' . $key);
         }
 
         $this->$key = $default;
@@ -257,7 +266,7 @@ Class AssetService
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
             throw new \OutOfRangeException
-                ('Asset Service: attempting to set value for unknown key: ' . $key);
+            ('Asset Service: attempting to set value for unknown key: ' . $key);
         }
 
         $this->$key = $value;
@@ -823,12 +832,6 @@ Class AssetService
             return array();
         }
 
-        if ($this->html5 == 1) {
-            $end = '>' . chr(10);
-        } else {
-            $end = '/>' . chr(10);
-        }
-
         $priorities = $this->get($priorityType);
         sort($priorities);
 
@@ -849,8 +852,8 @@ Class AssetService
                 if ($include === false) {
                 } else {
                     $temp_row->application_html5 = $this->html5;
-                    $temp_row->end = $end;
-                    $temp_row->page_mime_type = $this->mimetype;
+                    $temp_row->end = $this->line_end;
+                    $temp_row->page_mimetype = $this->mimetype;
                     $query_results[] = $temp_row;
                 }
             }

@@ -1,200 +1,239 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Metadata Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Metadata;
 
-defined('NIAMBIE') or die;
-
 use Molajo\Service\Services;
 
+defined('NIAMBIE') or die;
+
 /**
- * Metadata
+ * The Metadata Service collects Document Head information
  *
- * @package     Niambie
- * @subpackage  Services
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2012 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class MetadataService
 {
     /**
-     * Initialise - activated by Services Class
+     * Title
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $title = null;
+
+    /**
+     * Description
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $description = null;
+
+    /**
+     * Language
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $language = null;
+
+    /**
+     * Language Direction
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $direction = null;
+
+    /**
+     * HTML5
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $html5 = null;
+
+    /**
+     * Line end
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $line_end = null;
+
+    /**
+     * Mimetype
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $mimetype = 'text/html';
+
+    /**
+     * Request Date
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $request_date = null;
+
+    /**
+     * Modified Date
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $modified_date = null;
+
+    /**
+     * Array
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $metadata = null;
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameter_properties_array = array(
+        'title',
+        'description',
+        'direction',
+        'language',
+        'html5',
+        'line_end',
+        'mimetype',
+        'request_date',
+        'metadata',
+        'head_query',
+        'metadata_query',
+        'dummy_query'
+    );
+
+    /**
+     * Initialise the class for Metadata processing
+     *
+     * @since   1.0
+     * @return  object  MetadataService
      */
     public function initialise()
     {
-
+        $this->metadata = array();
 
         return $this;
     }
 
     /**
-     * Retrieve header and metadata information
+     * Get the current value (or default) of the specified key
      *
-     * @param   $model_type - head or metadata
+     * @param   string  $key
+     * @param   mixed   $default
      *
-     * @return  array
+     * @return  mixed
      * @since   1.0
      */
-    public function set($name, $content, $label = 'name')
+    public function get($key = null, $default = null)
     {
-        Services::Registry()->set(METADATA_LITERAL, $name, array($content, $label));
+        $key = strtolower($key);
 
-        return;
+        if (in_array($key, $this->parameter_properties_array)) {
+
+            $query_results = array();
+
+            if (strtolower($key) == 'metadata_query') {
+                return $this->getMetadata();
+
+            } elseif (strtolower($key) == 'dummy_query') {
+                $temp_row = new \stdClass();
+
+                $temp_row->name = 'dummy row';
+                $temp_row->application_html5 = $this->html5;
+                $temp_row->end = $this->line_end;
+
+                $query_results[] = $temp_row;
+
+                return $query_results;
+            }
+
+            if ($this->$key === null) {
+                $this->$key = $default;
+            }
+
+            return $this->$key;
+        }
+
+        if (isset($this->metadata[$key])) {
+        } else {
+            $this->metadata[$key] = $default;
+        }
+
+        return $this->metadata[$key];
     }
 
     /**
-     * Retrieve header and metadata information
+     * Set the value of the specified key
      *
-     * @param   $model_type - head, metadata
+     * @param   string  $key
+     * @param   array   $value
      *
-     * @return  array
+     * @return  mixed
      * @since   1.0
      */
-    public function get($model_type)
+    public function set($key, $value = array())
     {
-        $query_results = array();
+        $key = strtolower($key);
 
-        $application_html5 = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1);
-
-        if ((int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1) == 1) {
-            $end = '>' . chr(10);
+        if (in_array($key, $this->parameter_properties_array)) {
         } else {
-            $end = '/>' . chr(10);
+            throw new \OutOfRangeException
+            ('Metadata Service: attempting to set value for unknown key: ' . $key);
         }
 
-        if (strtolower($model_type) == 'head') {
-            $query_results = $this->getHead($application_html5, $end);
-
-        } elseif (strtolower($model_type) == METADATA_LITERAL) {
-            $query_results = $this->getMetadata($application_html5, $end);
-
-        } else {
-            $temp_row = new \stdClass();
-
-            $temp_row->name = 'dummy row';
-            $temp_row->application_html5 = $application_html5;
-            $temp_row->end = $end;
-
-            $query_results[] = $temp_row;
-        }
-
-        return $query_results;
+        $this->$key = $value;
+        return $this->$key;
     }
 
     /**
-     * getHead - Retrieve header information
-     *
-     * @param   $application_html5
-     * @param   $end
+     * Get Metadata - called from the MVC as a query
      *
      * @return  array
      * @since   1.0
      */
-    protected function getHead($application_html5, $end)
-    {
-        $query_results = array();
-
-        $temp_row = new \stdClass();
-
-        $temp = Services::Registry()->get(METADATA_LITERAL, 'title', '');
-        $title = $temp[0];
-        if (trim($title) == '') {
-            $title = SITE_NAME;
-        }
-        $temp_row->title = Services::Filter()->escape_text($title);
-
-        Services::Registry()->delete(METADATA_LITERAL, 'title');
-
-        $mimetype = Services::Registry()->get(METADATA_LITERAL, 'mimetype', '');
-        if (trim($mimetype) == '') {
-            $mimetype = 'text/html';
-        }
-        $temp_row->mimetype = Services::Filter()->escape_text($mimetype);
-
-        Services::Registry()->set(METADATA_LITERAL, 'mimetype', $mimetype);
-
-        $temp_row->base = SITE_BASE_URL;
-
-        $last_modified = Services::Registry()->get('parameters', 'modified_datetime');
-        if (trim($last_modified) == '') {
-            $last_modified = Services::Date()->getDate();
-        }
-        $temp_row->last_modified = Services::Filter()->escape_text($last_modified);
-
-        $temp_row->base_url = BASE_URL;
-
-        $temp_row->language_direction = 'lft';
-        if ($temp_row->language_direction == 'lft') {
-            $temp_row->language_direction = '';
-        } else {
-            $temp_row->language_direction = ' dir="rtl"';
-        }
-        //@todo get language from language services
-        $temp_row->language = 'en';
-
-        $temp_row->application_html5 = $application_html5;
-        $temp_row->end = $end;
-
-        $query_results[] = $temp_row;
-
-        return $query_results;
-    }
-
-    /**
-     * Retrieve metadata information
-     *
-     * @param   $application_html5
-     * @param   $end
-     *
-     * @return  array
-     * @since   1.0
-     */
-    protected function getMetadata($application_html5, $end)
+    protected function getMetadata()
     {
         $query_results = array();
 
         $temp_row = new \stdClass();
 
-        $temp = Services::Registry()->get(METADATA_LITERAL, 'title', '');
+        $temp = $this->get('title', '');
         $title = $temp[0];
         if (trim($title) == '') {
             $title = SITE_NAME;
         }
-        $temp_row->title = Services::Filter()->escape_text($title);
 
-        Services::Registry()->delete(METADATA_LITERAL, 'title');
-
-        $mimetype = Services::Registry()->get(METADATA_LITERAL, 'mimetype', '');
-        if (trim($mimetype) == '') {
-            $mimetype = 'text/html';
-        }
-        $temp_row->mimetype = Services::Filter()->escape_text($mimetype);
-
-        Services::Registry()->set(METADATA_LITERAL, 'mimetype', $mimetype);
-
+        $temp_row->title = $this->get('title', '');
+        $temp_row->description = $this->get('description', '');
+        $temp_row->mimetype = $this->get('mimetype', 'text/html');
         $temp_row->base = SITE_BASE_URL;
-
-        $last_modified = Services::Registry()->get('parameters', 'modified_datetime');
-        if (trim($last_modified) == '') {
-            $last_modified = Services::Date()->getDate();
-        }
-        $temp_row->last_modified = Services::Filter()->escape_text($last_modified);
-
         $temp_row->base_url = BASE_URL;
-
-        $temp_row->language_direction = 'lft';
-        if ($temp_row->language_direction == 'lft') {
-            $temp_row->language_direction = '';
-        } else {
-            $temp_row->language_direction = ' dir="rtl"';
-        }
-        //@todo figure out what it's like this
-        $temp_row->language = 'en';
-
-        $temp_row->application_html5 = $application_html5;
-        $temp_row->end = $end;
+        $temp_row->last_modified = $this->get('modified_datetime', $this->get('request_date'));
+        $temp_row->language_direction = $this->get('direction');
+        $temp_row->language = $this->get('language');
+        $temp_row->application_html5 = $this->get('html5');
+        $temp_row->line_end = $this->get('line_end');
 
         $query_results[] = $temp_row;
 

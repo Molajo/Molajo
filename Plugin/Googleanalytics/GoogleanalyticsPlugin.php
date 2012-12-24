@@ -42,7 +42,7 @@ class GoogleanalyticsPlugin extends Plugin
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();";
 
-        Services::Asset($this->assets)->addJSDeclarations($js, 100, 1, 'text/javascript');
+        $this->class_asset->addJSDeclarations($js, 100, 1, 'text/javascript');
 
         return true;
     }

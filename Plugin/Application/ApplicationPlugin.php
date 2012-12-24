@@ -79,7 +79,7 @@ class ApplicationPlugin extends Plugin
 
         $url = $this->get('request_base_url_path', '', 'parameters') . $this->get('request_url', '', 'parameters');
         Services::Registry()->set(PAGE_LITERAL, 'page_url', $url);
-        Services::Asset($this->assets)->addLink($url, 'canonical', 'rel', array(), 1);
+        $this->class_asset->addLink($url, 'canonical', 'rel', array(), 1);
 
         $resource = $this->get('extension_name_path_node', '', 'parameters');
         $url = Services::Registry()->get(PAGE_LITERAL, 'home_url') . '/' . strtolower($resource);
@@ -364,10 +364,10 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageMeta()
     {
-        $title = Services::Registry()->get(METADATA_LITERAL, 'title', '');
-        $description = Services::Registry()->get(METADATA_LITERAL, 'description', '');
-        $author = Services::Registry()->get(METADATA_LITERAL, 'author', '');
-        $robots = Services::Registry()->get(METADATA_LITERAL, 'robots', '');
+        $title = $this->class_metadata->get('title', '');
+        $description = $this->class_metadata->get('description', '');
+        $author = $this->class_metadata->get('author', '');
+        $robots = $this->class_metadata->get('robots', '');
 
         if ($title == '' || $description == '' || $author == '' || $robots == '') {
         } else {
@@ -395,7 +395,7 @@ class ApplicationPlugin extends Plugin
 
             $title .= SITE_NAME;
 
-            Services::Metadata()->set('title', $title);
+            $this->class_metadata->set('title', $title);
         }
 
         if (trim($description) == '') {
@@ -410,7 +410,7 @@ class ApplicationPlugin extends Plugin
                 }
             }
 
-            Services::Metadata()->set('description', $description);
+            $this->class_metadata->set('description', $description);
         }
 
         if (trim($author) == '') {
@@ -419,13 +419,13 @@ class ApplicationPlugin extends Plugin
 
                 if (isset($this->query_results[0]->author_full_name)) {
                     $author = $this->query_results[0]->author_full_name;
-                    Services::Metadata()->set('author', $author);
+                    $this->class_metadata->set('author', $author);
                 }
             }
         }
 
         if (trim($robots) == '') {
-            Services::Metadata()->set('robots', 'follow,index');
+            $this->class_metadata->set('robots', 'follow,index');
         }
 
         return true;
