@@ -4,7 +4,7 @@
  *
  * @package      Niambie
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\MVC\Model;
 
@@ -17,7 +17,7 @@ defined('NIAMBIE') or die;
  *
  * @package      Niambie
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
 class Model
@@ -261,9 +261,9 @@ class Model
                 '', 'languagestrings',
                 LOWER(REPLACE("
                     . $this->db->q($value) . ", ' ', '_')), '',
-                1, 0, 0, 1, '2012-09-13 12:00:00', '0000-00-00 00:00:00', 1, 0, 0,
-                '2012-09-13 12:00:00', 1, '2012-09-13 12:00:00', 1,
-                '2012-09-13 12:00:00', 0, 5, 0, 1, 0, 1, 0, '{}', '{}', '{}', 'string', 0, 0);";
+                1, 0, 0, 1, '2013-09-13 12:00:00', '0000-00-00 00:00:00', 1, 0, 0,
+                '2013-09-13 12:00:00', 1, '2013-09-13 12:00:00', 1,
+                '2013-09-13 12:00:00', 0, 5, 0, 1, 0, 1, 0, '{}', '{}', '{}', 'string', 0, 0);";
 
                 $this->db->setQuery($sql);
                 $this->db->execute();

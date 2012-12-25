@@ -4,7 +4,7 @@
  *
  * @package      Niambie
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Asset;
 
@@ -19,7 +19,7 @@ defined('NIAMBIE') or die;
  *
  * @author       Amy Stephen
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
 Class AssetService
@@ -243,7 +243,7 @@ Class AssetService
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
             throw new \OutOfRangeException
-            ('Asset Service: attempting to get value for unknown property: ' . $key);
+                ('Asset Service: attempting to get value for unknown property: ' . $key);
         }
 
         $this->$key = $default;
@@ -266,7 +266,7 @@ Class AssetService
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
             throw new \OutOfRangeException
-            ('Asset Service: attempting to set value for unknown key: ' . $key);
+                ('Asset Service: attempting to set value for unknown key: ' . $key);
         }
 
         $this->$key = $value;

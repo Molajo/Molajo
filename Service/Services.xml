@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
-    <service name="Registry" static="1" startup="getInstance"/>
-    <service name="Cache" static="1" startup="getInstance"/>
-    <service name="Profiler" static="1" startup="getInstance"/>
-    <service name="Version" static="1" startup="getInstance"/>
-    <service name="Client" static="0" startup="setRegistry"/>
-    <service name="Message" static="0" startup="initialise"/>
-    <service name="Configuration" static="1" startup="getInstance"/>
-    <service name="Permissions" static="0" startup="initialise"/>
-    <service name="Log" static="1" startup="initialise"/>
-    <service name="Event" static="0" startup="initialise"/>
-    <service name="User" static="0" startup="load"/>
-    <service name="Language" static="0" startup="load"/>
-    <service name="Date" static="1" startup="getInstance"/>
+    <service name="Configuration" static="1" startup="getInstance" class="Molajo\Service\Services\"/>
+    <service name="Cache" static="1" startup="getInstance" class="Molajo\Service\Services\"/>
+    <service name="Profiler" static="1" startup="getInstance" class="Molajo\Service\Services\"/>
+    <service name="Message" static="0" startup="initialise" class="Molajo\Service\Services\"/>
+    <service name="Permissions" static="0" startup="initialise" class="Molajo\Service\Services\"/>
+    <service name="Log" static="1" startup="initialise" class="Molajo\Service\Services\"/>
+    <service name="Event" static="0" startup="initialise" class="Molajo\Service\Services\"/>
+    <service name="User" static="0" startup="load" class="Molajo\Service\Services\"/>
+    <service name="Language" static="0" startup="load" class="Molajo\Service\Services\"/>
+    <service name="Date" static="1" startup="getInstance" class="Molajo\Service\Services\"/>
 </services>

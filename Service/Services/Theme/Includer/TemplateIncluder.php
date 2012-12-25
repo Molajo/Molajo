@@ -3,7 +3,7 @@
  * Theme Service Template Includer
  *
  * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
+ * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
 namespace Molajo\Service\Services\Theme\Includer;
@@ -20,7 +20,7 @@ defined('NIAMBIE') or die;
  *
  * @author       Amy Stephen
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
 Class TemplateIncluder extends Includer

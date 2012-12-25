@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
+ * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
 namespace Molajo\Plugin\Ipaddress;
@@ -30,9 +30,11 @@ class IpaddressPlugin extends Plugin
     {
         $fields = $this->retrieveFieldsByType('ip_address');
 
+        $ip_address = Services::Client()->get('ip_address');
+
         if (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $field) {
-                $this->saveField($field, $field['name'], Services::Registry()->get(CLIENT_LITERAL, 'ip_address', ''));
+                $this->saveField($field, $field['name'], $ip_address);
             }
         }
 

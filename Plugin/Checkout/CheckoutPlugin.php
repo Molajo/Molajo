@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
+ * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
 namespace Molajo\Plugin\Checkout;

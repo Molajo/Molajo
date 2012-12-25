@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
+ * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
 namespace Molajo\Plugin\Application;
@@ -364,10 +364,10 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageMeta()
     {
-        $title = $this->class_metadata->get('title', '');
-        $description = $this->class_metadata->get('description', '');
-        $author = $this->class_metadata->get('author', '');
-        $robots = $this->class_metadata->get('robots', '');
+        $title = $this->metadata_service->get('title', '');
+        $description = $this->metadata_service->get('description', '');
+        $author = $this->metadata_service->get('author', '');
+        $robots = $this->metadata_service->get('robots', '');
 
         if ($title == '' || $description == '' || $author == '' || $robots == '') {
         } else {
@@ -395,7 +395,7 @@ class ApplicationPlugin extends Plugin
 
             $title .= SITE_NAME;
 
-            $this->class_metadata->set('title', $title);
+            $this->metadata_service->set('title', $title);
         }
 
         if (trim($description) == '') {
@@ -410,7 +410,7 @@ class ApplicationPlugin extends Plugin
                 }
             }
 
-            $this->class_metadata->set('description', $description);
+            $this->metadata_service->set('description', $description);
         }
 
         if (trim($author) == '') {
@@ -419,13 +419,13 @@ class ApplicationPlugin extends Plugin
 
                 if (isset($this->query_results[0]->author_full_name)) {
                     $author = $this->query_results[0]->author_full_name;
-                    $this->class_metadata->set('author', $author);
+                    $this->metadata_service->set('author', $author);
                 }
             }
         }
 
         if (trim($robots) == '') {
-            $this->class_metadata->set('robots', 'follow,index');
+            $this->metadata_service->set('robots', 'follow,index');
         }
 
         return true;

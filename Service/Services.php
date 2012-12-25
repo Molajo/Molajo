@@ -25,7 +25,7 @@ defined('NIAMBIE') or die;
  *
  * @package      Niambie
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
 Class Services
@@ -66,6 +66,9 @@ Class Services
      */
     public static function __callStatic($name, $arguments)
     {
+        if ($name == 'Registry') {
+            return Frontcontroller::registry();
+        }
         return Frontcontroller::Services()->get($name . 'Service');
     }
 
@@ -79,7 +82,7 @@ Class Services
      *
      * @throws  \BadMethodCallException
      */
-    protected function get($key)
+    protected function get($key, $class='Molajo\\Service\\Services\\')
     {
         try {
 
@@ -87,12 +90,16 @@ Class Services
                 return $this->connections[$key];
             }
 
-            $serviceClass = 'Molajo\\Service\\Services\\'
+            if ($class === null) {
+                $class = 'Molajo\\Service\\Services\\';
+            }
+
+            $serviceClass = $class
                 . substr($key, 0, strlen($key) - strlen('service'))
                 . '\\'
                 . $key;
 
-            return $this->getClassInstance($serviceClass);
+            return $this->getServiceClassInstance($serviceClass);
 
         } catch (\Exception $e) {
 
@@ -105,12 +112,12 @@ Class Services
                 $error_message .= " in {$caller['class']}";
             }
 
-            throw new \Exception($error_message);
+            throw new \BadMethodCallException($error_message);
         }
     }
 
     /**
-     * initiates services defined in the services.xml file
+     * instantiates services defined in the services.xml file and runs onBefore and onAfterStart Events for each
      *
      * @return  boolean
      * @since   1.0
@@ -131,21 +138,33 @@ Class Services
             $static_indicator = (int)$service->attributes()->static;
             $name = (string)$service->attributes()->name;
             $startup = (string)$service->attributes()->startup;
+            $class = (string)$service->attributes()->class;
 
-            $serviceClass = 'Molajo\\Service\\Services\\' . $name . '\\' . $name . 'Service';
+            if ($class === null) {
+                $class = 'Molajo\\Service\\Services\\';
+            }
+
+            $serviceClass = $class . $name . '\\' . $name . 'Service';
+            $pluginClass = $class . $name . '\\' . $name . 'ServicePlugin';
 
             $connectionSucceeded = null;
 
             try {
-                $connection = $this->getClassInstance($serviceClass);
+                $pcConnection = $this->getPluginClassInstance($pluginClass);
+
+                $scConnection = $this->getServiceClassInstance($serviceClass);
+
+                $scConnection = $this->scheduleOnBeforeStartEvent($pcConnection, $pluginClass, $scConnection);
 
                 if (trim($startup) == '' || ($static_indicator == 1 && $startup == 'getInstance')) {
                 } else {
-                    $connectionSucceeded = $this->runStartupMethod($connection, $name . 'Service', $startup);
+                    $connectionSucceeded = $this->runStartupMethod($scConnection, $name . 'Service', $startup);
                 }
 
+                $scConnection = $this->scheduleOnAfterStartEvent($pcConnection, $pluginClass, $scConnection);
+
                 if ($static_indicator == 1) {
-                    $this->set($name . 'Service', $connection, $connectionSucceeded);
+                    $this->set($name . 'Service', $scConnection, $connectionSucceeded);
                 }
 
             } catch (\Exception $e) {
@@ -161,7 +180,7 @@ Class Services
     }
 
     /**
-     * Get Class Instance
+     * Get Service Class Instance
      *
      * @param   string   $entry
      * @param   $folder  $entry
@@ -169,7 +188,7 @@ Class Services
      * @return  mixed
      * @since   1.0
      */
-    private function getClassInstance($serviceClass)
+    private function getServiceClassInstance($serviceClass)
     {
         if (class_exists($serviceClass)) {
         } else {
@@ -180,19 +199,62 @@ Class Services
     }
 
     /**
+     * Get Plugin Class Instance
+     *
+     * @param   string   $entry
+     * @param   $folder  $entry
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function getPluginClassInstance($pluginClass)
+    {
+        if (class_exists($pluginClass)) {
+        } else {
+            return;
+        }
+
+        return new $pluginClass();
+    }
+
+    /**
+     * Schedule On Before Start Event - prior to instantiation of Services Class
+     *
+     * @param   string  $pcConnection
+     * @param   string  $pluginClass
+     * @param   string  $scConnection
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    private function scheduleOnBeforeStartEvent($pcConnection, $pluginClass, $scConnection)
+    {
+        if (method_exists($pluginClass, 'onBeforeStart')) {
+        } else {
+            return $scConnection;
+        }
+
+        $pcConnection->set('service_class', $scConnection);
+        $pcConnection->onBeforeStart();
+        $scConnection = $pcConnection->get('service_class', $scConnection);
+
+        return $scConnection;
+    }
+
+    /**
      * Execute Startup method
      *
-     * @param   $connection
+     * @param   $scConnection
      * @param   $serviceClass
      * @param   $serviceMethod
      *
      * @return  mixed
      * @since   1.0
      */
-    private function runStartupMethod($connection, $serviceClass, $serviceMethod)
+    protected function runStartupMethod($scConnection, $serviceClass, $serviceMethod)
     {
         try {
-            return $connection->$serviceMethod();
+            return $scConnection->$serviceMethod();
 
         } catch (\Exception $e) {
 
@@ -202,6 +264,30 @@ Class Services
 
             throw new \Exception($error);
         }
+    }
+
+    /**
+     * Schedule On After Start Event - after instantiation of Services Class
+     *
+     * @param   string  $pcConnection
+     * @param   string  $pluginClass
+     * @param   string  $scConnection
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function scheduleOnAfterStartEvent($pcConnection, $pluginClass, $scConnection)
+    {
+        if (method_exists($pluginClass, 'onAfterStart')) {
+        } else {
+            return $scConnection;
+        }
+
+        $pcConnection->set('service_class', $scConnection);
+        $pcConnection->onAfterStart();
+        $scConnection = $pcConnection->get('service_class', $scConnection);
+
+        return $scConnection;
     }
 
     /**
@@ -217,7 +303,7 @@ Class Services
      * @since   1.0
      * @throws  \Exception
      */
-    private function set($key, $value = null, $connectionSucceeded = true)
+    protected function set($key, $value = null, $connectionSucceeded = true)
     {
         $i = count($this->message);
 

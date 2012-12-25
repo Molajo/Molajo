@@ -4,7 +4,7 @@
  *
  * @package      Niambie
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Theme\Helper;
 
@@ -29,7 +29,7 @@ defined('NIAMBIE') or die;
  *
  * @author       Amy Stephen
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
 Class ContentHelper
@@ -326,7 +326,7 @@ Class ContentHelper
         $metadata = Services::Registry()->get($registry . METADATA_LITERAL);
         if (count($metadata) > 0) {
             foreach ($metadata as $key => $value) {
-                $this->class_metadata->set($key, array($value));
+                $this->metadata_service->set($key, array($value));
             }
         }
 

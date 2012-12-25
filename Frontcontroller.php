@@ -4,7 +4,7 @@
  *
  * @package      Niambie
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo;
 
@@ -25,7 +25,7 @@ defined('NIAMBIE') or die;
  *
  * @author     Amy Stephen
  * @license    MIT
- * @copyright  2012 Amy Stephen. All rights reserved.
+ * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
  */
 Class Frontcontroller
@@ -40,12 +40,21 @@ Class Frontcontroller
     protected static $services = null;
 
     /**
+     * Frontcontroller::Registry
+     *
+     * @static
+     * @var    object  Registry
+     * @since  1.0
+     */
+    protected static $registry = null;
+
+    /**
      * Assets Service
      *
      * @var    object
      * @since  1.0
      */
-    protected $class_assets = null;
+    protected $asset_service = null;
 
     /**
      * Metadata Service
@@ -53,7 +62,7 @@ Class Frontcontroller
      * @var    object
      * @since  1.0
      */
-    protected $class_metadata = null;
+    protected $metadata_service = null;
 
     /**
      * Configuration Service
@@ -78,6 +87,14 @@ Class Frontcontroller
      * @since  1.0
      */
     protected $site_service = null;
+
+    /**
+     * Application Service
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $application_service = null;
 
     /**
      * $requested_resource_for_route
@@ -135,7 +152,6 @@ Class Frontcontroller
         'application_html5',
         'application_line_end',
         'application_mimetype',
-
         'catalog_alias',
         'catalog_category_id',
         'catalog_extension_instance_id',
@@ -151,29 +167,26 @@ Class Frontcontroller
         'catalog_url_request',
         'catalog_url_sef_request',
         'catalog_view_group_id',
-
-        'class_assets',
-        'class_metadata',
-
+        'asset_service',
+        'metadata_service',
+        'application_service',
+        'site_service',
+        'configuration_service',
         'configuration_application_login_requirement',
         'configuration_application_home_catalog_id',
         'configuration_offline_switch',
         'configuration_sef_url',
-
         'error_code',
         'error_message',
         'error_theme_id',
         'error_page_view_id',
         'redirect_to_id',
-
         'language_current',
         'language_direction',
-
         'permission_filters',
         'permission_action_to_authorisation',
         'permission_action_to_controller',
         'permission_tasks',
-
         'request_action',
         'request_base_url_path',
         'request_catalog_id',
@@ -190,10 +203,8 @@ Class Frontcontroller
         'request_date',
         'request_url',
         'request_using_ssl',
-
         'status_authorised',
         'status_found',
-
         'user_authorised_for_offline_access',
         'user_guest'
     );
@@ -215,15 +226,14 @@ Class Frontcontroller
         'ExceptionService' => 'Molajo\\Service\\Services\\Exception\\ExceptionService',
         'MetadataService' => 'Molajo\\Service\\Services\\Metadata\\MetadataService',
         'RequestService' => 'Molajo\\Service\\Services\\Request\\RequestService',
+        'RegistryService' => 'Molajo\\Service\\Services\\Registry\\RegistryService',
         'RouteService' => 'Molajo\\Service\\Services\\Route\\RouteService',
         'SiteService' => 'Molajo\\Service\\Services\\Site\\SiteService',
         'ThemeService' => 'Molajo\\Service\\Services\\Theme\\ThemeService',
-
         'ContentHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
         'ExtensionHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ExtensionHelper',
         'ThemeHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ThemeHelper',
         'ViewHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ViewHelper',
-
         'Includer' => 'Molajo\\Service\\Services\\Theme\\Includer',
         'HeadIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\HeadIncluder',
         'MessageIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\MessageIncluder',
@@ -233,7 +243,6 @@ Class Frontcontroller
         'TemplateIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\TemplateIncluder',
         'ThemeIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder',
         'WrapIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\WrapIncluder',
-
         'Controller' => 'Molajo\\MVC\\Controller\\Controller',
         'CreateController' => 'Molajo\\MVC\\Controller\\CreateController',
         'DeleteController' => 'Molajo\\MVC\\Controller\\DeleteController',
@@ -241,7 +250,6 @@ Class Frontcontroller
         'LoginController' => 'Molajo\\MVC\\Controller\\LoginController',
         'LogoutController' => 'Molajo\\MVC\\Controller\\LogoutController',
         'UpdateController' => 'Molajo\\MVC\\Controller\\UpdateController',
-
         'Model' => 'Molajo\\MVC\\Model\\Model',
         'CreateModel' => 'Molajo\\MVC\\Model\\CreateModel',
         'DeleteModel' => 'Molajo\\MVC\\Model\\DeleteModel',
@@ -428,11 +436,11 @@ Class Frontcontroller
         $class = $this->class_array['RequestService'];
         $this->request_service = new $class();
 
-        $this->set('request_id', (int) $this->request_service->get('id', 0));
+        $this->set('request_id', (int)$this->request_service->get('id', 0));
         $this->set('request_method', $this->request_service->get('method', 'GET'));
         $this->set('request_mimetype', $this->request_service->get('mimetype', 'text/html'));
         $this->set('request_post_variables', $this->request_service->get('post_variables', array()));
-        $this->set('request_using_ssl', $this->request_service->get('connection')->isSecure());
+        $this->set('request_using_ssl', $this->request_service->get('is_secure'));
 
         /** Site (Base URLs) */
         $class = $this->class_array['SiteService'];
@@ -457,8 +465,10 @@ Class Frontcontroller
 
         $this->application->set('request_uri', substr($requestURI, 1, 9999));
         $this->application->set('applications', $this->configuration_service->getFile('Application', 'Applications'));
-        $this->application->set('base_url_path_with_scheme',
-            $this->request_service->get('base_url_path_with_scheme', 'text/html'));
+        $this->application->set(
+            'base_url_path_with_scheme',
+            $this->request_service->get('base_url_path_with_scheme', 'text/html')
+        );
 
         $this->application->setApplication();
 
@@ -482,16 +492,36 @@ Class Frontcontroller
         } else {
             $this->requested_resource_for_route = $override_url_request;
         }
+        /** Registry */
+        Frontcontroller::Registry($this->class_array['RegistryService']);
 
-        /** Servicess */
-        Frontcontroller::Services($this->class_array['Service'])->initiate();
+        /** Configuration */
+        $this->application->getApplication();
+        $this->application->setApplicationSitePaths();
+
+        Services::Registry()->get('Configuration', '*');
+
+        /** Services */
+        Frontcontroller::Services($this->class_array['Service']);
+        die;
+        Frontcontroller::Services()->initiate();
+
+        /** onAfterStart for Configuration */
+        Services::Profiler()->initialise();
+        Services::Cache()->initialise();
+
+        die;
 
         $this->request_date = Services::Date()->getDate();
 
-        $this->set('language_current',
-            Services::Registry()->get(LANGUAGES_LITERAL, 'Default'));
-        $this->set('language_direction',
-            Services::Registry()->get(LANGUAGES_LITERAL . $this->get('Language_current')));
+        $this->set(
+            'language_current',
+            Services::Registry()->get(LANGUAGES_LITERAL, 'Default')
+        );
+        $this->set(
+            'language_direction',
+            Services::Registry()->get(LANGUAGES_LITERAL . $this->get('Language_current'))
+        );
 
         $this->set('application_html5', Services::Registry()->get(CONFIGURATION_LITERAL, 'application_html5', 1));
 
@@ -530,8 +560,10 @@ Class Frontcontroller
         $this->set('error_page_view_id', Services::Registry()->get(CONFIGURATION_LITERAL, 'error_page_view_id'));
 
         /** Redirects if SSL is required */
-        $this->application->set('url_force_ssl',
-            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_force_ssl', 0));
+        $this->application->set(
+            'url_force_ssl',
+            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'url_force_ssl', 0)
+        );
         $this->application->set('request_using_ssl', $this->get('request_using_ssl'));
 
         $this->application->sslCheck();
@@ -600,26 +632,44 @@ Class Frontcontroller
      */
     protected function route($override_catalog_id = null)
     {
-        $this->set('configuration_application_login_requirement',
-            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'application_login_requirement'));
-        $this->set('configuration_application_home_catalog_id',
-            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id'));
-        $this->set('configuration_offline_switch',
-            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_switch'));
-        $this->set('configuration_sef_url',
-            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'sef_url'));
+        $this->set(
+            'configuration_application_login_requirement',
+            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_login_requirement')
+        );
+        $this->set(
+            'configuration_application_home_catalog_id',
+            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id')
+        );
+        $this->set(
+            'configuration_offline_switch',
+            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_switch')
+        );
+        $this->set(
+            'configuration_sef_url',
+            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'sef_url')
+        );
 
-        $this->set('permission_filters',
-            Services::Registry()->get(PERMISSIONS_LITERAL, 'filters', array()));
-        $this->set('permission_action_to_authorisation',
-            Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation', array()));
-        $this->set('permission_action_to_controller',
-            Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_controller', array()));
-        $this->set('permission_tasks',
-            Services::Registry()->get(PERMISSIONS_LITERAL, 'tasks', array()));
+        $this->set(
+            'permission_filters',
+            Services::Registry()->get(PERMISSIONS_LITERAL, 'filters', array())
+        );
+        $this->set(
+            'permission_action_to_authorisation',
+            Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation', array())
+        );
+        $this->set(
+            'permission_action_to_controller',
+            Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_controller', array())
+        );
+        $this->set(
+            'permission_tasks',
+            Services::Registry()->get(PERMISSIONS_LITERAL, 'tasks', array())
+        );
 
-        $this->set('user_authorised_for_offline_access',
-            Services::Registry()->get('User', 'authorised_for_offline_access', 0));
+        $this->set(
+            'user_authorised_for_offline_access',
+            Services::Registry()->get('User', 'authorised_for_offline_access', 0)
+        );
         $this->set('user_guest', Services::Registry()->get('User', 'guest', 1));
 
         $class = $this->class_array['RouteService'];
@@ -637,7 +687,8 @@ Class Frontcontroller
         $this->parameter_properties_array = $route[1];
 
         if ($this->get('redirect_to_id') == 0
-            && $this->get('error_code') == 0) {
+            && $this->get('error_code') == 0
+        ) {
             return;
         }
 
@@ -697,16 +748,22 @@ Class Frontcontroller
         $this->set('request_task_controller', 'read');
 
         if ($this->get('error_code') == 403) {
-            $this->set('error_message',
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'error_403_message',
+            $this->set(
+                'error_message',
+                Services::Registry()->get(
+                    CONFIGURATION_LITERAL,
+                    'error_403_message',
                     Services::Language()->translate('Not Authorised')
                 )
             );
         }
 
         if ($this->get('error_code') == 404) {
-            $this->set('error_message',
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'error_404_message',
+            $this->set(
+                'error_message',
+                Services::Registry()->get(
+                    CONFIGURATION_LITERAL,
+                    'error_404_message',
                     Services::Language()->translate('Page not found')
                 )
             );
@@ -719,16 +776,23 @@ Class Frontcontroller
         }
 
         if ($this->get('error_code') == 503) {
-            $this->set('error_theme_id',
+            $this->set(
+                'error_theme_id',
                 Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_theme_id')
             );
-            $this->set('error_page_view_id',
+            $this->set(
+                'error_page_view_id',
                 Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_page_view_id')
             );
-            $this->set('error_message',
-                Services::Registry()->get(CONFIGURATION_LITERAL, 'offline_message',
+            $this->set(
+                'error_message',
+                Services::Registry()->get(
+                    CONFIGURATION_LITERAL,
+                    'offline_message',
                     Services::Language()->translate
-                    ('This site is not available.<br /> Please check back again soon.')
+                    (
+                        'This site is not available.<br /> Please check back again soon.'
+                    )
                 )
             );
         }
@@ -1043,7 +1107,7 @@ Class Frontcontroller
     {
         $plugins = array();
 
-        if ((int) Services::Registry()->get($model_registry_name, 'process_plugins') > 0) {
+        if ((int)Services::Registry()->get($model_registry_name, 'process_plugins') > 0) {
 
             $modelPlugins = Services::Registry()->get($model_registry_name, 'plugins');
 
@@ -1092,6 +1156,10 @@ Class Frontcontroller
      */
     public static function Services($class = null)
     {
+        if ($class === null) {
+            $class = 'Molajo\\Service\\Services';
+        }
+
         if (self::$services) {
         } else {
             try {
@@ -1103,5 +1171,34 @@ Class Frontcontroller
         }
 
         return self::$services;
+    }
+
+    /**
+     * Frontcontroller::Registry is accessed using Services::Registry
+     *
+     * @param   null $class
+     *
+     * @static
+     * @return  null|object  Registry
+     * @throws  \RuntimeException
+     * @since   1.0
+     */
+    public static function Registry($class = null)
+    {
+        if ($class === null) {
+             $class = 'Molajo\\Service\\Services\\Registry\\RegistryService';
+        }
+
+        if (self::$registry) {
+        } else {
+            try {
+                self::$registry = new $class();
+
+            } catch (\RuntimeException $e) {
+                throw new \Exception('Frontcontroller: Instantiate Registry Exception: ', $e->getMessage());
+            }
+        }
+
+        return self::$registry;
     }
 }

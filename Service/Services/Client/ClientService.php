@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Client Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Client;
 
@@ -11,29 +13,148 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * Client
+ * Client Service
  *
- * @package     Niambie
- * @subpackage  Service
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class ClientService
 {
+    /**
+     * Ajax
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $ajax = null;
+
+    /**
+     * IP Address
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $ip_address = null;
+
+    /**
+     * Browser
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $browser = null;
+
+    /**
+     * Browser Version
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $browser_version = null;
+
+    /**
+     * User Agent
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $user_agent = null;
+
+    /**
+     * Desktop
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $desktop = null;
+
+    /**
+     * Platform
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $platform = null;
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameter_properties_array = array(
+        'ajax',
+        'ip_address',
+        'browser',
+        'browser_version',
+        'user_agent',
+        'desktop',
+        'platform'
+    );
+
     /**
      * __construct
      *
      * @return  object
      * @since   1.0
      */
-    public function setRegistry()
+    public function __construct()
     {
-        Services::Registry()->createRegistry(CLIENT_LITERAL);
-
         $this->get_ip_address();
         $this->isAjax();
         $this->get_client();
 
         return $this;
+    }
+
+    /**
+     * Get the current value (or default) of the specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function get($key = null, $default = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->parameter_properties_array)) {
+        } else {
+            throw new \OutOfRangeException('Client Service: is attempting to get value for unknown key: ' . $key);
+        }
+
+        if ($this->$key === null) {
+            $this->$key = $default;
+        }
+
+        return $this->$key;
+    }
+
+    /**
+     * Set the value of a specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function set($key, $value = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->parameter_properties_array)) {
+        } else {
+            throw new \OutOfRangeException('Client Service: is attempting to set value for unknown key: ' . $key);
+        }
+
+        $this->$key = $value;
+
+        return $this->$key;
     }
 
     /**
@@ -57,7 +178,7 @@ Class ClientService
             $ip_address = $_SERVER['HTTP_CLIENT_IP'];
         }
 
-        Services::Registry()->set(CLIENT_LITERAL, 'ip_address', $ip_address);
+        $this->set('ip_address', $ip_address);
 
         return $this;
     }
@@ -79,7 +200,7 @@ Class ClientService
             }
         }
 
-        Services::Registry()->set(CLIENT_LITERAL, 'Ajax', $ajax);
+        $this->set('Ajax', $ajax);
 
         return $this;
     }
@@ -120,7 +241,7 @@ Class ClientService
                 $platform = 'unknown';
             }
 
-            Services::Registry()->set(CLIENT_LITERAL, 'platform', $platform);
+            $this->set('platform', $platform);
 
             /** Desktop approximation */
             if ($platform == 'unknown') {
@@ -129,7 +250,7 @@ Class ClientService
                 $desktop = 1;
             }
 
-            Services::Registry()->set(CLIENT_LITERAL, 'desktop', $desktop);
+            $this->set('desktop', $desktop);
 
             /** Browser and Version Approximation */
             $browsers = array(
@@ -166,11 +287,11 @@ Class ClientService
             }
         }
 
-        Services::Registry()->set(CLIENT_LITERAL, 'browser', $browser);
+        $this->set('browser', $browser);
 
-        Services::Registry()->set(CLIENT_LITERAL, 'browser_version', $browser_version);
+        $this->set('browser_version', $browser_version);
 
-        Services::Registry()->set(CLIENT_LITERAL, 'user_agent', $user_agent);
+        $this->set('user_agent', $user_agent);
 
         return $this;
     }

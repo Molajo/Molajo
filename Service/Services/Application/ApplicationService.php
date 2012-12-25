@@ -4,7 +4,7 @@
  *
  * @package      Niambie
  * @license      MIT
- * @copyright    2012 Amy Stephen. All rights reserved.
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Application;
 
@@ -20,7 +20,7 @@ defined('NIAMBIE') or die;
  *
  * @author     Amy Stephen
  * @license    MIT
- * @copyright  2012 Amy Stephen. All rights reserved.
+ * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
  */
 Class ApplicationService
@@ -253,7 +253,7 @@ Class ApplicationService
      * @since   1.0
      * @throws  \Exception
      */
-    protected function getApplication()
+    public function getApplication()
     {
         if (APPLICATION == 'installation') {
 
@@ -307,8 +307,6 @@ Class ApplicationService
         }
 
         Services::Registry()->sort('Configuration');
-        Services::Profiler()->initialise();
-        Services::Cache()->initialise();
 
         return $this;
     }
@@ -375,5 +373,4 @@ Class ApplicationService
 
         return true;
     }
-
 }

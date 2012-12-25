@@ -2,8 +2,8 @@
 <extension type="Plugin" version="1.0">
     <name>EMAIL_PLUGIN_NAME</name>
     <author>Amy Stephen</author>
-    <create_date>August 2012</create_date>
-    <copyright>Copyright (C) 2012 Amy Stephen. All rights reserved.</copyright>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
     <license>MIT</license>
     <author_email>hello@niambie.org</author_email>
     <author_url>http://niambie.org</author_url>

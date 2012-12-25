@@ -1,20 +1,26 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2012 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Version Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Version;
+
+use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;
 
 /**
- * Version information class for Molajo
+ * Version Service
  *
- * @package  Molajo
- * @since    1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
-class VersionService
+Class VersionService
 {
     /**
      * Static instance
@@ -22,44 +28,43 @@ class VersionService
      * @var    object
      * @since  1.0
      */
-    protected static $instance;
+    protected $instance;
 
     /**
-     * Current Molajo Version
+     * Current Niambie Version
      */
     const VERSION = '1.0-DEV';
 
     /**
-     * getInstance
+     * Constructor
      *
-     * @static
-     * @return bool|object
+     * @return void
      * @since  1.0
      */
-    public static function getInstance()
+    public function __construct()
     {
-        if (empty(self::$instance)) {
-            self::$instance = new VersionService();
-        }
-
         if (defined('MOLAJOVERSION')) {
         } else {
-            define('MOLAJOVERSION', self::VERSION);
+            define('MOLAJOVERSION', $this->VERSION);
         }
 
-        return self::$instance;
+        return;
     }
 
     /**
      * Compares a Molajo version with the current one.
      *
-     * @param  string $version Molajo version to compare.
-     * @return int    Returns -1 if older, 0 if it is the same, 1 if version
-     * passed as argument is newer.
+     * @param   string  $version
+     *
+     * @return  int     Indication of Comparison Results:
+     *                  -1 Older
+     *                  0 Same
+     *                  1 Version passed in is newer
+     * @since   1.0
      */
-    public static function compare($version)
+    public function compare($version)
     {
-        $currentVersion = str_replace(' ', '', strtolower(self::VERSION));
+        $currentVersion = str_replace(' ', '', strtolower($this->VERSION));
         $version = str_replace(' ', '', $version);
 
         return version_compare($version, $currentVersion);

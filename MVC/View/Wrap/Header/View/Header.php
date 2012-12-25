@@ -2,7 +2,7 @@
 /**
  * @package    Niambie
  * @subpackage  Wrap
- * @copyright  Copyright (C)  2012 Amy Stephen. All rights reserved.
+ * @copyright  Copyright (C)  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
 defined('NIAMBIE') or die;
