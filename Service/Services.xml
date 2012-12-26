@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
-    <service name="Configuration" static="1" startup="getInstance" class="Molajo\Service\Services\"/>
-    <service name="Cache" static="1" startup="getInstance" class="Molajo\Service\Services\"/>
-    <service name="Profiler" static="1" startup="getInstance" class="Molajo\Service\Services\"/>
-    <service name="Message" static="0" startup="initialise" class="Molajo\Service\Services\"/>
-    <service name="Permissions" static="0" startup="initialise" class="Molajo\Service\Services\"/>
-    <service name="Log" static="1" startup="initialise" class="Molajo\Service\Services\"/>
-    <service name="Event" static="0" startup="initialise" class="Molajo\Service\Services\"/>
-    <service name="User" static="0" startup="load" class="Molajo\Service\Services\"/>
-    <service name="Language" static="0" startup="load" class="Molajo\Service\Services\"/>
-    <service name="Date" static="1" startup="getInstance" class="Molajo\Service\Services\"/>
+    <service name="Registry" startup="1" class="Molajo\Service\Services\Registry"/>
+    <service name="Configuration" startup="1" class="Molajo\Service\Services\Configuration"/>
+    <service name="Cache" static="1" startup="1" startup_method="getInstance" class="Molajo\Service\Services\"/>
+    <service name="Profiler" static="1" startup="1" startup_method="getInstance" class="Molajo\Service\Services\"/>
+    <service name="Message" static="0" startup="1" startup_method="initialise" class="Molajo\Service\Services\"/>
+    <service name="Permissions" static="0" startup="1" startup_method="initialise" class="Molajo\Service\Services\"/>
+    <service name="Log" static="1" startup="1" startup_method="initialise" class="Molajo\Service\Services\"/>
+    <service name="Event" static="0" startup="1" startup_method="initialise" class="Molajo\Service\Services\"/>
+    <service name="User" static="0" startup="1" startup_method="load" class="Molajo\Service\Services\"/>
+    <service name="Language" static="0" startup="1" startup_method="load" class="Molajo\Service\Services\"/>
+    <service name="Date" static="1" startup="1" startup_method="getInstance" class="Molajo\Service\Services\"/>
 </services>

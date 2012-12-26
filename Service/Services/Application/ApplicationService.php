@@ -15,13 +15,24 @@ defined('NIAMBIE') or die;
 /**
  * Application Services
  *
- * 1. Application Identification
- * 2. Installation
+ * 1. Identifies the current Application
+ * 2. Load Application Configuration
+ * 3. Defines Site Paths for Application
  *
  * @author     Amy Stephen
  * @license    MIT
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
+ *
+ * Usage:
+ *
+ *  To retrieve Configuration data for the Application:
+ *
+ *  Services::Application()->get($key);
+ *
+ *  Services::Application()->set($key, $value);
+ *
+ *  System Class, not a Frontend Developer Resource
  */
 Class ApplicationService
 {
@@ -82,20 +93,64 @@ Class ApplicationService
     protected $request_using_ssl = false;
 
     /**
+     * Calling Class
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $calling_class = false;
+
+    /**
+     * Calling Method
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $calling_method = false;
+
+    /**
+     * Application Configuration Data
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $parameters = array();
+
+    /**
      * List of Properties
      *
      * @var    object
      * @since  1.0
      */
     protected $parameter_properties_array = array(
+        'parameters',
         'request_uri',
         'applications',
         'base_url_path_with_scheme',
         'requested_resource_for_route',
         'base_url_path_for_application',
         'url_force_ssl',
-        'request_using_ssl'
+        'request_using_ssl',
+        'calling_class',
+        'calling_method'
     );
+
+    /**
+     * Class Constructor
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function __construct ()
+    {
+        $trace = debug_backtrace();
+        if (isset($trace[1])) {
+            $this->set('calling_class', $trace[1]['class']);
+            $this->set('calling_method', $trace[1]['method']);
+        }
+
+        return;
+    }
 
     /**
      * Get the current value (or default) of the specified key
@@ -106,21 +161,23 @@ Class ApplicationService
      * @return  mixed
      * @since   1.0
      */
-    public function get($key = null, $default = null)
+    public function get($key, $default = null)
     {
+        $key = strtolower($key);
+
         if (in_array($key, $this->parameter_properties_array)) {
-
-        } else {
-            throw new \OutOfRangeException
-            ('Site Service: attempting to get value for unknown property: ' . $key);
-        }
-
-        if (isset($this->$key)) {
+            if (isset($this->$key)) {
+                $this->$key = $default;
+            }
             return $this->$key;
         }
 
-        $this->$key = $default;
-        return $this->$key;
+        if (isset($this->parameters[$key])) {
+            return $this->parameters[$key];
+        }
+
+        $this->parameters[$key] = $default;
+        return $this->parameters[$key];
     }
 
     /**
@@ -137,19 +194,18 @@ Class ApplicationService
         $key = strtolower($key);
 
         if (in_array($key, $this->parameter_properties_array)) {
-        } else {
-            throw new \OutOfRangeException
-            ('Site Service: attempting to set value for unknown key: ' . $key);
+            $this->$key = $value;
+            return $this->$key;
         }
 
-        $this->$key = $value;
-        return $this->$key;
+        $this->parameters[$key] = $value;
+        return $this->parameters[$key];
     }
 
     /**
-     * Identify current application and page request
+     * Using Request URI, identify current application and page request
      *
-     * @return  boolean
+     * @return  void
      * @since   1.0
      */
     public function setApplication()
@@ -207,7 +263,7 @@ Class ApplicationService
     }
 
     /**
-     * Append Application to Base URL with Scheme for use setting links
+     * Append Application Node to Scheme + Base URL for use creating URLs for the Application
      *
      * @return  void
      * @since   1.0
@@ -220,7 +276,9 @@ Class ApplicationService
     }
 
     /**
-     * Check to see if secure access to the application is required by configuration
+     * Determine if the Application must use SSL, according to Configuration Data
+     * If so, determine if SSL is already in use
+     * If not, redirect using HTTPS
      *
      * @return  void
      * @since   1.0
@@ -247,9 +305,9 @@ Class ApplicationService
     }
 
     /**
-     * Get the application data and store it in the registry
+     * Retrieve Application Configuration Data
      *
-     * @return  ConfigurationService
+     * @return  void
      * @since   1.0
      * @throws  \Exception
      */
@@ -257,47 +315,45 @@ Class ApplicationService
     {
         if (APPLICATION == 'installation') {
 
-            Services::Registry()->set('Configuration', 'application_id', 0);
-            Services::Registry()->set('Configuration', 'application_catalog_type_id', CATALOG_TYPE_APPLICATION);
-            Services::Registry()->set('Configuration', 'application_name', APPLICATION);
-            Services::Registry()->set('Configuration', 'application_description', APPLICATION);
-            Services::Registry()->set('Configuration', 'application_path', APPLICATION);
+            $this->set('Configuration', 'application_id', 0);
+            $this->set('Configuration', 'application_catalog_type_id', CATALOG_TYPE_APPLICATION);
+            $this->set('Configuration', 'application_name', APPLICATION);
+            $this->set('Configuration', 'application_description', APPLICATION);
+            $this->set('Configuration', 'application_path', APPLICATION);
 
         } else {
 
             try {
-                $profiler_service = 0;
-
                 $controllerClass = CONTROLLER_CLASS;
                 $controller = new $controllerClass();
                 $controller->getModelRegistry('Datasource', 'Application', 1);
+
                 $controller->set('name_key_value', APPLICATION, 'model_registry');
+
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
                 if ($item === false) {
                     throw new \Exception ('ConfigurationService: Error executing getApplication Query');
                 }
 
-                Services::Registry()->set('Configuration', 'application_id', (int)$item->id);
-                Services::Registry()->set(
+                $this->set('Configuration', 'application_id', (int)$item->id);
+                $this->set(
                     'Configuration',
                     'application_catalog_type_id',
                     (int)$item->catalog_type_id
                 );
-                Services::Registry()->set('Configuration', 'application_name', $item->name);
-                Services::Registry()->set('Configuration', 'application_path', $item->path);
-                Services::Registry()->set('Configuration', 'application_description', $item->description);
-
-                $profiler_service = 0;
+                $this->set('Configuration', 'application_name', $item->name);
+                $this->set('Configuration', 'application_path', $item->path);
+                $this->set('Configuration', 'application_description', $item->description);
 
                 $parameters = Services::Registry()->getArray('ApplicationDatasourceParameters');
                 foreach ($parameters as $key => $value) {
-                    Services::Registry()->set('Configuration', $key, $value);
+                    $this->set('Configuration', $key, $value);
                 }
 
                 $metadata = Services::Registry()->getArray('ApplicationDatasourceMetadata');
                 if (count($metadata) > 0) {
                     foreach ($metadata as $key => $value) {
-                        Services::Registry()->set('Configuration', 'metadata_' . $key, $value);
+                        $this->set('Configuration', 'metadata_' . $key, $value);
                     }
                 }
 
@@ -306,59 +362,57 @@ Class ApplicationService
             }
         }
 
-        Services::Registry()->sort('Configuration');
+        sort($this->configuration);
 
-        return $this;
+        return;
     }
 
     /**
-     * Establish media, cache, log, etc., locations for site for application use
+     * Establish Site paths for media, cache, log, etc., locations as configured for this Application
      *
-     * Called out of the Configurations Class construct - paths needed in startup process for other services
-     *
-     * @return  mixed
+     * @return  void
      * @since   1.0
      */
-    protected function setApplicationSitePaths()
+    public function setApplicationSitePaths()
     {
-        Services::Registry()->set('Configuration', 'site_base_url', BASE_URL);
+        $this->set('Configuration', 'site_base_url', BASE_URL);
 
-        $path = Services::Registry()->get('Configuration', 'application_path', '');
-        Services::Registry()->set('Configuration', 'application_base_url', BASE_URL . $path);
+        $path = $this->get('Configuration', 'application_path', '');
+        $this->set('Configuration', 'application_base_url', BASE_URL . $path);
 
         if (defined('SITE_NAME')) {
         } else {
             define('SITE_NAME',
-            Services::Registry()->get('Configuration', 'site_name', SITE_ID));
+            $this->get('Configuration', 'site_name', SITE_ID));
         }
 
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
             define('SITE_CACHE_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'system_cache_folder', 'cache'));
+                . '/' . $this->get('Configuration', 'system_cache_folder', 'cache'));
         }
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
 
             define('SITE_LOGS_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'system_logs_folder', 'logs'));
+                . '/' . $this->get('Configuration', 'system_logs_folder', 'logs'));
         }
 
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
             define('SITE_MEDIA_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get('Configuration', 'system_media_folder', 'media'));
+                . '/' . $this->get('Configuration', 'system_media_folder', 'media'));
         }
         if (defined('SITE_MEDIA_URL')) {
         } else {
             define('SITE_MEDIA_URL', SITE_BASE_URL_RESOURCES
-                . '/' . Services::Registry()->get('Configuration', 'system_media_url', 'media'));
+                . '/' . $this->get('Configuration', 'system_media_url', 'media'));
         }
 
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
             define('SITE_TEMP_FOLDER', SITE_BASE_PATH
-                . '/' . Services::Registry()->get(
+                . '/' . $this->get(
                 'Configuration',
                 'system_temp_folder',
                 SITE_BASE_PATH . '/temp'
@@ -368,9 +422,9 @@ Class ApplicationService
         if (defined('SITE_TEMP_URL')) {
         } else {
             define('SITE_TEMP_URL', SITE_BASE_URL_RESOURCES
-                . '/' . Services::Registry()->get('Configuration', 'system_temp_url', 'temp'));
+                . '/' . $this->get('Configuration', 'system_temp_url', 'temp'));
         }
 
-        return true;
+        return;
     }
 }

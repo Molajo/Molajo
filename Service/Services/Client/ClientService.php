@@ -19,13 +19,23 @@ defined('NIAMBIE') or die;
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
+ *
+ * Usage Instructions:
+ *
+ * To retrieve a single value:
+ * Services::Client()->get('property');
+ *  where property = 'ajax', 'ip_address', 'browser', 'browser_version', 'user_agent', 'desktop', 'platform'
+ *
+ * To retrieve all values:
+ * Services::Client()->get('*');
+ *
  */
 Class ClientService
 {
     /**
      * Ajax
      *
-     * @var    string
+     * @var    bool
      * @since  1.0
      */
     protected $ajax = null;
@@ -81,7 +91,7 @@ Class ClientService
     /**
      * List of Properties
      *
-     * @var    object
+     * @var    array
      * @since  1.0
      */
     protected $parameter_properties_array = array(
@@ -118,9 +128,17 @@ Class ClientService
      * @return  mixed
      * @since   1.0
      */
-    protected function get($key = null, $default = null)
+    public function get($key = null, $default = null)
     {
         $key = strtolower($key);
+
+        if ($key == '*') {
+            $results = array();
+            foreach ($this->parameter_properties_array as $parameter) {
+                $results[$key] = $this->$key;
+            }
+            return;
+        }
 
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
@@ -143,7 +161,7 @@ Class ClientService
      * @return  mixed
      * @since   1.0
      */
-    protected function set($key, $value = null)
+    public function set($key, $value = null)
     {
         $key = strtolower($key);
 
@@ -163,7 +181,7 @@ Class ClientService
      * @return  object
      * @since   1.0
      */
-    public function get_ip_address()
+    protected function get_ip_address()
     {
         if (empty($_SERVER['HTTP_CLIENT_IP'])) {
 
@@ -186,10 +204,10 @@ Class ClientService
     /**
      * Tests to determine if Request is an Ajax call
      *
-     * @return  ClientService
+     * @return  void
      * @since   1.0
      */
-    public function isAjax()
+    protected function isAjax()
     {
         $ajax = 0;
 
@@ -202,19 +220,20 @@ Class ClientService
 
         $this->set('Ajax', $ajax);
 
-        return $this;
+        return;
     }
 
     /**
-     * get (very rough and not very reliable) client information
+     * get client information using HTTP_USER_AGENT (very rough and not very reliable)
      *
-     * - might be *somewhat* (maybe better than nothing) for very high-level guess about desktop versus mobile
-     *   in those cases where it's critical to handle the payload or interface differently
+     * - might be *somewhat* (maybe better than nothing) helpful for very high-level guess about desktop versus mobile
+     *   in those cases where it's critical to handle the payload or interface differently on the server side
+     *   if this disturbs you to even read this comment avoid using this data and nothing will rub off on you.
      *
-     * @return  object
+     * @return  void
      * @since   1.0
      */
-    public function get_client()
+    protected function get_client()
     {
         $user_agent = '';
 
@@ -293,6 +312,6 @@ Class ClientService
 
         $this->set('user_agent', $user_agent);
 
-        return $this;
+        return;
     }
 }

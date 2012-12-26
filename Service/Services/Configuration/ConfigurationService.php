@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Configuration Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Configuration;
 
@@ -12,11 +14,12 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * Configuration
+ * Configuration Service
  *
- * @package     Niambie
- * @subpackage  Service
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class ConfigurationService
 {
@@ -125,175 +128,173 @@ Class ConfigurationService
     protected $valid_value_attributes;
 
     /**
-     * Retrieve Site and Application data, set constants and paths
+     * Valid Field Attribute Defaults
      *
-     * @return  object
-     * @since   1.0
+     * @var    array
+     * @since  1.0
      */
-    public function initialise()
-    {
-        $this->getFieldProperties();
-
-        return $this;
-    }
+    protected $valid_field_attributes_default;
 
     /**
-     * Retrieve and load valid properties for fields, data models and data objects
+     * Valid Join Attribute Defaults
      *
-     * @return  object
-     * @throws  \Exception
+     * @var    array
+     * @since  1.0
+     */
+    protected $valid_join_attributes_default;
+
+    /**
+     * Valid Foreignkey Attribute Defaults
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $valid_foreignkey_attributes_default;
+
+    /**
+     * Valid Criteria Attribute Defaults
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $valid_criteria_attributes_default;
+
+    /**
+     * Valid Children Attribute Defaults
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $valid_children_attributes_default;
+
+    /**
+     * Valid Plugin Attribute Defaults
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $valid_plugin_attributes_default;
+
+    /**
+     * Valid Value Attribute Defaults
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $valid_value_attributes_default;
+
+    /**
+     * Calling Class
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $calling_class;
+
+    /**
+     * Calling Method
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $calling_method;
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameter_properties_array = array(
+        'calling_class',
+        'calling_method',
+        'valid_dataobject_types',
+        'valid_dataobject_attributes',
+        'valid_model_types',
+        'valid_model_attributes',
+        'valid_data_types',
+        'valid_queryelements_attributes',
+        'valid_field_attributes',
+        'valid_join_attributes',
+        'valid_foreignkey_attributes',
+        'valid_criteria_attributes',
+        'valid_children_attributes',
+        'valid_plugin_attributes',
+        'valid_value_attributes',
+        'valid_field_attributes_defaults',
+        'valid_join_attributes_defaults',
+        'valid_foreignkey_attributes_defaults',
+        'valid_criteria_attributes_defaults',
+        'valid_children_attributes_defaults',
+        'valid_plugin_attributes_defaults',
+        'valid_value_attributes_defaults'
+    );
+
+    /**
+     * Class Constructor
+     *
+     * @return  void
      * @since   1.0
      */
-    protected function getFieldProperties()
+    public function __construct()
     {
-        Services::Registry()->createRegistry('Fields');
-
-        $xml = $this->getFile('Application', 'Fields');
-        if ($xml === false) {
-            throw new \Exception('Configuration: getFieldProperties File not found.');
+        $trace = debug_backtrace();
+        if (isset($trace[1])) {
+            $this->set('calling_class', $trace[1]['class']);
+            $this->set('calling_method', $trace[1]['method']);
         }
-
-        $this->loadFieldProperties($xml, 'dataobjecttypes', 'dataobjecttype');
-
-        $this->loadFieldPropertiesWithAttributes($xml, 'dataobjectattributes', 'dataobjectattribute');
-
-        $this->loadFieldProperties($xml, 'modeltypes', 'modeltype');
-
-        $this->loadFieldPropertiesWithAttributes($xml, 'modelattributes', 'modelattribute');
-
-        $this->loadFieldProperties($xml, 'datatypes', 'datatype');
-
-        $this->loadFieldProperties($xml, 'queryelements', 'queryelement');
-
-        $list = Services::Registry()->get(FIELDS_LITERAL, 'queryelements');
-        foreach ($list as $item) {
-            $field = explode(',', $item);
-            $this->loadFieldProperties($xml, $field[0], $field[1]);
-        }
-
-        $this->valid_dataobject_types = Services::Registry()->get(FIELDS_LITERAL, 'dataobjecttypes');
-        $this->valid_dataobject_attributes = Services::Registry()->get(FIELDS_LITERAL, 'dataobjectattributes');
-
-        $this->valid_model_types = Services::Registry()->get(FIELDS_LITERAL, 'modeltypes');
-        $this->valid_model_attributes = Services::Registry()->get(FIELDS_LITERAL, 'modelattributes');
-
-        $this->valid_data_types = Services::Registry()->get(FIELDS_LITERAL, 'datatypes');
-        $this->valid_field_attributes = Services::Registry()->get(FIELDS_LITERAL, FIELDS_LITERAL);
-
-        $this->valid_join_attributes = Services::Registry()->get(FIELDS_LITERAL, 'joins');
-        $this->valid_foreignkey_attributes = Services::Registry()->get(FIELDS_LITERAL, 'foreignkeys');
-        $this->valid_criteria_attributes = Services::Registry()->get(FIELDS_LITERAL, 'criterion');
-        $this->valid_children_attributes = Services::Registry()->get(FIELDS_LITERAL, 'children');
-        $this->valid_plugin_attributes = Services::Registry()->get(FIELDS_LITERAL, 'plugins');
-        $this->valid_value_attributes = Services::Registry()->get(FIELDS_LITERAL, 'values');
-
-        $datalistsArray = array();
-        $extensionArray = array();
-        $datalistsArray = $this->loadDatalists($datalistsArray, PLATFORM_MVC . '/Model/Datalist');
-        $extensionArray = $this->loadDatalists($datalistsArray, EXTENSIONS . '/Model/Datalist');
-        array_merge($datalistsArray, $extensionArray);
-        sort($datalistsArray);
-        $datalistsArray = array_unique($datalistsArray);
-
-        Services::Registry()->set(FIELDS_LITERAL, 'Datalists', $datalistsArray);
 
         return;
     }
 
     /**
-     * loadFieldProperties
+     * Create a cache entry or set a parameter value
      *
-     * @param   string  $input
-     * @param   string  $plural
-     * @param   string  $singular
+     * @param   string  $key    md5 name uniquely identifying content
+     * @param   mixed   $value  Data to be serialized and then saved as cache
      *
-     * @return  bool
+     * @return  mixed
      * @since   1.0
      */
-    protected function loadFieldProperties($xml, $plural, $singular)
+    public function set($key, $value)
     {
-        if (isset($xml->$plural->$singular)) {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->parameter_properties_array)) {
         } else {
-            return false;
+            throw new \OutOfRangeException
+            ('Configuration Service: attempting to set value for unknown key: ' . $key);
         }
 
-        $types = $xml->$plural->$singular;
-        if (count($types) === 0) {
-            return false;
-        }
+        $this->$key = $value;
 
-        $typeArray = array();
-        foreach ($types as $type) {
-            $typeArray[] = (string)$type;
-        }
-
-        Services::Registry()->set(FIELDS_LITERAL, $plural, $typeArray);
-
-        return true;
+        return;
     }
 
     /**
-     * loadFieldPropertiesWithAttributes
+     * Retrieve value of Key
      *
-     * @param   string  $input
-     * @param   string  $plural
-     * @param   string  $singular
+     * @param   string  $key
+     * @param   null    $default
      *
-     * @return  bool
+     * @return  bool|mixed
      * @since   1.0
      */
-    protected function loadFieldPropertiesWithAttributes($xml, $plural, $singular)
+    public function get($key, $default = null)
     {
-        if (isset($xml->$plural->$singular)) {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->parameter_properties_array)) {
         } else {
-            return false;
+            throw new \OutOfRangeException
+            ('Configuration Service: attempting to set value for unknown key: ' . $key);
         }
 
-        $typeArray = array();
-        $typeDefaultArray = array();
-        foreach ($xml->$plural->$singular as $type) {
-            $typeArray[] = (string)$type['name'];
-            $typeDefaultArray[(string)$type['name']] = (string)$type['default'];
+        if ($this->$key === null) {
+            $this->$key = $default;
         }
 
-        Services::Registry()->set(FIELDS_LITERAL, $plural, $typeArray);
-        Services::Registry()->set(FIELDS_LITERAL, $plural . 'Defaults', $typeDefaultArray);
-
-        return true;
-    }
-
-    /**
-     * loadDatalists
-     *
-     * @param   string  $datalistsArray
-     * @param   string  $folder
-     *
-     * @return  array
-     * @since   1.0
-     * @throws  \Exception
-     */
-    protected function loadDatalists($datalistsArray, $folder)
-    {
-        try {
-
-            $dirRead = dir($folder);
-
-            $path = $dirRead->path;
-
-            while (false !== ($entry = $dirRead->read())) {
-                if (is_dir($path . '/' . $entry)) {
-                } else {
-                    $datalistsArray[] = substr($entry, 0, strlen($entry) - 4);
-                }
-            }
-
-            $dirRead->close();
-
-        } catch (\Exception $e) {
-            throw new \Exception('Configuration: Cannot find Datalists file for folder: ' . $folder);
-        }
-
-        return $datalistsArray;
+        return $this->$key;
     }
 
     /**
@@ -362,7 +363,8 @@ Class ConfigurationService
 
         $path_and_file = $this->locateFile($model_type, $model_name, $parameter_registry);
         if ($path_and_file === false) {
-            throw new \Exception('Configuration: Cannot find XML file for Model Type: '
+            throw new \Exception
+            ('Configuration: Cannot find XML file for Model Type: '
                 . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
 
         }
@@ -373,7 +375,8 @@ Class ConfigurationService
 
         $xml = simplexml_load_string($results);
         if ($xml === false) {
-            throw new \Exception('Configuration: getModel cannot process XML file for Model Type: '
+            throw new \Exception
+            ('Configuration: getModel cannot process XML file for Model Type: '
                 . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
         }
 
@@ -416,7 +419,7 @@ Class ConfigurationService
             $xml,
             'fields',
             'field',
-            $this->valid_field_attributes
+            $this->get('valid_field_attributes')
         );
 
         $this->setElementsRegistry(
@@ -424,7 +427,7 @@ Class ConfigurationService
             $xml,
             'joins',
             'join',
-            $this->valid_join_attributes
+            $this->get('valid_join_attributes')
         );
 
         $this->setElementsRegistry(
@@ -432,7 +435,7 @@ Class ConfigurationService
             $xml,
             'foreignkeys',
             'foreignkey',
-            $this->valid_foreignkey_attributes
+            $this->get('valid_foreignkey_attributes')
         );
 
         $this->setElementsRegistry(
@@ -440,7 +443,7 @@ Class ConfigurationService
             $xml,
             'criteria',
             'where',
-            $this->valid_criteria_attributes
+            $this->get('valid_criteria_attributes')
         );
 
         $this->setElementsRegistry(
@@ -448,7 +451,7 @@ Class ConfigurationService
             $xml,
             'children',
             'child',
-            $this->valid_children_attributes
+            $this->get('valid_children_attributes')
         );
 
         $this->setElementsRegistry(
@@ -456,7 +459,7 @@ Class ConfigurationService
             $xml,
             'plugins',
             'plugin',
-            $this->valid_plugin_attributes
+            $this->get('valid_plugin_attributes')
         );
 
         $this->setElementsRegistry(
@@ -464,7 +467,7 @@ Class ConfigurationService
             $xml,
             'values',
             'value',
-            $this->valid_value_attributes
+            $this->get('valid_value_attributes')
         );
 
         $this->getCustomFields($xml, $model_registry);
@@ -530,7 +533,6 @@ Class ConfigurationService
     /**
      * getIncludeCode parses the xml string repeatedly until all include statements have been processed
      *
-     * @static
      * @param   string  $xml_string
      *
      * @return  mixed
@@ -584,7 +586,6 @@ Class ConfigurationService
     /**
      * Store Data Object Definitions into Registry
      *
-     * @static
      * @param   object  $DataobjectRegistry
      * @param   object  $xml
      *
@@ -595,14 +596,14 @@ Class ConfigurationService
     protected function setDataobjectRegistry($DataobjectRegistry, $xml)
     {
 
-        $doArray = Services::Registry()->get(FIELDS_LITERAL, 'Dataobjectattributes');
+        $doArray = $this->get('valid_dataobject_attributes');
 
         foreach ($xml->attributes() as $key => $value) {
-            if (in_array((string) $key, $doArray)) {
+            if (in_array((string)$key, $doArray)) {
                 Services::Registry()->set($DataobjectRegistry, $key, (string)$value);
             } else {
-                throw new \Exception ('Configuration: setDataobjectRegistry encountered Invalid Dataobject Attributes '
-                    . $key);
+                throw new \Exception
+                ('Configuration: setDataobjectRegistry encountered Invalid Dataobject Attributes ' . $key);
             }
         }
 
@@ -620,7 +621,6 @@ Class ConfigurationService
     /**
      * Store Model Registry data into Registry
      *
-     * @static
      * @param   string  $model_registry
      * @param   object  $xml
      *
@@ -629,7 +629,7 @@ Class ConfigurationService
      */
     protected function setModelRegistry($model_registry, $xml)
     {
-        $modelArray = Services::Registry()->get(FIELDS_LITERAL, 'Modelattributes');
+        $modelArray = $this->get('valid_model_attributes');
 
         foreach ($xml->attributes() as $key => $value) {
 
@@ -652,7 +652,6 @@ Class ConfigurationService
     /**
      * Define elements for Data Model to Registry
      *
-     * @static
      * @param   string  $model_registry
      * @param   object  $xml
      * @param   string  $plural
@@ -684,7 +683,8 @@ Class ConfigurationService
 
                 if (in_array($key, $valid_attributes)) {
                 } else {
-                    throw new \Exception ('Configuration: setElementsRegistry encountered Invalid Model Attribute '
+                    throw new \Exception
+                    ('Configuration: setElementsRegistry encountered Invalid Model Attribute '
                         . $key . ' for ' . $model_registry);
                 }
 
@@ -749,7 +749,6 @@ Class ConfigurationService
     /**
      * setJoinFields - processes one set of join field definitions, updating the registry
      *
-     * @static
      * @param   array  $itemArray
      *
      * @return  array
@@ -810,7 +809,6 @@ Class ConfigurationService
     /**
      * getCustomFields extracts field information for all customfield groups
      *
-     * @static
      * @param   object  $xml
      * @param   string  $model_registry
      *
@@ -875,7 +873,6 @@ Class ConfigurationService
     /**
      * Load Custom Fields for a specific Group -- this is called once for each custom field type for a Model
      *
-     * @static
      * @param   $model_registry
      * @param   $customfield
      *
@@ -1059,7 +1056,8 @@ Class ConfigurationService
             if (file_exists($path)) {
                 return $path;
             }
-            throw new \Exception ('Configuration: locateFile() Cannot find Sites XML File.');
+            throw new \Exception
+            ('Configuration: locateFile() Cannot find Sites XML File.');
         }
 
         if ($model_type == 'Dataobject') {
@@ -1292,11 +1290,16 @@ Class ConfigurationService
      * 6. Extension (current extension, ex. Resource, Menuitem, Template, etc.)
      * 7. Primary Extension (always a Resource, whether distribution or core)
      *
-     * @param   $model_type
-     * @param   $model_name
-     * @param   $extension_path
-     * @param   $primary_extension_path
-     * @param   $file_or_folder
+     * @param   string  $model_type
+     * @param   string  $model_name
+     * @param   string  $extension_path
+     * @param   string  $primary_extension_path
+     * @param   string  $theme_path
+     * @param   string  $page_view_path
+     * @param   string  $template_view_path
+     * @param   string  $wrap_view_path
+     * @param   string  $view_path_portion
+     * @param   string  $file_or_folder
      *
      * @return  string
      * @since   1.0

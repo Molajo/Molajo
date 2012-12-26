@@ -62,18 +62,6 @@ Class RegistryService
     protected $registry = array();
 
     /**
-     * Class constructor
-     *
-     * @since   1.0
-     * @return  object
-     */
-    public function __construct()
-    {
-        $this->initialise();
-        return $this;
-    }
-
-    /**
      * Initialise Registry Arrays
      *
      * @return  object

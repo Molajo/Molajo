@@ -121,7 +121,7 @@ Class CacheService
      * @since  1.0
      */
     protected $parameter_properties_array = array(
-        'cache',
+        'cache_service',
         'system_cache_folder',
         'cache_handler',
         'cache_time',

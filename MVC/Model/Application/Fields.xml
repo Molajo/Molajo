@@ -61,6 +61,10 @@
     <modelattributes>
         <modelattribute name="name" default=""/>
         <modelattribute name="data_object" default=" "/>
+        <modelattribute name="class" default=""/>
+        <modelattribute name="startup" default="0"/>
+        <modelattribute name="startup_method" default=""/>
+        <modelattribute name="static" default=""/>
         <modelattribute name="table_name" default=""/>
         <modelattribute name="primary_key" default="id"/>
         <modelattribute name="primary_key_value" default=""/>
@@ -87,6 +91,7 @@
         <modelattribute name="model_offset" default="0"/>
         <modelattribute name="multiple" default="0"/>
         <modelattribute name="size" default="1"/>
+
     </modelattributes>
 
     <datatypes>
@@ -117,13 +122,13 @@
     </datatypes>
 
     <queryelements>
-        <queryelement>fields,field</queryelement>
-        <queryelement>joins,join</queryelement>
-        <queryelement>foreignkeys,foreignkey</queryelement>
-        <queryelement>criterion,criteria</queryelement>
-        <queryelement>children,child</queryelement>
-        <queryelement>plugins,plugin</queryelement>
-        <queryelement>values,value</queryelement>
+        <queryelement>fields,field,valid_field_attributes</queryelement>
+        <queryelement>joins,join,valid_join_attributes</queryelement>
+        <queryelement>foreignkeys,foreignkey,valid_foreignkey_attributes</queryelement>
+        <queryelement>criterion,criteria,valid_criteria_attributes</queryelement>
+        <queryelement>children,child,valid_children_attributes</queryelement>
+        <queryelement>plugins,plugin,valid_plugin_attributes</queryelement>
+        <queryelement>values,value,valid_value_attributes</queryelement>
     </queryelements>
 
     <fields>

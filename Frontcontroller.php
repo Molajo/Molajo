@@ -425,13 +425,18 @@ Class Frontcontroller
         /** PHP Minimum */
         $results = version_compare(PHP_VERSION, '5.3', '<');
         if ($results == 1) {
-            throw new \Exception('Frontcontroller: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
+            throw new \Exception
+                ('Frontcontroller: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
         }
+
+        /** Services */
+        Frontcontroller::Services($this->class_array['Service']);
 
         /** Configuration */
         $class = $this->class_array['ConfigurationService'];
         $this->configuration_service = new $class();
-
+        die;
+//Frontcontroller::Services()->startup();
         /** Request */
         $class = $this->class_array['RequestService'];
         $this->request_service = new $class();
@@ -453,7 +458,7 @@ Class Frontcontroller
         /** Application (Set Application -- Sequence needed for Installation) */
         $class = $this->class_array['ApplicationService'];
         $this->application = new $class();
-
+die;
         $p1 = $this->request_service->get('path_info');
         $t2 = $this->request_service->get('query_string');
 
@@ -500,11 +505,6 @@ Class Frontcontroller
         $this->application->setApplicationSitePaths();
 
         Services::Registry()->get('Configuration', '*');
-
-        /** Services */
-        Frontcontroller::Services($this->class_array['Service']);
-        die;
-        Frontcontroller::Services()->initiate();
 
         /** onAfterStart for Configuration */
         Services::Profiler()->initialise();

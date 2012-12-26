@@ -1,6 +1,6 @@
 <?php
 /**
- * Cache Serviced Plugin
+ * Cache Service Plugin
  *
  * @package      Niambie
  * @license      MIT
@@ -41,8 +41,9 @@ Class CacheServicePlugin extends ServicesPlugin
      */
     public function onAfterStartup()
     {
-        $this->set('cache_service', false);
-        $this->set('cache_keys', array());
+
+        $this->service_class->set('cache_service', false);
+        $this->service_class->set('cache_keys', array());
 
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_handler', 'file') == 'file') {
             $this->system_cache_folder = SITE_BASE_PATH . '/'

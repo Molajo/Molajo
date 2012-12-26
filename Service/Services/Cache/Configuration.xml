@@ -9,4 +9,10 @@
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>SERVICE_CACHE_DESCRIPTION</description>
+    <model
+            name="Cache"
+            startup="getInstance"
+            class="Molajo\Service\Services\Cache"
+            static="1">
+    </model>
 </extension>

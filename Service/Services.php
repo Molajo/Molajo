@@ -55,7 +55,53 @@ Class Services
     protected $registry;
 
     /**
-     * Used to connect to service either dynamically or reuse of an existing connection
+     * instantiates services defined in the services.xml file and runs onBefore and onAfterStart Events for each
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function startup()
+    {
+        $this->connections = array();
+        $this->message = array();
+
+        $services = ConfigurationService::getFile('Service', 'Services');
+
+        if ($services === false) {
+            throw new \RuntimeException
+            ('Cannot find Services File Model Type: Service Model Name: Services');
+        }
+
+        foreach ($services->service as $service) {
+
+            $name = (string)$service->attributes()->name;
+            $startup = (string)$service->attributes()->startup;
+            $class = (string)$service->attributes()->class;
+
+            if ($class === null) {
+                $class = 'Molajo\\Service\\Services\\';
+            }
+
+            if ((int) $startup == 0) {
+            } else {
+                $this->get($name, $class);
+            }
+        }
+
+        foreach ($this->message as $message) {
+            Services::Profiler()->set($message, PROFILER_SERVICES, VERBOSE);
+        }
+
+        return true;
+    }
+
+    /**
+     * Entry point for services called outside of the Services Class
+     *
+     * Note: The Services Class is a static connection to the FrontController. The Services, themselves,
+     *  are rarely static. The purpose of the static call is to creates a Facade in order to simplify frontend
+     *  developer access and to provide a single point of entry for all services calls. This single entry
+     *  point should make it easier to manage backwards compatible support.
      *
      * @static
      * @param   string  $name
@@ -66,14 +112,21 @@ Class Services
      */
     public static function __callStatic($name, $arguments)
     {
+        /** Registry is accessed through the Front Controller */
         if ($name == 'Registry') {
             return Frontcontroller::registry();
         }
+
+        /** All other Services route back to the Services->get() method */
         return Frontcontroller::Services()->get($name . 'Service');
     }
 
     /**
      * Retrieves Service Connection or Connects Service
+     *
+     * Method used in two ways:
+     * 1. Services::Name()-> Call routes static through __callStatic then in through the Frontcontroller
+     * 2. Services Instantiation processes startup Services using this Method once for each
      *
      * @param   string $key
      *
@@ -84,6 +137,58 @@ Class Services
      */
     protected function get($key, $class='Molajo\\Service\\Services\\')
     {
+        $controllerClass = CONTROLLER_CLASS;
+        $controller = new $controllerClass();
+        $controller->getModelRegistry('Services', $key);
+
+        Services::Registry()->get($key . 'Services', '*');
+        die;
+
+        $static_indicator = (int)$service->attributes()->static;
+        $name = (string)$service->attributes()->name;
+        $startup = (string)$service->attributes()->startup;
+        $startup_method = (string)$service->attributes()->startup_method;
+        $class = (string)$service->attributes()->class;
+
+        if ($class === null) {
+            $class = 'Molajo\\Service\\Services\\';
+        }
+
+        $serviceClass = $class . $name . '\\' . $name . 'Service';
+        $pluginClass = $class . $name . '\\' . $name . 'ServicePlugin';
+
+        $connectionSucceeded = null;
+
+        try {
+            $pluginInstance =
+                $this->getPluginClassInstance($pluginClass);
+
+            $serviceInstance =
+                $this->getServiceClassInstance($serviceClass);
+
+            $serviceInstance =
+                $this->scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance);
+
+            if (trim($startup_method) == ''
+                || ($static == 1 && $startup_method == 'getInstance')) {
+
+            } else {
+                $connectionSucceeded =
+                    $this->runStartupMethod($serviceInstance, $name . 'Service', $startup_method);
+            }
+
+            $serviceInstance
+                = $this->scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance);
+
+            if ($static == 1) {
+                $this->set($name . 'Service', $serviceInstance, $connectionSucceeded);
+            }
+
+        } catch (\Exception $e) {
+            throw new \Exception
+            ('Service: Connection for ' . $name . ' failed.' . $e->getMessage(), $e->getCode());
+        }
+
         try {
 
             if (isset($this->connections[$key])) {
@@ -117,69 +222,6 @@ Class Services
     }
 
     /**
-     * instantiates services defined in the services.xml file and runs onBefore and onAfterStart Events for each
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function initiate()
-    {
-        $this->connections = array();
-        $this->message = array();
-
-        $services = ConfigurationService::getFile('Service', 'Services');
-
-        if ($services === false) {
-            throw new \RuntimeException('Cannot find Services File ');
-        }
-
-        foreach ($services->service as $service) {
-
-            $static_indicator = (int)$service->attributes()->static;
-            $name = (string)$service->attributes()->name;
-            $startup = (string)$service->attributes()->startup;
-            $class = (string)$service->attributes()->class;
-
-            if ($class === null) {
-                $class = 'Molajo\\Service\\Services\\';
-            }
-
-            $serviceClass = $class . $name . '\\' . $name . 'Service';
-            $pluginClass = $class . $name . '\\' . $name . 'ServicePlugin';
-
-            $connectionSucceeded = null;
-
-            try {
-                $pcConnection = $this->getPluginClassInstance($pluginClass);
-
-                $scConnection = $this->getServiceClassInstance($serviceClass);
-
-                $scConnection = $this->scheduleOnBeforeStartEvent($pcConnection, $pluginClass, $scConnection);
-
-                if (trim($startup) == '' || ($static_indicator == 1 && $startup == 'getInstance')) {
-                } else {
-                    $connectionSucceeded = $this->runStartupMethod($scConnection, $name . 'Service', $startup);
-                }
-
-                $scConnection = $this->scheduleOnAfterStartEvent($pcConnection, $pluginClass, $scConnection);
-
-                if ($static_indicator == 1) {
-                    $this->set($name . 'Service', $scConnection, $connectionSucceeded);
-                }
-
-            } catch (\Exception $e) {
-                throw new \Exception('Service Connection for ' . $name . ' failed.' . $e->getMessage(), $e->getCode());
-            }
-        }
-
-        foreach ($this->message as $message) {
-            Services::Profiler()->set($message, PROFILER_SERVICES, VERBOSE);
-        }
-
-        return true;
-    }
-
-    /**
      * Get Service Class Instance
      *
      * @param   string   $entry
@@ -188,11 +230,12 @@ Class Services
      * @return  mixed
      * @since   1.0
      */
-    private function getServiceClassInstance($serviceClass)
+    protected function getServiceClassInstance($serviceClass)
     {
         if (class_exists($serviceClass)) {
         } else {
-            throw new \Exception('Service Class ' . $serviceClass . ' does not exist.');
+            throw new \Exception
+            ('Services: Class ' . $serviceClass . ' does not exist.');
         }
 
         return new $serviceClass();
@@ -211,6 +254,8 @@ Class Services
     {
         if (class_exists($pluginClass)) {
         } else {
+
+            /** Plugins are not required for Services */
             return;
         }
 
@@ -220,41 +265,41 @@ Class Services
     /**
      * Schedule On Before Start Event - prior to instantiation of Services Class
      *
-     * @param   string  $pcConnection
+     * @param   string  $pluginInstance
      * @param   string  $pluginClass
-     * @param   string  $scConnection
+     * @param   string  $serviceInstance
      *
      * @return  mixed
      * @since   1.0
      */
-    private function scheduleOnBeforeStartEvent($pcConnection, $pluginClass, $scConnection)
+    protected function scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance)
     {
         if (method_exists($pluginClass, 'onBeforeStart')) {
         } else {
-            return $scConnection;
+            return $serviceInstance;
         }
 
-        $pcConnection->set('service_class', $scConnection);
-        $pcConnection->onBeforeStart();
-        $scConnection = $pcConnection->get('service_class', $scConnection);
+        $pluginInstance->set('service_class', $serviceInstance);
+        $pluginInstance->onBeforeStart();
+        $serviceInstance = $pluginInstance->get('service_class', $serviceInstance);
 
-        return $scConnection;
+        return $serviceInstance;
     }
 
     /**
      * Execute Startup method
      *
-     * @param   $scConnection
-     * @param   $serviceClass
-     * @param   $serviceMethod
+     * @param   string  $serviceInstance
+     * @param   string  $serviceClass
+     * @param   string  $serviceMethod
      *
      * @return  mixed
      * @since   1.0
      */
-    protected function runStartupMethod($scConnection, $serviceClass, $serviceMethod)
+    protected function runStartupMethod($serviceInstance, $serviceClass, $serviceMethod)
     {
         try {
-            return $scConnection->$serviceMethod();
+            return $serviceInstance->$serviceMethod();
 
         } catch (\Exception $e) {
 
@@ -269,25 +314,25 @@ Class Services
     /**
      * Schedule On After Start Event - after instantiation of Services Class
      *
-     * @param   string  $pcConnection
+     * @param   string  $pluginInstance
      * @param   string  $pluginClass
-     * @param   string  $scConnection
+     * @param   string  $serviceInstance
      *
      * @return  mixed
      * @since   1.0
      */
-    protected function scheduleOnAfterStartEvent($pcConnection, $pluginClass, $scConnection)
+    protected function scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance)
     {
         if (method_exists($pluginClass, 'onAfterStart')) {
         } else {
-            return $scConnection;
+            return $serviceInstance;
         }
 
-        $pcConnection->set('service_class', $scConnection);
-        $pcConnection->onAfterStart();
-        $scConnection = $pcConnection->get('service_class', $scConnection);
+        $pluginInstance->set('service_class', $serviceInstance);
+        $pluginInstance->onAfterStart();
+        $serviceInstance = $pluginInstance->get('service_class', $serviceInstance);
 
-        return $scConnection;
+        return $serviceInstance;
     }
 
     /**
