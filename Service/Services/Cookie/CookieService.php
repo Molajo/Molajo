@@ -17,8 +17,8 @@ defined('NIAMBIE') or die;
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Cookie.html
  *
- * @package    Niambie
- * @subpackage  Services
+ * @package         Niambie
+ * @subpackage      Services
  * @since           1.0
  */
 Class CookieService

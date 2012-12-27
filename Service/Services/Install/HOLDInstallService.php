@@ -11,7 +11,7 @@ defined('NIAMBIE') or die;
 /**
  * Install
  *
- * @package    Niambie
+ * @package     Niambie
  * @subpackage  Install
  * @since       1.0
  */
@@ -58,8 +58,8 @@ Class InstallService
     {
 
         if ($element && is_a($element, 'SimpleXMLElement')) {
-            $this->type = (string) $element->attributes()->type;
-            $this->id = (string) $element->attributes()->id;
+            $this->type = (string)$element->attributes()->type;
+            $this->id   = (string)$element->attributes()->id;
 
             switch ($this->type) {
                 case 'resource':
@@ -76,7 +76,7 @@ Class InstallService
                 default:
                     break;
             }
-            $this->filename = (string) $element;
+            $this->filename = (string)$element;
         }
     }
 
@@ -189,16 +189,16 @@ Class InstallService
 
         $data = array();
 
-        $data['type'] = (string) $xml->type;
-        $data['name'] = (string) $xml->name;
-        $data['author'] = (string) $xml->author();
-        $data['create_date'] = (string) $xml->create_date();
-        $data['copyright'] = (string) $xml->copyright;
-        $data['license'] = (string) $xml->license;
-        $data['author_email'] = (string) $xml->author_email;
-        $data['author_url'] = (string) $xml->author_url;
-        $data['version'] = (string) $xml->version;
-        $data['description'] = (string) $xml->description;
+        $data['type']         = (string)$xml->type;
+        $data['name']         = (string)$xml->name;
+        $data['author']       = (string)$xml->author();
+        $data['create_date']  = (string)$xml->create_date();
+        $data['copyright']    = (string)$xml->copyright;
+        $data['license']      = (string)$xml->license;
+        $data['author_email'] = (string)$xml->author_email;
+        $data['author_url']   = (string)$xml->author_url;
+        $data['version']      = (string)$xml->version;
+        $data['description']  = (string)$xml->description;
 
         return $data;
     }
@@ -230,9 +230,12 @@ Class InstallService
         // Open the remote server socket for reading
         //turn on furl amd then off
         $inputHandle = fopen($url, "r");
-        $error = strstr($php_errormsg, 'failed to open stream:');
+        $error       = strstr($php_errormsg, 'failed to open stream:');
         if (!$inputHandle) {
-            MolajoError::raiseWarning(42, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
+            MolajoError::raiseWarning(
+                42,
+                Services::Language()->sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error)
+            );
 
             return false;
         }
@@ -241,7 +244,7 @@ Class InstallService
         foreach ($meta_data['wrapper_data'] as $wrapper_data) {
             if (substr($wrapper_data, 0, strlen("Content-Disposition")) == "Content-Disposition") {
                 $contentfilename = explode("\"", $wrapper_data);
-                $target = $contentfilename[1];
+                $target          = $contentfilename[1];
             }
         }
 
@@ -258,7 +261,13 @@ Class InstallService
         while (!feof($inputHandle)) {
             $contents .= fread($inputHandle, 4096);
             if ($contents === false) {
-                MolajoError::raiseWarning(44, Services::Language()->sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
+                MolajoError::raiseWarning(
+                    44,
+                    Services::Language()->sprintf(
+                        'JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES',
+                        $php_errormsg
+                    )
+                );
 
                 return false;
             }
@@ -299,7 +308,7 @@ Class InstallService
         $tmpdir = uniqid('install_');
 
         // Clean the paths to use for archive extraction
-        $extractdir = JPath::clean(dirname($p_filename) . '/' . $tmpdir);
+        $extractdir  = JPath::clean(dirname($p_filename) . '/' . $tmpdir);
         $archivename = JPath::clean($archivename);
 
         // Do the unpacking of the archive
@@ -313,7 +322,7 @@ Class InstallService
 * Let's set the extraction directory and package file in the result array so we can
 * cleanup everything properly later on.
 */
-        $retval['extractdir'] = $extractdir;
+        $retval['extractdir']  = $extractdir;
         $retval['packagefile'] = $archivename;
 
         /*
@@ -323,7 +332,10 @@ Class InstallService
 * List all the items in the installation directory.  If there is only one, and
 * it is a folder, then we will set that folder to be the installation folder.
 */
-        $dirList = array_merge(Services::Filesystem()->folderFiles($extractdir, ''), Services::Folder()->folders($extractdir, ''));
+        $dirList = array_merge(
+            Services::Filesystem()->folderFiles($extractdir, ''),
+            Services::Folder()->folders($extractdir, '')
+        );
 
         if (count($dirList) == 1) {
             if (Services::Filesystem()->folderExists($extractdir . '/' . $dirList[0])) {
@@ -380,7 +392,7 @@ Class InstallService
                 continue;
             }
 
-            $type = (string) $xml->attributes()->type;
+            $type = (string)$xml->attributes()->type;
             // Free up memory
             unset($xml);
 

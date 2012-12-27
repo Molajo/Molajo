@@ -69,7 +69,9 @@ class DeleteController extends Controller
     {
         if ($this->get('version_management', 1) == 1) {
         } else {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('RESTORE_DISABLED_IN_CONFIGURATION'));
+            $this->redirectClass->setRedirectMessage(
+                Services::Language()->translate('RESTORE_DISABLED_IN_CONFIGURATION')
+            );
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('error'));
 
             return $this->redirectClass->setSuccessIndicator(false);
@@ -178,7 +180,7 @@ class DeleteController extends Controller
         if ($action == 'saveascopy') {
             $this->set('id', 0);
             $data['id'] = 0;
-            $action = 'apply';
+            $action     = 'apply';
             JRequest::setVar('id', 0);
         }
 
@@ -209,7 +211,9 @@ class DeleteController extends Controller
 
         /** Edit: Must have data from form input, copy or restore action **/
         if (empty($data)) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE'));
+            $this->redirectClass->setRedirectMessage(
+                Services::Language()->translate('SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE')
+            );
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('warning'));
 
             return $this->redirectClass->setSuccessIndicator(false);
@@ -229,7 +233,9 @@ class DeleteController extends Controller
             return $this->redirectClass->setSuccessIndicator(false);
         }
         if ($this->model->status == STATUS_VERSION) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->translate('MolajoVersion_ROW_CANNOT_BE_CHANGED'));
+            $this->redirectClass->setRedirectMessage(
+                Services::Language()->translate('MolajoVersion_ROW_CANNOT_BE_CHANGED')
+            );
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('error'));
 
             return $this->redirectClass->setSuccessIndicator(false);
@@ -237,10 +243,12 @@ class DeleteController extends Controller
 
         /** Preparation: Save form or version data **/
         Services::User()->setUserState(JRequest::getInt('datakey'), $data);
-        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $action . '.' . JRequest::getInt('datakey');
+        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd(
+            'view'
+        ) . '.' . $action . '.' . JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
-        if ((int) $this->get('id')) {
+        if ((int)$this->get('id')) {
             $results = $this->verifyCheckout($this->get('id'));
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -278,6 +286,7 @@ class DeleteController extends Controller
                     );
                 }
             }
+
             // Services::Registry()->get('UserState', 'id')
             //     ->setUserState(JRequest::getInt('datakey'), $data);
             return $this->redirectClass->setSuccessIndicator(false);
@@ -331,7 +340,7 @@ class DeleteController extends Controller
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        $this->get('id', (int) $results);
+        $this->get('id', (int)$results);
         $validData->id = $this->get('id');
 
         /** Event: onContentSaveForm **/
@@ -402,7 +411,9 @@ class DeleteController extends Controller
         }
 
         /** Preparation: Save form or version data **/
-        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . 'delete';
+        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd(
+            'view'
+        ) . '.' . 'delete';
 
         /** only trashed and version items can be deleted **/
         if ($this->model->status == STATUS_TRASHED || $this->model->status == STATUS_VERSION) {

@@ -41,6 +41,7 @@ Class ServicesPlugin
         if ($this->$key === null) {
             $this->$key = $default;
         }
+
         return $this->$key;
     }
 
@@ -53,6 +54,7 @@ Class ServicesPlugin
     public function set($key, $value)
     {
         $this->$key = $value;
+
         return $this->$key;
     }
 }

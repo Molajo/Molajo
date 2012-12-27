@@ -91,7 +91,7 @@ Class ViewHelper
         $node = $this->extensionHelper->getExtensionNode((int)$id);
 
         if ($node === false || $node == '') {
-            $id = $this->getDefault($catalog_type);
+            $id   = $this->getDefault($catalog_type);
             $node = $this->extensionHelper->getExtensionNode((int)$id);
             if ($node === false || $node == '') {
                 return false;
@@ -123,7 +123,7 @@ Class ViewHelper
 
         /** Load View Model before extension query to use $registry value for Theme search */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry($catalog_type, $node, 1, $registry);
 
         $item = $this->extensionHelper->get($id, null, $catalog_type, $node, 1);

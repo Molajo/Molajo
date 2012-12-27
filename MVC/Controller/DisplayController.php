@@ -46,7 +46,8 @@ class DisplayController extends Controller
 
         } else {
 
-            $value = Services::Registry()->get($this->get('template_view_model_registry', '', 'parameters'),
+            $value = Services::Registry()->get(
+                $this->get('template_view_model_registry', '', 'parameters'),
                 'process_plugins'
             );
 
@@ -84,31 +85,35 @@ class DisplayController extends Controller
         }
 
         if (strtolower($this->get('includer_name', '', 'parameters'))
-            == strtolower(CATALOG_TYPE_THEME_LITERAL)) {
+            == strtolower(CATALOG_TYPE_THEME_LITERAL)
+        ) {
 
             $this->renderTheme();
 
-        } else if (strtolower($this->get('includer_name', '', 'parameters'))
-            == strtolower(CATALOG_TYPE_WRAP_VIEW_LITERAL)) {
-
-            $this->rendered_output = $this->query_results;
-            $this->wrapView();
-
         } else {
+            if (strtolower($this->get('includer_name', '', 'parameters'))
+                == strtolower(CATALOG_TYPE_WRAP_VIEW_LITERAL)
+            ) {
 
-            $this->set('view_css_id', $this->get('template_view_css_id', '', 'parameters'), 'parameters');
-            $this->set('view_css_class', $this->get('template_view_css_class', '', 'parameters'), 'parameters');
+                $this->rendered_output = $this->query_results;
+                $this->wrapView();
 
-            $this->view_path = $this->get('template_view_path', '', 'parameters');
-            $this->view_path_url = $this->get('template_view_path_url', '', 'parameters');
-
-            $this->renderView();
-
-            $this->onAfterRenderView();
-
-            if ($this->get('wrap_view_path_node', '', 'parameters') == '') {
             } else {
-               $this->wrapView();
+
+                $this->set('view_css_id', $this->get('template_view_css_id', '', 'parameters'), 'parameters');
+                $this->set('view_css_class', $this->get('template_view_css_class', '', 'parameters'), 'parameters');
+
+                $this->view_path     = $this->get('template_view_path', '', 'parameters');
+                $this->view_path_url = $this->get('template_view_path_url', '', 'parameters');
+
+                $this->renderView();
+
+                $this->onAfterRenderView();
+
+                if ($this->get('wrap_view_path_node', '', 'parameters') == '') {
+                } else {
+                    $this->wrapView();
+                }
             }
         }
 
@@ -123,7 +128,7 @@ class DisplayController extends Controller
      */
     public function wrapView()
     {
-        $this->query_results = array();
+        $this->query_results   = array();
         $this->query_results[] = $this->rendered_output;
 
         $this->set('view_css_id', $this->get('wrap_view_css_id', '', 'parameters'), 'parameters');
@@ -150,10 +155,10 @@ class DisplayController extends Controller
         if (file_exists($file_path)) {
         } else {
             $name = Services::Registry()->get('parameters', 'theme_path_node');
-            throw new \RuntimeException('DisplayController: Theme '. $name . ' not found at ' . $file_path);
+            throw new \RuntimeException('DisplayController: Theme ' . $name . ' not found at ' . $file_path);
         }
 
-        $this->row = new \stdClass();
+        $this->row            = new \stdClass();
         $this->row->page_name = Services::Registry()->get('parameters', 'page_view_path_node');
 
         ob_start();
@@ -203,9 +208,9 @@ class DisplayController extends Controller
         } else {
 
             /** 2. controller manages loop */
-            $total_rows = count($this->query_results);
-            $row_count = 1;
-            $first = 1;
+            $total_rows  = count($this->query_results);
+            $row_count   = 1;
+            $first       = 1;
             $even_or_odd = 'odd';
 
             if (count($this->query_results) > 0) {
@@ -283,13 +288,13 @@ class DisplayController extends Controller
     protected function onBeforeRenderView()
     {
         $arguments = array(
-            'model' => $this->get('model'),
-            'model_registry' => $this->get('model_registry'),
-            'parameters' => $this->get('parameters'),
-            'query_results' => array(),
-            'row' => $this->row,
-            'rendered_output' => null,
-            'include_parse_sequence' => array(),
+            'model'                             => $this->get('model'),
+            'model_registry'                    => $this->get('model_registry'),
+            'parameters'                        => $this->get('parameters'),
+            'query_results'                     => array(),
+            'row'                               => $this->row,
+            'rendered_output'                   => null,
+            'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
 
@@ -321,13 +326,13 @@ class DisplayController extends Controller
     protected function onAfterRenderView()
     {
         $arguments = array(
-            'model' => $this->get('model'),
-            'model_registry' => $this->get('model_registry'),
-            'parameters' => $this->get('parameters'),
-            'query_results' => array(),
-            'row' => array(),
-            'rendered_output' => $this->get('rendered_output'),
-            'include_parse_sequence' => array(),
+            'model'                             => $this->get('model'),
+            'model_registry'                    => $this->get('model_registry'),
+            'parameters'                        => $this->get('parameters'),
+            'query_results'                     => array(),
+            'row'                               => array(),
+            'rendered_output'                   => $this->get('rendered_output'),
+            'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
 

@@ -184,6 +184,14 @@ Class ConfigurationService
     protected $valid_value_attributes_default;
 
     /**
+     * Datalists
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $valid_datalists;
+
+    /**
      * Calling Class
      *
      * @var    string
@@ -221,13 +229,16 @@ Class ConfigurationService
         'valid_children_attributes',
         'valid_plugin_attributes',
         'valid_value_attributes',
+        'valid_dataobject_attributes_defaults',
+        'valid_model_attributes_defaults',
         'valid_field_attributes_defaults',
         'valid_join_attributes_defaults',
         'valid_foreignkey_attributes_defaults',
         'valid_criteria_attributes_defaults',
         'valid_children_attributes_defaults',
         'valid_plugin_attributes_defaults',
-        'valid_value_attributes_defaults'
+        'valid_value_attributes_defaults',
+        'valid_datalists'
     );
 
     /**
@@ -239,12 +250,24 @@ Class ConfigurationService
     public function __construct()
     {
         $trace = debug_backtrace();
+
         if (isset($trace[1])) {
             $this->set('calling_class', $trace[1]['class']);
-            $this->set('calling_method', $trace[1]['method']);
+            $this->set('calling_method', $trace[1]['function']);
         }
 
         return;
+    }
+
+    /**
+     * Initialise Registry Arrays
+     *
+     * @return  object
+     * @since   1.0
+     */
+    public function initialise()
+    {
+        return $this;
     }
 
     /**
@@ -342,8 +365,8 @@ Class ConfigurationService
      */
     public function getModel($model_type, $model_name, $parameter_registry)
     {
-        $model_type = ucfirst(strtolower($model_type));
-        $model_name = ucfirst(strtolower($model_name));
+        $model_type     = ucfirst(strtolower($model_type));
+        $model_name     = ucfirst(strtolower($model_name));
         $model_registry = $model_name . $model_type;
 
         if ($parameter_registry === null) {
@@ -406,7 +429,7 @@ Class ConfigurationService
         if (Services::Registry()->exists($dataObjectRegistry)) {
         } else {
             $controllerClass = CONTROLLER_CLASS;
-            $controller = new $controllerClass();
+            $controller      = new $controllerClass();
             $controller->getModelRegistry('Dataobject', $data_object, 0);
         }
 
@@ -556,9 +579,9 @@ Class ConfigurationService
                 break;
             }
 
-            $i = 0;
+            $i           = 0;
             $replaceThis = '';
-            $withThis = '';
+            $withThis    = '';
 
             foreach ($matches[1] as $match) {
 
@@ -595,7 +618,6 @@ Class ConfigurationService
      */
     protected function setDataobjectRegistry($DataobjectRegistry, $xml)
     {
-
         $doArray = $this->get('valid_dataobject_attributes');
 
         foreach ($xml->attributes() as $key => $value) {
@@ -676,7 +698,7 @@ Class ConfigurationService
 
             $attributes = get_object_vars($item);
 
-            $itemAttributes = ($attributes["@attributes"]);
+            $itemAttributes      = ($attributes["@attributes"]);
             $itemAttributesArray = array();
 
             foreach ($itemAttributes as $key => $value) {
@@ -701,12 +723,12 @@ Class ConfigurationService
         }
 
         if ($plural == 'joins') {
-            $joins = array();
+            $joins   = array();
             $selects = array();
 
             for ($i = 0; $i < count($itemArray); $i++) {
-                $temp = $this->setJoinFields($itemArray[$i]);
-                $joins[] = $temp[0];
+                $temp      = $this->setJoinFields($itemArray[$i]);
+                $joins[]   = $temp[0];
                 $selects[] = $temp[1];
             }
 
@@ -726,12 +748,12 @@ Class ConfigurationService
                         $temp_row = $value;
                     } else {
                         $valueVars = get_object_vars($value);
-                        $temp_row = ($valueVars["@attributes"]);
+                        $temp_row  = ($valueVars["@attributes"]);
                     }
 
                     $temp = new \stdClass();
 
-                    $temp->id = $temp_row['id'];
+                    $temp->id    = $temp_row['id'];
                     $temp->value = $temp_row['value'];
 
                     $valuesArray[] = $temp;
@@ -756,15 +778,15 @@ Class ConfigurationService
      */
     protected function setJoinFields($modelJoinArray)
     {
-        $joinArray = array();
+        $joinArray       = array();
         $joinSelectArray = array();
 
-        $joinModel = ucfirst(strtolower($modelJoinArray['model']));
+        $joinModel    = ucfirst(strtolower($modelJoinArray['model']));
         $joinRegistry = $joinModel . 'Datasource';
 
         if (Services::Registry()->exists($joinRegistry) === false) {
             $controllerClass = CONTROLLER_CLASS;
-            $controller = new $controllerClass();
+            $controller      = new $controllerClass();
             $controller->getModelRegistry('Datasource', $joinModel, 0);
         }
 
@@ -780,7 +802,7 @@ Class ConfigurationService
         }
         $joinArray['alias'] = trim($alias);
 
-        $select = (string)$modelJoinArray['select'];
+        $select              = (string)$modelJoinArray['select'];
         $joinArray['select'] = $select;
 
         $selectArray = explode(',', $select);
@@ -792,15 +814,15 @@ Class ConfigurationService
                 foreach ($fields as $joinSelectArray) {
 
                     if ($joinSelectArray['name'] == $s) {
-                        $joinSelectArray['as_name'] = trim($alias) . '_' . trim($s);
-                        $joinSelectArray['alias'] = $alias;
+                        $joinSelectArray['as_name']    = trim($alias) . '_' . trim($s);
+                        $joinSelectArray['alias']      = $alias;
                         $joinSelectArray['table_name'] = $table;
                     }
                 }
             }
         }
 
-        $joinArray['jointo'] = (string)$modelJoinArray['jointo'];
+        $joinArray['jointo']   = (string)$modelJoinArray['jointo'];
         $joinArray['joinwith'] = (string)$modelJoinArray['joinwith'];
 
         return array($joinArray, $joinSelectArray);
@@ -824,7 +846,7 @@ Class ConfigurationService
 
             foreach ($xml->customfields->customfield as $custom_field) {
 
-                $name = (string)$custom_field['name'];
+                $name    = (string)$custom_field['name'];
                 $results = $this->getCustomFieldsSpecificGroup($model_registry, $custom_field);
                 if ($results === false) {
                 } else {
@@ -886,8 +908,8 @@ Class ConfigurationService
 
         foreach ($customfield as $key1 => $value1) {
 
-            $attributes = get_object_vars($value1);
-            $fieldAttributes = ($attributes["@attributes"]);
+            $attributes           = get_object_vars($value1);
+            $fieldAttributes      = ($attributes["@attributes"]);
             $fieldAttributesArray = array();
 
             foreach ($fieldAttributes as $key2 => $value2) {
@@ -938,7 +960,7 @@ Class ConfigurationService
         $fieldNames = array()
     ) {
 
-        $inherit = array();
+        $inherit   = array();
         $available = Services::Registry()->get($model_registry, $name, array());
 
         if (count($available) > 0) {
@@ -952,8 +974,8 @@ Class ConfigurationService
                         if (in_array($fieldvalue, $fieldNames)) {
                         } else {
                             $temp_row['field_inherited'] = 1;
-                            $fieldArray[] = $temp_row;
-                            $fieldNames[] = $fieldvalue;
+                            $fieldArray[]                = $temp_row;
+                            $fieldNames[]                = $fieldvalue;
                         }
                     }
                 }
@@ -962,6 +984,7 @@ Class ConfigurationService
 
         if (is_array($fieldArray) && count($fieldArray) == 0) {
             Services::Registry()->set($model_registry, $name, array());
+
             return false;
         }
 
@@ -1017,7 +1040,7 @@ Class ConfigurationService
 
         } else {
             $controller_class = CONTROLLER_CLASS;
-            $controller = new $controller_class();
+            $controller       = new $controller_class();
             $controller->getModelRegistry($extends_model_type, $extends_model_name, 0);
         }
 
@@ -1058,6 +1081,24 @@ Class ConfigurationService
             }
             throw new \Exception
             ('Configuration: locateFile() Cannot find Sites XML File.');
+        }
+
+        if ($model_type == 'Application') {
+            $path = PLATFORM_MVC . '/Model/' . $model_type . '/' . $model_name . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            }
+            throw new \Exception ('Configuration: locateFile() Cannot find Model Type '
+                . $model_type . ' Model Name ' . $model_name);
+        }
+
+        if ($model_type == 'Resource') {
+            $path = EXTENSIONS . '/Resource/' . $model_name . '/Configuration.xml';
+            if (file_exists($path)) {
+                return $path;
+            } else {
+                $path = false;
+            }
         }
 
         if ($model_type == 'Dataobject') {
@@ -1103,7 +1144,7 @@ Class ConfigurationService
                 . $model_type . ' Model Name ' . $model_name);
         }
 
-        $modeltypeArray = array('Application', 'Datalist', 'Datasource', 'Field', 'Include');
+        $modeltypeArray = array('Datalist', 'Datasource', 'Field', 'Include');
         if (in_array($model_type, $modeltypeArray)) {
             $path = EXTENSIONS . '/Model/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
@@ -1131,12 +1172,6 @@ Class ConfigurationService
 
         if (in_array($model_type, $modeltypeArray)) {
 
-            $path = EXTENSIONS . '/' . $model_type . '/' . $model_name . '.xml';
-            if (file_exists($path)) {
-                return $path;
-            } else {
-                $path = false;
-            }
             $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
@@ -1317,10 +1352,10 @@ Class ConfigurationService
         $file_or_folder = 'file'
     ) {
         if ($view_path_portion == '') {
-            $connector = '/';
+            $connector      = '/';
             $core_connector = '/';
         } else {
-            $connector = $view_path_portion;
+            $connector      = $view_path_portion;
             $core_connector = '/MVC/View/';
         }
 

@@ -99,11 +99,23 @@ Class SessionService
      */
     public function setSessionStorageData()
     {
-        $save_path = Services::Registry()->get(CONFIGURATION_LITERAL, 'system_cache_folder', SITE_BASE_PATH . '/cache');
+        $save_path = Services::Registry()->get(
+            CONFIGURATION_LITERAL,
+            'system_cache_folder',
+            SITE_BASE_PATH . '/cache'
+        );
         $options = array();
         $options['cookie_lifetime'] = Services::Registry()->get(CONFIGURATION_LITERAL, 'lifetime', 15);
-        $options['cookie_domain'] = $cookie_domain = Services::Registry()->get(CONFIGURATION_LITERAL, 'cookie_domain', '');
-        $options['cookie_path'] = $cookie_path = Services::Registry()->get(CONFIGURATION_LITERAL, 'cookie_path', '');
+        $options['cookie_domain'] = $cookie_domain = Services::Registry()->get(
+            CONFIGURATION_LITERAL,
+            'cookie_domain',
+            ''
+        );
+        $options['cookie_path'] = $cookie_path = Services::Registry()->get(
+            CONFIGURATION_LITERAL,
+            'cookie_path',
+            ''
+        );
 
         $sessionStorage = new NativeFileSessionStorage ($save_path, $options);
 
@@ -135,16 +147,20 @@ Class SessionService
         }
         $container->setParameter('session.storage.options', $options);
 
-        $this->addClassesToCompile(array(
-            'Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener',
-            'Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface',
-            $container->getDefinition('session')->getClass(),
-        ));
+        $this->addClassesToCompile(
+            array(
+                'Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener',
+                'Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface',
+                $container->getDefinition('session')->getClass(),
+            )
+        );
 
         if ($container->hasDefinition($config['storage_id'])) {
-            $this->addClassesToCompile(array(
-                $container->findDefinition('session.storage')->getClass(),
-            ));
+            $this->addClassesToCompile(
+                array(
+                    $container->findDefinition('session.storage')->getClass(),
+                )
+            );
         }
     }
 }

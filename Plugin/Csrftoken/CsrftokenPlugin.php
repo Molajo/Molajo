@@ -46,10 +46,10 @@ class CsrftokenPlugin extends Plugin
         }
 
         $replaceThis = array();
-        $withThis = array();
-        $i = 0;
+        $withThis    = array();
+        $i           = 0;
 
-		$distinct = array_unique($forms[0]);
+        $distinct = array_unique($forms[0]);
 
         foreach ($distinct as $match) {
 

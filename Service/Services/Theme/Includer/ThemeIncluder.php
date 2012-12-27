@@ -30,6 +30,7 @@ class ThemeIncluder extends Includer
      *  Plugins overriding core and extension plugins are loaded, along with Theme Assets.
      *
      * @param   array $attributes
+     *
      * @return  mixed|null|string
      *
      * @return  mixed
@@ -53,10 +54,10 @@ class ThemeIncluder extends Includer
      */
     public function setThemeParameters()
     {
-        $catalog_id = $this->get('catalog_id');
+        $catalog_id        = $this->get('catalog_id');
         $catalog_page_type = $this->get('catalog_page_type');
 
-        $class = $this->class_array['ContentHelper'];
+        $class         = $this->class_array['ContentHelper'];
         $contentHelper = new $class();
         $contentHelper->initialise($this->parameters);
 
@@ -74,7 +75,7 @@ class ThemeIncluder extends Includer
             throw new \Exception('Theme Service: Could not identify Primary Data for Catalog ID ' . $catalog_id);
         }
 
-        $this->parameters = $response[0];
+        $this->parameters     = $response[0];
         $this->property_array = $response[1];
 
         return;
@@ -181,17 +182,17 @@ class ThemeIncluder extends Includer
             Services::Registry()->get('include', 'asset_priority_extension', 900)
         );
 
-        $priority = Services::Registry()->get('include', 'asset_priority_theme', 600);
+        $priority  = Services::Registry()->get('include', 'asset_priority_theme', 600);
         $file_path = Services::Registry()->get('include', 'theme_path');
-        $url_path = Services::Registry()->get('include', 'theme_path_url');
+        $url_path  = Services::Registry()->get('include', 'theme_path_url');
 
         $this->class_asset->addCssFolder($file_path, $url_path, $priority);
         $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
         $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
 
-        $priority = Services::Registry()->get('include', 'asset_priority_theme', 600);
+        $priority  = Services::Registry()->get('include', 'asset_priority_theme', 600);
         $file_path = Services::Registry()->get('include', 'page_view_path');
-        $url_path = Services::Registry()->get('include', 'page_view_path_url');
+        $url_path  = Services::Registry()->get('include', 'page_view_path_url');
 
         $this->class_asset->addCssFolder($file_path, $url_path, $priority);
         $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
@@ -222,50 +223,50 @@ class ThemeIncluder extends Includer
     {
         /** Theme */
         $file_path = Services::Registry()->get('include', 'theme_path');
-        $url_path = Services::Registry()->get('include', 'theme_path_url');
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = Services::Registry()->get('include', 'theme_path_url');
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** Site Specific: Application */
         $file_path = SITE_MEDIA_FOLDER . '/' . APPLICATION . $plus;
-        $url_path = SITE_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = SITE_MEDIA_URL . '/' . APPLICATION . $plus;
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
-        $url_path = SITE_MEDIA_URL . $plus;
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, false);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = SITE_MEDIA_URL . $plus;
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, false);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
-        $url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
-        $url_path = SITES_MEDIA_URL . $plus;
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = SITES_MEDIA_URL . $plus;
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

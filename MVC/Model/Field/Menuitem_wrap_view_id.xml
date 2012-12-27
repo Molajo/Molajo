@@ -1,1 +1,1 @@
-<field name="menuitem_wrap_view_id" type="integer"  datalist="Wraps" null="0" default=" "/>
+<field name="menuitem_wrap_view_id" type="integer" datalist="Wraps" null="0" default=" "/>

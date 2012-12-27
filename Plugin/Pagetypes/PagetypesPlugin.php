@@ -33,22 +33,22 @@ class PagetypesPlugin extends Plugin
             $page_type_list = $folders;
         }
 
-		$folders = Services::Filesystem()->folderFolders(PLATFORM_FOLDER . '/Menuitem');
-		if (count($folders) === 0 || $folders === false) {
-		} else {
-			$new = array_merge($page_type_list, $folders);
-			$page_type_list = $new;
-		}
+        $folders = Services::Filesystem()->folderFolders(PLATFORM_FOLDER . '/Menuitem');
+        if (count($folders) === 0 || $folders === false) {
+        } else {
+            $new            = array_merge($page_type_list, $folders);
+            $page_type_list = $new;
+        }
 
         $newer = array_unique($page_type_list);
         sort($newer);
 
         $page_types = array();
         foreach ($newer as $item) {
-            $temp_row = new \stdClass();
+            $temp_row        = new \stdClass();
             $temp_row->value = $item;
-            $temp_row->id = $item;
-            $page_types[] = $temp_row;
+            $temp_row->id    = $item;
+            $page_types[]    = $temp_row;
         }
 
         Services::Registry()->set(DATALIST_LITERAL, 'Pagetypes', $page_types);

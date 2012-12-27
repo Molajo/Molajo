@@ -50,12 +50,16 @@ class PageIncluder extends Includer
      */
     public function setPrimaryData()
     {
-        $catalog_id = Services::Registry()->get('include', 'catalog_id');
-        $id = Services::Registry()->get('include', 'catalog_source_id');
+        $catalog_id                    = Services::Registry()->get('include', 'catalog_id');
+        $id                            = Services::Registry()->get('include', 'catalog_source_id');
         $catalog_extension_instance_id = Services::Registry()->get('include', 'catalog_extension_instance_id');
-        $catalog_page_type = Services::Registry()->get('include', 'catalog_page_type');
-        $model_type = ucfirst(strtolower(Services::Registry()->get('include', 'catalog_model_type')));
-        $model_name = ucfirst(strtolower(Services::Registry()->get('include', 'catalog_model_name')));
+        $catalog_page_type             = Services::Registry()->get('include', 'catalog_page_type');
+        $model_type                    = ucfirst(
+            strtolower(Services::Registry()->get('include', 'catalog_model_type'))
+        );
+        $model_name                    = ucfirst(
+            strtolower(Services::Registry()->get('include', 'catalog_model_name'))
+        );
 
         if (strtolower(trim($catalog_page_type)) == QUERY_OBJECT_LIST) {
             $response = $this->contentHelper->getRouteList($id, $model_type, $model_name);
@@ -113,6 +117,7 @@ class PageIncluder extends Includer
         $this->loadPlugins();
 
         $this->renderOutput();
+
         return $this->rendered_output;
     }
 
@@ -128,6 +133,7 @@ class PageIncluder extends Includer
             Services::Registry()->get('include', 'Page_path'),
             Services::Registry()->get('include', 'Page_namespace')
         );
+
         return;
         Services::Event()->registerPlugins(
             Services::Registry()->get('include', 'page_view_path'),
@@ -175,39 +181,53 @@ class PageIncluder extends Includer
      */
     protected function loadMedia()
     {
-        $this->loadMediaPlus('',
-            Services::Registry()->get('include', 'asset_priority_site', 100));
+        $this->loadMediaPlus(
+            '',
+            Services::Registry()->get('include', 'asset_priority_site', 100)
+        );
 
-        $this->loadMediaPlus('/application' . APPLICATION,
-            Services::Registry()->get('include', 'asset_priority_application', 200));
+        $this->loadMediaPlus(
+            '/application' . APPLICATION,
+            Services::Registry()->get('include', 'asset_priority_application', 200)
+        );
 
-        $this->loadMediaPlus('/user' . Services::Registry()->get(USER_LITERAL, 'id'),
-            Services::Registry()->get('include', 'asset_priority_user', 300));
+        $this->loadMediaPlus(
+            '/user' . Services::Registry()->get(USER_LITERAL, 'id'),
+            Services::Registry()->get('include', 'asset_priority_user', 300)
+        );
 
-        $this->loadMediaPlus('/category' . Services::Registry()->get('include', 'catalog_category_id'),
-            Services::Registry()->get('include', 'asset_priority_primary_category', 700));
+        $this->loadMediaPlus(
+            '/category' . Services::Registry()->get('include', 'catalog_category_id'),
+            Services::Registry()->get('include', 'asset_priority_primary_category', 700)
+        );
 
-        $this->loadMediaPlus('/menuitem' . Services::Registry()->get('include', 'menu_item_id'),
-            Services::Registry()->get('include', 'asset_priority_menuitem', 800));
+        $this->loadMediaPlus(
+            '/menuitem' . Services::Registry()->get('include', 'menu_item_id'),
+            Services::Registry()->get('include', 'asset_priority_menuitem', 800)
+        );
 
-        $this->loadMediaPlus('/source/' . Services::Registry()->get('include', 'extension_title')
+        $this->loadMediaPlus(
+            '/source/' . Services::Registry()->get('include', 'extension_title')
                 . Services::Registry()->get('include', 'criteria_source_id'),
-            Services::Registry()->get('include', 'asset_priority_item', 900));
+            Services::Registry()->get('include', 'asset_priority_item', 900)
+        );
 
-        $this->loadMediaPlus('/resource/' . Services::Registry()->get('include', 'extension_title'),
-            Services::Registry()->get('include', 'asset_priority_extension', 900));
+        $this->loadMediaPlus(
+            '/resource/' . Services::Registry()->get('include', 'extension_title'),
+            Services::Registry()->get('include', 'asset_priority_extension', 900)
+        );
 
-        $priority = Services::Registry()->get('include', 'asset_priority_Page', 600);
+        $priority  = Services::Registry()->get('include', 'asset_priority_Page', 600);
         $file_path = Services::Registry()->get('include', 'Page_path');
-        $url_path = Services::Registry()->get('include', 'Page_path_url');
+        $url_path  = Services::Registry()->get('include', 'Page_path_url');
 
         $this->class_asset->addCssFolder($file_path, $url_path, $priority);
         $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
         $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
 
-        $priority = Services::Registry()->get('include', 'asset_priority_Page', 600);
+        $priority  = Services::Registry()->get('include', 'asset_priority_Page', 600);
         $file_path = Services::Registry()->get('include', 'page_view_path');
-        $url_path = Services::Registry()->get('include', 'page_view_path_url');
+        $url_path  = Services::Registry()->get('include', 'page_view_path_url');
 
         $this->class_asset->addCssFolder($file_path, $url_path, $priority);
         $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
@@ -237,50 +257,50 @@ class PageIncluder extends Includer
     {
         /** Page */
         $file_path = Services::Registry()->get('include', 'Page_path');
-        $url_path = Services::Registry()->get('include', 'Page_path_url');
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = Services::Registry()->get('include', 'Page_path_url');
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** Site Specific: Application */
         $file_path = SITE_MEDIA_FOLDER . '/' . APPLICATION . $plus;
-        $url_path = SITE_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = SITE_MEDIA_URL . '/' . APPLICATION . $plus;
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** Site Specific: Site-wide */
         $file_path = SITE_MEDIA_FOLDER . $plus;
-        $url_path = SITE_MEDIA_URL . $plus;
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, false);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = SITE_MEDIA_URL . $plus;
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, false);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** All Sites: Application */
         $file_path = SITES_MEDIA_FOLDER . '/' . APPLICATION . $plus;
-        $url_path = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = SITES_MEDIA_URL . '/' . APPLICATION . $plus;
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }
 
         /** All Sites: Site Wide */
         $file_path = SITES_MEDIA_FOLDER . $plus;
-        $url_path = SITES_MEDIA_URL . $plus;
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
-        $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
+        $url_path  = SITES_MEDIA_URL . $plus;
+        $css       = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js        = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $defer     = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
         if ($css === true || $js === true || $defer === true) {
             return true;
         }

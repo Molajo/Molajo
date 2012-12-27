@@ -173,10 +173,10 @@ class ReadModel extends Model
             $this->query,
             $this->db,
             array(
-                'join_to_prefix' => $primary_prefix,
+                'join_to_prefix'      => $primary_prefix,
                 'join_to_primary_key' => $primary_key,
-                'catalog_prefix' => 'check_permissions_catalog',
-                'select' => $select
+                'catalog_prefix'      => 'check_permissions_catalog',
+                'select'              => $select
             )
         );
 
@@ -195,16 +195,16 @@ class ReadModel extends Model
      */
     public function useSpecialJoins($joins, $primary_prefix, $query_object)
     {
-        $menu_id = (int)$this->get('menu_id', 0);
+        $menu_id         = (int)$this->get('menu_id', 0);
         $catalog_type_id = (int)$this->get('catalog_type_id', 0);
 
         foreach ($joins as $join) {
 
             $join_table = $join['table_name'];
-            $alias = $join['alias'];
-            $select = $join['select'];
-            $joinTo = $join['jointo'];
-            $joinWith = $join['joinwith'];
+            $alias      = $join['alias'];
+            $select     = $join['select'];
+            $joinTo     = $join['jointo'];
+            $joinWith   = $join['joinwith'];
 
             $this->query->from(
                 $this->db->qn($join_table)
@@ -236,7 +236,7 @@ class ReadModel extends Model
             }
 
             /* joinTo and joinWith Fields */
-            $joinToArray = explode(',', $joinTo);
+            $joinToArray   = explode(',', $joinTo);
             $joinWithArray = explode(',', $joinWith);
 
             if (count($joinToArray) > 0) {
@@ -281,19 +281,19 @@ class ReadModel extends Model
                     $operator = '=';
                     if (substr($with, 0, 2) == '>=') {
                         $operator = '>=';
-                        $with = substr($with, 2, strlen($with) - 2);
+                        $with     = substr($with, 2, strlen($with) - 2);
 
                     } elseif (substr($with, 0, 1) == '>') {
                         $operator = '>';
-                        $with = substr($with, 0, strlen($with) - 1);
+                        $with     = substr($with, 0, strlen($with) - 1);
 
                     } elseif (substr($with, 0, 2) == '<=') {
                         $operator = '<=';
-                        $with = substr($with, 2, strlen($with) - 2);
+                        $with     = substr($with, 2, strlen($with) - 2);
 
                     } elseif (substr($with, 0, 1) == '<') {
                         $operator = '<';
-                        $with = substr($with, 0, strlen($with) - 1);
+                        $with     = substr($with, 0, strlen($with) - 1);
                     }
 
                     if (defined('APPLICATION_ID') && $with == 'APPLICATION_ID') {
@@ -355,6 +355,7 @@ class ReadModel extends Model
                     . ' = ' . (int)$catalog_type_id
             );
         }
+
         /**
         if ((int) $extension_instance_id == 0) {
         } else {
@@ -369,6 +370,7 @@ class ReadModel extends Model
         ' (' . $status . ') ');
         }
          */
+
         return $this;
     }
 
@@ -398,18 +400,18 @@ class ReadModel extends Model
 
         if ($offset == 0 && $count == 0) {
             if ($query_object == QUERY_OBJECT_RESULT) {
-                $offset = 0;
-                $count = 1;
+                $offset         = 0;
+                $count          = 1;
                 $use_pagination = 0;
 
             } elseif ($query_object == QUERY_OBJECT_DISTINCT) {
-                $offset = 0;
-                $count = 999999;
+                $offset         = 0;
+                $count          = 999999;
                 $use_pagination = 0;
 
             } else {
-                $offset = 0;
-                $count = 15;
+                $offset         = 0;
+                $count          = 15;
                 $use_pagination = 1;
             }
         }
@@ -433,11 +435,11 @@ class ReadModel extends Model
 
             if ((int)$use_pagination === 0) {
                 $query_offset = $offset;
-                $query_count = $count;
+                $query_count  = $count;
 
             } else {
                 $query_offset = 0;
-                $query_count = 99999999;
+                $query_count  = 99999999;
             }
 
             $this->db->setQuery($this->query->__toString(), $query_offset, $query_count);
@@ -469,10 +471,11 @@ class ReadModel extends Model
             || (int)$total === 0
         ) {
             $this->query_results = $results;
+
             return $total;
         }
 
-        $countOfOffset = 0;
+        $countOfOffset  = 0;
         $countOfResults = 0;
 
         foreach ($results as $item) {
@@ -518,13 +521,13 @@ class ReadModel extends Model
         $query_object
     ) {
 
-        $customFieldName = strtolower($customFieldName);
+        $customFieldName  = strtolower($customFieldName);
         $useModelRegistry = $model_registry_name . ucfirst($customFieldName);
 
         /** See if there are query results for this Custom Field Group */
         if (is_object($query_results) && isset($query_results->$customFieldName)) {
             $jsonData = $query_results->$customFieldName;
-            $data = json_decode($jsonData);
+            $data     = json_decode($jsonData);
 
             /** test for application-specific values */
             if (count($data) > 0 && (defined('APPLICATION_ID'))) {
@@ -548,7 +551,7 @@ class ReadModel extends Model
 
         } else {
             /** No data in query results for this specific custom field */
-            $data = array();
+            $data   = array();
             $lookup = array();
         }
 
@@ -619,7 +622,7 @@ class ReadModel extends Model
             $controller = new $controllerClass();
             $controller->getModelRegistry($model_type, $model_name, 1);
 
-            $join = (string)$child['join'];
+            $join              = (string)$child['join'];
             $joinPrimaryPrefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
             $controller->model->query->where(
@@ -627,7 +630,7 @@ class ReadModel extends Model
                     . ' = ' . (int)$id
             );
 
-            $results = $controller->getData(QUERY_OBJECT_LIST);
+            $results                    = $controller->getData(QUERY_OBJECT_LIST);
             $query_results->$model_name = $results;
 
             unset ($controller);

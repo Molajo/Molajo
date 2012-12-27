@@ -47,6 +47,14 @@ Class Services
     protected $connections;
 
     /**
+     * Configuration
+     *
+     * @var     object
+     * @since   1.0
+     */
+    protected $configuration;
+
+    /**
      * Registry
      *
      * @var     object
@@ -60,29 +68,53 @@ Class Services
      * @return  boolean
      * @since   1.0
      */
-    public function startup()
+    public function startup($configuration_class = 'Molajo\\Services\\Service\\Configuration\\')
     {
         $this->connections = array();
-        $this->message = array();
+        $this->message     = array();
 
-        $services = ConfigurationService::getFile('Service', 'Services');
+        /** Configuration */
+        $name    = 'Configuration';
+        $class   = $configuration_class;
 
-        if ($services === false) {
+        if ($class === null) {
+            $class = 'Molajo\\Service\\Services\\Configuration\\';
+        }
+
+        $this->get($name, $class);
+
+        /** Startup Sequence */
+        $this->configuration = $this->connections['ConfigurationService'];
+
+        $services = $this->configuration->getFile('Service', 'Services');
+
+        if ($services === null) {
             throw new \RuntimeException
             ('Cannot find Services File Model Type: Service Model Name: Services');
         }
 
+        /** Registry */
+        $name    = 'Registry';
+        $class   = 'Molajo\\Services\\Service\\Registry\\';
+
+        $this->get($name, $class);
+echo 'fine';
+
+        $this->registry = $this->connections['RegistryService'];
+        echo 'fine';
+        die;
+
         foreach ($services->service as $service) {
 
-            $name = (string)$service->attributes()->name;
+            $name    = (string)$service->attributes()->name;
             $startup = (string)$service->attributes()->startup;
-            $class = (string)$service->attributes()->class;
+            $class   = (string)$service->attributes()->class;
 
             if ($class === null) {
                 $class = 'Molajo\\Service\\Services\\';
             }
 
-            if ((int) $startup == 0) {
+            if ((int)$startup == 0) {
             } else {
                 $this->get($name, $class);
             }
@@ -104,6 +136,7 @@ Class Services
      *  point should make it easier to manage backwards compatible support.
      *
      * @static
+     *
      * @param   string  $name
      * @param   array   $arguments
      *
@@ -118,6 +151,7 @@ Class Services
         }
 
         /** All other Services route back to the Services->get() method */
+
         return Frontcontroller::Services()->get($name . 'Service');
     }
 
@@ -135,42 +169,56 @@ Class Services
      *
      * @throws  \BadMethodCallException
      */
-    protected function get($key, $class='Molajo\\Service\\Services\\')
+    protected function get($key, $class = 'Molajo\\Service\\Services\\')
     {
-        $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
-        $controller->getModelRegistry('Services', $key);
+        if ($key == 'Configuration' || $key == 'Registry') {
+            $static_indicator = 1;
+            $name             = $key;
+            $startup          = 1;
+            $startup_method   = 'initialise';
+            $class            = $class;
+            $static_indicator = 1;
 
-        Services::Registry()->get($key . 'Services', '*');
-        die;
+        } else {
+            $controllerClass = CONTROLLER_CLASS;
+            $controller      = new $controllerClass();
+            $controller->getModelRegistry('Services', $key);
 
-        $static_indicator = (int)$service->attributes()->static;
-        $name = (string)$service->attributes()->name;
-        $startup = (string)$service->attributes()->startup;
-        $startup_method = (string)$service->attributes()->startup_method;
-        $class = (string)$service->attributes()->class;
+            $static_indicator = (int)   $service->attributes()->static;
+            $name             = (string)$service->attributes()->name;
+            $startup          = (string)$service->attributes()->startup;
+            $startup_method   = (string)$service->attributes()->startup_method;
+            $class            = (string)$service->attributes()->class;
+        }
 
         if ($class === null) {
             $class = 'Molajo\\Service\\Services\\';
         }
 
-        $serviceClass = $class . $name . '\\' . $name . 'Service';
-        $pluginClass = $class . $name . '\\' . $name . 'ServicePlugin';
+        $serviceClass = $class . $name . 'Service';
+        $pluginClass  = $class . $name . 'ServicePlugin';
 
         $connectionSucceeded = null;
 
         try {
+
+            if (isset($this->connections[$key])) {
+                return $this->connections[$key];
+            }
+
             $pluginInstance =
                 $this->getPluginClassInstance($pluginClass);
 
             $serviceInstance =
                 $this->getServiceClassInstance($serviceClass);
 
+            $pluginInstance->set('service_class', $serviceClass);
+
+
             $serviceInstance =
                 $this->scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance);
 
-            if (trim($startup_method) == ''
-                || ($static == 1 && $startup_method == 'getInstance')) {
+            if (trim($startup_method) == '') {
 
             } else {
                 $connectionSucceeded =
@@ -180,35 +228,13 @@ Class Services
             $serviceInstance
                 = $this->scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance);
 
-            if ($static == 1) {
+            if ($static_indicator == 1) {
                 $this->set($name . 'Service', $serviceInstance, $connectionSucceeded);
             }
 
         } catch (\Exception $e) {
-            throw new \Exception
-            ('Service: Connection for ' . $name . ' failed.' . $e->getMessage(), $e->getCode());
-        }
 
-        try {
-
-            if (isset($this->connections[$key])) {
-                return $this->connections[$key];
-            }
-
-            if ($class === null) {
-                $class = 'Molajo\\Service\\Services\\';
-            }
-
-            $serviceClass = $class
-                . substr($key, 0, strlen($key) - strlen('service'))
-                . '\\'
-                . $key;
-
-            return $this->getServiceClassInstance($serviceClass);
-
-        } catch (\Exception $e) {
-
-            $trace = debug_backtrace();
+            $trace  = debug_backtrace();
             $caller = array_shift($trace);
 
             $error_message = "Called by {$caller['function']}";
@@ -217,15 +243,18 @@ Class Services
                 $error_message .= " in {$caller['class']}";
             }
 
-            throw new \BadMethodCallException($error_message);
+            throw new \Exception
+            ('Service: Connection for ' . $name . ' failed.' . $e->getMessage(), $e->getCode());
         }
+
+        return;
     }
 
     /**
      * Get Service Class Instance
      *
      * @param   string   $entry
-     * @param   $folder  $entry
+     * @param            $folder  $entry
      *
      * @return  mixed
      * @since   1.0
@@ -233,6 +262,7 @@ Class Services
     protected function getServiceClassInstance($serviceClass)
     {
         if (class_exists($serviceClass)) {
+            echo $serviceClass;
         } else {
             throw new \Exception
             ('Services: Class ' . $serviceClass . ' does not exist.');
@@ -245,7 +275,7 @@ Class Services
      * Get Plugin Class Instance
      *
      * @param   string   $entry
-     * @param   $folder  $entry
+     * @param            $folder  $entry
      *
      * @return  mixed
      * @since   1.0
@@ -274,13 +304,13 @@ Class Services
      */
     protected function scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance)
     {
-        if (method_exists($pluginClass, 'onBeforeStart')) {
+        if (method_exists($pluginClass, 'onBeforeStartup')) {
         } else {
             return $serviceInstance;
         }
 
         $pluginInstance->set('service_class', $serviceInstance);
-        $pluginInstance->onBeforeStart();
+        $pluginInstance->onBeforeStartup();
         $serviceInstance = $pluginInstance->get('service_class', $serviceInstance);
 
         return $serviceInstance;
@@ -323,13 +353,13 @@ Class Services
      */
     protected function scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance)
     {
-        if (method_exists($pluginClass, 'onAfterStart')) {
+        if (method_exists($pluginClass, 'onAfterStartup')) {
         } else {
             return $serviceInstance;
         }
 
         $pluginInstance->set('service_class', $serviceInstance);
-        $pluginInstance->onAfterStart();
+        $pluginInstance->onAfterStartup();
         $serviceInstance = $pluginInstance->get('service_class', $serviceInstance);
 
         return $serviceInstance;
@@ -344,7 +374,7 @@ Class Services
      * @param   null    $value
      * @param   bool    $connectionSucceeded
      *
-     * @return  mixed
+     * @return  null
      * @since   1.0
      * @throws  \Exception
      */
@@ -354,12 +384,20 @@ Class Services
 
         if ($value == null || $connectionSucceeded === false) {
             $this->message[$i] = ' ' . $key . ' FAILED' . $value;
-            Services::Registry()->set('Service', $key, false);
+            if ($key == 'ConfigurationService' || $key == 'RegistryService') {
+            } else {
+                Services::Registry()->set('Service', $key, false);
+            }
 
         } else {
             $this->connections[$key] = $value;
-            $this->message[$i] = ' ' . $key . ' started successfully. ';
-            Services::Registry()->set('Service', $key, true);
+            $this->message[$i]       = ' ' . $key . ' started successfully. ';
+            if ($key == 'ConfigurationService' || $key == 'RegistryService') {
+            } else {
+                Services::Registry()->set('Service', $key, true);
+            }
         }
+
+        return;
     }
 }

@@ -30,7 +30,7 @@ class FeaturedPlugin extends Plugin
         $model_name = Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'model_name');
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 
         $controller->set('get_customfields', 1, 'model_registry');
@@ -38,13 +38,14 @@ class FeaturedPlugin extends Plugin
         $controller->set('process_plugins', 1, 'model_registry');
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-        $primary_key = $controller->get('primary_key', 'id', 'model_registry');
+        $primary_key    = $controller->get('primary_key', 'id', 'model_registry');
 
         $controller->model->query->where(
             $controller->model->db->qn($primary_prefix)
-            . '.'
-            . $controller->model->db->qn('featured')
-            . ' = 1 ');
+                . '.'
+                . $controller->model->db->qn('featured')
+                . ' = 1 '
+        );
 
         $results = $controller->getData(QUERY_OBJECT_LIST);
 

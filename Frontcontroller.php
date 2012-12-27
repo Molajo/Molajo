@@ -219,43 +219,45 @@ Class Frontcontroller
      */
     protected $class_array = array(
 
-        'Service' => 'Molajo\\Service\\Services',
-        'ApplicationService' => 'Molajo\\Service\\Services\\Application\\ApplicationService',
-        'AssetService' => 'Molajo\\Service\\Services\\Asset\\AssetService',
+        'Configuration'        => 'Molajo\\Service\\Services\\Configuration\\',
+
+        'Service'              => 'Molajo\\Service\\Services',
+        'ApplicationService'   => 'Molajo\\Service\\Services\\Application\\ApplicationService',
+        'AssetService'         => 'Molajo\\Service\\Services\\Asset\\AssetService',
         'ConfigurationService' => 'Molajo\\Service\\Services\\Configuration\\ConfigurationService',
-        'ExceptionService' => 'Molajo\\Service\\Services\\Exception\\ExceptionService',
-        'MetadataService' => 'Molajo\\Service\\Services\\Metadata\\MetadataService',
-        'RequestService' => 'Molajo\\Service\\Services\\Request\\RequestService',
-        'RegistryService' => 'Molajo\\Service\\Services\\Registry\\RegistryService',
-        'RouteService' => 'Molajo\\Service\\Services\\Route\\RouteService',
-        'SiteService' => 'Molajo\\Service\\Services\\Site\\SiteService',
-        'ThemeService' => 'Molajo\\Service\\Services\\Theme\\ThemeService',
-        'ContentHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
-        'ExtensionHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ExtensionHelper',
-        'ThemeHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ThemeHelper',
-        'ViewHelper' => 'Molajo\\Service\\Services\\Theme\\Helper\\ViewHelper',
-        'Includer' => 'Molajo\\Service\\Services\\Theme\\Includer',
-        'HeadIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\HeadIncluder',
-        'MessageIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\MessageIncluder',
-        'PageIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\PageIncluder',
-        'ProfilerIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\ProfilerIncluder',
-        'TagIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\TagIncluder',
-        'TemplateIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\TemplateIncluder',
-        'ThemeIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder',
-        'WrapIncluder' => 'Molajo\\Service\\Services\\Theme\\Includer\\WrapIncluder',
-        'Controller' => 'Molajo\\MVC\\Controller\\Controller',
-        'CreateController' => 'Molajo\\MVC\\Controller\\CreateController',
-        'DeleteController' => 'Molajo\\MVC\\Controller\\DeleteController',
-        'DisplayController' => 'Molajo\\MVC\\Controller\\DisplayController',
-        'LoginController' => 'Molajo\\MVC\\Controller\\LoginController',
-        'LogoutController' => 'Molajo\\MVC\\Controller\\LogoutController',
-        'UpdateController' => 'Molajo\\MVC\\Controller\\UpdateController',
-        'Model' => 'Molajo\\MVC\\Model\\Model',
-        'CreateModel' => 'Molajo\\MVC\\Model\\CreateModel',
-        'DeleteModel' => 'Molajo\\MVC\\Model\\DeleteModel',
-        'LoginModel' => 'Molajo\\MVC\\Model\\LoginModel',
-        'LogoutModel' => 'Molajo\\MVC\\Model\\LogoutModel',
-        'ReadModel' => 'Molajo\\MVC\\Model\\ReadModel'
+        'ExceptionService'     => 'Molajo\\Service\\Services\\Exception\\ExceptionService',
+        'MetadataService'      => 'Molajo\\Service\\Services\\Metadata\\MetadataService',
+        'RequestService'       => 'Molajo\\Service\\Services\\Request\\RequestService',
+        'RegistryService'      => 'Molajo\\Service\\Services\\Registry\\RegistryService',
+        'RouteService'         => 'Molajo\\Service\\Services\\Route\\RouteService',
+        'SiteService'          => 'Molajo\\Service\\Services\\Site\\SiteService',
+        'ThemeService'         => 'Molajo\\Service\\Services\\Theme\\ThemeService',
+        'ContentHelper'        => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
+        'ExtensionHelper'      => 'Molajo\\Service\\Services\\Theme\\Helper\\ExtensionHelper',
+        'ThemeHelper'          => 'Molajo\\Service\\Services\\Theme\\Helper\\ThemeHelper',
+        'ViewHelper'           => 'Molajo\\Service\\Services\\Theme\\Helper\\ViewHelper',
+        'Includer'             => 'Molajo\\Service\\Services\\Theme\\Includer',
+        'HeadIncluder'         => 'Molajo\\Service\\Services\\Theme\\Includer\\HeadIncluder',
+        'MessageIncluder'      => 'Molajo\\Service\\Services\\Theme\\Includer\\MessageIncluder',
+        'PageIncluder'         => 'Molajo\\Service\\Services\\Theme\\Includer\\PageIncluder',
+        'ProfilerIncluder'     => 'Molajo\\Service\\Services\\Theme\\Includer\\ProfilerIncluder',
+        'TagIncluder'          => 'Molajo\\Service\\Services\\Theme\\Includer\\TagIncluder',
+        'TemplateIncluder'     => 'Molajo\\Service\\Services\\Theme\\Includer\\TemplateIncluder',
+        'ThemeIncluder'        => 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder',
+        'WrapIncluder'         => 'Molajo\\Service\\Services\\Theme\\Includer\\WrapIncluder',
+        'Controller'           => 'Molajo\\MVC\\Controller\\Controller',
+        'CreateController'     => 'Molajo\\MVC\\Controller\\CreateController',
+        'DeleteController'     => 'Molajo\\MVC\\Controller\\DeleteController',
+        'DisplayController'    => 'Molajo\\MVC\\Controller\\DisplayController',
+        'LoginController'      => 'Molajo\\MVC\\Controller\\LoginController',
+        'LogoutController'     => 'Molajo\\MVC\\Controller\\LogoutController',
+        'UpdateController'     => 'Molajo\\MVC\\Controller\\UpdateController',
+        'Model'                => 'Molajo\\MVC\\Model\\Model',
+        'CreateModel'          => 'Molajo\\MVC\\Model\\CreateModel',
+        'DeleteModel'          => 'Molajo\\MVC\\Model\\DeleteModel',
+        'LoginModel'           => 'Molajo\\MVC\\Model\\LoginModel',
+        'LogoutModel'          => 'Molajo\\MVC\\Model\\LogoutModel',
+        'ReadModel'            => 'Molajo\\MVC\\Model\\ReadModel'
     );
 
     /**
@@ -384,6 +386,7 @@ Class Frontcontroller
         }
 
         $this->parameters[$key] = $default;
+
         return $this->parameters[$key];
     }
 
@@ -406,6 +409,7 @@ Class Frontcontroller
         }
 
         $this->parameters[$key] = $value;
+
         return $this->parameters[$key];
     }
 
@@ -426,19 +430,17 @@ Class Frontcontroller
         $results = version_compare(PHP_VERSION, '5.3', '<');
         if ($results == 1) {
             throw new \Exception
-                ('Frontcontroller: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
+            ('Frontcontroller: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
         }
 
         /** Services */
         Frontcontroller::Services($this->class_array['Service']);
+        Frontcontroller::Services()->startup($this->class_array['Configuration']);
 
-        /** Configuration */
-        $class = $this->class_array['ConfigurationService'];
-        $this->configuration_service = new $class();
         die;
-//Frontcontroller::Services()->startup();
+
         /** Request */
-        $class = $this->class_array['RequestService'];
+        $class                 = $this->class_array['RequestService'];
         $this->request_service = new $class();
 
         $this->set('request_id', (int)$this->request_service->get('id', 0));
@@ -448,7 +450,7 @@ Class Frontcontroller
         $this->set('request_using_ssl', $this->request_service->get('is_secure'));
 
         /** Site (Base URLs) */
-        $class = $this->class_array['SiteService'];
+        $class      = $this->class_array['SiteService'];
         $this->site = new $class();
 
         $this->site->set('base_url', $this->request_service->get('base_url'));
@@ -456,9 +458,9 @@ Class Frontcontroller
         $this->site->setStandardDefines();
 
         /** Application (Set Application -- Sequence needed for Installation) */
-        $class = $this->class_array['ApplicationService'];
+        $class             = $this->class_array['ApplicationService'];
         $this->application = new $class();
-die;
+        die;
         $p1 = $this->request_service->get('path_info');
         $t2 = $this->request_service->get('query_string');
 
@@ -497,14 +499,12 @@ die;
         } else {
             $this->requested_resource_for_route = $override_url_request;
         }
-        /** Registry */
-        Frontcontroller::Registry($this->class_array['RegistryService']);
+
 
         /** Configuration */
         $this->application->getApplication();
         $this->application->setApplicationSitePaths();
 
-        Services::Registry()->get('Configuration', '*');
 
         /** onAfterStart for Configuration */
         Services::Profiler()->initialise();
@@ -532,7 +532,7 @@ die;
         }
 
         /** Assets */
-        $class = $this->class_array['AssetService'];
+        $class              = $this->class_array['AssetService'];
         $this->assets_class = new $class();
 
         $this->assets_class->initialise();
@@ -543,7 +543,7 @@ die;
         $this->assets_class->set('direction', $this->get('language_direction'));
 
         /** Metadata */
-        $class = $this->class_array['MetadataService'];
+        $class                = $this->class_array['MetadataService'];
         $this->metadata_class = new $class();
 
         $this->metadata_class->initialise();
@@ -572,6 +572,7 @@ die;
 
         //
         /** LAZY LOAD Session */
+
         //Services::Session()->create(
         //    Services::Session()->getHash(get_class($this))
         //);
@@ -589,7 +590,7 @@ die;
      */
     public function exception_handler(\Exception $e)
     {
-        $class = $this->class_array['ExceptionService'];
+        $class   = $this->class_array['ExceptionService'];
         $connect = new $class($e->getMessage(), $e->getCode(), $e);
         $connect->formatMessage();
 
@@ -683,7 +684,7 @@ die;
             $override_catalog_id
         );
 
-        $this->parameters = $route[0];
+        $this->parameters                 = $route[0];
         $this->parameter_properties_array = $route[1];
 
         if ($this->get('redirect_to_id') == 0
@@ -841,6 +842,7 @@ die;
         if ($results === false) {
             Services::Profiler()->set('Execute ' . $action . ' failed', PROFILER_APPLICATION);
             throw new \Exception('Execute ' . $action . ' Failed', 500);
+
             return false;
         }
 
@@ -894,7 +896,7 @@ die;
     /**
      * Retrieve page from Page Cache, if cache is enabled and the page is available
      *
-     * @todo provide script to create a full HTML website with pre-rendered pages using catalog query
+     * @todo    provide script to create a full HTML website with pre-rendered pages using catalog query
      *
      * @return  mixed | false or string
      * @since   1.0
@@ -1040,22 +1042,22 @@ die;
     {
         if (isset($this->parameters['model_registry_name'])) {
             $model_registry_name = $this->parameters['model_registry_name'];
-            $model_registry = Services::Registry()->get($model_registry_name);
+            $model_registry      = Services::Registry()->get($model_registry_name);
         } else {
             $model_registry_name = '';
-            $model_registry = array();
+            $model_registry      = array();
         }
 
         $arguments = array(
-            'model' => null,
-            'model_registry' => $model_registry,
-            'parameters' => $this->parameters,
-            'parameter_properties_array' => $this->parameter_properties_array,
-            'query_results' => array(),
-            'row' => null,
-            'rendered_output' => $this->rendered_output,
-            'class_array' => $this->class_array,
-            'include_parse_sequence' => array(),
+            'model'                             => null,
+            'model_registry'                    => $model_registry,
+            'parameters'                        => $this->parameters,
+            'parameter_properties_array'        => $this->parameter_properties_array,
+            'query_results'                     => array(),
+            'row'                               => null,
+            'rendered_output'                   => $this->rendered_output,
+            'class_array'                       => $this->class_array,
+            'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
 
@@ -1186,7 +1188,7 @@ die;
     public static function Registry($class = null)
     {
         if ($class === null) {
-             $class = 'Molajo\\Service\\Services\\Registry\\RegistryService';
+            $class = 'Molajo\\Service\\Services\\Registry\\RegistryService';
         }
 
         if (self::$registry) {

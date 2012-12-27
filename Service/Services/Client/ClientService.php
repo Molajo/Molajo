@@ -137,6 +137,7 @@ Class ClientService
             foreach ($this->parameter_properties_array as $parameter) {
                 $results[$key] = $this->$key;
             }
+
             return;
         }
 
@@ -238,9 +239,9 @@ Class ClientService
         $user_agent = '';
 
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
-            $platform = 'unknown';
-            $desktop = 0;
-            $browser = 'unknown';
+            $platform        = 'unknown';
+            $desktop         = 0;
+            $browser         = 'unknown';
             $browser_version = 'unknown';
 
         } else {
@@ -294,12 +295,12 @@ Class ClientService
                 'aol'
             );
 
-            $browser = '';
+            $browser         = '';
             $browser_version = '';
             foreach ($browsers as $browser) {
 
                 if (preg_match("#($browser)[/ ]?([0-9.]*)#", $user_agent, $match)) {
-                    $browser = $match[1];
+                    $browser         = $match[1];
                     $browser_version = $match[2];
                     break;
                 }

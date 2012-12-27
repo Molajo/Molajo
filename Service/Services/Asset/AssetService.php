@@ -243,10 +243,11 @@ Class AssetService
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
             throw new \OutOfRangeException
-                ('Asset Service: attempting to get value for unknown property: ' . $key);
+            ('Asset Service: attempting to get value for unknown property: ' . $key);
         }
 
         $this->$key = $default;
+
         return $this->$key;
     }
 
@@ -266,10 +267,11 @@ Class AssetService
         if (in_array($key, $this->parameter_properties_array)) {
         } else {
             throw new \OutOfRangeException
-                ('Asset Service: attempting to set value for unknown key: ' . $key);
+            ('Asset Service: attempting to set value for unknown key: ' . $key);
         }
 
         $this->$key = $value;
+
         return $this->$key;
     }
 
@@ -309,10 +311,10 @@ Class AssetService
 
         $temp_row = new \stdClass();
 
-        $temp_row->url = $url;
-        $temp_row->relation = $relation;
+        $temp_row->url           = $url;
+        $temp_row->relation      = $relation;
         $temp_row->relation_type = $relation_type;
-        $temp_row->attributes = '';
+        $temp_row->attributes    = '';
 
         $temp = trim(implode(' ', $attributes));
         if (trim($temp) == '') {
@@ -442,12 +444,12 @@ Class AssetService
 
         $temp_row = new \stdClass();
 
-        $temp_row->url = $url;
-        $temp_row->priority = $priority;
-        $temp_row->mimetype = $mimetype;
-        $temp_row->media = $media;
+        $temp_row->url         = $url;
+        $temp_row->priority    = $priority;
+        $temp_row->mimetype    = $mimetype;
+        $temp_row->media       = $media;
         $temp_row->conditional = $conditional;
-        $temp_row->attributes = trim(implode(' ', $attributes));
+        $temp_row->attributes  = trim(implode(' ', $attributes));
 
         $css[] = $temp_row;
 
@@ -495,7 +497,7 @@ Class AssetService
         $temp_row = new \stdClass();
 
         $temp_row->mimetype = $mimetype;
-        $temp_row->content = $content;
+        $temp_row->content  = $content;
         $temp_row->priority = $priority;
 
         $css[] = $temp_row;
@@ -595,11 +597,11 @@ Class AssetService
 
         $temp_row = new \stdClass();
 
-        $temp_row->url = $url;
+        $temp_row->url      = $url;
         $temp_row->priority = $priority;
         $temp_row->mimetype = $mimetype;
-        $temp_row->async = $async;
-        $temp_row->defer = $defer;
+        $temp_row->async    = $async;
+        $temp_row->defer    = $defer;
 
         $js[] = $temp_row;
 
@@ -661,9 +663,9 @@ Class AssetService
 
         $temp_row = new \stdClass();
 
-        $temp_row->content = $content;
+        $temp_row->content  = $content;
         $temp_row->mimetype = $mimetype;
-        $temp_row->defer = $defer;
+        $temp_row->defer    = $defer;
         $temp_row->priority = $priority;
 
         $js[] = $temp_row;
@@ -734,7 +736,7 @@ Class AssetService
                 if ($temp_row->url == $url) {
                     echo $priority;
                     $temp_row->priority = $priority;
-                    $update = true;
+                    $update             = true;
                 }
             }
             $query_results[] = $temp_row;
@@ -781,7 +783,7 @@ Class AssetService
             return array();
         }
 
-        $update = false;
+        $update        = false;
         $query_results = array();
         foreach ($temp as $temp_row) {
             if (isset($temp_row->url)) {
@@ -852,12 +854,13 @@ Class AssetService
                 if ($include === false) {
                 } else {
                     $temp_row->application_html5 = $this->html5;
-                    $temp_row->end = $this->line_end;
-                    $temp_row->page_mimetype = $this->mimetype;
-                    $query_results[] = $temp_row;
+                    $temp_row->end               = $this->line_end;
+                    $temp_row->page_mimetype     = $this->mimetype;
+                    $query_results[]             = $temp_row;
                 }
             }
         }
+
         return $query_results;
     }
 }

@@ -33,7 +33,7 @@ class DeferPlugin extends Plugin
 
         /** JS */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(ASSETS_LITERAL, JS_DEFER_LITERAL);
         $controller->setDataobject();
         $controller->connectDatabase();
@@ -44,7 +44,7 @@ class DeferPlugin extends Plugin
 
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(ASSETS_LITERAL, JS_DECLARATIONS_DEFER_LITERAL);
         $controller->set('model_parameter', JS_DECLARATIONS_DEFER_LITERAL, 'parameters');
         $controller->connectDatabase();

@@ -17,10 +17,13 @@
         </table>
         <customfields>
             <customfield name="parameters">
-                <field name="button_group_type" type="char" null="0" default="primary" values="primary,secondary,success,alert"/>
-                <field name="button_group_size" type="char" null="0" default="regular" values="tiny,small,regular,large"/>
+                <field name="button_group_type" type="char" null="0" default="primary"
+                       values="primary,secondary,success,alert"/>
+                <field name="button_group_size" type="char" null="0" default="regular"
+                       values="tiny,small,regular,large"/>
                 <field name="button_group_shape" type="char" null="0" default="square" values="square,radius,rounded"/>
-                <field name="button_group_class" type="char" null="0" default="even,three-up" values="even,two-up,three-up,four-up,five-up"/>
+                <field name="button_group_class" type="char" null="0" default="even,three-up"
+                       values="even,two-up,three-up,four-up,five-up"/>
                 <field name="button_group_array" type="char" null="0" default=" "/>
             </customfield>
         </customfields>

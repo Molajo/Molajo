@@ -1,1 +1,1 @@
-<field name="defer_wrap_view_id" type="integer"  datalist="Wraps" null="0" default="0"/>
+<field name="defer_wrap_view_id" type="integer" datalist="Wraps" null="0" default="0"/>

@@ -45,7 +45,7 @@ class ItemuserpermissionsPlugin extends Plugin
 
         foreach ($actionsArray as $action) {
             if ($permissions[$action] === true) {
-                $field = $action . 'Permission';
+                $field             = $action . 'Permission';
                 $this->row->$field = $permissions[$action];
             }
         }

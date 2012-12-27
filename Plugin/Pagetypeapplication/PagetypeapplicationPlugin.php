@@ -20,8 +20,8 @@ class PagetypeapplicationPlugin extends Plugin
     /**
      * Prepares Configuration Data
      *
-     * @return 	boolean
-     * @since	1.0
+     * @return     boolean
+     * @since    1.0
      */
     public function onBeforeParse()
     {
@@ -34,7 +34,7 @@ class PagetypeapplicationPlugin extends Plugin
         $resource_model_name = $this->get('model_name', '', 'parameters');
 
         $this->contentHelper->getResourceExtensionParameters(
-            (int) $this->get('criteria_extension_instance_id', 0, 'parameters')
+            (int)$this->get('criteria_extension_instance_id', 0, 'parameters')
         );
 
         /** Array - All Pages in Set
@@ -45,7 +45,7 @@ class PagetypeapplicationPlugin extends Plugin
         $pages = explode('{{', $temp);
 
         /** Determine Current Page of Set */
-        $temp = Services::Registry()->get('parameters', 'request_filters', array());
+        $temp    = Services::Registry()->get('parameters', 'request_filters', array());
         $filters = explode(',', $temp);
 
         $page = 1;
@@ -57,7 +57,7 @@ class PagetypeapplicationPlugin extends Plugin
                 } else {
                     $pair = explode(':', $x);
                     if (strtolower($pair[0]) == 'page') {
-                        $page = (int) $pair[1];
+                        $page = (int)$pair[1];
                         break;
                     }
                 }
@@ -72,21 +72,21 @@ class PagetypeapplicationPlugin extends Plugin
 
         /** Submenu: Links to various Form Pages (Tabs) - ex. Basic, Metadata, Fields, etc. */
         $pageArray = array();
-        $i = 0;
+        $i         = 0;
         foreach ($pages as $item) {
             if ($item == '') {
             } else {
                 $i++;
-                $temp_row = new \stdClass();
+                $temp_row     = new \stdClass();
                 $temp_row->id = $i;
                 if ($i == $page_number) {
                     $temp_row->current = 1;
                 } else {
                     $temp_row->current = 0;
                 }
-                $temp_row->id = $i;
+                $temp_row->id    = $i;
                 $temp_row->title = substr($item, 0, strpos($item, ','));
-                $temp_row->url = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/page/' . $i;
+                $temp_row->url   = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/page/' . $i;
 
                 $pageArray[] = $temp_row;
             }
@@ -99,20 +99,20 @@ class PagetypeapplicationPlugin extends Plugin
         /**
          * $pageFieldsets - contains two fields: page_count and page_array
          *
-         * 	page_count - the number of pages created (will be 1 for this use)
+         *     page_count - the number of pages created (will be 1 for this use)
          *
-         * 	page_array: several fields that will be used by the primary view to display titles
-         *		and create the include that contains the form fieldsets
+         *     page_array: several fields that will be used by the primary view to display titles
+         *        and create the include that contains the form fieldsets
          *
-         *	Example page_array: Basic Page (tab 1)
-         * 		page_title: Basic
-         * 		page_title_extended: Articles Basic Configuration
-         * 		page_namespace: application
-         * 		page_link: applicationbasic
+         *    Example page_array: Basic Page (tab 1)
+         *         page_title: Basic
+         *         page_title_extended: Articles Basic Configuration
+         *         page_namespace: application
+         *         page_link: applicationbasic
          *
-         * 		Form View to include and the Registry containing Form contents:
-         * 			fieldset_template_view: Formpage
-         * 			fieldset_template_view_parameter: Formpageapplicationbasic
+         *         Form View to include and the Registry containing Form contents:
+         *             fieldset_template_view: Formpage
+         *             fieldset_template_view_parameter: Formpageapplicationbasic
          *
          */
         $form = Services::Form();

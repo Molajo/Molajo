@@ -43,7 +43,7 @@ class ApplicationPlugin extends Plugin
 
         $item_indicator = 0;
         if ((int)$current_menuitem_id == 0) {
-            $item_indicator = 1;
+            $item_indicator      = 1;
             $current_menuitem_id = (int)$this->get('parent_menu_id', 0, 'parameters');
         }
 
@@ -82,7 +82,7 @@ class ApplicationPlugin extends Plugin
         $this->class_asset->addLink($url, 'canonical', 'rel', array(), 1);
 
         $resource = $this->get('extension_name_path_node', '', 'parameters');
-        $url = Services::Registry()->get(PAGE_LITERAL, 'home_url') . '/' . strtolower($resource);
+        $url      = Services::Registry()->get(PAGE_LITERAL, 'home_url') . '/' . strtolower($resource);
         Services::Registry()->set(PAGE_LITERAL, 'resource_url', $url);
 
         //@todo add links for prev and next
@@ -115,7 +115,7 @@ class ApplicationPlugin extends Plugin
     {
         $bread_crumbs = Services::Registry()->get(PAGE_LITERAL, 'Breadcrumbs');
 
-        $menuname = '';
+        $menuname           = '';
         $temp_query_results = array();
 
         if ($bread_crumbs == false || count($bread_crumbs) == 0) {
@@ -156,15 +156,15 @@ class ApplicationPlugin extends Plugin
 
         Services::Registry()->set(PAGE_LITERAL, 'page_type', $this->get('page_type', '', 'parameters'));
 
-        $heading1 = $this->get('criteria_title', '', 'parameters');
+        $heading1  = $this->get('criteria_title', '', 'parameters');
         $page_type = $this->get('page_type', '', 'parameters');
         if ($page_type == 'Grid') {
             $page_type = QUERY_OBJECT_LIST;
         }
 
-        $list_current = 0;
+        $list_current          = 0;
         $configuration_current = 0;
-        $new_current = 0;
+        $new_current           = 0;
         if (strtolower($page_type) == QUERY_OBJECT_ITEM) {
             $new_current = 1;
         } elseif (strtolower($page_type) == PAGE_TYPE_CONFIGURATION) {
@@ -184,22 +184,22 @@ class ApplicationPlugin extends Plugin
 
         Services::Registry()->get(PAGE_LITERAL, 'resource_url');
 
-        $temp_row = new \stdClass();
-        $temp_row->link_text = Services::Language()->translate('GRID');
-        $temp_row->link = Services::Registry()->get(PAGE_LITERAL, 'resource_url');
-        $temp_row->current = $list_current;
+        $temp_row             = new \stdClass();
+        $temp_row->link_text  = Services::Language()->translate('GRID');
+        $temp_row->link       = Services::Registry()->get(PAGE_LITERAL, 'resource_url');
+        $temp_row->current    = $list_current;
         $temp_query_results[] = $temp_row;
 
-        $temp_row = new \stdClass();
-        $temp_row->link_text = Services::Language()->translate(CONFIGURATION_LITERAL);
-        $temp_row->link = Services::Registry()->get(PAGE_LITERAL, 'resource_url') . '/' . CONFIGURATION_LITERAL;
-        $temp_row->current = $configuration_current;
+        $temp_row             = new \stdClass();
+        $temp_row->link_text  = Services::Language()->translate(CONFIGURATION_LITERAL);
+        $temp_row->link       = Services::Registry()->get(PAGE_LITERAL, 'resource_url') . '/' . CONFIGURATION_LITERAL;
+        $temp_row->current    = $configuration_current;
         $temp_query_results[] = $temp_row;
 
-        $temp_row = new \stdClass();
-        $temp_row->link_text = Services::Language()->translate('NEW');
-        $temp_row->link = Services::Registry()->get(PAGE_LITERAL, 'resource_url') . '/' . 'new';
-        $temp_row->current = $new_current;
+        $temp_row             = new \stdClass();
+        $temp_row->link_text  = Services::Language()->translate('NEW');
+        $temp_row->link       = Services::Registry()->get(PAGE_LITERAL, 'resource_url') . '/' . 'new';
+        $temp_row->current    = $new_current;
         $temp_query_results[] = $temp_row;
 
         Services::Registry()->set(PAGE_LITERAL, 'PageSubmenu', $temp_query_results);
@@ -218,7 +218,8 @@ class ApplicationPlugin extends Plugin
         if ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
 
             if (strtolower(Services::Registry()->get('parameters', 'request_action', ACTION_READ, 'parameters'))
-                == ACTION_READ) {
+                == ACTION_READ
+            ) {
                 $actions = $this->setItemActions();
             } else {
                 $actions = $this->setEditActions();
@@ -239,7 +240,7 @@ class ApplicationPlugin extends Plugin
 
         $temp_query_results = array();
 
-        $temp_row = new \stdClass();
+        $temp_row               = new \stdClass();
         $temp_row->action_count = $actionCount;
         $temp_row->action_array = '';
 
@@ -268,7 +269,7 @@ class ApplicationPlugin extends Plugin
     {
         // Currently display
 
-        $actions = array();
+        $actions   = array();
         $actions[] = 'create';
         $actions[] = 'copy';
         $actions[] = ACTION_READ;
@@ -364,10 +365,10 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageMeta()
     {
-        $title = $this->metadata_service->get('title', '');
+        $title       = $this->metadata_service->get('title', '');
         $description = $this->metadata_service->get('description', '');
-        $author = $this->metadata_service->get('author', '');
-        $robots = $this->metadata_service->get('robots', '');
+        $author      = $this->metadata_service->get('author', '');
+        $robots      = $this->metadata_service->get('robots', '');
 
         if ($title == '' || $description == '' || $author == '' || $robots == '') {
         } else {

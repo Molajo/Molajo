@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-       name="Filter_status"
-       primary_key="id"
-       name_key="value"
-       multiple="1"
-       size="5"
-       data_object="Datalist">
+        name="Filter_status"
+        primary_key="id"
+        name_key="value"
+        multiple="1"
+        size="5"
+        data_object="Datalist">
     <table>
         <values>
             <value id="2" value="Archived"/>

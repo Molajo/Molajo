@@ -25,20 +25,20 @@
             criteria_extension_instance_id="1000"
             extends="SiteDatasource"
             data_object="Database">
-    <table>
-        <foreignkeys>
-            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
-        </foreignkeys>
-        <joins>
-            <join model="Catalog"
-                  alias="catalog"
-                  select="catalog_type_id,source_id,sef_request,view_group_id,redirect_to_id"
-                  jointo="source_id,application_id,catalog_type_id"
-                  joinwith="id,APPLICATION_ID,catalog_type_id"/>
-        </joins>
-        <plugins>
-            <plugin name="Sites"/>
-        </plugins>
-    </table>
+        <table>
+            <foreignkeys>
+                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            </foreignkeys>
+            <joins>
+                <join model="Catalog"
+                      alias="catalog"
+                      select="catalog_type_id,source_id,sef_request,view_group_id,redirect_to_id"
+                      jointo="source_id,application_id,catalog_type_id"
+                      joinwith="id,APPLICATION_ID,catalog_type_id"/>
+            </joins>
+            <plugins>
+                <plugin name="Sites"/>
+            </plugins>
+        </table>
     </model>
 </extension>

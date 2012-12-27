@@ -78,7 +78,7 @@ class ReadmorePlugin extends Plugin
         $tagPos = preg_match($pattern, $text);
 
         $introductory_text = '';
-        $fulltext = '';
+        $fulltext          = '';
 
         if ($tagPos == 0) {
             $introductory_text = $text;

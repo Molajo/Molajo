@@ -1,1 +1,2 @@
-<field name="application_list" type="char" null="0" default="{{List Default Page View,list_parent*,list_theme*,list_page*}}{{List Default Template View,list_template*}}{{List Default Wrap View,list_wrap*}}"/>
+<field name="application_list" type="char" null="0"
+       default="{{List Default Page View,list_parent*,list_theme*,list_page*}}{{List Default Template View,list_template*}}{{List Default Wrap View,list_wrap*}}"/>

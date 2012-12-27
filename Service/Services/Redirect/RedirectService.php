@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/RedirectResponse.html
  *
- * @package    Niambie
- * @subpackage  Services
+ * @package         Niambie
+ * @subpackage      Services
  * @since           1.0
  */
 Class RedirectService
@@ -42,7 +42,7 @@ Class RedirectService
      * Set the Redirect URL and Code
      *
      * @param null $url
-     * @param  $code
+     * @param      $code
      *
      * @return mixed
      * @since  1.0
@@ -51,8 +51,8 @@ Class RedirectService
     {
         /** Installation redirect */
         if ($code == 999) {
-            $code = 302;
-            $this->url = $url;
+            $code       = 302;
+            $this->url  = $url;
             $this->code = $code;
 
             return;
@@ -63,8 +63,10 @@ Class RedirectService
             $url = BASE_URL . APPLICATION_URL_PATH . $url;
         }
 
-        Services::Profiler()->set('Redirect Services Set URL: ' . $this->url
-                . ' Status Code: ' . $this->code, PROFILER_APPLICATION
+        Services::Profiler()->set(
+            'Redirect Services Set URL: ' . $this->url
+                . ' Status Code: ' . $this->code,
+            PROFILER_APPLICATION
         );
 
         return;
@@ -86,8 +88,11 @@ Class RedirectService
         } else {
             $this->code = $code;
         }
-        Services::Profiler()->set('RedirectServices::redirect to: ' . $this->url
-            . ' Status Code: ' . $this->code, PROFILER_APPLICATION);
+        Services::Profiler()->set(
+            'RedirectServices::redirect to: ' . $this->url
+                . ' Status Code: ' . $this->code,
+            PROFILER_APPLICATION
+        );
 
         return new RedirectResponse($this->url, $this->code);
     }

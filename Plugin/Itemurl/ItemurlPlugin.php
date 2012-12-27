@@ -35,29 +35,29 @@ class ItemurlPlugin extends Plugin
     public function onAfterRead()
     {
 
-		if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
+        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
 
-			if (isset($this->row->catalog_sef_request)) {
-				$newFieldValue = Services::Url()->getApplicationURL($this->row->catalog_sef_request);
-				$this->saveField(null, 'catalog_id_url', $newFieldValue);
+            if (isset($this->row->catalog_sef_request)) {
+                $newFieldValue = Services::Url()->getApplicationURL($this->row->catalog_sef_request);
+                $this->saveField(null, 'catalog_id_url', $newFieldValue);
 
-			} elseif (isset($this->row->sef_request)) {
-				$newFieldValue = Services::Url()->getApplicationURL($this->row->sef_request);
-				$this->saveField(null, 'catalog_id_url', $newFieldValue);
+            } elseif (isset($this->row->sef_request)) {
+                $newFieldValue = Services::Url()->getApplicationURL($this->row->sef_request);
+                $this->saveField(null, 'catalog_id_url', $newFieldValue);
 
-			} elseif (isset($this->row->catalog_id)) {
-				$newFieldValue = Services::Url()->getUrl($this->row->catalog_id);
-				$this->saveField(null, 'catalog_id_url', $newFieldValue);
-			}
+            } elseif (isset($this->row->catalog_id)) {
+                $newFieldValue = Services::Url()->getUrl($this->row->catalog_id);
+                $this->saveField(null, 'catalog_id_url', $newFieldValue);
+            }
 
-		} else {
+        } else {
 
-			if (isset($this->row->catalog_id)) {
-				$newFieldValue = Services::Url()->getUrl($this->row->catalog_id);
-				$this->saveField(null, 'catalog_id_url', $newFieldValue);
-			}
+            if (isset($this->row->catalog_id)) {
+                $newFieldValue = Services::Url()->getUrl($this->row->catalog_id);
+                $this->saveField(null, 'catalog_id_url', $newFieldValue);
+            }
 
-		}
+        }
 
         $fields = $this->retrieveFieldsByType('url');
 

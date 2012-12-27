@@ -1,1 +1,2 @@
-<field name="configuration_array" type="char" null="0" default="{{Basic,basic}}{{Fields,customfields,Customfields}}{{Editor,editor}}{{Grid,grid}}{{Views,views}}{{Permissions,noformfields}}"/>
+<field name="configuration_array" type="char" null="0"
+       default="{{Basic,basic}}{{Fields,customfields,Customfields}}{{Editor,editor}}{{Grid,grid}}{{Views,views}}{{Permissions,noformfields}}"/>

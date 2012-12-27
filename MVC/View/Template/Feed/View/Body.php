@@ -18,6 +18,8 @@ defined('NIAMBIE') or die; ?>
     echo '<br />' . $this->row->description;
 }
     if ($this->parameters['display_published_date'] == 1) {
-        echo '<br />' . '<strong>' . Services::Language()->translate('Published') . ':</strong> ' . $this->row->published_date;
+        echo '<br />' . '<strong>' . Services::Language()->translate(
+            'Published'
+        ) . ':</strong> ' . $this->row->published_date;
     } ?>
 </p>

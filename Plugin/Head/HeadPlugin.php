@@ -33,7 +33,7 @@ class HeadPlugin extends Plugin
 
         /** JS */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('dbo', ASSETS_LITERAL);
         $controller->setDataobject();
         $controller->connectDatabase();
@@ -45,7 +45,7 @@ class HeadPlugin extends Plugin
 
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('dbo', ASSETS_LITERAL);
         $controller->setDataobject();
         $controller->connectDatabase();

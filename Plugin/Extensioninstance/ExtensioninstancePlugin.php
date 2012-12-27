@@ -33,7 +33,7 @@ class ExtensioninstancePlugin extends Plugin
     {
         if ($this->row->catalog_type_id >= CATALOG_TYPE_BEGIN
             AND $this->row->catalog_type_id <= CATALOG_TYPE_END
-) {
+        ) {
         } else {
             return true;
         }
@@ -42,7 +42,7 @@ class ExtensioninstancePlugin extends Plugin
 
         /** Check if the Extension Instance already exists */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         $controller->setDataobject();
         $controller->connectDatabase();
@@ -54,37 +54,47 @@ class ExtensioninstancePlugin extends Plugin
         $controller->set('use_special_joins', 0, 'model_registry');
         $controller->set('check_view_level_access', 0, 'model_registry');
 
-        $controller->model->query->select($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('id'));
-        $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('title')
-            . ' = ' . $controller->model->db->q($this->row->title));
-        $controller->model->query->where($controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('catalog_type_id')
-            . ' = ' . (int) $this->row->catalog_type_id);
+        $controller->model->query->select(
+            $controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('id')
+        );
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('title')
+                . ' = ' . $controller->model->db->q($this->row->title)
+        );
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix) . '.' . $controller->model->db->qn('catalog_type_id')
+                . ' = ' . (int)$this->row->catalog_type_id
+        );
 
         $id = $controller->getData(QUERY_OBJECT_RESULT);
 
-        if ((int) $id > 0) {
+        if ((int)$id > 0) {
             //name already exists
             return false;
         }
 
         /** Next, see if the Extension node exists */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensions');
         $controller->setDataobject();
         $controller->connectDatabase();
 
         $controller->model->query->select($controller->model->db->qn('a.id'));
-        $controller->model->query->where($controller->model->db->qn('a.name')
-            . ' = ' . $controller->model->db->q($this->row->title));
-        $controller->model->query->where($controller->model->db->qn('a.catalog_type_id')
-            . ' = ' . (int) $this->row->catalog_type_id);
+        $controller->model->query->where(
+            $controller->model->db->qn('a.name')
+                . ' = ' . $controller->model->db->q($this->row->title)
+        );
+        $controller->model->query->where(
+            $controller->model->db->qn('a.catalog_type_id')
+                . ' = ' . (int)$this->row->catalog_type_id
+        );
 
         $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         if ($item === false) {
         } else {
-            $this->row->extension_id = $item->id;
+            $this->row->extension_id    = $item->id;
             $this->row->catalog_type_id = $item->catalog_type_id;
 
             return;
@@ -96,7 +106,7 @@ class ExtensioninstancePlugin extends Plugin
 
         /** Create a new Catalog Type */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('x', 'y');
         $controller->setDataobject();
 
@@ -114,12 +124,12 @@ class ExtensioninstancePlugin extends Plugin
         $this->parameters['criteria_catalog_type_id'] = $controller->model->db->insertid();
 
         /** Create a new Extension Node */
-        $data = new \stdClass();
-        $data->name = $this->row->title;
+        $data                  = new \stdClass();
+        $data->name            = $this->row->title;
         $data->catalog_type_id = $this->row->catalog_type_id;
-        $data->model_name = 'Extensions';
+        $data->model_name      = 'Extensions';
 
-        $controller = new CreateController();
+        $controller       = new CreateController();
         $controller->data = $data;
 
         $this->row->extension_id = $controller->execute();
@@ -144,7 +154,7 @@ class ExtensioninstancePlugin extends Plugin
 
         if ($this->row->catalog_type_id >= CATALOG_TYPE_BEGIN
             AND $this->row->catalog_type_id <= CATALOG_TYPE_END
-) {
+        ) {
         } else {
             return true;
         }
@@ -152,17 +162,17 @@ class ExtensioninstancePlugin extends Plugin
         echo 'ID ' . $this->row->id . '<br />';
         /** Extension Instance ID */
         $id = $this->row->id;
-        if ((int) $id == 0) {
+        if ((int)$id == 0) {
             return false;
         }
 
         /** Site Extension Instances */
         $controller = new CreateController();
 
-        $data = new \stdClass();
-        $data->site_id = SITE_ID;
+        $data                        = new \stdClass();
+        $data->site_id               = SITE_ID;
         $data->extension_instance_id = $id;
-        $data->model_name = 'SiteExtensionInstances';
+        $data->model_name            = 'SiteExtensionInstances';
 
         $controller->data = $data;
 
@@ -176,10 +186,10 @@ class ExtensioninstancePlugin extends Plugin
         /** Application Extension Instances */
         $controller = new CreateController();
 
-        $data = new \stdClass();
-        $data->application_id = APPLICATION_ID;
+        $data                        = new \stdClass();
+        $data->application_id        = APPLICATION_ID;
         $data->extension_instance_id = $id;
-        $data->model_name = 'ApplicationExtensionInstances';
+        $data->model_name            = 'ApplicationExtensionInstances';
 
         $controller->data = $data;
 
@@ -192,12 +202,12 @@ class ExtensioninstancePlugin extends Plugin
         /** Catalog */
         $controller = new CreateController();
 
-        $data = new \stdClass();
-        $data->catalog_type_id = Services::Registry()->get($this->model_registry_name, 'catalog_type_id');
-        $data->source_id = $id;
-        $data->view_group_id = 1;
+        $data                        = new \stdClass();
+        $data->catalog_type_id       = Services::Registry()->get($this->model_registry_name, 'catalog_type_id');
+        $data->source_id             = $id;
+        $data->view_group_id         = 1;
         $data->extension_instance_id = $id;
-        $data->model_name = 'Catalog';
+        $data->model_name            = 'Catalog';
 
         $controller->data = $data;
 
@@ -234,7 +244,7 @@ class ExtensioninstancePlugin extends Plugin
 
         /** Do not allow delete if there is content for this resource */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
 
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, $this->row->title);
 
@@ -251,11 +261,13 @@ class ExtensioninstancePlugin extends Plugin
         $controller->set('check_view_level_access', 0, 'model_registry');
 
         if (isset($this->parameters['criteria_catalog_type_id'])) {
-            $temp = (int) $this->parameters['criteria_catalog_type_id'];
+            $temp = (int)$this->parameters['criteria_catalog_type_id'];
 
-            $controller->model->query->where($controller->model->db->qn($primary_prefix)
-                . '.' . $controller->model->db->qn('catalog_type_id')
-                . ' = ' . $temp);
+            $controller->model->query->where(
+                $controller->model->db->qn($primary_prefix)
+                    . '.' . $controller->model->db->qn('catalog_type_id')
+                    . ' = ' . $temp
+            );
 
             $item = $controller->getData(QUERY_OBJECT_ITEM);
 
@@ -268,7 +280,7 @@ class ExtensioninstancePlugin extends Plugin
 
         /** Delete allowed - get rid of ACL info */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('x', 'y');
 
         $results = $controller->setDataobject();
@@ -276,22 +288,22 @@ class ExtensioninstancePlugin extends Plugin
             return false;
         }
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__application_extension_instances');
-        $sql .= ' WHERE ' . $controller->model->db->qn('extension_instance_id') . ' = ' . (int) $this->row->id;
+        $sql .= ' WHERE ' . $controller->model->db->qn('extension_instance_id') . ' = ' . (int)$this->row->id;
         $controller->model->db->setQuery($sql);
         $controller->model->db->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__site_extension_instances');
-        $sql .= ' WHERE ' . $controller->model->db->qn('extension_instance_id') . ' = ' . (int) $this->row->id;
+        $sql .= ' WHERE ' . $controller->model->db->qn('extension_instance_id') . ' = ' . (int)$this->row->id;
         $controller->model->db->setQuery($sql);
         $controller->model->db->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__group_permissions');
-        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->row->catalog_id;
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int)$this->row->catalog_id;
         $controller->model->db->setQuery($sql);
         $controller->model->db->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__view_group_permissions');
-        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->row->catalog_id;
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int)$this->row->catalog_id;
         $controller->model->db->setQuery($sql);
         $controller->model->db->execute();
 
@@ -299,9 +311,9 @@ class ExtensioninstancePlugin extends Plugin
         $controller = new DeleteController();
         echo 'Passing this catalog id in to Delete Controller ' . $this->row->catalog_id . '<br />';
 
-        $data = new \stdClass();
+        $data             = new \stdClass();
         $data->model_name = ucfirst(strtolower('Catalog'));
-        $data->id = $this->row->catalog_id;
+        $data->id         = $this->row->catalog_id;
         $controller->data = $data;
         $controller->set('action', 'delete');
 
@@ -319,7 +331,7 @@ class ExtensioninstancePlugin extends Plugin
     public function onAfterDelete()
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
 
         $results = $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'ExtensionInstances');
         if ($results === false) {
@@ -339,12 +351,14 @@ class ExtensioninstancePlugin extends Plugin
 
         $controller->model->query->select('COUNT(*)');
         $controller->model->query->from($controller->model->db->qn('#__extension_instances'));
-        $controller->model->query->where($controller->model->db->qn('extension_id')
-            . ' = ' . (int) $this->row->extension_id);
+        $controller->model->query->where(
+            $controller->model->db->qn('extension_id')
+                . ' = ' . (int)$this->row->extension_id
+        );
 
         $value = $controller->getData(QUERY_OBJECT_RESULT);
 
-        if (empty($value) || (int) $value == 0) {
+        if (empty($value) || (int)$value == 0) {
         } else {
             /** do not delete - more instances remain */
 
@@ -354,9 +368,9 @@ class ExtensioninstancePlugin extends Plugin
         /** Delete orphan node */
         $controller = new DeleteController();
 
-        $data = new \stdClass();
+        $data             = new \stdClass();
         $data->model_name = ucfirst(strtolower('Extensions'));
-        $data->id = $this->row->extension_id;
+        $data->id         = $this->row->extension_id;
         $controller->data = $data;
         $controller->set('action', 'delete');
 

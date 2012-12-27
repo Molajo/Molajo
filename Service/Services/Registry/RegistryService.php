@@ -69,8 +69,8 @@ Class RegistryService
      */
     protected function initialise()
     {
-        $this->registry = array();
-        $this->registryKeys = array();
+        $this->registry      = array();
+        $this->registryKeys  = array();
         $this->registryLocks = array();
 
         return $this;
@@ -191,7 +191,7 @@ Class RegistryService
      *
      * @return  bool    true - lock is on
      *                  false - there is no lock (and possibly no registry, either)
-     * @since   1.0
+     * @since           1.0
      * @throws  \RuntimeException
      */
     public function checkLock($namespace)
@@ -281,6 +281,7 @@ Class RegistryService
         }
 
         /** Returns new registry */
+
         return $this->registry[$namespace];
     }
 
@@ -338,7 +339,7 @@ Class RegistryService
     public function get($namespace = null, $key = null, $default = null)
     {
         $namespace = $this->editNamespace($namespace);
-        $key = $this->editNamespaceKey($namespace, $key);
+        $key       = $this->editNamespaceKey($namespace, $key);
 
         if ($this->exists($namespace) === true) {
         } else {
@@ -363,7 +364,7 @@ Class RegistryService
             } else {
                 //@todo - combine all the wildcard logic
                 if (substr($key, 0, 1) == '*') {
-                    $selected = array();
+                    $selected  = array();
                     $searchfor = substr($key, 1, (strrpos($key, '*') - 1));
                     foreach ($sort as $key => $value) {
                         if ($key == $searchfor) {
@@ -403,11 +404,11 @@ Class RegistryService
         }
 
         if (in_array($namespace, $this->registryKeys)) {
-            $array = $this->registry[$namespace];
+            $array            = $this->registry[$namespace];
             $namespace_exists = true;
 
         } else {
-            $array = array();
+            $array            = array();
             $namespace_exists = false;
         }
 
@@ -427,7 +428,7 @@ Class RegistryService
             $this->createRegistry($namespace);
         }
 
-        $array[$key] = $default;
+        $array[$key]                = $default;
         $this->registry[$namespace] = $array;
 
         return $array[$key];
@@ -443,7 +444,7 @@ Class RegistryService
      * @param   string   $key
      * @param   mixed    $value
      * @param   boolean  $match     - used as a security precaution to ensure only named parameters
-     *                             are updated via <include /> statement overrides
+     *                              are updated via <include /> statement overrides
      *
      * @return  Registry
      * @since   1.0
@@ -464,6 +465,7 @@ Class RegistryService
         if ($key == '') {
             // throw new \RuntimeException ('Registry: Key is required for Set. Namespace: ' . $namespace);
             echo 'Registry: Key is required for Set. Namespace: ' . $namespace;
+
             return;
         }
 
@@ -519,6 +521,7 @@ Class RegistryService
         if ($this->exists($source_registry)) {
         } else {
             echo $source_registry . ' does not exist but was requested during a copy ' . '<br /> ';
+
             return;
             throw new \RuntimeException
             ('Registry: Namespace ' . $source_registry . ' requested as source of copy does not exist.');
@@ -532,23 +535,24 @@ Class RegistryService
                     $this->set($target_registry, $key, $value);
                 }
             }
+
             return $this;
         }
 
         $searchfor = '';
         if (strpos($filter, '*')) {
-            $searchfor = substr($filter, 0, strrpos($filter, '*'));
+            $searchfor  = substr($filter, 0, strrpos($filter, '*'));
             $exactMatch = false;
 
         } else {
-            $searchfor = $filter;
+            $searchfor  = $filter;
             $exactMatch = true;
         }
 
         if (count($copy > 0)) {
 
             foreach ($copy as $key => $value) {
-                $use = false;
+                $use  = false;
                 $test = substr($key, 0, strlen($searchfor));
                 if (strtolower($test) == strtolower($searchfor)) {
                     if ($exactMatch === true) {
@@ -794,8 +798,8 @@ Class RegistryService
         $namespace = strtolower($namespace);
 
         $existing = $this->registryKeys;
-        $keep = array();
-        $deleted = false;
+        $keep     = array();
+        $deleted  = false;
         foreach ($existing as $key => $value) {
 
             if ($value === $namespace) {
@@ -813,11 +817,11 @@ Class RegistryService
 
         $tempRegistry = $this->registry;
 
-        $this->registry = array();
+        $this->registry     = array();
         $this->registryKeys = array();
 
         foreach ($keep as $key => $value) {
-            $this->registryKeys[] = $value;
+            $this->registryKeys[]   = $value;
             $this->registry[$value] = $tempRegistry[$value];
         }
 
@@ -876,7 +880,7 @@ Class RegistryService
      * Services::Registry()->getArray('Name Space', true);
      *
      * @param   string $namespace
-     * @param   boolean @$key_only set to true to retrieve key names
+     * @param          boolean @$key_only set to true to retrieve key names
      *
      * @return  array
      * @since   1.0
@@ -1010,7 +1014,7 @@ Class RegistryService
     {
         $registry = strtolower($registry);
 
-        $key = strtolower($key);
+        $key           = strtolower($key);
         $query_results = array();
 
         if ($key === null || $key == '*') {
@@ -1038,6 +1042,7 @@ Class RegistryService
             }
         }
         $query_results[] = $temp_row;
+
         return $query_results;
     }
 

@@ -47,7 +47,7 @@ Class WrapIncluder extends Includer
         $priority = Services::Registry()->get('include', 'criteria_media_priority_other_extension', 400);
 
         $file_path = Services::Registry()->get('include', 'wrap_view_path');
-        $url_path = Services::Registry()->get('include', 'wrap_view_path_url');
+        $url_path  = Services::Registry()->get('include', 'wrap_view_path_url');
 
         $this->class_asset->addCssFolder($file_path, $url_path, $priority);
         $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);

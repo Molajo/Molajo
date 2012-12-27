@@ -53,17 +53,17 @@ class DatalistPlugin extends Plugin
             $resourceLists = $this->processFiles($resourceFiles);
         }
 
-        $new = array_merge($dataLists, $resourceLists);
+        $new   = array_merge($dataLists, $resourceLists);
         $newer = array_unique($new);
         sort($newer);
 
         $datalist = array();
 
         foreach ($newer as $file) {
-            $temp_row = new \stdClass();
+            $temp_row        = new \stdClass();
             $temp_row->value = $file;
-            $temp_row->id = $file;
-            $datalist[] = $temp_row;
+            $temp_row->id    = $file;
+            $datalist[]      = $temp_row;
         }
 
         Services::Registry()->set(DATALIST_LITERAL, 'Datalists', $datalist);
@@ -84,7 +84,7 @@ class DatalistPlugin extends Plugin
         foreach ($files as $file) {
 
             $length = strlen($file) - strlen('.xml');
-            $value = substr($file, 0, $length);
+            $value  = substr($file, 0, $length);
 
             $fileList[] = $value;
         }

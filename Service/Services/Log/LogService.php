@@ -81,6 +81,7 @@ Class LogService
             $response = Services::Profiler()->setProfilerLogger();
             if ($response === false) {
                 Services::Profiler()->setConfigurationComplete();
+
                 return $this;
             }
             $this->setLog($response['options'], $response['priority'], $response['types']);
@@ -236,6 +237,7 @@ Class LogService
     {
         if ($option == 'count') {
             $array = Services::Registry()->getArray('LogProfiler');
+
             return count($array);
         }
 

@@ -130,9 +130,13 @@ Class ThemeService
      * @return  string
      * @since   1.0
      */
-    public function process($parameters, $parameter_property_array,
-        $class_array = array(), $override_parse_sequence = null, $override_parse_final = null)
-    {
+    public function process(
+        $parameters,
+        $parameter_property_array,
+        $class_array = array(),
+        $override_parse_sequence = null,
+        $override_parse_final = null
+    ) {
         Services::Profiler()->set('Theme Service: Started', PROFILER_RENDERING);
 
         $this->parameters = $parameters;
@@ -158,7 +162,7 @@ Class ThemeService
         }
 
         foreach ($final->include as $next) {
-            $sequence = (string)$next;
+            $sequence      = (string)$next;
             $this->final[] = (string)$next;
 
             if (stripos($sequence, ':')) {
@@ -184,8 +188,8 @@ Class ThemeService
         $this->renderLoop();
 
         /** Head */
-        $this->final_indicator = true;
-        $this->sequence = $this->final;
+        $this->final_indicator     = true;
+        $this->sequence            = $this->final;
         $this->exclude_until_final = array();
 
         $this->onBeforeParseHeadEvent();
@@ -220,6 +224,7 @@ Class ThemeService
             return $this->parameters[$key];
         }
         $this->parameters[$key] = $default;
+
         return $this->parameters[$key];
     }
 
@@ -242,6 +247,7 @@ Class ThemeService
         }
 
         $this->parameters[$key] = $value;
+
         return $this->parameters[$key];
     }
 
@@ -268,7 +274,7 @@ Class ThemeService
     protected function renderLoop()
     {
         $complete = false;
-        $loop = 0;
+        $loop     = 0;
         while ($complete === false) {
 
             $loop++;
@@ -303,9 +309,9 @@ Class ThemeService
      */
     protected function getIncludeRequests()
     {
-        $matches = array();
+        $matches               = array();
         $this->include_request = array();
-        $i = 0;
+        $i                     = 0;
 
         preg_match_all('#<include:(.*)\/>#iU', $this->rendered_output, $matches);
 
@@ -319,7 +325,7 @@ Class ThemeService
             $include_type = '';
 
             $parts = array();
-            $temp = explode(' ', $includeStatement);
+            $temp  = explode(' ', $includeStatement);
             if (count($temp) > 0) {
                 foreach ($temp as $item) {
                     if (trim($item) == '') {
@@ -345,9 +351,9 @@ Class ThemeService
                             $skipped_final_include_type = true;
 
                         } else {
-                            $this->include_request[$i]['name'] = $include_type;
+                            $this->include_request[$i]['name']    = $include_type;
                             $this->include_request[$i]['replace'] = $includeStatement;
-                            $skipped_final_include_type = false;
+                            $skipped_final_include_type           = false;
                         }
 
                     } elseif ($skipped_final_include_type === false) {
@@ -405,7 +411,7 @@ Class ThemeService
     protected function processIncludeRequests()
     {
         $replace = array();
-        $with = array();
+        $with    = array();
 
         foreach ($this->sequence as $sequence) {
 
@@ -431,7 +437,7 @@ Class ThemeService
 
                     $replace[] = "<include:" . $parsed['replace'] . "/>";
 
-                    $output = $this->getIncluderClass ($include_type, $include_name, $attributes);
+                    $output = $this->getIncluderClass($include_type, $include_name, $attributes);
 
                     $with[] = $output;
                 }
@@ -457,11 +463,13 @@ Class ThemeService
     protected function getIncluderClass($include_type, $include_name, $attributes)
     {
         if (defined(PROFILER_ON)) {
-            Services::Profiler()->set('Theme Service: getIncluderClass ' .
-                ' include_type: ' . $include_type .
-                ' include_name: ' . $include_name .
-                ' attributes: ' . implode(' ', $attributes) .
-                PROFILER_RENDERING);
+            Services::Profiler()->set(
+                'Theme Service: getIncluderClass ' .
+                    ' include_type: ' . $include_type .
+                    ' include_name: ' . $include_name .
+                    ' attributes: ' . implode(' ', $attributes) .
+                    PROFILER_RENDERING
+            );
         }
 
         $class = $this->class_array[ucfirst(strtolower($include_type)) . 'Includer'];
@@ -556,21 +564,21 @@ Class ThemeService
         }
 
         $arguments = array(
-            'model' => null,
-            'model_registry' => Services::Registry()->get($this->get('model_registry_name')),
-            'parameters' => $this->parameters,
-            'parameter_property_array' => $this->parameter_property_array,
-            'query_results' => $query_results,
-            'row' => array(),
-            'rendered_output' => $this->rendered_output,
-            'class_array' => $this->class_array,
-            'include_parse_sequence' => $this->sequence,
+            'model'                             => null,
+            'model_registry'                    => Services::Registry()->get($this->get('model_registry_name')),
+            'parameters'                        => $this->parameters,
+            'parameter_property_array'          => $this->parameter_property_array,
+            'query_results'                     => $query_results,
+            'row'                               => array(),
+            'rendered_output'                   => $this->rendered_output,
+            'class_array'                       => $this->class_array,
+            'include_parse_sequence'            => $this->sequence,
             'include_parse_exclude_until_final' => $this->exclude_until_final
         );
 
         $arguments = Services::Event()->scheduleEvent($event_name, $arguments, $this->getPluginList());
 
-        echo $event_name .'<br />';
+        echo $event_name . '<br />';
         echo '<pre>';
         var_dump($arguments);
         echo '</pre>';
@@ -604,7 +612,7 @@ Class ThemeService
         }
 
         if (isset($arguments['query_results'])) {
-           $query_results = $arguments['query_results'];
+            $query_results = $arguments['query_results'];
         }
 
         if (isset($arguments['include_parse_sequence'])) {
@@ -638,7 +646,7 @@ Class ThemeService
 
         $modelPlugins = array();
 
-        if ((int) Services::Registry()->get($model_registry_name, 'process_plugins') > 0) {
+        if ((int)Services::Registry()->get($model_registry_name, 'process_plugins') > 0) {
             $modelPlugins = Services::Registry()->get($model_registry_name, 'plugins');
 
             if (is_array($modelPlugins)) {
@@ -653,7 +661,7 @@ Class ThemeService
             $name = Services::Registry()->get($model_registry_name, 'template_view_path_node');
             if ($name == '') {
             } else {
-                $templatePlugins = Services::Registry()->get(ucfirst(strtolower($name)).'Templates', 'plugins');
+                $templatePlugins = Services::Registry()->get(ucfirst(strtolower($name)) . 'Templates', 'plugins');
 
                 if (is_array($templatePlugins)) {
                 } else {
@@ -681,8 +689,10 @@ Class ThemeService
         }
 
         if ((int)Services::Registry()->get($model_registry_name, 'process_plugins') == 0
-            && count($plugins) == 0) {
+            && count($plugins) == 0
+        ) {
             $this->get('plugins', array());
+
             return;
         }
 

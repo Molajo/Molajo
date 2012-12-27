@@ -9,7 +9,8 @@ use Molajo\Service\Services;
  */
 defined('NIAMBIE') or die;
 $action = Services::Registry()->get(PAGE_LITERAL, 'page_url');
-if ($this->row->enable == 1) { ?>
+if ($this->row->enable == 1) {
+    ?>
 <div class="grid-checkin grid-batch">
     <ol class="grid-batch">
         <li><strong><?php echo Services::Language()->translate('Checkin Content'); ?></strong></li>

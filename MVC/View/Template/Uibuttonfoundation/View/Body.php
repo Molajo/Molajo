@@ -21,7 +21,9 @@ if (trim($this->row->button_id) == '') {
 }
 if (trim($this->row->button_icon_prepend) == '') {
 } else {
-    $this->row->button_title = '<i class="' . trim($this->row->button_icon_prepend) . '"></i>' . $this->row->button_title;
+    $this->row->button_title = '<i class="' . trim(
+        $this->row->button_icon_prepend
+    ) . '"></i>' . $this->row->button_title;
 }
 if (trim($this->row->button_icon_append) == '') {
 } else {

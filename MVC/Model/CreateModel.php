@@ -26,12 +26,15 @@ class CreateModel extends Model
      */
     public function create($data, $model_registry)
     {
-        $table_name = Services::Registry()->get($model_registry, 'table_name');
+        $table_name     = Services::Registry()->get($model_registry, 'table_name');
         $primary_prefix = Services::Registry()->get($model_registry, 'primary_prefix');
 
         /** Prepare Data from Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
-            $model_registry, CUSTOMFIELDGROUPS_LITERAL, array());
+            $model_registry,
+            CUSTOMFIELDGROUPS_LITERAL,
+            array()
+        );
 
         if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
 
@@ -111,10 +114,10 @@ class CreateModel extends Model
     /**
      * prepareFieldValues prepares the values of each data element for insert into the database
      *
-     * @param $name
-     * @param $type
+     * @param     $name
+     * @param     $type
      * @param int $identity
-     * @param $data
+     * @param     $data
      *
      * @return string - data element value
      * @since  1.0
@@ -133,9 +136,9 @@ class CreateModel extends Model
             || $type == 'binary'
             || $type == 'catalog_id'
             || $type == 'boolean'
-) {
+        ) {
 
-            $value = (int) $input;
+            $value = (int)$input;
 
         } elseif ($type == 'char'
             || $type == 'datetime'
@@ -143,7 +146,7 @@ class CreateModel extends Model
             || $type == 'email'
             || $type == 'text'
             || $type == 'ip_address'
-) {
+        ) {
 
             $value = $this->db->q($input);
 

@@ -49,7 +49,7 @@ Class ExtensionHelper
      *  $object = $this->extensionHelper->get($extension_instance_id, null, $model_type, $model_name);
      *
      * @param   string  $extension_instance_id
-     * @param   string  $catalog_type  Numeric or textual key for View Catalog Type
+     * @param   string  $catalog_type      Numeric or textual key for View Catalog Type
      * @param   string  $model_type
      * @param   string  $model_name
      * @param   string  $check_permissions (not possible during language list)
@@ -82,11 +82,11 @@ Class ExtensionHelper
         $model_name = ucfirst(strtolower(trim($model_name)));
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-        $primary_key = $controller->get('primary_key', 'id', 'model_registry');
+        $primary_key    = $controller->get('primary_key', 'id', 'model_registry');
 
         if ((int)$extension_instance_id == 0) {
             $query_object = QUERY_OBJECT_LIST;
@@ -96,9 +96,9 @@ Class ExtensionHelper
 
             if (is_object($saved)) {
                 $controller->set('get_customfields', 1, 'model_registry');
-                $temp = $controller->addCustomFields(array($saved), QUERY_OBJECT_ITEM, 2);
+                $temp                    = $controller->addCustomFields(array($saved), QUERY_OBJECT_ITEM, 2);
                 $temp[0]->model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
-                $query_results = $temp[0];
+                $query_results           = $temp[0];
 
                 return $query_results;
 
@@ -200,7 +200,7 @@ Class ExtensionHelper
 
         if (Services::Registry()->exists('AuthorisedExtensionsByInstanceTitle') === true) {
             $key = trim($title) . $catalog_type_id;
-            $id = Services::Registry()->get('AuthorisedExtensionsByInstanceTitle', $key, 0);
+            $id  = Services::Registry()->get('AuthorisedExtensionsByInstanceTitle', $key, 0);
             if ((int)$id == 0) {
             } else {
                 return $id;
@@ -208,7 +208,7 @@ Class ExtensionHelper
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensioninstances');
 
         $controller->set('process_plugins', 0, 'model_registry');
@@ -266,7 +266,7 @@ Class ExtensionHelper
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensioninstances');
         $controller->setDataobject();
         $controller->connectDatabase();
@@ -314,7 +314,7 @@ Class ExtensionHelper
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensions');
 
         $controller->set('process_plugins', 0, 'model_registry');
@@ -642,7 +642,7 @@ Class ExtensionHelper
             || $catalog_type == CATALOG_TYPE_WRAP_VIEW_LITERAL
         ) {
 
-            $plus = '/View/' . $catalog_type . '/' . ucfirst(strtolower($node));
+            $plus   = '/View/' . $catalog_type . '/' . ucfirst(strtolower($node));
             $plusNS = 'View\\' . $catalog_type . '\\' . ucfirst(strtolower($node));
 
             if (file_exists(Services::Registry()->get($registry, 'theme_path') . $plus . '/Configuration.xml')) {

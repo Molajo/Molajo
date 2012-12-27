@@ -169,7 +169,7 @@ Class MailService
             $this->set('bcc', '');
         }
 
-        $mailClass = 'phpmailer\\PHPMailer';
+        $mailClass          = 'phpmailer\\PHPMailer';
         $this->mailInstance = new $mailClass();
 
         $this->processInput();
@@ -227,6 +227,7 @@ Class MailService
         /** User */
 
         /** authorization event */
+
         //@todo what is the catalog id of a service?
         //$results = Services::Permissions()->verifyTask('email', $catalog_id);
         return $permission;

@@ -141,7 +141,7 @@ Class ApplicationService
      * @return  void
      * @since   1.0
      */
-    public function __construct ()
+    public function __construct()
     {
         $trace = debug_backtrace();
         if (isset($trace[1])) {
@@ -169,6 +169,7 @@ Class ApplicationService
             if (isset($this->$key)) {
                 $this->$key = $default;
             }
+
             return $this->$key;
         }
 
@@ -177,6 +178,7 @@ Class ApplicationService
         }
 
         $this->parameters[$key] = $default;
+
         return $this->parameters[$key];
     }
 
@@ -195,10 +197,12 @@ Class ApplicationService
 
         if (in_array($key, $this->parameter_properties_array)) {
             $this->$key = $value;
+
             return $this->$key;
         }
 
         $this->parameters[$key] = $value;
+
         return $this->parameters[$key];
     }
 
@@ -268,7 +272,7 @@ Class ApplicationService
      * @return  void
      * @since   1.0
      */
-    public function setBaseUrlPathforApplication ()
+    public function setBaseUrlPathforApplication()
     {
         $this->set('base_url_path_for_application', $this->base_url_path_with_scheme . '/' . APPLICATION_URL_PATH);
 
@@ -325,7 +329,7 @@ Class ApplicationService
 
             try {
                 $controllerClass = CONTROLLER_CLASS;
-                $controller = new $controllerClass();
+                $controller      = new $controllerClass();
                 $controller->getModelRegistry('Datasource', 'Application', 1);
 
                 $controller->set('name_key_value', APPLICATION, 'model_registry');
@@ -358,7 +362,7 @@ Class ApplicationService
                 }
 
             } catch (\Exception $e) {
-                throw new \Exception('Configuration: Exception caught in Configuration: '. $e->getMessage());
+                throw new \Exception('Configuration: Exception caught in Configuration: ' . $e->getMessage());
             }
         }
 

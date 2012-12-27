@@ -32,12 +32,12 @@ Class TextService
      */
     public function extension($model_name, $source_path = null, $destination_path = null)
     {
-        $controller = new CreateController();
+        $controller     = new CreateController();
         $model_registry = ucfirst(strtolower($model_name)) . DATA_SOURCE_LITERAL;
 
         $data = new \stdClass();
 
-        $data->title = $model_name;
+        $data->title      = $model_name;
         $data->model_name = $model_name;
         $controller->data = $data;
 
@@ -54,10 +54,10 @@ Class TextService
      * Usage:
      * Services::Text()->getPlaceHolderText(4, 20, 'html', 1);
      *
-     * @param   int     $paragraph_word_count - number of words per paragraph
+     * @param   int     $paragraph_word_count   - number of words per paragraph
      * @param   int     $paragraph_count
-     * @param   string  $format               txt, plain, html
-     * @param   $start_with_lorem_ipsum 0 or 1
+     * @param   string  $format                 txt, plain, html
+     * @param           $start_with_lorem_ipsum 0 or 1
      *
      * @return  string
      * @since   1.0
@@ -93,16 +93,16 @@ Class TextService
      */
     public function getDatalist($model_name, $model_type, $parameters)
     {
-        $model_name = ucfirst(strtolower($model_name));
-        $model_type = ucfirst(strtolower($model_type));
+        $model_name     = ucfirst(strtolower($model_name));
+        $model_type     = ucfirst(strtolower($model_type));
         $model_registry = $model_name . $model_type;
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 
         $multiple = (int)Services::Registry()->get($model_registry, 'multiple');
-        $size = (int)Services::Registry()->get($model_registry, 'size');
+        $size     = (int)Services::Registry()->get($model_registry, 'size');
 
         if ((int)$multiple == 1) {
             if ((int)$size == 0) {
@@ -110,7 +110,7 @@ Class TextService
             }
         } else {
             $multiple = 0;
-            $size = 0;
+            $size     = 0;
         }
 
         $values = Services::Registry()->get($model_registry, 'values', array());
@@ -122,8 +122,8 @@ Class TextService
             $temp_row = new \stdClass();
 
             $temp_row->listitems = $values;
-            $temp_row->multiple = $multiple;
-            $temp_row->size = $size;
+            $temp_row->multiple  = $multiple;
+            $temp_row->size      = $size;
 
             $query_results[] = $temp_row;
 
@@ -137,8 +137,8 @@ Class TextService
         $temp_row = new \stdClass();
 
         $temp_row->listitems = $values;
-        $temp_row->multiple = $multiple;
-        $temp_row->size = $size;
+        $temp_row->multiple  = $multiple;
+        $temp_row->size      = $size;
 
         $query_results[] = $temp_row;
 
@@ -169,8 +169,8 @@ Class TextService
         }
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-        $primary_key = $controller->get('primary_key', 'id', 'model_registry');
-        $name_key = $controller->get('name_key', '', 'data_registry');
+        $primary_key    = $controller->get('primary_key', 'id', 'model_registry');
+        $name_key       = $controller->get('name_key', '', 'data_registry');
 
         $model_registry = $controller->get('model_registry');
 
@@ -215,12 +215,12 @@ Class TextService
                 $name = $field['name'];
 
                 if ($first) {
-                    $first = false;
-                    $as = 'id';
+                    $first    = false;
+                    $as       = 'id';
                     $distinct = QUERY_OBJECT_DISTINCT;
 
                 } else {
-                    $as = 'value';
+                    $as       = 'value';
                     $distinct = '';
                     $ordering = $alias . '.' . $name;
                 }
@@ -257,7 +257,7 @@ Class TextService
         $query_object = QUERY_OBJECT_DISTINCT;
 
         $offset = $controller->set('model_offset', 0, 'model_registry');
-        $count = $controller->set('model_count', 9999999);
+        $count  = $controller->set('model_count', 9999999);
 
         return $controller->getData($query_object);
     }
@@ -354,8 +354,8 @@ Class TextService
             $temp_row = new \stdClass();
 
             $temp_row->listname = $listname;
-            $temp_row->id = $item->id;
-            $temp_row->value = $item->value;
+            $temp_row->id       = $item->id;
+            $temp_row->value    = $item->value;
 
             if ($temp_row->id == $selected) {
                 $temp_row->selected = ' selected ';
@@ -485,7 +485,7 @@ Class TextService
         }
         if (substr($split[0], 0, 1) == '-') {
             $split[0] = substr($split[0], 1, strlen($split[0]) - 1);
-            $sign = Services::Language()->translate('negative', $translate) . ' ';
+            $sign     = Services::Language()->translate('negative', $translate) . ' ';
         }
 
         if ((int)$number == 0) {
@@ -495,7 +495,7 @@ Class TextService
         $word_value = $sign;
 
         $reverseDigits = str_split($number, 1);
-        $number = implode(array_reverse($reverseDigits));
+        $number        = implode(array_reverse($reverseDigits));
 
         if ((strlen($number) % 3) == 0) {
             $padToSetsOfThree = strlen($number);
@@ -506,8 +506,8 @@ Class TextService
         $number = str_pad($number, $padToSetsOfThree, 0, STR_PAD_RIGHT);
         $groups = str_split($number, 3);
 
-        $onesDigit = null;
-        $tensDigit = null;
+        $onesDigit     = null;
+        $tensDigit     = null;
         $hundredsDigit = null;
 
         $temp_word_value = '';
@@ -517,8 +517,8 @@ Class TextService
 
             $digit = str_split($digits, 1);
 
-            $onesDigit = $digit[0];
-            $tensDigit = $digit[1];
+            $onesDigit     = $digit[0];
+            $tensDigit     = $digit[1];
             $hundredsDigit = $digit[2];
 
             if ($onesDigit == 0 && $tensDigit == 0 && $hundredsDigit == 0) {
@@ -547,8 +547,8 @@ Class TextService
                 $temp_word_value .= ' ' . $this->convertGrouping($i, $translate);
             }
 
-            $onesDigit = null;
-            $tensDigit = null;
+            $onesDigit     = null;
+            $tensDigit     = null;
             $hundredsDigit = null;
 
             if (trim($word_value) == '') {

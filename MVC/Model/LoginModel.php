@@ -59,7 +59,15 @@ class LoginModel extends DisplayModel
         $languages = LanguageServices::createLanguageList(null, BASE_FOLDER, false, true);
         array_unshift($languages, MolajoHTML::_('select.option', '', Services::Language()->translate('JDEFAULT')));
 
-        return MolajoHTML::_('select.genericlist', $languages, CATALOG_TYPE_LANGUAGE_LITERAL, ' class="inputbox"', 'value', 'text', null);
+        return MolajoHTML::_(
+            'select.genericlist',
+            $languages,
+            CATALOG_TYPE_LANGUAGE_LITERAL,
+            ' class="inputbox"',
+            'value',
+            'text',
+            null
+        );
     }
 
     /**

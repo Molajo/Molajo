@@ -45,7 +45,7 @@ class CreateController extends Controller
         }
 
         $this->connect($this->row->model_type, $this->row->model_name, 'CreateModel');
-        if (isset($this->row->catalog_type_id) && (int) $this->row->catalog_type_id > 0) {
+        if (isset($this->row->catalog_type_id) && (int)$this->row->catalog_type_id > 0) {
         } else {
             $this->row->catalog_type_id = Services::Registry()->get($this->model_registry, 'catalog_type_id');
         }
@@ -98,7 +98,7 @@ class CreateController extends Controller
             if ($results === false) {
             } else {
                 $data->id = $results;
-                $results = $this->onAfterCreateEvent($data);
+                $results  = $this->onAfterCreateEvent($data);
                 if ($results === false) {
                     return false;
                     //error
@@ -170,7 +170,10 @@ class CreateController extends Controller
 
         /** Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
-            $this->model_registry, CUSTOMFIELDGROUPS_LITERAL, array());
+            $this->model_registry,
+            CUSTOMFIELDGROUPS_LITERAL,
+            array()
+        );
 
         if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
 
@@ -216,8 +219,8 @@ class CreateController extends Controller
     /**
      * processFieldGroup - runs custom filtering, defaults, validation for a field group
      *
-     * @param $fields
-     * @param $userHTMLFilter
+     * @param        $fields
+     * @param        $userHTMLFilter
      * @param string $customFieldName
      *
      * @return bool
@@ -374,9 +377,10 @@ class CreateController extends Controller
             /** Retrieve Model Foreign Key Definitions */
             if (isset($this->row->$name)) {
             } else {
-                if ((int) $required == 0) {
+                if ((int)$required == 0) {
                     return true;
                 }
+
                 // error
                 return false;
             }
@@ -384,13 +388,15 @@ class CreateController extends Controller
             if (isset($this->row->$name)) {
 
                 $controllerClass = CONTROLLER_CLASS;
-                $controller = new $controllerClass();
+                $controller      = new $controllerClass();
                 $controller->getModelRegistry(DATA_SOURCE_LITERAL, $source_model, 1);
 
                 $controller->model->query->select('COUNT(*)');
                 $controller->model->query->from($controller->model->db->qn($controller->get('table_name')));
-                $controller->model->query->where($controller->model->db->qn($source_id)
-                    . ' = ' . (int) $this->row->$name);
+                $controller->model->query->where(
+                    $controller->model->db->qn($source_id)
+                        . ' = ' . (int)$this->row->$name
+                );
 
                 $controller->set('get_customfields', 0, 'model_registry');
                 $controller->set('get_item_children', 0, 'model_registry');
@@ -423,23 +429,27 @@ class CreateController extends Controller
     protected function onBeforeCreateEvent()
     {
         if (count($this->plugins) == 0
-            || (int) $this->get('process_plugins') == 0
+            || (int)$this->get('process_plugins') == 0
         ) {
             return true;
         }
 
         $arguments = array(
             'model_registry' => $this->model_registry,
-            'db' => $this->model->db,
-            'data' => $this->row,
-            'null_date' => $this->model->null_date,
-            'now' => $this->model->now,
-            'parameters' => $this->parameters,
-            'model_type' => $this->get('model_type'),
-            'model_name' => $this->get('model_name')
+            'db'             => $this->model->db,
+            'data'           => $this->row,
+            'null_date'      => $this->model->null_date,
+            'now'            => $this->model->now,
+            'parameters'     => $this->parameters,
+            'model_type'     => $this->get('model_type'),
+            'model_name'     => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onBeforeCreateEvent Schedules onBeforeCreate', PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set(
+            'CreateController->onBeforeCreateEvent Schedules onBeforeCreate',
+            PROFILER_PLUGINS,
+            VERBOSE
+        );
 
         $arguments = Services::Event()->scheduleEvent('onBeforeCreate', $arguments, $this->plugins);
 
@@ -452,7 +462,7 @@ class CreateController extends Controller
         Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
 
         $this->parameters = $arguments['parameters'];
-        $this->row = $arguments['row'];
+        $this->row        = $arguments['row'];
 
         return true;
     }
@@ -468,7 +478,7 @@ class CreateController extends Controller
     protected function onAfterCreateEvent($data)
     {
         if (count($this->plugins) == 0
-            || (int) $this->get('process_plugins') == 0
+            || (int)$this->get('process_plugins') == 0
         ) {
             return true;
         }
@@ -476,14 +486,18 @@ class CreateController extends Controller
         /** Schedule Event onAfterCreate Event */
         $arguments = array(
             'model_registry' => $this->model_registry,
-            'db' => $this->model->db,
-            'data' => $data,
-            'parameters' => $this->parameters,
-            'model_type' => $this->get('model_type'),
-            'model_name' => $this->get('model_name')
+            'db'             => $this->model->db,
+            'data'           => $data,
+            'parameters'     => $this->parameters,
+            'model_type'     => $this->get('model_type'),
+            'model_name'     => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onAfterCreateEvent Schedules onAfterCreate', PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set(
+            'CreateController->onAfterCreateEvent Schedules onAfterCreate',
+            PROFILER_PLUGINS,
+            VERBOSE
+        );
 
         $arguments = Services::Event()->scheduleEvent('onAfterCreate', $arguments, $this->plugins);
 
@@ -496,7 +510,7 @@ class CreateController extends Controller
         Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
 
         $this->parameters = $arguments['parameters'];
-        $data = $arguments['row'];
+        $data             = $arguments['row'];
 
         return $data;
     }

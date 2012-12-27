@@ -6,7 +6,7 @@
  */
 
 defined('NIAMBIE') or die; ?>
-    <li>
-        <input type="submit" class="submit button small right" name="filter-button" id="filter-button" value="Filter">
-    </li>
+<li>
+    <input type="submit" class="submit button small right" name="filter-button" id="filter-button" value="Filter">
+</li>
 </ol>

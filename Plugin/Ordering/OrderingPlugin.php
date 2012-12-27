@@ -38,18 +38,18 @@ class OrderingPlugin extends Plugin
             $fieldValue = $this->getFieldValue($field);
         }
 
-        if ((int) $fieldValue > 0) {
+        if ((int)$fieldValue > 0) {
             return true;
         }
 
         $newFieldValue = '';
 
         if ($fieldValue === false
-            || (int) $fieldValue == 0
+            || (int)$fieldValue == 0
         ) {
 
             $controllerClass = CONTROLLER_CLASS;
-            $controller = new $controllerClass();
+            $controller      = new $controllerClass();
             $controller->getModelRegistry(
                 $this->get('model_type', '', 'parameters'),
                 $this->get('model_name', '', 'parameters'),
@@ -59,11 +59,15 @@ class OrderingPlugin extends Plugin
             $primary_prefix = $controller->set('primary_prefix', 0, 'model_registry');
 
             $catalog_type_idField = $this->getField('catalog_type_id');
-            $catalog_type_id = $this->getFieldValue($catalog_type_idField);
+            $catalog_type_id      = $this->getFieldValue($catalog_type_idField);
 
-            $controller->model->query->select('max(' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('ordering') . ')');
-            $controller->model->query->where($this->db->qn($primary_prefix) . '.' . $this->db->qn('catalog_type_id')
-                . ' = ' . (int) $catalog_type_id);
+            $controller->model->query->select(
+                'max(' . $this->db->qn($primary_prefix) . '.' . $this->db->qn('ordering') . ')'
+            );
+            $controller->model->query->where(
+                $this->db->qn($primary_prefix) . '.' . $this->db->qn('catalog_type_id')
+                    . ' = ' . (int)$catalog_type_id
+            );
 
             $controller->set('use_special_joins', 0, 'model_registry');
             $controller->set('check_view_level_access', 0, 'model_registry');
@@ -72,7 +76,7 @@ class OrderingPlugin extends Plugin
 
             $ordering = $controller->getData(QUERY_OBJECT_RESULT);
 
-            $newFieldValue = (int) $ordering + 1;
+            $newFieldValue = (int)$ordering + 1;
 
             $this->saveField($field, 'ordering', $newFieldValue);
 

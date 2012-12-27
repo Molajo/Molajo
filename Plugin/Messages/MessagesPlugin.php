@@ -28,7 +28,7 @@ class MessagesPlugin extends Plugin
     public function onBeforeParseHead()
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_OBJECT_LITERAL, 'Messages', 1);
         $messages = $controller->getData(QUERY_OBJECT_LIST);
 
@@ -38,6 +38,7 @@ class MessagesPlugin extends Plugin
                 $this->get('template_view_path_node', '', 'parameters'),
                 array()
             );
+
             return true;
         }
 
@@ -48,9 +49,9 @@ class MessagesPlugin extends Plugin
             $temp_row = new \stdClass();
 
             $temp_row->message = $message->message;
-            $temp_row->type = $message->type;
-            $temp_row->code = $message->code;
-            $temp_row->action = Services::Registry()->get('parameters', 'request_base_url_path') .
+            $temp_row->type    = $message->type;
+            $temp_row->code    = $message->code;
+            $temp_row->action  = Services::Registry()->get('parameters', 'request_base_url_path') .
                 Services::Registry()->get('parameters', 'request_url');
 
             $temp_row->class = 'alert-box';

@@ -62,14 +62,15 @@ Class RequestService
      * Class constructor
      *
      * return  object  Request
+     *
      * @since  1.0
      */
     public function __construct()
     {
         $this->request = new \stdClass();
 
-        $request_class = '\\Symfony\\Component\\HttpFoundation\\Request';
-        $connection = new $request_class();
+        $request_class         = '\\Symfony\\Component\\HttpFoundation\\Request';
+        $connection            = new $request_class();
         $this->symfony_request = $connection->createFromGlobals();
 
         $this->setRequest();
@@ -167,7 +168,7 @@ Class RequestService
         $query_parameters = array();
         if (count($tempQueryParameters) > 0) {
             foreach ($tempQueryParameters as $item) {
-                $pair = explode('=', $item);
+                $pair                       = explode('=', $item);
                 $query_parameters[$pair[0]] = $pair[1];
             }
         }
@@ -213,6 +214,7 @@ Class RequestService
         $this->set('post_variables', $this->symfony_request->request->all());
 
         /** Language */
+
         return true;
     }
 }

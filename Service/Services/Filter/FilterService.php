@@ -90,69 +90,84 @@ Class FilterService
      * @return mixed
      * @since   1.0
      */
-    public function filter($field_value,
-                           $type = 'char',
-                           $null = 1,
-                           $default = null,
-                           $values = array())
-    {
+    public function filter(
+        $field_value,
+        $type = 'char',
+        $null = 1,
+        $default = null,
+        $values = array()
+    ) {
 
         switch (strtolower($type)) {
             case 'integer':
             case 'boolean':
             case 'float':
                 return $this->filter_numeric(
-                    $field_value, $type, $null, $default
+                    $field_value,
+                    $type,
+                    $null,
+                    $default
                 );
                 break;
 
             case 'datetime':
                 return $this->filter_date(
-                    $field_value, $null, $default
+                    $field_value,
+                    $null,
+                    $default
                 );
                 break;
 
             case 'text':
                 return $field_value;
+
                 return $this->filter_html(
-                    $field_value, $null, $default
+                    $field_value,
+                    $null,
+                    $default
                 );
                 break;
 
             case 'email':
                 return $this->filter_email(
-                    $field_value, $null, $default
+                    $field_value,
+                    $null,
+                    $default
                 );
                 break;
 
             case 'alias':
                 return $this->filter_alias(
-                    $field_value, $null, $default
+                    $field_value,
+                    $null,
+                    $default
                 );
                 break;
 
             case 'url':
                 return $this->filter_url(
-                    $field_value, $null, $default
+                    $field_value,
+                    $null,
+                    $default
                 );
                 break;
 
             case 'word':
-                return (string) preg_replace('/[^A-Z_]/i', '', $field_value);
+                return (string)preg_replace('/[^A-Z_]/i', '', $field_value);
                 break;
 
             case 'alnum':
-                return (string) preg_replace('/[^A-Z0-9]/i', '', $field_value);
+                return (string)preg_replace('/[^A-Z0-9]/i', '', $field_value);
                 break;
 
             case 'cmd':
-                $result = (string) preg_replace('/[^A-Z0-9_\.-]/i', '', $field_value);
+                $result = (string)preg_replace('/[^A-Z0-9_\.-]/i', '', $field_value);
 
                 return ltrim($result, '.');
                 break;
 
             case 'base64':
-                return (string) preg_replace('/[^A-Z0-9\/+=]/i', '', $field_value);
+                return (string)preg_replace('/[^A-Z0-9\/+=]/i', '', $field_value);
                 break;
 
             case 'filename':
@@ -164,7 +179,7 @@ Class FilterService
                 break;
 
             case 'username':
-                return (string) preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $field_value);
+                return (string)preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $field_value);
                 break;
 
             case 'header_injection_test':
@@ -177,7 +192,9 @@ Class FilterService
 
             default:
                 return $this->filter_char(
-                    $field_value, $null, $default
+                    $field_value,
+                    $null,
+                    $default
                 );
                 break;
         }
@@ -194,11 +211,12 @@ Class FilterService
      * @return string
      * @since   1.0
      */
-    public function filter_numeric($field_value,
-                                   $type = 'int',
-                                   $null = 1,
-                                   $default = null)
-    {
+    public function filter_numeric(
+        $field_value,
+        $type = 'int',
+        $null = 1,
+        $default = null
+    ) {
         if ($default == null) {
         } elseif ($field_value == null) {
             $field_value = $default;
@@ -244,7 +262,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-) {
+        ) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -261,28 +279,29 @@ Class FilterService
      * @return string
      * @since   1.0
      */
-    public function filter_date($field_value = null,
-                                $null = 1,
-                                $default = null)
-    {
+    public function filter_date(
+        $field_value = null,
+        $null = 1,
+        $default = null
+    ) {
         if ($default == null) {
         } elseif ($field_value == null
             || $field_value == ''
             || $field_value == 0
-) {
+        ) {
             $field_value = $default;
         }
 
         if ($field_value == null
             || $field_value == '0000-00-00 00:00:00'
-) {
+        ) {
 
         } else {
-            $dd = substr($field_value, 8, 2);
-            $mm = substr($field_value, 5, 2);
+            $dd   = substr($field_value, 8, 2);
+            $mm   = substr($field_value, 5, 2);
             $ccyy = substr($field_value, 0, 4);
 
-            if (checkdate((int) $mm, (int) $dd, (int) $ccyy)) {
+            if (checkdate((int)$mm, (int)$dd, (int)$ccyy)) {
             } else {
                 throw new \Exception('FILTER_INVALID_VALUE');
             }
@@ -297,7 +316,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-) {
+        ) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -314,10 +333,11 @@ Class FilterService
      * @return mixed
      * @since   1.0
      */
-    public function filter_char($field_value = null,
-                                $null = 1,
-                                $default = null)
-    {
+    public function filter_char(
+        $field_value = null,
+        $null = 1,
+        $default = null
+    ) {
         if ($default == null) {
         } else {
             if ($field_value == null) {
@@ -337,7 +357,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-) {
+        ) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -354,10 +374,11 @@ Class FilterService
      * @return mixed
      * @since   1.0
      */
-    public function filter_email($field_value = null,
-                                 $null = 1,
-                                 $default = null)
-    {
+    public function filter_email(
+        $field_value = null,
+        $null = 1,
+        $default = null
+    ) {
         if ($default == null) {
         } else {
             $field_value = $default;
@@ -375,7 +396,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-) {
+        ) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -392,10 +413,11 @@ Class FilterService
      * @return mixed
      * @since   1.0
      */
-    public function filter_url($field_value = null,
-                               $null = 1,
-                               $default = null)
-    {
+    public function filter_url(
+        $field_value = null,
+        $null = 1,
+        $default = null
+    ) {
         if ($default == null) {
         } else {
             $field_value = $default;
@@ -413,7 +435,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-) {
+        ) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -430,10 +452,11 @@ Class FilterService
      * @return mixed
      * @since   1.0
      */
-    public function filter_alias($field_value = null,
-                                 $null = 1,
-                                 $default = null)
-    {
+    public function filter_alias(
+        $field_value = null,
+        $null = 1,
+        $default = null
+    ) {
         if ($default == null) {
         } else {
             $field_value = $default;
@@ -459,7 +482,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-) {
+        ) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -476,10 +499,11 @@ Class FilterService
      * @return mixed
      * @since   1.0
      */
-    public function filter_html($field_value = null,
-                                $null = 0,
-                                $default = null)
-    {
+    public function filter_html(
+        $field_value = null,
+        $null = 0,
+        $default = null
+    ) {
 
         //@todo get html filters back on
         return true;
@@ -496,7 +520,7 @@ Class FilterService
 
         if ($field_value == null
             && $null == 0
-) {
+        ) {
             throw new \Exception('FILTER_VALUE_REQUIRED');
         }
 
@@ -549,7 +573,8 @@ Class FilterService
      */
     public function filter_header_injection_test($content)
     {
-        $headers = array('Content-Type:',
+        $headers = array(
+            'Content-Type:',
             'MIME-Version:',
             'Content-Transfer-Encoding:',
             'bcc:',
@@ -610,7 +635,7 @@ Class FilterService
      */
     public function escape_integer($integer)
     {
-        return (int) $integer;
+        return (int)$integer;
     }
 
     /**
@@ -663,7 +688,7 @@ Class FilterService
         $config = HTMLPurifier\HTMLPurifier_Config::createDefault();
         //var_dump($config);
 
-        if ((int) Services::Registry()->get('parameters', 'application_html5', 1) == 1) {
+        if ((int)Services::Registry()->get('parameters', 'application_html5', 1) == 1) {
             $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
             //not supported $config->set('HTML.Doctype', 'HTML5');
         } else {
@@ -684,8 +709,8 @@ Class FilterService
         $options = array();
         if (count($options) > 0) {
             foreach ($options->option as $o) {
-                $key = (string) $o['key'];
-                $value = (string) $o['value'];
+                $key   = (string)$o['key'];
+                $value = (string)$o['value'];
                 $config->set($key, $value);
             }
         }

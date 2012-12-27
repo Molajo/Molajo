@@ -7,6 +7,7 @@
 defined('NIAMBIE') or die;  ?>
 <fieldset>
 <?php if ($this->parameters['criteria_title'] == '') {
-} else { ?>
+} else {
+    ?>
     <legend><?php echo $this->parameters['criteria_title']; ?></legend>
 <?php }

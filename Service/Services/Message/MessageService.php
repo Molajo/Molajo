@@ -91,8 +91,8 @@ Class MessageService
         $temp_row = new \stdClass();
 
         $temp_row->message = $message;
-        $temp_row->type = $type;
-        $temp_row->code = $code;
+        $temp_row->type    = $type;
+        $temp_row->code    = $code;
 
         $messageArray[] = $temp_row;
 

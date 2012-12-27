@@ -208,7 +208,9 @@ class UpdateController extends Controller
         }
 
         /** context **/
-        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('view') . '.' . $action;
+        $context = $this->row['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd(
+            'view'
+        ) . '.' . $action;
 
         /** ids **/
         $idArray = JRequest::getVar('cid', array(), '', 'array');
@@ -222,8 +224,10 @@ class UpdateController extends Controller
         /** target category **/
         if ($action == 'copy' || $action == 'delete') {
             $this->batch_category_id = JRequest::getInt('batch_category_id');
-            if ((int) $this->batch_category_id == 0) {
-                $this->redirectClass->setRedirectMessage(Services::Language()->translate('BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY'));
+            if ((int)$this->batch_category_id == 0) {
+                $this->redirectClass->setRedirectMessage(
+                    Services::Language()->translate('BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY')
+                );
                 $this->redirectClass->setRedirectMessageType('message');
 
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -245,7 +249,7 @@ class UpdateController extends Controller
             $this->table->load($this->mvc['id']);
 
             /** edit: valid id **/
-            if ((int) $this->table->id == 0) {
+            if ((int)$this->table->id == 0) {
                 $errorFoundForItem = true;
             }
 
@@ -307,7 +311,9 @@ class UpdateController extends Controller
 //        $results = $this->cleanCache();
 
         if ($errorFoundForBatch === false) {
-            $this->redirectClass->setRedirectMessage(Services::Language()->plural('N_ITEMS_' . strtoupper($action), count($idArray)));
+            $this->redirectClass->setRedirectMessage(
+                Services::Language()->plural('N_ITEMS_' . strtoupper($action), count($idArray))
+            );
             $this->redirectClass->setRedirectMessageType(Services::Language()->translate('message'));
 
             return $this->redirectClass->setSuccessIndicator(true);

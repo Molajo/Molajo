@@ -44,8 +44,11 @@ class PagetypeeditPlugin extends Plugin
 
         $form->set('model_type', $this->get('model_type', '', 'parameters'));
         $form->set('model_name', $this->get('model_name', '', 'parameters'));
-        $form->set('model_registry_name',
-            ucfirst(strtolower($this->get('model_name', '', 'parameters'))) . ucfirst(strtolower($this->get('model_type', '', 'parameters')))
+        $form->set(
+            'model_registry_name',
+            ucfirst(strtolower($this->get('model_name', '', 'parameters'))) . ucfirst(
+                strtolower($this->get('model_type', '', 'parameters'))
+            )
         );
 
         $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));
@@ -63,7 +66,7 @@ class PagetypeeditPlugin extends Plugin
         /** Customfields */
         $form->set(CUSTOMFIELDS_LITERAL, Services::Registry()->getArray('ResourcesSystemCustomfields'));
         $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', CUSTOMFIELDS_LITERAL));
-echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
+        echo Services::Registry()->get('ResourcesSystemParameters', 'edit_array');
 
         /** Build Fieldsets and Fields */
         $pageFieldsets = $form->execute(Services::Registry()->get('ResourcesSystemParameters', 'edit_array'));

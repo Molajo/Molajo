@@ -32,7 +32,7 @@ class PagetypegridPlugin extends Plugin
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', '', 'parameters'),
             $this->get('model_name', '', 'parameters'),
@@ -84,7 +84,9 @@ class PagetypegridPlugin extends Plugin
             if ($permissions[$button] === true) {
                 $temp_row = new \stdClass();
 
-                $temp_row->name = Services::Language()->translate(strtoupper('TASK_' . strtoupper($button) . '_BUTTON'));
+                $temp_row->name   = Services::Language()->translate(
+                    strtoupper('TASK_' . strtoupper($button) . '_BUTTON')
+                );
                 $temp_row->action = $button;
 
                 if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
@@ -100,7 +102,7 @@ class PagetypegridPlugin extends Plugin
         if ($this->get('grid_search', 1) == 1) {
             $temp_row = new \stdClass();
 
-            $temp_row->name = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
+            $temp_row->name   = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
             $temp_row->action = 'search';
 
             if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
@@ -157,9 +159,9 @@ class PagetypegridPlugin extends Plugin
 
                     Services::Registry()->set(DATALIST_LITERAL, $listname, $temp_query_results);
 
-                    $temp_row = new \stdClass();
+                    $temp_row           = new \stdClass();
                     $temp_row->listname = $listname;
-                    $lists[] = $temp_row;
+                    $lists[]            = $temp_row;
                 }
             }
         }
@@ -244,7 +246,7 @@ class PagetypegridPlugin extends Plugin
             foreach ($temp_query_results as $item) {
                 $temp_row = new \stdClass();
                 $temp_row = $item;
-                $name = $item->$name_key;
+                $name     = $item->$name_key;
 
                 if (isset($item->lvl)) {
                 } else {
@@ -264,12 +266,16 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        $controller->set('request_model_type',
+        $controller->set(
+            'request_model_type',
             $this->get('model_type', '', 'parameters'),
-            'model_registry');
-        $controller->set('request_model_name',
+            'model_registry'
+        );
+        $controller->set(
+            'request_model_name',
             $this->get('model_name', '', 'parameters'),
-            'model_registry');
+            'model_registry'
+        );
 
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
@@ -295,12 +301,14 @@ class PagetypegridPlugin extends Plugin
 
         if ($temp == '') {
             Services::Registry()->set(PAGE_LITERAL, 'SectionSubmenu', array());
+
             return true;
         }
 
         $grid_batch_array = explode(',', $temp);
         if (count($grid_batch_array) == 0) {
             Services::Registry()->set(PAGE_LITERAL, 'SectionSubmenu', array());
+
             return true;
         }
 
@@ -314,16 +322,20 @@ class PagetypegridPlugin extends Plugin
 
                 $grid_batch[] = strtolower($grid_batch_array[$i]);
 
-                $temp_row = new \stdClass();
+                $temp_row           = new \stdClass();
                 $temp_row->selected = '';
-                $temp_row->enable = 1;
+                $temp_row->enable   = 1;
 
-                Services::Registry()->set(TEMPLATE_LITERAL, 'Grid' . strtolower($grid_batch_array[$i]), array($temp_row));
+                Services::Registry()->set(
+                    TEMPLATE_LITERAL,
+                    'Grid' . strtolower($grid_batch_array[$i]),
+                    array($temp_row)
+                );
             }
         }
 
         $pageArray = array();
-        $i = 0;
+        $i         = 0;
 
         foreach ($grid_batch as $item) {
             if ($item == '') {
@@ -337,7 +349,7 @@ class PagetypegridPlugin extends Plugin
                     $temp_row->current = 0;
                 }
                 $temp_row->title = ucfirst(strtolower($item));
-                $temp_row->url = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '#lk' . strtolower($item);
+                $temp_row->url   = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '#lk' . strtolower($item);
 
                 $pageArray[] = $temp_row;
 

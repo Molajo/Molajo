@@ -72,7 +72,7 @@ class EventsPlugin extends Plugin
 
             $temp_row = new \stdClass();
 
-            $temp_row->id = $key;
+            $temp_row->id    = $key;
             $temp_row->value = trim($key);
 
             $eventArray[] = $temp_row;

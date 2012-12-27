@@ -90,6 +90,7 @@ Class SiteService
         }
 
         $this->$key = $default;
+
         return $this->$key;
     }
 
@@ -113,6 +114,7 @@ Class SiteService
         }
 
         $this->$key = $value;
+
         return $this->$key;
     }
 
@@ -312,6 +314,7 @@ Class SiteService
      * Determine if the site has already been installed
      *
      * return  boolean
+     *
      * @since  1.0
      */
     public function installCheck()
@@ -321,7 +324,8 @@ Class SiteService
         }
 
         if (file_exists(SITE_BASE_PATH . '/Dataobject/Database.xml')
-            && filesize(SITE_BASE_PATH . '/Dataobject/Database.xml') > 10) {
+            && filesize(SITE_BASE_PATH . '/Dataobject/Database.xml') > 10
+        ) {
             return;
         }
 

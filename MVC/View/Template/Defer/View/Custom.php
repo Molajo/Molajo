@@ -6,6 +6,6 @@
  */
 defined('NIAMBIE') or die; ?>
 <include:asset name=AssetsJS_DEFER_LITERAL/>
-<include:asset name=Assetsjsdeclarationsdefer/>
-    </body>
-</html>
+    <include:asset name=Assetsjsdeclarationsdefer/>
+        </body>
+        </html>

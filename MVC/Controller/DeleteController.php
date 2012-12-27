@@ -67,7 +67,7 @@ class DeleteController extends Controller
             if ($results === false) {
             } else {
                 $this->row->id = $results;
-                $results = $this->onAfterDeleteEvent();
+                $results       = $this->onAfterDeleteEvent();
                 if ($results === false) {
                     return false;
                     //error
@@ -113,17 +113,21 @@ class DeleteController extends Controller
         $this->connect(DATA_SOURCE_LITERAL, $hold_model_name);
 
         $this->set('use_special_joins', 0);
-        $name_key = $this->get('name_key');
-        $primary_key = $this->get('primary_key');
+        $name_key       = $this->get('name_key');
+        $primary_key    = $this->get('primary_key');
         $primary_prefix = $this->get('primary_prefix', 'a');
 
         if (isset($this->row->$primary_key)) {
-            $this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($primary_key)
-                . ' = ' . $this->model->db->q($this->row->$primary_key));
+            $this->model->query->where(
+                $this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($primary_key)
+                    . ' = ' . $this->model->db->q($this->row->$primary_key)
+            );
 
         } elseif (isset($this->row->$name_key)) {
-            $this->model->query->where($this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($name_key)
-                . ' = ' . $this->model->db->q($this->row->$name_key));
+            $this->model->query->where(
+                $this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn($name_key)
+                    . ' = ' . $this->model->db->q($this->row->$name_key)
+            );
 
         } else {
             //only deletes single rows
@@ -131,9 +135,11 @@ class DeleteController extends Controller
         }
 
         if (isset($this->row->catalog_type_id)) {
-            $this->model->query->where($this->model->db->qn($primary_prefix)
-                . '.' . $this->model->db->qn('catalog_type_id')
-                . ' = ' . $this->model->db->q($this->row->catalog_type_id));
+            $this->model->query->where(
+                $this->model->db->qn($primary_prefix)
+                    . '.' . $this->model->db->qn('catalog_type_id')
+                    . ' = ' . $this->model->db->q($this->row->catalog_type_id)
+            );
         }
 
         $item = $this->getData(QUERY_OBJECT_ITEM);
@@ -209,23 +215,27 @@ class DeleteController extends Controller
     protected function onBeforeDeleteEvent()
     {
         if (count($this->plugins) == 0
-            || (int) $this->get('process_plugins') == 0
+            || (int)$this->get('process_plugins') == 0
         ) {
             return true;
         }
 
         $arguments = array(
             'model_registry' => $this->model_registry,
-            'db' => $this->model->db,
-            'data' => $this->row,
-            'null_date' => $this->model->null_date,
-            'now' => $this->model->now,
-            'parameters' => $this->parameters,
-            'model_type' => $this->get('model_type'),
-            'model_name' => $this->get('model_name')
+            'db'             => $this->model->db,
+            'data'           => $this->row,
+            'null_date'      => $this->model->null_date,
+            'now'            => $this->model->now,
+            'parameters'     => $this->parameters,
+            'model_type'     => $this->get('model_type'),
+            'model_name'     => $this->get('model_name')
         );
 
-        Services::Profiler()->set('DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete', PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set(
+            'DeleteController->onBeforeDeleteEvent Schedules onBeforeDelete',
+            PROFILER_PLUGINS,
+            VERBOSE
+        );
 
         $arguments = Services::Event()->scheduleEvent('onBeforeDelete', $arguments, $this->plugins);
         if ($arguments === false) {
@@ -238,7 +248,7 @@ class DeleteController extends Controller
 
         /** Process results */
         $this->parameters = $arguments['parameters'];
-        $this->row = $arguments['row'];
+        $this->row        = $arguments['row'];
 
         return true;
     }
@@ -252,7 +262,7 @@ class DeleteController extends Controller
     protected function onAfterDeleteEvent()
     {
         if (count($this->plugins) == 0
-            || (int) $this->get('process_plugins') == 0
+            || (int)$this->get('process_plugins') == 0
         ) {
             return true;
         }
@@ -260,14 +270,18 @@ class DeleteController extends Controller
         /** Schedule Event onAfterDelete Event */
         $arguments = array(
             'model_registry' => $this->model_registry,
-            'db' => $this->model->db,
-            'data' => $this->row,
-            'parameters' => $this->parameters,
-            'model_type' => $this->get('model_type'),
-            'model_name' => $this->get('model_name')
+            'db'             => $this->model->db,
+            'data'           => $this->row,
+            'parameters'     => $this->parameters,
+            'model_type'     => $this->get('model_type'),
+            'model_name'     => $this->get('model_name')
         );
 
-        Services::Profiler()->set('CreateController->onAfterDeleteEvent Schedules onAfterDelete', PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set(
+            'CreateController->onAfterDeleteEvent Schedules onAfterDelete',
+            PROFILER_PLUGINS,
+            VERBOSE
+        );
 
         $arguments = Services::Event()->scheduleEvent('onAfterDelete', $arguments, $this->plugins);
         if ($arguments === false) {
@@ -280,7 +294,7 @@ class DeleteController extends Controller
 
         /** Process results */
         $this->parameters = $arguments['parameters'];
-        $this->row = $arguments['row'];
+        $this->row        = $arguments['row'];
 
         return true;
     }

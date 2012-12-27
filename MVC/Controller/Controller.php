@@ -168,6 +168,7 @@ class Controller
 
         if (in_array($key, $this->property_array) && $property == '') {
             $value = $this->$key;
+
             return $value;
         }
 
@@ -176,6 +177,7 @@ class Controller
                 return $this->parameters[$key];
             }
             $this->parameters[$key] = $default;
+
             return $this->parameters[$key];
         }
 
@@ -184,6 +186,7 @@ class Controller
                 return $this->model_registry[$key];
             }
             $this->model_registry[$key] = $default;
+
             return $this->model_registry[$key];
         }
 
@@ -215,21 +218,25 @@ class Controller
 
         if (in_array($key, $this->property_array) && $property == '') {
             $this->$key = $value;
+
             return $this->$key;
         }
 
         if ($property == 'parameters') {
             $this->parameters[$key] = $value;
+
             return $this->parameters[$key];
         }
 
         if ($property == 'model_registry') {
             $this->model_registry[$key] = $value;
+
             return $this->model_registry[$key];
         }
 
         if ($property == 'model') {
             $this->model->$key = $value;
+
             return $this->model->$key;
         }
 
@@ -251,9 +258,12 @@ class Controller
      *
      * @throws  \RuntimeException
      */
-    public function getModelRegistry($model_type = DATA_SOURCE_LITERAL, $model_name = null, $connect = 0,
-        $parameter_registry = null)
-    {
+    public function getModelRegistry(
+        $model_type = DATA_SOURCE_LITERAL,
+        $model_name = null,
+        $connect = 0,
+        $parameter_registry = null
+    ) {
 //echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
 
         $this->set('connect_database_set', 0);
@@ -447,7 +457,7 @@ class Controller
                 $this->query_results = array();
 
             } else {
-                $service_class = $this->get('service_class', DATABASE_LITERAL, 'model_registry');
+                $service_class              = $this->get('service_class', DATABASE_LITERAL, 'model_registry');
                 $service_class_query_method = $this->get('service_class_query_method', '', 'model_registry');
 
                 if ($this->get('model_name', '', 'model_registry') == PRIMARY_LITERAL) {
@@ -662,6 +672,7 @@ class Controller
                 Services::Profiler()->set($message, PROFILER_QUERIES);
             }
             $this->query_results = $query_results;
+
             return;
         }
 
@@ -738,8 +749,10 @@ class Controller
             if (is_array($q)) {
                 return $q[0];
             }
+
             return $q;
         }
+
         return $q;
     }
 
@@ -756,13 +769,13 @@ class Controller
     protected function onConnectDatabaseEvent()
     {
         $arguments = array(
-            'model' => $this->get('model'),
-            'model_registry' => $this->get('model_registry'),
-            'parameters' => $this->get('parameters'),
-            'query_results' => array(),
-            'row' => null,
-            'rendered_output' => null,
-            'include_parse_sequence' => array(),
+            'model'                             => $this->get('model'),
+            'model_registry'                    => $this->get('model_registry'),
+            'parameters'                        => $this->get('parameters'),
+            'query_results'                     => array(),
+            'row'                               => null,
+            'rendered_output'                   => null,
+            'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
 
@@ -844,6 +857,7 @@ class Controller
 
         if ((int)$this->get('process_plugins', 1, 'model_registry') == 0 && count($plugins) == 0) {
             $this->get('plugins', array());
+
             return;
         }
 
@@ -880,13 +894,13 @@ class Controller
         }
 
         $arguments = array(
-            'model' => $this->get('model'),
-            'model_registry' => $this->get('model_registry'),
-            'parameters' => $this->get('parameters'),
-            'query_results' => array(),
-            'row' => null,
-            'rendered_output' => null,
-            'include_parse_sequence' => array(),
+            'model'                             => $this->get('model'),
+            'model_registry'                    => $this->get('model_registry'),
+            'parameters'                        => $this->get('parameters'),
+            'query_results'                     => array(),
+            'row'                               => null,
+            'rendered_output'                   => null,
+            'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
 
@@ -927,7 +941,7 @@ class Controller
             return;
         }
 
-        $rows = $this->query_results;
+        $rows                = $this->query_results;
         $this->query_results = array();
 
         $first = true;
@@ -939,13 +953,13 @@ class Controller
                 $this->set('first', $first, 'parameters');
 
                 $arguments = array(
-                    'model' => $this->get('model'),
-                    'model_registry' => $this->get('model_registry'),
-                    'parameters' => $this->get('parameters'),
-                    'query_results' => array(),
-                    'row' => $row,
-                    'rendered_output' => null,
-                    'include_parse_sequence' => array(),
+                    'model'                             => $this->get('model'),
+                    'model_registry'                    => $this->get('model_registry'),
+                    'parameters'                        => $this->get('parameters'),
+                    'query_results'                     => array(),
+                    'row'                               => $row,
+                    'rendered_output'                   => null,
+                    'include_parse_sequence'            => array(),
                     'include_parse_exclude_until_final' => array()
                 );
 
@@ -985,13 +999,13 @@ class Controller
         }
 
         $arguments = array(
-            'model' => $this->get('model'),
-            'model_registry' => $this->get('model_registry'),
-            'parameters' => $this->get('parameters'),
-            'query_results' => $this->get('query_results'),
-            'row' => null,
-            'rendered_output' => null,
-            'include_parse_sequence' => array(),
+            'model'                             => $this->get('model'),
+            'model_registry'                    => $this->get('model_registry'),
+            'parameters'                        => $this->get('parameters'),
+            'query_results'                     => $this->get('query_results'),
+            'row'                               => null,
+            'rendered_output'                   => null,
+            'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
 

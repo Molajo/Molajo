@@ -41,9 +41,11 @@ Class TemplateIncluder extends Includer
             throw new \Exception ('TemplateIncluder: No Name provided for Template Include');
         }
 
-        if (is_numeric($this->get('name')) {
-            $template_id = $this->extensionHelper->getId(CATALOG_TYPE_TEMPLATE_VIEW, $this->get('name'));
+        if (is_numeric($this->get('name')){
+            $template_id = $this->extensionHelper->getId(CATALOG_TYPE_TEMPLATE_VIEW, $this->get('name')){
+            ;
         }
+    }
 
         $template_id = (int)Services::Registry()->get('parameters', 'template_view_id');
 
@@ -121,7 +123,7 @@ Class TemplateIncluder extends Includer
         $priority = Services::Registry()->get('include', 'criteria_media_priority_other_extension', 400);
 
         $file_path = Services::Registry()->get('include', 'template_view_path');
-        $url_path = Services::Registry()->get('include', 'template_view_path_url');
+        $url_path  = Services::Registry()->get('include', 'template_view_path_url');
 
         $this->class_asset->addCssFolder($file_path, $url_path, $priority);
         $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);

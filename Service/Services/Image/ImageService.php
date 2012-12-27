@@ -13,7 +13,7 @@ defined('NIAMBIE') or die;
 /**
  * Image
  *
- * @package    Niambie
+ * @package     Niambie
  * @subpackage  Service
  * @since       1.0
  */
@@ -122,13 +122,13 @@ Class ImageService
     public function getImage($id, $size = 0, $type = 'crop')
     {
         /** initialise  */
-        $this->id = (int) $id;
-        $this->size = (int) $this->size;
+        $this->id   = (int)$id;
+        $this->size = (int)$this->size;
         if ($this->size == 'thumbnail'
             || $this->size == 'small'
             || $this->size == 'medium'
             || $this->size == 'large'
-) {
+        ) {
         } else {
             $this->size = 'large';
         }
@@ -136,7 +136,7 @@ Class ImageService
             || $this->type == 'portrait'
             || $this->type == 'landscape'
             || $this->type == 'auto'
-) {
+        ) {
         } else {
             $this->type = 'crop';
         }
@@ -167,23 +167,27 @@ Class ImageService
             return $this->fileNameNew;
         }
 
-        $db = Services::DB();
+        $db    = Services::DB();
         $query = $db->getQuery(true);
 
         $date = Services::Date()
             ->format('Y-m-d-H-i-s');
 
-        $now = $date->toSql();
+        $now       = $date->toSql();
         $null_date = $db->getNullDate();
 
         $query->select($db->qn('path'));
         $query->from($db->qn('#__content') . 'as a');
         $query->where('a.' . $db->qn('status') . ' = 1');
-        $query->where('(a.' . $db->qn('start_publishing_datetime') . ' = ' . $db->q($null_date) .
-            ' OR a.' . $db->qn('start_publishing_datetime') . ' <= ' . $db->q($now) . ')');
-        $query->where('(a.' . $db->qn('stop_publishing_datetime') . ' = ' . $db->q($null_date) .
-            ' OR a.' . $db->qn('stop_publishing_datetime') . ' >= ' . $db->q($now) . ')');
-        $query->where('a.id = ' . (int) $this->id);
+        $query->where(
+            '(a.' . $db->qn('start_publishing_datetime') . ' = ' . $db->q($null_date) .
+                ' OR a.' . $db->qn('start_publishing_datetime') . ' <= ' . $db->q($now) . ')'
+        );
+        $query->where(
+            '(a.' . $db->qn('stop_publishing_datetime') . ' = ' . $db->q($null_date) .
+                ' OR a.' . $db->qn('stop_publishing_datetime') . ' >= ' . $db->q($now) . ')'
+        );
+        $query->where('a.id = ' . (int)$this->id);
 
         $query->from($db->qn('#__catalog') . 'as b');
         $query->where('b.' . $db->qn('source_id') . ' = ' . $db->qn('id'));
@@ -248,23 +252,23 @@ Class ImageService
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 'thumbnail') {
-            $width = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumbnail_width', 50);
+            $width  = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumbnail_width', 50);
             $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumbnail_height', 50);
 
         } elseif ($this->size == 'small') {
-            $width = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_small_width', 100);
+            $width  = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_small_width', 100);
             $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_small_height', 100);
 
         } elseif ($this->size == 'medium') {
-            $width = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_medium_width', 300);
+            $width  = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_medium_width', 300);
             $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_medium_height', 300);
 
         } elseif ($this->size == 'large') {
-            $width = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_large_width', 500);
+            $width  = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_large_width', 500);
             $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_large_height', 500);
 
         } else {
-            $this->width = imagesx($this->image);
+            $this->width  = imagesx($this->image);
             $this->height = imagesy($this->image);
         }
 
@@ -272,7 +276,7 @@ Class ImageService
         $this->createImageObject();
 
         /** 2. set existing dimensions */
-        $this->width = imagesx($this->image);
+        $this->width  = imagesx($this->image);
         $this->height = imagesy($this->image);
 
         /** 3. resize Image */
@@ -287,6 +291,7 @@ Class ImageService
      * createImageObject
      *
      * @param $file
+     *
      * @return bool|resource
      */
     protected function createImageObject()
@@ -316,24 +321,36 @@ Class ImageService
     /**
      * resizeImage
      *
-     * @param $newWidth
-     * @param $newHeight
+     * @param         $newWidth
+     * @param         $newHeight
      * @param  string $this->type
+     *
      * @return void
      */
     public function resizeImage($width, $height)
     {
         /** Get optimal dimensions based on type */
-        $newWidth = $width;
-        $newHeight = $height;
+        $newWidth        = $width;
+        $newHeight       = $height;
         $this->typeArray = $this->getDimensions($newWidth, $newHeight, $this->type);
 
-        $optimalWidth = $this->typeArray['optimalWidth'];
+        $optimalWidth  = $this->typeArray['optimalWidth'];
         $optimalHeight = $this->typeArray['optimalHeight'];
 
         /** resample */
         $this->imageResized = imagecreatetruecolor($optimalWidth, $optimalHeight);
-        imagecopyresampled($this->imageResized, $this->image, 0, 0, 0, 0, $optimalWidth, $optimalHeight, $this->width, $this->height);
+        imagecopyresampled(
+            $this->imageResized,
+            $this->image,
+            0,
+            0,
+            0,
+            0,
+            $optimalWidth,
+            $optimalHeight,
+            $this->width,
+            $this->height
+        );
 
         if ($this->type == 'crop') {
             $this->crop($optimalWidth, $optimalHeight, $newWidth, $newHeight);
@@ -353,30 +370,30 @@ Class ImageService
     {
         switch ($this->type) {
             case 'exact':
-                $optimalWidth = $newWidth;
+                $optimalWidth  = $newWidth;
                 $optimalHeight = $newHeight;
                 break;
 
             case 'portrait':
-                $optimalWidth = $this->getSizeByFixedHeight($newHeight);
+                $optimalWidth  = $this->getSizeByFixedHeight($newHeight);
                 $optimalHeight = $newHeight;
                 break;
 
             case 'landscape':
-                $optimalWidth = $newWidth;
+                $optimalWidth  = $newWidth;
                 $optimalHeight = $this->getSizeByFixedWidth($newWidth);
                 break;
 
             case 'auto':
                 $this->typeArray = $this->getSizeByAuto($newWidth, $newHeight);
-                $optimalWidth = $this->typeArray['optimalWidth'];
-                $optimalHeight = $this->typeArray['optimalHeight'];
+                $optimalWidth    = $this->typeArray['optimalWidth'];
+                $optimalHeight   = $this->typeArray['optimalHeight'];
                 break;
 
             case 'crop':
                 $this->typeArray = $this->getOptimalCrop($newWidth, $newHeight);
-                $optimalWidth = $this->typeArray['optimalWidth'];
-                $optimalHeight = $this->typeArray['optimalHeight'];
+                $optimalWidth    = $this->typeArray['optimalWidth'];
+                $optimalHeight   = $this->typeArray['optimalHeight'];
                 break;
         }
 
@@ -393,7 +410,7 @@ Class ImageService
      */
     protected function getSizeByFixedHeight($newHeight)
     {
-        $ratio = $this->width / $this->height;
+        $ratio    = $this->width / $this->height;
         $newWidth = $newHeight * $ratio;
 
         return $newWidth;
@@ -409,7 +426,7 @@ Class ImageService
      */
     protected function getSizeByFixedWidth($newWidth)
     {
-        $ratio = $this->height / $this->width;
+        $ratio     = $this->height / $this->width;
         $newHeight = $newWidth * $ratio;
 
         return $newHeight;
@@ -429,29 +446,29 @@ Class ImageService
         if ($this->height < $this->width) {
 
             // *** Image to be resized is wider (landscape)
-            $optimalWidth = $newWidth;
+            $optimalWidth  = $newWidth;
             $optimalHeight = $this->getSizeByFixedWidth($newWidth);
 
         } elseif ($this->height > $this->width) {
 
             // *** Image to be resized is taller (portrait)
-            $optimalWidth = $this->getSizeByFixedHeight($newHeight);
+            $optimalWidth  = $this->getSizeByFixedHeight($newHeight);
             $optimalHeight = $newHeight;
 
         } else {
 
             // *** Image to be resized is a square
             if ($newHeight < $newWidth) {
-                $optimalWidth = $newWidth;
+                $optimalWidth  = $newWidth;
                 $optimalHeight = $this->getSizeByFixedWidth($newWidth);
 
             } elseif ($newHeight > $newWidth) {
-                $optimalWidth = $this->getSizeByFixedHeight($newHeight);
+                $optimalWidth  = $this->getSizeByFixedHeight($newHeight);
                 $optimalHeight = $newHeight;
 
             } else {
                 // *** Square resized to a square
-                $optimalWidth = $newWidth;
+                $optimalWidth  = $newWidth;
                 $optimalHeight = $newHeight;
             }
         }
@@ -464,12 +481,13 @@ Class ImageService
      *
      * @param $newWidth
      * @param $newHeight
+     *
      * @return array
      */
     protected function getOptimalCrop($newWidth, $newHeight)
     {
         $heightRatio = $this->height / $newHeight;
-        $widthRatio = $this->width / $newWidth;
+        $widthRatio  = $this->width / $newWidth;
 
         if ($heightRatio < $widthRatio) {
             $optimalRatio = $heightRatio;
@@ -478,7 +496,7 @@ Class ImageService
         }
 
         $optimalHeight = $this->height / $optimalRatio;
-        $optimalWidth = $this->width / $optimalRatio;
+        $optimalWidth  = $this->width / $optimalRatio;
 
         return array('optimalWidth' => $optimalWidth, 'optimalHeight' => $optimalHeight);
     }
@@ -490,6 +508,7 @@ Class ImageService
      * @param $optimalHeight
      * @param $newWidth
      * @param $newHeight
+     *
      * @return void
      */
     protected function crop($optimalWidth, $optimalHeight, $newWidth, $newHeight)
@@ -502,7 +521,18 @@ Class ImageService
 
         // *** Now crop from center to exact requested size
         $this->imageResized = imagecreatetruecolor($newWidth, $newHeight);
-        imagecopyresampled($this->imageResized, $crop, 0, 0, $cropStartX, $cropStartY, $newWidth, $newHeight, $newWidth, $newHeight);
+        imagecopyresampled(
+            $this->imageResized,
+            $crop,
+            0,
+            0,
+            $cropStartX,
+            $cropStartY,
+            $newWidth,
+            $newHeight,
+            $newWidth,
+            $newHeight
+        );
     }
 
     /**
@@ -562,9 +592,11 @@ Class ImageService
      * getPlaceHolderImage
      *
      * @static
-     * @param $width
-     * @param $height
+     *
+     * @param        $width
+     * @param        $height
      * @param  array $options
+     *
      * @return mixed
      * @since 1.0
      */
@@ -572,7 +604,7 @@ Class ImageService
     {
 
         $services_class = array(
-            'placehold' => 'PlaceholdImage',
+            'placehold'   => 'PlaceholdImage',
             'lorem_pixel' => 'LoremPixelImage'
         );
 

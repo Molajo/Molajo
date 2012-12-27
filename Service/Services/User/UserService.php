@@ -31,37 +31,37 @@ Class UserService
         $this->id = 1;
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, USER_LITERAL, 1);
 
         $controller->set('primary_key_value', $this->id, 'model_registry');
-		$controller->set('get_customfields', 2, 'model_registry');
-		$controller->set('use_special_joins', 1, 'model_registry');
-		$controller->set('process_plugins', 1, 'model_registry');
+        $controller->set('get_customfields', 2, 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 1, 'model_registry');
 
         $item = $controller->getData(QUERY_OBJECT_ITEM);
         if ($item === false || count($item) == 0) {
             throw new \RuntimeException ('User: Load User Query Failed');
         }
 
-		unset($item->customfields);
-		unset($item->metadata);
-		unset($item->parameters);
-		unset($item->password);
+        unset($item->customfields);
+        unset($item->metadata);
+        unset($item->parameters);
+        unset($item->password);
 
         $applications = array();
-        $x = $item->Userapplications;
+        $x            = $item->Userapplications;
         if (count($x) > 0) {
             foreach ($x as $app) {
                 $applications[] = $app->application_id;
             }
         }
-		array_unique($applications);
+        array_unique($applications);
 
         unset($item->Userapplications);
 
         $temp = array();
-        $x = $item->Usergroups;
+        $x    = $item->Usergroups;
         if (count($x) > 0) {
             foreach ($x as $group) {
                 $temp[] = $group->group_id;
@@ -82,23 +82,23 @@ Class UserService
             }
         }
         unset($item->Usergroups);
-		sort($temp);
-		$groups = array_unique($temp);
+        sort($temp);
+        $groups = array_unique($temp);
 
         $temp = array();
-        $x = $item->Userviewgroups;
+        $x    = $item->Userviewgroups;
         foreach ($x as $vg) {
             $temp[] = $vg->view_group_id;
         }
 
         $temp[] = SYSTEM_GROUP_PUBLIC;
 
-		if (in_array(SYSTEM_GROUP_REGISTERED, $temp)) {
-		} else {
-			$temp[] = SYSTEM_GROUP_GUEST;
-		}
-		sort($temp);
-		$viewGroups = array_unique($temp);
+        if (in_array(SYSTEM_GROUP_REGISTERED, $temp)) {
+        } else {
+            $temp[] = SYSTEM_GROUP_GUEST;
+        }
+        sort($temp);
+        $viewGroups = array_unique($temp);
 
         unset($item->Userviewgroups);
 
@@ -131,18 +131,19 @@ Class UserService
         Services::Registry()->set(USER_LITERAL, 'Groups', $groups);
         Services::Registry()->set(USER_LITERAL, 'ViewGroups', $viewGroups);
 
-		unset($m);
-		unset($item);
-		unset($applications);
-		unset($groups);
-		unset($viewGroups);
+        unset($m);
+        unset($item);
+        unset($applications);
+        unset($groups);
+        unset($viewGroups);
 
-		Services::Registry()->sort(USER_LITERAL);
+        Services::Registry()->sort(USER_LITERAL);
 
         $this->setAuthorisedExtensions();
 
         return $this;
     }
+
     /**
      * Retrieve all Extensions the logged on User is authorised to use. The Extension Helper will use this
      *  registry to avoid a new read when processing requests for Themes, Views, Plugins, Services, etc.
@@ -153,7 +154,7 @@ Class UserService
     protected function setAuthorisedExtensions()
     {
         $this->extensionHelper = new ExtensionHelper();
-        $results = $this->extensionHelper->get(0, null, null, null, 1);
+        $results               = $this->extensionHelper->get(0, null, null, null, 1);
         if ($results === false || count($results) == 0) {
             throw new \Exception('User: No authorised Extension Instances.');
         }

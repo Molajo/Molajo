@@ -27,7 +27,7 @@ class CssclassandidsPlugin extends Plugin
     public function onAfterRead()
     {
 
-        if ((int) count($this->row) == 0
+        if ((int)count($this->row) == 0
             || $this->row === false
             || $this->row == null
         ) {

@@ -5,5 +5,5 @@
  * @license    MIT
  */
 defined('NIAMBIE') or die; ?>
-    </div>
+</div>
 </div>

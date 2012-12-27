@@ -73,6 +73,7 @@ Class RouteService
         }
 
         $this->parameters[$key] = $default;
+
         return $this->parameters[$key];
     }
 
@@ -95,6 +96,7 @@ Class RouteService
         }
 
         $this->parameters[$key] = $value;
+
         return $this->parameters[$key];
     }
 
@@ -116,7 +118,7 @@ Class RouteService
         $base_url_path_for_application,
         $override_catalog_id = null
     ) {
-        $this->parameters = $parameters;
+        $this->parameters                 = $parameters;
         $this->parameter_properties_array = $parameter_properties_array;
 
         $this->set('request_catalog_id', 0);
@@ -150,6 +152,7 @@ Class RouteService
             if ($this->get('user_authorised_for_offline_access') == 1) {
             } else {
                 $this->set('error_code', 503);
+
                 return array($this->parameters, $this->parameter_properties_array);
             }
         }
@@ -163,6 +166,7 @@ Class RouteService
         /** 404 */
         if ($this->get('status_found') === 0) {
             $this->set('error_code', 404);
+
             return array($this->parameters, $this->parameter_properties_array);
         }
 
@@ -180,6 +184,7 @@ Class RouteService
 
             $this->set('redirect_id', 'configuration_application_login_requirement');
             $this->set('error_code', 303);
+
             return array($this->parameters, $this->parameter_properties_array);
         }
 
@@ -207,6 +212,7 @@ Class RouteService
                 $this->get('configuration_application_home_catalog_id', 0)
             );
             $this->set('catalog_home', 1);
+
             return;
         }
 
@@ -326,6 +332,7 @@ Class RouteService
         $this->getResourceExtensionParameters();
         }
          */
+
         return;
     }
 
@@ -357,10 +364,10 @@ Class RouteService
 
         $filters = $this->get('permission_filters');
 
-        $path = '';
+        $path        = '';
         $filterArray = '';
-        $filter = '';
-        $i = 0;
+        $filter      = '';
+        $i           = 0;
 
         foreach ($urlParts as $slug) {
 
@@ -391,11 +398,11 @@ Class RouteService
         $this->set('request_task_values', '');
 
         $authorisationArray = $this->get('permission_action_to_authorisation');
-        $authorisation = $authorisationArray['read'];
+        $authorisation      = $authorisationArray['read'];
         $this->set('request_task_permission', $authorisation);
 
         $controllerArray = $this->get('permission_action_to_controller');
-        $x = $controllerArray['read'];
+        $x               = $controllerArray['read'];
         $this->set('request_task_controller', $x);
 
         if ($path == $this->get('request_url')) {
@@ -423,8 +430,8 @@ Class RouteService
 
         $tasks = $this->get('permission_tasks');
 
-        $path = '';
-        $task = '';
+        $path          = '';
+        $task          = '';
         $action_target = '';
 
         foreach ($urlParts as $slug) {
@@ -449,11 +456,11 @@ Class RouteService
         $this->set('request_task_values', $action_target);
 
         $authorisationArray = $this->get('permission_action_to_authorisation');
-        $authorisation = $authorisationArray[$task];
+        $authorisation      = $authorisationArray[$task];
         $this->set('request_task_permission', $authorisation);
 
         $controllerArray = $this->get('permission_action_to_controller');
-        $x = $controllerArray[$task];
+        $x               = $controllerArray[$task];
         $this->set('request_task_controller', $x);
 
         if ($path == $this->get('request_url')) {
@@ -493,20 +500,20 @@ Class RouteService
                 $catalog_type_id = 0;
          */
 
-        $catalog_id = $this->get('request_catalog_id');
+        $catalog_id      = $this->get('request_catalog_id');
         $url_sef_request = $this->get('request_url');
         $catalog_type_id = 0;
-        $source_id = 0;
+        $source_id       = 0;
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
 
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-        $key = $controller->get('primary_key', 'id', 'model_registry');
+        $key    = $controller->get('primary_key', 'id', 'model_registry');
 
         if ((int)$catalog_id > 0) {
             $controller->model->query->where(
@@ -556,6 +563,7 @@ Class RouteService
 
         if (count($item) == 0 || $item === false) {
             $this->set('status_found', 0);
+
             return;
         }
 
@@ -567,6 +575,7 @@ Class RouteService
 
         if (count($item) == 0 || (int)$item->id == 0 || (int)$item->enabled == 0) {
             $this->set('status_found', 0);
+
             return;
         }
 
@@ -575,6 +584,7 @@ Class RouteService
         if ((int)$item->redirect_to_id == 0) {
         } else {
             $this->set('redirect_to_id', (int)$item->redirect_to_id);
+
             return;
         }
 

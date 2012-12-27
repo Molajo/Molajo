@@ -36,7 +36,7 @@ class ContentlistPlugin extends Plugin
 
         /** Retrieve Data */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', '', 'parameters'),
             $this->get('model_name', '', 'parameters')
@@ -54,8 +54,10 @@ class ContentlistPlugin extends Plugin
         $criteria_status = '1,2';
         if ($criteria_status == '') {
         } else {
-            $controller->model->query->where($controller->model->db->qn($prefix . '.' . 'status')
-                . ' IN (' . $criteria_status . ')');
+            $controller->model->query->where(
+                $controller->model->db->qn($prefix . '.' . 'status')
+                    . ' IN (' . $criteria_status . ')'
+            );
         }
 
         $this->row = $controller->getData(QUERY_OBJECT_LIST);
@@ -64,30 +66,30 @@ class ContentlistPlugin extends Plugin
 
         $ordering = $this->parameters['criteria_ordering'];
         if ($ordering == 'Popular') {
-            $ordering = 'a.ordering'; //@todo hits
+            $ordering  = 'a.ordering'; //@todo hits
             $direction = 'ASC';
 
         } elseif ($ordering == 'Ordering') {
-            $ordering = 'a.ordering';
+            $ordering  = 'a.ordering';
             $direction = 'ASC';
 
         } elseif ($ordering == 'Stickied') {
-            $ordering = 'a.stickied';
+            $ordering  = 'a.stickied';
             $direction = 'ASC';
 
         } elseif ($ordering == 'Featured') {
-            $ordering = 'a.featured';
+            $ordering  = 'a.featured';
             $direction = 'ASC';
 
         } else {
-            $ordering = 'a.start_publishing_datetime';
+            $ordering  = 'a.start_publishing_datetime';
             $direction = 'DESC';
         }
         $controller->model->query->order($controller->model->db->qn($ordering) . ' ' . $direction);
 
         $controller->set('model_offset', 0, 'model_registry');
         $count = $this->parameters['criteria_count'];
-        if ((int) $count == 0) {
+        if ((int)$count == 0) {
             $count = 5;
         }
         $controller->set('model_count', $count);

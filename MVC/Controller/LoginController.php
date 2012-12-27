@@ -70,7 +70,7 @@ class LoginController extends Controller
             return;
         }
 
-        Services::Authentication()->authorise($userObject, (array) $options);
+        Services::Authentication()->authorise($userObject, (array)$options);
         if ($userObject->status === Services::Authentication()->STATUS_SUCCESS) {
         } else {
             $this->_loginFailed('authorise', $userObject, $options);
@@ -78,7 +78,7 @@ class LoginController extends Controller
             return;
         }
 
-        Services::Authentication()->onUserLogin($userObject, (array) $options);
+        Services::Authentication()->onUserLogin($userObject, (array)$options);
         if (isset($options['remember']) && $options['remember']) {
 
             // Create the encryption key, apply extra hardening using the user agent string.
@@ -86,17 +86,20 @@ class LoginController extends Controller
 
             // Ignore empty and crackish user agents
             if ($agent != '' && $agent != 'JLOGIN_REMEMBER') {
-                $key = MolajoUtility::getHash($agent);
-                $crypt = new MolajoSimpleCrypt($key);
-                $rcookie = $crypt->encrypt(serialize($credentials));
+                $key      = MolajoUtility::getHash($agent);
+                $crypt    = new MolajoSimpleCrypt($key);
+                $rcookie  = $crypt->encrypt(serialize($credentials));
                 $lifetime = time() + 365 * 24 * 60 * 60;
 
                 // Use domain and path set in config for cookie if it exists.
                 $cookie_domain = $this->getConfig('cookie_domain', '');
-                $cookie_path = $this->getConfig('cookie_path', '/');
+                $cookie_path   = $this->getConfig('cookie_path', '/');
                 setcookie(
-                    MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime,
-                    $cookie_path, $cookie_domain
+                    MolajoUtility::getHash('JLOGIN_REMEMBER'),
+                    $rcookie,
+                    $lifetime,
+                    $cookie_path,
+                    $cookie_domain
                 );
             }
         }
@@ -110,8 +113,9 @@ class LoginController extends Controller
      *
      * Handles failed login attempts
      *
-     * @param $response
+     * @param       $response
      * @param array $options
+     *
      * @return
      */
     protected function _loginFailed($type, $response, $options = Array())
@@ -145,7 +149,7 @@ class LoginController extends Controller
         $result = Application::logout($user_id, $options);
         if (!MolajoError::isError($result)) {
             $this->model = $this->getModel('login');
-            $return = $this->model->getState('return');
+            $return      = $this->model->getState('return');
             Services::Response()->redirect($return);
         }
 
@@ -179,7 +183,7 @@ class LoginController extends Controller
 
         // Build the credentials array.
         $parameters['username'] = $user->get('username');
-        $parameters['id'] = $user->get('id');
+        $parameters['id']       = $user->get('id');
 
         // Set clientid in the options array if it hasn't been set already.
         if (!isset($options['application_id'])) {
@@ -198,10 +202,11 @@ class LoginController extends Controller
 //        } else {
         // Use domain and path set in config for cookie if it exists.
         $cookie_domain = $this->getConfig('cookie_domain', '');
-        $cookie_path = $this->getConfig('cookie_path', '/');
+        $cookie_path   = $this->getConfig('cookie_path', '/');
         setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
         return true;
+
 //        }
 
         // Plugin onUserLoginFailure Event.

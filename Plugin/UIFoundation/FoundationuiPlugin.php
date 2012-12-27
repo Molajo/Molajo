@@ -17,18 +17,18 @@ defined('NIAMBIE') or die;
  */
 class FoundationuiPlugin extends Plugin
 {
-	/**
-	 * Prepares Application2 Menus
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	public function onBeforeParse()
-	{
-		$this->setUIObjects();
+    /**
+     * Prepares Application2 Menus
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    public function onBeforeParse()
+    {
+        $this->setUIObjects();
 
-		return true;
-	}
+        return true;
+    }
 
     /**
      * Prepares data for the Uifoundation UI Views
@@ -58,332 +58,332 @@ class FoundationuiPlugin extends Plugin
         return true;
     }
 
-	/**
-	 * Prepares Page Title and Buttons for Rendering
-	 *
-	 * @return boolean
-	 * @since   1.0
-	 */
-	protected function setUIObjects()
-	{
-		$buttonArray = $this->setButtonArray();
-		if ($buttonArray === false) {
-			$buttonCount = 0;
-		} else {
-			$buttonCount = count($buttonArray);
-		}
+    /**
+     * Prepares Page Title and Buttons for Rendering
+     *
+     * @return boolean
+     * @since   1.0
+     */
+    protected function setUIObjects()
+    {
+        $buttonArray = $this->setButtonArray();
+        if ($buttonArray === false) {
+            $buttonCount = 0;
+        } else {
+            $buttonCount = count($buttonArray);
+        }
 
-		$temp_query_results = array();
+        $temp_query_results = array();
 
-		$temp_row = new \stdClass();
-		$temp_row->button_count = $buttonCount;
-		$temp_row->button_array = '';
+        $temp_row               = new \stdClass();
+        $temp_row->button_count = $buttonCount;
+        $temp_row->button_array = '';
 
-		if ($buttonCount === 0) {
-			$temp_row->button_array = null;
-		} else {
-			foreach ($buttonArray as $button) {
-				$temp_row->button_array .= trim($button);
-			}
-		}
+        if ($buttonCount === 0) {
+            $temp_row->button_array = null;
+        } else {
+            foreach ($buttonArray as $button) {
+                $temp_row->button_array .= trim($button);
+            }
+        }
 
-		$temp_query_results[] = $temp_row;
+        $temp_query_results[] = $temp_row;
 
-		Services::Registry()->set('Plugindata', 'Toolbar', $temp_query_results);
+        Services::Registry()->set('Plugindata', 'Toolbar', $temp_query_results);
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Create Buttons based upon Page Type
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	protected function setButtonArray()
-	{
-		if ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
+    /**
+     * Create Buttons based upon Page Type
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function setButtonArray()
+    {
+        if ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
 
-			return $this->setItemButtons();
+            return $this->setItemButtons();
 
-		} elseif ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
-			return $this->setEditButtons();
+        } elseif ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_ITEM) {
+            return $this->setEditButtons();
 
-		} elseif ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_LIST) {
-			return $this->setListButtons();
-		}
+        } elseif ($this->get('page_type', '', 'parameters') == QUERY_OBJECT_LIST) {
+            return $this->setListButtons();
+        }
 
-		return $this->setDashboardButtons();
-	}
+        return $this->setDashboardButtons();
+    }
 
-	/**
-	 * Create Item Buttons
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	protected function setItemButtons()
-	{
-		$buttons = array();
+    /**
+     * Create Item Buttons
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function setItemButtons()
+    {
+        $buttons = array();
 
-		/** Button 1: Back to Grid */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonIcon = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
-		$linkURL = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
-		$buttonArray = 'button_title:'
-			. trim($buttonTitle)
-			. ','
-			. 'button_type:secondary,'
-			. 'button_link:'
-			. $linkURL
-			. ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 1: Back to Grid */
+        $buttonTitle = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonIcon  = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
+        $linkURL     = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
+        $buttonArray = 'button_title:'
+            . trim($buttonTitle)
+            . ','
+            . 'button_type:secondary,'
+            . 'button_link:'
+            . $linkURL
+            . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		/** Button 2: Edit Button */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Edit'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonIcon = htmlentities('icon-edit', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/edit';
-		$buttonArray = 'button_title:'
-			. trim($buttonTitle)
-			. ','
-			. 'button_type:secondary,'
-			. 'button_link:'
-			. $linkURL
-			. ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 2: Edit Button */
+        $buttonTitle = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Edit'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonIcon  = htmlentities('icon-edit', ENT_COMPAT, 'UTF-8');
+        $linkURL     = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/edit';
+        $buttonArray = 'button_title:'
+            . trim($buttonTitle)
+            . ','
+            . 'button_type:secondary,'
+            . 'button_link:'
+            . $linkURL
+            . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		/** Button 3: Delete Button */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Delete'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonIcon = htmlentities('icon-trash', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/delete';
-		$buttonArray = 'button_title:'
-			. trim($buttonTitle)
-			. ','
-			. 'button_type:alert,'
-			. 'button_link:'
-			. $linkURL
-			. ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 3: Delete Button */
+        $buttonTitle = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Delete'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonIcon  = htmlentities('icon-trash', ENT_COMPAT, 'UTF-8');
+        $linkURL     = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/delete';
+        $buttonArray = 'button_title:'
+            . trim($buttonTitle)
+            . ','
+            . 'button_type:alert,'
+            . 'button_link:'
+            . $linkURL
+            . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		return $buttons;
-	}
+        return $buttons;
+    }
 
-	/**
-	 * Create Edit Buttons
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	protected function setEditButtons()
-	{
-		$buttons = array();
+    /**
+     * Create Edit Buttons
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function setEditButtons()
+    {
+        $buttons = array();
 
-		/** Button 1: Back to Grid */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonIcon = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
-		$linkURL = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
-		$buttonArray = 'button_title:'
-			. trim($buttonTitle)
-			. ','
-			. 'button_type:secondary,'
-			. 'button_link:'
-			. $linkURL
-			. ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 1: Back to Grid */
+        $buttonTitle = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Back to Grid'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonIcon  = htmlentities('icon-list-alt', ENT_COMPAT, 'UTF-8');
+        $linkURL     = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
+        $buttonArray = 'button_title:'
+            . trim($buttonTitle)
+            . ','
+            . 'button_type:secondary,'
+            . 'button_link:'
+            . $linkURL
+            . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		/** Button 2: Revisions */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Revisions'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
-		$buttonIcon = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
-		$linkURL = $linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
-		$buttonArray = 'button_title:'
-			. $buttonTitle
-			. ','
-			. 'button_type:secondary,'
-			. 'button_link:' .
-			$linkURL . ','
-			. 'button_link_extra:'
-			. $buttonLinkExtra . ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 2: Revisions */
+        $buttonTitle     = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Revisions'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
+        $buttonIcon      = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
+        $linkURL         = $linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
+        $buttonArray     = 'button_title:'
+            . $buttonTitle
+            . ','
+            . 'button_type:secondary,'
+            . 'button_link:' .
+            $linkURL . ','
+            . 'button_link_extra:'
+            . $buttonLinkExtra . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		/** Button 3: Options */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Options'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
-		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
-		$buttonArray = 'button_title:'
-			. $buttonTitle
-			. ','
-			. 'button_type:secondary,'
-			. 'button_link:'
-			. $linkURL
-			. ','
-			. 'button_link_extra:'
-			. $buttonLinkExtra
-			. ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 3: Options */
+        $buttonTitle     = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Options'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
+        $buttonIcon      = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
+        $linkURL         = Services::Registry()->get(PAGE_LITERAL, 'page_url');
+        $buttonArray     = 'button_title:'
+            . $buttonTitle
+            . ','
+            . 'button_type:secondary,'
+            . 'button_link:'
+            . $linkURL
+            . ','
+            . 'button_link_extra:'
+            . $buttonLinkExtra
+            . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		return $buttons;
-	}
+        return $buttons;
+    }
 
-	/**
-	 * Create List Buttons
-	 *
-	 * @return array
-	 * @since  1.0
-	 */
-	protected function setListButtons()
-	{
-		$buttons = array();
+    /**
+     * Create List Buttons
+     *
+     * @return array
+     * @since  1.0
+     */
+    protected function setListButtons()
+    {
+        $buttons = array();
 
-		/** Button 1: Add Item */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Add Item'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonLinkExtra = htmlentities('data-reveal-id:resource-options', ENT_COMPAT, 'UTF-8');
-		$buttonIcon = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
-		$linkURL = $linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
-		$buttonArray = 'button_title:'
-			. $buttonTitle
-			. ','
-			. 'button_type:primary,'
-			. 'button_link:' .
-			$linkURL . ','
-			. 'button_link_extra:'
-			. $buttonLinkExtra . ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 1: Add Item */
+        $buttonTitle     = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Add Item'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonLinkExtra = htmlentities('data-reveal-id:resource-options', ENT_COMPAT, 'UTF-8');
+        $buttonIcon      = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
+        $linkURL         = $linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
+        $buttonArray     = 'button_title:'
+            . $buttonTitle
+            . ','
+            . 'button_type:primary,'
+            . 'button_link:' .
+            $linkURL . ','
+            . 'button_link_extra:'
+            . $buttonLinkExtra . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		/** Button 2: Edit Resource */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Edit Resource'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
-		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
-		$buttonArray = 'button_title:'
-			. $buttonTitle
-			. ','
-			. 'button_type:primary,'
-			. 'button_link:'
-			. $linkURL
-			. ','
-			. 'button_link_extra:'
-			. $buttonLinkExtra
-			. ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 2: Edit Resource */
+        $buttonTitle     = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Edit Resource'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
+        $buttonIcon      = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
+        $linkURL         = Services::Registry()->get(PAGE_LITERAL, 'page_url');
+        $buttonArray     = 'button_title:'
+            . $buttonTitle
+            . ','
+            . 'button_type:primary,'
+            . 'button_link:'
+            . $linkURL
+            . ','
+            . 'button_link_extra:'
+            . $buttonLinkExtra
+            . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		return $buttons;
-	}
+        return $buttons;
+    }
 
-	/**
-	 * Create Dashboard Page Buttons
-	 *
-	 * @return array
-	 */
-	protected function setDashboardButtons()
-	{
-		$buttons = array();
+    /**
+     * Create Dashboard Page Buttons
+     *
+     * @return array
+     */
+    protected function setDashboardButtons()
+    {
+        $buttons = array();
 
-		/** Button 1: Add Portlet */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Add Portlet'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonIcon = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
-		$linkURL = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
-		$buttonArray = 'button_title:'
-			. trim($buttonTitle)
-			. ','
-			. 'button_type:primary,'
-			. 'button_link:'
-			. $linkURL
-			. ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 1: Add Portlet */
+        $buttonTitle = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Add Portlet'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonIcon  = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
+        $linkURL     = '/admin/' . Services::Registry()->get('parameters', 'catalog_alias');
+        $buttonArray = 'button_title:'
+            . trim($buttonTitle)
+            . ','
+            . 'button_type:primary,'
+            . 'button_link:'
+            . $linkURL
+            . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		/** Button 2: Edit Resource */
-		$buttonTitle = str_replace(
-			' ',
-			'&nbsp;',
-			htmlentities(Services::Language()->translate('Edit Dashboard'), ENT_COMPAT, 'UTF-8')
-		);
-		$buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
-		$buttonIcon = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-		$linkURL = Services::Registry()->get(PAGE_LITERAL, 'page_url');
-		$buttonArray = 'button_title:'
-			. $buttonTitle
-			. ','
-			. 'button_type:primary,'
-			. 'button_link:'
-			. $linkURL
-			. ','
-			. 'button_link_extra:'
-			. $buttonLinkExtra
-			. ','
-			. 'button_icon_prepend:'
-			. $buttonIcon;
+        /** Button 2: Edit Resource */
+        $buttonTitle     = str_replace(
+            ' ',
+            '&nbsp;',
+            htmlentities(Services::Language()->translate('Edit Dashboard'), ENT_COMPAT, 'UTF-8')
+        );
+        $buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
+        $buttonIcon      = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
+        $linkURL         = Services::Registry()->get(PAGE_LITERAL, 'page_url');
+        $buttonArray     = 'button_title:'
+            . $buttonTitle
+            . ','
+            . 'button_type:primary,'
+            . 'button_link:'
+            . $linkURL
+            . ','
+            . 'button_link_extra:'
+            . $buttonLinkExtra
+            . ','
+            . 'button_icon_prepend:'
+            . $buttonIcon;
 
-		$buttons[] = '{{' . trim($buttonArray) . '}}';
+        $buttons[] = '{{' . trim($buttonArray) . '}}';
 
-		return $buttons;
-	}
+        return $buttons;
+    }
 
-	/**
+    /**
      * Uifoundation Buttons
      *
      * @return boolean
@@ -391,8 +391,8 @@ class FoundationuiPlugin extends Plugin
      */
     protected function button_general()
     {
-        $button_type = $this->row->button_type;
-        $button_size = $this->row->button_size;
+        $button_type  = $this->row->button_type;
+        $button_size  = $this->row->button_size;
         $button_shape = $this->row->button_shape;
 
         $button_class = trim($button_type);
@@ -416,8 +416,8 @@ class FoundationuiPlugin extends Plugin
     protected function button_group()
     {
 
-        $button_type = $this->row->button_group_type;
-        $button_size = $this->row->button_group_size;
+        $button_type  = $this->row->button_group_type;
+        $button_size  = $this->row->button_group_size;
         $button_shape = $this->row->button_group_shape;
         $button_class = str_replace(',', ' ', $this->row->button_group_class);
 
@@ -444,8 +444,8 @@ class FoundationuiPlugin extends Plugin
      */
     protected function button_dropdown()
     {
-        $button_type = $this->row->button_dropdown_type;
-        $button_size = $this->row->button_dropdown_size;
+        $button_type  = $this->row->button_dropdown_type;
+        $button_size  = $this->row->button_dropdown_size;
         $button_shape = $this->row->button_dropdown_shape;
         $button_class = str_replace(',', ' ', $this->row->button_dropdown_class);
 
@@ -455,7 +455,11 @@ class FoundationuiPlugin extends Plugin
         $button_dropdown_class = trim($button_dropdown_class) . ' ' . trim($button_class);
         $button_dropdown_class = trim($button_dropdown_class) . ' ' . 'button';
 
-        $button_dropdown_class = ' class="' . htmlspecialchars(trim($button_dropdown_class), ENT_NOQUOTES, 'UTF-8') . '"';
+        $button_dropdown_class = ' class="' . htmlspecialchars(
+            trim($button_dropdown_class),
+            ENT_NOQUOTES,
+            'UTF-8'
+        ) . '"';
 
         $this->saveField(null, 'button_dropdown_class', $button_dropdown_class);
 
@@ -469,12 +473,13 @@ class FoundationuiPlugin extends Plugin
      * Get individual buttons
      *
      * @param $buttons
+     *
      * @return array
      */
     protected function getButtons($buttons)
     {
         $button_array = array();
-        $temp = explode('}}', $buttons);
+        $temp         = explode('}}', $buttons);
 
         foreach ($temp as $set) {
             $set = str_replace(',', ' ', $set);
@@ -508,13 +513,14 @@ class FoundationuiPlugin extends Plugin
      * Get page sections
      *
      * @param $pages
+     *
      * @return array
      */
     protected function getPages($pages)
     {
         $page_array = array();
         $temp_array = array();
-        $temp = explode('}}', $pages);
+        $temp       = explode('}}', $pages);
 
         foreach ($temp as $set) {
             $set = str_replace(',', ' ', $set);
@@ -531,12 +537,12 @@ class FoundationuiPlugin extends Plugin
 
             $fields = explode(' ', $set);
             foreach ($fields as $field) {
-                $temp = explode('=', $field);
+                $temp            = explode('=', $field);
                 $pairs[$temp[0]] = $temp[1];
             }
 
             $temp_row = new \stdClass();
-            foreach ($pairs as $key=>$value) {
+            foreach ($pairs as $key => $value) {
                 $temp_row->$key = $value;
             }
             $page_array[] = $temp_row;

@@ -17,5 +17,6 @@ if ($this->row->closed == 1) {
 } ?>
 <div class="comment-head">
     <h3><?php echo $this->row->title; ?></h3>
+
     <p><?php echo $comment; ?><p>
 </div>

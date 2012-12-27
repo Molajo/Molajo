@@ -34,7 +34,9 @@ Class ConfigurationServicePlugin extends ServicesPlugin
     {
         $this->getFieldProperties();
 
+        return;
     }
+
     /**
      * Retrieve and load valid properties for fields, data models and data objects
      *
@@ -51,24 +53,55 @@ Class ConfigurationServicePlugin extends ServicesPlugin
         }
 
         $this->loadFieldProperties
-            ($xml, 'dataobjecttypes', 'dataobjecttype', 'valid_dataobject_types');
+        (
+            $xml,
+            'dataobjecttypes',
+            'dataobjecttype',
+            'valid_dataobject_types'
+        );
 
         $this->loadFieldPropertiesWithAttributes
-            ($xml, 'dataobjectattributes', 'dataobjectattribute', 'valid_dataobject_attributes');
+        (
+            $xml,
+            'dataobjectattributes',
+            'dataobjectattribute',
+            'valid_dataobject_attributes'
+        );
 
         $this->loadFieldProperties
-            ($xml, 'modeltypes', 'modeltype', 'valid_model_types');
+        (
+            $xml,
+            'modeltypes',
+            'modeltype',
+            'valid_model_types'
+        );
 
         $this->loadFieldPropertiesWithAttributes
-            ($xml, 'modelattributes', 'modelattribute', 'valid_model_attributes');
+        (
+            $xml,
+            'modelattributes',
+            'modelattribute',
+            'valid_model_attributes'
+        );
 
         $this->loadFieldProperties
-            ($xml, 'datatypes', 'datatype', 'valid_data_types');
+        (
+            $xml,
+            'datatypes',
+            'datatype',
+            'valid_data_types'
+        );
 
         $this->loadFieldProperties
-            ($xml, 'queryelements', 'queryelement', 'valid_queryelements_attributes');
+        (
+            $xml,
+            'queryelements',
+            'queryelement',
+            'valid_queryelements_attributes'
+        );
 
-        $list = $this->configuration->get('valid_queryelements_attributes');
+        $list = $this->service_class->get('valid_queryelements_attributes');
+
         foreach ($list as $item) {
             $field = explode(',', $item);
             $this->loadFieldProperties($xml, $field[0], $field[1], $field[2]);
@@ -77,12 +110,9 @@ Class ConfigurationServicePlugin extends ServicesPlugin
         $datalistsArray = array();
         $extensionArray = array();
         $datalistsArray = $this->loadDatalists($datalistsArray, PLATFORM_MVC . '/Model/Datalist');
-        $extensionArray = $this->loadDatalists($datalistsArray, EXTENSIONS . '/Model/Datalist');
-        array_merge($datalistsArray, $extensionArray);
-        sort($datalistsArray);
         $datalistsArray = array_unique($datalistsArray);
 
-        Services::Registry()->set(FIELDS_LITERAL, 'Datalists', $datalistsArray);
+        $this->service_class->set('valid_datalists', $datalistsArray);
 
         return;
     }
@@ -138,10 +168,10 @@ Class ConfigurationServicePlugin extends ServicesPlugin
             return false;
         }
 
-        $typeArray = array();
+        $typeArray        = array();
         $typeDefaultArray = array();
         foreach ($xml->$plural->$singular as $type) {
-            $typeArray[] = (string)$type['name'];
+            $typeArray[]                             = (string)$type['name'];
             $typeDefaultArray[(string)$type['name']] = (string)$type['default'];
         }
 

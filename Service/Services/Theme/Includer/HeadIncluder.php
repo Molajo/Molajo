@@ -60,30 +60,42 @@ Class HeadIncluder extends Includer
 
         if ($this->type == 'defer') {
 
-            if ((int) Services::Registry()->get('include', 'template_view_id', 0) == 0) {
-                Services::Registry()->set('include', 'template_view_id',
-                    Services::Registry()->get(CONFIGURATION_LITERAL, 'defer_template_view_id'));
+            if ((int)Services::Registry()->get('include', 'template_view_id', 0) == 0) {
+                Services::Registry()->set(
+                    'include',
+                    'template_view_id',
+                    Services::Registry()->get(CONFIGURATION_LITERAL, 'defer_template_view_id')
+                );
             }
 
-            if ((int) Services::Registry()->get('include', 'wrap_view_id', 0) == 0) {
-                Services::Registry()->set('include', 'wrap_view_id',
-                    Services::Registry()->get(CONFIGURATION_LITERAL, 'defer_wrap_view_id'));
+            if ((int)Services::Registry()->get('include', 'wrap_view_id', 0) == 0) {
+                Services::Registry()->set(
+                    'include',
+                    'wrap_view_id',
+                    Services::Registry()->get(CONFIGURATION_LITERAL, 'defer_wrap_view_id')
+                );
             }
 
         } else {
-            if ((int) Services::Registry()->get('include', 'template_view_id', 0) == 0) {
-                Services::Registry()->set('include', 'template_view_id',
-                    Services::Registry()->get(CONFIGURATION_LITERAL, 'head_template_view_id'));
+            if ((int)Services::Registry()->get('include', 'template_view_id', 0) == 0) {
+                Services::Registry()->set(
+                    'include',
+                    'template_view_id',
+                    Services::Registry()->get(CONFIGURATION_LITERAL, 'head_template_view_id')
+                );
             }
-            if ((int) Services::Registry()->get('include', 'wrap_view_id', 0) == 0) {
-                Services::Registry()->set('include', 'wrap_view_id',
-                    Services::Registry()->get(CONFIGURATION_LITERAL, 'head_wrap_view_id'));
+            if ((int)Services::Registry()->get('include', 'wrap_view_id', 0) == 0) {
+                Services::Registry()->set(
+                    'include',
+                    'wrap_view_id',
+                    Services::Registry()->get(CONFIGURATION_LITERAL, 'head_wrap_view_id')
+                );
             }
         }
 
         /** Save existing parameters */
         $savedParameters = array();
-        $temp = Services::Registry()->getArray('include');
+        $temp            = Services::Registry()->getArray('include');
 
         if (is_array($temp) && count($temp) > 0) {
             foreach ($temp as $key => $value) {
@@ -99,8 +111,10 @@ Class HeadIncluder extends Includer
         }
 
         /** Template  */
-        $this->viewHelper->get(Services::Registry()->get('include', 'template_view_id'),
-            CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+        $this->viewHelper->get(
+            Services::Registry()->get('include', 'template_view_id'),
+            CATALOG_TYPE_TEMPLATE_VIEW_LITERAL
+        );
 
         /** Merge Parameters in (Pre-wrap) */
         if (is_array($savedParameters) && count($savedParameters) > 0) {
@@ -110,17 +124,29 @@ Class HeadIncluder extends Includer
         }
         /** Default Wrap if needed */
         $wrap_view_id = Services::Registry()->get('include', 'wrap_view_id');
-        Services::Registry()->set('include', 'wrap_view_path_node',
-                    $this->extensionHelper->getExtensionNode((int) $wrap_view_id));
+        Services::Registry()->set(
+            'include',
+            'wrap_view_path_node',
+            $this->extensionHelper->getExtensionNode((int)$wrap_view_id)
+        );
         $wrap_view_title = Services::Registry()->get('include', 'wrap_view_path_node');
 
         Services::Registry()->set('include', 'wrap_view_title', $wrap_view_title);
-        Services::Registry()->set('include', 'wrap_view_path',
-            $this->extensionHelper->getPath($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL));
-        Services::Registry()->set('include', 'wrap_view_path_url',
-            $this->extensionHelper->getPathURL($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL));
-        Services::Registry()->set('include', 'wrap_view_namespace',
-            $this->extensionHelper->getNamespace($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL));
+        Services::Registry()->set(
+            'include',
+            'wrap_view_path',
+            $this->extensionHelper->getPath($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL)
+        );
+        Services::Registry()->set(
+            'include',
+            'wrap_view_path_url',
+            $this->extensionHelper->getPathURL($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL)
+        );
+        Services::Registry()->set(
+            'include',
+            'wrap_view_namespace',
+            $this->extensionHelper->getNamespace($wrap_view_title, CATALOG_TYPE_WRAP_VIEW_LITERAL)
+        );
 
         if (Services::Registry()->exists('include', 'wrap_view_role')) {
         } else {

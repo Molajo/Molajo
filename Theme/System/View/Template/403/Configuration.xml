@@ -9,5 +9,5 @@
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_ARTICLE_DESCRIPTION</description>
-    <model name="Article"  extends="PageviewsSystem"/>
+    <model name="Article" extends="PageviewsSystem"/>
 </extension>

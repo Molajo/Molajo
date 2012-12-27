@@ -82,14 +82,14 @@ Class DateService
             $date2 = $this->convertCCYYMMDD($this->getDate());
         }
 
-        $date1mm = substr($date1, 5, 2);
-        $date1dd = substr($date1, 8, 2);
+        $date1mm   = substr($date1, 5, 2);
+        $date1dd   = substr($date1, 8, 2);
         $date1ccyy = substr($date1, 0, 4);
 
         $date1 = date_create("$date1mm/$date1dd/$date1ccyy");
 
-        $date2mm = substr($date2, 5, 2);
-        $date2dd = substr($date2, 8, 2);
+        $date2mm   = substr($date2, 5, 2);
+        $date2dd   = substr($date2, 8, 2);
         $date2ccyy = substr($date2, 0, 4);
 
         $date2 = date_create("$date2mm/$date2dd/$date2ccyy");
@@ -115,7 +115,7 @@ Class DateService
             $compare_to_date = new \DateTime('now');
         }
 
-        $diff = $compare_to_date->format('U') - $source_date->format('U');
+        $diff    = $compare_to_date->format('U') - $source_date->format('U');
         $dayDiff = floor($diff / 86400);
 
         $prettyDate = '';
@@ -130,13 +130,13 @@ Class DateService
                 $prettyDate = Services::Language()->translate('JUST_NOW');
 
             } elseif ($diff < 3600) {
-                $number = floor($diff / 60);
+                $number     = floor($diff / 60);
                 $prettyDate = $number . ' '
                     . $this->translatePrettyDate($number, 'DATE_MINUTE_SINGULAR', 'DATE_MINUTE_PLURAL')
                     . ' ' . Services::Language()->translate('AGO');
 
             } elseif ($diff < 86400) {
-                $number = floor($diff / 3660);
+                $number     = floor($diff / 3660);
                 $prettyDate = $number . ' '
                     . $this->translatePrettyDate($number, 'DATE_HOUR_SINGULAR', 'DATE_HOUR_PLURAL')
                     . ' ' . Services::Language()->translate('AGO');
@@ -146,25 +146,25 @@ Class DateService
             $pretty_date = Services::Language()->translate('YESTERDAY');
 
         } elseif ($dayDiff < 7) {
-            $number = $dayDiff;
+            $number     = $dayDiff;
             $prettyDate = $number . ' '
                 . $this->translatePrettyDate($number, 'DATE_DAY_SINGULAR', 'DATE_DAY_PLURAL')
                 . ' ' . Services::Language()->translate('AGO');
 
         } elseif ($dayDiff < (7 * 6)) {
-            $number = ceil($dayDiff / 7);
+            $number     = ceil($dayDiff / 7);
             $prettyDate = $number . ' '
                 . $this->translatePrettyDate($number, 'DATE_WEEK_SINGULAR', 'DATE_WEEK_PLURAL')
                 . ' ' . Services::Language()->translate('AGO');
 
         } elseif ($dayDiff < 365) {
-            $number = ceil($dayDiff / (365 / 12));
+            $number     = ceil($dayDiff / (365 / 12));
             $prettyDate = $number . ' '
                 . $this->translatePrettyDate($number, 'DATE_MONTH_SINGULAR', 'DATE_MONTH_PLURAL')
                 . ' ' . Services::Language()->translate('AGO');
 
         } else {
-            $number = ceil($dayDiff / (365));
+            $number     = ceil($dayDiff / (365));
             $prettyDate = $number . ' '
                 . $this->translatePrettyDate($number, 'DATE_YEAR_SINGULAR', 'DATE_YEAR_PLURAL')
                 . ' ' . Services::Language()->translate('AGO');
@@ -452,11 +452,11 @@ Class DateService
     public function buildCalendar($month, $year)
     {
         $day_numbersOfWeek = array('S', 'M', 'T', 'W', 'T', 'F', 'S');
-        $firstDayOfMonth = mktime(0, 0, 0, $month, 1, $year);
-        $numberDays = date('t', $firstDayOfMonth);
-        $dateResources = getdate($firstDayOfMonth);
-        $monthName = $dateResources['month'];
-        $day_numberOfWeek = $dateResources['wday'];
+        $firstDayOfMonth   = mktime(0, 0, 0, $month, 1, $year);
+        $numberDays        = date('t', $firstDayOfMonth);
+        $dateResources     = getdate($firstDayOfMonth);
+        $monthName         = $dateResources['month'];
+        $day_numberOfWeek  = $dateResources['wday'];
 
         $calendar = "<table class='calendar'>";
         $calendar .= "<caption>$monthName $year</caption>";
@@ -478,7 +478,7 @@ Class DateService
                 $calendar .= "</tr><tr>";
             }
             $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
-            $date = "$year-$month-$currentDayRel";
+            $date          = "$year-$month-$currentDayRel";
             $calendar .= "<td class='day' rel='$date'>$currentDay</td>";
             $currentDay++;
             $day_numberOfWeek++;

@@ -47,16 +47,25 @@ Class ProfilerIncluder extends Includer
      */
     protected function setRenderCriteria()
     {
-        Services::Registry()->set('include', 'template_view_id',
-            Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_console_template_view_id'));
+        Services::Registry()->set(
+            'include',
+            'template_view_id',
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_console_template_view_id')
+        );
 
-        Services::Registry()->set('include', 'wrap_view_id',
-            Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_console_wrap_view_id'));
+        Services::Registry()->set(
+            'include',
+            'wrap_view_id',
+            Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_console_wrap_view_id')
+        );
 
         Services::Registry()->set('include', 'criteria_display_view_on_no_results', 1);
 
         /** Template  */
-        $this->viewHelper->get(Services::Registry()->get('include', 'template_view_id'), CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
+        $this->viewHelper->get(
+            Services::Registry()->get('include', 'template_view_id'),
+            CATALOG_TYPE_TEMPLATE_VIEW_LITERAL
+        );
 
         /** Wrap  */
         $this->viewHelper->get(Services::Registry()->get('include', 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);

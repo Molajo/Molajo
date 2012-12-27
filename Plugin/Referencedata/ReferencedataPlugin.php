@@ -39,7 +39,7 @@ class ReferencedataPlugin extends Plugin
             foreach ($fkFields as $fk) {
 
                 $fkName = $fk->name;
-                $name = substr($fkName, 3, strlen($fkName) - 3);
+                $name   = substr($fkName, 3, strlen($fkName) - 3);
 
                 $field = $this->getField($name);
                 if ($field === false) {
@@ -54,15 +54,19 @@ class ReferencedataPlugin extends Plugin
                     $new_name = $field['name'] . '_value';
 
                     $controllerClass = CONTROLLER_CLASS;
-                    $controller = new $controllerClass();
+                    $controller      = new $controllerClass();
                     $controller->getModelRegistry(DATA_SOURCE_LITERAL, $fk->source_model, 1);
                     $controller->set('get_customfields', 0, 'model_registry');
                     $controller->set('get_item_children', 0, 'model_registry');
                     $controller->set('use_special_joins', 0, 'model_registry');
                     $controller->set('check_view_level_access', 0, 'model_registry');
 
-                    $controller->set($controller->get('primary_key', 'id', 0, 'model_registry')
-                        , (int) $fieldValue, 'model_registry');
+                    $controller->set(
+                        $controller->get('primary_key', 'id', 0, 'model_registry')
+                        ,
+                        (int)$fieldValue,
+                        'model_registry'
+                    );
 
                     $value = $controller->getData(QUERY_OBJECT_RESULT);
 

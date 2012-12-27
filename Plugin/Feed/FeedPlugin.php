@@ -28,7 +28,7 @@ class FeedPlugin extends Plugin
      */
     public function onAfterReadall()
     {
-       return true;
+        return true;
 
         if (strtolower($this->get('template_view_path_node', '', 'parameters')) == 'feed') {
         } else {
@@ -41,7 +41,7 @@ class FeedPlugin extends Plugin
         }
 
         $count = $this->parameters['criteria_count'];
-        if ((int) $count == 0) {
+        if ((int)$count == 0) {
             $count = 5;
         }
 
@@ -52,9 +52,9 @@ class FeedPlugin extends Plugin
         foreach ($rss->getElementsByTagName('item') as $node) {
             $item = array(
                 'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-                'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
-                'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
-                'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
+                'desc'  => $node->getElementsByTagName('description')->item(0)->nodeValue,
+                'link'  => $node->getElementsByTagName('link')->item(0)->nodeValue,
+                'date'  => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
             );
             array_push($feed, $item);
         }
@@ -64,9 +64,9 @@ class FeedPlugin extends Plugin
         for ($x = 0; $x < $count; $x++) {
             $temp_row = new \stdClass();
 
-            $temp_row->title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
-            $temp_row->link = $feed[$x]['link'];
-            $temp_row->description = $feed[$x]['desc'];
+            $temp_row->title          = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
+            $temp_row->link           = $feed[$x]['link'];
+            $temp_row->description    = $feed[$x]['desc'];
             $temp_row->published_date = date('l F d, Y', strtotime($feed[$x]['date']));
 
             $temp_query_results[] = $temp_row;

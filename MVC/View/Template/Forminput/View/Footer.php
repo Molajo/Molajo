@@ -7,5 +7,5 @@
 defined('NIAMBIE') or die;
 if ($this->row->placeholder == '') {
 } else {
-echo 'placeholder' . '="' . $this->row->placeholder .'" ';
+    echo 'placeholder' . '="' . $this->row->placeholder . '" ';
 } ?>>

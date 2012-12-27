@@ -45,16 +45,16 @@ class PagingPlugin extends Plugin
         }
 
         /** previous page */
-        if ((int) $current_page > 1) {
-            $previous_page = (int) $current_page - 1;
-            $prev_link = $url . '/page/' . (int) $previous_page;
+        if ((int)$current_page > 1) {
+            $previous_page = (int)$current_page - 1;
+            $prev_link     = $url . '/page/' . (int)$previous_page;
         } else {
             $previous_page = 0;
-            $prev_link = '';
+            $prev_link     = '';
         }
 
         /** next page */
-        if ((int) $total_pages > (int) $current_page) {
+        if ((int)$total_pages > (int)$current_page) {
             $next_page = $current_page + 1;
             $next_link = $url . '/page/' . $next_page;
         } else {
@@ -65,14 +65,14 @@ class PagingPlugin extends Plugin
         /** Paging */
         $temp_row = new \stdClass();
 
-        $temp_row->total_items = (int) $this->get('pagination_total');
-        $temp_row->total_items_per_page = (int) $this->get('model_count', 0, 'parameters');
+        $temp_row->total_items          = (int)$this->get('pagination_total');
+        $temp_row->total_items_per_page = (int)$this->get('model_count', 0, 'parameters');
 
         $temp_row->first_page = $first_page;
         $temp_row->first_link = $first_link;
 
         $temp_row->previous_page = $previous_page;
-        $temp_row->prev_link = $prev_link;
+        $temp_row->prev_link     = $prev_link;
 
         $temp_row->next_page = $next_page;
         $temp_row->next_link = $next_link;
@@ -84,6 +84,7 @@ class PagingPlugin extends Plugin
 
         Services::Registry()->set(PRIMARY_LITERAL, 'Paging', $temp_query_results);
     }
+
     /**
      * Prev and Next Paging for Item Pages
      *
@@ -92,7 +93,7 @@ class PagingPlugin extends Plugin
     protected function itemPaging()
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
 
         $results = $controller->getModelRegistry(
             $this->get('model_type', DATA_SOURCE_LITERAL),
@@ -108,15 +109,23 @@ class PagingPlugin extends Plugin
         $controller->set('process_plugins', 0, 'model_registry');
         $controller->set('get_item_children', 0, 'model_registry');
 
-        $controller->model->query->select($controller->model->db->qn('a')
-            . '.' . $controller->model->db->qn($controller->get('primary_key', 'id', 'model_registry')));
+        $controller->model->query->select(
+            $controller->model->db->qn('a')
+                . '.' . $controller->model->db->qn($controller->get('primary_key', 'id', 'model_registry'))
+        );
 
-        $controller->model->query->select($controller->model->db->qn('a')
-            . '.' . $controller->model->db->qn($controller->get('name_key', 'title')));
+        $controller->model->query->select(
+            $controller->model->db->qn('a')
+                . '.' . $controller->model->db->qn($controller->get('name_key', 'title'))
+        );
 
-        $controller->model->query->where($controller->model->db->qn('a')
-            . '.' . $controller->model->db->qn($controller->get('primary_key', 'id', 'model_registry')
-            . ' = ' . (int) $this->parameters['catalog_source_id']));
+        $controller->model->query->where(
+            $controller->model->db->qn('a')
+                . '.' . $controller->model->db->qn(
+                $controller->get('primary_key', 'id', 'model_registry')
+                    . ' = ' . (int)$this->parameters['catalog_source_id']
+            )
+        );
 
 //@todo ordering
         $item = $controller->getData(QUERY_OBJECT_ITEM);

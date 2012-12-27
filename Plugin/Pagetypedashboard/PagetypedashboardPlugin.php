@@ -84,7 +84,7 @@ class PagetypedashboardPlugin extends Plugin
 
     public function portlets($portletOptionsArray)
     {
-        $i = 1;
+        $i               = 1;
         $portletIncludes = '';
         foreach ($portletOptionsArray as $portlet) {
 
@@ -152,9 +152,9 @@ class PagetypedashboardPlugin extends Plugin
 
         foreach ($list as $item) {
 
-            $temp_row = new \stdClass();
-            $temp_row->id = $item->id;
-            $temp_row->value = Services::Language()->translate(
+            $temp_row           = new \stdClass();
+            $temp_row->id       = $item->id;
+            $temp_row->value    = Services::Language()->translate(
                 ucfirst(strtolower(substr($item->value, 7, strlen($item->value))))
             );
             $temp_row->selected = '';

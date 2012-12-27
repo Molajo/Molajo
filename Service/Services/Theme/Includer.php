@@ -184,10 +184,10 @@ class Includer
         $this->set('', 'model_registry', null);
         $this->set('', 'rendered_output', null);
 
-        $this->contentHelper = new ContentHelper();
+        $this->contentHelper   = new ContentHelper();
         $this->extensionHelper = new ExtensionHelper();
-        $this->themeHelper = new ThemeHelper();
-        $this->viewHelper = new ViewHelper();
+        $this->themeHelper     = new ThemeHelper();
+        $this->viewHelper      = new ViewHelper();
 
         return $this;
     }
@@ -208,6 +208,7 @@ class Includer
 
         if (in_array($key, $this->property_array) && $property == '') {
             $value = $this->$key;
+
             return $value;
         }
 
@@ -216,6 +217,7 @@ class Includer
                 return $this->parameters[$key];
             }
             $this->parameters[$key] = $default;
+
             return $this->parameters[$key];
         }
 
@@ -224,6 +226,7 @@ class Includer
                 return $this->model_registry[$key];
             }
             $this->model_registry[$key] = $default;
+
             return $this->model_registry[$key];
         }
 
@@ -232,6 +235,7 @@ class Includer
                 return $this->attributes[$key];
             }
             $this->attributes[$key] = $default;
+
             return $this->attributes[$key];
         }
 
@@ -254,21 +258,25 @@ class Includer
 
         if (in_array($key, $this->property_array) && $property == '') {
             $this->$key = $value;
+
             return $this->$key;
         }
 
         if ($property == 'parameters') {
             $this->parameters[$key] = $value;
+
             return $this->parameters[$key];
         }
 
         if ($property == 'model_registry') {
             $this->model_registry[$key] = $value;
+
             return $this->model_registry[$key];
         }
 
         if ($property == 'attributes') {
             $this->attributes[$key] = $value;
+
             return $this->attributes[$key];
         }
 
@@ -323,7 +331,7 @@ class Includer
     protected function getAttributes($attributes)
     {
         $this->attributes = array();
-        $this->name = null;
+        $this->name       = null;
 
         if (count($attributes) > 0) {
         } else {
@@ -350,11 +358,11 @@ class Includer
      */
     protected function setRenderCriteria()
     {
-        $template_id = 0;
+        $template_id    = 0;
         $template_title = '';
 
         $saveTemplate = array();
-        $temp = Services::Registry()->get('parameters', 'template*');
+        $temp         = Services::Registry()->get('parameters', 'template*');
 
         if (is_array($temp) && count($temp) > 0) {
             foreach ($temp as $key => $value) {
@@ -379,11 +387,11 @@ class Includer
         }
 
         $saveWrap = array();
-        $temp = Services::Registry()->get('parameters', 'wrap*');
-        $temp2 = Services::Registry()->get('parameters', 'model*');
-        $temp3 = array_merge($temp, $temp2);
-        $temp2 = Services::Registry()->get('parameters', 'data*');
-        $temp = array_merge($temp2, $temp3);
+        $temp     = Services::Registry()->get('parameters', 'wrap*');
+        $temp2    = Services::Registry()->get('parameters', 'model*');
+        $temp3    = array_merge($temp, $temp2);
+        $temp2    = Services::Registry()->get('parameters', 'data*');
+        $temp     = array_merge($temp2, $temp3);
 
         if (is_array($temp) && count($temp) > 0) {
             foreach ($temp as $key => $value) {
@@ -523,7 +531,7 @@ class Includer
             }
         }
 
-        $wrap_id = 0;
+        $wrap_id    = 0;
         $wrap_title = '';
 
         $wrap_id = (int)Services::Registry()->get('parameters', 'wrap_view_id');
@@ -548,11 +556,11 @@ class Includer
         }
 
         $saveWrap = array();
-        $temp = Services::Registry()->get('parameters', 'wrap*');
-        $temp2 = Services::Registry()->get('parameters', 'model*');
-        $temp3 = array_merge($temp, $temp2);
-        $temp2 = Services::Registry()->get('parameters', 'data*');
-        $temp = array_merge($temp2, $temp3);
+        $temp     = Services::Registry()->get('parameters', 'wrap*');
+        $temp2    = Services::Registry()->get('parameters', 'model*');
+        $temp3    = array_merge($temp, $temp2);
+        $temp2    = Services::Registry()->get('parameters', 'data*');
+        $temp     = array_merge($temp2, $temp3);
 
         if (is_array($temp) && count($temp) > 0) {
             foreach ($temp as $key => $value) {
@@ -642,8 +650,8 @@ class Includer
      *  Instantiate Controller Class and pass in Parameters, Model Registry and Name and
      *  Include Name and Type. The MVC will render the output, and send it back to this method.
      *
-     *  @return  void
-     *  @since   1.0
+     * @return  void
+     * @since   1.0
      */
     protected function renderOutput()
     {
@@ -662,7 +670,7 @@ class Includer
         $controller->set('model_registry', Services::Registry()->get($model_registry_name));
         $controller->set('model_registry_name', $model_registry_name);
 
-        $cache_key = implode('', $controller->set('include', Services::Registry()->getArray('parameters')));
+        $cache_key     = implode('', $controller->set('include', Services::Registry()->getArray('parameters')));
         $cached_output = Services::Cache()->get(CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, $cache_key);
 
 //@todo check parameter to see if individual item should be cached
@@ -717,19 +725,19 @@ class Includer
      */
     protected function loadViewMedia()
     {
-        $priority = Services::Registry()->get('parameters', 'criteria_media_priority_other_extension', 400);
+        $priority  = Services::Registry()->get('parameters', 'criteria_media_priority_other_extension', 400);
         $file_path = Services::Registry()->get('parameters', 'template_view_path');
-        $url_path = Services::Registry()->get('parameters', 'template_view_path_url');
+        $url_path  = Services::Registry()->get('parameters', 'template_view_path_url');
 
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $css   = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js    = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
         $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
 
         $file_path = Services::Registry()->get('parameters', 'wrap_view_path');
-        $url_path = Services::Registry()->get('parameters', 'wrap_view_path_url');
+        $url_path  = Services::Registry()->get('parameters', 'wrap_view_path_url');
 
-        $css = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
-        $js = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
+        $css   = $this->class_asset->addCssFolder($file_path, $url_path, $priority);
+        $js    = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 0);
         $defer = $this->class_asset->addJsFolder($file_path, $url_path, $priority, 1);
 
         return $this;
@@ -771,13 +779,13 @@ class Includer
             . ucfirst(strtolower(Services::Registry()->get('parameters', 'model_type')));
 
         $arguments = array(
-            'model' => null,
-            'model_registry' => Services::Registry()->get($model_registry_name),
-            'parameters' => Services::Registry()->get('parameters'),
-            'query_results' => array(),
-            'row' => null,
-            'rendered_output' => $this->rendered_output,
-            'include_parse_sequence' => array(),
+            'model'                             => null,
+            'model_registry'                    => Services::Registry()->get($model_registry_name),
+            'parameters'                        => Services::Registry()->get('parameters'),
+            'query_results'                     => array(),
+            'row'                               => null,
+            'rendered_output'                   => $this->rendered_output,
+            'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
 

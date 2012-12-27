@@ -39,11 +39,11 @@ Class UrlService
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
 
             $controllerClass = CONTROLLER_CLASS;
-            $controller = new $controllerClass();
+            $controller      = new $controllerClass();
             $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
 
             $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-            $key = $controller->get('primary_key', 'id', 'model_registry');
+            $key    = $controller->get('primary_key', 'id', 'model_registry');
             $controller->set('process_plugins', 0, 'model_registry');
 
             $controller->model->query->select(
@@ -81,11 +81,11 @@ Class UrlService
     public function getCatalogID($catalog_type_id, $source_id = null, $url_sef_request = null)
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-        $key = $controller->get('primary_key', 'id', 'model_registry');
+        $key    = $controller->get('primary_key', 'id', 'model_registry');
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
 
@@ -144,11 +144,11 @@ Class UrlService
     public function getRedirectURL($catalog_id)
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
-        $key = $controller->get('primary_key', 'id', 'model_registry');
+        $key    = $controller->get('primary_key', 'id', 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
 
         $controller->model->query->select(
@@ -211,10 +211,10 @@ Class UrlService
     ) {
 
         if ((int)$size == 0) {
-            $size = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_size', 80);
-            $type = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_type', 'mm');
+            $size   = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_size', 80);
+            $type   = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_type', 'mm');
             $rating = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_rating', 'pg');
-            $image = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_image', 0);
+            $image  = Services::Registry()->get(CONFIGURATION_LITERAL, 'gravatar_image', 0);
         }
 
         /**
@@ -281,7 +281,7 @@ Class UrlService
     /**
      * createWebLinks - marks up a link into an <a href link
      *
-     * @todo pick one of these two (previous and this one)
+     * @todo    pick one of these two (previous and this one)
      *
      * @param   string $url_field
      *
@@ -377,12 +377,14 @@ Class UrlService
     /**
      * urlShortener
      * $longurl
+     *
      * @param object $longurl
      * 1 Local Shortened
      * 2 TinyURL
      * 3 is.gd
      * 4 bit.ly
      * 5 tr.im
+     *
      * @return
      */
     public function urlShortener($longurl, $username, $apikey, $username, $apikey)
@@ -400,13 +402,13 @@ Class UrlService
 
         } elseif ($shortener == '4') {
 
-            $bitlyURL = file_get_contents(
+            $bitlyURL     = file_get_contents(
                 "http://api.bit.ly/v3/shorten" . "&login=" . $username . "&apiKey=" . $apikey . "&longUrl=" . urlencode(
                     $longurl
                 ) . "&format=json"
             );
             $bitlyContent = json_decode($bitlyURL, true);
-            $bitlyError = $bitlyContent["errorCode"];
+            $bitlyError   = $bitlyContent["errorCode"];
             if ($bitlyError == 0) {
                 return $bitlyContent["results"][$longurl]["shortUrl"];
             } else {

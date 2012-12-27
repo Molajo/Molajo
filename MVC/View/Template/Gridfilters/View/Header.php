@@ -13,11 +13,12 @@ defined('NIAMBIE') or die; ?>
         <strong><?php echo Services::Language()->translate('Search'); ?></strong>
     </li>
     <li>
-        <input name="search" id="search" type="text" placeholder="<?php echo Services::Language()->translate('Search For'); ?>"/>
+        <input name="search" id="search" type="text"
+               placeholder="<?php echo Services::Language()->translate('Search For'); ?>"/>
     </li>
     <li>
         <input type="submit" class="submit button small right" name="search-button" id="search-button" value="Search">
-        <br />
+        <br/>
     </li>
     <li>
         <strong><?php echo Services::Language()->translate('Filters'); ?></strong>

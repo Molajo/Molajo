@@ -28,8 +28,10 @@
         <dataobjectattribute name="service_class" default="Registry"/>
         <dataobjectattribute name="service_class_query_method" default="getData"/>
         <dataobjectattribute name="service_class_query_method_parameter" default="Parameters"/>
-        <dataobjectattribute name="service_class_connection_namespace" default="JPlatform\database\driver\JDatabaseDriverMysqli"/>
-        <dataobjectattribute name="service_class_query_namespace" default="JPlatform\database\query\JDatabaseQueryMysqli"/>
+        <dataobjectattribute name="service_class_connection_namespace"
+                             default="JPlatform\database\driver\JDatabaseDriverMysqli"/>
+        <dataobjectattribute name="service_class_query_namespace"
+                             default="JPlatform\database\query\JDatabaseQueryMysqli"/>
         <dataobjectattribute name="process_plugins" default=""/>
     </dataobjectattributes>
 

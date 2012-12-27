@@ -114,11 +114,11 @@ Class ProfilerService
      * @since  1.0
      */
     protected $phase_array = array(
-        INITIALISE => 1,
-        ROUTING => 2,
+        INITIALISE    => 1,
+        ROUTING       => 2,
         AUTHORISATION => 3,
-        EXECUTE => 4,
-        RESPONSE => 5
+        EXECUTE       => 4,
+        RESPONSE      => 5
     );
 
     /**
@@ -186,9 +186,9 @@ Class ProfilerService
      */
     public function __construct()
     {
-        $this->current_phase = INITIALISE;
+        $this->current_phase       = INITIALISE;
         $this->profiler_start_with = INITIALISE;
-        $this->profiler_end_with = RESPONSE;
+        $this->profiler_end_with   = RESPONSE;
 
         return $this;
     }
@@ -298,7 +298,7 @@ Class ProfilerService
             throw new \RuntimeException('Unable to add Log Entry: ' . $message . ' ' . $e->getMessage());
         }
 
-        $this->previous_time = $elapsed;
+        $this->previous_time   = $elapsed;
         $this->previous_memory = $memory;
 
         return true;
@@ -321,7 +321,7 @@ Class ProfilerService
         $i = count($this->hold_for_date_service_startup) + 1;
 
         $entry = array(
-            'message' => sprintf(
+            'message'    => sprintf(
                 '%.3f seconds (+%.3f); %0.2f MB (+%.3f) - %s',
                 $elapsed,
                 $elapsed - $this->previous_time,
@@ -329,8 +329,8 @@ Class ProfilerService
                 $memory_difference,
                 $message
             ),
-            'log_level' => LOG_TYPE_PROFILER,
-            'log_type' => self::log_type,
+            'log_level'  => LOG_TYPE_PROFILER,
+            'log_type'   => self::log_type,
             'entry_date' => date("Y-m-d") . ' ' . date("H:m:s")
         ); // will not be set to timezone
 
@@ -355,6 +355,7 @@ Class ProfilerService
             $this->on = 0;
             define('PROFILER_ON', false);
             Services::Registry()->set(PROFILER_LITERAL, 'on', false);
+
             return $this;
         }
 
@@ -370,6 +371,7 @@ Class ProfilerService
             $this->on = 0;
             define('PROFILER_ON', false);
             Services::Registry()->set(PROFILER_LITERAL, 'on', false);
+
             return $this;
         } else {
             define('PROFILER_ON', true);
@@ -433,7 +435,7 @@ Class ProfilerService
         }
 
         $this->profiler_output_options = array();
-        $temp2 = explode(',', $temp);
+        $temp2                         = explode(',', $temp);
         foreach ($temp2 as $item) {
             if (in_array($item, $outputOptions)) {
                 $this->profiler_output_options[] = $item;
@@ -480,14 +482,14 @@ Class ProfilerService
         $this->$logMethod();
 
         if ($results === false) {
-            $this->profiler_options = array();
+            $this->profiler_options           = array();
             $this->profiler_options['logger'] = LOG_ECHO_LOGGER;
         }
 
-        $results = array();
-        $results['options'] = $this->profiler_options;
+        $results             = array();
+        $results['options']  = $this->profiler_options;
         $results['priority'] = LOG_TYPE_PROFILER;
-        $results['types'] = self::log_type;
+        $results['types']    = self::log_type;
 
         return $results;
     }
@@ -522,14 +524,14 @@ Class ProfilerService
             'mailer_mail_reply_to',
             ''
         );
-        $this->profiler_options['from'] = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from', '');
+        $this->profiler_options['from']     = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from', '');
 
         $this->profiler_options['subject'] = Services::Registry()->get(
             CONFIGURATION_LITERAL,
             'profiler_email_subject',
             ''
         );
-        $this->profiler_options['to'] = Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_email_to', '');
+        $this->profiler_options['to']      = Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_email_to', '');
 
         return true;
     }
@@ -658,10 +660,10 @@ Class ProfilerService
 
             $temp_row = new \stdClass();
 
-            $temp_row->date = $message['date'];
+            $temp_row->date     = $message['date'];
             $temp_row->priority = $message['priority'];
-            $temp_row->type = $message['type'];
-            $temp_row->message = $message['message'];
+            $temp_row->type     = $message['type'];
+            $temp_row->message  = $message['message'];
 
             $query_results[] = $temp_row;
         }

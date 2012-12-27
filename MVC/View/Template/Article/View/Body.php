@@ -18,34 +18,42 @@ defined('NIAMBIE') or die; ?>
     <?php echo $this->row->start_publishing_datetime_day_name
         . ', ' . $this->row->start_publishing_datetime_month_name
         . ' ' . $this->row->start_publishing_datetime_dd
-        . ', '. $this->row->start_publishing_datetime_ccyy; ?>.
+        . ', ' . $this->row->start_publishing_datetime_ccyy; ?>.
 </h6>
 
 <?php if ($this->row->image2 == '') {
-} else { ?>
+} else {
+    ?>
 <figure class="float_right image2">
     <img src="<?php echo $this->row->image2; ?>" alt="">
     <?php if ($this->row->image_caption2 == '') {
-} else { ?>
+} else {
+    ?>
     <figcaption><?php echo $this->row->image_caption2; ?></figcaption>
     <?php } ?>
 </figure>
-<?php }
+<?php
+}
 
 if ($this->row->content_text_introductory == '') {
-} else { ?>
+} else {
+    ?>
 <div class="introductory"><?php echo $this->row->content_text_introductory; ?></div>
-<?php }
+<?php
+}
 
 if ($this->row->image3 == '') {
-} else { ?>
+} else {
+    ?>
 <figure class="float_left image3">
     <img src="<?php echo $this->row->image3; ?>" alt="">
     <?php if ($this->row->image_caption3 == '') {
-} else { ?>
+} else {
+    ?>
     <figcaption><?php echo $this->row->image_caption3; ?></figcaption>
     <?php } ?>
 </figure>
-<?php }
+<?php
+}
 
 echo $this->row->content_text_fulltext;

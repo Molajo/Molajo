@@ -1,24 +1,24 @@
 {
-    "name": "Niambie/Platform",
+    "name":"Niambie/Platform",
     "type":"Content Management Framework",
     "description":"Content Management Framework",
     "keywords":["cmf", "framework"],
     "homepage":"http://Niambie.org",
     "license":"MIT",
-    "authors": [
+    "authors":[
         {
-            "name": "Amy Stephen",
-            "email": "AmyStephen@gmail.com",
-            "homepage": "http://niambie.org",
-            "role": "Developer"
+            "name":"Amy Stephen",
+            "email":"AmyStephen@gmail.com",
+            "homepage":"http://niambie.org",
+            "role":"Developer"
         }
     ],
-    "require": {
+    "require":{
         "php":">=5.3.4"
     },
-    "autoload": {
-        "psr-0": {
-            "Molajo": "src"
+    "autoload":{
+        "psr-0":{
+            "Molajo":"src"
         }
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <model
-       name="Timezone"
-       primary_key="id"
-       name_key="value">
+        name="Timezone"
+        primary_key="id"
+        name_key="value">
     <table>
         <values>
             <value id="00:00*1" value="(GMT) Casablanca"/>

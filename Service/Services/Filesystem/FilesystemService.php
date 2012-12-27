@@ -49,8 +49,8 @@ defined('NIAMBIE') or die;
  * Services::Filesystem()->pathFind
  *
  * @package       Molajo
- * @subpackage  Services
- * @since       1.0
+ * @subpackage    Services
+ * @since         1.0
  */
 class FilesystemService
 {
@@ -74,6 +74,7 @@ class FilesystemService
      * Joomla JFile, JFolder, and JPath Classes
      *
      * @static
+     *
      * @param $name
      * @param $arguments
      *
@@ -90,24 +91,26 @@ class FilesystemService
      *
      * @param $name
      * @param $arguments
+     *
      * @return bool|mixed
      */
     public function processCall($name, $arguments)
     {
         if (strtolower(substr($name, 0, 4)) == 'file') {
-            $class = 'JPlatform\\filesystem\\JFile';
+            $class  = 'JPlatform\\filesystem\\JFile';
             $method = substr($name, 4, strlen($name) - 4);
 
         } elseif (strtolower(substr($name, 0, 6)) == 'folder') {
-            $class = 'JPlatform\\filesystem\\JFolder';
+            $class  = 'JPlatform\\filesystem\\JFolder';
             $method = substr($name, 6, strlen($name) - 6);
 
         } elseif (strtolower(substr($name, 0, 4)) == 'path') {
-            $class = 'JPlatform\\filesystem\\JPath';
+            $class  = 'JPlatform\\filesystem\\JPath';
             $method = substr($name, 4, strlen($name) - 4);
 
         } else {
             Echo 'Invalid Filesystem Class: ';
+
             //error
             return false;
         }
@@ -118,6 +121,7 @@ class FilesystemService
         }
 
         echo 'Invalid Filesystem Method: ' . $name;
+
         //throw error
         return false;
     }

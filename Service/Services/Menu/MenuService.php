@@ -58,12 +58,14 @@ Class MenuService
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'MenuitemsNested', 1);
 
-        $controller->model->query->where($controller->model->db->qn('current_menuitem.id')
-            . ' = ' . (int) $current_menuitem_id);
-		$controller->model->query->where($controller->model->db->qn('a.status') . ' > 0');
+        $controller->model->query->where(
+            $controller->model->db->qn('current_menuitem.id')
+                . ' = ' . (int)$current_menuitem_id
+        );
+        $controller->model->query->where($controller->model->db->qn('a.status') . ' > 0');
 
         $controller->model->query->order('a.lft DESC');
 
@@ -75,16 +77,16 @@ Class MenuService
         $look_for_parent = 0;
 
         $select = array();
-        $i = 0;
+        $i      = 0;
         foreach ($query_results as $item) {
 
             if ($look_for_parent == 0) {
-                $select[] = $i;
+                $select[]        = $i;
                 $look_for_parent = $item->parent_id;
 
             } else {
                 if ($look_for_parent == $item->id) {
-                    $select[] = $i;
+                    $select[]        = $i;
                     $look_for_parent = $item->parent_id;
                 }
             }
@@ -94,7 +96,7 @@ Class MenuService
         rsort($select);
         $breadcrumbs = array();
         foreach ($select as $index) {
-                $breadcrumbs[] = $query_results[$index];
+            $breadcrumbs[] = $query_results[$index];
         }
 
         return $breadcrumbs;
@@ -112,7 +114,7 @@ Class MenuService
     public function get($menu_id, $current_menu_item = 0, $bread_crumbs = array())
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL, 1);
 
         $controller->set('get_customfields', 0, 'model_registry');
@@ -136,18 +138,18 @@ Class MenuService
         $controller->model->query->select($controller->model->db->qn('a.parameters'));
         $controller->model->query->select($controller->model->db->qn('a.ordering'));
 
-        $controller->model->query->where($controller->model->db->qn('a.extension_id') . ' = ' . (int) $menu_id);
-		$controller->model->query->where($controller->model->db->qn('a.status') . ' > 0');
+        $controller->model->query->where($controller->model->db->qn('a.extension_id') . ' = ' . (int)$menu_id);
+        $controller->model->query->where($controller->model->db->qn('a.status') . ' > 0');
 
-		$controller->model->query->where($controller->model->db->qn('catalog.enabled') . ' = 1');
+        $controller->model->query->where($controller->model->db->qn('catalog.enabled') . ' = 1');
 
         $controller->model->query->order('a.lft');
 
         $controller->set('model_offset', 0, 'model_registry');
         $controller->set('model_count', 999999, 'model_registry');
-		$controller->set('get_customfields', 2, 'model_registry');
-		$controller->set('use_special_joins', 1, 'model_registry');
-		$controller->set('process_plugins', 0, 'model_registry');
+        $controller->set('get_customfields', 2, 'model_registry');
+        $controller->set('use_special_joins', 1, 'model_registry');
+        $controller->set('process_plugins', 0, 'model_registry');
 
         $query_results = $controller->getData(QUERY_OBJECT_LIST);
         if ($query_results === false) {
@@ -158,12 +160,12 @@ Class MenuService
 
             $item->menu_id = $item->extension_id;
 
-            if ($item->id == $current_menu_item && (int) $current_menu_item > 0) {
+            if ($item->id == $current_menu_item && (int)$current_menu_item > 0) {
                 $item->css_class = 'current';
-                $item->current = 1;
+                $item->current   = 1;
             } else {
                 $item->css_class = '';
-                $item->current = 0;
+                $item->current   = 0;
             }
 
             $item->active = 0;
@@ -179,7 +181,7 @@ Class MenuService
             if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
                 $item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
             } else {
-                $item->url = Services::Url()->getApplicationURL('index.php?id=' . (int) $item->id);
+                $item->url = Services::Url()->getApplicationURL('index.php?id=' . (int)$item->id);
             }
 
             if ($item->subtitle == '' || $item->subtitle == null) {

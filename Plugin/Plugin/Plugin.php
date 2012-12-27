@@ -251,6 +251,7 @@ class Plugin
 
         if (in_array($key, $this->property_array) && $property == '') {
             $value = $this->$key;
+
             return $value;
         }
 
@@ -259,6 +260,7 @@ class Plugin
                 return $this->parameters[$key];
             }
             $this->parameters[$key] = $default;
+
             return $this->parameters[$key];
         }
 
@@ -267,6 +269,7 @@ class Plugin
                 return $this->model_registry[$key];
             }
             $this->model_registry[$key] = $default;
+
             return $this->model_registry[$key];
         }
 
@@ -304,21 +307,25 @@ class Plugin
                     $this->set('model_registry_name', $this->model_registry['model_registry_name'], 'model_registry');
                 }
             }
+
             return $this->$key;
         }
 
         if ($property == 'parameters') {
             $this->parameters[$key] = $value;
+
             return $this->parameters[$key];
         }
 
         if ($property == 'model_registry') {
             $this->model_registry[$key] = $value;
+
             return $this->model_registry[$key];
         }
 
         if ($property == 'model') {
             $this->model->$key = $value;
+
             return $this->model->$key;
         }
 

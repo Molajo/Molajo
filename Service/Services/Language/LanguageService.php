@@ -66,6 +66,7 @@ Class LanguageService
     {
         $language = $this->setCurrentLanguage($language);
         $this->setLanguageRegistry($language);
+
         return $this->loadLanguageStrings($language);
     }
 
@@ -124,7 +125,7 @@ Class LanguageService
         if ($language == Services::Registry()->get(LANGUAGES_LITERAL, 'Default')) {
         } else {
             $language = Services::Registry()->get(LANGUAGES_LITERAL, 'Default');
-            $result = Services::Registry()->get(LANGUAGES_LITERAL . $language, $string, '');
+            $result   = Services::Registry()->get(LANGUAGES_LITERAL . $language, $string, '');
             if ($result == '') {
             } else {
                 return $result;
@@ -134,7 +135,7 @@ Class LanguageService
         if ($language == Services::Registry()->get(LANGUAGES_LITERAL, 'en-GB')) {
         } else {
             $language = 'en-GB';
-            $result = Services::Registry()->get(LANGUAGES_LITERAL . $language, $string, '');
+            $result   = Services::Registry()->get(LANGUAGES_LITERAL . $language, $string, '');
             if ($result == '') {
             } else {
                 return $result;
@@ -171,7 +172,7 @@ Class LanguageService
 
         Services::Registry()->sort(LANGUAGES_LITERAL . 'TranslatedStringsMissing');
 
-        $body = '';
+        $body       = '';
         $translated = Services::Registry()->getArray(LANGUAGES_LITERAL . 'TranslatedStringsMissing');
 
         if (count($translated) === 0) {
@@ -179,7 +180,7 @@ Class LanguageService
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings', 1);
 
         $controller->set('check_view_level_access', 0, 'model_registry');
@@ -321,6 +322,7 @@ Class LanguageService
      * setLanguageRegistry - Loads the Core Language for specified language
      *
      * @param   string  $language
+     *
      * @return  string
      */
     protected function setLanguageRegistry($language)
@@ -369,7 +371,7 @@ Class LanguageService
     protected function getLanguageStrings($language)
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings', 1);
 
         $controller->set('check_view_level_access', 0, 'model_registry');
@@ -461,28 +463,28 @@ Class LanguageService
         }
 
         $languageList = array();
-        $tagArray = array();
+        $tagArray     = array();
 
         foreach ($installed as $language) {
 
             $temp_row = new \stdClass();
 
-            $temp_row->id = $language->extension_id;
-            $temp_row->title = $language->subtitle;
-            $temp_row->tag = $language->tag;
+            $temp_row->id     = $language->extension_id;
+            $temp_row->title  = $language->subtitle;
+            $temp_row->tag    = $language->tag;
             $temp_row->locale = $language->locale;
 
             if ($language->rtl == 1) {
-                $temp_row->rtl = $language->rtl;
+                $temp_row->rtl       = $language->rtl;
                 $temp_row->direction = 'rtl';
             } else {
-                $temp_row->rtl = $language->rtl;
+                $temp_row->rtl       = $language->rtl;
                 $temp_row->direction = '';
             }
             $temp_row->first_day = $language->first_day;
 
             $languageList[] = $temp_row;
-            $tagArray[] = $language->tag;
+            $tagArray[]     = $language->tag;
         }
 
         Services::Registry()->createRegistry(LANGUAGES_LITERAL);

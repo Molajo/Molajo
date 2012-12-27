@@ -29,7 +29,8 @@ class PublishedstatusPlugin extends Plugin
     {
         if ($this->get('data_object', '', 'model_registry') == 'Database') {
         } else {
-            return true;;
+            return true;
+            ;
         }
 
         $field = $this->getField('start_publishing_datetime');
@@ -49,21 +50,29 @@ class PublishedstatusPlugin extends Plugin
 
         $primary_prefix = $this->get('primary_prefix', 0, 'model_registry');
 
-        $this->model->query->where($this->model->db->qn($primary_prefix)
-            . '.' . $this->model->db->qn('status')
-            . ' > ' . STATUS_UNPUBLISHED);
+        $this->model->query->where(
+            $this->model->db->qn($primary_prefix)
+                . '.' . $this->model->db->qn('status')
+                . ' > ' . STATUS_UNPUBLISHED
+        );
 
-        $this->model->query->where('(' . $this->model->db->qn($primary_prefix)
+        $this->model->query->where(
+            '(' . $this->model->db->qn($primary_prefix)
                 . '.' . $this->model->db->qn('start_publishing_datetime')
                 . ' = ' . $this->model->db->q($this->model->null_date)
-                . ' OR ' . $this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn('start_publishing_datetime')
+                . ' OR ' . $this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn(
+                'start_publishing_datetime'
+            )
                 . ' <= ' . $this->model->db->q($this->model->now) . ')'
         );
 
-        $this->model->query->where('(' . $this->model->db->qn($primary_prefix)
+        $this->model->query->where(
+            '(' . $this->model->db->qn($primary_prefix)
                 . '.' . $this->model->db->qn('stop_publishing_datetime')
                 . ' = ' . $this->model->db->q($this->model->null_date)
-                . ' OR ' . $this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn('stop_publishing_datetime')
+                . ' OR ' . $this->model->db->qn($primary_prefix) . '.' . $this->model->db->qn(
+                'stop_publishing_datetime'
+            )
                 . ' >= ' . $this->model->db->q($this->model->now) . ')'
         );
 

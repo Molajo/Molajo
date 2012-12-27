@@ -21,5 +21,7 @@ defined('NIAMBIE') or die;
  * @subpackage  Services
  * @since       1.0
  */
-Class ResponseService extends Response  {}
+Class ResponseService extends Response
+{
+}
 

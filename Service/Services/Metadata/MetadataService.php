@@ -159,9 +159,9 @@ Class MetadataService
             } elseif (strtolower($key) == 'dummy_query') {
                 $temp_row = new \stdClass();
 
-                $temp_row->name = 'dummy row';
+                $temp_row->name              = 'dummy row';
                 $temp_row->application_html5 = $this->html5;
-                $temp_row->end = $this->line_end;
+                $temp_row->end               = $this->line_end;
 
                 $query_results[] = $temp_row;
 
@@ -203,6 +203,7 @@ Class MetadataService
         }
 
         $this->$key = $value;
+
         return $this->$key;
     }
 
@@ -218,22 +219,22 @@ Class MetadataService
 
         $temp_row = new \stdClass();
 
-        $temp = $this->get('title', '');
+        $temp  = $this->get('title', '');
         $title = $temp[0];
         if (trim($title) == '') {
             $title = SITE_NAME;
         }
 
-        $temp_row->title = $this->get('title', '');
-        $temp_row->description = $this->get('description', '');
-        $temp_row->mimetype = $this->get('mimetype', 'text/html');
-        $temp_row->base = SITE_BASE_URL;
-        $temp_row->base_url = BASE_URL;
-        $temp_row->last_modified = $this->get('modified_datetime', $this->get('request_date'));
+        $temp_row->title              = $this->get('title', '');
+        $temp_row->description        = $this->get('description', '');
+        $temp_row->mimetype           = $this->get('mimetype', 'text/html');
+        $temp_row->base               = SITE_BASE_URL;
+        $temp_row->base_url           = BASE_URL;
+        $temp_row->last_modified      = $this->get('modified_datetime', $this->get('request_date'));
         $temp_row->language_direction = $this->get('direction');
-        $temp_row->language = $this->get('language');
-        $temp_row->application_html5 = $this->get('html5');
-        $temp_row->line_end = $this->get('line_end');
+        $temp_row->language           = $this->get('language');
+        $temp_row->application_html5  = $this->get('html5');
+        $temp_row->line_end           = $this->get('line_end');
 
         $query_results[] = $temp_row;
 

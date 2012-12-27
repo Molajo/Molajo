@@ -4,24 +4,27 @@
  * @subpackage  User
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * @license     MIT
  */
 defined('NIAMBIE') or die;
 
 /**
  * This is the status code returned when the authentication is success (permit login)
+ *
  * @deprecated Use MolajoAuthentication::STATUS_SUCCESS
  */
 define('JAUTHENTICATE_STATUS_SUCCESS', 1);
 
 /**
  * Status to indicate cancellation of authentication (unused)
+ *
  * @deprecated
  */
 define('JAUTHENTICATE_STATUS_CANCEL', 2);
 
 /**
  * This is the status code returned when the authentication failed (prevent login if no success)
+ *
  * @deprecated Use MolajoAuthentication::STATUS_FAILURE
  */
 define('JAUTHENTICATE_STATUS_FAILURE', 4);
@@ -38,6 +41,7 @@ Class AuthenticationService
     // Shared success status
     /**
      * This is the status code returned when the authentication is success (permit login)
+     *
      * @const  STATUS_SUCCESS successful response
      * @since  11.2
      */
@@ -46,6 +50,7 @@ Class AuthenticationService
     // These are for authentication purposes (username and password is valid)
     /**
      * Status to indicate cancellation of authentication (unused)
+     *
      * @const  STATUS_CANCEL cancelled request (unused)
      * @since  11.2
      */
@@ -53,6 +58,7 @@ Class AuthenticationService
 
     /**
      * This is the status code returned when the authentication failed (prevent login if no success)
+     *
      * @const  STATUS_FAILURE failed request
      * @since  11.2
      */
@@ -61,6 +67,7 @@ Class AuthenticationService
     // These are for authorisation purposes (can the user login)
     /**
      * This is the status code returned when the account has expired (prevent login)
+     *
      * @const  STATUS_EXPIRED an expired account (will prevent login)
      * @since  11.2
      */
@@ -68,6 +75,7 @@ Class AuthenticationService
 
     /**
      * This is the status code returned when the account has been denied (prevent login)
+     *
      * @const  STATUS_DENIED denied request (will prevent login)
      * @since  11.2
      */
@@ -75,6 +83,7 @@ Class AuthenticationService
 
     /**
      * This is the status code returned when the account doesn't exist (not an error)
+     *
      * @const  STATUS_UNKNOWN unknown account (won't permit or prevent login)
      * @since  11.2
      */
@@ -93,7 +102,10 @@ Class AuthenticationService
 
         if ($isLoaded) {
         } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', Services::Language()->translate('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES'));
+            MolajoError::raiseWarning(
+                'SOME_ERROR_CODE',
+                Services::Language()->translate('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES')
+            );
         }
     }
 
@@ -129,8 +141,8 @@ Class AuthenticationService
      *
      * @return AuthenticationService Response object with status variable filled
      *                                 in for last plugin or first successful plugin
-     * @see     MolajoAuthenticationResponse
-     * @since   1.0
+     * @see                            MolajoAuthenticationResponse
+     * @since                          1.0
      */
     public function authenticate($credentials, $options = Array())
     {
@@ -153,10 +165,13 @@ Class AuthenticationService
         foreach ($plugins as $plugin) {
             $className = 'plg' . $plugin->type . $plugin->name;
             if (class_exists($className)) {
-                $plugin = new $className($this, (array) $plugin);
+                $plugin = new $className($this, (array)$plugin);
             } else {
                 // Bail here if the plugin can't be created
-                MolajoError::raiseWarning(50, Services::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+                MolajoError::raiseWarning(
+                    50,
+                    Services::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className)
+                );
                 continue;
             }
 
@@ -190,8 +205,9 @@ Class AuthenticationService
     /**
      * onUserLogin
      *
-     * @param $user
+     * @param                          $user
      * @param  array                   $options
+     *
      * @return JAuthenticationResponse
      */
     public function onUserLogin($user, $options = array())
@@ -209,10 +225,13 @@ Class AuthenticationService
         foreach ($plugins as $plugin) {
             $className = 'plg' . ucfirst($plugin->type) . ucfirst($plugin->name);
             if (class_exists($className)) {
-                $plugin = new $className($this, (array) $plugin);
+                $plugin = new $className($this, (array)$plugin);
             } else {
                 // Bail here if the plugin can't be created
-                MolajoError::raiseWarning(50, Services::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+                MolajoError::raiseWarning(
+                    50,
+                    Services::Language()->sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className)
+                );
                 continue;
             }
 
@@ -231,8 +250,10 @@ Class AuthenticationService
      * Authorises that a particular user should be able to login
      *
      * @access public
+     *
      * @param MolajoAuthenticationResponse username of the user to authorise
-     * @param Array list of options
+     * @param Array                        list of options
+     *
      * @return Array[MolajoAuthenticationResponse] results of authorisation
      * @since  11.1
      */
@@ -255,17 +276,26 @@ Class AuthenticationService
                         case MolajoAuthentication::STATUS_EXPIRED:
                             $response->status = STATUS_EXPIRED;
 
-                            return MolajoError::raiseWarning('102002', Services::Language()->translate('JLIB_LOGIN_EXPIRED'));
+                            return MolajoError::raiseWarning(
+                                '102002',
+                                Services::Language()->translate('JLIB_LOGIN_EXPIRED')
+                            );
                             break;
                         case MolajoAuthentication::STATUS_DENIED:
                             $response->status = STATUS_DENIED;
 
-                            return MolajoError::raiseWarning('102003', Services::Language()->translate('JLIB_LOGIN_DENIED'));
+                            return MolajoError::raiseWarning(
+                                '102003',
+                                Services::Language()->translate('JLIB_LOGIN_DENIED')
+                            );
                             break;
                         default:
                             $response->status = STATUS_FAILURE;
 
-                            return MolajoError::raiseWarning('102004', Services::Language()->translate('JLIB_LOGIN_AUTHORISATION'));
+                            return MolajoError::raiseWarning(
+                                '102004',
+                                Services::Language()->translate('JLIB_LOGIN_AUTHORISATION')
+                            );
                             break;
                     }
                 }
@@ -279,9 +309,9 @@ Class AuthenticationService
 /**
  * Authentication response class, provides an object for storing user and error details
  *
- * @package    Joomla.Platform
+ * @package       Joomla.Platform
  * @subpackage    User
- * @since    1.0
+ * @since         1.0
  */
 Class AuthenticationResponse
 {

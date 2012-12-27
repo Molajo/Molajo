@@ -18,7 +18,8 @@
         <customfields>
             <customfield name="parameters">
                 <field name="button_title" type="char" null="0" default=" "/>
-                <field name="button_type" type="char" null="0" default="primary" values="primary,secondary,success,alert"/>
+                <field name="button_type" type="char" null="0" default="primary"
+                       values="primary,secondary,success,alert"/>
                 <field name="button_size" type="char" null="0" default="regular" values="tiny,small,regular,large"/>
                 <field name="button_shape" type="char" null="0" default="square" values="square,radius,rounded"/>
                 <field name="button_link" type="url" null="0" default=" "/>
@@ -26,8 +27,10 @@
                 <field name="button_tag" type="char" null="0" default="a" values="a,button,input"/>
                 <field name="button_name" type="char" null="0" default=" "/>
                 <field name="button_id" type="char" null="0" default=" "/>
-                <field name="button_icon_prepend" type="char" null="0" default=" " values="icon-edit,icon-trash,icon-etc"/>
-                <field name="button_icon_append" type="char" null="0" default=" " values="icon-edit,icon-trash,icon-etc"/>
+                <field name="button_icon_prepend" type="char" null="0" default=" "
+                       values="icon-edit,icon-trash,icon-etc"/>
+                <field name="button_icon_append" type="char" null="0" default=" "
+                       values="icon-edit,icon-trash,icon-etc"/>
             </customfield>
         </customfields>
     </model>

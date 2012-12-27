@@ -32,7 +32,7 @@ class MenuitemsPlugin extends Plugin
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL, 1);
 
         $controller->set('check_view_level_access', 1, 'model_registry');
@@ -83,7 +83,7 @@ class MenuitemsPlugin extends Plugin
             $temp_row = new \stdClass();
 
             $name = $item->title;
-            $lvl = (int) $item->lvl - 1;
+            $lvl  = (int)$item->lvl - 1;
 
             if ($lvl > 0) {
                 for ($i = 0; $i < $lvl; $i++) {
@@ -91,7 +91,7 @@ class MenuitemsPlugin extends Plugin
                 }
             }
 
-            $temp_row->id = $item->id;
+            $temp_row->id    = $item->id;
             $temp_row->value = trim($name);
 
             $menuitems[] = $temp_row;

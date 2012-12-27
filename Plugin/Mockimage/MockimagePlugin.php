@@ -71,7 +71,7 @@ class MockimagePlugin extends Plugin
         preg_match_all($pattern, $text, $matches);
 
         $replaceThis = array();
-        $withThis = array();
+        $withThis    = array();
 
         if (count($matches) == 0) {
 
@@ -84,18 +84,18 @@ class MockimagePlugin extends Plugin
 
                 $ImageRequest = explode(',', $match);
 
-                $width = 0;
+                $width  = 0;
                 $height = 0;
-                $class = '';
-                $type = '';
+                $class  = '';
+                $type   = '';
 
                 $i = 0;
                 foreach ($ImageRequest as $parameter) {
                     if ($width == 0) {
-                        $width = (int) $parameter;
+                        $width = (int)$parameter;
 
                     } elseif ($height == 0) {
-                        $height = (int) $parameter;
+                        $height = (int)$parameter;
 
                     } elseif ($class == '') {
                         if (in_array($parameter, array('right', 'left', 'center'))) {
@@ -130,8 +130,8 @@ class MockimagePlugin extends Plugin
      * @param int $height
      * @param int $type   (box, cat)
      *
-     * @param  color ffffff
-     * @param  &text=Put+Text+Here
+     * @param     color   ffffff
+     * @param   &text=Put+Text+Here
      *
      * @return string
      * @since   1.0
@@ -147,12 +147,12 @@ class MockimagePlugin extends Plugin
         }
 
         $imageclass = 'image' . $class;
-        $spanclass = 'mockimage float' . $class;
+        $spanclass  = 'mockimage float' . $class;
 
         if ($type == 'cat') {
-            $mockimage = '<span class="' . $spanclass . '"><img src="http://placekitten.com/' . (int) $width . '/' . (int) $height . '" class="' . $imageclass . '"/></span>';
+            $mockimage = '<span class="' . $spanclass . '"><img src="http://placekitten.com/' . (int)$width . '/' . (int)$height . '" class="' . $imageclass . '"/></span>';
         } else {
-            $mockimage = '<span class="' . $spanclass . '"><img src="http://placehold.it/' . (int) $width . 'x' . (int) $height . '" class="' . $imageclass . '"/></span>';
+            $mockimage = '<span class="' . $spanclass . '"><img src="http://placehold.it/' . (int)$width . 'x' . (int)$height . '" class="' . $imageclass . '"/></span>';
         }
 
         return $mockimage;

@@ -102,7 +102,7 @@ Class CacheServicePlugin extends ServicesPlugin
             (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'cache_type_template', 0)
         );
 
-        $valid_types = array();
+        $valid_types   = array();
         $valid_types[] = 'model';
         $valid_types[] = 'page';
         $valid_types[] = 'query';

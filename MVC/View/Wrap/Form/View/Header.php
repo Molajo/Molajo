@@ -20,4 +20,7 @@ else :
     $headerClass = ' class="' . $headerClass . '"';
 endif;
 ?>
-<form<?php echo $headerId; ?><?php echo $headerClass; ?> method="post" action="<?php echo Services::Registry()->get(PAGE_LITERAL, 'page_url'); ?>">
+<form<?php echo $headerId; ?><?php echo $headerClass; ?> method="post" action="<?php echo Services::Registry()->get(
+    PAGE_LITERAL,
+    'page_url'
+); ?>">

@@ -21,8 +21,8 @@ class PagetypeconfigurationPlugin extends Plugin
     /**
      * Prepares Configuration Data
      *
-     * @return 	boolean
-     * @since	1.0
+     * @return     boolean
+     * @since    1.0
      */
     public function onBeforeParse()
     {
@@ -32,7 +32,7 @@ class PagetypeconfigurationPlugin extends Plugin
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', '', 'parameters'),
             $this->get('model_name', '', 'parameters'),
@@ -45,11 +45,11 @@ class PagetypeconfigurationPlugin extends Plugin
         /** Array - All Pages in Set
         2, {{Access,noformfields}}{{Editor,editor}}{{Grid,grid}}{{Form,form}}{{Item,item}}{{List,list}}
          */
-        $temp = $this->get('configuration_array', '', 'parameters');
+        $temp  = $this->get('configuration_array', '', 'parameters');
         $pages = explode('{{', $temp);
 
         /** Determine Current Page of Set */
-        $temp = $this->get('request_filters', array(), 'parameters');
+        $temp    = $this->get('request_filters', array(), 'parameters');
         $filters = explode(',', $temp);
 
         $page = 1;
@@ -61,7 +61,7 @@ class PagetypeconfigurationPlugin extends Plugin
                 } else {
                     $pair = explode(':', $x);
                     if (strtolower($pair[0]) == 'page') {
-                        $page = (int) $pair[1];
+                        $page = (int)$pair[1];
                         break;
                     }
                 }
@@ -76,13 +76,13 @@ class PagetypeconfigurationPlugin extends Plugin
 
         /** Resource Submenu: Links to various Form Pages (Tabs) - ex. Basic, Metadata, Fields, etc. */
         $pageArray = array();
-        $i = 0;
+        $i         = 0;
         foreach ($pages as $item) {
 
             if ($item == '') {
             } else {
                 $i++;
-                $temp_row = new \stdClass();
+                $temp_row     = new \stdClass();
                 $temp_row->id = $i;
                 if ($i == $page_number) {
                     $temp_row->current = 1;
@@ -90,9 +90,9 @@ class PagetypeconfigurationPlugin extends Plugin
                     $temp_row->current = 0;
                 }
 
-                $temp_row->id = $i;
+                $temp_row->id    = $i;
                 $temp_row->title = substr($item, 0, strpos($item, ','));
-                $temp_row->url = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/page/' . $i;
+                $temp_row->url   = Services::Registry()->get(PAGE_LITERAL, 'page_url') . '/page/' . $i;
 
                 $pageArray[] = $temp_row;
             }
@@ -114,9 +114,10 @@ class PagetypeconfigurationPlugin extends Plugin
         7. {{Item,item}}
         8. {{List,list}}
          */
-        if ($page_number == 1 || $page_number == 3  || $page_number == 4
-            || $page_number == 5  || $page_number == 6  || $page_number == 7
-            || $page_number == 8) {
+        if ($page_number == 1 || $page_number == 3 || $page_number == 4
+            || $page_number == 5 || $page_number == 6 || $page_number == 7
+            || $page_number == 8
+        ) {
 
             $pageFieldsets = $this->getResourceConfiguration($form, $current_page);
         }
@@ -150,13 +151,13 @@ class PagetypeconfigurationPlugin extends Plugin
     /**
      * Prepares Configuration Data
      *
-     * @return 	boolean
-     * @since	1.0
+     * @return     boolean
+     * @since    1.0
      */
     protected function getResourceConfiguration($form, $current_page)
     {
         $this->contentHelper->getResourceExtensionParameters(
-            (int) $this->parameters['criteria_extension_instance_id']
+            (int)$this->parameters['criteria_extension_instance_id']
         );
 
         /** Set Input */
@@ -164,8 +165,11 @@ class PagetypeconfigurationPlugin extends Plugin
 
         $form->set('model_type', $this->get('model_type', '', 'parameters'));
         $form->set('model_name', $this->get('model_name', '', 'parameters'));
-        $form->set('model_registry_name',
-            ucfirst(strtolower($this->get('model_name', '', 'parameters'))) . ucfirst(strtolower($this->get('model_type', '', 'parameters')))
+        $form->set(
+            'model_registry_name',
+            ucfirst(strtolower($this->get('model_name', '', 'parameters'))) . ucfirst(
+                strtolower($this->get('model_type', '', 'parameters'))
+            )
         );
 
         $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));
@@ -174,7 +178,7 @@ class PagetypeconfigurationPlugin extends Plugin
 
         /** Parameters */
         $parameters = Services::Registry()->getArray('ResourcesSystemParameters');
-        $array2 = Services::Registry()->getArray(PARAMETERS_LITERAL);
+        $array2     = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         foreach ($array2 as $key => $value) {
             if (substr($key, 0, strlen(CONFIGURATION_LITERAL)) == CONFIGURATION_LITERAL) {
@@ -194,6 +198,7 @@ class PagetypeconfigurationPlugin extends Plugin
         $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', CUSTOMFIELDS_LITERAL));
 
         /** Build Fieldsets and Fields */
+
         return $form->execute($current_page);
     }
 }

@@ -96,10 +96,12 @@ Class DatabaseService
     {
         if ($property == 'model_registry') {
             $this->model_registry[$key] = $value;
+
             return $this->model_registry[$key];
         }
 
         $this->$key = $value;
+
         return $this->$key;
     }
 
@@ -120,22 +122,22 @@ Class DatabaseService
         }
 
         $this->options = array(
-            'driver' => preg_replace(
+            'driver'   => preg_replace(
                 '/[^A-Z0-9_\.-]/i',
                 '',
                 $this->get('db_type')
             ),
-            'host' => $this->get('db_host'),
-            'user' => $this->get('db_user'),
+            'host'     => $this->get('db_host'),
+            'user'     => $this->get('db_user'),
             'password' => $this->get('db_password'),
             'database' => $this->get('db'),
-            'prefix' => $this->get('db_prefix'),
-            'select' => true
+            'prefix'   => $this->get('db_prefix'),
+            'select'   => true
         );
 
         $this->name = $this->get('db_type');
 
-        $service_class_connection_namespace =  $this->get('service_class_connection_namespace');
+        $service_class_connection_namespace = $this->get('service_class_connection_namespace');
 
         if (class_exists($service_class_connection_namespace)) {
         } else {

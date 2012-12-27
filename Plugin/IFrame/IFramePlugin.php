@@ -39,7 +39,7 @@ class IFramePlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                $name = $field['name'];
+                $name       = $field['name'];
                 $fieldValue = $this->getFieldValue($field);
 
                 if ($fieldValue === false) {
@@ -55,7 +55,7 @@ class IFramePlugin extends Plugin
 
                         foreach ($matches[0] as $iframe) {
                             $element = 'IFrame' . $i++;
-                            $video = '<include:wrap name=IFrame value=' . $element . '/>';
+                            $video   = '<include:wrap name=IFrame value=' . $element . '/>';
                             Services::Registry()->set(TEMPLATE_LITERAL, $element, $iframe);
                             $fieldValue = str_replace($iframe, $video, $fieldValue);
                         }

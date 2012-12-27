@@ -31,7 +31,7 @@ class CreatePlugin extends Plugin
     {
         if ($this->row->catalog_type_id >= CATALOG_TYPE_BEGIN
             AND $this->row->catalog_type_id <= CATALOG_TYPE_END
-) {
+        ) {
         } else {
             return true;
         }
@@ -62,8 +62,8 @@ class CreatePlugin extends Plugin
      */
     protected function createExtension()
     {
-        $sourceFolder = 'Samples';
-        $catalog_type = CATALOG_TYPE_RESOURCE_LITERAL;
+        $sourceFolder    = 'Samples';
+        $catalog_type    = CATALOG_TYPE_RESOURCE_LITERAL;
         $catalog_type_id = $this->parameters['criteria_catalog_type_id'];
 
         /** Determine Source Folder for files to copy */
@@ -86,7 +86,7 @@ class CreatePlugin extends Plugin
 
         /** Traverse Folders */
         $replace = ucfirst(strtolower('Samples'));
-        $with = ucfirst(strtolower($this->row->title));
+        $with    = ucfirst(strtolower($this->row->title));
 
         $results = $this->traverseFolders($destinationFolder, $replace, $with, $catalog_type_id);
         if ($results === false) {
@@ -159,8 +159,10 @@ class CreatePlugin extends Plugin
                 return EXTENSIONS . '/' . $catalog_type . '/' . $extension_name;
             }
         } elseif (Services::Filesystem()->folderExists(EXTENSIONS . '/' . 'Views' . '/' . $catalog_type)) {
-            if (Services::Filesystem()->folderExists(EXTENSIONS . '/' . 'Views'
-                . '/' . $catalog_type . '/' . $extension_name)
+            if (Services::Filesystem()->folderExists(
+                EXTENSIONS . '/' . 'Views'
+                    . '/' . $catalog_type . '/' . $extension_name
+            )
             ) {
                 // error extension already exists
                 return false;
@@ -175,6 +177,7 @@ class CreatePlugin extends Plugin
      *
      * @param $source
      * @param $destination
+     *
      * @return bool
      */
     protected function copy($source, $destination)
@@ -200,8 +203,13 @@ class CreatePlugin extends Plugin
     protected function traverseFolders($destination, $replace, $with, $catalog_type_id)
     {
         /** retrieve all folder names for destination **/
-        $folders = Services::Filesystem()->folderFolders($destination, $filter = '',
-            $recurse = true, $fullpath = true, $exclude = array('.git'));
+        $folders = Services::Filesystem()->folderFolders(
+            $destination,
+            $filter = '',
+            $recurse = true,
+            $fullpath = true,
+            $exclude = array('.git')
+        );
 
         $folders[] = $destination;
 
@@ -223,7 +231,8 @@ class CreatePlugin extends Plugin
                     $this->renameFile(
                         $existingName = $replace . '.' . $file_extension,
                         $newName = $with . '.' . $file_extension,
-                        $folder);
+                        $folder
+                    );
 
                     $this->changeWords($folder, $newName, $replace, $with, $catalog_type_id);
 
@@ -249,7 +258,8 @@ class CreatePlugin extends Plugin
                 $this->renameFolder(
                     $existingName = $replace,
                     $newName = $with,
-                    $parentPath);
+                    $parentPath
+                );
             }
         }
     }
@@ -354,21 +364,25 @@ class CreatePlugin extends Plugin
     protected function cloneGridMenuItem()
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, 'Grid');
         $controller->setDataobject();
         $controller->connectDatabase();
 
         $model_registry = 'GridMenuitem';
 
-        $name_key = $controller->get('name_key');
-        $primary_key = $controller->get('primary_key', 'id', 'model_registry');
+        $name_key       = $controller->get('name_key');
+        $primary_key    = $controller->get('primary_key', 'id', 'model_registry');
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
 
-        $controller->model->query->where($controller->model->db->qn($primary_prefix)
-            . '.' . $controller->model->db->qn('extension_instance_id') . ' = 100 ');
-        $controller->model->query->where($controller->model->db->qn($primary_prefix)
-            . '.' . $controller->model->db->qn('lvl') . ' = 3 ');
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('extension_instance_id') . ' = 100 '
+        );
+        $controller->model->query->where(
+            $controller->model->db->qn($primary_prefix)
+                . '.' . $controller->model->db->qn('lvl') . ' = 3 '
+        );
 
         $item = $controller->getData(QUERY_OBJECT_ITEM);
 
@@ -402,24 +416,24 @@ class CreatePlugin extends Plugin
         $data->model_name = 'Grid';
 
         /** Overlay for this extension */
-        $data->id = null;
+        $data->id    = null;
         $data->title = $this->row->title;
         $data->alias = Services::Filter()->filter($this->row->title, 'alias', 0, $this->row->title);
 
         $data->start_publishing_datetime = null;
-        $data->stop_publishing_datetime = null;
-        $data->created_datetime = null;
-        $data->created_by = 0;
-        $data->modified_datetime = null;
-        $data->modified_by = 0;
-        $data->checked_out_datetime = null;
-        $data->checked_out_by = 0;
-        $data->catalog_id = 0;
-        $data->catalog_sef_request = null;
-        $data->version = 1;
-        $data->version_of_id = 0;
-        $data->status_prior_to_version = 0;
-        $data->protected = 0;
+        $data->stop_publishing_datetime  = null;
+        $data->created_datetime          = null;
+        $data->created_by                = 0;
+        $data->modified_datetime         = null;
+        $data->modified_by               = 0;
+        $data->checked_out_datetime      = null;
+        $data->checked_out_by            = 0;
+        $data->catalog_id                = 0;
+        $data->catalog_sef_request       = null;
+        $data->version                   = 1;
+        $data->version_of_id             = 0;
+        $data->status_prior_to_version   = 0;
+        $data->protected                 = 0;
 
         $data->customfields = array();
         Services::Registry()->sort($model_registry . CUSTOMFIELDS_LITERAL);
@@ -448,8 +462,8 @@ class CreatePlugin extends Plugin
 
                 } elseif ($key == 'model_name') {
                     $data->parameters[$key] = $this->row->title;
-                    $data->model_name = 'Grid';
-                    $data->model_type = CATALOG_TYPE_MENUITEM_LITERAL;
+                    $data->model_name       = 'Grid';
+                    $data->model_type       = CATALOG_TYPE_MENUITEM_LITERAL;
 
                 } else {
                     $data->parameters[$key] = $value;
@@ -472,9 +486,9 @@ class CreatePlugin extends Plugin
         }
 
         /** Create Menu Item  */
-        $controller = new CreateController();
+        $controller       = new CreateController();
         $controller->data = $data;
-        $data->id = $controller->execute();
+        $data->id         = $controller->execute();
 
         if ($data->id === false) {
             //install failed
@@ -484,15 +498,15 @@ class CreatePlugin extends Plugin
         /** Create Catalog for Menu Item (it will plugin more) */
         $controller = new CreateController();
 
-        $data2 = new \stdClass();
-        $data2->catalog_type_id = $this->row->catalog_type_id;
-        $data2->source_id = $this->id;
-        $data2->view_group_id = 1;
+        $data2                        = new \stdClass();
+        $data2->catalog_type_id       = $this->row->catalog_type_id;
+        $data2->source_id             = $this->id;
+        $data2->view_group_id         = 1;
         $data2->extension_instance_id = $this->id;
-        $data2->model_name = 'Catalog';
-        $data2->sef_request = $this->row->alias;
-        $data2->page_type = $this->row->page_type;
-        $data2->routable = 1;
+        $data2->model_name            = 'Catalog';
+        $data2->sef_request           = $this->row->alias;
+        $data2->page_type             = $this->row->page_type;
+        $data2->routable              = 1;
 
         $controller->data = $data2;
 
@@ -518,8 +532,10 @@ class CreatePlugin extends Plugin
                 return EXTENSIONS . '/' . $catalog_type . '/' . $extension_name;
             }
         } elseif (Services::Filesystem()->folderExists(EXTENSIONS . '/' . 'Views' . '/' . $catalog_type)) {
-            if (Services::Filesystem()->folderExists(EXTENSIONS . '/' . 'Views'
-                . '/' . $catalog_type . '/' . $extension_name)
+            if (Services::Filesystem()->folderExists(
+                EXTENSIONS . '/' . 'Views'
+                    . '/' . $catalog_type . '/' . $extension_name
+            )
             ) {
                 return EXTENSIONS . '/' . 'Views' . '/' . $catalog_type . '/' . $extension_name;
             }
@@ -544,6 +560,7 @@ class CreatePlugin extends Plugin
         }
 
         echo 'after delete';
+
         //@todo - test to see if the folder is there since a false is returned from j!
 //		if ($results === false) {
 //			//error copying source to destination

@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    function submitform(){
+    function submitform() {
         document.Grid.submit();
     }
 });

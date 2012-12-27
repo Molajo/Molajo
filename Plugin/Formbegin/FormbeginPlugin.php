@@ -50,7 +50,10 @@ class FormbeginPlugin extends Plugin
 
         $form_name = $this->get('form_name');
         if ($form_name == '' || $form_name === null) {
-            $form_name = ' name="' . Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'template_view_path_node') . '"';
+            $form_name = ' name="' . Services::Registry()->get(
+                ROUTE_PARAMETERS_LITERAL,
+                'template_view_path_node'
+            ) . '"';
         } else {
             $form_name = ' name="' . $form_name . '"';
         }
@@ -59,7 +62,10 @@ class FormbeginPlugin extends Plugin
         if ($form_id == '' || $form_id === null) {
             $temp = $this->get('form_name', '');
             if ($temp == '' || $temp === null) {
-                $form_id = ' id="' . Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'template_view_path_node') . '"';
+                $form_id = ' id="' . Services::Registry()->get(
+                    ROUTE_PARAMETERS_LITERAL,
+                    'template_view_path_node'
+                ) . '"';
             } else {
                 $form_id = ' id="' . $temp . '"';
             }
@@ -78,7 +84,7 @@ class FormbeginPlugin extends Plugin
         if ($temp == '' || $temp === null) {
             $formAttributes = '';
         } else {
-            $formAttributes =  implode(' ', $temp);
+            $formAttributes = implode(' ', $temp);
         }
 
         /** Build Query Results for View */

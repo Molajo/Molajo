@@ -79,6 +79,7 @@ class FormselectlistPlugin extends Plugin
     public function onAfterInclude()
     {
         Services::Registry()->delete(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters'));
+
         return $this;
     }
 }

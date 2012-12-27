@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    Niambie
+ * @package     Niambie
  * @subpackage  Views
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * @copyright   2013 Amy Stephen. All rights reserved.
+ * @license     MIT
  */
 
 defined('NIAMBIE') or die; ?>

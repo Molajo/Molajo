@@ -33,7 +33,7 @@ Class PermissionsService
     {
         /** Permission Actions: Authenticate, Create, Read, Update, Publish, Delete */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Actions', 1);
 
         $items = $controller->getData(QUERY_OBJECT_LIST);
@@ -41,14 +41,14 @@ Class PermissionsService
             throw new \RuntimeException ('Permissions: getActions Query failed.');
         }
 
-        $permission_actions = array();
+        $permission_actions    = array();
         $permission_action_ids = array();
 
-        $title = 'none';
-        $permission_actions[0] = $title;
+        $title                         = 'none';
+        $permission_actions[0]         = $title;
         $permission_action_ids[$title] = 0;
         foreach ($items as $item) {
-            $title = strtolower($item->title);
+            $title                         = strtolower($item->title);
             $permission_actions[$item->id] = $title;
             $permission_action_ids[$title] = $item->id;
         }
@@ -60,15 +60,15 @@ Class PermissionsService
             throw new \Exception('Permissions: Actions Table not found.');
         }
 
-        $tasks = array();
+        $tasks                   = array();
         $action_to_authorisation = array();
-        $action_to_controller = array();
+        $action_to_controller    = array();
 
         foreach ($actions->action as $t) {
-            $name = (string)$t['name'];
-            $tasks[] = $name;
+            $name                           = (string)$t['name'];
+            $tasks[]                        = $name;
             $action_to_authorisation[$name] = (string)$t['authorisation'];
-            $action_to_controller[$name] = (string)$t['controller'];
+            $action_to_controller[$name]    = (string)$t['controller'];
         }
 
         Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation', $action_to_authorisation);
@@ -91,7 +91,7 @@ Class PermissionsService
 
         $filters = array();
         foreach ($filtersFile->filter as $f) {
-            $name = (string)$f['name'];
+            $name      = (string)$f['name'];
             $filters[] = $name;
         }
         sort($filters);
@@ -114,7 +114,7 @@ Class PermissionsService
     public function verifySiteApplication()
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Siteapplications', 1);
 
         $controller->model->query->select($controller->model->db->qn('a.application_id'));
@@ -262,14 +262,15 @@ Class PermissionsService
         if ($action == 'login') {
             return $this->verifyLogin('login', $catalog_id);
         }
+
         //@todo
         return true;
 
 //@todo hash store results for later reuse
-        $authorisationArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
+        $authorisationArray   = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
         $authorisationIdArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation_id');
 
-        $action = $authorisationArray[$action];
+        $action    = $authorisationArray[$action];
         $action_id = $authorisationIdArray[$action];
 
         if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
@@ -283,7 +284,7 @@ Class PermissionsService
         $action_id = 3;
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Grouppermissions', 1);
 
         $controller->model->query->select(
@@ -314,10 +315,11 @@ Class PermissionsService
      * Example usage:
      * Services::Permissions()->verifyLogin('login', $catalog_id);
      *
-     * @param   $key
-     * @param   $action
+     * @param         $key
+     * @param         $action
      *
      * @param   null  $catalog
+     *
      * @return  bool
      */
     public function verifyLogin($user_id)
@@ -327,7 +329,7 @@ Class PermissionsService
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Userapplications', 1);
 
         $controller->model->query->where('a.application_id = ' . (int)APPLICATION_ID);
@@ -442,7 +444,7 @@ Class PermissionsService
      */
     public function setHTMLFilter()
     {
-        $groups = Services::Registry()->get(CONFIGURATION_LITERAL, 'user_disable_filter_for_groups');
+        $groups     = Services::Registry()->get(CONFIGURATION_LITERAL, 'user_disable_filter_for_groups');
         $groupArray = explode(',', $groups);
         $userGroups = Services::Registry()->get(USER_LITERAL, 'groups');
 

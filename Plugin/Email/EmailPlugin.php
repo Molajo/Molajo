@@ -36,7 +36,7 @@ class EmailPlugin extends Plugin
 
             foreach ($fields as $field) {
 
-                $name = $field['name'];
+                $name     = $field['name'];
                 $new_name = $name . '_' . 'obfuscated';
 
                 /** Retrieves the actual field value from the 'normal' or special field */

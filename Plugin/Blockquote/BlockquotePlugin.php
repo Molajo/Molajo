@@ -36,7 +36,7 @@ class BlockquotePlugin extends Plugin
             foreach ($fields as $field) {
 
                 /** retrieve each text field */
-                $name = $field['name'];
+                $name       = $field['name'];
                 $fieldValue = $this->getFieldValue($field);
 
                 if ($fieldValue === false) {
@@ -72,7 +72,7 @@ class BlockquotePlugin extends Plugin
         preg_match_all($pattern, $text, $matches);
 
         $replaceThis = array();
-        $withThis = array();
+        $withThis    = array();
 
         if (count($matches) == 0) {
 
@@ -90,9 +90,9 @@ class BlockquotePlugin extends Plugin
                     $cite = '';
                     if (substr($blockquote, 0, 6) == '{cite:') {
                         $blockquote = substr($blockquote, 6, strlen($blockquote) - 6);
-                        $cite = substr($blockquote, 0, strpos($blockquote, '}'));
+                        $cite       = substr($blockquote, 0, strpos($blockquote, '}'));
                         $blockquote = substr($blockquote, strlen($cite) + 1, 9999);
-                        $cite = '<cite>' . $cite . '</cite>';
+                        $cite       = '<cite>' . $cite . '</cite>';
                     }
                     $withThis[] = '<blockquote>' . $blockquote . $cite . '</blockquote>';
                 }

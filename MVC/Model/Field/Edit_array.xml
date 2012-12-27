@@ -1,1 +1,2 @@
-<field name="edit_array" type="char" null="0" default="{{Editor,main,Editmain}}{{Parameters,parameters,Editparameters}}{{Permissions,permissions,Permissions}}{{Views,views,Editviews}}"/>
+<field name="edit_array" type="char" null="0"
+       default="{{Editor,main,Editmain}}{{Parameters,parameters,Editparameters}}{{Permissions,permissions,Permissions}}{{Views,views,Editviews}}"/>

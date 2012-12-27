@@ -46,10 +46,11 @@ class AjaxPlugin extends Plugin
         echo '</pre>';
         die;
 
-        if ((int) Services::Registry()->get(CLIENT_LITERAL, 'Ajax') == 0) {
+        if ((int)Services::Registry()->get(CLIENT_LITERAL, 'Ajax') == 0) {
             return true;
         }
-/**
+
+        /**
 
         Services::Registry()->set(PARAMETERS_LITERAL, 'template_view_id', 1342);
 
@@ -59,7 +60,8 @@ class AjaxPlugin extends Plugin
 
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_sequence', 'Ajax_sequence');
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', 'Ajax_final');
-*/
+         */
+
         return true;
     }
 }

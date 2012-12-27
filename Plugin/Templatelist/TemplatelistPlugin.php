@@ -52,7 +52,7 @@ class TemplatelistPlugin extends Plugin
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');

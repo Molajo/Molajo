@@ -86,7 +86,7 @@ class Model
      */
     public function __construct()
     {
-        $this->parameters = array();
+        $this->parameters    = array();
         $this->query_results = array();
     }
 
@@ -203,7 +203,7 @@ class Model
     /**
      * insertLanguageString
      *
-     * @todo move this into normal CRUD operations
+     * @todo    move this into normal CRUD operations
      *
      * @param   array $translated
      *
@@ -357,6 +357,7 @@ class Model
                 $this->db->execute();
             }
         }
+
         return true;
     }
 }

@@ -41,10 +41,10 @@ class GravatarPlugin extends Plugin
         if (is_array($fields) && count($fields) > 0) {
 
             if ($this->get('gravatar', 1, 'parameters') == 1) {
-                $size = $this->get('gravatar_size', 80, 'parameters');
-                $type = $this->get('gravatar_type', 'mm', 'parameters');
+                $size   = $this->get('gravatar_size', 80, 'parameters');
+                $type   = $this->get('gravatar_type', 'mm', 'parameters');
                 $rating = $this->get('gravatar_rating', 'pg', 'parameters');
-                $image = $this->get('gravatar_image', 0, 'parameters');
+                $image  = $this->get('gravatar_image', 0, 'parameters');
 
             } else {
                 return true;
@@ -53,7 +53,7 @@ class GravatarPlugin extends Plugin
             /** @noinspection PhpWrongForeachArgumentTypeInspection */
             foreach ($fields as $field) {
 
-                $name = $field['name'];
+                $name     = $field['name'];
                 $new_name = $name . '_' . 'gravatar';
 
                 /** Retrieves the actual field value from the 'normal' or special field */

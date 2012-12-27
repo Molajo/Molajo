@@ -26,17 +26,17 @@ class PagetypelistPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-		if (strtolower($this->get('page_type', '', 'parameters')) == QUERY_OBJECT_LIST) {
-		} else {
-			return true;
-		}
+        if (strtolower($this->get('page_type', '', 'parameters')) == QUERY_OBJECT_LIST) {
+        } else {
+            return true;
+        }
 
         $resource_table_registry = ucfirst(strtolower($this->get('model_name', '', 'parameters')))
             . ucfirst(strtolower($this->get('model_type', '', 'parameters')));
 
         /** Get Actual Data for matching to Fields */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', '', 'parameters'),
             $this->get('model_name', '', 'parameters'),
@@ -46,16 +46,16 @@ class PagetypelistPlugin extends Plugin
         $controller->set('get_customfields', 2, 'model_registry');
         $controller->set('use_special_joins', 1, 'model_registry');
         $controller->set('check_view_level_access', 1, 'model_registry');
-/**
+        /**
         $controller->set('model_offset', $this->get('model_offset', 0), 'model_registry');
         $controller->set('model_count', $this->get('model_count', 5), 'model_registry');
         $controller->set('use_pagination', $this->get('model_use_pagination', 1));
-*/
+         */
         $temp_query_results = $controller->getData(QUERY_OBJECT_LIST);
-/**
+        /**
         $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
         $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
-*/
+         */
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
         $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
@@ -83,7 +83,7 @@ class PagetypelistPlugin extends Plugin
             return true;
         }
 
-        if ((int) $this->get('total_rows', 0, 'parameters') == 0
+        if ((int)$this->get('total_rows', 0, 'parameters') == 0
             || $this->row === false
             || $this->row == null
         ) {
@@ -119,9 +119,11 @@ class PagetypelistPlugin extends Plugin
 
         /** grid_row_class */
         $value = ' class="' .
-            trim(trim($this->row->first_row)
+            trim(
+                trim($this->row->first_row)
                     . ' ' . trim($this->row->even_or_odd_row)
-                    . ' ' . trim($this->row->last_row))
+                    . ' ' . trim($this->row->last_row)
+            )
             . '"';
 
         $this->saveField(null, 'grid_row_class', $value);

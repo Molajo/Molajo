@@ -13,5 +13,8 @@ defined("MOLAJO") or die; ?>
     <td class="required"><?php $this->row->required; ?></td>
     <td class="datalist"><?php echo $this->row->datalist; ?></td>
     <td class="hidden"><?php echo $this->row->hidden; ?></td>
-    <td><a href="#" class="small button alert radius"><?php echo Services::Language()->translate('Delete', 'Delete'); ?></a></td>
+    <td><a href="#" class="small button alert radius"><?php echo Services::Language()->translate(
+        'Delete',
+        'Delete'
+    ); ?></a></td>
 </tr>

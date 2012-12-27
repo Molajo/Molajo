@@ -35,7 +35,7 @@ class CatalogPlugin extends Plugin
         }
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
 
         $controller->set('get_customfields', 0, 'model_registry');
@@ -73,14 +73,14 @@ class CatalogPlugin extends Plugin
                 . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' = ' . CATALOG_TYPE_MENUITEM
                 . ' OR ' .
-            $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
+                $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('catalog_type_id')
                 . ' > ' . CATALOG_TYPE_TAG
         );
         $controller->model->query->where(
             $controller->model->db->qn($controller->get('primary_prefix', 'a', 'model_registry'))
                 . '.' . $controller->model->db->qn('application_id')
-                . ' = ' . (int) APPLICATION_ID
+                . ' = ' . (int)APPLICATION_ID
         );
 
         $controller->model->query->order(
@@ -96,7 +96,7 @@ class CatalogPlugin extends Plugin
         $catalogArray = array();
 
         $application_home_catalog_id =
-            (int) Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id');
+            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id');
 
         if ($application_home_catalog_id === 0) {
         } else {
@@ -105,7 +105,7 @@ class CatalogPlugin extends Plugin
 
                 foreach ($temp_query_results as $item) {
                     if ($item->id == $application_home_catalog_id) {
-                        $item->value = trim($item->value . ' ' . Services::Language()->translate('Home'));
+                        $item->value    = trim($item->value . ' ' . Services::Language()->translate('Home'));
                         $catalogArray[] = $item;
                     } elseif (trim($item->value) == '' || $item->value === null) {
                         unset ($item);
@@ -130,7 +130,7 @@ class CatalogPlugin extends Plugin
     public function onAfterCreate()
     {
         $id = $this->row->id;
-        if ((int) $id == 0) {
+        if ((int)$id == 0) {
             return false;
         }
 
@@ -161,16 +161,20 @@ class CatalogPlugin extends Plugin
     public function onAfterUpdate()
     {
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_user_update_activity', 1) == 1) {
-            $results = $this->logUserActivity($this->row->id,
-                Services::Registry()->get('Actions', ACTION_DELETE));
+            $results = $this->logUserActivity(
+                $this->row->id,
+                Services::Registry()->get('Actions', ACTION_DELETE)
+            );
             if ($results === false) {
                 return false;
             }
         }
 
         if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_catalog_update_activity', 1) == 1) {
-            $results = $this->logCatalogActivity($this->row->id,
-                Services::Registry()->get('Actions', ACTION_DELETE));
+            $results = $this->logCatalogActivity(
+                $this->row->id,
+                Services::Registry()->get('Actions', ACTION_DELETE)
+            );
             if ($results === false) {
                 return false;
             }
@@ -203,16 +207,16 @@ class CatalogPlugin extends Plugin
     {
         /** @todo - fix empty setModelRegistry */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry('x', 'y', 1);
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_categories');
-        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->row->id;
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int)$this->row->id;
         $controller->model->db->setQuery($sql);
         $controller->model->db->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->db->qn('#__catalog_activity');
-        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int) $this->row->id;
+        $sql .= ' WHERE ' . $controller->model->db->qn('catalog_id') . ' = ' . (int)$this->row->id;
         $controller->model->db->setQuery($sql);
         $controller->model->db->execute();
 
@@ -248,13 +252,13 @@ class CatalogPlugin extends Plugin
      */
     public function logUserActivity($id, $action_id)
     {
-        $data = new \stdClass();
-        $data->model_name = 'UserActivity';
+        $data              = new \stdClass();
+        $data->model_name  = 'UserActivity';
         $data->model_table = DATA_SOURCE_LITERAL;
-        $data->catalog_id = $id;
-        $data->action_id = $action_id;
+        $data->catalog_id  = $id;
+        $data->action_id   = $action_id;
 
-        $controller = new CreateController();
+        $controller       = new CreateController();
         $controller->data = $data;
         $user_activity_id = $controller->execute();
         if ($user_activity_id === false) {
@@ -273,14 +277,14 @@ class CatalogPlugin extends Plugin
      */
     public function logCatalogActivity($id, $action_id)
     {
-        $data = new \stdClass();
-        $data->model_name = 'CatalogActivity';
+        $data              = new \stdClass();
+        $data->model_name  = 'CatalogActivity';
         $data->model_table = DATA_SOURCE_LITERAL;
-        $data->catalog_id = $id;
-        $data->action_id = $action_id;
+        $data->catalog_id  = $id;
+        $data->action_id   = $action_id;
 
-        $controller = new CreateController();
-        $controller->data = $data;
+        $controller          = new CreateController();
+        $controller->data    = $data;
         $catalog_activity_id = $controller->execute();
         if ($catalog_activity_id === false) {
             //install failed

@@ -84,10 +84,10 @@ Class ContentHelper
      */
     public function initialise($parameters)
     {
-        $this->parameters = $parameters;
+        $this->parameters      = $parameters;
         $this->extensionHelper = new ExtensionHelper();
-        $this->themeHelper = new ThemeHelper();
-        $this->viewHelper = new ViewHelper();
+        $this->themeHelper     = new ThemeHelper();
+        $this->viewHelper      = new ViewHelper();
 
         return $this;
     }
@@ -110,6 +110,7 @@ Class ContentHelper
         }
 
         $this->parameters[$key] = $default;
+
         return $this->parameters[$key];
     }
 
@@ -127,6 +128,7 @@ Class ContentHelper
         $key = strtolower($key);
 
         $this->parameters[$key] = $value;
+
         return $this->parameters[$key];
     }
 
@@ -138,7 +140,7 @@ Class ContentHelper
      */
     public function getRouteItem()
     {
-        $id = (int) $this->get('catalog_source_id');
+        $id         = (int)$this->get('catalog_source_id');
         $model_type = $this->get('catalog_model_type');
         $model_name = $this->get('catalog_model_name');
 
@@ -148,10 +150,10 @@ Class ContentHelper
         }
 
         if (isset($item->extension_instance_id)) {
-            $extension_instance_id = (int)$item->extension_instance_id;
+            $extension_instance_id              = (int)$item->extension_instance_id;
             $extension_instance_catalog_type_id = (int)$item->catalog_catalog_type_id;
         } else {
-            $extension_instance_id = (int)$item->catalog_extension_instance_id;
+            $extension_instance_id              = (int)$item->catalog_extension_instance_id;
             $extension_instance_catalog_type_id = (int)$item->catalog_catalog_type_id;
         }
 
@@ -198,8 +200,10 @@ Class ContentHelper
             }
         }
 
-        $parent_menu_id = Services::Registry()->get('ResourcesSystemParameters',
-            $page_type_namespace . '_parent_menu_id');
+        $parent_menu_id = Services::Registry()->get(
+            'ResourcesSystemParameters',
+            $page_type_namespace . '_parent_menu_id'
+        );
 
         Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, array($item));
 
@@ -213,7 +217,7 @@ Class ContentHelper
         ksort($parameters);
 
         $this->property_array = array();
-        foreach ($parameters as $key=>$value) {
+        foreach ($parameters as $key => $value) {
             $this->property_array[] = $key;
         }
         $property_array = $this->property_array;
@@ -229,7 +233,7 @@ Class ContentHelper
      */
     public function getRouteList()
     {
-        $id = (int) $this->get('catalog_id');
+        $id         = (int)$this->get('catalog_id');
         $model_type = $this->get('catalog_model_type');
         $model_name = $this->get('catalog_model_name');
 
@@ -284,7 +288,7 @@ Class ContentHelper
      */
     public function getRouteMenuitem()
     {
-        $id = (int) $this->get('catalog_source_id');
+        $id         = (int)$this->get('catalog_source_id');
         $model_type = CATALOG_TYPE_MENUITEM_LITERAL;
         $model_name = $this->get('catalog_page_type');
 
@@ -338,7 +342,8 @@ Class ContentHelper
 
         $this->set('extension_name_path_node', $this->get('catalog_model_name'));
 
-        $this->setParameters(strtolower(CATALOG_TYPE_MENUITEM_LITERAL),
+        $this->setParameters(
+            strtolower(CATALOG_TYPE_MENUITEM_LITERAL),
             $registry . PARAMETERS_LITERAL,
             $registry . METADATA_LITERAL,
             null,
@@ -351,7 +356,7 @@ Class ContentHelper
 
         /** Retrieve Model Registry for Resource */
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('catalog_model_type'),
             $this->get('catalog_model_name'),
@@ -386,7 +391,7 @@ Class ContentHelper
         );
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 
         $controller->set('primary_key_value', (int)$id, 'model_registry');
@@ -410,9 +415,9 @@ Class ContentHelper
      *
      * @param   string  $page_type_namespace (ex. item, list, menuitem)
      * @param   string  $parameter_namespace (ex. $item->model_registry_name . PARAMETERS_LITERAL)
-     * @param   string  $metadata_namespace (ex. $item->model_registry_name . METADATA_LITERAL)
-     * @param   string  $resource_namespace for extension (ex. ResourcesSystem)
-     * @param   string  $resource_or_system for extension (values 'resource' or 'system')
+     * @param   string  $metadata_namespace  (ex. $item->model_registry_name . METADATA_LITERAL)
+     * @param   string  $resource_namespace  for extension (ex. ResourcesSystem)
+     * @param   string  $resource_or_system  for extension (values 'resource' or 'system')
      *
      * @return  boolean
      * @since   1.0
@@ -446,8 +451,10 @@ Class ContentHelper
         if ($resource_namespace === null) {
         } else {
 
-            $parameter_set = Services::Registry()->get($resource_namespace . PARAMETERS_LITERAL,
-                $page_type_namespace . '*');
+            $parameter_set = Services::Registry()->get(
+                $resource_namespace . PARAMETERS_LITERAL,
+                $page_type_namespace . '*'
+            );
 
             if (is_array($parameter_set) && count($parameter_set) > 0) {
                 $this->processParameterSet($parameter_set, $page_type_namespace);
@@ -471,7 +478,7 @@ Class ContentHelper
         }
 
         /** Merge in the rest */
-        $random = 'r' . mt_rand ( 10000 , 60000000 );
+        $random = 'r' . mt_rand(10000, 60000000);
         Services::Registry()->createRegistry($random);
         Services::Registry()->loadArray($random, $this->parameters);
         Services::Registry()->merge($parameter_namespace, $random);
@@ -482,25 +489,31 @@ Class ContentHelper
         $this->viewHelper->get((int)$this->get('template_view_id'), CATALOG_TYPE_TEMPLATE_VIEW_LITERAL, $random);
         $this->viewHelper->get((int)$this->get('wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL, $random);
 
-        $this->set('extension_path',
+        $this->set(
+            'extension_path',
             $this->extensionHelper->getPath(
                 $resource_or_system,
                 $this->get('extension_name_path_node'),
-                $random)
+                $random
+            )
         );
 
-        $this->set('extension_path_url',
+        $this->set(
+            'extension_path_url',
             $this->extensionHelper->getPathURL(
                 $resource_or_system,
                 $this->get('extension_name_path_node'),
-                $random)
+                $random
+            )
         );
 
-        $this->set('extension_namespace',
+        $this->set(
+            'extension_namespace',
             $this->extensionHelper->getNamespace(
                 $resource_or_system,
                 $this->get('extension_name_path_node'),
-                $random)
+                $random
+            )
         );
 
         /** Metadata defaulting */
@@ -580,7 +593,7 @@ Class ContentHelper
     public function getResourceCatalogType($id = 0)
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'CatalogTypes', 1);
 
         $controller->set('process_plugins', 0, 'model_registry');
@@ -620,7 +633,7 @@ Class ContentHelper
     public function getResourceContentParameters($model_type = 'Resource', $model_name)
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 0);
 
         $controller->set('process_plugins', 0, 'model_registry');
@@ -647,7 +660,7 @@ Class ContentHelper
     public function getResourceExtensionParameters($id = 0)
     {
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(SYSTEM_LITERAL, 'Resources', 1);
 
         $controller->set('primary_key_value', (int)$id, 'model_registry');
@@ -679,7 +692,7 @@ Class ContentHelper
         $page_type = ucfirst(strtolower($page_type));
 
         $controllerClass = CONTROLLER_CLASS;
-        $controller = new $controllerClass();
+        $controller      = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, $page_type, 1);
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');

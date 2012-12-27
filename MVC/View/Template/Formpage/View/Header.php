@@ -17,11 +17,15 @@ defined("MOLAJO") or die; ?>
     <section class="configuration-header-section">
         <ul class="inline-list right">
             <li><a href="#"><strong><?php echo Services::Language()->translate('Reset', 'Reset'); ?></strong></a></li>
-            <li><a href="#" class="button success radius"><?php echo Services::Language()->translate('Save', 'Save'); ?></a></li>
+            <li><a href="#" class="button success radius"><?php echo Services::Language()->translate(
+                'Save',
+                'Save'
+            ); ?></a></li>
         </ul>
     </section>
 </header>
 <?php if ($this->row->page_subtitle_first_row == 1) {
-} else { ?>
+} else {
+    ?>
 <div class="configuration-body">
 <?php }

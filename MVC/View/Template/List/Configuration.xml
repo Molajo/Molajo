@@ -9,7 +9,7 @@
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>VIEW_TEMPLATE_LIST_DESCRIPTION</description>
-    <model name="List"  process_plugins="1" extends="TemplateviewsSystem">
+    <model name="List" process_plugins="1" extends="TemplateviewsSystem">
         <customfields>
             <customfield name="parameters">
                 <include name="ParametersListModel"/>
