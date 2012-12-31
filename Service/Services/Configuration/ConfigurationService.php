@@ -216,6 +216,7 @@ Class ConfigurationService
     protected $parameter_properties_array = array(
         'calling_class',
         'calling_method',
+
         'valid_dataobject_types',
         'valid_dataobject_attributes',
         'valid_model_types',
@@ -385,11 +386,11 @@ Class ConfigurationService
         }
 
         $path_and_file = $this->locateFile($model_type, $model_name, $parameter_registry);
+
         if ($path_and_file === false) {
             throw new \Exception
             ('Configuration: Cannot find XML file for Model Type: '
                 . $model_type . ' Model Name: ' . $model_name . ' Located at ' . $path_and_file);
-
         }
 
         $xml_string = $this->readXMLFile($path_and_file);
@@ -397,6 +398,7 @@ Class ConfigurationService
         $results = $this->getIncludeCode($xml_string, $model_name);
 
         $xml = simplexml_load_string($results);
+
         if ($xml === false) {
             throw new \Exception
             ('Configuration: getModel cannot process XML file for Model Type: '
@@ -694,31 +696,38 @@ Class ConfigurationService
 
         $itemArray = array();
 
-        foreach ($set->$singular as $item) {
+        if (count($set->$singular) > 0) {
 
-            $attributes = get_object_vars($item);
+            foreach ($set->$singular as $item) {
 
-            $itemAttributes      = ($attributes["@attributes"]);
-            $itemAttributesArray = array();
+                $attributes = get_object_vars($item);
 
-            foreach ($itemAttributes as $key => $value) {
+                $itemAttributes      = ($attributes["@attributes"]);
+                $itemAttributesArray = array();
 
-                if (in_array($key, $valid_attributes)) {
+                if (count($itemAttributes) > 0) {
+                    foreach ($itemAttributes as $key => $value) {
+
+                        if (in_array($key, $valid_attributes)) {
+                        } else {
+                            throw new \Exception
+                            ('Configuration: setElementsRegistry encountered Invalid Model Attribute '
+                                . $key . ' for ' . $model_registry);
+                        }
+
+                        $itemAttributesArray[$key] = $value;
+                    }
+                }
+
+                if ($plural == 'plugins') {
+                    if (count($itemAttributesArray) > 0) {
+                        foreach ($itemAttributesArray as $plugin) {
+                            $itemArray[] = $plugin;
+                        }
+                    }
                 } else {
-                    throw new \Exception
-                    ('Configuration: setElementsRegistry encountered Invalid Model Attribute '
-                        . $key . ' for ' . $model_registry);
+                    $itemArray[] = $itemAttributesArray;
                 }
-
-                $itemAttributesArray[$key] = $value;
-            }
-
-            if ($plural == 'plugins') {
-                foreach ($itemAttributesArray as $plugin) {
-                    $itemArray[] = $plugin;
-                }
-            } else {
-                $itemArray[] = $itemAttributesArray;
             }
         }
 
@@ -758,6 +767,7 @@ Class ConfigurationService
 
                     $valuesArray[] = $temp;
                 }
+
                 Services::Registry()->set($model_registry, 'values', $valuesArray);
             }
 
@@ -790,7 +800,7 @@ Class ConfigurationService
             $controller->getModelRegistry('Datasource', $joinModel, 0);
         }
 
-        $fields = Services::Registry()->get($joinRegistry, FIELDS_LITERAL);
+        $fields = Services::Registry()->get($joinRegistry, 'Fields');
 
         $table = Services::Registry()->get($joinRegistry, 'table_name');
 
@@ -906,33 +916,39 @@ Class ConfigurationService
         $fieldArray = array();
         $fieldNames = array();
 
-        foreach ($customfield as $key1 => $value1) {
+        if (count($customfield) > 0) {
 
-            $attributes           = get_object_vars($value1);
-            $fieldAttributes      = ($attributes["@attributes"]);
-            $fieldAttributesArray = array();
+            foreach ($customfield as $key1 => $value1) {
 
-            foreach ($fieldAttributes as $key2 => $value2) {
+                $attributes           = get_object_vars($value1);
+                $fieldAttributes      = ($attributes["@attributes"]);
+                $fieldAttributesArray = array();
 
-                if ($key2 == 'fieldset') {
-                } elseif (in_array($key2, $this->valid_field_attributes)) {
-                } else {
-                    throw new \Exception ('Configuration: getCustomFieldsSpecificGroup Invalid Field attribute '
-                        . $key2 . ':' . $value2 . ' for ' . $model_registry);
+                if (count($fieldAttributes) > 0) {
+                    foreach ($fieldAttributes as $key2 => $value2) {
+
+                        if ($key2 == 'fieldset') {
+                        } elseif (in_array($key2, $this->valid_field_attributes)) {
+                        } else {
+                            throw new \Exception ('Configuration: getCustomFieldsSpecificGroup Invalid Field attribute '
+                                . $key2 . ':' . $value2 . ' for ' . $model_registry);
+                        }
+
+                        if ($key2 == 'name') {
+                        } else {
+                            $fieldNames[] = $value2;
+                        }
+
+                        $fieldAttributesArray[$key2] = $value2;
+                    }
                 }
 
-                if ($key2 == 'name') {
-                } else {
-                    $fieldNames[] = $value2;
-                }
+                $fieldAttributesArray['field_inherited'] = 0;
 
-                $fieldAttributesArray[$key2] = $value2;
+                $fieldArray[] = $fieldAttributesArray;
             }
-
-            $fieldAttributesArray['field_inherited'] = 0;
-
-            $fieldArray[] = $fieldAttributesArray;
         }
+
 
         if (is_array($fieldArray) && count($fieldArray) > 0) {
         } else {
@@ -1005,27 +1021,31 @@ Class ConfigurationService
     protected function inheritDefinition($model_registry, $xml)
     {
         $extends = false;
-        foreach ($xml->attributes() as $key => $value) {
-            if ($key == 'extends') {
-                $extends = (string)$value;
+        if (count($xml->attributes()) > 0) {
+            foreach ($xml->attributes() as $key => $value) {
+                if ($key == 'extends') {
+                    $extends = (string)$value;
+                }
             }
         }
         if ($extends === false) {
             return;
         }
 
-        $modelArray = Services::Registry()->get(FIELDS_LITERAL, 'Modeltypes');
+        $modelArray = $this->valid_model_types;
 
         $extends_model_name = '';
         $extends_model_type = '';
-        foreach ($modelArray as $modeltype) {
-            if (ucfirst(
-                strtolower(substr($extends, strlen($extends) - strlen($modeltype), strlen($modeltype)))
-            ) == $modeltype
-            ) {
-                $extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen($modeltype))));
-                $extends_model_type = $modeltype;
-                break;
+        if (count($modelArray) > 0) {
+            foreach ($modelArray as $modeltype) {
+                if (ucfirst(
+                    strtolower(substr($extends, strlen($extends) - strlen($modeltype), strlen($modeltype)))
+                ) == $modeltype
+                ) {
+                    $extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen($modeltype))));
+                    $extends_model_type = $modeltype;
+                    break;
+                }
             }
         }
 
@@ -1090,6 +1110,24 @@ Class ConfigurationService
             }
             throw new \Exception ('Configuration: locateFile() Cannot find Model Type '
                 . $model_type . ' Model Name ' . $model_name);
+        }
+
+        if ($model_type == 'Services') {
+            $path = PLATFORM_FOLDER . '/Service/' . $model_type . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            } else {
+                $path = false;
+            }
+        }
+
+        if ($model_type == 'Service') {
+            $path = PLATFORM_FOLDER . '/Service/Services/' . $model_type . '/' . $model_name . '.xml';
+            if (file_exists($path)) {
+                return $path;
+            } else {
+                $path = false;
+            }
         }
 
         if ($model_type == 'Resource') {
@@ -1161,18 +1199,6 @@ Class ConfigurationService
 
         if ($model_type == 'Resource') {
             $path = EXTENSIONS . '/Resource/' . $model_name . '/Configuration.xml';
-            if (file_exists($path)) {
-                return $path;
-            } else {
-                $path = false;
-            }
-        }
-
-        $modeltypeArray = array('Service');
-
-        if (in_array($model_type, $modeltypeArray)) {
-
-            $path = PLATFORM_FOLDER . '/' . $model_type . '/' . $model_name . '.xml';
             if (file_exists($path)) {
                 return $path;
             } else {

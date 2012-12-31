@@ -32,7 +32,7 @@ class CreateModel extends Model
         /** Prepare Data from Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
             $model_registry,
-            CUSTOMFIELDGROUPS_LITERAL,
+            'customfieldgroups',
             array()
         );
 
@@ -76,7 +76,7 @@ class CreateModel extends Model
         }
 
         /** Build Insert Statement */
-        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
+        $fields = Services::Registry()->get($model_registry, 'Fields');
 
         $insertSQL = 'INSERT INTO ' . $this->db->qn($table_name) . ' ( ';
         $valuesSQL = ' VALUES ( ';

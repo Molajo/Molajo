@@ -11,16 +11,9 @@
     <description>SERVICE_EVENT_DESCRIPTION</description>
     <model
             name="Event"
-            criteria_catalog_type_id="4000"
-            criteria_extension_instance_id="4100"
-            extends="ServicesSystem">
-
-        <customfields>
-            <customfield name="customfields">
-                <field name="startup_event_list" type="text" null="1" default=""/>
-                <field name="startup_plugin_name" type="text" null="1" default=""/>
-                <field name="startup_plugin_class" type="text" null="1" default=""/>
-            </customfield>
-        </customfields>
+            startup="1"
+            startup_method="initialise"
+            class="Molajo\Service\Services\Event"
+            keep_instance="0">
     </model>
 </extension>

@@ -11,8 +11,9 @@
     <description>SERVICE_APPLICATION_DESCRIPTION</description>
     <model
             name="Application"
-            startup="getInstance"
+            startup="1"
+            startup_method=""
             class="Molajo\Service\Services\Application"
-            static="1">
+            keep_instance="1">
     </model>
 </extension>

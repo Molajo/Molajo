@@ -13,6 +13,6 @@
             name="Asset"
             startup="getInstance"
             class="Molajo\Service\Services\"
-            static="1">
+            keep_instance="1">
     </model>
 </extension>

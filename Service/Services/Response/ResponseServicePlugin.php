@@ -1,12 +1,12 @@
 <?php
 /**
- * Application Service Plugin
+ * Response Service Plugin
  *
  * @package      Niambie
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Service\Services\Application;
+namespace Molajo\Service\Services\Response;
 
 use Molajo\Service\Services;
 use Molajo\Service\ServicesPlugin;
@@ -14,14 +14,14 @@ use Molajo\Service\ServicesPlugin;
 defined('NIAMBIE') or die;
 
 /**
- * Application Service Plugin
+ * Response Service Plugin
  *
  * @author       Amy Stephen
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class ApplicationServicePlugin extends ServicesPlugin
+Class ResponseServicePlugin extends ServicesPlugin
 {
     /**
      * on Before Startup Event

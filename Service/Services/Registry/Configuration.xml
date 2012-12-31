@@ -13,6 +13,6 @@
             name="Registry"
             startup="getInstance"
             class="Molajo\Service\Services\Registry"
-            static="1">
+            keep_instance="1">
     </model>
 </extension>

@@ -184,12 +184,12 @@ Class ContentHelper
         $this->setParameters(
             $page_type_namespace,
             $item->model_registry_name . PARAMETERS_LITERAL,
-            $item->model_registry_name . METADATA_LITERAL,
+            $item->model_registry_name . 'Metadata',
             'ResourcesSystem',
             $resource_or_system
         );
 
-        $customfields = Services::Registry()->get($item->model_registry_name . CUSTOMFIELDS_LITERAL);
+        $customfields = Services::Registry()->get($item->model_registry_name . 'Customfields');
 
         if (is_array($customfields) && count($customfields) > 0) {
             foreach ($customfields as $key => $value) {
@@ -205,7 +205,7 @@ Class ContentHelper
             $page_type_namespace . '_parent_menu_id'
         );
 
-        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, array($item));
+        Services::Registry()->set('Primary', 'Data', array($item));
 
         $this->set('parent_menu_id', $parent_menu_id);
 
@@ -266,7 +266,7 @@ Class ContentHelper
         $this->setParameters(
             QUERY_OBJECT_LIST,
             $item->model_registry_name . PARAMETERS_LITERAL,
-            $item->model_registry_name . METADATA_LITERAL,
+            $item->model_registry_name . 'Metadata',
             null,
             $resource_or_system
         );
@@ -327,7 +327,7 @@ Class ContentHelper
             }
         }
 
-        $metadata = Services::Registry()->get($registry . METADATA_LITERAL);
+        $metadata = Services::Registry()->get($registry . 'Metadata');
         if (count($metadata) > 0) {
             foreach ($metadata as $key => $value) {
                 $this->metadata_service->set($key, array($value));
@@ -345,7 +345,7 @@ Class ContentHelper
         $this->setParameters(
             strtolower(CATALOG_TYPE_MENUITEM_LITERAL),
             $registry . PARAMETERS_LITERAL,
-            $registry . METADATA_LITERAL,
+            $registry . 'Metadata',
             null,
             $resource_or_system
         );
@@ -383,10 +383,10 @@ Class ContentHelper
      */
     public function getData($id = 0, $model_type = DATA_SOURCE_LITERAL, $model_name = 'Content')
     {
-        Services::Profiler()->set(
+        Services::Profiler()->set('message',
             'ContentHelper get ' . ' ID: ' . $id . ' Model Type: ' . $model_type
                 . ' Model Name: ' . $model_name,
-            PROFILER_ROUTING,
+            'Routing',
             VERBOSE
         );
 
@@ -415,7 +415,7 @@ Class ContentHelper
      *
      * @param   string  $page_type_namespace (ex. item, list, menuitem)
      * @param   string  $parameter_namespace (ex. $item->model_registry_name . PARAMETERS_LITERAL)
-     * @param   string  $metadata_namespace  (ex. $item->model_registry_name . METADATA_LITERAL)
+     * @param   string  $metadata_namespace  (ex. $item->model_registry_name . 'Metadata')
      * @param   string  $resource_namespace  for extension (ex. ResourcesSystem)
      * @param   string  $resource_or_system  for extension (values 'resource' or 'system')
      *
@@ -472,7 +472,7 @@ Class ContentHelper
         }
 
         /** III. Finally, Application level defaults */
-        $applicationDefaults = Services::Registry()->get(CONFIGURATION_LITERAL, $page_type_namespace . '*');
+        $applicationDefaults = Services::Registry()->get('Configuration', $page_type_namespace . '*');
         if (count($applicationDefaults) > 0) {
             $this->processParameterSet($applicationDefaults, $page_type_namespace);
         }
@@ -517,10 +517,10 @@ Class ContentHelper
         );
 
         /** Metadata defaulting */
-        Services::Registry()->merge($metadata_namespace, METADATA_LITERAL);
+        Services::Registry()->merge($metadata_namespace, 'Metadata');
         if ($resource_namespace == '') {
         } else {
-            Services::Registry()->merge($resource_namespace . METADATA_LITERAL, METADATA_LITERAL, true);
+            Services::Registry()->merge($resource_namespace . 'Metadata', 'Metadata', true);
         }
 
         /** Remove standard patterns no longer needed  */
@@ -531,7 +531,7 @@ Class ContentHelper
         Services::Registry()->delete($random, 'item*');
 
         /** Copy some configuration data */
-        $fields = Services::Registry()->get(CONFIGURATION_LITERAL, 'application*');
+        $fields = Services::Registry()->get('Configuration', 'application*');
         if (count($fields) === 0 || $fields === false) {
         } else {
             foreach ($fields as $key => $value) {

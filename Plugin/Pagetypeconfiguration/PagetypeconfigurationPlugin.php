@@ -132,15 +132,15 @@ class PagetypeconfigurationPlugin extends Plugin
         $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
 
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
-        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
+        $controller->set('model_name', 'Primary', 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
         $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
-        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
+        $controller->set('model_name', 'Primary', 'model_registry');
 
         Services::Registry()->set(
-            PRIMARY_LITERAL,
-            DATA_LITERAL,
+            'Primary',
+            'Data',
             $current_page
         );
 
@@ -181,7 +181,7 @@ class PagetypeconfigurationPlugin extends Plugin
         $array2     = Services::Registry()->getArray(PARAMETERS_LITERAL);
 
         foreach ($array2 as $key => $value) {
-            if (substr($key, 0, strlen(CONFIGURATION_LITERAL)) == CONFIGURATION_LITERAL) {
+            if (substr($key, 0, strlen('Configuration')) == 'Configuration') {
                 $parameters[$key] = $value;
             }
         }
@@ -190,12 +190,12 @@ class PagetypeconfigurationPlugin extends Plugin
         $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', PARAMETERS_LITERAL));
 
         /** Metadata */
-        $form->set(METADATA_LITERAL, Services::Registry()->getArray('ResourcesSystemMetadata'));
-        $form->set('metadata_fields', Services::Registry()->get('ResourcesSystem', METADATA_LITERAL));
+        $form->set('Metadata', Services::Registry()->getArray('ResourcesSystemMetadata'));
+        $form->set('metadata_fields', Services::Registry()->get('ResourcesSystem', 'Metadata'));
 
         /** Customfields */
-        $form->set(CUSTOMFIELDS_LITERAL, Services::Registry()->getArray('ResourcesSystemCustomfields'));
-        $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', CUSTOMFIELDS_LITERAL));
+        $form->set('Customfields', Services::Registry()->getArray('ResourcesSystemCustomfields'));
+        $form->set('customfields_fields', Services::Registry()->get('ResourcesSystem', 'Customfields'));
 
         /** Build Fieldsets and Fields */
 

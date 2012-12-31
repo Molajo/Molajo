@@ -67,7 +67,7 @@ Class RegistryService
      * @return  object
      * @since   1.0
      */
-    protected function initialise()
+    public function initialise()
     {
         $this->registry      = array();
         $this->registryKeys  = array();
@@ -264,18 +264,18 @@ Class RegistryService
         $this->registry[$namespace] = array();
 
         /** Profiler Startup and Normal Logging */
-        if ($this->exists(PROFILER_LITERAL)) {
+        if ($this->exists('Profiler')) {
         } else {
 
-            if (Services::Registry()->get(PROFILER_LITERAL, 'on') === true) {
+            if (Services::Registry()->get('Profiler', 'on') === true) {
 
                 if ($this->profiler_available === false) {
                     $this->profiler_available = true;
                     foreach ($this->registryKeys as $ns) {
-                        Services::Profiler()->set('Registry: Create Namespace ' . $ns, 'Registry');
+                        Services::Profiler()->set('message', 'Registry: Create Namespace ' . $ns, 'Registry');
                     }
                 } else {
-                    Services::Profiler()->set('Registry: Create Namespace ' . $namespace, 'Registry');
+                    Services::Profiler()->set('message', 'Registry: Create Namespace ' . $namespace, 'Registry');
                 }
             }
         }

@@ -80,7 +80,7 @@ Class TemplateIncluder extends Includer
         // loop thru parameter names and overaly with matching attributes
 
         // get model
-        $fields = Services::Registry()->get(CONFIGURATION_LITERAL, 'application*');
+        $fields = Services::Registry()->get('Configuration', 'application*');
         if (count($fields) === 0 || $fields === false) {
         } else {
             foreach ($fields as $key => $value) {
@@ -103,7 +103,7 @@ Class TemplateIncluder extends Includer
             . ' Model Type ' . Services::Registry()->get('include', 'model_type')
             . ' Model Name ' . Services::Registry()->get('include', 'model_name');
 
-        Services::Profiler()->set($message, PROFILER_RENDERING, VERBOSE);
+        Services::Profiler()->set('message', $message, 'Rendering', VERBOSE);
 
         return true;
     }

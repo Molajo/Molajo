@@ -6,7 +6,6 @@
  */
 namespace Molajo\Service\Services\Theme\Includer;
 
-use Molajo\Helpers;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Theme\Includer;
 
@@ -28,7 +27,7 @@ Class ProfilerIncluder extends Includer
      * @return null
      * @since   1.0
      */
-    public function __construct($include_name = null, $include_type = null)
+    public function initialise($include_name = null, $include_type = null)
     {
         Services::Registry()->set('include', 'extension_catalog_type_id', 0);
         parent::__construct($include_name, $include_type);
@@ -50,13 +49,13 @@ Class ProfilerIncluder extends Includer
         Services::Registry()->set(
             'include',
             'template_view_id',
-            Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_console_template_view_id')
+            Services::Registry()->get('Configuration', 'profiler_console_template_view_id')
         );
 
         Services::Registry()->set(
             'include',
             'wrap_view_id',
-            Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_console_wrap_view_id')
+            Services::Registry()->get('Configuration', 'profiler_console_wrap_view_id')
         );
 
         Services::Registry()->set('include', 'criteria_display_view_on_no_results', 1);
@@ -71,11 +70,11 @@ Class ProfilerIncluder extends Includer
         $this->viewHelper->get(Services::Registry()->get('include', 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         /** Merge Configuration in */
-        Services::Registry()->merge(CONFIGURATION_LITERAL, 'include', true);
+        Services::Registry()->merge('Configuration', 'include', true);
 
         /** DBO  */
         Services::Registry()->set('include', 'model_type', DATA_OBJECT_LITERAL);
-        Services::Registry()->set('include', 'model_name', PROFILER_LITERAL);
+        Services::Registry()->set('include', 'model_name', 'Profiler');
         Services::Registry()->set('include', 'model_query_object', QUERY_OBJECT_LIST);
 
         /** Cleanup */

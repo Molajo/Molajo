@@ -1,12 +1,12 @@
 <?php
 /**
- * Application Service Plugin
+ * Permissions Service Plugin
  *
  * @package      Niambie
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Service\Services\Application;
+namespace Molajo\Service\Services\Permissions;
 
 use Molajo\Service\Services;
 use Molajo\Service\ServicesPlugin;
@@ -14,14 +14,14 @@ use Molajo\Service\ServicesPlugin;
 defined('NIAMBIE') or die;
 
 /**
- * Application Service Plugin
+ * Permissions Service Plugin
  *
  * @author       Amy Stephen
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class ApplicationServicePlugin extends ServicesPlugin
+Class PermissionsServicePlugin extends ServicesPlugin
 {
     /**
      * on Before Startup Event

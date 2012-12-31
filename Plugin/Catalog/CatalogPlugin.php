@@ -96,7 +96,7 @@ class CatalogPlugin extends Plugin
         $catalogArray = array();
 
         $application_home_catalog_id =
-            (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'application_home_catalog_id');
+            (int)Services::Registry()->get('Configuration', 'application_home_catalog_id');
 
         if ($application_home_catalog_id === 0) {
         } else {
@@ -135,14 +135,14 @@ class CatalogPlugin extends Plugin
         }
 
         /** Catalog Activity: fields populated by Catalog Activity plugins */
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_user_update_activity', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
             $results = $this->logUserActivity($id, Services::Registry()->get('Actions', ACTION_CREATE));
             if ($results === false) {
                 return false;
             }
         }
 
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_catalog_update_activity', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
             $results = $this->logCatalogActivity($id, Services::Registry()->get('Actions', ACTION_CREATE));
             if ($results === false) {
                 return false;
@@ -160,7 +160,7 @@ class CatalogPlugin extends Plugin
      */
     public function onAfterUpdate()
     {
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_user_update_activity', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
             $results = $this->logUserActivity(
                 $this->row->id,
                 Services::Registry()->get('Actions', ACTION_DELETE)
@@ -170,7 +170,7 @@ class CatalogPlugin extends Plugin
             }
         }
 
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_catalog_update_activity', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
             $results = $this->logCatalogActivity(
                 $this->row->id,
                 Services::Registry()->get('Actions', ACTION_DELETE)
@@ -233,10 +233,10 @@ class CatalogPlugin extends Plugin
     {
         //how to get id - referential integrity?
         /**
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_user_update_activity', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'log_user_update_activity', 1) == 1) {
         $this->logUserActivity($id, Services::Registry()->get('Actions', 'delete'));
         }
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'log_catalog_update_activity', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'log_catalog_update_activity', 1) == 1) {
         $this->logCatalogActivity($id, Services::Registry()->get('Actions', 'delete'));
         }
          */

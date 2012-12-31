@@ -426,12 +426,12 @@ Class FormService
                 return $this->parameters[$key];
             }
 
-        } elseif ($type == METADATA_LITERAL) {
+        } elseif ($type == 'Metadata') {
             if (isset($this->metadata[$key])) {
                 return $this->metadata[$key];
             }
 
-        } elseif ($type == CUSTOMFIELDS_LITERAL) {
+        } elseif ($type == 'Customfields') {
             if (isset($this->customfields[$key])) {
                 return $this->customfields[$key];
             }
@@ -446,7 +446,7 @@ Class FormService
     /**
      * setFieldset - Processes a request for a fieldset
      *
-     *  Uses namespace and page link to retrieve configuration file, ex. CONFIGURATION_LITERAL + - + "views"
+     *  Uses namespace and page link to retrieve configuration file, ex. 'Configuration' + - + "views"
      *  Retrieves XML file Configuration_views.xml,
      *  Within for default value processes
      *  {{Page,form_parent*,form_theme*,form_page*}}{{Template,form_template*}}{{Wrap,form_wrap*}}{{Model,form_model*}}{{Page,item_parent* ...
@@ -739,7 +739,7 @@ Class FormService
                         $temp_row['fieldset_description'] = $this->fieldset_description;
 
                         //@todo defaults
-                        $temp_row['application_default'] = Services::Registry()->get(CONFIGURATION_LITERAL, $key);
+                        $temp_row['application_default'] = Services::Registry()->get('Configuration', $key);
 
                         $input_fields[] = $temp_row;
                     }
@@ -772,7 +772,7 @@ Class FormService
         $fieldArray        = Services::Registry()->get($this->model_name . $this->model_type, DATALIST_LITERAL);
         $customfieldgroups = Services::Registry()->get(
             $this->model_name . $this->model_type,
-            CUSTOMFIELDGROUPS_LITERAL
+            'customfieldgroups'
         );
 
         foreach ($options as $value) {
@@ -848,7 +848,7 @@ Class FormService
                                 }
 
                                 $temp_row['application_default'] = Services::Registry()->get(
-                                    CONFIGURATION_LITERAL,
+                                    'Configuration',
                                     $field['name']
                                 );
                                 $input_fields[]                  = $temp_row;
@@ -890,7 +890,7 @@ Class FormService
             $temp_row['value'] = $this->metadata_fields($field['name']);
 
             $temp_row['application_default'] = Services::Registry()->get(
-                CONFIGURATION_LITERAL,
+                'Configuration',
                 'metadata_' . $field['name']
             );
 
@@ -959,7 +959,7 @@ Class FormService
                         $temp_row['value'] = Services::Registry()->get('GridMenuitemParameters', $field['name']);
 
                         $temp_row['application_default'] = Services::Registry()->get(
-                            CONFIGURATION_LITERAL,
+                            'Configuration',
                             $field['name']
                         );
                         $input_fields[]                  = $temp_row;
@@ -1035,13 +1035,13 @@ Class FormService
         $this->model_registry_name = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
 
         $custom_fields   = array();
-        $custom_fields[] = METADATA_LITERAL;
-        $custom_fields[] = CUSTOMFIELDS_LITERAL;
+        $custom_fields[] = 'Metadata';
+        $custom_fields[] = 'Customfields';
         $custom_fields[] = PARAMETERS_LITERAL;
 
         $first = 1;
 
-        $temp = Services::Registry()->get($this->model_registry_name, CUSTOMFIELDGROUPS_LITERAL);
+        $temp = Services::Registry()->get($this->model_registry_name, 'customfieldgroups');
 
         if (count($custom_fields) == 0) {
         } else {
@@ -1523,21 +1523,21 @@ Class FormService
         $datalist = $field['datalist'];
 
         $yes = 0;
-        if (strtolower($datalist) == FIELDS_LITERAL) {
+        if (strtolower($datalist) == 'Fields') {
 
             $list = Services::Registry()->get(
                 DATALIST_LITERAL,
-                $this->model_registry_name . FIELDS_STANDARD_LITERAL
+                $this->model_registry_name . 'Fieldsstandard'
             );
 
-        } elseif (strtolower($datalist) == strtolower(FIELDS_STANDARD_LITERAL)) {
+        } elseif (strtolower($datalist) == strtolower('Fieldsstandard')) {
 
             $this->model_registry_name
                 = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
 
             $list = Services::Registry()->get(
                 DATALIST_LITERAL,
-                $this->model_registry_name . FIELDS_STANDARD_LITERAL
+                $this->model_registry_name . 'Fieldsstandard'
             );
 
         } else {

@@ -27,20 +27,12 @@ defined('NIAMBIE') or die;
 Class CacheService
 {
     /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * Cache
      *
      * @var    string
      * @since  1.0
      */
-    protected $cache = false;
+    protected $cache_service = false;
 
     /**
      * Cache Path
@@ -72,7 +64,7 @@ Class CacheService
      * @var    string
      * @since  1.0
      */
-    protected $cache_type_page = '';
+    protected $cache_page = '';
 
     /**
      * Cache Templates
@@ -80,7 +72,7 @@ Class CacheService
      * @var    string
      * @since  1.0
      */
-    protected $cache_type_template = '';
+    protected $cache_template = '';
 
     /**
      * Cache Queries
@@ -88,7 +80,7 @@ Class CacheService
      * @var    string
      * @since  1.0
      */
-    protected $cache_type_query = '';
+    protected $cache_query = '';
 
     /**
      * Cache Model
@@ -96,7 +88,7 @@ Class CacheService
      * @var    string
      * @since  1.0
      */
-    protected $cache_type_model = '';
+    protected $cache_model = '';
 
     /**
      * Count Queries
@@ -125,28 +117,15 @@ Class CacheService
         'system_cache_folder',
         'cache_handler',
         'cache_time',
-        'cache_type_page',
-        'cache_type_template',
-        'cache_type_query',
-        'cache_type_model',
-        'count_queries'
+        'cache_page',
+        'cache_template',
+        'cache_query',
+        'cache_model',
+        'count_queries',
+        'cache_keys',
+        'cache_service_time',
+        'valid_types'
     );
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return  bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new CacheService();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Initialise Cache when activated
@@ -158,15 +137,15 @@ Class CacheService
     {
 //@todo add classes other than file for caching
 
-        foreach ($this->valid_types as $type) {
+        foreach ($this->get('Parameter', 'valid_types') as $type) {
             $this->initialise_folders($type);
         }
 
-        foreach ($this->valid_types as $type) {
+        foreach ($this->get('Parameter', 'valid_types') as $type) {
             $this->prune_cache($type);
         }
 
-        foreach ($this->valid_types as $type) {
+        foreach ($this->get('Parameter', 'valid_types') as $type) {
             $this->loadCacheKeys($type);
         }
 
@@ -278,7 +257,7 @@ Class CacheService
             // error
         }
 
-        $files = \files($this->system_cache_folder);
+        $files = \glob($this->system_cache_folder);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
@@ -347,11 +326,12 @@ Class CacheService
         $cache_type = 'cache_' . strtolower($type);
 
         if ($this->$cache_type == 0) {
+
             $this->flush_cache($type);
 
         } else {
 
-            $files = \files($this->system_cache_folder . '/' . $type);
+            $files = \glob($this->system_cache_folder . '/' . $type);
 
             if (count($files) > 0) {
                 foreach ($files as $file) {
@@ -397,11 +377,11 @@ Class CacheService
      */
     protected function flush_cache($type = '')
     {
-        foreach ($this->valid_types as $t) {
+        foreach ($this->get('Parameter', 'valid_types') as $t) {
 
             if ($type == '' || $type == $t) {
 
-                $files = \files($this->system_cache_folder . '/' . $t . '/');
+                $files = \glob($this->system_cache_folder . '/' . $t . '/');
 
                 if (count($files) == 0 || $files === false) {
                 } else {

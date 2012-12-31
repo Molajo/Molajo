@@ -27,14 +27,6 @@ defined('NIAMBIE') or die;
 Class FilterService
 {
     /**
-     * Instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * Filter
      *
      * @var    array
@@ -49,31 +41,6 @@ Class FilterService
      * @since  1.0
      */
     protected $purifier;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new FilterService ();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * @return null
-     * @since   1.0
-     */
-    public function __construct()
-    {
-        $this->initialise_filtering();
-    }
 
     /**
      * Filter input, default value, edit
@@ -661,7 +628,7 @@ Class FilterService
      */
     public function escape_url($url)
     {
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_unicode_slugs') == 1) {
+        if (Services::Registry()->get('Configuration', 'url_unicode_slugs') == 1) {
 //            return FilterOutput::stringURLUnicodeSlug($url);
         } else {
 //            return FilterOutput::stringURLSafe($url);
@@ -669,7 +636,7 @@ Class FilterService
     }
 
     /**
-     * initialise_filtering
+     * initialise
      *
      * HTMLPurifier can be configured by:
      *
@@ -681,7 +648,7 @@ Class FilterService
      *  working on it. http://htmlpurifier.org/doxygen/html/classHTML5.html
      *
      */
-    protected function initialise_filtering()
+    public function initialise()
     {
         return;
 

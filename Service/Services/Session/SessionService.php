@@ -28,14 +28,6 @@ defined('NIAMBIE') or die;
 Class SessionService
 {
     /**
-     * Response instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * Session
      *
      * @var    object
@@ -43,23 +35,7 @@ Class SessionService
      */
     public $session;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return  object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new SessionService();
-        }
-
-        return self::$instance;
-    }
-
-    public function __construct()
+    public function initialise()
     {
 
         $session = new Session();
@@ -100,19 +76,19 @@ Class SessionService
     public function setSessionStorageData()
     {
         $save_path = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
+            'Configuration',
             'system_cache_folder',
             SITE_BASE_PATH . '/cache'
         );
         $options = array();
-        $options['cookie_lifetime'] = Services::Registry()->get(CONFIGURATION_LITERAL, 'lifetime', 15);
+        $options['cookie_lifetime'] = Services::Registry()->get('Configuration', 'lifetime', 15);
         $options['cookie_domain'] = $cookie_domain = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
+            'Configuration',
             'cookie_domain',
             ''
         );
         $options['cookie_path'] = $cookie_path = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
+            'Configuration',
             'cookie_path',
             ''
         );

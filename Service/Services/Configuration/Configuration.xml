@@ -11,9 +11,9 @@
     <description>SERVICE_CONFIGURATION_DESCRIPTION</description>
     <model
             name="Configuration"
-            static="0"
             startup="1"
-            startup_method=""
-            class="Molajo\Service\Services\Configuration">
+            startup_method="initialise"
+            class="Molajo\Service\Services\Configuration"
+            keep_instance="1">
     </model>
 </extension>

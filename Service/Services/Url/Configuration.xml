@@ -9,4 +9,11 @@
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>SERVICE_URL_DESCRIPTION</description>
+    <model
+            name="Url"
+            startup="1"
+            startup_method=""
+            class="Molajo\Service\Services\Url"
+            keep_instance="0">
+    </model>
 </extension>

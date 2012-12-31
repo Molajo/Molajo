@@ -6,7 +6,6 @@
  */
 namespace Molajo\Service\Services\Page\Includer;
 
-use Molajo\Helpers;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Page\Includer;
 use Molajo\MVC\Controller\DisplayController;
@@ -28,8 +27,8 @@ class PageIncluder extends Includer
      */
     public function __construct($include_name = null, $include_type = null)
     {
-        $this->name = $name;
-        $this->type = $type;
+        $this->name = $include_name;
+        $this->type = $include_type;
 
         Services::Registry()->createRegistry('Include');
 

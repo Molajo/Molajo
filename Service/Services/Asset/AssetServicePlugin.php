@@ -46,6 +46,11 @@ Class AssetServicePlugin extends ServicesPlugin
      */
     public function onAfterStartup()
     {
+        $this->service_class->set('html5', $this->frontcontroller_class->get('application_html5'));
+        $this->service_class->set('line_end', $this->frontcontroller_class->get('application_line_end'));
+        $this->service_class->set('mimetype', $this->frontcontroller_class->get('request_mimetype'));
+        $this->service_class->set('direction', $this->frontcontroller_class->get('language_direction'));
 
+        return;
     }
 }

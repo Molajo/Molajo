@@ -8,7 +8,6 @@
  */
 namespace Molajo\MVC\Controller;
 
-use Molajo\Service\Services\Configuration\ConfigurationService;
 use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;
@@ -264,7 +263,7 @@ class Controller
         $connect = 0,
         $parameter_registry = null
     ) {
-//echo 'Entering getModelRegistry: ' . $model_type . ' ' . $model_name . '<br />';
+        echo '<br />' . $model_name . $model_type . $connect . '<br />';
 
         $this->set('connect_database_set', 0);
 
@@ -290,11 +289,12 @@ class Controller
             $profiler_message = ' Registry ' . $this->model_registry_name . ' retrieved from Registry.';
 
         } else {
+
             $cached_output = Services::Cache()->get('Model', $this->model_registry_name);
 
             if ($cached_output === false) {
 
-                ConfigurationService::getModel(
+                Services::Configuration()->getModel(
                     $this->get('model_type', '', 'model_registry'),
                     $this->get('model_name', '', 'model_registry'),
                     $parameter_registry
@@ -330,7 +330,7 @@ class Controller
             $this->connectDatabase();
         }
 
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_table_registry') == 0) {
+        if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
         } else {
             ob_start();
             echo $this->get('model_registry_name');
@@ -341,9 +341,9 @@ class Controller
             ob_end_clean();
         }
 
-        Services::Profiler()->set($profiler_message, PROFILER_QUERIES, VERBOSE);
+        Services::Profiler()->set('message', $profiler_message, 'Queries', VERBOSE);
 
-        return $this;
+        return;
     }
 
     /**
@@ -357,7 +357,7 @@ class Controller
     {
         $this->set('connect_database_set', 1);
 
-        if (strtolower($this->get('data_object_type', '', 'model_registry')) == strtolower(DATABASE_LITERAL)) {
+        if (strtolower($this->get('data_object_type', '', 'model_registry')) == strtolower('Database')) {
 
             if ($this->get('model_class', null, 'model_registry') === null) {
                 $this->set('model_class', 'ReadModel', 'model_registry');
@@ -427,12 +427,12 @@ class Controller
 
         $this->set('query_object', $query_object, 'model_registry');
 
-        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
+        if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
             $this->prepareQuery($this->get('query_object', '', 'model_registry'));
         }
 
         $profiler_message =
-            ' <br />Data Object: ' . $this->get('data_object', DATABASE_LITERAL, 'model_registry')
+            ' <br />Data Object: ' . $this->get('data_object', 'Database', 'model_registry')
                 . ' <br />Model Type: ' . $this->get('model_type', DATA_SOURCE_LITERAL, 'model_registry')
                 . ' <br />Model Name: ' . $this->get('model_name', '', 'model_registry')
                 . ' <br />Model Query Object: ' . $this->get('query_object', '', 'model_registry')
@@ -443,7 +443,7 @@ class Controller
 //        echo $profiler_message;
 //        }
 
-        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
+        if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
 
             if (count($this->get('plugins', array())) > 0) {
                 $this->onBeforeReadEvent();
@@ -457,11 +457,11 @@ class Controller
                 $this->query_results = array();
 
             } else {
-                $service_class              = $this->get('service_class', DATABASE_LITERAL, 'model_registry');
+                $service_class              = $this->get('service_class', 'Database', 'model_registry');
                 $service_class_query_method = $this->get('service_class_query_method', '', 'model_registry');
 
-                if ($this->get('model_name', '', 'model_registry') == PRIMARY_LITERAL) {
-                    $method_parameter = DATA_LITERAL;
+                if ($this->get('model_name', '', 'model_registry') == 'Primary') {
+                    $method_parameter = 'Data';
 
                 } elseif ($this->get('service_class_query_method_parameter', '', 'model_registry')
                     == 'TEMPLATE_LITERAL'
@@ -509,14 +509,14 @@ class Controller
                 $this->get('model_count', 15, 'model_registry')
             );
         }
-        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
+        if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
         } else {
             //echo '<pre>';
             //var_dump($this->query_results);
             //echo '</pre><br /><br />';
             //die;
         }
-        if ($this->get('data_object_type', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
+        if ($this->get('data_object_type', 'Database', 'model_registry') == 'Database') {
         } else {
             return $this->query_results;
         }
@@ -529,7 +529,7 @@ class Controller
 
         if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_LIST) {
 
-            if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results', 0) == 1) {
+            if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
 
                 $profiler_message .= 'Controller: getData Query Results <br /><br />';
 
@@ -542,7 +542,7 @@ class Controller
                 ob_end_clean();
                 echo $profiler_message;
 
-                Services::Profiler()->set($profiler_message, PROFILER_QUERIES, VERBOSE);
+                Services::Profiler()->set('message', $profiler_message, 'Queries', VERBOSE);
             }
 
             return $this->query_results;
@@ -574,7 +574,7 @@ class Controller
         $this->set('primary_key_value', $key, 'model_registry');
 
         $this->model->setBaseQuery(
-            $this->get(strtolower(FIELDS_LITERAL), array(), 'model_registry'),
+            $this->get('fields', array(), 'model_registry'),
             $this->get('table_name', null, 'model_registry'),
             $this->get('primary_prefix', 'a', 'model_registry'),
             $this->get('primary_key', 'id', 'model_registry'),
@@ -638,11 +638,11 @@ class Controller
             'parameters'
         );
 
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_sql') == 1) {
-            Services::Profiler()->set(
+        if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql') == 1) {
+            Services::Profiler()->set('message',
                 'Controller runQuery: <br /><br />'
                     . $this->model->query->__toString(),
-                PROFILER_RENDERING,
+                'Rendering',
                 VERBOSE
             );
         }
@@ -661,7 +661,7 @@ class Controller
             || $this->get('query_object', '', 'model_registry') == QUERY_OBJECT_DISTINCT
         ) {
 
-            if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results') == 1) {
+            if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results') == 1) {
                 $message = 'DisplayController->getData Query Result <br /><br />';
                 ob_start();
                 echo '<pre>';
@@ -669,7 +669,7 @@ class Controller
                 echo '</pre><br /><br />';
                 $message .= ob_get_contents();
                 ob_end_clean();
-                Services::Profiler()->set($message, PROFILER_QUERIES);
+                Services::Profiler()->set('message', $message, 'Queries');
             }
             $this->query_results = $query_results;
 
@@ -696,7 +696,7 @@ class Controller
      */
     public function addCustomFields($query_results, $external = 0)
     {
-        $customFieldTypes = $this->get(strtolower(CUSTOMFIELDGROUPS_LITERAL), array(), 'model_registry');
+        $customFieldTypes = $this->get('customfieldgroups', array(), 'model_registry');
 
         if (count($customFieldTypes) > 0) {
         } else {
@@ -710,7 +710,7 @@ class Controller
             if ((int)$this->get('get_customfields', 1, 'model_registry') == 0) {
             } else {
 
-                $customFieldTypes = $this->get(strtolower(CUSTOMFIELDGROUPS_LITERAL), array(), 'model_registry');
+                $customFieldTypes = $this->get('customfieldgroups', array(), 'model_registry');
 
                 if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
                 } else {

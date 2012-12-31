@@ -57,13 +57,13 @@ class PagetypelistPlugin extends Plugin
         $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
          */
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
-        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
+        $controller->set('model_name', 'Primary', 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
         $controller->set('model_type', QUERY_OBJECT_LIST, 'model_registry');
-        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
+        $controller->set('model_name', 'Primary', 'model_registry');
 
-        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $temp_query_results);
+        Services::Registry()->set('Primary', 'Data', $temp_query_results);
 
         return true;
     }

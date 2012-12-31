@@ -89,66 +89,29 @@
     <define name="LOG_TYPE_INFO" value="64"/>
     <define name="LOG_TYPE_PROFILER" value="128"/>
 
-    <define name="PROFILER_ACTIONS" value="Actions"/>
-    <define name="PROFILER_APPLICATION" value="Application"/>
-    <define name="PROFILER_AUTHORISATION" value="Permissions"/>
-    <define name="PROFILER_INCLUDES" value="Includes"/>
-    <define name="PROFILER_QUERIES" value="Queries"/>
-    <define name="PROFILER_REGISTRY" value="Registry"/>
-    <define name="PROFILER_RENDERING" value="Rendering"/>
-    <define name="PROFILER_ROUTING" value="Routing"/>
-    <define name="PROFILER_SERVICES" value="Services"/>
-    <define name="PROFILER_PLUGINS" value="Plugins"/>
 
     <define name="VERBOSE" value="1"/>
-
-    <define name="LOG_FORMATTEDTEXT_LOGGER" value="formattedtext"/>
-    <define name="LOG_ECHO_LOGGER" value="echo"/>
-    <define name="LOG_DATABASE_LOGGER" value="database"/>
-    <define name="LOG_MESSAGES_LOGGER" value="messages"/>
-    <define name="LOG_EMAIL_LOGGER" value="email"/>
-    <define name="LOG_CONSOLE_LOGGER" value="console"/>
-
-    <define name="INITIALISE" value="Initialise"/>
-    <define name="ROUTING" value="Routing"/>
-    <define name="AUTHORISATION" value="Permissions"/>
-    <define name="EXECUTE" value="Execute"/>
-    <define name="RESPONSE" value="Response"/>
 
     <define name="AUTHENTICATE_STATUS_SUCCESS" value="1"/>
     <define name="AUTHENTICATE_STATUS_CANCEL" value="2"/>
     <define name="AUTHENTICATE_STATUS_FAILURE" value="4"/>
-
-    <define name="CONTROLLER_CLASS" value="Molajo\MVC\Controller\Controller"/>
-    <define name="HELPER_FILES" value="Molajo\Helper\"/>
-    <define name="MODEL_CLASS" value="Molajo\MVC\Model\"/>
 
     <define name="QUERY_OBJECT_RESULT" value="result"/>
     <define name="QUERY_OBJECT_ITEM" value="item"/>
     <define name="QUERY_OBJECT_LIST" value="list"/>
     <define name="QUERY_OBJECT_DISTINCT" value="distinct"/>
 
-    <define name="ASSETS_LITERAL" value="Assets"/>
-    <define name="CLIENT_LITERAL" value="Client"/>
-    <define name="CONFIGURATION_LITERAL" value="Configuration"/>
-    <define name="CUSTOMFIELDS_LITERAL" value="Customfields"/>
-    <define name="CUSTOMFIELDGROUPS_LITERAL" value="Customfieldgroups"/>
-    <define name="CSS_DECLARATIONS_LITERAL" value="CssDeclarations"/>
-    <define name="CSS_LITERAL" value="Css"/>
-    <define name="DATA_LITERAL" value="Data"/>
+    <define name="'Data'" value="Data"/>
     <define name="DATA_OBJECT_LITERAL" value="Dataobject"/>
     <define name="DATA_SOURCE_LITERAL" value="Datasource"/>
-    <define name="DATABASE_LITERAL" value="Database"/>
+    <define name="'Database'" value="Database"/>
     <define name="DATALIST_LITERAL" value="Datalist"/>
     <define name="DOCUMENT_LITERAL" value="Document"/>
     <define name="DUMMY_LITERAL" value="Dummy"/>
     <define name="EVENTS_LITERAL" value="Events"/>
     <define name="ERROR_STATUS_LITERAL" value="error_status"/>
     <define name="FIELDS_CUSTOM_LITERAL" value="Fieldscustom"/>
-    <define name="FIELDS_METADATA_LITERAL" value="Fieldsmetadata"/>
-    <define name="FIELDS_LITERAL" value="Fields"/>
     <define name="FIELDS_PARAMETERS_LITERAL" value="Fieldsparameters"/>
-    <define name="FIELDS_STANDARD_LITERAL" value="Fieldsstandard"/>
     <define name="JS_DECLARATIONS_LITERAL" value="JsDeclarations"/>
     <define name="JS_DECLARATIONS_DEFER_LITERAL" value="JsDeclarationsDefer"/>
     <define name="JS_DEFER_LITERAL" value="Jsdefer"/>
@@ -158,15 +121,13 @@
     <define name="MAIL_LITERAL" value="Mail"/>
     <define name="MENUITEMS_LITERAL" value="Menuitems"/>
     <define name="MESSAGES_LITERAL" value="Messages"/>
-    <define name="METADATA_LITERAL" value="Metadata"/>
-    <define name="MODEL_LITERAL" value="Model"/>
     <define name="PAGE_LITERAL" value="Page"/>
     <define name="NOFORMFIELDS_LITERAL" value="Noformfields"/>
     <define name="PARAMETERS_LITERAL" value="Parameters"/>
     <define name="PARSE_LITERAL" value="Parse"/>
-    <define name="PERMISSIONS_LITERAL" value="Permissions"/>
+    <define name="'Permissions'" value="Permissions"/>
     <define name="PLUGIN_LITERAL" value="Plugin"/>
-    <define name="PRIMARY_LITERAL" value="Primary"/>
+    <define name="'Primary'" value="Primary"/>
     <define name="PROFILER_LITERAL" value="Profiler"/>
     <define name="ROUTE_PARAMETERS_LITERAL" value="RouteParameters"/>
     <define name="SYSTEM_LITERAL" value="System"/>

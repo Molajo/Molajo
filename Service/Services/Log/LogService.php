@@ -68,16 +68,16 @@ Class LogService
         $this->loggers = array();
 
         /** Provided with JPlatform */
-        $this->loggers[] = LOG_FORMATTEDTEXT_LOGGER;
-        $this->loggers[] = LOG_ECHO_LOGGER;
-        $this->loggers[] = LOG_DATABASE_LOGGER;
+        $this->loggers[] = 'formattedtext';
+        $this->loggers[] = 'echo';
+        $this->loggers[] = 'database';
 
         /** Custom Molajo loggers */
-        $this->loggers[] = LOG_MESSAGES_LOGGER;
-        $this->loggers[] = LOG_EMAIL_LOGGER;
-        $this->loggers[] = LOG_CONSOLE_LOGGER;
+        $this->loggers[] = 'messages';
+        $this->loggers[] = 'email';
+        $this->loggers[] = 'console';
 
-        if (Services::Registry()->get(PROFILER_LITERAL, 'CurrentPhase') == INITIALISE) {
+        if (Services::Profiler()->get('current_phase') == 'Initialise') {
             $response = Services::Profiler()->setProfilerLogger();
             if ($response === false) {
                 Services::Profiler()->setConfigurationComplete();
@@ -125,10 +125,10 @@ Class LogService
      * 4. Email
      *
      * $this->options['sender'] = array(
-     *     Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from'),
-     *     Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from_name')
+     *     Services::Registry()->get('Configuration', 'mailer_mail_from'),
+     *     Services::Registry()->get('Configuration', 'mailer_mail_from_name')
      * };
-     * $this->options['recipient'] = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from_email_address');
+     * $this->options['recipient'] = Services::Registry()->get('Configuration', 'mailer_mail_from_email_address');
      * $this->options['subject'] = Services::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
      * $this->options['mailer'] = Services::Mail();
      *

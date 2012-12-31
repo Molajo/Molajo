@@ -56,7 +56,7 @@ class DisplayController extends Controller
             $this->getData($this->get('model_query_object', '', 'parameters'));
 
             if (PROFILER_ON
-                && Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output_queries_query_results', 0) == 1
+                && Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1
             ) {
 
                 $profiler_message = 'DisplayController: Execute method input '
@@ -74,7 +74,7 @@ class DisplayController extends Controller
                 $profiler_message .= ob_get_contents();
                 ob_end_clean();
 
-                Services::Profiler()->set($profiler_message, PROFILER_RENDERING, VERBOSE);
+                Services::Profiler()->set('message', $profiler_message, 'Rendering', VERBOSE);
             }
 
             if (count($this->query_results) == 0

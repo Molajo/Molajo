@@ -198,7 +198,7 @@ Class ViewHelper
             $this->processParameterSet($newParameters, $registry);
         }
 
-        $applicationDefaults = Services::Registry()->get(CONFIGURATION_LITERAL, $requestTypeNamespace . '*');
+        $applicationDefaults = Services::Registry()->get('Configuration', $requestTypeNamespace . '*');
         if (count($applicationDefaults) > 0) {
             $this->processParameterSet($applicationDefaults, $registry);
         }

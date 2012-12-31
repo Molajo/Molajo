@@ -1,4 +1,3 @@
-<include field="profiler_collect_missing_language_strings"/>
 <include field="profiler_service"/>
 <include field="profiler_error_reporting"/>
 <include field="profiler_verbose"/>
@@ -10,11 +9,4 @@
 <include field="profiler_output_queries_query_results"/>
 <include field="profiler_console_template_view_id"/>
 <include field="profiler_console_wrap_view_id"/>
-<include field="profiler_log"/>
-<include field="profiler_text_file"/>
-<include field="profiler_text_file_path"/>
-<include field="profiler_text_file_no_php"/>
-<include field="profiler_database_table"/>
-<include field="profiler_messages_namespace"/>
-<include field="profiler_email_subject"/>
-<include field="profiler_email_to"/>
+<include field="profiler_collect_missing_language_strings"/>

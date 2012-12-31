@@ -6,7 +6,6 @@
  */
 namespace Molajo\Service\Services\Theme\Includer;
 
-use Molajo\Helpers;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Theme\Includer;
 
@@ -56,7 +55,7 @@ Class HeadIncluder extends Includer
     {
         Services::Registry()->set('include', 'criteria_display_view_on_no_results', 1);
 
-        Services::Registry()->set('include', 'model_type', ASSETS_LITERAL);
+        Services::Registry()->set('include', 'model_type', 'Assets');
 
         if ($this->type == 'defer') {
 
@@ -64,7 +63,7 @@ Class HeadIncluder extends Includer
                 Services::Registry()->set(
                     'include',
                     'template_view_id',
-                    Services::Registry()->get(CONFIGURATION_LITERAL, 'defer_template_view_id')
+                    Services::Registry()->get('Configuration', 'defer_template_view_id')
                 );
             }
 
@@ -72,7 +71,7 @@ Class HeadIncluder extends Includer
                 Services::Registry()->set(
                     'include',
                     'wrap_view_id',
-                    Services::Registry()->get(CONFIGURATION_LITERAL, 'defer_wrap_view_id')
+                    Services::Registry()->get('Configuration', 'defer_wrap_view_id')
                 );
             }
 
@@ -81,14 +80,14 @@ Class HeadIncluder extends Includer
                 Services::Registry()->set(
                     'include',
                     'template_view_id',
-                    Services::Registry()->get(CONFIGURATION_LITERAL, 'head_template_view_id')
+                    Services::Registry()->get('Configuration', 'head_template_view_id')
                 );
             }
             if ((int)Services::Registry()->get('include', 'wrap_view_id', 0) == 0) {
                 Services::Registry()->set(
                     'include',
                     'wrap_view_id',
-                    Services::Registry()->get(CONFIGURATION_LITERAL, 'head_wrap_view_id')
+                    Services::Registry()->get('Configuration', 'head_wrap_view_id')
                 );
             }
         }

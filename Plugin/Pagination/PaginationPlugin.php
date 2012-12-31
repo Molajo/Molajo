@@ -125,7 +125,7 @@ class PaginationPlugin extends Plugin
 
         $temp_query_results[] = $temp_row;
 
-        Services::Registry()->set(PRIMARY_LITERAL, 'Paging', $temp_query_results);
+        Services::Registry()->set('Primary', 'Paging', $temp_query_results);
 
         /** Paging */
         $temp_query_results = array();

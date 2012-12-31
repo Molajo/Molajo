@@ -34,26 +34,26 @@ class HeadPlugin extends Plugin
         /** JS */
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry('dbo', ASSETS_LITERAL);
+        $controller->getModelRegistry('dbo', 'Assets');
         $controller->setDataobject();
         $controller->connectDatabase();
         $controller->set('model_parameter', 'Js', 'model_registry');
 
         $temp_query_results = $controller->getData('getAssets');
 
-        Services::Registry()->set(ASSETS_LITERAL, 'js', $temp_query_results);
+        Services::Registry()->set('Assets', 'js', $temp_query_results);
 
         /** JS Declarations */
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry('dbo', ASSETS_LITERAL);
+        $controller->getModelRegistry('dbo', 'Assets');
         $controller->setDataobject();
         $controller->connectDatabase();
 
         $controller->set('model_parameter', 'JsDeclarations', 'model_registry');
         $temp_query_results = $controller->getData('getAssets');
 
-        Services::Registry()->set(ASSETS_LITERAL, 'jsdeclarations', $temp_query_results);
+        Services::Registry()->set('Assets', 'jsdeclarations', $temp_query_results);
 
         return true;
     }

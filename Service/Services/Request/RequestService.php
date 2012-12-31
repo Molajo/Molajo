@@ -44,13 +44,6 @@ Class RequestService
     protected $symfony_request;
 
     /**
-     * Local object contained request elements
-     *
-     * object
-     * since 1.0
-     */
-
-    /**
      * Request
      *
      * @var    object  Request
@@ -59,15 +52,67 @@ Class RequestService
     protected $request = null;
 
     /**
-     * Class constructor
+     * Calling Class
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $calling_class;
+
+    /**
+     * Calling Method
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $calling_method;
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameter_properties_array = array(
+        'calling_class',
+        'calling_method',
+
+        'id',
+        'method',
+        'mimetype',
+        'post_variables',
+        'is_secure'
+    );
+
+    /**
+     * Class Constructor
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function __construct()
+    {
+        $trace = debug_backtrace();
+
+        if (isset($trace[1])) {
+
+            $this->set('calling_class', $trace[1]['class']);
+            $this->set('calling_method', $trace[1]['function']);
+        }
+
+        return;
+    }
+
+    /**
+     * Initialise
      *
      * return  object  Request
      *
      * @since  1.0
      */
-    public function __construct()
+    public function initialise()
     {
-        $this->request = new \stdClass();
+        $this->request         = new \stdClass();
 
         $request_class         = '\\Symfony\\Component\\HttpFoundation\\Request';
         $connection            = new $request_class();
@@ -79,36 +124,58 @@ Class RequestService
     }
 
     /**
-     * Retrieve the specified request item
+     * Create a request object or set a parameter value
      *
-     * @param   $key
+     * @param   string  $key    md5 name uniquely identifying content
+     * @param   mixed   $value  Data to be serialized and then saved as cache
      *
      * @return  mixed
      * @since   1.0
      */
-    public function get($key)
+    public function set($key, $value)
     {
-        if (isset($this->request->$key)) {
-            return $this->request->$key;
-        } else {
-            return null;
+        $key = strtolower($key);
+
+        if (in_array($key, $this->parameter_properties_array)) {
+            $this->$key = $value;
+            return $this->$key;
         }
+
+        $this->request->$key = $value;
+
+        return $this->request->$key;
     }
 
     /**
-     * set - store the key and value for the specified request item
+     * Retrieve request oboject or value of Key
      *
      * @param   string  $key
-     * @param   string  $value
+     * @param   null    $default
      *
-     * @return  object
+     * @return  bool|mixed
      * @since   1.0
      */
-    public function set($key, $value)
+    public function get($key, $default = null)
     {
-        $this->request->$key = $value;
+        $key = strtolower($key);
 
-        return $this;
+        if (isset($this->request->$key)) {
+            return $this->request->$key;
+        }
+
+        if (in_array($key, $this->parameter_properties_array)) {
+            if ($this->$key === null) {
+                $this->$key = $default;
+            }
+
+            return $this->$key;
+        }
+
+        if ($this->request->$key === null) {
+            $this->request->$key = $default;
+        }
+
+        return $this->request->$key;
     }
 
     /**

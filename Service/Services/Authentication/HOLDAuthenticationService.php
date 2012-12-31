@@ -294,7 +294,7 @@ Class AuthenticationService
 
                             return MolajoError::raiseWarning(
                                 '102004',
-                                Services::Language()->translate('JLIB_LOGIN_AUTHORISATION')
+                                Services::Language()->translate('JLIB_LOGIN_'Authorisation'')
                             );
                             break;
                     }

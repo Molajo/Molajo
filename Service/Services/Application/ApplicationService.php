@@ -146,10 +146,15 @@ Class ApplicationService
         $trace = debug_backtrace();
         if (isset($trace[1])) {
             $this->set('calling_class', $trace[1]['class']);
-            $this->set('calling_method', $trace[1]['method']);
+            $this->set('calling_method', $trace[1]['function']);
         }
 
         return;
+    }
+
+    public function initialise()
+    {
+
     }
 
     /**
@@ -241,12 +246,14 @@ Class ApplicationService
                         strlen(APPLICATION) + 1,
                         strlen($this->request_uri) - strlen(APPLICATION) + 1
                     );
+
                     break;
                 }
             }
 
             if (defined('APPLICATION')) {
             } else {
+
                 define('APPLICATION', $this->applications->default->name);
                 define('APPLICATION_URL_PATH', '');
                 define('APPLICATION_ID', $this->applications->default->id);
@@ -330,11 +337,15 @@ Class ApplicationService
             try {
                 $controllerClass = CONTROLLER_CLASS;
                 $controller      = new $controllerClass();
-                $controller->getModelRegistry('Datasource', 'Application', 1);
-
+                $results = $controller->getModelRegistry('Datasource', 'Application', 1);
+echo $results;
+                die;
                 $controller->set('name_key_value', APPLICATION, 'model_registry');
 
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
+
+                var_dump($item);
+                die;
                 if ($item === false) {
                     throw new \Exception ('ConfigurationService: Error executing getApplication Query');
                 }

@@ -1,12 +1,12 @@
 <?php
 /**
- * Application Service Plugin
+ * Metadata Service Plugin
  *
  * @package      Niambie
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Service\Services\Application;
+namespace Molajo\Service\Services\Metadata;
 
 use Molajo\Service\Services;
 use Molajo\Service\ServicesPlugin;
@@ -14,14 +14,14 @@ use Molajo\Service\ServicesPlugin;
 defined('NIAMBIE') or die;
 
 /**
- * Application Service Plugin
+ * Metadata Service Plugin
  *
  * @author       Amy Stephen
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class ApplicationServicePlugin extends ServicesPlugin
+Class MetadataServicePlugin extends ServicesPlugin
 {
     /**
      * on Before Startup Event
@@ -46,6 +46,13 @@ Class ApplicationServicePlugin extends ServicesPlugin
      */
     public function onAfterStartup()
     {
+        $this->service_class->set('language', $this->frontcontroller_class->get('language_current'));
+        $this->service_class->set('direction', $this->frontcontroller_class->get('language_direction'));
+        $this->service_class->set('html5', $this->frontcontroller_class->get('application_html5'));
+        $this->service_class->set('line_end', $this->frontcontroller_class->get('application_line_end'));
+        $this->service_class->set('mimetype', $this->frontcontroller_class->get('request_mimetype'));
+        $this->service_class->set('request_date', $this->frontcontroller_class->get('request_date'));
 
+        return;
     }
 }

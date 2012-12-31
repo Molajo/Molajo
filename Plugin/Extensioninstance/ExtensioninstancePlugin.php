@@ -189,7 +189,7 @@ class ExtensioninstancePlugin extends Plugin
         $data                        = new \stdClass();
         $data->application_id        = APPLICATION_ID;
         $data->extension_instance_id = $id;
-        $data->model_name            = 'ApplicationExtensionInstances';
+        $data->model_name            = 'Applicationextensioninstances';
 
         $controller->data = $data;
 

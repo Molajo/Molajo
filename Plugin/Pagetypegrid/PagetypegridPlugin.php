@@ -89,7 +89,7 @@ class PagetypegridPlugin extends Plugin
                 );
                 $temp_row->action = $button;
 
-                if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
+                if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
                     $temp_row->link = $url . '/' . $temp_row->action;
                 } else {
                     $temp_row->link = $url . '&action=' . $temp_row->action;
@@ -105,7 +105,7 @@ class PagetypegridPlugin extends Plugin
             $temp_row->name   = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
             $temp_row->action = 'search';
 
-            if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
+            if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
                 $temp_row->link = $url . '/' . $temp_row->action;
             } else {
                 $temp_row->link = $url . '&action=' . $temp_row->action;
@@ -278,10 +278,10 @@ class PagetypegridPlugin extends Plugin
         );
 
         $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
-        $controller->set('model_name', PRIMARY_LITERAL, 'model_registry');
+        $controller->set('model_name', 'Primary', 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
-        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $temp_query_results);
+        Services::Registry()->set('Primary', 'Data', $temp_query_results);
 
         return true;
     }

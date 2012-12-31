@@ -33,7 +33,7 @@ Class ApplicationServicePlugin extends ServicesPlugin
      */
     public function onBeforeStartup()
     {
-
+        return;
     }
 
     /**
@@ -46,6 +46,9 @@ Class ApplicationServicePlugin extends ServicesPlugin
      */
     public function onAfterStartup()
     {
+
+
+        return;
 
     }
 }

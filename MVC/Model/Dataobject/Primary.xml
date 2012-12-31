@@ -3,5 +3,5 @@
         name="Primary"
         service_class="Registry"
         service_class_query_method="getData"
-        service_class_query_method_parameter="DATA_LITERAL"
+        service_class_query_method_parameter="'Data'"
         process_plugins="1"/>

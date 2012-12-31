@@ -8,5 +8,11 @@
     <author_email>hello@niambie.org</author_email>
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
-    <description>SERVICE_FILTER_DESCRIPTION</description>
+    <model
+            name="Filter"
+            startup="1"
+            startup_method="initialise"
+            class="Molajo\Service\Services\Filter"
+            keep_instance="0">
+    </model>
 </extension>

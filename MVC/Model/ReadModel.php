@@ -583,7 +583,7 @@ class ReadModel extends Model
 
                 } else {
                     if (strtolower($customFieldName) == PARAMETERS_LITERAL
-                        || strtolower($customFieldName) == METADATA_LITERAL
+                        || strtolower($customFieldName) == 'Metadata'
                     ) {
                         $name = strtolower($customFieldName) . '_' . $name;
                     }

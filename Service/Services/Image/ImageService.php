@@ -19,21 +19,14 @@ defined('NIAMBIE') or die;
  */
 Class ImageService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
 
     /**
-     * @var numeric $id
+     * @var integer $id
      */
     protected $id;
 
     /**
-     * @var numeric $this->size
+     * @var integer $this->size
      *
      * thumbnail; configuration option, defaults to 50 x 50
      * small; configuration option, defaults to 75 x 75
@@ -44,70 +37,52 @@ Class ImageService
     protected $size;
 
     /**
-     * @var numeric $fileName
+     * @var integer $fileName
      */
     protected $fileName;
 
     /**
-     * @var numeric $fileNameOriginal
+     * @var integer $fileNameOriginal
      */
     protected $fileNameOriginal;
 
     /**
-     * @var numeric $fileNameNew
+     * @var integer $fileNameNew
      */
     protected $fileNameNew;
 
     /**
-     * @var numeric $image
+     * @var integer $image
      */
     protected $image;
 
     /**
-     * @var numeric $type
+     * @var integer $type
      */
     protected $type;
 
     /**
-     * @var numeric $width
+     * @var integer $width
      */
     protected $width;
 
     /**
-     * @var numeric $height
+     * @var integer $height
      */
     protected $height;
 
     /**
-     * @var numeric $imageResized
+     * @var integer $imageResized
      */
     protected $imageResized;
 
     /**
-     * getInstance
-     *
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new ImageService();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * __construct
-     *
-     * Class constructor.
+     * initialise
      *
      * @return boolean
      * @since  1.0
      */
-    public function __construct()
+    public function initialise()
     {
     }
 
@@ -201,7 +176,7 @@ Class ImageService
         }
 
         /** retrieve image folder for original images */
-        $images = Services::Registry()->get(CONFIGURATION_LITERAL, 'system_media_folder', 'media/images');
+        $images = Services::Registry()->get('Configuration', 'system_media_folder', 'media/images');
 
         /** folders */
         if (Services::Filesystem()->folderExists(SITE_BASE_PATH . '/' . $images)) {
@@ -226,7 +201,7 @@ Class ImageService
     private function getResizedImage()
     {
         /** retrieve image folder for resized images */
-        $images = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumb_folder', '/media/images/thumbs');
+        $images = Services::Registry()->get('Configuration', 'image_thumb_folder', '/media/images/thumbs');
 
         /** folders */
         if (Services::Filesystem()->folderExists(SITE_BASE_PATH . '/' . $images)) {
@@ -252,20 +227,20 @@ Class ImageService
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 'thumbnail') {
-            $width  = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumbnail_width', 50);
-            $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_thumbnail_height', 50);
+            $width  = Services::Registry()->get('Configuration', 'image_thumbnail_width', 50);
+            $height = Services::Registry()->get('Configuration', 'image_thumbnail_height', 50);
 
         } elseif ($this->size == 'small') {
-            $width  = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_small_width', 100);
-            $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_small_height', 100);
+            $width  = Services::Registry()->get('Configuration', 'image_small_width', 100);
+            $height = Services::Registry()->get('Configuration', 'image_small_height', 100);
 
         } elseif ($this->size == 'medium') {
-            $width  = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_medium_width', 300);
-            $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_medium_height', 300);
+            $width  = Services::Registry()->get('Configuration', 'image_medium_width', 300);
+            $height = Services::Registry()->get('Configuration', 'image_medium_height', 300);
 
         } elseif ($this->size == 'large') {
-            $width  = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_large_width', 500);
-            $height = Services::Registry()->get(CONFIGURATION_LITERAL, 'image_large_height', 500);
+            $width  = Services::Registry()->get('Configuration', 'image_large_width', 500);
+            $height = Services::Registry()->get('Configuration', 'image_large_height', 500);
 
         } else {
             $this->width  = imagesx($this->image);
@@ -600,7 +575,7 @@ Class ImageService
      * @return mixed
      * @since 1.0
      */
-    public static function getPlaceHolderImage($width, $height, $options = array())
+    public function getPlaceHolderImage($width, $height, $options = array())
     {
 
         $services_class = array(

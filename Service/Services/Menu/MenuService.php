@@ -19,29 +19,6 @@ defined('NIAMBIE') or die;
  */
 Class MenuService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return  bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new MenuService();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Retrieves an array of active menuitems, including the current menuitem and its parents
@@ -178,7 +155,7 @@ Class MenuService
 
             $item->css_class = trim($item->css_class);
 
-            if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
+            if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
                 $item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
             } else {
                 $item->url = Services::Url()->getApplicationURL('index.php?id=' . (int)$item->id);

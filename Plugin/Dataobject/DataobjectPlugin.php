@@ -26,17 +26,17 @@ class DataobjectPlugin extends Plugin
      */
     public function onConnectDatabase()
     {
-        if ($this->get('data_object', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
+        if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
         } else {
             return true;
         }
 
-        if ($this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry') == '') {
-            $this->set('data_object_service_class', DATABASE_LITERAL, 'model_registry');
+        if ($this->get('data_object_service_class', 'Database', 'model_registry') == '') {
+            $this->set('data_object_service_class', 'Database', 'model_registry');
         }
 
-        if ($this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry') == DATABASE_LITERAL) {
-            $service_class = $this->get('data_object_service_class', DATABASE_LITERAL, 'model_registry');
+        if ($this->get('data_object_service_class', 'Database', 'model_registry') == 'Database') {
+            $service_class = $this->get('data_object_service_class', 'Database', 'model_registry');
             $this->set('db', Services::$service_class()->connect($this->get('model_registry')), 'model');
             $this->set('query', $this->get('db', '', 'model')->getQuery($this->get('db', '', 'model')), 'model');
             $this->set('null_date', $this->get('db', '', 'model')->getNullDate(), 'model');

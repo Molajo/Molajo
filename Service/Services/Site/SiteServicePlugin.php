@@ -1,12 +1,12 @@
 <?php
 /**
- * Application Service Plugin
+ * Site Service Plugin
  *
  * @package      Niambie
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-namespace Molajo\Service\Services\Application;
+namespace Molajo\Service\Services\Site;
 
 use Molajo\Service\Services;
 use Molajo\Service\ServicesPlugin;
@@ -14,14 +14,14 @@ use Molajo\Service\ServicesPlugin;
 defined('NIAMBIE') or die;
 
 /**
- * Application Service Plugin
+ * Site Service Plugin
  *
  * @author       Amy Stephen
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class ApplicationServicePlugin extends ServicesPlugin
+Class SiteServicePlugin extends ServicesPlugin
 {
     /**
      * on Before Startup Event
@@ -33,7 +33,7 @@ Class ApplicationServicePlugin extends ServicesPlugin
      */
     public function onBeforeStartup()
     {
-
+        return;
     }
 
     /**
@@ -46,6 +46,10 @@ Class ApplicationServicePlugin extends ServicesPlugin
      */
     public function onAfterStartup()
     {
+        $this->service_class->set('base_url', $this->frontcontroller_class->get('request_base_url'));
+        $this->service_class->setBaseURL();
+        $this->service_class->setStandardDefines();
 
+        return;
     }
 }

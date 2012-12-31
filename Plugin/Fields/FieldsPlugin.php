@@ -43,7 +43,7 @@ class FieldsPlugin extends Plugin
         $fieldArray    = array();
         $standardArray = array();
 
-        $normalFields = $this->get(strtolower(FIELDS_LITERAL), array(), 'model_registry');
+        $normalFields = $this->get('Fields', array(), 'model_registry');
 
         $status = 0;
 
@@ -166,8 +166,8 @@ class FieldsPlugin extends Plugin
             }
         }
 
-//$exists = Services::Registry()->exists($model_registry, CUSTOMFIELDGROUPS_LITERAL);
-        $customfields     = $this->get(strtolower(CUSTOMFIELDS_LITERAL), array(), 'model_registry');
+//$exists = Services::Registry()->exists($model_registry, 'customfieldgroups');
+        $customfields     = $this->get('customfields', array(), 'model_registry');
         $customFieldArray = array();
         if (count($customfields) > 0) {
             foreach ($customfields as $field) {
@@ -194,12 +194,12 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $metadata = $this->get(strtolower(METADATA_LITERAL), array(), 'model_registry');
+        $metadata = $this->get('metadata', array(), 'model_registry');
         if (count($metadata) > 0) {
             foreach ($metadata as $field) {
                 $temp_row        = new \stdClass();
-                $temp_row->id    = METADATA_LITERAL . '_' . $field['name'];
-                $temp_row->value = METADATA_LITERAL . '_' . $field['name'] . $metadata_literal;
+                $temp_row->id    = 'Metadata' . '_' . $field['name'];
+                $temp_row->value = 'Metadata' . '_' . $field['name'] . $metadata_literal;
 
                 $fieldArray[]    = $temp_row;
                 $standardArray[] = $temp_row;
@@ -213,15 +213,15 @@ class FieldsPlugin extends Plugin
         asort($parametersArray);
         asort($customFieldArray);
 
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_LITERAL, $fieldArray);
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_STANDARD_LITERAL, $standardArray);
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_METADATA_LITERAL, $metadataArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . 'Fields', $fieldArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . 'Fieldsstandard', $standardArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . 'Metadata', $metadataArray);
         Services::Registry()->set(
             DATALIST_LITERAL,
             $model_registry . FIELDS_PARAMETERS_LITERAL,
             $parametersArray
         );
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . FIELDS_CUSTOM_LITERAL, $customFieldArray);
+        Services::Registry()->set(DATALIST_LITERAL, $model_registry . 'Fieldscustom', $customFieldArray);
 
         return true;
     }

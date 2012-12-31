@@ -46,7 +46,7 @@ class AjaxPlugin extends Plugin
         echo '</pre>';
         die;
 
-        if ((int)Services::Registry()->get(CLIENT_LITERAL, 'Ajax') == 0) {
+        if ((int)Services::Registry()->get('Client', 'Ajax') == 0) {
             return true;
         }
 

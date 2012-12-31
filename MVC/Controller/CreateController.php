@@ -74,7 +74,7 @@ class CreateController extends Controller
 
         if ($valid === true) {
 
-            $fields = Services::Registry()->get($this->model_registry, FIELDS_LITERAL);
+            $fields = Services::Registry()->get($this->model_registry, 'Fields');
 
             if (count($fields) == 0 || $fields === null) {
                 return false;
@@ -171,7 +171,7 @@ class CreateController extends Controller
         /** Custom Field Groups */
         $customfieldgroups = Services::Registry()->get(
             $this->model_registry,
-            CUSTOMFIELDGROUPS_LITERAL,
+            'customfieldgroups',
             array()
         );
 
@@ -200,7 +200,7 @@ class CreateController extends Controller
         }
 
         /** Standard Field Group */
-        $fields = Services::Registry()->get($this->model_registry, FIELDS_LITERAL);
+        $fields = Services::Registry()->get($this->model_registry, 'Fields');
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -211,7 +211,7 @@ class CreateController extends Controller
             return false;
         }
 
-        Services::Profiler()->set('CreateController::checkFields Filter::Success: ' . $valid, PROFILER_ACTIONS);
+        Services::Profiler()->set('message', 'CreateController::checkFields Filter::Success: ' . $valid, 'Actions');
 
         return $valid;
     }
@@ -323,7 +323,7 @@ class CreateController extends Controller
             $this->row->$customFieldName = $fieldArray;
         }
 
-        Services::Profiler()->set('CreateController::checkFields Filter::Success: ' . $valid, PROFILER_ACTIONS);
+        Services::Profiler()->set('message', 'CreateController::checkFields Filter::Success: ' . $valid, 'Actions');
 
         return $valid;
     }
@@ -445,21 +445,21 @@ class CreateController extends Controller
             'model_name'     => $this->get('model_name')
         );
 
-        Services::Profiler()->set(
+        Services::Profiler()->set('message',
             'CreateController->onBeforeCreateEvent Schedules onBeforeCreate',
-            PROFILER_PLUGINS,
+            'Plugins',
             VERBOSE
         );
 
         $arguments = Services::Event()->scheduleEvent('onBeforeCreate', $arguments, $this->plugins);
 
         if ($arguments === false) {
-            Services::Profiler()->set('CreateController->onBeforeCreateEvent failed.', PROFILER_PLUGINS, VERBOSE);
+            Services::Profiler()->set('message', 'CreateController->onBeforeCreateEvent failed.', 'Plugins', VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('CreateController->onBeforeCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set('message', 'CreateController->onBeforeCreateEvent successful.', 'Plugins', VERBOSE);
 
         $this->parameters = $arguments['parameters'];
         $this->row        = $arguments['row'];
@@ -493,21 +493,21 @@ class CreateController extends Controller
             'model_name'     => $this->get('model_name')
         );
 
-        Services::Profiler()->set(
+        Services::Profiler()->set('message',
             'CreateController->onAfterCreateEvent Schedules onAfterCreate',
-            PROFILER_PLUGINS,
+            'Plugins',
             VERBOSE
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterCreate', $arguments, $this->plugins);
 
         if ($arguments === false) {
-            Services::Profiler()->set('CreateController->onAfterCreateEvent failed.', PROFILER_PLUGINS, VERBOSE);
+            Services::Profiler()->set('message', 'CreateController->onAfterCreateEvent failed.', 'Plugins', VERBOSE);
 
             return false;
         }
 
-        Services::Profiler()->set('CreateController->onAfterCreateEvent successful.', PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set('message', 'CreateController->onAfterCreateEvent successful.', 'Plugins', VERBOSE);
 
         $this->parameters = $arguments['parameters'];
         $data             = $arguments['row'];

@@ -74,7 +74,7 @@ class ApplicationPlugin extends Plugin
      */
     protected function urls()
     {
-        $url = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_base_url');
+        $url = Services::Registry()->get('Configuration', 'application_base_url');
         Services::Registry()->set(PAGE_LITERAL, 'home_url', $url);
 
         $url = $this->get('request_base_url_path', '', 'parameters') . $this->get('request_url', '', 'parameters');
@@ -148,7 +148,7 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageTitle($item_indicator = 0)
     {
-        $title = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_name');
+        $title = Services::Registry()->get('Configuration', 'application_name');
         if ($title == '') {
             $title = 'Molajo ' . Services::Language()->translate(APPLICATION_NAME);
         }
@@ -191,8 +191,8 @@ class ApplicationPlugin extends Plugin
         $temp_query_results[] = $temp_row;
 
         $temp_row             = new \stdClass();
-        $temp_row->link_text  = Services::Language()->translate(CONFIGURATION_LITERAL);
-        $temp_row->link       = Services::Registry()->get(PAGE_LITERAL, 'resource_url') . '/' . CONFIGURATION_LITERAL;
+        $temp_row->link_text  = Services::Language()->translate('Configuration');
+        $temp_row->link       = Services::Registry()->get(PAGE_LITERAL, 'resource_url') . '/' . 'Configuration';
         $temp_row->current    = $configuration_current;
         $temp_query_results[] = $temp_row;
 

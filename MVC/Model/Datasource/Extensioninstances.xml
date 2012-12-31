@@ -65,7 +65,7 @@
                   select="id,name"
                   jointo="id"
                   joinwith="extension_id"/>
-            <join model="ApplicationExtensionInstances"
+            <join model="Applicationextensioninstances"
                   alias="application_extension_instances"
                   select=""
                   jointo="application_id,extension_instance_id"

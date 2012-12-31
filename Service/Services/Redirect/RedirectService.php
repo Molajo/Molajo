@@ -59,14 +59,14 @@ Class RedirectService
         }
 
         /** Configuration Service is available */
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
             $url = BASE_URL . APPLICATION_URL_PATH . $url;
         }
 
-        Services::Profiler()->set(
+        Services::Profiler()->set('message',
             'Redirect Services Set URL: ' . $this->url
                 . ' Status Code: ' . $this->code,
-            PROFILER_APPLICATION
+            'Application'
         );
 
         return;
@@ -88,10 +88,10 @@ Class RedirectService
         } else {
             $this->code = $code;
         }
-        Services::Profiler()->set(
+        Services::Profiler()->set('message',
             'RedirectServices::redirect to: ' . $this->url
                 . ' Status Code: ' . $this->code,
-            PROFILER_APPLICATION
+            'Application'
         );
 
         return new RedirectResponse($this->url, $this->code);

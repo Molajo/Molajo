@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Frontend Controller
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Filesystem;
 
@@ -48,21 +50,33 @@ defined('NIAMBIE') or die;
  * Services::Filesystem()->pathIsOwner
  * Services::Filesystem()->pathFind
  *
- * @package       Molajo
- * @subpackage    Services
- * @since         1.0
+ * @author     Amy Stephen
+ * @license    MIT
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 class FilesystemService
 {
     /**
+     * Initialise
+     *
+     * @return  Filesystem object
+     * @since   1.0
+     */
+    public function initialise()
+    {
+        return $this;
+    }
+
+    /**
      * Magic method __call intercepts calls and act as a proxy to
      * Joomla JFile, JFolder, and JPath Classes
      *
-     * @param $name
-     * @param $arguments
+     * @param   $name
+     * @param   $arguments
      *
-     * @return mixed
-     * @since 1.0
+     * @return  mixed
+     * @since   1.0
      */
     public function __call($name, $arguments)
     {
@@ -75,11 +89,11 @@ class FilesystemService
      *
      * @static
      *
-     * @param $name
-     * @param $arguments
+     * @param   $name
+     * @param   $arguments
      *
-     * @return mixed
-     * @since 1.0
+     * @return  mixed
+     * @since   1.0
      */
     public static function __callStatic($name, $arguments)
     {
@@ -89,10 +103,11 @@ class FilesystemService
     /**
      * proxy to JFile, JFolder, and JPath Classes
      *
-     * @param $name
-     * @param $arguments
+     * @param   $name
+     * @param   $arguments
      *
-     * @return bool|mixed
+     * @return  bool|mixed
+     * @since   1.0
      */
     public function processCall($name, $arguments)
     {

@@ -36,7 +36,7 @@ Class Services
      * @var     object
      * @since   1.0
      */
-    protected $message;
+    protected $message = array();
 
     /**
      * Service Connections
@@ -44,96 +44,99 @@ Class Services
      * @var     object
      * @since   1.0
      */
-    protected $connections;
+    protected $connections = array();
 
     /**
-     * Configuration
+     * Front Controller
      *
      * @var     object
      * @since   1.0
      */
-    protected $configuration;
+    protected $frontcontroller_class = null;
 
     /**
-     * Registry
+     * Controller Class Name
      *
      * @var     object
      * @since   1.0
      */
-    protected $registry;
+    protected $controller_class_name = null;
 
     /**
-     * instantiates services defined in the services.xml file and runs onBefore and onAfterStart Events for each
+     * Stores an array of key/value Parameters settings from Route
      *
-     * @return  boolean
+     * @var    array
+     * @since  1.0
+     */
+    protected $parameters = array();
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameter_properties_array = array(
+        'configuration',
+        'controller_class_name',
+        'frontcontroller_class'
+    );
+
+    /**
+     * Get the current value (or default) of the specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
      * @since   1.0
      */
-    public function startup($configuration_class = 'Molajo\\Services\\Service\\Configuration\\')
+    public function get($key = null, $default = null)
     {
-        $this->connections = array();
-        $this->message     = array();
+        $key = strtolower($key);
 
-        /** Configuration */
-        $name    = 'Configuration';
-        $class   = $configuration_class;
-
-        if ($class === null) {
-            $class = 'Molajo\\Service\\Services\\Configuration\\';
+        if (in_array($key, $this->parameter_properties_array)) {
+        } else {
+            throw new \OutOfRangeException('Services: is attempting to get value for unknown key: ' . $key);
         }
 
-        $this->get($name, $class);
-
-        /** Startup Sequence */
-        $this->configuration = $this->connections['ConfigurationService'];
-
-        $services = $this->configuration->getFile('Service', 'Services');
-
-        if ($services === null) {
-            throw new \RuntimeException
-            ('Cannot find Services File Model Type: Service Model Name: Services');
+        if ($this->$key === null) {
+            $this->$key = $default;
         }
 
-        /** Registry */
-        $name    = 'Registry';
-        $class   = 'Molajo\\Services\\Service\\Registry\\';
+        return $this->$key;
+    }
 
-        $this->get($name, $class);
-echo 'fine';
+    /**
+     * Set the value of a specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        $key = strtolower($key);
 
-        $this->registry = $this->connections['RegistryService'];
-        echo 'fine';
-        die;
-
-        foreach ($services->service as $service) {
-
-            $name    = (string)$service->attributes()->name;
-            $startup = (string)$service->attributes()->startup;
-            $class   = (string)$service->attributes()->class;
-
-            if ($class === null) {
-                $class = 'Molajo\\Service\\Services\\';
-            }
-
-            if ((int)$startup == 0) {
-            } else {
-                $this->get($name, $class);
-            }
+        if (in_array($key, $this->parameter_properties_array)) {
+        } else {
+            throw new \OutOfRangeException('Services: is attempting to set value for unknown key: ' . $key);
         }
 
-        foreach ($this->message as $message) {
-            Services::Profiler()->set($message, PROFILER_SERVICES, VERBOSE);
-        }
+        $this->$key = $value;
 
-        return true;
+        return $this->$key;
     }
 
     /**
      * Entry point for services called outside of the Services Class
      *
      * Note: The Services Class is a static connection to the FrontController. The Services, themselves,
-     *  are rarely static. The purpose of the static call is to creates a Facade in order to simplify frontend
-     *  developer access and to provide a single point of entry for all services calls. This single entry
-     *  point should make it easier to manage backwards compatible support.
+     *  are new or saved instances. The purpose of the static call is to creates a entry point and a facade
+     *  to simplify frontend developer access and to provide a single point of entry for all services calls.
+     *  This entry point will make easier the job of managing backwards compatible support.
      *
      * @static
      *
@@ -145,14 +148,42 @@ echo 'fine';
      */
     public static function __callStatic($name, $arguments)
     {
-        /** Registry is accessed through the Front Controller */
-        if ($name == 'Registry') {
-            return Frontcontroller::registry();
+        return Frontcontroller::Services()->start($name . 'Service');
+    }
+
+    /**
+     * Prior to startup, the Front Controller starts the Registry Service, followed by the Configuration Service
+     * Next, startup is invoked to instantiate service classes defined in the services.xml file
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function startup()
+    {
+        $services = $this->connections['ConfigurationService']->getFile('Services', 'Services');
+
+        if ($services === null) {
+            throw new \RuntimeException
+                ('Cannot find Services File Model Type: Service Model Name: Services');
         }
 
-        /** All other Services route back to the Services->get() method */
+        foreach ($services->service as $service) {
 
-        return Frontcontroller::Services()->get($name . 'Service');
+            $name  = (string)$service->attributes()->name;
+            $class = (string)$service->attributes()->class . $name . '\\';
+
+            if ($class === null) {
+                $class = 'Molajo\\Service\\Services\\';
+            }
+echo 'Startup ' . $name . ' ' . $class . '<br />';
+            $this->start($name, $class, true);
+        }
+echo 'DONE ' . $name . ' ' . $class . '<br />';
+        foreach ($this->message as $message) {
+            Services::Profiler()->set('message', $message, 'Services', VERBOSE);
+        }
+
+        return true;
     }
 
     /**
@@ -164,39 +195,49 @@ echo 'fine';
      *
      * @param   string $key
      *
-     * @return  mixed
+     * @return  null
      * @since   1.0
      *
      * @throws  \BadMethodCallException
      */
-    protected function get($key, $class = 'Molajo\\Service\\Services\\')
+    public function start($key, $class = '', $registry = false)
     {
-        if ($key == 'Configuration' || $key == 'Registry') {
-            $static_indicator = 1;
-            $name             = $key;
-            $startup          = 1;
-            $startup_method   = 'initialise';
-            $class            = $class;
-            $static_indicator = 1;
+
+        if ($class == '') {
+            $class = 'Molajo\\Service\\Services\\' . substr($key, 0, (strlen($key) - 7)) . '\\';
+        }
+        echo 'Start ' . $key . ' ' . $class . '<br />';
+
+//        echo '<pre>Here is $this->connections';
+//        var_dump($this->connections);
+//echo '</pre>';
+        if (isset($this->connections[$key])) {
+            return $this->connections[$key];
+        }
+
+        if ($registry == false) {
+
+            $keep_instance  = 1;
+            $name           = $key;
+            $startup        = 1;
+            $startup_method = 'initialise';
+            $class          = $class;
+            $keep_instance  = 1;
 
         } else {
-            $controllerClass = CONTROLLER_CLASS;
-            $controller      = new $controllerClass();
-            $controller->getModelRegistry('Services', $key);
 
-            $static_indicator = (int)   $service->attributes()->static;
-            $name             = (string)$service->attributes()->name;
-            $startup          = (string)$service->attributes()->startup;
-            $startup_method   = (string)$service->attributes()->startup_method;
-            $class            = (string)$service->attributes()->class;
+            $controller      = new $this->controller_class_name();
+            $controller->getModelRegistry('Service', $key);
+
+            $name           = (string)$service->attributes()->name;
+            $startup        = (string)$service->attributes()->startup;
+            $startup_method = (string)$service->attributes()->startup_method;
+            $class          = (string)$service->attributes()->class;
+            $keep_instance  = (int)$service->attributes()->keep_instance;
         }
 
-        if ($class === null) {
-            $class = 'Molajo\\Service\\Services\\';
-        }
-
-        $serviceClass = $class . $name . 'Service';
-        $pluginClass  = $class . $name . 'ServicePlugin';
+        $serviceClass = $class . $name;
+        $pluginClass  = $class . $name . 'Plugin';
 
         $connectionSucceeded = null;
 
@@ -214,6 +255,7 @@ echo 'fine';
 
             $pluginInstance->set('service_class', $serviceClass);
 
+            $pluginInstance->set('frontcontroller_class', $this->get('frontcontroller_class'));
 
             $serviceInstance =
                 $this->scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance);
@@ -221,15 +263,15 @@ echo 'fine';
             if (trim($startup_method) == '') {
 
             } else {
-                $connectionSucceeded =
-                    $this->runStartupMethod($serviceInstance, $name . 'Service', $startup_method);
+                $connectionSucceeded
+                    = $this->runStartupMethod($serviceInstance, $name, $startup_method);
             }
 
             $serviceInstance
                 = $this->scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance);
 
-            if ($static_indicator == 1) {
-                $this->set($name . 'Service', $serviceInstance, $connectionSucceeded);
+            if ($keep_instance == 1) {
+                $this->saveServiceClassInstance($name, $serviceInstance, $connectionSucceeded);
             }
 
         } catch (\Exception $e) {
@@ -251,10 +293,9 @@ echo 'fine';
     }
 
     /**
-     * Get Service Class Instance
+     * Retrieve Saved Service Class Instance or Instantiate New One
      *
-     * @param   string   $entry
-     * @param            $folder  $entry
+     * @param   string   $serviceClass
      *
      * @return  mixed
      * @since   1.0
@@ -262,10 +303,10 @@ echo 'fine';
     protected function getServiceClassInstance($serviceClass)
     {
         if (class_exists($serviceClass)) {
-            echo $serviceClass;
+
         } else {
             throw new \Exception
-            ('Services: Class ' . $serviceClass . ' does not exist.');
+                ('Services: Class ' . $serviceClass . ' does not exist.');
         }
 
         return new $serviceClass();
@@ -274,8 +315,8 @@ echo 'fine';
     /**
      * Get Plugin Class Instance
      *
-     * @param   string   $entry
-     * @param            $folder  $entry
+     * @param   string   $pluginClass
+     * @param   string   $folder  $entry
      *
      * @return  mixed
      * @since   1.0
@@ -378,7 +419,7 @@ echo 'fine';
      * @since   1.0
      * @throws  \Exception
      */
-    protected function set($key, $value = null, $connectionSucceeded = true)
+    protected function saveServiceClassInstance($key, $value = null, $connectionSucceeded = true)
     {
         $i = count($this->message);
 
@@ -386,7 +427,7 @@ echo 'fine';
             $this->message[$i] = ' ' . $key . ' FAILED' . $value;
             if ($key == 'ConfigurationService' || $key == 'RegistryService') {
             } else {
-                Services::Registry()->set('Service', $key, false);
+                $this->connections['RegistryService']->set('Service', $key, false);
             }
 
         } else {
@@ -394,7 +435,8 @@ echo 'fine';
             $this->message[$i]       = ' ' . $key . ' started successfully. ';
             if ($key == 'ConfigurationService' || $key == 'RegistryService') {
             } else {
-                Services::Registry()->set('Service', $key, true);
+                echo $key . '<br />';
+                $this->connections['RegistryService']->set('Service', $key, true);
             }
         }
 

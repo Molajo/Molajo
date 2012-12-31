@@ -9,4 +9,11 @@
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>SERVICE_TEXT_DESCRIPTION</description>
+    <model
+            name="Text"
+            startup="1"
+            startup_method="initialise"
+            class="Molajo\Service\Services\Text"
+            keep_instance="0">
+    </model>
 </extension>

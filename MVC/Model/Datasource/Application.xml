@@ -40,10 +40,10 @@
 
         <children>
             <child name="SiteApplications" type="Datasource" join="application_id"/>
-            <child name="ApplicationExtensionInstances" type="Datasource" join="application_id"/>
+            <child name="Applicationextensioninstances" type="Datasource" join="application_id"/>
             <child name="UserApplications" type="Datasource" join="application_id"/>
             <child name="Sessions" type="Datasource" join="application_id"/>
-            <child name="ApplicationExtensionInstances" type="Datasource" join="application_id"/>
+            <child name="Applicationextensioninstances" type="Datasource" join="application_id"/>
         </children>
 
         <plugins>

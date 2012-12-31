@@ -6,7 +6,6 @@
  */
 namespace Molajo\Service\Services\Theme\Includer;
 
-use Molajo\Helpers;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Theme\Includer;
 
@@ -50,12 +49,12 @@ Class MessageIncluder extends Includer
         Services::Registry()->set(
             'include',
             'template_view_id',
-            Services::Registry()->get(CONFIGURATION_LITERAL, 'message_template_view_id')
+            Services::Registry()->get('Configuration', 'message_template_view_id')
         );
         Services::Registry()->set(
             'include',
             'wrap_view_id',
-            Services::Registry()->get(CONFIGURATION_LITERAL, 'message_wrap_view_id')
+            Services::Registry()->get('Configuration', 'message_wrap_view_id')
         );
 
         Services::Registry()->set('include', 'criteria_display_view_on_no_results', 0);
@@ -70,7 +69,7 @@ Class MessageIncluder extends Includer
         $this->viewHelper->get(Services::Registry()->get('include', 'wrap_view_id'), CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         /** Merge Configuration in */
-        Services::Registry()->merge(CONFIGURATION_LITERAL, 'include', true);
+        Services::Registry()->merge('Configuration', 'include', true);
 
         /** DBO  */
         Services::Registry()->set('include', 'model_type', DATA_OBJECT_LITERAL);

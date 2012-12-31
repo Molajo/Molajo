@@ -53,19 +53,6 @@ Class DatabaseService
     protected $model_registry = array();
 
     /**
-     * Retrieve Site and Application data, set constants and paths
-     *
-     * @param   null  $configuration_file
-     *
-     * @return  object
-     * @since   1.0
-     */
-    public function __construct()
-    {
-        return $this;
-    }
-
-    /**
      * get property
      *
      * @param   $value

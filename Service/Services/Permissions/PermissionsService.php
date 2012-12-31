@@ -52,7 +52,7 @@ Class PermissionsService
             $permission_actions[$item->id] = $title;
             $permission_action_ids[$title] = $item->id;
         }
-        Services::Registry()->set(PERMISSIONS_LITERAL, 'actions', $permission_actions);
+        Services::Registry()->set('Permissions', 'actions', $permission_actions);
 
         /** Verb Actions (Order Up, Order Down, Feature) to Permission Actions */
         $actions = Services::Configuration()->getFile('Application', 'Actions');
@@ -71,17 +71,17 @@ Class PermissionsService
             $action_to_controller[$name]    = (string)$t['controller'];
         }
 
-        Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation', $action_to_authorisation);
-        Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_controller', $action_to_controller);
+        Services::Registry()->set('Permissions', 'action_to_authorisation', $action_to_authorisation);
+        Services::Registry()->set('Permissions', 'action_to_controller', $action_to_controller);
         sort($tasks);
-        Services::Registry()->set(PERMISSIONS_LITERAL, 'tasks', $tasks);
+        Services::Registry()->set('Permissions', 'tasks', $tasks);
 
         /** Bridges the Verb Action (Order Up, Order Down) to the Permission Action (Read, Update) to the ID (1, 2, etc.) */
         $action_to_authorisation_id = array();
         foreach ($action_to_authorisation as $action => $authorisation) {
             $action_to_authorisation_id[$action] = $permission_action_ids[$authorisation];
         }
-        Services::Registry()->set(PERMISSIONS_LITERAL, 'action_to_authorisation_id', $action_to_authorisation_id);
+        Services::Registry()->set('Permissions', 'action_to_authorisation_id', $action_to_authorisation_id);
 
         /** Not sure where else to place this */
         $filtersFile = Services::Configuration()->getFile('Application', 'Filters');
@@ -95,7 +95,7 @@ Class PermissionsService
             $filters[] = $name;
         }
         sort($filters);
-        Services::Registry()->set(PERMISSIONS_LITERAL, 'filters', $filters);
+        Services::Registry()->set('Permissions', 'filters', $filters);
 
         return true;
     }
@@ -137,7 +137,7 @@ Class PermissionsService
      */
     public function getTaskAction($task)
     {
-        $temp = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
+        $temp = Services::Registry()->get('Permissions', 'action_to_authorisation');
 
         if (isset($temp[$task])) {
             return $temp[$task];
@@ -159,7 +159,7 @@ Class PermissionsService
      */
     public function getTaskController($action)
     {
-        $temp = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_controller');
+        $temp = Services::Registry()->get('Permissions', 'action_to_controller');
 
         if (isset($temp[$action])) {
             return $temp[$action];
@@ -184,10 +184,10 @@ Class PermissionsService
     public function verifyTaskList($actionlist = array(), $catalog_id = 0)
     {
         if (count($actionlist) == 0) {
-            throw new \Exception(PERMISSIONS_LITERAL . ': Empty Action List sent into verifyTasklist');
+            throw new \Exception('Permissions' . ': Empty Action List sent into verifyTasklist');
         }
         if ($catalog_id == 0) {
-            throw new \Exception(PERMISSIONS_LITERAL . ': No Catalog ID sent into verifyTaskList');
+            throw new \Exception('Permissions' . ': No Catalog ID sent into verifyTaskList');
         }
 
         $actionPermissions = array();
@@ -267,8 +267,8 @@ Class PermissionsService
         return true;
 
 //@todo hash store results for later reuse
-        $authorisationArray   = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation');
-        $authorisationIdArray = Services::Registry()->get(PERMISSIONS_LITERAL, 'action_to_authorisation_id');
+        $authorisationArray   = Services::Registry()->get('Permissions', 'action_to_authorisation');
+        $authorisationIdArray = Services::Registry()->get('Permissions', 'action_to_authorisation_id');
 
         $action    = $authorisationArray[$action];
         $action_id = $authorisationIdArray[$action];
@@ -444,7 +444,7 @@ Class PermissionsService
      */
     public function setHTMLFilter()
     {
-        $groups     = Services::Registry()->get(CONFIGURATION_LITERAL, 'user_disable_filter_for_groups');
+        $groups     = Services::Registry()->get('Configuration', 'user_disable_filter_for_groups');
         $groupArray = explode(',', $groups);
         $userGroups = Services::Registry()->get(USER_LITERAL, 'groups');
 

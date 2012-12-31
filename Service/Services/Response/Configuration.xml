@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="Service" version="1.0" extends="ServicesSystem">
-    <name>SERVICE_RESPONSE_NAME</name>
+    <name>SERVICE_'Response'_NAME</name>
     <author>Amy Stephen</author>
     <create_date>January 2013</create_date>
     <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
@@ -8,5 +8,12 @@
     <author_email>hello@niambie.org</author_email>
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
-    <description>SERVICE_RESPONSE_DESCRIPTION</description>
+    <description>SERVICE_'Response'_DESCRIPTION</description>
+    <model
+            name="Response"
+            startup=""
+            startup_method=""
+            class="Molajo\Service\Services\Response"
+            keep_instance="0">
+    </model>
 </extension>

@@ -23,7 +23,6 @@ defined('NIAMBIE') or die;
  */
 Class ConfigurationServicePlugin extends ServicesPlugin
 {
-
     /**
      * On Before Startup for Configuration - runs after class instantiation
      *

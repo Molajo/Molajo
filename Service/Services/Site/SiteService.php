@@ -71,6 +71,18 @@ Class SiteService
     );
 
     /**
+     * Initialise
+     *
+     * return  null
+     *
+     * @since  1.0
+     */
+    public function initialise()
+    {
+        return;
+    }
+
+    /**
      * Get the current value (or default) of the specified key
      *
      * @param   string  $key

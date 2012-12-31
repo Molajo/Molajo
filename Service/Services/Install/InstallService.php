@@ -22,27 +22,6 @@ defined('NIAMBIE') or die;
  */
 Class InstallService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * @static
-     * @return bool|object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new InstallService();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Create Content
@@ -113,7 +92,7 @@ Class InstallService
         $email_address[] = 'MaryKline@example.com';
         $website[]       = 'http://example.com/';
 
-        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
+        $fields = Services::Registry()->get($model_registry, 'Fields');
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -194,8 +173,8 @@ Class InstallService
         }
 
         $data->metadata = array();
-        Services::Registry()->sort($model_registry . METADATA_LITERAL);
-        $parameters = Services::Registry()->getArray($model_registry . METADATA_LITERAL);
+        Services::Registry()->sort($model_registry . 'Metadata');
+        $parameters = Services::Registry()->getArray($model_registry . 'Metadata');
 
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
@@ -210,8 +189,8 @@ Class InstallService
         for ($i = 0; $i < 3; $i++) {
 
             $data->customfields = array();
-            Services::Registry()->sort($model_registry . CUSTOMFIELDS_LITERAL);
-            $customfields = Services::Registry()->getArray($model_registry . CUSTOMFIELDS_LITERAL);
+            Services::Registry()->sort($model_registry . 'Customfields');
+            $customfields = Services::Registry()->getArray($model_registry . 'Customfields');
 
             if (count($customfields) > 0) {
                 foreach ($customfields as $key => $value) {

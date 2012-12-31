@@ -215,7 +215,7 @@ Class InstallService
      */
     public static function downloadPackage($url, $target = false)
     {
-        $config = Services::Registry()->get(CONFIGURATION_LITERAL);
+        $config = Services::Registry()->get('Configuration');
 
         // Capture PHP errors
         $php_errormsg = 'Error Unknown';
@@ -438,7 +438,7 @@ Class InstallService
      */
     public static function cleanupInstall($package, $resultdir)
     {
-        $config = Services::Registry()->get(CONFIGURATION_LITERAL);
+        $config = Services::Registry()->get('Configuration');
 
         // Does the unpacked extension directory exist?
         if (is_dir($resultdir)) {

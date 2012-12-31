@@ -26,7 +26,7 @@ class GoogleanalyticsPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        $account = Services::Registry()->get(CONFIGURATION_LITERAL, 'application_google_analytics_code');
+        $account = Services::Registry()->get('Configuration', 'application_google_analytics_code');
 
         if (trim($account) == '') {
             return true;

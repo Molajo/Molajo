@@ -62,7 +62,7 @@ Class LanguageService
      * @return  null
      * @since   1.0
      */
-    public function load($language = null)
+    public function initialise($language = null)
     {
         $language = $this->setCurrentLanguage($language);
         $this->setLanguageRegistry($language);
@@ -165,7 +165,7 @@ Class LanguageService
             return true;
         }
 
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_collect_missing_language_strings') == '1') {
+        if (Services::Registry()->get('Configuration', 'profiler_collect_missing_language_strings') == '1') {
         } else {
             return true;
         }
@@ -303,7 +303,7 @@ Class LanguageService
             }
         }
 
-        $language = Services::Registry()->get(CONFIGURATION_LITERAL, CATALOG_TYPE_LANGUAGE_LITERAL);
+        $language = Services::Registry()->get('Configuration', CATALOG_TYPE_LANGUAGE_LITERAL);
 
         Services::Registry()->set(LANGUAGES_LITERAL, 'Default', $language);
 

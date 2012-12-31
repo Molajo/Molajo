@@ -9,4 +9,11 @@
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>SERVICE_DATE_DESCRIPTION</description>
+    <model
+            name="Date"
+            startup="1"
+            startup_method="initialise"
+            class="Molajo\Service\Services\Date"
+            keep_instance="1">
+    </model>
 </extension>

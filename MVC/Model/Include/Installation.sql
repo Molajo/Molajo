@@ -168,7 +168,7 @@ INSERT INTO `molajo_extension_instances`
 INSERT INTO `molajo_catalog`( `catalog_type_id`, `source_id`, `routable`, `page_type`, `sef_request`,
 `redirect_to_id`, `view_group_id`, `primary_category_id`, `tinyurl`)
 
-SELECT a.catalog_type_id, a.id, 1, CONFIGURATION_LITERAL, path, 0, 1, 1001, '' FROM `molajo_extension_instances` a
+SELECT a.catalog_type_id, a.id, 1, 'Configuration', path, 0, 1, 1001, '' FROM `molajo_extension_instances` a
 where id > 20000
 
 

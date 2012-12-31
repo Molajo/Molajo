@@ -19,29 +19,6 @@ defined('NIAMBIE') or die;
  */
 Class DateService
 {
-    /**
-     * Static instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
-     * getInstance
-     *
-     * @static
-     * @return  bool|object
-     * @since   1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new DateService();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Class constructor.
@@ -367,7 +344,7 @@ Class DateService
             }
         }
         if ($offset == '') {
-            $offset = Services::Registry()->get(CONFIGURATION_LITERAL, 'language_utc_offset', '');
+            $offset = Services::Registry()->get('Configuration', 'language_utc_offset', '');
         }
         if ($offset == '') {
             $offset = 'UTC';

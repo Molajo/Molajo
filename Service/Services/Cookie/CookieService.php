@@ -23,27 +23,5 @@ defined('NIAMBIE') or die;
  */
 Class CookieService
 {
-    /**
-     * Response instance
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
 
-    /**
-     * getInstance
-     *
-     * @static
-     * @return object
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new CookieService();
-        }
-
-        return self::$instance;
-    }
 }

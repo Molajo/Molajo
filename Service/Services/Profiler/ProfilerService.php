@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Profiler Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Profiler;
 
@@ -11,22 +13,25 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * Profiler
+ * Profiler Services
  *
- * @package     Niambie
- * @subpackage  Services
- * @since       1.0
+ * @author     Amy Stephen
+ * @license    MIT
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
+ *
+ * Usage:
+ *
+ *  To retrieve Configuration data for the Application:
+ *
+ *  Services::Application()->get($key);
+ *
+ *  Services::Application()->set($key, $value);
+ *
+ *  System Class, not a Frontend Developer Resource
  */
 Class ProfilerService
 {
-    /**
-     * Service Connection
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected static $instance;
-
     /**
      * $on Switch
      *
@@ -60,14 +65,6 @@ Class ProfilerService
     protected $previous_memory = 0.0;
 
     /**
-     * Options needed by the selected profiler logger
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $options;
-
-    /**
      * Types of profiler output desired
      *
      * @var    object
@@ -81,7 +78,7 @@ Class ProfilerService
      * @var    object
      * @since  1.0
      */
-    protected $profiler_start_with;
+    protected $profiler_start_with = 'Initialise';
 
     /**
      * End profiling with this phase
@@ -89,7 +86,7 @@ Class ProfilerService
      * @var    object
      * @since  1.0
      */
-    protected $profiler_end_with;
+    protected $profiler_end_with = 'Response';
 
     /**
      * Verbose mode provides considerably more detail
@@ -97,15 +94,15 @@ Class ProfilerService
      * @var    object
      * @since  1.0
      */
-    protected $verbose = array();
+    protected $verbose = 0;
 
     /**
      * Current phase
      *
-     * @var    object
+     * @var    string
      * @since  1.0
      */
-    protected $current_phase = array();
+    protected $current_phase = 'Initialise';
 
     /**
      * Phase Array
@@ -114,11 +111,11 @@ Class ProfilerService
      * @since  1.0
      */
     protected $phase_array = array(
-        INITIALISE    => 1,
-        ROUTING       => 2,
-        AUTHORISATION => 3,
-        EXECUTE       => 4,
-        RESPONSE      => 5
+        'Initialise'    => 1,
+        'Routing'       => 2,
+        'Authorisation' => 3,
+        'Execute'       => 4,
+        'Response'      => 5
     );
 
     /**
@@ -128,11 +125,11 @@ Class ProfilerService
      * @since  1.0
      */
     protected $phase_array_list = array(
-        INITIALISE,
-        ROUTING,
-        AUTHORISATION,
-        EXECUTE,
-        RESPONSE
+        'Initialise',
+        'Routing',
+        'Authorisation',
+        'Execute',
+        'Response'
     );
 
     /**
@@ -147,12 +144,12 @@ Class ProfilerService
     protected $configuration_complete = false;
 
     /**
-     * Hold profiler output until Dependency Date Service is started
+     * Profiler Messages
      *
      * @var    object
      * @since  1.0
      */
-    protected $hold_for_date_service_startup = array();
+    protected $messages = array();
 
     /**
      * Log Type
@@ -160,23 +157,30 @@ Class ProfilerService
      * @var    string
      * @since  1.0
      */
-    const log_type = PROFILER_LITERAL;
+    const log_type = 'Profiler';
 
     /**
-     * getInstance initiated by the Services Class
+     * List of Properties
      *
-     * @static
-     * @return  bool|object
-     * @since   1.0
+     * @var    object
+     * @since  1.0
      */
-    public static function getInstance()
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new ProfilerService();
-        }
-
-        return self::$instance;
-    }
+    protected $parameter_properties_array = array(
+        'on',
+        'profiler_started_time',
+        'previous_time',
+        'previous_memory',
+        'profiler_output_options',
+        'profiler_start_with',
+        'profiler_end_with',
+        'verbose',
+        'current_phase',
+        'phase_array',
+        'phase_array_list',
+        'configuration_complete',
+        'hold_for_date_service_startup',
+        'log_type'
+    );
 
     /**
      * Class constructor.
@@ -186,157 +190,11 @@ Class ProfilerService
      */
     public function __construct()
     {
-        $this->current_phase       = INITIALISE;
-        $this->profiler_start_with = INITIALISE;
-        $this->profiler_end_with   = RESPONSE;
+        $this->current_phase       = 'Initialise';
+        $this->profiler_start_with = 'Initialise';
+        $this->profiler_end_with   = 'Response';
 
         return $this;
-    }
-
-    /**
-     * Sets profiler message that is routed to the selected logger
-     *
-     * @param   string  $message
-     * @param   string  $output_type  Application,Permissions,Queries,Rendering,Routing,Services,Plugins
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function set($message, $output_type = '', $verbose = 0)
-    {
-        if ((int)$this->on == 0) {
-            return;
-        }
-        if (in_array($message, $this->phase_array_list)) {
-            Services::Registry()->set(PROFILER_LITERAL, 'CurrentPhase', $message);
-        }
-
-        $current_phase = Services::Registry()->get(PROFILER_LITERAL, 'CurrentPhase');
-
-        if (in_array($current_phase, $this->phase_array_list)) {
-        } else {
-            return true;
-        }
-
-        if ((int)$this->on == 0) {
-            if ((int)$this->configuration_complete == 0) {
-            } else {
-                return true;
-            }
-        }
-
-        if ((int)$this->verbose == 1) {
-        } else {
-            if ((int)$verbose == 1) {
-                return true;
-            }
-        }
-
-        if ($this->phase_array[$current_phase] >= $this->phase_array[$this->profiler_start_with]
-            && $this->phase_array[$current_phase] <= $this->phase_array[$this->profiler_end_with]
-        ) {
-        } else {
-            return true;
-        }
-
-        if (in_array($output_type, $this->profiler_output_options)
-            || $output_type == ''
-        ) {
-        } else {
-            return true;
-        }
-
-        /** LOG IT */
-        $elapsed = $this->getMicrotimeFloat() - $this->profiler_started_time;
-
-        if (function_exists('memory_get_usage')) {
-            $memory = memory_get_usage(true) / 1048576;
-        }
-
-        if ($memory > $this->previous_memory) {
-            $memory_difference = $memory - $this->previous_memory;
-        } else {
-            $memory_difference = 0;
-        }
-
-        try {
-
-            if (Services::Registry()->get(CATALOG_TYPE_SERVICE_LITERAL, 'DateService') == 1) {
-
-                if (count($this->hold_for_date_service_startup) > 0) {
-
-                    foreach ($this->hold_for_date_service_startup as $entry) {
-                        Services::Log()->addEntry(
-                            $entry['message'],
-                            $entry['log_level'],
-                            $entry['log_type'],
-                            $entry['entry_date']
-                        );
-                    }
-                    $this->hold_for_date_service_startup = array();
-                }
-
-                Services::Log()->addEntry(
-                    sprintf(
-                        '%.3f seconds (+%.3f); %0.2f MB (+%.3f) - %s',
-                        $elapsed,
-                        $elapsed - $this->previous_time,
-                        $memory,
-                        $memory_difference,
-                        $output_type . ': ' . trim($message)
-                    ),
-                    LOG_TYPE_PROFILER,
-                    self::log_type,
-                    Services::Date()->getDate('now')
-                );
-
-            } else {
-                $this->holdEntries($elapsed, $memory, $memory_difference, $output_type . ': ' . trim($message));
-            }
-
-        } catch (\Exception $e) {
-            throw new \RuntimeException('Unable to add Log Entry: ' . $message . ' ' . $e->getMessage());
-        }
-
-        $this->previous_time   = $elapsed;
-        $this->previous_memory = $memory;
-
-        return true;
-    }
-
-    /**
-     * holdEntries until the Configuration, Log, and Date Services are running and all
-     * information needed to process, or not process, profiler entries is known.
-     *
-     * @param   string  $elapsed
-     * @param   string  $memory
-     * @param   string  $memory_difference
-     * @param   string  $message
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function holdEntries($elapsed, $memory, $memory_difference, $message)
-    {
-        $i = count($this->hold_for_date_service_startup) + 1;
-
-        $entry = array(
-            'message'    => sprintf(
-                '%.3f seconds (+%.3f); %0.2f MB (+%.3f) - %s',
-                $elapsed,
-                $elapsed - $this->previous_time,
-                $memory,
-                $memory_difference,
-                $message
-            ),
-            'log_level'  => LOG_TYPE_PROFILER,
-            'log_type'   => self::log_type,
-            'entry_date' => date("Y-m-d") . ' ' . date("H:m:s")
-        ); // will not be set to timezone
-
-        $this->hold_for_date_service_startup[$i] = $entry;
-
-        return;
     }
 
     /**
@@ -347,151 +205,134 @@ Class ProfilerService
      */
     public function initialise()
     {
-        if ((int)Services::Registry()->get('Configuration', 'profiler_service') == 1) {
-            $this->on = 1;
-            define('PROFILER_ON', true);
-            Services::Registry()->set(PROFILER_LITERAL, 'on', true);
-        } else {
-            $this->on = 0;
-            define('PROFILER_ON', false);
-            Services::Registry()->set(PROFILER_LITERAL, 'on', false);
-
-            return $this;
-        }
-
-        $this->hold_for_date_service_startup = array();
-
-        $this->setProfilerOutputOptions();
+        $this->messages = array();
 
         $this->profiler_started_time = $this->getMicrotimeFloat();
 
-        $results = $this->setProfilerLogger();
-
-        if ($results === false) {
-            $this->on = 0;
-            define('PROFILER_ON', false);
-            Services::Registry()->set(PROFILER_LITERAL, 'on', false);
-
-            return $this;
-        } else {
-            define('PROFILER_ON', true);
-        }
-
-        $this->profiler_start_with = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
-            'profiler_start_with',
-            INITIALISE
-        );
-        if (in_array($this->profiler_start_with, $this->phase_array)) {
-            $this->profiler_start_with = INITIALISE;
-        }
-
-        $this->profiler_end_with = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
-            'profiler_end_with',
-            RESPONSE
-        );
-        if (in_array($this->profiler_end_with, $this->phase_array)) {
-            $this->profiler_end_with = RESPONSE;
-        }
-
-        $this->verbose = (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_verbose', VERBOSE);
-        if ($this->verbose == VERBOSE) {
-        } else {
-            $this->verbose = 0;
-        }
-
-        Services::Registry()->set(PROFILER_LITERAL, 'CurrentPhase', INITIALISE);
-
-        $this->set(INITIALISE, PROFILER_APPLICATION);
+        $this->current_phase = 'Initialise';
 
         return true;
     }
 
     /**
-     * set options for profiling output as specified in the system configuration
+     * Get the current value (or default) of the specified key
      *
-     * @return  boolean
-     * @since   1.0
-     */
-    protected function setProfilerOutputOptions()
-    {
-        $outputOptions = array(
-            PROFILER_ACTIONS,
-            PROFILER_APPLICATION,
-            PROFILER_AUTHORISATION,
-            PROFILER_QUERIES,
-            PROFILER_REGISTRY,
-            PROFILER_RENDERING,
-            PROFILER_ROUTING,
-            PROFILER_SERVICES,
-            PROFILER_PLUGINS
-        );
-
-        $temp = Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_output');
-
-        if ($temp == '' || $temp == null) {
-            $temp = $outputOptions;
-        }
-
-        $this->profiler_output_options = array();
-        $temp2                         = explode(',', $temp);
-        foreach ($temp2 as $item) {
-            if (in_array($item, $outputOptions)) {
-                $this->profiler_output_options[] = $item;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * setProfilerLogger - establish connection to the selected profiler logger and initiate Profiler
+     * @param   string  $key
+     * @param   mixed   $default
      *
      * @return  mixed
      * @since   1.0
      */
-    public function setProfilerLogger()
+    public function get($key, $default = null)
     {
-        $this->on = 1;
+        $key = strtolower($key);
 
-        $loggerOptions = array(
-            LOG_ECHO_LOGGER,
-            LOG_FORMATTEDTEXT_LOGGER,
-            LOG_DATABASE_LOGGER,
-            LOG_EMAIL_LOGGER,
-            LOG_CONSOLE_LOGGER,
-            LOG_MESSAGES_LOGGER
-        );
+        if (in_array($key, $this->parameter_properties_array)) {
 
-        $this->profiler_options = array();
-
-        $this->profiler_options['logger'] = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
-            'profiler_log',
-            LOG_CONSOLE_LOGGER
-        );
-
-        $results = false;
-        if (in_array($this->profiler_options['logger'], $loggerOptions)) {
         } else {
-            $this->profiler_options['logger'] = LOG_ECHO_LOGGER;
+            throw new \OutOfRangeException
+                ('Profiler Service: attempting to get value for unknown property: ' . $key);
         }
 
-        $results = $logMethod = 'set' . ucfirst(strtolower($this->profiler_options['logger'])) . 'Logger';
-        $this->$logMethod();
-
-        if ($results === false) {
-            $this->profiler_options           = array();
-            $this->profiler_options['logger'] = LOG_ECHO_LOGGER;
+        if (isset($this->$key)) {
+        } else {
+            $this->$key = $default;
         }
 
-        $results             = array();
-        $results['options']  = $this->profiler_options;
-        $results['priority'] = LOG_TYPE_PROFILER;
-        $results['types']    = self::log_type;
+        return $this->$key;
+    }
 
-        return $results;
+    /**
+     * Sets profiler message
+     *
+     * @param   string  $message
+     * @param   string  $output_type  Application,Permissions,Queries,Rendering,Routing,Services,Plugins
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function set($key, $value, $output_type = '', $verbose = 0)
+    {
+        $key = strtolower($key);
+
+        /** Settings */
+        if (in_array($key, $this->parameter_properties_array)) {
+            $this->$key = $value;
+
+            return;
+        }
+
+        if ((int)$this->on == 0) {
+            return;
+        }
+
+        /** Set the Current Phase */
+        if ($key == 'phase') {
+            if (in_array($value, $this->phase_array_list)) {
+                $this->current_phase = $value;
+            } else {
+                throw new \OutOfRangeException
+                ('Profiler Service: invalid phase: ' . $value);
+            }
+        }
+
+        /** Message Criteria */
+        if ($key == 'message') {
+        } else {
+            throw new \OutOfRangeException
+            ('Profiler Service: invalid key: ' . $key);
+        }
+
+        if ((int)$this->verbose == 1) {
+        } else {
+            if ((int)$verbose == 1) {
+                return;
+            }
+        }
+
+        if ($this->phase_array[$this->current_phase] >= $this->phase_array[$this->profiler_start_with]
+            && $this->phase_array[$this->current_phase] <= $this->phase_array[$this->profiler_end_with]
+        ) {
+        } else {
+            return;
+        }
+
+        /** Format and save Message */
+        $elapsed = $this->getMicrotimeFloat() - $this->profiler_started_time;
+
+        $memory = 0;
+        if (function_exists('memory_get_usage')) {
+            $memory = memory_get_usage(true) / 1048576;
+        }
+
+        if ($memory > $this->previous_memory) {
+            $memory_difference = $memory - $this->previous_memory;
+        } else {
+            $memory_difference = 0;
+        }
+
+        $temp_row = new \stdClass();
+
+        $query_results[]                     = $temp_row;
+
+        $temp_row->formatted_message         = sprintf(
+                '%.3f seconds (+%.3f); %0.2f MB (+%.3f) - %s',
+                $elapsed,
+                $elapsed - $this->previous_time,
+                $memory,
+                $memory_difference,
+                $value);
+        $temp_row->message                   = $value;
+        $temp_row->total_elapsed_time        = $elapsed;
+        $temp_row->additional_elapsed_time   = $elapsed - $this->previous_time;
+        $temp_row->total_memory              = $memory;
+        $temp_row->additional_memory         = $memory_difference;
+        $temp_row->entry_date                = date("Y-m-d") . ' ' . date("H:m:s");  // not be set to timezone
+
+        $this->previous_time                 = $elapsed;
+        $this->previous_memory               = $memory;
+
+        return;
     }
 
     /**
@@ -510,180 +351,15 @@ Class ProfilerService
     }
 
     /**
-     * setEmailLogger
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function setEmailLogger()
-    {
-        $this->profiler_options['mailer'] = Services::Mail();
-
-        $this->profiler_options['reply_to'] = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
-            'mailer_mail_reply_to',
-            ''
-        );
-        $this->profiler_options['from']     = Services::Registry()->get(CONFIGURATION_LITERAL, 'mailer_mail_from', '');
-
-        $this->profiler_options['subject'] = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
-            'profiler_email_subject',
-            ''
-        );
-        $this->profiler_options['to']      = Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_email_to', '');
-
-        return true;
-    }
-
-    /**
-     * setFormattedtextLogger
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function setFormattedtextLogger()
-    {
-        $this->profiler_options['text_file'] = Services::Registry()->get(
-            CONFIGURATION_LITERAL,
-            'profiler_text_file',
-            'profiler.php'
-        );
-
-        $temp = Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_text_file_path', 'SITE_LOGS_FOLDER');
-
-        if ($temp == 'SITE_LOGS_FOLDER' || $temp == '') {
-            $this->profiler_options['text_file_path'] = SITE_LOGS_FOLDER;
-
-        } else {
-            $this->profiler_options['text_file_path'] = $temp;
-        }
-
-        if (Services::Filesystem()->fileExists(SITE_LOGS_FOLDER . '/' . $this->profiler_options['text_file'])) {
-            $this->profiler_options['text_file_no_php']
-                = (int)Services::Registry()->get(CONFIGURATION_LITERAL, 'profiler_text_file_no_php', false);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * setDatabaseLogger
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function setDatabaseLogger()
-    {
-        $this->profiler_options['dbo'] = Services::Database()->get('db');
-
-        $this->profiler_options['db_table'] = Services::Registry()
-            ->get(CONFIGURATION_LITERAL, 'profiler_database_table', '#__log');
-
-        return true;
-    }
-
-    /**
-     * setMessagesLogger
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function setMessagesLogger()
-    {
-        $this->profiler_options['messages_namespace'] = Services::Registry()
-            ->get(CONFIGURATION_LITERAL, 'profiler_messages_namespace', 'profiler');
-
-        return true;
-    }
-
-    /**
-     * setFirephpLogger
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function setFirephpLogger()
-    {
-        $this->profiler_options['messages_namespace'] = Services::Registry()
-            ->get(CONFIGURATION_LITERAL, 'profiler_messages_namespace', 'profiler');
-
-        return true;
-    }
-
-    /**
-     * setEchoLogger
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function setEchoLogger()
-    {
-        $this->profiler_options['line_separator'] = Services::Registry()
-            ->get(CONFIGURATION_LITERAL, 'profiler_line_separator', '<br />');
-
-        return true;
-    }
-
-    /**
      * Get the current time from: http://php.net/manual/en/function.microtime.php
      *
      * @return  float
      * @since   1.0
      */
-    public static function getMicrotimeFloat()
+    public function getMicrotimeFloat()
     {
         list ($usec, $sec) = explode(' ', microtime());
 
         return ((float)$usec + (float)$sec);
-    }
-
-    /**
-     * getProfiler
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public function getProfiler()
-    {
-        $query_results = array();
-
-        $messages = $this->get();
-
-        if (count($messages) == 0) {
-            return array();
-        }
-
-        foreach ($messages as $message) {
-
-            $temp_row = new \stdClass();
-
-            $temp_row->date     = $message['date'];
-            $temp_row->priority = $message['priority'];
-            $temp_row->type     = $message['type'];
-            $temp_row->message  = $message['message'];
-
-            $query_results[] = $temp_row;
-        }
-
-        return $query_results;
-    }
-
-    /**
-     * get console log
-     *
-     * @return  array  console log entries
-     * @since   1.0
-     */
-    public function get($option = null)
-    {
-        if ($option == 'count') {
-            return Services::Log()->get($option);
-
-        } else {
-            return Services::Log()->get();
-        }
     }
 }

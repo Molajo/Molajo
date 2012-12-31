@@ -126,7 +126,7 @@ Class EventService
      */
     public function scheduleEvent($event, $arguments = array(), $selections = array())
     {
-        Services::Profiler()->set('Event: Initiated Scheduling of Event ' . $event, PROFILER_PLUGINS);
+        Services::Profiler()->set('message', 'Event: Initiated Scheduling of Event ' . $event, 'Plugins');
 
         $event = strtolower($event);
 
@@ -158,7 +158,7 @@ Class EventService
 
         if (in_array($event, $eventList) || count($registered) > 0) {
         } else {
-            Services::Profiler()->set('Event: ' . $event . ' has no registrations', PROFILER_PLUGINS, VERBOSE);
+            Services::Profiler()->set('message', 'Event: ' . $event . ' has no registrations', 'Plugins', VERBOSE);
 
             return $arguments;
         }
@@ -190,7 +190,7 @@ Class EventService
         }
 
         if (count($scheduledEventPlugins) == 0) {
-            Services::Profiler()->set('EventService: ' . $event . ' has no registrations', PROFILER_PLUGINS, VERBOSE);
+            Services::Profiler()->set('message', 'EventService: ' . $event . ' has no registrations', 'Plugins', VERBOSE);
 
             return $arguments;
         }
@@ -212,7 +212,7 @@ Class EventService
             }
         }
 
-        Services::Profiler()->set('Event: Finished EventSchedule for Event: ' . $event, PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set('message', 'Event: Finished EventSchedule for Event: ' . $event, 'Plugins', VERBOSE);
 
         return $arguments;
     }
@@ -244,7 +244,7 @@ Class EventService
             throw new \Exception('Event: ' . $event . ' processPluginClass failure instantiating: ' . $plugin_class);
         }
 
-        Services::Profiler()->set('Event:' . $event . ' firing Plugin: ' . $plugin_class, PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set('message', 'Event:' . $event . ' firing Plugin: ' . $plugin_class, 'Plugins', VERBOSE);
 
         $plugin->set('plugin_class', $plugin_class);
         $plugin->set('plugin_event', $event);
@@ -298,7 +298,7 @@ Class EventService
      */
     protected function registerInstalledPlugins()
     {
-        Services::Profiler()->set('Event: registerInstalledPlugins for Extension and Core', PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set('message', 'Event: registerInstalledPlugins for Extension and Core', 'Plugins', VERBOSE);
 
         $this->registerPlugins(PLATFORM_FOLDER, 'Molajo', 1);
         $this->registerPlugins(EXTENSIONS, 'Extension', 1);
@@ -325,7 +325,7 @@ Class EventService
      */
     public function registerPlugins($folder = '', $namespace = '', $core = 0)
     {
-        Services::Profiler()->set('Event: registerPlugins for Namespace' . $namespace, PROFILER_PLUGINS, VERBOSE);
+        Services::Profiler()->set('message', 'Event: registerPlugins for Namespace' . $namespace, 'Plugins', VERBOSE);
 
         if ($folder == '') {
             throw new \Exception ('Event: No folder sent into RegisterPlugins');
@@ -501,11 +501,11 @@ Class EventService
             $this->eventPluginArray[] = $temp_row;
         }
 
-        Services::Profiler()->set(
+        Services::Profiler()->set('message',
             'Event: Plugin ' . $plugin_name
                 . ' scheduled for Event: ' . $event
                 . ' will execute from namespace ' . $plugin_class,
-            PROFILER_PLUGINS,
+            'Plugins',
             VERBOSE
         );
 

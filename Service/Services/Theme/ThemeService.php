@@ -137,7 +137,7 @@ Class ThemeService
         $override_parse_sequence = null,
         $override_parse_final = null
     ) {
-        Services::Profiler()->set('Theme Service: Started', PROFILER_RENDERING);
+        Services::Profiler()->set('message', 'Theme Service: Started', 'Rendering');
 
         $this->parameters = $parameters;
 
@@ -396,7 +396,7 @@ Class ThemeService
         $includeDisplay = ob_get_contents();
         ob_end_clean();
 
-        Services::Profiler()->set($includeDisplay, PROFILER_RENDERING);
+        Services::Profiler()->set('message', $includeDisplay, 'Rendering');
 
         return;
     }
@@ -463,12 +463,12 @@ Class ThemeService
     protected function getIncluderClass($include_type, $include_name, $attributes)
     {
         if (defined(PROFILER_ON)) {
-            Services::Profiler()->set(
+            Services::Profiler()->set('message',
                 'Theme Service: getIncluderClass ' .
                     ' include_type: ' . $include_type .
                     ' include_name: ' . $include_name .
                     ' attributes: ' . implode(' ', $attributes) .
-                    PROFILER_RENDERING
+                    'Rendering'
             );
         }
 
@@ -484,7 +484,7 @@ Class ThemeService
         $rendered_output = trim($rc->process());
 
         if (defined(PROFILER_ON)) {
-            Services::Profiler()->set('Theme Service: Rendered ' . $rendered_output, PROFILER_RENDERING, VERBOSE);
+            Services::Profiler()->set('message', 'Theme Service: Rendered ' . $rendered_output, 'Rendering', VERBOSE);
         }
 
         return $rendered_output;
@@ -509,13 +509,13 @@ Class ThemeService
      */
     protected function onBeforeParseEvent()
     {
-        $query_results = $this->triggerEvent('onBeforeParse', Services::Registry()->get(PRIMARY_LITERAL, DATA_LITERAL));
+        $query_results = $this->triggerEvent('onBeforeParse', Services::Registry()->get('Primary', 'Data'));
 
-        Services::Registry()->delete(PRIMARY_LITERAL, DATA_LITERAL);
-        Services::Registry()->createRegistry(PRIMARY_LITERAL);
-        Services::Registry()->set(PRIMARY_LITERAL, DATA_LITERAL, $query_results);
+        Services::Registry()->delete('Primary', 'Data');
+        Services::Registry()->createRegistry('Primary');
+        Services::Registry()->set('Primary', 'Data', $query_results);
 
-        return Services::Registry()->get(PRIMARY_LITERAL, DATA_LITERAL);
+        return Services::Registry()->get('Primary', 'Data');
     }
 
     /**

@@ -9,4 +9,11 @@
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>SERVICE_DATABASE_DESCRIPTION</description>
+    <model
+            name="Database"
+            startup="1"
+            startup_method="initialise"
+            class="Molajo\Service\Services\Database"
+            keep_instance="1">
+    </model>
 </extension>

@@ -391,7 +391,7 @@ class CreatePlugin extends Plugin
         echo $controller->model->query->__toString();
         echo '<br /><br /><br />';
          */
-        $fields = Services::Registry()->get($model_registry, FIELDS_LITERAL);
+        $fields = Services::Registry()->get($model_registry, 'Fields');
         if (count($fields) == 0 || $fields === null) {
             return false;
         }
@@ -436,8 +436,8 @@ class CreatePlugin extends Plugin
         $data->protected                 = 0;
 
         $data->customfields = array();
-        Services::Registry()->sort($model_registry . CUSTOMFIELDS_LITERAL);
-        $customfields = Services::Registry()->getArray($model_registry . CUSTOMFIELDS_LITERAL);
+        Services::Registry()->sort($model_registry . 'Customfields');
+        $customfields = Services::Registry()->getArray($model_registry . 'Customfields');
         if (count($customfields) > 0) {
             foreach ($customfields as $key => $value) {
                 $data->customfields[$key] = '';
@@ -472,8 +472,8 @@ class CreatePlugin extends Plugin
         }
 
         $data->metadata = array();
-        Services::Registry()->sort($model_registry . METADATA_LITERAL);
-        $parameters = Services::Registry()->getArray($model_registry . METADATA_LITERAL);
+        Services::Registry()->sort($model_registry . 'Metadata');
+        $parameters = Services::Registry()->getArray($model_registry . 'Metadata');
 
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {

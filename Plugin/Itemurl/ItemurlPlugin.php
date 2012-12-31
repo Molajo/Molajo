@@ -35,7 +35,7 @@ class ItemurlPlugin extends Plugin
     public function onAfterRead()
     {
 
-        if (Services::Registry()->get(CONFIGURATION_LITERAL, 'url_sef', 1) == 1) {
+        if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
             if (isset($this->row->catalog_sef_request)) {
                 $newFieldValue = Services::Url()->getApplicationURL($this->row->catalog_sef_request);

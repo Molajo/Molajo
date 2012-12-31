@@ -281,7 +281,7 @@ class CommentPlugin extends Plugin
         return $results;
 
         /** Get configuration menuitem settings for this resource */
-        $menuitem = $this->contentHelper->getResourceMenuitemParameters(CONFIGURATION_LITERAL, 17000);
+        $menuitem = $this->contentHelper->getResourceMenuitemParameters('Configuration', 17000);
 
         /** Create Tabs */
         $namespace = 'Comments';

@@ -9,4 +9,11 @@
     <author_url>http://niambie.org</author_url>
     <version>1.0</version>
     <description>SERVICE_FILESYSTEM_DESCRIPTION</description>
+    <model
+            name="Filesystem"
+            startup="1"
+            startup_method=""
+            class="Molajo\Service\Services\Filesystem"
+            keep_instance="0">
+    </model>
 </extension>
