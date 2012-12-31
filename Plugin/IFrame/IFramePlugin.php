@@ -56,7 +56,7 @@ class IFramePlugin extends Plugin
                         foreach ($matches[0] as $iframe) {
                             $element = 'IFrame' . $i++;
                             $video   = '<include:wrap name=IFrame value=' . $element . '/>';
-                            Services::Registry()->set(TEMPLATE_LITERAL, $element, $iframe);
+                            Services::Registry()->set('Template', $element, $iframe);
                             $fieldValue = str_replace($iframe, $video, $fieldValue);
                         }
 

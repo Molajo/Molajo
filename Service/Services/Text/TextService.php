@@ -33,7 +33,7 @@ Class TextService
     public function extension($model_name, $source_path = null, $destination_path = null)
     {
         $controller     = new CreateController();
-        $model_registry = ucfirst(strtolower($model_name)) . DATA_SOURCE_LITERAL;
+        $model_registry = ucfirst(strtolower($model_name)) . 'datasource';
 
         $data = new \stdClass();
 
@@ -162,7 +162,7 @@ Class TextService
         if ($registry_entry == '') {
             $results = array();
         } else {
-            $results = Services::Registry()->get(DATALIST_LITERAL, $registry_entry, array());
+            $results = Services::Registry()->get('Datalist', $registry_entry, array());
             if (count($results) > 0) {
                 return $results;
             }

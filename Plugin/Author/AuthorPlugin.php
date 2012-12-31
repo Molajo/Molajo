@@ -44,9 +44,9 @@ class AuthorPlugin extends Plugin
 
         $registry_name = $append . $fieldValue;
 
-        if (Services::Registry()->exists(TEMPLATE_LITERAL, $registry_name)) {
+        if (Services::Registry()->exists('Template', $registry_name)) {
 
-            $authorArray = Services::Registry()->get(TEMPLATE_LITERAL, $registry_name);
+            $authorArray = Services::Registry()->get('Template', $registry_name);
 
             foreach ($authorArray as $key => $value) {
                 $this->saveField(null, $key, $value);
@@ -85,7 +85,7 @@ class AuthorPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set(TEMPLATE_LITERAL, $registry_name, $authorArray);
+        Services::Registry()->set('Template', $registry_name, $authorArray);
 
         return true;
     }

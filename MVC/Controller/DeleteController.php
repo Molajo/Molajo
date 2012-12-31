@@ -61,7 +61,7 @@ class DeleteController extends Controller
 
         if ($valid === true) {
 
-            $this->connect(DATA_SOURCE_LITERAL, $this->row->model_name, 'DeleteModel');
+            $this->connect('datasource', $this->row->model_name, 'DeleteModel');
             $results = $this->model->delete($this->row, $this->model_registry);
 
             if ($results === false) {
@@ -110,7 +110,7 @@ class DeleteController extends Controller
     public function getDeleteData()
     {
         $hold_model_name = $this->row->model_name;
-        $this->connect(DATA_SOURCE_LITERAL, $hold_model_name);
+        $this->connect('datasource', $hold_model_name);
 
         $this->set('use_special_joins', 0);
         $name_key       = $this->get('name_key');

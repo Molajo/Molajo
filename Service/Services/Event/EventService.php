@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Event Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Event;
 
@@ -14,10 +16,10 @@ defined('NIAMBIE') or die;
  * Event Service
  *
  * List All Events:
- *      $eventArray = Services::Registry()->get(EVENTS_LITERAL, 'events');
+ *      $eventArray = Services::Registry()->get('Events', 'events');
  *
  * List Plugins for a Specific Event:
- *      $pluginArray = Services::Registry()->get(EVENTS_LITERAL, 'onBeforeRead');
+ *      $pluginArray = Services::Registry()->get('Events', 'onBeforeRead');
  *
  * Schedule an Event:
  *      Services::Event()->scheduleEvent('onAfterDelete', $arguments, $selections);
@@ -26,12 +28,13 @@ defined('NIAMBIE') or die;
  *      Copy the Plugin folder into an Extension (i.e., Resource, View, Theme, etc.) and make changes,
  *      When that extension is in use, Molajo will locate the override and register it with this command:
  *
- *      Services::Event()->registerPlugin(PLATFORM_FOLDER . '/' . PLUGIN_LITERAL, 'Molajo\\Plugin\\');
+ *      Services::Event()->registerPlugin(PLATFORM_FOLDER . '/' . 'Plugin', 'Molajo\\Plugin\\');
  *      Services::Event()->registerPlugin('Extension', 'Extension\\Resource\\Articles\\AliasPlugin');
  *
- * @package     Niambie
- * @subpackage  Service
- * @since       1.0
+ * @author     Amy Stephen
+ * @license    MIT
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 
 Class EventService
@@ -89,16 +92,7 @@ Class EventService
      */
     public function initialise()
     {
-        Services::Registry()->createRegistry(EVENTS_LITERAL);
-
-        Services::Registry()->set(EVENTS_LITERAL, 'Events', array());
-        Services::Registry()->set(EVENTS_LITERAL, 'Plugins', array());
-        Services::Registry()->set(EVENTS_LITERAL, 'EventPlugins', array());
-
         $this->registerInstalledPlugins();
-
-        Services::Registry()->set(EVENTS_LITERAL, 'on', true);
-
         return $this;
     }
 
@@ -126,15 +120,22 @@ Class EventService
      */
     public function scheduleEvent($event, $arguments = array(), $selections = array())
     {
-        Services::Profiler()->set('message', 'Event: Initiated Scheduling of Event ' . $event, 'Plugins');
+        if (defined('PROFILER_ON') && PROFILER_ON == 1) {
+            Services::Profiler()->set(
+                'message',
+                'Event: Initiated Scheduling of Event ' . $event,
+                'Plugins',
+                1
+            );
+        }
 
         $event = strtolower($event);
 
-        if (Services::Registry()->get(EVENTS_LITERAL, 'on') === true) {
+        if (Services::Registry()->get('Events', 'on') === true) {
 
-            $eventList  = Services::Registry()->get(EVENTS_LITERAL, 'Events');
-            $registered = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
-            $pluginList = Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
+            $eventList  = Services::Registry()->get('Events', 'Events');
+            $registered = Services::Registry()->get('Events', 'EventPlugins');
+            $pluginList = Services::Registry()->get('Events', 'Plugins');
 
         } else {
 
@@ -158,15 +159,21 @@ Class EventService
 
         if (in_array($event, $eventList) || count($registered) > 0) {
         } else {
-            Services::Profiler()->set('message', 'Event: ' . $event . ' has no registrations', 'Plugins', VERBOSE);
-
+            if (defined('PROFILER_ON') && PROFILER_ON == 1) {
+                Services::Profiler()->set(
+                    'message',
+                    'Event: ' . $event . ' has no registrations',
+                    'Plugins',
+                    1
+                );
+            }
             return $arguments;
         }
 
         $compareSelection = array();
         if (count($selections) > 0 && is_array($selections)) {
             foreach ($selections as $s) {
-                $compareSelection[] = strtolower($s . PLUGIN_LITERAL);
+                $compareSelection[] = strtolower($s . 'Plugin');
             }
         }
 
@@ -190,7 +197,15 @@ Class EventService
         }
 
         if (count($scheduledEventPlugins) == 0) {
-            Services::Profiler()->set('message', 'EventService: ' . $event . ' has no registrations', 'Plugins', VERBOSE);
+
+            if (defined('PROFILER_ON') && PROFILER_ON == 1) {
+                Services::Profiler()->set(
+                    'message',
+                    'EventService: ' . $event . ' has no registrations',
+                    'Plugins',
+                    1
+                );
+            }
 
             return $arguments;
         }
@@ -212,7 +227,14 @@ Class EventService
             }
         }
 
-        Services::Profiler()->set('message', 'Event: Finished EventSchedule for Event: ' . $event, 'Plugins', VERBOSE);
+        if (defined('PROFILER_ON') && PROFILER_ON == 1) {
+            Services::Profiler()->set(
+                'message',
+                'Event: Finished EventSchedule for Event: ' . $event,
+                'Plugins',
+                1
+            );
+        }
 
         return $arguments;
     }
@@ -244,7 +266,15 @@ Class EventService
             throw new \Exception('Event: ' . $event . ' processPluginClass failure instantiating: ' . $plugin_class);
         }
 
-        Services::Profiler()->set('message', 'Event:' . $event . ' firing Plugin: ' . $plugin_class, 'Plugins', VERBOSE);
+        if (defined('PROFILER_ON') && PROFILER_ON == 1) {
+
+            Services::Profiler()->set(
+                'message',
+                'Event:' . $event . ' firing Plugin: ' . $plugin_class,
+                'Plugins',
+                1
+            );
+        }
 
         $plugin->set('plugin_class', $plugin_class);
         $plugin->set('plugin_event', $event);
@@ -298,7 +328,13 @@ Class EventService
      */
     protected function registerInstalledPlugins()
     {
-        Services::Profiler()->set('message', 'Event: registerInstalledPlugins for Extension and Core', 'Plugins', VERBOSE);
+        if (defined('PROFILER_ON') && PROFILER_ON == 1) {
+            Services::Profiler()->set(
+                'message',
+                'Event: registerInstalledPlugins for Extension and Core', 'Plugins',
+                1
+            );
+        }
 
         $this->registerPlugins(PLATFORM_FOLDER, 'Molajo', 1);
         $this->registerPlugins(EXTENSIONS, 'Extension', 1);
@@ -325,7 +361,14 @@ Class EventService
      */
     public function registerPlugins($folder = '', $namespace = '', $core = 0)
     {
-        Services::Profiler()->set('message', 'Event: registerPlugins for Namespace' . $namespace, 'Plugins', VERBOSE);
+        if (defined('PROFILER_ON') && PROFILER_ON == 1) {
+            Services::Profiler()->set(
+                'message',
+                'Event: registerPlugins for Namespace' . $namespace,
+                'Plugins',
+                1
+            );
+        }
 
         if ($folder == '') {
             throw new \Exception ('Event: No folder sent into RegisterPlugins');
@@ -335,12 +378,12 @@ Class EventService
             throw new \Exception ('Event: No namespace sent into RegisterPlugins');
         }
 
-        $folder .= '/' . PLUGIN_LITERAL;
-        $namespace .= '\\' . PLUGIN_LITERAL . '\\';
+        $folder .= '/' . 'Plugin';
+        $namespace .= '\\' . 'Plugin' . '\\';
 
-        $this->eventArray       = Services::Registry()->get(EVENTS_LITERAL, 'Events');
-        $this->pluginArray      = Services::Registry()->get(EVENTS_LITERAL, 'Plugins');
-        $this->eventPluginArray = Services::Registry()->get(EVENTS_LITERAL, 'EventPlugins');
+        $this->eventArray       = Services::Registry()->get('Events', 'Events');
+        $this->pluginArray      = Services::Registry()->get('Events', 'Plugins');
+        $this->eventPluginArray = Services::Registry()->get('Events', 'EventPlugins');
 
         $plugins = Services::Filesystem()->folderFolders($folder);
         if (count($plugins) == 0 || $plugins === false) {
@@ -352,7 +395,7 @@ Class EventService
 
             } else {
 
-                $plugin_name  = $folder . PLUGIN_LITERAL;
+                $plugin_name  = $folder . 'Plugin';
                 $plugin_class = $namespace . $folder . '\\' . $plugin_name;
 
                 $model_registry = ucfirst(strtolower($folder)) . 'Plugin';
@@ -376,9 +419,9 @@ Class EventService
             }
         }
 
-        Services::Registry()->set(EVENTS_LITERAL, 'Events', $this->eventArray);
-        Services::Registry()->set(EVENTS_LITERAL, 'Plugins', $this->pluginArray);
-        Services::Registry()->set(EVENTS_LITERAL, 'EventPlugins', $this->eventPluginArray);
+        Services::Registry()->set('Events', 'Events', $this->eventArray);
+        Services::Registry()->set('Events', 'Plugins', $this->pluginArray);
+        Services::Registry()->set('Events', 'EventPlugins', $this->eventPluginArray);
 
         return $this;
     }
@@ -442,9 +485,8 @@ Class EventService
 
         $authorised = 0;
         if ($test > 0) {
-            $authorised = Services::Registry()->get(
-                'AuthorisedExtensionsByInstanceTitle',
-                substr($plugin_name, 0, strlen($plugin_name) - strlen(PLUGIN_LITERAL)) . CATALOG_TYPE_PLUGIN
+            $authorised = Services::Registry()->get('AuthorisedExtensionsByInstanceTitle',
+                substr($plugin_name, 0, strlen($plugin_name) - strlen('Plugin')) . CATALOG_TYPE_PLUGIN
             );
         } else {
             $authorised = 1; // some plugin usage occurs before the authorisation table is ready
@@ -485,12 +527,13 @@ Class EventService
 
             $temp_row->event      = $event;
             $temp_row->plugin     = $plugin_name;
-            $temp_row->model_name = strtolower(substr($plugin_name, 0, strlen($plugin_name) - strlen(PLUGIN_LITERAL)));
+            $temp_row->model_name = strtolower(substr($plugin_name, 0, strlen($plugin_name) - strlen('Plugin')));
             $temp_row->model_type = 'Plugin';
 
             $model_registry           = ucfirst(strtolower($temp_row->model_name)) . ucfirst(
                 strtolower($temp_row->model_type)
             );
+
             $temp_row->model_registry = $model_registry;
             if (Services::Registry()->exists($model_registry)) {
             } else {
@@ -501,13 +544,16 @@ Class EventService
             $this->eventPluginArray[] = $temp_row;
         }
 
-        Services::Profiler()->set('message',
-            'Event: Plugin ' . $plugin_name
-                . ' scheduled for Event: ' . $event
-                . ' will execute from namespace ' . $plugin_class,
-            'Plugins',
-            VERBOSE
-        );
+        if (defined('PROFILER_ON') && PROFILER_ON == 1) {
+            Services::Profiler()->set(
+                'message',
+                'Event: Plugin ' . $plugin_name
+                    . ' scheduled for Event: ' . $event
+                    . ' will execute from namespace ' . $plugin_class,
+                'Plugins',
+                1
+            );
+        }
 
         return $this;
     }

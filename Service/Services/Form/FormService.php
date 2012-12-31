@@ -670,7 +670,7 @@ Class FormService
         }
 
         Services::Registry()->set(
-            TEMPLATE_LITERAL,
+            'Template',
             $this->fieldset_template_view . $this->namespace . strtolower($this->page_link),
             $fieldSets
         );
@@ -769,7 +769,7 @@ Class FormService
         $fieldValues  = array();
         $input_fields = array();
 
-        $fieldArray        = Services::Registry()->get($this->model_name . $this->model_type, DATALIST_LITERAL);
+        $fieldArray        = Services::Registry()->get($this->model_name . $this->model_type, 'Datalist');
         $customfieldgroups = Services::Registry()->get(
             $this->model_name . $this->model_type,
             'customfieldgroups'
@@ -1370,7 +1370,7 @@ Class FormService
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $temp_row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set('Template', $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1463,7 +1463,7 @@ Class FormService
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $temp_row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set('Template', $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1526,7 +1526,7 @@ Class FormService
         if (strtolower($datalist) == 'Fields') {
 
             $list = Services::Registry()->get(
-                DATALIST_LITERAL,
+                'Datalist',
                 $this->model_registry_name . 'Fieldsstandard'
             );
 
@@ -1536,13 +1536,13 @@ Class FormService
                 = ucfirst(strtolower($this->model_name)) . ucfirst(strtolower($this->model_type));
 
             $list = Services::Registry()->get(
-                DATALIST_LITERAL,
+                'Datalist',
                 $this->model_registry_name . 'Fieldsstandard'
             );
 
         } else {
 
-            $results  = Services::Text()->getDatalist($datalist, DATALIST_LITERAL, array());
+            $results  = Services::Text()->getDatalist($datalist, 'Datalist', array());
             $list     = $results[0]->listitems;
             $multiple = $results[0]->multiple;
             $size     = $results[0]->size;
@@ -1597,7 +1597,7 @@ Class FormService
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $temp_row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set('Template', $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }
@@ -1653,7 +1653,7 @@ Class FormService
         $ModelRegistry = $this->namespace . strtolower($this->page_link) . $temp_row->name;
         $ModelRegistry = str_replace('_', '', $ModelRegistry);
 
-        Services::Registry()->set(TEMPLATE_LITERAL, $ModelRegistry, $fieldRecordset);
+        Services::Registry()->set('Template', $ModelRegistry, $fieldRecordset);
 
         return $ModelRegistry;
     }

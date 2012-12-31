@@ -163,7 +163,7 @@ class PaginationPlugin extends Plugin
             $temp_query_results[] = $temp_row;
         }
 
-        Services::Registry()->set(TEMPLATE_LITERAL, 'Pagination', $temp_query_results);
+        Services::Registry()->set('Template', 'Pagination', $temp_query_results);
 
         return true;
     }
@@ -179,7 +179,7 @@ class PaginationPlugin extends Plugin
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
         $controller->getModelRegistry(
-            $this->get('model_type', DATA_SOURCE_LITERAL),
+            $this->get('model_type', 'datasource'),
             $this->get('model_name', '', 'parameters'),
             1
         );
@@ -211,7 +211,7 @@ class PaginationPlugin extends Plugin
         $item = $controller->getData(QUERY_OBJECT_ITEM);
 
         $this->model_registry_name = ucfirst(strtolower($this->get('model_name', '', 'parameters')))
-            . ucfirst(strtolower($this->get('model_type', DATA_SOURCE_LITERAL)));
+            . ucfirst(strtolower($this->get('model_type', 'datasource')));
 
         if ($item === false || count($item) == 0) {
             return false;

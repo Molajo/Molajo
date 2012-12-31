@@ -73,7 +73,7 @@ Class ProfilerIncluder extends Includer
         Services::Registry()->merge('Configuration', 'include', true);
 
         /** DBO  */
-        Services::Registry()->set('include', 'model_type', DATA_OBJECT_LITERAL);
+        Services::Registry()->set('include', 'model_type', 'Dataobject');
         Services::Registry()->set('include', 'model_name', 'Profiler');
         Services::Registry()->set('include', 'model_query_object', QUERY_OBJECT_LIST);
 

@@ -434,7 +434,7 @@ Class Frontcontroller
 
         if (defined('CONTROLLER_CLASS')) {
         } else {
-            define('CONTROLLER_CLASS', $this->class_array['Controller']);
+            define('CONTROLLER_CLASS', $this->class_array['Controller'] . '\\Controller');
         }
 
         if (defined('MODEL_CLASS')) {
@@ -524,11 +524,6 @@ Class Frontcontroller
         /** Start Event Service */
         Frontcontroller::Services()->start('EventService', $this->class_array['EventService']);
 
-        /** onAfterStart for Configuration */
-        Services::Profiler();
-
-        Services::Cache();
-
         /** Configuration */
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
@@ -543,13 +538,11 @@ Class Frontcontroller
 
         $this->request_date = Services::Date()->getDate();
 
-        $this->set(
-            'language_current',
-            Services::Registry()->get(LANGUAGES_LITERAL, 'Default')
+        $this->set('language_current',
+            Services::Registry()->get('Languages', 'Default')
         );
-        $this->set(
-            'language_direction',
-            Services::Registry()->get(LANGUAGES_LITERAL . $this->get('Language_current'))
+        $this->set('language_direction',
+            Services::Registry()->get('Languages' . $this->get('Language_current'))
         );
 
         $this->set('application_html5', Services::Application()->get('application_html5', 1));

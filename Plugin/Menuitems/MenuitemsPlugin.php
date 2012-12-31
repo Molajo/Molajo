@@ -33,7 +33,7 @@ class MenuitemsPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL, 1);
+        $controller->getModelRegistry(SYSTEM_LITERAL, 'Menuitems', 1);
 
         $controller->set('check_view_level_access', 1, 'model_registry');
         $controller->set('model_offset', 0, 'model_registry');
@@ -97,7 +97,7 @@ class MenuitemsPlugin extends Plugin
             $menuitems[] = $temp_row;
         }
 
-        Services::Registry()->set(DATALIST_LITERAL, MENUITEMS_LITERAL, $menuitems);
+        Services::Registry()->set('Datalist', 'Menuitems', $menuitems);
 
         return true;
     }

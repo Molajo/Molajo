@@ -37,7 +37,7 @@ class CreateController extends Controller
 
         if (isset($this->row->model_type)) {
         } else {
-            $this->row->model_type = DATA_SOURCE_LITERAL;
+            $this->row->model_type = 'datasource';
         }
         if (isset($this->row->model_name)) {
         } else {
@@ -389,7 +389,7 @@ class CreateController extends Controller
 
                 $controllerClass = CONTROLLER_CLASS;
                 $controller      = new $controllerClass();
-                $controller->getModelRegistry(DATA_SOURCE_LITERAL, $source_model, 1);
+                $controller->getModelRegistry('datasource', $source_model, 1);
 
                 $controller->model->query->select('COUNT(*)');
                 $controller->model->query->from($controller->model->db->qn($controller->get('table_name')));

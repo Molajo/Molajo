@@ -83,20 +83,20 @@ Class LanguageService
     public function get($property, $default = '', $language = null)
     {
         if ($language == null) {
-            $language = Services::Registry()->get(LANGUAGES_LITERAL, 'Current');
+            $language = Services::Registry()->get('Languages', 'Current');
         }
 
         if ($property == 'installed') {
-            return Services::Registry()->get(LANGUAGES_LITERAL, 'Installed');
+            return Services::Registry()->get('Languages', 'Installed');
 
         } elseif ($property == 'default') {
-            return Services::Registry()->get(LANGUAGES_LITERAL, 'Default');
+            return Services::Registry()->get('Languages', 'Default');
 
         } elseif ($property == 'current') {
-            return Services::Registry()->get(LANGUAGES_LITERAL, 'Current');
+            return Services::Registry()->get('Languages', 'Current');
         }
 
-        return Services::Registry()->get(LANGUAGES_LITERAL . $language, $property, $default);
+        return Services::Registry()->get('Languages' . $language, $property, $default);
     }
 
     /**
@@ -113,29 +113,29 @@ Class LanguageService
         $string = trim($string);
 
         if ($language == null) {
-            $language = Services::Registry()->get(LANGUAGES_LITERAL, 'Current');
+            $language = Services::Registry()->get('Languages', 'Current');
         }
 
-        $result = Services::Registry()->get(LANGUAGES_LITERAL . $language, $string, '');
+        $result = Services::Registry()->get('Languages' . $language, $string, '');
         if ($result == '') {
         } else {
             return $result;
         }
 
-        if ($language == Services::Registry()->get(LANGUAGES_LITERAL, 'Default')) {
+        if ($language == Services::Registry()->get('Languages', 'Default')) {
         } else {
-            $language = Services::Registry()->get(LANGUAGES_LITERAL, 'Default');
-            $result   = Services::Registry()->get(LANGUAGES_LITERAL . $language, $string, '');
+            $language = Services::Registry()->get('Languages', 'Default');
+            $result   = Services::Registry()->get('Languages' . $language, $string, '');
             if ($result == '') {
             } else {
                 return $result;
             }
         }
 
-        if ($language == Services::Registry()->get(LANGUAGES_LITERAL, 'en-GB')) {
+        if ($language == Services::Registry()->get('Languages', 'en-GB')) {
         } else {
             $language = 'en-GB';
-            $result   = Services::Registry()->get(LANGUAGES_LITERAL . $language, $string, '');
+            $result   = Services::Registry()->get('Languages' . $language, $string, '');
             if ($result == '') {
             } else {
                 return $result;
@@ -170,10 +170,10 @@ Class LanguageService
             return true;
         }
 
-        Services::Registry()->sort(LANGUAGES_LITERAL . 'TranslatedStringsMissing');
+        Services::Registry()->sort('Languages' . 'TranslatedStringsMissing');
 
         $body       = '';
-        $translated = Services::Registry()->getArray(LANGUAGES_LITERAL . 'TranslatedStringsMissing');
+        $translated = Services::Registry()->getArray('Languages' . 'TranslatedStringsMissing');
 
         if (count($translated) === 0) {
             return true;
@@ -199,12 +199,12 @@ Class LanguageService
      */
     protected function logUntranslatedString($string)
     {
-        if (Services::Registry()->exists(LANGUAGES_LITERAL . 'TranslatedStringsMissing')) {
+        if (Services::Registry()->exists('Languages' . 'TranslatedStringsMissing')) {
         } else {
-            Services::Registry()->createRegistry(LANGUAGES_LITERAL . 'TranslatedStringsMissing');
+            Services::Registry()->createRegistry('Languages' . 'TranslatedStringsMissing');
         }
 
-        Services::Registry()->set(LANGUAGES_LITERAL . 'TranslatedStringsMissing', $string, $string);
+        Services::Registry()->set('Languages' . 'TranslatedStringsMissing', $string, $string);
 
         return;
     }
@@ -220,19 +220,19 @@ Class LanguageService
     protected function loadLanguageStrings($language = null)
     {
         if ($language === null) {
-            $language = Services::Registry()->get(LANGUAGES_LITERAL, 'Current');
+            $language = Services::Registry()->get('Languages', 'Current');
         }
 
-        if (Services::Registry()->exists(LANGUAGES_LITERAL . $language) == false) {
-            $this->setLanguageRegistry(LANGUAGES_LITERAL . $language);
+        if (Services::Registry()->exists('Languages' . $language) == false) {
+            $this->setLanguageRegistry('Languages' . $language);
         }
 
         $results = $this->getLanguageStrings($language);
 
         if ($results === false || count($results) == 0) {
-            if ($language == Services::Registry()->get(LANGUAGES_LITERAL, 'Default')) {
+            if ($language == Services::Registry()->get('Languages', 'Default')) {
             } else {
-                $language == Services::Registry()->get(LANGUAGES_LITERAL, 'Default');
+                $language == Services::Registry()->get('Languages', 'Default');
                 $results = $this->getLanguageStrings($language);
             }
         }
@@ -241,7 +241,7 @@ Class LanguageService
 
             if ($language == 'en-GB') {
             } else {
-                $language == Services::Registry()->get(LANGUAGES_LITERAL, 'en-GB');
+                $language == Services::Registry()->get('Languages', 'en-GB');
                 $results = $this->getLanguageStrings($language);
             }
         }
@@ -255,9 +255,9 @@ Class LanguageService
             foreach ($results as $item) {
 
                 if (trim($item->content_text) == '' || $item->content_text === null) {
-                    Services::Registry()->set(LANGUAGES_LITERAL . $language, trim($item->title), trim($item->title));
+                    Services::Registry()->set('Languages' . $language, trim($item->title), trim($item->title));
                 } else {
-                    Services::Registry()->set(LANGUAGES_LITERAL . $language, trim($item->title), $item->content_text);
+                    Services::Registry()->set('Languages' . $language, trim($item->title), $item->content_text);
                 }
             }
         }
@@ -305,7 +305,7 @@ Class LanguageService
 
         $language = Services::Registry()->get('Configuration', CATALOG_TYPE_LANGUAGE_LITERAL);
 
-        Services::Registry()->set(LANGUAGES_LITERAL, 'Default', $language);
+        Services::Registry()->set('Languages', 'Default', $language);
 
         if (in_array($language, $installed)) {
             return $language;
@@ -327,11 +327,11 @@ Class LanguageService
      */
     protected function setLanguageRegistry($language)
     {
-        if (Services::Registry()->exists(LANGUAGES_LITERAL . $language)) {
+        if (Services::Registry()->exists('Languages' . $language)) {
             return $language;
         }
 
-        $languagesInstalled = Services::Registry()->get(LANGUAGES_LITERAL, 'installed');
+        $languagesInstalled = Services::Registry()->get('Languages', 'installed');
 
         if ($languagesInstalled === false || count($languagesInstalled) == 0) {
             throw new Exception('Language: ' . $language . ' Query returned no data');
@@ -344,18 +344,18 @@ Class LanguageService
             }
         }
 
-        Services::Registry()->createRegistry(LANGUAGES_LITERAL . $language);
+        Services::Registry()->createRegistry('Languages' . $language);
 
-        Services::Registry()->set(LANGUAGES_LITERAL . $language, 'id', $id);
-        Services::Registry()->set(LANGUAGES_LITERAL . $language, 'title', $installed->title);
-        Services::Registry()->set(LANGUAGES_LITERAL . $language, 'tag', $installed->tag);
-        Services::Registry()->set(LANGUAGES_LITERAL . $language, 'rtl', $installed->rtl);
-        Services::Registry()->set(LANGUAGES_LITERAL . $language, 'direction', $installed->direction);
-        Services::Registry()->set(LANGUAGES_LITERAL . $language, 'first_day', $installed->first_day);
+        Services::Registry()->set('Languages' . $language, 'id', $id);
+        Services::Registry()->set('Languages' . $language, 'title', $installed->title);
+        Services::Registry()->set('Languages' . $language, 'tag', $installed->tag);
+        Services::Registry()->set('Languages' . $language, 'rtl', $installed->rtl);
+        Services::Registry()->set('Languages' . $language, 'direction', $installed->direction);
+        Services::Registry()->set('Languages' . $language, 'first_day', $installed->first_day);
 
-        Services::Registry()->set(LANGUAGES_LITERAL, 'Current', $language);
+        Services::Registry()->set('Languages', 'Current', $language);
 
-        Services::Registry()->sort(LANGUAGES_LITERAL . $language);
+        Services::Registry()->sort('Languages' . $language);
 
         return $language;
     }
@@ -457,7 +457,7 @@ Class LanguageService
      */
     protected function getInstalledLanguages()
     {
-        $installed = $this->extensionHelper->get(0, CATALOG_TYPE_LANGUAGE, DATA_SOURCE_LITERAL, 'Languageservice');
+        $installed = $this->extensionHelper->get(0, CATALOG_TYPE_LANGUAGE, 'datasource', 'Languageservice');
         if ($installed === false || count($installed) == 0) {
             throw new Exception('Languages: No languages installed');
         }
@@ -487,8 +487,8 @@ Class LanguageService
             $tagArray[]     = $language->tag;
         }
 
-        Services::Registry()->createRegistry(LANGUAGES_LITERAL);
-        Services::Registry()->set(LANGUAGES_LITERAL, 'installed', $languageList);
+        Services::Registry()->createRegistry('Languages');
+        Services::Registry()->set('Languages', 'installed', $languageList);
 
         return $tagArray;
     }

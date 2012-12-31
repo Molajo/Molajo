@@ -36,7 +36,7 @@ Class MenuService
 
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'MenuitemsNested', 1);
+        $controller->getModelRegistry('datasource', 'MenuitemsNested', 1);
 
         $controller->model->query->where(
             $controller->model->db->qn('current_menuitem.id')
@@ -92,7 +92,7 @@ Class MenuService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, MENUITEMS_LITERAL, 1);
+        $controller->getModelRegistry(SYSTEM_LITERAL, 'Menuitems', 1);
 
         $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('use_special_joins', 0, 'model_registry');

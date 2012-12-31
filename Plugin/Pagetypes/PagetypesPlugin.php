@@ -51,7 +51,7 @@ class PagetypesPlugin extends Plugin
             $page_types[]    = $temp_row;
         }
 
-        Services::Registry()->set(DATALIST_LITERAL, 'Pagetypes', $page_types);
+        Services::Registry()->set('Datalist', 'Pagetypes', $page_types);
 
         return true;
     }

@@ -97,7 +97,7 @@ class DataobjectPlugin extends Plugin
             $dataobject[]    = $temp_row;
         }
 
-        Services::Registry()->set(DATALIST_LITERAL, 'Dataobject', $dataobject);
+        Services::Registry()->set('Datalist', 'Dataobject', $dataobject);
 
         return true;
     }

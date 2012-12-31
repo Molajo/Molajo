@@ -26,7 +26,7 @@ class FormselectlistPlugin extends Plugin
      */
     public function onBeforeInclude()
     {
-        $results = Services::Registry()->get(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters'));
+        $results = Services::Registry()->get('Template', $this->get('template_view_path_node', '', 'parameters'));
         if (count($results) > 0) {
             return true;
         }
@@ -36,7 +36,7 @@ class FormselectlistPlugin extends Plugin
             return true;
         }
 
-        $temp_query_results = Services::Registry()->get(DATALIST_LITERAL, $datalist);
+        $temp_query_results = Services::Registry()->get('Datalist', $datalist);
 
         if (count($temp_query_results) > 0) {
 
@@ -45,7 +45,7 @@ class FormselectlistPlugin extends Plugin
                 return true;
             }
 
-            $results = Services::Text()->getDatalist($datalist, DATALIST_LITERAL, $this->get('parameters'));
+            $results = Services::Text()->getDatalist($datalist, 'Datalist', $this->get('parameters'));
             if ($results === false) {
                 return true;
             }
@@ -62,7 +62,7 @@ class FormselectlistPlugin extends Plugin
         }
 
         Services::Registry()->set(
-            TEMPLATE_LITERAL,
+            'Template',
             $this->get('template_view_path_node', '', 'parameters'),
             $temp_query_results
         );
@@ -78,7 +78,7 @@ class FormselectlistPlugin extends Plugin
      */
     public function onAfterInclude()
     {
-        Services::Registry()->delete(TEMPLATE_LITERAL, $this->get('template_view_path_node', '', 'parameters'));
+        Services::Registry()->delete('Template', $this->get('template_view_path_node', '', 'parameters'));
 
         return $this;
     }

@@ -258,7 +258,7 @@ class Controller
      * @throws  \RuntimeException
      */
     public function getModelRegistry(
-        $model_type = DATA_SOURCE_LITERAL,
+        $model_type = 'datasource',
         $model_name = null,
         $connect = 0,
         $parameter_registry = null
@@ -268,7 +268,7 @@ class Controller
         $this->set('connect_database_set', 0);
 
         if ($model_type === null) {
-            $model_type = DATA_SOURCE_LITERAL;
+            $model_type = 'datasource';
         }
         if ($parameter_registry === null) {
             $parameter_registry = 'parameters';
@@ -433,7 +433,7 @@ class Controller
 
         $profiler_message =
             ' <br />Data Object: ' . $this->get('data_object', 'Database', 'model_registry')
-                . ' <br />Model Type: ' . $this->get('model_type', DATA_SOURCE_LITERAL, 'model_registry')
+                . ' <br />Model Type: ' . $this->get('model_type', 'datasource', 'model_registry')
                 . ' <br />Model Name: ' . $this->get('model_name', '', 'model_registry')
                 . ' <br />Model Query Object: ' . $this->get('query_object', '', 'model_registry')
                 . ' <br />Template View: ' . $this->get('template_view_path_node', '', 'parameters')
@@ -464,12 +464,12 @@ class Controller
                     $method_parameter = 'Data';
 
                 } elseif ($this->get('service_class_query_method_parameter', '', 'model_registry')
-                    == 'TEMPLATE_LITERAL'
+                    == 'Template'
                 ) {
                     $method_parameter = $this->get('template_view_path_node', '', 'parameters');
 
                 } elseif ($this->get('service_class_query_method_parameter', '', 'model_registry')
-                    == 'MODEL_LITERAL'
+                    == 'Model'
                 ) {
                     $method_parameter = $this->get('model_name', '', 'model_registry');
 

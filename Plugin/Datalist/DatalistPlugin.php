@@ -31,7 +31,7 @@ class DatalistPlugin extends Plugin
             return true;
         }
 
-        if (Services::Registry()->exists(DATALIST_LITERAL, 'Datalists')) {
+        if (Services::Registry()->exists('Datalist', 'Datalists')) {
             return true;
         }
 
@@ -66,7 +66,7 @@ class DatalistPlugin extends Plugin
             $datalist[]      = $temp_row;
         }
 
-        Services::Registry()->set(DATALIST_LITERAL, 'Datalists', $datalist);
+        Services::Registry()->set('Datalist', 'Datalists', $datalist);
 
         return true;
     }

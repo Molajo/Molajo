@@ -50,7 +50,7 @@ class FeaturedPlugin extends Plugin
         $results = $controller->getData(QUERY_OBJECT_LIST);
 
         Services::Registry()->set(
-            TEMPLATE_LITERAL,
+            'Template',
             $this->get('template_view_path_node', '', 'parameters'),
             $results
         );

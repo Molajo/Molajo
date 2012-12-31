@@ -33,6 +33,12 @@ Class EventServicePlugin extends ServicesPlugin
      */
     public function onBeforeStartup()
     {
+        Services::Registry()->createRegistry('Events');
+
+        Services::Registry()->set('Events', 'Events', array());
+        Services::Registry()->set('Events', 'Plugins', array());
+        Services::Registry()->set('Events', 'EventPlugins', array());
+
 
     }
 
@@ -46,6 +52,6 @@ Class EventServicePlugin extends ServicesPlugin
      */
     public function onAfterStartup()
     {
-
+        Services::Registry()->set('Events', 'on', true);
     }
 }

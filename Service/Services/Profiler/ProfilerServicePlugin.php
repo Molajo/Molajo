@@ -51,8 +51,7 @@ Class ProfilerServicePlugin extends ServicesPlugin
             $this->service_class->set('profiler_start_with', 'Initialise');
         }
 
-        $this->service_class->set(
-            'profiler_end_with',
+        $this->service_class->set('profiler_end_with',
             Services::Application()->get('profiler_end_with', 'Response')
         );
 

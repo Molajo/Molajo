@@ -114,7 +114,7 @@ class PagetypegridPlugin extends Plugin
             $temp_query_results[] = $temp_row;
         }
 
-        Services::Registry()->set(TEMPLATE_LITERAL, 'Toolbar', $temp_query_results);
+        Services::Registry()->set('Template', 'Toolbar', $temp_query_results);
 
         return true;
     }
@@ -144,7 +144,7 @@ class PagetypegridPlugin extends Plugin
                 //@todo figure out selected value
                 $selected = '';
 
-                $results = Services::Text()->getDatalist($listname, DATALIST_LITERAL, $this->parameters);
+                $results = Services::Text()->getDatalist($listname, 'Datalist', $this->parameters);
 
                 if ($results === false) {
                 } else {
@@ -157,7 +157,7 @@ class PagetypegridPlugin extends Plugin
                         $selected
                     );
 
-                    Services::Registry()->set(DATALIST_LITERAL, $listname, $temp_query_results);
+                    Services::Registry()->set('Datalist', $listname, $temp_query_results);
 
                     $temp_row           = new \stdClass();
                     $temp_row->listname = $listname;
@@ -166,7 +166,7 @@ class PagetypegridPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set(TEMPLATE_LITERAL, 'Gridfilters', $lists);
+        Services::Registry()->set('Template', 'Gridfilters', $lists);
 
         return true;
     }
@@ -277,7 +277,7 @@ class PagetypegridPlugin extends Plugin
             'model_registry'
         );
 
-        $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
+        $controller->set('model_type', 'Dataobject', 'model_registry');
         $controller->set('model_name', 'Primary', 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
@@ -327,7 +327,7 @@ class PagetypegridPlugin extends Plugin
                 $temp_row->enable   = 1;
 
                 Services::Registry()->set(
-                    TEMPLATE_LITERAL,
+                    'Template',
                     'Grid' . strtolower($grid_batch_array[$i]),
                     array($temp_row)
                 );

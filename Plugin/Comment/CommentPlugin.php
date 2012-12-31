@@ -78,7 +78,7 @@ class CommentPlugin extends Plugin
         );
 
         Services::Registry()->set(
-            TEMPLATE_LITERAL,
+            'Template',
             $this->get('template_view_path_node', '', 'parameters'),
             $results
         );
@@ -86,7 +86,7 @@ class CommentPlugin extends Plugin
         echo '<pre>';
         var_dump(
             Services::Registry()->get(
-                TEMPLATE_LITERAL,
+                'Template',
                 $this->get('template_view_path_node', '', 'parameters')
             )
         );
@@ -313,7 +313,7 @@ class CommentPlugin extends Plugin
         $this->set('model_name', 'Edit', 'parameters');
         $this->set('model_query_object', QUERY_OBJECT_ITEM, 'parameters');
 
-        Services::Registry()->set(TEMPLATE_LITERAL, 'Commentform', $tabs);
+        Services::Registry()->set('Template', 'Commentform', $tabs);
 
         return true;
     }

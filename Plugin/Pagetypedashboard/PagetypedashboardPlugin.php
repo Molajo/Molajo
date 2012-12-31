@@ -65,7 +65,7 @@ class PagetypedashboardPlugin extends Plugin
         $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
         $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
 
-        $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
+        $controller->set('model_type', 'Dataobject', 'model_registry');
         $controller->set('model_name', 'Primary', 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 
@@ -125,7 +125,7 @@ class PagetypedashboardPlugin extends Plugin
      */
     protected function setOptions()
     {
-        $results = Services::Text()->getDatalist('Portlets', DATALIST_LITERAL, $this->parameters);
+        $results = Services::Text()->getDatalist('Portlets', 'Datalist', $this->parameters);
         if ($results === false) {
             return true;
         }
@@ -163,7 +163,7 @@ class PagetypedashboardPlugin extends Plugin
 
             $temp_query_results[] = $temp_row;
         }
-        Services::Registry()->set(DATALIST_LITERAL, 'Portlets', $temp_query_results);
+        Services::Registry()->set('Datalist', 'Portlets', $temp_query_results);
 
         return true;
     }

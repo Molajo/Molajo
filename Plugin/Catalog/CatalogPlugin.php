@@ -36,7 +36,7 @@ class CatalogPlugin extends Plugin
 
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
+        $controller->getModelRegistry('datasource', 'Catalog', 1);
 
         $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('use_special_joins', 0, 'model_registry');
@@ -116,7 +116,7 @@ class CatalogPlugin extends Plugin
             }
         }
 
-        Services::Registry()->set(DATALIST_LITERAL, 'Catalog', $catalogArray);
+        Services::Registry()->set('Datalist', 'Catalog', $catalogArray);
 
         return true;
     }
@@ -254,7 +254,7 @@ class CatalogPlugin extends Plugin
     {
         $data              = new \stdClass();
         $data->model_name  = 'UserActivity';
-        $data->model_table = DATA_SOURCE_LITERAL;
+        $data->model_table = 'datasource';
         $data->catalog_id  = $id;
         $data->action_id   = $action_id;
 
@@ -279,7 +279,7 @@ class CatalogPlugin extends Plugin
     {
         $data              = new \stdClass();
         $data->model_name  = 'CatalogActivity';
-        $data->model_table = DATA_SOURCE_LITERAL;
+        $data->model_table = 'datasource';
         $data->catalog_id  = $id;
         $data->action_id   = $action_id;
 

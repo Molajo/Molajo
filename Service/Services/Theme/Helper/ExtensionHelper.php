@@ -73,7 +73,7 @@ Class ExtensionHelper
         }
 
         if (is_null($model_type)) {
-            $model_type = DATA_SOURCE_LITERAL;
+            $model_type = 'datasource';
         }
         if (is_null($model_name)) {
             $model_name = 'Extensioninstances';
@@ -131,7 +131,7 @@ Class ExtensionHelper
         }
 
         if (strtolower($query_object) == strtolower(QUERY_OBJECT_LIST)
-            && $model_type == DATA_SOURCE_LITERAL
+            && $model_type == 'datasource'
             && $model_name == 'Extensioninstances'
         ) {
 
@@ -159,7 +159,7 @@ Class ExtensionHelper
             $controller->set('check_view_level_access', $check_permissions, 'model_registry');
         }
 
-        if (strtolower($model_type) == strtolower(DATA_SOURCE_LITERAL)) {
+        if (strtolower($model_type) == 'datasource') {
         } else {
             $controller->model->query->where(
                 $controller->model->db->qn('catalog')
@@ -209,7 +209,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensioninstances');
+        $controller->getModelRegistry('datasource', 'Extensioninstances');
 
         $controller->set('process_plugins', 0, 'model_registry');
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
@@ -267,7 +267,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensioninstances');
+        $controller->getModelRegistry('datasource', 'Extensioninstances');
         $controller->setDataobject();
         $controller->connectDatabase();
 
@@ -315,7 +315,7 @@ Class ExtensionHelper
 
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Extensions');
+        $controller->getModelRegistry('datasource', 'Extensions');
 
         $controller->set('process_plugins', 0, 'model_registry');
 

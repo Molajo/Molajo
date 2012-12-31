@@ -3,6 +3,6 @@
         name="Profiler"
         service_class="Profiler"
         service_class_query_method="getProfiler"
-        service_class_query_method_parameter="TEMPLATE_LITERAL"
+        service_class_query_method_parameter="'Template'"
         process_plugins="0"/>
 

@@ -40,7 +40,7 @@ Class UrlService
 
             $controllerClass = CONTROLLER_CLASS;
             $controller      = new $controllerClass();
-            $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
+            $controller->getModelRegistry('datasource', 'Catalog', 1);
 
             $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
             $key    = $controller->get('primary_key', 'id', 'model_registry');
@@ -82,7 +82,7 @@ Class UrlService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
+        $controller->getModelRegistry('datasource', 'Catalog', 1);
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $key    = $controller->get('primary_key', 'id', 'model_registry');
@@ -145,7 +145,7 @@ Class UrlService
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'Catalog', 1);
+        $controller->getModelRegistry('datasource', 'Catalog', 1);
 
         $prefix = $controller->get('primary_prefix', 'a', 'model_registry');
         $key    = $controller->get('primary_key', 'id', 'model_registry');

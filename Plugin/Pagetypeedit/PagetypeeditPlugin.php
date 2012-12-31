@@ -53,7 +53,7 @@ class PagetypeeditPlugin extends Plugin
 
         $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));
 
-        $form->set('data', Services::Registry()->get(DATA_OBJECT_LITERAL, 'Primary'));
+        $form->set('data', Services::Registry()->get('Dataobject', 'Primary'));
 
         /** Parameters */
         $form->set(PARAMETERS_LITERAL, Services::Registry()->getArray('ResourcesSystemParameters'));
@@ -80,7 +80,7 @@ class PagetypeeditPlugin extends Plugin
         $controller->set('request_model_type', $this->get('model_type', '', 'parameters'), 'model_registry');
         $controller->set('request_model_name', $this->get('model_name', '', 'parameters'), 'model_registry');
 
-        $controller->set('model_type', DATA_OBJECT_LITERAL, 'model_registry');
+        $controller->set('model_type', 'Dataobject', 'model_registry');
         $controller->set('model_name', 'Primary', 'model_registry');
         $controller->set('model_query_object', QUERY_OBJECT_LIST, 'model_registry');
 

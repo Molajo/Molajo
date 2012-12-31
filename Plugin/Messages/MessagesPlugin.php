@@ -29,12 +29,12 @@ class MessagesPlugin extends Plugin
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_OBJECT_LITERAL, 'Messages', 1);
+        $controller->getModelRegistry('Dataobject', 'Messages', 1);
         $messages = $controller->getData(QUERY_OBJECT_LIST);
 
         if (count($messages) == 0 || $messages === false) {
             Services::Registry()->set(
-                MESSAGES_LITERAL,
+                'Messages',
                 $this->get('template_view_path_node', '', 'parameters'),
                 array()
             );
@@ -75,7 +75,7 @@ class MessagesPlugin extends Plugin
         }
 
         Services::Registry()->set(
-            TEMPLATE_LITERAL,
+            'Template',
             $this->get('template_view_path_node', '', 'parameters'),
             $temp_query_results
         );

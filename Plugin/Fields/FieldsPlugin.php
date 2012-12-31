@@ -213,15 +213,15 @@ class FieldsPlugin extends Plugin
         asort($parametersArray);
         asort($customFieldArray);
 
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . 'Fields', $fieldArray);
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . 'Fieldsstandard', $standardArray);
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . 'Metadata', $metadataArray);
+        Services::Registry()->set('Datalist', $model_registry . 'Fields', $fieldArray);
+        Services::Registry()->set('Datalist', $model_registry . 'Fieldsstandard', $standardArray);
+        Services::Registry()->set('Datalist', $model_registry . 'Metadata', $metadataArray);
         Services::Registry()->set(
-            DATALIST_LITERAL,
-            $model_registry . FIELDS_PARAMETERS_LITERAL,
+            'Datalist',
+            $model_registry . 'Fieldsparameters',
             $parametersArray
         );
-        Services::Registry()->set(DATALIST_LITERAL, $model_registry . 'Fieldscustom', $customFieldArray);
+        Services::Registry()->set('Datalist', $model_registry . 'Fieldscustom', $customFieldArray);
 
         return true;
     }

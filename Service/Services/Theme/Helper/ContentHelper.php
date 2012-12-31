@@ -381,7 +381,7 @@ Class ContentHelper
      * @return  array  An object containing an array of data
      * @since   1.0
      */
-    public function getData($id = 0, $model_type = DATA_SOURCE_LITERAL, $model_name = 'Content')
+    public function getData($id = 0, $model_type = 'datasource', $model_name = 'Content')
     {
         Services::Profiler()->set('message',
             'ContentHelper get ' . ' ID: ' . $id . ' Model Type: ' . $model_type
@@ -594,7 +594,7 @@ Class ContentHelper
     {
         $controllerClass = CONTROLLER_CLASS;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(DATA_SOURCE_LITERAL, 'CatalogTypes', 1);
+        $controller->getModelRegistry('datasource', 'CatalogTypes', 1);
 
         $controller->set('process_plugins', 0, 'model_registry');
         $controller->set('get_customfields', 0, 'model_registry');

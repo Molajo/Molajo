@@ -67,9 +67,9 @@ Class MailService
      */
     public function __construct()
     {
-        if (Services::Registry()->exists(MAIL_LITERAL)) {
+        if (Services::Registry()->exists('Mail')) {
         } else {
-            $this->registry = Services::Registry()->createRegistry(MAIL_LITERAL);
+            $this->registry = Services::Registry()->createRegistry('Mail');
         }
 
         return $this;
@@ -118,7 +118,7 @@ Class MailService
      */
     public function get($key, $default = null)
     {
-        return $this->registry->get(MAIL_LITERAL, $key, $default);
+        return $this->registry->get('Mail', $key, $default);
     }
 
     /**
@@ -135,7 +135,7 @@ Class MailService
      */
     public function set($key, $value = null)
     {
-        $this->registry->set(MAIL_LITERAL, $key, $value);
+        $this->registry->set('Mail', $key, $value);
 
         return $this;
     }
