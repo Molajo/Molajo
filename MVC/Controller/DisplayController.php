@@ -74,7 +74,7 @@ class DisplayController extends Controller
                 $profiler_message .= ob_get_contents();
                 ob_end_clean();
 
-                Services::Profiler()->set('message', $profiler_message, 'Rendering', VERBOSE);
+                Services::Profiler()->set('message', $profiler_message, 'Rendering', 1);
             }
 
             if (count($this->query_results) == 0

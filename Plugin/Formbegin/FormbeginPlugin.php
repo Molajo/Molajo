@@ -51,7 +51,7 @@ class FormbeginPlugin extends Plugin
         $form_name = $this->get('form_name');
         if ($form_name == '' || $form_name === null) {
             $form_name = ' name="' . Services::Registry()->get(
-                ROUTE_PARAMETERS_LITERAL,
+                'RouteParameters',
                 'template_view_path_node'
             ) . '"';
         } else {
@@ -63,7 +63,7 @@ class FormbeginPlugin extends Plugin
             $temp = $this->get('form_name', '');
             if ($temp == '' || $temp === null) {
                 $form_id = ' id="' . Services::Registry()->get(
-                    ROUTE_PARAMETERS_LITERAL,
+                    'RouteParameters',
                     'template_view_path_node'
                 ) . '"';
             } else {

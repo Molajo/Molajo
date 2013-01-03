@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <services>
-    <service name="Request" class="Molajo\Service\Services\"/>
-    <service name="Site" class="Molajo\Service\Services\"/>
-    <service name="Application" class="Molajo\Service\Services\"/>
     <service name="Assets" class="Molajo\Service\Services\"/>
     <service name="Metadata" class="Molajo\Service\Services\"/>
-    <service name="Cache" class="Molajo\Service\Services\"/>
-    <service name="Profiler" class="Molajo\Service\Services\"/>
     <service name="Message" class="Molajo\Service\Services\"/>
     <service name="Permissions" class="Molajo\Service\Services\"/>
     <service name="Log" class="Molajo\Service\Services\"/>
-    <service name="Event" class="Molajo\Service\Services\"/>
     <service name="User" class="Molajo\Service\Services\"/>
     <service name="Language" class="Molajo\Service\Services\"/>
     <service name="Date" class="Molajo\Service\Services\"/>

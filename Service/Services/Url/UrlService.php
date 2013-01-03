@@ -38,7 +38,7 @@ Class UrlService
 
         if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
 
-            $controllerClass = CONTROLLER_CLASS;
+            $controllerClass = CONTROLLER_CLASS_NAMESPACE;
             $controller      = new $controllerClass();
             $controller->getModelRegistry('datasource', 'Catalog', 1);
 
@@ -80,7 +80,7 @@ Class UrlService
      */
     public function getCatalogID($catalog_type_id, $source_id = null, $url_sef_request = null)
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'Catalog', 1);
 
@@ -143,7 +143,7 @@ Class UrlService
      */
     public function getRedirectURL($catalog_id)
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'Catalog', 1);
 

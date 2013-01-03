@@ -35,7 +35,7 @@ class ContentlistPlugin extends Plugin
         }
 
         /** Retrieve Data */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', '', 'parameters'),

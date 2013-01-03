@@ -355,7 +355,7 @@ Class ContentHelper
         $this->set('page_type', $this->get('catalog_page_type'));
 
         /** Retrieve Model Registry for Resource */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('catalog_model_type'),
@@ -387,10 +387,10 @@ Class ContentHelper
             'ContentHelper get ' . ' ID: ' . $id . ' Model Type: ' . $model_type
                 . ' Model Name: ' . $model_name,
             'Routing',
-            VERBOSE
+            1
         );
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 
@@ -592,7 +592,7 @@ Class ContentHelper
      */
     public function getResourceCatalogType($id = 0)
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'CatalogTypes', 1);
 
@@ -632,7 +632,7 @@ Class ContentHelper
      */
     public function getResourceContentParameters($model_type = 'Resource', $model_name)
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 0);
 
@@ -659,9 +659,9 @@ Class ContentHelper
      */
     public function getResourceExtensionParameters($id = 0)
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Resources', 1);
+        $controller->getModelRegistry('System', 'Resources', 1);
 
         $controller->set('primary_key_value', (int)$id, 'model_registry');
         $controller->set('process_plugins', 0, 'model_registry');
@@ -691,7 +691,7 @@ Class ContentHelper
     {
         $page_type = ucfirst(strtolower($page_type));
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, $page_type, 1);
 

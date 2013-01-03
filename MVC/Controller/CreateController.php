@@ -387,7 +387,7 @@ class CreateController extends Controller
 
             if (isset($this->row->$name)) {
 
-                $controllerClass = CONTROLLER_CLASS;
+                $controllerClass = CONTROLLER_CLASS_NAMESPACE;
                 $controller      = new $controllerClass();
                 $controller->getModelRegistry('datasource', $source_model, 1);
 
@@ -448,18 +448,18 @@ class CreateController extends Controller
         Services::Profiler()->set('message',
             'CreateController->onBeforeCreateEvent Schedules onBeforeCreate',
             'Plugins',
-            VERBOSE
+            1
         );
 
         $arguments = Services::Event()->scheduleEvent('onBeforeCreate', $arguments, $this->plugins);
 
         if ($arguments === false) {
-            Services::Profiler()->set('message', 'CreateController->onBeforeCreateEvent failed.', 'Plugins', VERBOSE);
+            Services::Profiler()->set('message', 'CreateController->onBeforeCreateEvent failed.', 'Plugins', 1);
 
             return false;
         }
 
-        Services::Profiler()->set('message', 'CreateController->onBeforeCreateEvent successful.', 'Plugins', VERBOSE);
+        Services::Profiler()->set('message', 'CreateController->onBeforeCreateEvent successful.', 'Plugins', 1);
 
         $this->parameters = $arguments['parameters'];
         $this->row        = $arguments['row'];
@@ -496,18 +496,18 @@ class CreateController extends Controller
         Services::Profiler()->set('message',
             'CreateController->onAfterCreateEvent Schedules onAfterCreate',
             'Plugins',
-            VERBOSE
+            1
         );
 
         $arguments = Services::Event()->scheduleEvent('onAfterCreate', $arguments, $this->plugins);
 
         if ($arguments === false) {
-            Services::Profiler()->set('message', 'CreateController->onAfterCreateEvent failed.', 'Plugins', VERBOSE);
+            Services::Profiler()->set('message', 'CreateController->onAfterCreateEvent failed.', 'Plugins', 1);
 
             return false;
         }
 
-        Services::Profiler()->set('message', 'CreateController->onAfterCreateEvent successful.', 'Plugins', VERBOSE);
+        Services::Profiler()->set('message', 'CreateController->onAfterCreateEvent successful.', 'Plugins', 1);
 
         $this->parameters = $arguments['parameters'];
         $data             = $arguments['row'];

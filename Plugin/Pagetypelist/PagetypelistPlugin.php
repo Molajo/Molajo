@@ -35,7 +35,7 @@ class PagetypelistPlugin extends Plugin
             . ucfirst(strtolower($this->get('model_type', '', 'parameters')));
 
         /** Get Actual Data for matching to Fields */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', '', 'parameters'),

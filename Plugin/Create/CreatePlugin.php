@@ -363,7 +363,7 @@ class CreatePlugin extends Plugin
      */
     protected function cloneGridMenuItem()
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_MENUITEM_LITERAL, 'Grid');
         $controller->setDataobject();

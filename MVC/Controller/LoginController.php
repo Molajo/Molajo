@@ -120,7 +120,7 @@ class LoginController extends Controller
      */
     protected function _loginFailed($type, $response, $options = Array())
     {
-//        MolajoPluginHelper::getPlugin(USER_LITERAL);
+//        MolajoPluginHelper::getPlugin('User');
 //        if ($type == 'authenticate') {
 //            Services::Event()->scheduleEvent('onUserLoginFailure', array($response, $options));
 //        } else {
@@ -191,7 +191,7 @@ class LoginController extends Controller
         }
 
         // Import the user plugin group.
-//        MolajoPluginHelper::importPlugin(USER_LITERAL);
+//        MolajoPluginHelper::importPlugin('User');
 
         // OK, the credentials are built. Lets fire the onLogout event.
 //        $results = Services::Event()->scheduleEvent('onUserLogout', array($parameters, $options));

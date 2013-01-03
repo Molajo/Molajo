@@ -505,7 +505,7 @@ Class RouteService
         $catalog_type_id = 0;
         $source_id       = 0;
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'Catalog', 1);
 

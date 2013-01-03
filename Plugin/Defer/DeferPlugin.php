@@ -32,7 +32,7 @@ class DeferPlugin extends Plugin
         }
 
         /** JS */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('Assets', JS_DEFER_LITERAL);
         $controller->setDataobject();
@@ -43,7 +43,7 @@ class DeferPlugin extends Plugin
         Services::Registry()->set('Assets', JS_DEFER_LITERAL, $temp_query_results);
 
         /** JS Declarations */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('Assets', JS_DECLARATIONS_DEFER_LITERAL);
         $controller->set('model_parameter', JS_DECLARATIONS_DEFER_LITERAL, 'parameters');

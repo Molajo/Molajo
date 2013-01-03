@@ -43,7 +43,7 @@ class CommentPlugin extends Plugin
         $parent_model_name = $results['parent_model_name'];
         $parent_source_id  = $results['parent_source_id'];
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry(CATALOG_TYPE_RESOURCE_LITERAL, 'Comments');
         $controller->setDataobject();
@@ -117,17 +117,17 @@ class CommentPlugin extends Plugin
             || $parent_source_id == 0
         ) {
             $parent_model_type = Services::Registry()->get(
-                ROUTE_PARAMETERS_LITERAL,
+                'RouteParameters',
                 'request_model_type',
                 'parameters'
             );
             $parent_model_name = Services::Registry()->get(
-                ROUTE_PARAMETERS_LITERAL,
+                'RouteParameters',
                 'request_model_name',
                 'parameters'
             );
             $parent_source_id  = (int)Services::Registry()->get(
-                ROUTE_PARAMETERS_LITERAL,
+                'RouteParameters',
                 'criteria_source_id',
                 'parameters'
             );

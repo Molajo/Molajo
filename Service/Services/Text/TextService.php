@@ -97,7 +97,7 @@ Class TextService
         $model_type     = ucfirst(strtolower($model_type));
         $model_registry = $model_name . $model_type;
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 

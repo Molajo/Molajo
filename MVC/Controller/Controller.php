@@ -263,7 +263,7 @@ class Controller
         $connect = 0,
         $parameter_registry = null
     ) {
-        echo '<br />' . $model_name . $model_type . $connect . '<br />';
+//echo '<br />' . $model_name . $model_type . $connect . '<br />';
 
         $this->set('connect_database_set', 0);
 
@@ -341,7 +341,7 @@ class Controller
             ob_end_clean();
         }
 
-        Services::Profiler()->set('message', $profiler_message, 'Queries', VERBOSE);
+        Services::Profiler()->set('message', $profiler_message, 'Queries', 1);
 
         return;
     }
@@ -357,13 +357,13 @@ class Controller
     {
         $this->set('connect_database_set', 1);
 
-        if (strtolower($this->get('data_object_type', '', 'model_registry')) == strtolower('Database')) {
+        if (strtolower($this->get('data_object_type', '', 'model_registry')) == 'database') {
 
             if ($this->get('model_class', null, 'model_registry') === null) {
                 $this->set('model_class', 'ReadModel', 'model_registry');
             }
 
-            $modelClass = MODEL_CLASS . $this->get('model_class', null, 'model_registry');
+            $modelClass = MODEL_NAMESPACE . $this->get('model_class', null, 'model_registry');
 
             try {
                 $this->model = new $modelClass();
@@ -542,7 +542,7 @@ class Controller
                 ob_end_clean();
                 echo $profiler_message;
 
-                Services::Profiler()->set('message', $profiler_message, 'Queries', VERBOSE);
+                Services::Profiler()->set('message', $profiler_message, 'Queries', 1);
             }
 
             return $this->query_results;
@@ -643,7 +643,7 @@ class Controller
                 'Controller runQuery: <br /><br />'
                     . $this->model->query->__toString(),
                 'Rendering',
-                VERBOSE
+                1
             );
         }
 

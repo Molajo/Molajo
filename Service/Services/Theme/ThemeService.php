@@ -146,9 +146,9 @@ Class ThemeService
         $this->class_array = $class_array;
 
         if ($override_parse_sequence === null) {
-            $sequence = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_sequence');
+            $sequence = Services::Configuration()->getFile('Parse', 'Parse_sequence');
         } else {
-            $sequence = Services::Configuration()->getFile(PARSE_LITERAL, $override_parse_sequence);
+            $sequence = Services::Configuration()->getFile('Parse', $override_parse_sequence);
         }
 
         foreach ($sequence->include as $next) {
@@ -156,9 +156,9 @@ Class ThemeService
         }
 
         if ($override_parse_final === null) {
-            $final = Services::Configuration()->getFile(PARSE_LITERAL, 'Parse_final');
+            $final = Services::Configuration()->getFile('Parse', 'Parse_final');
         } else {
-            $final = Services::Configuration()->getFile(PARSE_LITERAL, $override_parse_final);
+            $final = Services::Configuration()->getFile('Parse', $override_parse_final);
         }
 
         foreach ($final->include as $next) {
@@ -484,7 +484,7 @@ Class ThemeService
         $rendered_output = trim($rc->process());
 
         if (defined(PROFILER_ON)) {
-            Services::Profiler()->set('message', 'Theme Service: Rendered ' . $rendered_output, 'Rendering', VERBOSE);
+            Services::Profiler()->set('message', 'Theme Service: Rendered ' . $rendered_output, 'Rendering', 1);
         }
 
         return $rendered_output;

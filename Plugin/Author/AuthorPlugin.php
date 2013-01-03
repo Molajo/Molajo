@@ -55,9 +55,9 @@ class AuthorPlugin extends Plugin
             return true;
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Users', 1);
+        $controller->getModelRegistry('System', 'Users', 1);
 
         $controller->set('primary_key_value', (int)$fieldValue, 'model_registry');
         $controller->set('get_item_children', 0, 'model_registry');

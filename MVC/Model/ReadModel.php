@@ -609,7 +609,7 @@ class ReadModel extends Model
      */
     public function addItemChildren($children, $id, $query_results)
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
 
         foreach ($children as $child) {
 

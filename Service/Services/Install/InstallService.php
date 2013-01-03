@@ -38,7 +38,7 @@ Class InstallService
         $copy_extension_instance_id = 2;
         $copy_catalog_type_id       = 10000;
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry($copy_model_type, $copy_model_name, 1);
 
@@ -291,7 +291,7 @@ Class InstallService
     public function testDeleteExtension($extension_name, $model_name, $source_path = null)
     {
         /** Get Catalog Type ID */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('Catalogtypes', 'datasource', 1);
         $controller->setDataobject();

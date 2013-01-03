@@ -32,7 +32,7 @@ class HeadPlugin extends Plugin
         }
 
         /** JS */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('dbo', 'Assets');
         $controller->setDataobject();
@@ -44,7 +44,7 @@ class HeadPlugin extends Plugin
         Services::Registry()->set('Assets', 'js', $temp_query_results);
 
         /** JS Declarations */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('dbo', 'Assets');
         $controller->setDataobject();

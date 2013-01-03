@@ -60,7 +60,7 @@ class EventsPlugin extends Plugin
             'onBeforelogout'
         );
 
-        foreach (Services::Registry()->get('Events', 'Events') as $e) {
+        foreach (Services::Events()->get('Events') as $e) {
             if (in_array(strtolower($e), array_map('strtolower', $events))) {
             } else {
                 $events[] = $e;

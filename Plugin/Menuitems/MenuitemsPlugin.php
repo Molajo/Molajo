@@ -31,9 +31,9 @@ class MenuitemsPlugin extends Plugin
             return true;
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Menuitems', 1);
+        $controller->getModelRegistry('System', 'Menuitems', 1);
 
         $controller->set('check_view_level_access', 1, 'model_registry');
         $controller->set('model_offset', 0, 'model_registry');

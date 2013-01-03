@@ -46,9 +46,6 @@ Class ApplicationServicePlugin extends ServicesPlugin
      */
     public function onAfterStartup()
     {
-
-
         return;
-
     }
 }

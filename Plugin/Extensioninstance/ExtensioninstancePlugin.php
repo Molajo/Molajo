@@ -41,7 +41,7 @@ class ExtensioninstancePlugin extends Plugin
         /** Check Permissions */
 
         /** Check if the Extension Instance already exists */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'ExtensionInstances');
         $controller->setDataobject();
@@ -74,7 +74,7 @@ class ExtensioninstancePlugin extends Plugin
         }
 
         /** Next, see if the Extension node exists */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'Extensions');
         $controller->setDataobject();
@@ -105,7 +105,7 @@ class ExtensioninstancePlugin extends Plugin
         //@todo decide if another query is warranted for verifying existence of catalog type
 
         /** Create a new Catalog Type */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('x', 'y');
         $controller->setDataobject();
@@ -243,7 +243,7 @@ class ExtensioninstancePlugin extends Plugin
         }
 
         /** Do not allow delete if there is content for this resource */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
 
         $controller->getModelRegistry('datasource', $this->row->title);
@@ -279,7 +279,7 @@ class ExtensioninstancePlugin extends Plugin
         }
 
         /** Delete allowed - get rid of ACL info */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('x', 'y');
 
@@ -330,7 +330,7 @@ class ExtensioninstancePlugin extends Plugin
      */
     public function onAfterDelete()
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
 
         $results = $controller->getModelRegistry('datasource', 'ExtensionInstances');

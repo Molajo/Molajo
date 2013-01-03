@@ -104,12 +104,12 @@ Class ThemeHelper
         $item = $this->extensionHelper->get($theme_id, CATALOG_TYPE_THEME, null, null, 1);
         if (count($item) == 0) {
 
-            if ($theme_id == $this->extensionHelper->getId(CATALOG_TYPE_THEME, SYSTEM_LITERAL)) {
+            if ($theme_id == $this->extensionHelper->getId(CATALOG_TYPE_THEME, 'System')) {
                 Services::Error()->set(500, 'System Theme not found');
                 throw new \Exception('ThemeIncluder: Not found ' . $theme_id);
             }
 
-            $theme_id = $this->extensionHelper->getId(CATALOG_TYPE_THEME, SYSTEM_LITERAL);
+            $theme_id = $this->extensionHelper->getId(CATALOG_TYPE_THEME, 'System');
             Services::Registry()->set($registry, 'theme_id', (int)$theme_id);
 
             $node = $this->extensionHelper->getExtensionNode((int)$theme_id);

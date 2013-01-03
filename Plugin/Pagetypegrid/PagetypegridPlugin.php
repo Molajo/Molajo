@@ -31,7 +31,7 @@ class PagetypegridPlugin extends Plugin
             return true;
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry(
             $this->get('model_type', '', 'parameters'),

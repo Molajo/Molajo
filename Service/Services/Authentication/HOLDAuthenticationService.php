@@ -213,7 +213,7 @@ Class AuthenticationService
     public function onUserLogin($user, $options = array())
     {
         /** user plugins */
-        $plugins = MolajoPluginHelper::getPlugin(USER_LITERAL);
+        $plugins = MolajoPluginHelper::getPlugin('User');
 
         /*
 * Loop through the plugins and check of the creditials can be used to authenticate

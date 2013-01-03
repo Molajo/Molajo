@@ -102,11 +102,11 @@ class UseractivityPlugin extends Plugin
         );
 
         /** Retrieve User Data  */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'UserActivity', 1);
 
-        $controller->set('user_id', Services::Registry()->set(USER_LITERAL, 'id'));
+        $controller->set('user_id', Services::Registry()->set('User', 'id'));
         $controller->set('action_id', $action_id, 'parameters');
         $controller->set('catalog_id', $this->row->catalog_id, 'parameters');
         $controller->set('activity_datetime', null, 'parameters');

@@ -32,7 +32,7 @@ Class PermissionsService
     public function initialise()
     {
         /** Permission Actions: Authenticate, Create, Read, Update, Publish, Delete */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Actions', 1);
 
@@ -113,7 +113,7 @@ Class PermissionsService
      */
     public function verifySiteApplication()
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Siteapplications', 1);
 
@@ -212,7 +212,7 @@ Class PermissionsService
     {
         if (in_array(
             Services::Registry()->get('parameters', 'catalog_view_group_id'),
-            Services::Registry()->get(USER_LITERAL, 'ViewGroups')
+            Services::Registry()->get('User', 'ViewGroups')
         )
         ) {
             Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', true);
@@ -283,7 +283,7 @@ Class PermissionsService
 
         $action_id = 3;
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Grouppermissions', 1);
 
@@ -298,7 +298,7 @@ Class PermissionsService
         );
         $controller->model->query->where(
             $controller->model->db->qn('a.group_id')
-                . ' IN (' . implode(', ', Services::Registry()->get(USER_LITERAL, 'Groups')) . ')'
+                . ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
         );
 
         $count = $controller->getData(QUERY_OBJECT_RESULT);
@@ -328,7 +328,7 @@ Class PermissionsService
             return false;
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('Datasource', 'Userapplications', 1);
 
@@ -415,7 +415,7 @@ Class PermissionsService
                 APPLICATION_ID
         );
 
-        $vg = implode(',', array_unique(Services::Registry()->get(USER_LITERAL, 'ViewGroups')));
+        $vg = implode(',', array_unique(Services::Registry()->get('User', 'ViewGroups')));
 
         $query->where(
             $db->qn($parameters['catalog_prefix']) .
@@ -446,7 +446,7 @@ Class PermissionsService
     {
         $groups     = Services::Registry()->get('Configuration', 'user_disable_filter_for_groups');
         $groupArray = explode(',', $groups);
-        $userGroups = Services::Registry()->get(USER_LITERAL, 'groups');
+        $userGroups = Services::Registry()->get('User', 'groups');
 
         foreach ($groupArray as $single) {
             if (in_array($single, $userGroups)) {

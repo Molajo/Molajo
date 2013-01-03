@@ -27,7 +27,7 @@ class MessagesPlugin extends Plugin
      */
     public function onBeforeParseHead()
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('Dataobject', 'Messages', 1);
         $messages = $controller->getData(QUERY_OBJECT_LIST);

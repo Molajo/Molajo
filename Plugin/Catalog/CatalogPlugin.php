@@ -34,7 +34,7 @@ class CatalogPlugin extends Plugin
             return true;
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'Catalog', 1);
 
@@ -206,7 +206,7 @@ class CatalogPlugin extends Plugin
     public function onBeforeDelete()
     {
         /** @todo - fix empty setModelRegistry */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('x', 'y', 1);
 

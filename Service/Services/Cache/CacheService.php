@@ -107,6 +107,14 @@ Class CacheService
     protected $cache_keys = array();
 
     /**
+     * Cache Service Time
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $cache_service_time = array();
+
+    /**
      * List of Properties
      *
      * @var    object
@@ -159,8 +167,9 @@ Class CacheService
      * @param   string  $key    md5 name uniquely identifying content
      * @param   mixed   $value  Data to be serialized and then saved as cache
      *
-     * @return  mixed
+     * @return  bool|CacheService
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($type, $key, $value)
     {
@@ -203,7 +212,8 @@ Class CacheService
      * @param   string  $key md5 name uniquely identifying content
      * @param   null    $default
      *
-     * @return  bool|mixed  unserialized cache for this key
+     * @return  bool|mixed  cache for this key that has not been serialized
+     * @throws  \OutOfRangeException
      * @since   1.0
      */
     public function get($type, $key, $default = null)
@@ -246,18 +256,22 @@ Class CacheService
     /**
      * Load cache keys
      *
+     * @param   string  $type
+     *
      * @return  object
      * @since   1.0
+     * @return  bool|CacheService
+     * @throws  \Exception
      */
     protected function loadCacheKeys($type)
     {
-        if (is_dir($this->system_cache_folder)) {
+        if (is_dir($this->system_cache_folder . '/' . $type)) {
         } else {
-            return false;
-            // error
+            throw new \Exception
+            ('Cache: Folder not found: ' . $this->system_cache_folder . '/' . $type);
         }
 
-        $files = \glob($this->system_cache_folder);
+        $files = \glob($this->system_cache_folder . '/' . $type);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
@@ -271,7 +285,8 @@ Class CacheService
     /**
      * Determine if cache exists for this object
      *
-     * @param   string  $key md5 name uniquely identifying content
+     * @param  string  $type
+     * @param  string  $key  md5 name uniquely identifying content
      *
      * @return  boolean The option value.
      * @since   1.0
@@ -318,8 +333,11 @@ Class CacheService
     /**
      * Flush all cache
      *
+     * @param   string $type
+     *
      * @return  object
      * @since   1.0
+     * @return  CacheService
      */
     protected function prune_cache($type = '')
     {
@@ -346,6 +364,7 @@ Class CacheService
     /**
      * Remove cache for specified $key value
      *
+     * @param           $type
      * @param   string  $key md5 name uniquely identifying content
      *
      * @return  bool    true (expired) false (did not expire)
@@ -372,7 +391,9 @@ Class CacheService
     /**
      * Flush all cache
      *
-     * @return  object
+     * @param   string $type
+     *
+     * @return  CacheService
      * @since   1.0
      */
     protected function flush_cache($type = '')
@@ -398,6 +419,7 @@ Class CacheService
     /**
      * Remove cache for specified $key value
      *
+     * @param   string  $type
      * @param   string  $key md5 name uniquely identifying content
      *
      * @return  object
@@ -423,6 +445,8 @@ Class CacheService
 
     /**
      * Create cache folders, if needed
+     *
+     * @param   string  $type
      *
      * @return  object
      * @since   1.0

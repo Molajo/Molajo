@@ -103,7 +103,7 @@ Class TemplateIncluder extends Includer
             . ' Model Type ' . Services::Registry()->get('include', 'model_type')
             . ' Model Name ' . Services::Registry()->get('include', 'model_name');
 
-        Services::Profiler()->set('message', $message, 'Rendering', VERBOSE);
+        Services::Profiler()->set('message', $message, 'Rendering', 1);
 
         return true;
     }

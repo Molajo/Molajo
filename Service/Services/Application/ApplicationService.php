@@ -136,9 +136,8 @@ Class ApplicationService
     );
 
     /**
-     * Class Constructor
+     * Class constructor
      *
-     * @return  void
      * @since   1.0
      */
     public function __construct()
@@ -152,6 +151,12 @@ Class ApplicationService
         return;
     }
 
+    /**
+     * Initialise
+     *
+     * @return  void
+     * @since   1.0
+     */
     public function initialise()
     {
 
@@ -170,14 +175,18 @@ Class ApplicationService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
-            if (isset($this->$key)) {
-                $this->$key = $default;
+        if ($key == 'parameters') {
+        } else {
+            if (in_array($key, $this->parameter_properties_array)) {
+
+                if (isset($this->$key)) {
+                    $this->$key = $default;
+                }
+
+                return $this->$key;
+
             }
-
-            return $this->$key;
         }
-
         if (isset($this->parameters[$key])) {
             return $this->parameters[$key];
         }
@@ -196,14 +205,17 @@ Class ApplicationService
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value = null)
+    public function set($key, $value)
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
-            $this->$key = $value;
+        if ($key == 'parameters') {
+        } else {
+            if (in_array($key, $this->parameter_properties_array)) {
+                $this->$key = $value;
 
-            return $this->$key;
+                return $this->$key;
+            }
         }
 
         $this->parameters[$key] = $value;
@@ -225,7 +237,7 @@ Class ApplicationService
             $applicationTest = $this->request_uri;
         }
 
-        $requested_resource_for_route = '';
+        $this->requested_resource_for_route = '';
 
         if (defined('APPLICATION')) {
             /* to override - must also define $this->request->get('requested_resource_for_route') */
@@ -241,7 +253,7 @@ Class ApplicationService
                     define('APPLICATION_URL_PATH', APPLICATION . '/');
                     define('APPLICATION_ID', $app->id);
 
-                    $requested_resource_for_route = substr(
+                    $this->requested_resource_for_route = substr(
                         $this->request_uri,
                         strlen(APPLICATION) + 1,
                         strlen($this->request_uri) - strlen(APPLICATION) + 1
@@ -253,22 +265,26 @@ Class ApplicationService
 
             if (defined('APPLICATION')) {
             } else {
-
                 define('APPLICATION', $this->applications->default->name);
-                define('APPLICATION_URL_PATH', '');
-                define('APPLICATION_ID', $this->applications->default->id);
-
-                $requested_resource_for_route = $this->request_uri;
             }
+            if (defined('APPLICATION_URL_PATH')) {
+            } else {
+                define('APPLICATION_URL_PATH', '');
+            }
+            if (defined('APPLICATION_ID')) {
+            } else {
+                define('APPLICATION_ID', $this->applications->default->id);
+            }
+
+            $this->requested_resource_for_route = $this->request_uri;
         }
 
         /*  Page Request used in Application::Request */
-        if (strripos($requested_resource_for_route, '/') == (strlen($requested_resource_for_route) - 1)) {
-            $requested_resource_for_route
-                = substr($requested_resource_for_route, 0, strripos($requested_resource_for_route, '/'));
+        if (strripos($this->requested_resource_for_route, '/') == (strlen($this->requested_resource_for_route) - 1)) {
+            $this->requested_resource_for_route
+                = substr($this->requested_resource_for_route, 0, strripos($this->requested_resource_for_route, '/'));
         }
 
-        $this->set('requested_resource_for_route', $requested_resource_for_route);
 
         return;
     }
@@ -279,9 +295,9 @@ Class ApplicationService
      * @return  void
      * @since   1.0
      */
-    public function setBaseUrlPathforApplication()
+    public function setBaseUrlPath()
     {
-        $this->set('base_url_path_for_application', $this->base_url_path_with_scheme . '/' . APPLICATION_URL_PATH);
+        $this->base_url_path_for_application = $this->base_url_path_with_scheme . '/' . APPLICATION_URL_PATH;
 
         return;
     }
@@ -294,21 +310,20 @@ Class ApplicationService
      * @return  void
      * @since   1.0
      */
-    protected function sslCheck()
+    public function sslCheck()
     {
-        if ((int)$this->get('url_force_ssl', 0) > 0) {
+        if ((int)$this->url_force_ssl > 0) {
 
-            if (($this->get('request_using_ssl') === true)) {
+            if (($this->request_using_ssl === true)) {
 
             } else {
 
                 $redirectTo = (string)'https' .
                     substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
                     APPLICATION_URL_PATH .
-                    '/' . $this->get('requested_resource_for_route');
+                    '/' . $this->requested_resource_for_route;
 
-                Services::Redirect()
-                    ->set($redirectTo, 301);
+                Services::Redirect()->set($redirectTo, 301);
             }
         }
 
@@ -326,49 +341,42 @@ Class ApplicationService
     {
         if (APPLICATION == 'installation') {
 
-            $this->set('Configuration', 'application_id', 0);
-            $this->set('Configuration', 'application_catalog_type_id', CATALOG_TYPE_APPLICATION);
-            $this->set('Configuration', 'application_name', APPLICATION);
-            $this->set('Configuration', 'application_description', APPLICATION);
-            $this->set('Configuration', 'application_path', APPLICATION);
+            $this->set('application_id', 0);
+            $this->set('application_catalog_type_id', CATALOG_TYPE_APPLICATION);
+            $this->set('application_name', APPLICATION);
+            $this->set('application_description', APPLICATION);
+            $this->set('application_path', APPLICATION);
 
         } else {
 
             try {
-                $controllerClass = CONTROLLER_CLASS;
+                $controllerClass = CONTROLLER_CLASS_NAMESPACE;
                 $controller      = new $controllerClass();
-                $results = $controller->getModelRegistry('Datasource', 'Application', 1);
-echo $results;
-                die;
+                $controller->getModelRegistry('Datasource', 'Application', 1);
+
                 $controller->set('name_key_value', APPLICATION, 'model_registry');
 
                 $item = $controller->getData(QUERY_OBJECT_ITEM);
 
-                var_dump($item);
-                die;
                 if ($item === false) {
                     throw new \Exception ('ConfigurationService: Error executing getApplication Query');
                 }
 
-                $this->set('Configuration', 'application_id', (int)$item->id);
-                $this->set(
-                    'Configuration',
-                    'application_catalog_type_id',
-                    (int)$item->catalog_type_id
-                );
-                $this->set('Configuration', 'application_name', $item->name);
-                $this->set('Configuration', 'application_path', $item->path);
-                $this->set('Configuration', 'application_description', $item->description);
+                $this->set('application_id', (int)$item->id);
+                $this->set('application_catalog_type_id', (int)$item->catalog_type_id);
+                $this->set('application_name', $item->name);
+                $this->set('application_path', $item->path);
+                $this->set('application_description', $item->description);
 
                 $parameters = Services::Registry()->getArray('ApplicationDatasourceParameters');
                 foreach ($parameters as $key => $value) {
-                    $this->set('Configuration', $key, $value);
+                    $this->set($key, $value);
                 }
 
                 $metadata = Services::Registry()->getArray('ApplicationDatasourceMetadata');
                 if (count($metadata) > 0) {
                     foreach ($metadata as $key => $value) {
-                        $this->set('Configuration', 'metadata_' . $key, $value);
+                        $this->set('metadata_' . $key, $value);
                     }
                 }
 
@@ -377,7 +385,7 @@ echo $results;
             }
         }
 
-        sort($this->configuration);
+        ksort($this->parameters);
 
         return;
     }
@@ -390,54 +398,50 @@ echo $results;
      */
     public function setApplicationSitePaths()
     {
-        $this->set('Configuration', 'site_base_url', BASE_URL);
+        $this->set('site_base_url', BASE_URL);
 
-        $path = $this->get('Configuration', 'application_path', '');
-        $this->set('Configuration', 'application_base_url', BASE_URL . $path);
+        $path = $this->get('application_path', '');
+        $this->set('application_base_url', BASE_URL . $path);
 
         if (defined('SITE_NAME')) {
         } else {
             define('SITE_NAME',
-            $this->get('Configuration', 'site_name', SITE_ID));
+            $this->get('site_name', SITE_ID));
         }
 
         if (defined('SITE_CACHE_FOLDER')) {
         } else {
             define('SITE_CACHE_FOLDER', SITE_BASE_PATH
-                . '/' . $this->get('Configuration', 'system_cache_folder', 'cache'));
+                . '/' . $this->get('system_cache_folder', 'cache'));
         }
         if (defined('SITE_LOGS_FOLDER')) {
         } else {
 
             define('SITE_LOGS_FOLDER', SITE_BASE_PATH
-                . '/' . $this->get('Configuration', 'system_logs_folder', 'logs'));
+                . '/' . $this->get('system_logs_folder', 'logs'));
         }
 
         if (defined('SITE_MEDIA_FOLDER')) {
         } else {
             define('SITE_MEDIA_FOLDER', SITE_BASE_PATH
-                . '/' . $this->get('Configuration', 'system_media_folder', 'media'));
+                . '/' . $this->get('system_media_folder', 'media'));
         }
         if (defined('SITE_MEDIA_URL')) {
         } else {
             define('SITE_MEDIA_URL', SITE_BASE_URL_RESOURCES
-                . '/' . $this->get('Configuration', 'system_media_url', 'media'));
+                . '/' . $this->get('system_media_url', 'media'));
         }
 
         if (defined('SITE_TEMP_FOLDER')) {
         } else {
             define('SITE_TEMP_FOLDER', SITE_BASE_PATH
-                . '/' . $this->get(
-                'Configuration',
-                'system_temp_folder',
-                SITE_BASE_PATH . '/temp'
-            ));
+                . '/' . $this->get('system_temp_folder', SITE_BASE_PATH . '/temp'));
         }
 
         if (defined('SITE_TEMP_URL')) {
         } else {
             define('SITE_TEMP_URL', SITE_BASE_URL_RESOURCES
-                . '/' . $this->get('Configuration', 'system_temp_url', 'temp'));
+                . '/' . $this->get('system_temp_url', 'temp'));
         }
 
         return;

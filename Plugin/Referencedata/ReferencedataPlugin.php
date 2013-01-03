@@ -53,7 +53,7 @@ class ReferencedataPlugin extends Plugin
 
                     $new_name = $field['name'] . '_value';
 
-                    $controllerClass = CONTROLLER_CLASS;
+                    $controllerClass = CONTROLLER_CLASS_NAMESPACE;
                     $controller      = new $controllerClass();
                     $controller->getModelRegistry('datasource', $fk->source_model, 1);
                     $controller->set('get_customfields', 0, 'model_registry');

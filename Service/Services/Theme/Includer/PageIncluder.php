@@ -191,7 +191,7 @@ class PageIncluder extends Includer
         );
 
         $this->loadMediaPlus(
-            '/user' . Services::Registry()->get(USER_LITERAL, 'id'),
+            '/user' . Services::Registry()->get('User', 'id'),
             Services::Registry()->get('include', 'asset_priority_user', 300)
         );
 

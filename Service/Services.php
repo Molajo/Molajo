@@ -60,7 +60,7 @@ Class Services
      * @var     object
      * @since   1.0
      */
-    protected $controller_class_name = null;
+    protected $controller_class = null;
 
     /**
      * Stores an array of key/value Parameters settings from Route
@@ -78,7 +78,7 @@ Class Services
      */
     protected $parameter_properties_array = array(
         'configuration',
-        'controller_class_name',
+        'controller_class',
         'frontcontroller_class'
     );
 
@@ -175,12 +175,12 @@ Class Services
             if ($class === null) {
                 $class = 'Molajo\\Service\\Services\\';
             }
-echo 'Startup ' . $name . ' ' . $class . '<br />';
+            echo 'Startup ' . $name . ' ' . $class . '<br />';
             $this->start($name, $class, true);
         }
-echo 'DONE ' . $name . ' ' . $class . '<br />';
+
         foreach ($this->message as $message) {
-            Services::Profiler()->set('message', $message, 'Services', VERBOSE);
+            Services::Profiler()->set('message', $message, 'Services', 1);
         }
 
         return true;
@@ -206,7 +206,6 @@ echo 'DONE ' . $name . ' ' . $class . '<br />';
         if ($class == '') {
             $class = 'Molajo\\Service\\Services\\' . substr($key, 0, (strlen($key) - 7)) . '\\';
         }
-        echo 'Start ' . $key . ' ' . $class . '<br />';
 
 //        echo '<pre>Here is $this->connections';
 //        var_dump($this->connections);
@@ -214,6 +213,11 @@ echo 'DONE ' . $name . ' ' . $class . '<br />';
         if (isset($this->connections[$key])) {
             return $this->connections[$key];
         }
+
+//        if (isset($this->connections['ConfigurationService'])
+//            && isset($this->connections['RegistryService'])) {
+//            $registry = true;
+//        }
 
         if ($registry == false) {
 
@@ -226,8 +230,11 @@ echo 'DONE ' . $name . ' ' . $class . '<br />';
 
         } else {
 
-            $controller      = new $this->controller_class_name();
+            $controller      = new $this->controller_class();
             $controller->getModelRegistry('Service', $key);
+
+            $this->connections['RegistryService']->get($key . 'Service', '*');
+            die;
 
             $name           = (string)$service->attributes()->name;
             $startup        = (string)$service->attributes()->startup;
@@ -264,7 +271,7 @@ echo 'DONE ' . $name . ' ' . $class . '<br />';
 
             } else {
                 $connectionSucceeded
-                    = $this->runStartupMethod($serviceInstance, $name, $startup_method);
+                    = $this->runStartupMethod($serviceInstance, $serviceClass, $startup_method);
             }
 
             $serviceInstance
@@ -326,7 +333,7 @@ echo 'DONE ' . $name . ' ' . $class . '<br />';
         if (class_exists($pluginClass)) {
         } else {
 
-            /** Plugins are not required for Services */
+            /** Not an error as plugins are not required for Services */
             return;
         }
 
@@ -370,7 +377,16 @@ echo 'DONE ' . $name . ' ' . $class . '<br />';
     protected function runStartupMethod($serviceInstance, $serviceClass, $serviceMethod)
     {
         try {
-            return $serviceInstance->$serviceMethod();
+            if (method_exists($serviceClass, $serviceMethod)) {
+                return $serviceInstance->$serviceMethod();
+
+            } else {
+                $error = 'Service: ' . $serviceClass
+                    . ' Startup Method: ' . $serviceMethod
+                    . ' does not exist.';
+
+                throw new \Exception($error);
+            }
 
         } catch (\Exception $e) {
 

@@ -1,21 +1,28 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Data Object Plugin
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Plugin\Dataobject;
 
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
+
 defined('NIAMBIE') or die;
 
 /**
- * @package     Niambie
- * @license     MIT
- * @since       1.0
+ * Data Object Plugin - connects to Database
+ *
+ * @author     Amy Stephen
+ * @license    MIT
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
+
 class DataobjectPlugin extends Plugin
 {
     /**
@@ -36,12 +43,15 @@ class DataobjectPlugin extends Plugin
         }
 
         if ($this->get('data_object_service_class', 'Database', 'model_registry') == 'Database') {
+
             $service_class = $this->get('data_object_service_class', 'Database', 'model_registry');
-            $this->set('db', Services::$service_class()->connect($this->get('model_registry')), 'model');
+            $db = Services::$service_class()->connect($this->get('model_registry'));
+            $this->set('db', $db, 'model');
             $this->set('query', $this->get('db', '', 'model')->getQuery($this->get('db', '', 'model')), 'model');
             $this->set('null_date', $this->get('db', '', 'model')->getNullDate(), 'model');
+
             try {
-                $this->set('now', Services::Date()->getDate(), 'model');
+               // $this->set('now', Services::Date()->getDate(), 'model');
 
             } catch (\Exception $e) {
                 // ignore error due to Date Service activation later in sequence for some use
@@ -105,7 +115,9 @@ class DataobjectPlugin extends Plugin
     /**
      * Prepares list of Dataobject Lists
      *
-     * @return  boolean
+     * @param   array  $files
+     *
+     * @return  array
      * @since   1.0
      */
     protected function processFiles($files)

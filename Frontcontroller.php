@@ -214,6 +214,10 @@ Class Frontcontroller
     protected $class_array = array(
 
         'Service'               => 'Molajo\\Service\\Services',
+        'DatabaseService'       => 'Molajo\\Service\\Services\\Database\\',
+        'DateService'           => 'Molajo\\Service\\Services\\Date\\',
+        'LanguageService'       => 'Molajo\\Service\\Services\\Language\\',
+        'PermissionsService'    => 'Molajo\\Service\\Services\\Permissions\\',
         'CacheService'          => 'Molajo\\Service\\Services\\Cache\\',
         'ConfigurationService'  => 'Molajo\\Service\\Services\\Configuration\\',
         'ExceptionService'      => 'Molajo\\Service\\Services\\Exception\\',
@@ -224,12 +228,13 @@ Class Frontcontroller
         'FilesystemService'     => 'Molajo\\Service\\Services\\Filesystem\\',
         'EventService'          => 'Molajo\\Service\\Services\\Event\\',
         'ProfilerService'       => 'Molajo\\Service\\Services\\Profiler\\',
-        'AssetService'          => 'Molajo\\Service\\Services\\Asset\\AssetService',
-        'AuthenticationService' => 'Molajo\\Service\\Services\\Authentication\\AuthenticationService',
-        'ClientService'         => 'Molajo\\Service\\Services\\Client\\ClientService',
-        'CookieService'         => 'Molajo\\Service\\Services\\Cookie\\CookieService',
-        'MetadataService'       => 'Molajo\\Service\\Services\\Metadata\\MetadataService',
-        'RouteService'          => 'Molajo\\Service\\Services\\Route\\RouteService',
+        'AssetService'          => 'Molajo\\Service\\Services\\Asset\\',
+        'AuthenticationService' => 'Molajo\\Service\\Services\\Authentication\\',
+        'ClientService'         => 'Molajo\\Service\\Services\\Client\\',
+        'CookieService'         => 'Molajo\\Service\\Services\\Cookie\\',
+        'MetadataService'       => 'Molajo\\Service\\Services\\Metadata\\',
+        'RouteService'          => 'Molajo\\Service\\Services\\Route\\',
+        'UserService'           => 'Molajo\\Service\\Services\\User\\',
         'ThemeService'          => 'Molajo\\Service\\Services\\Theme\\ThemeService',
         'ContentHelper'         => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
         'ExtensionHelper'       => 'Molajo\\Service\\Services\\Theme\\Helper\\ExtensionHelper',
@@ -251,7 +256,7 @@ Class Frontcontroller
         'LoginController'       => 'Molajo\\MVC\\Controller\\LoginController',
         'LogoutController'      => 'Molajo\\MVC\\Controller\\LogoutController',
         'UpdateController'      => 'Molajo\\MVC\\Controller\\UpdateController',
-        'Model'                 => 'Molajo\\MVC\\Model',
+        'Model'                 => 'Molajo\\MVC\\Model\\',
         'CreateModel'           => 'Molajo\\MVC\\Model\\CreateModel',
         'DeleteModel'           => 'Molajo\\MVC\\Model\\DeleteModel',
         'LoginModel'            => 'Molajo\\MVC\\Model\\LoginModel',
@@ -271,6 +276,7 @@ Class Frontcontroller
      *
      * @return  mixed
      * @since   1.0
+     * @throws \Exception
      */
     public function process(
         $override_url_request = null,
@@ -370,6 +376,7 @@ Class Frontcontroller
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function get($key = null, $default = null)
     {
@@ -397,6 +404,7 @@ Class Frontcontroller
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value = null)
     {
@@ -415,6 +423,8 @@ Class Frontcontroller
     /**
      * Initialise Site, Application, and Services
      *
+     * @param   $override_url_request
+     *
      * @return  void
      * @since   1.0
      * @throws  \Exception
@@ -432,39 +442,28 @@ Class Frontcontroller
             ('Frontcontroller: PHP version ' . PHP_VERSION . ' does not meet 5.3 minimum.');
         }
 
-        if (defined('CONTROLLER_CLASS')) {
+        if (defined('CONTROLLER_CLASS_NAMESPACE')) {
         } else {
-            define('CONTROLLER_CLASS', $this->class_array['Controller'] . '\\Controller');
+            define('CONTROLLER_CLASS_NAMESPACE', $this->class_array['Controller'] . '\\Controller');
         }
 
-        if (defined('MODEL_CLASS')) {
+        if (defined('MODEL_NAMESPACE')) {
         } else {
-            define('MODEL_CLASS', $this->class_array['Model']);
+            define('MODEL_NAMESPACE', $this->class_array['Model']);
         }
 
         /** Instantiate Services Controller */
         Frontcontroller::Services($this->class_array['Service']);
         Frontcontroller::Services()->set('frontcontroller_class', $this);
-        Frontcontroller::Services()->set('controller_class_name', $this->class_array['Controller']);
+        Frontcontroller::Services()->set('controller_class', CONTROLLER_CLASS_NAMESPACE);
 
-        /** Start Configuration Service */
         Frontcontroller::Services()->start('ConfigurationService', $this->class_array['ConfigurationService']);
-
-        /** Start Registry Service */
         Frontcontroller::Services()->start('RegistryService', $this->class_array['RegistryService']);
-
-        /** Start Request Service */
         Frontcontroller::Services()->start('RequestService', $this->class_array['RequestService']);
-
-        /** Start Site Service */
         Frontcontroller::Services()->start('SiteService', $this->class_array['SiteService']);
-
-        /** Start Application Service */
         Frontcontroller::Services()->start('ApplicationService', $this->class_array['ApplicationService']);
 
         /** Start Filesystem Service */
-        Frontcontroller::Services()->start('FilesystemService', $this->class_array['FilesystemService']);
-
         if ($override_url_request === null) {
         } else {
             $this->set('requested_resource_for_route', $override_url_request);
@@ -513,37 +512,30 @@ Class Frontcontroller
         $this->set('base_url_path_for_application', Services::Application()->get('base_url_path_for_application'));
 
         /** Add Site URL to Application */
-        Services::Application()->setBaseUrlPathforApplication();
+        Services::Application()->setBaseUrlPath();
 
-        /** Start Profiler Service */
-        Frontcontroller::Services()->start('ProfilerService', $this->class_array['ProfilerService']);
-
-        /** Start Cache Service */
         Frontcontroller::Services()->start('CacheService', $this->class_array['CacheService']);
-
-        /** Start Event Service */
+        Frontcontroller::Services()->start('ProfilerService', $this->class_array['ProfilerService']);
+        Frontcontroller::Services()->start('FilesystemService', $this->class_array['FilesystemService']);
+        Frontcontroller::Services()->start('DatabaseService', $this->class_array['DatabaseService']);
         Frontcontroller::Services()->start('EventService', $this->class_array['EventService']);
+        Frontcontroller::Services()->start('DateService', $this->class_array['DateService']);
+        Frontcontroller::Services()->start('PermissionsService', $this->class_array['PermissionsService']);
+        Frontcontroller::Services()->start('UserService', $this->class_array['UserService']);
+        $this->set('request_date', Services::Date()->getDate());
 
-        /** Configuration */
-        $controllerClass = CONTROLLER_CLASS;
-        $controller      = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Application', 1);
-        die;
-        Services::Registry()->get($this->get('model_registry_name'), '*');
-        die;
-        //Services::Application()->getApplication();
-        die;
-        Services::Application()->setApplicationSitePaths();
-        die;
+        Frontcontroller::Services()->start('LanguageService', $this->class_array['LanguageService']);
 
-        $this->request_date = Services::Date()->getDate();
-
-        $this->set('language_current',
+        $this->set(
+            'language_current',
             Services::Registry()->get('Languages', 'Default')
         );
-        $this->set('language_direction',
+        $this->set(
+            'language_direction',
             Services::Registry()->get('Languages' . $this->get('Language_current'))
         );
+
+        Services::Application()->getApplication();
 
         $this->set('application_html5', Services::Application()->get('application_html5', 1));
 
@@ -552,32 +544,11 @@ Class Frontcontroller
         } else {
             $this->set('application_line_end', ('/>' . chr(10)));
         }
-        die;
-        /** Assets */
-        /**
-        $class              = $this->class_array['AssetService'];
-        $this->assets_class = new $class();
 
-        $this->assets_class->initialise();
+        Services::Application()->setApplicationSitePaths();
+        Frontcontroller::Services()->start('AssetService', $this->class_array['AssetService']);
+        Frontcontroller::Services()->start('MetadataService', $this->class_array['MetadataService']);
 
-        $this->assets_class->set('html5', $this->get('application_html5'));
-        $this->assets_class->set('line_end', $this->get('application_line_end'));
-        $this->assets_class->set('mimetype', $this->get('request_mimetype'));
-        $this->assets_class->set('direction', $this->get('language_direction'));
-         */
-        /** Metadata */
-        /**        $class                = $this->class_array['MetadataService'];
-        $this->metadata_class = new $class();
-
-        $this->metadata_class->initialise();
-
-        $this->metadata_class->set('language', $this->get('language_current'));
-        $this->metadata_class->set('direction', $this->get('language_direction'));
-        $this->metadata_class->set('html5', $this->get('application_html5'));
-        $this->metadata_class->set('line_end', $this->get('application_line_end'));
-        $this->metadata_class->set('mimetype', $this->get('request_mimetype'));
-        $this->metadata_class->set('request_date', $this->get('request_date'));
-         */
         /** Error Theme and View */
         $this->set('error_theme_id', Services::Application()->get('error_theme_id'));
         $this->set('error_page_view_id', Services::Application()->get('error_page_view_id'));
@@ -741,7 +712,7 @@ Class Frontcontroller
      */
     protected function authorise()
     {
-        $permissions = Services::Permissions()->verifyAction();
+        Services::Permissions()->verifyAction();
         //@todo verify 403
 
         if ($this->get('error_code', 0)) {
@@ -761,7 +732,7 @@ Class Frontcontroller
      */
     protected function setError()
     {
-        if (defined(PROFILER_ON)) {
+        if (defined(PROFILER_ON) && PROFILER_ON === true) {
             Services::Profiler()->set('message', 'Error Code: ' . $this->get('error_code'), 'Application');
         }
 
@@ -865,14 +836,13 @@ Class Frontcontroller
 
         if ($results === false) {
             Services::Profiler()->set('message', 'Execute ' . $action . ' failed', 'Application');
-            throw new \Exception('Execute ' . $action . ' Failed', 500);
 
-            return false;
+            throw new \Exception('Execute ' . $action . ' Failed', 500);
         }
 
         Services::Profiler()->set('message', 'Execute ' . $action . ' succeeded', 'Application');
 
-        return true;
+        return;
     }
 
     /**
@@ -922,7 +892,7 @@ Class Frontcontroller
      *
      * @todo    provide script to create a full HTML website with pre-rendered pages using catalog query
      *
-     * @return  mixed | false or string
+     * @return  mixed | bool or string
      * @since   1.0
      */
     protected function getPageCache()
@@ -978,12 +948,14 @@ Class Frontcontroller
     /**
      * Schedule Event onAfterExecute
      *
-     * @return  boolean
+     * @return  void
      * @since   1.0
      */
     protected function onAfterExecuteEvent()
     {
-        return $this->scheduleEvent('onAfterExecuteEvent');
+        $this->scheduleEvent('onAfterExecuteEvent');
+
+        return;
     }
 
     /**
@@ -991,6 +963,7 @@ Class Frontcontroller
      *
      * @return  object
      * @since   1.0
+     * @throws  \Exception
      */
     protected function response()
     {
@@ -1046,12 +1019,14 @@ Class Frontcontroller
      * Event runs after the entire document has been rendered. The rendered content is available
      * to event plugins.
      *
-     * @return  object
+     * @return  void
      * @since   1.0
      */
     protected function onAfterResponseEvent()
     {
-        return $this->scheduleEvent('onAfterResponseEvent');
+        $this->scheduleEvent('onAfterResponseEvent');
+
+        return;
     }
 
     /**
@@ -1131,7 +1106,7 @@ Class Frontcontroller
      */
     protected function getPluginList($model_registry_name = null)
     {
-        $plugins = array();
+        $modelPlugins = array();
 
         if ((int)Services::Registry()->get($model_registry_name, 'process_plugins') > 0) {
 
@@ -1143,6 +1118,7 @@ Class Frontcontroller
             }
         }
 
+        $plugins   = $modelPlugins;
         $plugins[] = 'Application';
 
         return $plugins;
@@ -1177,8 +1153,8 @@ Class Frontcontroller
      *
      * @static
      * @return  null|object  Services
-     * @throws  \RuntimeException
      * @since   1.0
+     * @throws \Exception
      */
     public static function Services($class = null)
     {

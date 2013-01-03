@@ -64,6 +64,7 @@ Class LanguageService
      */
     public function initialise($language = null)
     {
+
         $language = $this->setCurrentLanguage($language);
         $this->setLanguageRegistry($language);
 
@@ -160,7 +161,7 @@ Class LanguageService
      */
     public function logUntranslatedStrings()
     {
-        if (Services::Registry()->get(USER_LITERAL, 'username') == 'admin') {
+        if (Services::Registry()->get('User', 'username') == 'admin') {
         } else {
             return true;
         }
@@ -179,9 +180,9 @@ Class LanguageService
             return true;
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings', 1);
+        $controller->getModelRegistry('System', 'Languagestrings', 1);
 
         $controller->set('check_view_level_access', 0, 'model_registry');
         $controller->model->insertLanguageString($translated);
@@ -287,7 +288,7 @@ Class LanguageService
 
         /** @todo Retrieve from Session, if installed */
 
-        $language = Services::Registry()->get(USER_LITERAL, CATALOG_TYPE_LANGUAGE_LITERAL, '');
+        $language = Services::Registry()->get('User', CATALOG_TYPE_LANGUAGE_LITERAL, '');
         if (in_array($language, $installed)) {
             return $language;
         }
@@ -370,9 +371,9 @@ Class LanguageService
      */
     protected function getLanguageStrings($language)
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Languagestrings', 1);
+        $controller->getModelRegistry('System', 'Languagestrings', 1);
 
         $controller->set('check_view_level_access', 0, 'model_registry');
         $primary_prefix = $controller->get('primary_prefix', 'a', 'model_registry');
@@ -458,8 +459,9 @@ Class LanguageService
     protected function getInstalledLanguages()
     {
         $installed = $this->extensionHelper->get(0, CATALOG_TYPE_LANGUAGE, 'datasource', 'Languageservice');
+
         if ($installed === false || count($installed) == 0) {
-            throw new Exception('Languages: No languages installed');
+            throw new \Exception('Languages: No languages installed');
         }
 
         $languageList = array();

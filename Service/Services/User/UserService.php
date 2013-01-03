@@ -26,13 +26,13 @@ Class UserService
      * @return  User
      * @since   1.0
      */
-    public function load($id = 0)
+    public function initialise($id = 0)
     {
         $this->id = 1;
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry('datasource', USER_LITERAL, 1);
+        $controller->getModelRegistry('datasource', 'User', 1);
 
         $controller->set('primary_key_value', $this->id, 'model_registry');
         $controller->set('get_customfields', 2, 'model_registry');
@@ -102,34 +102,34 @@ Class UserService
 
         unset($item->Userviewgroups);
 
-        Services::Registry()->createRegistry(USER_LITERAL);
+        Services::Registry()->createRegistry('User');
 
         foreach (get_object_vars($item) as $key => $value) {
-            Services::Registry()->set(USER_LITERAL, $key, $value);
+            Services::Registry()->set('User', $key, $value);
         }
-        Services::Registry()->sort(USER_LITERAL);
+        Services::Registry()->sort('User');
 
         if ($this->id == 0) {
-            Services::Registry()->set(USER_LITERAL, 'public', 1);
-            Services::Registry()->set(USER_LITERAL, 'guest', 1);
-            Services::Registry()->set(USER_LITERAL, 'registered', 0);
+            Services::Registry()->set('User', 'public', 1);
+            Services::Registry()->set('User', 'guest', 1);
+            Services::Registry()->set('User', 'registered', 0);
         } else {
-            Services::Registry()->set(USER_LITERAL, 'public', 1);
-            Services::Registry()->set(USER_LITERAL, 'guest', 0);
-            Services::Registry()->set(USER_LITERAL, 'registered', 1);
+            Services::Registry()->set('User', 'public', 1);
+            Services::Registry()->set('User', 'guest', 0);
+            Services::Registry()->set('User', 'registered', 1);
         }
 
         if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $groups)) {
-            Services::Registry()->set(USER_LITERAL, 'administrator', 1);
-            Services::Registry()->set(USER_LITERAL, 'authorised_for_offline_access', 1);
+            Services::Registry()->set('User', 'administrator', 1);
+            Services::Registry()->set('User', 'authorised_for_offline_access', 1);
         } else {
-            Services::Registry()->set(USER_LITERAL, 'administrator', 0);
-            Services::Registry()->set(USER_LITERAL, 'authorised_for_offline_access', 0);
+            Services::Registry()->set('User', 'administrator', 0);
+            Services::Registry()->set('User', 'authorised_for_offline_access', 0);
         }
 
-        Services::Registry()->set(USER_LITERAL, 'Applications', $applications);
-        Services::Registry()->set(USER_LITERAL, 'Groups', $groups);
-        Services::Registry()->set(USER_LITERAL, 'ViewGroups', $viewGroups);
+        Services::Registry()->set('User', 'Applications', $applications);
+        Services::Registry()->set('User', 'Groups', $groups);
+        Services::Registry()->set('User', 'ViewGroups', $viewGroups);
 
         unset($m);
         unset($item);
@@ -137,7 +137,7 @@ Class UserService
         unset($groups);
         unset($viewGroups);
 
-        Services::Registry()->sort(USER_LITERAL);
+        Services::Registry()->sort('User');
 
         $this->setAuthorisedExtensions();
 

@@ -122,7 +122,7 @@ Class ViewHelper
         );
 
         /** Load View Model before extension query to use $registry value for Theme search */
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry($catalog_type, $node, 1, $registry);
 

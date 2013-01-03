@@ -81,7 +81,7 @@ Class ExtensionHelper
         $model_type = ucfirst(strtolower(trim($model_type)));
         $model_name = ucfirst(strtolower(trim($model_name)));
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 
@@ -134,7 +134,6 @@ Class ExtensionHelper
             && $model_type == 'datasource'
             && $model_name == 'Extensioninstances'
         ) {
-
             $controller->set('model_offset', 0, 'model_registry');
             $controller->set('model_count', 999999, 'model_registry');
             $controller->set('use_pagination', 0, 'model_registry');
@@ -207,7 +206,7 @@ Class ExtensionHelper
             }
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'Extensioninstances');
 
@@ -265,7 +264,7 @@ Class ExtensionHelper
             }
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'Extensioninstances');
         $controller->setDataobject();
@@ -313,7 +312,7 @@ Class ExtensionHelper
             }
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'Extensions');
 
@@ -394,10 +393,10 @@ Class ExtensionHelper
             }
 
             if (file_exists(
-                PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
-                return PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node));
+                return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
             }
 
         } elseif ($catalog_type == CATALOG_TYPE_MENUITEM_LITERAL) {
@@ -456,10 +455,10 @@ Class ExtensionHelper
 
 
             if (file_exists(
-                PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
-                return PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node));
+                return PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node));
             }
         }
 
@@ -503,7 +502,7 @@ Class ExtensionHelper
             }
 
             if (file_exists(
-                PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
                 return CORE_SYSTEM_URL . '/' . ucfirst(strtolower($node));
@@ -605,7 +604,7 @@ Class ExtensionHelper
             }
 
             if (file_exists(
-                PLATFORM_FOLDER . '/' . SYSTEM_LITERAL . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
+                PLATFORM_FOLDER . '/' . 'System' . '/' . ucfirst(strtolower($node)) . '/Configuration.xml'
             )
             ) {
                 return 'Vendor\\Molajo\\System\\' . ucfirst(strtolower($node));
@@ -754,7 +753,7 @@ Class ExtensionHelper
             } elseif ($catalog_type == CATALOG_TYPE_THEME_LITERAL) {
                 return CATALOG_TYPE_THEME;
 
-            } elseif ($catalog_type == CATALOG_TYPE_USER_LITERAL) {
+            } elseif ($catalog_type == CATALOG_TYPE_USER) {
                 return CATALOG_TYPE_USERS;
 
             } elseif ($catalog_type == CATALOG_TYPE_WRAP_VIEW_LITERAL) {
@@ -804,7 +803,7 @@ Class ExtensionHelper
             return CATALOG_TYPE_THEME_LITERAL;
 
         } elseif ($catalog_type_id == CATALOG_TYPE_USERS) {
-            return CATALOG_TYPE_USER_LITERAL;
+            return CATALOG_TYPE_USER;
 
         } elseif ($catalog_type_id == CATALOG_TYPE_WRAP_VIEW) {
             return CATALOG_TYPE_WRAP_VIEW_LITERAL;

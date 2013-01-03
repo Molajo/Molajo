@@ -34,7 +34,7 @@ Class MenuService
             return false;
         }
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('datasource', 'MenuitemsNested', 1);
 
@@ -90,9 +90,9 @@ Class MenuService
      */
     public function get($menu_id, $current_menu_item = 0, $bread_crumbs = array())
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
-        $controller->getModelRegistry(SYSTEM_LITERAL, 'Menuitems', 1);
+        $controller->getModelRegistry('System', 'Menuitems', 1);
 
         $controller->set('get_customfields', 0, 'model_registry');
         $controller->set('use_special_joins', 0, 'model_registry');

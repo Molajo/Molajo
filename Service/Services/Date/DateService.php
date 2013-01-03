@@ -21,14 +21,14 @@ Class DateService
 {
 
     /**
-     * Class constructor.
+     * Initialise class
      *
      * @return  boolean
      * @since   1.0
      */
-    public function __construct()
+    public function initialise()
     {
-        return $this->getDate();
+
     }
 
     /**
@@ -339,8 +339,8 @@ Class DateService
 
         if ($server_or_user_utc == 'server') {
         } else {
-            if (Services::Registry()->exists(USER_LITERAL)) {
-                $offset = Services::Registry()->get(USER_LITERAL, 'timezone', '');
+            if (Services::Registry()->exists('User')) {
+                $offset = Services::Registry()->get('User', 'timezone', '');
             }
         }
         if ($offset == '') {
@@ -367,8 +367,8 @@ Class DateService
         if ($time == '') {
             $time = 'now';
         }
-        $locale = Services::Language()->get('tag', 'en-GB');
-
+ //FIX $locale = Services::Language()->get('tag', 'en-GB');
+         $locale = 'en-GB';
         $class = str_replace('-', '_', $locale) . 'Date';
 
         if (class_exists($class)) {

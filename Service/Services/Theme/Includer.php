@@ -450,7 +450,7 @@ class Includer
             . ' Model Type ' . Services::Registry()->get('parameters', 'model_type')
             . ' Model Name ' . Services::Registry()->get('parameters', 'model_name');
 
-        Services::Profiler()->set('message', $message, 'Rendering', VERBOSE);
+        Services::Profiler()->set('message', $message, 'Rendering', 1);
 
         return true;
     }

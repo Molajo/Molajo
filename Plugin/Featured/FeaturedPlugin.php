@@ -26,10 +26,10 @@ class FeaturedPlugin extends Plugin
      */
     public function onBeforeInclude()
     {
-        $model_type = Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'model_type');
-        $model_name = Services::Registry()->get(ROUTE_PARAMETERS_LITERAL, 'model_name');
+        $model_type = Services::Registry()->get('RouteParameters', 'model_type');
+        $model_name = Services::Registry()->get('RouteParameters', 'model_name');
 
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry($model_type, $model_name, 1);
 

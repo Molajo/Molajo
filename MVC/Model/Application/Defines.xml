@@ -32,7 +32,7 @@
 
     <define name="CATALOG_TYPE_SITE_LITERAL" value="Site"/>
     <define name="CATALOG_TYPE_APPLICATION_LITERAL" value="Application"/>
-    <define name="CATALOG_TYPE_USER_LITERAL" value="User"/>
+    <define name="CATALOG_TYPE_USER" value="User"/>
     <define name="CATALOG_TYPE_SERVICE_LITERAL" value="Service"/>
     <define name="CATALOG_TYPE_'Plugin'" value="Plugin"/>
     <define name="CATALOG_TYPE_FIELD_LITERAL" value="Field"/>
@@ -89,8 +89,6 @@
     <define name="LOG_TYPE_INFO" value="64"/>
     <define name="LOG_TYPE_PROFILER" value="128"/>
 
-    <define name="VERBOSE" value="1"/>
-
     <define name="AUTHENTICATE_STATUS_SUCCESS" value="1"/>
     <define name="AUTHENTICATE_STATUS_CANCEL" value="2"/>
     <define name="AUTHENTICATE_STATUS_FAILURE" value="4"/>
@@ -105,14 +103,7 @@
     <define name="JS_DECLARATIONS_DEFER_LITERAL" value="JsDeclarationsDefer"/>
     <define name="JS_DEFER_LITERAL" value="Jsdefer"/>
     <define name="JS_LITERAL" value="Js"/>
-    <define name="'Languages'" value="Languages"/>
     <define name="PAGE_LITERAL" value="Page"/>
     <define name="NOFORMFIELDS_LITERAL" value="Noformfields"/>
     <define name="PARAMETERS_LITERAL" value="Parameters"/>
-    <define name="PARSE_LITERAL" value="Parse"/>
-    <define name="PROFILER_LITERAL" value="Profiler"/>
-    <define name="ROUTE_PARAMETERS_LITERAL" value="RouteParameters"/>
-    <define name="SYSTEM_LITERAL" value="System"/>
-    <define name="THEME_LITERAL" value="Theme"/>
-    <define name="USER_LITERAL" value="User"/>
 </defines>

@@ -1,13 +1,14 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Database Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Database;
 
 use Molajo\Service\Services;
-use Molajo\Service\Services\Configuration\ConfigurationService;
 
 defined('NIAMBIE') or die;
 
@@ -53,9 +54,33 @@ Class DatabaseService
     protected $model_registry = array();
 
     /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $parameter_properties_array = array(
+        'name',
+        'options',
+        'db',
+        'model_registry'
+    );
+
+    /**
+     * Configuration invokes this method to initialise the profiler service (on or off)
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function initialise()
+    {
+
+    }
+
+    /**
      * get property
      *
-     * @param   $value
+     * @param   $key
      *
      * @return  mixed
      * @since   1.0
@@ -73,7 +98,7 @@ Class DatabaseService
      * set property
      *
      * @param   string  $key
-     * @param   varies  $value
+     * @param   string  $value
      * @param   null    $property
      *
      * @return  mixed
@@ -95,6 +120,8 @@ Class DatabaseService
     /**
      * Connect to Database
      *
+     * @param   string  $model_registry
+     *
      * @return  mixed
      * @since   1.0
      * @throws  \RuntimeException
@@ -102,11 +129,6 @@ Class DatabaseService
     public function connect($model_registry)
     {
         $this->set('model_registry', $model_registry);
-
-        if (defined('DATABASE_SERVICE')) {
-        } else {
-            define('DATABASE_SERVICE', true);
-        }
 
         $this->options = array(
             'driver'   => preg_replace(
@@ -143,6 +165,8 @@ Class DatabaseService
 
     /**
      * Get the current query object for the current database connection
+     *
+     * @param   $db
      *
      * @return  object
      * @since   1.0

@@ -386,7 +386,6 @@ Class ConfigurationService
         }
 
         $path_and_file = $this->locateFile($model_type, $model_name, $parameter_registry);
-
         if ($path_and_file === false) {
             throw new \Exception
             ('Configuration: Cannot find XML file for Model Type: '
@@ -430,7 +429,7 @@ Class ConfigurationService
 
         if (Services::Registry()->exists($dataObjectRegistry)) {
         } else {
-            $controllerClass = CONTROLLER_CLASS;
+            $controllerClass = CONTROLLER_CLASS_NAMESPACE;
             $controller      = new $controllerClass();
             $controller->getModelRegistry('Dataobject', $data_object, 0);
         }
@@ -795,7 +794,7 @@ Class ConfigurationService
         $joinRegistry = $joinModel . 'Datasource';
 
         if (Services::Registry()->exists($joinRegistry) === false) {
-            $controllerClass = CONTROLLER_CLASS;
+            $controllerClass = CONTROLLER_CLASS_NAMESPACE;
             $controller      = new $controllerClass();
             $controller->getModelRegistry('Datasource', $joinModel, 0);
         }
@@ -1059,7 +1058,7 @@ Class ConfigurationService
         if (Services::Registry()->exists($inheritModelRegistry) === true) {
 
         } else {
-            $controller_class = CONTROLLER_CLASS;
+            $controller_class = CONTROLLER_CLASS_NAMESPACE;
             $controller       = new $controller_class();
             $controller->getModelRegistry($extends_model_type, $extends_model_name, 0);
         }

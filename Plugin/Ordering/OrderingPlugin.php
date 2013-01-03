@@ -48,7 +48,7 @@ class OrderingPlugin extends Plugin
             || (int)$fieldValue == 0
         ) {
 
-            $controllerClass = CONTROLLER_CLASS;
+            $controllerClass = CONTROLLER_CLASS_NAMESPACE;
             $controller      = new $controllerClass();
             $controller->getModelRegistry(
                 $this->get('model_type', '', 'parameters'),

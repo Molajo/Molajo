@@ -92,7 +92,7 @@ class PagingPlugin extends Plugin
      */
     protected function itemPaging()
     {
-        $controllerClass = CONTROLLER_CLASS;
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
 
         $results = $controller->getModelRegistry(
