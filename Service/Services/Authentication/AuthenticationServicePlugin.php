@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Authentication;
 
 use Molajo\Service\Services;
-use Molajo\Service\ServicesPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class AuthenticationServicePlugin extends ServicesPlugin
+Class AuthenticationServicePlugin extends Plugin
 {
     /**
      * on Before Startup Event

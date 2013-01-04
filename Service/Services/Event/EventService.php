@@ -41,6 +41,14 @@ defined('NIAMBIE') or die;
 Class EventService
 {
     /**
+     * Indicator Event Service has been activated
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $on;
+
+    /**
      * Events discovered within Plugins
      *
      * @var    array
@@ -65,14 +73,6 @@ Class EventService
     protected $event_plugin_array = array();
 
     /**
-     * Indicator Event Service has been activated
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $on;
-
-    /**
      * List of named Plugin Properties
      *
      * @var    object
@@ -87,14 +87,18 @@ Class EventService
         'plugin_event',
         'model',
         'model_registry',
+        'model_registry_name',
         'parameters',
-        'properties_array',
+        'property_array',
         'query_results',
         'row',
         'rendered_output',
         'class_array',
         'include_parse_sequence',
-        'include_parse_exclude_until_final'
+        'include_parse_exclude_until_final',
+
+        'service_class',
+
     );
 
     /**
@@ -255,10 +259,13 @@ Class EventService
             $model_type   = $selection->model_type;
 
             if (method_exists($plugin_class, $event)) {
+
                 $results = $this->processPluginClass($plugin_class, $event, $arguments, $model_name, $model_type);
+
                 if ($results === false) {
                     return false;
                 }
+
                 $arguments = $results;
             }
         }
@@ -313,6 +320,7 @@ Class EventService
         }
 
         $plugin->set('plugin_class', $plugin_class);
+
         $plugin->set('plugin_event', $event);
 
         if (count($arguments) > 0) {
@@ -329,12 +337,23 @@ Class EventService
                 }
             }
         }
-//        echo $event .' ' . $plugin_class  . '<br />';
-        $results = $plugin->initialise();
+
+
+        /** Option Test at the Event Name level to see if Plugin Class should run */
+        $method = $event . 'Test';
+        if (method_exists($plugin_class, $method)) {
+            $results = $plugin->$method();
+            if ($results === false) {
+                return $arguments;
+            }
+        }
+
+        $plugin->initialise();
+
         $results = $plugin->$event();
 
         if ($results === false) {
-            throw new \Exception ('False plugin' . $plugin_class . ' ' . $event);
+            // plugin will throw Exception if warranted, otherwise, a false means "don't update data"
         } else {
 
             if (count($arguments) > 0) {
@@ -392,7 +411,7 @@ Class EventService
         $namespace .= '\\' . 'Plugin' . '\\';
 
         $connect = new EventServicePlugin();
-        $plugins     = $connect->registerPluginFolder($folder, $namespace, $core);
+        $plugins = $connect->registerPluginFolder($folder, $namespace, $core);
 
         if (count($plugins) == 0 || $plugins === false) {
             return true;
@@ -477,7 +496,7 @@ Class EventService
 
         if (in_array($event, $this->event_array)) {
         } else {
-            $this->event_array[]  = $event;
+            $this->event_array[] = $event;
         }
 
         $list                     = $this->event_plugin_array;

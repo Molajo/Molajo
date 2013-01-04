@@ -1,12 +1,15 @@
 <?php
+/**
+ * Frontend Controller
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ */
 namespace Molajo\Service;
-
-use Molajo\Frontcontroller;
-use Molajo\Service\Services\Configuration\ConfigurationService;
 
 defined('NIAMBIE') or die;
 
-//@todo make it easy to tell if a service is running or not
 //@todo acl per service
 
 /**
@@ -19,7 +22,7 @@ defined('NIAMBIE') or die;
  *
  *  3) Reduce interdependence between software within the application
  *
- *  4) Standarize API by removing vendor-specific namespacing/characteristics to establish a basic set
+ *  4) Standarise API by removing vendor-specific namespacing/characteristics to establish a basic set
  *         of application utilities that provide basic functionality which can be supplied by different
  *         vendors without requiring change to the application itself
  *
@@ -76,7 +79,7 @@ Class Services
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'configuration',
         'controller_class',
         'frontcontroller_class'
@@ -90,12 +93,13 @@ Class Services
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function get($key = null, $default = null)
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException('Services: is attempting to get value for unknown key: ' . $key);
         }
@@ -115,12 +119,13 @@ Class Services
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value = null)
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException('Services: is attempting to set value for unknown key: ' . $key);
         }
@@ -157,6 +162,7 @@ Class Services
      *
      * @return  boolean
      * @since   1.0
+     * @throws  \RuntimeException
      */
     public function startup()
     {
@@ -164,7 +170,7 @@ Class Services
 
         if ($services === null) {
             throw new \RuntimeException
-                ('Cannot find Services File Model Type: Service Model Name: Services');
+            ('Cannot find Services File Model Type: Service Model Name: Services');
         }
 
         foreach ($services->service as $service) {
@@ -175,8 +181,8 @@ Class Services
             if ($class === null) {
                 $class = 'Molajo\\Service\\Services\\';
             }
-            echo 'Startup ' . $name . ' ' . $class . '<br />';
-            $this->start($name, $class, true);
+echo 'Startup ' . $name . ' ' . $class . '<br />';
+            $this->start($name, $class, 1);
         }
 
         foreach ($this->message as $message) {
@@ -193,58 +199,50 @@ Class Services
      * 1. Services::Name()-> Call routes static through __callStatic then in through the Frontcontroller
      * 2. Services Instantiation processes startup Services using this Method once for each
      *
-     * @param   string $key
+     * @param   string  $key
+     * @param   string  $class
+     * @param   bool    $registry
      *
-     * @return  null
+     * @return  mixed
      * @since   1.0
-     *
-     * @throws  \BadMethodCallException
+     * @throws  \Exception
      */
-    public function start($key, $class = '', $registry = false)
+    public function start($key, $class = '', $registry = 0)
     {
-
         if ($class == '') {
             $class = 'Molajo\\Service\\Services\\' . substr($key, 0, (strlen($key) - 7)) . '\\';
         }
 
-//        echo '<pre>Here is $this->connections';
-//        var_dump($this->connections);
-//echo '</pre>';
         if (isset($this->connections[$key])) {
             return $this->connections[$key];
         }
 
-//        if (isset($this->connections['ConfigurationService'])
-//            && isset($this->connections['RegistryService'])) {
-//            $registry = true;
-//        }
-
-        if ($registry == false) {
+        if ($registry == 0) {
 
             $keep_instance  = 1;
             $name           = $key;
             $startup        = 1;
             $startup_method = 'initialise';
-            $class          = $class;
             $keep_instance  = 1;
 
         } else {
 
-            $controller      = new $this->controller_class();
+            $controller = new $this->controller_class();
             $controller->getModelRegistry('Service', $key);
 
             $this->connections['RegistryService']->get($key . 'Service', '*');
+            echo 'fix this in services - it will die now';
             die;
-
-            $name           = (string)$service->attributes()->name;
-            $startup        = (string)$service->attributes()->startup;
-            $startup_method = (string)$service->attributes()->startup_method;
-            $class          = (string)$service->attributes()->class;
-            $keep_instance  = (int)$service->attributes()->keep_instance;
+            $name           = $this->connections['RegistryService']->get($key . 'Service', 'name');
+            $startup        = $this->connections['RegistryService']->get($key . 'Service', 'startup');
+            $startup_method = $this->connections['RegistryService']->get($key . 'Service', 'startup_method');
+            $class          = $this->connections['RegistryService']->get($key . 'Service', 'class');
+            $keep_instance  = $this->connections['RegistryService']->get($key . 'Service', 'keep_instance');
         }
 
         $serviceClass = $class . $name;
-        $pluginClass  = $class . $name . 'Plugin';
+
+        $pluginClass = $class . $name . 'Plugin';
 
         $connectionSucceeded = null;
 
@@ -260,9 +258,11 @@ Class Services
             $serviceInstance =
                 $this->getServiceClassInstance($serviceClass);
 
-            $pluginInstance->set('service_class', $serviceClass);
-
-            $pluginInstance->set('frontcontroller_class', $this->get('frontcontroller_class'));
+            if ($pluginInstance === false) {
+            } else {
+                $pluginInstance->set('service_class', $serviceClass);
+                $pluginInstance->set('frontcontroller_class', $this->get('frontcontroller_class'));
+            }
 
             $serviceInstance =
                 $this->scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance);
@@ -274,8 +274,11 @@ Class Services
                     = $this->runStartupMethod($serviceInstance, $serviceClass, $startup_method);
             }
 
-            $serviceInstance
-                = $this->scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance);
+            if ($pluginInstance === false) {
+            } else {
+                $serviceInstance
+                    = $this->scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance);
+            }
 
             if ($keep_instance == 1) {
                 $this->saveServiceClassInstance($name, $serviceInstance, $connectionSucceeded);
@@ -293,10 +296,10 @@ Class Services
             }
 
             throw new \Exception
-            ('Service: Connection for ' . $name . ' failed.' . $e->getMessage(), $e->getCode());
+            ('Service: Connection for ' . $name . ' failed.' . $error_message);
         }
 
-        return;
+        return true;
     }
 
     /**
@@ -306,6 +309,7 @@ Class Services
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \Exception
      */
     protected function getServiceClassInstance($serviceClass)
     {
@@ -313,7 +317,7 @@ Class Services
 
         } else {
             throw new \Exception
-                ('Services: Class ' . $serviceClass . ' does not exist.');
+            ('Services: Class ' . $serviceClass . ' does not exist.');
         }
 
         return new $serviceClass();
@@ -323,7 +327,6 @@ Class Services
      * Get Plugin Class Instance
      *
      * @param   string   $pluginClass
-     * @param   string   $folder  $entry
      *
      * @return  mixed
      * @since   1.0
@@ -334,7 +337,7 @@ Class Services
         } else {
 
             /** Not an error as plugins are not required for Services */
-            return;
+            return false;
         }
 
         return new $pluginClass();
@@ -373,6 +376,7 @@ Class Services
      *
      * @return  mixed
      * @since   1.0
+     * @throws \Exception
      */
     protected function runStartupMethod($serviceInstance, $serviceClass, $serviceMethod)
     {

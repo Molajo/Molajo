@@ -786,6 +786,7 @@ class Controller
         $arguments = array(
             'model'                             => $this->get('model'),
             'model_registry'                    => $this->get('model_registry'),
+            'model_registry_name'               => $this->get('model_registry_name'),
             'parameters'                        => $this->get('parameters'),
             'query_results'                     => array(),
             'row'                               => null,

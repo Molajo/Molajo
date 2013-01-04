@@ -137,7 +137,7 @@ Class Frontcontroller
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'application_login_requirement',
         'application_home_catalog_id',
         'application_html5',
@@ -214,32 +214,38 @@ Class Frontcontroller
     protected $class_array = array(
 
         'Service'               => 'Molajo\\Service\\Services',
-        'DatabaseService'       => 'Molajo\\Service\\Services\\Database\\',
-        'DateService'           => 'Molajo\\Service\\Services\\Date\\',
-        'LanguageService'       => 'Molajo\\Service\\Services\\Language\\',
-        'PermissionsService'    => 'Molajo\\Service\\Services\\Permissions\\',
-        'CacheService'          => 'Molajo\\Service\\Services\\Cache\\',
-        'ConfigurationService'  => 'Molajo\\Service\\Services\\Configuration\\',
-        'ExceptionService'      => 'Molajo\\Service\\Services\\Exception\\',
-        'RegistryService'       => 'Molajo\\Service\\Services\\Registry\\',
-        'RequestService'        => 'Molajo\\Service\\Services\\Request\\',
-        'SiteService'           => 'Molajo\\Service\\Services\\Site\\',
+
         'ApplicationService'    => 'Molajo\\Service\\Services\\Application\\',
-        'FilesystemService'     => 'Molajo\\Service\\Services\\Filesystem\\',
-        'EventService'          => 'Molajo\\Service\\Services\\Event\\',
-        'ProfilerService'       => 'Molajo\\Service\\Services\\Profiler\\',
         'AssetService'          => 'Molajo\\Service\\Services\\Asset\\',
         'AuthenticationService' => 'Molajo\\Service\\Services\\Authentication\\',
+        'CacheService'          => 'Molajo\\Service\\Services\\Cache\\',
         'ClientService'         => 'Molajo\\Service\\Services\\Client\\',
+        'ConfigurationService'  => 'Molajo\\Service\\Services\\Configuration\\',
         'CookieService'         => 'Molajo\\Service\\Services\\Cookie\\',
+        'DatabaseService'       => 'Molajo\\Service\\Services\\Database\\',
+        'DateService'           => 'Molajo\\Service\\Services\\Date\\',
+        'EventService'          => 'Molajo\\Service\\Services\\Event\\',
+        'ExceptionService'      => 'Molajo\\Service\\Services\\Exception\\',
+        'FilesystemService'     => 'Molajo\\Service\\Services\\Filesystem\\',
+        'LanguageService'       => 'Molajo\\Service\\Services\\Language\\',
         'MetadataService'       => 'Molajo\\Service\\Services\\Metadata\\',
+        'PermissionsService'    => 'Molajo\\Service\\Services\\Permissions\\',
+        'ProfilerService'       => 'Molajo\\Service\\Services\\Profiler\\',
+        'RegistryService'       => 'Molajo\\Service\\Services\\Registry\\',
+        'RequestService'        => 'Molajo\\Service\\Services\\Request\\',
         'RouteService'          => 'Molajo\\Service\\Services\\Route\\',
+        'SessionService'        => 'Molajo\\Service\\Services\\Session\\',
+        'SiteService'           => 'Molajo\\Service\\Services\\Site\\',
         'UserService'           => 'Molajo\\Service\\Services\\User\\',
+
+
         'ThemeService'          => 'Molajo\\Service\\Services\\Theme\\ThemeService',
+
         'ContentHelper'         => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
         'ExtensionHelper'       => 'Molajo\\Service\\Services\\Theme\\Helper\\ExtensionHelper',
         'ThemeHelper'           => 'Molajo\\Service\\Services\\Theme\\Helper\\ThemeHelper',
         'ViewHelper'            => 'Molajo\\Service\\Services\\Theme\\Helper\\ViewHelper',
+
         'Includer'              => 'Molajo\\Service\\Services\\Theme\\Includer',
         'HeadIncluder'          => 'Molajo\\Service\\Services\\Theme\\Includer\\HeadIncluder',
         'MessageIncluder'       => 'Molajo\\Service\\Services\\Theme\\Includer\\MessageIncluder',
@@ -249,6 +255,7 @@ Class Frontcontroller
         'TemplateIncluder'      => 'Molajo\\Service\\Services\\Theme\\Includer\\TemplateIncluder',
         'ThemeIncluder'         => 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder',
         'WrapIncluder'          => 'Molajo\\Service\\Services\\Theme\\Includer\\WrapIncluder',
+
         'Controller'            => 'Molajo\\MVC\\Controller',
         'CreateController'      => 'Molajo\\MVC\\Controller\\CreateController',
         'DeleteController'      => 'Molajo\\MVC\\Controller\\DeleteController',
@@ -256,6 +263,7 @@ Class Frontcontroller
         'LoginController'       => 'Molajo\\MVC\\Controller\\LoginController',
         'LogoutController'      => 'Molajo\\MVC\\Controller\\LogoutController',
         'UpdateController'      => 'Molajo\\MVC\\Controller\\UpdateController',
+
         'Model'                 => 'Molajo\\MVC\\Model\\',
         'CreateModel'           => 'Molajo\\MVC\\Model\\CreateModel',
         'DeleteModel'           => 'Molajo\\MVC\\Model\\DeleteModel',
@@ -271,7 +279,7 @@ Class Frontcontroller
      * @param   string  $override_catalog_id
      * @param   string  $override_parse_sequence
      * @param   string  $override_parse_final
-     * @param   string  $override_properties_array
+     * @param   string  $override_property_array
      * @param   string  $override_class_array
      *
      * @return  mixed
@@ -283,7 +291,7 @@ Class Frontcontroller
         $override_catalog_id = null,
         $override_parse_sequence = null,
         $override_parse_final = null,
-        $override_properties_array = null,
+        $override_property_array = null,
         $override_class_array = null
     ) {
 
@@ -292,9 +300,9 @@ Class Frontcontroller
             $this->class_array = $override_class_array;
         }
 
-        if ($override_properties_array == null) {
+        if ($override_property_array == null) {
         } else {
-            $this->properties_array = $override_properties_array;
+            $this->property_array = $override_property_array;
         }
 
         /** 1. Initialise */
@@ -382,7 +390,7 @@ Class Frontcontroller
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException('Frontcontroller: is attempting to get value for unknown key: ' . $key);
         }
@@ -410,7 +418,7 @@ Class Frontcontroller
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException('Frontcontroller: is attempting to set value for unknown key: ' . $key);
         }
@@ -454,6 +462,7 @@ Class Frontcontroller
 
         /** Instantiate Services Controller */
         Frontcontroller::Services($this->class_array['Service']);
+
         Frontcontroller::Services()->set('frontcontroller_class', $this);
         Frontcontroller::Services()->set('controller_class', CONTROLLER_CLASS_NAMESPACE);
 
@@ -516,6 +525,7 @@ Class Frontcontroller
 
         Frontcontroller::Services()->start('CacheService', $this->class_array['CacheService']);
         Frontcontroller::Services()->start('ProfilerService', $this->class_array['ProfilerService']);
+        Frontcontroller::Services()->start('SessionService', $this->class_array['SessionService']);
         Frontcontroller::Services()->start('FilesystemService', $this->class_array['FilesystemService']);
         Frontcontroller::Services()->start('DatabaseService', $this->class_array['DatabaseService']);
         Frontcontroller::Services()->start('EventService', $this->class_array['EventService']);
@@ -678,14 +688,14 @@ Class Frontcontroller
 
         $route = $route->process(
             $this->parameters,
-            $this->properties_array,
+            $this->property_array,
             $this->requested_resource_for_route,
             $this->base_url_path_for_application,
             $override_catalog_id
         );
 
-        $this->parameters                 = $route[0];
-        $this->properties_array = $route[1];
+        $this->parameters     = $route[0];
+        $this->property_array = $route[1];
 
         if ($this->get('redirect_to_id') == 0
             && $this->get('error_code') == 0
@@ -878,7 +888,7 @@ Class Frontcontroller
         if ($results === false) {
             $results = $theme->process(
                 $this->parameters,
-                $this->properties_array,
+                $this->property_array,
                 $this->class_array,
                 $override_parse_sequence,
                 $override_parse_final
@@ -1055,8 +1065,9 @@ Class Frontcontroller
         $arguments = array(
             'model'                             => null,
             'model_registry'                    => $model_registry,
+            'model_registry_name'               => $this->get('model_registry_name'),
             'parameters'                        => $this->parameters,
-            'properties_array'        => $this->properties_array,
+            'property_array'                    => $this->property_array,
             'query_results'                     => array(),
             'row'                               => null,
             'rendered_output'                   => $this->rendered_output,
@@ -1079,8 +1090,8 @@ Class Frontcontroller
             $this->parameters = $arguments['parameters'];
         }
 
-        if (isset($arguments['properties_array'])) {
-            $this->properties_array = $arguments['properties_array'];
+        if (isset($arguments['property_array'])) {
+            $this->property_array = $arguments['property_array'];
         }
 
         if (isset($this->parameters['model_registry_name'])) {

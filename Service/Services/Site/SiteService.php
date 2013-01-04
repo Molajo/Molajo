@@ -63,7 +63,7 @@ Class SiteService
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'base_url',
         'custom_defines',
         'site_base_url',
@@ -95,7 +95,7 @@ Class SiteService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException
             ('Site Service: attempting to get value for unknown property: ' . $key);
@@ -119,7 +119,7 @@ Class SiteService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException
             ('Site Service: attempting to set value for unknown key: ' . $key);

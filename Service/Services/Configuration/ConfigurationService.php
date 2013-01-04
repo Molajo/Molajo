@@ -213,7 +213,7 @@ Class ConfigurationService
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'calling_class',
         'calling_method',
 
@@ -284,7 +284,7 @@ Class ConfigurationService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException
             ('Configuration Service: attempting to set value for unknown key: ' . $key);
@@ -308,7 +308,7 @@ Class ConfigurationService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException
             ('Configuration Service: attempting to set value for unknown key: ' . $key);

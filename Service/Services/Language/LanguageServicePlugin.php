@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Language;
 
 use Molajo\Service\Services;
-use Molajo\Service\ServicesPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class LanguageServicePlugin extends ServicesPlugin
+Class LanguageServicePlugin extends Plugin
 {
     /**
      * on Before Startup Event
@@ -33,16 +33,6 @@ Class LanguageServicePlugin extends ServicesPlugin
      */
     public function onBeforeServiceStartup()
     {
-
-        $this->service_class->set('user_language',
-            Services::Registry()->get('User', 'language'));
-
-        $this->service_class->set('default_language',
-            Services::Application()->get('language'));
-
-        $this->service_class->set('profile_missing_strings',
-            Services::Application()->get('profiler_collect_missing_language_strings'));
-
         return;
     }
 
@@ -56,6 +46,36 @@ Class LanguageServicePlugin extends ServicesPlugin
      */
     public function onAfterServiceStartup()
     {
+        $this->service_class->set('user_language',
+            Services::Registry()->get('User', 'language'));
+
+        $this->service_class->set('default_language',
+            Services::Application()->get('language'));
+
+        $this->service_class->set('profile_missing_strings',
+            Services::Application()->get('profiler_collect_missing_language_strings'));
+
+        return;
+    }
+
+    /**
+     * On After Read All Event
+     *
+     * Follows the getData Method and all special field activities
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function onAfterReadAll()
+    {
+        if ($this->model_registry_name == 'LanguagestringsSystem') {
+        } else {
+            return;
+        }
+
+        $this->service_class->set('parameters', Services::Registry()->getArray('ApplicationDatasourceParameters'));
+        $this->service_class->set('metadata', Services::Registry()->getArray('ApplicationDatasourceMetadata'));
+
         return;
     }
 }

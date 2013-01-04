@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Password;
 
 use Molajo\Service\Services;
-use Molajo\Service\ServicesPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class PasswordServicePlugin extends ServicesPlugin
+Class PasswordServicePlugin extends Plugin
 {
     /**
      * on Before Startup Event

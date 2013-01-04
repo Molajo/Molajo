@@ -73,7 +73,7 @@ Class RequestService
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'calling_class',
         'calling_method',
 
@@ -136,7 +136,7 @@ Class RequestService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
             $this->$key = $value;
             return $this->$key;
         }
@@ -163,7 +163,7 @@ Class RequestService
             return $this->request->$key;
         }
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
             if ($this->$key === null) {
                 $this->$key = $default;
             }

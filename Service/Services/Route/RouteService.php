@@ -48,7 +48,7 @@ Class RouteService
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array();
+    protected $property_array = array();
 
     /**
      * Get the current value (or default) of the specified key
@@ -63,7 +63,7 @@ Class RouteService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException('Route: is attempting to get value for unknown key: ' . $key);
         }
@@ -90,7 +90,7 @@ Class RouteService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException('Route: is attempting to set value for unknown key: ' . $key);
         }
@@ -103,23 +103,23 @@ Class RouteService
     /**
      * Retrieve catalog entry and values needed to route the request
      *
-     * @param   string  $properties_array     Valid parameter keys
+     * @param   string  $property_array     Valid parameter keys
      * @param   string  $requested_resource_for_route   Routable portion of Request (ex. articles/article-1)
      * @param   string  $base_url_path_for_application  Base for URL (ex. http://example.com/administrator)
      * @param   string  $override_catalog_id            Use instead of $requested_resource_for_route
      *
-     * @return  array   return array($this->parameters, $this->properties_array);
+     * @return  array   return array($this->parameters, $this->property_array);
      * @since   1.0
      */
     public function process(
         $parameters,
-        $properties_array,
+        $property_array,
         $requested_resource_for_route,
         $base_url_path_for_application,
         $override_catalog_id = null
     ) {
         $this->parameters                 = $parameters;
-        $this->properties_array = $properties_array;
+        $this->property_array = $property_array;
 
         $this->set('request_catalog_id', 0);
         $this->set('status_found', 0);
@@ -144,7 +144,7 @@ Class RouteService
 
         if ($this->get('redirect_to_id') === 0) {
         } else {
-            return array($this->parameters, $this->properties_array);
+            return array($this->parameters, $this->property_array);
         }
 
         /** Offline Check */
@@ -153,7 +153,7 @@ Class RouteService
             } else {
                 $this->set('error_code', 503);
 
-                return array($this->parameters, $this->properties_array);
+                return array($this->parameters, $this->property_array);
             }
         }
 
@@ -167,13 +167,13 @@ Class RouteService
         if ($this->get('status_found') === 0) {
             $this->set('error_code', 404);
 
-            return array($this->parameters, $this->properties_array);
+            return array($this->parameters, $this->property_array);
         }
 
         /** URL Change Redirect from Catalog */
         if ((int)$this->get('redirect_to_id') === 0) {
         } else {
-            return array($this->parameters, $this->properties_array);
+            return array($this->parameters, $this->property_array);
         }
 
         /** Redirect to login */
@@ -185,13 +185,13 @@ Class RouteService
             $this->set('redirect_id', 'configuration_application_login_requirement');
             $this->set('error_code', 303);
 
-            return array($this->parameters, $this->properties_array);
+            return array($this->parameters, $this->property_array);
         }
 
         $sort = $this->parameters;
         ksort($sort);
 
-        return array($sort, $this->properties_array);
+        return array($sort, $this->property_array);
     }
 
     /**

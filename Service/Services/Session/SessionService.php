@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Session Service Plugin
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Session;
 
@@ -15,15 +17,16 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeMemcachedSess
 defined('NIAMBIE') or die;
 
 /**
- * Session
+ * Session Service Plugin
  *
  * http://symfony.com/doc/master/resources/http_foundation/sessions.html
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Session.html
  *
- * @package     Niambie
- * @subpackage  Services
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class SessionService
 {
@@ -35,21 +38,23 @@ Class SessionService
      */
     public $session;
 
+
     public function initialise()
     {
+        Services::Registry()->set('User', 1);
 
+        return;
         $session = new Session();
         $session->start();
 
         // set and get session attributes
-        $session->set('name', 'Drak');
+        $session->set('name', 'Amy Stephen');
         echo $session->get('name');
 
         // set flash messages
         $session->getFlashBag()->add('notice', 'Profile updated');
 
         // retrieve messages
-
         foreach ($session->getFlashBag()->get('notice', array()) as $message) {
             echo "<div class='flash-notice'>$message</div>";
 

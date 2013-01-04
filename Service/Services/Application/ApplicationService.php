@@ -122,7 +122,7 @@ Class ApplicationService
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'parameters',
         'request_uri',
         'applications',
@@ -177,7 +177,7 @@ Class ApplicationService
 
         if ($key == 'parameters') {
         } else {
-            if (in_array($key, $this->properties_array)) {
+            if (in_array($key, $this->property_array)) {
 
                 if (isset($this->$key)) {
                     $this->$key = $default;
@@ -211,7 +211,7 @@ Class ApplicationService
 
         if ($key == 'parameters') {
         } else {
-            if (in_array($key, $this->properties_array)) {
+            if (in_array($key, $this->property_array)) {
                 $this->$key = $value;
 
                 return $this->$key;

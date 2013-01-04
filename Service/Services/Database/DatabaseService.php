@@ -59,7 +59,7 @@ Class DatabaseService
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'name',
         'options',
         'db',

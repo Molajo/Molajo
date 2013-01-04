@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\User;
 
 use Molajo\Service\Services;
-use Molajo\Service\ServicesPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class UserServicePlugin extends ServicesPlugin
+Class UserServicePlugin extends Plugin
 {
     /**
      * on Before Startup Event
@@ -33,7 +33,9 @@ Class UserServicePlugin extends ServicesPlugin
      */
     public function onBeforeServiceStartup()
     {
-
+        if ($this->service_class->get('id', 0) == 0) {
+            $this->service_class->set('id', Services::Registry()->get('User'));
+        }
     }
 
     /**
@@ -46,6 +48,39 @@ Class UserServicePlugin extends ServicesPlugin
      */
     public function onAfterServiceStartup()
     {
+        return;
+    }
 
+    /**
+     * On After Read All Event
+     *
+     * Follows the getData Method and all special field activities
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function onAfterReadAll()
+    {
+        if ($this->model_registry_name == 'UserDatasource') {
+        } else {
+            return;
+        }
+
+        $this->service_class->set(
+            'parameters',
+            Services::Registry()->getArray('UserDatasourceParameters')
+        );
+
+        $this->service_class->set(
+            'metadata',
+            Services::Registry()->getArray('UserDatasourceMetadata')
+        );
+
+        $this->service_class->set(
+            'customfields',
+            Services::Registry()->getArray('UserDatasourceCustomfields')
+        );
+
+        return;
     }
 }

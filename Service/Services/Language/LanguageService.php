@@ -95,12 +95,20 @@ Class LanguageService
     protected $user_language;
 
     /**
+     * Display missing strings in profiler
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $profile_missing_strings;
+
+    /**
      * List of Properties
      *
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'registry',
         'default',
         'current',
@@ -109,6 +117,7 @@ Class LanguageService
         'list',
         'strings',
         'user',
+        'profile_missing_strings',
         'id',
         'title',
         'tag',
@@ -126,11 +135,12 @@ Class LanguageService
      */
     public function initialise()
     {
-        $this->current_language    = null;
-        $this->default_language    = null;
-        $this->installed_languages = array();
-        $this->loaded_languages    = array();
-        $this->language_strings    = array();
+        $this->profile_missing_strings = 0;
+        $this->current_language        = null;
+        $this->default_language        = null;
+        $this->installed_languages     = array();
+        $this->loaded_languages        = array();
+        $this->language_strings        = array();
 
         return;
     }
@@ -150,6 +160,10 @@ Class LanguageService
     {
         $key = strtolower($key);
 
+        if ($key == 'profile_missing_strings') {
+            return $this->profile_missing_strings;
+        }
+
         $this->setGetSetLanguage($language);
         $language = $this->current_language;
 
@@ -157,7 +171,7 @@ Class LanguageService
             return $language;
         }
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException
             ('Language Service: attempting to get value for unknown property: ' . $key);
@@ -231,14 +245,23 @@ Class LanguageService
     {
         $key = strtolower($key);
 
+        if ($key == 'profile_missing_strings') {
+            if ((int)$value == 1) {
+                $this->profile_missing_strings = 1;
+
+                return;
+            }
+        }
+
         $this->setGetSetLanguage($language);
+
         $language = $this->current_language;
 
         if ($key == 'language') {
             return;
         }
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException
             ('Language Service: attempting to set value for unknown key: ' . $key);
@@ -327,7 +350,7 @@ Class LanguageService
 
         $language = $this->get('current_language');
 
-        if ((int) $list == 1) {
+        if ((int)$list == 1) {
             $found = array();
 
             $keys = array_keys($this->language_strings[$language]);

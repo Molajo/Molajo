@@ -94,7 +94,7 @@ Class ClientService
      * @var    array
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'ajax',
         'ip_address',
         'browser',
@@ -139,14 +139,14 @@ Class ClientService
 
             $results = array();
 
-            foreach ($this->properties_array as $parameter) {
+            foreach ($this->property_array as $parameter) {
                 $results[$key] = $this->$key;
             }
 
             return null;
         }
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException('Client Service: is attempting to get value for unknown key: ' . $key);
         }
@@ -172,7 +172,7 @@ Class ClientService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->properties_array)) {
+        if (in_array($key, $this->property_array)) {
         } else {
             throw new \OutOfRangeException('Client Service: is attempting to set value for unknown key: ' . $key);
         }

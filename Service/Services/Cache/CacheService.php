@@ -120,7 +120,7 @@ Class CacheService
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array(
+    protected $property_array = array(
         'cache_service',
         'system_cache_folder',
         'cache_handler',
@@ -197,7 +197,7 @@ Class CacheService
 
             $key = strtolower($key);
 
-            if (in_array($key, $this->properties_array)) {
+            if (in_array($key, $this->property_array)) {
             } else {
                 throw new \OutOfRangeException
                 ('Cache Service: attempting to set value for unknown key: ' . $key);
@@ -242,7 +242,7 @@ Class CacheService
 
             $key = strtolower($key);
 
-            if (in_array($key, $this->properties_array)) {
+            if (in_array($key, $this->property_array)) {
             } else {
                 throw new \OutOfRangeException
                 ('Cache Service: attempting to set value for unknown key: ' . $key);

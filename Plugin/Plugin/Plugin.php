@@ -91,7 +91,7 @@ class Plugin
      * @var    object
      * @since  1.0
      */
-    protected $properties_array = array();
+    protected $parameter_property_array = array();
 
     /**
      * Data from Query Results
@@ -102,7 +102,7 @@ class Plugin
     protected $query_results;
 
     /**
-     * Used for single resultsset display and in Create, Update, Delete operations
+     * Used for single set of results for display and in Create, Update, Delete operations
      *
      * @var    object
      * @since  1.0
@@ -146,6 +146,30 @@ class Plugin
     protected $include_parse_exclude_until_final = array();
 
     /**
+     * Frontcontroller Instance
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $frontcontroller_class = null;
+
+    /**
+     * Services Class Name
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $service_class_name = null;
+
+    /**
+     * Services Class Instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $service_class = null;
+
+    /**
      * List of named Plugin Properties
      *
      * @var    object
@@ -158,6 +182,7 @@ class Plugin
         'model_registry',
         'model_registry_name',
         'parameters',
+        'parameter_property_array',
         'query_results',
         'row',
         'rendered_output',
@@ -244,6 +269,7 @@ class Plugin
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function get($key, $default = null, $property = '')
     {
@@ -296,6 +322,7 @@ class Plugin
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value = null, $property = '')
     {
@@ -335,7 +362,7 @@ class Plugin
     }
 
     /**
-     * Retrieve Fields for a specified Datatype
+     * Retrieve Fields for a specified Data Type
      *
      * @param   string  $type
      *
@@ -743,6 +770,66 @@ class Plugin
      * @since   1.0
      */
     public function onAfterlogout()
+    {
+        return true;
+    }
+
+    /**
+     * Test to see if the On Before Services Start Event should be run
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onBeforeServiceStartTest()
+    {
+        $plugin_class_name = $this->get('plugin_class');
+
+        $service_class_name = $this->get('service_class_name');
+
+        if (substr($plugin_class_name, 0, strlen($service_class_name)) == $service_class_name) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * After Plugin class is instantiated but before the Service Initialisation Method Runs
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onBeforeServiceStart()
+    {
+        return;
+    }
+
+    /**
+     * Test to see if the After Service Start Event should be run
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onAfterServiceStartTest()
+    {
+        $plugin_class_name = $this->get('plugin_class');
+
+        $service_class_name = $this->get('service_class_name');
+
+        if (substr($plugin_class_name, 0, strlen($service_class_name)) == $service_class_name) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * After Service Initialisation Method Runs
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    public function onAfterServiceStart()
     {
         return true;
     }

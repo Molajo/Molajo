@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Asset;
 
 use Molajo\Service\Services;
-use Molajo\Service\ServicesPlugin;
+use Molajo\Plugin\Plugin\Plugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class AssetServicePlugin extends ServicesPlugin
+Class AssetServicePlugin extends Plugin
 {
     /**
      * on Before Startup Event
@@ -52,11 +52,5 @@ Class AssetServicePlugin extends ServicesPlugin
         $this->service_class->set('direction', $this->frontcontroller_class->get('language_direction'));
 
         return;
-    }
-
-    public function onAfterReadAll()
-    {
-        $this->service_class->set('parameters', Services::Registry()->getArray('ApplicationDatasourceParameters'));
-        $this->service_class->set('metadata', Services::Registry()->getArray('ApplicationDatasourceMetadata'));
     }
 }
