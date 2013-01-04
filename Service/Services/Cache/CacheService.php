@@ -120,7 +120,7 @@ Class CacheService
      * @var    object
      * @since  1.0
      */
-    protected $parameter_properties_array = array(
+    protected $properties_array = array(
         'cache_service',
         'system_cache_folder',
         'cache_handler',
@@ -134,6 +134,26 @@ Class CacheService
         'cache_service_time',
         'valid_types'
     );
+
+    /**
+     * Create cache folders, if needed
+     *
+     * @param   string  $type
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function initialise_folders($type = '')
+    {
+        if (is_dir($this->system_cache_folder . '/' . ucfirst(strtolower($type)))) {
+            return true;
+        }
+
+        mkdir($this->system_cache_folder . '/' . ucfirst(strtolower($type)));
+        chmod(($this->system_cache_folder . '/' . ucfirst(strtolower($type))), 0755);
+
+        return is_dir($this->system_cache_folder . '/' . ucfirst(strtolower($type)));
+    }
 
     /**
      * Initialise Cache when activated
@@ -177,7 +197,7 @@ Class CacheService
 
             $key = strtolower($key);
 
-            if (in_array($key, $this->parameter_properties_array)) {
+            if (in_array($key, $this->properties_array)) {
             } else {
                 throw new \OutOfRangeException
                 ('Cache Service: attempting to set value for unknown key: ' . $key);
@@ -222,7 +242,7 @@ Class CacheService
 
             $key = strtolower($key);
 
-            if (in_array($key, $this->parameter_properties_array)) {
+            if (in_array($key, $this->properties_array)) {
             } else {
                 throw new \OutOfRangeException
                 ('Cache Service: attempting to set value for unknown key: ' . $key);
@@ -258,9 +278,8 @@ Class CacheService
      *
      * @param   string  $type
      *
-     * @return  object
-     * @since   1.0
      * @return  bool|CacheService
+     * @since   1.0
      * @throws  \Exception
      */
     protected function loadCacheKeys($type)
@@ -441,25 +460,5 @@ Class CacheService
         $this->cache_keys = $temp;
 
         return $this;
-    }
-
-    /**
-     * Create cache folders, if needed
-     *
-     * @param   string  $type
-     *
-     * @return  object
-     * @since   1.0
-     */
-    protected function initialise_folders($type = '')
-    {
-        if (is_dir($this->system_cache_folder . '/' . ucfirst(strtolower($type)))) {
-            return true;
-        }
-
-        mkdir($this->system_cache_folder . '/' . ucfirst(strtolower($type)));
-        chmod(($this->system_cache_folder . '/' . ucfirst(strtolower($type))), 0755);
-
-        return is_dir($this->system_cache_folder . '/' . ucfirst(strtolower($type)));
     }
 }

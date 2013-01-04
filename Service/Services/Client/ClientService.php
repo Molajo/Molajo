@@ -94,7 +94,7 @@ Class ClientService
      * @var    array
      * @since  1.0
      */
-    protected $parameter_properties_array = array(
+    protected $properties_array = array(
         'ajax',
         'ip_address',
         'browser',
@@ -113,7 +113,9 @@ Class ClientService
     public function __construct()
     {
         $this->get_ip_address();
+
         $this->isAjax();
+
         $this->get_client();
 
         return $this;
@@ -127,21 +129,24 @@ Class ClientService
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function get($key = null, $default = null)
     {
         $key = strtolower($key);
 
         if ($key == '*') {
+
             $results = array();
-            foreach ($this->parameter_properties_array as $parameter) {
+
+            foreach ($this->properties_array as $parameter) {
                 $results[$key] = $this->$key;
             }
 
-            return;
+            return null;
         }
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException('Client Service: is attempting to get value for unknown key: ' . $key);
         }
@@ -161,12 +166,13 @@ Class ClientService
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value = null)
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException('Client Service: is attempting to set value for unknown key: ' . $key);
         }

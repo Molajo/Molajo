@@ -29,7 +29,7 @@ Class CacheServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
         $this->service_class->set('Parameter', 'cache_service', false);
         $this->service_class->set('Parameter', 'cache_keys', array());
@@ -108,7 +108,7 @@ Class CacheServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
         Services::Registry()->set('cache_service', 'on',
             $this->service_class->get('Parameter', 'cache_service')

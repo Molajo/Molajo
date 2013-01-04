@@ -31,9 +31,8 @@ Class DateServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
-
     }
 
     /**
@@ -44,8 +43,8 @@ Class DateServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
-
+        $this->set('date_translate_array', Services::Language()->get('list', 'date_'));
     }
 }

@@ -31,7 +31,7 @@ Class MetadataServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
 
     }
@@ -44,7 +44,7 @@ Class MetadataServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
         $this->service_class->set('language', $this->frontcontroller_class->get('language_current'));
         $this->service_class->set('direction', $this->frontcontroller_class->get('language_direction'));

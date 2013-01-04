@@ -31,7 +31,7 @@ Class EventServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
 
     }
@@ -44,7 +44,7 @@ Class EventServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
         if (defined('PROFILER_ON') && PROFILER_ON === true) {
             Services::Profiler()->set(
@@ -56,6 +56,7 @@ Class EventServicePlugin extends ServicesPlugin
         }
 
         $this->service_class->registerPlugins(PLATFORM_FOLDER, 'Molajo', 1);
+        $this->service_class->registerPlugins(PLATFORM_FOLDER . '/' . 'Services', 'Extension', 1);
         $this->service_class->registerPlugins(EXTENSIONS, 'Extension', 1);
 
         Services::Registry()->set('Events', 'on', true);

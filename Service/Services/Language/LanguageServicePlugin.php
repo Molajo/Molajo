@@ -31,9 +31,19 @@ Class LanguageServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
 
+        $this->service_class->set('user_language',
+            Services::Registry()->get('User', 'language'));
+
+        $this->service_class->set('default_language',
+            Services::Application()->get('language'));
+
+        $this->service_class->set('profile_missing_strings',
+            Services::Application()->get('profiler_collect_missing_language_strings'));
+
+        return;
     }
 
     /**
@@ -44,8 +54,8 @@ Class LanguageServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
-
+        return;
     }
 }

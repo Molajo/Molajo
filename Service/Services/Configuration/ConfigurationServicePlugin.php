@@ -29,7 +29,7 @@ Class ConfigurationServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
         $this->getFieldProperties();
 
@@ -221,7 +221,7 @@ Class ConfigurationServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
         return;
     }

@@ -31,7 +31,7 @@ Class AssetServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
 
     }
@@ -44,7 +44,7 @@ Class AssetServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
         $this->service_class->set('html5', $this->frontcontroller_class->get('application_html5'));
         $this->service_class->set('line_end', $this->frontcontroller_class->get('application_line_end'));
@@ -52,5 +52,11 @@ Class AssetServicePlugin extends ServicesPlugin
         $this->service_class->set('direction', $this->frontcontroller_class->get('language_direction'));
 
         return;
+    }
+
+    public function onAfterReadAll()
+    {
+        $this->service_class->set('parameters', Services::Registry()->getArray('ApplicationDatasourceParameters'));
+        $this->service_class->set('metadata', Services::Registry()->getArray('ApplicationDatasourceMetadata'));
     }
 }

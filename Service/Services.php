@@ -76,7 +76,7 @@ Class Services
      * @var    object
      * @since  1.0
      */
-    protected $parameter_properties_array = array(
+    protected $properties_array = array(
         'configuration',
         'controller_class',
         'frontcontroller_class'
@@ -95,7 +95,7 @@ Class Services
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException('Services: is attempting to get value for unknown key: ' . $key);
         }
@@ -120,7 +120,7 @@ Class Services
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException('Services: is attempting to set value for unknown key: ' . $key);
         }
@@ -352,13 +352,13 @@ Class Services
      */
     protected function scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance)
     {
-        if (method_exists($pluginClass, 'onBeforeStartup')) {
+        if (method_exists($pluginClass, 'onBeforeServiceStartup')) {
         } else {
             return $serviceInstance;
         }
 
         $pluginInstance->set('service_class', $serviceInstance);
-        $pluginInstance->onBeforeStartup();
+        $pluginInstance->onBeforeServiceStartup();
         $serviceInstance = $pluginInstance->get('service_class', $serviceInstance);
 
         return $serviceInstance;
@@ -410,13 +410,13 @@ Class Services
      */
     protected function scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance)
     {
-        if (method_exists($pluginClass, 'onAfterStartup')) {
+        if (method_exists($pluginClass, 'onAfterServiceStartup')) {
         } else {
             return $serviceInstance;
         }
 
         $pluginInstance->set('service_class', $serviceInstance);
-        $pluginInstance->onAfterStartup();
+        $pluginInstance->onAfterServiceStartup();
         $serviceInstance = $pluginInstance->get('service_class', $serviceInstance);
 
         return $serviceInstance;

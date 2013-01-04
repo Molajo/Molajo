@@ -122,7 +122,7 @@ Class ApplicationService
      * @var    object
      * @since  1.0
      */
-    protected $parameter_properties_array = array(
+    protected $properties_array = array(
         'parameters',
         'request_uri',
         'applications',
@@ -177,7 +177,7 @@ Class ApplicationService
 
         if ($key == 'parameters') {
         } else {
-            if (in_array($key, $this->parameter_properties_array)) {
+            if (in_array($key, $this->properties_array)) {
 
                 if (isset($this->$key)) {
                     $this->$key = $default;
@@ -211,7 +211,7 @@ Class ApplicationService
 
         if ($key == 'parameters') {
         } else {
-            if (in_array($key, $this->parameter_properties_array)) {
+            if (in_array($key, $this->properties_array)) {
                 $this->$key = $value;
 
                 return $this->$key;
@@ -285,7 +285,6 @@ Class ApplicationService
                 = substr($this->requested_resource_for_route, 0, strripos($this->requested_resource_for_route, '/'));
         }
 
-
         return;
     }
 
@@ -307,7 +306,7 @@ Class ApplicationService
      * If so, determine if SSL is already in use
      * If not, redirect using HTTPS
      *
-     * @return  void
+     * @return  bool|string
      * @since   1.0
      */
     public function sslCheck()
@@ -318,16 +317,15 @@ Class ApplicationService
 
             } else {
 
-                $redirectTo = (string)'https' .
+                return (string)'https' .
                     substr(BASE_URL, 4, strlen(BASE_URL) - 4) .
                     APPLICATION_URL_PATH .
                     '/' . $this->requested_resource_for_route;
 
-                Services::Redirect()->set($redirectTo, 301);
             }
         }
 
-        return;
+        return false;
     }
 
     /**
@@ -368,12 +366,12 @@ Class ApplicationService
                 $this->set('application_path', $item->path);
                 $this->set('application_description', $item->description);
 
-                $parameters = Services::Registry()->getArray('ApplicationDatasourceParameters');
+                $parameters = $controller->getAdditionalData('Parameters');
                 foreach ($parameters as $key => $value) {
                     $this->set($key, $value);
                 }
 
-                $metadata = Services::Registry()->getArray('ApplicationDatasourceMetadata');
+                $metadata = $controller->getAdditionalData('Metadata');
                 if (count($metadata) > 0) {
                     foreach ($metadata as $key => $value) {
                         $this->set('metadata_' . $key, $value);

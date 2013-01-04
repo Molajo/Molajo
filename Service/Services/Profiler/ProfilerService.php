@@ -165,7 +165,7 @@ Class ProfilerService
      * @var    object
      * @since  1.0
      */
-    protected $parameter_properties_array = array(
+    protected $properties_array = array(
         'on',
         'profiler_started_time',
         'previous_time',
@@ -227,7 +227,7 @@ Class ProfilerService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
 
         } else {
             throw new \OutOfRangeException
@@ -256,7 +256,7 @@ Class ProfilerService
         $key = strtolower($key);
 
         /** Settings */
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
             $this->$key = $value;
 
             return;

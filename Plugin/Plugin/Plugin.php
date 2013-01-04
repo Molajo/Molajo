@@ -91,7 +91,7 @@ class Plugin
      * @var    object
      * @since  1.0
      */
-    protected $parameter_properties_array = array();
+    protected $properties_array = array();
 
     /**
      * Data from Query Results

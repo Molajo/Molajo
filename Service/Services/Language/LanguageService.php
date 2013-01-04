@@ -39,229 +39,351 @@ defined('NIAMBIE') or die;
 Class LanguageService
 {
     /**
-     * Helpers
+     * Default Language
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $default_language;
+
+    /**
+     * Current Language
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $current_language;
+
+    /**
+     * Language Registry (by language)
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $language_registry = array();
+
+    /**
+     * Installed Languages (contains tag values, like en-GB)
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $installed_languages = array();
+
+    /**
+     * Language Strings (by language)
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $language_strings = array();
+
+    /**
+     * Loaded Languages
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $loaded_languages = array();
+
+    /**
+     * User Language
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $user_language;
+
+    /**
+     * List of Properties
      *
      * @var    object
      * @since  1.0
      */
-    protected $extensionHelper;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->extensionHelper = new ExtensionHelper();
-    }
+    protected $properties_array = array(
+        'registry',
+        'default',
+        'current',
+        'installed',
+        'language',
+        'list',
+        'strings',
+        'user',
+        'id',
+        'title',
+        'tag',
+        'locale',
+        'rtl',
+        'translation',
+        'direction'
+    );
 
     /**
      * Load language file for specific language
      *
-     * @param   string  $language
-     *
-     * @return  null
+     * @return  void
      * @since   1.0
      */
-    public function initialise($language = null)
+    public function initialise()
     {
+        $this->current_language    = null;
+        $this->default_language    = null;
+        $this->installed_languages = array();
+        $this->loaded_languages    = array();
+        $this->language_strings    = array();
 
-        $language = $this->setCurrentLanguage($language);
-        $this->setLanguageRegistry($language);
-
-        return $this->loadLanguageStrings($language);
+        return;
     }
 
     /**
      * Get language property
      *
-     * @param   string  $property
+     * @param   string  $key
      * @param   string  $default
      * @param   string  $language
      *
-     * @return  mixed
+     * @return  array|mixed|string
+     * @throws  \OutOfRangeException
      * @since   1.0
      */
-    public function get($property, $default = '', $language = null)
+    public function get($key, $default = '', $language = null)
     {
-        if ($language == null) {
-            $language = Services::Registry()->get('Languages', 'Current');
+        $key = strtolower($key);
+
+        $this->setGetSetLanguage($language);
+        $language = $this->current_language;
+
+        if ($key == 'language') {
+            return $language;
         }
 
-        if ($property == 'installed') {
-            return Services::Registry()->get('Languages', 'Installed');
-
-        } elseif ($property == 'default') {
-            return Services::Registry()->get('Languages', 'Default');
-
-        } elseif ($property == 'current') {
-            return Services::Registry()->get('Languages', 'Current');
+        if (in_array($key, $this->properties_array)) {
+        } else {
+            throw new \OutOfRangeException
+            ('Language Service: attempting to get value for unknown property: ' . $key);
         }
 
-        return Services::Registry()->get('Languages' . $language, $property, $default);
+        if ($key == 'translation') {
+            return $this->translate($default, 0);
+        }
+
+
+        if ($key == 'list') {
+            return $this->translate($default, 1);
+        }
+
+
+        if ($key == 'installed') {
+            return $this->installed_languages;
+        }
+
+        if ($key == 'default') {
+            return $this->default_language;
+        }
+
+        if ($key == 'current') {
+            return $this->current_language;
+        }
+
+        if ($key == 'registry') {
+            if ($this->language_registry == null) {
+                $this->language_registry = $default;
+            }
+
+            return $this->language_registry;
+        }
+
+        if ($key == 'strings') {
+            if ($this->language_registry == null) {
+                $this->language_registry = $default;
+            }
+
+            return $this->language_registry;
+        }
+
+        if ($key == 'user') {
+            if ($this->language_registry == null) {
+                $this->language_registry = $default;
+            }
+
+            return $this->language_registry;
+        }
+
+        if (isset($this->language_registry[$language]->$key)) {
+            return $this->language_registry[$language]->$key;
+        }
+
+        return $default;
     }
 
     /**
-     * Translate String
+     * Set the value of the specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     * @param   mixed   $language
+     *
+     * @return  void
+     * @since   1.0
+     * @throws  \OutOfRangeException
+     */
+    public function set($key, $value = null, $language = null)
+    {
+        $key = strtolower($key);
+
+        $this->setGetSetLanguage($language);
+        $language = $this->current_language;
+
+        if ($key == 'language') {
+            return;
+        }
+
+        if (in_array($key, $this->properties_array)) {
+        } else {
+            throw new \OutOfRangeException
+            ('Language Service: attempting to set value for unknown key: ' . $key);
+        }
+
+        $registry = array('id', 'title', 'tag', 'locale', 'rtl', 'direction');
+        if (in_array($key, $registry)) {
+            $this->language_registry[$language]->$key = $value;
+
+            return;
+        }
+
+        $this->$key = $value;
+
+        return;
+    }
+
+    /**
+     * First time used, this method retrieves installed languages,
+     * sets default language (if not set by configuration), sets current language,
+     * and retrieves the language strings for the current language.
+     *
+     * Subsequent times, sets the current language, if not provided and
+     * retrieves the language strings for that language, if not loaded.
+     *
+     * @param   string  $language
+     *
+     * @return  void
+     * @since   1.0
+     */
+    protected function setGetSetLanguage($language)
+    {
+        if (count($this->get('installed_languages', array())) == 0) {
+            $this->getInstalledLanguages();
+        }
+
+        if (in_array($language, $this->get('installed_languages'))) {
+        } else {
+            $language = null;
+        }
+
+        if ($this->default_language == null) {
+            $this->default_language = $language;
+        }
+
+        if ($this->default_language == null) {
+            $this->default_language = 'en-GB';
+        }
+
+        $load_language = false;
+        if ($language == null) {
+        } else {
+            $this->current_language = $language;
+            $load_language          = true;
+        }
+
+        if ($this->current_language == null) {
+            $this->current_language = $this->default_language;
+            $load_language          = true;
+        }
+
+        if ($this->current_language === null) {
+            $load_language = true;
+        }
+
+        if ($load_language === true) {
+            $this->getCurrentLanguage();
+            $this->setLanguageStrings();
+        }
+
+        return;
+    }
+
+    /**
+     * Translate String in Current Language, or fall back to defaults
      *
      * @param   string  $string
-     * @param   string  $language
+     * @param   bool    $list
      *
      * @return  mixed
      * @since   1.0
      */
-    public function translate($string, $language = null)
+    protected function translate($string, $list = 0)
     {
-        $string = trim($string);
+        $string = strtolower(trim($string));
 
-        if ($language == null) {
-            $language = Services::Registry()->get('Languages', 'Current');
-        }
+        $language = $this->get('current_language');
 
-        $result = Services::Registry()->get('Languages' . $language, $string, '');
-        if ($result == '') {
+        if ((int) $list == 1) {
+            $found = array();
+
+            $keys = array_keys($this->language_strings[$language]);
+
+            foreach ($keys as $key) {
+                if (strpos($string, strtolower($key))) {
+                    $found[$key] = $this->language_strings[$key];
+                }
+            }
+
+            return $found;
+
         } else {
-            return $result;
-        }
 
-        if ($language == Services::Registry()->get('Languages', 'Default')) {
-        } else {
-            $language = Services::Registry()->get('Languages', 'Default');
-            $result   = Services::Registry()->get('Languages' . $language, $string, '');
-            if ($result == '') {
+            if (isset($this->language_strings[$language]->$string)) {
+                return $this->language_strings[$language]->$string;
+            }
+
+            if ($language == $this->get('default_language', 'en-GB')) {
             } else {
-                return $result;
+                if (isset($this->language_strings[$language]->$string)) {
+                    return $this->language_strings[$language]->$string;
+                }
+            }
+
+            if ($language == 'en-GB') {
+            } else {
+                $language = 'en-GB';
+                if (isset($this->language_strings[$language]->$string)) {
+                    return $this->language_strings[$language]->$string;
+                }
             }
         }
 
-        if ($language == Services::Registry()->get('Languages', 'en-GB')) {
-        } else {
-            $language = 'en-GB';
-            $result   = Services::Registry()->get('Languages' . $language, $string, '');
-            if ($result == '') {
-            } else {
-                return $result;
-            }
-        }
-
-        if ($string == 'Application configured default:') {
-
-        } else {
-            Services::Language()->logUntranslatedString($string);
-        }
+        $this->logUntranslatedString($string);
 
         return $string;
     }
 
     /**
      * Language strings found within the code but not identified to the database are captured and
-     *      inserted into the language strings table
+     *      inserted into the language strings table when admin is logged on
+     *
+     * @param   $string
      *
      * @return  bool
      * @since   1.0
      */
-    public function logUntranslatedStrings()
+    protected function logUntranslatedString($string)
     {
-        if (Services::Registry()->get('User', 'username') == 'admin') {
-        } else {
-            return true;
-        }
-
-        if (Services::Registry()->get('Configuration', 'profiler_collect_missing_language_strings') == '1') {
-        } else {
-            return true;
-        }
-
-        Services::Registry()->sort('Languages' . 'TranslatedStringsMissing');
-
-        $body       = '';
-        $translated = Services::Registry()->getArray('Languages' . 'TranslatedStringsMissing');
-
-        if (count($translated) === 0) {
-            return true;
-        }
-
         $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('System', 'Languagestrings', 1);
 
         $controller->set('check_view_level_access', 0, 'model_registry');
-        $controller->model->insertLanguageString($translated);
-
-        return true;
-    }
-
-    /**
-     * Log requests for translations that could not be processed
-     *
-     * @param   string  $string
-     *
-     * @return  void
-     * @since   1.0
-     */
-    protected function logUntranslatedString($string)
-    {
-        if (Services::Registry()->exists('Languages' . 'TranslatedStringsMissing')) {
-        } else {
-            Services::Registry()->createRegistry('Languages' . 'TranslatedStringsMissing');
-        }
-
-        Services::Registry()->set('Languages' . 'TranslatedStringsMissing', $string, $string);
-
-        return;
-    }
-
-    /**
-     * Loads language strings into registry
-     *
-     * @param   null  $language
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function loadLanguageStrings($language = null)
-    {
-        if ($language === null) {
-            $language = Services::Registry()->get('Languages', 'Current');
-        }
-
-        if (Services::Registry()->exists('Languages' . $language) == false) {
-            $this->setLanguageRegistry('Languages' . $language);
-        }
-
-        $results = $this->getLanguageStrings($language);
-
-        if ($results === false || count($results) == 0) {
-            if ($language == Services::Registry()->get('Languages', 'Default')) {
-            } else {
-                $language == Services::Registry()->get('Languages', 'Default');
-                $results = $this->getLanguageStrings($language);
-            }
-        }
-
-        if ($results === false || count($results) == 0) {
-
-            if ($language == 'en-GB') {
-            } else {
-                $language == Services::Registry()->get('Languages', 'en-GB');
-                $results = $this->getLanguageStrings($language);
-            }
-        }
-
-        if ($results === false || count($results) == 0) {
-            return false;
-        }
-
-        if (count($results) == 0 || $results === false) {
-        } else {
-            foreach ($results as $item) {
-
-                if (trim($item->content_text) == '' || $item->content_text === null) {
-                    Services::Registry()->set('Languages' . $language, trim($item->title), trim($item->title));
-                } else {
-                    Services::Registry()->set('Languages' . $language, trim($item->title), $item->content_text);
-                }
-            }
-        }
+        $controller->model->insertLanguageString($string);
 
         return true;
     }
@@ -269,108 +391,133 @@ Class LanguageService
     /**
      * Determine language to be used as current
      *
-     * @param   null|string  $language
-     *
-     * @return  null/string
+     * @return  void
      * @since   1.0
+     * @throws  \Exception
      */
-    protected function setCurrentLanguage($language = null)
+    protected function getCurrentLanguage()
     {
-        $installed = $this->getInstalledLanguages();
-
-        if (count($installed) == 1) {
-            return $installed[0];
+        if ($this->current_language == null) {
+        } else {
+            return;
         }
 
-        if (in_array($language, $installed)) {
-            return $language;
+        if (count($this->get('installed_languages')) == 0) {
+            $this->getInstalledLanguages();
+        }
+
+        if (count($this->get('installed_languages')) == 1) {
+            $installed_language     = $this->get('installed_languages');
+            $this->current_language = $installed_language[0];
+
+            return;
         }
 
         /** @todo Retrieve from Session, if installed */
 
-        $language = Services::Registry()->get('User', CATALOG_TYPE_LANGUAGE_LITERAL, '');
-        if (in_array($language, $installed)) {
-            return $language;
+        if (in_array($this->get('user_language'), $this->get('installed_languages'))) {
+            $this->current_language = $this->get('user_language');
+
+            return;
         }
 
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
             if (count($browserLanguages) > 0) {
                 foreach ($browserLanguages as $language) {
-                    if (in_array($language, $installed)) {
-                        return $language;
+                    if (in_array($language, $this->get('installed_languages'))) {
+                        $this->current_language = $language;
+
+                        return;
                     }
                 }
             }
         }
 
-        $language = Services::Registry()->get('Configuration', CATALOG_TYPE_LANGUAGE_LITERAL);
+        if (in_array($this->get('default_language'), $this->get('installed_languages'))) {
+            $this->current_language = $this->get('default_language');
 
-        Services::Registry()->set('Languages', 'Default', $language);
-
-        if (in_array($language, $installed)) {
-            return $language;
+            return;
         }
 
-        if (in_array('en-GB', $installed)) {
-            return 'en-GB';
+        if (in_array('en-GB', $this->get('installed_languages'))) {
+            $this->current_language = 'en-GB';
+
+            return;
         }
 
-        throw new \Exception('Language: Logic error');
+        throw new \Exception('Language: getCurrentLanguage cannot identify an available language.');
     }
 
     /**
-     * setLanguageRegistry - Loads the Core Language for specified language
+     * Retrieve installed languages for this application
      *
-     * @param   string  $language
-     *
-     * @return  string
+     * @return  null
+     * @throws  \Exception
      */
-    protected function setLanguageRegistry($language)
+    protected function getInstalledLanguages()
     {
-        if (Services::Registry()->exists('Languages' . $language)) {
-            return $language;
+        $extensionHelper = new ExtensionHelper();
+        $results         = $extensionHelper->get(0, 'Language', 'datasource', 'Languageservice');
+
+        if (is_array($results)) {
+        } else {
+            $results = array();
         }
 
-        $languagesInstalled = Services::Registry()->get('Languages', 'installed');
-
-        if ($languagesInstalled === false || count($languagesInstalled) == 0) {
-            throw new Exception('Language: ' . $language . ' Query returned no data');
+        if (count($results) == 0) {
+            throw new \Exception('Languages: No languages installed');
         }
 
-        foreach ($languagesInstalled as $installed) {
-            if ($installed->tag == trim($language)) {
-                $id = $installed->id;
-                break;
+        $languageList = array();
+        $tagArray     = array();
+
+        foreach ($results as $language) {
+
+            $temp_row = new \stdClass();
+
+            $temp_row->id     = $language->extension_id;
+            $temp_row->title  = $language->subtitle;
+            $temp_row->tag    = $language->tag;
+            $temp_row->locale = $language->locale;
+
+            if ($language->rtl == 1) {
+                $temp_row->rtl       = $language->rtl;
+                $temp_row->direction = 'rtl';
+            } else {
+                $temp_row->rtl       = $language->rtl;
+                $temp_row->direction = '';
             }
+            $temp_row->first_day = $language->first_day;
+
+            $languageList[] = $temp_row;
+            $tagArray[]     = $language->tag;
         }
 
-        Services::Registry()->createRegistry('Languages' . $language);
+        $this->set('installed_languages', $tagArray);
+        $this->set('installed_language_registries', $languageList);
 
-        Services::Registry()->set('Languages' . $language, 'id', $id);
-        Services::Registry()->set('Languages' . $language, 'title', $installed->title);
-        Services::Registry()->set('Languages' . $language, 'tag', $installed->tag);
-        Services::Registry()->set('Languages' . $language, 'rtl', $installed->rtl);
-        Services::Registry()->set('Languages' . $language, 'direction', $installed->direction);
-        Services::Registry()->set('Languages' . $language, 'first_day', $installed->first_day);
-
-        Services::Registry()->set('Languages', 'Current', $language);
-
-        Services::Registry()->sort('Languages' . $language);
-
-        return $language;
+        return;
     }
 
     /**
-     * Get language strings from database
+     * Set Language Strings for specified language by retrieving from the Database and
+     *  storing in property array
      *
-     * @param   $language
-     *
-     * @return  bool
+     * @return  void
      * @since   1.0
+     * @throws  \Exception
      */
-    protected function getLanguageStrings($language)
+    protected function setLanguageStrings()
     {
+        $language = $this->get('current_language', 'en-GB');
+
+        if (in_array($language, $this->get('loaded_languages', array()))) {
+            return;
+        }
+
+        $this->loaded_languages[] = $language;
+
         $controllerClass = CONTROLLER_CLASS_NAMESPACE;
         $controller      = new $controllerClass();
         $controller->getModelRegistry('System', 'Languagestrings', 1);
@@ -447,51 +594,29 @@ Class LanguageService
         $controller->set('model_offset', 0, 'model_registry');
         $controller->set('model_count', 999999, 'model_registry');
 
-        return $controller->getData(QUERY_OBJECT_LIST);
-    }
+        $results = $controller->getData(QUERY_OBJECT_LIST);
 
-    /**
-     * Retrieve installed languages for this application
-     *
-     * @return   bool
-     * @since    1.0
-     */
-    protected function getInstalledLanguages()
-    {
-        $installed = $this->extensionHelper->get(0, CATALOG_TYPE_LANGUAGE, 'datasource', 'Languageservice');
-
-        if ($installed === false || count($installed) == 0) {
-            throw new \Exception('Languages: No languages installed');
+        if (is_array($results)) {
+        } else {
+            $results = array();
         }
 
-        $languageList = array();
-        $tagArray     = array();
+        if (count($results) === 0) {
+            throw new \Exception
+            ('Language Services: No Language string results for Language: ' . $language);
+        }
 
-        foreach ($installed as $language) {
+        foreach ($results as $item) {
 
-            $temp_row = new \stdClass();
+            $item->title = trim($item->title);
 
-            $temp_row->id     = $language->extension_id;
-            $temp_row->title  = $language->subtitle;
-            $temp_row->tag    = $language->tag;
-            $temp_row->locale = $language->locale;
-
-            if ($language->rtl == 1) {
-                $temp_row->rtl       = $language->rtl;
-                $temp_row->direction = 'rtl';
+            if (trim($item->content_text) == '' || $item->content_text === null) {
+                $this->language_strings[$language][$item->title] = $item->title;
             } else {
-                $temp_row->rtl       = $language->rtl;
-                $temp_row->direction = '';
+                $this->language_strings[$language][$item->title] = $item->content_text;
             }
-            $temp_row->first_day = $language->first_day;
-
-            $languageList[] = $temp_row;
-            $tagArray[]     = $language->tag;
         }
 
-        Services::Registry()->createRegistry('Languages');
-        Services::Registry()->set('Languages', 'installed', $languageList);
-
-        return $tagArray;
+        return;
     }
 }

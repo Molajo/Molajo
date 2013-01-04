@@ -108,7 +108,7 @@ Class MetadataService
      * @var    object
      * @since  1.0
      */
-    protected $parameter_properties_array = array(
+    protected $properties_array = array(
         'title',
         'description',
         'direction',
@@ -149,7 +149,7 @@ Class MetadataService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
 
             $query_results = array();
 
@@ -196,7 +196,7 @@ Class MetadataService
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException
             ('Metadata Service: attempting to set value for unknown key: ' . $key);

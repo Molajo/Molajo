@@ -756,6 +756,21 @@ class Controller
         return $q;
     }
 
+
+    /**
+     * Method to return custom field data for specific model registries
+     *
+     * @param   string   $query_object - result, item, list, distinct
+     *
+     * @return  array    Additional data results
+     * @since   1.0
+     * @throws  \RuntimeException
+     */
+    public function getAdditionalData($type = '')
+    {
+        return Services::Registry()->getArray($this->get('model_registry') . $type);
+    }
+
     /**
      * Schedule onConnectDatabase Event
      *

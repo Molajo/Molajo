@@ -88,7 +88,7 @@ Class EventService
         'model',
         'model_registry',
         'parameters',
-        'parameter_properties_array',
+        'properties_array',
         'query_results',
         'row',
         'rendered_output',

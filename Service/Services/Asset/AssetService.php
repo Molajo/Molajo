@@ -174,7 +174,7 @@ Class AssetService
      * @var    object
      * @since  1.0
      */
-    protected $parameter_properties_array = array(
+    protected $properties_array = array(
         'direction',
         'html5',
         'mimetype',
@@ -235,12 +235,13 @@ Class AssetService
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function get($key = null, $default = null)
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException
             ('Asset Service: attempting to get value for unknown property: ' . $key);
@@ -259,12 +260,13 @@ Class AssetService
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value = null)
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException
             ('Asset Service: attempting to set value for unknown key: ' . $key);
@@ -295,10 +297,10 @@ Class AssetService
      * @param   string  $url
      * @param   string  $relation
      * @param   string  $relation_type
-     * @param   string  $attributes
-     * @param   string  $priority
+     * @param   array   $attributes
+     * @param   int     $priority
      *
-     * @return  object
+     * @return  object  AssetService
      * @since   1.0
      */
     public function addLink($url, $relation, $relation_type = 'rel', $attributes = array(), $priority = 500)
@@ -574,11 +576,11 @@ Class AssetService
      *
      * @param   string  $url
      * @param   int     $priority
-     * @param   bool    $defer
+     * @param   int     $defer
      * @param   string  $mimetype
      * @param   bool    $async
      *
-     * @return  mixed
+     * @return  object  AssetService
      * @since   1.0
      */
     public function addJs($url, $priority = 500, $defer = 0, $mimetype = "text/javascript", $async = false)
@@ -640,11 +642,11 @@ Class AssetService
      * $this->assets->addJSDeclarations($fallback, 'text/javascript', 1000);
      *
      * @param   string  $content
-     * @param   string  $priority
-     * @param   string  $defer
+     * @param   int     $priority
+     * @param   int     $defer
      * @param   string  $mimetype
      *
-     * @return  object
+     * @return  object  AssetService
      * @since   1.0
      */
     public function addJSDeclarations($content, $priority = 500, $defer = 0, $mimetype = 'text/javascript')

@@ -137,7 +137,7 @@ Class Frontcontroller
      * @var    object
      * @since  1.0
      */
-    protected $parameter_properties_array = array(
+    protected $properties_array = array(
         'application_login_requirement',
         'application_home_catalog_id',
         'application_html5',
@@ -271,7 +271,7 @@ Class Frontcontroller
      * @param   string  $override_catalog_id
      * @param   string  $override_parse_sequence
      * @param   string  $override_parse_final
-     * @param   string  $override_parameter_properties_array
+     * @param   string  $override_properties_array
      * @param   string  $override_class_array
      *
      * @return  mixed
@@ -283,7 +283,7 @@ Class Frontcontroller
         $override_catalog_id = null,
         $override_parse_sequence = null,
         $override_parse_final = null,
-        $override_parameter_properties_array = null,
+        $override_properties_array = null,
         $override_class_array = null
     ) {
 
@@ -292,9 +292,9 @@ Class Frontcontroller
             $this->class_array = $override_class_array;
         }
 
-        if ($override_parameter_properties_array == null) {
+        if ($override_properties_array == null) {
         } else {
-            $this->parameter_properties_array = $override_parameter_properties_array;
+            $this->properties_array = $override_properties_array;
         }
 
         /** 1. Initialise */
@@ -382,7 +382,7 @@ Class Frontcontroller
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException('Frontcontroller: is attempting to get value for unknown key: ' . $key);
         }
@@ -410,7 +410,7 @@ Class Frontcontroller
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->parameter_properties_array)) {
+        if (in_array($key, $this->properties_array)) {
         } else {
             throw new \OutOfRangeException('Frontcontroller: is attempting to set value for unknown key: ' . $key);
         }
@@ -561,7 +561,12 @@ Class Frontcontroller
 
         Services::Application()->set('request_using_ssl', $this->get('request_using_ssl'));
 
-        Services::Application()->sslCheck();
+        $redirectTo = Services::Application()->sslCheck();
+
+        if ($redirectTo === false) {
+        } else {
+            Services::Redirect()->set($redirectTo, 301);
+        }
 
         $this->verifySiteApplication();
 
@@ -673,14 +678,14 @@ Class Frontcontroller
 
         $route = $route->process(
             $this->parameters,
-            $this->parameter_properties_array,
+            $this->properties_array,
             $this->requested_resource_for_route,
             $this->base_url_path_for_application,
             $override_catalog_id
         );
 
         $this->parameters                 = $route[0];
-        $this->parameter_properties_array = $route[1];
+        $this->properties_array = $route[1];
 
         if ($this->get('redirect_to_id') == 0
             && $this->get('error_code') == 0
@@ -873,7 +878,7 @@ Class Frontcontroller
         if ($results === false) {
             $results = $theme->process(
                 $this->parameters,
-                $this->parameter_properties_array,
+                $this->properties_array,
                 $this->class_array,
                 $override_parse_sequence,
                 $override_parse_final
@@ -1051,7 +1056,7 @@ Class Frontcontroller
             'model'                             => null,
             'model_registry'                    => $model_registry,
             'parameters'                        => $this->parameters,
-            'parameter_properties_array'        => $this->parameter_properties_array,
+            'properties_array'        => $this->properties_array,
             'query_results'                     => array(),
             'row'                               => null,
             'rendered_output'                   => $this->rendered_output,
@@ -1074,8 +1079,8 @@ Class Frontcontroller
             $this->parameters = $arguments['parameters'];
         }
 
-        if (isset($arguments['parameter_properties_array'])) {
-            $this->parameter_properties_array = $arguments['parameter_properties_array'];
+        if (isset($arguments['properties_array'])) {
+            $this->properties_array = $arguments['properties_array'];
         }
 
         if (isset($this->parameters['model_registry_name'])) {

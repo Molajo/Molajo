@@ -31,7 +31,7 @@ Class RequestServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
         $this->frontcontroller_class
             ->set('request_method', $this->service_class->get('method', 'GET'));

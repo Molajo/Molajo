@@ -596,8 +596,8 @@ Class ThemeService
             $this->parameters = $arguments['parameters'];
         }
 
-        if (isset($arguments['parameter_properties_array'])) {
-            $this->parameters = $arguments['parameter_properties_array'];
+        if (isset($arguments['properties_array'])) {
+            $this->parameters = $arguments['properties_array'];
         }
 
         if (isset($this->parameters['model_registry_name'])) {

@@ -31,7 +31,7 @@ Class SiteServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
         return;
     }
@@ -44,7 +44,7 @@ Class SiteServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
         $this->service_class->set('base_url', $this->frontcontroller_class->get('request_base_url'));
         $this->service_class->setBaseURL();

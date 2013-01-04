@@ -31,7 +31,7 @@ Class ProfilerServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeStartup()
+    public function onBeforeServiceStartup()
     {
         if ((int)Services::Application()->get('profiler_service') == 1) {
             $this->service_class->set('on', 1);
@@ -102,7 +102,7 @@ Class ProfilerServicePlugin extends ServicesPlugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterStartup()
+    public function onAfterServiceStartup()
     {
         if ($this->service_class->get('on') == 0) {
             define('PROFILER_ON', false);
