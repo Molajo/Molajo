@@ -181,11 +181,9 @@ Class LanguageService
             return $this->translate($default, 0);
         }
 
-
         if ($key == 'list') {
             return $this->translate($default, 1);
         }
-
 
         if ($key == 'installed') {
             return $this->installed_languages;
@@ -339,9 +337,9 @@ Class LanguageService
      * Translate String in Current Language, or fall back to defaults
      *
      * @param   string  $string
-     * @param   bool    $list
+     * @param   int     $list
      *
-     * @return  mixed
+     * @return  array|string
      * @since   1.0
      */
     protected function translate($string, $list = 0)

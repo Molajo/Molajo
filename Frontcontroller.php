@@ -238,7 +238,6 @@ Class Frontcontroller
         'SiteService'           => 'Molajo\\Service\\Services\\Site\\',
         'UserService'           => 'Molajo\\Service\\Services\\User\\',
 
-
         'ThemeService'          => 'Molajo\\Service\\Services\\Theme\\ThemeService',
 
         'ContentHelper'         => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
@@ -467,6 +466,7 @@ Class Frontcontroller
         Frontcontroller::Services()->set('controller_class', CONTROLLER_CLASS_NAMESPACE);
 
         Frontcontroller::Services()->start('ConfigurationService', $this->class_array['ConfigurationService']);
+        die;
         Frontcontroller::Services()->start('RegistryService', $this->class_array['RegistryService']);
         Frontcontroller::Services()->start('RequestService', $this->class_array['RequestService']);
         Frontcontroller::Services()->start('SiteService', $this->class_array['SiteService']);

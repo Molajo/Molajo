@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Cookie Service Plugin
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Cookie;
 
@@ -13,13 +15,14 @@ use Symfony\Component\HttpFoundation\Cookie;
 defined('NIAMBIE') or die;
 
 /**
- * Redirect
+ * Cookie Service Plugin
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Cookie.html
  *
- * @package         Niambie
- * @subpackage      Services
- * @since           1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class CookieService
 {

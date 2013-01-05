@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Date Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Date;
 
@@ -11,14 +13,68 @@ use Molajo\Service\Services;
 defined('NIAMBIE') or die;
 
 /**
- * Date
+ * Date Service
  *
- * @package     Niambie
- * @subpackage  Service
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class DateService
 {
+    /**
+     * Date Class
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $date_class;
+
+    /**
+     * Translation Strings for Dates
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $date_translate_array = array();
+
+    /**
+     * Locale
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $locale;
+
+    /**
+     * Offset
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $offset;
+
+    /**
+     * Language UTC Offset
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $language_utc_offset;
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $property_array = array(
+        'date_class',
+        'date_translate_array',
+        'locale',
+        'offset',
+        'language_utc_offset'
+    );
 
     /**
      * Initialise class
@@ -29,6 +85,81 @@ Class DateService
     public function initialise()
     {
 
+    }
+
+    /**
+     * Get the current value (or default) of the specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
+     * @since   1.0
+     * @throws  \OutOfRangeException
+     */
+    public function get($key = null, $default = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->property_array)) {
+        } else {
+            throw new \OutOfRangeException
+            ('Date Service: attempting to get value for unknown property: ' . $key);
+        }
+
+        $this->$key = $default;
+
+        return $this->$key;
+    }
+
+    /**
+     * Set the value of the specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  mixed
+     * @since   1.0
+     * @throws  \OutOfRangeException
+     */
+    public function set($key, $value = null)
+    {
+        $key = strtolower($key);
+
+        if (in_array($key, $this->property_array)) {
+        } else {
+            throw new \OutOfRangeException
+            ('Date Service: attempting to set value for unknown key: ' . $key);
+        }
+
+        $this->$key = $value;
+
+        return $this->$key;
+    }
+
+    /**
+     * Prepares Date object
+     *
+     * @param   mixed   $time     The initial time for the Date object
+     * @param   mixed   $tzOffset The timezone offset.
+     *
+     * @return  object  JDate
+     * @since   1.0
+     */
+    public function getDate($time = 'now', $tzOffset = null)
+    {
+        if ($time == '') {
+            $time = 'now';
+        }
+
+        $class = str_replace('-', '_', $this->get('locale')) . 'Date';
+
+        if (class_exists($class)) {
+        } else {
+            $class = $this->get('date_class');
+        }
+
+        return new $class($time, $tzOffset);
     }
 
     /**
@@ -63,15 +194,15 @@ Class DateService
         $date1dd   = substr($date1, 8, 2);
         $date1ccyy = substr($date1, 0, 4);
 
-        $date1 = date_create("$date1mm/$date1dd/$date1ccyy");
+        $date1 = new \DateTime($date1mm . '/' . $date1dd . '/' . $date1ccyy);
 
         $date2mm   = substr($date2, 5, 2);
         $date2dd   = substr($date2, 8, 2);
         $date2ccyy = substr($date2, 0, 4);
 
-        $date2 = date_create("$date2mm/$date2dd/$date2ccyy");
+        $date2 = new \DateTime($date2mm . '/' . $date2dd . '/' . $date2ccyy);
 
-        $day_object = date_diff($date2, $date1);
+        $day_object = $date1->diff($date2);
 
         return $day_object->days;
     }
@@ -79,7 +210,8 @@ Class DateService
     /**
      * getPrettyDate
      *
-     * @param   $date
+     * @param   string  $source
+     * @param   string  $compare
      *
      * @return  string formatted pretty date
      * @since   1.0
@@ -90,64 +222,66 @@ Class DateService
 
         if ($compare === null) {
             $compare_to_date = new \DateTime('now');
+        } else {
+            $compare_to_date = $compare;
         }
 
-        $diff    = $compare_to_date->format('U') - $source_date->format('U');
-        $dayDiff = floor($diff / 86400);
+        $difference     = $compare_to_date->format('U') - $source_date->format('U');
+        $day_difference = floor($difference / 86400);
 
-        $prettyDate = '';
+        $pretty_date = '';
 
-        if (is_nan($dayDiff) || $dayDiff < 0) {
+        if (is_nan($day_difference) || $day_difference < 0) {
             return '';
         }
 
-        if ($dayDiff == 0) {
+        if ($day_difference == 0) {
 
-            if ($diff < 60) {
-                $prettyDate = Services::Language()->translate('JUST_NOW');
+            if ($difference < 60) {
+                $pretty_date = $this->translate('JUST_NOW');
 
-            } elseif ($diff < 3600) {
-                $number     = floor($diff / 60);
-                $prettyDate = $number . ' '
+            } elseif ($difference < 3600) {
+                $number      = floor($difference / 60);
+                $pretty_date = $number . ' '
                     . $this->translatePrettyDate($number, 'DATE_MINUTE_SINGULAR', 'DATE_MINUTE_PLURAL')
-                    . ' ' . Services::Language()->translate('AGO');
+                    . ' ' . $this->translate('AGO');
 
-            } elseif ($diff < 86400) {
-                $number     = floor($diff / 3660);
-                $prettyDate = $number . ' '
+            } elseif ($difference < 86400) {
+                $number      = floor($difference / 3660);
+                $pretty_date = $number . ' '
                     . $this->translatePrettyDate($number, 'DATE_HOUR_SINGULAR', 'DATE_HOUR_PLURAL')
-                    . ' ' . Services::Language()->translate('AGO');
+                    . ' ' . $this->translate('AGO');
             }
 
-        } elseif ($dayDiff == 1) {
-            $pretty_date = Services::Language()->translate('YESTERDAY');
+        } elseif ($day_difference == 1) {
+            $pretty_date = $this->translate('YESTERDAY');
 
-        } elseif ($dayDiff < 7) {
-            $number     = $dayDiff;
-            $prettyDate = $number . ' '
+        } elseif ($day_difference < 7) {
+            $number      = $day_difference;
+            $pretty_date = $number . ' '
                 . $this->translatePrettyDate($number, 'DATE_DAY_SINGULAR', 'DATE_DAY_PLURAL')
-                . ' ' . Services::Language()->translate('AGO');
+                . ' ' . $this->translate('AGO');
 
-        } elseif ($dayDiff < (7 * 6)) {
-            $number     = ceil($dayDiff / 7);
-            $prettyDate = $number . ' '
+        } elseif ($day_difference < (7 * 6)) {
+            $number      = ceil($day_difference / 7);
+            $pretty_date = $number . ' '
                 . $this->translatePrettyDate($number, 'DATE_WEEK_SINGULAR', 'DATE_WEEK_PLURAL')
-                . ' ' . Services::Language()->translate('AGO');
+                . ' ' . $this->translate('AGO');
 
-        } elseif ($dayDiff < 365) {
-            $number     = ceil($dayDiff / (365 / 12));
-            $prettyDate = $number . ' '
+        } elseif ($day_difference < 365) {
+            $number      = ceil($day_difference / (365 / 12));
+            $pretty_date = $number . ' '
                 . $this->translatePrettyDate($number, 'DATE_MONTH_SINGULAR', 'DATE_MONTH_PLURAL')
-                . ' ' . Services::Language()->translate('AGO');
+                . ' ' . $this->translate('AGO');
 
         } else {
-            $number     = ceil($dayDiff / (365));
-            $prettyDate = $number . ' '
+            $number      = ceil($day_difference / (365));
+            $pretty_date = $number . ' '
                 . $this->translatePrettyDate($number, 'DATE_YEAR_SINGULAR', 'DATE_YEAR_PLURAL')
-                . ' ' . Services::Language()->translate('AGO');
+                . ' ' . $this->translate('AGO');
         }
 
-        return $prettyDate;
+        return $pretty_date;
     }
 
     /**
@@ -164,51 +298,51 @@ Class DateService
         switch ((int)$day_number) {
             case 1:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_MON');
+                    return $this->translate('DATE_MON');
                 } else {
-                    return Services::Language()->translate('DATE_MONDAY');
+                    return $this->translate('DATE_MONDAY');
                 }
                 break;
             case 2:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_TUE');
+                    return $this->translate('DATE_TUE');
                 } else {
-                    return Services::Language()->translate('DATE_TUESDAY');
+                    return $this->translate('DATE_TUESDAY');
                 }
                 break;
             case 3:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_WED');
+                    return $this->translate('DATE_WED');
                 } else {
-                    return Services::Language()->translate('DATE_WEDNESDAY');
+                    return $this->translate('DATE_WEDNESDAY');
                 }
                 break;
             case 4:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_THU');
+                    return $this->translate('DATE_THU');
                 } else {
-                    return Services::Language()->translate('DATE_THURSDAY');
+                    return $this->translate('DATE_THURSDAY');
                 }
                 break;
             case 5:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_FRI');
+                    return $this->translate('DATE_FRI');
                 } else {
-                    return Services::Language()->translate('DATE_FRIDAY');
+                    return $this->translate('DATE_FRIDAY');
                 }
                 break;
             case 6:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_SAT');
+                    return $this->translate('DATE_SAT');
                 } else {
-                    return Services::Language()->translate('DATE_SATURDAY');
+                    return $this->translate('DATE_SATURDAY');
                 }
                 break;
             default:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_SUN');
+                    return $this->translate('DATE_SUN');
                 } else {
-                    return Services::Language()->translate('DATE_SUNDAY');
+                    return $this->translate('DATE_SUNDAY');
                 }
                 break;
         }
@@ -228,75 +362,75 @@ Class DateService
         switch ((int)$month_number) {
             case 1:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_JAN');
+                    return $this->translate('DATE_JAN');
                 } else {
-                    return Services::Language()->translate('DATE_JANUARY');
+                    return $this->translate('DATE_JANUARY');
                 }
             case 2:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_FEB');
+                    return $this->translate('DATE_FEB');
                 } else {
-                    return Services::Language()->translate('DATE_FEBRUARY');
+                    return $this->translate('DATE_FEBRUARY');
                 }
             case 3:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_MAR');
+                    return $this->translate('DATE_MAR');
                 } else {
-                    return Services::Language()->translate('DATE_MARCH');
+                    return $this->translate('DATE_MARCH');
                 }
             case 4:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_APR');
+                    return $this->translate('DATE_APR');
                 } else {
-                    return Services::Language()->translate('DATE_APRIL');
+                    return $this->translate('DATE_APRIL');
                 }
             case 5:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_MAY');
+                    return $this->translate('DATE_MAY');
                 } else {
-                    return Services::Language()->translate('DATE_MAY');
+                    return $this->translate('DATE_MAY');
                 }
             case 6:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_JUN');
+                    return $this->translate('DATE_JUN');
                 } else {
-                    return Services::Language()->translate('DATE_JUNE');
+                    return $this->translate('DATE_JUNE');
                 }
             case 7:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_JUL');
+                    return $this->translate('DATE_JUL');
                 } else {
-                    return Services::Language()->translate('DATE_JULY');
+                    return $this->translate('DATE_JULY');
                 }
             case 8:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_AUG');
+                    return $this->translate('DATE_AUG');
                 } else {
-                    return Services::Language()->translate('DATE_AUGUST');
+                    return $this->translate('DATE_AUGUST');
                 }
             case 9:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_SEP');
+                    return $this->translate('DATE_SEP');
                 } else {
-                    return Services::Language()->translate('DATE_SEPTEMBER');
+                    return $this->translate('DATE_SEPTEMBER');
                 }
             case 10:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_OCT');
+                    return $this->translate('DATE_OCT');
                 } else {
-                    return Services::Language()->translate('DATE_OCTOBER');
+                    return $this->translate('DATE_OCTOBER');
                 }
             case 11:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_NOV');
+                    return $this->translate('DATE_NOV');
                 } else {
-                    return Services::Language()->translate('DATE_NOVEMBER');
+                    return $this->translate('DATE_NOVEMBER');
                 }
             default:
                 if ($abbreviation === true) {
-                    return Services::Language()->translate('DATE_DECEMBER');
+                    return $this->translate('DATE_DECEMBER');
                 } else {
-                    return Services::Language()->translate('DATE_DECEMBER');
+                    return $this->translate('DATE_DECEMBER');
                 }
         }
     }
@@ -304,10 +438,10 @@ Class DateService
     /**
      * getTimezoneDate - retrieves a date in the server or user timezone
      *
-     * @param   string  $utc_date
-     * @param   string  $server_or_user_UTC
+     * @param  string   $utc_date
+     * @param  string   $server_or_user_utc
      *
-     * @return  string
+     * @return  bool
      * @since   1.0
      */
     public function getTimezoneDate($utc_date, $server_or_user_utc = 'user')
@@ -320,9 +454,12 @@ Class DateService
         $timezone = $this->getTimezone($server_or_user_utc);
 
         $date = $this->getDate($utc_date, 'UTC');
+
         $date->setTimezone(new \DateTimeZone($timezone));
 
-        return $date->toSql(true);
+        $date_object = $date->toSql(true);
+
+        return $date_object;
     }
 
     /**
@@ -338,45 +475,18 @@ Class DateService
         $offset = '';
 
         if ($server_or_user_utc == 'server') {
+            $offset = '';
         } else {
-            if (Services::Registry()->exists('User')) {
-                $offset = Services::Registry()->get('User', 'timezone', '');
-            }
+            $offset = $this->get('offset');
         }
         if ($offset == '') {
-            $offset = Services::Registry()->get('Configuration', 'language_utc_offset', '');
+            $offset = $this->get('language_utc_offset');
         }
         if ($offset == '') {
             $offset = 'UTC';
         }
 
         return $offset;
-    }
-
-    /**
-     * Prepares Date object
-     *
-     * @param   mixed  $time     The initial time for the Date object
-     * @param   mixed  $tzOffset The timezone offset.
-     *
-     * @return  Date   object
-     * @since   1.0
-     */
-    public function getDate($time = 'now', $tzOffset = null)
-    {
-        if ($time == '') {
-            $time = 'now';
-        }
- //FIX $locale = Services::Language()->get('tag', 'en-GB');
-         $locale = 'en-GB';
-        $class = str_replace('-', '_', $locale) . 'Date';
-
-        if (class_exists($class)) {
-        } else {
-            $class = 'JPlatform\\date\\JDate';
-        }
-
-        return new $class($time, $tzOffset);
     }
 
     /**
@@ -396,10 +506,27 @@ Class DateService
         }
 
         if ($numeric_value == 1) {
-            return strtolower(Services::Language()->translate($singular_literal));
+            return strtolower($this->translate($singular_literal));
         }
 
-        return strtolower(Services::Language()->translate($plural_literal));
+        return strtolower($this->translate($plural_literal));
+    }
+
+    /**
+     * Translate the string
+     *
+     * @param   string $string
+     *
+     * @return  string
+     * @since   1.0
+     */
+    public function translate($string)
+    {
+        if (isset($this->date_translate_array[$string])) {
+            return $this->date_translate_array[$string];
+        }
+
+        return $string;
     }
 
     /**
@@ -417,58 +544,16 @@ Class DateService
      * @return  string  CCYY-MM-DD
      * @since   1.0
      */
-//@todo Amy - redo to generate a set of dates in a model, combine with other data, pass to a view for rendering
-
-    /**
-     * @param   $month
-     * @param   $year
-     *
-     * @return  string
-     * @since   1.0
-     */
     public function buildCalendar($month, $year)
     {
-        $day_numbersOfWeek = array('S', 'M', 'T', 'W', 'T', 'F', 'S');
-        $firstDayOfMonth   = mktime(0, 0, 0, $month, 1, $year);
-        $numberDays        = date('t', $firstDayOfMonth);
-        $dateResources     = getdate($firstDayOfMonth);
-        $monthName         = $dateResources['month'];
-        $day_numberOfWeek  = $dateResources['wday'];
+        $temp_row                     = new \stdClass();
+        $temp_row->days_of_week       = array('S', 'M', 'T', 'W', 'T', 'F', 'S');
+        $temp_row->first_day_of_month = mktime(0, 0, 0, $month, 1, $year);
+        $temp_row->number_of_days     = date('t', $temp_row->first_day_of_month);
+        $temp_row->date_resources     = getdate($temp_row->first_day_of_month);
+        $temp_row->month_name         = $temp_row->date_resources['month'];
+        $temp_row->day_of_week_number = $temp_row->date_resources['wday'];
 
-        $calendar = "<table class='calendar'>";
-        $calendar .= "<caption>$monthName $year</caption>";
-        $calendar .= "<tr>";
-        foreach ($day_numbersOfWeek as $day_number) {
-            $calendar .= "<th class='header'>$day_number</th>";
-        }
-
-        $currentDay = 1;
-        $calendar .= "</tr><tr>";
-        if ($day_numberOfWeek > 0) {
-            $calendar .= "<td colspan='$day_numberOfWeek'>&nbsp;</td>";
-        }
-
-        $month = str_pad($month, 2, "0", STR_PAD_LEFT);
-        while ($currentDay <= $numberDays) {
-            if ($day_numberOfWeek == 7) {
-                $day_numberOfWeek = 0;
-                $calendar .= "</tr><tr>";
-            }
-            $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
-            $date          = "$year-$month-$currentDayRel";
-            $calendar .= "<td class='day' rel='$date'>$currentDay</td>";
-            $currentDay++;
-            $day_numberOfWeek++;
-        }
-
-        if ($day_numberOfWeek != 7) {
-            $remainingDays = 7 - $day_numberOfWeek;
-            $calendar .= "<td colspan='$remainingDays'>&nbsp;</td>";
-        }
-
-        $calendar .= "</tr>";
-        $calendar .= "</table>";
-
-        return $calendar;
+        return array($temp_row);
     }
 }

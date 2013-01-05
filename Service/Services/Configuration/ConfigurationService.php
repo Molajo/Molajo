@@ -216,7 +216,6 @@ Class ConfigurationService
     protected $property_array = array(
         'calling_class',
         'calling_method',
-
         'valid_dataobject_types',
         'valid_dataobject_attributes',
         'valid_model_types',
@@ -245,7 +244,6 @@ Class ConfigurationService
     /**
      * Class Constructor
      *
-     * @return  void
      * @since   1.0
      */
     public function __construct()
@@ -256,8 +254,6 @@ Class ConfigurationService
             $this->set('calling_class', $trace[1]['class']);
             $this->set('calling_method', $trace[1]['function']);
         }
-
-        return;
     }
 
     /**
@@ -279,6 +275,7 @@ Class ConfigurationService
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value)
     {
@@ -303,6 +300,7 @@ Class ConfigurationService
      *
      * @return  bool|mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function get($key, $default = null)
     {
@@ -330,8 +328,8 @@ Class ConfigurationService
      * or - in classes where usage can happen before the service is activated:
      *      $this->getFile($model_type, $model_name);
      *
-     * @param   string  $model_name
      * @param   string  $model_type
+     * @param   string  $model_name
      *
      * @return  object  $xml
      * @since   1.0
@@ -355,8 +353,8 @@ Class ConfigurationService
      *
      * $this->getModel($model_type, $model_name);
      *
-     * @param   string  $model_name
      * @param   string  $model_type
+     * @param   string  $model_name
      * @param   string  $parameter_registry
      *
      * @return  string  Name of the Model Registry object
@@ -506,22 +504,21 @@ Class ConfigurationService
      * Services::Configuration()->getDataobject('Dataobject', 'Database');
      * Services::Configuration()->getDataobject('Dataobject', 'Assets');
      *
-     * @param   string  $model_name
      * @param   string  $model_type
+     * @param   string  $model_name
      *
      * @return  string  Name of the Dataobject Registry object
      * @since   1.0
-     *
      * @throws  \Exception
      */
     public function getDataobject($model_type, $model_name)
     {
-        $model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
+        $model_registry_name = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
 
         if (class_exists('Services')) {
-            $exists = Services::Registry()->exists($model_registry);
+            $exists = Services::Registry()->exists($model_registry_name);
             if ($exists === true) {
-                return $model_registry;
+                return $model_registry_name;
             }
         }
 
@@ -545,13 +542,13 @@ Class ConfigurationService
             $xml = $xml->model;
         }
 
-        Services::Registry()->createRegistry($model_registry);
+        Services::Registry()->createRegistry($model_registry_name);
 
-        $this->setDataobjectRegistry($model_registry, $xml);
+        $this->setDataobjectRegistry($model_registry_name, $xml);
 
-        Services::Registry()->sort($model_registry);
+        Services::Registry()->sort($model_registry_name);
 
-        return $model_registry;
+        return $model_registry_name;
     }
 
     /**
@@ -560,16 +557,14 @@ Class ConfigurationService
      * @param   string  $xml_string
      *
      * @return  mixed
-     * @throws  \RuntimeException
      * @since   1.0
      */
-    protected function getIncludeCode($xml_string, $model_name)
+    protected function getIncludeCode($xml_string)
     {
         if (trim($xml_string) == '') {
             return $xml_string;
         }
 
-        $include = '';
         $pattern = '/<include (.*)="(.*)"\/>/';
 
         $done = false;
@@ -610,7 +605,7 @@ Class ConfigurationService
     /**
      * Store Data Object Definitions into Registry
      *
-     * @param   object  $DataobjectRegistry
+     * @param   string  $DataobjectRegistry
      * @param   object  $xml
      *
      * @return  boolean
@@ -647,8 +642,9 @@ Class ConfigurationService
      * @param   string  $model_registry
      * @param   object  $xml
      *
-     * @return  boolean
+     * @return  bool
      * @since   1.0
+     * @throws \Exception
      */
     protected function setModelRegistry($model_registry, $xml)
     {
@@ -683,6 +679,7 @@ Class ConfigurationService
      *
      * @return  bool
      * @since   1.0
+     * @throws  \Exception
      */
     protected function setElementsRegistry($model_registry, $xml, $plural, $singular, $valid_attributes)
     {
@@ -780,7 +777,7 @@ Class ConfigurationService
     /**
      * setJoinFields - processes one set of join field definitions, updating the registry
      *
-     * @param   array  $itemArray
+     * @param   array  $modelJoinArray
      *
      * @return  array
      * @since   1.0
@@ -907,8 +904,9 @@ Class ConfigurationService
      * @param   $model_registry
      * @param   $customfield
      *
-     * @return  array
+     * @return  array|bool
      * @since   1.0
+     * @throws \Exception
      */
     protected function getCustomFieldsSpecificGroup($model_registry, $customfield)
     {
@@ -975,7 +973,6 @@ Class ConfigurationService
         $fieldNames = array()
     ) {
 
-        $inherit   = array();
         $available = Services::Registry()->get($model_registry, $name, array());
 
         if (count($available) > 0) {
@@ -1041,7 +1038,9 @@ Class ConfigurationService
                     strtolower(substr($extends, strlen($extends) - strlen($modeltype), strlen($modeltype)))
                 ) == $modeltype
                 ) {
-                    $extends_model_name = ucfirst(strtolower(substr($extends, 0, strlen($extends) - strlen($modeltype))));
+                    $extends_model_name = ucfirst(
+                        strtolower(substr($extends, 0, strlen($extends) - strlen($modeltype)))
+                    );
                     $extends_model_type = $modeltype;
                     break;
                 }
@@ -1493,7 +1492,7 @@ Class ConfigurationService
      *
      * @return  bool|object
      * @since   1.0
-     * @throws  \RuntimeException
+     * @throws  \Exception
      */
     protected function readXMLFile($path_and_file)
     {

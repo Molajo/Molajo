@@ -96,7 +96,6 @@ Class EventService
         'class_array',
         'include_parse_sequence',
         'include_parse_exclude_until_final',
-
         'service_class',
 
     );

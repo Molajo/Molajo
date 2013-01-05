@@ -119,7 +119,7 @@ Class ConfigurationServicePlugin extends Plugin
     /**
      * loadFieldProperties
      *
-     * @param   string  $input
+     * @param   string  $xml
      * @param   string  $plural
      * @param   string  $singular
      * @param   string  $parameter_name
@@ -152,7 +152,7 @@ Class ConfigurationServicePlugin extends Plugin
     /**
      * loadFieldPropertiesWithAttributes
      *
-     * @param   string  $input
+     * @param   string  $xml
      * @param   string  $plural
      * @param   string  $singular
      * @param   string  $parameter_name

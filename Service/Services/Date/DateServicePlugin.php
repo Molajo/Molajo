@@ -45,6 +45,28 @@ Class DateServicePlugin extends Plugin
      */
     public function onAfterServiceStartup()
     {
-        $this->set('date_translate_array', Services::Language()->get('list', 'date_'));
+        $this->service_class->set(
+            'locale',
+            Services::Language()->get('tag')
+        );
+
+        $this->service_class->set(
+            'date_translate_array',
+            Services::Language()->get('list', 'date_')
+        );
+
+        $this->service_class->set(
+            'offset',
+            Services::User()->get('timezone', '')
+        );
+
+        $this->service_class->set(
+            'language_utc_offset',
+            Services::Application()->get('language_utc_offset', '')
+        );
+
+        $this->service_class->set('date_class', 'JPlatform\\date\\JDate');
+
+        return;
     }
 }
