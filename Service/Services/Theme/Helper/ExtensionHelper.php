@@ -82,6 +82,7 @@ Class ExtensionHelper
         if (is_null($model_name)) {
             $model_name = 'Extensioninstances';
         }
+
         $model_type = ucfirst(strtolower(trim($model_type)));
         $model_name = ucfirst(strtolower(trim($model_name)));
 
@@ -176,7 +177,9 @@ Class ExtensionHelper
         }
 
         $query_results = $controller->getData($query_object);
-
+        echo '<pre>';
+var_dump($query_results);
+        echo '</pre>';
         if ($query_object == QUERY_OBJECT_ITEM) {
             $query_results->model_registry = $model_name . $model_type;
         }

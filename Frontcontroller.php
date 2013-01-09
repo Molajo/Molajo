@@ -553,17 +553,8 @@ Class Frontcontroller
         Frontcontroller::Services()->start('DatabaseService', $this->get_class_array('DatabaseService'));
         Frontcontroller::Services()->start('EventService', $this->get_class_array('EventService'));
         Frontcontroller::Services()->start('UserService', $this->get_class_array('UserService'));
-die;
         Frontcontroller::Services()->start('LanguageService', $this->get_class_array('LanguageService'));
-
         Frontcontroller::Services()->start('DateService', $this->get_class_array('DateService'));
-
-
-        Frontcontroller::Services()->start('PermissionsService', $this->get_class_array('PermissionsService'));
-        echo 'doing permissions';
-        die;
-        Frontcontroller::Services()->start('LanguageService', $this->get_class_array('LanguageService'));
-
         $this->set(
             'language_current',
             Services::Registry()->get('Languages', 'Default')
@@ -573,7 +564,6 @@ die;
             Services::Registry()->get('Languages' . $this->get('Language_current'))
         );
         $this->set('request_date', Services::Date()->getDate());
-        die;
 
         Services::Application()->getApplication();
 
@@ -692,19 +682,19 @@ die;
 
         $this->set(
             'permission_filters',
-            Services::Registry()->get('Permissions', 'filters', array())
+            Services::Permissions()->get('filters', array())
         );
         $this->set(
             'permission_action_to_authorisation',
-            Services::Registry()->get('Permissions', 'action_to_authorisation', array())
+            Services::Permissions()->get('action_to_authorisation', array())
         );
         $this->set(
             'permission_action_to_controller',
-            Services::Registry()->get('Permissions', 'action_to_controller', array())
+            Services::Permissions()->get('action_to_controller', array())
         );
         $this->set(
             'permission_tasks',
-            Services::Registry()->get('Permissions', 'tasks', array())
+            Services::Permissions()->get('tasks', array())
         );
 
         $this->set(
@@ -757,12 +747,16 @@ die;
      */
     protected function authorise()
     {
-        Services::Permissions()->verifyAction();
-        //@todo verify 403
+        $view_group_id = $this->get('request_view_group_id');
+        $request_action = $this->get('request_action');
+        $catalog_id  = $this->get('catalog_id');
 
-        if ($this->get('error_code', 0)) {
+        $results = Services::Permissions()->verifyAction($view_group_id, $request_action, $catalog_id);
+
+        if ($results === false) {
+            Services::Error()->set(403);
+            $this->set('error_code', 403);
             $this->set('error_message', '');
-        } else {
             $this->setError();
         }
 
@@ -777,7 +771,7 @@ die;
      */
     protected function setError()
     {
-        if (defined('PROFILER_ON') && PROFILER_ON === true && PROFILER_ON === true) {
+        if (defined('PROFILER_ON') && PROFILER_ON === true) {
             Services::Profiler()->set('message', 'Error Code: ' . $this->get('error_code'), 'Application');
         }
 
@@ -1050,8 +1044,6 @@ die;
             throw new \Exception('Response failed', $results);
         }
 
-        Services::Language()->logUntranslatedStrings();
-
         Services::Profiler()
             ->set('Response exit ' . $results, 'Application');
 
@@ -1185,7 +1177,7 @@ die;
      */
     protected function verifySiteApplication()
     {
-        $authorise = Services::Permissions()->verifySiteApplication();
+        $authorise = Services::Permissions()->get('site_application');
 
         if ($authorise === false) {
 

@@ -51,7 +51,6 @@ Class UserServicePlugin extends ServicesPlugin
      */
     public function onAfterServiceInitialise()
     {
-
         $id = $this->service_class_instance->get('id');
 
         $controllerClass = CONTROLLER_CLASS_NAMESPACE;
@@ -109,7 +108,11 @@ Class UserServicePlugin extends ServicesPlugin
         $this->service_class_instance->getUserData();
 
         $this->setAuthorisedExtensions();
+        //$view_groups = $this->service_class_instance->get('view_groups');
 
+        $extension_class    = $this->frontcontroller_instance->get_class_array('ExtensionHelper');
+        $extension_instance = new $extension_class();
+        $results            = $extension_instance->get(0, null, null, null, 0);
         return;
     }
 

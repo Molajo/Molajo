@@ -169,7 +169,6 @@ class ReadModel extends Model
             $select = true;
         }
 
-// when language query runs, Services is not yet defined
         Services::Permissions()->setQueryViewAccess(
             $this->query,
             $this->db,
@@ -417,13 +416,13 @@ class ReadModel extends Model
             }
         }
 
-        /**
+
         echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination . '<br />';
         echo '<br /><br /><pre>';
         $string = $this->query->__toString();
         echo str_replace('#__', 'molajo_', $string);
         echo '</pre><br /><br />';
-         */
+
 
         $cache_key = $this->query->__toString();
 

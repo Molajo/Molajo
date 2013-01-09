@@ -526,6 +526,7 @@ Class Services
         } else {
             return false;
         }
+
         $reflectionMethod = new \ReflectionMethod(new $plugin_class_namespace, $event);
         $results          = $reflectionMethod->getDeclaringClass();
 

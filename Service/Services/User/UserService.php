@@ -59,6 +59,14 @@ Class UserService
     protected $password;
 
     /**
+     * Language
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $language;
+
+    /**
      * Administrator
      *
      * @var    string
@@ -179,6 +187,7 @@ Class UserService
     protected $property_array = array(
         'id',
         'password',
+        'language',
         'authorised_for_offline_access',
         'public',
         'guest',
@@ -339,6 +348,10 @@ Class UserService
             throw new \RuntimeException ('User Service: Load User Query Failed');
         }
 
+        $this->language = $this->data->language;
+        if ($this->language == '') {
+            $this->language = 'en-GB';
+        }
         $this->setApplications();
 
         $this->setGroups();
@@ -446,10 +459,6 @@ Class UserService
      * @return  array
      * @since   1.0
      * @throws  \RuntimeException
-     */
-
-    /**
-     * @return array
      */
     protected function setViewgroups()
     {

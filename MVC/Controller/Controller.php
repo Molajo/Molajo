@@ -607,7 +607,7 @@ class Controller
             $this->get('primary_prefix', 'a', 'model_registry')
         );
 
-        if ($this->get('model_registry_name') == 'ExtensioninstancesDatasource') {
+        if ($this->get('model_registry_name') == 'ExtensioninstancesDatasourceddd') {
         echo '<br /><br /><pre>';
         $this->get('model_registry_name');
         echo '<br /><br /><pre>';

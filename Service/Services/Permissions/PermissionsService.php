@@ -23,150 +23,163 @@ defined('NIAMBIE') or die;
 Class PermissionsService
 {
     /**
-     * Load various permissions data (list of actions, actions to permissions and controllers)
+     * Actions used to establish permissions
      *
-     * @return  null
-     * @since   1.0
-     * @throws  \Exception
+     *  [0]=> "none" [1]=> "login" [2]=> "create" [3]=> "read"
+     *  [4]=> "update" [5]=> "publish" [6]=> "delete" [7]=> "administer"
+     *
+     * @var    bool
+     * @since  1.0
      */
-    public function initialise()
+    protected $actions;
+
+    /**
+     * Action to Authorisation
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $action_to_authorisation;
+
+    /**
+     * Action to Controller
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $action_to_controller;
+
+    /**
+     * Tasks (Order up, Order down, Feature, etc.)
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $task;
+
+    /**
+     * Action to Authorisation ID
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $action_to_authorisation_id;
+
+    /**
+     * Filter Authorisation
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $filters;
+
+    /**
+     * User View Groups
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $user_view_groups;
+
+    /**
+     * User Groups
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $user_groups;
+
+    /**
+     * Disable Filter for Groups
+     *
+     * @var    bool
+     * @since  1.0
+     */
+    protected $disable_filter_for_groups;
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $property_array = array(
+        'actions',
+        'action_to_authorisation',
+        'action_to_controller',
+        'tasks',
+        'action_to_authorisation_id',
+        'filters',
+        'site_application',
+        'task_action',
+        'action_to_controller',
+        'user_view_groups',
+        'user_groups',
+        'disable_filter_for_groups'
+    );
+
+    /**
+     * Get language property
+     *
+     * @param   string  $key
+     * @param   string  $default
+     *
+     * @return  array|mixed|string
+     * @throws  \OutOfRangeException
+     * @since   1.0
+     */
+    public function get($key, $default = '')
     {
-        /** Permission Actions: Authenticate, Create, Read, Update, Publish, Delete */
-        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
-        $controller      = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Actions', 1);
+        $key = strtolower($key);
 
-        $items = $controller->getData(QUERY_OBJECT_LIST);
-
-        if ($items === false) {
-            throw new \RuntimeException ('Permissions: getActions Query failed.');
+        if ($key == 'site_application') {
+            return $this->verifySiteApplication();
         }
 
-        $permission_actions    = array();
-        $permission_action_ids = array();
-
-        $title                         = 'none';
-        $permission_actions[0]         = $title;
-        $permission_action_ids[$title] = 0;
-        foreach ($items as $item) {
-            $title                         = strtolower($item->title);
-            $permission_actions[$item->id] = $title;
-            $permission_action_ids[$title] = $item->id;
-        }
-        Services::Registry()->set('Permissions', 'actions', $permission_actions);
-
-        /** Verb Actions (Order Up, Order Down, Feature) to Permission Actions */
-        $actions = Services::Configuration()->getFile('Application', 'Actions');
-        if (count($actions) == 0) {
-            throw new \Exception('Permissions: Actions Table not found.');
+        if ($key == 'task_action') {
+            return $this->getTaskAction($default);
         }
 
-        $tasks                   = array();
-        $action_to_authorisation = array();
-        $action_to_controller    = array();
-
-        foreach ($actions->action as $t) {
-            $name                           = (string)$t['name'];
-            $tasks[]                        = $name;
-            $action_to_authorisation[$name] = (string)$t['authorisation'];
-            $action_to_controller[$name]    = (string)$t['controller'];
+        if ($key == 'action_to_controller') {
+            return $this->getTaskController($default);
         }
 
-        Services::Registry()->set('Permissions', 'action_to_authorisation', $action_to_authorisation);
-        Services::Registry()->set('Permissions', 'action_to_controller', $action_to_controller);
-        sort($tasks);
-        Services::Registry()->set('Permissions', 'tasks', $tasks);
+        if (in_array($key, $this->property_array)) {
 
-        /** Bridges the Verb Action (Order Up, Order Down) to the Permission Action (Read, Update) to the ID (1, 2, etc.) */
-        $action_to_authorisation_id = array();
-        foreach ($action_to_authorisation as $action => $authorisation) {
-            $action_to_authorisation_id[$action] = $permission_action_ids[$authorisation];
-        }
-        Services::Registry()->set('Permissions', 'action_to_authorisation_id', $action_to_authorisation_id);
+            if (isset($this->$key)) {
+            } else {
+                $this->$key = $default;
+            }
 
-        /** Not sure where else to place this */
-        $filtersFile = Services::Configuration()->getFile('Application', 'Filters');
-        if (count($filtersFile) == 0) {
-            throw new \Exception('Permissions: Filters Table not found.');
+            return $this->$key;
         }
 
-        $filters = array();
-        foreach ($filtersFile->filter as $f) {
-            $name      = (string)$f['name'];
-            $filters[] = $name;
-        }
-        sort($filters);
-        Services::Registry()->set('Permissions', 'filters', $filters);
-
-        return true;
+        throw new \OutOfRangeException
+        ('Permissions Service: attempting to get value for unknown property: ' . $key);
     }
 
     /**
-     * Check if the Site has permission to utilise this Application
+     * Set the value of the specified key
      *
-     * Usage:
-     * $results = Services::Permissions()->verifySiteApplication();
+     * @param   string  $key
+     * @param   mixed   $value
      *
-     * @param   mixed $application_id if valid, or false
-     *
-     * @return  boolean
+     * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
-    public function verifySiteApplication()
+    public function set($key, $value = null)
     {
-        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
-        $controller      = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'Siteapplications', 1);
+        $key = strtolower($key);
 
-        $controller->model->query->select($controller->model->db->qn('a.application_id'));
-        $controller->model->query->where($controller->model->db->qn('a.site_id') . ' = ' . (int)SITE_ID);
-        $controller->model->query->where($controller->model->db->qn('a.application_id') . ' = ' . (int)APPLICATION_ID);
+        if (in_array($key, $this->property_array)) {
+            $this->$key = $value;
 
-        return $controller->getData(QUERY_OBJECT_RESULT);
-    }
-
-    /**
-     * Using the Request Task (Verb Action, like Tag, or Order Up), retrieve the Permissions Action (ex. Update)
-     *
-     * Example usage:
-     * $request_action = Services::Permissions()->getTaskAction($task);
-     *
-     * @param   $task
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getTaskAction($task)
-    {
-        $temp = Services::Registry()->get('Permissions', 'action_to_authorisation');
-
-        if (isset($temp[$task])) {
-            return $temp[$task];
+            return $this->$key;
         }
 
-        throw new \Exception ('Route: Action/Authorisation not defined by Permission Registry');
-    }
-
-    /**
-     * Using the Request Task (Verb Action, like Tag, or Order Up), retrieve the Controller
-     *
-     * Example usage:
-     * $controller = Services::Permissions()->getTaskController($action);
-     *
-     * @param   $action
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getTaskController($action)
-    {
-        $temp = Services::Registry()->get('Permissions', 'action_to_controller');
-
-        if (isset($temp[$action])) {
-            return $temp[$action];
-        }
-
-        throw new \Exception ('Route: Action/Controller not defined by Permission Registry');
+        throw new \OutOfRangeException
+        ('Permissions Service: attempting to get value for unknown property: ' . $key);
     }
 
     /**
@@ -176,23 +189,23 @@ Class PermissionsService
      * Example usage:
      * $permissions = Services::Permissions()->verifyTaskList($actionsArray, $item->catalog_id);
      *
-     * @param   array   $actionlist
-     * @param   string  $catalog_id
+     * @param   array  $actionlist
+     * @param   int    $catalog_id
      *
-     * @return  boolean
+     * @return  array
      * @since   1.0
+     * @throws  \Exception
      */
     public function verifyTaskList($actionlist = array(), $catalog_id = 0)
     {
         if (count($actionlist) == 0) {
-            throw new \Exception('Permissions' . ': Empty Action List sent into verifyTasklist');
+            throw new \Exception('Permissions: Empty Action List sent into verifyTasklist');
         }
         if ($catalog_id == 0) {
-            throw new \Exception('Permissions' . ': No Catalog ID sent into verifyTaskList');
+            throw new \Exception('Permissions: No Catalog ID sent into verifyTaskList');
         }
 
         $actionPermissions = array();
-
         foreach ($actionlist as $action) {
             $actionPermissions[$action] = $this->verifyTask($action, $catalog_id);
         }
@@ -201,48 +214,107 @@ Class PermissionsService
     }
 
     /**
-     * Verify User Permissions for the Action and Catalog ID
+     * Check if the Site has permission to utilise this Application
      *
-     * Example usage:
-     *  $permissions = Services::Permissions()->verifyAction();
+     * Usage:
+     * $results = Services::Permissions()->get('site_application');
      *
      * @return  boolean
      * @since   1.0
      */
-    public function verifyAction()
+    protected function verifySiteApplication()
     {
-        if (in_array(
-            Services::Registry()->get('parameters', 'catalog_view_group_id'),
-            Services::User()->get('view_groups')
-        )
-        ) {
-            Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', true);
+        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
+        $controller      = new $controllerClass();
+        $controller->getModelRegistry('Datasource', 'Siteapplications', 1);
 
-        } else {
-            return Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', false);
+        $controller->model->query->
+            select($controller->model->db->qn('a.application_id'));
+        $controller->model->query->
+            where($controller->model->db->qn('a.site_id') . ' = ' . (int)SITE_ID);
+        $controller->model->query->
+            where($controller->model->db->qn('a.application_id') . ' = ' . (int)APPLICATION_ID);
+
+        return $controller->getData(QUERY_OBJECT_RESULT);
+    }
+
+    /**
+     * Using the Request Task (Verb Action, like Tag, or Order Up), retrieve the Permissions Action (ex. Update)
+     *
+     * Example usage:
+     *  $results = Services::Permissions()->get('task_action', $task);
+     *
+     * @param   string  $task
+     *
+     * @return  string
+     * @since   1.0
+     * @throws  \Exception
+     */
+    protected function getTaskAction($task)
+    {
+        if (isset($this->action_to_authorisation[$task])) {
+            return $this->action_to_authorisation[$task];
         }
 
-        if (Services::Registry()->get('parameters', 'request_action', ACTION_READ) == ACTION_READ
-            && Services::Registry()->get('parameters', 'status_authorised') === true
-        ) {
+        throw new \Exception ('Permissions: Task not defined by Permission Registry');
+    }
+
+    /**
+     * Using the Request Task (Verb Action, like Tag, or Order Up), retrieve the Controller
+     *
+     * Example usage:
+     *  $results = Services::Permissions()->get('action_to_controller', $action);
+     *
+     * @param   string  $action
+     *
+     * @return  string
+     * @since   1.0
+     * @throws  \Exception
+     */
+    protected function getTaskController($action)
+    {
+        if (isset($this->action_to_controller[$action])) {
+            return $this->action_to_controller[$action];
+        }
+
+        throw new \Exception ('Permissions: Action not defined by Permission Registry');
+    }
+
+    /**
+     * Verify User Permissions for the Action and Catalog ID
+     *
+     * Example usage:
+     *  $permissions = Services::Permissions()->verifyAction($view_group_id, $request_action, $catalog_id);
+     *
+     * @param   string  $view_group_id
+     * @param   string  $request_action
+     * @param   string  $catalog_id
+     *
+     * @return  bool
+     * @since   1.0
+     * @throws  \Exception
+     */
+    public function verifyAction($view_group_id, $request_action, $catalog_id)
+    {
+        $status_authorised = true;
+
+        if (in_array($view_group_id, $this->get('user_view_groups'))) {
+
+        } else {
+            $status_authorised = false;
+        }
+
+        if ($request_action == ACTION_READ) {
+
+        } elseif ($this->verifyTask($request_action, $catalog_id) === false) {
+            $status_authorised = false;
+        }
+
+        if ($status_authorised === true) {
             return true;
         }
 
-        $authorised = $this->verifyTask(
-            Services::Registry()->get('parameters', 'request_action'),
-            Services::Registry()->get('parameters', 'request_catalog_id')
-        );
-
-        Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', $authorised);
-
-        if (Services::Registry()->get('parameters', 'status_authorised') === true) {
-            return true;
-
-        } else {
-            Services::Error()->set(403);
-
-            return false;
-        }
+        return false;
     }
 
     /**
@@ -250,13 +322,14 @@ Class PermissionsService
      *      Useful for question "Can the logged on User Edit this Article (or content in this Resource)?"
      *
      * Example usage:
-     * Services::Permissions()->verifyTask($action, $catalog_id);
+     *  Services::Permissions()->verifyTask($action, $catalog_id);
      *
      * @param   string  $action
      * @param   string  $catalog_id
      *
      * @return  boolean
      * @since   1.0
+     * @throws  \Exception
      */
     public function verifyTask($action, $catalog_id)
     {
@@ -268,18 +341,21 @@ Class PermissionsService
         return true;
 
 //@todo hash store results for later reuse
-        $authorisationArray   = Services::Registry()->get('Permissions', 'action_to_authorisation');
-        $authorisationIdArray = Services::Registry()->get('Permissions', 'action_to_authorisation_id');
 
-        $action    = $authorisationArray[$action];
-        $action_id = $authorisationIdArray[$action];
+        $action_to_authorisation    = $this->get('action_to_authorisation');
+        $action_to_authorisation_id = $this->get('action_to_authorisation_id');
+
+        $action    = $action_to_authorisation[$action];
+        $action_id = $action_to_authorisation_id[$action];
 
         if (trim($action) == '' || (int)$action_id == 0 || trim($action) == '') {
-            throw new \Exception(PARAMETERS_LITERAL . ': Required value Action not provided for verifyTask method.');
+            throw new \Exception
+            ('Permission Services: Required value Action not provided for verifyTask method.');
         }
 
         if (trim($catalog_id) == '' || (int)$catalog_id == 0 || trim($catalog_id) == '') {
-            throw new \Exception(PARAMETERS_LITERAL . ': Required value Catalog ID not provided for verifyTask method.');
+            throw new \Exception
+            ('Permission Services: Required value Catalog ID not provided for verifyTask method.');
         }
 
         $action_id = 3;
@@ -299,7 +375,7 @@ Class PermissionsService
         );
         $controller->model->query->where(
             $controller->model->db->qn('a.group_id')
-                . ' IN (' . implode(', ', Services::User()->get('groups')) . ')'
+                . ' IN (' . implode(', ', $this->get('user_groups')) . ')'
         );
 
         $count = $controller->getData(QUERY_OBJECT_RESULT);
@@ -314,14 +390,12 @@ Class PermissionsService
      * Verifies permission for a user to login to a specific application
      *
      * Example usage:
-     * Services::Permissions()->verifyLogin('login', $catalog_id);
+     *  Services::Permissions()->verifyLogin($user_id);
      *
-     * @param         $key
-     * @param         $action
-     *
-     * @param   null  $catalog
+     * @param   int  $user_id
      *
      * @return  bool
+     * @since   1.0
      */
     public function verifyLogin($user_id)
     {
@@ -359,15 +433,14 @@ Class PermissionsService
      *     )
      * );
      *
-     * @param   array $query
-     * @param   array $db
-     * @param   array $parameters
-     * @param   array $view_groups
+     * @param   array  $query
+     * @param   array  $db
+     * @param   array  $parameters
      *
      * @return  array
      * @since   1.0
      */
-    public function setQueryViewAccess($query = array(), $db = array(), $parameters = array(), $view_groups = array())
+    public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
     {
         if ($parameters['select'] === true) {
             $query->select(
@@ -417,7 +490,7 @@ Class PermissionsService
                 APPLICATION_ID
         );
 
-        $vg = implode(',', array_unique($view_groups));
+        $vg = implode(',', array_unique($this->get('user_view_groups')));
 
         $query->where(
             $db->qn($parameters['catalog_prefix']) .
@@ -441,17 +514,17 @@ Class PermissionsService
      * Example usage:
      * $userHTMLFilter = Services::Permissions()->setHTMLFilter();
      *
+     *  True => disable filter
+     *
+     *  False => Filter is not required
+     *
      * @return  bool
      * @since   1.0
      */
     public function setHTMLFilter()
     {
-        $groups     = Services::Application()->get('user_disable_filter_for_groups');
-        $groupArray = explode(',', $groups);
-        $userGroups = Services::User()->get('groups');
-
-        foreach ($groupArray as $single) {
-            if (in_array($single, $userGroups)) {
+        foreach ($this->get('disable_filter_for_groups') as $single) {
+            if (in_array($single, $this->get('user_groups'))) {
                 return false;
                 break;
             }

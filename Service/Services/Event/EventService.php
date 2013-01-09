@@ -419,10 +419,10 @@ echo ' Event Sechedule: ' . $event  . '<br />';
      * The application will find and register overrides at the point in time the extension is used in rendering.
      *
      * Usage:
-     * Services::Event()->registerPlugin('Molajo\\Plugin');
+     * Services::Event()->registerPlugin('ExamplePlugin', 'Molajo\\Plugin\\Example');
      *
-     * @param   string  $folder
-     * @param   string  $namespace
+     * @param   string  $plugin_name
+     * @param   string  $plugin_class_name
      *
      * @return  bool|EventService
      * @throws  \Exception
