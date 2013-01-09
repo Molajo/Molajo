@@ -739,7 +739,7 @@ Class FormService
                         $temp_row['fieldset_description'] = $this->fieldset_description;
 
                         //@todo defaults
-                        $temp_row['application_default'] = Services::Registry()->get('Configuration', $key);
+                        $temp_row['application_default'] = Services::Application()->get($key);
 
                         $input_fields[] = $temp_row;
                     }

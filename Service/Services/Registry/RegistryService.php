@@ -155,7 +155,6 @@ Class RegistryService
     Services::Registry()->get('Unit', '*');
      */
 
-
     /**
      * Lock registry from update.
      *
@@ -166,6 +165,7 @@ Class RegistryService
      *
      * @return  bool
      * @since   1.0
+     * @throws  \RuntimeException
      */
     public function lock($namespace)
     {
@@ -173,7 +173,8 @@ Class RegistryService
 
         if ($this->exists($namespace)) {
         } else {
-            throw new \RuntimeException ('Registry: Namespace in Lock Request does not exist.');
+            throw new \RuntimeException
+            ('Registry Service: Namespace in Lock Request does not exist.');
         }
 
         $this->registryLocks[$namespace] = true;
@@ -235,6 +236,7 @@ Class RegistryService
      *
      * @return  mixed|bool|array
      * @since   1.0
+     * @throws  \RuntimeException
      * @throws  \Exception
      */
     public function createRegistry($namespace)
@@ -245,14 +247,15 @@ Class RegistryService
 
             if (isset($this->registryKeys[$namespace])) {
                 throw new \RuntimeException
-                ('Registry: Cannot create Namespace ' . $namespace . ' because it already exists.');
+                ('Registry Service: Cannot create Namespace ' . $namespace . ' because it already exists.');
             } else {
                 return $this->registry[$namespace];
             }
         }
 
         if ($namespace == 'db' || $namespace == '*') {
-            throw new \Exception ('Registry: Namespace ' . $namespace . ' is a reserved word.');
+            throw new \Exception
+            ('Registry Service: Namespace ' . $namespace . ' is a reserved word.');
         }
 
         if (isset($this->registryKeys[$namespace])) {
@@ -267,15 +270,19 @@ Class RegistryService
         if ($this->exists('Profiler')) {
         } else {
 
-            if (Services::Registry()->get('Profiler', 'on') === true) {
+            if ($this->get('Profiler', 'on') === true) {
 
                 if ($this->profiler_available === false) {
                     $this->profiler_available = true;
                     foreach ($this->registryKeys as $ns) {
-                        Services::Profiler()->set('message', 'Registry: Create Namespace ' . $ns, 'Registry');
+                        Services::Profiler()->set('message', 'Registry Service: Create Namespace ' . $ns, 'Registry');
                     }
                 } else {
-                    Services::Profiler()->set('message', 'Registry: Create Namespace ' . $namespace, 'Registry');
+                    Services::Profiler()->set(
+                        'message',
+                        'Registry Service: Create Namespace ' . $namespace,
+                        'Registry'
+                    );
                 }
             }
         }
@@ -446,27 +453,29 @@ Class RegistryService
      * @param   boolean  $match     - used as a security precaution to ensure only named parameters
      *                              are updated via <include /> statement overrides
      *
-     * @return  Registry
+     * @return  void|bool|RegistryService
      * @since   1.0
+     * @throws  \RuntimeException
      */
     public function set($namespace, $key, $value = null, $match = false)
     {
         $namespace = $this->editNamespace($namespace);
 
         if ($this->checkLock($namespace)) {
-            throw new \RuntimeException ('Registry: Namespace is locked. Updates are not allowed.');
+            throw new \RuntimeException
+            ('Registry Service: Namespace is locked. Updates are not allowed.');
         }
 
         $key = $this->editNamespaceKey($namespace, $key);
 
         if ($namespace == '') {
-            throw new \RuntimeException ('Registry: Namespace is required for Set.');
+            throw new \RuntimeException
+            ('Registry Service: Namespace is required for Set.');
         }
-        if ($key == '') {
-            // throw new \RuntimeException ('Registry: Key is required for Set. Namespace: ' . $namespace);
-            echo 'Registry: Key is required for Set. Namespace: ' . $namespace;
 
-            return;
+        if ($key == '') {
+            throw new \RuntimeException
+            ('Registry Service: Key is required for Set. Namespace: ' . $namespace);
         }
 
         /** Match requirement for security to ensure only named parameters are updated */
@@ -504,7 +513,7 @@ Class RegistryService
      * @param   string  $target_registry
      * @param   null    $filter
      *
-     * @return  RegistryService
+     * @return  void|RegistryService
      * @since   1.0
      * @throws  \RuntimeException
      */
@@ -515,16 +524,13 @@ Class RegistryService
 
         if ($this->checkLock($target_registry)) {
             throw new \RuntimeException
-            ('Registry: Target Namespace: ' . $target_registry . ' is locked. May not copy into it.');
+            ('Registry Service: Target Namespace: ' . $target_registry . ' is locked. May not copy into it.');
         }
 
         if ($this->exists($source_registry)) {
         } else {
-            echo $source_registry . ' does not exist but was requested during a copy ' . '<br /> ';
-
-            return;
             throw new \RuntimeException
-            ('Registry: Namespace ' . $source_registry . ' requested as source of copy does not exist.');
+            ('Registry Service: Namespace ' . $source_registry . ' requested as source of copy does not exist.');
         }
 
         $copy = $this->getRegistry($source_registry);
@@ -549,7 +555,7 @@ Class RegistryService
             $exactMatch = true;
         }
 
-        if (count($copy > 0)) {
+        if (count($copy) > 0) {
 
             foreach ($copy as $key => $value) {
                 $use  = false;
@@ -591,10 +597,10 @@ Class RegistryService
      *
      * @param   string  $source_registry
      * @param   string  $target_registry
-     * @param   string  $filter - merge for matching keys
-     * @param   string  $remove_from_source
+     * @param   bool    $filter - merge for matching keys
+     * @param   int     $remove_from_source
      *
-     * @return  bool
+     * @return  array|bool
      * @since   1.0
      * @throws  \RuntimeException
      */
@@ -606,26 +612,26 @@ Class RegistryService
         if ($this->exists($source_registry)) {
         } else {
             throw new \RuntimeException
-            ('Registry: Namespace ' . $source_registry . ' requested as a source for merging does not exist.');
+            ('Registry Service: Namespace ' . $source_registry . ' requested as a source for merging does not exist.');
         }
 
         if ($this->exists($target_registry)) {
         } else {
             throw new \RuntimeException
-            ('Registry: Namespace ' . $target_registry . ' does not exist, was requested as target of merge.');
+            ('Registry Service: Namespace ' . $target_registry . ' does not exist, was requested as target of merge.');
         }
 
         if ($remove_from_source == 1) {
             if ($this->checkLock($source_registry)) {
                 throw new \RuntimeException
-                ('Registry: Source Namespace: ' . $target_registry . ' for Merge is locked. May not remove entries.');
+                ('Registry Service: Source Namespace: ' . $target_registry . ' for Merge is locked. May not remove entries.');
             }
         }
 
         $target_registry = $this->editNamespace($target_registry);
         if ($this->checkLock($target_registry)) {
             throw new \RuntimeException
-            ('Registry: Target Namespace: ' . $target_registry . ' for Merge is locked. May not add entries.');
+            ('Registry Service: Target Namespace: ' . $target_registry . ' for Merge is locked. May not add entries.');
         }
 
 
@@ -682,9 +688,9 @@ Class RegistryService
      *
      * @param   namespace
      *
-     * @return  mixed
-     * @since   1.0
      * @return  RegistryService
+     * @throws  \RuntimeException
+     * @since   1.0
      */
     public function sort($namespace)
     {
@@ -693,7 +699,7 @@ Class RegistryService
         if ($this->exists($namespace)) {
         } else {
             throw new \RuntimeException
-            ('Registry: Cannot sort Namespace ' . $namespace . ' since it does not exist.');
+            ('Registry Service: Cannot sort Namespace ' . $namespace . ' since it does not exist.');
         }
 
         $sort = $this->getRegistry($namespace);
@@ -713,6 +719,8 @@ Class RegistryService
      * @param   string  $key
      *
      * @return  object
+     * @return  array|RegistryService
+     * @throws  \RuntimeException
      * @since   1.0
      */
     public function delete($namespace, $key = null)
@@ -726,7 +734,7 @@ Class RegistryService
 
         if ($this->checkLock($namespace)) {
             throw new \RuntimeException
-            ('Registry: Cannot delete an entry from Namespace: ' . $namespace . ' since it has been locked.');
+            ('Registry Service: Cannot delete an entry from Namespace: ' . $namespace . ' since it has been locked.');
         }
 
         $key = strtolower($key);
@@ -742,7 +750,7 @@ Class RegistryService
         }
 
         $copy = $this->getRegistry($namespace);
-        if (count($copy > 0)) {
+        if (count($copy) > 0) {
         } else {
             return $this; //nothing to delete
         }
@@ -837,8 +845,9 @@ Class RegistryService
      * @param   $namespace
      * @param   $new_namespace
      *
-     * @return  Registry
+     * @return  RegistryService
      * @since   1.0
+     * @throws  \RuntimeException
      */
     public function rename($namespace, $new_namespace)
     {
@@ -847,18 +856,18 @@ Class RegistryService
         if ($this->exists($namespace)) {
         } else {
             throw new \RuntimeException
-            ('Registry: Cannot rename Namespace ' . $namespace . ' since it does not exist.');
+            ('Registry Service: Cannot rename Namespace ' . $namespace . ' since it does not exist.');
         }
 
         if ($this->checkLock($namespace)) {
             throw new \RuntimeException
-            ('Registry: Cannot rename Namespace: ' . $namespace . ' since it has been locked.');
+            ('Registry Service: Cannot rename Namespace: ' . $namespace . ' since it has been locked.');
         }
 
         if ($this->exists($new_namespace)) {
         } else {
             throw new \RuntimeException
-            ('Registry: Cannot rename ' . $namespace . ' to an existing registry ' . $new_namespace);
+            ('Registry Service: Cannot rename ' . $namespace . ' to an existing registry ' . $new_namespace);
         }
 
         $existing = $this->getRegistry($namespace);
@@ -915,9 +924,9 @@ Class RegistryService
      * Services::Registry()->loadArray('Namespace', $array);
      *
      * @param   string   $namespace  name of registry to use or create
-     * @param   boolean  $array      key and value pairs to load
+     * @param   array    $array      key and value pairs to load
      *
-     * @return  array
+     * @return  RegistryService
      * @since   1.0
      * @throws  \RuntimeException
      */
@@ -926,14 +935,14 @@ Class RegistryService
         if (is_array($array) && count($array) > 0) {
         } else {
             throw new \RuntimeException
-            ('Registry: Empty or missing input array provided to loadArray.');
+            ('Registry Service: Empty or missing input array provided to loadArray.');
         }
 
         $namespace = $this->editNamespace($namespace);
 
         //if ($this->exists($namespace)) {
         //    throw new \RuntimeException
-        //    ('Registry: Namespace ' . $namespace . ' already exists. Cannot use existing namespace with loadArray.');
+        //    ('Registry Service: Namespace ' . $namespace . ' already exists. Cannot use existing namespace with loadArray.');
         // }
 
         $this->getRegistry($namespace);
@@ -1007,7 +1016,7 @@ Class RegistryService
      * @param   string  $key           Key of the named pair
      * @param   string  $query_object  Result, Item, or List
      *
-     * @return  array
+     * @return  array|bool|mixed
      * @since   1.0
      */
     public function getData($registry, $key = null, $query_object = false)
@@ -1065,7 +1074,7 @@ Class RegistryService
 
         } else {
             throw new \RuntimeException
-            ('Registry: Namespace: is not a string.');
+            ('Registry Service: Namespace: is not a string.');
         }
 
         return $namespace;
@@ -1093,7 +1102,7 @@ Class RegistryService
             var_dump($key);
             echo '</pre>';
             throw new \RuntimeException
-            ('Registry: Key associated with Namespace: ' . $namespace . ' is not a string.');
+            ('Registry Service: Key associated with Namespace: ' . $namespace . ' is not a string.');
         }
 
         return $key;

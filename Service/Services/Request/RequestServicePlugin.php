@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Request;
 
 use Molajo\Service\Services;
-use Molajo\Plugin\Plugin\Plugin;
+use Molajo\Service\ServicesPlugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class RequestServicePlugin extends Plugin
+Class RequestServicePlugin extends ServicesPlugin
 {
     /**
      * On After Startup Event
@@ -31,18 +31,18 @@ Class RequestServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterServiceStartup()
+    public function onAfterServiceInitialise()
     {
-        $this->frontcontroller_class
-            ->set('request_method', $this->service_class->get('method', 'GET'));
-        $this->frontcontroller_class
-            ->set('request_mimetype', $this->service_class->get('mimetype', 'text/html'));
-        $this->frontcontroller_class
-            ->set('request_post_variables', $this->service_class->get('post_variables', array()));
-        $this->frontcontroller_class
-            ->set('request_using_ssl', $this->service_class->get('is_secure'));
-        $this->frontcontroller_class
-            ->set('request_base_url', $this->service_class->get('base_url'));
+        $this->frontcontroller_instance
+            ->set('request_method', $this->service_class_instance->get('method', 'GET'));
+        $this->frontcontroller_instance
+            ->set('request_mimetype', $this->service_class_instance->get('mimetype', 'text/html'));
+        $this->frontcontroller_instance
+            ->set('request_post_variables', $this->service_class_instance->get('post_variables', array()));
+        $this->frontcontroller_instance
+            ->set('request_using_ssl', $this->service_class_instance->get('is_secure'));
+        $this->frontcontroller_instance
+            ->set('request_base_url', $this->service_class_instance->get('base_url'));
 
         return;
     }

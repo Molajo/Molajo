@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Profiler;
 
 use Molajo\Service\Services;
-use Molajo\Plugin\Plugin\Plugin;
+use Molajo\Service\ServicesPlugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class ProfilerServicePlugin extends Plugin
+Class ProfilerServicePlugin extends ServicesPlugin
 {
     /**
      * on Before Startup Event
@@ -31,33 +31,34 @@ Class ProfilerServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeServiceStartup()
+    public function onBeforeServiceInitialise()
     {
         if ((int)Services::Application()->get('profiler_service') == 1) {
-            $this->service_class->set('on', 1);
+            $this->service_class_instance->set('on', 1);
         } else {
-            $this->service_class->set('on', 0);
+            $this->service_class_instance->set('on', 0);
         }
 
-        $phase_array_list = $this->service_class->get('phase_array_list', array());
+        $phase_array_list = $this->service_class_instance->get('phase_array_list', array());
 
-        $this->service_class->set(
+        $this->service_class_instance->set(
             'profiler_start_with',
             Services::Application()->get('profiler_start_with', 'Initialise')
         );
 
-        if (in_array($this->service_class->get('profiler_start_with'), $phase_array_list)) {
+        if (in_array($this->service_class_instance->get('profiler_start_with'), $phase_array_list)) {
         } else {
-            $this->service_class->set('profiler_start_with', 'Initialise');
+            $this->service_class_instance->set('profiler_start_with', 'Initialise');
         }
 
-        $this->service_class->set('profiler_end_with',
+        $this->service_class_instance->set(
+            'profiler_end_with',
             Services::Application()->get('profiler_end_with', 'Response')
         );
 
-        if (in_array($this->service_class->get('profiler_end_with'), $phase_array_list)) {
+        if (in_array($this->service_class_instance->get('profiler_end_with'), $phase_array_list)) {
         } else {
-            $this->service_class->set('profiler_end_with', 'Response');
+            $this->service_class_instance->set('profiler_end_with', 'Response');
         }
 
         $outputOptions = array(
@@ -84,12 +85,12 @@ Class ProfilerServicePlugin extends Plugin
                 $profiler_output_options[] = $item;
             }
         }
-        $this->service_class->set('profiler_output_options', $profiler_output_options);
+        $this->service_class_instance->set('profiler_output_options', $profiler_output_options);
 
-        $this->service_class->set('verbose', (int)Services::Application()->get('profiler_verbose', 0));
-        if ($this->service_class->get('verbose', 1)) {
+        $this->service_class_instance->set('verbose', (int)Services::Application()->get('profiler_verbose', 0));
+        if ($this->service_class_instance->get('verbose', 1)) {
         } else {
-            $this->service_class->set('verbose', 0);
+            $this->service_class_instance->set('verbose', 0);
         }
 
     }
@@ -102,9 +103,9 @@ Class ProfilerServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterServiceStartup()
+    public function onAfterServiceInitialise()
     {
-        if ($this->service_class->get('on') == 0) {
+        if ($this->service_class_instance->get('on') == 0) {
             define('PROFILER_ON', false);
             Services::Registry()->set('Profiler', 'on', false);
         } else {

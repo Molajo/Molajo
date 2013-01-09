@@ -8,8 +8,6 @@
  */
 namespace Molajo\Service\Services\Date;
 
-use Molajo\Service\Services;
-
 defined('NIAMBIE') or die;
 
 /**
@@ -22,14 +20,6 @@ defined('NIAMBIE') or die;
  */
 Class DateService
 {
-    /**
-     * Date Class
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $date_class;
-
     /**
      * Translation Strings for Dates
      *
@@ -47,20 +37,20 @@ Class DateService
     protected $locale;
 
     /**
-     * Offset
+     * Offset for User Time zone
      *
      * @var    string
      * @since  1.0
      */
-    protected $offset;
+    protected $offset_user;
 
     /**
-     * Language UTC Offset
+     * Offset for Server Time zone
      *
      * @var    string
      * @since  1.0
      */
-    protected $language_utc_offset;
+    protected $offset_server;
 
     /**
      * List of Properties
@@ -72,8 +62,8 @@ Class DateService
         'date_class',
         'date_translate_array',
         'locale',
-        'offset',
-        'language_utc_offset'
+        'offset_user',
+        'offset_server'
     );
 
     /**
@@ -140,26 +130,43 @@ Class DateService
     /**
      * Prepares Date object
      *
-     * @param   mixed   $time     The initial time for the Date object
-     * @param   mixed   $tzOffset The timezone offset.
+     * @param   string  $time               The initial time for the Date object, defaults to 'now'
+     * @param   null    $time_zone_offset   The timezone offset
+     * @param   string  $server_or_user_utc
+     * @param   int     $date_type          1: standard 2: unix 3: SQL
      *
-     * @return  object  JDate
+     * @return  \DateTime|int|string
      * @since   1.0
      */
-    public function getDate($time = 'now', $tzOffset = null)
-    {
+    public function getDate(
+        $time = 'now',
+        $time_zone_offset = null,
+        $server_or_user_utc = 'user',
+        $date_type = 0
+    ) {
         if ($time == '') {
             $time = 'now';
         }
 
-        $class = str_replace('-', '_', $this->get('locale')) . 'Date';
-
-        if (class_exists($class)) {
-        } else {
-            $class = $this->get('date_class');
+        if ($time_zone_offset === null) {
+            if ($server_or_user_utc == 'server') {
+                $time_zone_offset = $this->get('offset_server');
+            } else {
+                $time_zone_offset = $this->get('offset_user');
+            }
         }
 
-        return new $class($time, $tzOffset);
+        $date_time = new \DateTime($time, $time_zone_offset);
+
+        if ($date_type == 2) {
+            $date = strtotime($date_time->format('d-m-YY'));
+        } elseif ($date_type == 3) {
+            $date = $date_time->format('Y-m-d H:i:s');
+        } else {
+            $date = $date_time;
+        }
+
+        return $date;
     }
 
     /**
@@ -221,7 +228,7 @@ Class DateService
         $source_date = new \Datetime ($source);
 
         if ($compare === null) {
-            $compare_to_date = new \DateTime('now');
+            $compare_to_date = $this->getDate('now', null, 'user', 0);
         } else {
             $compare_to_date = $compare;
         }
@@ -436,65 +443,11 @@ Class DateService
     }
 
     /**
-     * getTimezoneDate - retrieves a date in the server or user timezone
-     *
-     * @param  string   $utc_date
-     * @param  string   $server_or_user_utc
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function getTimezoneDate($utc_date, $server_or_user_utc = 'user')
-    {
-        if (intval($utc_date)) {
-        } else {
-            return false;
-        }
-
-        $timezone = $this->getTimezone($server_or_user_utc);
-
-        $date = $this->getDate($utc_date, 'UTC');
-
-        $date->setTimezone(new \DateTimeZone($timezone));
-
-        $date_object = $date->toSql(true);
-
-        return $date_object;
-    }
-
-    /**
-     * Get the Time Zone of the user or server
-     *
-     * @param   string $server_or_user_utc
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getTimezone($server_or_user_utc = 'user')
-    {
-        $offset = '';
-
-        if ($server_or_user_utc == 'server') {
-            $offset = '';
-        } else {
-            $offset = $this->get('offset');
-        }
-        if ($offset == '') {
-            $offset = $this->get('language_utc_offset');
-        }
-        if ($offset == '') {
-            $offset = 'UTC';
-        }
-
-        return $offset;
-    }
-
-    /**
      * translatePrettyDate
      *
-     * @param   $numeric_value
-     * @param   $singular_literal
-     * @param   $plural_literal
+     * @param   integer  $numeric_value
+     * @param   string   $singular_literal
+     * @param   string   $plural_literal
      *
      * @return  mixed
      * @since   1.0

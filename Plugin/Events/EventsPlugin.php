@@ -48,16 +48,16 @@ class EventsPlugin extends Plugin
             'onAfterParse',
             'onAfterExecute',
             'onAfterResponse',
-            'onBeforecreate',
-            'onAftercreate',
-            'onBeforeupdate',
-            'onAfterupdate',
-            'onBeforedelete',
-            'onAfterdelete',
-            'onAfterlogin',
-            'onBeforelogin',
-            'onAfterlogout',
-            'onBeforelogout'
+            'onBeforeCreate',
+            'onAfterCreate',
+            'onBeforeUpdate',
+            'onAfterUpdate',
+            'onBeforDdelete',
+            'onAfterDelete',
+            'onAfterLogin',
+            'onBeforeLogin',
+            'onAfterLogout',
+            'onBeforeLogout'
         );
 
         foreach (Services::Events()->get('Events') as $e) {

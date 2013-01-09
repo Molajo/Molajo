@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Language;
 
 use Molajo\Service\Services;
-use Molajo\Plugin\Plugin\Plugin;
+use Molajo\Service\ServicesPlugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class LanguageServicePlugin extends Plugin
+Class LanguageServicePlugin extends ServicesPlugin
 {
     /**
      * on Before Startup Event
@@ -31,7 +31,7 @@ Class LanguageServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeServiceStartup()
+    public function onBeforeServiceInitialise()
     {
         return;
     }
@@ -44,15 +44,15 @@ Class LanguageServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterServiceStartup()
+    public function onAfterServiceInitialise()
     {
-        $this->service_class->set('user_language',
-            Services::Registry()->get('User', 'language'));
+        $this->service_class_instance->set('user_language',
+            Services::User()->get('language'));
 
-        $this->service_class->set('default_language',
+        $this->service_class_instance->set('default_language',
             Services::Application()->get('language'));
 
-        $this->service_class->set('profile_missing_strings',
+        $this->service_class_instance->set('profile_missing_strings',
             Services::Application()->get('profiler_collect_missing_language_strings'));
 
         return;
@@ -73,8 +73,8 @@ Class LanguageServicePlugin extends Plugin
             return;
         }
 
-        $this->service_class->set('parameters', Services::Registry()->getArray('ApplicationDatasourceParameters'));
-        $this->service_class->set('metadata', Services::Registry()->getArray('ApplicationDatasourceMetadata'));
+        $this->service_class_instance->set('parameters', Services::Registry()->getArray('ApplicationDatasourceParameters'));
+        $this->service_class_instance->set('metadata', Services::Registry()->getArray('ApplicationDatasourceMetadata'));
 
         return;
     }

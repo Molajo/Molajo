@@ -55,7 +55,7 @@ Class SiteService
      * @var    object
      * @since  1.0
      */
-    protected $custom_defines = null;
+    protected $custom_defines = array();
 
     /**
      * List of Properties
@@ -71,18 +71,6 @@ Class SiteService
     );
 
     /**
-     * Initialise
-     *
-     * return  null
-     *
-     * @since  1.0
-     */
-    public function initialise()
-    {
-        return;
-    }
-
-    /**
      * Get the current value (or default) of the specified key
      *
      * @param   string  $key
@@ -90,6 +78,7 @@ Class SiteService
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function get($key = null, $default = null)
     {
@@ -114,6 +103,7 @@ Class SiteService
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value = null)
     {
@@ -174,6 +164,7 @@ Class SiteService
      *
      * @return  void
      * @since   1.0
+     * @throws  \RuntimeException
      */
     public function identifySite()
     {

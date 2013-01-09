@@ -49,12 +49,12 @@ Class MessageIncluder extends Includer
         Services::Registry()->set(
             'include',
             'template_view_id',
-            Services::Registry()->get('Configuration', 'message_template_view_id')
+            Services::Application()->get('message_template_view_id')
         );
         Services::Registry()->set(
             'include',
             'wrap_view_id',
-            Services::Registry()->get('Configuration', 'message_wrap_view_id')
+            Services::Application()->get('message_wrap_view_id')
         );
 
         Services::Registry()->set('include', 'criteria_display_view_on_no_results', 0);

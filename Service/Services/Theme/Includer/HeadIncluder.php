@@ -63,7 +63,7 @@ Class HeadIncluder extends Includer
                 Services::Registry()->set(
                     'include',
                     'template_view_id',
-                    Services::Registry()->get('Configuration', 'defer_template_view_id')
+                    Services::Application()->get('defer_template_view_id')
                 );
             }
 
@@ -71,7 +71,7 @@ Class HeadIncluder extends Includer
                 Services::Registry()->set(
                     'include',
                     'wrap_view_id',
-                    Services::Registry()->get('Configuration', 'defer_wrap_view_id')
+                    Services::Application()->get('defer_wrap_view_id')
                 );
             }
 
@@ -80,14 +80,14 @@ Class HeadIncluder extends Includer
                 Services::Registry()->set(
                     'include',
                     'template_view_id',
-                    Services::Registry()->get('Configuration', 'head_template_view_id')
+                    Services::Application()->get('head_template_view_id')
                 );
             }
             if ((int)Services::Registry()->get('include', 'wrap_view_id', 0) == 0) {
                 Services::Registry()->set(
                     'include',
                     'wrap_view_id',
-                    Services::Registry()->get('Configuration', 'head_wrap_view_id')
+                    Services::Application()->get('head_wrap_view_id')
                 );
             }
         }

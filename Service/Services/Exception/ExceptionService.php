@@ -1,21 +1,28 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Exception Service
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Exception;
-
-use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;
 
 /**
- * Exception
+ * Exception Service
  *
- * @package     Niambie
- * @subpackage  Service
- * @since       1.0
+ * In the FrontController
+ *  - Initialise uses set_exception_handler to set the exception_handler method as the Exception Handler.
+ *  - Initialise uses set_error_handler to set the error_handler method to handle PHP errors.
+ *  - error_handler method throws an ErrorException, passing those errors into the exception_handler method
+ *  - exception handler instantiates this class, passing in the Exception message, code and Exception
+ *
+ * @author     Amy Stephen
+ * @license    MIT
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @since      1.0
  */
 Class ExceptionService extends \Exception
 {
@@ -24,9 +31,8 @@ Class ExceptionService extends \Exception
      *
      * @param   string      $message
      * @param   int         $code
-     * @param   \Exception  $this
+     * @param   \Exception  $e
      *
-     * @return  void
      * @since   1.0
      */
     public function __construct($message, $code, \Exception $e)
@@ -36,6 +42,14 @@ Class ExceptionService extends \Exception
 
     /**
      * Format Custom Message
+     *
+     * @param   null  $title
+     * @param   null  $message
+     * @param   null  $code
+     * @param   int   $display_file
+     * @param   int   $display_line
+     * @param   int   $display_stack_trace
+     * @param   int   $terminate
      *
      * @return  string
      * @since   1.0

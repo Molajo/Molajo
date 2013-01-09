@@ -89,7 +89,7 @@ class PagetypegridPlugin extends Plugin
                 );
                 $temp_row->action = $button;
 
-                if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+                if (Services::Application()->get('url_sef', 1) == 1) {
                     $temp_row->link = $url . '/' . $temp_row->action;
                 } else {
                     $temp_row->link = $url . '&action=' . $temp_row->action;
@@ -105,7 +105,7 @@ class PagetypegridPlugin extends Plugin
             $temp_row->name   = Services::Language()->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
             $temp_row->action = 'search';
 
-            if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+            if (Services::Application()->get('url_sef', 1) == 1) {
                 $temp_row->link = $url . '/' . $temp_row->action;
             } else {
                 $temp_row->link = $url . '&action=' . $temp_row->action;

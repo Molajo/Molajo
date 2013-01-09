@@ -8,8 +8,6 @@
  */
 namespace Molajo\Service\Services\Asset;
 
-use Molajo\Service\Services;
-
 defined('NIAMBIE') or die;
 
 /**

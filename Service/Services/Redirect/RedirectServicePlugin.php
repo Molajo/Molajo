@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Redirect;
 
 use Molajo\Service\Services;
-use Molajo\Plugin\Plugin\Plugin;
+use Molajo\Service\ServicesPlugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class RedirectServicePlugin extends Plugin
+Class RedirectServicePlugin extends ServicesPlugin
 {
     /**
      * on Before Startup Event
@@ -31,7 +31,7 @@ Class RedirectServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeServiceStartup()
+    public function onBeforeServiceInitialise()
     {
 
     }
@@ -44,7 +44,7 @@ Class RedirectServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterServiceStartup()
+    public function onAfterServiceInitialise()
     {
 
     }

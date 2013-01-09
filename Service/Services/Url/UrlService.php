@@ -32,11 +32,11 @@ Class UrlService
      */
     public function get($catalog_type_id = null, $source_id = null, $catalog_id = null)
     {
-        if ($catalog_id == Services::Registry()->get('Configuration', 'application_home_catalog_id', 0)) {
+        if ($catalog_id == Services::Application()->get('application_home_catalog_id', 0)) {
             return '';
         }
 
-        if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+        if (Services::Application()->get('url_sef', 1) == 1) {
 
             $controllerClass = CONTROLLER_CLASS_NAMESPACE;
             $controller      = new $controllerClass();
@@ -211,10 +211,10 @@ Class UrlService
     ) {
 
         if ((int)$size == 0) {
-            $size   = Services::Registry()->get('Configuration', 'gravatar_size', 80);
-            $type   = Services::Registry()->get('Configuration', 'gravatar_type', 'mm');
-            $rating = Services::Registry()->get('Configuration', 'gravatar_rating', 'pg');
-            $image  = Services::Registry()->get('Configuration', 'gravatar_image', 0);
+            $size   = Services::Application()->get('gravatar_size', 80);
+            $type   = Services::Application()->get('gravatar_type', 'mm');
+            $rating = Services::Application()->get('gravatar_rating', 'pg');
+            $image  = Services::Application()->get('gravatar_image', 0);
         }
 
         /**

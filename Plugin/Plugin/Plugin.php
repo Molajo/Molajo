@@ -1,6 +1,6 @@
 <?php
 /**
- * Application Frontend Controller
+ * Plugin
  *
  * @package      Niambie
  * @license      MIT
@@ -34,20 +34,28 @@ defined('NIAMBIE') or die;
 class Plugin
 {
     /**
-     * Plugin currently activated
+     * Front controller Instance
      *
-     * @var    string
+     * @var    object
      * @since  1.0
      */
-    protected $plugin_class;
+    protected $frontcontroller_instance;
 
     /**
-     * Event current scheduled
+     * Event method current scheduled
      *
      * @var    string
      * @since  1.0
      */
     protected $plugin_event;
+
+    /**
+     * Name of Plugin currently activated
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $plugin_class_name;
 
     /**
      * Instance of Model
@@ -60,14 +68,6 @@ class Plugin
     protected $model;
 
     /**
-     * Build from Model Registry
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $model_registry_name;
-
-    /**
      * Instance of Model Properties from Controller/Model
      *
      * Access to data like table_name, primary_key, get_customfields, data_object, fields, customfields
@@ -76,6 +76,14 @@ class Plugin
      * @since  1.0
      */
     protected $model_registry;
+
+    /**
+     * Build from Model Registry
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $model_registry_name;
 
     /**
      * Parameters set by the Includer and used in the MVC to render output or process data
@@ -123,7 +131,7 @@ class Plugin
      * @var    object
      * @since  1.0
      */
-    protected $class_array;
+    protected $class_array = array();
 
     /**
      * Include statements to be processed by parser in order of sequence processed
@@ -146,38 +154,18 @@ class Plugin
     protected $include_parse_exclude_until_final = array();
 
     /**
-     * Frontcontroller Instance
+     * List of Plugin Property Array
      *
-     * @var    string
-     * @since  1.0
-     */
-    protected $frontcontroller_class = null;
-
-    /**
-     * Services Class Name
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $service_class_name = null;
-
-    /**
-     * Services Class Instance
+     * Must match Plugin Class $property_array Property
      *
      * @var    object
      * @since  1.0
      */
-    protected $service_class = null;
-
-    /**
-     * List of named Plugin Properties
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $property_array = array(
-        'plugin_class',
+    protected $plugin_property_array = array(
+        'frontcontroller_instance',
         'plugin_event',
+        'plugin_class_name',
+
         'model',
         'model_registry',
         'model_registry_name',
@@ -186,6 +174,10 @@ class Plugin
         'query_results',
         'row',
         'rendered_output',
+        'view_path',
+        'view_path_url',
+        'plugins',
+        'class_array',
         'include_parse_sequence',
         'include_parse_exclude_until_final'
     );
@@ -231,6 +223,15 @@ class Plugin
     public function initialise()
     {
         /** Not available in configuration (todo: put it in there)  */
+        if (is_array($this->class_array)) {
+        } else {
+            $this->class_array = array();
+        }
+
+        if (count($this->class_array) == 0) {
+            $this->class_array = $this->frontcontroller_instance->get('class_array');
+        }
+
         $class = $this->class_array['ContentHelper'];
         if ($class === '') {
             $this->contentHelper = new $class();
@@ -252,12 +253,6 @@ class Plugin
         }
 
         return;
-        echo '<pre>';
-        var_dump($this->class_array);
-        echo '</pre>';
-        die;
-
-
     }
 
     /**
@@ -275,7 +270,7 @@ class Plugin
     {
         $value = null;
 
-        if (in_array($key, $this->property_array) && $property == '') {
+        if (in_array($key, $this->plugin_property_array) && $property == '') {
             $value = $this->$key;
 
             return $value;
@@ -303,7 +298,7 @@ class Plugin
             return $this->model->$key;
         }
 
-        throw new \OutOfRangeException('Plugin: ' . $this->plugin_class .
+        throw new \OutOfRangeException('Plugin: ' . $this->plugin_class_name .
             ' Event ' . $this->plugin_event .
             ' attempting to get value for unknown key: ' . $key);
     }
@@ -326,7 +321,7 @@ class Plugin
      */
     public function set($key, $value = null, $property = '')
     {
-        if (in_array($key, $this->property_array) && $property == '') {
+        if (in_array($key, $this->plugin_property_array) && $property == '') {
             $this->$key = $value;
 
             if ($key == 'model_registry') {
@@ -334,7 +329,6 @@ class Plugin
                     $this->set('model_registry_name', $this->model_registry['model_registry_name'], 'model_registry');
                 }
             }
-
             return $this->$key;
         }
 
@@ -356,7 +350,7 @@ class Plugin
             return $this->model->$key;
         }
 
-        throw new \OutOfRangeException('Plugin: ' . $this->plugin_class .
+        throw new \OutOfRangeException('Plugin: ' . $this->plugin_class_name .
             ' Event ' . $this->plugin_event .
             ' attempting to set value for unknown property: ' . $key);
     }
@@ -770,66 +764,6 @@ class Plugin
      * @since   1.0
      */
     public function onAfterlogout()
-    {
-        return true;
-    }
-
-    /**
-     * Test to see if the On Before Services Start Event should be run
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function onBeforeServiceStartTest()
-    {
-        $plugin_class_name = $this->get('plugin_class');
-
-        $service_class_name = $this->get('service_class_name');
-
-        if (substr($plugin_class_name, 0, strlen($service_class_name)) == $service_class_name) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * After Plugin class is instantiated but before the Service Initialisation Method Runs
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function onBeforeServiceStart()
-    {
-        return;
-    }
-
-    /**
-     * Test to see if the After Service Start Event should be run
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function onAfterServiceStartTest()
-    {
-        $plugin_class_name = $this->get('plugin_class');
-
-        $service_class_name = $this->get('service_class_name');
-
-        if (substr($plugin_class_name, 0, strlen($service_class_name)) == $service_class_name) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * After Service Initialisation Method Runs
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    public function onAfterServiceStart()
     {
         return true;
     }

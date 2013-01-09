@@ -11,7 +11,6 @@ namespace Molajo\Plugin\Dataobject;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-
 defined('NIAMBIE') or die;
 
 /**
@@ -45,13 +44,17 @@ class DataobjectPlugin extends Plugin
         if ($this->get('data_object_service_class', 'Database', 'model_registry') == 'Database') {
 
             $service_class = $this->get('data_object_service_class', 'Database', 'model_registry');
-            $db = Services::$service_class()->connect($this->get('model_registry'));
+            $instance      = Services::$service_class();
+
+            $db    = $instance->connect($this->get('model_registry'));
+            $query = $instance->getQuery();
+
             $this->set('db', $db, 'model');
-            $this->set('query', $this->get('db', '', 'model')->getQuery($this->get('db', '', 'model')), 'model');
-            $this->set('null_date', $this->get('db', '', 'model')->getNullDate(), 'model');
+            $this->set('query', $query, 'model');
+            $this->set('null_date', $db->getNullDate(), 'model');
 
             try {
-               // $this->set('now', Services::Date()->getDate(), 'model');
+                $this->set('now', Services::Date()->getDate(), 'model');
 
             } catch (\Exception $e) {
                 // ignore error due to Date Service activation later in sequence for some use

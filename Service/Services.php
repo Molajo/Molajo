@@ -1,12 +1,14 @@
 <?php
 /**
- * Frontend Controller
+ * Services
  *
  * @package      Niambie
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service;
+
+use Molajo\Frontcontroller;
 
 defined('NIAMBIE') or die;
 
@@ -55,7 +57,7 @@ Class Services
      * @var     object
      * @since   1.0
      */
-    protected $frontcontroller_class = null;
+    protected $frontcontroller_instance = null;
 
     /**
      * Controller Class Name
@@ -66,14 +68,6 @@ Class Services
     protected $controller_class = null;
 
     /**
-     * Stores an array of key/value Parameters settings from Route
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $parameters = array();
-
-    /**
      * List of Properties
      *
      * @var    object
@@ -82,7 +76,8 @@ Class Services
     protected $property_array = array(
         'configuration',
         'controller_class',
-        'frontcontroller_class'
+        'frontcontroller_instance',
+        'class_array'
     );
 
     /**
@@ -127,7 +122,8 @@ Class Services
 
         if (in_array($key, $this->property_array)) {
         } else {
-            throw new \OutOfRangeException('Services: is attempting to set value for unknown key: ' . $key);
+            throw new \OutOfRangeException
+            ('Services: is attempting to set value for unknown key: ' . $key);
         }
 
         $this->$key = $value;
@@ -170,18 +166,17 @@ Class Services
 
         if ($services === null) {
             throw new \RuntimeException
-            ('Cannot find Services File Model Type: Service Model Name: Services');
+            ('Services: Cannot find Services File Model Type: Service Model Name: Services');
         }
 
         foreach ($services->service as $service) {
 
             $name  = (string)$service->attributes()->name;
-            $class = (string)$service->attributes()->class . $name . '\\';
+            $class = (string)$service->attributes()->class;
 
             if ($class === null) {
-                $class = 'Molajo\\Service\\Services\\';
+                $class = '';
             }
-echo 'Startup ' . $name . ' ' . $class . '<br />';
             $this->start($name, $class, 1);
         }
 
@@ -199,89 +194,148 @@ echo 'Startup ' . $name . ' ' . $class . '<br />';
      * 1. Services::Name()-> Call routes static through __callStatic then in through the Frontcontroller
      * 2. Services Instantiation processes startup Services using this Method once for each
      *
-     * @param   string  $key
-     * @param   string  $class
-     * @param   bool    $registry
+     * @param   string  $service_class_name
+     * @param   string  $service_class_namespace
+     * @param   bool    $read_registry
      *
-     * @return  mixed
+     * @return  mixed|object
      * @since   1.0
      * @throws  \Exception
      */
-    public function start($key, $class = '', $registry = 0)
+    public function start($service_class_name, $service_class_namespace = '', $read_registry = 0)
     {
-        if ($class == '') {
-            $class = 'Molajo\\Service\\Services\\' . substr($key, 0, (strlen($key) - 7)) . '\\';
+        $service = substr($service_class_name, 0, strlen($service_class_name) - 7);
+        $service = ucfirst(strtolower($service));
+
+        $service_class_name = $service . 'Service';
+        $plugin_class_name  = $service_class_name . 'Plugin';
+
+        if (isset($this->connections[$service_class_name])) {
+            return $this->connections[$service_class_name];
         }
 
-        if (isset($this->connections[$key])) {
-            return $this->connections[$key];
+        if ($service_class_namespace == '') {
+            $service_class_namespace = $this->frontcontroller_instance->get_class_array($service_class_name);
+            $read_registry = 1;
+            echo 'Requested by applicatoin: ' . $service_class_namespace . '<br />';
+        } else {
+            echo 'Request for ' . $service . '<br />';
         }
 
-        if ($registry == 0) {
+        if ($service_class_namespace == '') {
+            $service_class_namespace = 'Molajo\\Service\\Services\\' . $service . '\\';
+        }
 
-            $keep_instance  = 1;
-            $name           = $key;
-            $startup        = 1;
-            $startup_method = 'initialise';
-            $keep_instance  = 1;
+        $plugin_class_namespace  = $service_class_namespace . $plugin_class_name;
+        $service_class_namespace = $service_class_namespace . $service_class_name;
+
+        if ((int)$read_registry == 0) {
+            $startup       = 1;
+            $keep_instance = 1;
 
         } else {
-
             $controller = new $this->controller_class();
-            $controller->getModelRegistry('Service', $key);
+            $controller->getModelRegistry('Service', $service);
 
-            $this->connections['RegistryService']->get($key . 'Service', '*');
-            echo 'fix this in services - it will die now';
-            die;
-            $name           = $this->connections['RegistryService']->get($key . 'Service', 'name');
-            $startup        = $this->connections['RegistryService']->get($key . 'Service', 'startup');
-            $startup_method = $this->connections['RegistryService']->get($key . 'Service', 'startup_method');
-            $class          = $this->connections['RegistryService']->get($key . 'Service', 'class');
-            $keep_instance  = $this->connections['RegistryService']->get($key . 'Service', 'keep_instance');
+            $startup = $this->connections['RegistryService']->get($service . 'Service', 'startup');
+            $keep_instance = $this->connections['RegistryService']->get($service . 'Service', 'keep_instance');
         }
 
-        $serviceClass = $class . $name;
-
-        $pluginClass = $class . $name . 'Plugin';
-
-        $connectionSucceeded = null;
+        $connection_succeeded = null;
 
         try {
 
-            if (isset($this->connections[$key])) {
-                return $this->connections[$key];
+            $service_class_instance =
+                $this->getServiceClassInstance($service_class_namespace);
+
+            if ($service_class_instance === false) {
+
+                if ($keep_instance == 1) {
+                    $this->setServiceClassInstance(
+                        $service_class_name,
+                        $service_class_instance = null,
+                        $connection_succeeded = false
+                    );
+                }
+
+                return false;
             }
 
-            $pluginInstance =
-                $this->getPluginClassInstance($pluginClass);
+            $plugin_instance =
+                $this->getPluginClassInstance($plugin_class_namespace);
 
-            $serviceInstance =
-                $this->getServiceClassInstance($serviceClass);
+            if ($plugin_instance === false) {
 
-            if ($pluginInstance === false) {
             } else {
-                $pluginInstance->set('service_class', $serviceClass);
-                $pluginInstance->set('frontcontroller_class', $this->get('frontcontroller_class'));
+
+                $results = $this->scheduleEvent(
+                    $plugin_class_name,
+                    $plugin_class_namespace,
+                    $plugin_instance,
+                    $service_class_name,
+                    $service_class_namespace,
+                    $service_class_instance,
+                    'onBeforeServiceInitialise'
+                );
+
+                if ($results === false) {
+                } else {
+                    $service_class_instance = $results;
+                }
             }
 
-            $serviceInstance =
-                $this->scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance);
+            $service_class_instance =
+                $this->runServiceInitialiseMethod($service_class_instance, $service_class_namespace);
 
-            if (trim($startup_method) == '') {
-
+            if ($plugin_instance === false) {
             } else {
-                $connectionSucceeded
-                    = $this->runStartupMethod($serviceInstance, $serviceClass, $startup_method);
-            }
 
-            if ($pluginInstance === false) {
-            } else {
-                $serviceInstance
-                    = $this->scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance);
+                $results = $this->scheduleEvent(
+                    $plugin_class_name,
+                    $plugin_class_namespace,
+                    $plugin_instance,
+                    $service_class_name,
+                    $service_class_namespace,
+                    $service_class_instance,
+                    'onAfterServiceInitialise'
+                );
+
+                if ($results === false) {
+                } else {
+                    $service_class_instance = $results;
+                }
             }
 
             if ($keep_instance == 1) {
-                $this->saveServiceClassInstance($name, $serviceInstance, $connectionSucceeded);
+                $this->setServiceClassInstance(
+                    $service_class_name,
+                    $service_class_instance,
+                    1
+                );
+            }
+
+            if ($plugin_instance === false
+                || (int)$keep_instance == 0
+            ) {
+            } else {
+                $this->scheduleEvent(
+                    $plugin_class_name,
+                    $plugin_class_namespace,
+                    $plugin_instance,
+                    $service_class_name,
+                    $service_class_namespace,
+                    $service_class_instance,
+                    'OnAfterSaveServiceInstance'
+                );
+            }
+
+            if ($plugin_instance === false) {
+            } else {
+                unset($plugin_instance);
+            }
+
+            if ($service_class_name == 'EventService') {
+                $service_class_instance = $this->onAfterSaveEventService($service_class_instance);
             }
 
         } catch (\Exception $e) {
@@ -296,106 +350,62 @@ echo 'Startup ' . $name . ' ' . $class . '<br />';
             }
 
             throw new \Exception
-            ('Service: Connection for ' . $name . ' failed.' . $error_message);
+            ('Service: Connection for ' . $service_class_name . ' failed.' . $error_message);
         }
-
-        return true;
+        echo '' . 'Done ' . $service_class_name . '<br /><br /><br />';
+        return $service_class_instance;
     }
 
     /**
      * Retrieve Saved Service Class Instance or Instantiate New One
      *
-     * @param   string   $serviceClass
+     * @param   string   $service_class_namespace
      *
      * @return  mixed
      * @since   1.0
      * @throws  \Exception
      */
-    protected function getServiceClassInstance($serviceClass)
+    protected function getServiceClassInstance($service_class_namespace)
     {
-        if (class_exists($serviceClass)) {
+        if (class_exists($service_class_namespace)) {
 
         } else {
             throw new \Exception
-            ('Services: Class ' . $serviceClass . ' does not exist.');
+            ('Services: Failure Instantiating Class ' . $service_class_namespace . ' does not exist.');
         }
 
-        return new $serviceClass();
+        return new $service_class_namespace();
     }
 
     /**
-     * Get Plugin Class Instance
+     * Execute Service initialise Method
      *
-     * @param   string   $pluginClass
+     * @param   string  $service_class_instance
+     * @param   string  $service_class_namespace
      *
-     * @return  mixed
-     * @since   1.0
-     */
-    protected function getPluginClassInstance($pluginClass)
-    {
-        if (class_exists($pluginClass)) {
-        } else {
-
-            /** Not an error as plugins are not required for Services */
-            return false;
-        }
-
-        return new $pluginClass();
-    }
-
-    /**
-     * Schedule On Before Start Event - prior to instantiation of Services Class
-     *
-     * @param   string  $pluginInstance
-     * @param   string  $pluginClass
-     * @param   string  $serviceInstance
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    protected function scheduleOnBeforeStartEvent($pluginInstance, $pluginClass, $serviceInstance)
-    {
-        if (method_exists($pluginClass, 'onBeforeServiceStartup')) {
-        } else {
-            return $serviceInstance;
-        }
-
-        $pluginInstance->set('service_class', $serviceInstance);
-        $pluginInstance->onBeforeServiceStartup();
-        $serviceInstance = $pluginInstance->get('service_class', $serviceInstance);
-
-        return $serviceInstance;
-    }
-
-    /**
-     * Execute Startup method
-     *
-     * @param   string  $serviceInstance
-     * @param   string  $serviceClass
-     * @param   string  $serviceMethod
-     *
-     * @return  mixed
+     * @return  object
      * @since   1.0
      * @throws \Exception
      */
-    protected function runStartupMethod($serviceInstance, $serviceClass, $serviceMethod)
+    protected function runServiceInitialiseMethod($service_class_instance, $service_class_namespace)
     {
         try {
-            if (method_exists($serviceClass, $serviceMethod)) {
-                return $serviceInstance->$serviceMethod();
 
-            } else {
-                $error = 'Service: ' . $serviceClass
-                    . ' Startup Method: ' . $serviceMethod
-                    . ' does not exist.';
+            if (method_exists($service_class_namespace, 'initialise')) {
 
-                throw new \Exception($error);
+                $results = $service_class_instance->initialise();
+
+                if (is_object($results)) {
+                    $service_class_instance = $results;
+                }
             }
+
+            return $service_class_instance;
 
         } catch (\Exception $e) {
 
-            $error = 'Service: ' . $serviceClass
-                . ' Startup Method: ' . $serviceMethod
+            $error = 'Service: ' . $service_class_namespace
+                . ' Startup Method: initialise '
                 . ' failed: ' . $e->getMessage();
 
             throw new \Exception($error);
@@ -403,63 +413,247 @@ echo 'Startup ' . $name . ' ' . $class . '<br />';
     }
 
     /**
-     * Schedule On After Start Event - after instantiation of Services Class
-     *
-     * @param   string  $pluginInstance
-     * @param   string  $pluginClass
-     * @param   string  $serviceInstance
-     *
-     * @return  mixed
-     * @since   1.0
-     */
-    protected function scheduleOnAfterStartEvent($pluginInstance, $pluginClass, $serviceInstance)
-    {
-        if (method_exists($pluginClass, 'onAfterServiceStartup')) {
-        } else {
-            return $serviceInstance;
-        }
-
-        $pluginInstance->set('service_class', $serviceInstance);
-        $pluginInstance->onAfterServiceStartup();
-        $serviceInstance = $pluginInstance->get('service_class', $serviceInstance);
-
-        return $serviceInstance;
-    }
-
-    /**
      * Store service connection locally
      *
-     * Set indicator of Service availability in Registry
-     *
-     * @param   string  $key
-     * @param   null    $value
-     * @param   bool    $connectionSucceeded
+     * @param   string  $service_class_name
+     * @param   null    $service_class_instance
+     * @param   bool    $connection_succeeded
      *
      * @return  null
      * @since   1.0
      * @throws  \Exception
      */
-    protected function saveServiceClassInstance($key, $value = null, $connectionSucceeded = true)
-    {
+    protected function setServiceClassInstance(
+        $service_class_name,
+        $service_class_instance = null,
+        $connection_succeeded = true
+    ) {
         $i = count($this->message);
 
-        if ($value == null || $connectionSucceeded === false) {
-            $this->message[$i] = ' ' . $key . ' FAILED' . $value;
-            if ($key == 'ConfigurationService' || $key == 'RegistryService') {
+        if ($service_class_instance == null || $connection_succeeded === false) {
+
+            $this->message[$i] = ' ' . $service_class_name . ' FAILED' . $service_class_instance;
+            if ($service_class_name == 'ConfigurationService' || $service_class_name == 'RegistryService') {
             } else {
-                $this->connections['RegistryService']->set('Service', $key, false);
+                $this->connections['RegistryService']->set('Service', $service_class_name, false);
             }
 
         } else {
-            $this->connections[$key] = $value;
-            $this->message[$i]       = ' ' . $key . ' started successfully. ';
-            if ($key == 'ConfigurationService' || $key == 'RegistryService') {
+
+            $this->connections[$service_class_name] = $service_class_instance;
+            $this->message[$i]                      = ' ' . $service_class_name . ' started successfully. ';
+            if ($service_class_name == 'ConfigurationService' || $service_class_name == 'RegistryService') {
             } else {
-                echo $key . '<br />';
-                $this->connections['RegistryService']->set('Service', $key, true);
+                $this->connections['RegistryService']->set('Service', $service_class_name, true);
             }
         }
 
         return;
+    }
+
+    /**
+     * Unset a Service Class
+     *
+     * @param   string  $service_class_name
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    public function unsetServiceClassInstance($service_class_name)
+    {
+        $key = ucfirst(strtolower($service_class_name));
+
+        if (isset($this->connections[$service_class_name])) {
+            $temp = $this->connections[$service_class_name];
+            unset($temp);
+            unset($this->connections[$service_class_name]);
+        }
+
+        return;
+    }
+
+    /**
+     * Get Plugin Class Instance
+     *
+     * @param   string   $plugin_class_namespace
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function getPluginClassInstance($plugin_class_namespace)
+    {
+        if (class_exists($plugin_class_namespace)) {
+        } else {
+
+            /** Not an error as plugins are not required for Services */
+            return false;
+        }
+
+        return new $plugin_class_namespace();
+    }
+
+    /**
+     * TODO: Figure out sane way to make the following a plugin method
+     */
+
+    /**
+     * Schedule On Before Start Event - prior to instantiation of Services Class
+     *
+     * @param   string  $plugin_class_name
+     * @param   string  $plugin_class_namespace
+     * @param   string  $plugin_instance
+     * @param   string  $service_class_name
+     * @param   string  $service_class_namespace
+     * @param   string  $service_class_instance
+     *
+     * @return  mixed
+     * @since   1.0
+     */
+    protected function scheduleEvent(
+        $plugin_class_name,
+        $plugin_class_namespace,
+        $plugin_instance,
+        $service_class_name,
+        $service_class_namespace,
+        $service_class_instance,
+        $event
+    ) {
+        if (method_exists($plugin_class_namespace, $event)) {
+        } else {
+            return false;
+        }
+        $reflectionMethod = new \ReflectionMethod(new $plugin_class_namespace, $event);
+        $results          = $reflectionMethod->getDeclaringClass();
+
+        if ($results->name == $plugin_class_namespace) {
+        } else {
+            return false;
+        }
+
+        $plugin_instance->set('service_class_name', $service_class_name);
+        $plugin_instance->set('service_class_namespace', $service_class_namespace);
+        $plugin_instance->set('service_class_instance', $service_class_instance);
+
+        $plugin_instance->set('plugin_class_name', $plugin_class_name);
+        $plugin_instance->set('plugin_event', $event);
+
+        $plugin_instance->set('frontcontroller_instance', $this->get('frontcontroller_instance'));
+
+        $plugin_instance->$event();
+
+        $service_class_instance = $plugin_instance->get('service_class_instance', $service_class_instance);
+
+        return $service_class_instance;
+    }
+
+    /**
+     * FOR NOW: After Event
+     *
+     * Follows the completion of the start method defined in the configuration
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function onAfterSaveEventService($service_class_instance)
+    {
+        if (defined('PROFILER_ON') && PROFILER_ON === true) {
+            Services::Profiler()->set(
+                'message',
+                'Event Service: registerInstalledPlugins for Extension and Core',
+                'Plugins',
+                1
+            );
+        }
+
+        $service_class_instance = $this->registerPlugins(
+            PLATFORM_FOLDER . '/' . 'Plugin',
+            'Molajo\\Plugin\\',
+            $service_class_instance
+        );
+
+        $service_class_instance = $this->registerPlugins(
+            EXTENSIONS . '/' . 'Plugin',
+            'Extension\\Plugin\\',
+            $service_class_instance
+        );
+
+        return $service_class_instance;
+    }
+
+    /**
+     * onBeforeRegisterPlugin determines a set of plugins from a folder and namespace and then
+     * returns a set of plugins, plugin class values, and namespaces for which the visitor is authorised
+     *
+     * @return  array|bool
+     * @since   1.0
+     * @throws  \Exception
+     */
+    public function registerPlugins($folder, $namespace, $service_class_instance)
+    {
+        if ($folder == '') {
+            throw new \Exception ('Event Service: No folder sent into RegisterPlugins');
+        }
+
+        if ($namespace == '') {
+            throw new \Exception ('Event Service: No namespace sent into RegisterPlugins');
+        }
+
+        $folders_and_files = scandir($folder);
+        if (count($folders_and_files) == 0) {
+            return array();
+        }
+
+        $plugin_folders = array();
+
+        foreach ($folders_and_files as $key => $value) {
+            if ($value == '.') {
+
+            } elseif ($value == '..') {
+
+            } elseif (is_dir($folder . '/' . $value)) {
+                $plugin_folders[] = $value;
+            }
+        }
+
+        if (count($plugin_folders) == 0 || $plugin_folders === false) {
+            return array();
+        }
+// deal with authorisation - might have to deal with it when using the plugin due to timing issues
+//$authorised_plugins = array();
+
+//        $authorised = Services::User()->get('authorised_extension_titles');
+
+
+//        if ($authorised === false) {
+//            $authorised = array();
+//        }
+        $authorised = array();
+        foreach ($plugin_folders as $plugin_folder) {
+
+            $plugin_name = ucfirst(strtolower($plugin_folder)) . 'Plugin';
+
+            if (substr(strtolower($plugin_folder), 0, 4) == 'hold') {
+
+            } elseif (in_array($plugin_folder, $authorised) || count($authorised) == 0) {
+
+                $this->connections['RegistryService']->deleteRegistry($plugin_name);
+                $plugin_class_name = $namespace . $plugin_folder . '\\' . $plugin_name;
+
+                $controllerClass = CONTROLLER_CLASS_NAMESPACE;
+                $controller      = new $controllerClass();
+                $controller->getModelRegistry('Plugin', ucfirst(strtolower($plugin_folder)), 0);
+
+                $temp                    = new \stdClass();
+                $temp->plugin_name       = $plugin_name;
+                $temp->plugin_class_name = $plugin_class_name;
+
+                $service_class_instance =
+                    $this->connections['EventService']->registerPlugin($plugin_name, $plugin_class_name);
+
+//$authorised_plugins[] = $temp;
+            }
+        }
+
+        return $service_class_instance;
     }
 }

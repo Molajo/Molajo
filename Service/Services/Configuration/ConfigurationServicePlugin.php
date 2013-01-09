@@ -8,8 +8,7 @@
  */
 namespace Molajo\Service\Services\Configuration;
 
-use Molajo\Service\Services;
-use Molajo\Plugin\Plugin\Plugin;
+use Molajo\Service\ServicesPlugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +20,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class ConfigurationServicePlugin extends Plugin
+Class ConfigurationServicePlugin extends ServicesPlugin
 {
     /**
      * On Before Startup for Configuration - runs after class instantiation
@@ -29,7 +28,7 @@ Class ConfigurationServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeServiceStartup()
+    public function onBeforeServiceInitialise()
     {
         $this->getFieldProperties();
 
@@ -45,7 +44,7 @@ Class ConfigurationServicePlugin extends Plugin
      */
     protected function getFieldProperties()
     {
-        $xml = $this->service_class->getFile('Application', 'Fields');
+        $xml = $this->service_class_instance->getFile('Application', 'Fields');
         if ($xml === false) {
             throw new \Exception
             ('Configuration Plugin: getFieldProperties File Model Type: Application Model_name: Fields not found.');
@@ -99,7 +98,7 @@ Class ConfigurationServicePlugin extends Plugin
             'valid_queryelements_attributes'
         );
 
-        $list = $this->service_class->get('valid_queryelements_attributes');
+        $list = $this->service_class_instance->get('valid_queryelements_attributes');
 
         foreach ($list as $item) {
             $field = explode(',', $item);
@@ -111,7 +110,7 @@ Class ConfigurationServicePlugin extends Plugin
         $datalistsArray = $this->loadDatalists($datalistsArray, PLATFORM_MVC . '/Model/Datalist');
         $datalistsArray = array_unique($datalistsArray);
 
-        $this->service_class->set('valid_datalists', $datalistsArray);
+        $this->service_class_instance->set('valid_datalists', $datalistsArray);
 
         return;
     }
@@ -144,7 +143,7 @@ Class ConfigurationServicePlugin extends Plugin
             $typeArray[] = (string)$type;
         }
 
-        $this->service_class->set($parameter_name, $typeArray);
+        $this->service_class_instance->set($parameter_name, $typeArray);
 
         return true;
     }
@@ -174,8 +173,8 @@ Class ConfigurationServicePlugin extends Plugin
             $typeDefaultArray[(string)$type['name']] = (string)$type['default'];
         }
 
-        $this->service_class->set($parameter_name, $typeArray);
-        $this->service_class->set($parameter_name . '_defaults', $typeDefaultArray);
+        $this->service_class_instance->set($parameter_name, $typeArray);
+        $this->service_class_instance->set($parameter_name . '_defaults', $typeDefaultArray);
 
         return true;
     }
@@ -221,7 +220,7 @@ Class ConfigurationServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterServiceStartup()
+    public function onAfterServiceInitialise()
     {
         return;
     }

@@ -9,7 +9,7 @@
 namespace Molajo\Service\Services\Date;
 
 use Molajo\Service\Services;
-use Molajo\Plugin\Plugin\Plugin;
+use Molajo\Service\ServicesPlugin;
 
 defined('NIAMBIE') or die;
 
@@ -21,7 +21,7 @@ defined('NIAMBIE') or die;
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0
  */
-Class DateServicePlugin extends Plugin
+Class DateServicePlugin extends ServicesPlugin
 {
     /**
      * on Before Startup Event
@@ -31,7 +31,7 @@ Class DateServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onBeforeServiceStartup()
+    public function onBeforeServiceInitialise()
     {
     }
 
@@ -43,29 +43,27 @@ Class DateServicePlugin extends Plugin
      * @return  void
      * @since   1.0
      */
-    public function onAfterServiceStartup()
+    public function onAfterServiceInitialise()
     {
-        $this->service_class->set(
+        $this->service_class_instance->set(
             'locale',
             Services::Language()->get('tag')
         );
 
-        $this->service_class->set(
+        $this->service_class_instance->set(
             'date_translate_array',
             Services::Language()->get('list', 'date_')
         );
 
-        $this->service_class->set(
-            'offset',
+        $this->service_class_instance->set(
+            'offset_user',
             Services::User()->get('timezone', '')
         );
 
-        $this->service_class->set(
-            'language_utc_offset',
-            Services::Application()->get('language_utc_offset', '')
+        $this->service_class_instance->set(
+            'offset_server',
+            Services::Application()->get('language_utc_offset', 'UTC')
         );
-
-        $this->service_class->set('date_class', 'JPlatform\\date\\JDate');
 
         return;
     }

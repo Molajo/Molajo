@@ -116,7 +116,7 @@ class SmiliesPlugin extends Plugin
             ':?:'       => 'icon_question.gif',
         );
 
-        if (Services::Registry()->get('Configuration', 'url_force_ssl', 0) > 0) {
+        if (Services::Application()->get('url_force_ssl', 0) > 0) {
             $protocol = 'https://';
         } else {
             $protocol = 'http://';

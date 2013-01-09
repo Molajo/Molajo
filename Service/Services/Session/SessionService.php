@@ -1,6 +1,6 @@
 <?php
 /**
- * Session Service Plugin
+ * Session Service
  *
  * @package      Niambie
  * @license      MIT
@@ -11,8 +11,6 @@ namespace Molajo\Service\Services\Session;
 use Molajo\Service\Services;
 
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeMemcachedSessionHandler;
 
 defined('NIAMBIE') or die;
 
@@ -36,20 +34,45 @@ Class SessionService
      * @var    object
      * @since  1.0
      */
-    public $session;
+    protected $session;
+
+    /**
+     * Authorised Extension Titles for User
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $authorised_extension_titles = array();
+
+    /**
+     * List of Properties
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $property_array = array(
+
+    );
 
 
+    /**
+     *
+     */
     public function initialise()
     {
-        Services::Registry()->set('User', 1);
-
-        return;
-        $session = new Session();
-        $session->start();
+        $this->session = new Session();
+        $this->session->start();
 
         // set and get session attributes
-        $session->set('name', 'Amy Stephen');
-        echo $session->get('name');
+        $this->session->set('userid', 1);
+
+        return;
+
+        echo '<pre>';
+        var_dump($_SESSION);
+
+        return;
+        echo $session->get('Userid');
 
         // set flash messages
         $session->getFlashBag()->add('notice', 'Profile updated');
@@ -63,14 +86,41 @@ Class SessionService
     }
 
     /**
-     * getSession
+     * Get the current value (or default) of the specified key
      *
+     * @param   string  $key
+     * @param   mixed   $default
+     *
+     * @return  mixed
+     * @since   1.0
      */
-    public function getSession()
+    public function get($key = null, $default = null)
     {
-        $storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
-        $session = new Session($storage);
-        //var_dump($session);
+        $key = strtolower($key);
+
+        if ($this->session->get($key, null) === null) {
+            $this->session->set($key, $default);
+        }
+
+        return $this->session->get($key);
+    }
+
+    /**
+     * Set the value of a specified key
+     *
+     * @param   string  $key
+     * @param   mixed   $value
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        $key = strtolower($key);
+
+        $this->session->set($key, $value);
+
+        return;
     }
 
     /**
@@ -86,7 +136,7 @@ Class SessionService
             SITE_BASE_PATH . '/cache'
         );
         $options = array();
-        $options['cookie_lifetime'] = Services::Registry()->get('Configuration', 'lifetime', 15);
+        $options['cookie_lifetime'] = Services::Application()->get('lifetime', 15);
         $options['cookie_domain'] = $cookie_domain = Services::Registry()->get(
             'Configuration',
             'cookie_domain',

@@ -221,7 +221,7 @@ class Model
             return true;
         }
 
-        if (Services::Registry()->get('Configuration', 'profiler_collect_missing_language_strings') == '1') {
+        if (Services::Application()->get('profiler_collect_missing_language_strings') == '1') {
         } else {
             return true;
         }

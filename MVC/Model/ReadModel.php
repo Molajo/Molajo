@@ -28,15 +28,15 @@ class ReadModel extends Model
      *
      * Retrieve all elements of the specific table for a specific item
      *
-     * @param   $columns
-     * @param   $table_name
-     * @param   $primary_prefix
-     * @param   $primary_key
-     * @param   $id
-     * @param   $name_key
-     * @param   $name_key_value
-     * @param   $query_object - item, list, result, distinct
-     * @param   $criteria_array
+     * @param   array   $columns
+     * @param   string  $table_name
+     * @param   string  $primary_prefix
+     * @param   string  $primary_key
+     * @param   int     $id
+     * @param   string  $name_key
+     * @param   int     $name_key_value
+     * @param   string  $query_object - item, list, result, distinct
+     * @param   array   $criteria_array
      *
      * @return  ReadModel
      * @since   1.0
@@ -380,7 +380,7 @@ class ReadModel extends Model
      * @param   string   $query_object - four valid values: result, item, list, distinct
      * @param   int      $offset
      * @param   int      $count
-     * @param   boolean  $use_pagination
+     * @param   int      $use_pagination
      *
      * @return  int      count of total rows for pagination
      * @since   1.0

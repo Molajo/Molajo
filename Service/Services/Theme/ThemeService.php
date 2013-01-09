@@ -437,6 +437,12 @@ Class ThemeService
 
                     $replace[] = "<include:" . $parsed['replace'] . "/>";
 
+
+                    $this->set('include_name', $include_name);
+                    $this->set('include_type', $include_type);
+                    $this->set('tag', $tag);
+                    $this->set('parameters', $parameters);
+
                     $output = $this->getIncluderClass($include_type, $include_name, $attributes);
 
                     $with[] = $output;
@@ -563,42 +569,36 @@ Class ThemeService
             $query_results = array();
         }
 
+        if (isset($this->parameters['model_registry_name'])) {
+            $model_registry_name = $this->parameters['model_registry_name'];
+            $model_registry      = Services::Registry()->get($model_registry_name);
+        } else {
+            $model_registry_name = '';
+            $model_registry      = array();
+        }
+
         $arguments = array(
             'model'                             => null,
-            'model_registry'                    => Services::Registry()->get($this->get('model_registry_name')),
+            'model_registry'                    => $model_registry,
+            'model_registry_name'               => $this->get('model_registry_name'),
             'parameters'                        => $this->parameters,
             'parameter_property_array'          => $this->parameter_property_array,
             'query_results'                     => $query_results,
             'row'                               => array(),
             'rendered_output'                   => $this->rendered_output,
+            'view_path'                         => null,
+            'view_path_url'                     => null,
+            'plugins'                           => null,
             'class_array'                       => $this->class_array,
             'include_parse_sequence'            => $this->sequence,
             'include_parse_exclude_until_final' => $this->exclude_until_final
         );
 
-        $arguments = Services::Event()->scheduleEvent($event_name, $arguments, $this->getPluginList());
-
-        echo $event_name . '<br />';
-        echo '<pre>';
-        var_dump($arguments);
-        echo '</pre>';
         $arguments = Services::Event()->scheduleEvent(
             $event_name,
             $arguments,
             $this->getPluginList()
         );
-
-        if (isset($arguments['class_array'])) {
-            $this->parameters = $arguments['class_array'];
-        }
-
-        if (isset($arguments['parameters'])) {
-            $this->parameters = $arguments['parameters'];
-        }
-
-        if (isset($arguments['property_array'])) {
-            $this->parameters = $arguments['property_array'];
-        }
 
         if (isset($this->parameters['model_registry_name'])) {
 
@@ -611,8 +611,28 @@ Class ThemeService
             }
         }
 
+        if (isset($arguments['parameters'])) {
+            $this->parameters = $arguments['parameters'];
+        }
+
+        if (isset($arguments['property_array'])) {
+            $this->parameters = $arguments['property_array'];
+        }
+
         if (isset($arguments['query_results'])) {
             $query_results = $arguments['query_results'];
+        }
+
+        if (isset($arguments['row'])) {
+            $query_results = $arguments['row'];
+        }
+
+        if (isset($arguments['rendered_output'])) {
+            $query_results = $arguments['rendered_output'];
+        }
+
+        if (isset($arguments['class_array'])) {
+            $query_results = $arguments['class_array'];
         }
 
         if (isset($arguments['include_parse_sequence'])) {
@@ -623,10 +643,6 @@ Class ThemeService
             $this->exclude_until_final = $arguments['include_parse_exclude_until_final'];
         } else {
             $this->exclude_until_final = array();
-        }
-
-        if (isset($arguments['rendered_output'])) {
-            $this->rendered_output = $arguments['rendered_output'];
         }
 
         return $query_results;

@@ -72,7 +72,7 @@ class Includer
     protected $attributes = array();
 
     /**
-     * $tag
+     * $tag used to extract a set of views for rendering
      *
      * @var    array
      * @since  1.0
@@ -86,6 +86,14 @@ class Includer
      * @since  1.0
      */
     protected $parameters = array();
+
+    /**
+     * Parameters to pass on to the MVC for rendering the include statement
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $parameter_property_array = array();
 
     /**
      * Name of Model Registry used to generate input for the include
@@ -174,15 +182,11 @@ class Includer
      */
     public function __construct($include_name = null, $include_type = null, $tag = null, $parameters = array())
     {
-        $this->set('', 'include_name', $include_name);
-        $this->set('', 'include_type', $include_type);
-        $this->set('', 'name', null);
-        $this->set('', 'attributes', array());
-        $this->set('', 'tag', $tag);
-        $this->set('', 'parameters', $parameters);
-        $this->set('', 'model_registry_name', null);
-        $this->set('', 'model_registry', null);
-        $this->set('', 'rendered_output', null);
+        $this->set('name', null);
+        $this->set('attributes', array());
+        $this->set('model_registry_name', null);
+        $this->set('model_registry', null);
+        $this->set('rendered_output', null);
 
         $this->contentHelper   = new ContentHelper();
         $this->extensionHelper = new ExtensionHelper();
@@ -427,7 +431,7 @@ class Includer
 
         Services::Registry()->sort('parameters');
 
-        $fields = Services::Registry()->get('Configuration', 'application*');
+        $fields = Services::Application()->get('application*');
         if (count($fields) === 0 || $fields === false) {
         } else {
             foreach ($fields as $key => $value) {
@@ -778,22 +782,26 @@ class Includer
         $model_registry_name = ucfirst(strtolower(Services::Registry()->get('parameters', 'model_name')))
             . ucfirst(strtolower(Services::Registry()->get('parameters', 'model_type')));
 
+        $model_registry      = Services::Registry()->get($model_registry_name);
+
         $arguments = array(
             'model'                             => null,
-            'model_registry'                    => Services::Registry()->get($model_registry_name),
-            'parameters'                        => Services::Registry()->get('parameters'),
+            'model_registry'                    => $model_registry,
+            'model_registry_name'               => $this->model_registry_name,
+            'parameters'                        => $this->parameters,
+            'parameter_property_array'          => $this->parameter_property_array,
             'query_results'                     => array(),
-            'row'                               => null,
+            'row'                               => array(),
             'rendered_output'                   => $this->rendered_output,
+            'view_path'                         => null,
+            'view_path_url'                     => null,
+            'plugins'                           => null,
+            'class_array'                       => $this->class_array,
             'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
 
-        $arguments = Services::Event()->scheduleEvent(
-            $event_name,
-            $arguments,
-            array()
-        );
+        $arguments = Services::Event()->scheduleEvent($event_name, $arguments, array());
 
         if (isset($arguments['model_registry'])) {
             Services::Registry()->delete($model_registry_name);
@@ -801,15 +809,31 @@ class Includer
             Services::Registry()->loadArray($model_registry_name, $arguments['model_registry']);
         }
 
+        if (isset($this->parameters['model_registry_name'])) {
+
+            $model_registry_name = $this->parameters['model_registry_name'];
+
+            if (isset($arguments['model_registry'])) {
+                Services::Registry()->delete($model_registry_name);
+                Services::Registry()->createRegistry($this->get('model_registry_name'));
+                Services::Registry()->loadArray($this->get('model_registry_name'), $arguments['model_registry']);
+            }
+        }
+
         if (isset($arguments['parameters'])) {
-            Services::Registry()->delete('parameters');
-            Services::Registry()->createRegistry('parameters');
-            Services::Registry()->loadArray('parameters', $arguments['parameters']);
-            Services::Registry()->sort('parameters');
+            $this->parameters = $arguments['parameters'];
+        }
+
+        if (isset($arguments['parameter_property_array'])) {
+            $this->parameter_property_array = $arguments['parameter_property_array'];
         }
 
         if (isset($arguments['rendered_output'])) {
             $this->rendered_output = $arguments['rendered_output'];
+        }
+
+        if (isset($arguments['class_array'])) {
+            $this->class_array = $arguments['class_array'];
         }
 
         return;

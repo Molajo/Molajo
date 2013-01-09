@@ -49,13 +49,13 @@ Class ProfilerIncluder extends Includer
         Services::Registry()->set(
             'include',
             'template_view_id',
-            Services::Registry()->get('Configuration', 'profiler_console_template_view_id')
+            Services::Application()->get('profiler_console_template_view_id')
         );
 
         Services::Registry()->set(
             'include',
             'wrap_view_id',
-            Services::Registry()->get('Configuration', 'profiler_console_wrap_view_id')
+            Services::Application()->get('profiler_console_wrap_view_id')
         );
 
         Services::Registry()->set('include', 'criteria_display_view_on_no_results', 1);

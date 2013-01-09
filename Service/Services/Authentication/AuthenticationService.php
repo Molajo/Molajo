@@ -6,8 +6,6 @@
  */
 namespace Molajo\Service\Services\Authentication;
 
-use Molajo\Service\Services;
-
 defined('NIAMBIE') or die;
 
 /**

@@ -59,7 +59,7 @@ Class RedirectService
         }
 
         /** Configuration Service is available */
-        if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+        if (Services::Application()->get('url_sef', 1) == 1) {
             $url = BASE_URL . APPLICATION_URL_PATH . $url;
         }
 

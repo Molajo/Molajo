@@ -8,7 +8,7 @@ use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;
 
-if ((int)Services::Registry()->get('Configuration', 'application_html5', 1) == 1
+if ((int)Services::Application()->get('application_html5', 1) == 1
     && ($this->parameters['wrap_view_title'] == 'Article'
         || $this->parameters['wrap_view_title'] == 'Aside'
         || $this->parameters['wrap_view_title'] == 'Footer'
@@ -49,7 +49,7 @@ endif;
 <<?php echo trim($headerType . $headerId . $headerClass . $headerRole . $headerProperty); ?>>
 <?php
 $headingLevel = $this->parameters['wrap_view_header_level'];
-if ((int)Services::Registry()->get('Configuration', 'application_html5', 1) == 1):
+if ((int)Services::Application()->get('application_html5', 1) == 1):
     if ($this->parameters['wrap_view_show_title'] === true
         && $this->parameters['wrap_view_show_subtitle'] === true
     ) : ?>
@@ -71,7 +71,7 @@ if ($this->parameters['wrap_view_show_subtitle'] === true) :  ?>
     <?php
 endif;
 
-if ((int)Services::Registry()->get('Configuration', 'application_html5', 1) == 1) :
+if ((int)Services::Application()->get('application_html5', 1) == 1) :
     if ($this->parameters['wrap_view_show_title'] === true
         && $this->parameters['wrap_view_show_subtitle'] === true
     ) : ?>

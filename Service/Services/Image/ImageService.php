@@ -176,7 +176,7 @@ Class ImageService
         }
 
         /** retrieve image folder for original images */
-        $images = Services::Registry()->get('Configuration', 'system_media_folder', 'media/images');
+        $images = Services::Application()->get('system_media_folder', 'media/images');
 
         /** folders */
         if (Services::Filesystem()->folderExists(SITE_BASE_PATH . '/' . $images)) {
@@ -201,7 +201,7 @@ Class ImageService
     private function getResizedImage()
     {
         /** retrieve image folder for resized images */
-        $images = Services::Registry()->get('Configuration', 'image_thumb_folder', '/media/images/thumbs');
+        $images = Services::Application()->get('image_thumb_folder', '/media/images/thumbs');
 
         /** folders */
         if (Services::Filesystem()->folderExists(SITE_BASE_PATH . '/' . $images)) {
@@ -227,20 +227,20 @@ Class ImageService
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 'thumbnail') {
-            $width  = Services::Registry()->get('Configuration', 'image_thumbnail_width', 50);
-            $height = Services::Registry()->get('Configuration', 'image_thumbnail_height', 50);
+            $width  = Services::Application()->get('image_thumbnail_width', 50);
+            $height = Services::Application()->get('image_thumbnail_height', 50);
 
         } elseif ($this->size == 'small') {
-            $width  = Services::Registry()->get('Configuration', 'image_small_width', 100);
-            $height = Services::Registry()->get('Configuration', 'image_small_height', 100);
+            $width  = Services::Application()->get('image_small_width', 100);
+            $height = Services::Application()->get('image_small_height', 100);
 
         } elseif ($this->size == 'medium') {
-            $width  = Services::Registry()->get('Configuration', 'image_medium_width', 300);
-            $height = Services::Registry()->get('Configuration', 'image_medium_height', 300);
+            $width  = Services::Application()->get('image_medium_width', 300);
+            $height = Services::Application()->get('image_medium_height', 300);
 
         } elseif ($this->size == 'large') {
-            $width  = Services::Registry()->get('Configuration', 'image_large_width', 500);
-            $height = Services::Registry()->get('Configuration', 'image_large_height', 500);
+            $width  = Services::Application()->get('image_large_width', 500);
+            $height = Services::Application()->get('image_large_height', 500);
 
         } else {
             $this->width  = imagesx($this->image);
@@ -586,9 +586,9 @@ Class ImageService
         $service = $options['service'];
         $service = isset($service) ? $service : 'placehold';
 
-        $service_class = $services_class[$service];
-        if (class_exists($service_class)) {
-            $service = new $service_class($width, $height, $options);
+        $service_class_name = $services_class[$service];
+        if (class_exists($service_class_name)) {
+            $service = new $service_class_name($width, $height, $options);
 
             return $service->url();
         } else {

@@ -8,8 +8,6 @@
  */
 namespace Molajo\Service\Services\Database;
 
-use Molajo\Service\Services;
-
 defined('NIAMBIE') or die;
 
 /**
@@ -21,6 +19,14 @@ defined('NIAMBIE') or die;
  */
 Class DatabaseService
 {
+    /**
+     * Database instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $database_instance;
+
     /**
      * Name
      *
@@ -38,14 +44,6 @@ Class DatabaseService
     protected $options;
 
     /**
-     * DB Connection
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $db;
-
-    /**
      * Model Registry
      *
      * @var    array
@@ -60,9 +58,9 @@ Class DatabaseService
      * @since  1.0
      */
     protected $property_array = array(
+        'database_instance',
         'name',
         'options',
-        'db',
         'model_registry'
     );
 
@@ -80,47 +78,61 @@ Class DatabaseService
     /**
      * get property
      *
-     * @param   $key
+     * @param  string  $key
+     * @param  null    $default
      *
      * @return  mixed
      * @since   1.0
      */
-    public function get($key)
+    public function get($key, $default = null)
     {
-        if (isset($this->model_registry['data_object_' . $key])) {
-            return $this->model_registry['data_object_' . $key];
+        if (in_array($key, $this->property_array)) {
+            if (isset($this->$key)) {
+            } else {
+                $this->$key = $default;
+            }
+
+            return $this->$key;
         }
 
-        return $this->$key;
+        $key = 'data_object_' . $key;
+
+        if (isset($this->model_registry[$key])) {
+        } else {
+            $this->model_registry[$key] = $default;
+        }
+
+        return $this->model_registry[$key];
     }
 
     /**
      * set property
      *
      * @param   string  $key
-     * @param   string  $value
-     * @param   null    $property
+     * @param   mixed   $value
      *
      * @return  mixed
      * @since   1.0
      */
-    public function set($key, $value, $property = null)
+    public function set($key, $value)
     {
-        if ($property == 'model_registry') {
-            $this->model_registry[$key] = $value;
+        if (in_array($key, $this->property_array)) {
+            $this->$key = $value;
 
-            return $this->model_registry[$key];
+            return $this->$key;
         }
 
-        $this->$key = $value;
+        $key = 'data_object_' . $key;
 
-        return $this->$key;
+        $this->model_registry[$key] = $value;
+
+        return $this->model_registry[$key];
     }
 
     /**
      * Connect to Database
      *
-     * @param   string  $model_registry
+     * @param   object  $model_registry
      *
      * @return  mixed
      * @since   1.0
@@ -144,43 +156,42 @@ Class DatabaseService
             'select'   => true
         );
 
-        $this->name = $this->get('db_type');
+        $this->name = $this->options['driver'];
 
-        $service_class_connection_namespace = $this->get('service_class_connection_namespace');
+        $class_namespace = $this->get('service_class_connection_namespace');
 
-        if (class_exists($service_class_connection_namespace)) {
+        if (class_exists($class_namespace)) {
         } else {
             throw new \RuntimeException(sprintf('Unable to load Database Driver: %s', $this->options['driver']));
         }
 
         try {
-            $this->db = new $service_class_connection_namespace($this->options);
+            $this->database_instance = new $class_namespace($this->options);
+
+            return $this->database_instance;
 
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Unable to connect to the Database: %s', $e->getMessage()));
         }
 
-        return $this->db;
     }
 
     /**
      * Get the current query object for the current database connection
      *
-     * @param   $db
-     *
      * @return  object
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function getQuery($db)
+    public function getQuery()
     {
-        $service_class_query_namespace = $this->get('service_class_query_namespace');
+        $query_namespace = $this->get('service_class_query_method');
 
-        if (class_exists($service_class_query_namespace)) {
+        if (class_exists($query_namespace)) {
         } else {
             throw new \RuntimeException('Database: Query Class not found');
         }
 
-        return new $service_class_query_namespace($db);
+        return new $query_namespace($this->database_instance);
     }
 }

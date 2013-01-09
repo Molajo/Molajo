@@ -8,8 +8,6 @@
  */
 namespace Molajo\Service\Services\Profiler;
 
-use Molajo\Service\Services;
-
 defined('NIAMBIE') or die;
 
 /**
@@ -231,7 +229,7 @@ Class ProfilerService
 
         } else {
             throw new \OutOfRangeException
-                ('Profiler Service: attempting to get value for unknown property: ' . $key);
+            ('Profiler Service: attempting to get value for unknown property: ' . $key);
         }
 
         if (isset($this->$key)) {
@@ -245,11 +243,14 @@ Class ProfilerService
     /**
      * Sets profiler message
      *
-     * @param   string  $message
+     * @param   string  $key
+     * @param   string  $value
      * @param   string  $output_type  Application,Permissions,Queries,Rendering,Routing,Services,Plugins
+     * @param   int     $verbose
      *
-     * @return  void
      * @since   1.0
+     * @return  void
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value, $output_type = '', $verbose = 0)
     {
@@ -313,24 +314,25 @@ Class ProfilerService
 
         $temp_row = new \stdClass();
 
-        $query_results[]                     = $temp_row;
+        $query_results[] = $temp_row;
 
-        $temp_row->formatted_message         = sprintf(
-                '%.3f seconds (+%.3f); %0.2f MB (+%.3f) - %s',
-                $elapsed,
-                $elapsed - $this->previous_time,
-                $memory,
-                $memory_difference,
-                $value);
-        $temp_row->message                   = $value;
-        $temp_row->total_elapsed_time        = $elapsed;
-        $temp_row->additional_elapsed_time   = $elapsed - $this->previous_time;
-        $temp_row->total_memory              = $memory;
-        $temp_row->additional_memory         = $memory_difference;
-        $temp_row->entry_date                = date("Y-m-d") . ' ' . date("H:m:s");  // not be set to timezone
+        $temp_row->formatted_message       = sprintf(
+            '%.3f seconds (+%.3f); %0.2f MB (+%.3f) - %s',
+            $elapsed,
+            $elapsed - $this->previous_time,
+            $memory,
+            $memory_difference,
+            $value
+        );
+        $temp_row->message                 = $value;
+        $temp_row->total_elapsed_time      = $elapsed;
+        $temp_row->additional_elapsed_time = $elapsed - $this->previous_time;
+        $temp_row->total_memory            = $memory;
+        $temp_row->additional_memory       = $memory_difference;
+        $temp_row->entry_date              = date("Y-m-d") . ' ' . date("H:m:s"); // not be set to timezone
 
-        $this->previous_time                 = $elapsed;
-        $this->previous_memory               = $memory;
+        $this->previous_time   = $elapsed;
+        $this->previous_memory = $memory;
 
         return;
     }

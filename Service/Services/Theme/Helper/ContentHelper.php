@@ -472,7 +472,7 @@ Class ContentHelper
         }
 
         /** III. Finally, Application level defaults */
-        $applicationDefaults = Services::Registry()->get('Configuration', $page_type_namespace . '*');
+        $applicationDefaults = Services::Application()->get($page_type_namespace . '*');
         if (count($applicationDefaults) > 0) {
             $this->processParameterSet($applicationDefaults, $page_type_namespace);
         }
@@ -531,7 +531,7 @@ Class ContentHelper
         Services::Registry()->delete($random, 'item*');
 
         /** Copy some configuration data */
-        $fields = Services::Registry()->get('Configuration', 'application*');
+        $fields = Services::Application()->get('application*');
         if (count($fields) === 0 || $fields === false) {
         } else {
             foreach ($fields as $key => $value) {

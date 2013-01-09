@@ -155,7 +155,7 @@ Class MenuService
 
             $item->css_class = trim($item->css_class);
 
-            if (Services::Registry()->get('Configuration', 'url_sef', 1) == 1) {
+            if (Services::Application()->get('url_sef', 1) == 1) {
                 $item->url = Services::Url()->getApplicationURL($item->catalog_sef_request);
             } else {
                 $item->url = Services::Url()->getApplicationURL('index.php?id=' . (int)$item->id);

@@ -9,7 +9,6 @@
 namespace Molajo\Service\Services\Event;
 
 use Molajo\Service\Services;
-use Molajo\Service\Services\Event\EventServicePlugin;
 
 defined('NIAMBIE') or die;
 
@@ -17,16 +16,19 @@ defined('NIAMBIE') or die;
  * Event Service
  *
  * List All Events:
- *      $event_array = Services::Registry()->get('Events', 'events');
+ *      $event_array = Services::Events()->get('Events');
+ *
+ * List All Plugins:
+ *      $plugin_array = Services::Events()->get('Plugins');
  *
  * List Plugins for a Specific Event:
- *      $plugin_array = Services::Registry()->get('Events', 'onBeforeRead');
+ *      $plugin_array = Services::Events()->get('Plugins', 'onBeforeRead');
  *
  * Schedule an Event:
  *      Services::Event()->scheduleEvent('onAfterDelete', $arguments, $selections);
  *
  * Override a Plugin:
- *      Copy the Plugin folder into an Extension (i.e., Resource, View, Theme, etc.) and make changes,
+ *      Copy the Plugin folder into an Extension (i.e., Plugin, Resource, View, Theme, etc.) and make changes,
  *      When that extension is in use, Molajo will locate the override and register it with this command:
  *
  *      Services::Event()->registerPlugin(PLATFORM_FOLDER . '/' . 'Plugin', 'Molajo\\Plugin\\');
@@ -37,7 +39,6 @@ defined('NIAMBIE') or die;
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-
 Class EventService
 {
     /**
@@ -47,6 +48,14 @@ Class EventService
      * @since  1.0
      */
     protected $on;
+
+    /**
+     * Frontcontroller Instance
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $frontcontroller_instance;
 
     /**
      * Events discovered within Plugins
@@ -80,48 +89,68 @@ Class EventService
      */
     protected $property_array = array(
         'on',
+        'frontcontroller_instance',
+        'events',
         'event_array',
+        'plugins',
         'plugin_array',
-        'event_plugin_array',
-        'plugin_class',
-        'plugin_event',
+        'event_plugin_array'
+    );
+
+    /**
+     * List of Plugin Property Array
+     *
+     * Must match Plugin Class $property_array Property
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $plugin_property_array = array(
         'model',
         'model_registry',
         'model_registry_name',
         'parameters',
-        'property_array',
+        'parameter_property_array',
         'query_results',
         'row',
         'rendered_output',
+        'view_path',
+        'view_path_url',
+        'plugins',
         'class_array',
         'include_parse_sequence',
-        'include_parse_exclude_until_final',
-        'service_class',
-
+        'include_parse_exclude_until_final'
     );
-
-    /**
-     * Initialise Event Service - Register Core and Extension Plugins for Events
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function initialise()
-    {
-
-    }
 
     /**
      * get property
      *
-     * @param   $key
+     * @param   string  $key
+     * @param   string  $default
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
-    public function get($key, $default)
+    public function get($key, $default = '')
     {
         $key = strtolower($key);
+
+        if ($key == 'events') {
+            $key = 'event_array';
+        }
+
+        if ($key == 'plugins') {
+            $plugins = array();
+            foreach ($this->event_plugin_array as $x) {
+                if ($x->event == $default || $default == '') {
+                    $plugin           = $this->plugin_array[$x->plugin];
+                    $plugins[$plugin] = $x->plugin;
+                }
+            }
+
+            return $plugins;
+        }
 
         if (in_array($key, $this->property_array)) {
         } else {
@@ -129,9 +158,9 @@ Class EventService
             ('Event Service: attempting to set value for unknown key: ' . $key);
         }
 
-
         if (isset($this->$key)) {
-            return $this->$key;
+        } else {
+            $this->$key = $default;
         }
 
         return $this->$key;
@@ -145,6 +174,7 @@ Class EventService
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value)
     {
@@ -161,7 +191,6 @@ Class EventService
         return;
     }
 
-
     /**
      * The application schedules events at various points within the system.
      *
@@ -177,7 +206,7 @@ Class EventService
      * - authorised for use by the user
      *
      * @param   string  $event
-     * @param   array   $parameters
+     * @param   array   $arguments
      * @param   array   $selections
      *
      * @return  boolean
@@ -187,22 +216,23 @@ Class EventService
     public function scheduleEvent($event, $arguments = array(), $selections = array())
     {
         if (defined('PROFILER_ON') && PROFILER_ON === true) {
+
             Services::Profiler()->set(
                 'message',
-                'Event: Initiated Scheduling of Event ' . $event,
+                'Event Service: Initiated Scheduling of Event ' . $event,
                 'Plugins',
                 1
             );
+
         }
-
-        $event = strtolower($event);
-
-        if (in_array($event, $this->event_array) || count($this->event_plugin_array) > 0) {
+echo ' Event Sechedule: ' . $event  . '<br />';
+        if (in_array(strtolower($event), $this->event_array) || count($this->event_plugin_array) > 0) {
         } else {
+
             if (defined('PROFILER_ON') && PROFILER_ON === true) {
                 Services::Profiler()->set(
                     'message',
-                    'Event: ' . $event . ' has no registrations',
+                    'Event Service: ' . $event . ' has no registrations',
                     'Plugins',
                     1
                 );
@@ -212,6 +242,7 @@ Class EventService
         }
 
         $compareSelection = array();
+
         if (count($selections) > 0 && is_array($selections)) {
             foreach ($selections as $s) {
                 $compareSelection[] = strtolower($s . 'Plugin');
@@ -219,18 +250,19 @@ Class EventService
         }
 
         $scheduledEventPlugins = array();
+
         foreach ($this->event_plugin_array as $x) {
 
-            if ($x->event == $event) {
+            if ($x->event == strtolower($event)) {
 
                 if (count($compareSelection) == 0
                     || in_array(strtolower($x->plugin), $compareSelection)
                 ) {
                     $temp_row = $x;
 
-                    $temp_row->plugin_class = $this->plugin_array[$x->plugin];
-                    $temp_row->model_name   = $x->model_name;
-                    $temp_row->model_type   = $x->model_type;
+                    $temp_row->plugin_class_name = $this->plugin_array[$x->plugin];
+                    $temp_row->model_name        = $x->model_name;
+                    $temp_row->model_type        = $x->model_type;
 
                     $scheduledEventPlugins[] = $temp_row;
                 }
@@ -240,6 +272,7 @@ Class EventService
         if (count($scheduledEventPlugins) == 0) {
 
             if (defined('PROFILER_ON') && PROFILER_ON === true) {
+
                 Services::Profiler()->set(
                     'message',
                     'EventService: ' . $event . ' has no registrations',
@@ -253,13 +286,11 @@ Class EventService
 
         foreach ($scheduledEventPlugins as $selection) {
 
-            $plugin_class = $selection->plugin_class;
-            $model_name   = $selection->model_name;
-            $model_type   = $selection->model_type;
+            $plugin_class_name = $selection->plugin_class_name;
 
-            if (method_exists($plugin_class, $event)) {
+            if (method_exists($plugin_class_name, $event)) {
 
-                $results = $this->processPluginClass($plugin_class, $event, $arguments, $model_name, $model_type);
+                $results = $this->processPluginClass($plugin_class_name, $event, $arguments);
 
                 if ($results === false) {
                     return false;
@@ -270,12 +301,14 @@ Class EventService
         }
 
         if (defined('PROFILER_ON') && PROFILER_ON === true) {
+
             Services::Profiler()->set(
                 'message',
-                'Event: Finished EventSchedule for Event: ' . $event,
+                'Event Service: Finished EventSchedule for Event: ' . $event,
                 'Plugins',
                 1
             );
+
         }
 
         return $arguments;
@@ -289,36 +322,38 @@ Class EventService
      * Execute each qualified plugin, one at a time, until all have been processed.
      * Return arguments, which could contain changed data, to the calling class.
      *
-     * @param   string  $plugin_class  includes namespace
+     * @param   string  $plugin_class_name  includes namespace
      * @param   string  $event
      * @param   array   $arguments
-     * @param   string  $model_name
-     * @param   string  $model_type
      *
      * @return  array|bool
      * @since   1.0
      * @throws  \Exception
+     * @throws  \OutOfRangeException
      */
-    protected function processPluginClass($plugin_class, $event, $arguments = array(), $model_name, $model_type)
+    protected function processPluginClass($plugin_class_name, $event, $arguments = array())
     {
         try {
-            $plugin = new $plugin_class();
+            $plugin = new $plugin_class_name();
 
         } catch (\Exception $e) {
-            throw new \Exception('Event: ' . $event . ' processPluginClass failure instantiating: ' . $plugin_class);
+            throw new \Exception('Event Service: ' . $event
+                . ' processPluginClass failure instantiating: ' . $plugin_class_name);
         }
 
         if (defined('PROFILER_ON') && PROFILER_ON === true) {
 
             Services::Profiler()->set(
                 'message',
-                'Event:' . $event . ' firing Plugin: ' . $plugin_class,
+                'Event:' . $event . ' firing Plugin: ' . $plugin_class_name,
                 'Plugins',
                 1
             );
         }
 
-        $plugin->set('plugin_class', $plugin_class);
+        $plugin->set('frontcontroller_instance', $this->frontcontroller_instance);
+
+        $plugin->set('plugin_class_name', $plugin_class_name);
 
         $plugin->set('plugin_event', $event);
 
@@ -326,24 +361,14 @@ Class EventService
 
             foreach ($arguments as $key => $value) {
 
-                if (in_array($key, $this->property_array)) {
+                if (in_array($key, $this->plugin_property_array)) {
                     $plugin->set($key, $value, '');
 
                 } else {
-                    throw new \OutOfRangeException('Event: ' . $event .
-                        ' Plugin ' . $plugin_class .
+                    throw new \OutOfRangeException('Event Service: ' . $event .
+                        ' Plugin ' . $plugin_class_name .
                         ' attempting to set value for unknown property: ' . $key);
                 }
-            }
-        }
-
-
-        /** Option Test at the Event Name level to see if Plugin Class should run */
-        $method = $event . 'Test';
-        if (method_exists($plugin_class, $method)) {
-            $results = $plugin->$method();
-            if ($results === false) {
-                return $arguments;
             }
         }
 
@@ -359,12 +384,12 @@ Class EventService
 
                 foreach ($arguments as $key => $value) {
 
-                    if (in_array($key, $this->property_array)) {
+                    if (in_array($key, $this->plugin_property_array)) {
                         $arguments[$key] = $plugin->get($key);
 
                     } else {
-                        throw new \OutOfRangeException('Event: ' . $event .
-                            ' Plugin ' . $plugin_class .
+                        throw new \OutOfRangeException('Event Service: ' . $event .
+                            ' Plugin ' . $plugin_class_name .
                             ' attempting to set value for unknown property: ' . $key);
                     }
                 }
@@ -384,89 +409,34 @@ Class EventService
      * Usage:
      * Services::Event()->registerPlugin('Molajo\\Plugin');
      *
-     * @return  object
-     * @since   1.0
-     */
-    public function registerPlugins($folder = '', $namespace = '', $core = 0)
-    {
-        if (defined('PROFILER_ON') && PROFILER_ON === true) {
-            Services::Profiler()->set(
-                'message',
-                'Event: registerPlugins for Namespace' . $namespace,
-                'Plugins',
-                1
-            );
-        }
-
-        if ($folder == '') {
-            throw new \Exception ('Event: No folder sent into RegisterPlugins');
-        }
-
-        if ($namespace == '') {
-            throw new \Exception ('Event: No namespace sent into RegisterPlugins');
-        }
-
-        $folder .= '/' . 'Plugin';
-        $namespace .= '\\' . 'Plugin' . '\\';
-
-        $connect = new EventServicePlugin();
-        $plugins = $connect->registerPluginFolder($folder, $namespace, $core);
-
-        if (count($plugins) == 0 || $plugins === false) {
-            return true;
-        }
-
-        foreach ($plugins as $plugin) {
-
-            $plugin_name  = $plugin[0];
-            $plugin_class = $namespace . $plugin[1] . '\\' . $plugin[0];
-
-            try {
-
-                $this->registerPlugin($plugin_name, $plugin_class);
-
-            } catch (\Exception $e) {
-
-                throw new \Exception('Events: Registration Failed for Plugin '
-                    . $plugin_name . ' and Class ' . $plugin_class);
-            }
-        }
-
-        sort($this->event_array);
-        ksort($this->plugin_array);
-        sort($this->event_plugin_array);
-
-        return $this;
-    }
-
-    /**
-     * Instantiate the Plugin class, register it to listen to each event for which it has a method,
-     *  and save the path and name for possible use later
+     * @param   string  $folder
+     * @param   string  $namespace
      *
-     * @param   string  $plugin_name
-     * @param   string  $plugin_class
-     *
-     * @return  object
-     * @since   1.0
+     * @return  bool|EventService
+     * @throws  \Exception
      */
-    protected function registerPlugin($plugin_name, $plugin_class)
+    public function registerPlugin($plugin_name = '', $plugin_class_name = '')
     {
-        $events = get_class_methods($plugin_class);
+        $events = get_class_methods($plugin_class_name);
 
         if (count($events) > 0) {
 
             foreach ($events as $event) {
 
                 if (substr($event, 0, 2) == 'on') {
-                    $reflectionMethod = new \ReflectionMethod(new $plugin_class, $event);
+                    $reflectionMethod = new \ReflectionMethod(new $plugin_class_name, $event);
                     $results          = $reflectionMethod->getDeclaringClass();
 
-                    if ($results->name == $plugin_class) {
-                        $this->registerPluginEvent($plugin_name, $plugin_class, $event);
+                    if ($results->name == $plugin_class_name) {
+                        $this->registerPluginEvent($plugin_name, $plugin_class_name, $event);
                     }
                 }
             }
         }
+
+        sort($this->event_array);
+        ksort($this->plugin_array);
+        sort($this->event_plugin_array);
 
         return $this;
     }
@@ -481,18 +451,20 @@ Class EventService
      * Plugins can be overridden by registering after the installed plugins.
      *
      * @param   string  $plugin_name
-     * @param   string  $plugin_class
+     * @param   string  $plugin_class_name
      * @param   string  $event
      *
      * @return  void
      * @since   1.0
      */
-    protected function registerPluginEvent($plugin_name, $plugin_class, $event)
+    protected function registerPluginEvent($plugin_name, $plugin_class_name, $event)
     {
         $event = strtolower($event);
 
-        $this->plugin_array[$plugin_name] = $plugin_class;
+        // $this->plugin_array['AssetServicePlugin'] = 'Molajo//Service//Services//Asset';
+        $this->plugin_array[$plugin_name] = $plugin_class_name;
 
+        // $this->event_array = 'onBeforeRegisterPlugins';
         if (in_array($event, $this->event_array)) {
         } else {
             $this->event_array[] = $event;
@@ -509,6 +481,7 @@ Class EventService
                         $found = true;
                     }
                 }
+
                 $this->event_plugin_array[] = $single;
             }
         }
@@ -517,6 +490,13 @@ Class EventService
         } else {
 
             $temp_row = new \stdClass();
+
+            // $this->event_plugin_array = array (
+            //      event => 'onBeforeRegisterPlugin',
+            //      plugin => 'EventServicePlugin',
+            //      model_name => 'EventService',
+            //      model_type => 'Plugin'
+            //  )
 
             $temp_row->event      = $event;
             $temp_row->plugin     = $plugin_name;
@@ -529,9 +509,9 @@ Class EventService
         if (defined('PROFILER_ON') && PROFILER_ON === true) {
             Services::Profiler()->set(
                 'message',
-                'Event: Plugin ' . $plugin_name
+                'Event Service: Plugin ' . $plugin_name
                     . ' scheduled for Event: ' . $event
-                    . ' will execute from namespace ' . $plugin_class,
+                    . ' will execute from namespace ' . $plugin_class_name,
                 'Plugins',
                 1
             );

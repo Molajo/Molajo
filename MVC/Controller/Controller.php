@@ -118,17 +118,17 @@ class Controller
      * @since  1.0
      */
     protected $property_array = array(
-        'model_registry_name',
         'model',
         'model_registry',
+        'model_registry_name',
         'parameters',
         'query_results',
         'row',
-        'plugins',
         'rendered_output',
         'view_path',
         'view_path_url',
-        'connect_database_set'
+        'connect_database_set',
+        'plugins'
     );
 
     /**
@@ -262,9 +262,8 @@ class Controller
         $model_name = null,
         $connect = 0,
         $parameter_registry = null
-    ) {
-//echo '<br />' . $model_name . $model_type . $connect . '<br />';
-
+    )
+    {
         $this->set('connect_database_set', 0);
 
         if ($model_type === null) {
@@ -330,7 +329,7 @@ class Controller
             $this->connectDatabase();
         }
 
-        if (Services::Registry()->get('Configuration', 'profiler_output_queries_table_registry') == 0) {
+        if (Services::Application()->get('profiler_output_queries_table_registry') == 0) {
         } else {
             ob_start();
             echo $this->get('model_registry_name');
@@ -427,20 +426,23 @@ class Controller
 
         $this->set('query_object', $query_object, 'model_registry');
 
-        if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
-            $this->prepareQuery($this->get('query_object', '', 'model_registry'));
-        }
-
         $profiler_message =
             ' <br />Data Object: ' . $this->get('data_object', 'Database', 'model_registry')
                 . ' <br />Model Type: ' . $this->get('model_type', 'datasource', 'model_registry')
                 . ' <br />Model Name: ' . $this->get('model_name', '', 'model_registry')
+                . ' <br />Model Registry Name: ' . $this->get('model_registry_name')
                 . ' <br />Model Query Object: ' . $this->get('query_object', '', 'model_registry')
                 . ' <br />Template View: ' . $this->get('template_view_path_node', '', 'parameters')
                 . ' <br />Process Plugins: ' . (int)$this->get('process_plugins', 1, 'model_registry')
                 . '<br /><br />';
 
-//        echo $profiler_message;
+        //echo $profiler_message;
+
+        if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
+            $this->prepareQuery($this->get('query_object', '', 'model_registry'));
+        }
+
+
 //        }
 
         if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
@@ -529,7 +531,7 @@ class Controller
 
         if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_LIST) {
 
-            if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results', 0) == 1) {
+            if (Services::Application()->get('profiler_output_queries_query_results', 0) == 1) {
 
                 $profiler_message .= 'Controller: getData Query Results <br /><br />';
 
@@ -567,10 +569,14 @@ class Controller
      */
     protected function prepareQuery()
     {
+        //Services::Registry()->get('ActionsDatasource', '*');
+
         $key = $this->get('primary_key_value', 0, 'model_registry');
+
         if ($key === 0) {
             $key = $this->get('criteria_source_id', 0, 'parameters');
         }
+
         $this->set('primary_key_value', $key, 'model_registry');
 
         $this->model->setBaseQuery(
@@ -610,12 +616,13 @@ class Controller
             $this->get('primary_prefix', 'a', 'model_registry')
         );
 
-        //echo '<br /><br /><pre>';
-        //$this->get('model_registry_name');
-        //echo '<br /><br /><pre>';
-        //echo $this->model->query->__toString();
-        //echo '<br /><br />';
-
+        /**
+        echo '<br /><br /><pre>';
+        $this->get('model_registry_name');
+        echo '<br /><br /><pre>';
+        echo $this->model->query->__toString();
+        echo '<br /><br />';
+        */
         return;
     }
 
@@ -638,7 +645,7 @@ class Controller
             'parameters'
         );
 
-        if (Services::Registry()->get('Configuration', 'profiler_output_queries_sql') == 1) {
+        if (Services::Application()->get('profiler_output_queries_sql') == 1) {
             Services::Profiler()->set('message',
                 'Controller runQuery: <br /><br />'
                     . $this->model->query->__toString(),
@@ -661,7 +668,7 @@ class Controller
             || $this->get('query_object', '', 'model_registry') == QUERY_OBJECT_DISTINCT
         ) {
 
-            if (Services::Registry()->get('Configuration', 'profiler_output_queries_query_results') == 1) {
+            if (Services::Application()->get('profiler_output_queries_query_results') == 1) {
                 $message = 'DisplayController->getData Query Result <br /><br />';
                 ob_start();
                 echo '<pre>';
@@ -791,6 +798,10 @@ class Controller
             'query_results'                     => array(),
             'row'                               => null,
             'rendered_output'                   => null,
+            'view_path'                         => null,
+            'view_path_url'                     => null,
+            'plugins'                           => $this->get('plugins'),
+            'class_array'                       => array(),
             'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
@@ -900,7 +911,7 @@ class Controller
     {
         if (defined('ROUTE')) {
         } else {
-            return true;
+            return;
         }
 
         if (count($this->get('plugins', array())) == 0
@@ -912,10 +923,15 @@ class Controller
         $arguments = array(
             'model'                             => $this->get('model'),
             'model_registry'                    => $this->get('model_registry'),
+            'model_registry_name'               => $this->get('model_registry_name'),
             'parameters'                        => $this->get('parameters'),
             'query_results'                     => array(),
             'row'                               => null,
             'rendered_output'                   => null,
+            'view_path'                         => null,
+            'view_path_url'                     => null,
+            'plugins'                           => $this->get('plugins'),
+            'class_array'                       => array(),
             'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
@@ -971,10 +987,15 @@ class Controller
                 $arguments = array(
                     'model'                             => $this->get('model'),
                     'model_registry'                    => $this->get('model_registry'),
+                    'model_registry_name'               => $this->get('model_registry_name'),
                     'parameters'                        => $this->get('parameters'),
                     'query_results'                     => array(),
                     'row'                               => $row,
                     'rendered_output'                   => null,
+                    'view_path'                         => null,
+                    'view_path_url'                     => null,
+                    'plugins'                           => $this->get('plugins'),
+                    'class_array'                       => array(),
                     'include_parse_sequence'            => array(),
                     'include_parse_exclude_until_final' => array()
                 );
@@ -1011,16 +1032,21 @@ class Controller
     {
         if (defined('ROUTE')) {
         } else {
-            return true;
+            return;
         }
 
         $arguments = array(
             'model'                             => $this->get('model'),
             'model_registry'                    => $this->get('model_registry'),
+            'model_registry_name'               => $this->get('model_registry_name'),
             'parameters'                        => $this->get('parameters'),
             'query_results'                     => $this->get('query_results'),
             'row'                               => null,
             'rendered_output'                   => null,
+            'view_path'                         => null,
+            'view_path_url'                     => null,
+            'plugins'                           => $this->get('plugins'),
+            'class_array'                       => array(),
             'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
         );
@@ -1058,6 +1084,12 @@ class Controller
             $this->set('model_registry', array(), '');
         }
 
+        if (isset($arguments['model_registry_name'])) {
+            $this->set('model_registry_name', $arguments['model_registry_name'], '');
+        } else {
+            $this->set('model_registry_name', '');
+        }
+
         if (isset($arguments['parameters'])) {
             $this->set('parameters', $arguments['parameters'], '');
         } else {
@@ -1084,6 +1116,11 @@ class Controller
             $this->set('rendered_output', array(), '');
         }
 
+        if (isset($arguments['plugins'])) {
+            $this->set('plugins', $arguments['plugins'], '');
+        } else {
+            $this->set('plugins', array(), '');
+        }
         return true;
     }
 }

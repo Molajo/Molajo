@@ -125,10 +125,10 @@ Class LogService
      * 4. Email
      *
      * $this->options['sender'] = array(
-     *     Services::Registry()->get('Configuration', 'mailer_mail_from'),
-     *     Services::Registry()->get('Configuration', 'mailer_mail_from_name')
+     *     Services::Application()->get('mailer_mail_from'),
+     *     Services::Application()->get('mailer_mail_from_name')
      * };
-     * $this->options['recipient'] = Services::Registry()->get('Configuration', 'mailer_mail_from_email_address');
+     * $this->options['recipient'] = Services::Application()->get('mailer_mail_from_email_address');
      * $this->options['subject'] = Services::Language()->translate('LOG_ALERT_EMAIL_SUBJECT'));
      * $this->options['mailer'] = Services::Mail();
      *

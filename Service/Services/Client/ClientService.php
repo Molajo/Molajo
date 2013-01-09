@@ -8,8 +8,6 @@
  */
 namespace Molajo\Service\Services\Client;
 
-use Molajo\Service\Services;
-
 defined('NIAMBIE') or die;
 
 /**
@@ -107,7 +105,6 @@ Class ClientService
     /**
      * __construct
      *
-     * @return  object
      * @since   1.0
      */
     public function __construct()
@@ -139,7 +136,7 @@ Class ClientService
 
             $results = array();
 
-            foreach ($this->property_array as $parameter) {
+            foreach ($this->property_array as $key) {
                 $results[$key] = $this->$key;
             }
 
@@ -318,6 +315,10 @@ Class ClientService
         $this->set('browser_version', $browser_version);
 
         $this->set('user_agent', $user_agent);
+
+        $this->set('platform', $platform);
+
+        $this->set('desktop', $desktop);
 
         return;
     }

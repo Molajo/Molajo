@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Request Service Plugin
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Request;
 
@@ -11,13 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 defined('NIAMBIE') or die;
 
 /**
- * Request
+ * Request Service Plugin
  *
  * @url http://symfony.com/doc/current/resources/http_foundation.html#accessing-request-data
  *
- * @package     Niambie
- * @subpackage  Services
- * @since       1.0
+ * @author       Amy Stephen
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class RequestService
 {
@@ -76,7 +79,6 @@ Class RequestService
     protected $property_array = array(
         'calling_class',
         'calling_method',
-
         'id',
         'method',
         'mimetype',
@@ -87,7 +89,6 @@ Class RequestService
     /**
      * Class Constructor
      *
-     * @return  void
      * @since   1.0
      */
     public function __construct()
@@ -112,7 +113,7 @@ Class RequestService
      */
     public function initialise()
     {
-        $this->request         = new \stdClass();
+        $this->request = new \stdClass();
 
         $request_class         = '\\Symfony\\Component\\HttpFoundation\\Request';
         $connection            = new $request_class();
@@ -138,6 +139,7 @@ Class RequestService
 
         if (in_array($key, $this->property_array)) {
             $this->$key = $value;
+
             return $this->$key;
         }
 
@@ -192,7 +194,7 @@ Class RequestService
         /** http://localhost/molajo/index.php returns 'http' */
         $this->set('is_secure', $this->symfony_request->isSecure());
 
-        /** http://localhost:99/molajo/index.php retursn http:://localhost:99 (non-standard port) */
+        /** http://localhost:99/molajo/index.php returns http:://localhost:99 (non-standard port) */
         $this->set('host', $this->symfony_request->headers->get('host'));
 
         /** http://localhost/molajo/index.php returns '/molajo' */

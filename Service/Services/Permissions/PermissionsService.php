@@ -37,6 +37,7 @@ Class PermissionsService
         $controller->getModelRegistry('Datasource', 'Actions', 1);
 
         $items = $controller->getData(QUERY_OBJECT_LIST);
+
         if ($items === false) {
             throw new \RuntimeException ('Permissions: getActions Query failed.');
         }
@@ -444,7 +445,7 @@ Class PermissionsService
      */
     public function setHTMLFilter()
     {
-        $groups     = Services::Registry()->get('Configuration', 'user_disable_filter_for_groups');
+        $groups     = Services::Application()->get('user_disable_filter_for_groups');
         $groupArray = explode(',', $groups);
         $userGroups = Services::Registry()->get('User', 'groups');
 

@@ -138,65 +138,67 @@ Class Frontcontroller
      * @since  1.0
      */
     protected $property_array = array(
-        'application_login_requirement',
         'application_home_catalog_id',
         'application_html5',
         'application_line_end',
+        'application_login_requirement',
         'application_mimetype',
+        'application_service',
+        'asset_service',
+        'base_url_path_for_application',
         'catalog_alias',
         'catalog_category_id',
         'catalog_extension_instance_id',
         'catalog_home',
         'catalog_id',
         'catalog_model_name',
-        'catalog_model_type',
         'catalog_model_registry_name',
+        'catalog_model_type',
         'catalog_page_type',
         'catalog_source_id',
-        'catalog_type',
         'catalog_type_id',
+        'catalog_type',
         'catalog_url_request',
         'catalog_url_sef_request',
         'catalog_view_group_id',
-        'asset_service',
-        'metadata_service',
-        'application_service',
-        'site_service',
-        'configuration_service',
-        'configuration_application_login_requirement',
+        'class_array',
         'configuration_application_home_catalog_id',
+        'configuration_application_login_requirement',
         'configuration_offline_switch',
         'configuration_sef_url',
+        'configuration_service',
         'error_code',
         'error_message',
-        'error_theme_id',
         'error_page_view_id',
-        'redirect_to_id',
+        'error_theme_id',
+        'frontcontroller_instance',
         'language_current',
         'language_direction',
-        'permission_filters',
+        'metadata_service',
         'permission_action_to_authorisation',
         'permission_action_to_controller',
+        'permission_filters',
         'permission_tasks',
+        'redirect_to_id',
         'request_action',
         'request_base_url_path',
         'request_base_url',
         'request_catalog_id',
+        'request_date',
         'request_filters',
         'request_id',
         'request_method',
         'request_mimetype',
         'request_non_route_parameters',
         'request_post_variables',
-        'request_task',
         'request_task_controller',
         'request_task_permission',
         'request_task_values',
-        'request_date',
+        'request_task',
         'request_url',
         'request_using_ssl',
-        'base_url_path_for_application',
         'requested_resource_for_route',
+        'site_service',
         'status_authorised',
         'status_found',
         'user_authorised_for_offline_access',
@@ -214,7 +216,6 @@ Class Frontcontroller
     protected $class_array = array(
 
         'Service'               => 'Molajo\\Service\\Services',
-
         'ApplicationService'    => 'Molajo\\Service\\Services\\Application\\',
         'AssetService'          => 'Molajo\\Service\\Services\\Asset\\',
         'AuthenticationService' => 'Molajo\\Service\\Services\\Authentication\\',
@@ -237,14 +238,11 @@ Class Frontcontroller
         'SessionService'        => 'Molajo\\Service\\Services\\Session\\',
         'SiteService'           => 'Molajo\\Service\\Services\\Site\\',
         'UserService'           => 'Molajo\\Service\\Services\\User\\',
-
         'ThemeService'          => 'Molajo\\Service\\Services\\Theme\\ThemeService',
-
         'ContentHelper'         => 'Molajo\\Service\\Services\\Theme\\Helper\\ContentHelper',
         'ExtensionHelper'       => 'Molajo\\Service\\Services\\Theme\\Helper\\ExtensionHelper',
         'ThemeHelper'           => 'Molajo\\Service\\Services\\Theme\\Helper\\ThemeHelper',
         'ViewHelper'            => 'Molajo\\Service\\Services\\Theme\\Helper\\ViewHelper',
-
         'Includer'              => 'Molajo\\Service\\Services\\Theme\\Includer',
         'HeadIncluder'          => 'Molajo\\Service\\Services\\Theme\\Includer\\HeadIncluder',
         'MessageIncluder'       => 'Molajo\\Service\\Services\\Theme\\Includer\\MessageIncluder',
@@ -254,7 +252,6 @@ Class Frontcontroller
         'TemplateIncluder'      => 'Molajo\\Service\\Services\\Theme\\Includer\\TemplateIncluder',
         'ThemeIncluder'         => 'Molajo\\Service\\Services\\Theme\\Includer\\ThemeIncluder',
         'WrapIncluder'          => 'Molajo\\Service\\Services\\Theme\\Includer\\WrapIncluder',
-
         'Controller'            => 'Molajo\\MVC\\Controller',
         'CreateController'      => 'Molajo\\MVC\\Controller\\CreateController',
         'DeleteController'      => 'Molajo\\MVC\\Controller\\DeleteController',
@@ -262,7 +259,6 @@ Class Frontcontroller
         'LoginController'       => 'Molajo\\MVC\\Controller\\LoginController',
         'LogoutController'      => 'Molajo\\MVC\\Controller\\LogoutController',
         'UpdateController'      => 'Molajo\\MVC\\Controller\\UpdateController',
-
         'Model'                 => 'Molajo\\MVC\\Model\\',
         'CreateModel'           => 'Molajo\\MVC\\Model\\CreateModel',
         'DeleteModel'           => 'Molajo\\MVC\\Model\\DeleteModel',
@@ -283,7 +279,7 @@ Class Frontcontroller
      *
      * @return  mixed
      * @since   1.0
-     * @throws \Exception
+     * @throws  \Exception
      */
     public function process(
         $override_url_request = null,
@@ -310,8 +306,8 @@ Class Frontcontroller
             $this->scheduleEvent('onAfterInitialiseEvent');
 
         } catch (\Exception $e) {
-
             throw new \Exception('Initialise Error: ' . $e->getMessage(), $e->getCode(), $e);
+
         }
 
         /** 2. Route */
@@ -376,6 +372,25 @@ Class Frontcontroller
     }
 
     /**
+     * Get class array namespace
+     *
+     * @param   string  $key
+     *
+     * @return  string
+     * @since   1.0
+     * @throws  \OutOfRangeException
+     */
+    public function get_class_array($key = null)
+    {
+        if (isset($this->class_array[$key])) {
+            return $this->class_array[$key];
+        }
+
+        throw new \OutOfRangeException
+        ('Frontcontroller: No entry for requested class array entry: ' . $key);
+    }
+
+    /**
      * Get the current value (or default) of the specified key
      *
      * @param   string  $key
@@ -389,9 +404,14 @@ Class Frontcontroller
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
+        if ($key == 'parameters') {
+
+        } elseif (in_array($key, $this->property_array)) {
+            return $this->$key;
+
         } else {
-            throw new \OutOfRangeException('Frontcontroller: is attempting to get value for unknown key: ' . $key);
+            throw new \OutOfRangeException
+            ('Frontcontroller: is attempting to get value for unknown key: ' . $key);
         }
 
         if (isset($this->parameters[$key])) {
@@ -417,9 +437,16 @@ Class Frontcontroller
     {
         $key = strtolower($key);
 
-        if (in_array($key, $this->property_array)) {
+        if ($key == 'parameters') {
+
+        } elseif (in_array($key, $this->property_array)) {
+            $this->$key = $value;
+
+            return $this->$key;
+
         } else {
-            throw new \OutOfRangeException('Frontcontroller: is attempting to set value for unknown key: ' . $key);
+            throw new \OutOfRangeException
+            ('Frontcontroller: is attempting to set value for unknown key: ' . $key);
         }
 
         $this->parameters[$key] = $value;
@@ -451,28 +478,26 @@ Class Frontcontroller
 
         if (defined('CONTROLLER_CLASS_NAMESPACE')) {
         } else {
-            define('CONTROLLER_CLASS_NAMESPACE', $this->class_array['Controller'] . '\\Controller');
+            define('CONTROLLER_CLASS_NAMESPACE', $this->get_class_array('Controller') . '\\Controller');
         }
 
         if (defined('MODEL_NAMESPACE')) {
         } else {
-            define('MODEL_NAMESPACE', $this->class_array['Model']);
+            define('MODEL_NAMESPACE', $this->get_class_array('Model'));
         }
 
         /** Instantiate Services Controller */
-        Frontcontroller::Services($this->class_array['Service']);
+        Frontcontroller::Services($this->get_class_array('Service'));
 
-        Frontcontroller::Services()->set('frontcontroller_class', $this);
+        Frontcontroller::Services()->set('frontcontroller_instance', $this);
         Frontcontroller::Services()->set('controller_class', CONTROLLER_CLASS_NAMESPACE);
 
-        Frontcontroller::Services()->start('ConfigurationService', $this->class_array['ConfigurationService']);
-        die;
-        Frontcontroller::Services()->start('RegistryService', $this->class_array['RegistryService']);
-        Frontcontroller::Services()->start('RequestService', $this->class_array['RequestService']);
-        Frontcontroller::Services()->start('SiteService', $this->class_array['SiteService']);
-        Frontcontroller::Services()->start('ApplicationService', $this->class_array['ApplicationService']);
+        Frontcontroller::Services()->start('ConfigurationService', $this->get_class_array('ConfigurationService'));
+        Frontcontroller::Services()->start('RegistryService', $this->get_class_array('RegistryService'));
+        Frontcontroller::Services()->start('RequestService', $this->get_class_array('RequestService'));
+        Frontcontroller::Services()->start('SiteService', $this->get_class_array('SiteService'));
+        Frontcontroller::Services()->start('ApplicationService', $this->get_class_array('ApplicationService'));
 
-        /** Start Filesystem Service */
         if ($override_url_request === null) {
         } else {
             $this->set('requested_resource_for_route', $override_url_request);
@@ -523,18 +548,16 @@ Class Frontcontroller
         /** Add Site URL to Application */
         Services::Application()->setBaseUrlPath();
 
-        Frontcontroller::Services()->start('CacheService', $this->class_array['CacheService']);
-        Frontcontroller::Services()->start('ProfilerService', $this->class_array['ProfilerService']);
-        Frontcontroller::Services()->start('SessionService', $this->class_array['SessionService']);
-        Frontcontroller::Services()->start('FilesystemService', $this->class_array['FilesystemService']);
-        Frontcontroller::Services()->start('DatabaseService', $this->class_array['DatabaseService']);
-        Frontcontroller::Services()->start('EventService', $this->class_array['EventService']);
-        Frontcontroller::Services()->start('DateService', $this->class_array['DateService']);
-        Frontcontroller::Services()->start('PermissionsService', $this->class_array['PermissionsService']);
-        Frontcontroller::Services()->start('UserService', $this->class_array['UserService']);
-        $this->set('request_date', Services::Date()->getDate());
-
-        Frontcontroller::Services()->start('LanguageService', $this->class_array['LanguageService']);
+        Frontcontroller::Services()->start('CacheService', $this->get_class_array('CacheService'));
+        Frontcontroller::Services()->start('ProfilerService', $this->get_class_array('ProfilerService'));
+//Frontcontroller::Services()->start('SessionService', $this->get_class_array('SessionService'));
+        Frontcontroller::Services()->start('DatabaseService', $this->get_class_array('DatabaseService'));
+        Frontcontroller::Services()->start('EventService', $this->get_class_array('EventService'));
+        Frontcontroller::Services()->start('PermissionsService', $this->get_class_array('PermissionsService'));
+        Frontcontroller::Services()->start('UserService', $this->get_class_array('UserService'));
+        echo 'doing permissions';
+        die;
+        Frontcontroller::Services()->start('LanguageService', $this->get_class_array('LanguageService'));
 
         $this->set(
             'language_current',
@@ -544,6 +567,8 @@ Class Frontcontroller
             'language_direction',
             Services::Registry()->get('Languages' . $this->get('Language_current'))
         );
+        $this->set('request_date', Services::Date()->getDate());
+        die;
 
         Services::Application()->getApplication();
 
@@ -556,8 +581,8 @@ Class Frontcontroller
         }
 
         Services::Application()->setApplicationSitePaths();
-        Frontcontroller::Services()->start('AssetService', $this->class_array['AssetService']);
-        Frontcontroller::Services()->start('MetadataService', $this->class_array['MetadataService']);
+        Frontcontroller::Services()->start('AssetService', $this->get_class_array('AssetService'));
+        Frontcontroller::Services()->start('MetadataService', $this->get_class_array('MetadataService'));
 
         /** Error Theme and View */
         $this->set('error_theme_id', Services::Application()->get('error_theme_id'));
@@ -600,7 +625,7 @@ Class Frontcontroller
      */
     public function exception_handler(\Exception $e)
     {
-        $class   = $this->class_array['ExceptionService'] . 'ExceptionService';
+        $class   = $this->get_class_array('ExceptionService') . 'ExceptionService';
         $connect = new $class($e->getMessage(), $e->getCode(), $e);
         $connect->formatMessage();
 
@@ -683,7 +708,7 @@ Class Frontcontroller
         );
         $this->set('user_guest', Services::Registry()->get('User', 'guest', 1));
 
-        $class = $this->class_array['RouteService'];
+        $class = $this->get_class_array('RouteService');
         $route = new $class();
 
         $route = $route->process(
@@ -875,14 +900,14 @@ Class Frontcontroller
      * @param   string  $override_parse_sequence
      * @param   string  $override_parse_final
      *
+     * @return  void
      * @since   1.0
-     * @return  Application
      */
     protected function display($override_parse_sequence, $override_parse_final)
     {
         $results = $this->getPageCache();
 
-        $class = $this->class_array['ThemeService'];
+        $class = $this->get_class_array('ThemeService');
         $theme = new $class();
 
         if ($results === false) {
@@ -899,7 +924,7 @@ Class Frontcontroller
 
         $this->setPageCache();
 
-        return true;
+        return;
     }
 
     /**
@@ -1067,10 +1092,13 @@ Class Frontcontroller
             'model_registry'                    => $model_registry,
             'model_registry_name'               => $this->get('model_registry_name'),
             'parameters'                        => $this->parameters,
-            'property_array'                    => $this->property_array,
+            'parameter_property_array'          => $this->property_array,
             'query_results'                     => array(),
-            'row'                               => null,
+            'row'                               => array(),
             'rendered_output'                   => $this->rendered_output,
+            'view_path'                         => null,
+            'view_path_url'                     => null,
+            'plugins'                           => null,
             'class_array'                       => $this->class_array,
             'include_parse_sequence'            => array(),
             'include_parse_exclude_until_final' => array()
@@ -1082,16 +1110,8 @@ Class Frontcontroller
             $this->getPluginList($model_registry_name)
         );
 
-        if (isset($arguments['class_array'])) {
-            $this->parameters = $arguments['class_array'];
-        }
-
-        if (isset($arguments['parameters'])) {
-            $this->parameters = $arguments['parameters'];
-        }
-
-        if (isset($arguments['property_array'])) {
-            $this->property_array = $arguments['property_array'];
+        if (isset($arguments['model_registry'])) {
+            $this->parameters = $arguments['model_registry'];
         }
 
         if (isset($this->parameters['model_registry_name'])) {
@@ -1105,8 +1125,20 @@ Class Frontcontroller
             }
         }
 
+        if (isset($arguments['parameters'])) {
+            $this->parameters = $arguments['parameters'];
+        }
+
+        if (isset($arguments['parameter_property_array'])) {
+            $this->property_array = $arguments['parameter_property_array'];
+        }
+
         if (isset($arguments['rendered_output'])) {
             $this->rendered_output = $arguments['rendered_output'];
+        }
+
+        if (isset($arguments['class_array'])) {
+            $this->class_array = $arguments['class_array'];
         }
 
         return;
@@ -1170,7 +1202,7 @@ Class Frontcontroller
      * @static
      * @return  null|object  Services
      * @since   1.0
-     * @throws \Exception
+     * @throws  \Exception
      */
     public static function Services($class = null)
     {

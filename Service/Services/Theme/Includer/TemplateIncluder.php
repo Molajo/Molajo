@@ -80,7 +80,7 @@ Class TemplateIncluder extends Includer
         // loop thru parameter names and overaly with matching attributes
 
         // get model
-        $fields = Services::Registry()->get('Configuration', 'application*');
+        $fields = Services::Application()->get('application*');
         if (count($fields) === 0 || $fields === false) {
         } else {
             foreach ($fields as $key => $value) {

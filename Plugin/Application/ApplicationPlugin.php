@@ -74,7 +74,7 @@ class ApplicationPlugin extends Plugin
      */
     protected function urls()
     {
-        $url = Services::Registry()->get('Configuration', 'application_base_url');
+        $url = Services::Application()->get('application_base_url');
         Services::Registry()->set(PAGE_LITERAL, 'home_url', $url);
 
         $url = $this->get('request_base_url_path', '', 'parameters') . $this->get('request_url', '', 'parameters');
@@ -148,7 +148,7 @@ class ApplicationPlugin extends Plugin
      */
     protected function setPageTitle($item_indicator = 0)
     {
-        $title = Services::Registry()->get('Configuration', 'application_name');
+        $title = Services::Application()->get('application_name');
         if ($title == '') {
             $title = 'Molajo ' . Services::Language()->translate(APPLICATION_NAME);
         }

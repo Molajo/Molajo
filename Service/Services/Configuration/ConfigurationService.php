@@ -1120,7 +1120,7 @@ Class ConfigurationService
         }
 
         if ($model_type == 'Service') {
-            $path = PLATFORM_FOLDER . '/Service/Services/' . $model_type . '/' . $model_name . '.xml';
+            $path = PLATFORM_FOLDER . '/Service/Services/' . $model_name . '/' . 'Configuration.xml';
             if (file_exists($path)) {
                 return $path;
             } else {
