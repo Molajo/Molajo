@@ -64,10 +64,14 @@ Class ExtensionHelper
         $model_name = null,
         $check_permissions = null
     ) {
-        if (((int)$catalog_type == 0 && trim($catalog_type) == '') || is_null($catalog_type)) {
+        if (((int)$catalog_type == 0 && trim($catalog_type) == '')
+            || is_null($catalog_type)
+        ) {
             $catalog_type_id = 0;
+
         } elseif (is_numeric($catalog_type)) {
             $catalog_type_id = $catalog_type;
+
         } else {
             $catalog_type_id = $this->getType(0, $catalog_type);
         }
@@ -91,31 +95,29 @@ Class ExtensionHelper
         if ((int)$extension_instance_id == 0) {
             $query_object = QUERY_OBJECT_LIST;
 
-        } elseif (Services::Registry()->exists('AuthorisedExtensions') === true) {
-            $saved = Services::Registry()->get('AuthorisedExtensions', $extension_instance_id);
+        } else {
+            $authorised = Services::User()->checkAuthorised($extension_instance_id);
 
-            if (is_object($saved)) {
+            if (is_object($authorised)) {
                 $controller->set('get_customfields', 1, 'model_registry');
-                $temp                    = $controller->addCustomFields(array($saved), QUERY_OBJECT_ITEM, 2);
+                $temp                    = $controller->addCustomFields(array($authorised), QUERY_OBJECT_ITEM, 2);
                 $temp[0]->model_registry = ucfirst(strtolower($model_name)) . ucfirst(strtolower($model_type));
                 $query_results           = $temp[0];
 
                 return $query_results;
 
             } else {
-                return false;
+
+                $controller->model->query->where(
+                    $controller->model->db->qn($primary_prefix)
+                        . '.'
+                        . $controller->model->db->qn($primary_key)
+                        . ' = '
+                        . (int)$extension_instance_id
+                );
+
+                $query_object = QUERY_OBJECT_ITEM;
             }
-
-        } else {
-            $controller->model->query->where(
-                $controller->model->db->qn($primary_prefix)
-                    . '.'
-                    . $controller->model->db->qn($primary_key)
-                    . ' = '
-                    . (int)$extension_instance_id
-            );
-
-            $query_object = QUERY_OBJECT_ITEM;
         }
 
         if ((int)$catalog_type_id == 0) {
@@ -131,17 +133,20 @@ Class ExtensionHelper
         }
 
         if (strtolower($query_object) == strtolower(QUERY_OBJECT_LIST)
-            && $model_type == 'datasource'
-            && $model_name == 'Extensioninstances'
+            && strtolower($model_type) == 'datasource'
+            && strtolower($model_name) == 'extensioninstances'
         ) {
+
             $controller->set('model_offset', 0, 'model_registry');
             $controller->set('model_count', 999999, 'model_registry');
             $controller->set('use_pagination', 0, 'model_registry');
             $controller->set('use_special_joins', 1, 'model_registry');
-            $controller->set('get_customfields', 2, 'model_registry');
+            $controller->set('get_customfields', 1, 'model_registry');
         }
 
+        /** Do not return base row for extension catalog type */
         if (strtolower($query_object) == strtolower(QUERY_OBJECT_LIST)) {
+
             $controller->model->query->where(
                 $controller->model->db->qn($primary_prefix)
                     . '.'
@@ -159,6 +164,7 @@ Class ExtensionHelper
         }
 
         if (strtolower($model_type) == 'datasource') {
+
         } else {
             $controller->model->query->where(
                 $controller->model->db->qn('catalog')

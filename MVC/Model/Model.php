@@ -216,7 +216,7 @@ class Model
             return true;
         }
 
-        if (Services::Registry()->get('User', 'username') == 'admin') {
+        if (Services::User()->get('administrator') == 1) {
         } else {
             return true;
         }

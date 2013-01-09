@@ -21,6 +21,14 @@ defined('NIAMBIE') or die;
 class ServicesPlugin
 {
     /**
+     * Current Date
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $current_date;
+
+    /**
      * Front controller Instance
      *
      * @var    object
@@ -77,6 +85,7 @@ class ServicesPlugin
      * @since  1.0
      */
     protected $plugin_property_array = array(
+        'current_date',
         'frontcontroller_instance',
         'service_class_name',
         'service_class_namespace',

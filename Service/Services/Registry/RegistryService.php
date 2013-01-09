@@ -350,7 +350,10 @@ Class RegistryService
 
         if ($this->exists($namespace) === true) {
         } else {
-            return false;
+            if ($namespace == '*') {
+            } else {
+                return false;
+            }
         }
 
         if ($namespace == '*') {

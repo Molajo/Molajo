@@ -58,6 +58,14 @@ Class EventService
     protected $frontcontroller_instance;
 
     /**
+     * Current Date
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $current_date;
+
+    /**
      * Events discovered within Plugins
      *
      * @var    array
@@ -88,6 +96,7 @@ Class EventService
      * @since  1.0
      */
     protected $property_array = array(
+        'current_date',
         'on',
         'frontcontroller_instance',
         'events',
@@ -106,6 +115,7 @@ Class EventService
      * @since  1.0
      */
     protected $plugin_property_array = array(
+        'current_date',
         'model',
         'model_registry',
         'model_registry_name',
@@ -356,6 +366,8 @@ echo ' Event Sechedule: ' . $event  . '<br />';
         $plugin->set('plugin_class_name', $plugin_class_name);
 
         $plugin->set('plugin_event', $event);
+
+        $plugin->set('current_date', $this->current_date);
 
         if (count($arguments) > 0) {
 

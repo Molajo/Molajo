@@ -34,6 +34,14 @@ defined('NIAMBIE') or die;
 class Plugin
 {
     /**
+     * Current Date
+     *
+     * @var    object
+     * @since  1.0
+     */
+    protected $current_date;
+
+    /**
      * Front controller Instance
      *
      * @var    object
@@ -162,6 +170,7 @@ class Plugin
      * @since  1.0
      */
     protected $plugin_property_array = array(
+        'current_date',
         'frontcontroller_instance',
         'plugin_event',
         'plugin_class_name',
@@ -276,15 +285,6 @@ class Plugin
             return $value;
         }
 
-        if ($property == 'parameters') {
-            if (isset($this->parameters[$key])) {
-                return $this->parameters[$key];
-            }
-            $this->parameters[$key] = $default;
-
-            return $this->parameters[$key];
-        }
-
         if ($property == 'model_registry') {
             if (isset($this->model_registry[$key])) {
                 return $this->model_registry[$key];
@@ -298,9 +298,13 @@ class Plugin
             return $this->model->$key;
         }
 
-        throw new \OutOfRangeException('Plugin: ' . $this->plugin_class_name .
-            ' Event ' . $this->plugin_event .
-            ' attempting to get value for unknown key: ' . $key);
+        if (isset($this->parameters[$key])) {
+            return $this->parameters[$key];
+        }
+
+        $this->parameters[$key] = $default;
+
+        return $this->parameters[$key];
     }
 
     /**
@@ -332,12 +336,6 @@ class Plugin
             return $this->$key;
         }
 
-        if ($property == 'parameters') {
-            $this->parameters[$key] = $value;
-
-            return $this->parameters[$key];
-        }
-
         if ($property == 'model_registry') {
             $this->model_registry[$key] = $value;
 
@@ -350,9 +348,9 @@ class Plugin
             return $this->model->$key;
         }
 
-        throw new \OutOfRangeException('Plugin: ' . $this->plugin_class_name .
-            ' Event ' . $this->plugin_event .
-            ' attempting to set value for unknown property: ' . $key);
+        $this->parameters[$key] = $value;
+
+        return $this->parameters[$key];
     }
 
     /**
@@ -502,7 +500,6 @@ class Plugin
         return;
     }
 
-
     /**
      * Triggered by Controller after Data Object is set for Model Registry
      *
@@ -623,7 +620,6 @@ class Plugin
     {
         return true;
     }
-
 
     /**
      * After the View has been rendered but before the output has been passed back to the Includer

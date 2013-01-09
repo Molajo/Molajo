@@ -213,7 +213,7 @@ Class PermissionsService
     {
         if (in_array(
             Services::Registry()->get('parameters', 'catalog_view_group_id'),
-            Services::Registry()->get('User', 'ViewGroups')
+            Services::User()->get('view_groups')
         )
         ) {
             Services::Registry()->set(PARAMETERS_LITERAL, 'status_authorised', true);
@@ -299,7 +299,7 @@ Class PermissionsService
         );
         $controller->model->query->where(
             $controller->model->db->qn('a.group_id')
-                . ' IN (' . implode(', ', Services::Registry()->get('User', 'Groups')) . ')'
+                . ' IN (' . implode(', ', Services::User()->get('groups')) . ')'
         );
 
         $count = $controller->getData(QUERY_OBJECT_RESULT);
@@ -362,11 +362,12 @@ Class PermissionsService
      * @param   array $query
      * @param   array $db
      * @param   array $parameters
+     * @param   array $view_groups
      *
      * @return  array
      * @since   1.0
      */
-    public function setQueryViewAccess($query = array(), $db = array(), $parameters = array())
+    public function setQueryViewAccess($query = array(), $db = array(), $parameters = array(), $view_groups = array())
     {
         if ($parameters['select'] === true) {
             $query->select(
@@ -416,7 +417,7 @@ Class PermissionsService
                 APPLICATION_ID
         );
 
-        $vg = implode(',', array_unique(Services::Registry()->get('User', 'ViewGroups')));
+        $vg = implode(',', array_unique($view_groups));
 
         $query->where(
             $db->qn($parameters['catalog_prefix']) .
@@ -447,7 +448,7 @@ Class PermissionsService
     {
         $groups     = Services::Application()->get('user_disable_filter_for_groups');
         $groupArray = explode(',', $groups);
-        $userGroups = Services::Registry()->get('User', 'groups');
+        $userGroups = Services::User()->get('groups');
 
         foreach ($groupArray as $single) {
             if (in_array($single, $userGroups)) {

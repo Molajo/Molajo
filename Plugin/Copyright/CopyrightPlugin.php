@@ -30,7 +30,7 @@ class CopyrightPlugin extends Plugin
         } else {
             return true;
         }
-        $current_year = Services::Date()->getDate()->format('Y');
+        $current_year = $this->current_date->format('Y');
 
         $first_year_field = $this->getField('copyright_first_year');
         if ($first_year_field === false) {

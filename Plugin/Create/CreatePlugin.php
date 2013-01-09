@@ -445,8 +445,8 @@ class CreatePlugin extends Plugin
         }
 
         $data->parameters = array();
-        Services::Registry()->sort($model_registry . PARAMETERS_LITERAL);
-        $parameters = Services::Registry()->getArray($model_registry . PARAMETERS_LITERAL);
+        Services::Registry()->sort($model_registry . 'Parameters');
+        $parameters = Services::Registry()->getArray($model_registry . 'Parameters');
         if (count($parameters) > 0) {
             foreach ($parameters as $key => $value) {
 

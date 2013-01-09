@@ -48,7 +48,7 @@ class DateformatsPlugin extends Plugin
                         $this->saveField(
                             $modifiedByField,
                             'modified_by',
-                            Services::Registry()->get('User', 'id')
+                            Services::User()->get('id')
                         );
                     }
 
@@ -65,7 +65,7 @@ class DateformatsPlugin extends Plugin
                             $this->saveField(
                                 $createdByField,
                                 'created_by',
-                                Services::Registry()->get('User', 'id')
+                                Services::User()->get('id')
                             );
                         }
 
@@ -73,7 +73,7 @@ class DateformatsPlugin extends Plugin
                         $createdByField = $this->getField('user_id');
                         $createdByValue = $this->getFieldValue($createdByField);
                         if ($createdByValue === false) {
-                            $this->saveField($createdByField, 'user_id', Services::Registry()->get('User', 'id'));
+                            $this->saveField($createdByField, 'user_id', Services::User()->get('id'));
                         }
 
                     }

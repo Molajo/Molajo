@@ -364,16 +364,11 @@ Class ApplicationService
                 $this->set('application_path', $item->path);
                 $this->set('application_description', $item->description);
 
-                $parameters = $controller->getAdditionalData('Parameters');
-                foreach ($parameters as $key => $value) {
-                    $this->set($key, $value);
-                }
-
-                $metadata = $controller->getAdditionalData('Metadata');
-                if (count($metadata) > 0) {
-                    foreach ($metadata as $key => $value) {
-                        $this->set('metadata_' . $key, $value);
+                foreach ($item as $key => $value) {
+                    if (substr($key, 0, strlen('parameters_') == strtolower('parameters_'))) {
+                        $key = substr($key, strlen('parameters_'), strlen($key) - strlen('parameters_'));
                     }
+                    $this->set($key, $value);
                 }
 
             } catch (\Exception $e) {

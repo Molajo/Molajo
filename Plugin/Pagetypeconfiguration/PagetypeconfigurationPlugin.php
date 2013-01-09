@@ -178,7 +178,7 @@ class PagetypeconfigurationPlugin extends Plugin
 
         /** Parameters */
         $parameters = Services::Registry()->getArray('ResourcesSystemParameters');
-        $array2     = Services::Registry()->getArray(PARAMETERS_LITERAL);
+        $array2     = Services::Registry()->getArray('Parameters');
 
         foreach ($array2 as $key => $value) {
             if (substr($key, 0, strlen('Configuration')) == 'Configuration') {
@@ -186,8 +186,8 @@ class PagetypeconfigurationPlugin extends Plugin
             }
         }
 
-        $form->set(PARAMETERS_LITERAL, $parameters);
-        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', PARAMETERS_LITERAL));
+        $form->set('Parameters', $parameters);
+        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', 'Parameters'));
 
         /** Metadata */
         $form->set('Metadata', Services::Registry()->getArray('ResourcesSystemMetadata'));

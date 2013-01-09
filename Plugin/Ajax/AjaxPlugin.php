@@ -33,7 +33,7 @@ class AjaxPlugin extends Plugin
      */
     public function onBeforeParse()
     {
-        echo 'yes';
+        echo 'onBeforeParse';
         die;
         if (APPLICATION_ID == 2) {
         } else {
@@ -41,26 +41,18 @@ class AjaxPlugin extends Plugin
         }
 
         $view = $this->viewHelper->get(0, CATALOG_TYPE_TEMPLATE_VIEW_LITERAL);
-        echo '<pre>';
-        var_dump($view);
-        echo '</pre>';
-        die;
 
-        if ((int)Services::Registry()->get('Client', 'Ajax') == 0) {
+        if ((int)Services::Client()->get('ajax') == 0) {
             return true;
         }
 
-        /**
+        $this->set('template_view_id', 1342);
+        $this->set('wrap_view_id', 2090);
 
-        Services::Registry()->set(PARAMETERS_LITERAL, 'template_view_id', 1342);
-
-
-        Services::Registry()->set(PARAMETERS_LITERAL, 'wrap_view_id', 2090);
         $this->viewHelper->get(2090, CATALOG_TYPE_WRAP_VIEW_LITERAL);
 
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_sequence', 'Ajax_sequence');
         Services::Registry()->set(OVERRIDE_LITERAL, 'parse_final', 'Ajax_final');
-         */
 
         return true;
     }

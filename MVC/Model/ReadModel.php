@@ -9,6 +9,7 @@
 namespace Molajo\MVC\Model;
 
 use Molajo\Frontcontroller;
+
 use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;
@@ -338,10 +339,10 @@ class ReadModel extends Model
     /**
      * Add Model Criteria to Query
      *
-     * @param   $catalog_type_id
-     * @param   $extension_instance_id
-     * @param   $primary_prefix
-     * @param   $status
+     * @param   string  $catalog_type_id
+     * @param   string  $extension_instance_id
+     * @param   string  $primary_prefix
+     * @param   string  $status
      *
      * @return  ReadModel
      * @since   1.0
@@ -415,6 +416,7 @@ class ReadModel extends Model
                 $use_pagination = 1;
             }
         }
+
         /**
         echo  'Offset ' . $offset . ' Count ' . $count . ' Use Pagination ' . $use_pagination . '<br />';
         echo '<br /><br /><pre>';
@@ -422,6 +424,7 @@ class ReadModel extends Model
         echo str_replace('#__', 'molajo_', $string);
         echo '</pre><br /><br />';
          */
+
         $cache_key = $this->query->__toString();
 
         $cached_output = Services::Cache()->get('Query', $cache_key);
@@ -503,7 +506,7 @@ class ReadModel extends Model
      * Populate query results with custom fields and values
      *
      * @param   string  $model_registry_name
-     * @param   string  $customFieldName
+     * @param   string  $custom_field_name
      * @param   array   $fields
      * @param   string  $retrieval_method
      * @param   object  $query_results
@@ -514,24 +517,23 @@ class ReadModel extends Model
      */
     public function addCustomFields(
         $model_registry_name,
-        $customFieldName,
+        $custom_field_name,
         $fields,
         $retrieval_method,
         $query_results,
         $query_object
     ) {
-
-        $customFieldName  = strtolower($customFieldName);
-        $useModelRegistry = $model_registry_name . ucfirst($customFieldName);
+        $custom_field_name = strtolower($custom_field_name);
+        $useModelRegistry  = $model_registry_name . ucfirst($custom_field_name);
 
         /** See if there are query results for this Custom Field Group */
-        if (is_object($query_results) && isset($query_results->$customFieldName)) {
-            $jsonData = $query_results->$customFieldName;
-            $data     = json_decode($jsonData);
+        if (is_object($query_results) && isset($query_results->$custom_field_name)) {
 
-            /** test for application-specific values */
+            $json_data = $query_results->$custom_field_name;
+            $data      = json_decode($json_data);
+
+            /** get application-specific data */
             if (count($data) > 0 && (defined('APPLICATION_ID'))) {
-
                 foreach ($data as $key => $value) {
                     if ($key == APPLICATION_ID) {
                         $data = $value;
@@ -540,7 +542,7 @@ class ReadModel extends Model
                 }
             }
 
-            /** Inject data for custom field group into named pairs array */
+            /** Build named pair (field name and value) array for custom fields */
             $lookup = array();
 
             if (count($data) > 0) {
@@ -555,10 +557,9 @@ class ReadModel extends Model
             $lookup = array();
         }
 
-        /** Process each of the Custom Field Group Definitions for Query Results or defaults */
+        /** Set value with query result value (or default) for each Model Field */
         foreach ($fields as $f) {
 
-            //@todo remove hack testing name - addition elements added on in controller incorrectly show in this array
             if (isset($f['name'])) {
                 $name = $f['name'];
                 $name = strtolower($name);
@@ -580,15 +581,15 @@ class ReadModel extends Model
 
                 if ($retrieval_method == 1 && $query_object == QUERY_OBJECT_ITEM) {
                     Services::Registry()->set($useModelRegistry, $name, $setValue);
-
-                } else {
-                    if (strtolower($customFieldName) == PARAMETERS_LITERAL
-                        || strtolower($customFieldName) == 'Metadata'
-                    ) {
-                        $name = strtolower($customFieldName) . '_' . $name;
-                    }
-                    $query_results->$name = $setValue;
                 }
+
+                if (strtolower($custom_field_name) == 'parameters'
+                    || strtolower($custom_field_name) == 'metadata'
+                ) {
+                    $name = strtolower($custom_field_name) . '_' . $name;
+                }
+
+                $query_results->$name = $setValue;
             }
         }
 
@@ -630,7 +631,8 @@ class ReadModel extends Model
                     . ' = ' . (int)$id
             );
 
-            $results                    = $controller->getData(QUERY_OBJECT_LIST);
+            $results = $controller->getData(QUERY_OBJECT_LIST);
+
             $query_results->$model_name = $results;
 
             unset ($controller);

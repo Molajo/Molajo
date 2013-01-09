@@ -181,7 +181,7 @@ class FieldsPlugin extends Plugin
             }
         }
 
-        $parameters      = $this->get(strtolower(PARAMETERS_LITERAL), array(), 'model_registry');
+        $parameters      = $this->get(strtolower('Parameters'), array(), 'model_registry');
         $parametersArray = array();
         if (count($parameters) > 0) {
             foreach ($parameters as $field) {

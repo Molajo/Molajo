@@ -312,7 +312,7 @@ Class Frontcontroller
 
         /** 2. Route */
         try {
-            if (defined(PROFILER_ON)) {
+            if (defined('PROFILER_ON') && PROFILER_ON === true) {
                 Services::Profiler()->set('current_phase', 'Routing');
             }
 
@@ -332,7 +332,7 @@ Class Frontcontroller
         /** 3. Authorise */
         try {
 
-            if (defined(PROFILER_ON)) {
+            if (defined('PROFILER_ON') && PROFILER_ON === true) {
                 Services::Profiler()->set('current_phase', 'Authorise');
             }
 
@@ -550,11 +550,16 @@ Class Frontcontroller
 
         Frontcontroller::Services()->start('CacheService', $this->get_class_array('CacheService'));
         Frontcontroller::Services()->start('ProfilerService', $this->get_class_array('ProfilerService'));
-//Frontcontroller::Services()->start('SessionService', $this->get_class_array('SessionService'));
         Frontcontroller::Services()->start('DatabaseService', $this->get_class_array('DatabaseService'));
         Frontcontroller::Services()->start('EventService', $this->get_class_array('EventService'));
-        Frontcontroller::Services()->start('PermissionsService', $this->get_class_array('PermissionsService'));
         Frontcontroller::Services()->start('UserService', $this->get_class_array('UserService'));
+die;
+        Frontcontroller::Services()->start('LanguageService', $this->get_class_array('LanguageService'));
+
+        Frontcontroller::Services()->start('DateService', $this->get_class_array('DateService'));
+
+
+        Frontcontroller::Services()->start('PermissionsService', $this->get_class_array('PermissionsService'));
         echo 'doing permissions';
         die;
         Frontcontroller::Services()->start('LanguageService', $this->get_class_array('LanguageService'));
@@ -704,9 +709,9 @@ Class Frontcontroller
 
         $this->set(
             'user_authorised_for_offline_access',
-            Services::Registry()->get('User', 'authorised_for_offline_access', 0)
+            Services::User()->get('authorised_for_offline_access', 0)
         );
-        $this->set('user_guest', Services::Registry()->get('User', 'guest', 1));
+        $this->set('user_guest', Services::User()->get('guest', 1));
 
         $class = $this->get_class_array('RouteService');
         $route = new $class();
@@ -772,7 +777,7 @@ Class Frontcontroller
      */
     protected function setError()
     {
-        if (defined(PROFILER_ON) && PROFILER_ON === true) {
+        if (defined('PROFILER_ON') && PROFILER_ON === true && PROFILER_ON === true) {
             Services::Profiler()->set('message', 'Error Code: ' . $this->get('error_code'), 'Application');
         }
 

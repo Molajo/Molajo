@@ -33,6 +33,7 @@ Class EventServicePlugin extends ServicesPlugin
      */
     public function onBeforeServiceInitialise()
     {
+        $this->service_class_instance->set('current_date', $this->current_date);
         $this->service_class_instance->set('frontcontroller_instance', $this->frontcontroller_instance);
     }
 

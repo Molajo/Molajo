@@ -60,9 +60,21 @@ Class SessionService
      */
     public function initialise()
     {
+        echo 'yes';
+var_dump($_SESSION);
+        die;
+        session_start();
+        $_SESSION['views'] = 1; // store session data
+        echo "Pageviews = ". $_SESSION['views']; //retrieve data
+
+        die;
+        $session = new Session();
+        $session->start();
+        die;
         $this->session = new Session();
         $this->session->start();
-
+        echo 'session';
+        die;
         // set and get session attributes
         $this->session->set('userid', 1);
 

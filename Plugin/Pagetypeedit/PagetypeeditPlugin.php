@@ -56,8 +56,8 @@ class PagetypeeditPlugin extends Plugin
         $form->set('data', Services::Registry()->get('Dataobject', 'Primary'));
 
         /** Parameters */
-        $form->set(PARAMETERS_LITERAL, Services::Registry()->getArray('ResourcesSystemParameters'));
-        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', PARAMETERS_LITERAL));
+        $form->set('Parameters', Services::Registry()->getArray('ResourcesSystemParameters'));
+        $form->set('parameter_fields', Services::Registry()->get('ResourcesSystem', 'Parameters'));
 
         /** Metadata */
         $form->set('Metadata', Services::Registry()->getArray('ResourcesSystemMetadata'));

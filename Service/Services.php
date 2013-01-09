@@ -217,9 +217,10 @@ Class Services
         if ($service_class_namespace == '') {
             $service_class_namespace = $this->frontcontroller_instance->get_class_array($service_class_name);
             $read_registry = 1;
-            echo 'Requested by applicatoin: ' . $service_class_namespace . '<br />';
+            echo 'Requested by application: ' . $service_class_namespace . '<br />';
         } else {
             echo 'Request for ' . $service . '<br />';
+
         }
 
         if ($service_class_namespace == '') {
@@ -239,6 +240,9 @@ Class Services
 
             $startup = $this->connections['RegistryService']->get($service . 'Service', 'startup');
             $keep_instance = $this->connections['RegistryService']->get($service . 'Service', 'keep_instance');
+
+            $startup       = 1;
+            $keep_instance = 1;
         }
 
         $connection_succeeded = null;
@@ -530,6 +534,15 @@ Class Services
             return false;
         }
 
+        if (isset($this->connections['DateService'])) {
+            $current_date = $this->connections['DateService']->getDate();
+        } else {
+            $temp = new \DateTime('now');
+            $current_date = $temp->format('Y-m-d H:i:s');
+        }
+
+        $plugin_instance->set('current_date', $current_date);
+
         $plugin_instance->set('service_class_name', $service_class_name);
         $plugin_instance->set('service_class_namespace', $service_class_namespace);
         $plugin_instance->set('service_class_instance', $service_class_instance);
@@ -551,7 +564,7 @@ Class Services
      *
      * Follows the completion of the start method defined in the configuration
      *
-     * @return  void
+     * @return  object
      * @since   1.0
      */
     public function onAfterSaveEventService($service_class_instance)

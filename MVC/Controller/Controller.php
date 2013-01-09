@@ -159,6 +159,7 @@ class Controller
      * @param   string  $property
      *
      * @return  mixed
+     * @throws  \OutOfRangeException
      * @since   1.0
      */
     public function get($key, $default = null, $property = '')
@@ -210,6 +211,7 @@ class Controller
      *
      * @return  mixed
      * @since   1.0
+     * @throws  \OutOfRangeException
      */
     public function set($key, $value = null, $property = '')
     {
@@ -252,7 +254,7 @@ class Controller
      * @param   int     $connect
      * @param   null    $parameter_registry
      *
-     * @return  object  Controller
+     * @return  object  model_registry
      * @since   1.0
      *
      * @throws  \RuntimeException
@@ -262,8 +264,7 @@ class Controller
         $model_name = null,
         $connect = 0,
         $parameter_registry = null
-    )
-    {
+    ) {
         $this->set('connect_database_set', 0);
 
         if ($model_type === null) {
@@ -312,6 +313,10 @@ class Controller
 
         $this->set('model_registry', Services::Registry()->get($this->model_registry_name));
 
+        if (defined('PROFILER_ON') && PROFILER_ON === true) {
+            Services::Profiler()->set($profiler_message, 'Queries');
+        }
+
         /** Only to ensure this redundant data is the same - it is a handy data element to retain */
         $this->set('model_registry_name', $this->model_registry_name, 'model_registry');
 
@@ -329,20 +334,7 @@ class Controller
             $this->connectDatabase();
         }
 
-        if (Services::Application()->get('profiler_output_queries_table_registry') == 0) {
-        } else {
-            ob_start();
-            echo $this->get('model_registry_name');
-            echo '<pre>';
-            var_dump($this->get('model_registry'));
-            echo '</pre>';
-            $profiler_message .= ob_get_contents();
-            ob_end_clean();
-        }
-
-        Services::Profiler()->set('message', $profiler_message, 'Queries', 1);
-
-        return;
+        return $this->get('model_registry');
     }
 
     /**
@@ -350,7 +342,7 @@ class Controller
      *
      * @return  void
      * @since   1.0
-     * @throws  \RuntimeException
+     * @throws  \Exception
      */
     public function connectDatabase()
     {
@@ -426,24 +418,24 @@ class Controller
 
         $this->set('query_object', $query_object, 'model_registry');
 
-        $profiler_message =
-            ' <br />Data Object: ' . $this->get('data_object', 'Database', 'model_registry')
-                . ' <br />Model Type: ' . $this->get('model_type', 'datasource', 'model_registry')
-                . ' <br />Model Name: ' . $this->get('model_name', '', 'model_registry')
-                . ' <br />Model Registry Name: ' . $this->get('model_registry_name')
-                . ' <br />Model Query Object: ' . $this->get('query_object', '', 'model_registry')
-                . ' <br />Template View: ' . $this->get('template_view_path_node', '', 'parameters')
-                . ' <br />Process Plugins: ' . (int)$this->get('process_plugins', 1, 'model_registry')
-                . '<br /><br />';
+        if (defined('PROFILER_ON') && PROFILER_ON === true) {
 
-        //echo $profiler_message;
+            $profiler_message =
+                ' <br />Data Object: ' . $this->get('data_object', 'Database', 'model_registry')
+                    . ' <br />Model Type: ' . $this->get('model_type', 'datasource', 'model_registry')
+                    . ' <br />Model Name: ' . $this->get('model_name', '', 'model_registry')
+                    . ' <br />Model Registry Name: ' . $this->get('model_registry_name')
+                    . ' <br />Model Query Object: ' . $this->get('query_object', '', 'model_registry')
+                    . ' <br />Template View: ' . $this->get('template_view_path_node', '', 'parameters')
+                    . ' <br />Process Plugins: ' . (int)$this->get('process_plugins', 1, 'model_registry')
+                    . '<br /><br />';
+
+            Services::Profiler()->set($profiler_message, 'Queries');
+        }
 
         if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
             $this->prepareQuery($this->get('query_object', '', 'model_registry'));
         }
-
-
-//        }
 
         if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
 
@@ -459,6 +451,7 @@ class Controller
                 $this->query_results = array();
 
             } else {
+
                 $service_class              = $this->get('service_class', 'Database', 'model_registry');
                 $service_class_query_method = $this->get('service_class_query_method', '', 'model_registry');
 
@@ -487,13 +480,15 @@ class Controller
                     $this->onBeforeReadEvent();
                 }
 
-                $profiler_message .= 'Class: ' . $service_class
-                    . ' Method ' . $service_class_query_method
-                    . ' Model Name ' . $this->get('model_name', '', 'model_registry')
-                    . ' Method parameter ' . $method_parameter
-                    . ' Query Object ' . $this->get('query_object', '', 'model_registry');
+                if (defined('PROFILER_ON') && PROFILER_ON === true) {
+                    $profiler_message .= 'Class: ' . $service_class
+                        . ' Method ' . $service_class_query_method
+                        . ' Model Name ' . $this->get('model_name', '', 'model_registry')
+                        . ' Method parameter ' . $method_parameter
+                        . ' Query Object ' . $this->get('query_object', '', 'model_registry');
 
-//echo $profiler_message . '<br /><br />';
+                    Services::Profiler()->set($profiler_message, 'Queries');
+                }
 
                 $this->query_results = Services::$service_class()
                     ->$service_class_query_method(
@@ -511,13 +506,7 @@ class Controller
                 $this->get('model_count', 15, 'model_registry')
             );
         }
-        if ($this->get('data_object', 'Database', 'model_registry') == 'Database') {
-        } else {
-            //echo '<pre>';
-            //var_dump($this->query_results);
-            //echo '</pre><br /><br />';
-            //die;
-        }
+
         if ($this->get('data_object_type', 'Database', 'model_registry') == 'Database') {
         } else {
             return $this->query_results;
@@ -531,8 +520,7 @@ class Controller
 
         if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_LIST) {
 
-            if (Services::Application()->get('profiler_output_queries_query_results', 0) == 1) {
-
+            if (defined('PROFILER_ON') && PROFILER_ON === true) {
                 $profiler_message .= 'Controller: getData Query Results <br /><br />';
 
                 ob_start();
@@ -544,7 +532,7 @@ class Controller
                 ob_end_clean();
                 echo $profiler_message;
 
-                Services::Profiler()->set('message', $profiler_message, 'Queries', 1);
+                Services::Profiler()->set($profiler_message, 'Queries', 1);
             }
 
             return $this->query_results;
@@ -592,6 +580,7 @@ class Controller
         );
 
         if ((int)$this->get('check_view_level_access', 0, 'model_registry') == 1) {
+
             $this->model->checkPermissions(
                 $this->get('primary_prefix', 'a', 'model_registry'),
                 $this->get('primary_key', 'id', 'model_registry'),
@@ -600,7 +589,9 @@ class Controller
         }
 
         if ((int)$this->get('use_special_joins', 1, 'model_registry') == 1) {
+
             $joins = $this->get('joins', array(), 'model_registry');
+
             if (count($joins) > 0) {
                 $this->model->useSpecialJoins(
                     $joins,
@@ -616,13 +607,14 @@ class Controller
             $this->get('primary_prefix', 'a', 'model_registry')
         );
 
-        /**
+        if ($this->get('model_registry_name') == 'ExtensioninstancesDatasource') {
         echo '<br /><br /><pre>';
         $this->get('model_registry_name');
         echo '<br /><br /><pre>';
         echo $this->model->query->__toString();
         echo '<br /><br />';
-        */
+        }
+
         return;
     }
 
@@ -645,11 +637,11 @@ class Controller
             'parameters'
         );
 
-        if (Services::Application()->get('profiler_output_queries_sql') == 1) {
-            Services::Profiler()->set('message',
+        if (defined('PROFILER_ON') && PROFILER_ON === true) {
+            Services::Profiler()->set(
                 'Controller runQuery: <br /><br />'
                     . $this->model->query->__toString(),
-                'Rendering',
+                'Queries',
                 1
             );
         }
@@ -664,20 +656,25 @@ class Controller
         var_dump($query_results);
         echo '</pre><br /><br />';
          */
+
         if ($this->get('query_object', '', 'model_registry') == QUERY_OBJECT_RESULT
             || $this->get('query_object', '', 'model_registry') == QUERY_OBJECT_DISTINCT
         ) {
 
-            if (Services::Application()->get('profiler_output_queries_query_results') == 1) {
+            if (defined('PROFILER_ON') && PROFILER_ON === true) {
+
                 $message = 'DisplayController->getData Query Result <br /><br />';
+
                 ob_start();
                 echo '<pre>';
                 var_dump($query_results);
                 echo '</pre><br /><br />';
                 $message .= ob_get_contents();
                 ob_end_clean();
-                Services::Profiler()->set('message', $message, 'Queries');
+
+                Services::Profiler()->set($message, 'Queries', 1);
             }
+
             $this->query_results = $query_results;
 
             return;
@@ -701,81 +698,50 @@ class Controller
      * @return  bool
      * @since   1.0
      */
-    public function addCustomFields($query_results, $external = 0)
+    public function addCustomFields($query_results)
     {
-        $customFieldTypes = $this->get('customfieldgroups', array(), 'model_registry');
+        $custom_field_types = $this->get('customfieldgroups', array(), 'model_registry');
 
-        if (count($customFieldTypes) > 0) {
+        if (is_array($custom_field_types)) {
         } else {
-            return $query_results;
+            $custom_field_types = array();
         }
 
         $q = array();
+        foreach ($query_results as $row) {
 
-        foreach ($query_results as $results) {
 
-            if ((int)$this->get('get_customfields', 1, 'model_registry') == 0) {
-            } else {
-
-                $customFieldTypes = $this->get('customfieldgroups', array(), 'model_registry');
-
-                if (count($customFieldTypes) == 0 || $customFieldTypes == null) {
-                } else {
-
-                    foreach ($customFieldTypes as $customFieldName) {
-
-                        $results =
-                            $this->model->addCustomFields(
-                                $this->get('model_registry_name', '', 'model_registry'),
-                                $customFieldName,
-                                $this->get($customFieldName, array(), 'model_registry'),
-                                $this->get('get_customfields', 1, 'model_registry'),
-                                $results,
-                                $this->get('query_object', QUERY_OBJECT_ITEM, 'model_registry')
-                            );
-                    }
-                }
-
-                if ((int)$this->get('get_item_children', 1, 'model_registry') == 1) {
-                    $children = $this->get('children', array(), 'model_registry');
-                    if (count($children) > 0) {
-                        $results = $this->model->addItemChildren(
-                            $children,
-                            (int)$this->get('primary_key_value', 0, 'model_registry'),
-                            $results
+            if (count($custom_field_types) > 0) {
+                foreach ($custom_field_types as $field_type) {
+                    $row =
+                        $this->model->addCustomFields(
+                            $this->get('model_registry_name', '', 'model_registry'),
+                            $field_type,
+                            $this->get($field_type, array(), 'model_registry'),
+                            $this->get('get_customfields', 1, 'model_registry'),
+                            $row,
+                            $this->get('query_object', QUERY_OBJECT_ITEM, 'model_registry')
                         );
-                    }
                 }
             }
-            $q[] = $results;
-        }
 
-        /** Just hijacking this to build registry special fields for specific extension (from saved extension registry) */
-        /** @todo figure out what the heck i meant by this (or, more likely, just make certain it isn't used and pull it. */
-        if ($external == 1) {
-            if (is_array($q)) {
-                return $q[0];
+            if ((int)$this->get('get_item_children', 1, 'model_registry') == 1) {
+
+                $children = $this->get('children', array(), 'model_registry');
+
+                if (count($children) > 0) {
+                    $row = $this->model->addItemChildren(
+                        $children,
+                        $this->get('primary_key_value', 0, 'model_registry'),
+                        $row
+                    );
+                }
             }
 
-            return $q;
+            $q[] = $row;
         }
 
         return $q;
-    }
-
-
-    /**
-     * Method to return custom field data for specific model registries
-     *
-     * @param   string   $query_object - result, item, list, distinct
-     *
-     * @return  array    Additional data results
-     * @since   1.0
-     * @throws  \RuntimeException
-     */
-    public function getAdditionalData($type = '')
-    {
-        return Services::Registry()->getArray($this->get('model_registry') . $type);
     }
 
     /**
@@ -1121,6 +1087,7 @@ class Controller
         } else {
             $this->set('plugins', array(), '');
         }
+
         return true;
     }
 }

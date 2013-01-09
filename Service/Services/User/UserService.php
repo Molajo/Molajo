@@ -8,9 +8,6 @@
  */
 namespace Molajo\Service\Services\User;
 
-use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
-use Molajo\Service\Services;
-
 defined('NIAMBIE') or die;
 
 /**
@@ -62,20 +59,68 @@ Class UserService
     protected $password;
 
     /**
+     * Administrator
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $administrator;
+
+    /**
+     * Authorised for Offline Access
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $authorised_for_offline_access;
+
+    /**
+     * Public
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $public;
+
+    /**
+     * Guest
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $guest;
+
+    /**
+     * Public
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $registered;
+
+    /**
+     * Model Registry
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $model_registry;
+
+    /**
+     * Data
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $data;
+
+    /**
      * Parameters for User
      *
      * @var    array
      * @since  1.0
      */
     protected $parameters = array();
-
-    /**
-     * Custom Fields for User
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $customfields = array();
 
     /**
      * Metadata for User
@@ -133,30 +178,19 @@ Class UserService
      */
     protected $property_array = array(
         'id',
-        'site_id',
-        'catalog_type_id',
-        'username',
-        'first_name',
-        'last_name',
-        'full_name',
-        'alias',
-        'content_text',
-        'email',
         'password',
-        'block',
-        'register_datetime',
-        'activation_datetime',
-        'last_visit_datetime',
-        'catalog_types_title',
-        'catalog_types_alias',
-        'customfields',
+        'authorised_for_offline_access',
+        'public',
+        'guest',
+        'registered',
+        'administrator',
+        'model_registry',
+        'data',
         'parameters',
         'metadata',
         'applications',
         'groups',
         'view_groups',
-        'password',
-        'properties',
         'authorised_extensions',
         'authorised_extension_titles'
     );
@@ -169,9 +203,9 @@ Class UserService
      * @return  void
      * @since   1.0
      */
-    public function __construct($id)
+    public function __construct($id = 0)
     {
-        $this->id = int($id);
+        $this->id = (int)$id;
 
         return;
     }
@@ -184,16 +218,15 @@ Class UserService
      */
     public function initialise()
     {
-        $this->parameters                  = array();
-        $this->metadata                    = array();
-        $this->customfields                = array();
         $this->applications                = array();
-        $this->groups                      = array();
-        $this->view_groups                 = array();
-        $this->authorised_extensions       = array();
         $this->authorised_extension_titles = array();
-
-        $this->load();
+        $this->authorised_extensions       = array();
+        $this->data                        = array();
+        $this->groups                      = array();
+        $this->metadata                    = array();
+        $this->model_registry              = array();
+        $this->parameters                  = array();
+        $this->view_groups                 = array();
 
         return;
     }
@@ -213,16 +246,29 @@ Class UserService
         $key = strtolower($key);
 
         if (in_array($key, $this->property_array)) {
+            if (isset($this->$key)) {
+            } else {
+                $this->$key = $default;
+            }
 
-        } else {
-            throw new \OutOfRangeException('User Service: is attempting to get value for unknown key: ' . $key);
+            return $this->$key;
         }
 
-        if ($this->$key === null) {
-            $this->$key = $default;
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
         }
 
-        return $this->$key;
+        if (isset($this->metadata[$key])) {
+            return $this->metadata[$key];
+        }
+
+        if (isset($this->parameters[$key])) {
+            return $this->parameters[$key];
+        }
+
+        $this->parameters[$key] = $default;
+
+        return $this->parameters[$key];
     }
 
     /**
@@ -240,35 +286,64 @@ Class UserService
         $key = strtolower($key);
 
         if (in_array($key, $this->property_array)) {
-        } else {
-            throw new \OutOfRangeException('User Service: is attempting to set value for unknown key: ' . $key);
+            $this->$key = $value;
+
+            return $this->$key;
         }
 
-        $this->$key = $value;
+        if (isset($this->data[$key])) {
+            $this->data[$key] = $value;
 
-        return $this->$key;
+            return $this->data[$key];
+        }
+
+        if (isset($this->metadata[$key])) {
+            $this->metadata[$key] = $value;
+
+            return $this->metadata[$key];
+        }
+
+        $this->parameters[$key] = $value;
+
+        return $this->parameters[$key];
     }
 
     /**
-     * Retrieve User Information (both authenticated and guest)
+     * Checks to see that the user is authorised to use this extension
      *
-     * @return  object  UserService
+     * @param   string  $extension_instance_id
+     *
+     * @return  bool
      * @since   1.0
-     * @throws  \RuntimeException
      */
-    protected function load()
+    public function checkAuthorised($extension_instance_id)
     {
-        $item = $this->getUserData();
-
-        $item = $this->setApplications($item);
-
-        $item = $this->setGroups($item);
-
-        $item = $this->setViewgroups($item);
-
-        foreach (get_object_vars($item) as $key => $value) {
-            $this->set($key, $value);
+        if (in_array($extension_instance_id, $this->authorised_extensions)) {
+            return $this->authorised_extensions[$extension_instance_id];
         }
+
+        return false;
+    }
+
+    /**
+     * Get data for site visitor (user or guest)
+     *
+     * @returns  void
+     * @since    1.0
+     * @throws   \RuntimeException
+     */
+    public function getUserData()
+    {
+        if (is_object($this->data)) {
+        } else {
+            throw new \RuntimeException ('User Service: Load User Query Failed');
+        }
+
+        $this->setApplications();
+
+        $this->setGroups();
+
+        $this->setViewgroups();
 
         if ($this->get('id', 0) == 0) {
             $this->set('public', 1);
@@ -281,73 +356,25 @@ Class UserService
             $this->set('registered', 1);
         }
 
-        $this->setAuthorisedExtensions();
-
-
-        return $this;
-    }
-
-    /**
-     * Get data for site visitor (user or guest)
-     *
-     * @returns  array
-     * @since    1.0
-     * @throws   \RuntimeException
-     */
-    protected function getUserData()
-    {
-        $controllerClass = CONTROLLER_CLASS_NAMESPACE;
-        $controller      = new $controllerClass();
-        $controller->getModelRegistry('Datasource', 'User', 1);
-
-        $controller->set('primary_key_value', (int)$this->get('id'), 'model_registry');
-        $controller->set('get_customfields', 2, 'model_registry');
-        $controller->set('use_special_joins', 1, 'model_registry');
-        $controller->set('process_plugins', 1, 'model_registry');
-
-        $item = $controller->getData(QUERY_OBJECT_ITEM);
-        if (is_array($item)) {
-        } else {
-            $item = array();
-        }
-        if (count($item) == 0) {
-            throw new \RuntimeException ('User Service: Load User Query Failed');
-        }
-
-        unset($item->customfields);
-        unset($item->metadata);
-        unset($item->parameters);
-
-        $this->set('password', $item->password);
-
-        return $item;
+        return;
     }
 
     /**
      * Set Applications for which User is Authorised to Login
      *
-     * @param   $item
-     *
-     * @return  array  $item
+     * @return  void
      * @since   1.0
      * @throws  \RuntimeException
      */
-    protected function setApplications($item)
+    protected function setApplications()
     {
-        if (is_array($item)) {
-        } else {
-            $item = array();
-        }
-
         $this->applications = array();
 
-        if (count($item) == 0) {
-        } else {
-            $x = $item->Userapplications;
-            if (count($x) > 0) {
-                foreach ($x as $app) {
-                    $this->applications[] = $app->application_id;
-                }
+        $x = $this->data->Userapplications;
+
+        if (count($x) > 0) {
+            foreach ($x as $app) {
+                $this->applications[] = $app->application_id;
             }
         }
 
@@ -357,29 +384,24 @@ Class UserService
             throw new \RuntimeException ('User Service: User is not authorised for any applications.');
         }
 
-        unset($item->Userapplications);
+        unset($this->data->Userapplications);
 
-        return $item;
+        return;
     }
 
     /**
      * Set Groups the User is authorised for
      *
-     * @param   $item
-     *
      * @return  array
      * @since   1.0
      * @throws  \RuntimeException
      */
-    protected function setGroups($item)
+    protected function setGroups()
     {
-        if (is_array($item)) {
-        } else {
-            $item = array();
-        }
-
         $temp = array();
-        $x    = $item->Usergroups;
+
+        $x = $this->data->Usergroups;
+
         if (count($x) > 0) {
             foreach ($x as $group) {
                 $temp[] = $group->group_id;
@@ -400,13 +422,12 @@ Class UserService
             }
         }
 
-        unset($item->Usergroups);
-
-        sort($temp);
+        unset($this->data->Usergroups);
 
         if (in_array(SYSTEM_GROUP_ADMINISTRATOR, $temp)) {
             $this->set('administrator', 1);
             $this->set('authorised_for_offline_access', 1);
+
         } else {
             $this->set('administrator', 0);
             $this->set('authorised_for_offline_access', 0);
@@ -416,27 +437,24 @@ Class UserService
 
         $this->set('groups', $temp2);
 
-        return $item;
+        return;
     }
 
     /**
      * Set View Groups the User is authorised for
      *
-     * @param   $item
-     *
-     * @return  array  $item
+     * @return  array
      * @since   1.0
      * @throws  \RuntimeException
      */
-    protected function setViewgroups($item)
-    {
-        if (is_array($item)) {
-        } else {
-            $item = array();
-        }
 
+    /**
+     * @return array
+     */
+    protected function setViewgroups()
+    {
         $temp = array();
-        $x    = $item->Userviewgroups;
+        $x    = $this->data->Userviewgroups;
         if (count($x) > 0) {
             foreach ($x as $vg) {
                 $temp[] = $vg->view_group_id;
@@ -450,49 +468,12 @@ Class UserService
             $temp[] = SYSTEM_GROUP_GUEST;
         }
 
-        unset($item->Userviewgroups);
+        unset($this->data->Userviewgroups);
 
         $temp2 = array_unique($temp);
 
         $this->set('view_groups', $temp2);
 
-        return $item;
-    }
-
-    /**
-     * Retrieve all Extensions the logged on User is authorised to use. The Extension Helper will use this
-     *  registry to avoid a new read when processing requests for Themes, Views, Plugins, Services, etc.
-     *
-     * @return  bool
-     * @since   1.0
-     * @throws  \Exception
-     */
-    protected function setAuthorisedExtensions()
-    {
-        $this->extensionHelper = new ExtensionHelper();
-        $results               = $this->extensionHelper->get(0, null, null, null, 1);
-        if ($results === false || count($results) == 0) {
-            throw new \Exception('User Service: No authorised Extension Instances.');
-        }
-
-        Services::Registry()->createRegistry('AuthorisedExtensions');
-
-        Services::Registry()->createRegistry('AuthorisedExtensionsByInstanceTitle');
-
-        foreach ($results as $extension) {
-
-            Services::Registry()->set('AuthorisedExtensions', $extension->id, $extension);
-
-            if ($extension->catalog_type_id == CATALOG_TYPE_MENUITEM) {
-            } else {
-                $key = trim($extension->title) . $extension->catalog_type_id;
-                Services::Registry()->set('AuthorisedExtensionsByInstanceTitle', $key, $extension->id);
-            }
-        }
-
-        Services::Registry()->sort('AuthorisedExtensions');
-        Services::Registry()->sort('AuthorisedExtensionsByInstanceTitle');
-
-        return true;
+        return $this->data;
     }
 }

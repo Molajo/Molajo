@@ -54,7 +54,7 @@ class DataobjectPlugin extends Plugin
             $this->set('null_date', $db->getNullDate(), 'model');
 
             try {
-                $this->set('now', Services::Date()->getDate(), 'model');
+                $this->set('now', $this->current_date, 'model');
 
             } catch (\Exception $e) {
                 // ignore error due to Date Service activation later in sequence for some use
