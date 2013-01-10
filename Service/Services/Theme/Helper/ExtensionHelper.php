@@ -177,9 +177,7 @@ Class ExtensionHelper
         }
 
         $query_results = $controller->getData($query_object);
-        echo '<pre>';
-var_dump($query_results);
-        echo '</pre>';
+
         if ($query_object == QUERY_OBJECT_ITEM) {
             $query_results->model_registry = $model_name . $model_type;
         }

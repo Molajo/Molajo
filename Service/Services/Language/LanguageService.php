@@ -327,6 +327,7 @@ Class LanguageService
         }
 
         if (defined('PROFILER_ON') && PROFILER_ON === true) {
+
             Services::Profiler()->set(
                 'Language Services: ' . $this->get('current_language', 'en-GB')
                     . ' Language is missing translation for string: ' . $string,

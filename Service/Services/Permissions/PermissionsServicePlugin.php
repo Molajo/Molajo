@@ -30,6 +30,8 @@ Class PermissionsServicePlugin extends ServicesPlugin
      *
      * @return  void
      * @since   1.0
+     * @throws  \RuntimeException
+     * @throws  \Exception
      */
     public function onBeforeServiceInitialise()
     {
@@ -105,11 +107,11 @@ Class PermissionsServicePlugin extends ServicesPlugin
 
         $this->service_class_instance->set('user_groups', Services::User()->get('groups'));
 
-        $this->service_class_instance->set('disable_filter_for_groups',
-            explode(',', Services::Application()->get('user_disable_filter_for_groups')));
+        $this->service_class_instance->set(
+            'disable_filter_for_groups',
+            explode(',', Services::Application()->get('user_disable_filter_for_groups'))
+        );
 
-        var_dump($this);
-        die;
         return;
     }
 

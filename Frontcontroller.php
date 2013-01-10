@@ -172,7 +172,7 @@ Class Frontcontroller
         'error_page_view_id',
         'error_theme_id',
         'frontcontroller_instance',
-        'language_current',
+        'language_tag',
         'language_direction',
         'metadata_service',
         'permission_action_to_authorisation',
@@ -553,16 +553,12 @@ Class Frontcontroller
         Frontcontroller::Services()->start('DatabaseService', $this->get_class_array('DatabaseService'));
         Frontcontroller::Services()->start('EventService', $this->get_class_array('EventService'));
         Frontcontroller::Services()->start('UserService', $this->get_class_array('UserService'));
+        Frontcontroller::Services()->start('PermissionsService', $this->get_class_array('PermissionsService'));
         Frontcontroller::Services()->start('LanguageService', $this->get_class_array('LanguageService'));
         Frontcontroller::Services()->start('DateService', $this->get_class_array('DateService'));
-        $this->set(
-            'language_current',
-            Services::Registry()->get('Languages', 'Default')
-        );
-        $this->set(
-            'language_direction',
-            Services::Registry()->get('Languages' . $this->get('Language_current'))
-        );
+
+        $this->set('language_tag', Services::Languages()->get('language'));
+        $this->set('language_direction', Services::Languages()->get('language_direction'));
         $this->set('request_date', Services::Date()->getDate());
 
         Services::Application()->getApplication();

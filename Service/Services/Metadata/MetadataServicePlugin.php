@@ -46,7 +46,7 @@ Class MetadataServicePlugin extends ServicesPlugin
      */
     public function onAfterServiceInitialise()
     {
-        $this->service_class_instance->set('language', $this->frontcontroller_instance->get('language_current'));
+        $this->service_class_instance->set('language', $this->frontcontroller_instance->get('language_tag'));
         $this->service_class_instance->set('direction', $this->frontcontroller_instance->get('language_direction'));
         $this->service_class_instance->set('html5', $this->frontcontroller_instance->get('application_html5'));
         $this->service_class_instance->set('line_end', $this->frontcontroller_instance->get('application_line_end'));
