@@ -27,12 +27,6 @@ defined('NIAMBIE') or die;
  * To retrieve the key value (ex. 'en-GB') for the language which is loaded:
  *      Services::Language()->get('language');
  *
- * To translate the string $xyz:
- *      Services::Language()->get('translation', $xyz);
- *
- * To retrieve a list of language strings and translations matching a wildcard value:
- *      Services::Language()->get('translation', $xyz, 1);
- *
  * To retrieve all language strings and translations for the loaded language:
  *      Services::Language()->get('strings');
  *
@@ -44,6 +38,12 @@ defined('NIAMBIE') or die;
  *
  * To retrieve all registry attribute values as an array for the loaded language:
  *      Services::Language()->get('registry');
+ *
+ * To translate the string $xyz:
+ *      Services::Language()->translate($xyz);
+ *
+ * To retrieve a list of language strings and translations matching a wildcard value:
+ *      Services::Language()->translate($xyz, 1);
  *
  * To insert strings found in code but are not already in database
  *      If an administrator is logged on, the primary language services automatically insert untranslated strings
@@ -136,13 +136,13 @@ Class LanguageService
         'language',
         'strings',
         'profile_missing_strings',
-        'insert_missing_strings',
-        'list',
-        'translate'
+        'insert_missing_strings'
     );
 
     /**
      * Class constructor
+     *
+     * @param   string  $language
      *
      * @since   1.0
      */
@@ -166,14 +166,6 @@ Class LanguageService
     public function get($key, $default = '')
     {
         $key = strtolower($key);
-
-        if ($key == 'translate') {
-            return $this->translate($default, 0);
-        }
-
-        if ($key == 'list') {
-            return $this->translate($default, 1);
-        }
 
         if (in_array($key, $this->property_array)) {
 
@@ -207,14 +199,6 @@ Class LanguageService
     {
         $key = strtolower($key);
 
-        if ($key == 'translate') {
-            return $this->translate($value, 0);
-        }
-
-        if ($key == 'list') {
-            return $this->translate($value, 1);
-        }
-
         if (in_array($key, $this->property_array)) {
 
             $this->$key = $value;
@@ -241,7 +225,7 @@ Class LanguageService
      * @return  array|string
      * @since   1.0
      */
-    protected function translate($string, $list = 0)
+    public function translate($string, $list = 0)
     {
         $string = strtolower(trim($string));
 
@@ -249,10 +233,9 @@ Class LanguageService
             $found = array();
 
             $keys = array_keys($this->strings);
-
             foreach ($keys as $key) {
-
-                if (strpos($string, strtolower($key))) {
+                if (strpos(strtolower($key), $string) === false) {
+                } else {
                     $found[$key] = $this->strings[$key];
                 }
             }

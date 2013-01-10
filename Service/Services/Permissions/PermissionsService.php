@@ -1,12 +1,13 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Permissions Services
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Permissions;
 
-use Molajo\Frontcontroller;
 use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;
@@ -14,11 +15,12 @@ defined('NIAMBIE') or die;
 //@todo remove hard-coded prefixes (a.) and replace with prefixes defined in model
 
 /**
- * Permissions
+ * Permissions Service
  *
- * @package     Niambie
- * @subpackage  Services
- * @since       1.0
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ * @since        1.0
  */
 Class PermissionsService
 {
@@ -112,7 +114,6 @@ Class PermissionsService
         'filters',
         'site_application',
         'task_action',
-        'action_to_controller',
         'user_view_groups',
         'user_groups',
         'disable_filter_for_groups'
@@ -271,8 +272,11 @@ Class PermissionsService
      * @since   1.0
      * @throws  \Exception
      */
-    protected function getTaskController($action)
+    protected function getTaskController($action = '')
     {
+        if ($action == '') {
+            $action = 'read';
+        }
         if (isset($this->action_to_controller[$action])) {
             return $this->action_to_controller[$action];
         }

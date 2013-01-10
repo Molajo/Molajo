@@ -5,7 +5,6 @@ use Molajo\Service\Services;
  * @package    Niambie
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
- *             echo Services::Language()->translate('No inpution')
  */
 defined('NIAMBIE') or die;
 $tooltip_css_class = 'has-tip'; ?>

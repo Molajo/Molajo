@@ -16,7 +16,7 @@ defined("MOLAJO") or die; ?>
     </header>
     <section class="configuration-header-section">
         <ul class="inline-list right">
-            <li><a href="#"><strong><?php echo Services::Language()->translate('Reset', 'Reset'); ?></strong></a></li>
+            <li><a href="#"><strong><?php echo Services::Language()->translate('Reset'); ?></strong></a></li>
             <li><a href="#" class="button success radius"><?php echo Services::Language()->translate(
                 'Save',
                 'Save'

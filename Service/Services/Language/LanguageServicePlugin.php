@@ -49,7 +49,20 @@ Class LanguageServicePlugin extends ServicesPlugin
         $language = $this->service_class_instance->get('language');
 
         if ($language == '') {
+
             $this->setLanguage();
+
+            $language = $this->service_class_instance->get('language');
+
+            $registry = $this->service_class_instance->get('registry');
+
+            foreach ($registry as $entry) {
+
+                if ($entry->tag == $language) {
+                    $this->service_class_instance->set('registry', $entry);
+                    break;
+                }
+            }
         }
 
         $this->setLanguageStrings();
@@ -151,13 +164,6 @@ Class LanguageServicePlugin extends ServicesPlugin
         // session
 
         $language = Services::User()->get('language');
-        if (in_array($language, $this->get('installed'))) {
-            $this->service_class_instance->set('language', $language);
-
-            return;
-        }
-
-        $language = Services::Application()->get('language');
         if (in_array($language, $this->get('installed'))) {
             $this->service_class_instance->set('language', $language);
 

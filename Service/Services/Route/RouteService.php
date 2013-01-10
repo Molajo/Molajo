@@ -8,7 +8,6 @@
  */
 namespace Molajo\Service\Services\Route;
 
-use Molajo\Frontcontroller;
 use Molajo\Service\Services;
 
 defined('NIAMBIE') or die;
@@ -103,10 +102,11 @@ Class RouteService
     /**
      * Retrieve catalog entry and values needed to route the request
      *
-     * @param   string  $property_array     Valid parameter keys
+     * @param   array   $parameters
+     * @param   array   $property_array                 Valid parameter keys
      * @param   string  $requested_resource_for_route   Routable portion of Request (ex. articles/article-1)
      * @param   string  $base_url_path_for_application  Base for URL (ex. http://example.com/administrator)
-     * @param   string  $override_catalog_id            Use instead of $requested_resource_for_route
+     * @param   int     $override_catalog_id            Use instead of $requested_resource_for_route
      *
      * @return  array   return array($this->parameters, $this->property_array);
      * @since   1.0
@@ -118,9 +118,17 @@ Class RouteService
         $base_url_path_for_application,
         $override_catalog_id = null
     ) {
-        $this->parameters                 = $parameters;
+        $this->parameters     = $parameters;
         $this->property_array = $property_array;
-
+        echo '<pre>';
+var_dump(array(
+        $parameters,
+        $property_array,
+        $requested_resource_for_route,
+        $base_url_path_for_application,
+        $override_catalog_id
+    ));
+        die;
         $this->set('request_catalog_id', 0);
         $this->set('status_found', 0);
         $this->set('status_authorised', '');
@@ -355,9 +363,14 @@ Class RouteService
      */
     protected function getReadVariables()
     {
+        echo '<pre>';
+        var_dump($this);
+die;
         $path = $this->get('request_url');
 
         $urlParts = explode('/', $path);
+        echo $path;
+        die;
         if (count($urlParts) == 0) {
             return;
         }

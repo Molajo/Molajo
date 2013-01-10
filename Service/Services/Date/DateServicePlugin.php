@@ -47,18 +47,18 @@ Class DateServicePlugin extends ServicesPlugin
     {
         $this->service_class_instance->set(
             'locale',
-            Services::Language()->get('tag')
+            Services::Language()->get('language')
         );
 
         $this->service_class_instance->set(
             'date_translate_array',
-            Services::Language()->get('list', 'date_')
+            Services::Language()->translate('date_', 1)
         );
 
-        $this->service_class_instance->set(
-            'offset_user',
-            Services::User()->get('timezone', '')
-        );
+//        $this->service_class_instance->set(
+//            'offset_user',
+//            Services::User()->get('parameters_timezone', '')
+//        );
 
         $this->service_class_instance->set(
             'offset_server',
