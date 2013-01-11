@@ -1,12 +1,14 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Default Wrap View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
-use Molajo\Service\Services;
-
 defined('NIAMBIE') or die;
+
+use Molajo\Service\Services;
 
 if ((int)Services::Application()->get('application_html5', 1) == 1
     && ($this->parameters['wrap_view_title'] == 'Article'

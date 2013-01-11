@@ -1,11 +1,10 @@
 <?php
-use Molajo\Service\Services;
-
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
- *             echo Services::Language()->translate('No textareaion')
+ * Formtextarea Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 defined('NIAMBIE') or die;
 $tooltip_css_class = 'has-tip';
@@ -15,4 +14,4 @@ $tooltip_css_class = 'has-tip';
 if ($this->row->placeholder == '') {
 } else {
     echo 'placeholder' . '="' . $this->row->placeholder . '" ';
-} ?>
+}

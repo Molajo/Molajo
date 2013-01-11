@@ -1,11 +1,13 @@
 <?php
+/**
+ * Contentlist Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ */
 use Molajo\Service\Services;
 
-/**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
- */
 defined('NIAMBIE') or die; ?>
 <div class="portlet-header">
     <h4><?php echo Services::Registry()->get('parameters', 'criteria_title'); ?></h4>

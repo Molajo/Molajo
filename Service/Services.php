@@ -481,7 +481,7 @@ Class Services
      *
      * @param   string   $plugin_class_namespace
      *
-     * @return  mixed
+     * @return  bool
      * @since   1.0
      */
     protected function getPluginClassInstance($plugin_class_namespace)
@@ -565,7 +565,9 @@ Class Services
      *
      * Follows the completion of the start method defined in the configuration
      *
-     * @return  object
+     * @param   string  $service_class_instance
+     *
+     * @return  array|bool
      * @since   1.0
      */
     public function onAfterSaveEventService($service_class_instance)
@@ -598,9 +600,22 @@ Class Services
      * onBeforeRegisterPlugin determines a set of plugins from a folder and namespace and then
      * returns a set of plugins, plugin class values, and namespaces for which the visitor is authorised
      *
+     * @param   string  $folder
+     * @param   string  $namespace
+     * @param   string  $service_class_instance
+     *
      * @return  array|bool
      * @since   1.0
      * @throws  \Exception
+     */
+
+    /**
+     * @param $folder
+     * @param $namespace
+     * @param $service_class_instance
+     *
+     * @return array
+     * @throws \Exception
      */
     public function registerPlugins($folder, $namespace, $service_class_instance)
     {

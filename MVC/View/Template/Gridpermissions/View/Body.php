@@ -1,16 +1,17 @@
 <?php
+/**
+ * Gridpermissions Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ */
 use Molajo\Service\Services;
 
-/**
- *
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
- */
 defined('NIAMBIE') or die;
 $action = Services::Registry()->get(PAGE_LITERAL, 'page_url');
 if ($this->row->enable == 1) {
-    ?>
+?>
 <div class="grid-permissions grid-batch">
     <ol class="grid-batch">
         <li><input type="submit" class="submit button small radius" name="submit" id="AssignPermissions" value="Assign">

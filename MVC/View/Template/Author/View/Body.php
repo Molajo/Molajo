@@ -1,12 +1,14 @@
 <?php
 /**
- * @package     Niambie
- * @copyright   2013 Amy Stephen. All rights reserved.
- * @license     MIT
+ * Author Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die; ?>
+defined('NIAMBIE') or die;  ?>
 <section itemscope itemtype="http://data-vocabulary.org/Person">
     <h1 itemprop="name">
         <?php echo $this->row->author_full_name; ?>

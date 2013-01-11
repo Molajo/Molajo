@@ -35,16 +35,51 @@ defined('NIAMBIE') or die;
 Class ApplicationService
 {
     /**
-     * Application Data
+     * Application ID
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $application_id;
+
+    /**
+     * Application Name
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $application_name;
+
+    /**
+     * Application Base URL
      *
      * @var    string
      * @since  1.0
      */
     protected $application_base_url;
+
+    /**
+     * Application Catalog Type ID
+     *
+     * @var    string
+     * @since  1.0
+     */
     protected $application_catalog_type_id;
+
+    /**
+     * Application Description
+     *
+     * @var    string
+     * @since  1.0
+     */
     protected $application_description;
-    protected $application_id;
-    protected $application_name;
+
+    /**
+     * Application Path
+     *
+     * @var    string
+     * @since  1.0
+     */
     protected $application_path;
 
     /**
@@ -190,9 +225,9 @@ Class ApplicationService
     public function get($key, $default = null)
     {
         $key = strtolower($key);
-
+        echo $key . '<br />';
         if (in_array($key, $this->property_array)) {
-
+            echo $key . '<br />';
             if (isset($this->$key)) {
                 return $this->$key;
             }

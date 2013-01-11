@@ -1,9 +1,13 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Video Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
+use Molajo\Service\Services;
+
 defined('NIAMBIE') or die; ?>
 <div class="video-wrapper">
     <div class="video-container">

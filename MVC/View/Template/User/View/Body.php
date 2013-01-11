@@ -1,11 +1,14 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * User Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die;
-?>
+use Molajo\Service\Services;
+
+defined('NIAMBIE') or die; ?>
 <h1><?php echo $this->row->username; ?></h1>
 
 <p><?php echo '<strong>' . Services::Languages()->translate(

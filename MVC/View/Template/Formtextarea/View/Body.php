@@ -1,8 +1,10 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Form Text Area
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
 defined('NIAMBIE') or die;
 if ($this->row->value == $this->row->key) {

@@ -1,12 +1,15 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Admindashboardtab Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined("MOLAJO") or die;
+defined('NIAMBIE') or die;
+
 if ($this->row->new_fieldset == '1') {
-    ?>
+?>
 </ol>
 </fieldset>
 <fieldset class="two-up">

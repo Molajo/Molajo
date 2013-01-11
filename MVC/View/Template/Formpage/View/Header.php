@@ -1,12 +1,12 @@
 <?php
-use Molajo\Service\Services;
-
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * Formpage Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined("MOLAJO") or die; ?>
+defined('NIAMBIE') or die; ?>
 <header class="configuration-header">
     <header class="configuration-header-header">
         <h3><?php echo $this->row->page_title_extended; ?></h3>

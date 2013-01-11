@@ -530,20 +530,21 @@ Class Frontcontroller
 
         Services::Site()->identifySite();
 
-        if ($override_url_request === null) {
-            $this->set('requested_resource_for_route', $override_url_request);
-        } else {
-            $this->requested_resource_for_route =
-                Services::Application()->get('requested_resource_for_route');
-        }
-
         Services::Site()->set('custom_defines', Services::Configuration()->getFile('Application', 'Defines'));
         Services::Site()->setCustomDefines();
 
-        $this->set('base_url_path_for_application', Services::Application()->get('base_url_path_for_application'));
-
         /** Add Site URL to Application */
+
+        if ($override_url_request === null) {
+            $this->requested_resource_for_route =
+                Services::Application()->get('requested_resource_for_route');
+        } else {
+            $this->set('requested_resource_for_route', $override_url_request);
+        }
+
         Services::Application()->setBaseUrlPath();
+
+        $this->set('base_url_path_for_application', Services::Application()->get('base_url_path_for_application'));
 
         Frontcontroller::Services()->start('CacheService', $this->get_class_array('CacheService'));
         Frontcontroller::Services()->start('ProfilerService', $this->get_class_array('ProfilerService'));
@@ -701,15 +702,7 @@ Class Frontcontroller
 
         $class = $this->get_class_array('RouteService');
         $route = new $class();
-        echo '<pre>';
-var_dump(array(
-    $this->parameters,
-            $this->property_array,
-            $this->requested_resource_for_route,
-            $this->base_url_path_for_application,
-            $override_catalog_id
-        ));
-        die;
+
         $route = $route->process(
             $this->parameters,
             $this->property_array,
@@ -717,7 +710,7 @@ var_dump(array(
             $this->base_url_path_for_application,
             $override_catalog_id
         );
-        die;
+
         $this->parameters     = $route[0];
         $this->property_array = $route[1];
 echo '<pre>';

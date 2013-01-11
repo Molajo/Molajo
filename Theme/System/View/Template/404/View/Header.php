@@ -1,12 +1,12 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * 404 Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
-
-defined('NIAMBIE') or die;
-?>
+defined('NIAMBIE') or die; ?>
 <div class="row">
     <div class="one columns show-for-small">
         <form action="<?php echo $this->row->catalog_id_url ?>/edit">

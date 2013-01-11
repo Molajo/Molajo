@@ -1,11 +1,13 @@
 <?php
+/**
+ * Gallery Template View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
+ */
 use Molajo\Service\Services;
 
-/**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
- */
 defined('NIAMBIE') or die; ?>
 <tr<?php echo $this->row->grid_row_class; ?>><?php
     $columnCount = 1;

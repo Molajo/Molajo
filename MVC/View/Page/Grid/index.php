@@ -1,11 +1,15 @@
 <?php
 /**
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
- *     <include:template name=Toolbar/>
+ * Grid Page View
+ *
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die; ?>
+
+defined('NIAMBIE') or die;
+?>
+<include:template name=Toolbar/>
 <include:template name=Formbegin/>
     <include:template name=Gridfilters wrap=nav wrap_class=grid-filters role=nav/>
         <section class="grid">

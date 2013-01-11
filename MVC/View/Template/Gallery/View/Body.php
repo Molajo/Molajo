@@ -1,8 +1,9 @@
 <?php
 /**
+ * Gallery Template View
  *
- * @package    Niambie
- * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * @package      Niambie
+ * @license      MIT
+ * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die;
+defined('NIAMBIE') or die; ?>
