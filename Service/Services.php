@@ -216,7 +216,7 @@ Class Services
 
         if ($service_class_namespace == '') {
             $service_class_namespace = $this->frontcontroller_instance->get_class_array($service_class_name);
-            $read_registry = 1;
+            $read_registry           = 1;
             echo 'Requested by application: ' . $service_class_namespace . '<br />';
         } else {
             echo 'Request for ' . $service . '<br />';
@@ -238,7 +238,7 @@ Class Services
             $controller = new $this->controller_class();
             $controller->getModelRegistry('Service', $service);
 
-            $startup = $this->connections['RegistryService']->get($service . 'Service', 'startup');
+            $startup       = $this->connections['RegistryService']->get($service . 'Service', 'startup');
             $keep_instance = $this->connections['RegistryService']->get($service . 'Service', 'keep_instance');
 
             $startup       = 1;
@@ -357,6 +357,7 @@ Class Services
             ('Service: Connection for ' . $service_class_name . ' failed.' . $error_message);
         }
         echo '' . 'Done ' . $service_class_name . '<br /><br /><br />';
+
         return $service_class_instance;
     }
 
@@ -503,14 +504,15 @@ Class Services
     /**
      * Schedule On Before Start Event - prior to instantiation of Services Class
      *
-     * @param   string  $plugin_class_name
-     * @param   string  $plugin_class_namespace
-     * @param   string  $plugin_instance
-     * @param   string  $service_class_name
-     * @param   string  $service_class_namespace
-     * @param   string  $service_class_instance
+     * @param  string  $plugin_class_name
+     * @param  string  $plugin_class_namespace
+     * @param  string  $plugin_instance
+     * @param  string  $service_class_name
+     * @param  string  $service_class_namespace
+     * @param  string  $service_class_instance
+     * @param  string  $event
      *
-     * @return  mixed
+     * @return  bool
      * @since   1.0
      */
     protected function scheduleEvent(
@@ -538,7 +540,7 @@ Class Services
         if (isset($this->connections['DateService'])) {
             $current_date = $this->connections['DateService']->getDate();
         } else {
-            $temp = new \DateTime('now');
+            $temp         = new \DateTime('now');
             $current_date = $temp->format('Y-m-d H:i:s');
         }
 
@@ -604,18 +606,9 @@ Class Services
      * @param   string  $namespace
      * @param   string  $service_class_instance
      *
-     * @return  array|bool
+     * @return  array
      * @since   1.0
      * @throws  \Exception
-     */
-
-    /**
-     * @param $folder
-     * @param $namespace
-     * @param $service_class_instance
-     *
-     * @return array
-     * @throws \Exception
      */
     public function registerPlugins($folder, $namespace, $service_class_instance)
     {
