@@ -2,7 +2,7 @@
 /**
  * Request Service Plugin
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service\Services\Request;
 
 use Symfony\Component\HttpFoundation\Request;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Request Service Plugin

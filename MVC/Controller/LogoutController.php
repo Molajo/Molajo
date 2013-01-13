@@ -2,7 +2,7 @@
 /**
  * Logout Controller
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -11,12 +11,12 @@ namespace Molajo\MVC\Controller;
 use Molajo\Service\Services;
 use Molajo\MVC\Controller\Controller;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The logout controller manages system logout actions and schedules before and after logout events.
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0

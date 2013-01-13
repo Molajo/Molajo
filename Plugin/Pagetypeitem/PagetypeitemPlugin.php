@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -11,10 +11,10 @@ use Molajo\Plugin\Pagetypeconfiguration;
 use Molajo\Service\Services;
 
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
- * @package     Niambie
+ * @package     Molajo
  * @license     MIT
  * @since       1.0
  */

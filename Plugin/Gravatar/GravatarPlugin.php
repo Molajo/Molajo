@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -9,12 +9,12 @@ namespace Molajo\Plugin\Gravatar;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Gravatar
  *
- * @package     Niambie
+ * @package     Molajo
  * @license     MIT
  * @since       1.0
  */

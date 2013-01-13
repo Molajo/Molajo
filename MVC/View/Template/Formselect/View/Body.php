@@ -2,9 +2,9 @@
 /**
  * Formselect Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <option value="<?php echo $this->row->id; ?>"<?php echo $this->row->selected; ?>><?php echo $this->row->value; ?></option>

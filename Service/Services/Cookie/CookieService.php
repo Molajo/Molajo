@@ -2,7 +2,7 @@
 /**
  * Cookie Service Plugin
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -12,7 +12,7 @@ use Molajo\Service\Services;
 
 use Symfony\Component\HttpFoundation\Cookie;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Cookie Service Plugin

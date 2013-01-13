@@ -1,17 +1,17 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
 namespace Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Install
  *
- * @package     Niambie
+ * @package     Molajo
  * @subpackage  Install
  * @since       1.0
  */

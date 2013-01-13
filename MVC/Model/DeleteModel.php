@@ -3,13 +3,13 @@ namespace Molajo\MVC\Model;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * As instructed by the Delete Controller. the Delete Model uses model registry data to prepare
  * data, create and run SQL statements needed to delete data.
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0

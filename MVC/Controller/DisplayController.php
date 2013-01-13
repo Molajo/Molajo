@@ -2,7 +2,7 @@
 /**
  * Display Controller
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -12,14 +12,14 @@ use Molajo\Frontcontroller;
 use Molajo\Service\Services;
 use Molajo\MVC\Controller\Controller;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The display controller uses parameter values provided by the Theme Includer to render output for
  * specified model, theme, page view, template view, and/or wrap view values. The display controller
  * schedules events for before and after view rendering.
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0

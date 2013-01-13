@@ -2,7 +2,7 @@
 /**
  * Theme Service Theme Helper
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -11,7 +11,7 @@ namespace Molajo\Service\Services\Theme\Helper;
 use Molajo\Service\Services;
 use Molajo\Service\Services\Theme\Helper\ExtensionHelper;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Theme Helper retrieves values needed to render the selected Theme index.php file, load plugins

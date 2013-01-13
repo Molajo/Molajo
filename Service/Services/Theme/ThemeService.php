@@ -2,7 +2,7 @@
 /**
  * Theme Service
  *
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service\Services\Theme;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The Theme Service passes the information retrieved in Route to the Content Helper

@@ -2,11 +2,11 @@
 /**
  * 404 Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <div class="row">
     <div class="twelve columns">
         <?php echo $this->row->content_text; ?>

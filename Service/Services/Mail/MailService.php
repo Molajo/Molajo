@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\Mail;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Mail
@@ -29,7 +29,7 @@ defined('NIAMBIE') or die;
  *
  * Services::Mail()->send();
  *
- * @package     Niambie
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */

@@ -2,7 +2,7 @@
 /**
  * Language Service
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service\Services\Language;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Language Services supporting translations for the User Interface

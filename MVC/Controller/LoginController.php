@@ -2,7 +2,7 @@
 /**
  * Login Controller
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -11,13 +11,13 @@ namespace Molajo\MVC\Controller;
 use Molajo\Service\Services;
 use Molajo\MVC\Controller\Controller;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The login controller verifies user and user credentials to access the site and application.
  * In addition, the login controller schedules before and after login events.
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0

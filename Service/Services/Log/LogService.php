@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -8,12 +8,12 @@ namespace Molajo\Service\Services\Log;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Log
  *
- * @package     Niambie
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  */

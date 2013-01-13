@@ -2,13 +2,13 @@
 /**
  * Date Service
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Date;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Date Service

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 </ul>
 </div>

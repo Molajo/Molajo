@@ -2,7 +2,7 @@
 /**
  * Data Object Plugin
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -11,7 +11,7 @@ namespace Molajo\Plugin\Dataobject;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Data Object Plugin - connects to Database

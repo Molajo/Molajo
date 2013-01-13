@@ -2,7 +2,7 @@
 /**
  * Theme Service Extension Helper
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service\Services\Theme\Helper;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Extension Helper provides an interface to different types of extension information, like:

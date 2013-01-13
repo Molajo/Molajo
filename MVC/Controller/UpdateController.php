@@ -2,7 +2,7 @@
 /**
  * Update Controller
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -11,7 +11,7 @@ namespace Molajo\MVC\Controller;
 use Molajo\Service\Services;
 use Molajo\MVC\Controller\Controller;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The update controller handles all update tasks, such as reorder, checkin, sticky, feature, archive, and
@@ -19,7 +19,7 @@ defined('NIAMBIE') or die;
  * to edit, filter, and save data, verifying foreign key restraints, expected values, permissions, etc.
  * In addition, the update controller schedules before and after update events.
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0

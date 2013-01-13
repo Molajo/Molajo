@@ -2,13 +2,13 @@
 /**
  * Gridstatus Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 if ($this->row->enable == 1) {
     ?>
 <div class="grid-status grid-batch">

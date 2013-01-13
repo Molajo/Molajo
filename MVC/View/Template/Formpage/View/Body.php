@@ -2,11 +2,11 @@
 /**
  * Formpage Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 if ($this->row->page_first_row == 1) {
 } elseif ($this->row->new_fieldset == 1) {

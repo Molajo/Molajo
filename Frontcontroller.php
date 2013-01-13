@@ -2,7 +2,7 @@
 /**
  * Frontend Controller
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,10 +10,10 @@ namespace Molajo;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
- * Front Controller for Niambie
+ * Front Controller for Molajo
  *
  * 1. Initialise
  * 2. Route
@@ -237,6 +237,8 @@ Class Frontcontroller
         $override_property_array = null,
         $override_class_array = null
     ) {
+
+        throw new Exception ('did this work');
 
         if ($override_class_array == null) {
             $file_and_path = VENDOR . '/Molajo/Classes.xml';
@@ -466,7 +468,9 @@ Class Frontcontroller
     {
         /** Error and Exception Handling */
         set_exception_handler(array($this, 'exception_handler'));
-        set_error_handler(array($this, 'error_handler'), E_ALL);
+        set_error_handler(array($this, 'error_handler'), 0);
+
+        trigger_error ( 'Deprecated', E_USER_NOTICE );
 
         /** PHP Minimum */
         $results = version_compare(PHP_VERSION, '5.3', '<');
@@ -635,6 +639,9 @@ Class Frontcontroller
      */
     public function error_handler($code, $message, $file, $line)
     {
+        echo '<pre>' . error_reporting();
+        var_dump($code, $message, $file, $line);
+        //die;
         if (0 == error_reporting()) {
             return;
         }

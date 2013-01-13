@@ -8,7 +8,7 @@ namespace Molajo\Plugin\Blockquote;
 
 use Molajo\Plugin\Plugin\Plugin;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Blockquote

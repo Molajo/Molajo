@@ -2,7 +2,7 @@
 /**
  * Registry Service
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service\Services\Registry;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 //@todo consider API and minimize interface points
 //@todo limit access by class

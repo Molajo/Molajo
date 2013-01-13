@@ -2,7 +2,7 @@
 /**
  * Theme Service Content Helper
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -13,7 +13,7 @@ use Molajo\Service\Services\Theme\Helper\ThemeHelper;
 use Molajo\Service\Services\Theme\Helper\ViewHelper;
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Retrieves Item, List, or Menu Item Parameters for Route from Content, Extension, and Menu Item

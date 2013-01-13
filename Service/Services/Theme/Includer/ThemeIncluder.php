@@ -2,7 +2,7 @@
 /**
  * Theme Service Theme Includer
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service\Services\Theme\Includer;
 
 use Molajo\Service\Services\Theme\Includer;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The Theme Includer sets parameter values needed to render the Theme Index.php file, the results

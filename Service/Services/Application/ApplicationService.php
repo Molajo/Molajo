@@ -2,13 +2,13 @@
 /**
  * Application Service
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Application;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Application Services

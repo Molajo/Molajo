@@ -9,7 +9,7 @@ namespace Molajo\Plugin\Featured;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * @package     Molajo

@@ -2,13 +2,13 @@
 /**
  * Gridordering Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <div class="grid-ordering grid-batch">
     <ol class="grid-batch">
         <li><strong><?php echo Services::Language()->translate('Order Results'); ?></strong></li>

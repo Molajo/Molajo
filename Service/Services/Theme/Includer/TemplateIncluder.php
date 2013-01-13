@@ -2,7 +2,7 @@
 /**
  * Theme Service Template Includer
  *
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service\Services\Theme\Includer;
 
 use Molajo\Service\Services\Theme\Includer;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The Template Includer prepares parameter values needed by the MVC to render the requested

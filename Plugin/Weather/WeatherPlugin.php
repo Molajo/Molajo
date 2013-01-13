@@ -9,7 +9,7 @@ namespace Molajo\Plugin\Weather;
 use Molajo\Plugin\Plugin\Plugin;
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Weather

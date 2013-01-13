@@ -2,11 +2,11 @@
 /**
  * Formselectlist Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <select <?php echo $this->row->multiple; ?>name="<?php echo $this->row->listname; ?>" class="inputbox">
 <?php if ($this->row->multiple == '') { ?>
     <option value=""><?php echo Services::Language()->translate(

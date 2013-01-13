@@ -2,7 +2,7 @@
 /**
  * Log Service Plugin
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -11,7 +11,7 @@ namespace Molajo\Service\Services\Log;
 use Molajo\Service\Services;
 use Molajo\Service\ServicesPlugin;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Log Service Plugin

@@ -2,11 +2,11 @@
 /**
  * Portlet Wrap View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <div class="portlet-header">
     <?php if ($this->parameters['criteria_title'] == '') {
 } else {

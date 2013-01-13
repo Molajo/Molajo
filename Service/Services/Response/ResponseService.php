@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -10,14 +10,14 @@ use Molajo\Service\Services;
 
 use Symfony\Component\HttpFoundation\Response;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Response
  *
  * http://api.symfony.com/2.0/Symfony/Resource/HttpFoundation/Response.html
  *
- * @package     Niambie
+ * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */

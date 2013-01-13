@@ -2,13 +2,13 @@
 /**
  * Frontend Controller
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Filesystem;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Filesystem
@@ -130,6 +130,7 @@ class FilesystemService
 
         $method = strtolower($method);
         if (method_exists($class, $method)) {
+            var_dump($arguments);
             return call_user_func_array(array($class, $method), $arguments);
         }
 

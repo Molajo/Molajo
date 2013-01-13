@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -8,12 +8,12 @@ namespace Molajo\Plugin\Snippet;
 
 use Molajo\Plugin\Plugin\Plugin;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Snippet
  *
- * @package     Niambie
+ * @package     Molajo
  * @license     MIT
  * @since       1.0
  */

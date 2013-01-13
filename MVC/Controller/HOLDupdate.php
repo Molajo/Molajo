@@ -4,14 +4,14 @@ namespace Molajo\MVC\Controller;
 use Molajo\Service\Services;
 use Molajo\MVC\Controller;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The delete controller uses model registry data and HTTP post variables to verifying foreign key restraints,
  * and permissions, etc, archive version history, and delete data. The delete controller also schedules the
  * before and after delete event.
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0

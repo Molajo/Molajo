@@ -2,7 +2,7 @@
 /**
  * Permissions Service Plugin
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -11,7 +11,7 @@ namespace Molajo\Service\Services\Permissions;
 use Molajo\Service\ServicesPlugin;
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Permissions Service Plugin

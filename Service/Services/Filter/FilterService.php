@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -8,7 +8,7 @@ namespace Molajo\Service\Services\Filter;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 //@todo SIMPLIFY these options to what Molajo really needs.
 //@todo Hook back up HTML Purifier
@@ -16,7 +16,7 @@ defined('NIAMBIE') or die;
 /**
  * Filter
  *
- * @package     Niambie
+ * @package     Molajo
  * @subpackage  Service
  * @since       1.0
  *

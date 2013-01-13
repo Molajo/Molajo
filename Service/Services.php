@@ -2,7 +2,7 @@
 /**
  * Services
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service;
 
 use Molajo\Frontcontroller;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 //@todo acl per service
 
@@ -28,7 +28,7 @@ defined('NIAMBIE') or die;
  *         of application utilities that provide basic functionality which can be supplied by different
  *         vendors without requiring change to the application itself
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0

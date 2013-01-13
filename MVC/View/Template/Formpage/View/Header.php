@@ -2,11 +2,11 @@
 /**
  * Formpage Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <header class="configuration-header">
     <header class="configuration-header-header">
         <h3><?php echo $this->row->page_title_extended; ?></h3>

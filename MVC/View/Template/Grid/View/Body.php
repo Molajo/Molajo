@@ -2,13 +2,13 @@
 /**
  * Gallery Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <tr<?php echo $this->row->grid_row_class; ?>><?php
     $columnCount = 1;
     $nowrap      = ' nowrap';

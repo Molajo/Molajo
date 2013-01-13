@@ -2,13 +2,13 @@
 /**
  * Audio Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /** swf player and parameters **/
 $js = "window.addEvent('domready', function() { " . "\n";

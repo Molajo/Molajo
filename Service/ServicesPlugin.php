@@ -2,13 +2,13 @@
 /**
  * ServicesPlugin
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * ServicesPlugin Base Class

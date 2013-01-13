@@ -2,11 +2,11 @@
 
 /**
  *
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 $this->row->button_title = str_replace('&nbsp;', ' ', htmlspecialchars_decode($this->row->button_title));
 $this->row->button_link_extra = str_replace('&nbsp;', ' ', htmlspecialchars_decode($this->row->button_link_extra));

@@ -2,13 +2,13 @@
 /**
  * User Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <h1><?php echo $this->row->username; ?></h1>
 
 <p><?php echo '<strong>' . Services::Languages()->translate(

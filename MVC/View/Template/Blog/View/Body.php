@@ -2,13 +2,13 @@
 /**
  * Blog Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <article class="blog">
     <h3>
         <a href="<?php echo $this->row->catalog_sef_request; ?>">

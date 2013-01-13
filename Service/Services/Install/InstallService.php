@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -11,12 +11,12 @@ use Molajo\MVC\Controller\CreateController;
 use Molajo\MVC\Controller\DeleteController;
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Install
  *
- * @package     Niambie
+ * @package     Molajo
  * @subpackage  Services
  * @since       1.0
  */

@@ -2,7 +2,7 @@
 /**
  * Theme Service Includer Base Class
  *
- * @package    Niambie
+ * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    MIT
  */
@@ -10,7 +10,7 @@ namespace Molajo\Service\Services\Theme;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The Includer acts as the base class for a set of classes which gather the input parameters needed

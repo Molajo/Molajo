@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2013 Amy Stephen. All rights reserved.
  * @license     MIT
  */
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * This is the status code returned when the authentication is success (permit login)

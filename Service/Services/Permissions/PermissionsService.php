@@ -2,7 +2,7 @@
 /**
  * Permissions Services
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,14 +10,14 @@ namespace Molajo\Service\Services\Permissions;
 
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 //@todo remove hard-coded prefixes (a.) and replace with prefixes defined in model
 
 /**
  * Permissions Service
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  * @since        1.0

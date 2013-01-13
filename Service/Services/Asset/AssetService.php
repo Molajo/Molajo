@@ -2,13 +2,13 @@
 /**
  * Asset Service
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Services\Asset;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * The Asset Service is used within the Theme Service, Plugins, and MVC classes to indicate

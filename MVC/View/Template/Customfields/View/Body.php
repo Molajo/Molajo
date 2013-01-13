@@ -2,13 +2,13 @@
 /**
  * Customfields Template View
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
 use Molajo\Service\Services;
 
-defined('NIAMBIE') or die; ?>
+defined('MOLAJO') or die; ?>
 <tr>
     <td class="name"><?php echo Services::Language()->translate($this->row->label); ?></td>
     <td class="type"><?php echo $this->row->type; ?></td>

@@ -2,7 +2,7 @@
 /**
  * Username Plugin
  *
- * @package      Niambie
+ * @package      Molajo
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
@@ -10,7 +10,7 @@ namespace Molajo\Plugin\Username;
 
 use Molajo\Plugin\Plugin\Plugin;
 
-defined('NIAMBIE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Username Plugin that runs on before Create, Update and After Update to handle pre and post
