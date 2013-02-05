@@ -355,7 +355,7 @@ Class Frontcontroller
 
             foreach ($classes->class as $class) {
 
-                $key  = (string)$class->attributes()->name;
+                $key   = (string)$class->attributes()->name;
                 $class = (string)$class->attributes()->class;
 
                 if ($class === null) {
@@ -470,7 +470,7 @@ Class Frontcontroller
         set_exception_handler(array($this, 'exception_handler'));
         set_error_handler(array($this, 'error_handler'), 0);
 
-        trigger_error ( 'Deprecated', E_USER_NOTICE );
+        trigger_error('Deprecated', E_USER_NOTICE);
 
         /** PHP Minimum */
         $results = version_compare(PHP_VERSION, '5.3', '<');
@@ -601,6 +601,7 @@ Class Frontcontroller
 
         //
         /** LAZY LOAD Session */
+
         //
         //Services::Session()->create(
         //    Services::Session()->getHash(get_class($this))
@@ -720,9 +721,9 @@ Class Frontcontroller
 
         $this->parameters     = $route[0];
         $this->property_array = $route[1];
-echo '<pre>';
-var_dump($this->parameters);
-die;
+        echo '<pre>';
+        var_dump($this->parameters);
+        die;
         if ($this->get('redirect_to_id') == 0
             && $this->get('error_code') == 0
         ) {
@@ -753,9 +754,9 @@ die;
      */
     protected function authorise()
     {
-        $view_group_id = $this->get('request_view_group_id');
+        $view_group_id  = $this->get('request_view_group_id');
         $request_action = $this->get('request_action');
-        $catalog_id  = $this->get('catalog_id');
+        $catalog_id     = $this->get('catalog_id');
 
         $results = Services::Permissions()->verifyAction($view_group_id, $request_action, $catalog_id);
 

@@ -168,7 +168,7 @@ Class CacheService
         }
 
         foreach ($this->get('Parameter', 'valid_types') as $type) {
-            $this->prune_cache($type);
+            $this->prune($type);
         }
 
         foreach ($this->get('Parameter', 'valid_types') as $type) {
@@ -204,7 +204,7 @@ Class CacheService
             $this->$key = $value;
         }
 
-        $continue = $this->verify_cache($type);
+        $continue = $this->enabled($type);
         if ($continue === true) {
         } else {
             return false;
@@ -257,7 +257,7 @@ Class CacheService
             $this->count_queries++;
         }
 
-        $continue = $this->verify_cache($type);
+        $continue = $this->enabled($type);
         if ($continue === true) {
         } else {
             return false;
@@ -324,14 +324,14 @@ Class CacheService
     }
 
     /**
-     * Verify type of cache
+     * Verify type of cache is enabled
      *
      * @param   string $type
      *
      * @return  bool
      * @since   1.0
      */
-    protected function verify_cache($type)
+    protected function enabled($type)
     {
         if ($this->cache_service === true) {
         } else {
@@ -356,7 +356,7 @@ Class CacheService
      * @since   1.0
      * @return  CacheService
      */
-    protected function prune_cache($type = '')
+    protected function prune($type = '')
     {
         $cache_type = 'cache_' . strtolower($type);
 

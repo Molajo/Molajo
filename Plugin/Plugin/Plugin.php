@@ -31,7 +31,7 @@ defined('MOLAJO') or die;
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Plugin
+abstract class Plugin
 {
     /**
      * Current Date

@@ -1,9 +1,9 @@
 {
-    "name":"Niambie/Platform",
+    "name":"Molajo/Platform",
     "type":"Content Management Framework",
     "description":"Content Management Framework",
     "keywords":["cmf", "framework"],
-    "homepage":"http://Niambie.org",
+    "homepage":"http://Molajo.org",
     "license":"MIT",
     "authors":[
         {
