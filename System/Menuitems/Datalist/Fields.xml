@@ -1,5 +1,0 @@
-<datalist name="FieldsmenuitemsDatalist">
-    <model
-            name="FieldsmenuitemsDatalist"
-            registry_entry="MenuitemssystemFields"/>
-</datalist>

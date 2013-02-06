@@ -1,6 +1,0 @@
-<field
-        name="criteria_display_view_on_no_results"
-        type="boolean"
-        null="0"
-        default="1"
-        />

@@ -1,6 +1,0 @@
-<datalist name="ContentPlugins">
-    <model
-            name="ContentPlugins"
-            criteria_catalog_type_id="1450"
-            extends="ExtensionInstancesDatalist"/>
-</datalist>

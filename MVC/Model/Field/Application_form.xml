@@ -1,2 +1,0 @@
-<field name="application_form" type="char" null="0"
-       default="{{Form Default Page View,form_parent*,form_theme*,form_page*}}{{Form Default Template View,form_template*}}{{Form Default Wrap View,form_wrap*}}"/>

@@ -1,5 +1,0 @@
-<include field="gravatar"/>
-<include field="gravatar_size"/>
-<include field="gravatar_type"/>
-<include field="gravatar_rating"/>
-<include field="gravatar_image"/>

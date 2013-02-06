@@ -1,2 +1,0 @@
-<field name="profiler_end_with" type="text" null="0" default="Response"
-       values="Initialise,Route,Authorise,Execute,Response"/>

@@ -1,8 +1,0 @@
-<field name="catalog_type_id"
-       type="integer"
-       null="0"
-       default="model"
-       datalist="CatalogType"
-       locked="0"
-       display="catalog_types_title"
-        />

@@ -1,7 +1,0 @@
-Configuration
-Default
-Dummy
-Edit
-Grid
-System
-temp.txt

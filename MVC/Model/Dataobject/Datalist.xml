@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model
-        name="Datalist"
-        service_class="Registry"
-        service_class_query_method="getData"
-        service_class_query_method_parameter="MODEL_LITERAL"
-        process_plugins="1"/>

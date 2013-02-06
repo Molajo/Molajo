@@ -1,6 +1,0 @@
-<field
-        name="criteria_title"
-        type="char"
-        null="0"
-        default=" "
-        />

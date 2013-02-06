@@ -1,4 +1,0 @@
-<include field="item_parent_menu_id"/>
-<include field="item_model_name"/>
-<include field="item_model_type"/>
-<include field="item_model_query_object"/>

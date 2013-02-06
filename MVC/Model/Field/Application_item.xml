@@ -1,2 +1,0 @@
-<field name="application_item" type="char" null="0"
-       default="{{Item Default Page View,item_parent*,item_theme*,item_page*}}{{Item Default Template View,item_template*}}{{Item Default Wrap View,item_wrap*}}"/>

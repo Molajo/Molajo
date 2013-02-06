@@ -1,7 +1,0 @@
-<field name="description"
-       type="text"
-       null="0"
-       cols="80"
-       rows="5"
-       default=" "
-        />

@@ -1,3 +1,0 @@
-<include field="url_sef"/>
-<include field="url_unicode_slugs"/>
-<include field="url_force_ssl"/>

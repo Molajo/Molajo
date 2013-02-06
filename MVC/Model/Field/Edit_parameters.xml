@@ -1,1 +1,0 @@
-<field name="edit_parameters" hidden="1" type="char" null="0" default="{{Parameters,parameters*}}"/>

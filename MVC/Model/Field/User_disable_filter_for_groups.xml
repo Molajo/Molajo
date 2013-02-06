@@ -1,1 +1,0 @@
-<field name="user_disable_filter_for_groups" type="char" null="0" datalist="Groups" multiple="1" size="5"/>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model
-        name="Parameters"
-        service_class="Registry"
-        service_class_query_method="getData"
-        service_class_query_method_parameter="*"
-        process_plugins="1"/>

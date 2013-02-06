@@ -1,6 +1,0 @@
-<field name="list_model_ordering"
-       type="char"
-       null="0"
-       default=" "
-       datalist="Fields"
-        />

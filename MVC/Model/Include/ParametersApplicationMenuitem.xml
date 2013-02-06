@@ -1,9 +1,0 @@
-<include field="application_array"/>
-<include field="application_basic"/>
-<include field="application_user"/>
-<include field="application_media"/>
-<include field="application_system"/>
-<include field="application_views"/>
-<include field="application_form"/>
-<include field="application_item"/>
-<include field="application_list"/>
