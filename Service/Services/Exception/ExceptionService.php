@@ -109,8 +109,7 @@ Class ExceptionService extends \Exception
             echo  'Application will now terminate.';
         }
 
-        $renderedOutput = ob_get_contents();
-        ob_end_clean();
+        $renderedOutput = ob_end_clean();
 
         echo $renderedOutput;
 

@@ -393,8 +393,7 @@ Class ThemeService
         foreach ($this->include_request as $request) {
             echo $request['replace'] . '<br />';
         }
-        $includeDisplay = ob_get_contents();
-        ob_end_clean();
+        $includeDisplay = ob_end_clean();
 
         Services::Profiler()->set('message', $includeDisplay, 'Rendering');
 
