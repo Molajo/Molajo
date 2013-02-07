@@ -6,8 +6,9 @@
  * @license      MIT
  * @copyright    2013 Amy Stephen. All rights reserved.
  */
-namespace Molajo;
+namespace Molajo\Foundation;
 
+use Exception;
 use Molajo\Service\Services;
 
 defined('MOLAJO') or die;

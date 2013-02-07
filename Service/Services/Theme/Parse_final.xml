@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<sequence>
-    <include>asset:template</include>
-    <include>metadata:template</include>
-    <include>message</include>
-    <include>profiler</include>
-    <include>head</include>
-    <include>defer:head</include>
-</sequence>

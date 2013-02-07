@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<sequence>
-    <include>tag</include>
-    <include>template</include>
-    <include>page</include>
-    <include>wrap</include>
-</sequence>

@@ -1,3 +1,6 @@
-.idea
+.buildpath
 .DS_Store
-.sass-cache
+.idea
+.project
+.settings
+build/
