@@ -1,0 +1,2 @@
+<field name="configuration_editor" type="char" null="0"
+       default="{{Main,edit_main_*}}{{Publishing,edit_publish_*}}{{Categorization,edit_categorization_*}}{{Metadata,edit_metadata_*}}{{Parameters,edit_parameter_*}}"/>

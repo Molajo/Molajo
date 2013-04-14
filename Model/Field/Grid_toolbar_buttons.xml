@@ -1,0 +1,9 @@
+<field name="grid_toolbar_buttons"
+       type="char"
+       null="0"
+       default="new,edit,publish,feature,archive,checkin,restore,delete,trash,options"
+       values="new,edit,publish,feature,archive,checkin,restore,delete,trash,options"
+       datalist="Listactions"
+       multiple="1"
+       size="5"
+        />

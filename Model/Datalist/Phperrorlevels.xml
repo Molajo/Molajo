@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="PhperrorlevelsDatalist"
+       data_object="Datalist">
+    <table>
+        <values>
+            <value id="1" value="E_ERROR"/>
+            <value id="2" value="E_WARNING"/>
+            <value id="4" value="E_PARSE"/>
+            <value id="8" value="E_NOTICE"/>
+            <value id="16" value="E_CORE_ERROR"/>
+            <value id="32" value="E_CORE_WARNING"/>
+            <value id="64" value="E_COMPILE_ERROR"/>
+            <value id="128" value="E_COMPILE_WARNING"/>
+            <value id="256" value="E_USER_ERROR"/>
+            <value id="512" value="E_USER_WARNING"/>
+            <value id="1024" value="E_USER_NOTICE"/>
+            <value id="6143" value="E_ALL"/>
+            <value id="2048" value="E_STRICT"/>
+            <value id="4096" value="E_RECOVERABLE_ERROR"/>
+        </values>
+    </table>
+</model>

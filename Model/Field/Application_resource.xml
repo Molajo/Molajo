@@ -1,0 +1,2 @@
+<field name="application_resource" type="char" null="0"
+       default="{{Content,enable_content*}}{{Broadcast,enable_broadcast*}}{{Categorize,enable_categorize*}}{{Protection,enable_protection*}}{{Response,enable_response*}}{{System,enable_system*}}"/>

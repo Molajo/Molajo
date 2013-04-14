@@ -1,0 +1,5 @@
+<field name="list_model_offset"
+       type="integer"
+       null="0"
+       default="0"
+        />

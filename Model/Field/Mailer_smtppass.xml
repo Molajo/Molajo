@@ -1,0 +1,1 @@
+<field name="mailer_smtppass" type="integer" null="0" default=" "/>

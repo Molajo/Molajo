@@ -1,0 +1,2 @@
+<field name="application_user" type="char" null="0"
+       default="{{User Defaults,user*}}{{Language Options,language*}}{{Groups,group*}}{{Permissions,permission*}}{{Log,log*}}"/>

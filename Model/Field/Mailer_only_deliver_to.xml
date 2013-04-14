@@ -1,0 +1,1 @@
+<field name="mailer_only_deliver_to" type="char" null="0" default=" "/>

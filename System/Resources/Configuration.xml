@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="System" version="1.0">
+    <name>SYSTEM_RESOURCES_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@niambie.org</author_email>
+    <author_url>http://niambie.org</author_url>
+    <version>1.0</version>
+    <description>SYSTEM_RESOURCES_DESCRIPTION</description>
+    <model
+            name="Resources"
+            criteria_catalog_type_id="12000"
+            extends="RenderDatasource">
+        <customfields>
+            <customfield name="parameters">
+                <include name="ParametersEdit"/>
+                <include name="ParametersEnable"/>
+                <include name="ParametersForm"/>
+                <include name="ParametersFormModel"/>
+                <include name="ParametersItem"/>
+                <include name="ParametersItemModel"/>
+                <include name="ParametersList"/>
+                <include name="ParametersListModel"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

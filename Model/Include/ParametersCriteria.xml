@@ -1,0 +1,7 @@
+<include field="criteria_title"/>
+<include field="criteria_catalog_type_id"/>
+<include field="criteria_extension_instance_id"/>
+<include field="criteria_source_id"/>
+<include field="criteria_status"/>
+<include field="criteria_snippet_length"/>
+<include field="criteria_display_view_on_no_results"/>

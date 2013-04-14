@@ -1,0 +1,1 @@
+<field name="profiler_output_queries_sql" type="boolean" null="0" default="1"/>

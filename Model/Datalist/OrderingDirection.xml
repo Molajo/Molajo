@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="OrderingDirection"
+       data_object="Datalist">
+    <table>
+        <values>
+            <value id="DESC" value="Descending"/>
+            <value id="ASC" value="Ascending"/>
+        </values>
+    </table>
+</model>

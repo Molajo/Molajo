@@ -1,0 +1,1 @@
+<field name="mailer_html_or_text" type="char" null="0" datalist="Htmlortext"/>

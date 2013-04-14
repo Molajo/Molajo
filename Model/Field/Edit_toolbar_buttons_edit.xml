@@ -1,0 +1,8 @@
+<field name="edit_toolbar_buttons_edit"
+       type="char"
+       null="0"
+       default="draft,save,cancel,delete,restore"
+       datalist="Actions"
+       multiple="1"
+       size="5"
+        />

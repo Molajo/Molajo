@@ -1,0 +1,5 @@
+<field name="display_phone"
+       type="boolean"
+       null="0"
+       default="0"
+        />

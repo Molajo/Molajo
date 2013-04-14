@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Modeltypes"
+       data_object="Datalist">
+    <table>
+        <values>
+            <value id="datalist" value="Datalist"/>
+            <value id="dataobject" value="Dataobject"/>
+            <value id="menuitem" value="Menuitem"/>
+            <value id="pageview" value="Pageview"/>
+            <value id="plugin" value="Plugin"/>
+            <value id="resource" value="Resource"/>
+            <value id="service" value="Service"/>
+            <value id="system" value="System"/>
+            <value id="templateview" value="Templateview"/>
+            <value id="theme" value="Theme"/>
+            <value id="wrap" value="Wrapview"/>
+        </values>
+    </table>
+</model>

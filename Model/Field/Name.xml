@@ -1,0 +1,7 @@
+<field name="name"
+       type="char"
+       null="0"
+       unique="1"
+       default=" "
+       width="50"
+        />

@@ -1,0 +1,6 @@
+<field name="catalog_id"
+       type="catalog_id"
+       null="0"
+       default="model"
+       locked="0"
+        />

@@ -1,4 +1,0 @@
-- More:
-- [Usage](doc/usage.md)
-- [Extend](doc/extend.md)
-- [Specifications](doc/specifications.md)

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="GravatarRating"
+       data_object="Datalist">
+    <table>
+        <values>
+            <value id="g" value="G"/>
+            <value id="pg" value="PG"/>
+            <value id="r" value="R"/>
+            <value id="x" value="X"/>
+        </values>
+    </table>
+</model>

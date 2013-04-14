@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Wrapviews"
+        criteria_catalog_type_id="10000"
+        extension_id="10000"
+        process_plugins="0"
+        extends="RenderDatasource">
+    <customfields>
+        <customfield name="parameters">
+            <include name="ParametersWrap"/>
+        </customfield>
+    </customfields>
+</model>

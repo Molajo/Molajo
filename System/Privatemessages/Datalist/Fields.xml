@@ -1,0 +1,5 @@
+<datalist name="FieldsPrivatemessages">
+    <model
+            name="FieldsPrivatemessages"
+            registry_entry="PrivatemessagesSystemFields"/>
+</datalist>

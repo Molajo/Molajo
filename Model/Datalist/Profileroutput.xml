@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Profileroutput"
+       data_object="Datalist">
+    <table>
+        <values>
+            <value id="Actions" value="Actions"/>
+            <value id="Application" value="Application"/>
+            <value id="Permissions" value="Permissions"/>
+            <value id="Queries" value="Queries"/>
+            <value id="Registry" value="Registry"/>
+            <value id="Rendering" value="Rendering"/>
+            <value id="Routing" value="Routing"/>
+            <value id="Services" value="Services"/>
+            <value id="Plugins" value="Plugins"/>
+        </values>
+    </table>
+</model>

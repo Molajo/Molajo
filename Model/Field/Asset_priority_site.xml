@@ -1,0 +1,1 @@
+<field name="asset_priority_site" type="integer" null="0" default="100"/>

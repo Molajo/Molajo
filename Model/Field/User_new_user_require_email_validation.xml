@@ -1,0 +1,1 @@
+<field name="user_new_user_require_email_validation" type="boolean" null="0" default="1"/>

@@ -1,0 +1,1 @@
+<field name="mailer_smtpuser" type="char" null="0" default=" "/>

@@ -1,0 +1,2 @@
+<field name="configuration_form" type="char" null="0"
+       default="{{Page,form_parent*,form_theme*,form_page*}}{{Template,form_template*}}{{Wrap,form_wrap*}}{{Model,form_model*}}"/>

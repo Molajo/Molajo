@@ -1,0 +1,1 @@
+<field name="edit_permissions" type="char" null="0" default="{{Permissions,permissions*}}"/>

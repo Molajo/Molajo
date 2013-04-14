@@ -1,0 +1,5 @@
+<datalist name="Pagetypes">
+    <model
+            name="Pagetypes"
+            registry_entry="Pagetypes"/>
+</datalist>

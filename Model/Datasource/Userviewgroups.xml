@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="UserViewGroups"
+        table_name="#__user_view_groups"
+        primary_key="id"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="0"
+        check_view_level_access="0"
+        process_plugins="0"
+        data_object="Database">
+    <table>
+        <fields>
+            <include field="user_id"/>
+            <include field="view_group_id"/>
+        </fields>
+        <foreignkeys>
+            <foreignkey name="user_id" source_id="id" source_model="User" required="1"/>
+            <foreignkey name="view_group_id" source_id="id" source_model="GroupViewGroup" required="1"/>
+        </foreignkeys>
+    </table>
+</model>

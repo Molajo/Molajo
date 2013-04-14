@@ -1,0 +1,8 @@
+<include field="configuration_array"/>
+<include field="configuration_basic"/>
+<include field="configuration_access"/>
+<include field="configuration_metadata"/>
+<include field="configuration_customfields"/>
+<include field="configuration_editor"/>
+<include field="configuration_grid"/>
+<include field="configuration_views"/>

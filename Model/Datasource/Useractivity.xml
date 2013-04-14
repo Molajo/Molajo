@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Useractivity"
+        table_name="#__user_activity"
+        primary_key="id"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="1"
+        check_view_level_access="0"
+        process_plugins="1"
+        use_pagination="1"
+        model_offset="1"
+        model_count="5"
+        data_object="Database">
+    <table>
+
+        <fields>
+            <field name="id" type="integer" null="0" default="" identity="1"/>
+            <include field="user_id"/>
+            <include field="action_id"/>
+            <include field="catalog_id"/>
+            <include field="activity_datetime"/>
+            <include field="ip_address"/>
+        </fields>
+
+        <joins>
+            <join model="User"
+                  alias="useractivity_to_users"
+                  select="username,first_name,last_name"
+                  jointo="id"
+                  joinwith="user_id"/>
+            <join model="Actions"
+                  alias="useractivity_to_actions"
+                  select="title"
+                  jointo="id"
+                  joinwith="action_id"/>
+            <join model="Catalog"
+                  alias="useractivity_to_catalog"
+                  select="catalog_type_id,source_id,sef_request,view_group_id"
+                  jointo="id"
+                  joinwith="catalog_id"/>
+            <join model="CatalogTypes"
+                  alias="useractivity_to_catalog_type"
+                  select="title"
+                  jointo="id"
+                  joinwith="useractivity_to_catalog.catalog_type_id"/>
+        </joins>
+
+        <plugins>
+            <plugin name="Action"/>
+            <plugin name="Dateformats"/>
+            <plugin name="Ipaddress"/>
+        </plugins>
+
+        <foreignkeys>
+            <foreignkey name="user_id" source_id="id" source_model="User" required="1"/>
+            <foreignkey name="action_id" source_id="id" source_model="Actions" required="1"/>
+            <foreignkey name="catalog_id" source_id="id" source_model="Catalog" required="1"/>
+        </foreignkeys>
+    </table>
+</model>

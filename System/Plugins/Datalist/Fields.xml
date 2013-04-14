@@ -1,0 +1,5 @@
+<datalist name="FieldsPlugins">
+    <model
+            name="FieldsPlugins"
+            registry_entry="PluginsSystemFields"/>
+</datalist>

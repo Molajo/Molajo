@@ -1,0 +1,1 @@
+<field name="robots" type="char" null="0" datalist="Robots" default="follow,index"/>

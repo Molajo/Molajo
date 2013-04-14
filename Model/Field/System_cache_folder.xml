@@ -1,0 +1,1 @@
+<field name="system_cache_folder" type="char" null="0" default="cache"/>

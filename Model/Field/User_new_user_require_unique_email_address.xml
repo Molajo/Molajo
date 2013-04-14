@@ -1,0 +1,1 @@
+<field name="user_new_user_require_unique_email_address" type="boolean" null="0" default="1"/>

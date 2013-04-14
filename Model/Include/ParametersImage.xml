@@ -1,0 +1,10 @@
+<include field="image_resizing"/>
+<include field="image_resized_image_subfolder"/>
+<include field="image_thumbnail_width"/>
+<include field="image_thumbnail_height"/>
+<include field="image_small_width"/>
+<include field="image_small_height"/>
+<include field="image_medium_width"/>
+<include field="image_medium_height"/>
+<include field="image_large_width"/>
+<include field="image_large_height"/>

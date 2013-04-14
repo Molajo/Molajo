@@ -1,26 +1,39 @@
-{
-    "name":"Molajo/Filesystem",
-    "description":"Common handling of file and directory requests for adapter filesystems",
-    "keywords":["Filesystem", "Adapters", "Interface", "PSR-0"],
-    "homepage":"http://github.com/AmyStephen/Filesystem",
-    "type":"library",
+ {
+    "name":"molajo/foundation",
+    "type":"molajo-bundle",
+    "description":"Molajo Foundation: Base classes for Molajo Application",
+    "keywords":["Application", "Framework", "Molajo", "PSR-0"],
+    "homepage":"http://github.com/Molajo/Foundation",
     "license":"MIT",
     "authors":[
         {
             "name":"Amy Stephen",
             "email":"AmyStephen@gmail.com",
-            "homepage":"http://Twitter.com/AmyStephen"
+            "homepage":"http://AmyStephen.github.com"
+        },
+        {
+            "name":"Other Contributors",
+            "homepage":"http://github.com/Molajo/Foundation/contributors"
         }
     ],
     "require":{
         "php":">=5.3.3"
     },
-    "require-dev": {
-        "phpunit/phpunit": "3.7.*@stable"
+
+    "support":{
+        "email":"hello@molajo.org",
+        "irc":"irc://irc.freenode.org/molajo"
     },
+    "target-dir":"Molajo/Foundation",
     "autoload":{
         "psr-0":{
-            "Molajo/Filesystem":"src/"
+            "Molajo\\Foundation":"./"
+        }
+    },
+    "minimum-stability":"dev",
+    "extra":{
+        "branch-alias":{
+            "dev-master":"0.1.0-dev"
         }
     }
 }

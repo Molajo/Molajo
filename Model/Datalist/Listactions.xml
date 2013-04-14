@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="Listactions"
+       data_object="Datalist">
+    <table>
+        <values>
+            <value id="archive" value="Archive item(s)"/>
+            <value id="checkin" value="Check-in item(s)"/>
+            <value id="options" value="Configure Resource"/>
+            <value id="new" value="Create new item"/>
+            <value id="delete" value="Delete item(s)"/>
+            <value id="edit" value="Edit item"/>
+            <value id="feature" value="Feature item(s)"/>
+            <value id="spam" value="Mark item(s) as spam"/>
+            <value id="publish" value="Publish item(s)"/>
+            <value id="restore" value="Restore item from version history"/>
+            <value id="trash" value="Trash item(s)"/>
+            <value id="unpublish" value="Unpublish item(s)"/>
+        </values>
+    </table>
+</model>

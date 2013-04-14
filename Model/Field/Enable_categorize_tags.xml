@@ -1,0 +1,1 @@
+<field name="enable_categorize_tags" type="text" size="10" datalist="Tags" multiple="1" null="1"/>

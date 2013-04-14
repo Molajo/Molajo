@@ -1,0 +1,5 @@
+<field name="stickied"
+       type="boolean"
+       null="0"
+       default="0"
+        />

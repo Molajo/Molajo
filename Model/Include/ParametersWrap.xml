@@ -1,0 +1,13 @@
+<include field="wrap_view_id"/>
+
+<include field="wrap_view_css_id"/>
+<include field="wrap_view_css_class"/>
+<include field="wrap_view_role"/>
+<include field="wrap_view_property"/>
+<include field="wrap_view_header_level"/>
+<include field="wrap_view_show_title"/>
+<include field="wrap_view_show_subtitle"/>
+
+<include field="model_name"/>
+<include field="model_type"/>
+<include field="model_query_object"/>

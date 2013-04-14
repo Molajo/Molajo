@@ -1,0 +1,7 @@
+<field name="id"
+       type="integer"
+       null="0"
+       default=" "
+       identity="1"
+       hidden="1"
+        />

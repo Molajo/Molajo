@@ -1,0 +1,5 @@
+<datalist name="Menuitems">
+    <model
+            name="Menuitems"
+            registry_entry="Menuitems"/>
+</datalist>

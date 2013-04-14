@@ -1,0 +1,2 @@
+<field name="edit_main" hidden="1" type="char" null="0"
+       default="{{Main,edit_main_*,Editmain}}{{Categorization,edit_categorization_*,Editcategorization}}{{Metadata,edit_metadata*,Editmetadata}}{{Publishing,edit_publish_*,Editpublishing}}{{Versions,versions,Editversions}}"/>

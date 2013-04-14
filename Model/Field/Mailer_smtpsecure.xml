@@ -1,0 +1,1 @@
+<field name="mailer_smtpsecure" type="char" null="0" default="" datalist="SmtpSecure"/>

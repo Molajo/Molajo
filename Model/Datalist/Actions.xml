@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Actions"
+        table_name="#__actions"
+        primary_key="id"
+        name_key="title"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="0"
+        check_view_level_access="0"
+        process_plugins="0"
+        published_status="0"
+        data_object="Database">
+    <table>
+        <fields>
+            <include field="id_pk"/>
+            <field name="title" type="char" null="0" default="" unique="1"/>
+        </fields>
+    </table>
+</model>

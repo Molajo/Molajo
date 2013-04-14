@@ -1,0 +1,15 @@
+<include field="asset_css_combine_and_minify"/>
+<include field="asset_js_combine_and_minify"/>
+<include field="asset_use_extension_css"/>
+<include field="asset_use_extension_js"/>
+
+<include field="asset_priority_site"/>
+<include field="asset_priority_application"/>
+<include field="asset_priority_user"/>
+<include field="asset_priority_extension"/>
+<include field="asset_priority_request"/>
+<include field="asset_priority_primary_category"/>
+<include field="asset_priority_menuitem"/>
+<include field="asset_priority_list"/>
+<include field="asset_priority_item"/>
+<include field="asset_priority_theme"/>

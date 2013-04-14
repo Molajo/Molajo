@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model name="MenuitemsNested"
+       process_plugins="0"
+       extends="MenuitemsSystem">
+    <table>
+        <joins>
+            <join model="ExtensionInstances"
+                  alias="current_menuitem"
+                  select=""
+                  jointo="lft,rgt,root"
+                  joinwith="&gt;=lft,&lt;=rgt,root"/>
+        </joins>
+    </table>
+</model>

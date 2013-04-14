@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Database"
+        db_type="mysqli"
+        host="localhost"
+        user=""
+        password=""
+        db="molajo"
+        db_prefix="molajo_"
+        service_class_connection_namespace="JPlatform\database\driver\JDatabaseDriverMysqli"
+        service_class_query_method="JPlatform\database\query\JDatabaseQueryMysqli"
+        service_class="Database"
+        process_plugins="1"/>

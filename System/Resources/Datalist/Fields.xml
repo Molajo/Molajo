@@ -1,0 +1,5 @@
+<datalist name="FieldsResources">
+    <model
+            name="FieldsResources"
+            registry_entry="ResourcesSystemFields"/>
+</datalist>

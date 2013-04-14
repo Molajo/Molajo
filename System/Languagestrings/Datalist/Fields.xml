@@ -1,0 +1,5 @@
+<datalist name="FieldsLanguagestrings">
+    <model
+            name="FieldsLanguagestrings"
+            registry_entry="LanguagestringsSystemFields"/>
+</datalist>

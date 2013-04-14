@@ -1,0 +1,1 @@
+<field name="configuration_access" type="char" null="0" default="{{Access,access_*}}"/>

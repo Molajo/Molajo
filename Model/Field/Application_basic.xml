@@ -1,0 +1,2 @@
+<field name="application_basic" type="char" null="0"
+       default="{{Basics,application*}}{{URLs,url*}}{{Language,language*}}{{Offline,offline_sw*,offline_message}}"/>

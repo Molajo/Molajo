@@ -1,0 +1,1 @@
+<field name="asset_priority_application" type="integer" null="0" default="200"/>

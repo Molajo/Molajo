@@ -1,0 +1,3 @@
+<include field="page_view_id"/>
+<include field="page_view_css_id"/>
+<include field="page_view_css_class"/>

@@ -1,0 +1,7 @@
+<field
+        name="criteria_catalog_type_id"
+        locked="1"
+        type="integer"
+        null="0"
+        datalist="CatalogType"
+        />

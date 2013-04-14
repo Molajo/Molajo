@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Catalog"
+        table_name="#__catalog"
+        primary_key="id"
+        primary_prefix="a"
+        get_customfields="0"
+        get_item_children="0"
+        use_special_joins="0"
+        check_view_level_access="0"
+        process_plugins="0"
+        use_pagination="1"
+        data_object="Database">
+    <table>
+
+        <fields>
+            <include field="id_pk"/>
+            <include field="application_id"/>
+            <include field="catalog_type_id"/>
+            <include field="source_id"/>
+            <include field="enabled"/>
+            <include field="redirect_to_id"/>
+            <include field="sef_request"/>
+            <include field="page_type"/>
+            <include field="extension_instance_id"/>
+            <include field="view_group_id"/>
+            <include field="primary_category_id"/>
+        </fields>
+
+        <joins>
+            <join model="Catalogtypes"
+                  alias="b"
+                  select="title,model_type,model_name,primary_category_id,alias"
+                  jointo="id"
+                  joinwith="catalog_type_id"/>
+            <join model="Applicationextensioninstances"
+                  alias="application_extension_instances"
+                  select=""
+                  jointo="application_id,extension_instance_id"
+                  joinwith="APPLICATION_ID,extension_instance_id"/>
+            <join model="SiteExtensionInstances"
+                  alias="site_extension_instances"
+                  select=""
+                  jointo="site_id,extension_instance_id"
+                  joinwith="SITE_ID,extension_instance_id"/>
+        </joins>
+
+        <criteria>
+            <where name="a.enabled"
+                   connector="="
+                   value="1"/>
+            <where name="a.redirect_to_id"
+                   connector="="
+                   value="0"/>
+        </criteria>
+
+        <children>
+            <child name="Catalogactivity" type="Datasource" join="catalog_id"/>
+            <child name="Catalogcategories" type="Datasource" join="catalog_id"/>
+        </children>
+
+        <foreignkeys>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+        </foreignkeys>
+
+    </table>
+</model>

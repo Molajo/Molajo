@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="User"
+        table_name="#__users"
+        primary_key="id"
+        primary_key_value=""
+        name_key="username"
+        primary_prefix="a"
+        get_customfields="2"
+        get_item_children="1"
+        use_special_joins="1"
+        check_view_level_access="0"
+        process_plugins="1"
+        criteria_catalog_type_id="3000"
+        extends="root"
+        data_object="Database">
+
+    <table>
+        <fields>
+            <include field="id_pk"/>
+            <include field="site_id"/>
+            <include field="catalog_type_id"/>
+            <include field="username"/>
+            <include field="first_name"/>
+            <include field="last_name"/>
+            <include field="full_name"/>
+            <include field="alias"/>
+            <include field="content_text"/>
+            <include field="email"/>
+            <include field="password"/>
+            <include field="block"/>
+            <include field="register_datetime"/>
+            <include field="activation_datetime"/>
+            <include field="last_visit_datetime"/>
+            <include field="customfields"/>
+            <include field="parameters"/>
+            <include field="metadata"/>
+        </fields>
+
+        <joins>
+            <join model="CatalogTypes"
+                  alias="catalog_types"
+                  select="title,alias"
+                  jointo="id"
+                  joinwith="catalog_type_id"/>
+        </joins>
+
+        <foreignkeys>
+            <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            <foreignkey name="site_id" source_id="id" source_model="Site" required="1"/>
+        </foreignkeys>
+
+        <children>
+            <child name="Userapplications" type="Datasource" join="user_id"/>
+            <child name="Usergroups" type="Datasource" join="user_id"/>
+            <child name="Userviewgroups" type="Datasource" join="user_id"/>
+        </children>
+
+        <plugins>
+            <plugin name="Email"/>
+            <plugin name="Password"/>
+            <plugin name="Username"/>
+            <plugin name="Fullname"/>
+            <plugin name="Gravatar"/>
+            <plugin name="Smilies"/>
+            <plugin name="Snippet"/>
+            <plugin name="Readmore"/>
+            <plugin name="Dateformats"/>
+            <plugin name="Itemurl"/>
+        </plugins>
+    </table>
+    <customfields>
+
+        <customfield name="parameters">
+            <include field="display_phone"/>
+            <include field="display_gravatar"/>
+            <include field="display_birthdate"/>
+            <include field="display_email"/>
+            <include field="theme_id"/>
+        </customfield>
+
+        <customfield name="customfields">
+            <include field="gender"/>
+            <include field="about_me"/>
+            <include field="editor"/>
+            <include field="language"/>
+            <include field="date_of_birth"/>
+            <include field="secondary_email"/>
+            <include field="phone"/>
+        </customfield>
+
+    </customfields>
+</model>

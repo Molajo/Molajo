@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Customfieldtypes"
+        data_object="Datalist">
+    <table>
+        <values>
+            <value id="customfields" value="Customfield"/>
+            <value id="metadata" value="Metadata"/>
+            <value id="parameters" value="Parameter"/>
+        </values>
+    </table>
+</model>

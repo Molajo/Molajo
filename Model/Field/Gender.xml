@@ -1,0 +1,1 @@
+<field name="gender" type="char" null="1" default=" " values="M,F"/>

@@ -1,0 +1,6 @@
+<datalist name="ContentLanguage">
+    <model
+            name="ContentLanguage"
+            criteria_catalog_type_id="6000"
+            extends="ExtensionInstancesDatalist"/>
+</datalist>

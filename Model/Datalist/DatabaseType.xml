@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="DatabaseType"
+        data_object="Datalist">
+    <table>
+        <values>
+            <value id="mysqli" value="MySQLi"/>
+        </values>
+    </table>
+</model>

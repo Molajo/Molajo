@@ -1,0 +1,17 @@
+<include field="page_type"/>
+
+<include field="menuitem_theme_id"/>
+
+<include field="menuitem_page_view_id"/>
+<include field="menuitem_page_view_css_id"/>
+<include field="menuitem_page_view_css_class"/>
+
+<include field="menuitem_template_view_id"/>
+<include field="menuitem_template_view_css_id"/>
+<include field="menuitem_template_view_css_class"/>
+
+<include field="menuitem_wrap_view_id"/>
+<include field="menuitem_wrap_view_css_id"/>
+<include field="menuitem_wrap_view_css_class"/>
+<include field="menuitem_wrap_view_role"/>
+<include field="menuitem_wrap_view_property"/>

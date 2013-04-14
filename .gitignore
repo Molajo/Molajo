@@ -3,4 +3,8 @@
 .idea
 .project
 .settings
-build/
+.gitignore
+.gitattributes
+composer.phar
+composer.lock
+

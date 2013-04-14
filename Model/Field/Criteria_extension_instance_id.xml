@@ -1,0 +1,8 @@
+<field
+        name="criteria_extension_instance_id"
+        type="integer"
+        null="0"
+        default=" "
+        datalist="ExtensionInstances"
+        locked="1"
+        />
