@@ -37,11 +37,7 @@
         "Molajo/Render": "dev-master",
         "Molajo/Resource": "dev-master",
         "Molajo/Route": "dev-master",
-        "Molajo/User": "dev-master",
-        "joomla/database": "dev-master",
-        "twig/twig": "1.*@stable",
-        "mustache/mustache": "2.1.*",
-        "phpMailer/phpMailer": "dev-master"
+        "Molajo/User": "dev-master"
     },
 
     "autoload": {

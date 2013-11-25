@@ -241,8 +241,8 @@ class EmailInjector extends AbstractInjector implements ServiceHandlerInterface
     protected function testEmail()
     {
         /** Test */
-        $this->service_instance->set('to', 'AmyStephen@gmail.com,Amy Stephen');
-        $this->service_instance->set('from', 'AmyStephen@gmail.com,Amy Stephen');
+        $this->service_instance->set('to', 'AmyStephen@Molajo.org,Amy Stephen');
+        $this->service_instance->set('from', 'AmyStephen@Molajo.org,Amy Stephen');
         $this->service_instance->set('reply_to', 'person@example.com,FName LName');
         $this->service_instance->set('cc', 'person@example.com,FName LName');
         $this->service_instance->set('bcc', 'person@example.com,FName LName');
