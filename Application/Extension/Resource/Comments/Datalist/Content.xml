@@ -1,0 +1,7 @@
+<datalist name="ContentComments">
+    <model
+            name="ContentComments"
+            criteria_catalog_type_id="17000"
+            criteria_extension_instance_id="17000"
+            extends="ContentDatalist"/>
+</datalist>

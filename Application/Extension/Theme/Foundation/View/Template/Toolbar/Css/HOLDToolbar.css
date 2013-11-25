@@ -1,0 +1,99 @@
+.resource-toolbar {
+    background-color: #FFF;
+    background-image: -moz-linear-gradient(center top, #FFF, #FFF, #FFF, #ddd);
+    background-image: -webkit-gradient(linear, center top, center bottom, from(#FFF), color-stop(0.5, #FFF), to(#ddd));
+    border: 1px solid #C7C7C7;
+    bottom: 70px;
+    left: 300px;
+    padding: 0 15px 5px;
+    position: fixed;
+    width: 520px;
+
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    -moz-box-shadow: 3px -3px 5px #B8B8B8;
+    -webkit-box-shadow: 3px -3px 5px #B8B8B8;
+    box-shadow: 3px -3px 5px #B8B8B8;
+}
+
+.resource-toolbar a.slider {
+    background-color: #fff;
+    background-image: -moz-linear-gradient(center top, #ddd, #FFF);
+    background-image: -webkit-gradient(linear, center top, center bottom, from(#ddd), to(#FFF));
+    border: 1px solid #C7C7C7;
+    border-bottom: none;
+    cursor: pointer;
+    float: right;
+    height: 8px;
+    margin: -15px 30px 0 0;
+    padding: 3px 20px;
+    width: 8px;
+    z-index: 2001;
+
+    -moz-border-radius-topright: 7px;
+    -moz-border-radius-topleft: 7px;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    -moz-box-shadow: 3px -2px 3px #B8B8B8;
+    -webkit-box-shadow: 3px -2px 3px #B8B8B8;
+    box-shadow: 3px -2px 3px #B8B8B8;
+}
+
+.resource-toolbar a.slider img {
+    padding-bottom: 3px;
+}
+
+#toolbar {
+    list-style: none;
+}
+
+#toolbar li {
+    display: inline-block;
+    margin: 10px;
+}
+
+#toolbar li a {
+    border: 1px solid #ccc;
+    color: #858585;
+    display: block;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    width: auto;
+
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-topleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+#toolbar li a:hover, #toolbar li a.active {
+    background-color: #ddd;
+}
+
+#toolbar li ul {
+    display: none;
+}
+
+#toolbar li ul li {
+    margin: 5px 0;
+    display: block;
+}
+
+#toolbar li a img {
+    border-width: 0px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+#toolbar ul li a img {
+    background: url("Extension/Theme/Molajo/View/Template/Toolbar/Images/bulb.png") no-repeat;
+    border-width: 0px;
+    height: 16px;
+    line-height: 22px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 16px;
+}

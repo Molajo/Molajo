@@ -1,0 +1,34 @@
+<?
+/**
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+?>
+<div class="row">
+    <article class="nine columns">
+        <include blog class=right,secondary,small,button wrap=section role=main/>
+            <? if ((int)$this->registry->get('runtime_data', 'enable_response_comments') == 1) { ?>
+                <aside class="row" role="complementary">
+                    <div class="twelve rows">
+                        <ul class="link-list right">
+                            <li><a href="#" class="fc-webicon facebook">Like us on Facebook</a></li>
+                            <li><a href="#" class="fc-webicon twitter">Like us on Facebook</a></li>
+                            <li><a href="#" class="fc-webicon googleplus">Like us on Facebook</a></li>
+                        </ul>
+                        <hr/>
+                        <include Author wrap=Div wrap_class=author-profile/>
+                            <section>
+                                <include Comment/>
+                                <include Comments/>
+                                <include Commentform/>
+                            </section>
+                    </div>
+                </aside>
+            <? } ?>
+    </article>
+    <include Sidebar wrap=aside wrap_class=three,columns role=complementary/>
+</div>
+<div class="row">
+    <include Paging wrap=nav role=navigation wrap_class=paging/>
+</div>

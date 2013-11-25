@@ -1,0 +1,5 @@
+<datalist name="FieldsPages">
+    <model
+            name="FieldsPages"
+            registry_entry="PagesResourceFields"/>
+</datalist>

@@ -1,0 +1,5 @@
+<datalist name="FieldsComments">
+    <model
+            name="FieldsComments"
+            registry_entry="CommentsResourceFields"/>
+</datalist>

@@ -1,7 +1,0 @@
-<field name="modified_by"
-       type="integer"
-       null="0"
-       locked="1"
-       display="modified_by_full_name"
-       default="0"
-        />

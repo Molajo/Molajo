@@ -1,2 +1,0 @@
-<field hidden="1" name="grid_batch_array" type="char" null="0"
-       default="ordering,status,categories,tags,permissions,feature,sticky,checkin"/>

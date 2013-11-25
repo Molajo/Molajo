@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model
-        name="Template"
-        service_class="Registry"
-        service_class_query_method="getData"
-        service_class_query_method_parameter="'Template'"
-        process_plugins="1"/>

@@ -1,5 +1,0 @@
-<field name="display_email"
-       type="boolean"
-       null="0"
-       default="0"
-        />

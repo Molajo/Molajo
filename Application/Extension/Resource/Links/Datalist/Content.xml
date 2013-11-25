@@ -1,0 +1,7 @@
+<datalist name="ContentImages">
+    <model
+            name="ContentImages"
+            criteria_catalog_type_id="25000"
+            criteria_extension_instance_id="25000"
+            extends="ContentDatalist"/>
+</datalist>

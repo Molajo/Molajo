@@ -1,6 +1,0 @@
-<field
-        name="criteria_snippet_length"
-        type="integer"
-        null="0"
-        default="200"
-        />

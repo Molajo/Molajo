@@ -1,0 +1,7 @@
+<datalist name="ContentVideo">
+    <model
+            name="ContentVideo"
+            criteria_catalog_type_id="23000"
+            criteria_extension_instance_id="23000"
+            extends="ContentDatalist"/>
+</datalist>

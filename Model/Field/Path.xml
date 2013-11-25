@@ -1,7 +1,0 @@
-<field name="path"
-       type="char"
-       null="0"
-       default=" "
-       width="50"
-       locked="0"
-        />

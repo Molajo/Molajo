@@ -1,4 +1,0 @@
-<include field="template_view_id"/>
-<include field="template_view_css_id"/>
-<include field="template_view_css_class"/>
-<include name="ParametersWrap"/>

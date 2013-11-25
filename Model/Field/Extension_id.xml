@@ -1,8 +1,0 @@
-<field name="extension_id"
-       type="integer"
-       null="0"
-       default="0"
-       datalist="Extensions"
-       locked="1"
-       display="name"
-        />

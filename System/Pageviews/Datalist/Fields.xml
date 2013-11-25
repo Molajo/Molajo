@@ -1,5 +1,0 @@
-<datalist name="FieldsPageviews">
-    <model
-            name="FieldsPageviews"
-            registry_entry="PageviewsSystemFields"/>
-</datalist>

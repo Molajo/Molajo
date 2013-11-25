@@ -1,6 +1,0 @@
-<field name="status_prior_to_version"
-       type="integer"
-       null="0"
-       locked="1"
-       default="0"
-        />

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Resource" version="1.0" extends="Content">
+    <name>RESOURCE_SAMPLES_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>RESOURCE_SAMPLES_DESCRIPTION</description>
+    <model name="Samples" criteria_catalog_type_id="xxxxx">
+        <customfields>
+            <customfield name="parameters">
+                <field name="tags" type="tags" null="0" default="1" extends="Plugin"/>
+            </customfield>
+            <customfield name="customfields">
+                <field name="intro_text_image" type="file" null="0" default="1"/>
+                <field name="full_text_image" type="file" null="0" default="1"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

@@ -1,6 +1,0 @@
-<field name="source_id"
-       type="integer"
-       null="0"
-       default=" "
-       hidden="1"
-        />

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Resource" version="1.0">
+    <name>RESOURCE_COMMENTS_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>RESOURCE_COMMENTS_DESCRIPTION</description>
+    <model
+            name="Comments"
+            criteria_catalog_type_id="17000"
+            criteria_extension_instance_id="17000"
+            get_customfields="1"
+            get_item_children="0"
+            use_special_joins="0"
+            check_view_level_access="1"
+            process_events="1"
+            use_pagination="1"
+            extends="Contentresources"
+            data_object="Database">
+    </model>
+</extension>

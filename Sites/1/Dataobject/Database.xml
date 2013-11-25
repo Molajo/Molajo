@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        name="Database"
+        data_object_type="Database"
+        db_type="mysqli"
+        db_host="localhost"
+        db_user="root"
+        db_password="root"
+        db="molajo_site2"
+        db_prefix="molajo_"
+        process_events="1"/>
+

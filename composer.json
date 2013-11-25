@@ -1,39 +1,57 @@
- {
-    "name":"molajo/foundation",
-    "type":"molajo-bundle",
-    "description":"Molajo Foundation: Base classes for Molajo Application",
-    "keywords":["Application", "Framework", "Molajo", "PSR-0"],
-    "homepage":"http://github.com/Molajo/Foundation",
-    "license":"MIT",
-    "authors":[
+{
+    "name": "molajo/molajo",
+    "description": "Molajo Content Managment Framework",
+    "type": "application",
+    "keywords": ["Molajo", "Application", "CommonApi"],
+    "homepage": "http://github.com/Molajo/Molajo",
+    "license": "MIT",
+    "version": "0.1.0-alpha",
+
+    "authors": [
         {
-            "name":"Amy Stephen",
-            "email":"AmyStephen@gmail.com",
-            "homepage":"http://AmyStephen.github.com"
-        },
-        {
-            "name":"Other Contributors",
-            "homepage":"http://github.com/Molajo/Foundation/contributors"
+            "name": "Amy Stephen",
+            "email": "AmyStephen@Molajo.org",
+            "homepage": "http://AmyStephen.com"
         }
     ],
-    "require":{
-        "php":">=5.3.3"
+
+    "support": {
+        "event": "hello@molajo.org",
+        "irc": "irc://irc.freenode.org/molajo"
     },
 
-    "support":{
-        "email":"hello@molajo.org",
-        "irc":"irc://irc.freenode.org/molajo"
+    "require": {
+        "php": ">=5.3.10",
+        "Molajo/Authorisation": "dev-master",
+        "Molajo/Cache": "dev-master",
+        "Molajo/Database": "dev-master",
+        "Molajo/Email": "dev-master",
+        "Molajo/Event": "dev-master",
+        "Molajo/Fieldhandler": "dev-master",
+        "Molajo/Filesystem": "dev-master",
+        "Molajo/Framework": "dev-master",
+        "Molajo/Http": "dev-master",
+        "Molajo/IoC": "dev-master",
+        "Molajo/Language": "dev-master",
+        "Molajo/Log": "dev-master",
+        "Molajo/Render": "dev-master",
+        "Molajo/Resource": "dev-master",
+        "Molajo/Route": "dev-master",
+        "Molajo/User": "dev-master",
+        "joomla/database": "dev-master",
+        "twig/twig": "1.*@stable",
+        "mustache/mustache": "2.1.*",
+        "phpMailer/phpMailer": "dev-master"
     },
-    "target-dir":"Molajo/Foundation",
-    "autoload":{
-        "psr-0":{
-            "Molajo\\Foundation":"./"
+
+    "autoload": {
+        "psr-0": {
+            "Joomla": "src/",
+            "Twig": "src/",
+            "Mustache": "src/",
+            "Molajo": "/"
         }
     },
-    "minimum-stability":"dev",
-    "extra":{
-        "branch-alias":{
-            "dev-master":"0.1.0-dev"
-        }
-    }
+    
+    "minimum-stability": "dev"
 }

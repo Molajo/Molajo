@@ -1,0 +1,8 @@
+<datalist name="FieldscustomarticlesDatalist">
+    <model
+            name="FieldscustomarticlesDatalist"
+            table_name="#__content"
+            criteria_catalog_type_id="16000"
+            criteria_extension_instance_id="16000"
+            extends="FieldscustomDatalist"/>
+</datalist>

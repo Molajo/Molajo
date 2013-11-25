@@ -1,0 +1,7 @@
+<datalist name="ContentGroups">
+    <model
+            name="ContentGroups"
+            criteria_catalog_type_id="13000"
+            criteria_extension_instance_id="13000"
+            extends="ContentDatalist"/>
+</datalist>

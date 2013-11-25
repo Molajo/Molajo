@@ -1,3 +1,0 @@
-<field name="grid_submenu_items" type="char" null="0"
-       default="items,categories,drafts"
-       values="items,categories,drafts"/>

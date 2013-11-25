@@ -1,7 +1,0 @@
-<include field="menuitem_model_name"/>
-<include field="menuitem_model_type"/>
-<include field="menuitem_model_query_object"/>
-<include field="menuitem_model_ordering"/>
-<include field="menuitem_model_offset"/>
-<include field="menuitem_model_count"/>
-<include field="menuitem_model_use_pagination"/>

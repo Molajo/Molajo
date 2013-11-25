@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Resource" version="1.0">
+    <name>RESOURCE_VIDEO_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>RESOURCE_VIDEO_DESCRIPTION</description>
+    <model
+            name="Video"
+            criteria_catalog_type_id="23000"
+            criteria_extension_instance_id="23000"
+            extends="Contentresources">
+        <customfields>
+            <customfield name="parameters">
+                <field name="add_a_parameter" type="boolean" null="0" default="1"/>
+            </customfield>
+            <customfield name="customfields">
+                <field name="anything_can_be_added" type="boolean" null="0" default="0"/>
+                <field name="anything_can_be_overridden" type="boolean" null="0" default="0"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

@@ -1,1 +1,0 @@
-<field name="enable_content_maximum_version_count" type="integer" null="0" default="5" minimum="0" maximum="20"/>
