@@ -1,6 +1,6 @@
 {
     "name": "molajo/molajo",
-    "description": "Molajo Content Managment Framework",
+    "description": "Molajo Content Management Framework",
     "type": "application",
     "keywords": ["Molajo", "Application", "CommonApi"],
     "homepage": "http://github.com/Molajo/Molajo",
