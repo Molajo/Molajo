@@ -22,22 +22,22 @@
 
     "require": {
         "php": ">=5.3.10",
-        "Molajo/Authorisation": "dev-master",
-        "Molajo/Cache": "dev-master",
-        "Molajo/Database": "dev-master",
-        "Molajo/Email": "dev-master",
-        "Molajo/Event": "dev-master",
-        "Molajo/Fieldhandler": "dev-master",
-        "Molajo/Filesystem": "dev-master",
-        "Molajo/Framework": "dev-master",
-        "Molajo/Http": "dev-master",
-        "Molajo/IoC": "dev-master",
-        "Molajo/Language": "dev-master",
-        "Molajo/Log": "dev-master",
-        "Molajo/Render": "dev-master",
-        "Molajo/Resource": "dev-master",
-        "Molajo/Route": "dev-master",
-        "Molajo/User": "dev-master"
+        "molajo/authorisation": "dev-master",
+        "molajo/cache": "dev-master",
+        "molajo/database": "dev-master",
+        "molajo/email": "dev-master",
+        "molajo/fieldhandler": "dev-master",
+        "molajo/event": "dev-master",
+        "molajo/filesystem": "dev-master",
+        "molajo/framework": "dev-master",
+
+        "molajo/ioc": "dev-master",
+        "molajo/language": "dev-master",
+        "molajo/log": "dev-master",
+        "molajo/render": "dev-master",
+        "molajo/resource": "dev-master",
+        "molajo/route": "dev-master",
+        "molajo/user": "dev-master"
     },
 
     "autoload": {
