@@ -30,7 +30,7 @@
         "molajo/event": "dev-master",
         "molajo/filesystem": "dev-master",
         "molajo/framework": "dev-master",
-
+        "molajo/http": "dev-master",
         "molajo/ioc": "dev-master",
         "molajo/language": "dev-master",
         "molajo/log": "dev-master",
