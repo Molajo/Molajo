@@ -1,0 +1,31 @@
+<?
+/**
+ * Formpage Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+    <header class="configuration-header">
+        <header class="configuration-header-header">
+            <h3><? echo $row->page_title_extended; ?></h3>
+            <? if ($runtime_data->application_help == 1) { ?>
+                <h6><? echo $row->page_description; ?></h6>
+            <? } ?>
+        </header>
+        <section class="configuration-header-section">
+            <ul class="inline-list right">
+                <li><a href="#"><strong><? echo $this->language_controller->translate('Reset'); ?></strong></a></li>
+                <li><a href="#" class="button success radius"><? echo $this->language_controller->translate(
+                            'Save',
+                            'Save'
+                        ); ?></a></li>
+            </ul>
+        </section>
+    </header>
+<? if ($row->page_subtitle_first_row == 1) {
+} else {
+    ?>
+    <div class="configuration-body">
+<? }

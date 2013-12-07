@@ -1,0 +1,25 @@
+<?
+/**
+ * Grid Page View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+<include Toolbar/>
+<include Formbegin/>
+    <include Gridfilters wrap=nav wrap_class=grid-filters role=nav/>
+    <section class="grid">
+        <include Gridordering/>
+        <include Gridstatus/>
+        <include Gridpermissions/>
+        <include Gridcategories/>
+        <include Gridtags/>
+        <include Gridfeature/>
+        <include Gridsticky/>
+        <include Gridcheckin/>
+        <include Grid role=main/>
+            <include Pagination wrap=nav wrap_class=pagination/>
+    </section>
+<include Formend/>

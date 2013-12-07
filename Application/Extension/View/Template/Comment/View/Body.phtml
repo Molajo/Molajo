@@ -1,0 +1,23 @@
+<?
+/**
+ * Comment Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+if ($row->closed == 1) {
+    $comment = $row->closed_comment;
+
+} elseif ($row->count_of_comments == 0) {
+    $comment = $row->content_text;
+
+} else {
+    $comment = $row->content_text . ' ' . $row->count_of_comments . '.';
+} ?>
+<div class="comment-head">
+    <h3><? echo $row->title; ?></h3>
+
+    <p><? echo $comment; ?><p>
+</div>

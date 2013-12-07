@@ -26,8 +26,8 @@
         "molajo/cache": "dev-master",
         "molajo/database": "dev-master",
         "molajo/email": "dev-master",
-        "molajo/fieldhandler": "dev-master",
         "molajo/event": "dev-master",
+        "molajo/fieldhandler": "dev-master",
         "molajo/filesystem": "dev-master",
         "molajo/framework": "dev-master",
         "molajo/http": "dev-master",
@@ -42,9 +42,6 @@
 
     "autoload": {
         "psr-0": {
-            "Joomla": "src/",
-            "Twig": "src/",
-            "Mustache": "src/",
             "Molajo": "/"
         }
     },

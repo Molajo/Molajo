@@ -1,0 +1,47 @@
+<?
+/**
+ * Calendar Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+<table class='calendar'>
+    <caption><? echo $row->month_name . ' ' . $row->year; ?></caption>
+    <tr>
+        <? foreach ($row->days_of_week as $day_number) { ?>
+            <th class='header'><? echo $row->day_number; ?></th>
+        <?
+        }
+        $local_current_day = 1; ?>
+    </tr>
+    <tr>
+        <? if ($row->day_of_week_number > 0) { ?>
+            <td colspan='<? echo $row->day_of_week_number; ?>'>&nbsp;</td>
+        <?
+        }
+        $month = str_pad($row->month, 2, "0", STR_PAD_LEFT);
+        while ($local_current_day <= $row->number_of_days) {
+        if ($row->day_of_week_number == 7) {
+        $row->day_of_week_number = 0;
+        ?>
+    </tr>
+    <tr>
+        <?
+        }
+        $local_current_day2 = str_pad($row->local_current_day, 2, '0', STR_PAD_LEFT);
+        $date = $row->year - $row->month - $local_current_day2;
+        ?>
+        <td class='day' rel='<? echo $date; ?>'><? echo $row->local_current_day; ?></td>
+        <?
+        $local_current_day ++;
+        $day_number ++;
+        }
+
+        if ($row->day_of_week_number != 7) {
+            $remainingDays = 7 - $row->day_of_week_number; ?>
+            <td colspan='<? echo $remainingDays; ?>'>&nbsp;</td>
+        <? } ?>
+    </tr>
+</table>

@@ -56,7 +56,7 @@ $handler_folders                                              = array();
 $handler_folders[BASE_FOLDER . '/Application/Service']        = 'Molajo\\Service';
 $handler_folders[BASE_FOLDER . '/Vendor/Molajo/User/Service'] = 'Molajo\\Service';
 
-$classDependencies = BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Output/ClassDependencies.json';
+$classDependencies = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/ClassDependencies.json';
 
 $FCNamespace = 'Molajo\\Controller\\FrontController';
 $FCFile      = __DIR__ . '/Controller/FrontController.php';

@@ -1,0 +1,26 @@
+<?
+/**
+ * Gridcategories Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+if ($row->enable == 1) {
+    ?>
+    <div class="grid-categories grid-batch">
+        <ol class="grid-batch">
+            <li><strong><? echo $this->language_controller->translate('Category Assignment'); ?></strong></li>
+            <li>
+                <include formselectlist datalist=categories/>
+            </li>
+            <li><input type="submit" class="submit button small radius" name="submit" id="AssignCategories"
+                       value="Assign"/>
+            </li>
+            <li><input type="submit" class="submit button small radius" name="submit" id="RemoveCategories"
+                       value="Remove"/>
+            </li>
+        </ol>
+    </div>
+<?
+}

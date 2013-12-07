@@ -1,0 +1,35 @@
+<?
+/**
+ * User Profile Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+?>
+<h1><? echo $row->username; ?></h1>
+
+<p><? echo '<strong>' . $this->language_controller->translate(
+            'First Name'
+        ) . ':</strong>: ' . $row->full_name; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate(
+            'Last Name'
+        ) . ':</strong>: ' . $row->full_name; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate(
+            'Full Name'
+        ) . ':</strong>: ' . $row->full_name; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate('Alias') . ':</strong>: ' . $row->full_name; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate('Text') . ':</strong>:' ?></p>
+<? echo $row->content_text; ?>
+<p><? echo '<strong>' . $this->language_controller->translate('Email') . ':</strong>: ' . $row->email; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate('Blocked') . ':</strong>: ' . $row->block; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate(
+            'Registered'
+        ) . ':</strong>: ' . $row->register_datetime; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate(
+            'Activated'
+        ) . ':</strong>: ' . $row->register_datetime; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate(
+            'Last Visited'
+        ) . ':</strong>: ' . $row->last_visit_datetime; ?></p>

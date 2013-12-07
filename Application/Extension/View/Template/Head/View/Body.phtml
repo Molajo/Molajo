@@ -1,0 +1,65 @@
+<?
+/**
+ * Head Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+$class = $this->registry->get('runtime_data', 'page_view_css_class');
+if (trim($class) == '') {
+    $class = '';
+} else {
+    $class = ' class="' . htmlspecialchars($class) . '"';
+}
+
+$id = $this->registry->get('runtime_data', 'page_view_css_id');
+if (trim($id) == '') {
+    $id = '';
+} else {
+    $id = ' id="' . htmlspecialchars($id) . '"';
+}
+
+$application_html5 = $row->application_html5;
+$end = $row->end;
+
+$l = $row->language;
+$d = $row->language_direction;
+if ((int)$application_html5 == 1): ?>
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js ie oldie"<? echo trim($d); ?> lang="<? echo trim($l); ?>"><![endif]-->
+<!--[if IE 7]>
+<html class="no-js ie ie7"<? echo trim($d); ?> lang="<? echo trim($l); ?>"><![endif]-->
+<!--[if IE 8]>
+<html class="no-js ie ie8"<? echo trim($d); ?> lang="<? echo trim($l); ?>"><![endif]-->
+<!--[if IE 9]>
+<html class="no-js ie ie9"<? echo trim($d); ?> lang="<? echo trim($l); ?>"><![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js"<? echo trim($d); ?> lang="<? echo trim($l); ?>"><!--<![endif]-->
+<? else : ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+>
+<html xmlns="http://www.w3.org/1999/xhtml" <? echo $row->language_direction; ?>
+      lang="<? echo $row->language; ?>">
+<? endif; ?>
+<head>
+    <title><? echo $row->title; ?></title>
+    <base href="<? echo $row->base_url . '"' . $end; ?>
+<? if ((int)$application_html5 == 1): ?>
+    <meta charset=" utf-8
+    "<? echo $end; ?>
+    <? else : ?>
+        <meta http-equiv="Content-Type"
+        content="<? echo $row->mimetype; ?>; charset=utf-8"<? echo $end; ?>
+    <?
+    endif;
+    ?>
+    <include type=asset name=Assetslinks/>
+        <include type=metadata name=Metadata/>
+            <include type=asset name=Assetscss/>
+                <include type=asset name=Assetscssdeclarations/>
+                    <include type=asset name=Assetsjs/>
+                        <include type=asset name=Assetsjsdeclarations/>
+</head>
+<body<? echo $id; ?><? echo $class; ?>>

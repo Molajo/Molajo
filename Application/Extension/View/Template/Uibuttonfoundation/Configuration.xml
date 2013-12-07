@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Templateview" version="1.0">
+    <name>VIEW_TEMPLATE_UIBUTTONFOUNDATION_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_TEMPLATE_UIBUTTONFOUNDATION_DESCRIPTION</description>
+    <model name="Uibuttonfoundation" extends="Templateview">
+        <table>
+            <plugins>
+                <plugin name="UIFoundation"/>
+            </plugins>
+        </table>
+        <customfields>
+            <customfield name="parameters">
+                <field name="button_title" type="char" null="0" default=" "/>
+                <field name="button_type" type="char" null="0" default="primary"
+                       values="primary,secondary,success,alert"/>
+                <field name="button_size" type="char" null="0" default="regular" values="tiny,small,regular,large"/>
+                <field name="button_shape" type="char" null="0" default="square" values="square,radius,rounded"/>
+                <field name="button_link" type="url" null="0" default=" "/>
+                <field name="button_link_extra" type="char" null="0" default=" "/>
+                <field name="button_tag" type="char" null="0" default="a" values="a,button,input"/>
+                <field name="button_name" type="char" null="0" default=" "/>
+                <field name="button_id" type="char" null="0" default=" "/>
+                <field name="button_icon_prepend" type="char" null="0" default=" "
+                       values="icon-edit,icon-trash,icon-etc"/>
+                <field name="button_icon_append" type="char" null="0" default=" "
+                       values="icon-edit,icon-trash,icon-etc"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

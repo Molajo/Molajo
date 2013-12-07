@@ -51,12 +51,12 @@ require_once BASE_FOLDER . '/Vendor/commonapi/resource/SchemeInterface.php';
 // AdapterInterface must follow other interfaces
 require_once BASE_FOLDER . '/Vendor/commonapi/resource/AdapterInterface.php';
 // carry on ...
-require_once BASE_FOLDER . '/Vendor/Molajo/Resources/Handler/AbstractHandler.php';
-require_once BASE_FOLDER . '/Vendor/Molajo/Resources/Handler/ClassHandler.php';
-require_once BASE_FOLDER . '/Vendor/Molajo/Resources/Adapter.php';
-require_once BASE_FOLDER . '/Vendor/Molajo/Resources/Scheme.php';
+require_once BASE_FOLDER . '/Vendor/Molajo/Resource/Handler/AbstractHandler.php';
+require_once BASE_FOLDER . '/Vendor/Molajo/Resource/Handler/ClassHandler.php';
+require_once BASE_FOLDER . '/Vendor/Molajo/Resource/Adapter.php';
+require_once BASE_FOLDER . '/Vendor/Molajo/Resource/Scheme.php';
 
-$resource_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Output/ResourceMap.json';
+$resource_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/ResourceMap.json';
 if (file_exists($resource_map_filename)) {
     $resource_map = readJsonFile($resource_map_filename);
 } else {
@@ -70,7 +70,7 @@ $class                            = 'Molajo\\Resources\\Handler\\ClassHandler';
 $handler                          = new $class(BASE_FOLDER, $resource_map, array(), array('.php'));
 $handler_instance                 = array();
 $handler_instance['ClassHandler'] = $handler;
-$file                             = BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Input/SchemeClass.json';
+$file                             = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Input/SchemeClass.json';
 $class                            = 'Molajo\\Resources\\Scheme';
 $scheme                           = new $class($file);
 $class                            = 'Molajo\\Resources\\Adapter';
@@ -84,9 +84,9 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
     $class        = 'Molajo\\Resources\\ResourceMap';
     $class_loader = new $class (
         BASE_FOLDER,
-        $resource_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Output/ResourceMap.json',
-        $interface_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Output/ClassMap.json',
-        $interface_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Input/ExcludeFolders.json'
+        $resource_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/ResourceMap.json',
+        $interface_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/ClassMap.json',
+        $interface_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Input/ExcludeFolders.json'
     );
 
     include __DIR__ . '/SetNamespace.php';
@@ -97,10 +97,10 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     try {
         $map_instance = new $class (
-            BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Output/ClassMap.json',
-            BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Output/Interfaces.json',
-            BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Output/ClassDependencies.json',
-            BASE_FOLDER . '/Vendor/Molajo/Resources/Files/Output/Events.json'
+            BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/ClassMap.json',
+            BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/Interfaces.json',
+            BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/ClassDependencies.json',
+            BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/Events.json'
         );
     } catch (Exception $e) {
         throw new Exception ('Interface Map ' . $class . ' Exception during Instantiation: ' . $e->getMessage());

@@ -1,0 +1,24 @@
+<?
+/**
+ * Gridfilters Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+<ol class="filters">
+    <li>
+        <strong><? echo $this->language_controller->translate('Search'); ?></strong>
+    </li>
+    <li>
+        <input name="search" id="search" type="text"
+               placeholder="<? echo $this->language_controller->translate('Search For'); ?>"/>
+    </li>
+    <li>
+        <input type="submit" class="submit button small right" name="search-button" id="search-button" value="Search">
+        <br/>
+    </li>
+    <li>
+        <strong><? echo $this->language_controller->translate('Filters'); ?></strong>
+    </li>

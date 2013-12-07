@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Templateview" version="1.0">
+    <name>VIEW_TEMPLATE_FEED_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_TEMPLATE_FEED_DESCRIPTION</description>
+    <model name="Feed" extends="Templateview">
+        <customfields>
+            <customfield name="parameters">
+                <field name="criteria_rss_feed" type="url" null="0"
+                       default="http:\/\/rss.cnn.com\/rss\/cnn_topstories.rss"/>
+                <field name="criteria_count" type="integer" null="0" default="5"/>
+                <field name="display_snippet" type="boolean" null="0" default="1"/>
+                <field name="display_published_date" type="boolean" null="0" default="1"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

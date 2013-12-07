@@ -75,10 +75,11 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
         $grid_toolbar_buttons = explode(',', $list);
         $catalog_id           = $this->runtime_data->route->catalog_id;
-        $permissions          = $this->authorisation_controller->isUserAuthorisedTasks(
+        $permissions          = $this->isUserAuthorisedTasks(
             $grid_toolbar_buttons,
             $catalog_id
         );
+
 
         $temp_query_results = array();
 
@@ -169,11 +170,11 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         /** Fields */
         $temp_array = array();
 
-        $fields     = $this->runtime_data->resource->model_registry['fields'];
+        $fields = $this->runtime_data->resource->model_registry['fields'];
         if (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $field) {
 
-                $temp           = new stdClass();
+                $temp = new stdClass();
 
                 if ($field['type'] == 'customfield') {
                 } else {
@@ -181,16 +182,16 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                     $temp->name     = $field['name'];
                     $temp->multiple = '';
                     $temp->size     = 1;
-                    $temp_array[] = $temp;
+                    $temp_array[]   = $temp;
                 }
             }
         }
 
-        $fields     = $this->runtime_data->resource->model_registry['parameters'];
+        $fields = $this->runtime_data->resource->model_registry['parameters'];
         if (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $field) {
 
-                $temp           = new stdClass();
+                $temp = new stdClass();
 
                 if ($field['type'] == 'customfield') {
                 } else {
@@ -198,16 +199,16 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                     $temp->name     = $field['name'];
                     $temp->multiple = '';
                     $temp->size     = 1;
-                    $temp_array[] = $temp;
+                    $temp_array[]   = $temp;
                 }
             }
         }
 
-        $fields     = $this->runtime_data->resource->model_registry['metadata'];
+        $fields = $this->runtime_data->resource->model_registry['metadata'];
         if (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $field) {
 
-                $temp           = new stdClass();
+                $temp = new stdClass();
 
                 if ($field['type'] == 'customfield') {
                 } else {
@@ -215,7 +216,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                     $temp->name     = $field['name'];
                     $temp->multiple = '';
                     $temp->size     = 1;
-                    $temp_array[] = $temp;
+                    $temp_array[]   = $temp;
                 }
             }
         }
@@ -533,4 +534,37 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
         return $this;
     }
+
+    /**
+     * Is User Authorised for this Site
+     *
+     * @return  bool
+     * @since   1.0
+     */
+    protected function isUserAuthorisedTasks($grid_toolbar_buttons, $catalog_id)
+    {
+        if (count($grid_toolbar_buttons) === 0) {
+            return array();
+        }
+
+        $permission_array = array();
+
+        foreach ($grid_toolbar_buttons as $task) {
+
+            $action = $this->getTaskAction($task);
+
+            if ($action === false) {
+                $permission_array[$task] = false;
+            } else {
+                $options = array();
+                $options['task'] = $task;
+                $options['resource_id'] = $catalog_id;
+                $permission_array[$task]
+                    = $this->authorisation_controlleruthorisation->isUserAuthorised($options);
+            }
+        }
+
+        return $permission_array;
+    }
+
 }

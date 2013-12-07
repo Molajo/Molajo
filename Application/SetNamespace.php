@@ -93,7 +93,7 @@ $class_loader->setNamespace('Molajo\\Plugin', 'Application/Extension/Plugin/');
 $class_loader->setNamespace('Molajo\\Plugin', 'Application/Extension/Theme/Foundation/Plugin/');
 $class_loader->setNamespace('Molajo\\Resource', 'Application/Extension/Resource/');
 $class_loader->setNamespace('Molajo\\Resources', 'Application/Resources/');
-$class_loader->setNamespace('Molajo\\Resources', 'Vendor/Molajo/Resources/');
+$class_loader->setNamespace('Molajo\\Resources', 'Vendor/Molajo/Resource/');
 $class_loader->setNamespace('Molajo\\Route', 'Vendor/Molajo/Route/');
 $class_loader->setNamespace('Molajo\\Render', 'Vendor/Molajo/Render/');
 $class_loader->setNamespace('Molajo\\Service', 'Application/Service/');

@@ -1,0 +1,14 @@
+<?
+/**
+ * Messages Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="<? echo $row->class; ?>">
+    <? echo $row->message; ?>
+    <a class="close" href="<? echo $row->action; ?>#">&times;</a>
+    <h4 class="alert-heading"><? echo $row->heading; ?></h4>
+</div>

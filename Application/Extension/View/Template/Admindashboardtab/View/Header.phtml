@@ -1,0 +1,23 @@
+<?
+/**
+ * Admindashboardtab Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+
+$row->new_fieldset = '0';
+?>
+<h2>
+    <span>
+        <em><? echo 'Articles Configuration'; ?></em>
+        <strong><? echo $row->tab_title; ?></strong>
+    </span>
+</h2>
+<p class="tab-description"><? echo $row->tab_description; ?></p>
+<fieldset class="two-up">
+    <legend><? echo $row->tab_fieldset_title; ?></legend>
+    <p class="fieldset-description"><? echo $row->tab_fieldset_description; ?></p>
+    <ol>

@@ -1,0 +1,65 @@
+<?
+/**
+ * Audio Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+/** swf player and runtime_data **/
+$js = "window.addEvent('domready', function() { " . "\n";
+$js .= ' AudioPlayer.setup("' . JURI::base() . 'media/molajo/audio/player.swf' . '", {   ' . "\n";
+
+/** options **/
+$js .= ' loop: "' . $runtime_data->get('audio_loop', "no") . '", ' . "\n";
+$js .= ' animation: "' . $runtime_data->get('audio_animation', "yes") . '", ' . "\n";
+$js .= ' remaining: "' . $runtime_data->get('audio_remaining', "no") . '", ' . "\n";
+$js .= ' noinfo: "' . $runtime_data->get('audio_noinfo', "no") . '", ' . "\n";
+$js .= ' initialvolume: ' . $runtime_data->get('audio_initialvolume', 60) . ', ' . "\n";
+$js .= ' buffer: ' . $runtime_data->get('audio_buffer', 5) . ', ' . "\n";
+$js .= ' encode: "' . $runtime_data->get('audio_encode', "no") . '", ' . "\n";
+$js .= ' checkpolicy: "' . $runtime_data->get('audio_checkpolicy', "no") . '", ' . "\n";
+$js .= ' rtl: "' . $runtime_data->get('audio_rtl', "no") . '", ' . "\n";
+
+/** flash player options **/
+$js .= ' width: ' . $runtime_data->get('audio_width', 290) . ', ' . "\n";
+$js .= ' transparentpagebg: "' . $runtime_data->get('audio_transparentpagebg', "no") . '", ' . "\n";
+$js .= ' pagebg: "' . $runtime_data->get('audio_pagebg', "") . '", ' . "\n";
+
+/** colors **/
+$js .= ' bg: "' . $runtime_data->get('audio_bg', "E5E5E5") . '", ' . "\n";
+$js .= ' leftbg: "' . $runtime_data->get('audio_leftbg', "CCCCCC") . '", ' . "\n";
+$js .= ' lefticon: "' . $runtime_data->get('audio_lefticon', "333333") . '", ' . "\n";
+$js .= ' voltrack: "' . $runtime_data->get('audio_voltrack', "F2F2F2") . '", ' . "\n";
+$js .= ' volslider: "' . $runtime_data->get('audio_volslider', "666666") . '", ' . "\n";
+$js .= ' rightbg: "' . $runtime_data->get('audio_rightbg', "B4B4B4") . '", ' . "\n";
+$js .= ' rightbghover: "' . $runtime_data->get('audio_rightbghover', "999999") . '", ' . "\n";
+$js .= ' righticon: "' . $runtime_data->get('audio_righticon', "333333") . '", ' . "\n";
+$js .= ' righticonhover: "' . $runtime_data->get('audio_righticonhover', "FFFFFF") . '", ' . "\n";
+$js .= ' loader: "' . $runtime_data->get('audio_loader', "009900") . '", ' . "\n";
+$js .= ' track: "' . $runtime_data->get('audio_track', "FFFFFF") . '", ' . "\n";
+$js .= ' tracker: "' . $runtime_data->get('audio_tracker', "DDDDDD") . '", ' . "\n";
+$js .= ' border: "' . $runtime_data->get('audio_border', "CCCCCC") . '", ' . "\n";
+$js .= ' skip: "' . $runtime_data->get('audio_skip', "666666") . '", ' . "\n";
+$js .= ' text: "' . $runtime_data->get('audio_text', "333333") . '" ' . "\n";
+
+/** swf player end **/
+$js .= ' });' . "\n";
+
+Services::Assets()->addScriptDeclaration($js);
+
+/** head for individual mp3 **/
+$loader = "window.addEvent('domready', function() { " . "\n";
+foreach ($list as $item) {
+    $loader .= 'AudioPlayer.embed("audioplayer' . $row->id . '", {soundFile: "' . $row->file_link . '"});'; ?>
+    <p id="audioplayer_<? echo $this->id; ?>"><? echo $this->audio_label; ?></p>
+<?
+}
+$loader .= ' });';
+Services::Assets()->addScriptDeclaration($loader);
+
+?>
+    </audio>
+    </div>
+<?

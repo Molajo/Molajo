@@ -1,0 +1,48 @@
+<?
+/**
+ * Formpage Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+
+if ($row->page_first_row == 1) {
+} elseif ($row->new_fieldset == 1) {
+    ?>
+    </fieldset>
+<?
+}
+
+if ($row->page_first_row == 1) {
+} elseif ($row->page_subtitle_first_row == 1) {
+    ?>
+    </div>
+<?
+}
+
+if ($row->page_subtitle_first_row == 1) {
+?>
+<hr/>
+<div id="<? echo $row->page_subtitle; ?>" class="subtitle radius">
+    <h4><? echo $row->page_subtitle; ?></h4>
+    <? if ($runtime_data->application_help == 1) { ?>
+        <h6><? echo $row->page_subtitle_description; ?></h6>
+    <? } ?>
+</div>
+<hr/>
+<div class="configuration-body">
+    <?
+    }
+
+    if ($row->new_fieldset == 1) {
+    ?>
+    <fieldset class="configuration">
+        <legend class="configuration"><? echo $row->fieldset_title; ?></legend>
+        <? if ($runtime_data->application_help == 1) { ?>
+            <p><? echo $row->fieldset_description; ?></p>
+        <?
+        }
+        } ?>
+        <include <? echo $row->view; ?> parameter_np=<? echo $row->name; ?>/>

@@ -1,0 +1,40 @@
+<?
+
+/**
+ *
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+
+$row->button_title      = str_replace('&nbsp;', ' ', htmlspecialchars_decode($row->button_title));
+$row->button_link_extra = str_replace('&nbsp;', ' ', htmlspecialchars_decode($row->button_link_extra));
+
+if (trim($row->button_link_extra) == '') {
+} else {
+    $row->button_link_extra = ' ' . trim($row->button_link_extra);
+}
+if (trim($row->button_id) == '') {
+} else {
+    $row->button_id = ' ' . 'id="' . trim($row->button_id) . '"';
+}
+if (trim($row->button_icon_prepend) == '') {
+} else {
+    $row->button_title = '<i class="' . trim(
+            $row->button_icon_prepend
+        ) . '"></i>' . $row->button_title;
+}
+if (trim($row->button_icon_append) == '') {
+} else {
+    $row->button_title .= '<i class="' . trim($row->button_icon_append) . '"></i>';
+}
+
+switch ($row->button_tag) {
+    case 'button':
+        echo '<button' . $row->button_id . $row->button_class . $row->button_link_extra . '>' . $row->button_title . '</button>';
+        break;
+
+    default:
+        echo '<a href="' . $row->button_link . '"' . $row->button_id . $row->button_class . $row->button_link_extra . '>' . $row->button_title . '</a>';
+        break;
+}

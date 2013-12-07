@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Templateview" version="1.0">
+    <name>VIEW_TEMPLATE_FORMBEGIN_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_TEMPLATE_FORMBEGIN_DESCRIPTION</description>
+    <model name="formbegin"
+           process_events="1"
+           extends="Templateview">
+        <customfields>
+            <customfield name="parameters">
+                <field name="form_action" type="char" null="0" default=" "/>
+                <field name="form_method" type="char" null="0" default=" "/>
+                <field name="form_name" type="char" null="0" default=" "/>
+                <field name="form_id" type="char" null="0" default=" "/>
+                <field name="form_class" type="char" null="0" default=" "/>
+                <field name="form_attributes" type="char" null="0" default=" "/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

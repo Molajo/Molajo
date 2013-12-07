@@ -1,0 +1,18 @@
+<?
+/**
+ * Default Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+    <h2>
+        <? if (isset($row->title)) {
+            echo $row->title;
+        }?>
+    </h2>
+<?
+if (isset($row->text)) {
+    echo $row->text;
+}
