@@ -25,7 +25,6 @@ abstract class ReadEventPlugin extends AbstractPlugin implements ReadInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\ReadEventException
      */
     public function onBeforeRead()
     {
@@ -37,7 +36,6 @@ abstract class ReadEventPlugin extends AbstractPlugin implements ReadInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\ReadEventException
      */
     public function onAfterRead()
     {
@@ -49,7 +47,6 @@ abstract class ReadEventPlugin extends AbstractPlugin implements ReadInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\ReadEventException
      */
     public function onAfterReadall()
     {
