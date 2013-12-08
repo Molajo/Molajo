@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="System" version="1.0">
+    <name>ADMINISTRATION_SITES_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2013</create_date>
+    <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>ADMINISTRATION_SITES_DESCRIPTION</description>
+    <model
+            name="Site"
+            table_name="#__sites"
+            primary_key="id"
+            name_key="name"
+            primary_prefix="a"
+            get_customfields="0"
+            get_item_children="0"
+            use_special_joins="0"
+            check_view_level_access="0"
+            process_events="1"
+            criteria_catalog_type_id="1000"
+            use_pagination="1"
+            criteria_extension_instance_id="1000"
+            extends="SiteDatasource"
+            data_object="Database">
+        <table>
+            <foreignkeys>
+                <foreignkey name="catalog_type_id" source_id="id" source_model="CatalogTypes" required="1"/>
+            </foreignkeys>
+            <joins>
+                <join model="Catalog"
+                      alias="catalog"
+                      select="catalog_type_id,source_id,sef_request,view_group_id,redirect_to_id"
+                      jointo="source_id,application_id,catalog_type_id"
+                      joinwith="id,APPLICATION_ID,catalog_type_id"/>
+            </joins>
+            <plugins>
+                <plugin name="Sites"/>
+            </plugins>
+        </table>
+    </model>
+</extension>

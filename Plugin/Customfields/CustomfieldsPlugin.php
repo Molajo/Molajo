@@ -9,7 +9,6 @@
 namespace Molajo\Plugin\Customfields;
 
 use stdClass;
-use Exception;
 use CommonApi\Exception\RuntimeException;
 use CommonApi\Event\ReadInterface;
 use Molajo\Plugin\ReadEventPlugin;
@@ -205,9 +204,10 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
                     $value = $default;
                 }
 
-                $page_type = $customfields['type'];
+                $filter_options = array();
+                $filter_options['page_type'] = $customfields['type'];
 
-                $temp[$target_key] = $this->filter($key, $value, $page_type);
+                $temp[$target_key] = $this->filter($key, $value, $filter, $filter_options);
             }
         }
 
@@ -219,46 +219,5 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
         }
 
         return $group_name;
-    }
-
-    /**
-     * Filter Input
-     *
-     * @param          $key
-     * @param   null   $value
-     * @param          $page_type
-     * @param   array  $filter_options
-     *
-     * @return  mixed
-     * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    protected function filter($key, $value = null, $page_type, $filter_options = array())
-    {
-        if ($page_type == 'text') {
-            $filter = 'Html';
-        } elseif ($page_type == 'char') {
-            $filter = 'String';
-        } elseif ($page_type == 'image') {
-            $filter = 'Url';
-        } elseif (substr($page_type, strlen($page_type) - 3, 3) == '_id'
-            || $key == 'id'
-            || $page_type == 'integer'
-        ) {
-            $filter = 'Int';
-        } elseif ($page_type == 'char') {
-            $filter = 'String';
-        } else {
-            $filter = $page_type;
-        }
-
-        try {
-            $value = $this->fieldhandler->filter($key, $value, $filter, $filter_options);
-        } catch (Exception $e) {
-            throw new RuntimeException
-            ('Request: Filter class Failed for Key: ' . $key . ' Filter: ' . $filter . ' ' . $e->getMessage());
-        }
-
-        return $value;
     }
 }

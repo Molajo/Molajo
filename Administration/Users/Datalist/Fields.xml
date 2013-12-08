@@ -1,0 +1,5 @@
+<datalist name="FieldsusersDatalist">
+    <model
+            name="FieldsusersDatalist"
+            registry_entry="UserssystemFields"/>
+</datalist>

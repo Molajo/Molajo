@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="Plugin" version="1.0">
-    <name>CUSTOMFIELDS_PLUGIN_NAME</name>
+<extension type="System" version="1.0">
+    <name>ADMINISTRATION_SERVICES_NAME</name>
     <author>Amy Stephen</author>
     <create_date>January 2013</create_date>
     <copyright>Copyright (C) 2013 Amy Stephen. All rights reserved.</copyright>
@@ -8,8 +8,10 @@
     <author_email>hello@molajo.org</author_email>
     <author_url>http://molajo.org</author_url>
     <version>1.0</version>
-    <description>CUSTOMFIELDS_PLUGIN_DESCRIPTION</description>
+    <description>ADMINISTRATION_SERVICES_DESCRIPTION</description>
     <model
-            name="Customfields"
-            extends="Plugin"/>
+            name="Services"
+            criteria_catalog_type_id="4000"
+            criteria_extension_instance_id="4000"
+            extends="RenderDatasource"/>
 </extension>

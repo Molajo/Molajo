@@ -7,14 +7,6 @@
  * @license    http:/www.opensource.org/licenses/mit-license.html MIT License
  */
 
-/**
- * Read the JSON file
- *
- * @param   string $file_name
- *
- * @return  array
- * @since   1.0
- */
 function readJsonFile($file_name)
 {
     $temp_array = array();
@@ -37,9 +29,9 @@ function readJsonFile($file_name)
 
     return $temp_array;
 }
-require_once BASE_FOLDER . '/Application/Resources/Api/ConfigurationDataInterface.php';
-require_once BASE_FOLDER . '/Application/Resources/Api/ConfigurationInterface.php';
-require_once BASE_FOLDER . '/Application/Resources/Api/RegistryInterface.php';
+require_once BASE_FOLDER . '/Resources/Api/ConfigurationDataInterface.php';
+require_once BASE_FOLDER . '/Resources/Api/ConfigurationInterface.php';
+require_once BASE_FOLDER . '/Resources/Api/RegistryInterface.php';
 require_once BASE_FOLDER . '/Vendor/commonapi/resource/ClassHandlerInterface.php';
 require_once BASE_FOLDER . '/Vendor/commonapi/resource/ClassMapInterface.php';
 require_once BASE_FOLDER . '/Vendor/commonapi/resource/ExtensionsInterface.php';
