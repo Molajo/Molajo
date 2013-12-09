@@ -155,7 +155,7 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
         $controller->model->query->where(
             $controller->model->database->qn($controller->model->getModelRegistry('primary_prefix', 'a'))
             . '.' . $controller->model->database->qn('catalog_type_id')
-            . ' = ' . (int) $this->runtime_data->reference_data->catalog_type_user_id
+            . ' = ' . (int)$this->runtime_data->reference_data->catalog_type_user_id
         );
 
         try {

@@ -33,7 +33,7 @@ class FieldsPlugin extends SystemEventPlugin implements SystemInterface
         } else {
             return $this;
         }
-return;
+        return;
         $model_type = $this->runtime_data->route->model_type;
         $model_name = $this->runtime_data->route->model_name;
 
@@ -252,9 +252,9 @@ return;
         $this->runtime_data->plugin_data->datalists->fields         = $fieldArray;
         $this->runtime_data->plugin_data->datalists->fieldsstandard = $standardArray;
         $this->runtime_data->plugin_data->datalists->metadata       = $metadataArray;
-        $fieldname                                     = $model_registry . 'Fieldsruntime_data';
+        $fieldname                                                  = $model_registry . 'Fieldsruntime_data';
         $this->runtime_data->plugin_data->datalists->$fieldname     = $runtime_dataArray;
-        $fieldname                                     = $model_registry . 'Fieldscustom';
+        $fieldname                                                  = $model_registry . 'Fieldscustom';
         $this->runtime_data->plugin_data->datalists->$fieldname     = $customFieldArray;
 
         return $this;

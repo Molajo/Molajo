@@ -45,7 +45,7 @@ class FormselectlistPlugin extends DisplayEventPlugin implements DisplayInterfac
 //        $temp_query_results = $this->runtime_data->plugin_data->grid_filters[$list];
 
         $this->runtime_data->plugin_data->form_select_list = array();
-            //$this->runtime_data->plugin_data->datalists->datalist[$list];
+        //$this->runtime_data->plugin_data->datalists->datalist[$list];
 
         $this->query_results = $this->runtime_data->plugin_data->form_select_list;
 

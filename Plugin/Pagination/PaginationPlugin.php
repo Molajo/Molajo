@@ -31,7 +31,8 @@ class PaginationPlugin extends DisplayEventPlugin implements DisplayInterface
     {
         if (isset($this->runtime_data->render->token)
             && $this->runtime_data->render->token->type == 'template'
-            && $this->runtime_data->render->token->name == 'pagination') {
+            && $this->runtime_data->render->token->name == 'pagination'
+        ) {
         } else {
             return $this;
         }

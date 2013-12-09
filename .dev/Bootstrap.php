@@ -1,40 +1,51 @@
 <?php
 /**
- * Foundation
+ * Bootstrap for Testing
  *
  * @package    Molajo
  * @copyright  2013 Amy Stephen. All rights reserved.
- * @license    MIT
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
-if (substr($_SERVER['DOCUMENT_ROOT'], - 1) == '/') {
-    define('ROOT_FOLDER', $_SERVER['DOCUMENT_ROOT']);
-} else {
-    define('ROOT_FOLDER', $_SERVER['DOCUMENT_ROOT'] . '/');
+include_once __DIR__ . '/CreateClassMap.php';
+
+if (! defined('PHP_VERSION_ID')) {
+    $version = explode('.', phpversion());
+    define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
 }
 
-$base = substr(__DIR__, 0, strlen(__DIR__) - 5);
+$base     = substr(__DIR__, 0, strlen(__DIR__) - 5);
+$classmap = array();
+$classmap = createClassMap($base . '/vendor/commonapi/ioc', 'CommonApi\\IoC\\');
 
-define('BASE_FOLDER', $base);
+$results  = createClassMap($base . '/vendor/commonapi/exception', 'CommonApi\\Exception\\');
+$classmap = array_merge($classmap, $results);
 
-$classMap = array(
-    'Molajo\\Application'                                      => BASE_FOLDER . '/Application.php',
-    'Molajo\\Controller'                                       => BASE_FOLDER . '/Frontcontroller.php',
-    'Molajo\\Site'                                             => BASE_FOLDER . '/Site.php',
-    'Molajo\\CommonApi\\ApplicationInterface'                        => BASE_FOLDER . '/Api/ApplicationInterface.php',
-    'Molajo\\CommonApi\\ExceptionInterface'                          => BASE_FOLDER . '/Api/ExceptionInterface.php',
-    'Molajo\\CommonApi\\FrontcontrollerInterface'                    => BASE_FOLDER . '/Api/FrontcontrollerInterface.php',
-    'Molajo\\CommonApi\\SiteInterface'                               => BASE_FOLDER . '/Api/SiteInterface.php',
-    'Molajo\\Application\\Exception\\ApplicationException'     => BASE_FOLDER . '/Exception/ApplicationException.php',
-    'Molajo\\Application\\Exception\\ErrorThrownAsException'   => BASE_FOLDER . '/Exception/ErrorThrownAsException.php',
-    'Molajo\\Application\\Exception\\Exceptions'               => BASE_FOLDER . '/Exception/Exceptions.php',
-    'Molajo\\Application\\Exception\\FrontcontrollerException' => BASE_FOLDER . '/Exception/FrontcontrollerException.php',
-    'Molajo\\Application\\Exception\\SiteException'            => BASE_FOLDER . '/Exception/SiteException.php'
-);
+$results  = createClassMap($base . '/Api', 'Molajo\\IoC\\Api\\');
+$classmap = array_merge($classmap, $results);
+
+$results  = createClassMap($base . '/.dev/Classes', 'Molajo\\');
+$classmap = array_merge($classmap, $results);
+
+$results  = createClassMap($base . '/.dev/Service/CacheMock', 'Molajo\\Service\\CacheMock\\');
+$classmap = array_merge($classmap, $results);
+
+$results  = createClassMap($base . '/.dev/Service/ConfigurationMock', 'Molajo\\Service\\ConfigurationMock\\');
+$classmap = array_merge($classmap, $results);
+
+$results  = createClassMap($base . '/Api', 'Molajo\\IoC\\Api\\');
+$classmap = array_merge($classmap, $results);
+
+$classmap['Molajo\\IoC\\AbstractServiceProvider']   = $base . '/AbstractServiceProvider.php';
+$classmap['Molajo\\IoC\\Container']                 = $base . '/Container.php';
+$classmap['Molajo\\IoC\\ServiceProviderAdapter']    = $base . '/ServiceProviderAdapter.php';
+$classmap['Molajo\\IoC\\ServiceProviderController'] = $base . '/ServiceProviderController.php';
+$classmap['Molajo\\IoC\\StandardServiceProvider']   = $base . '/StandardServiceProvider.php';
+ksort($classmap);
 
 spl_autoload_register(
-    function ($class) use ($classMap) {
-        if (array_key_exists($class, $classMap)) {
-            require_once $classMap[$class];
+    function ($class) use ($classmap) {
+        if (array_key_exists($class, $classmap)) {
+            require_once $classmap[$class];
         }
     }
 );

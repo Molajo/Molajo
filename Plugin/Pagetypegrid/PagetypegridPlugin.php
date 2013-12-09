@@ -556,11 +556,11 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             if ($action === false) {
                 $permission_array[$task] = false;
             } else {
-                $options = array();
-                $options['task'] = $task;
+                $options                = array();
+                $options['task']        = $task;
                 $options['resource_id'] = $catalog_id;
                 $permission_array[$task]
-                    = $this->authorisation_controlleruthorisation->isUserAuthorised($options);
+                                        = $this->authorisation_controlleruthorisation->isUserAuthorised($options);
             }
         }
 

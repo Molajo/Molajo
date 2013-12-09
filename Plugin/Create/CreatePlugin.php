@@ -469,8 +469,8 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
                     $data->parameters[$key] = $this->query_results->id;
                 } elseif ($key == 'model_name') {
                     $data->parameters[$key] = $this->query_results->title;
-                    $data->model_name         = 'Grid';
-                    $data->model_type         = $this->runtime_data->reference_data->catalog_type_menuitem_id_LITERAL;
+                    $data->model_name       = 'Grid';
+                    $data->model_type       = $this->runtime_data->reference_data->catalog_type_menuitem_id_LITERAL;
                 } else {
                     $data->parameters[$key] = $value;
                 }

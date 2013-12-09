@@ -36,7 +36,6 @@ class ItemurlPlugin extends ReadEventPlugin implements ReadInterface
         $fields = $this->getFieldsByType('url');
 
 
-
         if (is_array($fields) && count($fields) > 0) {
 
             foreach ($fields as $field) {

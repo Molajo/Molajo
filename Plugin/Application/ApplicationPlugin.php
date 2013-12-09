@@ -47,8 +47,8 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $this->runtime_data->page->menuitem_id = $current_menuitem_id;
         $model                                 = 'Molajo//Menuitem//' . $current_menuitem_id;
 
-        $this->runtime_data->page->menuitem    = $this->resources->get('Menuitem:///' . $model);
-        $this->runtime_data->page->menu        = $this->runtime_data->page->menuitem->menu;
+        $this->runtime_data->page->menuitem = $this->resources->get('Menuitem:///' . $model);
+        $this->runtime_data->page->menu     = $this->runtime_data->page->menuitem->menu;
 
         $this->runtime_data->page->current_menuitem_id = $current_menuitem_id;
 
