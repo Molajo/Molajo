@@ -81,7 +81,7 @@ $class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Page
 $class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Permissions/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Plugins/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Privatemessages/Menuitem/');
-$class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Resources/Menuitem/');
+$class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Resource/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Services/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Sites/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Templateviews/Menuitem/');
@@ -92,8 +92,8 @@ $class_loader->setNamespace('Molajo\\Menuitem', 'Application/Administration/Wrap
 $class_loader->setNamespace('Molajo\\Plugin', 'Application/Extension/Plugin/');
 $class_loader->setNamespace('Molajo\\Plugin', 'Application/Extension/Theme/Foundation/Plugin/');
 $class_loader->setNamespace('Molajo\\Resource', 'Application/Extension/Resource/');
-$class_loader->setNamespace('Molajo\\Resources', 'Application/Resources/');
-$class_loader->setNamespace('Molajo\\Resources', 'Vendor/Molajo/Resource/');
+$class_loader->setNamespace('Molajo\\Resource', 'Application/Resource/');
+$class_loader->setNamespace('Molajo\\Resource', 'Vendor/Molajo/Resource/');
 $class_loader->setNamespace('Molajo\\Route', 'Vendor/Molajo/Route/');
 $class_loader->setNamespace('Molajo\\Render', 'Vendor/Molajo/Render/');
 $class_loader->setNamespace('Molajo\\Service', 'Application/Service/');

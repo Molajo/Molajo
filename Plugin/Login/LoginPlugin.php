@@ -10,7 +10,7 @@ namespace Molajo\Plugin\Login;
 
 use Molajo\Plugin\AuthenticateEventPlugin;
 use CommonApi\Event\AuthenticateInterface;
-use Exception\Plugin\AuthenticateEventException;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Login Plugin
@@ -26,7 +26,7 @@ class LoginPlugin extends AuthenticateEventPlugin implements AuthenticateInterfa
      *
      * @return  $this
      * @since   1.0
-     * @throws  AuthenticateEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function onBeforeLogin()
     {
@@ -38,7 +38,7 @@ class LoginPlugin extends AuthenticateEventPlugin implements AuthenticateInterfa
      *
      * @return  $this
      * @since   1.0
-     * @throws  AuthenticateEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function onAfterLogin()
     {

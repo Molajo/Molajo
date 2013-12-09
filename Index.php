@@ -52,9 +52,9 @@ $ContainerFile       = BASE_FOLDER . '/Vendor/Molajo/IoC/Container.php';
 $ControllerNamespace = 'Molajo\\IoC\\Controller';
 $ControllerFile      = BASE_FOLDER . '/Vendor/Molajo/IoC/Controller.php';
 
-$handler_folders                                              = array();
-$handler_folders[BASE_FOLDER . '/Application/Service']        = 'Molajo\\Service';
-$handler_folders[BASE_FOLDER . '/Vendor/Molajo/User/Service'] = 'Molajo\\Service';
+$service_provider_folders                                              = array();
+$service_provider_folders[BASE_FOLDER . '/Application/Service']        = 'Molajo\\Service';
+$service_provider_folders[BASE_FOLDER . '/Vendor/Molajo/User/Service'] = 'Molajo\\Service';
 
 $classDependencies = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/ClassDependencies.json';
 
@@ -62,13 +62,13 @@ $FCNamespace = 'Molajo\\Controller\\FrontController';
 $FCFile      = __DIR__ . '/Controller/FrontController.php';
 
 /**
- *  Instantiate IoC Container, IoC Controller and FrontController
+ *  Instantiate IoC Container, Service Provider Controller and FrontController
  */
 require_once $ContainerFile;
 $container = new $ContainerNamespace();
 
 require_once $ControllerFile;
-$IoC = new $ControllerNamespace ($container, $handler_folders, $classDependencies);
+$IoC = new $ControllerNamespace ($container, $service_provider_folders, $classDependencies);
 
 require_once $FCFile;
 $frontController = new $FCNamespace ($IoC);

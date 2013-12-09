@@ -11,7 +11,7 @@ namespace Molajo\Plugin\Create;
 use Molajo\Controller\CreateController;
 use CommonApi\Event\CreateInterface;
 use Molajo\Plugin\CreateEventPlugin;
-use Exception\Plugin\PluginException;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Service;
 
 /**
@@ -137,7 +137,7 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
             return dirname(__FILE__) . '/' . $catalog_type . '/' . $source_folder;
         }
 
-        throw new PluginException
+        throw new RuntimeException
         ('CreatePlugin getSourceFolder: No resource for ' . $catalog_type . '/' . $source_folder);
     }
 
@@ -172,7 +172,7 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
             }
         }
 
-        throw new PluginException
+        throw new RuntimeException
         ('CreatePlugin getDestinationFolder: No target folder for ' . $catalog_type . '/' . $extension_name);
     }
 
@@ -184,13 +184,13 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
      *
      * @return  $this
      * @since   1.0
-     *          throws   /Molajo/Plugins/Exception/PluginException
+     *          throws   /Molajo/Plugins/Exception/RuntimeException
      */
     protected function copy($source, $destination)
     {
         $results = copy($source, $destination);
         if ($results === false) {
-            throw new PluginException
+            throw new RuntimeException
             ('CreatePlugin copy: Could not copy: ' . $source . ' to ' . $destination);
         }
 

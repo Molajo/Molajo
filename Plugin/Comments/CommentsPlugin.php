@@ -10,7 +10,7 @@ namespace Molajo\Plugin\Comments;
 
 use stdClass;
 use CommonApi\Event\SystemInterface;
-use Exception\Plugin\PluginException;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
 
 /**
@@ -102,7 +102,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\PluginException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getCommentHeading()
     {
@@ -137,7 +137,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
             $count = $comments->getData();
 
         } catch (Exception $e) {
-            throw new PluginException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
 
         $temp_row = new stdClass();
@@ -171,7 +171,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @returns  stdClass
      * @since    1.0
-     * @throws   \Exception\Plugin\PluginException
+     * @throws   \CommonApi\Exception\RuntimeException
      */
     protected function getComments()
     {
@@ -211,7 +211,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
             $this->runtime_data->plugin_data->comments->model_registry = $comments->getModelRegistry('*');
 
         } catch (Exception $e) {
-            throw new PluginException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
     }
 
@@ -220,7 +220,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @returns  stdClass
      * @since    1.0
-     * @throws   \Exception\Plugin\PluginException
+     * @throws   \CommonApi\Exception\RuntimeException
      */
     protected function getCommentForm()
     {

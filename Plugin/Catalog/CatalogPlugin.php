@@ -12,7 +12,7 @@ use CommonApi\Event\DisplayInterface;
 
 use Molajo\Plugin\DisplayEventPlugin;
 use Molajo\Controller\CreateController;
-use Exception\Plugin\PluginException;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Catalog Plugin
@@ -108,7 +108,7 @@ class CatalogPlugin extends DisplayEventPlugin implements DisplayInterface
         try {
             $temp_query_results = $controller->getData();
         } catch (Exception $e) {
-            throw new PluginException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
 
         $catalogArray = array();

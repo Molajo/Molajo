@@ -10,7 +10,7 @@ namespace Molajo\Plugin\Application;
 
 use stdClass;
 use CommonApi\Event\SystemInterface;
-use Exception\Plugin\SystemEventException;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
 
 /**
@@ -27,7 +27,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function onAfterResource()
     {
@@ -72,7 +72,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  int
      * @since   1.0
-     * @throws  \Exception\Plugin\SystemEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getItemMenuItemId()
     {
@@ -135,7 +135,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         try {
             return $controller->getData();
         } catch (Exception $e) {
-            throw new SystemEventException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
     }
 
@@ -144,7 +144,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getUrls()
     {
@@ -226,7 +226,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getMenu()
     {
@@ -331,7 +331,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getPageTitle()
     {
@@ -392,7 +392,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function setPageEligibleActions()
     {
@@ -444,7 +444,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function setItemActions()
     {
@@ -486,7 +486,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function setEditActions()
     {
@@ -500,7 +500,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function setListActions()
     {
@@ -530,7 +530,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\DisplayEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function setMenuitemActions()
     {

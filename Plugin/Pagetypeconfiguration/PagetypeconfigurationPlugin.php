@@ -186,7 +186,7 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
         $form->set('data', array());
 
         /** Parameters */
-        $runtime_data = $this->registry->getArray('ResourcesSystemParameters');
+        $runtime_data = $this->registry->getArray('ResourceSystemParameters');
         $array2       = $this->registry->getArray('Parameters');
 
         foreach ($array2 as $key => $value) {
@@ -196,15 +196,15 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
         }
 
         $form->set('Parameters', $runtime_data);
-        $form->set('parameter_fields', $this->registry->get('ResourcesSystem', 'Parameters'));
+        $form->set('parameter_fields', $this->registry->get('ResourceSystem', 'Parameters'));
 
         /** Metadata */
-        $form->set('Metadata', $this->registry->getArray('ResourcesSystemMetadata'));
-        $form->set('metadata_fields', $this->registry->get('ResourcesSystem', 'Metadata'));
+        $form->set('Metadata', $this->registry->getArray('ResourceSystemMetadata'));
+        $form->set('metadata_fields', $this->registry->get('ResourceSystem', 'Metadata'));
 
         /** Customfields */
-        $form->set('Customfields', $this->registry->getArray('ResourcesSystemCustomfields'));
-        $form->set('customfields_fields', $this->registry->get('ResourcesSystem', 'Customfields'));
+        $form->set('Customfields', $this->registry->getArray('ResourceSystemCustomfields'));
+        $form->set('customfields_fields', $this->registry->get('ResourceSystem', 'Customfields'));
 
         /** Build Fieldsets and Fields */
         return $form->execute($current_page);

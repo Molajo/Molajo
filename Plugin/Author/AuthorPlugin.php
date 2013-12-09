@@ -161,7 +161,7 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
         try {
             return $controller->getData();
         } catch (Exception $e) {
-            throw new PluginException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
     }
 }

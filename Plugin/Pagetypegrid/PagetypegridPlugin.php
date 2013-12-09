@@ -10,7 +10,7 @@ namespace Molajo\Plugin\Pagetypegrid;
 
 use stdClass;
 use CommonApi\Event\DisplayInterface;
-use Exception\Plugin\PluginException;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\DisplayEventPlugin;
 
 /**
@@ -156,7 +156,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                     if (isset($this->runtime_data->plugin_data->datalists->datalist[$list])) {
                         $results = $this->runtime_data->plugin_data->datalists->datalist[$list];
                     } else {
-                        throw new PluginException
+                        throw new RuntimeException
                         ('PagetypegridPlugin: Unknown $this->runtime_data->plugin_data->datalists->datalist: ' . $list);
                     }
 
@@ -232,7 +232,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      *
      * @return  int
      * @since   1.0
-     * @throws  \Exception\Plugin\SystemEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getFilter($namespace, $list)
     {
@@ -264,7 +264,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         try {
             $results = $controller->getData();
         } catch (Exception $e) {
-            throw new PluginException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
 
         return $results;

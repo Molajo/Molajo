@@ -12,7 +12,7 @@ use CommonApi\Event\DisplayInterface;
 
 use Molajo\Plugin\DisplayEventPlugin;
 use Molajo\Controller\CreateController;
-use Exception\Plugin\PluginException;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Activity Plugin

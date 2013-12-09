@@ -9,7 +9,7 @@
 namespace Molajo\Plugin\Fields;
 
 use CommonApi\Event\SystemInterface;
-use Exception\Plugin\PluginException;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
 
 /**
@@ -53,7 +53,7 @@ return;
         try {
             $this->runtime_data->author = $controller->getData();
         } catch (Exception $e) {
-            throw new PluginException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
 
         $primary_prefix = $controller->getModelRegistry('primary_prefix', 'a');

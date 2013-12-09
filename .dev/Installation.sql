@@ -193,7 +193,7 @@ where id > 20000
 SET @dashboard_extension_id = nn;
 SET @dashboard_extension_instance_id = nn;
 SET @dashboard_catalog_type_id = 1300;
-SET @dashboard_title = 'Resources';
+SET @dashboard_title = 'Resource';
 SET @dashboard_subtitle = 'icon-pencil';
 SET @dashboard_alias = 'resources';
 SET @datetime = '2013-08-30 12:00:00';

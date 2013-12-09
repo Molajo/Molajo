@@ -61,20 +61,20 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
         $form->set('data', $this->registry->get('Dataobject', 'Primary'));
 
         /** Parameters */
-        $form->set('Parameters', $this->registry->getArray('ResourcesSystemParameters'));
-        $form->set('parameter_fields', $this->registry->get('ResourcesSystem', 'Parameters'));
+        $form->set('Parameters', $this->registry->getArray('ResourceSystemParameters'));
+        $form->set('parameter_fields', $this->registry->get('ResourceSystem', 'Parameters'));
 
         /** Metadata */
-        $form->set('Metadata', $this->registry->getArray('ResourcesSystemMetadata'));
-        $form->set('metadata_fields', $this->registry->get('ResourcesSystem', 'Metadata'));
+        $form->set('Metadata', $this->registry->getArray('ResourceSystemMetadata'));
+        $form->set('metadata_fields', $this->registry->get('ResourceSystem', 'Metadata'));
 
         /** Customfields */
-        $form->set('Customfields', $this->registry->getArray('ResourcesSystemCustomfields'));
-        $form->set('customfields_fields', $this->registry->get('ResourcesSystem', 'Customfields'));
-        echo $this->registry->get('ResourcesSystemParameters', 'edit_array');
+        $form->set('Customfields', $this->registry->getArray('ResourceSystemCustomfields'));
+        $form->set('customfields_fields', $this->registry->get('ResourceSystem', 'Customfields'));
+        echo $this->registry->get('ResourceSystemParameters', 'edit_array');
 
         /** Build Fieldsets and Fields */
-        $pageFieldsets = $form->execute($this->registry->get('ResourcesSystemParameters', 'edit_array'));
+        $pageFieldsets = $form->execute($this->registry->get('ResourceSystemParameters', 'edit_array'));
 
         /** Set the View Model Parameters and Populate the Registry used as the Model */
         $current_page = $form->getPages(

@@ -29,9 +29,9 @@ function readJsonFile($file_name)
 
     return $temp_array;
 }
-require_once BASE_FOLDER . '/Resources/Api/ConfigurationDataInterface.php';
-require_once BASE_FOLDER . '/Resources/Api/ConfigurationInterface.php';
-require_once BASE_FOLDER . '/Resources/Api/RegistryInterface.php';
+require_once BASE_FOLDER . '/Resource/Api/ConfigurationDataInterface.php';
+require_once BASE_FOLDER . '/Resource/Api/ConfigurationInterface.php';
+require_once BASE_FOLDER . '/Resource/Api/RegistryInterface.php';
 require_once BASE_FOLDER . '/Vendor/commonapi/resource/ClassHandlerInterface.php';
 require_once BASE_FOLDER . '/Vendor/commonapi/resource/ClassMapInterface.php';
 require_once BASE_FOLDER . '/Vendor/commonapi/resource/ExtensionsInterface.php';
@@ -58,14 +58,14 @@ if (file_exists($resource_map_filename)) {
 include BASE_FOLDER . '/Vendor/autoload.php';
 
 /** Class Loader */
-$class                            = 'Molajo\\Resources\\Handler\\ClassHandler';
+$class                            = 'Molajo\\Resource\\Handler\\ClassHandler';
 $handler                          = new $class(BASE_FOLDER, $resource_map, array(), array('.php'));
 $handler_instance                 = array();
 $handler_instance['ClassHandler'] = $handler;
 $file                             = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Input/SchemeClass.json';
-$class                            = 'Molajo\\Resources\\Scheme';
+$class                            = 'Molajo\\Resource\\Scheme';
 $scheme                           = new $class($file);
-$class                            = 'Molajo\\Resources\\Adapter';
+$class                            = 'Molajo\\Resource\\Adapter';
 $class_loader                     = new $class($scheme, $handler_instance);
 include __DIR__ . '/SetNamespace.php';
 $hold_class_loader = $class_loader;
@@ -73,7 +73,7 @@ $hold_class_loader = $class_loader;
 /** Resource Map */
 if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 } else {
-    $class        = 'Molajo\\Resources\\ResourceMap';
+    $class        = 'Molajo\\Resource\\ResourceMap';
     $class_loader = new $class (
         BASE_FOLDER,
         $resource_map_filename = BASE_FOLDER . '/Vendor/Molajo/Resource/Files/Output/ResourceMap.json',
@@ -85,7 +85,7 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     $class_loader->createMap();
 
-    $class = 'Molajo\\Resources\\ClassMap';
+    $class = 'Molajo\\Resource\\ClassMap';
 
     try {
         $map_instance = new $class (

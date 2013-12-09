@@ -11,7 +11,7 @@ namespace Molajo\Plugin\Menuitems;
 use stdClass;
 use CommonApi\Event\SystemInterface;
 use Molajo\Plugin\SystemEventPlugin;
-use Exception\Plugin\SystemEventException;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Menuitems Plugin
@@ -27,7 +27,7 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\SystemEventException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function onAfterRoute()
     {
@@ -60,7 +60,7 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
         } catch (Exception $e) {
             echo 'didied';
             die;
-            throw new SystemEventException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
 
         $menuitem->model->query->select(

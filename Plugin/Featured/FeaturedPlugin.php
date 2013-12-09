@@ -9,7 +9,7 @@
 namespace Molajo\Plugin\Featured;
 
 use CommonApi\Event\SystemInterface;
-use Exception\Plugin\PluginException;
+use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
 
 /**
@@ -26,7 +26,7 @@ class FeaturedPlugin extends SystemEventPlugin implements SystemInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \Exception\Plugin\PluginException
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function onAfterResource()
     {
@@ -61,7 +61,7 @@ class FeaturedPlugin extends SystemEventPlugin implements SystemInterface
         try {
             $this->runtime_data->featured = $controller->getData();
         } catch (Exception $e) {
-            throw new PluginException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
 
         return $this;
