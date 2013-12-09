@@ -1,0 +1,23 @@
+<?
+/**
+ * Tag Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+$action = $runtime_data->page->urls['page']; ?>
+<label>Tag</label>
+<div class="row">
+    <div class="five columns">
+        <div class="row collapse">
+            <div class="eight mobile-three columns">
+                <input type="text"/>
+            </div>
+            <div class="four mobile-one columns">
+                <a href="<? echo $action; ?>" class="postfix button">Tag</a>
+            </div>
+        </div>
+    </div>
+</div>
+

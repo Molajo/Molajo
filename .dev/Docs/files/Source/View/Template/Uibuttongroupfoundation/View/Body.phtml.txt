@@ -1,0 +1,17 @@
+<?
+/**
+ *
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+
+$array = $row->button_group_array;
+for ($i = 0; $i < count($array); $i ++) {
+    ?>
+    <li>
+        <include type=ui name=button <? echo $array[$i]; ?>/>
+    </li>
+<?
+}
+

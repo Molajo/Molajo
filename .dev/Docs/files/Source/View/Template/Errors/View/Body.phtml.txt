@@ -1,0 +1,13 @@
+<?
+/**
+ * Errors Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+<li>
+    <? echo '<strong>' . $row->code . ' ' . $row->title . ':</strong> ' . $row->content_text; ?>
+</li>
+

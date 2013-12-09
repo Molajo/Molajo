@@ -1,0 +1,15 @@
+<?
+/**
+ * Assetslinks Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+$application_html5 = $row->application_html5;
+$end = $row->end;
+?>
+    <link href="<? echo $row->url; ?>"
+    rel="<? echo $row->relation; ?>"<? echo $row->attributes; ?><? echo $end;
+

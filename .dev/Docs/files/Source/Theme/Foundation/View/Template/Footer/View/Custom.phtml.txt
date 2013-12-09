@@ -1,0 +1,28 @@
+<?
+/**
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+$pageURL = $runtime_data->page->urls['page'];
+$homeURL = $runtime_data->page->urls['home']; ?>
+
+<footer id="pagefooter" class="contain-to-grid" role="contentinfo">
+    <div class="row">
+        <div class="large-8 columns">
+            <ul class="inline-list">
+                <li><a href="<? echo $pageURL; ?>#top">&uarr; Back to Top</a></li>
+                <li><a href="pages/about-us">About Us</a></li>
+                <li><a href="pages/contact-us">Contact Us</a></li>
+                <li><a href="pages/privacy-policy">Privacy Policy</a></li>
+                <li><a href="pages/site-map">Site Map</a></li>
+            </ul>
+        </div>
+        <div class="large-4 columns right">
+            <p><? //echo $row->copyright_statement ?> <a
+                    href="<? //echo $row->link; ?>"><? //echo $row->linked_text; ?> </a><? //echo ' ' . $row->remaining_text; ?>
+            </p>
+        </div>
+    </div>
+</footer>
+

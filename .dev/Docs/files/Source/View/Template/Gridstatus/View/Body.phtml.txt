@@ -1,0 +1,23 @@
+<?
+/**
+ * Gridstatus Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+if ($row->enable == 1) {
+    ?>
+    <div class="grid-status grid-batch">
+        <ol class="grid-batch">
+            <li><strong><? echo $this->language_controller->translate('Update Status'); ?></strong></li>
+            <li>
+                <include formselectlist datalist=Statuschange/>
+            </li>
+            <li><input type="submit" class="submit button small radius" name="submit" id="AssignStatus" value="Assign">
+            </li>
+        </ol>
+    </div>
+<?
+}
+

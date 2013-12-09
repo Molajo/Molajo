@@ -1,0 +1,18 @@
+<?
+/**
+ * Metadata Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+$application_html5 = $row->application_html5;
+$end = $row->end;
+if (trim($row->content) == '') {
+} elseif ($row->name == 'mimetype' && (int)$row->application_html5 === 1) {
+} else {
+    ?>
+    <meta <? echo $row->label; ?>="<? echo $row->name; ?>" content="<? echo $row->content; ?>"<? echo $end;
+}
+

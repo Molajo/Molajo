@@ -1,0 +1,60 @@
+<?
+/**
+ * Article Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+    <h3><? echo $row->title; ?>
+        <small><? echo $this->language_controller->translate('Written by'); ?>
+            <a href="#">
+                <? echo $row->created_by_full_name; ?>
+            </a>
+            <? echo $this->language_controller->translate(' on '); ?>
+            <? echo $row->start_publishing_datetime_day_name
+                . ', ' . $row->start_publishing_datetime_month_name
+                . ' ' . $row->start_publishing_datetime_dd
+                . ', ' . $row->start_publishing_datetime_ccyy;
+            ?>.
+        </small>
+    </h3>
+
+<? if ($row->customfields->image2 == '') {
+} else {
+    ?>
+    <figure class="float_right image2">
+        <img src="<? echo $row->customfields->image2; ?>" alt="">
+        <? if ($row->customfields->image_caption2 == '') {
+        } else {
+            ?>
+            <figcaption><? echo $row->customfields->image_caption2; ?></figcaption>
+        <? } ?>
+    </figure>
+<?
+}
+
+if ($row->content_text_introductory == '') {
+} else {
+    ?>
+    <div class="introductory"><? echo $row->content_text_introductory; ?></div>
+<?
+}
+
+if ($row->customfields->image3 == '') {
+} else {
+    ?>
+    <figure class="float_left image3">
+        <img src="<? echo $row->customfields->image3; ?>" alt="">
+        <? if ($row->customfields->image_caption3 == '') {
+        } else {
+            ?>
+            <figcaption><? echo $row->customfields->image_caption3; ?></figcaption>
+        <? } ?>
+    </figure>
+<?
+}
+
+echo $row->content_text_fulltext;
+

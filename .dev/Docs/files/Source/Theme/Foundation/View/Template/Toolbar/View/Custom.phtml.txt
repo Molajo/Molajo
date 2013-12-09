@@ -1,0 +1,109 @@
+<?
+/**
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+ ?><!--pushup content bar statrs here-->
+<!--left demo --->
+<div id="left-demo" class="contents">
+    <!--pushup content bar statrs here-->
+    <div class="btn-show">
+        Show
+    </div>
+    <div class="pushup-form">
+        <div class="btn-close">
+            Close
+        </div>
+        <div class="clear">
+        </div>
+        <div class="cform">
+            <div class="address">
+                <p>
+                    <b>Muhammad Shahbaz Saleem</b></p>
+
+                <p>
+                    Lahore, Pakistan
+                    <br/>
+                    http://www.egrappler.com</p>
+            </div>
+            <div class="map">
+            </div>
+            <div class="contact-form">
+                <form action="index.htm" method="get,post">
+                    <h4>
+                        Contact Form
+                    </h4>
+
+                    <p>
+                        <input type="text" class="name" value="Name"/>
+                    </p>
+
+                    <p>
+                        <input type="text" class="email" value="Email"/>
+                    </p>
+
+                    <p>
+                        <textarea class="message">Message</textarea>
+                    </p>
+
+                    <p class="clear">
+                        <input type="submit" value="Send" class="submit"/>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--pushup content bar ends here-->
+</div>
+<!--right demo-->
+<div id="right-demo" class="contents">
+    <!--pushup content bar statrs here-->
+    <div class="btn-show">
+        Show
+    </div>
+    <div class="pushup-form">
+        <div class="btn-close">
+            Close
+        </div>
+        <div class="clear">
+        </div>
+        <div class="cform">
+            <div class="address">
+                <p>
+                    <b>Muhammad Shahbaz Saleem</b></p>
+
+                <p>
+                    Lahore, Pakistan
+                    <br/>
+                    http://www.egrappler.com</p>
+            </div>
+            <div class="map">
+            </div>
+            <div class="contact-form">
+                <form action="index.htm" method="get,post">
+                    <h4>
+                        Contact Form
+                    </h4>
+
+                    <p>
+                        <input type="text" class="name" value="Name"/>
+                    </p>
+
+                    <p>
+                        <input type="text" class="email" value="Email"/>
+                    </p>
+
+                    <p>
+                        <textarea class="message">Message</textarea>
+                    </p>
+
+                    <p class="clear">
+                        <input type="submit" value="Send" class="submit"/>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--pushup content bar ends here-->
+

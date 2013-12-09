@@ -1,0 +1,40 @@
+<?
+/**
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+?>
+<div class="row">
+    <div class="nine columns push-three" role="main">
+        <include Article wrap=article class="row"/>
+        <? if ((int)$this->registry->get('runtime_data', 'enable_response_comments') == 1) { ?>
+            <aside class="row" role="complementary">
+                <div class="twelve rows">
+                    <ul class="link-list right">
+                        <li><a href="#" class="fc-webicon facebook">Like us on Facebook</a></li>
+                        <li><a href="#" class="fc-webicon twitter">Like us on Facebook</a></li>
+                        <li><a href="#" class="fc-webicon googleplus">Like us on Facebook</a></li>
+                    </ul>
+                    <hr/>
+                    <include Author wrap=Div wrap_class=author-profile/>
+                        <section>
+                            <include Comment/>
+                            <include Comments/>
+                            <include Commentform/>
+                        </section>
+                </div>
+            </aside>
+        <? } ?>
+    </div>
+    <nav class="three columns pull-nine" role="navigation">
+        <ul class="side-nav">
+            <li><a href="#">Section 1</a></li>
+            <li><a href="#">Section 2</a></li>
+            <li><a href="#">Section 3</a></li>
+            <li><a href="#">Section 4</a></li>
+        </ul>
+        <p><img src="http://placehold.it/320x240&text=Ad"/></p>
+    </nav>
+</div>
+

@@ -20,9 +20,6 @@ $classmap = createClassMap($base . '/vendor/commonapi/ioc', 'CommonApi\\IoC\\');
 $results  = createClassMap($base . '/vendor/commonapi/exception', 'CommonApi\\Exception\\');
 $classmap = array_merge($classmap, $results);
 
-$results  = createClassMap($base . '/Api', 'Molajo\\IoC\\Api\\');
-$classmap = array_merge($classmap, $results);
-
 $results  = createClassMap($base . '/.dev/Classes', 'Molajo\\');
 $classmap = array_merge($classmap, $results);
 
@@ -32,14 +29,10 @@ $classmap = array_merge($classmap, $results);
 $results  = createClassMap($base . '/.dev/Service/ConfigurationMock', 'Molajo\\Service\\ConfigurationMock\\');
 $classmap = array_merge($classmap, $results);
 
-$results  = createClassMap($base . '/Api', 'Molajo\\IoC\\Api\\');
+$results  = createClassMap($base . '/Source/Api', 'Molajo\\IoC\\Api\\');
 $classmap = array_merge($classmap, $results);
 
-$classmap['Molajo\\IoC\\AbstractServiceProvider']   = $base . '/AbstractServiceProvider.php';
-$classmap['Molajo\\IoC\\Container']                 = $base . '/Container.php';
-$classmap['Molajo\\IoC\\ServiceProviderAdapter']    = $base . '/ServiceProviderAdapter.php';
-$classmap['Molajo\\IoC\\ServiceProviderController'] = $base . '/ServiceProviderController.php';
-$classmap['Molajo\\IoC\\StandardServiceProvider']   = $base . '/StandardServiceProvider.php';
+$classmap['Molajo\\IoC\\AbstractServiceProvider']   = $base . '/Source/AbstractServiceProvider.php';
 ksort($classmap);
 
 spl_autoload_register(

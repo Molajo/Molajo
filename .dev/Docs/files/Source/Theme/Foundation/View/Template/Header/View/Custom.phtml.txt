@@ -1,0 +1,23 @@
+<?
+/**
+ * @package    Molajo
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+?>
+<div class="row">
+    <nav class="breadcrumbs">
+        <a href="#">Home</a>
+        <a href="#">Features</a>
+        <a class="unavailable" href="#">Gene Splicing</a>
+        <a class="current" href="#">Cloning</a>
+    </nav>
+    <ul class="inline-list">
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+        <li><a href="#">Link 4</a></li>
+        <li><a href="#">Link 5</a></li>
+    </ul>
+</div>
+

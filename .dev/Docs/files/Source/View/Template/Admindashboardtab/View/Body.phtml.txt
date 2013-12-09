@@ -1,0 +1,23 @@
+<?
+/**
+ * Admindashboardtab Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+
+if ($row->new_fieldset == '1') {
+?>
+</ol>
+</fieldset>
+<fieldset class="two-up">
+    <legend><? echo $row->tab_fieldset_title; ?></legend>
+    <p><? echo $row->tab_fieldset_description; ?></p>
+    <ol>
+        <? } ?>
+        <li>
+            <include <? echo $row->view; ?> parameter_np=<? echo $row->name; ?>/>
+        </li>
+

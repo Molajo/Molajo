@@ -1,0 +1,18 @@
+<?
+/**
+ * Formtextarea Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+$tooltip_css_class = 'has-tip';
+?>
+    <span class="<? echo $tooltip_css_class; ?>" title="<? echo $row->tooltip; ?>"><label
+            for="<? echo $row->id; ?>"><? echo $row->label; ?></label></span><textarea <?
+if ($row->placeholder == '') {
+} else {
+    echo 'placeholder' . '="' . $row->placeholder . '" ';
+}
+

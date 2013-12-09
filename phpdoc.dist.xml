@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdoc>
-    <title><![CDATA[<b>Molajo</b> Project]]></title>
+    <title>Molajo Content Management Framework</title>
     <parser>
-        <target>Docs</target>
+        <target>.dev/Docs</target>
         <markers>
             <item>TODO</item>
             <item>FIXME</item>
         </markers>
         <extensions>
             <extension>php</extension>
+            <extension>phtml</extension>
         </extensions>
+        <visibility></visibility>
     </parser>
     <transformer>
-        <target>Docs</target>
+        <target>.dev/Docs</target>
     </transformer>
-    <logging>
-        <level>warn</level>
-        <paths>
-            <default>{APP_ROOT}/Docs/log/{DATE}.log</default>
-            <errors>{APP_ROOT}/Docs/log/{DATE}.errors.log</errors>
-        </paths>
-    </logging>
     <transformations>
-        <template name="/Users/amystephen/Sites/clean/"/>
+        <template name="clean" />
     </transformations>
     <files>
-        <directory>Application</directory>
-        <directory>Vendor/Molajo</directory>
+        <directory>.</directory>
         <ignore>.dev/*</ignore>
+        <ignore>vendor/composer/*</ignore>
+        <ignore>vendor/filp/*</ignore>
+        <ignore>vendor/joomla/*</ignore>
+        <ignore>vendor/mustache/*</ignore>
+        <ignore>vendor/phpmailer/*</ignore>
+        <ignore>vendor/psr/*</ignore>
+        <ignore>vendor/swiftmailer/*</ignore>
+        <ignore>vendor/twig/*</ignore>
+        <ignore>*autoload*</ignore>
     </files>
 </phpdoc>

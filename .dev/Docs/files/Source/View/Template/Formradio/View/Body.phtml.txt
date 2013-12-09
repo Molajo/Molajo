@@ -1,0 +1,17 @@
+<?
+/**
+ * Formradio Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+
+$tooltip_css_class = 'has-tip';
+?>
+<li>
+    <input id="<? echo $row->id; ?>"<? echo $row->checked; ?> name="<? echo $row->name; ?>"
+           type="radio">
+    <label for="<? echo $row->id; ?>"><? echo $row->id_label; ?></label>
+</li>
+

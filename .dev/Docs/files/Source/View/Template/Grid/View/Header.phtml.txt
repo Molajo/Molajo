@@ -1,0 +1,54 @@
+<?
+
+/**
+ * Grid Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+$nowrap = '';
+$checked = '';
+$rowCount = count($runtime_data->plugin_data->grid_data);
+?>
+<table class="grid responsive">
+    <thead>
+    <tr>
+        <?
+        $count = 1;
+        $columnArray = $runtime_data->plugin_data->grid_columns;
+        echo '<pre>';
+   //     var_dump($columnArray);
+   //     var_dump($row);
+
+        foreach ($columnArray as $column) {
+            if (trim($column) == '') {
+            } else {
+                $extra_class = '';
+                $nowrap     = '';
+                if ($count == 1) {
+                    $extra_class .= 'first';
+                    $nowrap = ' nowrap';
+                }
+                if ($count == count($columnArray)) {
+                    $extra_class .= 'last';
+                }
+                if ($extra_class == '') {
+                } else {
+                    $temp = trim($extra_class);
+                    $extra_class = ' class=' . '"' . $temp . '"';
+                }
+                ?>
+                <th<? echo $extra_class . $nowrap; ?>><span><? echo $this->language_controller->translate(
+                      'GRID_' . strtoupper($column) . '_COLUMN_HEADING'); ?></span></th>
+                <?
+                $count ++;
+            }
+        } ?>
+        <th width="1%">
+            <input type="checkbox" class="checkall">
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+

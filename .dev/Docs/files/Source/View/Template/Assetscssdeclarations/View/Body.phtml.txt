@@ -1,0 +1,24 @@
+<?
+/**
+ * Assetcssdeclarations Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+$application_html5 = $row->application_html5;
+$end = $row->end; ?>
+    <style<? if ((int)$application_html5 == 0): ?>
+    type="<? echo $row->mimetype; ?>"<? endif; ?><? echo $end; ?>
+<? if ($row->page_mimetype == 'text/html') :
+else : ?>
+    <![CDATA[
+<? endif;
+echo $row->content . chr(10);
+if ($row->page_mimetype == 'text/html') :
+else : ?>
+    ]]>
+<?
+endif; ?>
+    </style><? echo chr(10);
+

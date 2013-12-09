@@ -1,0 +1,11 @@
+<?
+/**
+ * Formbegin Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2013 Amy Stephen. All rights reserved.
+ */
+?>
+<form <? echo $row->form_action . $row->form_method . $row->form_name . $row->form_id . $row->form_class . $row->form_attributes; ?>>
+
