@@ -58,7 +58,7 @@ $class_loader->setNamespace('Molajo\\Http', 'vendor/molajo/Http/');
 $class_loader->setNamespace('Molajo\\Images', 'Source/Resource/Images/');
 $class_loader->setNamespace('Molajo\\Include', 'vendor/molajo/framework/Source/Model/Include/');
 $class_loader->setNamespace('Molajo\\IoC', 'vendor/molajo/ioc/Source');
-$class_loader->setNamespace('Molajo\\IoC\\Api', 'vendor/molajo/ioc/Api');
+$class_loader->setNamespace('Molajo\\IoC\\Api', 'vendor/molajo/ioc/Source/Api');
 $class_loader->setNamespace('Molajo\\Language', 'vendor/molajo/Language/');
 $class_loader->setNamespace('Molajo\\Links', 'Source/Resource/Links/');
 //$class_loader->setNamespace('Molajo\\Log', 'vendor/molajo/Log/');

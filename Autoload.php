@@ -32,8 +32,8 @@ function readJsonFile($file_name)
 
 require_once $base_folder . '/vendor/commonapi/ioc/ContainerInterface.php';
 require_once $base_folder . '/vendor/commonapi/ioc/ServiceProviderInterface.php';
-require_once $base_folder . '/vendor/molajo/ioc/Api/ServiceProviderAdapterInterface.php';
-require_once $base_folder . '/vendor/molajo/ioc/Api/ServiceProviderControllerInterface.php';
+require_once $base_folder . '/vendor/molajo/ioc/Source/Api/ServiceProviderAdapterInterface.php';
+require_once $base_folder . '/vendor/molajo/ioc/Source/Api/ServiceProviderControllerInterface.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/AbstractServiceProvider.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/StandardServiceProvider.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/Container.php';
@@ -43,6 +43,7 @@ require_once $base_folder . '/vendor/molajo/ioc/Source/ServiceProviderAdapter.ph
 require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/ConfigurationDataInterface.php';
 require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/ConfigurationInterface.php';
 require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/RegistryInterface.php';
+
 require_once $base_folder . '/vendor/commonapi/resource/ClassHandlerInterface.php';
 require_once $base_folder . '/vendor/commonapi/resource/ClassMapInterface.php';
 require_once $base_folder . '/vendor/commonapi/resource/ExtensionsInterface.php';
@@ -74,7 +75,7 @@ $class                            = 'Molajo\\Resource\\Handler\\ClassHandler';
 $handler                          = new $class($base_folder, $resource_map, array(), array('.php'));
 $handler_instance                 = array();
 $handler_instance['ClassHandler'] = $handler;
-$file                             = $base_folder . '/vendor/molajo/resource/Files/Input/SchemeClass.json';
+$file                             = $base_folder . '/vendor/molajo/resource/Source/Files/Input/SchemeClass.json';
 $class                            = 'Molajo\\Resource\\Scheme';
 $scheme                           = new $class($file);
 $class                            = 'Molajo\\Resource\\Adapter';
@@ -94,9 +95,9 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     $class_loader = new $class (
         $base_folder,
-        $resource_map_filename = $base_folder . '/vendor/molajo/resource/Files/Output/ResourceMap.json',
-        $interface_map_filename = $base_folder . '/vendor/molajo/resource/Files/Output/ClassMap.json',
-        $interface_map_filename = $base_folder . '/vendor/molajo/resource/Files/Input/ExcludeFolders.json'
+        $resource_map_filename = $base_folder . '/vendor/molajo/resource/Source/Files/Output/ResourceMap.json',
+        $interface_map_filename = $base_folder . '/vendor/molajo/resource/Source/Files/Output/ClassMap.json',
+        $interface_map_filename = $base_folder . '/vendor/molajo/resource/Source/Files/Input/ExcludeFolders.json'
     );
 
     include __DIR__ . '/SetNamespace.php';
@@ -109,10 +110,10 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     try {
         $map_instance = new $class (
-            $base_folder . '/vendor/molajo/resource/Files/Output/ClassMap.json',
-            $base_folder . '/vendor/molajo/resource/Files/Output/Interfaces.json',
-            $base_folder . '/vendor/molajo/resource/Files/Output/ClassDependencies.json',
-            $base_folder . '/vendor/molajo/resource/Files/Output/Events.json'
+            $base_folder . '/vendor/molajo/resource/Source/Files/Output/ClassMap.json',
+            $base_folder . '/vendor/molajo/resource/Source/Files/Output/Interfaces.json',
+            $base_folder . '/vendor/molajo/resource/Source/Files/Output/ClassDependencies.json',
+            $base_folder . '/vendor/molajo/resource/Source/Files/Output/Events.json'
         );
     } catch (Exception $e) {
         throw new Exception ('Interface Map ' . $class . ' Exception during Instantiation: ' . $e->getMessage());
@@ -120,5 +121,3 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     $map_instance->createMap();
 }
-echo 'yello';
-die;
