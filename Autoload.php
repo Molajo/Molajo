@@ -30,9 +30,19 @@ function readJsonFile($file_name)
     return $temp_array;
 }
 
-require_once $base_folder . '/vendor/molajo/framework/Resource/Api/ConfigurationDataInterface.php';
-require_once $base_folder . '/vendor/molajo/framework/Resource/Api/ConfigurationInterface.php';
-require_once $base_folder . '/vendor/molajo/framework/Resource/Api/RegistryInterface.php';
+require_once $base_folder . '/vendor/commonapi/ioc/ContainerInterface.php';
+require_once $base_folder . '/vendor/commonapi/ioc/ServiceProviderInterface.php';
+require_once $base_folder . '/vendor/molajo/ioc/Api/ServiceProviderAdapterInterface.php';
+require_once $base_folder . '/vendor/molajo/ioc/Api/ServiceProviderControllerInterface.php';
+require_once $base_folder . '/vendor/molajo/ioc/Source/AbstractServiceProvider.php';
+require_once $base_folder . '/vendor/molajo/ioc/Source/StandardServiceProvider.php';
+require_once $base_folder . '/vendor/molajo/ioc/Source/Container.php';
+require_once $base_folder . '/vendor/molajo/ioc/Source/ServiceProviderController.php';
+require_once $base_folder . '/vendor/molajo/ioc/Source/ServiceProviderAdapter.php';
+
+require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/ConfigurationDataInterface.php';
+require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/ConfigurationInterface.php';
+require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/RegistryInterface.php';
 require_once $base_folder . '/vendor/commonapi/resource/ClassHandlerInterface.php';
 require_once $base_folder . '/vendor/commonapi/resource/ClassMapInterface.php';
 require_once $base_folder . '/vendor/commonapi/resource/ExtensionsInterface.php';
@@ -44,17 +54,18 @@ require_once $base_folder . '/vendor/commonapi/resource/SchemeInterface.php';
 // AdapterInterface must follow other interfaces
 require_once $base_folder . '/vendor/commonapi/resource/AdapterInterface.php';
 // carry on ...
-require_once $base_folder . '/vendor/molajo/resource/Handler/AbstractHandler.php';
-require_once $base_folder . '/vendor/molajo/resource/Handler/ClassHandler.php';
-require_once $base_folder . '/vendor/molajo/resource/Adapter.php';
-require_once $base_folder . '/vendor/molajo/resource/Scheme.php';
+require_once $base_folder . '/vendor/molajo/resource/Source/Handler/AbstractHandler.php';
+require_once $base_folder . '/vendor/molajo/resource/Source/Handler/ClassHandler.php';
+require_once $base_folder . '/vendor/molajo/resource/Source/Adapter.php';
+require_once $base_folder . '/vendor/molajo/resource/Source/Scheme.php';
 
-$resource_map_filename = $base_folder . '/vendor/molajo/resource/Files/Output/ResourceMap.json';
+$resource_map_filename = $base_folder . '/vendor/molajo/resource/Source/Files/Output/ResourceMap.json';
 if (file_exists($resource_map_filename)) {
     $resource_map = readJsonFile($resource_map_filename);
 } else {
     $resource_map = array();
 }
+
 /** Composer */
 include $base_folder . '/vendor/autoload.php';
 
@@ -76,7 +87,11 @@ $hold_class_loader = $class_loader;
 /** Resource Map */
 if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 } else {
+
+    require_once $base_folder . '/vendor/molajo/resource/Source/ResourceMap.php';
+
     $class        = 'Molajo\\Resource\\ResourceMap';
+
     $class_loader = new $class (
         $base_folder,
         $resource_map_filename = $base_folder . '/vendor/molajo/resource/Files/Output/ResourceMap.json',
@@ -87,6 +102,8 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
     include __DIR__ . '/SetNamespace.php';
 
     $class_loader->createMap();
+
+    require_once $base_folder . '/vendor/molajo/resource/Source/ClassMap.php';
 
     $class = 'Molajo\\Resource\\ClassMap';
 
@@ -103,3 +120,5 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     $map_instance->createMap();
 }
+echo 'yello';
+die;

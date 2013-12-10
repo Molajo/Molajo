@@ -48,10 +48,18 @@ if (file_exists(BASE_FOLDER . '/OverrideAutoload.php')) {
  *  3. FrontController
  */
 $ContainerNamespace  = 'Molajo\\IoC\\Container';
-$ContainerFile       = BASE_FOLDER . '/vendor/Molajo/IoC/Container.php';
+$ContainerFile       = BASE_FOLDER . '/vendor/molajo/ioc/Source/Container.php';
 $ControllerNamespace = 'Molajo\\IoC\\Controller';
-$ControllerFile      = BASE_FOLDER . '/vendor/Molajo/IoC/Controller.php';
+$ControllerFile      = BASE_FOLDER . '/vendor/molajo/ioc/Source/Controller.php';
 
+$service_folders = $base_folder . '/vendor/molajo/resource/Source/Files/Input/ServiceFolders.json';
+if (file_exists($service_folders)) {
+    $service_folders_array = readJsonFile($service_folders);
+} else {
+    $service_folders_array = array();
+}
+var_dump($service_folders_array);
+die;
 $service_provider_folders                                              = array();
 $service_provider_folders[BASE_FOLDER . '/Application/Service']        = 'Molajo\\Service';
 $service_provider_folders[BASE_FOLDER . '/vendor/Molajo/User/Service'] = 'Molajo\\Service';
