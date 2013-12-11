@@ -28,7 +28,7 @@ class PagetypesPlugin extends SystemEventPlugin implements SystemInterface
      */
     public function onAfterRoute()
     {
-        $folders = glob(BASE_FOLDER . '/Application/Extension' . '/Menuitem/*');
+        $folders = glob(BASE_FOLDER . '/Source/Menuitem/*');
         if (count($folders) === 0 || $folders === false) {
             $page_type_list = array();
         } else {

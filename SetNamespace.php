@@ -33,6 +33,7 @@ $class_loader->setNamespace('Molajo\\Categories', 'Source/Resource/Categories/')
 $class_loader->setNamespace('Molajo\\Comments', 'Source/Resource/Comments/');
 $class_loader->setNamespace('Molajo\\Contacts', 'Source/Resource/Contacts/');
 $class_loader->setNamespace('Molajo\\Controller', 'vendor/molajo/framework/Source/Controller/');
+$class_loader->setNamespace('Molajo\\Controller', 'vendor/molajo/framework/Source/Resource/');
 $class_loader->setNamespace('Molajo\\Database', 'vendor/molajo/database/Source/');
 $class_loader->setNamespace('Molajo\\Dataobject', 'vendor/molajo/framework/Source/Model/Dataobject/');
 $class_loader->setNamespace('Molajo\\Datasource', 'vendor/molajo/framework/Source/Model/Datasource/');
@@ -95,11 +96,13 @@ $class_loader->setNamespace('Molajo\\Menuitem', 'vendor/molajo/framework/Source/
 $class_loader->setNamespace('Molajo\\Model', 'vendor/molajo/framework/Source/Model/');
 $class_loader->setNamespace('Molajo\\Model\\Datalist', 'vendor/molajo/framework/Source/Model/Datalist/');
 $class_loader->setNamespace('Molajo\\Pages', 'Source/Resource/Pages/');
-$class_loader->setNamespace('Molajo\\Plugin', 'Source/Theme/Foundation/Plugin/');
 $class_loader->setNamespace('Molajo\\Plugin', 'vendor/molajo/framework/Source/Plugin/');
+$class_loader->setNamespace('Molajo\\Plugin', 'Source/Plugin/');
+$class_loader->setNamespace('Molajo\\Plugin', 'Source/Theme/Foundation/Plugin/');
 $class_loader->setNamespace('Molajo\\Render', 'vendor/molajo/Render/');
 $class_loader->setNamespace('Molajo\\Resource', 'Source/Resource/');
-$class_loader->setNamespace('Molajo\\Resource', 'vendor/molajo/resource/');
+$class_loader->setNamespace('Molajo\\Resource', 'vendor/molajo/resource/Source/');
+$class_loader->setNamespace('Molajo\\Resource', 'vendor/molajo/framework/Source/Resource/');
 $class_loader->setNamespace('Molajo\\Route', 'vendor/molajo/route/');
 $class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/authorisation/Service/');
 $class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/cache/Service/');
@@ -112,6 +115,9 @@ $class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/framework/Service/
 $class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/Http/Service/');
 $class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/Language/Service/');
 //$class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/Log/Service');
+$class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/render/Service/');
+$class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/resource/Service/');
+$class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/route/Service/');
 $class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/user/Service/');
 $class_loader->setNamespace('Molajo\\Site2', 'Sites/');
 $class_loader->setNamespace('Molajo\\Sites', 'Sites/');

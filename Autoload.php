@@ -30,6 +30,8 @@ function readJsonFile($file_name)
     return $temp_array;
 }
 
+require_once $base_folder . '/vendor/commonapi/exception/ExceptionInterface.php';
+require_once $base_folder . '/vendor/commonapi/exception/RuntimeException.php';
 require_once $base_folder . '/vendor/commonapi/ioc/ContainerInterface.php';
 require_once $base_folder . '/vendor/commonapi/ioc/ServiceProviderInterface.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/Api/ServiceProviderAdapterInterface.php';
