@@ -205,7 +205,7 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
                 }
 
                 $filter_options              = array();
-                $filter_options['page_type'] = $customfields['type'];
+                $filter_options['data_type'] = $customfields['type'];
 
                 $temp[$target_key] = $this->filter($key, $value, $filter, $filter_options);
             }
