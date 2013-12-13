@@ -62,6 +62,13 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
      */
     public function onAfterRead()
     {
+        if (count($this->query_results) > 0
+            && $this->model_registry['query_object'] != 'result'
+            && $this->model_registry['get_customfields'] == 1) {
+        } else {
+            return $this;
+        }
+
         $customfieldgroups = $this->model_registry['customfieldgroups'];
         if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
         } else {
