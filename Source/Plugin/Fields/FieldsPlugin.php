@@ -37,7 +37,7 @@ class FieldsPlugin extends SystemEventPlugin implements SystemInterface
         $model_type = $this->runtime_data->route->model_type;
         $model_name = $this->runtime_data->route->model_name;
 
-        $controller = $this->resources->get(
+        $controller = $this->resource->get(
             'query:///' . $model_type . '/' . $model_name,
             array('Runtimedata', $this->runtime_data)
         );

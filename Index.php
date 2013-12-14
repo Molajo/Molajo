@@ -95,5 +95,4 @@ $service_provider_controller = new $service_provider_controller_class (
 require_once BASE_FOLDER . '/vendor/molajo/framework/Source/Controller/FrontController.php';
 $front_controller_class = 'Molajo\\Controller\\FrontController';
 $front_controller = new $front_controller_class ($service_provider_controller);
-
 $front_controller->driver();

@@ -9,9 +9,9 @@
 namespace Molajo\Plugin\Customfields;
 
 use stdClass;
-use CommonApi\Exception\RuntimeException;
 use CommonApi\Event\ReadInterface;
 use Molajo\Plugin\ReadEventPlugin;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Customfields Plugin
@@ -23,38 +23,6 @@ use Molajo\Plugin\ReadEventPlugin;
 class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
 {
     /**
-     * Model Registry
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $model_registry = null;
-
-    /**
-     * Source Data containing the custom fields
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $data = null;
-
-    /**
-     * runtime_data
-     *
-     * @var    object
-     * @since  1.0
-     */
-    protected $runtime_data = null;
-
-    /**
-     * Type
-     *
-     * @var    string
-     * @since  1.0
-     */
-    protected $page_type = 'list';
-
-    /**
      * Post-read processing - one row at a time
      *
      * @return  $this
@@ -62,28 +30,37 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
      */
     public function onAfterRead()
     {
-        if (count($this->query_results) > 0
-            && $this->model_registry['query_object'] != 'result'
-            && $this->model_registry['get_customfields'] == 1) {
+        if (count($this->query_results) === 0) {
+            return $this;
+        }
+
+        if (isset($this->model_registry['query_object'])
+            && isset($this->model_registry['get_customfields'])
+        ) {
         } else {
             return $this;
         }
 
+        if ($this->model_registry['query_object'] == 'result') {
+            return $this;
+        }
+
+        if ((int)$this->model_registry['get_customfields'] == 0) {
+            return $this;
+        }
+
         $customfieldgroups = $this->model_registry['customfieldgroups'];
+
         if (is_array($customfieldgroups) && count($customfieldgroups) > 0) {
         } else {
-            return array();
+            return $this;
         }
 
-        $customfields = array();
         foreach ($customfieldgroups as $group) {
-            $customfields[$group] = $this->processCustomfieldGroup($group);
+            $this->query_results->$group = $this->processCustomfieldGroup($group);
         }
 
-        $this->model_registry = null;
-        $this->data           = null;
-
-        return $customfields;
+        return $this;
     }
 
     /**
@@ -96,12 +73,20 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
      */
     protected function processCustomfieldGroup($group)
     {
+        /** Page Type */
+        $page_type = strtolower($this->runtime_data->route->page_type);
+
         /** Standard Data */
-        if (isset($this->data->$group)) {
+        if (isset($this->query_results->$group)) {
         } else {
-            return array();
+            return new stdClass();
         }
-        $standard_custom_field_data = json_decode($this->data->$group);
+
+        if (is_object($this->query_results->$group)) {
+            return $this->query_results->$group;
+        }
+
+        $standard_custom_field_data = json_decode($this->query_results->$group);
 
         if (is_array($standard_custom_field_data) > 0
             && isset($this->runtime_data->application->id)
@@ -118,8 +103,9 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
         /** Extension Instances Data */
         $x = 'extension_instances_' . $group;
 
-        if (isset($this->data->$x)) {
-            $extension_instances_field_data = json_decode($this->data->$x);
+        if (isset($this->query_results->$x)) {
+            $extension_instances_field_data = json_decode($this->query_results->$x);
+            unset($this->query_results->$x);
 
             if (is_array($extension_instances_field_data)
                 && isset($this->runtime_data->application->id)
@@ -152,15 +138,15 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
 
             $key        = $customfields['name'];
             $target_key = $key;
-            $test       = substr($key, 0, strlen($this->page_type));
+            $test       = substr($key, 0, strlen($page_type));
             $use        = true;
 
-            if ((strlen($this->page_type) > 0)) {
+            if ((strlen($page_type) > 0)) {
 
-                if ($test == $this->page_type) {
-                    if ($this->page_type == 'item' || $this->page_type == 'form' || $this->page_type == 'list') {
-                        if (substr($key, 0, strlen($this->page_type) + 1) == $this->page_type . '_') {
-                            $target_key = substr($key, strlen($this->page_type) + 1, 9999);
+                if ($test == $page_type) {
+                    if ($page_type == 'item' || $page_type == 'form' || $page_type == 'list') {
+                        if (substr($key, 0, strlen($page_type) + 1) == $page_type . '_') {
+                            $target_key = substr($key, strlen($page_type) + 1, 9999);
                         } else {
                             $use = false;
                         }
@@ -168,7 +154,7 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
 
                 } elseif (substr($key, 0, strlen('menuitem_')) == 'menuitem_') {
 
-                    if ($this->page_type == 'item' || $this->page_type == 'form' || $this->page_type == 'list') {
+                    if ($page_type == 'item' || $page_type == 'form' || $page_type == 'list') {
                         $use = false;
                     } else {
                         $target_key = substr($key, strlen('menuitem_'), 9999);
@@ -214,7 +200,7 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
                 $filter_options              = array();
                 $filter_options['data_type'] = $customfields['type'];
 
-                $temp[$target_key] = $this->filter($key, $value, $filter, $filter_options);
+                $temp[$target_key] = $this->filter($key, $value, $filter = null, $filter_options);
             }
         }
 

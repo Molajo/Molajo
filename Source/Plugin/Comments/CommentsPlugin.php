@@ -106,7 +106,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getCommentHeading()
     {
-        $comments = $this->resources->get(
+        $comments = $this->resource->get(
             'query:///Molajo//Datasource//Comments//Configuration.xml',
             array('runtime_data', $this->runtime_data)
         );
@@ -175,7 +175,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getComments()
     {
-        $comments = $this->resources->get(
+        $comments = $this->resource->get(
             'query:///Molajo//Datasource//Comments//Configuration.xml',
             array('Parameters', $this->runtime_data)
         );

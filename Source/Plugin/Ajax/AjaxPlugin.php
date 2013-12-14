@@ -38,11 +38,11 @@ class AjaxPlugin extends SystemEventPlugin implements SystemInterface
             return $this;
         }
 
-        $this->runtime_data->resource->template = $this->resources->get('Template:///Molajo//View//Template//' . 1342);
-        $this->runtime_data->resource->wrap     = $this->resources->get('Wrap:///Molajo//View//Wrap//' . 2090);
+        $this->runtime_data->resource->template = $this->resource->get('Template:///Molajo//View//Template//' . 1342);
+        $this->runtime_data->resource->wrap     = $this->resource->get('Wrap:///Molajo//View//Wrap//' . 2090);
 
         $sequence = array();
-        $x        = $this->resources->get('xml:///Molajo//Application//Ajax_sequence.xml')->include;
+        $x        = $this->resource->get('xml:///Molajo//Application//Ajax_sequence.xml')->include;
         foreach ($x as $y) {
             $sequence[] = (string)$y;
         }
@@ -54,7 +54,7 @@ class AjaxPlugin extends SystemEventPlugin implements SystemInterface
         $this->runtime_data->render->token_sequence = $sequence;
 
         $final_sequence = array();
-        $x              = $this->resources->get('xml:///Molajo//Application//Ajax_final.xml')->include;
+        $x              = $this->resource->get('xml:///Molajo//Application//Ajax_final.xml')->include;
 
         if ($x === null || count($x) > 0) {
         } else {

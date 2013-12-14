@@ -38,8 +38,8 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
 
         return $this;
 
-        $menuitem = $this->resources->get(
-            'query:///Molajo/Menuitem/Applications/Configuration.xml',
+        $menuitem = $this->resource->get(
+            'query:///Molajo//Menuitem//Applications//Configuration.xml',
             array('Parameters', $this->runtime_data)
         );
 

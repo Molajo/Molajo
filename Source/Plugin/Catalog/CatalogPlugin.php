@@ -36,7 +36,7 @@ class CatalogPlugin extends DisplayEventPlugin implements DisplayInterface
             return $this;
         }
 
-        $controller = $this->resources->get('query:///Molajo//Datasource//Catalog.xml');
+        $controller = $this->resource->get('query:///Molajo//Datasource//Catalog.xml');
 
         $controller->setModelRegistry('check_view_level_access', 0);
         $controller->setModelRegistry('process_events', 0);

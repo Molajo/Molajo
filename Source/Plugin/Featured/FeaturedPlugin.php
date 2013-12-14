@@ -37,7 +37,7 @@ class FeaturedPlugin extends SystemEventPlugin implements SystemInterface
 
         $model = 'query:///Molajo//Datasource//' . $this->runtime_data->route->model_name . '//Configuration.xml';
 
-        $controller = $this->resources->get(
+        $controller = $this->resource->get(
             $model,
             array('Parameters', $this->runtime_data)
         );

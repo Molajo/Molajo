@@ -47,7 +47,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $this->runtime_data->page->menuitem_id = $current_menuitem_id;
         $model                                 = 'Molajo//Menuitem//' . $current_menuitem_id;
 
-        $this->runtime_data->page->menuitem = $this->resources->get('Menuitem:///' . $model);
+        $this->runtime_data->page->menuitem = $this->resource->get('Menuitem:///' . $model);
         $this->runtime_data->page->menu     = $this->runtime_data->page->menuitem->menu;
 
         $this->runtime_data->page->current_menuitem_id = $current_menuitem_id;
@@ -79,7 +79,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $options                 = array();
         $options['runtime_data'] = $this->runtime_data;
         $options['parameters']   = $this->parameters;
-        $controller              = $this->resources->get('query:///Molajo//Datasource//Catalog.xml', $options);
+        $controller              = $this->resource->get('query:///Molajo//Datasource//Catalog.xml', $options);
 
         $controller->setModelRegistry('check_view_level_access', 0);
         $controller->setModelRegistry('process_events', 0);
@@ -172,7 +172,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             return array();
         }
 
-        $controller = $this->resources->get('query:///Molajo//Datasource//MenuitemsNested.xml');
+        $controller = $this->resource->get('query:///Molajo//Datasource//MenuitemsNested.xml');
 
         $controller->setModelRegistry('check_view_level_access', 1);
         $controller->setModelRegistry('process_events', 0);
@@ -232,7 +232,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     {
         $menu_id = $this->runtime_data->page->extension_id;
 
-        $controller = $this->resources->get('query:///Molajo//Administration//Menuitems//Configuration.xml');
+        $controller = $this->resource->get('query:///Molajo//Administration//Menuitems//Configuration.xml');
 
         $controller->setModelRegistry('check_view_level_access', 1);
         $controller->setModelRegistry('process_events', 0);

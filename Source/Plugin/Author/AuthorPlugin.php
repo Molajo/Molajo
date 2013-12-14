@@ -70,7 +70,7 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
             return $this;
         }
 
-        $author = $this->resources->get(
+        $author = $this->resource->get(
             'query:///Molajo//Datasource//User.xml',
             array('Parameters', $this->runtime_data)
         );
@@ -102,7 +102,7 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getAuthorProfileURL()
     {
-        $controller = $this->resources->get('query:///Molajo//Datasource//Catalog.xml');
+        $controller = $this->resource->get('query:///Molajo//Datasource//Catalog.xml');
 
         $controller->setModelRegistry('check_view_level_access', 0);
         $controller->setModelRegistry('process_events', 0);

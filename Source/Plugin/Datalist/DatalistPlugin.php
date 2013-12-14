@@ -36,7 +36,7 @@ class DatalistPlugin extends AbstractPlugin
         $options             = array();
         $options['multiple'] = true;
 
-        $folders       = $this->resources->get('folder:///Molajo//Model//Datalist', $options);
+        $folders       = $this->resource->get('folder:///Molajo//Model//Datalist', $options);
         $all_datalists = array();
 
         foreach ($folders as $folder) {

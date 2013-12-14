@@ -10,8 +10,8 @@ namespace Molajo\Plugin\Pagetypegrid;
 
 use stdClass;
 use CommonApi\Event\DisplayInterface;
-use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\DisplayEventPlugin;
+use CommonApi\Exception\RuntimeException;
 
 /**
  * Page Type Grid Plugin
@@ -46,7 +46,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
         $this->setToolbar();
 
-        $this->setFilter();
+        $this->setGridFilter();
 
         $this->getGridData();
 
@@ -129,7 +129,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      * @return  $this
      * @since   1.0
      */
-    protected function setFilter()
+    protected function setGridFilter()
     {
         $grid_list = array();
 
@@ -238,7 +238,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
     {
         $options                 = array();
         $options['runtime_data'] = $this->runtime_data;
-        $controller              = $this->resources->get('query:///' . $namespace . '.xml', $options);
+        $controller              = $this->resource->get('query:///' . $namespace . '.xml', $options);
 
         $controller->setModelRegistry('process_events', 0);
         $controller->setModelRegistry('get_customfields', 0);
@@ -284,7 +284,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         }
 
         $model = 'Molajo//Datasource//' . $resource . '//Configuration.xml';
-        $query = $this->resources->get('query:///' . $model);
+        $query = $this->resource->get('query:///' . $model);
 
         $query->setModelRegistry('check_view_level_access', 0);
         $query->setModelRegistry('process_events', 1);
