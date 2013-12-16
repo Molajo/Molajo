@@ -9,17 +9,17 @@
  */
 $nowrap = '';
 $checked = '';
-$rowCount = count($runtime_data->plugin_data->grid_data);
+$this->rowCount = count($this->runtime_data->plugin_data->grid_data);
 ?>
 <table class="grid responsive">
     <thead>
     <tr>
         <?
         $count = 1;
-        $columnArray = $runtime_data->plugin_data->grid_columns;
+        $columnArray = $this->runtime_data->plugin_data->grid_columns;
         echo '<pre>';
    //     var_dump($columnArray);
-   //     var_dump($row);
+   //     var_dump($this->row);
 
         foreach ($columnArray as $column) {
             if (trim($column) == '') {

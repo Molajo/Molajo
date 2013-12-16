@@ -7,17 +7,17 @@
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
 
-if ($row->closed == 1) {
-    $comment = $row->closed_comment;
+if ($this->row->closed == 1) {
+    $comment = $this->row->closed_comment;
 
-} elseif ($row->count_of_comments == 0) {
-    $comment = $row->content_text;
+} elseif ($this->row->count_of_comments == 0) {
+    $comment = $this->row->content_text;
 
 } else {
-    $comment = $row->content_text . ' ' . $row->count_of_comments . '.';
+    $comment = $this->row->content_text . ' ' . $this->row->count_of_comments . '.';
 } ?>
 <div class="comment-head">
-    <h3><? echo $row->title; ?></h3>
+    <h3><? echo $this->row->title; ?></h3>
 
     <p><? echo $comment; ?><p>
 </div>

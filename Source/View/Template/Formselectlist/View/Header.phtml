@@ -7,10 +7,10 @@
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
 ?>
-<select <? echo $row->multiple; ?>name="<? echo $row->listname; ?>" class="inputbox">
-<? if ($row->multiple == '') { ?>
+<select <? echo $this->row->multiple; ?>name="<? echo $this->row->listname; ?>" class="inputbox">
+<? if ($this->row->multiple == '') { ?>
     <option value=""><? echo $this->language_controller->translate(
-            'SELECT_' . strtoupper($row->listname)
+            'SELECT_' . strtoupper($this->row->listname)
         ); ?></option>
 <? } else { ?>
     <option value=""><? echo $this->language_controller->translate('No selection'); ?></option>

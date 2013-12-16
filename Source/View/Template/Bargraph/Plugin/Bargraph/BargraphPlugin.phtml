@@ -27,7 +27,7 @@ class BargraphPlugin extends DisplayEventPlugin implements DisplayInterface
         return;
 
         //move this into  on after read all -- build graph after summary query
-        if ($runtime_data->application->id == 2) {
+        if ($this->runtime_data->application->id == 2) {
         } else {
             return true;
         }
@@ -58,18 +58,18 @@ class BargraphPlugin extends DisplayEventPlugin implements DisplayInterface
         foreach ($temp as $set) {
             $temp2 = explode(',', $graphOptions);
 
-            $row = new \stdClass();
+            $this->row = new \stdClass();
 
-            $row->id        = $i;
-            $row->css_id    = ' id="data' . $i . '"';
-            $row->css_class = ' class="bar portletbargraph' . $i . '"';
-            $row->title     = $temp2[0];
-            $row->value     = $temp2[1];
+            $this->row->id        = $i;
+            $this->row->css_id    = ' id="data' . $i . '"';
+            $this->row->css_class = ' class="bar portletbargraph' . $i . '"';
+            $this->row->title     = $temp2[0];
+            $this->row->value     = $temp2[1];
 
-            $query_results[] = $row;
+            $query_results[] = $this->row;
         }
 
-        $row = $query_results;
+        $this->row = $query_results;
 
         return true;
     }

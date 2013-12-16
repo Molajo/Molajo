@@ -8,10 +8,10 @@
  */
 
 $tooltip_css_class = 'has-tip';
-if ($row->type == 'hidden') {
+if ($this->row->type == 'hidden') {
 } else {
     ?>
-    <span class="<? echo $tooltip_css_class; ?>" title="<? echo $row->tooltip; ?>">
-<label for="<? echo $row->id; ?>"><? echo $row->label; ?></label></span>
+    <span class="<? echo $tooltip_css_class; ?>" title="<? echo $this->row->tooltip; ?>">
+<label for="<? echo $this->row->id; ?>"><? echo $this->row->label; ?></label></span>
 <? } ?>
 <input

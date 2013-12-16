@@ -8,28 +8,28 @@
  */
 
 ?>
-<h1><? echo $row->username; ?></h1>
+<h1><? echo $this->row->username; ?></h1>
 
 <p><? echo '<strong>' . $this->language_controller->translate(
             'First Name'
-        ) . ':</strong>: ' . $row->full_name; ?></p>
+        ) . ':</strong>: ' . $this->row->full_name; ?></p>
 <p><? echo '<strong>' . $this->language_controller->translate(
             'Last Name'
-        ) . ':</strong>: ' . $row->full_name; ?></p>
+        ) . ':</strong>: ' . $this->row->full_name; ?></p>
 <p><? echo '<strong>' . $this->language_controller->translate(
             'Full Name'
-        ) . ':</strong>: ' . $row->full_name; ?></p>
-<p><? echo '<strong>' . $this->language_controller->translate('Alias') . ':</strong>: ' . $row->full_name; ?></p>
+        ) . ':</strong>: ' . $this->row->full_name; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate('Alias') . ':</strong>: ' . $this->row->full_name; ?></p>
 <p><? echo '<strong>' . $this->language_controller->translate('Text') . ':</strong>:' ?></p>
-<? echo $row->content_text; ?>
-<p><? echo '<strong>' . $this->language_controller->translate('Email') . ':</strong>: ' . $row->email; ?></p>
-<p><? echo '<strong>' . $this->language_controller->translate('Blocked') . ':</strong>: ' . $row->block; ?></p>
+<? echo $this->row->content_text; ?>
+<p><? echo '<strong>' . $this->language_controller->translate('Email') . ':</strong>: ' . $this->row->email; ?></p>
+<p><? echo '<strong>' . $this->language_controller->translate('Blocked') . ':</strong>: ' . $this->row->block; ?></p>
 <p><? echo '<strong>' . $this->language_controller->translate(
             'Registered'
-        ) . ':</strong>: ' . $row->register_datetime; ?></p>
+        ) . ':</strong>: ' . $this->row->register_datetime; ?></p>
 <p><? echo '<strong>' . $this->language_controller->translate(
             'Activated'
-        ) . ':</strong>: ' . $row->register_datetime; ?></p>
+        ) . ':</strong>: ' . $this->row->register_datetime; ?></p>
 <p><? echo '<strong>' . $this->language_controller->translate(
             'Last Visited'
-        ) . ':</strong>: ' . $row->last_visit_datetime; ?></p>
+        ) . ':</strong>: ' . $this->row->last_visit_datetime; ?></p>

@@ -29,7 +29,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function onAfterResource()
+    public function onBeforeExecute()
     {
         if ($this->runtime_data->request->client->ajax == 1) {
             return $this;
@@ -232,7 +232,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     {
         $menu_id = $this->runtime_data->page->extension_id;
 
-        $controller = $this->resource->get('query:///Molajo//Administration//Menuitems//Configuration.xml');
+        $controller = $this->resource->get('query:///Molajo//Datasource//Menuitem.xml');
 
         $controller->setModelRegistry('check_view_level_access', 1);
         $controller->setModelRegistry('process_events', 0);

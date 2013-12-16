@@ -10,12 +10,12 @@
         <div class="page-menu">
             <ul class="page-menu">
                 <li>
-                    <a href="<? echo $runtime_data->page->urls['page']; ?>">
-                        <? echo $runtime_data->page->heading1 ?>
+                    <a href="<? echo $this->runtime_data->page->urls['page']; ?>">
+                        <? echo $this->runtime_data->page->heading1 ?>
                     </a>
                 </li>
                 <?
-                $pageSubmenu = $runtime_data->page->menu['PageSubmenu'];
+                $pageSubmenu = $this->runtime_data->page->menu['PageSubmenu'];
                 if (count($pageSubmenu) > 0) {
                     foreach ($pageSubmenu as $menu) {
                         if ((int)$menu->current == 1) {
@@ -35,7 +35,7 @@
         </div>
     </div>
     <?
-    $pageArray = $runtime_data->page->menu['SectionSubmenu'];
+    $pageArray = $this->runtime_data->page->menu['SectionSubmenu'];
     $count = count($pageArray);
     if ($count > 0) {
         ?>
@@ -70,7 +70,7 @@
         <div class="page-menu">
             <ul class="page-menu">
                 <?
-                $pageSubmenu = $runtime_data->page->menu['PageSubmenu'];
+                $pageSubmenu = $this->runtime_data->page->menu['PageSubmenu'];
                 $i = 0;
                 if (count($pageSubmenu) > 0) {
                     foreach ($pageSubmenu as $menu) {
@@ -80,7 +80,7 @@
                             $active = '';
                         }
                         if ($i == 0) {
-                            $text = $runtime_data->page->heading1;
+                            $text = $this->runtime_data->page->heading1;
                         } else {
                             $text = '[ ' . $menu->link_text . '] ';
                         }
@@ -100,7 +100,7 @@
         <div class="section-submenu">
             <ul class="section-submenu">
                 <?
-                $pageArray = $runtime_data->page->menu['SectionSubmenu'];
+                $pageArray = $this->runtime_data->page->menu['SectionSubmenu'];
                 $count = count($pageArray);
 
                 if ($count > 0) {

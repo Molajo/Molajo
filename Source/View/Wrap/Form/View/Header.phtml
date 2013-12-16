@@ -8,13 +8,13 @@
  */
 
 
-$headerId = trim($runtime_data->wrap_view_css_id);
+$headerId = trim($this->runtime_data->wrap_view_css_id);
 if ($headerId == '') :
 else :
     $headerId = ' id="' . $headerId . '"';
 endif;
 
-$headerclass = trim($runtime_data->wrap_view_css_class);
+$headerclass = trim($this->runtime_data->wrap_view_css_class);
 if ($headerclass == '') :
 else :
     $headerclass = ' class="' . $headerclass . '"';

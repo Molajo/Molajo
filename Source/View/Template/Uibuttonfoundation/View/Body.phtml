@@ -7,34 +7,34 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 
-$row->button_title      = str_replace('&nbsp;', ' ', htmlspecialchars_decode($row->button_title));
-$row->button_link_extra = str_replace('&nbsp;', ' ', htmlspecialchars_decode($row->button_link_extra));
+$this->row->button_title      = str_replace('&nbsp;', ' ', htmlspecialchars_decode($this->row->button_title));
+$this->row->button_link_extra = str_replace('&nbsp;', ' ', htmlspecialchars_decode($this->row->button_link_extra));
 
-if (trim($row->button_link_extra) == '') {
+if (trim($this->row->button_link_extra) == '') {
 } else {
-    $row->button_link_extra = ' ' . trim($row->button_link_extra);
+    $this->row->button_link_extra = ' ' . trim($this->row->button_link_extra);
 }
-if (trim($row->button_id) == '') {
+if (trim($this->row->button_id) == '') {
 } else {
-    $row->button_id = ' ' . 'id="' . trim($row->button_id) . '"';
+    $this->row->button_id = ' ' . 'id="' . trim($this->row->button_id) . '"';
 }
-if (trim($row->button_icon_prepend) == '') {
+if (trim($this->row->button_icon_prepend) == '') {
 } else {
-    $row->button_title = '<i class="' . trim(
-            $row->button_icon_prepend
-        ) . '"></i>' . $row->button_title;
+    $this->row->button_title = '<i class="' . trim(
+            $this->row->button_icon_prepend
+        ) . '"></i>' . $this->row->button_title;
 }
-if (trim($row->button_icon_append) == '') {
+if (trim($this->row->button_icon_append) == '') {
 } else {
-    $row->button_title .= '<i class="' . trim($row->button_icon_append) . '"></i>';
+    $this->row->button_title .= '<i class="' . trim($this->row->button_icon_append) . '"></i>';
 }
 
-switch ($row->button_tag) {
+switch ($this->row->button_tag) {
     case 'button':
-        echo '<button' . $row->button_id . $row->button_class . $row->button_link_extra . '>' . $row->button_title . '</button>';
+        echo '<button' . $this->row->button_id . $this->row->button_class . $this->row->button_link_extra . '>' . $this->row->button_title . '</button>';
         break;
 
     default:
-        echo '<a href="' . $row->button_link . '"' . $row->button_id . $row->button_class . $row->button_link_extra . '>' . $row->button_title . '</a>';
+        echo '<a href="' . $this->row->button_link . '"' . $this->row->button_id . $this->row->button_class . $this->row->button_link_extra . '>' . $this->row->button_title . '</a>';
         break;
 }

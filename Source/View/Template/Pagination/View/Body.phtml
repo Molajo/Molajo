@@ -6,9 +6,9 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
-if ($row->current === 0) {
+if ($this->row->current === 0) {
     $class   = '';
-    $link    = '<a href="' . $row->link . '">';
+    $link    = '<a href="' . $this->row->link . '">';
     $linkend = '</a>';
 } else {
     $class   = 'class="unavailable"';
@@ -17,5 +17,5 @@ if ($row->current === 0) {
 }
 ?>
 <li <? echo $class; ?>>
-    <? echo $link; ?><? echo $row->link_text; ?><? echo $linkend; ?>
+    <? echo $link; ?><? echo $this->row->link_text; ?><? echo $linkend; ?>
 </li>

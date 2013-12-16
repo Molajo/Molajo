@@ -9,9 +9,9 @@
 $i = 1;
 $currentMenuArray = array();
 
-$menu = $runtime_data->page->menu['Update'];
-$breadcrumbs = $runtime_data->page->breadcrumbs;
-$pageURL = $runtime_data->page->urls['page'];
+$menu = $this->runtime_data->page->menu['Update'];
+$breadcrumbs = $this->runtime_data->page->breadcrumbs;
+$pageURL = $this->runtime_data->page->urls['page'];
 
 if (isset($menu[0]->css_class)) {
     $class = ' class="' . $menu[0]->css_class . '" ';

@@ -6,13 +6,13 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
-if ($row->previous_page === 0) {
+if ($this->row->previous_page === 0) {
     $class   = 'class="arrow unavailable"';
     $link    = '';
     $linkend = '';
 } else {
     $class   = 'class="arrow"';
-    $link    = '<a href="' . $row->prev_link . '">';
+    $link    = '<a href="' . $this->row->prev_link . '">';
     $linkend = '</a>';
 }
 ?>

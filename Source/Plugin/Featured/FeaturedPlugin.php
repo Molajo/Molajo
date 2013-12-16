@@ -8,6 +8,7 @@
  */
 namespace Molajo\Plugin\Featured;
 
+use Exception;
 use CommonApi\Event\SystemInterface;
 use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
@@ -28,14 +29,14 @@ class FeaturedPlugin extends SystemEventPlugin implements SystemInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function onAfterResource()
+    public function onBeforeExecute()
     {
         if (strtolower($this->runtime_data->route->page_type) == 'item') {
         } else {
             return $this;
         }
 
-        $model = 'query:///Molajo//Datasource//' . $this->runtime_data->route->model_name . '//Configuration.xml';
+        $model = 'query:///Molajo//' . $this->runtime_data->route->model_name . '//Configuration.xml';
 
         $controller = $this->resource->get(
             $model,
@@ -60,6 +61,7 @@ class FeaturedPlugin extends SystemEventPlugin implements SystemInterface
 
         try {
             $this->runtime_data->featured = $controller->getData();
+
         } catch (Exception $e) {
             throw new RuntimeException ($e->getMessage());
         }

@@ -9,9 +9,9 @@
 
 $tooltip_css_class = 'has-tip';
 ?>
-    <span class="<? echo $tooltip_css_class; ?>" title="<? echo $row->tooltip; ?>"><label
-            for="<? echo $row->id; ?>"><? echo $row->label; ?></label></span><textarea <?
-if ($row->placeholder == '') {
+    <span class="<? echo $tooltip_css_class; ?>" title="<? echo $this->row->tooltip; ?>"><label
+            for="<? echo $this->row->id; ?>"><? echo $this->row->label; ?></label></span><textarea <?
+if ($this->row->placeholder == '') {
 } else {
-    echo 'placeholder' . '="' . $row->placeholder . '" ';
+    echo 'placeholder' . '="' . $this->row->placeholder . '" ';
 }

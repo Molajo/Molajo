@@ -6,30 +6,30 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
-$pageURL = $runtime_data->page->urls['page'];
+$pageURL = $this->runtime_data->page->urls['page'];
 ?>
 <article
-    class="<? //echo trim('comment' . ' ' . $row->first_row . ' ' . $row->last_row . ' ' . $row->even_or_odd_row  . ' ' . $row->css_class); ?>"
-    id="<? echo $row->alias; ?>">
+    class="<? //echo trim('comment' . ' ' . $this->row->first_row . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd_row  . ' ' . $this->row->css_class); ?>"
+    id="<? echo $this->row->alias; ?>">
     <div class="comment-meta">
-        <a class="permalink" href="<? echo $pageURL; ?>#<? echo $row->alias; ?>">#</a>
+        <a class="permalink" href="<? echo $pageURL; ?>#<? echo $this->row->alias; ?>">#</a>
         <? //echo $this->language_controller->translate('On') . ' ' ?>
-        <time datetime="<? echo $row->created_datetime; ?>" pubdate>
-            <? //echo $row->created_datetime_month_name
-            // . ' ' . $row->created_datetime_day_number
-            //  . ', ' . $row->created_datetime_ccyy
+        <time datetime="<? echo $this->row->created_datetime; ?>" pubdate>
+            <? //echo $this->row->created_datetime_month_name
+            // . ' ' . $this->row->created_datetime_day_number
+            //  . ', ' . $this->row->created_datetime_ccyy
             //  . ', ' . $this->language_controller->translate('at')
-            //  . ' ' . $row->created_datetime_time;
+            //  . ' ' . $this->row->created_datetime_time;
             ?>
         </time>
         ,
-        <? //if ($row->website == '') {
+        <? //if ($this->row->website == '') {
         //       } else {
         ?>
-        <a href="<? //echo $row->website; ?>" rel='external nofollow' class='url'>
+        <a href="<? //echo $this->row->website; ?>" rel='external nofollow' class='url'>
             <? //} ?>
-            <? //echo $row->customfields->visitor_name; ?>
-            <? //if ($row->website == '') {
+            <? //echo $this->row->customfields->visitor_name; ?>
+            <? //if ($this->row->website == '') {
             // } else {
             ?>
         </a>
@@ -37,11 +37,11 @@ $pageURL = $runtime_data->page->urls['page'];
         //}
         // echo $this->language_controller->translate('said:') . ' ';
         ?>
-        <? if ($row->title == '') {
+        <? if ($this->row->title == '') {
         } else {
             ?>
             <header>
-                <h5><? echo $row->title; ?></h5>
+                <h5><? echo $this->row->title; ?></h5>
             </header>
         <? } ?>
     </div>
@@ -50,6 +50,6 @@ $pageURL = $runtime_data->page->urls['page'];
          class="gravatar float_right" height="48" width="48"/>
 
     <div class="comment-text">
-        <p class="comment-text"><? echo $row->content_text; ?></p>
+        <p class="comment-text"><? echo $this->row->content_text; ?></p>
     </div>
 </article>

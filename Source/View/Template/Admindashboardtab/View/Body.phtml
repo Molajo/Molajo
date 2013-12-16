@@ -8,15 +8,15 @@
  */
 
 
-if ($row->new_fieldset == '1') {
+if ($this->row->new_fieldset == '1') {
 ?>
 </ol>
 </fieldset>
 <fieldset class="two-up">
-    <legend><? echo $row->tab_fieldset_title; ?></legend>
-    <p><? echo $row->tab_fieldset_description; ?></p>
+    <legend><? echo $this->row->tab_fieldset_title; ?></legend>
+    <p><? echo $this->row->tab_fieldset_description; ?></p>
     <ol>
         <? } ?>
         <li>
-            <include <? echo $row->view; ?> parameter_np=<? echo $row->name; ?>/>
+            <include <? echo $this->row->view; ?> parameter_np=<? echo $this->row->name; ?>/>
         </li>

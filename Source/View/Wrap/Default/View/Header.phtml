@@ -7,39 +7,39 @@
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
 
-if ((int)$runtime_data->application->parameters->application_html5 == 1
-    && ($runtime_data->render->extension->title == 'Article'
-        || $runtime_data->render->extension->title == 'Aside'
-        || $runtime_data->render->extension->title == 'Footer'
-        || $runtime_data->render->extension->title == 'Header'
-        || $runtime_data->render->extension->title == 'Hgroup'
-        || $runtime_data->render->extension->title == 'Nav'
-        || $runtime_data->render->extension->title == 'Section')
+if ((int)$this->runtime_data->application->parameters->application_html5 == 1
+    && ($this->runtime_data->render->extension->title == 'Article'
+        || $this->runtime_data->render->extension->title == 'Aside'
+        || $this->runtime_data->render->extension->title == 'Footer'
+        || $this->runtime_data->render->extension->title == 'Header'
+        || $this->runtime_data->render->extension->title == 'Hgroup'
+        || $this->runtime_data->render->extension->title == 'Nav'
+        || $this->runtime_data->render->extension->title == 'Section')
 ):
-    $headerType = $runtime_data->render->extension->title; else :
+    $headerType = $this->runtime_data->render->extension->title; else :
     $headerType = 'div';
 endif;
 $headerType = strtolower($headerType);
 
-$headerId = trim($runtime_data->render->extension->parameters->wrap_view_css_id);
+$headerId = trim($this->runtime_data->render->extension->parameters->wrap_view_css_id);
 if ($headerId == '') :
 else :
     $headerId = ' id="' . $headerId . '"';
 endif;
 
-$headerclass = trim($runtime_data->render->extension->parameters->wrap_view_css_class);
+$headerclass = trim($this->runtime_data->render->extension->parameters->wrap_view_css_class);
 if ($headerclass == '') :
 else :
     $headerclass = ' class="' . $headerclass . '"';
 endif;
 
-$headerRole = trim($runtime_data->render->extension->parameters->wrap_view_role);
+$headerRole = trim($this->runtime_data->render->extension->parameters->wrap_view_role);
 if ($headerRole == '') :
 else :
     $headerRole = ' role="' . $headerRole . '"';
 endif;
 
-$headerProperty = trim($runtime_data->render->extension->parameters->wrap_view_property);
+$headerProperty = trim($this->runtime_data->render->extension->parameters->wrap_view_property);
 if ($headerProperty == '') :
 else :
     $headerProperty = ' property="' . $headerProperty . '"';
@@ -47,32 +47,32 @@ endif;
 ?>
     <<? echo trim($headerType . $headerId . $headerclass . $headerRole . $headerProperty); ?>>
 <?
-$headingLevel = $runtime_data->render->extension->parameters->wrap_view_header_level;
-if ((int)$runtime_data->application->parameters->application_html5 == 1):
-    if ($runtime_data->render->extension->parameters->wrap_view_show_title === true
-        && $runtime_data->render->extension->parameters->wrap_view_show_subtitle === true
+$headingLevel = $this->runtime_data->render->extension->parameters->wrap_view_header_level;
+if ((int)$this->runtime_data->application->parameters->application_html5 == 1):
+    if ($this->runtime_data->render->extension->parameters->wrap_view_show_title === true
+        && $this->runtime_data->render->extension->parameters->wrap_view_show_subtitle === true
     ) : ?>
         <hgroup>
     <? endif;
 endif;
 
-if ($runtime_data->render->extension->parameters->wrap_view_show_title === true) :  ?>
+if ($this->runtime_data->render->extension->parameters->wrap_view_show_title === true) :  ?>
     <h<? echo $headingLevel; ?>>
-        <? echo $row->title; ?>
+        <? echo $this->row->title; ?>
     </h<? echo $headingLevel ++; ?>>
 <?
 endif;
 
-if ($runtime_data->render->extension->parameters->wrap_view_show_subtitle === true) :  ?>
+if ($this->runtime_data->render->extension->parameters->wrap_view_show_subtitle === true) :  ?>
     <h<? echo $headingLevel; ?>>
-        <? echo $row->subtitle; ?>
+        <? echo $this->row->subtitle; ?>
     </h<? echo $headingLevel ++; ?>>
 <?
 endif;
 
-if ((int)$runtime_data->application->parameters->application_html5 == 1) :
-    if ($runtime_data->render->extension->parameters->wrap_view_show_title === true
-        && $runtime_data->render->extension->parameters->wrap_view_show_subtitle === true
+if ((int)$this->runtime_data->application->parameters->application_html5 == 1) :
+    if ($this->runtime_data->render->extension->parameters->wrap_view_show_title === true
+        && $this->runtime_data->render->extension->parameters->wrap_view_show_subtitle === true
     ) : ?>
         </hgroup>
     <? endif;

@@ -38,7 +38,7 @@ class EventsPlugin extends SystemEventPlugin implements SystemInterface
             'onAfterInitialise',
             'onAfterRoute',
             'onAfterAuthorise',
-            'onAfterResource',
+            'onBeforeExecute',
             'onAfterExecute',
             'onBeforeRender',
             'onBeforeParse',

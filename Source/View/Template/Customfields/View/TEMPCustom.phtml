@@ -6,9 +6,9 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
-if ($row->new_fieldset == '1') {
-    if ($row->page_first_row == 'first') {
-    } elseif ((int)$row->first_following === 1) {
+if ($this->row->new_fieldset == '1') {
+    if ($this->row->page_first_row == 'first') {
+    } elseif ((int)$this->row->first_following === 1) {
         ?>
         </ol>
         </fieldset>
@@ -17,18 +17,18 @@ if ($row->new_fieldset == '1') {
         </table>
         </fieldset>
     <? } ?>
-    <? if ($row->fieldset_title == 'Create') { ?>
+    <? if ($this->row->fieldset_title == 'Create') { ?>
         <fieldset class="two-up">
-        <legend><? echo $row->fieldset_title; ?></legend>
+        <legend><? echo $this->row->fieldset_title; ?></legend>
         <? if ($this->registry->get('runtime_data', 'application_help') == 1) { ?>
-            <p><? echo $row->fieldset_description; ?></p>
+            <p><? echo $this->row->fieldset_description; ?></p>
         <? } ?>
         <ol>
     <? } else { ?>
         <fieldset>
-        <legend><? echo $row->fieldset_title; ?></legend>
+        <legend><? echo $this->row->fieldset_title; ?></legend>
         <? if ($this->registry->get('runtime_data', 'application_help') == 1) { ?>
-            <p><? echo $row->fieldset_description; ?></p>
+            <p><? echo $this->row->fieldset_description; ?></p>
         <? } ?>
         <table class="responsive">
         <thead>
@@ -48,21 +48,21 @@ if ($row->new_fieldset == '1') {
     }
 } ?>
 
-<? if ($row->tab_fieldset_title == 'Create') { ?>
+<? if ($this->row->tab_fieldset_title == 'Create') { ?>
     <li>
-        <? echo $row->view;
+        <? echo $this->row->view;
         die;
         ?>
-        <include <? echo $row->view; ?> parameter_np=<? echo $row->name; ?>/>
+        <include <? echo $this->row->view; ?> parameter_np=<? echo $this->row->name; ?>/>
     </li>
 
 <? } else { ?>
     <tr>
-        <td class="name"><? echo $this->language_controller->translate($row->label); ?></td>
-        <td class="type"><? echo $row->type; ?></td>
-        <td class="required"><? $row->required; ?></td>
-        <td class="datalist"><? echo $row->datalist; ?></td>
-        <td class="hidden"><? echo $row->hidden; ?></td>
+        <td class="name"><? echo $this->language_controller->translate($this->row->label); ?></td>
+        <td class="type"><? echo $this->row->type; ?></td>
+        <td class="required"><? $this->row->required; ?></td>
+        <td class="datalist"><? echo $this->row->datalist; ?></td>
+        <td class="hidden"><? echo $this->row->hidden; ?></td>
         <td><a href="#" class="small button alert radius"><? echo $this->language_controller->translate(
                     'Delete',
                     'Delete'

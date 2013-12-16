@@ -8,11 +8,11 @@
  */
 ?>
     <h2>
-        <? if (isset($row->title)) {
-            echo $row->title;
+        <? if (isset($this->row->title)) {
+            echo $this->row->title;
         }?>
     </h2>
 <?
-if (isset($row->text)) {
-    echo $row->text;
+if (isset($this->row->text)) {
+    echo $this->row->text;
 }

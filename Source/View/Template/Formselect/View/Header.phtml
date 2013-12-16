@@ -8,17 +8,17 @@
  */
 
 $tooltip_css_class = 'has-tip'; ?>
-    <span class="<? echo $tooltip_css_class; ?>" title="<? echo $row->tooltip; ?>">
-<label for="<? echo $row->field_id; ?>"><? echo $row->label; ?></label></span>
-<select id="<? echo $row->field_id; ?>"
-        name="<? echo $row->name; ?>"<? echo $row->multiple; ?> <? echo $row->required; ?> <? echo $row->disabled; ?> <? echo $row->size; ?>>
-<? if ($row->multiple == '') { ?>
+    <span class="<? echo $tooltip_css_class; ?>" title="<? echo $this->row->tooltip; ?>">
+<label for="<? echo $this->row->field_id; ?>"><? echo $this->row->label; ?></label></span>
+<select id="<? echo $this->row->field_id; ?>"
+        name="<? echo $this->row->name; ?>"<? echo $this->row->multiple; ?> <? echo $this->row->required; ?> <? echo $this->row->disabled; ?> <? echo $this->row->size; ?>>
+<? if ($this->row->multiple == '') { ?>
     <option value=""><? echo $this->language_controller->translate(
-            'SELECT_' . strtoupper($row->datalist)
+            'SELECT_' . strtoupper($this->row->datalist)
         ); ?></option>
 <? } else { ?>
     <option value=""><? echo $this->language_controller->translate('No selection'); ?></option>
-    <? if ($row->selected == '#') {
+    <? if ($this->row->selected == '#') {
 
         $selected = ' selected';
     } else {

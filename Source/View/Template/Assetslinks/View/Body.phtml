@@ -7,8 +7,8 @@
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
 
-$application_html5 = $row->application_html5;
-$end = $row->end;
+$application_html5 = $this->row->application_html5;
+$end = $this->row->end;
 ?>
-    <link href="<? echo $row->url; ?>"
-    rel="<? echo $row->relation; ?>"<? echo $row->attributes; ?><? echo $end;
+    <link href="<? echo $this->row->url; ?>"
+    rel="<? echo $this->row->relation; ?>"<? echo $this->row->attributes; ?><? echo $end;

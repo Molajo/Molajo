@@ -29,7 +29,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      * @return  $this
      * @since   1.0
      */
-    public function onAfterResource()
+    public function onBeforeExecute()
     {
         if (isset($this->runtime_data->plugin_data->comments_open)) {
             return $this;
@@ -47,8 +47,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
         $this->runtime_data->plugin_data->comment_form->model_registry     = new stdClass();
 
         if (isset($this->runtime_data->resource->data->parameters->enable_response_comments)
-            && (int)$this->runtime_data->resource->data->parameters->enable_response_comments == 1
-        ) {
+            && (int)$this->runtime_data->resource->data->parameters->enable_response_comments == 1) {
         } else {
             return $this;
         }

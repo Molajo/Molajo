@@ -27,13 +27,13 @@ class FieldsPlugin extends SystemEventPlugin implements SystemInterface
      * @return  $this
      * @since   1.0
      */
-    public function onAfterResource()
+    public function onBeforeExecute()
     {
         if ($this->runtime_data->application->id == 2) {
         } else {
             return $this;
         }
-        return;
+        return $this;
         $model_type = $this->runtime_data->route->model_type;
         $model_name = $this->runtime_data->route->model_name;
 

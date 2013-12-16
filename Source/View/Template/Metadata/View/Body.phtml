@@ -7,11 +7,11 @@
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
 
-$application_html5 = $row->application_html5;
-$end = $row->end;
-if (trim($row->content) == '') {
-} elseif ($row->name == 'mimetype' && (int)$row->application_html5 === 1) {
+$application_html5 = $this->row->application_html5;
+$end = $this->row->end;
+if (trim($this->row->content) == '') {
+} elseif ($this->row->name == 'mimetype' && (int)$this->row->application_html5 === 1) {
 } else {
     ?>
-    <meta <? echo $row->label; ?>="<? echo $row->name; ?>" content="<? echo $row->content; ?>"<? echo $end;
+    <meta <? echo $this->row->label; ?>="<? echo $this->row->name; ?>" content="<? echo $this->row->content; ?>"<? echo $end;
 }

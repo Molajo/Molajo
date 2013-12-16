@@ -9,9 +9,9 @@
 ?>
     <header class="configuration-header">
         <header class="configuration-header-header">
-            <h3><? echo $row->page_title_extended; ?></h3>
-            <? if ($runtime_data->application_help == 1) { ?>
-                <h6><? echo $row->page_description; ?></h6>
+            <h3><? echo $this->row->page_title_extended; ?></h3>
+            <? if ($this->runtime_data->application_help == 1) { ?>
+                <h6><? echo $this->row->page_description; ?></h6>
             <? } ?>
         </header>
         <section class="configuration-header-section">
@@ -24,7 +24,7 @@
             </ul>
         </section>
     </header>
-<? if ($row->page_subtitle_first_row == 1) {
+<? if ($this->row->page_subtitle_first_row == 1) {
 } else {
     ?>
     <div class="configuration-body">

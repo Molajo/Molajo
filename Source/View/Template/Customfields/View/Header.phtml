@@ -9,9 +9,9 @@
 ?>
 <div class="configuration-header">
     <header>
-        <h3><? echo $row->page_title_extended; ?></h3>
-        <? if ($runtime_data->application_help == 1) { ?>
-            <h6><? echo $row->page_description; ?></h6>
+        <h3><? echo $this->row->page_title_extended; ?></h3>
+        <? if ($this->runtime_data->application_help == 1) { ?>
+            <h6><? echo $this->row->page_description; ?></h6>
         <? } ?>
     </header>
     <section>
@@ -25,7 +25,7 @@
     </section>
 </div>
 
-<include <? echo $row->view; ?> parameter_np=<? echo $row->name; ?>/>
+<include <? echo $this->row->view; ?> parameter_np=<? echo $this->row->name; ?>/>
 
 <div class="configuration-body">
 

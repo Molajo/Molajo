@@ -8,7 +8,7 @@
  */
 
 
-$template = ucfirst(strtolower($row->fieldset_template_view));
-$runtime_data = $row->fieldset_template_view_parameter; ?>
-<include <? echo $template; ?> parameter=<? echo $runtime_data; ?> wrap=Div
-                               wrap_id=<? echo $runtime_data; ?>/>
+$template = ucfirst(strtolower($this->row->fieldset_template_view));
+$this->runtime_data = $this->row->fieldset_template_view_parameter; ?>
+<include <? echo $template; ?> parameter=<? echo $this->runtime_data; ?> wrap=Div
+                               wrap_id=<? echo $this->runtime_data; ?>/>

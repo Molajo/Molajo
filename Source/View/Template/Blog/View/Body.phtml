@@ -10,39 +10,39 @@
 ?>
 <article class="blog">
     <h3>
-        <a href="<? echo $row->catalog_sef_request; ?>">
-            <? echo $row->title; ?>
+        <a href="<? echo $this->row->catalog_sef_request; ?>">
+            <? echo $this->row->title; ?>
         </a>
     </h3>
     <h6><? echo $this->language_controller->translate('Written by'); ?>
         <a href="#">
-            <? echo $row->author_full_name; ?>
+            <? echo $this->row->author_full_name; ?>
         </a>
         <? echo $this->language_controller->translate(' on '); ?>
-        <? echo $row->start_publishing_datetime_day_name
-            . ', ' . $row->start_publishing_datetime_month_name
-            . ' ' . $row->start_publishing_datetime_dd
-            . ', ' . $row->start_publishing_datetime_ccyy; ?>.
+        <? echo $this->row->start_publishing_datetime_day_name
+            . ', ' . $this->row->start_publishing_datetime_month_name
+            . ' ' . $this->row->start_publishing_datetime_dd
+            . ', ' . $this->row->start_publishing_datetime_ccyy; ?>.
     </h6>
 
-    <? if ($row->image1 == '') {
+    <? if ($this->row->image1 == '') {
     } else {
         ?>
         <figure class="float_left image1">
-            <img src="<? echo $row->image1; ?>" alt="">
-            <? if ($row->image_caption1 == '') {
+            <img src="<? echo $this->row->image1; ?>" alt="">
+            <? if ($this->row->image_caption1 == '') {
             } else {
                 ?>
-                <figcaption><? echo $row->image_caption1; ?></figcaption>
+                <figcaption><? echo $this->row->image_caption1; ?></figcaption>
             <? } ?>
         </figure>
     <?
     }
-    if ($row->content_text_introductory == '') {
+    if ($this->row->content_text_introductory == '') {
     } else {
         ?>
-        <div class="introductory"><? echo $row->content_text_introductory; ?></div>
+        <div class="introductory"><? echo $this->row->content_text_introductory; ?></div>
     <? } ?>
-    <p class="readmore"><a href="<? echo $row->catalog_sef_request; ?>"
+    <p class="readmore"><a href="<? echo $this->row->catalog_sef_request; ?>"
                            class="<? echo $this->get('template_view_css_class'); ?>">Read more &rarr;</a></p>
 </article>

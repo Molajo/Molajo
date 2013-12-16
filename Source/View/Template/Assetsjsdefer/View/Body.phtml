@@ -6,10 +6,10 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
-$application_html5 = $row->application_html5;
-$end = $row->end;
+$application_html5 = $this->row->application_html5;
+$end = $this->row->end;
 ?>
-<script src="<? echo $row->url; ?>"<? if ((int)$application_html5 == 0): ?>
-    type="<? echo $row->mimetype; ?>"<? endif; ?><? if ((int)$row->defer == 1): ?>
-    defer="defer"<? endif; ?><? if ((int)$row->async == 1): ?>
+<script src="<? echo $this->row->url; ?>"<? if ((int)$application_html5 == 0): ?>
+    type="<? echo $this->row->mimetype; ?>"<? endif; ?><? if ((int)$this->row->defer == 1): ?>
+    defer="defer"<? endif; ?><? if ((int)$this->row->async == 1): ?>
     async="async"<? endif; ?>></script><? echo chr(10);

@@ -10,7 +10,7 @@
 $tooltip_css_class = 'has-tip';
 ?>
 <li>
-    <input id="<? echo $row->id; ?>"<? echo $row->checked; ?> name="<? echo $row->name; ?>"
+    <input id="<? echo $this->row->id; ?>"<? echo $this->row->checked; ?> name="<? echo $this->row->name; ?>"
            type="radio">
-    <label for="<? echo $row->id; ?>"><? echo $row->id_label; ?></label>
+    <label for="<? echo $this->row->id; ?>"><? echo $this->row->id_label; ?></label>
 </li>

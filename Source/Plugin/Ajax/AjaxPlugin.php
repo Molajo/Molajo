@@ -27,7 +27,7 @@ class AjaxPlugin extends SystemEventPlugin implements SystemInterface
      * @return  $this
      * @since   1.0
      */
-    public function onAfterResource()
+    public function onBeforeExecute()
     {
         if ($this->runtime_data->application->id == 2) {
         } else {

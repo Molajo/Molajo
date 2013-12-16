@@ -7,18 +7,18 @@
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
 
-$application_html5 = $row->application_html5;
-$end = $row->end;
+$application_html5 = $this->row->application_html5;
+$end = $this->row->end;
 ?>
-<script<? if ((int)$application_html5 == 0): ?> type="<? echo $row->mimetype; ?>"<? endif; ?>>
+<script<? if ((int)$application_html5 == 0): ?> type="<? echo $this->row->mimetype; ?>"<? endif; ?>>
     <?
-    if ($row->page_mimetype == 'text/html') :
+    if ($this->row->page_mimetype == 'text/html') :
     else : ?>
     <![CDATA[
     <?
 endif;
-echo '    ' . trim($row->content) . chr(10);
-if ($row->page_mimetype == 'text/html') :
+echo '    ' . trim($this->row->content) . chr(10);
+if ($this->row->page_mimetype == 'text/html') :
 else : ?>
     ]]>
     <?

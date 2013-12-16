@@ -8,10 +8,10 @@
  */
 ?>
 <div class="portlet-header">
-    <? if ($runtime_data->criteria_title == '') {
+    <? if ($this->runtime_data->criteria_title == '') {
     } else {
         ?>
-        <h4><? echo $runtime_data->criteria_title; ?></h4>
+        <h4><? echo $this->runtime_data->criteria_title; ?></h4>
     <? } ?>
 </div>
 <div class="portlet-content">

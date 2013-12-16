@@ -12,37 +12,37 @@ $js = "window.addEvent('domready', function() { " . "\n";
 $js .= ' AudioPlayer.setup("' . JURI::base() . 'media/molajo/audio/player.swf' . '", {   ' . "\n";
 
 /** options **/
-$js .= ' loop: "' . $runtime_data->get('audio_loop', "no") . '", ' . "\n";
-$js .= ' animation: "' . $runtime_data->get('audio_animation', "yes") . '", ' . "\n";
-$js .= ' remaining: "' . $runtime_data->get('audio_remaining', "no") . '", ' . "\n";
-$js .= ' noinfo: "' . $runtime_data->get('audio_noinfo', "no") . '", ' . "\n";
-$js .= ' initialvolume: ' . $runtime_data->get('audio_initialvolume', 60) . ', ' . "\n";
-$js .= ' buffer: ' . $runtime_data->get('audio_buffer', 5) . ', ' . "\n";
-$js .= ' encode: "' . $runtime_data->get('audio_encode', "no") . '", ' . "\n";
-$js .= ' checkpolicy: "' . $runtime_data->get('audio_checkpolicy', "no") . '", ' . "\n";
-$js .= ' rtl: "' . $runtime_data->get('audio_rtl', "no") . '", ' . "\n";
+$js .= ' loop: "' . $this->runtime_data->get('audio_loop', "no") . '", ' . "\n";
+$js .= ' animation: "' . $this->runtime_data->get('audio_animation', "yes") . '", ' . "\n";
+$js .= ' remaining: "' . $this->runtime_data->get('audio_remaining', "no") . '", ' . "\n";
+$js .= ' noinfo: "' . $this->runtime_data->get('audio_noinfo', "no") . '", ' . "\n";
+$js .= ' initialvolume: ' . $this->runtime_data->get('audio_initialvolume', 60) . ', ' . "\n";
+$js .= ' buffer: ' . $this->runtime_data->get('audio_buffer', 5) . ', ' . "\n";
+$js .= ' encode: "' . $this->runtime_data->get('audio_encode', "no") . '", ' . "\n";
+$js .= ' checkpolicy: "' . $this->runtime_data->get('audio_checkpolicy', "no") . '", ' . "\n";
+$js .= ' rtl: "' . $this->runtime_data->get('audio_rtl', "no") . '", ' . "\n";
 
 /** flash player options **/
-$js .= ' width: ' . $runtime_data->get('audio_width', 290) . ', ' . "\n";
-$js .= ' transparentpagebg: "' . $runtime_data->get('audio_transparentpagebg', "no") . '", ' . "\n";
-$js .= ' pagebg: "' . $runtime_data->get('audio_pagebg', "") . '", ' . "\n";
+$js .= ' width: ' . $this->runtime_data->get('audio_width', 290) . ', ' . "\n";
+$js .= ' transparentpagebg: "' . $this->runtime_data->get('audio_transparentpagebg', "no") . '", ' . "\n";
+$js .= ' pagebg: "' . $this->runtime_data->get('audio_pagebg', "") . '", ' . "\n";
 
 /** colors **/
-$js .= ' bg: "' . $runtime_data->get('audio_bg', "E5E5E5") . '", ' . "\n";
-$js .= ' leftbg: "' . $runtime_data->get('audio_leftbg', "CCCCCC") . '", ' . "\n";
-$js .= ' lefticon: "' . $runtime_data->get('audio_lefticon', "333333") . '", ' . "\n";
-$js .= ' voltrack: "' . $runtime_data->get('audio_voltrack', "F2F2F2") . '", ' . "\n";
-$js .= ' volslider: "' . $runtime_data->get('audio_volslider', "666666") . '", ' . "\n";
-$js .= ' rightbg: "' . $runtime_data->get('audio_rightbg', "B4B4B4") . '", ' . "\n";
-$js .= ' rightbghover: "' . $runtime_data->get('audio_rightbghover', "999999") . '", ' . "\n";
-$js .= ' righticon: "' . $runtime_data->get('audio_righticon', "333333") . '", ' . "\n";
-$js .= ' righticonhover: "' . $runtime_data->get('audio_righticonhover', "FFFFFF") . '", ' . "\n";
-$js .= ' loader: "' . $runtime_data->get('audio_loader', "009900") . '", ' . "\n";
-$js .= ' track: "' . $runtime_data->get('audio_track', "FFFFFF") . '", ' . "\n";
-$js .= ' tracker: "' . $runtime_data->get('audio_tracker', "DDDDDD") . '", ' . "\n";
-$js .= ' border: "' . $runtime_data->get('audio_border', "CCCCCC") . '", ' . "\n";
-$js .= ' skip: "' . $runtime_data->get('audio_skip', "666666") . '", ' . "\n";
-$js .= ' text: "' . $runtime_data->get('audio_text', "333333") . '" ' . "\n";
+$js .= ' bg: "' . $this->runtime_data->get('audio_bg', "E5E5E5") . '", ' . "\n";
+$js .= ' leftbg: "' . $this->runtime_data->get('audio_leftbg', "CCCCCC") . '", ' . "\n";
+$js .= ' lefticon: "' . $this->runtime_data->get('audio_lefticon', "333333") . '", ' . "\n";
+$js .= ' voltrack: "' . $this->runtime_data->get('audio_voltrack', "F2F2F2") . '", ' . "\n";
+$js .= ' volslider: "' . $this->runtime_data->get('audio_volslider', "666666") . '", ' . "\n";
+$js .= ' rightbg: "' . $this->runtime_data->get('audio_rightbg', "B4B4B4") . '", ' . "\n";
+$js .= ' rightbghover: "' . $this->runtime_data->get('audio_rightbghover', "999999") . '", ' . "\n";
+$js .= ' righticon: "' . $this->runtime_data->get('audio_righticon', "333333") . '", ' . "\n";
+$js .= ' righticonhover: "' . $this->runtime_data->get('audio_righticonhover', "FFFFFF") . '", ' . "\n";
+$js .= ' loader: "' . $this->runtime_data->get('audio_loader', "009900") . '", ' . "\n";
+$js .= ' track: "' . $this->runtime_data->get('audio_track', "FFFFFF") . '", ' . "\n";
+$js .= ' tracker: "' . $this->runtime_data->get('audio_tracker', "DDDDDD") . '", ' . "\n";
+$js .= ' border: "' . $this->runtime_data->get('audio_border', "CCCCCC") . '", ' . "\n";
+$js .= ' skip: "' . $this->runtime_data->get('audio_skip', "666666") . '", ' . "\n";
+$js .= ' text: "' . $this->runtime_data->get('audio_text', "333333") . '" ' . "\n";
 
 /** swf player end **/
 $js .= ' });' . "\n";
@@ -52,7 +52,7 @@ Services::Assets()->addScriptDeclaration($js);
 /** head for individual mp3 **/
 $loader = "window.addEvent('domready', function() { " . "\n";
 foreach ($list as $item) {
-    $loader .= 'AudioPlayer.embed("audioplayer' . $row->id . '", {soundFile: "' . $row->file_link . '"});'; ?>
+    $loader .= 'AudioPlayer.embed("audioplayer' . $this->row->id . '", {soundFile: "' . $this->row->file_link . '"});'; ?>
     <p id="audioplayer_<? echo $this->id; ?>"><? echo $this->audio_label; ?></p>
 <?
 }

@@ -8,17 +8,17 @@
  */
 ?>
 <p>
-    <a href="<? echo $row->link; ?>">
+    <a href="<? echo $this->row->link; ?>">
         <strong>
-            <? echo $row->title; ?>
+            <? echo $this->row->title; ?>
         </strong>
     </a>
-    <? if ($runtime_data->display_snippet == 1) {
-        echo '<br />' . $row->description;
+    <? if ($this->runtime_data->display_snippet == 1) {
+        echo '<br />' . $this->row->description;
     }
-    if ($runtime_data->display_published_date == 1) {
+    if ($this->runtime_data->display_published_date == 1) {
         echo '<br />' . '<strong>' . $this->language_controller->translate(
                 'Published'
-            ) . ':</strong> ' . $row->published_date;
+            ) . ':</strong> ' . $this->row->published_date;
     } ?>
 </p>

@@ -29,9 +29,8 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    public function onAfterResource()
+    public function onBeforeExecute()
     {
-
         $this->runtime_data->plugin_data->author                 = new stdClass();
         $this->runtime_data->plugin_data->author->data           = new stdClass();
         $this->runtime_data->plugin_data->author->model_registry = new stdClass();
@@ -79,6 +78,7 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
         $author->setModelRegistry('process_events', 1);
         $author->setModelRegistry('query_object', 'item');
         $author->setModelRegistry('use_special_joins', 1);
+        $author->setModelRegistry('get_customfields', 0);
         $author->setModelRegistry('primary_key_value', (int)$this->runtime_data->resource->data->created_by);
         $author->setModelRegistry('get_item_children', 0);
 

@@ -4,8 +4,8 @@
  * @copyright  2013 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
-$pageURL = $runtime_data->page->urls['page'];
-$homeURL = $runtime_data->page->urls['home']; ?>
+$pageURL = $this->runtime_data->page->urls['page'];
+$homeURL = $this->runtime_data->page->urls['home']; ?>
 
 <footer id="pagefooter" class="contain-to-grid" role="contentinfo">
     <div class="row">
@@ -19,8 +19,8 @@ $homeURL = $runtime_data->page->urls['home']; ?>
             </ul>
         </div>
         <div class="large-4 columns right">
-            <p><? //echo $row->copyright_statement ?> <a
-                    href="<? //echo $row->link; ?>"><? //echo $row->linked_text; ?> </a><? //echo ' ' . $row->remaining_text; ?>
+            <p><? //echo $this->row->copyright_statement ?> <a
+                    href="<? //echo $this->row->link; ?>"><? //echo $this->row->linked_text; ?> </a><? //echo ' ' . $this->row->remaining_text; ?>
             </p>
         </div>
     </div>

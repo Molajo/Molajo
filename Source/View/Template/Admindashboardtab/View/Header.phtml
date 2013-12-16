@@ -8,16 +8,16 @@
  */
 
 
-$row->new_fieldset = '0';
+$this->row->new_fieldset = '0';
 ?>
 <h2>
     <span>
         <em><? echo 'Articles Configuration'; ?></em>
-        <strong><? echo $row->tab_title; ?></strong>
+        <strong><? echo $this->row->tab_title; ?></strong>
     </span>
 </h2>
-<p class="tab-description"><? echo $row->tab_description; ?></p>
+<p class="tab-description"><? echo $this->row->tab_description; ?></p>
 <fieldset class="two-up">
-    <legend><? echo $row->tab_fieldset_title; ?></legend>
-    <p class="fieldset-description"><? echo $row->tab_fieldset_description; ?></p>
+    <legend><? echo $this->row->tab_fieldset_title; ?></legend>
+    <p class="fieldset-description"><? echo $this->row->tab_fieldset_description; ?></p>
     <ol>

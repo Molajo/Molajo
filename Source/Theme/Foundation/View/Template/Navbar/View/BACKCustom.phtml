@@ -9,9 +9,9 @@
 $i = 1;
 $currentMenuArray = array();
 
-$menu = $runtime_data->page->menu['Update'];
-$breadcrumbs = $runtime_data->page->breadcrumbs;
-$pageURL = $runtime_data->page->urls['page'];
+$menu = $this->runtime_data->page->menu['Update'];
+$breadcrumbs = $this->runtime_data->page->breadcrumbs;
+$pageURL = $this->runtime_data->page->urls['page'];
 
 if (isset($menu[0]->css_class)) {
     $class = ' class="' . $menu[0]->css_class . '" ';
@@ -27,7 +27,7 @@ $link = $menu[0]->link;
                     <li<? echo $class; ?>><a href="<? echo $link; ?>"><? echo $link_text; ?></a>
                 </h1>
             </li>
-            <li class="toggle-topbar"><a href="<? echo $runtime_data->page->urls['page']; ?>#"></a>
+            <li class="toggle-topbar"><a href="<? echo $this->runtime_data->page->urls['page']; ?>#"></a>
             </li>
         </ul>
         <? if (count($menu) == 0 || $menu == '') {

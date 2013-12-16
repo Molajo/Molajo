@@ -7,7 +7,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 
-if ((int)$row->results == 0) {
+if ((int)$this->row->results == 0) {
     return;
 };
 ?>
@@ -15,69 +15,69 @@ if ((int)$row->results == 0) {
 <div class="weather-wrapper">
     <div class="weather current">
         <div class="weather-icon float-left">
-            <img src="<? echo $row->now_icon; ?>" alt="<? echo $row->now_condition; ?>"
-                 title="<? echo $row->now_condition; ?>"/>
+            <img src="<? echo $this->row->now_icon; ?>" alt="<? echo $this->row->now_condition; ?>"
+                 title="<? echo $this->row->now_condition; ?>"/>
         </div>
         <div class="weather-info forecast-info float-left">
             <b><? echo $this->language_controller->translate('Today'); ?></b><br/>
 
-            <div class="temp"><? echo $row->now_temp; ?></div>
-            <div class="condition"><? echo $row->now_condition; ?></div>
-            <div class="wind"><? echo $row->now_wind_condition; ?></div>
+            <div class="temp"><? echo $this->row->now_temp; ?></div>
+            <div class="condition"><? echo $this->row->now_condition; ?></div>
+            <div class="wind"><? echo $this->row->now_wind_condition; ?></div>
         </div>
     </div>
     <h5 class="weather"><? echo $this->language_controller->translate('Forecast'); ?></h5>
 
     <div class="weather forecast forecast-1">
         <div class="weather-icon float-left">
-            <img src="<? echo $row->day1_forecast_icon; ?>"
-                 alt="<? echo $row->day1_forecast_day_of_week; ?>"
-                 title="<? echo $row->day1_forecast_day_of_week; ?>"/>
+            <img src="<? echo $this->row->day1_forecast_icon; ?>"
+                 alt="<? echo $this->row->day1_forecast_day_of_week; ?>"
+                 title="<? echo $this->row->day1_forecast_day_of_week; ?>"/>
         </div>
         <div class="weather-info forecast-info float-left">
-            <b><? echo $row->day1_forecast_day_of_week; ?></b><br/>
-            <? echo $row->day1_forecast_low_temperature; ?>
-            | <? echo $row->day1_forecast_high_temperature; ?><br/>
-            <? echo $row->day1_forecast_condition; ?>
+            <b><? echo $this->row->day1_forecast_day_of_week; ?></b><br/>
+            <? echo $this->row->day1_forecast_low_temperature; ?>
+            | <? echo $this->row->day1_forecast_high_temperature; ?><br/>
+            <? echo $this->row->day1_forecast_condition; ?>
         </div>
     </div>
     <div class="weather forecast forecast-2">
         <div class="weather-icon float-left">
-            <img src="<? echo $row->day2_forecast_icon; ?>"
-                 alt="<? echo $row->day2_forecast_day_of_week; ?>"
-                 title="<? echo $row->day2_forecast_day_of_week; ?>"/>
+            <img src="<? echo $this->row->day2_forecast_icon; ?>"
+                 alt="<? echo $this->row->day2_forecast_day_of_week; ?>"
+                 title="<? echo $this->row->day2_forecast_day_of_week; ?>"/>
         </div>
         <div class="weather-info forecast-info float-left">
-            <b><? echo $row->day2_forecast_day_of_week; ?></b><br/>
-            <? echo $row->day2_forecast_low_temperature; ?>
-            | <? echo $row->day2_forecast_high_temperature; ?><br/>
-            <? echo $row->day2_forecast_condition; ?>
+            <b><? echo $this->row->day2_forecast_day_of_week; ?></b><br/>
+            <? echo $this->row->day2_forecast_low_temperature; ?>
+            | <? echo $this->row->day2_forecast_high_temperature; ?><br/>
+            <? echo $this->row->day2_forecast_condition; ?>
         </div>
     </div>
     <div class="weather forecast forecast-3">
         <div class="weather-icon float-left">
-            <img src="<? echo $row->day3_forecast_icon; ?>"
-                 alt="<? echo $row->day3_forecast_day_of_week; ?>"
-                 title="<? echo $row->day3_forecast_day_of_week; ?>"/>
+            <img src="<? echo $this->row->day3_forecast_icon; ?>"
+                 alt="<? echo $this->row->day3_forecast_day_of_week; ?>"
+                 title="<? echo $this->row->day3_forecast_day_of_week; ?>"/>
         </div>
         <div class="weather-info forecast-info float-left">
-            <b><? echo $row->day3_forecast_day_of_week; ?></b><br/>
-            <? echo $row->day3_forecast_low_temperature; ?>
-            | <? echo $row->day3_forecast_high_temperature; ?><br/>
-            <? echo $row->day3_forecast_condition; ?>
+            <b><? echo $this->row->day3_forecast_day_of_week; ?></b><br/>
+            <? echo $this->row->day3_forecast_low_temperature; ?>
+            | <? echo $this->row->day3_forecast_high_temperature; ?><br/>
+            <? echo $this->row->day3_forecast_condition; ?>
         </div>
     </div>
     <div class="weather forecast forecast-4">
         <div class="weather-icon float-left">
-            <img src="<? echo $row->day4_forecast_icon; ?>"
-                 alt="<? echo $row->day4_forecast_day_of_week; ?>"
-                 title="<? echo $row->day4_forecast_day_of_week; ?>"/>
+            <img src="<? echo $this->row->day4_forecast_icon; ?>"
+                 alt="<? echo $this->row->day4_forecast_day_of_week; ?>"
+                 title="<? echo $this->row->day4_forecast_day_of_week; ?>"/>
         </div>
         <div class="weather-info forecast-info float-left">
-            <b><? echo $row->day4_forecast_day_of_week; ?></b><br/>
-            <? echo $row->day4_forecast_low_temperature; ?>
-            | <? echo $row->day4_forecast_high_temperature; ?><br/>
-            <? echo $row->day4_forecast_condition; ?>
+            <b><? echo $this->row->day4_forecast_day_of_week; ?></b><br/>
+            <? echo $this->row->day4_forecast_low_temperature; ?>
+            | <? echo $this->row->day4_forecast_high_temperature; ?><br/>
+            <? echo $this->row->day4_forecast_condition; ?>
         </div>
     </div>
 </div>

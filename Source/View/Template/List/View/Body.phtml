@@ -8,18 +8,18 @@
  */
 
 
-if (isset($row->title)) {
-    $title = $row->title;
+if (isset($this->row->title)) {
+    $title = $this->row->title;
 } else {
-    $title = $row->full_name;
+    $title = $this->row->full_name;
 }
 ?>
 <li>
-    <? if (isset($row->catalog_id_url)) { ?>
-    <a href="<? echo $row->catalog_id_url; ?>">
+    <? if (isset($this->row->catalog_id_url)) { ?>
+    <a href="<? echo $this->row->catalog_id_url; ?>">
         <? } ?>
         <? echo $title ?>
-        <? if (isset($row->catalog_id_url)) { ?>
+        <? if (isset($this->row->catalog_id_url)) { ?>
     </a>
 <? } ?>
 </li>

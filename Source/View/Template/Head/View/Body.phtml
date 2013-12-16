@@ -20,11 +20,11 @@ if (trim($id) == '') {
     $id = ' id="' . htmlspecialchars($id) . '"';
 }
 
-$application_html5 = $row->application_html5;
-$end = $row->end;
+$application_html5 = $this->row->application_html5;
+$end = $this->row->end;
 
-$l = $row->language;
-$d = $row->language_direction;
+$l = $this->row->language;
+$d = $this->row->language_direction;
 if ((int)$application_html5 == 1): ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>
@@ -40,18 +40,18 @@ if ((int)$application_html5 == 1): ?>
 <? else : ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 >
-<html xmlns="http://www.w3.org/1999/xhtml" <? echo $row->language_direction; ?>
-      lang="<? echo $row->language; ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" <? echo $this->row->language_direction; ?>
+      lang="<? echo $this->row->language; ?>">
 <? endif; ?>
 <head>
-    <title><? echo $row->title; ?></title>
-    <base href="<? echo $row->base_url . '"' . $end; ?>
+    <title><? echo $this->row->title; ?></title>
+    <base href="<? echo $this->row->base_url . '"' . $end; ?>
 <? if ((int)$application_html5 == 1): ?>
     <meta charset=" utf-8
     "<? echo $end; ?>
     <? else : ?>
         <meta http-equiv="Content-Type"
-        content="<? echo $row->mimetype; ?>; charset=utf-8"<? echo $end; ?>
+        content="<? echo $this->row->mimetype; ?>; charset=utf-8"<? echo $end; ?>
     <?
     endif;
     ?>
