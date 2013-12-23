@@ -152,23 +152,23 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
      */
     protected function getDestinationFolder($catalog_type, $extension_name)
     {
-        if (is_dir(BASE_FOLDER . '/Application/Extension' . '/' . $catalog_type)) {
-            if (is_dir(BASE_FOLDER . '/Application/Extension' . '/' . $catalog_type . '/' . $extension_name)) {
+        if (is_dir(BASE_FOLDER . '/Source' . '/' . $catalog_type)) {
+            if (is_dir(BASE_FOLDER . '/Source' . '/' . $catalog_type . '/' . $extension_name)) {
                 // error extension already exists
                 return $this;
             } else {
-                return BASE_FOLDER . '/Application/Extension' . '/' . $catalog_type . '/' . $extension_name;
+                return BASE_FOLDER . '/Source' . '/' . $catalog_type . '/' . $extension_name;
             }
-        } elseif (is_dir(BASE_FOLDER . '/Application/Extension' . '/' . 'Views' . '/' . $catalog_type)) {
+        } elseif (is_dir(BASE_FOLDER . '/Source' . '/' . 'Views' . '/' . $catalog_type)) {
             if (is_dir(
-                BASE_FOLDER . '/Application/Extension' . '/' . 'Views'
+                BASE_FOLDER . '/Source' . '/' . 'Views'
                 . '/' . $catalog_type . '/' . $extension_name
             )
             ) {
                 // error extension already exists
                 return $this;
             } else {
-                return BASE_FOLDER . '/Application/Extension' . '/' . 'Views' . '/' . $catalog_type . '/' . $extension_name;
+                return BASE_FOLDER . '/Source' . '/' . 'Views' . '/' . $catalog_type . '/' . $extension_name;
             }
         }
 
@@ -532,18 +532,18 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
      */
     protected function getFolderToDelete($catalog_type, $extension_name)
     {
-        if (is_dir(BASE_FOLDER . '/Application/Extension' . '/' . $catalog_type)) {
-            if (is_dir(BASE_FOLDER . '/Application/Extension' . '/' . $catalog_type . '/' . $extension_name)) {
+        if (is_dir(BASE_FOLDER . '/Source' . '/' . $catalog_type)) {
+            if (is_dir(BASE_FOLDER . '/Source' . '/' . $catalog_type . '/' . $extension_name)) {
                 // error extension already exists
-                return BASE_FOLDER . '/Application/Extension' . '/' . $catalog_type . '/' . $extension_name;
+                return BASE_FOLDER . '/Source' . '/' . $catalog_type . '/' . $extension_name;
             }
-        } elseif (is_dir(BASE_FOLDER . '/Application/Extension' . '/' . 'Views' . '/' . $catalog_type)) {
+        } elseif (is_dir(BASE_FOLDER . '/Source' . '/' . 'Views' . '/' . $catalog_type)) {
             if (is_dir(
-                BASE_FOLDER . '/Application/Extension' . '/' . 'Views'
+                BASE_FOLDER . '/Source' . '/' . 'Views'
                 . '/' . $catalog_type . '/' . $extension_name
             )
             ) {
-                return BASE_FOLDER . '/Application/Extension' . '/' . 'Views' . '/' . $catalog_type . '/' . $extension_name;
+                return BASE_FOLDER . '/Source' . '/' . 'Views' . '/' . $catalog_type . '/' . $extension_name;
             }
         }
     }

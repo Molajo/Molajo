@@ -40,7 +40,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         } elseif ($page_type == 'list') {
             return $this->getResourceList();
         } else {
-            return $this->getResourceItem();
+            return $this->getResourceMenu();
         }
     }
 
@@ -82,6 +82,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
 
         try {
             $item           = $resource->getData();
+
             $model_registry = $resource->getModelRegistry('*');
 
         } catch (Exception $e) {
@@ -98,7 +99,11 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         }
 
         $resource                 = new stdClass();
+        $parameters               = $item->parameters;
+        unset($item->parameters);
+
         $resource->data           = $item;
+        $resource->parameters     = $parameters;
         $resource->model_registry = $model_registry;
 
         $this->runtime_data->resource = $resource;
@@ -138,5 +143,116 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         }
 
         return $resource;
+    }
+
+    /**
+     * Retrieve Resource List
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\UnexpectedValueException
+     */
+    protected function getResourceMenu()
+    {
+        $controller = $this->resource->get('query:///Molajo//Datasource//Menuitem.xml');
+
+        $controller->setModelRegistry('check_view_level_access', 1);
+        $controller->setModelRegistry('process_events', 1);
+        $controller->setModelRegistry('query_object', 'item');
+        $controller->setModelRegistry('get_customfields', 1);
+        $controller->setModelRegistry('use_special_joins', 1);
+        $controller->setModelRegistry(
+            'primary_key_value',
+            (int)$this->runtime_data->route->source_id
+        );
+        $controller->setModelRegistry('query_object', 'item');
+
+        try {
+            $menu_item = $controller->getData();
+
+        } catch (Exception $e) {
+            throw new UnexpectedValueException ($e->getMessage());
+        }
+
+        if (count($menu_item) == 0) {
+            throw new UnexpectedValueException ('Resource Menu Item not found.');
+        }
+
+        if (isset($menu_item->parameters->theme_id) && (int)$menu_item->parameters->theme_id > 0) {
+        } else {
+            $menu_item->parameters->theme_id = $this->runtime_data->application->parameters->application_default_theme_id;
+        }
+
+        $catalog_type_id = $menu_item->parameters->criteria_catalog_type_id;
+
+        $model_name = $this->getCatalogModel($catalog_type_id);
+
+        $resource             = $this->getMenuitemResourceList($model_name);
+        $resource->parameters = $menu_item->parameters;
+        $resource->metadata   = $menu_item->metadata;
+        $resource->menuitem   = $menu_item;
+
+        $this->runtime_data->resource = $resource;
+
+        return $resource;
+    }
+
+    /**
+     * Retrieve Resource Item
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\UnexpectedValueException
+     */
+    protected function getMenuitemResourceList($model)
+    {
+        $model      = 'Molajo//' . $model . '//Configuration.xml';
+        $controller = $this->resource->get('query:///' . $model);
+
+        $controller->setModelRegistry('check_view_level_access', 1);
+        $controller->setModelRegistry('process_events', 1);
+        $controller->setModelRegistry('query_object', 'list');
+        $controller->setModelRegistry('get_customfields', 1);
+        $controller->setModelRegistry('use_special_joins', 1);
+
+        try {
+            $data = $controller->getData();
+
+        } catch (Exception $e) {
+            throw new UnexpectedValueException ($e->getMessage());
+        }
+
+        $resource                 = new stdClass();
+        $resource->data           = $data;
+        $resource->model_registry = $controller->getModelRegistry('*');
+
+        return $resource;
+    }
+
+    /**
+     * Retrieve Resource Item
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\UnexpectedValueException
+     */
+    protected function getCatalogModel($id)
+    {
+        $model    = 'Molajo//Datasource//Catalogtypes.xml';
+        $resource = $this->resource->get('query:///' . $model);
+
+        $resource->setModelRegistry('check_view_level_access', 0);
+        $resource->setModelRegistry('process_events', 0);
+        $resource->setModelRegistry('query_object', 'result');
+        $resource->setModelRegistry('get_customfields', 0);
+        $resource->setModelRegistry('use_special_joins', 0);
+        $resource->setModelRegistry('primary_key_value', $id);
+
+        $resource->model->query->select(
+            $resource->model->database->qn($resource->getModelRegistry('primary_prefix', 'a'))
+            . '.' . $resource->model->database->qn('model_name')
+        );
+
+        return $resource->getData();
     }
 }

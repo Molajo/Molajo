@@ -28,24 +28,33 @@ class ItemuserpermissionsPlugin extends AbstractPlugin
      */
     public function onAfterRead()
     {
+        $this->runtime_data->permissions = array();
+
         if (isset($this->query_results->catalog_id)) {
         } else {
             return $this;
         }
 
-        $actions = $this->get('toolbar_buttons', '', 'runtime_data');
+        if (count($this->runtime_data->reference_data->task_to_action) > 0) {
+        } else {
+            return $this;
+        }
 
-        $actionsArray = explode(',', $actions);
+        $permissions = array();
+        foreach ($this->runtime_data->reference_data->task_to_action as $task => $action) {
 
-        $permissions = $this->authorisation_controller
-            ->verifyTaskListPermissions($actionsArray, $this->query_results->catalog_id);
+            if ($task == 'none' || $task == 'cancel') {
+                $permissions[$task]     = true;
+            } else {
+                $options                = array();
+                $options['resource_id'] = $this->query_results->catalog_id;
+                $options['action']      = $action;
 
-        foreach ($actionsArray as $action) {
-            if ($permissions[$action] === true) {
-                $field                       = $action . 'Permission';
-                $this->query_results->$field = $permissions[$action];
+                $permissions[$task]     = $this->authorisation_controller->isUserAuthorised($options);
             }
         }
+
+        $this->runtime_data->permissions = $permissions;
 
         return $this;
     }

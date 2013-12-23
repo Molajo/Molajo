@@ -29,6 +29,7 @@ class FormbeginPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRenderView()
     {
+        return $this;
         if (isset($this->runtime_data->render->token)) {
         } else {
             return $this;

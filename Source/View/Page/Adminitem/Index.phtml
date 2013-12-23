@@ -7,12 +7,11 @@
 ?>
 <div id="main" class="large-9 push-3 columns">
     <include article wrap=article role=main/>
-        <? if ((int)$this->runtime_data->resource->data->parameters->enable_response_comments == 1) { ?>
+        <? if ((int)$this->runtime_data->resource->parameters->enable_response_comments == 1) { ?>
         <include Author wrap=aside wrap_class=author-profile/>
             <section>
                 <include Comment/>
                 <include Comments/>
-                <include Commentform/>
             </section>
             <? } ?>
 </div>

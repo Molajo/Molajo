@@ -41,13 +41,13 @@ class FoundationPlugin extends DisplayEventPlugin implements DisplayInterface
 
         /** For non-Retina iPhone, iPod Touch, and Android 2.1+ devices */
         $this->document_links->set(
-            $url = BASE_FOLDER . '/Application/Extension' . '/' . THEME_URL . '/' . $theme
+            $url = BASE_FOLDER . '/Source' . '/' . THEME_URL . '/' . $theme
                 . '/' . 'images/favicons/apple-touch-icon-precomposed.png',
             $relation = 'apple-touch-icon-precomposed'
         );
         /** For first- and second-generation iPad */
         $this->document_links->set(
-            $url = BASE_FOLDER . '/Application/Extension' . '/' . THEME_URL . '/' . $theme
+            $url = BASE_FOLDER . '/Source' . '/' . THEME_URL . '/' . $theme
                 . '/' . 'images/favicons/apple-touch-icon-72x72-precomposed.png',
             $relation = 'apple-touch-icon-precomposed',
             $relation_type = 'rel',
@@ -55,7 +55,7 @@ class FoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         );
         /** For iPhone with high-resolution Retina display */
         $this->document_links->set(
-            $url = BASE_FOLDER . '/Application/Extension' . '/' . THEME_URL . '/' . $theme
+            $url = BASE_FOLDER . '/Source' . '/' . THEME_URL . '/' . $theme
                 . '/' . 'images/favicons/apple-touch-icon-114x114-precomposed.png',
             $relation = 'apple-touch-icon-precomposed',
             $relation_type = 'rel',
@@ -63,7 +63,7 @@ class FoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         );
         /** For third-generation iPad with high-resolution Retina display */
         $this->document_links->set(
-            $url = BASE_FOLDER . '/Application/Extension' . '/' . THEME_URL . '/' . $theme
+            $url = BASE_FOLDER . '/Source' . '/' . THEME_URL . '/' . $theme
                 . '/' . 'images/favicons/apple-touch-icon-144x144-precomposed.png',
             $relation = 'apple-touch-icon-precomposed',
             $relation_type = 'rel',
@@ -73,7 +73,7 @@ class FoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         /** Application-specific CSS: Both share Foundation CSS but require different max-width and top bar breakpoint*/
         if ($this->runtime_data->application->id == 1) {
             $this->document_css->set(
-                $url = BASE_FOLDER . '/Application/Extension' . '/' . THEME_URL . '/' . $theme . '/' . 'css/1/Template.css',
+                $url = BASE_FOLDER . '/Source' . '/' . THEME_URL . '/' . $theme . '/' . 'css/1/Template.css',
                 $priority = 1000,
                 $mimetype = 'test/css',
                 $media = 'all',
@@ -85,8 +85,8 @@ class FoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         /** jQuery CDN and fallback */
         $this->document_js->set('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 1, 1);
 
-        $jQueryUrl   = BASE_FOLDER . '/Application/Extension' . '/' . THEME_URL . '/' . $theme . '/' . 'Js/Fallback/jquery-1.8.0.min.js';
-        $jQueryUIUrl = BASE_FOLDER . '/Application/Extension' . '/' . THEME_URL . '/' . $theme . '/' . 'Js/Fallback/jquery-ui-1.8.23.min.js';
+        $jQueryUrl   = BASE_FOLDER . '/Source' . '/' . THEME_URL . '/' . $theme . '/' . 'Js/Fallback/jquery-1.8.0.min.js';
+        $jQueryUIUrl = BASE_FOLDER . '/Source' . '/' . THEME_URL . '/' . $theme . '/' . 'Js/Fallback/jquery-ui-1.8.23.min.js';
         $fallback    = "
         if (typeof jQuery == 'undefined') {
             document.write(unescape(" . '"' . "%3Cscript src='" . $jQueryUrl . "' type='text/javascript'%3E%3C/script%3E" . '"' . "));

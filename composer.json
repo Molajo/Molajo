@@ -37,7 +37,8 @@
         "molajo/render": "dev-master",
         "molajo/resource": "dev-master",
         "molajo/route": "dev-master",
-        "molajo/user": "dev-master"
+        "molajo/user": "dev-master",
+        "phpunit/php-code-coverage": ">=1.2.10,<1.3.0"
     },
 
     "autoload": {

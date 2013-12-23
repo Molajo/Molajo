@@ -29,13 +29,13 @@ class CatalogPlugin extends DisplayEventPlugin implements DisplayInterface
      * @return  $this
      * @since   1.0
      */
-    public function onBeforeRenderView()
+    public function onBeforeRender()
     {
         if ($this->runtime_data->application->id == 2) {
         } else {
             return $this;
         }
-
+return $this;
         $controller = $this->resource->get('query:///Molajo//Datasource//Catalog.xml');
 
         $controller->setModelRegistry('check_view_level_access', 0);

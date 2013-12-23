@@ -29,7 +29,7 @@ class CsrftokenPlugin extends CreateEventPlugin implements CreateInterface, Upda
      */
     public function onAfterRenderView()
     {
-        return;
+        return $this;
 
         $rendered = $this->get('rendered_page');
 

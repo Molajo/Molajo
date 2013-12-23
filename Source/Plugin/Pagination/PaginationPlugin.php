@@ -37,7 +37,7 @@ class PaginationPlugin extends DisplayEventPlugin implements DisplayInterface
             return $this;
         }
 
-        $use_pagination = $this->runtime_data->resource->data->parameters->use_pagination;
+        $use_pagination = $this->runtime_data->resource->parameters->use_pagination;
         if ((int)$use_pagination > 0) {
         } else {
             return $this;
@@ -48,21 +48,21 @@ class PaginationPlugin extends DisplayEventPlugin implements DisplayInterface
         $temp_query_results = array();
 
         /** pagination_total: number of items */
-        $pagination_total = $this->runtime_data->resource->data->parameters->pagination_total;
+        $pagination_total = $this->runtime_data->resource->parameters->pagination_total;
         if ((int)$pagination_total > 1) {
         } else {
             return $this;
         }
 
         /** model_count: max number of rows to display per page */
-        $model_count = $this->runtime_data->resource->data->parameters->model_count;
+        $model_count = $this->runtime_data->resource->parameters->model_count;
         if ((int)$model_count > 0) {
         } else {
             $model_count = 15;
         }
 
         /** model_offset: offset of 0 means skip 0 rows, then start with row 1 */
-        $model_offset = $this->runtime_data->resource->data->parameters->model_offset;
+        $model_offset = $this->runtime_data->resource->parameters->model_offset;
         if ((int)$model_offset > 0) {
         } else {
             $model_offset = 0;

@@ -9,6 +9,7 @@
 namespace Molajo\Plugin\Author;
 
 use stdClass;
+use Exception;
 use CommonApi\Event\SystemInterface;
 use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
@@ -78,7 +79,7 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
         $author->setModelRegistry('process_events', 1);
         $author->setModelRegistry('query_object', 'item');
         $author->setModelRegistry('use_special_joins', 1);
-        $author->setModelRegistry('get_customfields', 0);
+        $author->setModelRegistry('get_customfields', 1);
         $author->setModelRegistry('primary_key_value', (int)$this->runtime_data->resource->data->created_by);
         $author->setModelRegistry('get_item_children', 0);
 

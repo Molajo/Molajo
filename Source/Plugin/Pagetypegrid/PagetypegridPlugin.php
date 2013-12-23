@@ -38,8 +38,8 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         } else {
             return $this;
         }
-
-        // Initiate
+echo 'yes';
+        die;
         $this->runtime_data->plugin_data->form_select_list = array();
 
         $this->runtime_data->plugin_data->grid = new stdClass();
@@ -67,7 +67,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
     {
         $url = $this->runtime_data->page->urls['page'];
 
-        $list = $this->runtime_data->resource->data->parameters->grid_toolbar_buttons;
+        $list = $this->runtime_data->resource->parameters->grid_toolbar_buttons;
 
         if ($list == '#' || $list == '') {
             $list = 'create,read,edit,publish,feature,archive,checkin,restore,delete,trash';
@@ -103,7 +103,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        if ($this->runtime_data->resource->data->parameters->grid_search == 1) {
+        if ($this->runtime_data->resource->parameters->grid_search == 1) {
             $temp_row = new stdClass();
 
             $temp_row->name   = $this->language_controller->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
@@ -136,8 +136,8 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         for ($i = 1; $i < 11; $i ++) {
 
             $grid_list_number = 'grid_list' . $i;
-            if (isset($this->runtime_data->resource->data->parameters->$grid_list_number)) {
-                $grid_list[] = $this->runtime_data->resource->data->parameters->$grid_list_number;
+            if (isset($this->runtime_data->resource->parameters->$grid_list_number)) {
+                $grid_list[] = $this->runtime_data->resource->parameters->$grid_list_number;
             } else {
                 $grid_list[] = null;
             }
@@ -247,8 +247,8 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $catalog_type_id = $controller->getModelRegistry('catalog_type_id');
 
         if ((string)$catalog_type_id == '*') {
-            if (isset($this->runtime_data->resource->data->parameters->criteria_catalog_type_id)) {
-                $catalog_type_id = $this->runtime_data->resource->data->parameters->criteria_catalog_type_id;
+            if (isset($this->runtime_data->resource->parameters->criteria_catalog_type_id)) {
+                $catalog_type_id = $this->runtime_data->resource->parameters->criteria_catalog_type_id;
             }
         }
         if ((int)$catalog_type_id === 0) {
@@ -278,7 +278,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function getGridData()
     {
-        $resource = $this->runtime_data->resource->data->parameters->model_name;
+        $resource = $this->runtime_data->resource->parameters->model_name;
         if ($resource == '') {
             $resource = 'Articles';
         }
@@ -298,8 +298,8 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         for ($i = 1; $i < 16; $i ++) {
 
             $grid_column_number = 'grid_column' . $i;
-            if (isset($this->runtime_data->resource->data->parameters->$grid_column_number)) {
-                $grid_column_list[] = trim($this->runtime_data->resource->data->parameters->$grid_column_number);
+            if (isset($this->runtime_data->resource->parameters->$grid_column_number)) {
+                $grid_column_list[] = trim($this->runtime_data->resource->parameters->$grid_column_number);
             } else {
                 $grid_column_list[] = null;
             }
@@ -308,13 +308,13 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $this->runtime_data->plugin_data->grid_columns = $grid_column_list;
 
         /** Catalog Type ID */
-        if (isset($this->runtime_data->resource->data->parameters->criteria_catalog_type_id)) {
+        if (isset($this->runtime_data->resource->parameters->criteria_catalog_type_id)) {
             $query->model->query->where(
                 $query->model->database->qn($primary_prefix)
                 . '.'
                 . $query->model->database->qn('catalog_type_id')
                 . ' = '
-                . (int)$this->runtime_data->resource->data->parameters->criteria_catalog_type_id
+                . (int)$this->runtime_data->resource->parameters->criteria_catalog_type_id
             );
         }
 
@@ -333,12 +333,12 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         );
 
         /** Ordering */
-        $ordering = $this->runtime_data->resource->data->parameters->grid_ordering;
+        $ordering = $this->runtime_data->resource->parameters->grid_ordering;
         if ($ordering == '' || $ordering === null) {
             $ordering = $this->runtime_data->resource->model_registry['primary_key'];
         }
 
-        $direction = $this->runtime_data->resource->data->parameters->grid_ordering_direction;
+        $direction = $this->runtime_data->resource->parameters->grid_ordering_direction;
         if ($direction == 'ASC') {
         } else {
             $direction = 'DESC';
@@ -352,13 +352,13 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         );
 
         /** Offset */
-        $offset = $this->runtime_data->resource->data->parameters->model_offset;
+        $offset = $this->runtime_data->resource->parameters->model_offset;
         if ($offset == '' || $offset === null || (int)$offset == 0) {
             $offset = 0;
         }
 
         /** Items per Page */
-        $items_per_page = (int)$this->runtime_data->resource->data->parameters->model_count;
+        $items_per_page = (int)$this->runtime_data->resource->parameters->model_count;
         if ((int)$items_per_page === 0) {
             $items_per_page = 15;
         }
@@ -470,7 +470,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function setBatch()
     {
-        $temp = $this->runtime_data->resource->data->parameters->grid_batch_array;
+        $temp = $this->runtime_data->resource->parameters->grid_batch_array;
 
         if (trim($temp) == '') {
             $this->runtime_data->page->menu['SectionSubmenu'] = array();

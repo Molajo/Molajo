@@ -6,36 +6,34 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2013 Amy Stephen. All rights reserved.
  */
-$pageURL = $this->runtime_data->page->urls['page'];
 ?>
 <article
-    class="<? //echo trim('comment' . ' ' . $this->row->first_row . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd_row  . ' ' . $this->row->css_class); ?>"
+    class="<? echo trim('comment' . ' ' . $this->row->first . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd); ?>"
     id="<? echo $this->row->alias; ?>">
     <div class="comment-meta">
-        <a class="permalink" href="<? echo $pageURL; ?>#<? echo $this->row->alias; ?>">#</a>
-        <? //echo $this->language_controller->translate('On') . ' ' ?>
+        <a class="permalink" href="<? echo $this->runtime_data->page->urls['home']; ?>#<? echo $this->row->alias; ?>">#</a>
+        <? echo $this->language_controller->translate('On') . ' ' ?>
         <time datetime="<? echo $this->row->created_datetime; ?>" pubdate>
-            <? //echo $this->row->created_datetime_month_name
-            // . ' ' . $this->row->created_datetime_day_number
-            //  . ', ' . $this->row->created_datetime_ccyy
-            //  . ', ' . $this->language_controller->translate('at')
-            //  . ' ' . $this->row->created_datetime_time;
+            <? echo $this->row->created_datetime_month_name
+            . ' ' . $this->row->created_datetime_day_number
+            . ', ' . $this->row->created_datetime_ccyy
+            . ', ' . $this->language_controller->translate('at')
+            . ' ' . $this->row->created_datetime_time;
             ?>
         </time>
-        ,
-        <? //if ($this->row->website == '') {
-        //       } else {
+        <? if ($this->row->customfields->website == '') {
+           } else {
         ?>
-        <a href="<? //echo $this->row->website; ?>" rel='external nofollow' class='url'>
-            <? //} ?>
-            <? //echo $this->row->customfields->visitor_name; ?>
-            <? //if ($this->row->website == '') {
-            // } else {
+        <a href="<? echo $this->row->customfields->website; ?>" rel='external nofollow' class='url'>
+            <? } ?>
+            <? echo $this->row->customfields->visitor_name; ?>
+            <? if ($this->row->customfields->website == '') {
+            } else {
             ?>
         </a>
         <?
-        //}
-        // echo $this->language_controller->translate('said:') . ' ';
+        }
+        echo $this->language_controller->translate('said:') . ' ';
         ?>
         <? if ($this->row->title == '') {
         } else {

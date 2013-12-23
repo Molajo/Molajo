@@ -9,6 +9,7 @@
 namespace Molajo\Plugin\Comments;
 
 use stdClass;
+use Exception;
 use CommonApi\Event\SystemInterface;
 use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
@@ -23,8 +24,7 @@ use Molajo\Plugin\SystemEventPlugin;
 class CommentsPlugin extends SystemEventPlugin implements SystemInterface
 {
     /**
-     * This method is used to retrieve data input for the Comment,
-     * Commentform, and Comment Template Views
+     * Retrieve data for the Comments, Commentform, and Comment Template Views
      *
      * @return  $this
      * @since   1.0
@@ -46,13 +46,27 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
         $this->runtime_data->plugin_data->comment_form->data               = new stdClass();
         $this->runtime_data->plugin_data->comment_form->model_registry     = new stdClass();
 
-        if (isset($this->runtime_data->resource->data->parameters->enable_response_comments)
-            && (int)$this->runtime_data->resource->data->parameters->enable_response_comments == 1) {
+        $page_type = strtolower($this->runtime_data->route->page_type);
+        if ($page_type == 'item') {
+        } else {
+            return $this;
+        }
+
+        $this->runtime_data->resource->parameters->enable_response_comments = 1;
+
+        if (isset($this->runtime_data->resource->parameters->enable_response_comments)
+            && (int)$this->runtime_data->resource->parameters->enable_response_comments == 1) {
+        } else {
+            return $this;
+        }
+
+        if (strtolower($this->runtime_data->route->page_type) == 'item') {
         } else {
             return $this;
         }
 
         $this->runtime_data->plugin_data->comments_open = $this->getCommentsOpen();
+
         $this->getCommentHeading();
         $this->getComments();
         $this->getCommentForm();
@@ -68,11 +82,11 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getCommentsOpen()
     {
-        if (isset($this->runtime_data->resource->data->parameters->enable_response_comments)
-            && isset($this->runtime_data->resource->data->parameters->enable_response_comment_form_open_days)
-            && (int)$this->runtime_data->resource->data->parameters->enable_response_comments == 1
+        if (isset($this->runtime_data->resource->parameters->enable_response_comments)
+            && isset($this->runtime_data->resource->parameters->enable_response_comment_form_open_days)
+            && (int)$this->runtime_data->resource->parameters->enable_response_comments == 1
         ) {
-            $open_days = (int)$this->runtime_data->resource->data->parameters->enable_response_comment_form_open_days;
+            $open_days = (int)$this->runtime_data->resource->parameters->enable_response_comment_form_open_days;
         } else {
             $open_days = 0;
         }
@@ -120,7 +134,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
         $comments->model->query->where(
             $comments->model->database->qn($comments->getModelRegistry('primary_prefix', 'a'))
             . ' . '
-            . $comments->model->database->qn('parent_id')
+            . $comments->model->database->qn('root')
             . ' = '
             . (int)$this->runtime_data->route->source_id
         );
@@ -144,15 +158,15 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
         $temp_row->count_of_comments = (int)$count;
 
         if ((int)$count == 0) {
-            $temp_row->title        = $this->language_controller->translate('COMMENTS_TITLE_NO_COMMENTS');
-            $temp_row->content_text = $this->language_controller->translate('COMMENTS_TEXT_NO_COMMENTS');
+            $temp_row->title        = $this->language_controller->translate('No comments');
+            $temp_row->content_text = $this->language_controller->translate('There are no comments.');
         } else {
-            $temp_row->title        = $this->language_controller->translate('COMMENTS_TITLE_HAS_COMMENTS');
-            $temp_row->content_text = $this->language_controller->translate('COMMENTS_TEXT_HAS_COMMENTS');
+            $temp_row->title        = $this->language_controller->translate('Comments');
+            $temp_row->content_text = $this->language_controller->translate('Comments');
         }
 
         if ((int)$this->runtime_data->plugin_data->comments_open == 0) {
-            $temp_row->closed_comment = $this->language_controller->translate('COMMENTS_ARE_CLOSED');
+            $temp_row->closed_comment = $this->language_controller->translate('Comments are closed.');
             $temp_row->closed         = 1;
         } else {
             $temp_row->closed_comment = '';
