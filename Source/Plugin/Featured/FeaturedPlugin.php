@@ -9,9 +9,9 @@
 namespace Molajo\Plugin\Featured;
 
 use Exception;
-use CommonApi\Event\SystemInterface;
 use CommonApi\Exception\RuntimeException;
-use Molajo\Plugin\SystemEventPlugin;
+use Molajo\Plugin\DisplayEventPlugin;
+use CommonApi\Event\DisplayInterface;
 
 /**
  * Featured Plugin
@@ -20,7 +20,7 @@ use Molajo\Plugin\SystemEventPlugin;
  * @license     http://www.opensource.org/licenses/mit-license.html MIT License
  * @since       1.0
  */
-class FeaturedPlugin extends SystemEventPlugin implements SystemInterface
+class FeaturedPlugin extends DisplayEventPlugin implements DisplayInterface
 {
     /**
      * Retrieves Featured Content
@@ -29,9 +29,10 @@ class FeaturedPlugin extends SystemEventPlugin implements SystemInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function onBeforeExecute()
+    public function onBeforeRenderView()
     {
-        if (strtolower($this->runtime_data->route->page_type) == 'item') {
+        if (strtolower($this->runtime_data->render->scheme) == 'template'
+            && strtolower($this->runtime_data->render->token->name == 'features')) {
         } else {
             return $this;
         }

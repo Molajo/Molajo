@@ -28,11 +28,7 @@ class PagetypelistPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeParse()
     {
-        if ((strtolower($this->runtime_data->route->page_type)
-                == strtolower($this->runtime_data->reference_data->page_type_list))
-            || (strtolower($this->runtime_data->route->page_type)
-                == strtolower($this->runtime_data->reference_data->page_type_list))
-        ) {
+        if (strtolower($this->runtime_data->route->page_type) == 'list') {
         } else {
             return $this;
         }

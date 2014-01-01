@@ -154,7 +154,9 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getResourceMenu()
     {
-        $controller = $this->resource->get('query:///Molajo//Datasource//Menuitem.xml');
+        $page_type = strtolower($this->runtime_data->route->page_type);
+
+        $controller = $this->resource->get('query:///Molajo//Menuitem//' . $page_type . '//Configuration.xml');
 
         $controller->setModelRegistry('check_view_level_access', 1);
         $controller->setModelRegistry('process_events', 1);

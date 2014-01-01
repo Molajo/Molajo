@@ -78,7 +78,6 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
         try {
             $temp_query_results = $menuitem->getData();
 
-
         } catch (Exception $e) {
             throw new RuntimeException ($e->getMessage());
         }

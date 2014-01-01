@@ -21,7 +21,7 @@ use Molajo\Plugin\ReadEventPlugin;
 class MockdataPlugin extends ReadEventPlugin implements ReadInterface
 {
     /**
-     * Creates text, adds images, video, smilies, assigns created_by
+     * Replaces {text}250,250,box{/text}
      *
      * {image}250,250,box{/image}
      * {blockquote}{cite:xYZ}*.*{/blockquote}
@@ -32,7 +32,8 @@ class MockdataPlugin extends ReadEventPlugin implements ReadInterface
      */
     public function onAfterRead()
     {
-        return;
+        return $this;
+
         $fields = $this->getFieldsByType('text');
 
         if (is_array($fields) && count($fields) > 0) {

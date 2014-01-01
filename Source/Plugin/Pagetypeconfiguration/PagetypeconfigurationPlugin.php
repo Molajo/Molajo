@@ -28,12 +28,7 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
      */
     public function onBeforeParse()
     {
-        return $this;
-
-        if (strtolower(
-                $this->runtime_data->route->page_type
-            ) == $this->runtime_data->reference_data->page_type_configuration
-        ) {
+        if (strtolower($this->runtime_data->route->page_type) == 'configuration') {
         } else {
             return $this;
         }

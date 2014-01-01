@@ -9,6 +9,7 @@
 namespace Molajo\Plugin\Pagetypegrid;
 
 use stdClass;
+use Exception;
 use CommonApi\Event\DisplayInterface;
 use Molajo\Plugin\DisplayEventPlugin;
 use CommonApi\Exception\RuntimeException;
@@ -32,17 +33,16 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeParse()
     {
-        if (strtolower($this->runtime_data->route->page_type)
-            == strtolower($this->runtime_data->reference_data->page_type_grid)
-        ) {
+        if (strtolower($this->runtime_data->route->page_type) == 'grid') {
         } else {
             return $this;
         }
-echo 'yes';
-        die;
+
         $this->runtime_data->plugin_data->form_select_list = array();
 
         $this->runtime_data->plugin_data->grid = new stdClass();
+
+        $this->getCurrentMenuItem();
 
         $this->setToolbar();
 
@@ -63,11 +63,29 @@ echo 'yes';
      * @return  $this
      * @since   1.0
      */
+    protected function getCurrentMenuItem()
+    {
+        // 11102 or articles ... hmmmm ... hard to be unique qith grid, edit, list, etc.
+        $model = 'Menuitem' . ':///Molajo//Menuitem//Articles';
+        $this->runtime_data->current_menuitem = new stdClass();
+        $this->runtime_data->current_menuitem->id = (int) $this->runtime_data->page->current_menuitem_id;
+        $this->runtime_data->current_menuitem->extension = $this->resource->get($model);
+
+        return $this;
+
+    }
+
+    /**
+     * Create Toolbar Registry based on Authorized Access
+     *
+     * @return  $this
+     * @since   1.0
+     */
     protected function setToolbar()
     {
         $url = $this->runtime_data->page->urls['page'];
 
-        $list = $this->runtime_data->resource->parameters->grid_toolbar_buttons;
+        $list = $this->runtime_data->current_menuitem->extension->parameters->grid_toolbar_buttons;
 
         if ($list == '#' || $list == '') {
             $list = 'create,read,edit,publish,feature,archive,checkin,restore,delete,trash';
@@ -75,31 +93,36 @@ echo 'yes';
 
         $grid_toolbar_buttons = explode(',', $list);
         $catalog_id           = $this->runtime_data->route->catalog_id;
-        $permissions          = $this->isUserAuthorisedTasks(
-            $grid_toolbar_buttons,
-            $catalog_id
-        );
-
 
         $temp_query_results = array();
 
-        foreach ($grid_toolbar_buttons as $button) {
+        if (count($grid_toolbar_buttons) > 0) {
 
-            if ($permissions[$button] === true) {
-                $temp_row = new stdClass();
+            foreach ($grid_toolbar_buttons as $button) {
 
-                $temp_row->name   = $this->language_controller->translate(
-                    strtoupper('TASK_' . strtoupper($button) . '_BUTTON')
-                );
-                $temp_row->action = $button;
+                $options = array();
+                $options['resource_id'] = $catalog_id;
+                $options['task'] = $button;
 
-                if ($this->runtime_data->application->parameters->url_sef == 1) {
-                    $temp_row->link = $url . '/task/' . $temp_row->action;
-                } else {
-                    $temp_row->link = $url . '&task=' . $temp_row->action;
+                $permissions          = $this->authorisation_controller->isUserAuthorised($options);
+
+                if ($permissions === true) {
+
+                    $temp_row = new stdClass();
+
+                    $temp_row->name   = $this->language_controller->translate(
+                        strtoupper('TASK_' . strtoupper($button) . '_BUTTON')
+                    );
+                    $temp_row->action = $button;
+
+                    if ($this->runtime_data->application->parameters->url_sef == 1) {
+                        $temp_row->link = $url . '/task/' . $temp_row->action;
+                    } else {
+                        $temp_row->link = $url . '&task=' . $temp_row->action;
+                    }
+
+                    $temp_query_results[] = $temp_row;
                 }
-
-                $temp_query_results[] = $temp_row;
             }
         }
 
@@ -128,6 +151,7 @@ echo 'yes';
      *
      * @return  $this
      * @since   1.0
+     * @throws  /CommonApi/Exception/RuntimeException
      */
     protected function setGridFilter()
     {
@@ -136,15 +160,15 @@ echo 'yes';
         for ($i = 1; $i < 11; $i ++) {
 
             $grid_list_number = 'grid_list' . $i;
-            if (isset($this->runtime_data->resource->parameters->$grid_list_number)) {
-                $grid_list[] = $this->runtime_data->resource->parameters->$grid_list_number;
+            if (isset($this->runtime_data->current_menuitem->extension->parameters->$grid_list_number)) {
+                $grid_list[] = $this->runtime_data->current_menuitem->extension->parameters->$grid_list_number;
             } else {
                 $grid_list[] = null;
             }
         }
 
         $lists = array();
-        if (is_array($grid_list) && count($grid_list) > 0) {
+/**        if (is_array($grid_list) && count($grid_list) > 0) {
 
             foreach ($grid_list as $list) {
 
@@ -153,11 +177,11 @@ echo 'yes';
 
                 if ((string)$list == '') {
                 } else {
-                    if (isset($this->runtime_data->plugin_data->datalists->datalist[$list])) {
-                        $results = $this->runtime_data->plugin_data->datalists->datalist[$list];
+                    if (isset($this->runtime_data->plugin_data->datalists->$list)) {
+                        $results = $this->runtime_data->plugin_data->datalists->$list;
                     } else {
                         throw new RuntimeException
-                        ('PagetypegridPlugin: Unknown $this->runtime_data->plugin_data->datalists->datalist: ' . $list);
+                        ('PagetypegridPlugin: Unknown $this->runtime_data->plugin_data->datalists: ' . $list);
                     }
 
                     $key = $results->id;
@@ -166,7 +190,10 @@ echo 'yes';
                 }
             }
         }
-
+        echo '<pre>';
+        var_dump($lists);
+        die;
+ */
         /** Fields */
         $temp_array = array();
 
@@ -238,7 +265,7 @@ echo 'yes';
     {
         $options                 = array();
         $options['runtime_data'] = $this->runtime_data;
-        $controller              = $this->resource->get('query:///' . $namespace . '.xml', $options);
+        $controller              = $this->resource->get('query:///Molajo//' . $namespace . '.xml', $options);
 
         $controller->setModelRegistry('process_events', 0);
         $controller->setModelRegistry('get_customfields', 0);
@@ -247,8 +274,8 @@ echo 'yes';
         $catalog_type_id = $controller->getModelRegistry('catalog_type_id');
 
         if ((string)$catalog_type_id == '*') {
-            if (isset($this->runtime_data->resource->parameters->criteria_catalog_type_id)) {
-                $catalog_type_id = $this->runtime_data->resource->parameters->criteria_catalog_type_id;
+            if (isset($this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id)) {
+                $catalog_type_id = $this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id;
             }
         }
         if ((int)$catalog_type_id === 0) {
@@ -278,28 +305,26 @@ echo 'yes';
      */
     protected function getGridData()
     {
-        $resource = $this->runtime_data->resource->parameters->model_name;
-        if ($resource == '') {
-            $resource = 'Articles';
-        }
+        $resource = $this->runtime_data->current_menuitem->extension->parameters->menuitem_model_name;
 
         $model = 'Molajo//Datasource//' . $resource . '//Configuration.xml';
-        $query = $this->resource->get('query:///' . $model);
+        $grid = $this->resource->get('query:///' . $model);
 
-        $query->setModelRegistry('check_view_level_access', 0);
-        $query->setModelRegistry('process_events', 1);
-        $query->setModelRegistry('get_item_children', 0);
-        $query->setModelRegistry('use_special_joins', 1);
+        $grid->setModelRegistry('check_view_level_access', 1);
+        $grid->setModelRegistry('process_events', 1);
+        $grid->setModelRegistry('query_object', 'list');
+        $grid->setModelRegistry('get_customfields', 1);
+        $grid->setModelRegistry('use_special_joins', 1);
 
-        $primary_prefix = $query->getModelRegistry('primary_prefix');
-        $key            = $query->getModelRegistry('primary_key');
+        $primary_prefix = $grid->getModelRegistry('primary_prefix');
+        $key            = $grid->getModelRegistry('primary_key');
 
         /** Select */
         for ($i = 1; $i < 16; $i ++) {
 
             $grid_column_number = 'grid_column' . $i;
-            if (isset($this->runtime_data->resource->parameters->$grid_column_number)) {
-                $grid_column_list[] = trim($this->runtime_data->resource->parameters->$grid_column_number);
+            if (isset($this->runtime_data->current_menuitem->extension->parameters->$grid_column_number)) {
+                $grid_column_list[] = trim($this->runtime_data->current_menuitem->extension->parameters->$grid_column_number);
             } else {
                 $grid_column_list[] = null;
             }
@@ -308,69 +333,72 @@ echo 'yes';
         $this->runtime_data->plugin_data->grid_columns = $grid_column_list;
 
         /** Catalog Type ID */
-        if (isset($this->runtime_data->resource->parameters->criteria_catalog_type_id)) {
-            $query->model->query->where(
-                $query->model->database->qn($primary_prefix)
+        if (isset($this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id)) {
+            $grid->model->query->where(
+                $grid->model->database->qn($primary_prefix)
                 . '.'
-                . $query->model->database->qn('catalog_type_id')
+                . $grid->model->database->qn('catalog_type_id')
                 . ' = '
-                . (int)$this->runtime_data->resource->parameters->criteria_catalog_type_id
+                . (int)$this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id
             );
         }
 
         /** Status */
         $list = '0,1,2';
-        $query->model->query->where(
-            $query->model->database->qn($primary_prefix)
-            . '.' . $query->model->database->qn('status')
+        $grid->model->query->where(
+            $grid->model->database->qn($primary_prefix)
+            . '.' . $grid->model->database->qn('status')
             . ' IN (' . $list . ')'
         );
 
         /** Redirect To ID */
-        $query->model->query->where(
-            $query->model->database->qn('catalog.redirect_to_id')
+        $grid->model->query->where(
+            $grid->model->database->qn('catalog.redirect_to_id')
             . ' = ' . 0
         );
 
         /** Ordering */
-        $ordering = $this->runtime_data->resource->parameters->grid_ordering;
+        $ordering = $this->runtime_data->current_menuitem->extension->parameters->grid_ordering;
         if ($ordering == '' || $ordering === null) {
             $ordering = $this->runtime_data->resource->model_registry['primary_key'];
         }
 
-        $direction = $this->runtime_data->resource->parameters->grid_ordering_direction;
+        $direction = $this->runtime_data->current_menuitem->extension->parameters->grid_ordering_direction;
         if ($direction == 'ASC') {
         } else {
             $direction = 'DESC';
         }
 
-        $query->model->query->order(
-            $query->model->database->qn($primary_prefix)
-            . '.' . $query->model->database->qn($ordering)
+        $grid->model->query->order(
+            $grid->model->database->qn($primary_prefix)
+            . '.' . $grid->model->database->qn($ordering)
             . ' '
             . $direction
         );
 
         /** Offset */
-        $offset = $this->runtime_data->resource->parameters->model_offset;
+//todo
+//        $offset = $this->runtime_data->current_menuitem->extension->parameters->model_offset;
+        $offset = 0;
         if ($offset == '' || $offset === null || (int)$offset == 0) {
             $offset = 0;
         }
 
         /** Items per Page */
-        $items_per_page = (int)$this->runtime_data->resource->parameters->model_count;
+        //$items_per_page = (int)$this->runtime_data->current_menuitem->extension->parameters->menuitem_model_count;
+        $items_per_page = 15;
         if ((int)$items_per_page === 0) {
             $items_per_page = 15;
         }
-        $query->setModelRegistry('model_count', $items_per_page);
+//        $grid->setModelRegistry('model_count', $items_per_page);
 
         try {
-            $results = $query->getData();
+            $results = $grid->getData();
         } catch (Exception $e) {
-            throw new ControllerException ($e->getMessage());
+            throw new RuntimeException ($e->getMessage());
         }
 
-        $name_key   = $query->getModelRegistry('name_key');
+        $name_key   = $grid->getModelRegistry('name_key');
         $grid_items = array();
         if (count($results) > 0) {
             foreach ($results as $item) {
@@ -470,7 +498,7 @@ echo 'yes';
      */
     protected function setBatch()
     {
-        $temp = $this->runtime_data->resource->parameters->grid_batch_array;
+        $temp = $this->runtime_data->current_menuitem->extension->parameters->grid_batch_array;
 
         if (trim($temp) == '') {
             $this->runtime_data->page->menu['SectionSubmenu'] = array();
@@ -534,37 +562,4 @@ echo 'yes';
 
         return $this;
     }
-
-    /**
-     * Is User Authorised for this Site
-     *
-     * @return  bool
-     * @since   1.0
-     */
-    protected function isUserAuthorisedTasks($grid_toolbar_buttons, $catalog_id)
-    {
-        if (count($grid_toolbar_buttons) === 0) {
-            return array();
-        }
-
-        $permission_array = array();
-
-        foreach ($grid_toolbar_buttons as $task) {
-
-            $action = $this->getTaskAction($task);
-
-            if ($action === false) {
-                $permission_array[$task] = false;
-            } else {
-                $options                = array();
-                $options['task']        = $task;
-                $options['resource_id'] = $catalog_id;
-                $permission_array[$task]
-                                        = $this->authorisation_controlleruthorisation->isUserAuthorised($options);
-            }
-        }
-
-        return $permission_array;
-    }
-
 }

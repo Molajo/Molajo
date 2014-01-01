@@ -28,9 +28,7 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeParse()
     {
-        return $this;
-
-        if (strtolower($this->runtime_data->route->page_type) == $this->runtime_data->reference_data->page_type_edit) {
+        if (strtolower($this->runtime_data->route->page_type) == 'edit') {
         } else {
             return $this;
         }

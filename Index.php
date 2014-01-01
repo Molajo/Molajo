@@ -45,54 +45,46 @@ require_once __DIR__ . '/Autoload.php';
 /**
  *  V. Inversion of Control Processing
  *
- *  1. Container
- *  2. Service Provider Namespaces and Aliases
- *  3. Service Provider Controller
+ *  1. Service Provider Namespaces and Aliases
+ *  2. IoC Container
  */
 
-// 1. Container
-require_once BASE_FOLDER . '/vendor/molajo/ioc/Source/Container.php';;
-$container_class  = 'Molajo\\IoC\\Container';
-$container = new $container_class();
-
-// 2. Service Provider Namespaces and Aliases
-require_once BASE_FOLDER . '/vendor/molajo/ioc/Source/MapServiceProviderNamespaces.php';
+// 1. Service Provider Namespaces and Aliases
+require_once BASE_FOLDER . '/vendor/molajo/ioc/Source/MapServiceProviders.php';
 $service_provider_folders = array();
-$temp = readJsonFile(
+$temp                     = readJsonFile(
     $base_folder . '/vendor/molajo/ioc/Source/Files/Input/ServiceFolders.json'
 );
 foreach ($temp as $folder) {
     $service_provider_folders[] = $base_folder . '/' . $folder;
 }
 
-$folder_namespace = 'Molajo\\Service';
-$service_provider_map_filename = $base_folder . '/vendor/molajo/ioc/Source/Files/Output/ServiceProviderMap.json';
+$folder_namespace                = 'Molajo\\Service';
 $service_provider_alias_filename = $base_folder . '/vendor/molajo/ioc/Source/Files/Output/ServiceProviderAliases.json';
 
-$map_class = 'Molajo\\IoC\\MapServiceProviderNamespaces';
-$map = new $map_class (
+$map_class = 'Molajo\\IoC\\MapServiceProviders';
+$map       = new $map_class (
     $service_provider_folders,
     $folder_namespace,
-    $service_provider_map_filename,
     $service_provider_alias_filename
 );
+
 $map->createMap();
 
-// 3. Service Provider Controller
-require_once BASE_FOLDER . '/vendor/molajo/ioc/Source/ServiceProviderController.php';
-$classDependencies = BASE_FOLDER . '/vendor/molajo/resource/Source/Files/Output/ClassDependencies.json';
-$service_provider_controller_class = 'Molajo\\IoC\\ServiceProviderController';
-$service_provider_controller = new $service_provider_controller_class (
-    $container,
-    $classDependencies,
-    readJsonFile($service_provider_map_filename),
-    readJsonFile($service_provider_alias_filename
-    ));
+// 2. IoC Container
+require_once BASE_FOLDER . '/vendor/molajo/ioc/Source/Container.php';
+$classDependencies    = BASE_FOLDER . '/vendor/molajo/resource/Source/Files/Output/ClassDependencies.json';
+$ioc_container_class = 'Molajo\\IoC\\Container';
+$ioc_container       = new $ioc_container_class (
+    readJsonFile($service_provider_alias_filename),
+    $classDependencies
+);
 
 /**
  *  VI. Fire off FrontController
  */
 require_once BASE_FOLDER . '/vendor/molajo/framework/Source/Controller/FrontController.php';
 $front_controller_class = 'Molajo\\Controller\\FrontController';
-$front_controller = new $front_controller_class ($service_provider_controller, $base_folder);
+$front_controller       = new $front_controller_class ($ioc_container, $base_folder);
+
 $front_controller->driver();

@@ -34,12 +34,10 @@ require_once $base_folder . '/vendor/commonapi/exception/ExceptionInterface.php'
 require_once $base_folder . '/vendor/commonapi/exception/RuntimeException.php';
 require_once $base_folder . '/vendor/commonapi/ioc/ContainerInterface.php';
 require_once $base_folder . '/vendor/commonapi/ioc/ServiceProviderInterface.php';
-require_once $base_folder . '/vendor/molajo/ioc/Source/Api/ServiceProviderAdapterInterface.php';
-require_once $base_folder . '/vendor/molajo/ioc/Source/Api/ServiceProviderControllerInterface.php';
+require_once $base_folder . '/vendor/commonapi/ioc/ServiceProviderAdapterInterface.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/AbstractServiceProvider.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/StandardServiceProvider.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/Container.php';
-require_once $base_folder . '/vendor/molajo/ioc/Source/ServiceProviderController.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/ServiceProviderAdapter.php';
 
 require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/ConfigurationDataInterface.php';

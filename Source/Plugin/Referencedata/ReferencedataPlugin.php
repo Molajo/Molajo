@@ -73,6 +73,7 @@ class ReferencedataPlugin extends ReadEventPlugin implements ReadInterface
 
                     if ($value === false) {
                     } else {
+                        // what is this?
                         $this->saveForeignKeyValue($new_name, $value);
                     }
                 }

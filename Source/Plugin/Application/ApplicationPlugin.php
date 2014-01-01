@@ -236,7 +236,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $controller->setModelRegistry('check_view_level_access', 1);
         $controller->setModelRegistry('process_events', 0);
-        $controller->setModelRegistry('get_customfields', 1);
+        $controller->setModelRegistry('get_customfields', 0);
         $controller->setModelRegistry('query_object', 'list');
         $controller->setModelRegistry('model_offset', 0);
         $controller->setModelRegistry('model_count', 9999);
@@ -266,8 +266,13 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $controller->model->query->order(
             $controller->model->database->qn($prefix)
+            . '.' . $controller->model->database->qn('menu')
+        );
+        $controller->model->query->order(
+            $controller->model->database->qn($prefix)
             . '.' . $controller->model->database->qn('lft')
         );
+
         $query_results = $controller->getData();
 
         if (count($query_results) === 0) {
@@ -276,12 +281,11 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $current_menu_item = $this->runtime_data->page->current_menuitem_id;
         $breadcrumbs       = $this->runtime_data->page->breadcrumbs;
-        $menu_name         = '';
 
         foreach ($query_results as $item) {
 
             $item->menu_id = $item->extension_id;
-            $menu_name     = $item->title;
+            $menu_name     = $item->menu;
 
             if ($item->id == $current_menu_item && (int)$current_menu_item > 0) {
                 $item->css_class = 'current';

@@ -29,11 +29,7 @@ class PagetypeapplicationPlugin extends DisplayEventPlugin implements DisplayInt
      */
     public function onBeforeParse()
     {
-        return;
-        if (strtolower(
-                $this->runtime_data->route->page_type
-            ) == $this->runtime_data->reference_data->page_type_application
-        ) {
+        if (strtolower($this->runtime_data->route->page_type) == 'application') {
         } else {
             return $this;
         }
