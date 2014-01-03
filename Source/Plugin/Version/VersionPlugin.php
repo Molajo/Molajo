@@ -3,7 +3,7 @@
  * Version Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Version;
@@ -85,7 +85,7 @@ class VersionPlugin extends UpdateEventPlugin implements UpdateInterface
         if ($fieldValue === false
             || $fieldValue == ''
         ) {
-            $newFieldValue = $this->query_results->status;
+            $newFieldValue = $this->row->status;
             $this->setField($field, $name, $newFieldValue);
         }
 

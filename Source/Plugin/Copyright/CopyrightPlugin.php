@@ -3,7 +3,7 @@
  * Copyright Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Copyright;
@@ -56,7 +56,7 @@ class CopyrightPlugin extends SystemEventPlugin implements SystemInterface
         $row->link                = $this->runtime_data->render->extension->parameters->link;
         $row->remaining_text      = $this->runtime_data->render->extension->parameters->link;
 
-        $this->query_results[] = $row;
+        $this->row[] = $row;
 
         return $this;
     }

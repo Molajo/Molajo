@@ -3,7 +3,7 @@
  * Create Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Create;
@@ -32,8 +32,8 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
     public function onAfterCreate()
     {
         return $this;
-        if ($this->query_results->catalog_type_id >= CATALOG_TYPE_BEGIN
-            AND $this->query_results->catalog_type_id <= CATALOG_TYPE_END
+        if ($this->row->catalog_type_id >= CATALOG_TYPE_BEGIN
+            AND $this->row->catalog_type_id <= CATALOG_TYPE_END
         ) {
         } else {
             return $this;
@@ -76,7 +76,7 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
         }
 
         /** Determine Destination Folder for target location */
-        $destinationFolder = $this->getDestinationFolder($catalog_type, $this->query_results->title);
+        $destinationFolder = $this->getDestinationFolder($catalog_type, $this->row->title);
         if ($destinationFolder === false) {
             return $this;
         }
@@ -89,7 +89,7 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
 
         /** Traverse Folders */
         $replace = ucfirst(strtolower('Samples'));
-        $with    = ucfirst(strtolower($this->query_results->title));
+        $with    = ucfirst(strtolower($this->row->title));
 
         $results = $this->traverseFolders($destinationFolder, $replace, $with, $catalog_type_id);
         if ($results === false) {
@@ -108,7 +108,7 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
     public function onAfterDelete()
     {
         /** Determine Destination Folder for target location */
-        $destinationFolder = $this->getFolderToDelete(CATALOG_TYPE_RESOURCE_LITERAL, $this->query_results->title);
+        $destinationFolder = $this->getFolderToDelete(CATALOG_TYPE_RESOURCE_LITERAL, $this->row->title);
         if ($destinationFolder === false) {
             return $this;
         }
@@ -427,8 +427,8 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
 
         /** Overlay for this extension */
         $data->id    = null;
-        $data->title = $this->query_results->title;
-        $data->alias = Services::Filter()->filter($this->query_results->title, 'alias', 0, $this->query_results->title);
+        $data->title = $this->row->title;
+        $data->alias = Services::Filter()->filter($this->row->title, 'alias', 0, $this->row->title);
 
         $data->start_publishing_datetime = null;
         $data->stop_publishing_datetime  = null;
@@ -461,14 +461,14 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
             foreach ($this->runtime_data as $key => $value) {
 
                 if ($key == 'criteria_title') {
-                    $data->parameters[$key] = $this->query_results->title;
+                    $data->parameters[$key] = $this->row->title;
                     //@todo get rid of one of these variables
                 } elseif ($key == 'criteria_catalog_type_id') {
-                    $data->parameters[$key] = $this->query_results->catalog_type_id;
+                    $data->parameters[$key] = $this->row->catalog_type_id;
                 } elseif ($key == 'criteria_extension_instance_id') {
-                    $data->parameters[$key] = $this->query_results->id;
+                    $data->parameters[$key] = $this->row->id;
                 } elseif ($key == 'model_name') {
-                    $data->parameters[$key] = $this->query_results->title;
+                    $data->parameters[$key] = $this->row->title;
                     $data->model_name       = 'Grid';
                     $data->model_type       = $this->runtime_data->reference_data->catalog_type_menuitem_id_LITERAL;
                 } else {
@@ -484,7 +484,7 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
         if (count($this->runtime_data) > 0) {
             foreach ($this->runtime_data as $key => $value) {
                 if ($key == 'title') {
-                    $data->metadata[$key] = $this->query_results->title;
+                    $data->metadata[$key] = $this->row->title;
                 } else {
                     $data->metadata[$key] = '';
                 }
@@ -505,13 +505,13 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
         $controller = new CreateController();
 
         $data2                        = new \stdClass();
-        $data2->catalog_type_id       = $this->query_results->catalog_type_id;
+        $data2->catalog_type_id       = $this->row->catalog_type_id;
         $data2->source_id             = $this->id;
         $data2->view_group_id         = 1;
         $data2->extension_instance_id = $this->id;
         $data2->model_name            = 'Catalog';
-        $data2->sef_request           = $this->query_results->alias;
-        $data2->page_type             = $this->query_results->page_type;
+        $data2->sef_request           = $this->row->alias;
+        $data2->page_type             = $this->row->page_type;
         $data2->routable              = 1;
 
         $controller->data = $data2;

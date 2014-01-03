@@ -3,7 +3,7 @@
  * Events Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Events;
@@ -29,11 +29,6 @@ class EventsPlugin extends SystemEventPlugin implements SystemInterface
      */
     public function onAfterInitialise()
     {
-        if ($this->runtime_data->application->id == 2) {
-        } else {
-            return $this;
-        }
-
         $events = array(
             'onAfterInitialise',
             'onAfterRoute',

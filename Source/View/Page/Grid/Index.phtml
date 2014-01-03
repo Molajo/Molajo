@@ -4,13 +4,17 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  *
  *     <include Gridfilters wrap=nav wrap_class=grid-filters role=nav/>
  */
 ?>
-<include Toolbar/>
-<include Formbegin/>
+<a id="top"></a>
+<include Navbar/>
+<include Header/>
+<div id="wrapper" class="row">
+    <include Toolbar/>
+    <include Formbegin/>
 
     <section class="grid">
         <include Gridordering/>
@@ -24,4 +28,6 @@
         <include Grid role=main/>
             <include Pagination wrap=nav wrap_class=pagination/>
     </section>
-<include Formend/>
+    <include Formend/>
+</div>
+<include Footer/>

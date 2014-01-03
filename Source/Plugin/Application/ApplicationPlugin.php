@@ -3,7 +3,7 @@
  * Application Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Application;
@@ -44,19 +44,27 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             $current_menuitem_id = $this->runtime_data->resource->menuitem->id;
         }
 
-        $this->runtime_data->page->menuitem_id = $current_menuitem_id;
-        $model                                 = 'Molajo//Menuitem//' . $current_menuitem_id;
-
-        $this->runtime_data->page->menuitem = $this->resource->get('Menuitem:///' . $model);
-        $this->runtime_data->page->menu     = $this->runtime_data->page->menuitem->menu;
-
-        $this->runtime_data->page->current_menuitem_id = $current_menuitem_id;
+        if ((int)$current_menuitem_id == 0) {
+            $this->runtime_data->page->menuitem_id         = 0;
+            $this->runtime_data->page->menuitem            = new stdClass();
+            $this->runtime_data->page->menu                = new stdClass();
+            $this->runtime_data->page->current_menuitem_id = 0;
+        } else {
+            $this->runtime_data->page->menuitem_id         = $current_menuitem_id;
+            $model                                         = 'Molajo//Menuitem//' . $current_menuitem_id;
+            $this->runtime_data->page->menuitem            = $this->resource->get('Menuitem:///' . $model);
+            $this->runtime_data->page->menu                = $this->runtime_data->page->menuitem->menu;
+            $this->runtime_data->page->current_menuitem_id = $current_menuitem_id;
+        }
 
         $this->getUrls();
 
-        $this->runtime_data->page->breadcrumbs = $this->getMenuBreadcrumbIds();
-
-        $this->getMenu();
+        if ((int)$current_menuitem_id == 0) {
+            $this->runtime_data->page->breadcrumbs = new stdClass();
+        } else {
+            $this->runtime_data->page->breadcrumbs = $this->getMenuBreadcrumbIds();
+            $this->getMenu();
+        }
 
         $this->getPageTitle($page_type);
 
@@ -175,27 +183,28 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $controller = $this->resource->get('query:///Molajo//Datasource//MenuitemsNested.xml');
 
         $controller->setModelRegistry('check_view_level_access', 1);
-        $controller->setModelRegistry('process_events', 0);
+        $controller->setModelRegistry('process_events', 1);
         $controller->setModelRegistry('get_customfields', 1);
+        $controller->setModelRegistry('use_special_joins', 0);
         $controller->setModelRegistry('query_object', 'list');
         $controller->setModelRegistry('model_offset', 0);
         $controller->setModelRegistry('model_count', 9999);
 
         $controller->model->query->where(
-            $controller->model->database->qn('current_menuitem.id')
+            $controller->model->database->qn('id')
             . ' = ' . (int)$this->runtime_data->page->current_menuitem_id
         );
         $controller->model->query->where($controller->model->database->qn('a.status') . ' > 0');
 
         $controller->model->query->order('a.lft DESC');
 
-        $query_results = $controller->getData();
+        $row = $controller->getData();
 
         $look_for_parent = 0;
 
         $select = array();
         $i      = 0;
-        foreach ($query_results as $item) {
+        foreach ($row as $item) {
 
             $this->runtime_data->page->extension_id = $item->extension_id;
 
@@ -215,7 +224,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         rsort($select);
         $breadcrumbs = array();
         foreach ($select as $index) {
-            $breadcrumbs[] = $query_results[$index];
+            $breadcrumbs[] = $row[$index];
         }
 
         return $breadcrumbs;
@@ -273,16 +282,16 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             . '.' . $controller->model->database->qn('lft')
         );
 
-        $query_results = $controller->getData();
+        $row = $controller->getData();
 
-        if (count($query_results) === 0) {
+        if (count($row) === 0) {
             return $this;
         }
 
         $current_menu_item = $this->runtime_data->page->current_menuitem_id;
         $breadcrumbs       = $this->runtime_data->page->breadcrumbs;
 
-        foreach ($query_results as $item) {
+        foreach ($row as $item) {
 
             $item->menu_id = $item->extension_id;
             $menu_name     = $item->menu;
@@ -325,7 +334,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $this->runtime_data->page->breadcrumbs = $breadcrumbs;
 
         $this->runtime_data->page->menu             = array();
-        $this->runtime_data->page->menu[$menu_name] = $query_results;
+        $this->runtime_data->page->menu[$menu_name] = $row;
 
         return $this;
     }
@@ -333,7 +342,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     /**
      * Set the Header Title
      *
-     * @param   string  $page_type
+     * @param   string $page_type
      *
      * @return  $this
      * @since   1.0
@@ -379,26 +388,29 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $this->runtime_data->page->heading1 = $heading1;
         $this->runtime_data->page->heading2 = $heading2;
+        $temp_query_results                 = array();
 
-        $temp_row             = new stdClass();
-        $temp_row->link_text  = $this->language_controller->translate('GRID');
-        $temp_row->link       = $this->runtime_data->page->urls['resource'];
-        $temp_row->current    = $list_current;
-        $temp_query_results[] = $temp_row;
+        if ($this->runtime_data->application->id == 2) {
+            $temp_row             = new stdClass();
+            $temp_row->link_text  = $this->language_controller->translate('GRID');
+            $temp_row->link       = $this->runtime_data->page->urls['resource'];
+            $temp_row->current    = $list_current;
+            $temp_query_results[] = $temp_row;
 
-        $temp_row             = new stdClass();
-        $temp_row->link_text  = $this->language_controller->translate('Configuration');
-        $temp_row->link       = $this->runtime_data->page->urls['resource'] . '/' . 'configuration';
-        $temp_row->current    = $configuration_current;
-        $temp_query_results[] = $temp_row;
+            $temp_row             = new stdClass();
+            $temp_row->link_text  = $this->language_controller->translate('Configuration');
+            $temp_row->link       = $this->runtime_data->page->urls['resource'] . '/' . 'configuration';
+            $temp_row->current    = $configuration_current;
+            $temp_query_results[] = $temp_row;
 
-        $temp_row             = new stdClass();
-        $temp_row->link_text  = $this->language_controller->translate('NEW');
-        $temp_row->link       = $this->runtime_data->page->urls['resource'] . '/' . 'new';
-        $temp_row->current    = $new_current;
-        $temp_query_results[] = $temp_row;
+            $temp_row             = new stdClass();
+            $temp_row->link_text  = $this->language_controller->translate('NEW');
+            $temp_row->link       = $this->runtime_data->page->urls['resource'] . '/' . 'new';
+            $temp_row->current    = $new_current;
+            $temp_query_results[] = $temp_row;
 
-        $this->runtime_data->page->menu['PageSubmenu'] = $temp_query_results;
+            $this->runtime_data->page->menu['PageSubmenu'] = $temp_query_results;
+        }
 
         return $this;
     }
@@ -406,7 +418,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     /**
      * Prepares Page Title and Actions for Rendering
      *
-     * @param   string  $page_type
+     * @param   string $page_type
      *
      * @return  $this
      * @since   1.0
@@ -436,7 +448,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             $actionCount = count($actions);
         }
 
-        $temp_query_results = array();
+        $temp_row = array();
 
         $temp_row               = new stdClass();
         $temp_row->action_count = $actionCount;
@@ -452,7 +464,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $temp_query_results[] = $temp_row;
 
-        $this->runtime_data->page->page_eligible_actions = $temp_query_results;
+        $this->runtime_data->page->page_eligible_actions = $temp_row;
 
         return $this;
     }
@@ -560,7 +572,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     /**
      * Set Page Meta Data during onBeforeParse, can be modified at any point during the document body rendering
      *
-     * @param   string  $page_type
+     * @param   string $page_type
      *
      * @return  $this
      * @since   1.0

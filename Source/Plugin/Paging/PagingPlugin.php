@@ -3,7 +3,7 @@
  * Paging Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Paging;
@@ -80,9 +80,9 @@ class PagingPlugin extends DisplayEventPlugin implements DisplayInterface
         $temp_row->last_page = $last_page;
         $temp_row->last_link = $last_link;
 
-        $temp_query_results[] = $temp_row;
+        $temp_row[] = $temp_row;
 
-        $this->registry->set('Primary', 'Paging', $temp_query_results);
+        $this->registry->set('Primary', 'Paging', $temp_row);
     }
 
     /**

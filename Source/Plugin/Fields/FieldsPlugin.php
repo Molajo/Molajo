@@ -3,15 +3,14 @@
  * Fields Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Fields;
 
+use CommonApi\Event\ReadInterface;
+use Molajo\Plugin\ReadEventPlugin;
 use stdClass;
-use CommonApi\Event\SystemInterface;
-use CommonApi\Exception\RuntimeException;
-use Molajo\Plugin\SystemEventPlugin;
 
 /**
  * Fields Plugin
@@ -20,7 +19,7 @@ use Molajo\Plugin\SystemEventPlugin;
  * @license     http://www.opensource.org/licenses/mit-license.html MIT License
  * @since       1.0
  */
-class FieldsPlugin extends SystemEventPlugin implements SystemInterface
+class FieldsPlugin extends ReadEventPlugin implements ReadInterface
 {
     /**
      * Generates list of Fields for select lists and defining Custom Fields
@@ -28,7 +27,7 @@ class FieldsPlugin extends SystemEventPlugin implements SystemInterface
      * @return  $this
      * @since   1.0
      */
-    public function onBeforeExecute()
+    public function onAfterRead()
     {
         $extended_literal    = ' (' . $this->language_controller->translate('extended') . ')';
         $parameter_literal   = ' (' . $this->language_controller->translate('parameter') . ')';

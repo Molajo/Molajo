@@ -3,7 +3,7 @@
  * Form Begin Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Formbegin;
@@ -85,7 +85,7 @@ class FormbeginPlugin extends DisplayEventPlugin implements DisplayInterface
         }
 
         /** Build Query Results for View */
-        $temp_query_results = array();
+        $temp_row = array();
 
         $temp_row = new stdClass();
 
@@ -95,9 +95,9 @@ class FormbeginPlugin extends DisplayEventPlugin implements DisplayInterface
         $temp_row->form_id         = $form_id;
         $temp_row->form_class      = $form_class;
         $temp_row->form_attributes = $form_attributes;
-        $temp_query_results[]      = $temp_row;
+        $temp_row[]                = $temp_row;
 
-        $this->runtime_data->plugin_data->form_begin = $temp_query_results;
+        $this->runtime_data->plugin_data->form_begin = $temp_row;
 
         return $this;
     }

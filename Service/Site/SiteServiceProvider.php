@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Site;
 
@@ -19,7 +19,7 @@ use CommonApi\Exception\RuntimeException;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
 class SiteServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface
@@ -52,10 +52,10 @@ class SiteServiceProvider extends AbstractServiceProvider implements ServiceProv
          * To make certain all dependencies are filled before Site runs and continues
          * scheduling from the Resources schedule
          */
-        $options                            = array();
-        $this->dependencies                 = array();
-        $this->dependencies['Resource']     = $options;
-        $this->dependencies['Request']      = $options;
+        $options                        = array();
+        $this->dependencies             = array();
+        $this->dependencies['Resource'] = $options;
+        $this->dependencies['Request']  = $options;
 
         return $this->dependencies;
     }

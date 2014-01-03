@@ -3,7 +3,7 @@
  * Item Url Permissions
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Itemuserpermissions;
@@ -30,7 +30,7 @@ class ItemuserpermissionsPlugin extends AbstractPlugin
     {
         $this->runtime_data->permissions = array();
 
-        if (isset($this->query_results->catalog_id)) {
+        if (isset($this->row->catalog_id)) {
         } else {
             return $this;
         }
@@ -44,13 +44,13 @@ class ItemuserpermissionsPlugin extends AbstractPlugin
         foreach ($this->runtime_data->reference_data->task_to_action as $task => $action) {
 
             if ($task == 'none' || $task == 'cancel') {
-                $permissions[$task]     = true;
+                $permissions[$task] = true;
             } else {
                 $options                = array();
-                $options['resource_id'] = $this->query_results->catalog_id;
+                $options['resource_id'] = $this->row->catalog_id;
                 $options['action']      = $action;
 
-                $permissions[$task]     = $this->authorisation_controller->isUserAuthorised($options);
+                $permissions[$task] = $this->authorisation_controller->isUserAuthorised($options);
             }
         }
 

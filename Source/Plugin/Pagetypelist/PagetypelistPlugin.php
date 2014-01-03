@@ -3,7 +3,7 @@
  * Page Type List Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Pagetypelist;
@@ -53,7 +53,7 @@ class PagetypelistPlugin extends DisplayEventPlugin implements DisplayInterface
          * $controller->set('model_count', $this->get('model_count', 5));
          * $controller->set('use_pagination', $this->get('model_use_pagination', 1));
          */
-        $temp_query_results = $controller->getData('list');
+        $temp_row = $controller->getData('list');
         /**
          * $controller->set('request_model_type', $this->get('model_type', '', 'runtime_data'));
          * $controller->set('request_model_name', $this->get('model_name', '', 'runtime_data'));
@@ -65,7 +65,7 @@ class PagetypelistPlugin extends DisplayEventPlugin implements DisplayInterface
         $controller->set('model_type', 'list');
         $controller->set('model_name', 'Primary');
 
-        $this->registry->set('Primary', 'Data', $temp_query_results);
+        $this->registry->set('Primary', 'Data', $temp_row);
 
         return $this;
     }
@@ -88,13 +88,13 @@ class PagetypelistPlugin extends DisplayEventPlugin implements DisplayInterface
         }
 
         if ((int)$this->get('total_rows', 0, 'runtime_data') == 0
-            || $this->query_results === false
-            || $this->query_results == null
+            || $this->row === false
+            || $this->row == null
         ) {
             return $this;
         }
 
-        if (is_object($this->query_results)) {
+        if (is_object($this->row)) {
         } else {
             return $this;
         }
@@ -124,9 +124,9 @@ class PagetypelistPlugin extends DisplayEventPlugin implements DisplayInterface
         /** grid_row_class */
         $value = ' class="' .
             trim(
-                trim($this->query_results->first_row)
-                . ' ' . trim($this->query_results->even_or_odd_row)
-                . ' ' . trim($this->query_results->last_row)
+                trim($this->row->first_row)
+                . ' ' . trim($this->row->even_or_odd_row)
+                . ' ' . trim($this->row->last_row)
             )
             . '"';
 

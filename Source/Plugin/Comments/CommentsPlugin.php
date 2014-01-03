@@ -3,16 +3,16 @@
  * Comments Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Comments;
 
 use stdClass;
 use Exception;
-use CommonApi\Event\SystemInterface;
+use CommonApi\Event\ReadInterface;
 use CommonApi\Exception\RuntimeException;
-use Molajo\Plugin\SystemEventPlugin;
+use Molajo\Plugin\ReadEventPlugin;
 
 /**
  * Comments Plugin
@@ -21,7 +21,7 @@ use Molajo\Plugin\SystemEventPlugin;
  * @license     http://www.opensource.org/licenses/mit-license.html MIT License
  * @since       1.0
  */
-class CommentsPlugin extends SystemEventPlugin implements SystemInterface
+class CommentsPlugin extends ReadEventPlugin implements ReadInterface
 {
     /**
      * Retrieve data for the Comments, Commentform, and Comment Template Views
@@ -29,7 +29,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      * @return  $this
      * @since   1.0
      */
-    public function onBeforeExecute()
+    public function onAfterRead()
     {
         if (isset($this->runtime_data->plugin_data->comments_open)) {
             return $this;
@@ -46,21 +46,11 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
         $this->runtime_data->plugin_data->comment_form->data               = new stdClass();
         $this->runtime_data->plugin_data->comment_form->model_registry     = new stdClass();
 
-        $page_type = strtolower($this->runtime_data->route->page_type);
-        if ($page_type == 'item') {
-        } else {
-            return $this;
-        }
+        $this->parameters->enable_response_comments = 1;
 
-        $this->runtime_data->resource->parameters->enable_response_comments = 1;
-
-        if (isset($this->runtime_data->resource->parameters->enable_response_comments)
-            && (int)$this->runtime_data->resource->parameters->enable_response_comments == 1) {
-        } else {
-            return $this;
-        }
-
-        if (strtolower($this->runtime_data->route->page_type) == 'item') {
+        if (isset($this->parameters->enable_response_comments)
+            && (int)$this->parameters->enable_response_comments == 1
+        ) {
         } else {
             return $this;
         }
@@ -82,11 +72,11 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getCommentsOpen()
     {
-        if (isset($this->runtime_data->resource->parameters->enable_response_comments)
-            && isset($this->runtime_data->resource->parameters->enable_response_comment_form_open_days)
-            && (int)$this->runtime_data->resource->parameters->enable_response_comments == 1
+        if (isset($this->parameters->enable_response_comments)
+            && isset($this->parameters->enable_response_comment_form_open_days)
+            && (int)$this->parameters->enable_response_comments == 1
         ) {
-            $open_days = (int)$this->runtime_data->resource->parameters->enable_response_comment_form_open_days;
+            $open_days = (int)$this->parameters->enable_response_comment_form_open_days;
         } else {
             $open_days = 0;
         }
@@ -96,7 +86,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
         }
 
         $converted = $this->date_controller->convertCCYYMMDD(
-            $this->runtime_data->resource->data->start_publishing_datetime
+            $this->row->start_publishing_datetime
         );
         if ($converted === false) {
             return 0;
@@ -136,7 +126,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
             . ' . '
             . $comments->model->database->qn('root')
             . ' = '
-            . (int)$this->runtime_data->route->source_id
+            . (int)$this->row->id
         );
 
         $comments->model->query->where(
@@ -204,7 +194,7 @@ class CommentsPlugin extends SystemEventPlugin implements SystemInterface
             . ' . '
             . $comments->model->database->qn('root')
             . ' = '
-            . (int)$this->runtime_data->route->source_id
+            . (int)$this->row->id
         );
 
         $comments->model->query->where(

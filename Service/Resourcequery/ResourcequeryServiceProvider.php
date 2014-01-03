@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Resourcequery;
 
@@ -18,7 +18,7 @@ use CommonApi\Exception\RuntimeException;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
 class ResourcequeryServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface
@@ -50,7 +50,7 @@ class ResourcequeryServiceProvider extends AbstractServiceProvider implements Se
     {
         parent::setDependencies($reflection);
 
-        $this->dependencies['Resource']    = array();
+        $this->dependencies['Resource']      = array();
         $this->dependencies['Eventcallback'] = array();
 
         return $this->dependencies;
@@ -90,7 +90,7 @@ class ResourcequeryServiceProvider extends AbstractServiceProvider implements Se
             }
         }
         $this->dependencies['resource_array'] = $resources;
-        $this->dependencies['schedule_event']   = $this->dependencies['Eventcallback'];
+        $this->dependencies['schedule_event'] = $this->dependencies['Eventcallback'];
 
         return $this->dependencies;
     }

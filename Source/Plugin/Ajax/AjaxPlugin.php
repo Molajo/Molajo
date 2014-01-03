@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Plugin\Ajax;
 
@@ -16,7 +16,7 @@ use CommonApi\Event\SystemInterface;
  * Ajax Plugin
  *
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
 class AjaxPlugin extends SystemEventPlugin implements SystemInterface
@@ -29,11 +29,6 @@ class AjaxPlugin extends SystemEventPlugin implements SystemInterface
      */
     public function onBeforeExecute()
     {
-        if ($this->runtime_data->application->id == 2) {
-        } else {
-            return $this;
-        }
-
         if ($this->runtime_data->request->client->ajax == 0) {
             return $this;
         }

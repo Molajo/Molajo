@@ -3,7 +3,7 @@
  * Messages Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Messages;
@@ -31,11 +31,11 @@ class MessagesPlugin extends DisplayEventPlugin implements DisplayInterface
     {
         return $this;
         $this->runtime_data->page->messages = new stdClass();
-        $this->runtime_data->page->messages = $temp_query_results;
+        $this->runtime_data->page->messages = $temp_row;
 
         $messages = $controller->getData();
 
-        $temp_query_results = array();
+        $temp_row = array();
 
         foreach ($messages as $message) {
 
@@ -61,7 +61,7 @@ class MessagesPlugin extends DisplayEventPlugin implements DisplayInterface
                 $temp_row->class .= ' secondary';
             }
 
-            $temp_query_results[] = $temp_row;
+            $temp_row[] = $temp_row;
         }
 
         return $this;

@@ -3,7 +3,7 @@
  * Customfields Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Customfields;
@@ -30,7 +30,7 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
      */
     public function onAfterRead()
     {
-        if (count($this->query_results) === 0) {
+        if (count($this->row) === 0) {
             return $this;
         }
 
@@ -57,7 +57,7 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
         }
 
         foreach ($customfieldgroups as $group) {
-            $this->query_results->$group = $this->processCustomfieldGroup($group);
+            $this->row->$group = $this->processCustomfieldGroup($group);
         }
 
         return $this;
@@ -77,16 +77,16 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
         $page_type = strtolower($this->runtime_data->route->page_type);
 
         /** Standard Data */
-        if (isset($this->query_results->$group)) {
+        if (isset($this->row->$group)) {
         } else {
             return new stdClass();
         }
 
-        if (is_object($this->query_results->$group)) {
-            return $this->query_results->$group;
+        if (is_object($this->row->$group)) {
+            return $this->row->$group;
         }
 
-        $standard_custom_field_data = json_decode($this->query_results->$group);
+        $standard_custom_field_data = json_decode($this->row->$group);
 
         if (is_array($standard_custom_field_data) > 0
             && isset($this->runtime_data->application->id)
@@ -103,9 +103,9 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
         /** Extension Instances Data */
         $x = 'extension_instances_' . $group;
 
-        if (isset($this->query_results->$x)) {
-            $extension_instances_field_data = json_decode($this->query_results->$x);
-            unset($this->query_results->$x);
+        if (isset($this->row->$x)) {
+            $extension_instances_field_data = json_decode($this->row->$x);
+            unset($this->row->$x);
 
             if (is_array($extension_instances_field_data)
                 && isset($this->runtime_data->application->id)

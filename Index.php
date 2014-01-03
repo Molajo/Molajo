@@ -3,7 +3,7 @@
  * Bootstrap Application
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 
@@ -73,7 +73,7 @@ $map->createMap();
 
 // 2. IoC Container
 require_once BASE_FOLDER . '/vendor/molajo/ioc/Source/Container.php';
-$classDependencies    = BASE_FOLDER . '/vendor/molajo/resource/Source/Files/Output/ClassDependencies.json';
+$classDependencies   = BASE_FOLDER . '/vendor/molajo/resource/Source/Files/Output/ClassDependencies.json';
 $ioc_container_class = 'Molajo\\IoC\\Container';
 $ioc_container       = new $ioc_container_class (
     readJsonFile($service_provider_alias_filename),

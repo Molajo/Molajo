@@ -3,7 +3,7 @@
  * Pagination Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Pagination;
@@ -44,8 +44,8 @@ class PaginationPlugin extends DisplayEventPlugin implements DisplayInterface
         }
 
         /** initialise */
-        $url                = $this->runtime_data->page->urls['page'];
-        $temp_query_results = array();
+        $url      = $this->runtime_data->page->urls['page'];
+        $temp_row = array();
 
         /** pagination_total: number of items */
         $pagination_total = $this->runtime_data->resource->parameters->pagination_total;
@@ -125,12 +125,12 @@ class PaginationPlugin extends DisplayEventPlugin implements DisplayInterface
         $temp_row->last_page = $last_page;
         $temp_row->last_link = $last_link;
 
-        $temp_query_results[] = $temp_row;
+        $temp_row[] = $temp_row;
 
-        $this->runtime_data->plugin_data->paging = $temp_query_results;
+        $this->runtime_data->plugin_data->paging = $temp_row;
 
         /** Paging */
-        $temp_query_results = array();
+        $temp_row = array();
         if ($total_pages > 10) {
             $total_pages = 10;
         }
@@ -165,10 +165,10 @@ class PaginationPlugin extends DisplayEventPlugin implements DisplayInterface
             $temp_row->last_page = $last_page;
             $temp_row->last_link = $last_link;
 
-            $temp_query_results[] = $temp_row;
+            $temp_row[] = $temp_row;
         }
 
-        $this->runtime_data->plugin_data->pagination = $temp_query_results;
+        $this->runtime_data->plugin_data->pagination = $temp_row;
 
         return $this;
     }

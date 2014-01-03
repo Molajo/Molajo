@@ -4,25 +4,33 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  */
 ?>
-<article
-    class="<? echo trim('comment' . ' ' . $this->row->first . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd); ?>"
-    id="<? echo $this->row->alias; ?>">
-    <div class="comment-meta">
-        <a class="permalink" href="<? echo $this->runtime_data->page->urls['home']; ?>#<? echo $this->row->alias; ?>">#</a>
+<article class="row <? echo trim(
+    'comment' . ' '
+    . $this->row->first . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd
+); ?>" id="<? echo $this->row->alias; ?>">
+    <div class="large-1 columns small-2">
+        <img alt=""
+             src="http://1.gravatar.com/avatar/37372c3acc31affca29886c1a9cbc13b?s=48&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D48&amp;r=G"
+             class="gravatar float_right" height="48" width="48"/>
+
+    </div>
+    <div class="large-11 columns">
+        <a class="small permalink"
+           href="<? echo $this->runtime_data->page->urls['home']; ?>#<? echo $this->row->alias; ?>">#</a>
         <? echo $this->language_controller->translate('On') . ' ' ?>
         <time datetime="<? echo $this->row->created_datetime; ?>" pubdate>
             <? echo $this->row->created_datetime_month_name
-            . ' ' . $this->row->created_datetime_day_number
-            . ', ' . $this->row->created_datetime_ccyy
-            . ', ' . $this->language_controller->translate('at')
-            . ' ' . $this->row->created_datetime_time;
+                . ' ' . $this->row->created_datetime_day_number
+                . ', ' . $this->row->created_datetime_ccyy
+                . ', ' . $this->language_controller->translate('at')
+                . ' ' . $this->row->created_datetime_time;
             ?>
         </time>
         <? if ($this->row->customfields->website == '') {
-           } else {
+        } else {
         ?>
         <a href="<? echo $this->row->customfields->website; ?>" rel='external nofollow' class='url'>
             <? } ?>
@@ -31,10 +39,10 @@
             } else {
             ?>
         </a>
-        <?
-        }
-        echo $this->language_controller->translate('said:') . ' ';
-        ?>
+    <?
+    }
+    echo $this->language_controller->translate('said:') . ' ';
+    ?>
         <? if ($this->row->title == '') {
         } else {
             ?>
@@ -42,12 +50,6 @@
                 <h5><? echo $this->row->title; ?></h5>
             </header>
         <? } ?>
-    </div>
-    <img alt=""
-         src="http://1.gravatar.com/avatar/37372c3acc31affca29886c1a9cbc13b?s=48&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D48&amp;r=G"
-         class="gravatar float_right" height="48" width="48"/>
-
-    <div class="comment-text">
-        <p class="comment-text"><? echo $this->row->content_text; ?></p>
+        <p><? echo $this->row->content_text; ?></p>
     </div>
 </article>

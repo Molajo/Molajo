@@ -3,7 +3,7 @@
  * Children Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Children;
@@ -74,11 +74,11 @@ class ChildrenPlugin extends ReadEventPlugin implements ReadInterface
 
             $results = $controller->getData();
 
-            $query_results->$model_name = $results;
+            $row->$model_name = $results;
 
             unset ($controller);
         }
 
-        return $query_results;
+        return $row;
     }
 }

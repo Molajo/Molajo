@@ -3,7 +3,7 @@
  * Menuitems Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Menuitems;
@@ -11,8 +11,8 @@ namespace Molajo\Plugin\Menuitems;
 use stdClass;
 use Exception;
 use CommonApi\Event\SystemInterface;
-use Molajo\Plugin\SystemEventPlugin;
 use CommonApi\Exception\RuntimeException;
+use Molajo\Plugin\SystemEventPlugin;
 
 /**
  * Menuitems Plugin
@@ -42,7 +42,7 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
 
         $menuitem->model->query->select(
             $menuitem->model->database->qn($menuitem->getModelRegistry('primary_prefix', 'a'))
-                . '.' . $menuitem->model->database->qn('title')
+            . '.' . $menuitem->model->database->qn('title')
         );
         $menuitem->model->query->select(
             $menuitem->model->database->qn($menuitem->getModelRegistry('primary_prefix', 'a'))
@@ -59,9 +59,13 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
             . ' IN (0,1,2)'
         );
         $menuitem->model->query->where(
+            $menuitem->model->database->qn('catalog.enabled')
+            . ' = 1'
+        );
+        $menuitem->model->query->where(
             $menuitem->model->database->qn($menuitem->getModelRegistry('primary_prefix', 'a'))
             . '.' . $menuitem->model->database->qn('catalog_type_id')
-                . ' = ' . $this->runtime_data->reference_data->catalog_type_menuitem_id
+            . ' = ' . $this->runtime_data->reference_data->catalog_type_menuitem_id
         );
 
         $menuitem->model->query->order(
@@ -76,19 +80,19 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
         $menuitem->setModelRegistry('model_count', 99999);
 
         try {
-            $temp_query_results = $menuitem->getData();
+            $temp_row = $menuitem->getData();
 
         } catch (Exception $e) {
             throw new RuntimeException ($e->getMessage());
         }
 
-        if (count($temp_query_results) == 0) {
+        if (count($temp_row) == 0) {
             $this->runtime_data->plugin_data->datalists->menuitems = array();
             return $this;
         }
 
         $menuitem = array();
-        foreach ($temp_query_results as $item) {
+        foreach ($temp_row as $item) {
             $temp_row = new \stdClass();
 
             $name = $item->title;

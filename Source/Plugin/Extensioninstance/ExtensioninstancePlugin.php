@@ -3,7 +3,7 @@
  * Extension Instance
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Extensioninstance;
@@ -28,8 +28,8 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
      */
     public function onBeforeCreate()
     {
-        if ($this->query_results->catalog_type_id >= CATALOG_TYPE_BEGIN
-            AND $this->query_results->catalog_type_id <= CATALOG_TYPE_END
+        if ($this->row->catalog_type_id >= CATALOG_TYPE_BEGIN
+            AND $this->row->catalog_type_id <= CATALOG_TYPE_END
         ) {
         } else {
             return $this;
@@ -56,13 +56,13 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
         );
         $controller->model->query->where(
             $controller->model->database->qn($primary_prefix) . '.' . $controller->model->database->qn('title')
-            . ' = ' . $controller->model->database->q($this->query_results->title)
+            . ' = ' . $controller->model->database->q($this->row->title)
         );
         $controller->model->query->where(
             $controller->model->database->qn($primary_prefix) . '.' . $controller->model->database->qn(
                 'catalog_type_id'
             )
-            . ' = ' . (int)$this->query_results->catalog_type_id
+            . ' = ' . (int)$this->row->catalog_type_id
         );
 
         $id = $controller->getData('result');
@@ -82,19 +82,19 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
         $controller->model->query->select($controller->model->database->qn('a.id'));
         $controller->model->query->where(
             $controller->model->database->qn('a.name')
-            . ' = ' . $controller->model->database->q($this->query_results->title)
+            . ' = ' . $controller->model->database->q($this->row->title)
         );
         $controller->model->query->where(
             $controller->model->database->qn('a.catalog_type_id')
-            . ' = ' . (int)$this->query_results->catalog_type_id
+            . ' = ' . (int)$this->row->catalog_type_id
         );
 
         $item = $controller->getData('item');
 
         if ($item === false) {
         } else {
-            $this->query_results->extension_id    = $item->id;
-            $this->query_results->catalog_type_id = $item->catalog_type_id;
+            $this->row->extension_id    = $item->id;
+            $this->row->catalog_type_id = $item->catalog_type_id;
 
             return;
         }
@@ -112,9 +112,9 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
         /** Catalog Types */
         $sql = 'INSERT INTO ' . $controller->model->database->qn('#__catalog_types');
         $sql .= ' VALUES ( null, '
-            . $controller->model->database->q($this->query_results->title)
+            . $controller->model->database->q($this->row->title)
             . ', 0, '
-            . $controller->model->database->q($this->query_results->title)
+            . $controller->model->database->q($this->row->title)
             . ', ' . $controller->model->database->q('#__content') . ')';
 
         $controller->model->database->setQueryPermissions($sql);
@@ -124,16 +124,16 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
 
         /** Create a new Extension Node */
         $data                  = new \stdClass();
-        $data->name            = $this->query_results->title;
-        $data->catalog_type_id = $this->query_results->catalog_type_id;
+        $data->name            = $this->row->title;
+        $data->catalog_type_id = $this->row->catalog_type_id;
         $data->model_name      = 'Extensions';
 
         $controller       = new CreateController();
         $controller->data = $data;
 
-        $this->query_results->extension_id = $controller->execute();
+        $this->row->extension_id = $controller->execute();
 
-        if ($this->query_results->extension_id === false) {
+        if ($this->row->extension_id === false) {
             //error
             return $this;
         }
@@ -149,18 +149,18 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
      */
     public function onAfterCreate()
     {
-        echo 'Catalog ID ' . $this->query_results->catalog_type_id . '<br />';
+        echo 'Catalog ID ' . $this->row->catalog_type_id . '<br />';
 
-        if ($this->query_results->catalog_type_id >= CATALOG_TYPE_BEGIN
-            AND $this->query_results->catalog_type_id <= CATALOG_TYPE_END
+        if ($this->row->catalog_type_id >= CATALOG_TYPE_BEGIN
+            AND $this->row->catalog_type_id <= CATALOG_TYPE_END
         ) {
         } else {
             return $this;
         }
 
-        echo 'ID ' . $this->query_results->id . '<br />';
+        echo 'ID ' . $this->row->id . '<br />';
         /** Extension Instance ID */
-        $id = $this->query_results->id;
+        $id = $this->row->id;
         if ((int)$id == 0) {
             return $this;
         }
@@ -210,7 +210,7 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
 
         $controller->data = $data;
 
-        $this->query_results->catalog_id = $controller->execute();
+        $this->row->catalog_id = $controller->execute();
         if ($results === false) {
             //install failed
             return $this;
@@ -234,8 +234,8 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
     {
 
         /** Only Extension Instances */
-        if (isset($this->query_results->catalog_type_id)
-            && ($this->query_results->catalog_type_id == CATALOG_TYPE_RESOURCE)
+        if (isset($this->row->catalog_type_id)
+            && ($this->row->catalog_type_id == CATALOG_TYPE_RESOURCE)
         ) {
         } else {
             return $this;
@@ -245,7 +245,7 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
         $controller_class_namespace = $this->controller_namespace;
         $controller                 = new $controller_class_namespace();
 
-        $controller->getModelRegistry('datasource', $this->query_results->title);
+        $controller->getModelRegistry('datasource', $this->row->title);
 
         $results = $controller->setDataobject();
         if ($results === false) {
@@ -289,38 +289,38 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
         $sql = 'DELETE FROM ' . $controller->model->database->qn('#__application_extension_instances');
         $sql .= ' WHERE ' . $controller->model->database->qn(
                 'extension_instance_id'
-            ) . ' = ' . (int)$this->query_results->id;
+            ) . ' = ' . (int)$this->row->id;
         $controller->model->database->setQueryPermissions($sql);
         $controller->model->database->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->database->qn('#__site_extension_instances');
         $sql .= ' WHERE ' . $controller->model->database->qn(
                 'extension_instance_id'
-            ) . ' = ' . (int)$this->query_results->id;
+            ) . ' = ' . (int)$this->row->id;
         $controller->model->database->setQueryPermissions($sql);
         $controller->model->database->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->database->qn('#__group_permissions');
         $sql .= ' WHERE ' . $controller->model->database->qn(
                 'catalog_id'
-            ) . ' = ' . (int)$this->query_results->catalog_id;
+            ) . ' = ' . (int)$this->row->catalog_id;
         $controller->model->database->setQueryPermissions($sql);
         $controller->model->database->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->database->qn('#__view_group_permissions');
         $sql .= ' WHERE ' . $controller->model->database->qn(
                 'catalog_id'
-            ) . ' = ' . (int)$this->query_results->catalog_id;
+            ) . ' = ' . (int)$this->row->catalog_id;
         $controller->model->database->setQueryPermissions($sql);
         $controller->model->database->execute();
 
         /** Catalog has plugins for more deletions */
         $controller = new DeleteController();
-        echo 'Passing this catalog id in to Delete Controller ' . $this->query_results->catalog_id . '<br />';
+        echo 'Passing this catalog id in to Delete Controller ' . $this->row->catalog_id . '<br />';
 
         $data             = new \stdClass();
         $data->model_name = ucfirst(strtolower('Catalog'));
-        $data->id         = $this->query_results->catalog_id;
+        $data->id         = $this->row->catalog_id;
         $controller->data = $data;
         $controller->set('action', 'delete');
 
@@ -360,7 +360,7 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
         $controller->model->query->from($controller->model->database->qn('#__extension_instances'));
         $controller->model->query->where(
             $controller->model->database->qn('extension_id')
-            . ' = ' . (int)$this->query_results->extension_id
+            . ' = ' . (int)$this->row->extension_id
         );
 
         $value = $controller->getData('result');
@@ -377,7 +377,7 @@ class ExtensioninstancePlugin extends CreateEventPlugin implements CreateInterfa
 
         $data             = new \stdClass();
         $data->model_name = ucfirst(strtolower('Extensions'));
-        $data->id         = $this->query_results->extension_id;
+        $data->id         = $this->row->extension_id;
         $controller->data = $data;
         $controller->set('action', 'delete');
 

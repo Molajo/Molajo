@@ -3,7 +3,7 @@
  * Cssclassandids Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Cssclassandids;
@@ -30,32 +30,32 @@ class CssclassandidsPlugin extends ReadEventPlugin implements ReadInterface
     {
         return $this;
 
-        if (isset($this->query_results->runtime_data)) {
+        if (isset($this->row->runtime_data)) {
             return $this;
         }
 
         /** class */
-        $this->query_results->css_class = trim($this->query_results->runtime_data->css_class)
-            . ' ' . trim($this->query_results->runtime_data->template_view_css_class)
-            . ' ' . trim($this->query_results->runtime_data->current);
+        $this->row->css_class = trim($this->row->runtime_data->css_class)
+            . ' ' . trim($this->row->runtime_data->template_view_css_class)
+            . ' ' . trim($this->row->runtime_data->current);
 
-        if (trim($this->query_results->css_class) == '') {
+        if (trim($this->row->css_class) == '') {
         } else {
-            $this->query_results->css_class = htmlspecialchars(
-                trim($this->query_results->css_class),
+            $this->row->css_class = htmlspecialchars(
+                trim($this->row->css_class),
                 ENT_NOQUOTES,
                 'UTF-8'
             );
         }
 
         /** id */
-        $this->query_results->css_id = ' ' . trim($this->query_results->runtime_data->css_id)
-            . ' ' . trim($this->query_results->runtime_data->template_view_css_id)
-            . ' ' . trim($this->query_results->runtime_data->current);
+        $this->row->css_id = ' ' . trim($this->row->runtime_data->css_id)
+            . ' ' . trim($this->row->runtime_data->template_view_css_id)
+            . ' ' . trim($this->row->runtime_data->current);
 
-        if (trim($this->query_results->css_id) == '') {
+        if (trim($this->row->css_id) == '') {
         } else {
-            $this->query_results->css_id = htmlspecialchars(trim($this->query_results->css_id), ENT_NOQUOTES, 'UTF-8');
+            $this->row->css_id = htmlspecialchars(trim($this->row->css_id), ENT_NOQUOTES, 'UTF-8');
         }
 
         return $this;

@@ -3,7 +3,7 @@
  * Fullname Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Fullname;
@@ -28,18 +28,18 @@ class FullnamePlugin extends ReadEventPlugin implements ReadInterface
      */
     public function onAfterRead()
     {
-        if (isset($this->query_results->first_name)
-            && isset($this->query_results->last_name)
+        if (isset($this->row->first_name)
+            && isset($this->row->last_name)
         ) {
         } else {
             return $this;
         }
 
-        if (isset($this->query_results->full_name)) {
+        if (isset($this->row->full_name)) {
             return $this;
         }
 
-        $this->setField(null, 'full_name', $this->query_results->first_name . ' ' . $this->query_results->last_name);
+        $this->setField(null, 'full_name', $this->row->first_name . ' ' . $this->row->last_name);
 
         return $this;
     }

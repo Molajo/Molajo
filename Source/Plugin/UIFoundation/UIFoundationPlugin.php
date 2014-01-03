@@ -3,7 +3,7 @@
  * UI Foundation Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\UIFoundation;
@@ -81,7 +81,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
             $buttonCount = count($buttonArray);
         }
 
-        $temp_query_results = array();
+        $temp_row = array();
 
         $temp_row               = new \stdClass();
         $temp_row->button_count = $buttonCount;
@@ -95,9 +95,9 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        $temp_query_results[] = $temp_row;
+        $temp_row[] = $temp_row;
 
-        $this->registry->set('Plugindata', 'Toolbar', $temp_query_results);
+        $this->registry->set('Plugindata', 'Toolbar', $temp_row);
 
         return $this;
     }
@@ -396,9 +396,9 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function button_general()
     {
-        $button_type  = $this->query_results->button_type;
-        $button_size  = $this->query_results->button_size;
-        $button_shape = $this->query_results->button_shape;
+        $button_type  = $this->row->button_type;
+        $button_size  = $this->row->button_size;
+        $button_shape = $this->row->button_shape;
 
         $button_class = trim($button_type);
         $button_class = trim($button_class) . ' ' . trim($button_shape);
@@ -421,10 +421,10 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
     protected function button_group()
     {
 
-        $button_type  = $this->query_results->button_group_type;
-        $button_size  = $this->query_results->button_group_size;
-        $button_shape = $this->query_results->button_group_shape;
-        $button_class = str_replace(',', ' ', $this->query_results->button_group_class);
+        $button_type  = $this->row->button_group_type;
+        $button_size  = $this->row->button_group_size;
+        $button_shape = $this->row->button_group_shape;
+        $button_class = str_replace(',', ' ', $this->row->button_group_class);
 
         $button_group_class = trim($button_type);
         $button_group_class = trim($button_group_class) . ' ' . trim($button_shape);
@@ -435,7 +435,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         $button_group_class = ' class="' . htmlspecialchars(trim($button_group_class), ENT_NOQUOTES, 'UTF-8') . '"';
         $this->setField(null, 'button_group_class', $button_group_class);
 
-        $button_array = $this->getButtons($this->query_results->button_group_array);
+        $button_array = $this->getButtons($this->row->button_group_array);
         $this->setField(null, 'button_group_array', $button_array);
 
         return $this;
@@ -449,10 +449,10 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function button_dropdown()
     {
-        $button_type  = $this->query_results->button_dropdown_type;
-        $button_size  = $this->query_results->button_dropdown_size;
-        $button_shape = $this->query_results->button_dropdown_shape;
-        $button_class = str_replace(',', ' ', $this->query_results->button_dropdown_class);
+        $button_type  = $this->row->button_dropdown_type;
+        $button_size  = $this->row->button_dropdown_size;
+        $button_shape = $this->row->button_dropdown_shape;
+        $button_class = str_replace(',', ' ', $this->row->button_dropdown_class);
 
         $button_dropdown_class = trim($button_type);
         $button_dropdown_class = trim($button_dropdown_class) . ' ' . trim($button_shape);
@@ -468,7 +468,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
 
         $this->setField(null, 'button_dropdown_class', $button_dropdown_class);
 
-        $button_array = $this->getButtons($this->query_results->button_group_array);
+        $button_array = $this->getButtons($this->row->button_group_array);
         $this->setField(null, 'button_group_array', $button_array);
 
         return $this;
@@ -508,7 +508,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function page()
     {
-        $page_array = $this->getPages($this->query_results->page_array);
+        $page_array = $this->getPages($this->row->page_array);
         $this->setField(null, 'page_array', $page_array);
 
         return $this;

@@ -3,7 +3,7 @@
  * Defer Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Defer;
@@ -42,9 +42,9 @@ class DeferPlugin extends ReadEventPlugin implements ReadInterface
         $controller->setDataobject();
         $controller->connectDatabase();
 
-        $temp_query_results = $controller->getData('list');
+        $temp_row = $controller->getData('list');
 
-        $this->registry->set('Assets', JS_DEFER_LITERAL, $temp_query_results);
+        $this->registry->set('Assets', JS_DEFER_LITERAL, $temp_row);
 
         /** JS Declarations */
         $controller_class_namespace = $this->controller_namespace;
@@ -53,9 +53,9 @@ class DeferPlugin extends ReadEventPlugin implements ReadInterface
         $controller->set('model_parameter', JS_DECLARATIONS_DEFER_LITERAL, 'runtime_data');
         $controller->connectDatabase();
 
-        $temp_query_results = $controller->getData('list');
+        $temp_row = $controller->getData('list');
 
-        $this->registry->set('Assets', JS_DECLARATIONS_DEFER_LITERAL, $temp_query_results);
+        $this->registry->set('Assets', JS_DECLARATIONS_DEFER_LITERAL, $temp_row);
 
         return $this;
     }

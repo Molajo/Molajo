@@ -3,7 +3,7 @@
  * Weather Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Weather;
@@ -61,9 +61,9 @@ class WeatherPlugin extends ReadEventPlugin implements ReadInterface
         }
 
         if ($results === false) {
-            $row                 = new \stdClass();
-            $row->results        = 0;
-            $this->query_results = $row;
+            $row          = new \stdClass();
+            $row->results = 0;
+            $this->row    = $row;
 
             return $this;
         }
@@ -123,7 +123,7 @@ class WeatherPlugin extends ReadEventPlugin implements ReadInterface
             $i ++;
         }
 
-        $this->query_results = $row;
+        $this->row = $row;
 
         return $this;
     }

@@ -3,7 +3,7 @@
  * Autoload
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http:/www.opensource.org/licenses/mit-license.html MIT License
  */
 
@@ -91,7 +91,7 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     require_once $base_folder . '/vendor/molajo/resource/Source/ResourceMap.php';
 
-    $class        = 'Molajo\\Resource\\ResourceMap';
+    $class = 'Molajo\\Resource\\ResourceMap';
 
     $class_loader = new $class (
         $base_folder,

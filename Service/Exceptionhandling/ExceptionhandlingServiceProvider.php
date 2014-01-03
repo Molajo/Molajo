@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  */
 namespace Molajo\Service\Exceptionhandling;
 
@@ -18,7 +18,7 @@ use CommonApi\IoC\ServiceProviderInterface;
  *
  * @author     Amy Stephen
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
 class ExceptionhandlingServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface
@@ -80,7 +80,7 @@ class ExceptionhandlingServiceProvider extends AbstractServiceProvider implement
 
         $run->register();
 
-        $class                  = 'Molajo\\Controller\\ExceptionHandling';
+        $class = 'Molajo\\Controller\\ExceptionHandling';
 //todo        $this->service_instance = new $class();
 
         return $this;

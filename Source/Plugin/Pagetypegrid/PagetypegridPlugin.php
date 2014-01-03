@@ -3,7 +3,7 @@
  * Page Type Grid Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Pagetypegrid;
@@ -46,9 +46,11 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
         $this->setToolbar();
 
-        $this->setGridFilter();
+        $this->getGridColumns();
 
         $this->getGridData();
+
+        $this->setGridFilter();
 
         $this->setFirstLastEvenOdd();
 
@@ -66,9 +68,9 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
     protected function getCurrentMenuItem()
     {
         // 11102 or articles ... hmmmm ... hard to be unique qith grid, edit, list, etc.
-        $model = 'Menuitem' . ':///Molajo//Menuitem//Articles';
-        $this->runtime_data->current_menuitem = new stdClass();
-        $this->runtime_data->current_menuitem->id = (int) $this->runtime_data->page->current_menuitem_id;
+        $model                                           = 'Menuitem' . ':///Molajo//Menuitem//Articles';
+        $this->runtime_data->current_menuitem            = new stdClass();
+        $this->runtime_data->current_menuitem->id        = (int)$this->runtime_data->page->current_menuitem_id;
         $this->runtime_data->current_menuitem->extension = $this->resource->get($model);
 
         return $this;
@@ -100,11 +102,11 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
             foreach ($grid_toolbar_buttons as $button) {
 
-                $options = array();
+                $options                = array();
                 $options['resource_id'] = $catalog_id;
-                $options['task'] = $button;
+                $options['task']        = $button;
 
-                $permissions          = $this->authorisation_controller->isUserAuthorised($options);
+                $permissions = $this->authorisation_controller->isUserAuthorised($options);
 
                 if ($permissions === true) {
 
@@ -147,154 +149,29 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
     }
 
     /**
-     * Filters: lists stored in registry, where clauses for primary grid query set
+     * Get Grid Columns
      *
      * @return  $this
      * @since   1.0
-     * @throws  /CommonApi/Exception/RuntimeException
      */
-    protected function setGridFilter()
+    protected function getGridColumns()
     {
-        $grid_list = array();
+        for ($i = 1; $i < 16; $i ++) {
 
-        for ($i = 1; $i < 11; $i ++) {
+            $grid_column_number = 'grid_column' . $i;
+            if (isset($this->runtime_data->current_menuitem->extension->parameters->$grid_column_number)) {
 
-            $grid_list_number = 'grid_list' . $i;
-            if (isset($this->runtime_data->current_menuitem->extension->parameters->$grid_list_number)) {
-                $grid_list[] = $this->runtime_data->current_menuitem->extension->parameters->$grid_list_number;
-            } else {
-                $grid_list[] = null;
-            }
-        }
-
-        $lists = array();
-/**        if (is_array($grid_list) && count($grid_list) > 0) {
-
-            foreach ($grid_list as $list) {
-
-                //@todo figure out selected value
-                $selected = '';
-
-                if ((string)$list == '') {
+                $field = trim($this->runtime_data->current_menuitem->extension->parameters->$grid_column_number);
+                if (trim($field) == '') {
                 } else {
-                    if (isset($this->runtime_data->plugin_data->datalists->$list)) {
-                        $results = $this->runtime_data->plugin_data->datalists->$list;
-                    } else {
-                        throw new RuntimeException
-                        ('PagetypegridPlugin: Unknown $this->runtime_data->plugin_data->datalists: ' . $list);
-                    }
-
-                    $key = $results->id;
-
-                    $lists[$key] = $this->getFilter($results->value, $key);
-                }
-            }
-        }
-        echo '<pre>';
-        var_dump($lists);
-        die;
- */
-        /** Fields */
-        $temp_array = array();
-
-        $fields = $this->runtime_data->resource->model_registry['fields'];
-        if (is_array($fields) && count($fields) > 0) {
-            foreach ($fields as $field) {
-
-                $temp = new stdClass();
-
-                if ($field['type'] == 'customfield') {
-                } else {
-                    $temp->id       = $field['name'];
-                    $temp->name     = $field['name'];
-                    $temp->multiple = '';
-                    $temp->size     = 1;
-                    $temp_array[]   = $temp;
+                    $grid_column_list[] = $field;
                 }
             }
         }
 
-        $fields = $this->runtime_data->resource->model_registry['parameters'];
-        if (is_array($fields) && count($fields) > 0) {
-            foreach ($fields as $field) {
-
-                $temp = new stdClass();
-
-                if ($field['type'] == 'customfield') {
-                } else {
-                    $temp->id       = $field['name'];
-                    $temp->name     = $field['name'];
-                    $temp->multiple = '';
-                    $temp->size     = 1;
-                    $temp_array[]   = $temp;
-                }
-            }
-        }
-
-        $fields = $this->runtime_data->resource->model_registry['metadata'];
-        if (is_array($fields) && count($fields) > 0) {
-            foreach ($fields as $field) {
-
-                $temp = new stdClass();
-
-                if ($field['type'] == 'customfield') {
-                } else {
-                    $temp->id       = $field['name'];
-                    $temp->name     = $field['name'];
-                    $temp->multiple = '';
-                    $temp->size     = 1;
-                    $temp_array[]   = $temp;
-                }
-            }
-        }
-        $lists['Fields'] = $temp_array;
-
-        $this->runtime_data->plugin_data->grid_filters = $lists;
+        $this->runtime_data->plugin_data->grid_columns = $grid_column_list;
 
         return $this;
-    }
-
-    /**
-     * Get Filter
-     *
-     * @return  int
-     * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    protected function getFilter($namespace, $list)
-    {
-        $options                 = array();
-        $options['runtime_data'] = $this->runtime_data;
-        $controller              = $this->resource->get('query:///Molajo//' . $namespace . '.xml', $options);
-
-        $controller->setModelRegistry('process_events', 0);
-        $controller->setModelRegistry('get_customfields', 0);
-        $controller->setModelRegistry('query_object', 'list');
-
-        $catalog_type_id = $controller->getModelRegistry('catalog_type_id');
-
-        if ((string)$catalog_type_id == '*') {
-            if (isset($this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id)) {
-                $catalog_type_id = $this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id;
-            }
-        }
-        if ((int)$catalog_type_id === 0) {
-        } else {
-            $controller->model->query->where(
-                $controller->model->database->qn($controller->get('primary_prefix', 'a'))
-                . '.' . $controller->model->database->qn('catalog_type_id')
-                . ' = '
-                . (int)$catalog_type_id
-            );
-        }
-
-        try {
-            $results = $controller->getData();
-        } catch (Exception $e) {
-            throw new RuntimeException ($e->getMessage());
-        }
-
-        return $results;
     }
 
     /**
@@ -308,7 +185,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $resource = $this->runtime_data->current_menuitem->extension->parameters->menuitem_model_name;
 
         $model = 'Molajo//Datasource//' . $resource . '//Configuration.xml';
-        $grid = $this->resource->get('query:///' . $model);
+        $grid  = $this->resource->get('query:///' . $model);
 
         $grid->setModelRegistry('check_view_level_access', 1);
         $grid->setModelRegistry('process_events', 1);
@@ -318,19 +195,6 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
         $primary_prefix = $grid->getModelRegistry('primary_prefix');
         $key            = $grid->getModelRegistry('primary_key');
-
-        /** Select */
-        for ($i = 1; $i < 16; $i ++) {
-
-            $grid_column_number = 'grid_column' . $i;
-            if (isset($this->runtime_data->current_menuitem->extension->parameters->$grid_column_number)) {
-                $grid_column_list[] = trim($this->runtime_data->current_menuitem->extension->parameters->$grid_column_number);
-            } else {
-                $grid_column_list[] = null;
-            }
-        }
-
-        $this->runtime_data->plugin_data->grid_columns = $grid_column_list;
 
         /** Catalog Type ID */
         if (isset($this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id)) {
@@ -425,7 +289,8 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        $this->runtime_data->plugin_data->grid_data = $grid_items;
+        $this->runtime_data->plugin_data->grid_data           = $grid_items;
+        $this->runtime_data->plugin_data->grid_model_registry = $grid->model->model_registry;
 
         /** Grid Ordering Template */
         $temp                                           = new stdClass();
@@ -436,6 +301,157 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $this->runtime_data->plugin_data->grid_ordering = $temp;
 
         return $this;
+    }
+
+    /**
+     * Filters: lists stored in registry, where clauses for primary grid query set
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  /CommonApi/Exception/RuntimeException
+     */
+    protected function setGridFilter()
+    {
+        $grid_list = array();
+
+        for ($i = 1; $i < 11; $i ++) {
+
+            $grid_list_number = 'grid_list' . $i;
+            if (isset($this->runtime_data->current_menuitem->extension->parameters->$grid_list_number)) {
+                $grid_list[] = $this->runtime_data->current_menuitem->extension->parameters->$grid_list_number;
+            } else {
+                $grid_list[] = null;
+            }
+        }
+
+        $lists = array();
+        /**        if (is_array($grid_list) && count($grid_list) > 0) {
+
+        foreach ($grid_list as $list) {
+
+        //@todo figure out selected value
+        $selected = '';
+
+        if ((string)$list == '') {
+        } else {
+        if (isset($this->runtime_data->plugin_data->datalists->$list)) {
+        $results = $this->runtime_data->plugin_data->datalists->$list;
+        } else {
+        throw new RuntimeException
+        ('PagetypegridPlugin: Unknown $this->runtime_data->plugin_data->datalists: ' . $list);
+        }
+
+        $key = $results->id;
+
+        $lists[$key] = $this->getFilter($results->value, $key);
+        }
+        }
+        }
+        echo '<pre>';
+        var_dump($lists);
+        die;
+         */
+        /** Fields */
+        $temp_array = array();
+
+        $fields = $this->runtime_data->plugin_data->grid_model_registry['fields'];
+        if (is_array($fields) && count($fields) > 0) {
+            foreach ($fields as $field) {
+
+                $temp = new stdClass();
+
+                if ($field['type'] == 'customfield') {
+                } else {
+                    $temp->id       = $field['name'];
+                    $temp->name     = $field['name'];
+                    $temp->multiple = '';
+                    $temp->size     = 1;
+                    $temp_array[]   = $temp;
+                }
+            }
+        }
+
+        $fields = $this->runtime_data->plugin_data->grid_model_registry['parameters'];
+        if (is_array($fields) && count($fields) > 0) {
+            foreach ($fields as $field) {
+
+                $temp = new stdClass();
+
+                if ($field['type'] == 'customfield') {
+                } else {
+                    $temp->id       = $field['name'];
+                    $temp->name     = $field['name'];
+                    $temp->multiple = '';
+                    $temp->size     = 1;
+                    $temp_array[]   = $temp;
+                }
+            }
+        }
+
+        $fields = $this->runtime_data->plugin_data->grid_model_registry['metadata'];
+        if (is_array($fields) && count($fields) > 0) {
+            foreach ($fields as $field) {
+
+                $temp = new stdClass();
+
+                if ($field['type'] == 'customfield') {
+                } else {
+                    $temp->id       = $field['name'];
+                    $temp->name     = $field['name'];
+                    $temp->multiple = '';
+                    $temp->size     = 1;
+                    $temp_array[]   = $temp;
+                }
+            }
+        }
+        $lists['Fields'] = $temp_array;
+
+        $this->runtime_data->plugin_data->grid_filters = $lists;
+
+        return $this;
+    }
+
+    /**
+     * Get Filter
+     *
+     * @return  int
+     * @since   1.0
+     * @throws  \CommonApi\Exception\RuntimeException
+     */
+    protected function getFilter($namespace, $list)
+    {
+        $options                 = array();
+        $options['runtime_data'] = $this->runtime_data;
+        $controller              = $this->resource->get('query:///Molajo//' . $namespace . '.xml', $options);
+
+        $controller->setModelRegistry('process_events', 0);
+        $controller->setModelRegistry('get_customfields', 0);
+        $controller->setModelRegistry('query_object', 'list');
+
+        $catalog_type_id = $controller->getModelRegistry('catalog_type_id');
+
+        if ((string)$catalog_type_id == '*') {
+            if (isset($this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id)) {
+                $catalog_type_id = $this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id;
+            }
+        }
+        if ((int)$catalog_type_id === 0) {
+        } else {
+            $controller->model->query->where(
+                $controller->model->database->qn($controller->get('primary_prefix', 'a'))
+                . '.' . $controller->model->database->qn('catalog_type_id')
+                . ' = '
+                . (int)$catalog_type_id
+            );
+        }
+
+        try {
+            $results = $controller->getData();
+        } catch (Exception $e) {
+            throw new RuntimeException ($e->getMessage());
+        }
+
+        return $results;
     }
 
     /**

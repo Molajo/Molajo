@@ -3,7 +3,7 @@
  * Alias Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Alias;
@@ -51,22 +51,22 @@ class AliasPlugin extends CreateEventPlugin implements CreateInterface, UpdateIn
      */
     protected function createAlias()
     {
-        if (isset($this->query_results->title) && isset($this->query_results->alias)) {
+        if (isset($this->row->title) && isset($this->row->alias)) {
         } else {
             return $this;
         }
 
-        if ($this->query_results->alias == '') {
-            $this->query_results->alias = $this->fieldhandler->filter(
+        if ($this->row->alias == '') {
+            $this->row->alias = $this->fieldhandler->filter(
                 'alias',
-                $this->query_results->alias,
+                $this->row->alias,
                 'alias',
                 array()
             );
         } else {
-            $this->query_results->alias = $this->fieldhandler->filter(
+            $this->row->alias = $this->fieldhandler->filter(
                 'title',
-                $this->query_results->title,
+                $this->row->title,
                 'alias',
                 array()
             );

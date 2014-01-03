@@ -4,9 +4,8 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  */
-
 ?>
 <tr class="<? echo $this->row->grid_row_class; ?>"><?
     $columnCount = 1;
@@ -54,6 +53,7 @@
             echo '<span class="' . $class . '">' . $this->language_controller->translate(
                     $this->row->status_name
                 ) . '</span>';
+
         } elseif ($column == 'stickied') {
             echo '<span class="stickied">';
             if ((int)$this->row->$column == 1) {
@@ -64,6 +64,7 @@
                     ) . '"></i>';
             }
             echo '</span>';
+
         } elseif ($column == 'featured') {
             echo '<span class="featured">';
             if ((int)$this->row->$column == 1) {
@@ -74,6 +75,7 @@
                     ) . '"></i>';
             }
             echo '</span>';
+
         } elseif ($column == 'ordering') {
             echo '<span class="orderingicons">';
             if ((int)$this->row->last_row == 1) {
@@ -90,11 +92,17 @@
             echo '<span class="ordering">';
             echo $this->row->$column;
             echo '</span>';
+
         } else {
-            if (isset($this->row->column)) {
+            if (isset($this->row->$column)) {
                 echo $this->row->$column;
             } else {
-                echo '<br />Column does not exist: ' . $column;
+                if (substr($column, 0, strlen('metadata_')) == 'metadata_') {
+                    $column = substr($column, strlen('metadata_'), 9999);
+                    echo $this->row->metadata->$column;
+                } else {
+                    echo '<br />Column does not exist: ' . $column;
+                }
             }
         }
         ?>
@@ -112,3 +120,4 @@
         <input type=checkbox value="<? echo $checked; ?>">
     </td>
 </tr>
+

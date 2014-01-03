@@ -17,7 +17,7 @@
         <target>.dev/Docs</target>
     </transformer>
     <transformations>
-        <template name="clean" />
+        <template name="clean"/>
     </transformations>
     <files>
         <directory>.</directory>

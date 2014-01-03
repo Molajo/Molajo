@@ -3,7 +3,7 @@
  * Head Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Head;
@@ -42,9 +42,9 @@ class HeadPlugin extends ReadEventPlugin implements ReadInterface
         $controller->connectDatabase();
         $controller->set('model_parameter', 'Js');
 
-        $temp_query_results = $controller->getData('getAssets');
+        $temp_row = $controller->getData('getAssets');
 
-        $this->registry->set('Assets', 'js', $temp_query_results);
+        $this->registry->set('Assets', 'js', $temp_row);
 
         /** JS Declarations */
         $controller_class_namespace = $this->controller_namespace;
@@ -54,9 +54,9 @@ class HeadPlugin extends ReadEventPlugin implements ReadInterface
         $controller->connectDatabase();
 
         $controller->set('model_parameter', 'JsDeclarations');
-        $temp_query_results = $controller->getData('getAssets');
+        $temp_row = $controller->getData('getAssets');
 
-        $this->registry->set('Assets', 'jsdeclarations', $temp_query_results);
+        $this->registry->set('Assets', 'jsdeclarations', $temp_row);
 
         return $this;
     }

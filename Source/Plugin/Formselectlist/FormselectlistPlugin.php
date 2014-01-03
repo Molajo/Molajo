@@ -3,7 +3,7 @@
  * Form Select List Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Formselectlist;
@@ -42,12 +42,12 @@ class FormselectlistPlugin extends DisplayEventPlugin implements DisplayInterfac
             return $this;
         }
 
-//        $temp_query_results = $this->runtime_data->plugin_data->grid_filters[$list];
+//        $temp_row = $this->runtime_data->plugin_data->grid_filters[$list];
 
         $this->runtime_data->plugin_data->form_select_list = array();
         //$this->runtime_data->plugin_data->datalists->datalist[$list];
 
-        $this->query_results = $this->runtime_data->plugin_data->form_select_list;
+        $this->row = $this->runtime_data->plugin_data->form_select_list;
 
         return $this;
     }

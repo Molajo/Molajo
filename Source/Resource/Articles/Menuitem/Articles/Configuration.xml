@@ -3,6 +3,9 @@
     <customfields>
         <customfield name="parameters">
             <include name="ParametersApplicationMenuitem"/>
+            <include name="ParametersGrid"/>
+            <include name="ParametersConfiguration"/>
+            <include name="ParametersEdit"/>
         </customfield>
     </customfields>
 </model>

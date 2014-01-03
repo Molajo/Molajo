@@ -3,7 +3,7 @@
  * Resource Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Resource;
@@ -26,7 +26,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
     /**
      * Get Resource, Theme and View Data for Page Type and other Route Data
      *
-     * @return  object
+     * @return  $this
      * @since   1.0
      */
     public function onAfterRoute()
@@ -34,14 +34,19 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         $page_type = strtolower($this->runtime_data->route->page_type);
 
         if ($page_type == 'item') {
-            return $this->getResourceItem();
+            $this->getResourceItem();
+
         } elseif ($page_type == 'form') {
-            return $this->getResourceForm();
+            $this->getResourceForm();
+
         } elseif ($page_type == 'list') {
-            return $this->getResourceList();
+            $this->getResourceList();
+
         } else {
-            return $this->getResourceMenu();
+            $this->getResourceMenu();
         }
+
+        return $this;
     }
 
     /**
@@ -81,7 +86,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         );
 
         try {
-            $item           = $resource->getData();
+            $item = $resource->getData();
 
             $model_registry = $resource->getModelRegistry('*');
 
@@ -98,8 +103,8 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
             $item->parameters->theme_id = $this->runtime_data->application->parameters->application_default_theme_id;
         }
 
-        $resource                 = new stdClass();
-        $parameters               = $item->parameters;
+        $resource   = new stdClass();
+        $parameters = $item->parameters;
         unset($item->parameters);
 
         $resource->data           = $item;
@@ -167,7 +172,6 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
             'primary_key_value',
             (int)$this->runtime_data->route->source_id
         );
-        $controller->setModelRegistry('query_object', 'item');
 
         try {
             $menu_item = $controller->getData();
@@ -187,16 +191,15 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
 
         $catalog_type_id = $menu_item->parameters->criteria_catalog_type_id;
 
-        $model_name = $this->getCatalogModel($catalog_type_id);
-
-        $resource             = $this->getMenuitemResourceList($model_name);
-        $resource->parameters = $menu_item->parameters;
-        $resource->metadata   = $menu_item->metadata;
-        $resource->menuitem   = $menu_item;
+        $resource                  = new stdClass();
+        $resource->parameters      = $menu_item->parameters;
+        $resource->metadata        = $menu_item->metadata;
+        $resource->menuitem        = $menu_item;
+        $resource->catalog_type_id = $catalog_type_id;
 
         $this->runtime_data->resource = $resource;
 
-        return $resource;
+        return $this;
     }
 
     /**
@@ -208,6 +211,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getMenuitemResourceList($model)
     {
+// NOT USED page type plugins get data.
         $model      = 'Molajo//' . $model . '//Configuration.xml';
         $controller = $this->resource->get('query:///' . $model);
 

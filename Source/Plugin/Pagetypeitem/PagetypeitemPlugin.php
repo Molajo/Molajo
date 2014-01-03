@@ -3,7 +3,7 @@
  * Page Type Item Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Pagetypeitem;
@@ -33,8 +33,6 @@ class PagetypeitemPlugin extends DisplayEventPlugin implements DisplayInterface
         } else {
             return $this;
         }
-
-        $this->runtime_data->page->menu['SectionSubmenu'] = array();
 
         return $this;
     }

@@ -3,16 +3,16 @@
  * Author Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Author;
 
-use stdClass;
-use Exception;
-use CommonApi\Event\SystemInterface;
+use CommonApi\Event\ReadInterface;
 use CommonApi\Exception\RuntimeException;
-use Molajo\Plugin\SystemEventPlugin;
+use Exception;
+use Molajo\Plugin\ReadEventPlugin;
+use stdClass;
 
 /**
  * Author Plugin
@@ -21,7 +21,7 @@ use Molajo\Plugin\SystemEventPlugin;
  * @license  http://www.opensource.org/licenses/mit-license.html MIT License
  * @since    1.0
  */
-class AuthorPlugin extends SystemEventPlugin implements SystemInterface
+class AuthorPlugin extends ReadEventPlugin implements ReadInterface
 {
     /**
      * After-read processing
@@ -30,18 +30,18 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    public function onBeforeExecute()
+    public function onAfterRead()
     {
         $this->runtime_data->plugin_data->author                 = new stdClass();
         $this->runtime_data->plugin_data->author->data           = new stdClass();
         $this->runtime_data->plugin_data->author->model_registry = new stdClass();
 
-        if (isset($this->runtime_data->resource->data->created_by)) {
+        if (isset($this->row->created_by)) {
         } else {
             return $this;
         }
 
-        if ((int)$this->runtime_data->resource->data->created_by == 0) {
+        if ((int)$this->row->created_by == 0) {
             return $this;
         }
 
@@ -61,12 +61,12 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
      */
     public function getAuthorProfile()
     {
-        if (isset($this->runtime_data->resource->data->created_by)) {
+        if (isset($this->row->created_by)) {
         } else {
             return $this;
         }
 
-        if ((int)$this->runtime_data->resource->data->created_by == 0) {
+        if ((int)$this->row->created_by == 0) {
             return $this;
         }
 
@@ -80,7 +80,7 @@ class AuthorPlugin extends SystemEventPlugin implements SystemInterface
         $author->setModelRegistry('query_object', 'item');
         $author->setModelRegistry('use_special_joins', 1);
         $author->setModelRegistry('get_customfields', 1);
-        $author->setModelRegistry('primary_key_value', (int)$this->runtime_data->resource->data->created_by);
+        $author->setModelRegistry('primary_key_value', (int)$this->row->created_by);
         $author->setModelRegistry('get_item_children', 0);
 
         try {

@@ -3,7 +3,7 @@
  * Featured Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Featured;
@@ -32,7 +32,8 @@ class FeaturedPlugin extends DisplayEventPlugin implements DisplayInterface
     public function onBeforeRenderView()
     {
         if (strtolower($this->runtime_data->render->scheme) == 'template'
-            && strtolower($this->runtime_data->render->token->name == 'features')) {
+            && strtolower($this->runtime_data->render->token->name == 'features')
+        ) {
         } else {
             return $this;
         }

@@ -3,7 +3,7 @@
  * User Activity Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Useractivity;
@@ -108,7 +108,7 @@ class UseractivityPlugin extends ReadEventPlugin implements ReadInterface
 
         $controller->set('user_id', $this->registry->set('User', 'id'));
         $controller->set('action_id', $action_id, 'runtime_data');
-        $controller->set('catalog_id', $this->query_results->catalog_id, 'runtime_data');
+        $controller->set('catalog_id', $this->row->catalog_id, 'runtime_data');
         $controller->set('activity_datetime', null, 'runtime_data');
 
         $results = $controller->getData('create');

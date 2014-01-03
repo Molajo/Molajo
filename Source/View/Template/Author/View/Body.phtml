@@ -4,7 +4,7 @@
  *
  * @package    Molajo
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  */
 ?>
 <div class="row">
@@ -20,9 +20,9 @@
             <p>
                 <a href="<? echo $this->row->sef_url; ?>"
                    title="<? echo $this->language_controller->translate('Posts by '); ?>
-                    <span itemprop="name">
-                        <? echo $this->row->full_name; ?>
-                    </span>
+                    <span itemprop=" name">
+                <? echo $this->row->full_name; ?>
+                </span>
                 </a>
             </p>
             <? if ($this->parameters->display_phone == 1) { ?>

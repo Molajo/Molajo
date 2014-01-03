@@ -3,13 +3,14 @@
  * Catalog Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Catalog;
 
 use CommonApi\Event\DisplayInterface;
 
+use Molajo\Plugin\AbstractPlugin;
 use Molajo\Plugin\DisplayEventPlugin;
 use Molajo\Controller\CreateController;
 use CommonApi\Exception\RuntimeException;
@@ -21,127 +22,8 @@ use CommonApi\Exception\RuntimeException;
  * @license  http://www.opensource.org/licenses/mit-license.html MIT License
  * @since    1.0
  */
-class CatalogPlugin extends DisplayEventPlugin implements DisplayInterface
+class CatalogPlugin extends AbstractPlugin
 {
-    /**
-     * Generates Catalog Datalist
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function onBeforeRender()
-    {
-        if ($this->runtime_data->application->id == 2) {
-        } else {
-            return $this;
-        }
-return $this;
-        $controller = $this->resource->get('query:///Molajo//Datasource//Catalog.xml');
-
-        $controller->setModelRegistry('check_view_level_access', 0);
-        $controller->setModelRegistry('process_events', 0);
-        $controller->setModelRegistry('get_customfields', 0);
-        $controller->setModelRegistry('query_object', 'list');
-
-        $controller->model->query->select(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('id')
-        );
-
-        $controller->model->query->select(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('sef_request')
-            . ' as value'
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('application_id')
-            . ' = '
-            . (int)$this->runtime_data->application->id
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('enabled')
-            . ' = '
-            . ' 1 '
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('redirect_to_id')
-            . ' = '
-            . ' 0 '
-        );
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('page_type')
-            . ' <> '
-            . $controller->model->database->q('link')
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->model->getModelRegistry('primary_prefix', 'a'))
-            . '.' . $controller->model->database->qn('catalog_type_id')
-            . ' = ' . $this->runtime_data->reference_data->catalog_type_menuitem_id
-            . ' OR ' .
-            $controller->model->database->qn($controller->model->getModelRegistry('primary_prefix', 'a'))
-            . '.' . $controller->model->database->qn('catalog_type_id')
-            . ' > ' . (int)$this->runtime_data->reference_data->catalog_type_tag_id
-        );
-
-        $controller->model->query->order(
-            $controller->model->database->qn($controller->model->getModelRegistry('primary_prefix', 'a'))
-            . '.' . $controller->model->database->qn('sef_request')
-        );
-
-        $controller->model->setModelRegistry('model_offset', 0);
-        $controller->model->setModelRegistry('model_count', 99999);
-
-        try {
-            $temp_query_results = $controller->getData();
-        } catch (Exception $e) {
-            throw new RuntimeException ($e->getMessage());
-        }
-
-        $catalogArray = array();
-
-        $application_home_catalog_id =
-            (int)$this->runtime_data->application->parameters->application_home_catalog_id;
-
-        if ($application_home_catalog_id === 0) {
-        } else {
-            if (count($temp_query_results) == 0 || $temp_query_results === false) {
-            } else {
-
-                foreach ($temp_query_results as $item) {
-
-                    if ($item->id == $application_home_catalog_id) {
-                        $item->value    = trim($this->language_controller->translate('Home'));
-                        $catalogArray[] = $item;
-
-                    } elseif (trim($item->value) == '' || $item->value === null) {
-                        unset ($item);
-
-                    } else {
-                        $catalogArray[] = $item;
-                    }
-                }
-            }
-        }
-
-        $this->runtime_data->plugin_data->datalists->catalog = $catalogArray;
-
-        return $this;
-    }
-
     /**
      * Post-create processing
      *
@@ -150,7 +32,7 @@ return $this;
      */
     public function onAfterCreate()
     {
-        $id = $this->query_results->id;
+        $id = $this->row->id;
         if ((int)$id == 0) {
             return $this;
         }
@@ -183,7 +65,7 @@ return $this;
     {
         if ($this->application->get('log_user_update_activity', 1) == 1) {
             $results = $this->logUserActivity(
-                $this->query_results->id,
+                $this->row->id,
                 $this->registry->get('Actions', 'delete')
             );
             if ($results === false) {
@@ -193,7 +75,7 @@ return $this;
 
         if ($this->application->get('log_catalog_update_activity', 1) == 1) {
             $results = $this->logCatalogActivity(
-                $this->query_results->id,
+                $this->row->id,
                 $this->registry->get('Actions', 'delete')
             );
             if ($results === false) {
@@ -229,12 +111,12 @@ return $this;
         $controller->model->getModelRegistryModelRegistry('x', 'y', 1);
 
         $sql = 'DELETE FROM ' . $controller->model->database->qn('#__catalog_categories');
-        $sql .= ' WHERE ' . $controller->model->database->qn('catalog_id') . ' = ' . (int)$this->query_results->id;
+        $sql .= ' WHERE ' . $controller->model->database->qn('catalog_id') . ' = ' . (int)$this->row->id;
         $controller->model->database->setQueryPermissions($sql);
         $controller->model->database->execute();
 
         $sql = 'DELETE FROM ' . $controller->model->database->qn('#__catalog_activity');
-        $sql .= ' WHERE ' . $controller->model->database->qn('catalog_id') . ' = ' . (int)$this->query_results->id;
+        $sql .= ' WHERE ' . $controller->model->database->qn('catalog_id') . ' = ' . (int)$this->row->id;
         $controller->model->database->setQueryPermissions($sql);
         $controller->model->database->execute();
 

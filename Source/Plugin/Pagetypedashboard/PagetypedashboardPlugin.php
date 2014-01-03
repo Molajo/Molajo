@@ -3,7 +3,7 @@
  * Page Type Dashboard Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Pagetypedashboard;
@@ -32,6 +32,9 @@ class PagetypedashboardPlugin extends DisplayEventPlugin implements DisplayInter
         } else {
             return $this;
         }
+
+        echo 'PagetypedashboardPlugin';
+        die;
 
         $portletOptions = $this->registry->get('runtime_data', 'dashboard_portlet');
         if (trim($portletOptions) == '') {
@@ -157,7 +160,7 @@ class PagetypedashboardPlugin extends DisplayEventPlugin implements DisplayInter
             //throw exception
         }
 
-        $temp_query_results = array();
+        $temp_row = array();
 
         foreach ($list as $item) {
 
@@ -170,10 +173,10 @@ class PagetypedashboardPlugin extends DisplayEventPlugin implements DisplayInter
             $temp_row->multiple = '';
             $temp_row->listname = 'Portlets';
 
-            $temp_query_results[] = $temp_row;
+            $temp_row[] = $temp_row;
         }
 
-        $this->runtime_data->plugin_data->datalists->portlets = $temp_query_results;
+        $this->runtime_data->plugin_data->datalists->portlets = $temp_row;
 
         return $this;
     }

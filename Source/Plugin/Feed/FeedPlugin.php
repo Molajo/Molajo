@@ -3,7 +3,7 @@
  * Feed Plugin
  *
  * @package    Molajo
- * @copyright  2013 Amy Stephen. All rights reserved.
+ * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 namespace Molajo\Plugin\Feed;
@@ -58,7 +58,7 @@ class FeedPlugin extends AbstractPlugin
             array_push($feed, $item);
         }
 
-        $temp_query_results = array();
+        $temp_row = array();
 
         for ($x = 0; $x < $count; $x ++) {
             $temp_row = new \stdClass();
@@ -68,10 +68,10 @@ class FeedPlugin extends AbstractPlugin
             $temp_row->description    = $feed[$x]['desc'];
             $temp_row->published_date = date('l F d, Y', strtotime($feed[$x]['date']));
 
-            $temp_query_results[] = $temp_row;
+            $temp_row[] = $temp_row;
         }
 
-        $this->query_results = $temp_query_results;
+        $this->row = $temp_row;
 
         return $this;
     }
