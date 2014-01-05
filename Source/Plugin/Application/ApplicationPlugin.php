@@ -76,78 +76,6 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     }
 
     /**
-     * Get Menu Item ID
-     *
-     * @return  int
-     * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    protected function getItemMenuItemId()
-    {
-        $options                 = array();
-        $options['runtime_data'] = $this->runtime_data;
-        $options['parameters']   = $this->parameters;
-        $controller              = $this->resource->get('query:///Molajo//Datasource//Catalog.xml', $options);
-
-        $controller->setModelRegistry('check_view_level_access', 0);
-        $controller->setModelRegistry('process_events', 0);
-        $controller->setModelRegistry('get_customfields', 0);
-        $controller->setModelRegistry('query_object', 'result');
-
-        $controller->model->query->select(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('source_id')
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('catalog_type_id')
-            . ' = '
-            . (int)$this->runtime_data->reference_data->catalog_type_menuitem_id
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('application_id')
-            . ' = '
-            . (int)$this->runtime_data->application->id
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('enabled')
-            . ' = '
-            . ' 1 '
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('page_type')
-            . ' <> '
-            . $controller->model->database->q('link')
-        );
-
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('sef_request')
-            . ' = '
-            . $controller->model->database->q($this->runtime_data->route->b_alias)
-        );
-
-        try {
-            return $controller->getData();
-        } catch (Exception $e) {
-            throw new RuntimeException ($e->getMessage());
-        }
-    }
-
-    /**
      * Build the home and page url to be used in links
      *
      * @return  $this
@@ -282,23 +210,26 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             . '.' . $controller->model->database->qn('lft')
         );
 
-        $row = $controller->getData();
+        $rows = $controller->getData();
 
-        if (count($row) === 0) {
+        if (count($rows) === 0) {
             return $this;
         }
 
         $current_menu_item = $this->runtime_data->page->current_menuitem_id;
         $breadcrumbs       = $this->runtime_data->page->breadcrumbs;
+        $menu_name         = '';
 
-        foreach ($row as $item) {
+        foreach ($rows as $item) {
 
             $item->menu_id = $item->extension_id;
-            $menu_name     = $item->menu;
+
+            $menu_name = $item->menu;
 
             if ($item->id == $current_menu_item && (int)$current_menu_item > 0) {
                 $item->css_class = 'current';
                 $item->current   = 1;
+
             } else {
                 $item->css_class = '';
                 $item->current   = 0;
@@ -316,11 +247,8 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
             $base = $this->runtime_data->application->base_url;
 
-            if ($this->runtime_data->application->parameters->url_sef == 1) {
-                $item->url = $base . $item->catalog_sef_request;
-            } else {
-                $item->url = $base . 'index.php?id=' . (int)$item->catalog_id;
-            }
+            $item->url = $base . 'index.php?id=' . (int)$item->catalog_id;
+            $item->link = $base . $item->catalog_sef_request;
 
             if ($item->subtitle == '' || $item->subtitle == null) {
                 $item->link_text = $item->title;
@@ -328,13 +256,12 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
                 $item->link_text = $item->subtitle;
             }
 
-            $item->link = $item->url;
         }
 
         $this->runtime_data->page->breadcrumbs = $breadcrumbs;
 
         $this->runtime_data->page->menu             = array();
-        $this->runtime_data->page->menu[$menu_name] = $row;
+        $this->runtime_data->page->menu[$menu_name] = $rows;
 
         return $this;
     }

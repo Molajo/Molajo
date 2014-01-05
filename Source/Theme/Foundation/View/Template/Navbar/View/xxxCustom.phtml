@@ -6,62 +6,75 @@
  */
 
 /** Get menu id for level currently being processed */
+//$i = 1;
+//$currentMenuArray = array();
+//$menu = $this->runtime_data->page->menu['Menuadmin'];
+//$breadcrumbs = $this->runtime_data->page->breadcrumbs;
+//$pageURL = $this->runtime_data->page->urls['page'];
+
+//if (isset($menu[0]->css_class)) {
+//    $class = ' class="' . $menu[0]->css_class . '" ';
+//}
+//$link_text = $menu[0]->link_text;
+//$link = $menu[0]->link;
+
+?>
+<?
+/**
+ * @package    Molajo
+ * @copyright  2014 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+
+/** Get menu id for level currently being processed */
 $i = 1;
 $currentMenuArray = array();
 
 $menu = $this->runtime_data->page->menu['Menuadmin'];
+
 $breadcrumbs = $this->runtime_data->page->breadcrumbs;
 $pageURL = $this->runtime_data->page->urls['page'];
+$homeURL = $this->runtime_data->page->urls['page'];
 
 if (isset($menu[0]->css_class)) {
     $class = ' class="' . $menu[0]->css_class . '" ';
 }
-$link_text = $menu[0]->link_text;
-$link = $menu[0]->link;
+
+/** Home */
+$link_text = 'Site Name';
+$link = $homeURL;
 ?>
 <div class="fixed contain-to-grid" id="navigation-bar" role="banner">
-    <nav class="top-bar">
-        <ul>
+    <nav class="top-bar" data-topbar>
+        <ul class="title-area">
             <li class="name">
                 <h1>
                     <li<? echo $class; ?>><a href="<? echo $link; ?>"><? echo $link_text; ?></a>
                 </h1>
             </li>
-            <li class="toggle-topbar"><a href="<? echo $this->runtime_data->page->urls['page']; ?>#"></a>
-            </li>
         </ul>
         <? if (count($menu) == 0 || $menu == '') {
-        } else {
-            ?>
-            <section>
+        } else { ?>
+            <section class="top-bar-section">
                 <ul class="left">
                     <li class="divider"></li>
                     <?
                     $previous_lvl = 0;
                     foreach ($menu as $menuitem) {
-
                     /* Previous Menu Item(s) */
-                    if ($previous_lvl == 0) {
-                    } elseif ($previous_lvl == $menuitem->lvl) {
-                        ?>
+                    if ($previous_lvl == 0 || $previous_lvl == 1) {
+                    } elseif ($previous_lvl == $menuitem->lvl) { ?>
                         </li>
-
-                    <?
-                    } elseif ($previous_lvl < $menuitem->lvl) {
-                    }
-                    else {
+                    <?  } elseif ($previous_lvl < $menuitem->lvl) {
+                    } else {
                     $count = (int)$previous_lvl - (int)$menuitem->lvl + 1;
-                    for ($i = 0;
-                    $i < $count;
-                    $i ++) {
-                    if ($i + 1 == $count) {
-                        ?>
+                    for ($i = 0; $i < $count; $i ++) {
+                    if ($i + 1 == $count) { ?>
                         </li>
                     <? } else { ?>
                     </li>
                 </ul>
-                <?
-                }
+                <? }
                 }
                 }
 
@@ -97,8 +110,7 @@ $link = $menu[0]->link;
             <? } else { ?>
                 <li<? echo $liClass; ?>><a
                         href="<? echo $menuitem->link; ?>"><? echo $menuitem->link_text; ?></a>
-                    <?
-                    }
+                    <? }
 
                     if ((int)$menuitem->lvl == 3) {
                         $saveLvlLink  = $menuitem->link;
@@ -106,27 +118,20 @@ $link = $menu[0]->link;
                     }
 
                     if ((int)$menuitem->lft + 1 == (int)$menuitem->rgt) {
-                    } else {
-                    ?>
+                    } else { ?>
                     <ul<? echo $ulClass; ?>>
-                        <?
-                        }
-
+                        <? }
                         /** Save the current level */
                         $previous_lvl = $menuitem->lvl;
                         }
                         $count = (int)$previous_lvl - 1;
-                        for ($i = 0;
-                        $i < $count;
-                        $i ++) {
-                        if ($i + 1 == $count) {
-                        ?>
+                        for ($i = 0; $i < $count; $i ++) {
+                        if ($i + 1 == $count) { ?>
                 </li>
             <? } else { ?>
                 </li>
                 </ul>
-            <?
-            }
+            <? }
             } ?>
                 </ul>
             </section>

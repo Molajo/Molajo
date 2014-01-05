@@ -29,12 +29,14 @@
             //echo '<a href="' . $this->row->catalog_id_url . '">';
             echo $this->row->$column;
             echo '</a>';
+
         } elseif ($column == 'username') {
             //    echo '<a href="' . $this->row->catalog_id_url . '">';
             echo '<a href="">';
             echo $this->row->$column;
             echo '</a>';
-        } elseif ($column == 'status') {
+
+        } elseif ($column == 'status' || $column == 'status_name') {
             if ((int)$this->row->status == 2) {
                 $class = 'success radius label';
             } elseif ((int)$this->row->status == 1) {
@@ -50,43 +52,39 @@
             } elseif ((int)$this->row->status == - 10) {
                 $class = 'secondary radius label';
             }
+
             echo '<span class="' . $class . '">' . $this->language_controller->translate(
                     $this->row->status_name
                 ) . '</span>';
 
         } elseif ($column == 'stickied') {
-            echo '<span class="stickied">';
+            echo '<span class="stickied centered">';
             if ((int)$this->row->$column == 1) {
-                echo '<i class="icon-star" alt="' . $this->language_controller->translate('Stickied') . '"></i>';
+                echo '<i class="fi-check" alt="' . $this->language_controller->translate('Stickied') . '"></i>';
             } else {
-                echo '<i class="icon-star-empty" alt="' . $this->language_controller->translate(
-                        'Not Stickied'
-                    ) . '"></i>';
+                echo '';
             }
             echo '</span>';
 
         } elseif ($column == 'featured') {
-            echo '<span class="featured">';
+            echo '<span class="featured centered">';
             if ((int)$this->row->$column == 1) {
-                echo '<i class="icon-star" alt="' . $this->language_controller->translate('Featured') . '"></i>';
+                echo '<i class="fi-star" alt="' . $this->language_controller->translate('Featured') . '"></i>';
             } else {
-                echo '<i class="icon-star-empty" alt="' . $this->language_controller->translate(
-                        'Not Featured'
-                    ) . '"></i>';
+                echo '';
             }
             echo '</span>';
 
         } elseif ($column == 'ordering') {
-            echo '<span class="orderingicons">';
             if ((int)$this->row->last_row == 1) {
                 echo ' ';
             } else {
-                echo '<i class="icon-arrow-down"></i>';
+                echo '<i class="fi-arrow-down"></i>&nbsp;';
             }
-            if ((int)$this->row->$column == 1) {
+            if ((int)$this->row->first_row == 1) {
                 echo ' ';
             } else {
-                echo '<i class="icon-arrow-up"></i>';
+                echo '<i class="fi-arrow-up"></i>&nbsp;';
             }
             echo '</span>';
             echo '<span class="ordering">';

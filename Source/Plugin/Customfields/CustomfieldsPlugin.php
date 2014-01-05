@@ -11,7 +11,6 @@ namespace Molajo\Plugin\Customfields;
 use stdClass;
 use CommonApi\Event\ReadInterface;
 use Molajo\Plugin\ReadEventPlugin;
-use CommonApi\Exception\RuntimeException;
 
 /**
  * Customfields Plugin

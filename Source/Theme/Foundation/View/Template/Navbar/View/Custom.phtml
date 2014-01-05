@@ -6,129 +6,106 @@
  */
 
 /** Get menu id for level currently being processed */
-//$i = 1;
-//$currentMenuArray = array();
-//$menu = $this->runtime_data->page->menu['Menuadmin'];
-//$breadcrumbs = $this->runtime_data->page->breadcrumbs;
-//$pageURL = $this->runtime_data->page->urls['page'];
+$i = 1;
+$currentMenuArray = array();
 
-//if (isset($menu[0]->css_class)) {
-//    $class = ' class="' . $menu[0]->css_class . '" ';
-//}
-//$link_text = $menu[0]->link_text;
-//$link = $menu[0]->link;
+$menu = $this->runtime_data->page->menu['Menuadmin'];
+
+$breadcrumbs = $this->runtime_data->page->breadcrumbs;
+$pageURL = $this->runtime_data->page->urls['page'];
+$homeURL = $this->runtime_data->page->urls['home'];
+
+
+/** Home */
+$link_text = $menu[0]->title;
+$link = $homeURL;
+
+/** Profile */
+$profile_link = '';
 ?>
-<div class="contain-to-grid sticky">
-    <nav class="top-bar">
+<div class="fixed contain-to-grid" id="navigation-bar" role="banner">
+    <nav class="top-bar" data-topbar>
         <ul class="title-area">
-            <!-- Title Area -->
             <li class="name">
-                <h1><a href="#">Top Bar Title </a></h1>
+                <h1><a href="<? echo $link; ?>"><? echo $link_text; ?></a></h1>
             </li>
-            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
-
         <section class="top-bar-section">
             <!-- Left Nav Section -->
             <ul class="left">
-                <li class="divider"></li>
-                <li class="active"><a href="#">Main Item 1</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Main Item 2</a></li>
-                <li class="divider"></li>
-                <li class="has-dropdown"><a href="#">Main Item 3</a>
+            <?
 
-                    <ul class="dropdown">
-                        <li class="has-dropdown"><a href="#">Dropdown Level 1a</a>
+            $count = 0;
+            $previous_level = 0;
 
-                            <ul class="dropdown">
-                                <li><label>Dropdown Level 2 Label</label></li>
-                                <li><a href="#">Dropdown Level 2a</a></li>
-                                <li><a href="#">Dropdown Level 2b</a></li>
-                                <li class="has-dropdown"><a href="#">Dropdown Level 2c</a>
+            foreach ($menu as $menuitem) {
 
-                                    <ul class="dropdown">
-                                        <li><label>Dropdown Level 3 Label</label></li>
-                                        <li><a href="#">Dropdown Level 3a</a></li>
-                                        <li><a href="#">Dropdown Level 3b</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Dropdown Level 3c</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Dropdown Level 2d</a></li>
-                                <li><a href="#">Dropdown Level 2e</a></li>
-                                <li><a href="#">Dropdown Level 2f</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Dropdown Level 1b</a></li>
-                        <li><a href="#">Dropdown Level 1c</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Dropdown Level 1d</a></li>
-                        <li><a href="#">Dropdown Level 1e</a></li>
-                        <li><a href="#">Dropdown Level 1f</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">See all &rarr;</a></li>
+                /** Level 1: Home (skip) */
+                if ((int)$menuitem->lvl == 1) {
+
+                /** Level 2: Resources, Media, Access, Build, System (Dashboard) */
+                } elseif ((int)$menuitem->lvl == 2) {
+
+                    /** End Previous */
+                    if ($previous_level == 1) {
+
+                    } elseif ($previous_level == 4) { ?>
                     </ul>
-                </li>
-                <li class="divider"></li>
+                        </li>
+                    </ul>
+                        </li>
+
+                    <?
+                    } else { ?>
+                    </ul>
+                        </li>
+                    <?
+                    }
+                    /* Start Level 2 */ ?>
+                    <li class="divider"></li>
+                    <li class="has-dropdown">
+                        <a href="<? echo $menuitem->link; ?>" class="">
+                            <i class="<? echo $menuitem->link_text; ?>" alt="<? echo $menuitem->title; ?>"></i>
+                        </a>
+                        <ul class="dropdown">
+
+                <?
+                /** Level 3: Articles, Pages, Contacts, Comments, Categories, Tags, Images, Files, etc. */
+                } elseif ((int)$menuitem->lvl == 3) {
+
+                    if ($previous_level == 4) { ?>
+                        </ul>
+                    </li>
+                <?
+                    } ?>
+                    <li class="has-dropdown">
+                        <a href="<? echo $menuitem->link; ?>"><? echo $menuitem->link_text; ?></a>
+                        <ul class="dropdown">
+                <?
+                } else { ?>
+                    <li><a href="<? echo $menuitem->link; ?>"><? echo $menuitem->link_text; ?></a></li>
+             <? }
+                $previous_level = $menuitem->lvl;
+                $count++;
+            } ?>
             </ul>
+        </section>
 
-            <!-- Right Nav Section -->
+        <section class="top-bar-section">
             <ul class="right">
-                <li class="divider hide-for-small"></li>
-                <li class="has-dropdown"><a href="#">Main Item 4</a>
-
-                    <ul class="dropdown">
-                        <li><label>Dropdown Level 1 Label</label></li>
-                        <li class="has-dropdown"><a href="#" class="">Dropdown Level 1a</a>
-
-                            <ul class="dropdown">
-                                <li><a href="#">Dropdown Level 2a</a></li>
-                                <li><a href="#">Dropdown Level 2b</a></li>
-                                <li class="has-dropdown"><a href="#">Dropdown Level 2c</a>
-
-                                    <ul class="dropdown">
-                                        <li><a href="#">Dropdown Level 3a</a></li>
-                                        <li><a href="#">Dropdown Level 3b</a></li>
-                                        <li><a href="#">Dropdown Level 3c</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Dropdown Level 2d</a></li>
-                                <li><a href="#">Dropdown Level 2e</a></li>
-                                <li><a href="#">Dropdown Level 2f</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Dropdown Level 1b</a></li>
-                        <li><a href="#">Dropdown Level 1c</a></li>
-                        <li class="divider"></li>
-                        <li><label>Dropdown Level 1 Label</label></li>
-                        <li><a href="#">Dropdown Level 1d</a></li>
-                        <li><a href="#">Dropdown Level 1e</a></li>
-                        <li><a href="#">Dropdown Level 1f</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">See all &rarr;</a></li>
-                    </ul>
-                </li>
                 <li class="divider"></li>
-                <li class="has-form">
-                    <form>
-                        <div class="row collapse">
-                            <div class="small-8 columns">
-                                <input type="text">
-                            </div>
-                            <div class="small-4 columns">
-                                <a href="#" class="alert button">Search</a>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-                <li class="divider show-for-small"></li>
-                <li class="has-form">
-                    <a class="button" href="#">Button!</a>
+                <li class="has-dropdown">
+                    <a href="<? echo $profile_link; ?>" class="">
+                        <i class="fi-torso" alt="Profile"></i>
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="#">Password</a></li>
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
                 </li>
             </ul>
         </section>
     </nav>
 </div>
-

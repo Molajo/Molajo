@@ -27,7 +27,7 @@ class FieldsPlugin extends ReadEventPlugin implements ReadInterface
      * @return  $this
      * @since   1.0
      */
-    public function onAfterRead()
+    public function onAfterReadAll()
     {
         $extended_literal    = ' (' . $this->language_controller->translate('extended') . ')';
         $parameter_literal   = ' (' . $this->language_controller->translate('parameter') . ')';
