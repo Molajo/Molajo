@@ -7,26 +7,26 @@
  * @copyright  2014 Amy Stephen. All rights reserved.
  *
  *     <include Gridfilters wrap=nav wrap_class=grid-filters role=nav/>
+ *         <include Gridordering/>
+ * <include Gridstatus/>
+ * <include Gridpermissions/>
+ * <include Gridcategories/>
+ * <include Gridtags/>
+ * <include Gridfeature/>
+ * <include Gridsticky/>
+ * <include Gridcheckin/>
+ *
  */
 ?>
 <a id="top"></a>
 <include Navbar/>
-<include Header/>
 <div id="wrapper" class="row">
-    <include Toolbar/>
     <include Formbegin/>
-    <section class="grid">
-        <include Gridordering/>
-        <include Gridstatus/>
-        <include Gridpermissions/>
-        <include Gridcategories/>
-        <include Gridtags/>
-        <include Gridfeature/>
-        <include Gridsticky/>
-        <include Gridcheckin/>
-        <include Grid role=main/>
+        <include Header/>
+        <section class="grid">
+            <include Grid role=main/>
             <include Pagination wrap=nav wrap_class=pagination/>
-    </section>
+        </section>
     <include Formend/>
 </div>
 <include Footer/>

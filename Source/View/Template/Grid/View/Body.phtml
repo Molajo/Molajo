@@ -6,6 +6,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
+$homeURL = $this->runtime_data->page->urls['home'];
 ?>
 <tr class="<? echo $this->row->grid_row_class; ?>"><?
     $columnCount = 1;
@@ -26,7 +27,7 @@
         <td<? echo $class ?><? echo $nowrap; ?>><?
         if ($column == 'title') {
             echo '<a href="">';
-            //echo '<a href="' . $this->row->catalog_id_url . '">';
+            echo '<a href="' . $homeURL . $this->row->catalog_sef_request . '">';
             echo $this->row->$column;
             echo '</a>';
 
@@ -53,12 +54,12 @@
                 $class = 'secondary radius label';
             }
 
-            echo '<span class="' . $class . '">' . $this->language_controller->translate(
+            echo '<span align="center" class="' . $class . '">' . $this->language_controller->translate(
                     $this->row->status_name
                 ) . '</span>';
 
         } elseif ($column == 'stickied') {
-            echo '<span class="stickied centered">';
+            echo '<span align="center" class="stickied centered">';
             if ((int)$this->row->$column == 1) {
                 echo '<i class="fi-check" alt="' . $this->language_controller->translate('Stickied') . '"></i>';
             } else {
@@ -67,7 +68,7 @@
             echo '</span>';
 
         } elseif ($column == 'featured') {
-            echo '<span class="featured centered">';
+            echo '<span class="featured center">';
             if ((int)$this->row->$column == 1) {
                 echo '<i class="fi-star" alt="' . $this->language_controller->translate('Featured') . '"></i>';
             } else {

@@ -9,7 +9,6 @@
 namespace Molajo\Plugin\Application;
 
 use stdClass;
-use Exception;
 use CommonApi\Event\SystemInterface;
 use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
@@ -152,6 +151,11 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         rsort($select);
         $breadcrumbs = array();
         foreach ($select as $index) {
+
+            if ($this->runtime_data->page->current_menuitem_id == 0) {
+                return array();
+            }
+
             $breadcrumbs[] = $row[$index];
         }
 

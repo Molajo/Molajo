@@ -8,9 +8,9 @@
  */
 namespace Molajo\Plugin\Pagination;
 
-use stdClass;
-use CommonApi\Event\DisplayInterface;
-use Molajo\Plugin\DisplayEventPlugin;
+use CommonApi\Event\ReadInterface;
+use Molajo\Plugin\ReadEventPlugin;
+use Molajo\Render\Pagination as Pagination;
 
 /**
  * Pagination Plugin
@@ -19,7 +19,7 @@ use Molajo\Plugin\DisplayEventPlugin;
  * @license     http://www.opensource.org/licenses/mit-license.html MIT License
  * @since       1.0
  */
-class PaginationPlugin extends DisplayEventPlugin implements DisplayInterface
+class PaginationPlugin extends ReadEventPlugin implements ReadInterface
 {
     /**
      * After reading, calculate pagination data
@@ -27,148 +27,49 @@ class PaginationPlugin extends DisplayEventPlugin implements DisplayInterface
      * @return  $this
      * @since   1.0
      */
-    public function onBeforeParse()
+    public function onAfterReadall()
     {
-        if (isset($this->runtime_data->render->token)
-            && $this->runtime_data->render->token->type == 'template'
-            && $this->runtime_data->render->token->name == 'pagination'
+        if (isset($this->model_registry['use_pagination'])
+            && isset($this->model_registry['total_items'])
+            && isset($this->model_registry['model_count'])
+            && isset($this->runtime_data->request->data->url)
+            && isset($this->query_results)
         ) {
         } else {
             return $this;
         }
 
-        $use_pagination = $this->runtime_data->resource->parameters->use_pagination;
-        if ((int)$use_pagination > 0) {
-        } else {
+        if ((int)$this->model_registry['use_pagination'] === 0) {
             return $this;
         }
 
-        /** initialise */
-        $url      = $this->runtime_data->page->urls['page'];
-        $temp_row = array();
+        /** From Http Request Class */
+        $page_url = $this->runtime_data->request->data->url;
+//        $query_parameters = array('tag' => 'celebrate'); // Exclude the page parameter
+        $query_parameters = array(); // Exclude the page parameter
+        $page = 1;
 
-        /** pagination_total: number of items */
-        $pagination_total = $this->runtime_data->resource->parameters->pagination_total;
-        if ((int)$pagination_total > 1) {
-        } else {
-            return $this;
-        }
+        /** From Database Query */
+        $data = $this->query_results;
 
-        /** model_count: max number of rows to display per page */
-        $model_count = $this->runtime_data->resource->parameters->model_count;
-        if ((int)$model_count > 0) {
-        } else {
-            $model_count = 15;
-        }
+        $total_items = $this->model_registry['total_items'];
 
-        /** model_offset: offset of 0 means skip 0 rows, then start with row 1 */
-        $model_offset = $this->runtime_data->resource->parameters->model_offset;
-        if ((int)$model_offset > 0) {
-        } else {
-            $model_offset = 0;
-        }
+        /** Application Configuration */
+        $per_page = $this->model_registry['model_count'];          // How many items should display on the page?
+        $display_links = 5;     // How many numeric page links should display in the pagination?
 
-        /** current_page */
-        $current_page = ($model_offset / $model_count) + 1;
+        /** Instantiate the Pagination Adapter */
+        $pagination = new Pagination(
+            $data,
+            $page_url,
+            $query_parameters,
+            $total_items,
+            $per_page,
+            $display_links,
+            $page
+        );
 
-        if ($model_offset % $model_count) {
-            $current_page ++;
-        }
-
-        /** previous page */
-        if ((int)$current_page > 1) {
-            $previous_page = (int)$current_page - 1;
-            $prev_link     = $url . '/page/' . (int)$previous_page;
-        } else {
-            $previous_page = 0;
-            $prev_link     = '';
-        }
-
-        /** total pages */
-        $total_pages = $pagination_total / $model_count;
-
-        if ($pagination_total % $model_count) {
-            $total_pages ++;
-        }
-
-        /** next page */
-        if ((int)$total_pages > (int)$current_page) {
-            $next_page = $current_page + 1;
-            $next_link = $url . '/page/' . $next_page;
-        } else {
-            $next_page = 0;
-            $next_link = '';
-        }
-
-        /** first and last pages */
-        $first_page = 1;
-        $first_link = $url . '/page/' . 1;
-
-        $last_page = (int)$total_pages;
-        $last_link = $url . '/page/' . (int)$total_pages;
-
-        /** Paging */
-        $temp_row = new stdClass();
-
-        $temp_row->total_items          = (int)$pagination_total;
-        $temp_row->total_items_per_page = (int)$model_count;
-
-        $temp_row->first_page = $first_page;
-        $temp_row->first_link = $first_link;
-
-        $temp_row->previous_page = $previous_page;
-        $temp_row->prev_link     = $prev_link;
-
-        $temp_row->next_page = $next_page;
-        $temp_row->next_link = $next_link;
-
-        $temp_row->last_page = $last_page;
-        $temp_row->last_link = $last_link;
-
-        $temp_row[] = $temp_row;
-
-        $this->runtime_data->plugin_data->paging = $temp_row;
-
-        /** Paging */
-        $temp_row = array();
-        if ($total_pages > 10) {
-            $total_pages = 10;
-        }
-
-        $grid_list = array();
-
-        for ($i = 1; $i < $total_pages; $i ++) {
-
-            $temp_row = new stdClass();
-
-            $temp_row->total_items          = $pagination_total;
-            $temp_row->total_items_per_page = $model_count;
-
-            $temp_row->first_page = $first_page;
-            $temp_row->first_link = $first_link;
-
-            $temp_row->previous_page = $previous_page;
-            $temp_row->prev_link     = $prev_link;
-
-            if ($i == $current_page) {
-                $temp_row->current = 1;
-            } else {
-                $temp_row->current = 0;
-            }
-
-            $temp_row->link      = $url . '/page/' . $i;
-            $temp_row->link_text = ' ' . (int)$i;
-
-            $temp_row->next_page = $next_page;
-            $temp_row->next_link = $next_link;
-
-            $temp_row->last_page = $last_page;
-            $temp_row->last_link = $last_link;
-
-            $temp_row[] = $temp_row;
-        }
-
-        $this->runtime_data->plugin_data->pagination = $temp_row;
+        $this->runtime_data->plugin_data->pagination = $pagination;
 
         return $this;
     }

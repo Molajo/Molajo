@@ -1,0 +1,28 @@
+<?
+/**
+ * Pagination Template View
+ *
+ * @package    Molajo
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014 Amy Stephen. All rights reserved.
+ */
+$pagination = $this->runtime_data->plugin_data->pagination;
+?>
+<nav class="pagination-centered">
+    <ul class="pagination">
+        <li class="arrow unavailable"><a href="<?php echo $pagination->getPageUrl('first'); ?>">First</a></li>
+        <li class="arrow unavailable"><a href="<?php echo $pagination->getPageUrl('prev'); ?>">&laquo;</a></li>
+        <?php
+        $current = ' class="current"';
+        for ($i = $pagination->getStartDisplayPage();
+             $i < $pagination->getStopDisplayPage();
+             $i ++) {
+            ?>
+            <li<?echo $current; ?>><a href="<?php echo $pagination->getPageUrl($i); ?>"><?php echo $i; ?></a></li>
+        <?php
+            $current = '';
+        } ?>
+        <li class="arrow unavailable"><a href="<?php echo $pagination->getPageUrl('next'); ?>">&raquo;</a></li>
+        <li class="arrow unavailable"><a href="<?php echo $pagination->getPageUrl('last'); ?>">Last</a></li>
+    </ul>
+</nav>

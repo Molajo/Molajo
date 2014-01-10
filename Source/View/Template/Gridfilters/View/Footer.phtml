@@ -7,7 +7,15 @@
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
 ?>
-<li>
-    <input type="submit" class="submit button small right" name="filter-button" id="filter-button" value="Filter">
-</li>
-</ol>
+        <li>
+            <strong><? echo $this->language_controller->translate('Search'); ?></strong>
+        </li>
+        <li>
+            <input name="search" id="search" type="text"
+                   placeholder="<? echo $this->language_controller->translate('Search For'); ?>"/>
+        </li>
+        <li>
+            <input type="submit" class="submit button small right" name="filter-button" id="filter-button" value="Filter">
+        </li>
+    </ul>
+</div>

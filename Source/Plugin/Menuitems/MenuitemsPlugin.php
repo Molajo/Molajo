@@ -78,6 +78,7 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
 
         $menuitem->setModelRegistry('model_offset', 0);
         $menuitem->setModelRegistry('model_count', 99999);
+        $menuitem->setModelRegistry('model_use_pagination', 0);
 
         try {
             $temp_row = $menuitem->getData();

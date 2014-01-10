@@ -7,13 +7,15 @@
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
 ?>
-<select <? echo $this->row->multiple; ?>name="<? echo $this->row->listname; ?>" class="inputbox">
-<? if ($this->row->multiple == '') { ?>
-    <option value=""><? echo $this->language_controller->translate(
-            'SELECT_' . strtoupper($this->row->listname)
-        ); ?></option>
-<? } else { ?>
-    <option value=""><? echo $this->language_controller->translate('No selection'); ?></option>
-    <option value="#"><? echo $this->language_controller->translate('Select all'); ?></option>
-<?
-}
+<label><? echo $this->language_controller->translate('SELECT_' . strtoupper($this->row->list_name)); ?></label>
+    <select<? echo $this->row->multiple; ?><? echo $this->row->size; ?> name="<? echo $this->row->list_name; ?>" class="inputbox">
+    <? if ($this->row->multiple == '') { ?>
+            <option value=""><? echo $this->language_controller->translate('SELECT_' . strtoupper($this->row->list_name)); ?></option>
+    <? } else {
+            $selected = '';
+            if ((int) $this->row->no_selection == 1) {
+               $selected = ' selected';
+            }
+    ?>
+            <option<? echo $selected; ?> value=""><? echo $this->language_controller->translate('No selection'); ?></option>
+    <? }

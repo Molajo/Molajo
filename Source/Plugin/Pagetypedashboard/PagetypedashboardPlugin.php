@@ -171,7 +171,7 @@ class PagetypedashboardPlugin extends DisplayEventPlugin implements DisplayInter
             );
             $temp_row->selected = '';
             $temp_row->multiple = '';
-            $temp_row->listname = 'Portlets';
+            $temp_row->list_name = 'Portlets';
 
             $temp_row[] = $temp_row;
         }

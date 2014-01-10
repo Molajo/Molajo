@@ -8,6 +8,8 @@
  */
 
 ?>
-<li>
-    <include formselectlist datalist=<? echo $this->row->listname; ?>/>
-</li>
+<div class="row">
+    <div class="large-12 columns">
+        <include formselectlist model_name=<? echo $this->row->list_name; ?>/>
+    </div>
+</div>
