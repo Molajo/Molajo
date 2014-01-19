@@ -20,6 +20,7 @@
             process_events="1"
             use_pagination="1"
             extends="Contentresources"
+            model_type="Resource"
             data_object="Database">
         <customfields>
             <customfield name="customfields">

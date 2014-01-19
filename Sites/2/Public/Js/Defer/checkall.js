@@ -1,7 +1,5 @@
-$(document).ready(function () {
-
-    $("input[type=checkbox].checkall").on("click.chkAll", function (event) {
-        $(this).parents('.responsive:eq(0)').find(':checkbox').prop('checked', this.checked);
+$(function () {
+    $('.checkall').on('click', function () {
+        $(this).closest('table').find(':checkbox').prop('checked', this.checked);
     });
-
 });

@@ -103,6 +103,7 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
         $x = 'extension_instances_' . $group;
 
         if (isset($this->row->$x)) {
+
             $extension_instances_field_data = json_decode($this->row->$x);
             unset($this->row->$x);
 
@@ -118,6 +119,7 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
                     }
                 }
             }
+
         } else {
             $extension_instances_field_data = null;
         }

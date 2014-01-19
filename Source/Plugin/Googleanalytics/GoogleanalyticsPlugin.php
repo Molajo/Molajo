@@ -26,7 +26,7 @@ class GoogleanalyticsPlugin extends DisplayEventPlugin implements DisplayInterfa
      * @return  $this
      * @since   1.0
      */
-    public function onBeforeParseHead()
+    public function onAfterRender()
     {
         $account = $this->runtime_data->application->parameters->application_google_analytics_code;
 

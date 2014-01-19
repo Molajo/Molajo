@@ -26,7 +26,7 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
      * @return  $this
      * @since    1.0
      */
-    public function onBeforeParse()
+    public function onBeforeRender()
     {
         if (strtolower($this->runtime_data->route->page_type) == 'configuration') {
         } else {

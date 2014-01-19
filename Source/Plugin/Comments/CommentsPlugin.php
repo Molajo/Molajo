@@ -8,11 +8,11 @@
  */
 namespace Molajo\Plugin\Comments;
 
-use stdClass;
 use Exception;
-use CommonApi\Event\ReadInterface;
+use CommonApi\Event\SystemInterface;
 use CommonApi\Exception\RuntimeException;
-use Molajo\Plugin\ReadEventPlugin;
+use Molajo\Plugin\SystemEventPlugin;
+use stdClass;
 
 /**
  * Comments Plugin
@@ -21,7 +21,7 @@ use Molajo\Plugin\ReadEventPlugin;
  * @license     http://www.opensource.org/licenses/mit-license.html MIT License
  * @since       1.0
  */
-class CommentsPlugin extends ReadEventPlugin implements ReadInterface
+class CommentsPlugin extends SystemEventPlugin implements SystemInterface
 {
     /**
      * Retrieve data for the Comments, Commentform, and Comment Template Views
@@ -29,31 +29,31 @@ class CommentsPlugin extends ReadEventPlugin implements ReadInterface
      * @return  $this
      * @since   1.0
      */
-    public function onAfterRead()
+    public function onBeforeExecute()
     {
-        if (isset($this->runtime_data->plugin_data->comments_open)) {
-            return $this;
-        }
-
-        $this->runtime_data->plugin_data->comments_open                    = new stdClass();
-        $this->runtime_data->plugin_data->comments_heading                 = new stdClass();
-        $this->runtime_data->plugin_data->comments_heading->data           = new stdClass();
-        $this->runtime_data->plugin_data->comments_heading->model_registry = new stdClass();
-        $this->runtime_data->plugin_data->comments                         = new stdClass();
-        $this->runtime_data->plugin_data->comments->data                   = new stdClass();
-        $this->runtime_data->plugin_data->comments->model_registry         = new stdClass();
-        $this->runtime_data->plugin_data->comment_form                     = new stdClass();
-        $this->runtime_data->plugin_data->comment_form->data               = new stdClass();
-        $this->runtime_data->plugin_data->comment_form->model_registry     = new stdClass();
-
-        $this->parameters->enable_response_comments = 1;
-
-        if (isset($this->parameters->enable_response_comments)
-            && (int)$this->parameters->enable_response_comments == 1
-        ) {
+        if (isset($this->runtime_data->resource->parameters->enable_response_comments)) {
         } else {
             return $this;
         }
+
+        if ($this->runtime_data->resource->parameters->enable_response_comments == 1) {
+        } else {
+            return $this;
+        }
+
+        $this->runtime_data->plugin_data->comments_open                    = 0;
+
+        $this->runtime_data->plugin_data->comments_heading                 = new stdClass();
+        $this->runtime_data->plugin_data->comments_heading->data           = new stdClass();
+        $this->runtime_data->plugin_data->comments_heading->model_registry = new stdClass();
+
+        $this->runtime_data->plugin_data->comments                         = new stdClass();
+        $this->runtime_data->plugin_data->comments->data                   = new stdClass();
+        $this->runtime_data->plugin_data->comments->model_registry         = new stdClass();
+
+        $this->runtime_data->plugin_data->comment_form                     = new stdClass();
+        $this->runtime_data->plugin_data->comment_form->data               = new stdClass();
+        $this->runtime_data->plugin_data->comment_form->model_registry     = new stdClass();
 
         $this->runtime_data->plugin_data->comments_open = $this->getCommentsOpen();
 
@@ -72,11 +72,8 @@ class CommentsPlugin extends ReadEventPlugin implements ReadInterface
      */
     protected function getCommentsOpen()
     {
-        if (isset($this->parameters->enable_response_comments)
-            && isset($this->parameters->enable_response_comment_form_open_days)
-            && (int)$this->parameters->enable_response_comments == 1
-        ) {
-            $open_days = (int)$this->parameters->enable_response_comment_form_open_days;
+        if ($this->runtime_data->resource->parameters->enable_response_comment_form_open_days) {
+            $open_days = (int)$this->runtime_data->resource->parameters->enable_response_comment_form_open_days;
         } else {
             $open_days = 0;
         }
@@ -86,8 +83,9 @@ class CommentsPlugin extends ReadEventPlugin implements ReadInterface
         }
 
         $converted = $this->date_controller->convertCCYYMMDD(
-            $this->row->start_publishing_datetime
+            $this->runtime_data->resource->data->start_publishing_datetime
         );
+
         if ($converted === false) {
             return 0;
         }
@@ -126,7 +124,7 @@ class CommentsPlugin extends ReadEventPlugin implements ReadInterface
             . ' . '
             . $comments->model->database->qn('root')
             . ' = '
-            . (int)$this->row->id
+            . (int)$this->runtime_data->resource->data->id
         );
 
         $comments->model->query->where(
@@ -172,7 +170,7 @@ class CommentsPlugin extends ReadEventPlugin implements ReadInterface
     /**
      * Get Comments
      *
-     * @returns  stdClass
+     * @returns  $this
      * @since    1.0
      * @throws   \CommonApi\Exception\RuntimeException
      */
@@ -194,7 +192,7 @@ class CommentsPlugin extends ReadEventPlugin implements ReadInterface
             . ' . '
             . $comments->model->database->qn('root')
             . ' = '
-            . (int)$this->row->id
+            . (int)$this->runtime_data->resource->data->id
         );
 
         $comments->model->query->where(
@@ -216,6 +214,8 @@ class CommentsPlugin extends ReadEventPlugin implements ReadInterface
         } catch (Exception $e) {
             throw new RuntimeException ($e->getMessage());
         }
+
+        return $this;
     }
 
     /**

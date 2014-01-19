@@ -31,7 +31,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      * @return  $this
      * @since   1.0
      */
-    public function onBeforeParse()
+    public function onBeforeRender()
     {
         if (strtolower($this->runtime_data->route->page_type) == 'grid') {
         } else {
@@ -369,6 +369,10 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
         $this->runtime_data->plugin_data->grid_filters = $grid_list;
 
+        $this->runtime_data->plugin_data->grid_batch_categories = $this->getFilter('Categories');
+        $this->runtime_data->plugin_data->grid_batch_tags       = $this->getFilter('Tags');
+        $this->runtime_data->plugin_data->grid_batch_groups     = $this->getFilter('Groups');
+
         return $this;
     }
 
@@ -450,9 +454,9 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                         $row->size = ' size="' . (int)$size . '"';
                     }
 
-                    $row->selected = '';
+                    $row->selected     = '';
                     $row->no_selection = 1;
-                    $structured[]  = $row;
+                    $structured[]      = $row;
                 }
             }
 

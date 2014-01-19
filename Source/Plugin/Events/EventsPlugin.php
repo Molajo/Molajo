@@ -31,34 +31,42 @@ class EventsPlugin extends SystemEventPlugin implements SystemInterface
     {
         $events = array(
             'onAfterInitialise',
+            'onBeforeRoute',
             'onAfterRoute',
+            'onBeforeAuthorise',
             'onAfterAuthorise',
             'onBeforeExecute',
             'onAfterExecute',
-            'onBeforeRender',
-            'onBeforeParse',
-            'onBeforeParseHead',
-            'onBeforeRenderView',
-            'onAfterRenderView',
-            'onAfterParse',
-            'onAfterRender',
-            'onBeforeRenderView',
-            'onAfterInclude',
             'onBeforeResponse',
             'onAfterResponse',
-            'onBeforeLogin',
-            'onAfterLogin',
-            'onBeforeLogout',
-            'onAfterLogout',
+
+            'onBeforeRender',
+            'onBeforeParse',
+            'onAfterParse',
+            'onBeforeRenderView',
+            'onBeforeRenderViewHead',
+            'onBeforeRenderViewItem',
+            'onBeforeRenderViewFooter',
+            'onAfterRenderView',
+            'onAfterRender',
+
             'onBeforeRead',
             'onAfterRead',
             'onAfterReadall',
+
             'onBeforeCreate',
             'onAfterCreate',
             'onBeforeDelete',
             'onAfterDelete',
             'onBeforeUpdate',
-            'onAfterUpdate'
+            'onAfterUpdate',
+
+            'onBeforeAuthenticate',
+            'onAfterAuthenticate',
+            'onBeforeAuthorise',
+            'onAfterAuthorise',
+            'onBeforeLogout',
+            'onAfterLogout'
         );
 
         foreach ($events as $e) {
@@ -79,7 +87,7 @@ class EventsPlugin extends SystemEventPlugin implements SystemInterface
             $eventArray[] = $temp_row;
         }
 
-        $this->runtime_data->plugin_data->datalists->eventslist = $eventArray;
+        $this->runtime_data->plugin_data->datalists->events = $eventArray;
 
         return $this;
     }

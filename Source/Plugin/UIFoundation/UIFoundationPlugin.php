@@ -26,7 +26,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
      * @return  $this
      * @since   1.0
      */
-    public function onBeforeParse()
+    public function onBeforeRender()
     {
         return $this;
 

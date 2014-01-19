@@ -7,32 +7,61 @@
  * @copyright  2014 Amy Stephen. All rights reserved.
  */
 ?>
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Molajo</title>
+    <link rel="stylesheet" href="/Css/normalize.css">
+    <link rel="stylesheet" href="/Css/webicons.css">
+    <link rel="stylesheet" href="/Css/foundation-icons.css" />
+    <link rel="stylesheet" href="/Css/foundation.css">
+    <link rel="stylesheet" href="/Css/customize.css">
+    <link rel="stylesheet" href="/Css/responsive-tables.css" />
+    <script src="/Js/vendor/custom.modernizr.js"></script>
+</head>
+<body>
 <a id="top"></a>
-<include Navbar/>
-<include Header/>
-<div id="wrapper" class="row">
-    <div id="main" class="large-9 push-3 columns">
-        <include article wrap=article role=main/>
-            <? if ((int)$this->runtime_data->resource->parameters->enable_response_comments == 1) { ?>
-            <include Author wrap=aside wrap_class=author-profile/>
-                <section>
-                    <include Comment/>
-                    <include Comments/>
-                </section>
-                <? } ?>
-    </div>
-    <div class="large-3 pull-9 columns">
-        <ul class="side-nav">
-            <li><a href="#">Section 1</a></li>
-            <li><a href="#">Section 2</a></li>
-            <li><a href="#">Section 3</a></li>
-            <li><a href="#">Section 4</a></li>
-            <li><a href="#">Section 5</a></li>
-            <li><a href="#">Section 6</a></li>
-        </ul>
-        <p><img src="http://placehold.it/320x240&text=Ad"/></p>
+<div class="page-wrap">
+    <include Navbar/>
+    <include Header/>
+    <div id="wrapper" class="row">
+        <div id="main" class="large-9 push-3 columns">
+            <include article wrap=article role=main/>
+                <? if ((int)$this->runtime_data->resource->parameters->enable_response_comments == 1) { ?>
+                <include Author wrap=aside wrap_class=author-profile/>
+                    <section>
+                        <include Comment/>
+                        <include Comments/>
+                    </section>
+                    <? } ?>
+        </div>
+        <div class="large-3 pull-9 columns">
+            <ul class="side-nav">
+                <li><a href="#">Section 1</a></li>
+                <li><a href="#">Section 2</a></li>
+                <li><a href="#">Section 3</a></li>
+                <li><a href="#">Section 4</a></li>
+                <li><a href="#">Section 5</a></li>
+                <li><a href="#">Section 6</a></li>
+            </ul>
+            <p><img src="http://placehold.it/320x240&text=Ad"/></p>
+        </div>
     </div>
 </div>
 <include Footer/>
-
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="/Js/foundation/foundation.js"></script>
+<script src="/Js/foundation/foundation.topbar.js"></script>
+<script src="/Js/foundation/foundation.tooltip.js"></script>
+<script src="/Js/responsive-tables.js"></script>
+<script src="/Js/Defer/document.js"></script>
+<script src="/Js/Defer/checkall.js"></script>
+<script src="/Js/Defer/hideshow.js"></script
+</body>
+</html>

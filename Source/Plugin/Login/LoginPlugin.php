@@ -28,7 +28,7 @@ class LoginPlugin extends AuthenticateEventPlugin implements AuthenticateInterfa
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function onBeforeLogin()
+    public function onBeforeAuthenticate()
     {
         return $this;
     }
@@ -40,7 +40,7 @@ class LoginPlugin extends AuthenticateEventPlugin implements AuthenticateInterfa
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException
      */
-    public function onAfterLogin()
+    public function onAfterAuthenticate()
     {
         return $this;
     }

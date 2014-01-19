@@ -50,9 +50,8 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             $this->runtime_data->page->current_menuitem_id = 0;
         } else {
             $this->runtime_data->page->menuitem_id         = $current_menuitem_id;
-            $model                                         = 'Molajo//Menuitem//' . $current_menuitem_id;
-            $this->runtime_data->page->menuitem            = $this->resource->get('Menuitem:///' . $model);
-            $this->runtime_data->page->menu                = $this->runtime_data->page->menuitem->menu;
+            $this->runtime_data->page->menuitem            = new stdClass();
+            $this->runtime_data->page->menu                = new stdClass();
             $this->runtime_data->page->current_menuitem_id = $current_menuitem_id;
         }
 
@@ -86,10 +85,8 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $this->runtime_data->page->urls['home']      = $this->runtime_data->application->base_url;
         $this->runtime_data->page->urls['page']      = $this->runtime_data->request->data->url;
         $this->runtime_data->page->urls['canonical'] = $this->runtime_data->request->data->url;
-        $this->runtime_data->page->urls['resource']
-                                                     = $this->runtime_data->application->base_url . strtolower(
-                $this->runtime_data->route->b_alias
-            );
+        $this->runtime_data->page->urls['resource']  = $this->runtime_data->application->base_url
+            . strtolower($this->runtime_data->route->b_alias);
 
         //@todo add links for prev and next
         return $this;
@@ -251,7 +248,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
             $base = $this->runtime_data->application->base_url;
 
-            $item->url = $base . 'index.php?id=' . (int)$item->catalog_id;
+            $item->url  = $base . 'index.php?id=' . (int)$item->catalog_id;
             $item->link = $base . $item->catalog_sef_request;
 
             if ($item->subtitle == '' || $item->subtitle == null) {
@@ -501,7 +498,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     }
 
     /**
-     * Set Page Meta Data during onBeforeParse, can be modified at any point during the document body rendering
+     * Set Page Meta Data
      *
      * @param   string $page_type
      *
@@ -523,7 +520,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     }
 
     /**
-     * Set Page Meta Data during onBeforeParse, can be modified at any point during the document body rendering
+     * Set Page Meta Data for Item
      *
      * @return  $this
      * @since   1.0
@@ -606,7 +603,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     }
 
     /**
-     * Set Page Meta Data during onBeforeParse, can be modified at any point during the document body rendering
+     * Set Page Meta Data for List
      *
      * @return  $this
      * @since   1.0
@@ -617,7 +614,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     }
 
     /**
-     * Set Page Meta Data during onBeforeParse, can be modified at any point during the document body rendering
+     * Set Page Meta Data for Menuitem
      *
      * @return  $this
      * @since   1.0

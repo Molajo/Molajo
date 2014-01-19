@@ -79,7 +79,6 @@ $class_loader->setNamespace('Molajo\\Menuitem', 'Source/Administration/Templatev
 $class_loader->setNamespace('Molajo\\Menuitem', 'Source/Administration/Themes/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Source/Administration/Users/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Source/Administration/Wrapviews/Menuitem/');
-$class_loader->setNamespace('Molajo\\Menuitem', 'Source/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Source/Resource/Articles/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Source/Resource/Audio/Menuitem/');
 $class_loader->setNamespace('Molajo\\Menuitem', 'Source/Resource/Categories/Menuitem/');
@@ -97,7 +96,6 @@ $class_loader->setNamespace('Molajo\\Model\\Datalist', 'vendor/molajo/framework/
 $class_loader->setNamespace('Molajo\\Pages', 'Source/Resource/Pages/');
 $class_loader->setNamespace('Molajo\\Plugin', 'vendor/molajo/event/Source/Plugin/');
 $class_loader->setNamespace('Molajo\\Plugin', 'Source/Plugin/');
-$class_loader->setNamespace('Molajo\\Plugin', 'Source/Theme/Foundation/Plugin/');
 $class_loader->setNamespace('Molajo\\Render', 'vendor/molajo/Render/Source/');
 $class_loader->setNamespace('Molajo\\Resource', 'Source/Resource/');
 $class_loader->setNamespace('Molajo\\Resource', 'vendor/molajo/resource/Source/');
@@ -121,18 +119,16 @@ $class_loader->setNamespace('Molajo\\Service', 'vendor/molajo/user/Service/');
 $class_loader->setNamespace('Molajo\\Site2', 'Sites/');
 $class_loader->setNamespace('Molajo\\Sites', 'Sites/');
 $class_loader->setNamespace('Molajo\\Tags', 'Source/Resource/Tags/');
-$class_loader->setNamespace('Molajo\\Theme', 'Source/Theme/');
 $class_loader->setNamespace('Molajo\\User', 'vendor/molajo/user/Source/');
 $class_loader->setNamespace('Molajo\\Video', 'Source/Resource/Video/');
-$class_loader->setNamespace('Molajo\\View\\Page', 'Source/Theme/Foundation/View/Page/');
-$class_loader->setNamespace('Molajo\\View\\Page', 'Source/Theme/System/View/Page/');
 $class_loader->setNamespace('Molajo\\View\\Page', 'Source/View/Page/');
-$class_loader->setNamespace('Molajo\\View\\Template', 'Source/Theme/Foundation/View/Template/');
-$class_loader->setNamespace('Molajo\\View\\Template', 'Source/Theme/System/View/Template/');
 $class_loader->setNamespace('Molajo\\View\\Template', 'Source/View/Template/');
-$class_loader->setNamespace('Molajo\\View\\Wrap', 'Source/Theme/Foundation/View/Wrap/');
-$class_loader->setNamespace('Molajo\\View\\Wrap', 'Source/Theme/System/View/Wrap/');
 $class_loader->setNamespace('Molajo\\View\\Wrap', 'Source/View/Wrap/');
+$class_loader->setNamespace('Molajo\\Theme', 'Source/Theme/', true);
+$class_loader->setNamespace('Molajo\\Theme', 'vendor/molajo/foundation5/Source/Theme/', true);
+$class_loader->setNamespace('Molajo\\View\\Page', 'vendor/molajo/foundation5/Source/View/Page/', true);
+$class_loader->setNamespace('Molajo\\View\\Template', 'vendor/molajo/foundation5/Source/View/Template/', true);
+$class_loader->setNamespace('Molajo\\Plugin', 'vendor/molajo/foundation5/Source/Plugin/', true);
 
 // Overrides
 $class_loader->setNamespace('Molajo\\Plugin', 'vendor/molajo/framework/Source/Plugin/', true);
