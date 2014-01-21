@@ -37,7 +37,10 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $page_type = strtolower($this->runtime_data->route->page_type);
 
-        if ($page_type == 'item' || $page_type == 'form' || $page_type == 'list') {
+        if ($page_type == 'item'
+            || $page_type == 'form'
+            || $page_type == 'edit'
+            || $page_type == 'list') {
             $current_menuitem_id = $this->runtime_data->resource->parameters->parent_menu_id;
         } else {
             $current_menuitem_id = $this->runtime_data->resource->menuitem->id;
@@ -507,9 +510,9 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function setPageMeta($page_type)
     {
-        if ($page_type == 'item') {
+        if ($page_type == 'item'
+            || $page_type == 'edit') {
             return $this->setPageMetaItem();
-
         }
 
         if ($page_type == 'list') {

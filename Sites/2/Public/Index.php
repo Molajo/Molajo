@@ -1,6 +1,6 @@
 <?php
 /**
- * Entry Point
+ * "It always seems impossible until its done." Nelson Mandela
  *
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.

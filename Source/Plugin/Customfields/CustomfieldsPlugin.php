@@ -8,9 +8,9 @@
  */
 namespace Molajo\Plugin\Customfields;
 
-use stdClass;
 use CommonApi\Event\ReadInterface;
 use Molajo\Plugin\ReadEventPlugin;
+use stdClass;
 
 /**
  * Customfields Plugin
@@ -133,6 +133,11 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
             $application = new stdClass();
         }
 
+
+        if ($page_type == 'new' || $page_type == 'edit') {
+            $page_type = 'form';
+        }
+
         $temp = array();
 
         foreach ($this->model_registry[$group] as $customfields) {
@@ -146,10 +151,12 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
 
                 if ($test == $page_type) {
                     if ($page_type == 'item' || $page_type == 'form' || $page_type == 'list') {
+
                         if (substr($key, 0, strlen($page_type) + 1) == $page_type . '_') {
                             $target_key = substr($key, strlen($page_type) + 1, 9999);
+
                         } else {
-                            $use = false;
+                            $use = true;
                         }
                     }
 
@@ -160,6 +167,9 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
                     } else {
                         $target_key = substr($key, strlen('menuitem_'), 9999);
                     }
+
+                } else {
+                    $use = true;
                 }
             }
 

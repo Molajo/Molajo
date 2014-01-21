@@ -29,7 +29,9 @@ class PagetypeitemPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRender()
     {
-        if (strtolower($this->runtime_data->route->page_type) == 'item') {
+        $page_type = strtolower($this->runtime_data->route->page_type);
+
+        if ($page_type == 'item'  || $page_type == 'edit' || $page_type == 'delete') {
         } else {
             return $this;
         }

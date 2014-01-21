@@ -10,6 +10,7 @@ namespace Molajo\Plugin\Pagetypeedit;
 
 use CommonApi\Event\DisplayInterface;
 use Molajo\Plugin\DisplayEventPlugin;
+use stdClass;
 
 /**
  * Page Type Edit Plugin
@@ -28,73 +29,41 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRender()
     {
-        if (strtolower($this->runtime_data->route->page_type) == 'edit') {
+        $page_type = strtolower($this->runtime_data->route->page_type);
+
+        if ($page_type == 'new' || $page_type == 'edit') {
         } else {
             return $this;
         }
 
-        $resource_model_type = $this->get('model_type', '', 'runtime_data');
-        $resource_model_name = $this->get('model_name', '', 'runtime_data');
+        $parameters                                 = $this->runtime_data->resource->parameters;
+        $model_registry                             = $this->runtime_data->resource->model_registry;
+        $data                                       = $this->runtime_data->resource->data;
+        $tab_array                                  = $parameters->edit_array;
+        $this->runtime_data->plugin_data->edit_tabs = $this->setTabs($tab_array);
+        $this->setTabFormFieldsets($parameters);
+        $this->setTabSectionFields($parameters, $model_registry);
 
-        //@todo - submenu
-        $this->runtime_data->page->menu['SectionSubmenu'] = array();
+        $template_views = array();
+        foreach ($this->tab_form_fieldsets as $key => $item) {
+            $template_views[] = $key;
+        }
 
-        /** Form Service */
-        $form = Services::Form();
-
-        /** Set Input */
-        $form->set('namespace', strtolower($this->runtime_data->route->page_type));
-
-        $form->set('model_type', $this->get('model_type', '', 'runtime_data'));
-        $form->set('model_name', $this->get('model_name', '', 'runtime_data'));
-        $form->set(
-            'model_registry_name',
-            ucfirst(strtolower($this->get('model_name', '', 'runtime_data'))) . ucfirst(
-                strtolower($this->get('model_type', '', 'runtime_data'))
-            )
-        );
-
-        $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));
-
-        $form->set('data', $this->registry->get('Dataobject', 'Primary'));
-
-        /** Parameters */
-        $form->set('Parameters', $this->registry->getArray('ResourceSystemParameters'));
-        $form->set('parameter_fields', $this->registry->get('ResourceSystem', 'Parameters'));
-
-        /** Metadata */
-        $form->set('Metadata', $this->registry->getArray('ResourceSystemMetadata'));
-        $form->set('metadata_fields', $this->registry->get('ResourceSystem', 'Metadata'));
-
-        /** Customfields */
-        $form->set('Customfields', $this->registry->getArray('ResourceSystemCustomfields'));
-        $form->set('customfields_fields', $this->registry->get('ResourceSystem', 'Customfields'));
-        echo $this->registry->get('ResourceSystemParameters', 'edit_array');
-
-        /** Build Fieldsets and Fields */
-        $pageFieldsets = $form->execute($this->registry->get('ResourceSystemParameters', 'edit_array'));
-
-        /** Set the View Model Parameters and Populate the Registry used as the Model */
-        $current_page = $form->getPages(
-            $pageFieldsets[0]->page_array,
-            $pageFieldsets[0]->page_count
-        );
-
-        $controller->set('request_model_type', $this->get('model_type', '', 'runtime_data'));
-        $controller->set('request_model_name', $this->get('model_name', '', 'runtime_data'));
-
-        $controller->set('model_type', 'Dataobject');
-        $controller->set('model_name', 'Primary');
-        $controller->set('model_query_object', 'list');
-
-        $controller->set('model_type', 'list');
-        $controller->set('model_name', 'Primary');
-
-        $this->registry->set(
-            'Primary',
-            'Data',
-            $current_page
-        );
+        foreach ($template_views as $template) {
+            $temp = array();
+            foreach ($this->tab_form_fieldsets_fields as $item) {
+                if ($template == $item->template_view) {
+                    $name   = $item->name;
+                    if (isset($data->$name)) {
+                        $item->value = $data->$name;
+                    } else {
+                        $item->value = null;
+                    }
+                    $temp[] = $item;
+                }
+            }
+            $this->runtime_data->plugin_data->$template = $temp;
+        }
 
         return $this;
     }
