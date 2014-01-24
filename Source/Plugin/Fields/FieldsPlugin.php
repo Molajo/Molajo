@@ -8,8 +8,8 @@
  */
 namespace Molajo\Plugin\Fields;
 
-use CommonApi\Event\ReadInterface;
-use Molajo\Plugin\ReadEventPlugin;
+use CommonApi\Event\DisplayInterface;
+use Molajo\Plugin\DisplayEventPlugin;
 use stdClass;
 
 /**
@@ -19,7 +19,7 @@ use stdClass;
  * @license     http://www.opensource.org/licenses/mit-license.html MIT License
  * @since       1.0
  */
-class FieldsPlugin extends ReadEventPlugin implements ReadInterface
+class FieldsPlugin extends DisplayEventPlugin implements DisplayInterface
 {
     /**
      * Generates list of Fields for select lists and defining Custom Fields
@@ -27,197 +27,87 @@ class FieldsPlugin extends ReadEventPlugin implements ReadInterface
      * @return  $this
      * @since   1.0
      */
-    public function onAfterReadAll()
+    public function onBeforeRender()
     {
-        $extended_literal    = ' (' . $this->language_controller->translate('extended') . ')';
-        $parameter_literal   = ' (' . $this->language_controller->translate('parameter') . ')';
-        $customfield_literal = ' (' . $this->language_controller->translate('customfield') . ')';
-        $metadata_literal    = ' (' . $this->language_controller->translate('metadata') . ')';
-
-        $fieldArray    = array();
-        $standardArray = array();
-
         $model_registry = $this->runtime_data->resource->model_registry;
 
-        $normalFields = $model_registry['fields'];
+        $fields = $model_registry['fields'];
 
-        $status = 0;
+        if (count($fields) > 0 && is_array($fields)) {
+            foreach ($fields as $field) {
+                $row     = new stdClass();
+                $row->id = $field['name'];
 
-        if (count($normalFields) > 0) {
-
-            foreach ($normalFields as $field) {
-
-                $temp_row        = new stdClass();
-                $temp_row->id    = $field['name'];
-                $temp_row->value = $field['name'];
-
-                $standardArray[] = $temp_row;
-                $fieldArray[]    = $temp_row;
-
-                if ($field['name'] == 'status') {
-                    $status = 1;
+                if (isset($field['calculated']) && $field['calculated'] == 1) {
+                    $row->value             = $field['name'] . ' (' . $this->language_controller->translate(
+                            'Extended'
+                        ) . ')';
+                    $extended_field_array[] = $row;
+                } else {
+                    $row->value = $field['name'];
                 }
-
-                if ($field['type'] == 'datetime') {
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_n_days_ago';
-                    $temp_row->value = $field['name'] . '_n_days_ago ' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_ccyy';
-                    $temp_row->value = $field['name'] . '_ccyy' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_mm';
-                    $temp_row->value = $field['name'] . '_mm' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_dd';
-                    $temp_row->value = $field['name'] . '_dd' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_ccyy_mm_dd';
-                    $temp_row->value = $field['name'] . '_ccyy_mm_dd' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_month_name_abbr';
-                    $temp_row->value = $field['name'] . '_month_name_abbr' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_month_name';
-                    $temp_row->value = $field['name'] . '_month_name' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_time';
-                    $temp_row->value = $field['name'] . '_time' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_day_number';
-                    $temp_row->value = $field['name'] . '_day_number' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_day_name_abbr';
-                    $temp_row->value = $field['name'] . '_day_name_abbr' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_day_name';
-                    $temp_row->value = $field['name'] . '_day_name' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-                }
-
-                if ($field['type'] == 'text') {
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_introductory';
-                    $temp_row->value = $field['name'] . '_introductory' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_fulltext';
-                    $temp_row->value = $field['name'] . '_fulltext' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-
-                    $temp_row        = new stdClass();
-                    $temp_row->id    = $field['name'] . '_snippet';
-                    $temp_row->value = $field['name'] . '_snippet' . $extended_literal;
-                    $fieldArray[]    = $temp_row;
-                }
+                $field_array[]      = $row;
+                $all_fields_array[] = $row;
             }
+            $this->runtime_data->plugin_data->fieldsstandard = $field_array;
         }
 
-        if ($status == 0) {
-        } else {
-            $temp_row        = new stdClass();
-            $temp_row->id    = 'status_name';
-            $temp_row->value = 'status_name' . $extended_literal;
-            $fieldArray[]    = $temp_row;
+        ksort($extended_field_array);
+        $this->runtime_data->plugin_data->extended_field_array = $extended_field_array;
+
+        $groups = $model_registry['customfieldgroups'];
+
+        if (count($groups) > 0 && is_array($groups)) {
+            foreach ($groups as $group) {
+
+                $group_array = array();
+
+                if (isset($model_registry[$group])) {
+                    $fields = $model_registry[$group];
+
+                    if (count($fields) > 0 && is_array($fields)) {
+                        foreach ($fields as $field) {
+                            $row        = new stdClass();
+                            $row->id    = $field['name'];
+                            $row->value = $field['name'] . ' (' . $this->language_controller->translate($group) . ')';
+
+                            $group_array[]      = $row;
+                            $all_fields_array[] = $row;
+                        }
+                        ksort($group_array);
+                        $this->runtime_data->plugin_data->$group = $group_array;
+                    }
+                }
+            }
         }
 
         $joins = $model_registry['joins'];
 
         if (count($joins) > 0) {
             foreach ($joins as $field) {
-                $temp = explode(',', $field['select']);
-                if (count($temp) > 0) {
-                    foreach ($temp as $f) {
+                $row = explode(',', $field['select']);
+                if (count($row) > 0) {
+                    foreach ($row as $f) {
                         if (trim($f) == '') {
                         } else {
-                            $temp_row        = new stdClass();
-                            $temp_row->id    = $field['alias'] . '_' . $f;
-                            $temp_row->value = $field['alias'] . '_' . $f . $extended_literal;
+                            $row        = new stdClass();
+                            $row->id    = $field['alias'] . '_' . $f;
+                            $row->value = $field['alias'] . '_' . $f . ' (' . $this->language_controller->translate(
+                                    'joins'
+                                ) . ')';
 
-                            $fieldArray[] = $temp_row;
+                            $join_array[]       = $row;
+                            $all_fields_array[] = $row;
                         }
+                        ksort($group_array);
+                        $this->runtime_data->plugin_data->$group = $group_array;
                     }
                 }
             }
         }
 
-//$exists = $this->registry->exists($model_registry, 'customfieldgroups');
-        $customfields     = $model_registry['customfields'];
-        $customFieldArray = array();
-        if (count($customfields) > 0) {
-            foreach ($customfields as $field) {
-                $temp_row        = new stdClass();
-                $temp_row->id    = $field['name'];
-                $temp_row->value = $field['name'] . $customfield_literal;
-
-                $fieldArray[]       = $temp_row;
-                $standardArray[]    = $temp_row;
-                $customFieldArray[] = $temp_row;
-            }
-        }
-
-        $runtime_data      = $model_registry['parameters'];
-        $runtime_dataArray = array();
-        if (count($runtime_data) > 0) {
-            foreach ($runtime_data as $field) {
-                $temp_row        = new stdClass();
-                $temp_row->id    = 'parameter' . '_' . $field['name'];
-                $temp_row->value = $field['name'] . $parameter_literal;
-
-                $fieldArray[]        = $temp_row;
-                $runtime_dataArray[] = $temp_row;
-            }
-        }
-
-        $metadata = $model_registry['metadata'];
-        if (count($metadata) > 0) {
-            foreach ($metadata as $field) {
-                $temp_row        = new stdClass();
-                $temp_row->id    = 'Metadata' . '_' . $field['name'];
-                $temp_row->value = 'Metadata' . '_' . $field['name'] . $metadata_literal;
-
-                $fieldArray[]    = $temp_row;
-                $standardArray[] = $temp_row;
-                $metadataArray[] = $temp_row;
-            }
-        }
-
-        asort($fieldArray);
-        asort($standardArray);
-        asort($metadataArray);
-        asort($runtime_dataArray);
-        asort($customFieldArray);
-
-        $this->runtime_data->plugin_data->datalists                 = new stdClass();
-        $this->runtime_data->plugin_data->datalists->fields         = $fieldArray;
-        $this->runtime_data->plugin_data->datalists->fieldsstandard = $standardArray;
-        $this->runtime_data->plugin_data->datalists->metadata       = $metadataArray;
-
-        $fieldname                                              = $model_registry['name'] . 'Fieldsruntime_data';
-        $this->runtime_data->plugin_data->datalists->$fieldname = $runtime_dataArray;
-        $fieldname                                              = $model_registry['name'] . 'Fieldscustom';
-        $this->runtime_data->plugin_data->datalists->$fieldname = $customFieldArray;
+        asort($all_fields_array);
+        $this->runtime_data->plugin_data->fields = $all_fields_array;
 
         return $this;
     }

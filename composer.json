@@ -42,9 +42,13 @@
     },
 
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Molajo": "/"
         }
+    },
+
+    "archive": {
+        "exclude": ["/.dev"]
     },
 
     "minimum-stability": "dev"

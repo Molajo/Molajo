@@ -8,11 +8,11 @@
  */
 namespace Molajo\Plugin\Pagetypegrid;
 
-use stdClass;
 use Exception;
 use CommonApi\Event\DisplayInterface;
-use Molajo\Plugin\DisplayEventPlugin;
 use CommonApi\Exception\RuntimeException;
+use Molajo\Plugin\DisplayEventPlugin;
+use stdClass;
 
 /**
  * Page Type Grid Plugin
@@ -400,8 +400,8 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $catalog_type_id = $controller->getModelRegistry('criteria_catalog_type_id');
 
         if ((string)$catalog_type_id == '*') {
-            if (isset($this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id)) {
-                $catalog_type_id = $this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id;
+            if (isset($this->runtime_data->resources->data->parameters->criteria_catalog_type_id)) {
+                $catalog_type_id = $this->runtime_data->resources->data->parameters->criteria_catalog_type_id;
             }
         }
 
@@ -417,6 +417,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
         try {
             $results    = $controller->getData();
+
             $multiple   = (int)$controller->getModelRegistry('multiple');
             $size       = (int)$controller->getModelRegistry('size');
             $structured = array();
@@ -476,75 +477,33 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function setGridFieldFilter()
     {
-        $temp_array = array();
-//todo - automate
-        $fields = $this->runtime_data->plugin_data->grid_model_registry['fields'];
+        if (is_array($this->runtime_data->plugin_data->fields)
+            && count($this->runtime_data->plugin_data->fields) > 0
+        ) {
 
-        if (is_array($fields) && count($fields) > 0) {
-            foreach ($fields as $field) {
+            $first      = 1;
+            $temp_array = array();
 
-                $temp = new stdClass();
+            foreach ($this->runtime_data->plugin_data->fields as $field) {
 
-                if ($field['type'] == 'customfield') {
-                } else {
-                    $temp->id       = $field['name'];
-                    $temp->value    = $field['name'];
-                    $temp->multiple = 0;
-                    $temp->size     = 1;
-                    $temp->selected = 0;
-                    $temp_array[]   = $temp;
-                }
+                $temp               = new stdClass();
+                $temp->id           = $field->id;
+                $temp->value        = $field->value;
+                $temp->multiple     = '';
+                $temp->size         = '';
+                $temp->selected     = '';
+                $temp->no_selection = 1;
+                $temp->first        = $first;
+                $temp->list_name    = $this->language_controller->translate('Fields');
+                $temp_array[]       = $temp;
+                $first              = 0;
             }
         }
 
-        $fields = $this->runtime_data->plugin_data->grid_model_registry['parameters'];
-        if (is_array($fields) && count($fields) > 0) {
-            foreach ($fields as $field) {
-
-                $temp = new stdClass();
-
-                if ($field['type'] == 'customfield') {
-                } else {
-                    $temp->id       = $field['name'];
-                    $temp->value    = $field['name'];
-                    $temp->multiple = 0;
-                    $temp->size     = 1;
-                    $temp->selected = 0;
-                    $temp_array[]   = $temp;
-                }
-            }
-        }
-
-        $fields = $this->runtime_data->plugin_data->grid_model_registry['metadata'];
-        if (is_array($fields) && count($fields) > 0) {
-            foreach ($fields as $field) {
-
-                $temp = new stdClass();
-
-                if ($field['type'] == 'customfield') {
-                } else {
-                    $temp->id       = $field['name'];
-                    $temp->value    = $field['name'];
-                    $temp->multiple = 0;
-                    $temp->size     = 1;
-                    $temp->selected = 0;
-                    $temp_array[]   = $temp;
-                }
-            }
-        }
-
-        usort(
-            $temp_array,
-            function ($a, $b) {
-                return strcmp($a->value, $b->value);
-            }
-        );
-
-        $this->runtime_data->plugin_data->Fields = $temp_array;
+        $this->runtime_data->plugin_data->grid_fields = $temp_array;
 
         return $this;
     }
-
 
     /**
      * First, Even/Odd and Last Rows

@@ -10,6 +10,9 @@ $(document).ready(function () {
             $("div#grid-filters").hide();
         } else {
             $("div#grid-filters").show();
+            $("div#grid-tags").hide();
+            $("div#grid-categories").hide();
+            $("div#grid-permissions").hide();
         }
     });
 
@@ -18,6 +21,9 @@ $(document).ready(function () {
             $("div#grid-tags").hide();
         } else {
             $("div#grid-tags").show();
+            $("div#grid-filters").hide();
+            $("div#grid-categories").hide();
+            $("div#grid-permissions").hide();
         }
     });
 
@@ -26,6 +32,9 @@ $(document).ready(function () {
             $("div#grid-categories").hide();
         } else {
             $("div#grid-categories").show();
+            $("div#grid-filters").hide();
+            $("div#grid-tags").hide();
+            $("div#grid-permissions").hide();
         }
     });
 
@@ -34,6 +43,9 @@ $(document).ready(function () {
             $("div#grid-permissions").hide();
         } else {
             $("div#grid-permissions").show();
+            $("div#grid-filters").hide();
+            $("div#grid-tags").hide();
+            $("div#grid-categories").hide();
         }
     });
 });

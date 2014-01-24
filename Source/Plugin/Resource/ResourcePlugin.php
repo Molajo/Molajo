@@ -147,7 +147,9 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
             $resource->$key = $value;
         }
 
-        return $resource;
+        $this->runtime_data->resource = $resource;
+
+        return $this;
     }
 
     /**
@@ -196,6 +198,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         $resource->metadata        = $menu_item->metadata;
         $resource->menuitem        = $menu_item;
         $resource->catalog_type_id = $catalog_type_id;
+        $resource->model_registry  = $controller->getModelRegistry('*');
 
         $this->runtime_data->resource = $resource;
 
@@ -232,7 +235,9 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         $resource->data           = $data;
         $resource->model_registry = $controller->getModelRegistry('*');
 
-        return $resource;
+        $this->runtime_data->resource = $resource;
+
+        return $this;
     }
 
     /**

@@ -4,6 +4,10 @@
 .odd {
     background-color: #DBDBDB
 }
+.edit-title {}
+.edit-editor {}
+.edit-foooter {}
+.edit-sidebar1, .edit-sidebar2, .edit-sidebar3 {}
 
 /*! Footer*/
 .footer-bottom {
