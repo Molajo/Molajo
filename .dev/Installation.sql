@@ -100,7 +100,7 @@ SET @parameters = CONCAT('
 "configuration_form":"{{Page,form_parent*,form_theme*,form_page*}}{{Template,form_template*}}{{Wrap,form_wrap*}}{{Model,form_model*}}",
 "configuration_item":"{{Page,item_parent*,item_theme*,item_page*}}{{Template,item_template*}}{{Wrap,item_wrap*}}{{Model,item_model*}}",
 "configuration_list":"{{Page,list_parent*,list_theme*,list_page*}}{{Template,list_template*}}{{Wrap,list_wrap*}}{{Model,list_model*}}",
-"configuration_editor":"{{Main,edit_toolbar*,edit_main*,edit_secondary*}}{{Publish,edit_publish*}}{{Permissions,edit_permission*}}{{SEO,edit_seo*}}",
+"configuration_editor":"{{Main,edit_toolbar*,edit_editor*,edit_secondary*}}{{Publish,edit_sidebar1*}}{{Permissions,edit_permission*}}{{SEO,edit_seo*}}",
 "configuration_grid":"{{Grid,grid_toolbar*,grid_stat*,grid_ordering*}}{{Lists,grid_list*}}{{Columns,grid_col*}}{{Batch,grid_batch*}}",
 
 "menuitem_source_id":"",
@@ -139,8 +139,8 @@ SET @parameters = CONCAT('
 "cache_handler":"file",
 
 "edit_array":"{{Main,main}}{{Publish,publish}}{{Permissions,permissions}}{{SEO,seo}}",
-		"edit_main":"{{Main,edit_toolbar*,edit_main*,edit_secondary*}}",
-		"edit_publish":"{{Publish,edit_publish*}}",
+		"edit_editor":"{{Main,edit_toolbar*,edit_editor*,edit_secondary*}}",
+		"edit_sidebar1":"{{Publish,edit_sidebar1*}}",
 		"edit_permissions":"{{Permissions,edit_permission*}}",
 		"edit_seo":"{{SEO,edit_seo*}}"
 
