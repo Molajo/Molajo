@@ -39,6 +39,7 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
         $parameters                                 = $this->runtime_data->resource->parameters;
         $model_registry                             = $this->runtime_data->resource->model_registry;
         $data                                       = $this->runtime_data->resource->data;
+
         $tab_array                                  = $parameters->edit_array;
         $this->runtime_data->plugin_data->edit_tabs = $this->setTabs($tab_array);
         $this->setTabFormFieldsets($parameters);
@@ -63,6 +64,11 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
                 }
             }
             $this->runtime_data->plugin_data->$template = $temp;
+
+            echo $template . '<br />';
+            echo '<pre>';
+            var_dump($this->runtime_data->plugin_data->$template);
+            echo '</pre>';
         }
 
         return $this;

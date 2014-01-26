@@ -141,7 +141,7 @@ SET @parameters = CONCAT('
 "edit_array":"{{Main,main}}{{Publish,publish}}{{Permissions,permissions}}{{SEO,seo}}",
 		"edit_editor":"{{Main,edit_toolbar*,edit_editor*,edit_secondary*}}",
 		"edit_sidebar1":"{{Publish,edit_sidebar1*}}",
-		"edit_permissions":"{{Permissions,edit_permission*}}",
+		"edit_sidebar1":"{{Permissions,edit_permission*}}",
 		"edit_seo":"{{SEO,edit_seo*}}"
 
 
