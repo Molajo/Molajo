@@ -39,37 +39,95 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
         $parameters                                 = $this->runtime_data->resource->parameters;
         $model_registry                             = $this->runtime_data->resource->model_registry;
         $data                                       = $this->runtime_data->resource->data;
-
-        $tab_array                                  = $parameters->edit_array;
-        $this->runtime_data->plugin_data->edit_tabs = $this->setTabs($tab_array);
-        $this->setTabFormFieldsets($parameters);
-        $this->setTabSectionFields($parameters, $model_registry);
+        $customfieldgroups                          = $model_registry['customfieldgroups'];
+        $section_array                              = $parameters->edit_array;
+        $this->runtime_data->plugin_data->edit_tabs = $this->setFormSections($section_array);
+        $this->setFormSectionFieldsets($parameters);
+        $this->setFormFieldsetFields($parameters, $model_registry);
 
         $template_views = array();
-        foreach ($this->tab_form_fieldsets as $key => $item) {
+        foreach ($this->form_section_fieldsets as $key => $item) {
             $template_views[] = $key;
         }
 
         foreach ($template_views as $template) {
             $temp = array();
-            foreach ($this->tab_form_fieldsets_fields as $item) {
+            foreach ($this->form_section_fieldset_fields as $item) {
+
                 if ($template == $item->template_view) {
-                    $name   = $item->name;
+
+                    $name        = $item->name;
+                    $item->value = null;
+
                     if (isset($data->$name)) {
                         $item->value = $data->$name;
                     } else {
-                        $item->value = null;
+
+                        if (count($customfieldgroups) > 0 && is_array($customfieldgroups)) {
+                            foreach ($customfieldgroups as $group) {
+                                if ($group == 'parameters') {
+                                    if (isset($parameters->$name)) {
+                                        $item->value = $parameters->$name;
+                                    }
+                                } else {
+                                    if (isset($data->$group->$name)) {
+                                        $item->value = $data->$group->$name;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
-                    $temp[] = $item;
+
+                    if (isset($item->datalist)) {
+                        $item->type      = 'selectlist';
+                        $item->list_name = $item->datalist;
+                        $this->getSelectlist($item->datalist);
+                    }
+                    $temp[$name] = $item;
                 }
             }
-            $this->runtime_data->plugin_data->$template = $temp;
 
-            echo $template . '<br />';
-            echo '<pre>';
-            var_dump($this->runtime_data->plugin_data->$template);
-            echo '</pre>';
+            $template                                   = strtolower($template);
+            $this->runtime_data->plugin_data->$template = $temp;
         }
+
+        return $this;
+    }
+
+    /**
+     * Get Select List and save results in plugin data
+     *
+     * @param   $list
+     *
+     * @return  $this
+     *
+     */
+    public function getSelectlist($list)
+    {
+        //@todo figure out selected value
+        $selected = '';
+
+        if (isset($this->runtime_data->plugin_data->datalists->$list)) {
+            $value = $this->runtime_data->plugin_data->datalists->$list;
+        } else {
+            $value = $this->getFilter($list);
+        }
+
+        if (is_array($value) && count($value) > 0) {
+
+            usort(
+                $value,
+                function ($a, $b) {
+                    return strcmp($a->value, $b->value);
+                }
+            );
+
+        } else {
+            $value = array();
+        }
+
+        $this->runtime_data->plugin_data->$list = $value;
 
         return $this;
     }
