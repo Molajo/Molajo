@@ -21,7 +21,7 @@
     },
 
     "require": {
-        "php": ">=5.3.10",
+        "php": ">=5.4",
         "molajo/authorisation": "dev-master",
         "molajo/cache": "dev-master",
         "molajo/database": "dev-master",

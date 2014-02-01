@@ -10,8 +10,8 @@ namespace Molajo\Plugin\Featured;
 
 use Exception;
 use CommonApi\Exception\RuntimeException;
-use Molajo\Plugin\DisplayEventPlugin;
 use CommonApi\Event\DisplayInterface;
+use Molajo\Plugin\DisplayEventPlugin;
 
 /**
  * Featured Plugin

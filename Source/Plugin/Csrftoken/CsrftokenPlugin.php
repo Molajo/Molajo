@@ -8,9 +8,11 @@
  */
 namespace Molajo\Plugin\Csrftoken;
 
-use Molajo\Plugin\CreateEventPlugin;
 use CommonApi\Event\CreateInterface;
+use CommonApi\Event\DeleteInterface;
+use CommonApi\Event\DisplayInterface;
 use CommonApi\Event\UpdateInterface;
+use Molajo\Plugin\AbstractPlugin;
 
 /**
  * Csrftoken Plugin
@@ -19,7 +21,7 @@ use CommonApi\Event\UpdateInterface;
  * @license     http://www.opensource.org/licenses/mit-license.html MIT License
  * @since       1.0
  */
-class CsrftokenPlugin extends CreateEventPlugin implements CreateInterface, UpdateInterface
+class CsrftokenPlugin extends AbstractPlugin
 {
     /**
      * After View Rendering, look for </form> Statement, if found, add CSRF Protection
@@ -27,11 +29,9 @@ class CsrftokenPlugin extends CreateEventPlugin implements CreateInterface, Upda
      * @return  $this
      * @since   1.0
      */
-    public function onAfterRenderView()
+    public function onBeforeResponse()
     {
-        return $this;
-
-        $rendered = $this->get('rendered_page');
+        $rendered = $this->rendered_page;
 
         if ($rendered === null
             || trim($rendered) == ''
@@ -59,7 +59,7 @@ class CsrftokenPlugin extends CreateEventPlugin implements CreateInterface, Upda
 
             $withThis[] = $match
                 . chr(10)
-                . '<div class="catch"><input name="info" type="text" value=""></div>'
+                . '<input name="info" type="hidden" value="">'
                 . chr(10)
                 . '<input type="hidden" name="' . $formToken . '" value="token">';
 
@@ -73,7 +73,7 @@ class CsrftokenPlugin extends CreateEventPlugin implements CreateInterface, Upda
             return $this;
         }
 
-        $this->set('rendered_page', $temp);
+        $this->rendered_page = $temp;
 
         return $this;
     }

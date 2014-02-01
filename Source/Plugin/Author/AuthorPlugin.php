@@ -8,10 +8,10 @@
  */
 namespace Molajo\Plugin\Author;
 
-use CommonApi\Event\ReadInterface;
-use CommonApi\Exception\RuntimeException;
 use Exception;
-use Molajo\Plugin\ReadEventPlugin;
+use CommonApi\Event\DisplayInterface;
+use CommonApi\Exception\RuntimeException;
+use Molajo\Plugin\DisplayEventPlugin;
 use stdClass;
 
 /**
@@ -21,7 +21,7 @@ use stdClass;
  * @license  http://www.opensource.org/licenses/mit-license.html MIT License
  * @since    1.0
  */
-class AuthorPlugin extends ReadEventPlugin implements ReadInterface
+class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
 {
     /**
      * After-read processing
@@ -30,8 +30,17 @@ class AuthorPlugin extends ReadEventPlugin implements ReadInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    public function onAfterRead()
+    public function onBeforeRenderView()
     {
+        if ($this->parameters->token->name == 'Author') {
+        } else {
+            return $this;
+        }
+
+        echo '<pre>';
+        var_dump($this->parameters->token);
+        die;
+
         $this->runtime_data->plugin_data->author                 = new stdClass();
         $this->runtime_data->plugin_data->author->data           = new stdClass();
         $this->runtime_data->plugin_data->author->model_registry = new stdClass();
@@ -48,6 +57,9 @@ class AuthorPlugin extends ReadEventPlugin implements ReadInterface
         $this->getAuthorProfile();
 
         $this->runtime_data->plugin_data->author->data->sef_url = $this->getAuthorProfileURL();
+
+        echo '<pre>';
+        var_dump($this->runtime_data->plugin_data->author);
 
         return $this;
     }
