@@ -90,12 +90,12 @@ class PagetypeapplicationPlugin extends DisplayEventPlugin implements DisplayInt
                 }
                 $temp_row->id    = $i;
                 $temp_row->title = substr($item, 0, strpos($item, ','));
-                $temp_row->url   = $this->runtime_data->page->urls['page'] . '/page/' . $i;
+                $temp_row->url   = $this->plugin_data->page->urls['page'] . '/page/' . $i;
 
                 $pageArray[] = $temp_row;
             }
         }
-        $this->runtime_data->page->menu['SectionSubmenu'] = $pageArray;
+        $this->plugin_data->page->menu['SectionSubmenu'] = $pageArray;
 
         /** Even tho links are created to each form page, generate Form for the current page, only */
         $current_page = '{{' . $pages[$page_number];

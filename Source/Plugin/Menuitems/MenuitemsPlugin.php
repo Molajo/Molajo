@@ -88,7 +88,7 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
         }
 
         if (count($temp_row) == 0) {
-            $this->runtime_data->plugin_data->datalists->menuitems = array();
+            $this->plugin_data->datalists->menuitems = array();
             return $this;
         }
 
@@ -111,7 +111,7 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
             $menuitem[] = $temp_row;
         }
 
-        $this->runtime_data->plugin_data->datalists->menuitems = $menuitem;
+        $this->plugin_data->datalists->menuitems = $menuitem;
 
         return $this;
     }

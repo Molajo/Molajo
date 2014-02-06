@@ -28,27 +28,27 @@ class FormselectlistPlugin extends DisplayEventPlugin implements DisplayInterfac
      */
     public function onBeforeRenderView()
     {
-        if (isset($this->runtime_data->render->token)
-            && $this->runtime_data->render->token->type == 'template'
-            && strtolower($this->runtime_data->render->token->name) == 'formselectlist'
+        if (isset($this->plugin_data->render->token)
+            && $this->plugin_data->render->token->type == 'template'
+            && strtolower($this->plugin_data->render->token->name) == 'formselectlist'
         ) {
         } else {
             return $this;
         }
 
-        if (isset($this->runtime_data->render->token->attributes['datalist'])) {
-            $list = $this->runtime_data->render->token->attributes['datalist'];
+        if (isset($this->plugin_data->render->token->attributes['datalist'])) {
+            $list = $this->plugin_data->render->token->attributes['datalist'];
         } else {
             return $this;
         }
-echo $list;
+        echo $list;
         die;
-//        $temp_row = $this->runtime_data->plugin_data->grid_filters[$list];
+//        $temp_row = $this->plugin_data->grid_filters[$list];
 
-        $this->runtime_data->plugin_data->form_select_list = array();
-        //$this->runtime_data->plugin_data->datalists->datalist[$list];
+        $this->plugin_data->form_select_list = array();
+        //$this->plugin_data->datalists->datalist[$list];
 
-        $this->row = $this->runtime_data->plugin_data->form_select_list;
+        $this->row = $this->plugin_data->form_select_list;
 
         echo '<pre>';
         var_dump($this->row);

@@ -10,7 +10,7 @@ namespace Molajo\Plugin\Pagetypeconfiguration;
 
 use CommonApi\Event\DisplayInterface;
 use Molajo\Plugin\DisplayEventPlugin;
-
+use stdClass;
 /**
  * Page Type Configuration Plugin
  *
@@ -21,10 +21,12 @@ use Molajo\Plugin\DisplayEventPlugin;
 class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayInterface
 {
     /**
-     * Prepares Configuration Data
+     * Prepares data for the Administrator Grid
+     *
+     * Dependent upon lists developed in onAfterRoute
      *
      * @return  $this
-     * @since    1.0
+     * @since   1.0
      */
     public function onBeforeRender()
     {
@@ -33,175 +35,203 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
             return $this;
         }
 
-        $controller_class_namespace = $this->controller_namespace;
-        $controller                 = new $controller_class_namespace();
-        $controller->getModelRegistry(
-            $this->get('model_type', '', 'runtime_data'),
-            $this->get('model_name', '', 'runtime_data'),
-            1
-        );
-        $controller->set('get_customfields', 2);
-        $controller->set('use_special_joins', 1);
-        $controller->set('process_events', 1);
+        $this->plugin_data->form_select_list = array();
+        $this->plugin_data->configuration    = new stdClass();
 
-        /** Array - All Pages in Set
-         * 2, {{Access,noformfields}}{{Editor,editor}}{{Grid,grid}}{{Form,form}}{{Item,item}}{{List,list}}
-         */
-        $temp  = $this->get('configuration_array', '', 'runtime_data');
-        $pages = explode('{{', $temp);
+        $this->getCurrentMenuItem();
 
-        /** Determine Current Page of Set */
-        $temp    = $this->get('request_filters', array(), 'runtime_data');
-        $filters = explode(',', $temp);
-
-        $page = 1;
-        if ($filters == '' || count($filters) == 0) {
-            $page = 1;
-        } else {
-            foreach ($filters as $x) {
-                if (trim($x) == '') {
-                } else {
-                    $pair = explode(':', $x);
-                    if (strtolower($pair[0]) == 'page') {
-                        $page = (int)$pair[1];
-                        break;
-                    }
-                }
-            }
-        }
-
-        if ($page < count($pages)) {
-        } else {
-            $page = 1;
-        }
-        $page_number = $page;
-
-        /** Resource Submenu: Links to various Form Pages (Tabs) - ex. Basic, Metadata, Fields, etc. */
-        $pageArray = array();
-        $i         = 0;
-        foreach ($pages as $item) {
-
-            if ($item == '') {
-            } else {
-                $i ++;
-                $temp_row     = new \stdClass();
-                $temp_row->id = $i;
-                if ($i == $page_number) {
-                    $temp_row->current = 1;
-                } else {
-                    $temp_row->current = 0;
-                }
-
-                $temp_row->id    = $i;
-                $temp_row->title = substr($item, 0, strpos($item, ','));
-                $temp_row->url   = $this->runtime_data->page->urls['page'] . '/page/' . $i;
-
-                $pageArray[] = $temp_row;
-            }
-        }
-        $this->runtime_data->page->menu['SectionSubmenu'] = $pageArray;
-
-        /** Even tho links are created to each form page, generate Form for the current page, only */
-        $current_page = '{{' . $pages[$page_number];
-
-        /** Build Fieldsets and Fields */
-        $form = Services::Form();
-
-        /** Resource
-         * 1. {{Basic,basic}}
-         * 3. {{Fields,customfields,Customfields}}
-         * 4. {{Editor,editor}}
-         * 5. {{Grid,grid}}
-         * 6. {{Form,form}}
-         * 7. {{Item,item}}
-         * 8. {{List,list}}
-         */
-        if ($page_number == 1 || $page_number == 3 || $page_number == 4
-            || $page_number == 5 || $page_number == 6 || $page_number == 7
-            || $page_number == 8
-        ) {
-
-            $pageFieldsets = $this->getResourceConfiguration($form, $current_page);
-        }
-
-        /** Set the View Model Parameters and Populate the Registry used as the Model */
-        $current_page = $form->getPages(
-            $pageFieldsets[0]->page_array,
-            $pageFieldsets[0]->page_count
-        );
-
-        $controller->set('request_model_type', $this->get('model_type', '', 'runtime_data'));
-        $controller->set('request_model_name', $this->get('model_name', '', 'runtime_data'));
-
-        $controller->set('model_type', 'Dataobject');
-        $controller->set('model_name', 'Primary');
-        $controller->set('model_query_object', 'list');
-
-        $controller->set('model_type', 'list');
-        $controller->set('model_name', 'Primary');
-
-        $this->registry->set(
-            'Primary',
-            'Data',
-            $current_page
-        );
+        $this->setToolbar();
+        //$this->setGridFilter();
+        $this->setGridFieldFilter();
 
         return $this;
     }
 
     /**
-     * Prepares Configuration Data
-     *
-     * @param   string $form
-     * @param   string $current_page
+     * Create Toolbar Registry based on Authorized Access
      *
      * @return  $this
      * @since   1.0
      */
-    protected function getResourceConfiguration($form, $current_page)
+    protected function getCurrentMenuItem()
     {
-        $this->content_helper->getResourceExtensionParameters(
-            (int)$this->runtime_data->criteria_extension_instance_id
-        );
+        //todo: fix
+        $resource                                        = 'Articles';
+        $model                                           = 'Menuitem' . ':///Molajo//Menuitem//' . $resource;
+        $this->runtime_data->current_menuitem            = new stdClass();
+        $this->runtime_data->current_menuitem->id        = $this->plugin_data->page->current_menuitem_id;
+        $this->runtime_data->current_menuitem->extension = $this->resource->get($model);
 
-        /** Set Input */
-        $form->set('namespace', strtolower($this->runtime_data->route->page_type));
+        return $this;
+    }
 
-        $form->set('model_type', $this->get('model_type', '', 'runtime_data'));
-        $form->set('model_name', $this->get('model_name', '', 'runtime_data'));
-        $form->set(
-            'model_registry_name',
-            ucfirst(strtolower($this->get('model_name', '', 'runtime_data'))) . ucfirst(
-                strtolower($this->get('model_type', '', 'runtime_data'))
-            )
-        );
+    /**
+     * Create Toolbar Registry based on Authorized Access
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    protected function setToolbar()
+    {
+        $url = $this->plugin_data->page->urls['page'];
 
-        $form->set('extension_instance_id', $this->get('criteria_extension_instance_id'));
+        $list = $this->plugin_data->resource->parameters->configuration_toolbar_buttons;
 
-        $form->set('data', array());
+        if ($list == '#' || $list == '') {
+            $list = 'save';
+        }
 
-        /** Parameters */
-        $runtime_data = $this->registry->getArray('ResourceSystemParameters');
-        $array2       = $this->registry->getArray('Parameters');
+        $configuration_toolbar_buttons = explode(',', $list);
+        $catalog_id           = $this->runtime_data->route->catalog_id;
 
-        foreach ($array2 as $key => $value) {
-            if (substr($key, 0, strlen('Configuration')) == 'Configuration') {
-                $runtime_data[$key] = $value;
+        $temp_query_results = array();
+
+        if (count($configuration_toolbar_buttons) > 0) {
+
+            foreach ($configuration_toolbar_buttons as $button) {
+
+                $options                = array();
+                $options['resource_id'] = $catalog_id;
+                $options['task']        = $button;
+
+                $permissions = true; //$this->authorisation_controller->isUserAuthorised($options);
+
+                if ($permissions === true) {
+
+                    $temp_row = new stdClass();
+
+                    $temp_row->name   = $this->language_controller->translate(
+                        strtoupper('TASK_' . strtoupper($button) . '_BUTTON')
+                    );
+                    $temp_row->action = $button;
+
+                    if ($this->runtime_data->application->parameters->url_sef == 1) {
+                        $temp_row->link = $url . '/task/' . $temp_row->action;
+                    } else {
+                        $temp_row->link = $url . '&task=' . $temp_row->action;
+                    }
+
+                    $temp_query_results[] = $temp_row;
+                }
             }
         }
 
-        $form->set('Parameters', $runtime_data);
-        $form->set('parameter_fields', $this->registry->get('ResourceSystem', 'Parameters'));
+        $this->plugin_data->configuration_toolbar = $temp_query_results;
 
-        /** Metadata */
-        $form->set('Metadata', $this->registry->getArray('ResourceSystemMetadata'));
-        $form->set('metadata_fields', $this->registry->get('ResourceSystem', 'Metadata'));
+        return $this;
+    }
 
-        /** Customfields */
-        $form->set('Customfields', $this->registry->getArray('ResourceSystemCustomfields'));
-        $form->set('customfields_fields', $this->registry->get('ResourceSystem', 'Customfields'));
+    /**
+     * Filters: lists stored in registry, where clauses for primary configuration query set
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  /CommonApi/Exception/RuntimeException
+     */
+    protected function setGridFilter()
+    {
+        $configuration_list = array();
+        $temp      = array();
 
-        /** Build Fieldsets and Fields */
-        return $form->execute($current_page);
+        for ($i = 1; $i < 11; $i ++) {
+
+            $configuration_list_number = 'configuration_list' . $i;
+            if (isset($this->runtime_data->current_menuitem->extension->parameters->$configuration_list_number)) {
+                if (trim($this->runtime_data->current_menuitem->extension->parameters->$configuration_list_number) == '') {
+                } else {
+                    if (in_array($configuration_list_number, $temp)) {
+                    } else {
+                        $temp[]         = $configuration_list_number;
+                        $row            = new stdClass();
+                        $row->list_name = $this->runtime_data->current_menuitem->extension->parameters->$configuration_list_number;
+                        $configuration_list[]    = $row;
+                    }
+                }
+            }
+        }
+
+        $lists = array();
+
+        if (is_array($configuration_list) && count($configuration_list) > 0) {
+
+            foreach ($configuration_list as $row) {
+
+                //@todo figure out selected value
+                $selected = '';
+
+                $list = $row->list_name;
+
+                if ((string)$list == '') {
+                } else {
+
+                    if (isset($this->plugin_data->datalists->$list)) {
+                        $value = $this->plugin_data->datalists->$list;
+                    } else {
+                        $value = $this->getFilter($list);
+                    }
+
+                    if (is_array($value) && count($value) > 0) {
+
+                        usort(
+                            $value,
+                            function ($a, $b) {
+                                return strcmp($a->value, $b->value);
+                            }
+                        );
+
+                    } else {
+                        $value = array();
+                    }
+
+                    $listname = strtolower($list);
+                    $this->plugin_data->$listname = $value;
+                }
+            }
+        }
+
+        $this->plugin_data->configuration_filters = $configuration_list;
+
+        $this->plugin_data->configuration_batch_categories = $this->getFilter('Categories');
+        $this->plugin_data->configuration_batch_tags       = $this->getFilter('Tags');
+        $this->plugin_data->configuration_batch_groups     = $this->getFilter('Groups');
+
+        return $this;
+    }
+
+    /**
+     * Fields used by resource
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  /CommonApi/Exception/RuntimeException
+     */
+    protected function setGridFieldFilter()
+    {
+        if (is_array($this->plugin_data->fields)
+            && count($this->plugin_data->fields) > 0
+        ) {
+
+            $first      = 1;
+            $temp_array = array();
+
+            foreach ($this->plugin_data->fields as $field) {
+
+                $temp               = new stdClass();
+                $temp->id           = $field->id;
+                $temp->value        = $field->value;
+                $temp->multiple     = '';
+                $temp->size         = '';
+                $temp->selected     = '';
+                $temp->no_selection = 1;
+                $temp->first        = $first;
+                $temp->list_name    = $this->language_controller->translate('Fields');
+                $temp_array[]       = $temp;
+                $first              = 0;
+            }
+        }
+
+        $this->plugin_data->configuration_fields = $temp_array;
+
+        return $this;
     }
 }

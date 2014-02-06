@@ -32,34 +32,21 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRenderView()
     {
-        if ($this->parameters->token->name == 'Author') {
+        $test_title = strtolower($this->plugin_data->render->extension->title);
+
+        if ($test_title == 'author') {
         } else {
             return $this;
         }
 
-        echo '<pre>';
-        var_dump($this->parameters->token);
-        die;
-
-        $this->runtime_data->plugin_data->author                 = new stdClass();
-        $this->runtime_data->plugin_data->author->data           = new stdClass();
-        $this->runtime_data->plugin_data->author->model_registry = new stdClass();
-
-        if (isset($this->row->created_by)) {
+        if (isset($this->parameters->token->attributes['author'])) {
         } else {
             return $this;
         }
 
-        if ((int)$this->row->created_by == 0) {
-            return $this;
-        }
+        $author_id = $this->parameters->token->attributes['author'];
 
-        $this->getAuthorProfile();
-
-        $this->runtime_data->plugin_data->author->data->sef_url = $this->getAuthorProfileURL();
-
-        echo '<pre>';
-        var_dump($this->runtime_data->plugin_data->author);
+        $this->getAuthorProfile($author_id);
 
         return $this;
     }
@@ -71,20 +58,14 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    public function getAuthorProfile()
+    public function getAuthorProfile($author_id)
     {
-        if (isset($this->row->created_by)) {
-        } else {
-            return $this;
-        }
-
-        if ((int)$this->row->created_by == 0) {
-            return $this;
-        }
-
         $author = $this->resource->get(
             'query:///Molajo//Datasource//User.xml',
-            array('Parameters', $this->runtime_data)
+            array(
+                'runtime_data' => $this->runtime_data,
+                'plugin_data'  => $this->plugin_data
+            )
         );
 
         $author->setModelRegistry('check_view_level_access', 0);
@@ -92,12 +73,27 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
         $author->setModelRegistry('query_object', 'item');
         $author->setModelRegistry('use_special_joins', 1);
         $author->setModelRegistry('get_customfields', 1);
-        $author->setModelRegistry('primary_key_value', (int)$this->row->created_by);
+        $author->setModelRegistry('primary_key_value', (int)$author_id);
         $author->setModelRegistry('get_item_children', 0);
 
         try {
-            $this->runtime_data->plugin_data->author->data           = $author->getData();
-            $this->runtime_data->plugin_data->author->model_registry = $author->getModelRegistry('*');
+            $data = $author->getData();
+            $data->sef_url = $this->getAuthorProfileURL($author_id);
+
+            if (isset($data->parameters)) {
+                $parameters = $data->parameters;
+                unset($data->parameters);
+            } else {
+                $parameters = new stdClass();
+            }
+
+            foreach (\get_object_vars($parameters) as $key => $value) {
+                $this->parameters->$key = $value;
+            }
+
+            $this->query_results   = array();
+            $this->query_results[] = $data;
+            $this->model_registry  = $author->getModelRegistry('*');
 
         } catch (Exception $e) {
             throw new RuntimeException ($e->getMessage());
@@ -113,7 +109,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\RuntimeException;
      */
-    protected function getAuthorProfileURL()
+    protected function getAuthorProfileURL($author_id)
     {
         $controller = $this->resource->get('query:///Molajo//Datasource//Catalog.xml');
 
@@ -162,7 +158,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
         $controller->model->query->where(
             $controller->model->database->qn($controller->model->getModelRegistry('primary_prefix', 'a'))
             . '.' . $controller->model->database->qn('source_id')
-            . ' = ' . $this->runtime_data->plugin_data->author->data->id
+            . ' = ' . (int)$author_id
         );
 
         $controller->model->query->where(

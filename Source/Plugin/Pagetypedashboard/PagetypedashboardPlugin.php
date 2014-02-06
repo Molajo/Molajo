@@ -10,7 +10,7 @@ namespace Molajo\Plugin\Pagetypedashboard;
 
 use CommonApi\Event\DisplayInterface;
 use Molajo\Plugin\DisplayEventPlugin;
-
+use stdClass;
 /**
  * Page Type Dashboard Plugin
  *
@@ -21,7 +21,9 @@ use Molajo\Plugin\DisplayEventPlugin;
 class PagetypedashboardPlugin extends DisplayEventPlugin implements DisplayInterface
 {
     /**
-     * Prepares data for Pagetypedashboard
+     * Prepares data for the Dashboard
+     *
+     * Dependent upon lists developed in onAfterRoute
      *
      * @return  $this
      * @since   1.0
@@ -33,150 +35,197 @@ class PagetypedashboardPlugin extends DisplayEventPlugin implements DisplayInter
             return $this;
         }
 
-        echo 'PagetypedashboardPlugin';
-        die;
+        $this->plugin_data->form_select_list = array();
+        $this->plugin_data->dashboard    = new stdClass();
 
-        $portletOptions = $this->registry->get('runtime_data', 'dashboard_portlet');
-        if (trim($portletOptions) == '') {
-            return $this;
-        }
+        $this->getCurrentMenuItem();
 
-        $portletOptionsArray = explode(',', $portletOptions);
-
-        if (count($portletOptionsArray) == 0
-            || $portletOptionsArray === false
-        ) {
-        } else {
-            $this->portlets($portletOptionsArray);
-        }
-
-        /** Create Tabs */
-        $namespace = 'Pagetypedashboard';
-
-        $page_array = $this->get('dashboard_page_array');
-
-        $tabs = Services::Form()->setPageArray(
-            $this->get('model_type', '', 'runtime_data'),
-            $this->get('model_name', '', 'runtime_data'),
-            $namespace,
-            $page_array,
-            'dahboard_page_',
-            'Pagetypedashboard',
-            'Pagetypedashboardtab',
-            null,
-            null
-        );
-
-        $controller->set('request_model_type', $this->get('model_type', '', 'runtime_data'));
-        $controller->set('request_model_name', $this->get('model_name', '', 'runtime_data'));
-
-        $controller->set('model_type', 'Dataobject');
-        $controller->set('model_name', 'Primary');
-        $controller->set('model_query_object', 'list');
-
-        $controller->set('model_type', 'list');
-        $controller->set('model_name', 'Primary');
-
-        $this->registry->set(
-            'Primary',
-            'Data',
-            $tabs
-        );
+        //$this->setToolbar();
+        //$this->setGridFilter();
+       // $this->setGridFieldFilter();
 
         return $this;
-    }
-
-    /**
-     * Portlets
-     *
-     * @param   array $portletOptionsArray
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function portlets(array $portletOptionsArray = array())
-    {
-        $i               = 1;
-        $portletIncludes = '';
-        foreach ($portletOptionsArray as $portlet) {
-
-            $portletIncludes .= '<include '
-                . ucfirst(strtolower(trim($portlet)))
-                . ' wrap=Portlet wrap_id=portlet'
-                . $i
-                . ' wrap_class=portlet/>'
-                . chr(13);
-
-            $i ++;
-        }
-
-        $this->registry->set('xxxx', 'PortletOptions', $portletIncludes);
-
-        if ($this->get('model_type', '', 'runtime_data') == '' || $this->get('model_name', '', 'runtime_data') == '') {
-            return $this;
-        }
-
-        $this->setOptions();
     }
 
     /**
      * Create Toolbar Registry based on Authorized Access
      *
      * @return  $this
-     * @since  1.0
+     * @since   1.0
      */
-    protected function setDashboardPermissions()
+    protected function getCurrentMenuItem()
     {
+        //todo: fix
+        $model                                           = 'Menuitem' . ':///Molajo//Menuitem//Configuration';
+        $this->runtime_data->current_menuitem            = new stdClass();
+        $this->runtime_data->current_menuitem->id        = $this->plugin_data->page->current_menuitem_id;
+        $this->runtime_data->current_menuitem->extension = $this->resource->get($model);
+
+        return $this;
     }
 
     /**
-     * Options: creates a list of Portlets available for this Dashboard
+     * Create Toolbar Registry based on Authorized Access
      *
      * @return  $this
      * @since   1.0
      */
-    protected function setOptions()
+    protected function setToolbar()
     {
-        $results = Services::Text()->getDatalist('Portlets', 'Datalist', $this->runtime_data);
-        if ($results === false) {
-            return $this;
+        $url = $this->plugin_data->page->urls['page'];
+
+        $list = $this->plugin_data->resource->parameters->dashboard_toolbar_buttons;
+
+        if ($list == '#' || $list == '') {
+            $list = 'save';
         }
 
-        if (isset($this->runtime_data->selected)) {
-            $selected = $this->runtime_data->selected;
-        } else {
-            $selected = null;
+        $dashboard_toolbar_buttons = explode(',', $list);
+        $catalog_id           = $this->runtime_data->route->catalog_id;
+
+        $temp_query_results = array();
+
+        if (count($dashboard_toolbar_buttons) > 0) {
+
+            foreach ($dashboard_toolbar_buttons as $button) {
+
+                $options                = array();
+                $options['resource_id'] = $catalog_id;
+                $options['task']        = $button;
+
+                $permissions = true; //$this->authorisation_controller->isUserAuthorised($options);
+
+                if ($permissions === true) {
+
+                    $temp_row = new stdClass();
+
+                    $temp_row->name   = $this->language_controller->translate(
+                        strtoupper('TASK_' . strtoupper($button) . '_BUTTON')
+                    );
+                    $temp_row->action = $button;
+
+                    if ($this->runtime_data->application->parameters->url_sef == 1) {
+                        $temp_row->link = $url . '/task/' . $temp_row->action;
+                    } else {
+                        $temp_row->link = $url . '&task=' . $temp_row->action;
+                    }
+
+                    $temp_query_results[] = $temp_row;
+                }
+            }
         }
 
-        $list = Services::Text()->buildSelectList(
-            'Portlets',
-            $results[0]->listitems,
-            $results[0]->multiple,
-            $results[0]->size,
-            $selected
-        );
+        $this->plugin_data->dashboard_toolbar = $temp_query_results;
 
-        if (count($list) == 0 || $list === false) {
-            //throw exception
+        return $this;
+    }
+
+    /**
+     * Filters: lists stored in registry, where clauses for primary dashboard query set
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  /CommonApi/Exception/RuntimeException
+     */
+    protected function setGridFilter()
+    {
+        $dashboard_list = array();
+        $temp      = array();
+
+        for ($i = 1; $i < 11; $i ++) {
+
+            $dashboard_list_number = 'dashboard_list' . $i;
+            if (isset($this->runtime_data->current_menuitem->extension->parameters->$dashboard_list_number)) {
+                if (trim($this->runtime_data->current_menuitem->extension->parameters->$dashboard_list_number) == '') {
+                } else {
+                    if (in_array($dashboard_list_number, $temp)) {
+                    } else {
+                        $temp[]         = $dashboard_list_number;
+                        $row            = new stdClass();
+                        $row->list_name = $this->runtime_data->current_menuitem->extension->parameters->$dashboard_list_number;
+                        $dashboard_list[]    = $row;
+                    }
+                }
+            }
         }
 
-        $temp_row = array();
+        $lists = array();
 
-        foreach ($list as $item) {
+        if (is_array($dashboard_list) && count($dashboard_list) > 0) {
 
-            $temp_row           = new \stdClass();
-            $temp_row->id       = $item->id;
-            $temp_row->value    = $this->language_controller->translate(
-                ucfirst(strtolower(substr($item->value, 7, strlen($item->value))))
-            );
-            $temp_row->selected = '';
-            $temp_row->multiple = '';
-            $temp_row->list_name = 'Portlets';
+            foreach ($dashboard_list as $row) {
 
-            $temp_row[] = $temp_row;
+                //@todo figure out selected value
+                $selected = '';
+
+                $list = $row->list_name;
+
+                if ((string)$list == '') {
+                } else {
+
+                    if (isset($this->plugin_data->datalists->$list)) {
+                        $value = $this->plugin_data->datalists->$list;
+                    } else {
+                        $value = $this->getFilter($list);
+                    }
+
+                    if (is_array($value) && count($value) > 0) {
+
+                        usort(
+                            $value,
+                            function ($a, $b) {
+                                return strcmp($a->value, $b->value);
+                            }
+                        );
+
+                    } else {
+                        $value = array();
+                    }
+
+                    $listname = strtolower($list);
+                    $this->plugin_data->$listname = $value;
+                }
+            }
         }
 
-        $this->runtime_data->plugin_data->datalists->portlets = $temp_row;
+        $this->plugin_data->dashboard_filters = $dashboard_list;
+
+        return $this;
+    }
+
+    /**
+     * Fields used by resource
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  /CommonApi/Exception/RuntimeException
+     */
+    protected function setGridFieldFilter()
+    {
+        if (is_array($this->plugin_data->fields)
+            && count($this->plugin_data->fields) > 0
+        ) {
+
+            $first      = 1;
+            $temp_array = array();
+
+            foreach ($this->plugin_data->fields as $field) {
+
+                $temp               = new stdClass();
+                $temp->id           = $field->id;
+                $temp->value        = $field->value;
+                $temp->multiple     = '';
+                $temp->size         = '';
+                $temp->selected     = '';
+                $temp->no_selection = 1;
+                $temp->first        = $first;
+                $temp->list_name    = $this->language_controller->translate('Fields');
+                $temp_array[]       = $temp;
+                $first              = 0;
+            }
+        }
+
+        $this->plugin_data->dashboard_fields = $temp_array;
 
         return $this;
     }

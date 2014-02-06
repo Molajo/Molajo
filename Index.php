@@ -83,8 +83,9 @@ $ioc_container       = new $ioc_container_class (
 /**
  *  VI. Fire off FrontController
  */
+require_once __DIR__ . '/Services.php';
 require_once BASE_FOLDER . '/vendor/molajo/framework/Source/Controller/FrontController.php';
 $front_controller_class = 'Molajo\\Controller\\FrontController';
-$front_controller       = new $front_controller_class ($ioc_container, $base_folder);
+$front_controller       = new $front_controller_class ($ioc_container, $services);
 
-$front_controller->driver();
+$front_controller->process();

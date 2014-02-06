@@ -56,7 +56,7 @@ class DatalistPlugin extends AbstractPlugin
             $datalist[basename($file)] = $temp_row;
         }
 
-        $this->runtime_data->plugin_data->datalists->datalist = $datalist;
+        $this->plugin_data->datalists->datalist = $datalist;
 
         return $this;
     }

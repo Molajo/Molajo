@@ -73,7 +73,11 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
     protected function processCustomfieldGroup($group)
     {
         /** Page Type */
-        $page_type = strtolower($this->runtime_data->route->page_type);
+        if (isset($this->runtime_data->route->page_type)) {
+            $page_type = strtolower($this->runtime_data->route->page_type);
+        } else {
+            $page_type = '';
+        }
 
         /** Standard Data */
         if (isset($this->row->$group)) {
@@ -132,7 +136,6 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
         } else {
             $application = new stdClass();
         }
-
 
         if ($page_type == 'new' || $page_type == 'edit') {
             $page_type = 'form';

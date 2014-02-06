@@ -10,7 +10,7 @@ namespace Molajo\Plugin\Pagination;
 
 use CommonApi\Event\ReadInterface;
 use Molajo\Plugin\ReadEventPlugin;
-use Molajo\Render\Pagination as Pagination;
+use Molajo\Pagination\Pagination as Pagination;
 
 /**
  * Pagination Plugin
@@ -33,7 +33,6 @@ class PaginationPlugin extends ReadEventPlugin implements ReadInterface
             && isset($this->model_registry['total_items'])
             && isset($this->model_registry['model_count'])
             && isset($this->runtime_data->request->data->url)
-            && isset($this->query_results)
         ) {
         } else {
             return $this;
@@ -47,7 +46,7 @@ class PaginationPlugin extends ReadEventPlugin implements ReadInterface
         $page_url = $this->runtime_data->request->data->url;
 //        $query_parameters = array('tag' => 'celebrate'); // Exclude the page parameter
         $query_parameters = array(); // Exclude the page parameter
-        $page = 1;
+        $page             = 1;
 
         /** From Database Query */
         $data = $this->query_results;
@@ -55,8 +54,8 @@ class PaginationPlugin extends ReadEventPlugin implements ReadInterface
         $total_items = $this->model_registry['total_items'];
 
         /** Application Configuration */
-        $per_page = $this->model_registry['model_count'];          // How many items should display on the page?
-        $display_links = 5;     // How many numeric page links should display in the pagination?
+        $per_page      = $this->model_registry['model_count']; // How many items should display on the page?
+        $display_links = 5; // How many numeric page links should display in the pagination?
 
         /** Instantiate the Pagination Adapter */
         $pagination = new Pagination(
@@ -69,7 +68,7 @@ class PaginationPlugin extends ReadEventPlugin implements ReadInterface
             $page
         );
 
-        $this->runtime_data->plugin_data->pagination = $pagination;
+        $this->plugin_data->pagination = $pagination;
 
         return $this;
     }

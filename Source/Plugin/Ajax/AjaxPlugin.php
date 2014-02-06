@@ -9,8 +9,8 @@
 namespace Molajo\Plugin\Ajax;
 
 use stdClass;
-use Molajo\Plugin\SystemEventPlugin;
 use CommonApi\Event\SystemInterface;
+use Molajo\Plugin\SystemEventPlugin;
 
 /**
  * Ajax Plugin
@@ -33,8 +33,8 @@ class AjaxPlugin extends SystemEventPlugin implements SystemInterface
             return $this;
         }
 
-        $this->runtime_data->resource->template = $this->resource->get('Template:///Molajo//View//Template//' . 1342);
-        $this->runtime_data->resource->wrap     = $this->resource->get('Wrap:///Molajo//View//Wrap//' . 2090);
+        $this->plugin_data->resource->template = $this->resource->get('Template:///Molajo//View//Template//' . 1342);
+        $this->plugin_data->resource->wrap     = $this->resource->get('Wrap:///Molajo//View//Wrap//' . 2090);
 
         $sequence = array();
         $x        = $this->resource->get('xml:///Molajo//Application//Ajax_sequence.xml')->include;
@@ -42,11 +42,11 @@ class AjaxPlugin extends SystemEventPlugin implements SystemInterface
             $sequence[] = (string)$y;
         }
 
-        if (isset($this->runtime_data->render)) {
+        if (isset($this->plugin_data->render)) {
         } else {
-            $this->runtime_data->render = new stdClass();
+            $this->plugin_data->render = new stdClass();
         }
-        $this->runtime_data->render->token_sequence = $sequence;
+        $this->plugin_data->render->token_sequence = $sequence;
 
         $final_sequence = array();
         $x              = $this->resource->get('xml:///Molajo//Application//Ajax_final.xml')->include;
@@ -58,7 +58,7 @@ class AjaxPlugin extends SystemEventPlugin implements SystemInterface
             }
         }
 
-        $this->runtime_data->render->exclude_tokens = $final_sequence;
+        $this->plugin_data->render->exclude_tokens = $final_sequence;
 
         return $this;
     }

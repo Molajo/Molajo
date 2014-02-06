@@ -55,7 +55,7 @@ class PagetypesPlugin extends SystemEventPlugin implements SystemInterface
             $page_types[]    = $temp_row;
         }
 
-        $this->runtime_data->plugin_data->datalists->pagetypes = $page_types;
+        $this->plugin_data->datalists->pagetypes = $page_types;
 
         return $this;
     }

@@ -39,7 +39,6 @@ class EventsPlugin extends SystemEventPlugin implements SystemInterface
             'onAfterExecute',
             'onBeforeResponse',
             'onAfterResponse',
-
             'onBeforeRender',
             'onBeforeParse',
             'onAfterParse',
@@ -49,18 +48,15 @@ class EventsPlugin extends SystemEventPlugin implements SystemInterface
             'onBeforeRenderViewFooter',
             'onAfterRenderView',
             'onAfterRender',
-
             'onBeforeRead',
             'onAfterRead',
             'onAfterReadall',
-
             'onBeforeCreate',
             'onAfterCreate',
             'onBeforeDelete',
             'onAfterDelete',
             'onBeforeUpdate',
             'onAfterUpdate',
-
             'onBeforeAuthenticate',
             'onAfterAuthenticate',
             'onBeforeAuthorise',
@@ -87,7 +83,7 @@ class EventsPlugin extends SystemEventPlugin implements SystemInterface
             $eventArray[] = $temp_row;
         }
 
-        $this->runtime_data->plugin_data->datalists->events = $eventArray;
+        $this->plugin_data->datalists->events = $eventArray;
 
         return $this;
     }

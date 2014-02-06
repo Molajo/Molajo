@@ -23,7 +23,7 @@ use Molajo\Plugin\SystemEventPlugin;
 class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 {
     /**
-     * Prepares Page Information storing results in $this->runtime_data->page
+     * Prepares Page Information storing results in $this->plugin_data->page
      *
      * @return  $this
      * @since   1.0
@@ -40,30 +40,31 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         if ($page_type == 'item'
             || $page_type == 'form'
             || $page_type == 'edit'
-            || $page_type == 'list') {
-            $current_menuitem_id = $this->runtime_data->resource->parameters->parent_menu_id;
+            || $page_type == 'list'
+        ) {
+            $current_menuitem_id = $this->plugin_data->resource->parameters->parent_menu_id;
         } else {
-            $current_menuitem_id = $this->runtime_data->resource->menuitem->id;
+            $current_menuitem_id = $this->plugin_data->resource->menuitem->id;
         }
 
         if ((int)$current_menuitem_id == 0) {
-            $this->runtime_data->page->menuitem_id         = 0;
-            $this->runtime_data->page->menuitem            = new stdClass();
-            $this->runtime_data->page->menu                = new stdClass();
-            $this->runtime_data->page->current_menuitem_id = 0;
+            $this->plugin_data->page->menuitem_id         = 0;
+            $this->plugin_data->page->menuitem            = new stdClass();
+            $this->plugin_data->page->menu                = new stdClass();
+            $this->plugin_data->page->current_menuitem_id = 0;
         } else {
-            $this->runtime_data->page->menuitem_id         = $current_menuitem_id;
-            $this->runtime_data->page->menuitem            = new stdClass();
-            $this->runtime_data->page->menu                = new stdClass();
-            $this->runtime_data->page->current_menuitem_id = $current_menuitem_id;
+            $this->plugin_data->page->menuitem_id         = $current_menuitem_id;
+            $this->plugin_data->page->menuitem            = new stdClass();
+            $this->plugin_data->page->menu                = new stdClass();
+            $this->plugin_data->page->current_menuitem_id = $current_menuitem_id;
         }
 
         $this->getUrls();
 
         if ((int)$current_menuitem_id == 0) {
-            $this->runtime_data->page->breadcrumbs = new stdClass();
+            $this->plugin_data->page->breadcrumbs = new stdClass();
         } else {
-            $this->runtime_data->page->breadcrumbs = $this->getMenuBreadcrumbIds();
+            $this->plugin_data->page->breadcrumbs = $this->getMenuBreadcrumbIds();
             $this->getMenu();
         }
 
@@ -85,10 +86,11 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getUrls()
     {
-        $this->runtime_data->page->urls['home']      = $this->runtime_data->application->base_url;
-        $this->runtime_data->page->urls['page']      = $this->runtime_data->request->data->url;
-        $this->runtime_data->page->urls['canonical'] = $this->runtime_data->request->data->url;
-        $this->runtime_data->page->urls['resource']  = $this->runtime_data->application->base_url
+        $this->plugin_data->page->urls['home']      = $this->runtime_data->application->base_url;
+        $this->plugin_data->page->urls['base']      = $this->runtime_data->application->base_url;
+        $this->plugin_data->page->urls['page']      = $this->runtime_data->request->data->url;
+        $this->plugin_data->page->urls['canonical'] = $this->runtime_data->request->data->url;
+        $this->plugin_data->page->urls['resource']  = $this->runtime_data->application->base_url
             . strtolower($this->runtime_data->route->b_alias);
 
         //@todo add links for prev and next
@@ -103,7 +105,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     public function getMenuBreadcrumbIds()
     {
-        if ($this->runtime_data->page->current_menuitem_id == 0) {
+        if ($this->plugin_data->page->current_menuitem_id == 0) {
             return array();
         }
 
@@ -119,7 +121,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $controller->model->query->where(
             $controller->model->database->qn('id')
-            . ' = ' . (int)$this->runtime_data->page->current_menuitem_id
+            . ' = ' . (int)$this->plugin_data->page->current_menuitem_id
         );
         $controller->model->query->where($controller->model->database->qn('a.status') . ' > 0');
 
@@ -133,7 +135,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $i      = 0;
         foreach ($row as $item) {
 
-            $this->runtime_data->page->extension_id = $item->extension_id;
+            $this->plugin_data->page->extension_id = $item->extension_id;
 
             if ($look_for_parent == 0) {
                 $select[]        = $i;
@@ -152,7 +154,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $breadcrumbs = array();
         foreach ($select as $index) {
 
-            if ($this->runtime_data->page->current_menuitem_id == 0) {
+            if ($this->plugin_data->page->current_menuitem_id == 0) {
                 return array();
             }
 
@@ -171,7 +173,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getMenu()
     {
-        $menu_id = $this->runtime_data->page->extension_id;
+        $menu_id = $this->plugin_data->page->extension_id;
 
         $controller = $this->resource->get('query:///Molajo//Datasource//Menuitem.xml');
 
@@ -220,8 +222,8 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             return $this;
         }
 
-        $current_menu_item = $this->runtime_data->page->current_menuitem_id;
-        $breadcrumbs       = $this->runtime_data->page->breadcrumbs;
+        $current_menu_item = $this->plugin_data->page->current_menuitem_id;
+        $breadcrumbs       = $this->plugin_data->page->breadcrumbs;
         $menu_name         = '';
 
         foreach ($rows as $item) {
@@ -241,6 +243,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
             $item->active = 0;
             foreach ($breadcrumbs as $crumb) {
+
                 if ($item->id == $crumb->id) {
                     $item->css_class .= ' active';
                     $item->active = 1;
@@ -260,12 +263,15 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
                 $item->link_text = $item->subtitle;
             }
 
+            if ($item->current === 1) {
+                $this->plugin_data->page->menuitem = $item;
+            }
         }
 
-        $this->runtime_data->page->breadcrumbs = $breadcrumbs;
+        $this->plugin_data->page->breadcrumbs = $breadcrumbs;
 
-        $this->runtime_data->page->menu             = array();
-        $this->runtime_data->page->menu[$menu_name] = $rows;
+        $this->plugin_data->page->menu             = array();
+        $this->plugin_data->page->menu[$menu_name] = $rows;
 
         return $this;
     }
@@ -281,22 +287,22 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getPageTitle($page_type)
     {
-        $this->runtime_data->page->page_type = $page_type;
+        $this->plugin_data->page->page_type = $page_type;
 
         $title = $this->runtime_data->application->name;
         if ($title == '') {
             $title = 'Molajo Application';
         }
 
-        $this->runtime_data->page->header_title = $title;
+        $this->plugin_data->page->header_title = $title;
 
         if ($page_type == 'item') {
-            $heading1 = $this->runtime_data->resource->parameters->criteria_title;
+            $heading1 = $this->plugin_data->resource->parameters->criteria_title;
 
         } elseif ($page_type == 'list') {
 
         } else {
-            $heading1 = $this->runtime_data->resource->parameters->criteria_title;
+            $heading1 = $this->plugin_data->resource->parameters->criteria_title;
         }
 
         $list_current          = 0;
@@ -311,36 +317,36 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         }
 
         $display_page_type = $this->language_controller->translate(
-            strtoupper($this->runtime_data->page->page_type)
+            strtoupper($this->plugin_data->page->page_type)
         );
 
 //		$action_id = $this->get('request_action');
         $heading2 = ucfirst($page_type);
 
-        $this->runtime_data->page->heading1 = $heading1;
-        $this->runtime_data->page->heading2 = $heading2;
+        $this->plugin_data->page->heading1 = $heading1;
+        $this->plugin_data->page->heading2 = $heading2;
         $temp_query_results                 = array();
 
         if ($this->runtime_data->application->id == 2) {
             $temp_row             = new stdClass();
             $temp_row->link_text  = $this->language_controller->translate('GRID');
-            $temp_row->link       = $this->runtime_data->page->urls['resource'];
+            $temp_row->link       = $this->plugin_data->page->urls['resource'];
             $temp_row->current    = $list_current;
             $temp_query_results[] = $temp_row;
 
             $temp_row             = new stdClass();
             $temp_row->link_text  = $this->language_controller->translate('Configuration');
-            $temp_row->link       = $this->runtime_data->page->urls['resource'] . '/' . 'configuration';
+            $temp_row->link       = $this->plugin_data->page->urls['resource'] . '/' . 'configuration';
             $temp_row->current    = $configuration_current;
             $temp_query_results[] = $temp_row;
 
             $temp_row             = new stdClass();
             $temp_row->link_text  = $this->language_controller->translate('NEW');
-            $temp_row->link       = $this->runtime_data->page->urls['resource'] . '/' . 'new';
+            $temp_row->link       = $this->plugin_data->page->urls['resource'] . '/' . 'new';
             $temp_row->current    = $new_current;
             $temp_query_results[] = $temp_row;
 
-            $this->runtime_data->page->menu['PageSubmenu'] = $temp_query_results;
+            $this->plugin_data->page->menu['PageSubmenu'] = $temp_query_results;
         }
 
         return $this;
@@ -395,7 +401,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $temp_query_results[] = $temp_row;
 
-        $this->runtime_data->page->page_eligible_actions = $temp_row;
+        $this->plugin_data->page->page_eligible_actions = $temp_row;
 
         return $this;
     }
@@ -511,7 +517,8 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     protected function setPageMeta($page_type)
     {
         if ($page_type == 'item'
-            || $page_type == 'edit') {
+            || $page_type == 'edit'
+        ) {
             return $this->setPageMetaItem();
         }
 
@@ -530,39 +537,39 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function setPageMetaItem()
     {
-        if (isset($this->runtime_data->resource->data->metadata->title)) {
-            $title = $this->runtime_data->resource->data->metadata->title;
+        if (isset($this->plugin_data->resource->data->metadata->title)) {
+            $title = $this->plugin_data->resource->data->metadata->title;
         } else {
             $title = '';
         }
-        if (isset($this->runtime_data->resource->data->metadata->author)) {
-            $author = $this->runtime_data->resource->data->metadata->author;
+        if (isset($this->plugin_data->resource->data->metadata->author)) {
+            $author = $this->plugin_data->resource->data->metadata->author;
         } else {
             $author = '';
         }
-        if (isset($this->runtime_data->resource->data->metadata->description)) {
-            $description = $this->runtime_data->resource->data->metadata->description;
+        if (isset($this->plugin_data->resource->data->metadata->description)) {
+            $description = $this->plugin_data->resource->data->metadata->description;
         } else {
             $description = '';
         }
-        if (isset($this->runtime_data->resource->data->metadata->keywords)) {
-            $keywords = $this->runtime_data->resource->data->metadata->keywords;
+        if (isset($this->plugin_data->resource->data->metadata->keywords)) {
+            $keywords = $this->plugin_data->resource->data->metadata->keywords;
         } else {
             $keywords = '';
         }
-        if (isset($this->runtime_data->resource->data->metadata->robots)) {
-            $robots = $this->runtime_data->resource->data->metadata->robots;
+        if (isset($this->plugin_data->resource->data->metadata->robots)) {
+            $robots = $this->plugin_data->resource->data->metadata->robots;
         } else {
             $robots = '';
         }
 
         if (trim($title) == '') {
-            if (isset($this->runtime_data->resource->data->title)) {
-                $title = $this->runtime_data->resource->data->title;
+            if (isset($this->plugin_data->resource->data->title)) {
+                $title = $this->plugin_data->resource->data->title;
             }
 
             if ($title == '') {
-                $title = $this->runtime_data->page->header_title;
+                $title = $this->plugin_data->page->header_title;
             }
 
             if ($title == '') {
@@ -573,34 +580,34 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             $title .= $this->runtime_data->site->name;
         }
 
-        $this->runtime_data->resource->data->metadata->title = $title;
+        $this->plugin_data->resource->data->metadata->title = $title;
 
         if (trim($description) == '') {
 
-            if (isset($this->runtime_data->resource->data->description)) {
-                $description = $this->runtime_data->resource->data->description;
+            if (isset($this->plugin_data->resource->data->description)) {
+                $description = $this->plugin_data->resource->data->description;
 
-            } elseif (isset($this->runtime_data->resource->data->content_text_snippet)) {
-                $description = $this->runtime_data->resource->data->content_text_snippet;
+            } elseif (isset($this->plugin_data->resource->data->content_text_snippet)) {
+                $description = $this->plugin_data->resource->data->content_text_snippet;
             }
         }
 
-        $this->runtime_data->resource->data->metadata->description = $description;
+        $this->plugin_data->resource->data->metadata->description = $description;
 
         if (trim($author) == '') {
 
-            if (isset($this->runtime_data->resource->data->author_full_name)) {
-                $author = $this->runtime_data->resource->data->author_full_name;
+            if (isset($this->plugin_data->resource->data->author_full_name)) {
+                $author = $this->plugin_data->resource->data->author_full_name;
             }
         }
 
-        $this->runtime_data->resource->data->metadata->author = $author;
+        $this->plugin_data->resource->data->metadata->author = $author;
 
         if (trim($robots) == '') {
             $robots = 'follow,index';
         }
 
-        $this->runtime_data->resource->data->metadata->robots = $robots;
+        $this->plugin_data->resource->data->metadata->robots = $robots;
 
         return $this;
     }
@@ -624,34 +631,34 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function setPageMetaMenuItem()
     {
-        if (isset($this->runtime_data->resource->metadata->title)) {
-            $title = $this->runtime_data->resource->metadata->title;
+        if (isset($this->plugin_data->resource->metadata->title)) {
+            $title = $this->plugin_data->resource->metadata->title;
         } else {
             $title = '';
         }
-        if (isset($this->runtime_data->resource->metadata->author)) {
-            $author = $this->runtime_data->resource->metadata->author;
+        if (isset($this->plugin_data->resource->metadata->author)) {
+            $author = $this->plugin_data->resource->metadata->author;
         } else {
             $author = '';
         }
-        if (isset($this->runtime_data->resource->metadata->description)) {
-            $description = $this->runtime_data->resource->metadata->description;
+        if (isset($this->plugin_data->resource->metadata->description)) {
+            $description = $this->plugin_data->resource->metadata->description;
         } else {
             $description = '';
         }
-        if (isset($this->runtime_data->resource->metadata->keywords)) {
-            $keywords = $this->runtime_data->resource->metadata->keywords;
+        if (isset($this->plugin_data->resource->metadata->keywords)) {
+            $keywords = $this->plugin_data->resource->metadata->keywords;
         } else {
             $keywords = '';
         }
-        if (isset($this->runtime_data->resource->metadata->robots)) {
-            $robots = $this->runtime_data->resource->metadata->robots;
+        if (isset($this->plugin_data->resource->metadata->robots)) {
+            $robots = $this->plugin_data->resource->metadata->robots;
         } else {
             $robots = '';
         }
 
         if (trim($title) == '') {
-            $title = $this->runtime_data->page->header_title;
+            $title = $this->plugin_data->page->header_title;
 
             if ($title == '') {
             } else {
@@ -661,15 +668,15 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             $title .= $this->runtime_data->site->name;
         }
 
-        $this->runtime_data->resource->metadata->title       = $title;
-        $this->runtime_data->resource->metadata->description = $description;
-        $this->runtime_data->resource->metadata->author      = $author;
+        $this->plugin_data->resource->metadata->title       = $title;
+        $this->plugin_data->resource->metadata->description = $description;
+        $this->plugin_data->resource->metadata->author      = $author;
 
         if (trim($robots) == '') {
             $robots = 'follow,index';
         }
 
-        $this->runtime_data->resource->metadata->robots = $robots;
+        $this->plugin_data->resource->metadata->robots = $robots;
 
         return $this;
     }

@@ -29,7 +29,7 @@ class FieldsPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRender()
     {
-        $model_registry = $this->runtime_data->resource->model_registry;
+        $model_registry = $this->plugin_data->resource->model_registry;
 
         $fields = $model_registry['fields'];
 
@@ -49,11 +49,11 @@ class FieldsPlugin extends DisplayEventPlugin implements DisplayInterface
                 $field_array[]      = $row;
                 $all_fields_array[] = $row;
             }
-            $this->runtime_data->plugin_data->fieldsstandard = $field_array;
+            $this->plugin_data->fieldsstandard = $field_array;
         }
 
         ksort($extended_field_array);
-        $this->runtime_data->plugin_data->extended_field_array = $extended_field_array;
+        $this->plugin_data->extended_field_array = $extended_field_array;
 
         $groups = $model_registry['customfieldgroups'];
 
@@ -75,7 +75,7 @@ class FieldsPlugin extends DisplayEventPlugin implements DisplayInterface
                             $all_fields_array[] = $row;
                         }
                         ksort($group_array);
-                        $this->runtime_data->plugin_data->$group = $group_array;
+                        $this->plugin_data->$group = $group_array;
                     }
                 }
             }
@@ -100,14 +100,14 @@ class FieldsPlugin extends DisplayEventPlugin implements DisplayInterface
                             $all_fields_array[] = $row;
                         }
                         ksort($group_array);
-                        $this->runtime_data->plugin_data->$group = $group_array;
+                        $this->plugin_data->$group = $group_array;
                     }
                 }
             }
         }
 
         asort($all_fields_array);
-        $this->runtime_data->plugin_data->fields = $all_fields_array;
+        $this->plugin_data->fields = $all_fields_array;
 
         return $this;
     }

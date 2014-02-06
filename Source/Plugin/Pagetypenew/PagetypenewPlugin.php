@@ -39,7 +39,7 @@ class PagetypenewPlugin extends DisplayEventPlugin implements DisplayInterface
         $grid  = $this->resource->get('query:///' . $model);
 
         //@todo - submenu
-        $this->runtime_data->page->menu['SectionSubmenu'] = array();
+        $this->plugin_data->page->menu['SectionSubmenu'] = array();
 
         /** Form Service */
         $form = Services::Form();

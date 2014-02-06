@@ -28,9 +28,9 @@ class ContentlistPlugin extends ReadEventPlugin implements ReadInterface
      */
     public function onAfterReadall()
     {
-        if (isset($this->runtime_data->render->token)
-            && $this->runtime_data->render->token->type == 'template'
-            && strtolower($this->runtime_data->render->token->name) == 'contentlist'
+        if (isset($this->plugin_data->render->token)
+            && $this->plugin_data->render->token->type == 'template'
+            && strtolower($this->plugin_data->render->token->name) == 'contentlist'
         ) {
         } else {
             return $this;

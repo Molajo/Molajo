@@ -158,7 +158,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
             htmlentities($this->language_controller->translate('Edit'), ENT_COMPAT, 'UTF-8')
         );
         $buttonIcon  = htmlentities('icon-edit', ENT_COMPAT, 'UTF-8');
-        $linkURL     = $this->runtime_data->page->urls['page'] . '/edit';
+        $linkURL     = $this->plugin_data->page->urls['page'] . '/edit';
         $buttonArray = 'button_title:'
             . trim($buttonTitle)
             . ','
@@ -178,7 +178,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
             htmlentities($this->language_controller->translate('Delete'), ENT_COMPAT, 'UTF-8')
         );
         $buttonIcon  = htmlentities('icon-trash', ENT_COMPAT, 'UTF-8');
-        $linkURL     = $this->runtime_data->page->urls['page'] . '/delete';
+        $linkURL     = $this->plugin_data->page->urls['page'] . '/delete';
         $buttonArray = 'button_title:'
             . trim($buttonTitle)
             . ','
@@ -232,7 +232,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         );
         $buttonLinkExtra = htmlentities('data-reveal-id:item-revisions', ENT_COMPAT, 'UTF-8');
         $buttonIcon      = htmlentities('icon-time', ENT_COMPAT, 'UTF-8');
-        $linkURL         = $linkURL = $this->runtime_data->page->urls['page'];
+        $linkURL         = $linkURL = $this->plugin_data->page->urls['page'];
         $buttonArray     = 'button_title:'
             . $buttonTitle
             . ','
@@ -254,7 +254,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         );
         $buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
         $buttonIcon      = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-        $linkURL         = $this->runtime_data->page->urls['page'];
+        $linkURL         = $this->plugin_data->page->urls['page'];
         $buttonArray     = 'button_title:'
             . $buttonTitle
             . ','
@@ -291,7 +291,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         );
         $buttonLinkExtra = htmlentities('data-reveal-id:resource-options', ENT_COMPAT, 'UTF-8');
         $buttonIcon      = htmlentities('icon-plus', ENT_COMPAT, 'UTF-8');
-        $linkURL         = $linkURL = $this->runtime_data->page->urls['page'];
+        $linkURL         = $linkURL = $this->plugin_data->page->urls['page'];
         $buttonArray     = 'button_title:'
             . $buttonTitle
             . ','
@@ -313,7 +313,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         );
         $buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
         $buttonIcon      = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-        $linkURL         = $this->runtime_data->page->urls['page'];
+        $linkURL         = $this->plugin_data->page->urls['page'];
         $buttonArray     = 'button_title:'
             . $buttonTitle
             . ','
@@ -369,7 +369,7 @@ class UIFoundationPlugin extends DisplayEventPlugin implements DisplayInterface
         );
         $buttonLinkExtra = htmlentities('data-reveal-id:item-options', ENT_COMPAT, 'UTF-8');
         $buttonIcon      = htmlentities('icon-wrench', ENT_COMPAT, 'UTF-8');
-        $linkURL         = $this->runtime_data->page->urls['page'];
+        $linkURL         = $this->plugin_data->page->urls['page'];
         $buttonArray     = 'button_title:'
             . $buttonTitle
             . ','

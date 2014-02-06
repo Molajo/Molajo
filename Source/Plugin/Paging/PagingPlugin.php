@@ -36,7 +36,7 @@ class PagingPlugin extends DisplayEventPlugin implements DisplayInterface
         }
 
         /** initialise */
-        $url = $this->runtime_data->page->urls['page'];
+        $url = $this->plugin_data->page->urls['page'];
 
         /** current_page */
         $current_page = ($this->get('model_offset') / $this->get('model_count', 0, 'runtime_data')) + 1;

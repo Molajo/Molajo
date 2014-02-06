@@ -29,16 +29,18 @@
         "molajo/event": "dev-master",
         "molajo/fieldhandler": "dev-master",
         "molajo/filesystem": "dev-master",
+        "molajo/foundation5": "dev-master",
         "molajo/framework": "dev-master",
         "molajo/http": "dev-master",
         "molajo/ioc": "dev-master",
         "molajo/language": "dev-master",
         "molajo/log": "dev-master",
+        "molajo/molajito": "dev-master",
         "molajo/pagination": "dev-master",
         "molajo/render": "dev-master",
-        "molajo/resource": "dev-master",
         "molajo/route": "dev-master",
-        "molajo/user": "dev-master"
+        "molajo/user": "dev-master",
+        "joomla/database": "dev-master"
     },
 
     "archive": {

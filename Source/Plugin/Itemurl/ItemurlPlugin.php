@@ -28,13 +28,7 @@ class ItemurlPlugin extends ReadEventPlugin implements ReadInterface
      */
     public function onAfterRead()
     {
-        if ($this->runtime_data->application->parameters->url_sef == 1) {
-        } else {
-            return $this;
-        }
-
         $fields = $this->getFieldsByType('url');
-
 
         if (is_array($fields) && count($fields) > 0) {
 

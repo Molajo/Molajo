@@ -38,8 +38,8 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             return $this;
         }
 
-        $this->runtime_data->plugin_data->form_select_list = array();
-        $this->runtime_data->plugin_data->grid             = new stdClass();
+        $this->plugin_data->form_select_list = array();
+        $this->plugin_data->grid             = new stdClass();
 
         $this->getCurrentMenuItem();
         $this->setToolbar();
@@ -65,7 +65,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $resource                                        = 'Articles';
         $model                                           = 'Menuitem' . ':///Molajo//Menuitem//' . $resource;
         $this->runtime_data->current_menuitem            = new stdClass();
-        $this->runtime_data->current_menuitem->id        = (int)$this->runtime_data->page->current_menuitem_id;
+        $this->runtime_data->current_menuitem->id        = (int)$this->plugin_data->page->current_menuitem_id;
         $this->runtime_data->current_menuitem->extension = $this->resource->get($model);
 
         return $this;
@@ -79,7 +79,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function setToolbar()
     {
-        $url = $this->runtime_data->page->urls['page'];
+        $url = $this->plugin_data->page->urls['page'];
 
         $list = $this->runtime_data->current_menuitem->extension->parameters->grid_toolbar_buttons;
 
@@ -122,7 +122,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        if ($this->runtime_data->resource->parameters->grid_search == 1) {
+        if ($this->plugin_data->resource->parameters->grid_search == 1) {
             $temp_row = new stdClass();
 
             $temp_row->name   = $this->language_controller->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
@@ -137,7 +137,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             $temp_query_results[] = $temp_row;
         }
 
-        $this->runtime_data->plugin_data->grid_toolbar = $temp_query_results;
+        $this->plugin_data->grid_toolbar = $temp_query_results;
 
         return $this;
     }
@@ -163,7 +163,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        $this->runtime_data->plugin_data->grid_columns = $grid_column_list;
+        $this->plugin_data->grid_columns = $grid_column_list;
 
         return $this;
     }
@@ -218,7 +218,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         /** Ordering */
         $ordering = $this->runtime_data->current_menuitem->extension->parameters->grid_ordering;
         if ($ordering == '' || $ordering === null) {
-            $ordering = $this->runtime_data->resource->model_registry['primary_key'];
+            $ordering = $this->plugin_data->resource->model_registry['primary_key'];
         }
 
         $direction = $this->runtime_data->current_menuitem->extension->parameters->grid_ordering_direction;
@@ -286,16 +286,16 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        $this->runtime_data->plugin_data->grid_data           = $grid_items;
-        $this->runtime_data->plugin_data->grid_model_registry = $grid->model->model_registry;
+        $this->plugin_data->grid_data           = $grid_items;
+        $this->plugin_data->grid_model_registry = $grid->model->model_registry;
 
         /** Grid Ordering Template */
-        $temp                                           = new stdClass();
-        $temp->ordering                                 = $ordering;
-        $temp->direction                                = $direction;
-        $temp->items_per_page                           = $items_per_page;
-        $temp->offset                                   = $offset;
-        $this->runtime_data->plugin_data->grid_ordering = $temp;
+        $temp                             = new stdClass();
+        $temp->ordering                   = $ordering;
+        $temp->direction                  = $direction;
+        $temp->items_per_page             = $items_per_page;
+        $temp->offset                     = $offset;
+        $this->plugin_data->grid_ordering = $temp;
 
         return $this;
     }
@@ -343,8 +343,8 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                 if ((string)$list == '') {
                 } else {
 
-                    if (isset($this->runtime_data->plugin_data->datalists->$list)) {
-                        $value = $this->runtime_data->plugin_data->datalists->$list;
+                    if (isset($this->plugin_data->datalists->$list)) {
+                        $value = $this->plugin_data->datalists->$list;
                     } else {
                         $value = $this->getFilter($list);
                     }
@@ -362,16 +362,17 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                         $value = array();
                     }
 
-                    $this->runtime_data->plugin_data->$list = $value;
+                    $listname = strtolower($list);
+                    $this->plugin_data->$listname = $value;
                 }
             }
         }
 
-        $this->runtime_data->plugin_data->grid_filters = $grid_list;
+        $this->plugin_data->grid_filters = $grid_list;
 
-        $this->runtime_data->plugin_data->grid_batch_categories = $this->getFilter('Categories');
-        $this->runtime_data->plugin_data->grid_batch_tags       = $this->getFilter('Tags');
-        $this->runtime_data->plugin_data->grid_batch_groups     = $this->getFilter('Groups');
+        $this->plugin_data->grid_batch_categories = $this->getFilter('Categories');
+        $this->plugin_data->grid_batch_tags       = $this->getFilter('Tags');
+        $this->plugin_data->grid_batch_groups     = $this->getFilter('Groups');
 
         return $this;
     }
@@ -385,14 +386,14 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function setGridFieldFilter()
     {
-        if (is_array($this->runtime_data->plugin_data->fields)
-            && count($this->runtime_data->plugin_data->fields) > 0
+        if (is_array($this->plugin_data->fields)
+            && count($this->plugin_data->fields) > 0
         ) {
 
             $first      = 1;
             $temp_array = array();
 
-            foreach ($this->runtime_data->plugin_data->fields as $field) {
+            foreach ($this->plugin_data->fields as $field) {
 
                 $temp               = new stdClass();
                 $temp->id           = $field->id;
@@ -408,7 +409,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        $this->runtime_data->plugin_data->grid_fields = $temp_array;
+        $this->plugin_data->grid_fields = $temp_array;
 
         return $this;
     }
@@ -421,7 +422,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function setFirstLastEvenOdd()
     {
-        $rows = $this->runtime_data->plugin_data->grid_data;
+        $rows = $this->plugin_data->grid_data;
 
         $total_rows      = count($rows);
         $even_or_odd_row = 'odd ';
@@ -460,7 +461,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        $this->runtime_data->plugin_data->grid_data = $rows;
+        $this->plugin_data->grid_data = $rows;
 
         return $this;
     }
@@ -476,14 +477,14 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $temp = $this->runtime_data->current_menuitem->extension->parameters->grid_batch_array;
 
         if (trim($temp) == '') {
-            $this->runtime_data->page->menu['SectionSubmenu'] = array();
+            $this->plugin_data->page->menu['SectionSubmenu'] = array();
 
             return $this;
         }
 
         $grid_batch_array = explode(',', $temp);
         if (count($grid_batch_array) == 0) {
-            $this->runtime_data->page->menu['SectionSubmenu'] = array();
+            $this->plugin_data->page->menu['SectionSubmenu'] = array();
             return $this;
         }
 
@@ -505,7 +506,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
 
                 $name = 'grid_batch_' . strtolower($grid_batch_array[$i]);
 
-                $this->runtime_data->plugin_data->$name = array($temp);
+                $this->plugin_data->$name = array($temp);
             }
         }
 
@@ -525,7 +526,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                     $temp_row->current = 0;
                 }
                 $temp_row->title = ucfirst(strtolower($item));
-                $temp_row->url   = $this->runtime_data->page->urls['page'] . '#lk' . strtolower($item);
+                $temp_row->url   = $this->plugin_data->page->urls['page'] . '#lk' . strtolower($item);
 
                 $pageArray[] = $temp_row;
 
@@ -533,7 +534,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             }
         }
 
-        $this->runtime_data->page->menu['SectionSubmenu'] = $pageArray;
+        $this->plugin_data->page->menu['SectionSubmenu'] = $pageArray;
 
         return $this;
     }

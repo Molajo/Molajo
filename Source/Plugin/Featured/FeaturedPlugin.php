@@ -31,8 +31,8 @@ class FeaturedPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRenderView()
     {
-        if (strtolower($this->runtime_data->render->scheme) == 'template'
-            && strtolower($this->runtime_data->render->token->name == 'features')
+        if (strtolower($this->plugin_data->render->scheme) == 'template'
+            && strtolower($this->plugin_data->render->token->name == 'features')
         ) {
         } else {
             return $this;

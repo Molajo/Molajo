@@ -30,8 +30,8 @@ class MessagesPlugin extends DisplayEventPlugin implements DisplayInterface
     public function onBeforeParseHead()
     {
         return $this;
-        $this->runtime_data->page->messages = new stdClass();
-        $this->runtime_data->page->messages = $temp_row;
+        $this->plugin_data->page->messages = new stdClass();
+        $this->plugin_data->page->messages = $temp_row;
 
         $messages = $controller->getData();
 
@@ -44,7 +44,7 @@ class MessagesPlugin extends DisplayEventPlugin implements DisplayInterface
             $temp_row->message = $message->message;
             $temp_row->type    = $message->type;
             $temp_row->code    = $message->code;
-            $temp_row->action  = $this->runtime_data->page->urls['page'];
+            $temp_row->action  = $this->plugin_data->page->urls['page'];
 
             $temp_row->class = 'alert-box';
             if ($message->type == 'Success') {

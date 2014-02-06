@@ -31,7 +31,7 @@ class PagetypeitemPlugin extends DisplayEventPlugin implements DisplayInterface
     {
         $page_type = strtolower($this->runtime_data->route->page_type);
 
-        if ($page_type == 'item'  || $page_type == 'edit' || $page_type == 'delete') {
+        if ($page_type == 'item' || $page_type == 'edit' || $page_type == 'delete') {
         } else {
             return $this;
         }

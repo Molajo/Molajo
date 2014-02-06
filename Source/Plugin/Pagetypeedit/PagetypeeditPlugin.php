@@ -10,7 +10,6 @@ namespace Molajo\Plugin\Pagetypeedit;
 
 use CommonApi\Event\DisplayInterface;
 use Molajo\Plugin\DisplayEventPlugin;
-use stdClass;
 
 /**
  * Page Type Edit Plugin
@@ -36,12 +35,13 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
             return $this;
         }
 
-        $parameters                                 = $this->runtime_data->resource->parameters;
-        $model_registry                             = $this->runtime_data->resource->model_registry;
-        $data                                       = $this->runtime_data->resource->data;
-        $customfieldgroups                          = $model_registry['customfieldgroups'];
-        $section_array                              = $parameters->edit_array;
-        $this->runtime_data->plugin_data->edit_tabs = $this->setFormSections($section_array);
+        $parameters                   = $this->plugin_data->resource->parameters;
+        $model_registry               = $this->plugin_data->resource->model_registry;
+        $data                         = $this->plugin_data->resource->data;
+        $customfieldgroups            = $model_registry['customfieldgroups'];
+        $section_array                = $parameters->edit_array;
+
+        $this->setFormSections($section_array);
         $this->setFormSectionFieldsets($parameters);
         $this->setFormFieldsetFields($parameters, $model_registry);
 
@@ -88,8 +88,8 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
                 }
             }
 
-            $template                                   = strtolower($template);
-            $this->runtime_data->plugin_data->$template = $temp;
+            $template                     = strtolower($template);
+            $this->plugin_data->$template = $temp;
         }
 
         return $this;
@@ -108,8 +108,10 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
         //@todo figure out selected value
         $selected = '';
 
-        if (isset($this->runtime_data->plugin_data->datalists->$list)) {
-            $value = $this->runtime_data->plugin_data->datalists->$list;
+        $list = strtolower($list);
+
+        if (isset($this->plugin_data->datalists->$list)) {
+            $value = $this->plugin_data->datalists->$list;
         } else {
             $value = $this->getFilter($list);
         }
@@ -127,7 +129,7 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
             $value = array();
         }
 
-        $this->runtime_data->plugin_data->$list = $value;
+        $this->plugin_data->$list = $value;
 
         return $this;
     }

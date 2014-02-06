@@ -30,9 +30,9 @@ class WeatherPlugin extends ReadEventPlugin implements ReadInterface
      */
     public function onAfterRead()
     {
-        if (isset($this->runtime_data->render->token)
-            && $this->runtime_data->render->token->type == 'template'
-            && strtolower($this->runtime_data->render->token->name) == 'weather'
+        if (isset($this->plugin_data->render->token)
+            && $this->plugin_data->render->token->type == 'template'
+            && strtolower($this->plugin_data->render->token->name) == 'weather'
         ) {
         } else {
             return $this;

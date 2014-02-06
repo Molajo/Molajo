@@ -98,7 +98,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         $resource->parameters     = $parameters;
         $resource->model_registry = $model_registry;
 
-        $this->runtime_data->resource = $resource;
+        $this->plugin_data->resource = $resource;
 
         return $this;
     }
@@ -147,7 +147,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
             $resource->$key = $value;
         }
 
-        $this->runtime_data->resource = $resource;
+        $this->plugin_data->resource = $resource;
 
         return $this;
     }
@@ -183,12 +183,13 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         }
 
         if (count($menu_item) == 0) {
-            throw new UnexpectedValueException ('Resource Menu Item not found.');
+            throw new UnexpectedValueException ('Resource Plugin: Resource Menu Item not found.');
         }
 
         if (isset($menu_item->parameters->theme_id) && (int)$menu_item->parameters->theme_id > 0) {
         } else {
-            $menu_item->parameters->theme_id = $this->runtime_data->application->parameters->application_default_theme_id;
+            $menu_item->parameters->theme_id
+                = $this->runtime_data->application->parameters->application_default_theme_id;
         }
 
         $catalog_type_id = $menu_item->parameters->criteria_catalog_type_id;
@@ -200,7 +201,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         $resource->catalog_type_id = $catalog_type_id;
         $resource->model_registry  = $controller->getModelRegistry('*');
 
-        $this->runtime_data->resource = $resource;
+        $this->plugin_data->resource = $resource;
 
         return $this;
     }
@@ -235,7 +236,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         $resource->data           = $data;
         $resource->model_registry = $controller->getModelRegistry('*');
 
-        $this->runtime_data->resource = $resource;
+        $this->plugin_data->resource = $resource;
 
         return $this;
     }

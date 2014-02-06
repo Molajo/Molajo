@@ -18,24 +18,24 @@
     <title>Molajo</title>
     <link rel="stylesheet" href="/Css/normalize.css">
     <link rel="stylesheet" href="/Css/webicons.css">
-    <link rel="stylesheet" href="/Css/foundation-icons.css" />
+    <link rel="stylesheet" href="/Css/foundation-icons.css"/>
     <link rel="stylesheet" href="/Css/foundation.css">
     <link rel="stylesheet" href="/Css/customize.css">
-    <link rel="stylesheet" href="/Css/responsive-tables.css" />
+    <link rel="stylesheet" href="/Css/responsive-tables.css"/>
     <script src="/Js/vendor/custom.modernizr.js"></script>
 </head>
 <body>
 <a id="top"></a>
+
 <div class="page-wrap">
     <include Navbar/>
     <include Header/>
     <div id="wrapper" class="row">
         <div id="main" class="large-9 push-3 columns">
             <include article wrap=article role=main/>
-                <? if ((int)$this->runtime_data->resource->parameters->enable_response_comments == 1) { ?>
+                <? if ((int)$this->plugin_data->resource->parameters->enable_response_comments == 1) { ?>
                 <include Author wrap=aside wrap_class=author-profile/>
                     <section>
-                        <include Comment/>
                         <include Comments/>
                     </section>
                     <? } ?>
