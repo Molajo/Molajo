@@ -7,4 +7,4 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 
-include '../../../../Molajo/Index.php';
+include '../../../Index.php';

@@ -11,6 +11,7 @@
     <description>SYSTEM_ARTICLES_DESCRIPTION</description>
     <model
             name="Articles"
+            primary_key_value="16000"
             criteria_catalog_type_id="12000"
             get_customfields="1"
             get_item_children="0"

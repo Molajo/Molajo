@@ -154,7 +154,6 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
 
                 if ($test == $page_type) {
                     if ($page_type == 'item' || $page_type == 'form' || $page_type == 'list') {
-
                         if (substr($key, 0, strlen($page_type) + 1) == $page_type . '_') {
                             $target_key = substr($key, strlen($page_type) + 1, 9999);
 

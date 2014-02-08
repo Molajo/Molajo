@@ -44,7 +44,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         ) {
             $current_menuitem_id = $this->plugin_data->resource->parameters->parent_menu_id;
         } else {
-            $current_menuitem_id = $this->plugin_data->resource->menuitem->id;
+            $current_menuitem_id = $this->plugin_data->resource->menuitem->data->id;
         }
 
         if ((int)$current_menuitem_id == 0) {
@@ -320,12 +320,12 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             strtoupper($this->plugin_data->page->page_type)
         );
 
-//		$action_id = $this->get('request_action');
-        $heading2 = ucfirst($page_type);
+        $heading2 = ucfirst(strtolower($page_type));
 
         $this->plugin_data->page->heading1 = $heading1;
         $this->plugin_data->page->heading2 = $heading2;
-        $temp_query_results                 = array();
+
+        $temp_query_results                = array();
 
         if ($this->runtime_data->application->id == 2) {
             $temp_row             = new stdClass();
@@ -537,28 +537,28 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function setPageMetaItem()
     {
-        if (isset($this->plugin_data->resource->data->metadata->title)) {
-            $title = $this->plugin_data->resource->data->metadata->title;
+        if (isset($this->plugin_data->resource->data->metadata->metadata_title)) {
+            $title = $this->plugin_data->resource->data->metadata->metadata_title;
         } else {
             $title = '';
         }
-        if (isset($this->plugin_data->resource->data->metadata->author)) {
-            $author = $this->plugin_data->resource->data->metadata->author;
+        if (isset($this->plugin_data->resource->data->metadata->metadata_author)) {
+            $author = $this->plugin_data->resource->data->metadata->metadata_author;
         } else {
             $author = '';
         }
-        if (isset($this->plugin_data->resource->data->metadata->description)) {
-            $description = $this->plugin_data->resource->data->metadata->description;
+        if (isset($this->plugin_data->resource->data->metadata->metadata_description)) {
+            $description = $this->plugin_data->resource->data->metadata->metadata_description;
         } else {
             $description = '';
         }
-        if (isset($this->plugin_data->resource->data->metadata->keywords)) {
-            $keywords = $this->plugin_data->resource->data->metadata->keywords;
+        if (isset($this->plugin_data->resource->data->metadata->metadata_keywords)) {
+            $keywords = $this->plugin_data->resource->data->metadata->metadata_keywords;
         } else {
             $keywords = '';
         }
-        if (isset($this->plugin_data->resource->data->metadata->robots)) {
-            $robots = $this->plugin_data->resource->data->metadata->robots;
+        if (isset($this->plugin_data->resource->data->metadata->metadata_robots)) {
+            $robots = $this->plugin_data->resource->data->metadata->metadata_robots;
         } else {
             $robots = '';
         }
@@ -580,7 +580,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             $title .= $this->runtime_data->site->name;
         }
 
-        $this->plugin_data->resource->data->metadata->title = $title;
+        $this->plugin_data->resource->data->metadata->metadata_title = $title;
 
         if (trim($description) == '') {
 
@@ -592,7 +592,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             }
         }
 
-        $this->plugin_data->resource->data->metadata->description = $description;
+        $this->plugin_data->resource->data->metadata->metadata_description = $description;
 
         if (trim($author) == '') {
 
@@ -601,13 +601,13 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             }
         }
 
-        $this->plugin_data->resource->data->metadata->author = $author;
+        $this->plugin_data->resource->data->metadata->metadata_author = $author;
 
         if (trim($robots) == '') {
             $robots = 'follow,index';
         }
 
-        $this->plugin_data->resource->data->metadata->robots = $robots;
+        $this->plugin_data->resource->data->metadata->metadata_robots = $robots;
 
         return $this;
     }
@@ -631,33 +631,24 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function setPageMetaMenuItem()
     {
-        if (isset($this->plugin_data->resource->metadata->title)) {
-            $title = $this->plugin_data->resource->metadata->title;
-        } else {
-            $title = '';
-        }
-        if (isset($this->plugin_data->resource->metadata->author)) {
-            $author = $this->plugin_data->resource->metadata->author;
-        } else {
-            $author = '';
-        }
-        if (isset($this->plugin_data->resource->metadata->description)) {
-            $description = $this->plugin_data->resource->metadata->description;
-        } else {
-            $description = '';
-        }
-        if (isset($this->plugin_data->resource->metadata->keywords)) {
-            $keywords = $this->plugin_data->resource->metadata->keywords;
-        } else {
-            $keywords = '';
-        }
-        if (isset($this->plugin_data->resource->metadata->robots)) {
-            $robots = $this->plugin_data->resource->metadata->robots;
-        } else {
-            $robots = '';
+        $metadata_array                         = array();
+        $metadata_array['metadata_title']       = null;
+        $metadata_array['metadata_author']      = null;
+        $metadata_array['metadata_description'] = null;
+        $metadata_array['metadata_keywords']    = null;
+        $metadata_array['metadata_robots']      = null;
+
+        $data = $this->plugin_data->resource->menuitem->data->metadata;
+        foreach ($metadata_array as $key => $value) {
+            $metadata_array[$key] = $this->setMetadata($data, $key, $value);
         }
 
-        if (trim($title) == '') {
+        $data = $this->plugin_data->resource->data->metadata;
+        foreach ($metadata_array as $key => $value) {
+            $metadata_array[$key] = $this->setMetadata($data, $key, $value);
+        }
+
+        if (trim($metadata_array['metadata_title']) == '') {
             $title = $this->plugin_data->page->header_title;
 
             if ($title == '') {
@@ -666,18 +657,39 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             }
 
             $title .= $this->runtime_data->site->name;
+
+            $metadata_array['metadata_title'] = $title;
         }
 
-        $this->plugin_data->resource->metadata->title       = $title;
-        $this->plugin_data->resource->metadata->description = $description;
-        $this->plugin_data->resource->metadata->author      = $author;
-
-        if (trim($robots) == '') {
-            $robots = 'follow,index';
+        if (trim($metadata_array['metadata_robots']) == '') {
+            $metadata_array['metadata_robots'] = 'follow,index';
         }
 
-        $this->plugin_data->resource->metadata->robots = $robots;
+        foreach ($metadata_array as $key => $value) {
+            $this->plugin_data->resource->menuitem->data->metadata->$key = $value;
+        }
 
         return $this;
+    }
+
+    /**
+     * Set Meta Data for Key
+     *
+     * @param   object     $data
+     * @param   string     $key
+     * @param   null|mixed $value
+     *
+     * @return  null|$this
+     * @since   1.0
+     */
+    protected function setMetadata($data, $key, $value = null)
+    {
+        if ($value === null) {
+            if (isset($data->$key)) {
+                return $data->$key;
+            }
+        }
+
+        return $value;
     }
 }
