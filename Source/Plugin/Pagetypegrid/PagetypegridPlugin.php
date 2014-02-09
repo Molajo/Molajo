@@ -48,7 +48,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $this->setGridFilter();
         $this->setGridFieldFilter();
         $this->setFirstLastEvenOdd();
-        $this->setBatch();
+      //  $this->setBatch();
 
         return $this;
     }

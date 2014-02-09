@@ -21,5 +21,15 @@
             use_pagination="0"
             extends="Contentextension"
             data_object="Database">
+        <customfields>
+            <customfield name="customfields">
+                <field name="image1" type="image" null="1" default=""/>
+                <field name="image_caption1" type="char" null="1" default=""/>
+                <field name="image2" type="image" null="1" default=""/>
+                <field name="image_caption2" type="char" null="1" default=""/>
+                <field name="image3" type="image" null="1" default=""/>
+                <field name="image_caption3" type="char" null="1" default=""/>
+            </customfield>
+        </customfields>
     </model>
 </extension>

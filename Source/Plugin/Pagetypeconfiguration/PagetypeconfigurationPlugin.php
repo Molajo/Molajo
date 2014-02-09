@@ -8,9 +8,7 @@
  */
 namespace Molajo\Plugin\Pagetypeconfiguration;
 
-use CommonApi\Exception\UnexpectedValueException;
 use CommonApi\Event\DisplayInterface;
-use Exception;
 use Molajo\Plugin\DisplayEventPlugin;
 use stdClass;
 
@@ -44,10 +42,236 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
         $this->getCurrentMenuItem();
 
         $this->setToolbar();
+//        $this->setFilters();
         $this->setGridFieldFilter();
         $this->setFormFields();
 
         return $this;
+    }
+
+    /**
+     * Prepares Configuration Data
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    protected function setFormFields()
+    {
+        /** Get Extension Data (Retrieve in ResourcePlugin in onAfterRoute) */
+        $resource = $this->plugin_data->resource->data;
+
+        $extension_parameters = $this->plugin_data->resource->parameters;
+        unset($resource->parameters);
+
+        $metadata = $resource->metadata;
+        unset($resource->metadata);
+
+        $model_registry    = $this->plugin_data->resource->model_registry;
+        $customfieldgroups = $model_registry['customfieldgroups'];
+
+        /** Merge Extension Parameters with Configuration Menuitem Parameters */
+        $merged_parameters = $extension_parameters;
+        foreach ($this->plugin_data->resource->menuitem->parameters as $key => $value) {
+            $merged_parameters->$key = $value;
+        }
+        foreach ($metadata as $key => $value) {
+            $merged_parameters->$key = $value;
+        }
+
+        $section_array = $extension_parameters->configuration_array;
+
+        $this->setFormSections($section_array);
+        $this->setFormSectionFieldsets($merged_parameters);
+        $this->setFormFieldsetFields($merged_parameters, $model_registry, false);
+
+        $template_views = array();
+        foreach ($this->form_section_fieldsets as $key => $item) {
+            $template_views[] = $key;
+        }
+
+        /** Set non-custom field views */
+        foreach ($template_views as $template) {
+            $temp = array();
+            foreach ($this->form_section_fieldset_fields as $item) {
+                if ($template == $item->template_view) {
+                    $temp[$item->name] = $this->setFormFieldProperties($item, $merged_parameters, $metadata);
+                }
+            }
+            $template                     = strtolower($template);
+            $this->plugin_data->$template = $temp;
+        }
+
+        /** Customfields */
+        foreach ($customfieldgroups as $customfield) {
+            $this->setCustomfieldGroup($model_registry, $customfield);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Process Customfield Group
+     *
+     * @param   object $model_registry
+     * @param   object $customfield
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    protected function setCustomfieldGroup($model_registry, $customfield)
+    {
+        $i      = 1;
+        $fields = array();
+        $temp   = array();
+
+        if (isset($model_registry[$customfield])) {
+            $fields = $model_registry[$customfield];
+        }
+
+        if (count($fields) > 0 && is_array($fields)) {
+            foreach ($fields as $field) {
+                if ((int)$field['field_inherited'] === 0) {
+                    $item              = $this->setCustomfieldItem($field, $i, $customfield);
+                    $temp[$item->name] = $this->setFormFieldProperties($item);
+                }
+            }
+        }
+
+        if (count($temp) > 0 && is_array($temp)) {
+        } else {
+            $field             = array();
+            $field['name']     = 'none';
+            $field['type']     = 'char';
+            $field['null']     = 0;
+            $field['default']  = '';
+            $item              = $this->setCustomfieldItem($field, 1, $customfield);
+            $temp[$item->name] = $this->setFormFieldProperties($item);
+        }
+
+        $plugin_data_name                     = 'configuration_' . $customfield;
+        $this->plugin_data->$plugin_data_name = $temp;
+
+        return $this;
+    }
+
+    /**
+     * Prepares Configuration Data
+     *
+     * @param   object $field
+     * @param   int    $i
+     * @param   object $customfield
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function setCustomfieldItem($field, $i, $customfield)
+    {
+        $item                 = new stdClass();
+        $item->id             = $i;
+        $item->name           = $field['name'];
+        $item->template_label = 'Customfields' . ucfirst(strtolower($customfield));
+        $item->template_view  = 'Configuration_customfields';
+        $item->field_masks    = strtolower($customfield) . '_*';
+        $item->type           = $field['type'];
+        $item->null           = $field['null'];
+        $item->default        = $field['default'];
+        $item->value          = null;
+
+        return $item;
+    }
+
+    /**
+     * Prepares Configuration Data
+     *
+     * @param   object      $item
+     * @param   null|object $merged_parameters
+     * @param   null|object $metadata
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function setFormFieldProperties($item, $merged_parameters = null, $metadata = null)
+    {
+        $name        = $item->name;
+        $item->value = null;
+
+        if (isset($merged_parameters->$name)) {
+            $item->value = $merged_parameters->$name;
+
+        } elseif (substr(strtolower($name), 0, strlen('metadata')) == 'metadata') {
+            if (isset($metadata->$name)) {
+                $item->value = $metadata->$name;
+            }
+        }
+
+        if ($item->value === null) {
+            $item->value = $item->default;
+        }
+
+        if (isset($item->datalist)) {
+            $item->type = 'selectlist';
+//todo: fix
+            if ($item->datalist == 'Fieldsmetadata') {
+                $item->datalist = 'Metadata';
+            }
+            $item->list_name = strtolower($item->datalist);
+
+            $this->getSelectlist($item->datalist);
+        }
+
+        if (isset($item->type)) {
+        } else {
+            $item->type = 'char';
+        }
+
+        return $item;
+    }
+
+    /**
+     * Prepares Configuration Data
+     *
+     * @param   object $item
+     * @param   object $merged_parameters
+     * @param   object $metadata
+     *
+     * @return  object
+     * @since   1.0
+     */
+    protected function setCustomFields($item, $merged_parameters, $metadata)
+    {
+        $name        = $item->name;
+        $item->value = null;
+
+        if (isset($merged_parameters->$name)) {
+            $item->value = $merged_parameters->$name;
+
+        } elseif (substr(strtolower($name), 0, strlen('metadata')) == 'metadata') {
+            if (isset($metadata->$name)) {
+                $item->value = $metadata->$name;
+            }
+        }
+
+        if ($item->value === null) {
+            $item->value = $item->default;
+        }
+
+        if (isset($item->datalist)) {
+            $item->type = 'selectlist';
+//todo: fix
+            if ($item->datalist == 'Fieldsmetadata') {
+                $item->datalist = 'Metadata';
+            }
+            $item->list_name = strtolower($item->datalist);
+
+            $this->getSelectlist($item->datalist);
+        }
+
+        if (isset($item->type)) {
+        } else {
+            $item->type = 'char';
+        }
+
+        return $item;
     }
 
     /**
@@ -131,6 +355,21 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
      * @since   1.0
      * @throws  /CommonApi/Exception/RuntimeException
      */
+    protected function setFilters()
+    {
+        $results = $this->getSelectlist('datatypes');
+        $this->plugin_data->configuration_datatypes = $results;
+
+        return $this;
+    }
+
+    /**
+     * Fields used by resource
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  /CommonApi/Exception/RuntimeException
+     */
     protected function setGridFieldFilter()
     {
         if (is_array($this->plugin_data->fields)
@@ -162,92 +401,6 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
     }
 
     /**
-     * Prepares Configuration Data
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function setFormFields()
-    {
-        $resource             = $this->plugin_data->resource->data;
-        $extension_parameters = $this->plugin_data->resource->parameters;
-        unset($resource->parameters);
-        $metadata = $resource->metadata;
-        unset($resource->metadata);
-        $merged_parameters = $extension_parameters;
-        foreach ($this->plugin_data->resource->menuitem->parameters as $key => $value) {
-            $merged_parameters->$key = $value;
-        }
-        foreach ($metadata as $key => $value) {
-            $merged_parameters->$key = $value;
-        }
-
-        $model_registry    = $this->plugin_data->resource->model_registry;
-        $customfieldgroups = $model_registry['customfieldgroups'];
-        $section_array     = $extension_parameters->configuration_array;
-        echo $section_array;
-        $this->setFormSections($section_array);
-        $this->setFormSectionFieldsets($merged_parameters);
-        $this->setFormFieldsetFields($merged_parameters, $model_registry, false);
-
-        $template_views = array();
-        foreach ($this->form_section_fieldsets as $key => $item) {
-            $template_views[] = $key;
-        }
-
-        foreach ($template_views as $template) {
-
-            $temp = array();
-
-            foreach ($this->form_section_fieldset_fields as $item) {
-
-                if ($template == $item->template_view) {
-
-                    $name        = $item->name;
-                    $item->value = null;
-
-                    if (isset($merged_parameters->$name)) {
-                        $item->value = $merged_parameters->$name;
-
-                    } elseif (substr(strtolower($name), 0, strlen('metadata')) == 'metadata') {
-                        if (isset($metadata->$name)) {
-                            $item->value = $metadata->$name;
-                        }
-                    }
-
-                    if ($item->value === null) {
-                        $item->value = $item->default;
-                    }
-
-                    if (isset($item->datalist)) {
-                        $item->type = 'selectlist';
-//todo: fix
-                        if ($item->datalist == 'Fieldsmetadata') {
-                            $item->datalist = 'Metadata';
-                        }
-                        $item->list_name = strtolower($item->datalist);
-
-                        $this->getSelectlist($item->datalist);
-                    }
-
-                    if (isset($item->type)) {
-                    } else {
-                        $item->type = 'char';
-                    }
-
-                    $temp[$name] = $item;
-                }
-            }
-
-            $template = strtolower($template);
-
-            $this->plugin_data->$template = $temp;
-        }
-
-        return $this;
-    }
-
-    /**
      * Get Select List and save results in plugin data
      *
      * @param   $list
@@ -255,7 +408,7 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
      * @return  $this
      *
      */
-    public function getSelectlist($list)
+    protected function getSelectlist($list)
     {
         //@todo figure out selected value
         $selected = '';
@@ -287,4 +440,5 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
 
         return $this;
     }
+
 }

@@ -2,7 +2,11 @@
 
 /*! Grid row */
 .odd {
-    background-color: #DBDBDB
+    background-color: #DBDBDB;
+    padding-top: .5em
+}
+.even {
+    padding-top: .5em
 }
 .edit-title {}
 .edit-editor {}
@@ -65,3 +69,7 @@
     height: 80px;
     background: #333333;
 }
+
+.order-down, .order-up {padding-right: 5px}
+.fi-star {color: gold; font-weight: bold; font-size: 1.5rem; text-align: center}
+.center {text-align: center}
