@@ -42,13 +42,14 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $this->plugin_data->grid             = new stdClass();
 
         $this->getCurrentMenuItem();
+        $this->setActionList();
         $this->setToolbar();
         $this->getGridColumns();
         $this->getGridData();
         $this->setGridFilter();
         $this->setGridFieldFilter();
         $this->setFirstLastEvenOdd();
-      //  $this->setBatch();
+        $this->setBatch();
 
         return $this;
     }
@@ -61,8 +62,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function getCurrentMenuItem()
     {
-        //todo: fix
-        $resource                                        = 'Articles';
+        $resource                                        = $this->plugin_data->resource->resource_model_name;
         $model                                           = 'Menuitem' . ':///Molajo//Menuitem//' . $resource;
         $this->runtime_data->current_menuitem            = new stdClass();
         $this->runtime_data->current_menuitem->id        = (int)$this->plugin_data->page->current_menuitem_id;
@@ -77,69 +77,159 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      * @return  $this
      * @since   1.0
      */
-    protected function setToolbar()
+    protected function setActionList()
     {
         $url = $this->plugin_data->page->urls['page'];
 
-        $list = $this->runtime_data->current_menuitem->extension->parameters->grid_toolbar_buttons;
+        $list = array();
 
-        if ($list == '#' || $list == '') {
-            $list = 'create,read,edit,publish,feature,archive,checkin,restore,delete,trash';
+        $parameters = $this->plugin_data->resource->menuitem->parameters;
+
+        if ((int)$parameters->grid_action_archive == 1) {
+            $list[] = 'archive';
+        }
+        if ((int)$parameters->grid_action_checkin == 1) {
+            $list[] = 'checkin';
+        }
+        if ((int)$parameters->grid_action_feature == 1) {
+            $list[] = 'feature';
+        }
+        if ((int)$parameters->grid_action_publish == 1) {
+            $list[] = 'publish';
+        }
+        if ((int)$parameters->grid_action_delete == 1) {
+            $list[] = 'delete';
+        }
+        if ((int)$parameters->grid_action_restore == 1) {
+            $list[] = 'restore';
+        }
+        if ((int)$parameters->grid_action_sticky == 1) {
+            $list[] = 'sticky';
+        }
+        if ((int)$parameters->grid_action_trash == 1) {
+            $list[] = 'trash';
+        }
+        if ((int)$parameters->grid_action_unpublish == 1) {
+            $list[] = 'unpublish';
         }
 
-        $grid_toolbar_buttons = explode(',', $list);
-        $catalog_id           = $this->runtime_data->route->catalog_id;
+        $catalog_id = $this->runtime_data->route->catalog_id;
 
         $temp_query_results = array();
 
-        if (count($grid_toolbar_buttons) > 0) {
+        if (count($list) > 0) {
 
-            foreach ($grid_toolbar_buttons as $button) {
+            foreach ($list as $button) {
 
-                $options                = array();
-                $options['resource_id'] = $catalog_id;
-                $options['task']        = $button;
+                $results = $this->authoriseAction($button, $catalog_id, $url);
 
-                $permissions = $this->authorisation_controller->isUserAuthorised($options);
-
-                if ($permissions === true) {
-
-                    $temp_row = new stdClass();
-
-                    $temp_row->name   = $this->language_controller->translate(
-                        strtoupper('TASK_' . strtoupper($button) . '_BUTTON')
-                    );
-                    $temp_row->action = $button;
-
-                    if ($this->runtime_data->application->parameters->url_sef == 1) {
-                        $temp_row->link = $url . '/task/' . $temp_row->action;
-                    } else {
-                        $temp_row->link = $url . '&task=' . $temp_row->action;
-                    }
-
-                    $temp_query_results[] = $temp_row;
+                if ($results === false) {
+                } else {
+                    $temp_query_results[] = $results;
                 }
             }
         }
 
-        if ($this->plugin_data->resource->parameters->grid_search == 1) {
-            $temp_row = new stdClass();
+        $this->plugin_data->grid_actions = $temp_query_results;
 
-            $temp_row->name   = $this->language_controller->translate(strtoupper('TASK_' . 'SEARCH' . '_BUTTON'));
-            $temp_row->action = 'search';
+        return $this;
+    }
 
-            if ($this->runtime_data->application->parameters->url_sef == 1) {
-                $temp_row->link = $url . '/task/' . $temp_row->action;
-            } else {
-                $temp_row->link = $url . '&task=' . $temp_row->action;
+    /**
+     * Create Toolbar Registry based on Authorized Access
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    protected function setToolbar()
+    {
+        $url        = $this->plugin_data->page->urls['page'];
+        $parameters = $this->plugin_data->resource->menuitem->parameters;
+        $list       = array();
+
+        if ((int)$parameters->grid_toolbar_button_copy == 1) {
+            $list[] = 'copy';
+        }
+        if ((int)$parameters->grid_toolbar_button_filter == 1) {
+            $list[] = 'filter';
+        }
+        if ((int)$parameters->grid_toolbar_button_new == 1) {
+            $list[] = 'new';
+        }
+        if ((int)$parameters->grid_toolbar_button_permissions == 1) {
+            $list[] = 'permissions';
+        }
+        if ((int)$parameters->grid_toolbar_button_tags == 1) {
+            $list[] = 'tags';
+        }
+
+        $catalog_id = $this->runtime_data->route->catalog_id;
+
+        $temp_query_results = array();
+
+        if (count($list) > 0) {
+
+            foreach ($list as $button) {
+
+                $results = $this->authoriseAction($button, $catalog_id, $url);
+
+                if ($results === false) {
+                } else {
+                    $temp_query_results[] = $results;
+                }
             }
-
-            $temp_query_results[] = $temp_row;
         }
 
         $this->plugin_data->grid_toolbar = $temp_query_results;
 
         return $this;
+    }
+
+    /**
+     * Authorise action
+     *
+     * @param   string $button
+     * @param   int    $catalog_id
+     * @param   string $url
+     *
+     * @return  $this
+     * @since   1.0
+     */
+    protected function authoriseAction($button, $catalog_id, $url)
+    {
+        $options                = array();
+        $options['resource_id'] = $catalog_id;
+        $options['task']        = $button;
+
+        if ($button == 'filter'
+            || $button == 'permissions'
+            || $button == 'tags'
+            || $button == 'new'
+            || $button == 'category'
+        ) {
+            $permissions = true;
+        } else {
+            $permissions = $this->authorisation_controller->isUserAuthorised($options);
+        }
+
+        if ($permissions === false) {
+            return false;
+        }
+
+        $temp_row = new stdClass();
+
+        $temp_row->name   = $this->language_controller->translate(
+            strtoupper('TASK_' . strtoupper($button) . '_BUTTON')
+        );
+        $temp_row->action = $button;
+
+        if ($this->runtime_data->application->parameters->url_sef == 1) {
+            $temp_row->link = $url . '/task/' . $temp_row->action;
+        } else {
+            $temp_row->link = $url . '&task=' . $temp_row->action;
+        }
+
+        return $temp_row;
     }
 
     /**
@@ -150,12 +240,14 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function getGridColumns()
     {
+        $parameters = $this->plugin_data->resource->menuitem->parameters;
+
         for ($i = 1; $i < 16; $i ++) {
 
             $grid_column_number = 'grid_column' . $i;
-            if (isset($this->runtime_data->current_menuitem->extension->parameters->$grid_column_number)) {
+            if (isset($parameters->$grid_column_number)) {
 
-                $field = trim($this->runtime_data->current_menuitem->extension->parameters->$grid_column_number);
+                $field = trim($parameters->$grid_column_number);
                 if (trim($field) == '') {
                 } else {
                     $grid_column_list[] = $field;
@@ -176,10 +268,11 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function getGridData()
     {
-        $resource = $this->runtime_data->current_menuitem->extension->parameters->menuitem_model_name;
-
-        $model = 'Molajo//Datasource//' . $resource . '//Configuration.xml';
-        $grid  = $this->resource->get('query:///' . $model);
+        $parameters      = $this->plugin_data->resource->menuitem->parameters;
+        $resource        = $this->plugin_data->resource->resource_model_name;
+        $catalog_type_id = $parameters->criteria_catalog_type_id;
+        $model           = 'Molajo//Datasource//' . $resource . '//Configuration.xml';
+        $grid            = $this->resource->get('query:///' . $model);
 
         $grid->setModelRegistry('check_view_level_access', 1);
         $grid->setModelRegistry('process_events', 1);
@@ -191,23 +284,25 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $key            = $grid->getModelRegistry('primary_key');
 
         /** Catalog Type ID */
-        if (isset($this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id)) {
-            $grid->model->query->where(
-                $grid->model->database->qn($primary_prefix)
-                . '.'
-                . $grid->model->database->qn('catalog_type_id')
-                . ' = '
-                . (int)$this->runtime_data->current_menuitem->extension->parameters->criteria_catalog_type_id
-            );
-        }
-
-        /** Status */
-        $list = '0,1,2';
         $grid->model->query->where(
             $grid->model->database->qn($primary_prefix)
-            . '.' . $grid->model->database->qn('status')
-            . ' IN (' . $list . ')'
+            . '.'
+            . $grid->model->database->qn('catalog_type_id')
+            . ' = '
+            . (int)$catalog_type_id
         );
+
+        /** Status */
+//        $list = $parameters->grid_status;
+        $list = '';
+        if ($list == '' || trim($list) == '' || $list === null) {
+        } else {
+            $grid->model->query->where(
+                $grid->model->database->qn($primary_prefix)
+                . '.' . $grid->model->database->qn('status')
+                . ' IN (' . $list . ')'
+            );
+        }
 
         /** Redirect To ID */
         $grid->model->query->where(
@@ -215,40 +310,46 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
             . ' = ' . 0
         );
 
-        /** Ordering */
-        $ordering = $this->runtime_data->current_menuitem->extension->parameters->grid_ordering;
-        if ($ordering == '' || $ordering === null) {
-            $ordering = $this->plugin_data->resource->model_registry['primary_key'];
-        }
+        if ((int)$parameters->grid_pagination_use == 1) {
 
-        $direction = $this->runtime_data->current_menuitem->extension->parameters->grid_ordering_direction;
-        if ($direction == 'ASC') {
-        } else {
-            $direction = 'DESC';
-        }
+            $ordering = $parameters->grid_pagination_ordering_column;
+            if ($ordering == '' || $ordering === null) {
+                $ordering = $this->plugin_data->resource->model_registry['primary_key'];
+            }
 
-        $grid->model->query->order(
-            $grid->model->database->qn($primary_prefix)
-            . '.' . $grid->model->database->qn($ordering)
-            . ' '
-            . $direction
-        );
+            $direction = $parameters->grid_pagination_ordering_direction;
+            if ($direction == 'ASC') {
+            } else {
+                $direction = 'DESC';
+            }
 
-        /** Offset */
-        $offset = $this->runtime_data->current_menuitem->extension->parameters->menuitem_model_offset;
-        if ($offset == '' || $offset === null || (int)$offset == 0) {
+            $grid->model->query->order(
+                $grid->model->database->qn($primary_prefix)
+                . '.' . $grid->model->database->qn($ordering)
+                . ' '
+                . $direction
+            );
+
+            /** Offset */
             $offset = 0;
-        }
-        $grid->setModelRegistry('model_offset', $offset);
+            if ($offset == '' || $offset === null || (int)$offset == 0) {
+                $offset = 0;
+            }
+            $grid->setModelRegistry('model_offset', $offset);
 
-        /** Items per Page */
-        $items_per_page = (int)$this->runtime_data->current_menuitem->extension->parameters->menuitem_model_count;
-        if ((int)$items_per_page === 0) {
-            $items_per_page = 10;
-        }
+            /** Items per Page */
+            $items_per_page = (int)$parameters->grid_pagination_items_per_page;
+            if ((int)$items_per_page === 0) {
+                $items_per_page = 10;
+            }
 
-        $grid->setModelRegistry('model_count', $items_per_page);
-        $grid->setModelRegistry('model_use_pagination', 1);
+            $grid->setModelRegistry('model_count', $items_per_page);
+            $grid->setModelRegistry('model_use_pagination', 1);
+        } else {
+            $grid->setModelRegistry('model_offset', 0);
+            $grid->setModelRegistry('model_count', 999999);
+            $grid->setModelRegistry('model_use_pagination', 0);
+        }
 
         try {
             $results = $grid->getData();
@@ -309,20 +410,23 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function setGridFilter()
     {
+        $parameters = $this->plugin_data->resource->menuitem->parameters;
+
         $grid_list = array();
         $temp      = array();
 
         for ($i = 1; $i < 11; $i ++) {
 
-            $grid_list_number = 'grid_list' . $i;
-            if (isset($this->runtime_data->current_menuitem->extension->parameters->$grid_list_number)) {
-                if (trim($this->runtime_data->current_menuitem->extension->parameters->$grid_list_number) == '') {
+            $grid_list_number = 'grid_filter_list' . $i;
+
+            if (isset($parameters->$grid_list_number)) {
+                if (trim($parameters->$grid_list_number) == '') {
                 } else {
                     if (in_array($grid_list_number, $temp)) {
                     } else {
                         $temp[]         = $grid_list_number;
                         $row            = new stdClass();
-                        $row->list_name = $this->runtime_data->current_menuitem->extension->parameters->$grid_list_number;
+                        $row->list_name = $parameters->$grid_list_number;
                         $grid_list[]    = $row;
                     }
                 }
@@ -362,17 +466,13 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
                         $value = array();
                     }
 
-                    $listname = strtolower($list);
+                    $listname                     = strtolower($list);
                     $this->plugin_data->$listname = $value;
                 }
             }
         }
 
         $this->plugin_data->grid_filters = $grid_list;
-
-        $this->plugin_data->grid_batch_categories = $this->getFilter('Categories');
-        $this->plugin_data->grid_batch_tags       = $this->getFilter('Tags');
-        $this->plugin_data->grid_batch_groups     = $this->getFilter('Groups');
 
         return $this;
     }
@@ -427,6 +527,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $total_rows      = count($rows);
         $even_or_odd_row = 'odd ';
         $count           = 0;
+
         if ($total_rows == 0) {
         } else {
             foreach ($rows as $row) {
@@ -474,67 +575,17 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function setBatch()
     {
-        $temp = $this->runtime_data->current_menuitem->extension->parameters->grid_batch_array;
+        $parameters = $this->plugin_data->resource->menuitem->parameters;
 
-        if (trim($temp) == '') {
-            $this->plugin_data->page->menu['SectionSubmenu'] = array();
-
-            return $this;
+        if ((int)$parameters->grid_batch_categories == 1) {
+            $this->plugin_data->grid_batch_categories = $this->getFilter('Categories');
         }
-
-        $grid_batch_array = explode(',', $temp);
-        if (count($grid_batch_array) == 0) {
-            $this->plugin_data->page->menu['SectionSubmenu'] = array();
-            return $this;
+        if ((int)$parameters->grid_batch_tags == 1) {
+            $this->plugin_data->grid_batch_tags = $this->getFilter('Tags');
         }
-
-        $grid_batch = array();
-
-        for ($i = 0; $i < count($grid_batch_array); $i ++) {
-
-            $enable = 'grid_batch_' . strtolower($grid_batch_array[$i]);
-
-
-            if ((int)$enable == 0) {
-            } else {
-
-                $grid_batch[] = strtolower($grid_batch_array[$i]);
-
-                $temp_row           = new stdClass();
-                $temp_row->selected = '';
-                $temp_row->enable   = 1;
-
-                $name = 'grid_batch_' . strtolower($grid_batch_array[$i]);
-
-                $this->plugin_data->$name = array($temp);
-            }
+        if ((int)$parameters->grid_batch_permissions == 1) {
+            $this->plugin_data->grid_batch_groups = $this->getFilter('Groups');
         }
-
-
-        $pageArray = array();
-        $i         = 0;
-
-        foreach ($grid_batch as $item) {
-            if ($item == '') {
-            } else {
-                $temp_row = new stdClass();
-
-                $temp_row->id = strtolower($item);
-                if ($i == 0) {
-                    $temp_row->current = 1;
-                } else {
-                    $temp_row->current = 0;
-                }
-                $temp_row->title = ucfirst(strtolower($item));
-                $temp_row->url   = $this->plugin_data->page->urls['page'] . '#lk' . strtolower($item);
-
-                $pageArray[] = $temp_row;
-
-                $i ++;
-            }
-        }
-
-        $this->plugin_data->page->menu['SectionSubmenu'] = $pageArray;
 
         return $this;
     }

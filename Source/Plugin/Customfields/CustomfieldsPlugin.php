@@ -79,6 +79,10 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
             $page_type = '';
         }
 
+        if ($page_type == 'edit' || $page_type == 'new') {
+            $page_type = 'form';
+        }
+
         /** Standard Data */
         if (isset($this->row->$group)) {
         } else {
@@ -137,10 +141,6 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
             $application = new stdClass();
         }
 
-        if ($page_type == 'new' || $page_type == 'edit') {
-            $page_type = 'form';
-        }
-
         $temp = array();
 
         foreach ($this->model_registry[$group] as $customfields) {
@@ -148,73 +148,61 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
             $key        = $customfields['name'];
             $target_key = $key;
             $test       = substr($key, 0, strlen($page_type));
-            $use        = true;
 
             if ((strlen($page_type) > 0)) {
 
-                if ($test == $page_type) {
+                if (($test == $page_type)) {
+
                     if ($page_type == 'item' || $page_type == 'form' || $page_type == 'list') {
                         if (substr($key, 0, strlen($page_type) + 1) == $page_type . '_') {
                             $target_key = substr($key, strlen($page_type) + 1, 9999);
-
-                        } else {
-                            $use = true;
                         }
                     }
 
                 } elseif (substr($key, 0, strlen('menuitem_')) == 'menuitem_') {
+                    $target_key = substr($key, strlen('menuitem_'), 9999);
+                }
+            }
 
-                    if ($page_type == 'item' || $page_type == 'form' || $page_type == 'list') {
-                        $use = false;
-                    } else {
-                        $target_key = substr($key, strlen('menuitem_'), 9999);
-                    }
+            $value = null;
 
+            if (isset($standard_custom_field_data->$key)) {
+                $value = $standard_custom_field_data->$key;
+            }
+
+            if (($value === null || $value == '' || $value == ' ')
+                && isset($extension_instances_field_data->$key)
+            ) {
+                $value = $extension_instances_field_data->$key;
+            }
+
+            if (($value === null || $value == '' || $value == ' ' || $value == 0)
+                && isset($application->$key)
+            ) {
+                $value = $application->$key;
+            }
+
+            if (($value === null || $value == '' || $value == ' ')
+                && isset($application->$target_key)
+            ) {
+                $value = $application->$target_key;
+            }
+
+            if ($value === null || $value == '' || $value == ' ') {
+                if (isset($customfields['default'])) {
+                    $default = $customfields['default'];
                 } else {
-                    $use = true;
+                    $default = false;
                 }
+                $value = $default;
             }
 
-            if ($use === true) {
+            $filter_options              = array();
+            $filter_options['data_type'] = $customfields['type'];
 
-                $value = null;
+            $filtered = $this->filter($key, $value, $filter = null, $filter_options);
 
-                if (isset($standard_custom_field_data->$key)) {
-                    $value = $standard_custom_field_data->$key;
-                }
-
-                if (($value === null || $value == '' || $value == ' ')
-                    && isset($extension_instances_field_data->$key)
-                ) {
-                    $value = $extension_instances_field_data->$key;
-                }
-
-                if (($value === null || $value == '' || $value == ' ' || $value == 0)
-                    && isset($application->$key)
-                ) {
-                    $value = $application->$key;
-                }
-
-                if (($value === null || $value == '' || $value == ' ')
-                    && isset($application->$target_key)
-                ) {
-                    $value = $application->$target_key;
-                }
-
-                if ($value === null || $value == '' || $value == ' ') {
-                    if (isset($customfields['default'])) {
-                        $default = $customfields['default'];
-                    } else {
-                        $default = false;
-                    }
-                    $value = $default;
-                }
-
-                $filter_options              = array();
-                $filter_options['data_type'] = $customfields['type'];
-
-                $temp[$target_key] = $this->filter($key, $value, $filter = null, $filter_options);
-            }
+            $temp[$target_key] = $filtered;
         }
 
         ksort($temp);

@@ -155,13 +155,39 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
     }
 
     /**
-     * Retrieve Resource List
+     * Retrieve Menu Item Data
      *
      * @return  $this
      * @since   1.0
      * @throws  \CommonApi\Exception\UnexpectedValueException
      */
     protected function getResourceMenu()
+    {
+        $page_type = strtolower($this->runtime_data->route->page_type);
+
+        try {
+            $this->getResourceMenuItem();
+
+        } catch (Exception $e) {
+            throw new UnexpectedValueException ($e->getMessage());
+        }
+
+        if (strtolower($this->runtime_data->route->page_type) == 'configuration') {
+            $this->getResourceGridMenuItem();
+            $this->getResourceExtension();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Retrieve Resource Menu Item
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\UnexpectedValueException
+     */
+    protected function getResourceMenuItem()
     {
         $page_type = strtolower($this->runtime_data->route->page_type);
 
@@ -178,49 +204,28 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         );
 
         try {
-            $menu_item = $controller->getData();
+            $menuitem = $controller->getData();
 
         } catch (Exception $e) {
             throw new UnexpectedValueException ($e->getMessage());
         }
 
-        if (count($menu_item) == 0) {
+        if (count($menuitem) == 0) {
             throw new UnexpectedValueException ('Resource Plugin: Resource Menu Item not found.');
         }
 
-        if (isset($menu_item->parameters->theme_id) && (int)$menu_item->parameters->theme_id > 0) {
+        if (isset($menuitem->parameters->theme_id)
+            && (int)$menuitem->parameters->theme_id > 0
+        ) {
         } else {
-            $menu_item->parameters->theme_id
+            $menuitem->parameters->theme_id
                 = $this->runtime_data->application->parameters->application_default_theme_id;
         }
 
-        $catalog_type_id = $menu_item->parameters->criteria_catalog_type_id;
-
-        if ((int)$catalog_type_id === 0) {
-            $resource_parameters = array();
-        } else {
-
-            $this->getMenuitemResourceList($catalog_type_id);
-
-            $resource_parameters = $this->plugin_data->resource->parameters;
-
-            foreach ($menu_item->parameters as $key => $value) {
-
-                if (substr($key, 0, strlen($page_type)) == $page_type) {
-                    $resource_parameters->$key = $value;
-                } elseif (isset($resource_parameters->$key)) {
-                } else {
-                    $resource_parameters->$key = $value;
-                }
-
-                $this->plugin_data->resource->parameters = $resource_parameters;
-            }
-        }
-
         $this->plugin_data->resource->menuitem = new stdClass();
-        $parameters                            = $menu_item->parameters;
-        unset($menu_item->parameters);
-        $this->plugin_data->resource->menuitem->data           = $menu_item;
+        $parameters                            = $menuitem->parameters;
+        unset($menuitem->parameters);
+        $this->plugin_data->resource->menuitem->data           = $menuitem;
         $this->plugin_data->resource->menuitem->parameters     = $parameters;
         $this->plugin_data->resource->menuitem->model_registry = $controller->model->getModelRegistry('*');
 
@@ -228,15 +233,96 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
     }
 
     /**
-     * Retrieve Resource Item
+     * Retrieve Resource Menu Item
      *
      * @return  $this
      * @since   1.0
      * @throws  \CommonApi\Exception\UnexpectedValueException
      */
-    protected function getMenuitemResourceList($catalog_type_id)
+    protected function getResourceGridMenuItem()
     {
-        $resource_model_name = $this->getModelName($catalog_type_id);
+        $page_type = 'grid';
+
+        $controller = $this->resource->get('query:///Molajo//Menuitem//' . $page_type . '//Configuration.xml');
+
+        $controller->setModelRegistry('check_view_level_access', 1);
+        $controller->setModelRegistry('process_events', 1);
+        $controller->setModelRegistry('query_object', 'item');
+        $controller->setModelRegistry('get_customfields', 1);
+        $controller->setModelRegistry('use_special_joins', 1);
+
+        $controller->model->query->where(
+            $controller->model->database->qn(
+                $controller->getModelRegistry('primary_prefix', 'a')
+            )
+            . '.' . $controller->model->database->qn('alias')
+            . ' = '
+            . $controller->model->database->q(
+                $this->plugin_data->resource->menuitem->data->path
+            )
+        );
+        $controller->model->query->where(
+            $controller->model->database->qn(
+                $controller->getModelRegistry('primary_prefix', 'a')
+            )
+            . '.' . $controller->model->database->qn('status')
+            . ' > 0 '
+        );
+
+        try {
+            $grid_menuitem = $controller->getData();
+
+            $grid_menuitem_parameters = $grid_menuitem->parameters;
+            unset($grid_menuitem->parameters);
+
+            $grid_menuitem_model_registry = $controller->model->model_registry;
+
+        } catch (Exception $e) {
+            throw new UnexpectedValueException ($e->getMessage());
+        }
+
+        if (count($grid_menuitem) == 0) {
+            throw new UnexpectedValueException
+            ('Resource Plugin getResourceGridMenuItem: Resource Grid Menu Item not found.');
+        }
+
+        $parameter_keys = array();
+        foreach ($this->plugin_data->resource->menuitem->parameters as $key => $value) {
+            $parameter_keys[] = $key;
+        }
+
+        foreach ($grid_menuitem_model_registry['parameters'] as $registry_item) {
+
+            if (in_array($registry_item['name'], $parameter_keys)) {
+            } else {
+                $key = $registry_item['name'];
+
+                if (isset($grid_menuitem_parameters->$key)) {
+                    $value = $grid_menuitem_parameters->$key;
+                } else {
+                    $value = null;
+                }
+                $this->plugin_data->resource->menuitem->model_registry["parameters"][]
+                    = $registry_item;
+
+                $this->plugin_data->resource->menuitem->parameters->$key
+                    = $value;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Retrieve Resource Extension Item
+     *
+     * @return  $this
+     * @since   1.0
+     * @throws  \CommonApi\Exception\UnexpectedValueException
+     */
+    protected function getResourceExtension()
+    {
+        $resource_model_name = ucfirst($this->plugin_data->resource->menuitem->data->path);
 
         $model      = 'Molajo//' . $resource_model_name . '//Extension.xml';
         $controller = $this->resource->get('query:///' . $model);
@@ -252,20 +338,43 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
             $parameters = $data->parameters;
             unset($data->parameters);
 
-            $resource = new stdClass();
-
-            $resource->catalog_type_id     = $data->catalog_type_id;
-            $resource->resource_model_name = $resource_model_name;
-            $resource->data                = $data;
-            $resource->parameters          = $parameters;
-            $resource->model_registry      = $controller->getModelRegistry('*');
-
-            $this->plugin_data->resource = $resource;
+            $model_registry = $controller->model->model_registry;
 
         } catch (Exception $e) {
             throw new UnexpectedValueException ($e->getMessage());
         }
 
+        $parameter_keys = array();
+        foreach ($this->plugin_data->resource->menuitem->parameters as $key => $value) {
+            $parameter_keys[] = $key;
+        }
+
+        foreach ($model_registry['parameters'] as $registry_item) {
+
+            if (in_array($registry_item['name'], $parameter_keys)) {
+            } else {
+                $key = $registry_item['name'];
+
+                if (isset($parameters->$key)) {
+                    $value = $parameters->$key;
+                } else {
+                    $value = null;
+                }
+
+                $this->plugin_data->resource->menuitem->model_registry["parameters"][]
+                    = $registry_item;
+
+                $this->plugin_data->resource->menuitem->parameters->$key
+                    = $value;
+            }
+        }
+
+        $this->plugin_data->resource->data                = $data;
+        $this->plugin_data->resource->parameters          = $parameters;
+        $this->plugin_data->resource->model_registry      = $model_registry;
+        $this->plugin_data->resource->catalog_type_id     = $data->catalog_type_id;
+        $this->plugin_data->resource->resource_model_name = $resource_model_name;
+;
         return $this;
     }
 
@@ -308,7 +417,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
      * @since   1.0
      * @throws  \CommonApi\Exception\UnexpectedValueException
      */
-    protected function getResourceExtension()
+    protected function DELETEgetResourceExtension()
     {
         $model    = 'Molajo//Resource//' . $this->runtime_data->route->model_name . '//Configuration.xml';
         $resource = $this->resource->get('query:///' . $model);

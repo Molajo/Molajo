@@ -29,8 +29,7 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
     public function onBeforeRender()
     {
         $page_type = strtolower($this->runtime_data->route->page_type);
-
-        if ($page_type == 'new' || $page_type == 'edit') {
+        if ($page_type == 'edit') {
         } else {
             return $this;
         }

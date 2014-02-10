@@ -37,12 +37,10 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $page_type = strtolower($this->runtime_data->route->page_type);
 
-        if ($page_type == 'item'
-            || $page_type == 'form'
-            || $page_type == 'edit'
-            || $page_type == 'list'
-        ) {
+        if ($page_type == 'item' || $page_type == 'new' || $page_type == 'edit') {
             $current_menuitem_id = $this->plugin_data->resource->parameters->parent_menu_id;
+        } elseif ($page_type == 'list') {
+            $current_menuitem_id = $this->plugin_data->resource->parameters->list_parent_menu_id;
         } else {
             $current_menuitem_id = $this->plugin_data->resource->menuitem->data->id;
         }

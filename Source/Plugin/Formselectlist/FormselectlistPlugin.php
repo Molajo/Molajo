@@ -28,6 +28,8 @@ class FormselectlistPlugin extends DisplayEventPlugin implements DisplayInterfac
      */
     public function onBeforeRenderView()
     {
+        return $this;
+
         if (isset($this->plugin_data->render->token)
             && $this->plugin_data->render->token->type == 'template'
             && strtolower($this->plugin_data->render->token->name) == 'formselectlist'
@@ -41,18 +43,13 @@ class FormselectlistPlugin extends DisplayEventPlugin implements DisplayInterfac
         } else {
             return $this;
         }
-        echo $list;
-        die;
+
 //        $temp_row = $this->plugin_data->grid_filters[$list];
 
         $this->plugin_data->form_select_list = array();
         //$this->plugin_data->datalists->datalist[$list];
 
         $this->row = $this->plugin_data->form_select_list;
-
-        echo '<pre>';
-        var_dump($this->row);
-        die;
 
         return $this;
     }

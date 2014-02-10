@@ -8,11 +8,11 @@
  */
 namespace Molajo\Plugin\Menuitems;
 
-use stdClass;
 use Exception;
 use CommonApi\Event\SystemInterface;
 use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
+use stdClass;
 
 /**
  * Menuitems Plugin
@@ -94,7 +94,7 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
 
         $menuitem = array();
         foreach ($temp_row as $item) {
-            $temp_row = new \stdClass();
+            $temp_row = new stdClass();
 
             $name = $item->title;
             $lvl  = (int)$item->lvl - 1;
