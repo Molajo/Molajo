@@ -1,5 +1,0 @@
-<datalist name="FieldsAudio">
-    <model
-            name="FieldsAudio"
-            registry_entry="AudioResourceFields"/>
-</datalist>

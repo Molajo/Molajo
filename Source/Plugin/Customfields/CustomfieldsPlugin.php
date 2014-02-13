@@ -203,6 +203,11 @@ class CustomfieldsPlugin extends ReadEventPlugin implements ReadInterface
             $filtered = $this->filter($key, $value, $filter = null, $filter_options);
 
             $temp[$target_key] = $filtered;
+
+            if ($target_key == $key) {
+            } else {
+                $temp[$key] = $filtered;
+            }
         }
 
         ksort($temp);

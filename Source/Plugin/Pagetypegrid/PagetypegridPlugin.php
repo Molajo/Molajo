@@ -8,9 +8,9 @@
  */
 namespace Molajo\Plugin\Pagetypegrid;
 
-use Exception;
 use CommonApi\Event\DisplayInterface;
 use CommonApi\Exception\RuntimeException;
+use Exception;
 use Molajo\Plugin\DisplayEventPlugin;
 use stdClass;
 

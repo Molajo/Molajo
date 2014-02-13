@@ -1,5 +1,0 @@
-<datalist name="FieldsContacts">
-    <model
-            name="FieldsContacts"
-            registry_entry="ContactsResourceFields"/>
-</datalist>

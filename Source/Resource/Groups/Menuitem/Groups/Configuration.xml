@@ -1,8 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Groups" extends="Menuitem">
-    <customfields>
-        <customfield name="parameters">
-            <include name="ParametersApplicationMenuitem"/>
-        </customfield>
-    </customfields>
-</model>
+<model name="Groups" extends="Configuration"/>

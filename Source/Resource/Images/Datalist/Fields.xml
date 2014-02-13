@@ -1,5 +1,0 @@
-<datalist name="FieldsImages">
-    <model
-            name="FieldsImages"
-            registry_entry="ImagesResourceFields"/>
-</datalist>

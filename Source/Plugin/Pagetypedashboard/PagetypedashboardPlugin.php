@@ -30,6 +30,8 @@ class PagetypedashboardPlugin extends DisplayEventPlugin implements DisplayInter
      */
     public function onBeforeRender()
     {
+        return $this;
+
         if (strtolower($this->runtime_data->route->page_type) == 'dashboard') {
         } else {
             return $this;

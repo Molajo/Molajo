@@ -13,5 +13,13 @@
             name="Links"
             criteria_catalog_type_id="25000"
             criteria_extension_instance_id="25000"
-            extends="Contentresources"/>
+            get_customfields="1"
+            get_item_children="1"
+            use_special_joins="1"
+            check_view_level_access="1"
+            process_events="1"
+            use_pagination="1"
+            extends="Contentresources"
+            model_type="Resource"
+            data_object="Database"/>
 </extension>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="System" version="1.0">
+    <name>SYSTEM_TAGS_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2014</create_date>
+    <copyright>Copyright (C) 2014 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>SYSTEM_TAGS_DESCRIPTION</description>
+    <model
+            name="Tags"
+            primary_key_value="15000"
+            criteria_catalog_type_id="12000"
+            get_customfields="1"
+            get_item_children="0"
+            use_special_joins="1"
+            check_view_level_access="1"
+            process_events="1"
+            use_pagination="0"
+            extends="Contentextension"
+            data_object="Database"/>
+
+</extension>

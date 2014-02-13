@@ -29,7 +29,17 @@ class FieldsPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRender()
     {
-        $model_registry = $this->plugin_data->resource->model_registry;
+        $page_type = strtolower($this->runtime_data->route->page_type);
+
+        if ($page_type == 'dashboard') {
+            return $this;
+        }
+
+        if (isset($this->plugin_data->resource->menuitem->model_registry)) {
+            $model_registry = $this->plugin_data->resource->menuitem->model_registry;
+        } else {
+            $model_registry = $this->plugin_data->resource->model_registry;
+        }
 
         $fields = $model_registry['fields'];
 

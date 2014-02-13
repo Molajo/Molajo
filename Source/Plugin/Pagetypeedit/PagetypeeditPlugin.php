@@ -29,16 +29,16 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
     public function onBeforeRender()
     {
         $page_type = strtolower($this->runtime_data->route->page_type);
-        if ($page_type == 'edit') {
+        if ($page_type == 'edit' || $page_type == 'new') {
         } else {
             return $this;
         }
 
-        $parameters                   = $this->plugin_data->resource->parameters;
-        $model_registry               = $this->plugin_data->resource->model_registry;
-        $data                         = $this->plugin_data->resource->data;
-        $customfieldgroups            = $model_registry['customfieldgroups'];
-        $section_array                = $parameters->edit_array;
+        $parameters        = $this->plugin_data->resource->parameters;
+        $model_registry    = $this->plugin_data->resource->model_registry;
+        $data              = $this->plugin_data->resource->data;
+        $customfieldgroups = $model_registry['customfieldgroups'];
+        $section_array     = $parameters->edit_array;
 
         $this->setFormSections($section_array);
         $this->setFormSectionFieldsets($parameters);
@@ -50,7 +50,9 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
         }
 
         foreach ($template_views as $template) {
+
             $temp = array();
+
             foreach ($this->form_section_fieldset_fields as $item) {
 
                 if ($template == $item->template_view) {
@@ -58,21 +60,26 @@ class PagetypeeditPlugin extends DisplayEventPlugin implements DisplayInterface
                     $name        = $item->name;
                     $item->value = null;
 
-                    if (isset($data->$name)) {
-                        $item->value = $data->$name;
-                    } else {
+                    if ($page_type == 'new') {
 
-                        if (count($customfieldgroups) > 0 && is_array($customfieldgroups)) {
-                            foreach ($customfieldgroups as $group) {
-                                if ($group == 'parameters') {
-                                    if (isset($parameters->$name)) {
-                                        $item->value = $parameters->$name;
-                                    }
-                                } else {
-                                    if (isset($data->$group->$name)) {
-                                        $item->value = $data->$group->$name;
-                                        break;
-                                    }
+                        if (isset($item->default)) {
+                            $item->value = $item->default;
+                        }
+
+                    } elseif (isset($data->$name)) {
+                        $item->value = $data->$name;
+
+                    } elseif (count($customfieldgroups) > 0 && is_array($customfieldgroups)) {
+                        foreach ($customfieldgroups as $group) {
+
+                            if ($group == 'parameters') {
+                                if (isset($parameters->$name)) {
+                                    $item->value = $parameters->$name;
+                                }
+                            } else {
+                                if (isset($data->$group->$name)) {
+                                    $item->value = $data->$group->$name;
+                                    break;
                                 }
                             }
                         }

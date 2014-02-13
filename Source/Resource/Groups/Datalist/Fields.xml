@@ -1,5 +1,0 @@
-<datalist name="FieldsGroups">
-    <model
-            name="FieldsGroups"
-            registry_entry="GroupsSystemFields"/>
-</datalist>

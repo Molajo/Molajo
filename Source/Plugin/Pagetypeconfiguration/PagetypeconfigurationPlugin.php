@@ -55,7 +55,7 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
     protected function getCurrentMenuItem()
     {
         $resource                                        = $this->plugin_data->resource->resource_model_name;
-        $model                                           = 'Menuitem' . ':///Molajo//Menuitem//' . $resource;
+        $model                                           = 'Menuitem:///Molajo//Menuitem//' . $resource;
         $this->runtime_data->current_menuitem            = new stdClass();
         $this->runtime_data->current_menuitem->id        = (int)$this->plugin_data->page->current_menuitem_id;
         $this->runtime_data->current_menuitem->extension = $this->resource->get($model);
@@ -75,7 +75,6 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
         if (is_array($this->plugin_data->fields)
             && count($this->plugin_data->fields) > 0
         ) {
-
             $first      = 1;
             $temp_array = array();
 
@@ -112,20 +111,16 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
     protected function setFormFields()
     {
         $parameters        = $this->plugin_data->resource->menuitem->parameters;
+        $metadata          = $this->plugin_data->resource->menuitem->data->metadata;
         $model_registry    = $this->plugin_data->resource->menuitem->model_registry;
         $customfieldgroups = $model_registry['customfieldgroups'];
 
         $section_array = $parameters->configuration_array;
 
         $this->setFormSections($section_array);
-
-        echo '<pre>';
-        var_dump($this->form_sections);
-die;
         $this->setFormSectionFieldsets($parameters);
-        die;
         $this->setFormFieldsetFields($parameters, $model_registry, false);
-        die;
+
         $template_views = array();
         foreach ($this->form_section_fieldsets as $key => $item) {
             $template_views[] = $key;
@@ -139,7 +134,8 @@ die;
                     $temp[$item->name] = $this->setFormFieldProperties($item, $parameters, $metadata);
                 }
             }
-            $template                     = strtolower($template);
+            $template = strtolower($template);
+
             $this->plugin_data->$template = $temp;
         }
 
@@ -147,6 +143,13 @@ die;
         foreach ($customfieldgroups as $customfield) {
             $this->setCustomfieldGroup($model_registry, $customfield);
         }
+
+        /** Lists */
+        $this->getSelectlist('Groups');
+        $this->getSelectlist('Themes');
+        $this->getSelectlist('Pageviews');
+        $this->getSelectlist('Templates');
+        $this->getSelectlist('Wraps');
 
         return $this;
     }
@@ -172,7 +175,10 @@ die;
 
         if (count($fields) > 0 && is_array($fields)) {
             foreach ($fields as $field) {
-                if ((int)$field['field_inherited'] === 0) {
+
+                if (isset($field['field_inherited'])
+                    && (int)$field['field_inherited'] === 0
+                ) {
                     $item              = $this->setCustomfieldItem($field, $i, $customfield);
                     $temp[$item->name] = $this->setFormFieldProperties($item);
                 }
@@ -190,7 +196,8 @@ die;
             $temp[$item->name] = $this->setFormFieldProperties($item);
         }
 
-        $plugin_data_name = 'configuration_' . $customfield;
+        $plugin_data_name                     = 'configuration_' . $customfield;
+        $this->plugin_data->$plugin_data_name = $temp;
 
         return $this;
     }
@@ -213,10 +220,26 @@ die;
         $item->template_label = 'Customfields' . ucfirst(strtolower($customfield));
         $item->template_view  = 'Configuration_customfields';
         $item->field_masks    = strtolower($customfield) . '_*';
-        $item->type           = $field['type'];
-        $item->null           = $field['null'];
-        $item->default        = $field['default'];
-        $item->value          = null;
+
+        if (isset($field['type'])) {
+            $item->type = $field['type'];
+        } else {
+            $item->type = 'char';
+        }
+
+        if (isset($field['null'])) {
+            $item->null = $field['null'];
+        } else {
+            $item->null = 1;
+        }
+
+        if (isset($field['default'])) {
+            $item->default = $field['default'];
+        } else {
+            $item->default = null;
+        }
+
+        $item->value = null;
 
         return $item;
     }
@@ -327,14 +350,15 @@ die;
     /**
      * Get Select List and save results in plugin data
      *
-     * @param   $list
+     * @param   string $list
      *
      * @return  $this
-     *
+     * @ince    1.0
      */
     protected function getSelectlist($list)
     {
         //@todo figure out selected value
+
         $selected = '';
 
         $list = strtolower($list);

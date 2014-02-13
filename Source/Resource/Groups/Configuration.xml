@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="System" version="1.0">
+<extension type="Resource" version="1.0">
     <name>RESOURCE_GROUPS_NAME</name>
     <author>Amy Stephen</author>
     <create_date>January 2014</create_date>
@@ -13,19 +13,13 @@
             name="Groups"
             criteria_catalog_type_id="13000"
             criteria_extension_instance_id="13000"
-            extends="Contentresources">
-        <customfields>
-            <customfield name="parameters">
-                <field name="users_can_join" type="boolean" null="0" default="0"/>
-                <field name="allow_delete_with_members" type="boolean" null="0" default="1"/>
-                <field name="allow_delete_when_used_with_acl" type="boolean" null="0" default="1"/>
-            </customfield>
-            <customfield name="customfields">
-                <field name="group_web_address" type="url" null="0" default=" "/>
-                <field name="group_email_address" type="email" null="0" default=" "/>
-                <field name="group_owner" type="integer" datalist="user" null="0" default="1"/>
-                <field name="group_collection_category_id" type="integer" datalist="categories" null="0" default="1"/>
-            </customfield>
-        </customfields>
-    </model>
+            get_customfields="1"
+            get_item_children="1"
+            use_special_joins="1"
+            check_view_level_access="1"
+            process_events="1"
+            use_pagination="1"
+            extends="Groups"
+            model_type="Resource"
+            data_object="Database"/>
 </extension>

@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model name="Articles" extends="Menuitem">
+<model name="Articles" extends="Configuration">
     <customfields>
-        <customfield name="parameters">
-            <include name="ParametersApplicationMenuitem"/>
-            <include name="ParametersConfiguration"/>
-            <include name="ParametersEdit"/>
-            <include name="ParametersGrid"/>
-            <include name="ParametersItem"/>
-            <include name="ParametersList"/>
-            <include name="ParametersMenuitem"/>
-            <include name="ParametersMenuitemModel"/>
-            <include name="ParametersNew"/>
+        <customfield name="customfields">
+            <field name="image1" type="image" null="1" default=""/>
+            <field name="image_caption1" type="char" null="1" default=""/>
+            <field name="image2" type="image" null="1" default=""/>
+            <field name="image_caption2" type="char" null="1" default=""/>
+            <field name="image3" type="image" null="1" default=""/>
+            <field name="image_caption3" type="char" null="1" default=""/>
         </customfield>
     </customfields>
 </model>

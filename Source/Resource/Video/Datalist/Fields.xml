@@ -1,5 +1,0 @@
-<datalist name="FieldsVideo">
-    <model
-            name="FieldsVideo"
-            registry_entry="VideoResourceFields"/>
-</datalist>

@@ -8,10 +8,10 @@
  */
 namespace Molajo\Plugin\Application;
 
-use stdClass;
 use CommonApi\Event\SystemInterface;
 use CommonApi\Exception\RuntimeException;
 use Molajo\Plugin\SystemEventPlugin;
+use stdClass;
 
 /**
  * Application Plugin
@@ -37,7 +37,11 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $page_type = strtolower($this->runtime_data->route->page_type);
 
-        if ($page_type == 'item' || $page_type == 'new' || $page_type == 'edit') {
+        if ($page_type == 'dashboard') {
+            return $this;
+        }
+
+        if ($page_type == 'item' || $page_type == 'edit') {
             $current_menuitem_id = $this->plugin_data->resource->parameters->parent_menu_id;
         } elseif ($page_type == 'list') {
             $current_menuitem_id = $this->plugin_data->resource->parameters->list_parent_menu_id;
@@ -68,9 +72,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $this->getPageTitle($page_type);
 
-        $this->setPageEligibleActions($page_type);
-
-        $this->setPageMeta($page_type);
+        $this->setPageMeta();
 
         return $this;
     }
@@ -289,27 +291,31 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
 
         $title = $this->runtime_data->application->name;
         if ($title == '') {
-            $title = 'Molajo Application';
+            $title = $this->language_controller->translate('Molajo Application');
         }
 
         $this->plugin_data->page->header_title = $title;
 
-        if ($page_type == 'item') {
-            $heading1 = $this->plugin_data->resource->parameters->criteria_title;
+        if (isset($this->plugin_data->resource->menuitem->parameters->criteria_title)) {
+            $heading1 = $this->plugin_data->resource->menuitem->parameters->criteria_title;
 
-        } elseif ($page_type == 'list') {
+        } elseif (isset($this->plugin_data->resource->parameters->criteria_title)) {
+            $heading1 = $this->plugin_data->resource->parameters->criteria_title;
 
         } else {
-            $heading1 = $this->plugin_data->resource->parameters->criteria_title;
+            $heading1 = '';
         }
 
         $list_current          = 0;
         $configuration_current = 0;
         $new_current           = 0;
+
         if ($page_type == 'item') {
             $new_current = 1;
+
         } elseif ($page_type == 'configuration') {
             $configuration_current = 1;
+
         } else {
             $list_current = 1;
         }
@@ -323,311 +329,16 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $this->plugin_data->page->heading1 = $heading1;
         $this->plugin_data->page->heading2 = $heading2;
 
-        $temp_query_results                = array();
-
-        if ($this->runtime_data->application->id == 2) {
-            $temp_row             = new stdClass();
-            $temp_row->link_text  = $this->language_controller->translate('GRID');
-            $temp_row->link       = $this->plugin_data->page->urls['resource'];
-            $temp_row->current    = $list_current;
-            $temp_query_results[] = $temp_row;
-
-            $temp_row             = new stdClass();
-            $temp_row->link_text  = $this->language_controller->translate('Configuration');
-            $temp_row->link       = $this->plugin_data->page->urls['resource'] . '/' . 'configuration';
-            $temp_row->current    = $configuration_current;
-            $temp_query_results[] = $temp_row;
-
-            $temp_row             = new stdClass();
-            $temp_row->link_text  = $this->language_controller->translate('NEW');
-            $temp_row->link       = $this->plugin_data->page->urls['resource'] . '/' . 'new';
-            $temp_row->current    = $new_current;
-            $temp_query_results[] = $temp_row;
-
-            $this->plugin_data->page->menu['PageSubmenu'] = $temp_query_results;
-        }
-
         return $this;
-    }
-
-    /**
-     * Prepares Page Title and Actions for Rendering
-     *
-     * @param   string $page_type
-     *
-     * @return  $this
-     * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    protected function setPageEligibleActions($page_type)
-    {
-        if ($page_type == 'item') {
-
-            if ($this->runtime_data->request->data->method == 'GET') {
-                $actions = $this->setItemActions();
-            } else {
-                $actions = $this->setEditActions();
-            }
-
-        } elseif ($page_type == 'grid'
-            || $page_type == 'list'
-        ) {
-            $actions = $this->setListActions();
-
-        } else {
-            $actions = $this->setMenuitemActions();
-        }
-
-        $actionCount = 0;
-        if (is_array($actions)) {
-            $actionCount = count($actions);
-        }
-
-        $temp_row = array();
-
-        $temp_row               = new stdClass();
-        $temp_row->action_count = $actionCount;
-        $temp_row->action_array = '';
-
-        if ($actionCount === 0) {
-            $temp_row->action_array = null;
-        } else {
-            foreach ($actions as $action) {
-                $temp_row->action_array .= trim($action);
-            }
-        }
-
-        $temp_query_results[] = $temp_row;
-
-        $this->plugin_data->page->page_eligible_actions = $temp_row;
-
-        return $this;
-    }
-
-    /**
-     * Create Item Actions
-     *
-     * @return  $this
-     * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    protected function setItemActions()
-    {
-        // Currently display
-
-        $actions   = array();
-        $actions[] = 'create';
-        $actions[] = 'copy';
-        $actions[] = 'read';
-        $actions[] = 'edit';
-
-        // editing item
-        $actions[] = 'read';
-        $actions[] = 'copy';
-        $actions[] = 'draft';
-        $actions[] = 'save';
-        $actions[] = 'restore';
-        $actions[] = 'cancel';
-
-        // either
-        $actions[] = 'tag';
-        $actions[] = 'categorize';
-        $actions[] = 'status'; // archive, publish, unpublish, trash, spam, version
-        $actions[] = 'sticky';
-        $actions[] = 'feature';
-        $actions[] = 'delete';
-
-        // list
-        $actions[] = 'orderup';
-        $actions[] = 'orderdown';
-        $actions[] = 'reorder';
-        $actions[] = 'status';
-
-        return $actions;
-    }
-
-    /**
-     * Create Edit Actions
-     *
-     * @return  $this
-     * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    protected function setEditActions()
-    {
-        $actions = array();
-
-        return $actions;
-    }
-
-    /**
-     * Create List Actions
-     *
-     * @return  $this
-     * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    protected function setListActions()
-    {
-        $actions = array();
-
-        $actions[] = 'create';
-        $actions[] = 'copy';
-        $actions[] = 'edit';
-
-        $actions[] = 'tag';
-        $actions[] = 'categorize';
-        $actions[] = 'status'; // archive, publish, unpublish, trash, spam, version
-        $actions[] = 'sticky';
-        $actions[] = 'feature';
-        $actions[] = 'delete';
-
-        $actions[] = 'orderup';
-        $actions[] = 'orderdown';
-        $actions[] = 'reorder';
-        $actions[] = 'status';
-
-        return $actions;
-    }
-
-    /**
-     * Menu Item Actions
-     *
-     * @return  $this
-     * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException
-     */
-    protected function setMenuitemActions()
-    {
-        $actions = array();
-
-        return $actions;
     }
 
     /**
      * Set Page Meta Data
      *
-     * @param   string $page_type
-     *
      * @return  $this
      * @since   1.0
      */
-    protected function setPageMeta($page_type)
-    {
-        if ($page_type == 'item'
-            || $page_type == 'edit'
-        ) {
-            return $this->setPageMetaItem();
-        }
-
-        if ($page_type == 'list') {
-            return $this->setPageMetaList();
-
-        }
-        return $this->setPageMetaMenuItem();
-    }
-
-    /**
-     * Set Page Meta Data for Item
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    protected function setPageMetaItem()
-    {
-        if (isset($this->plugin_data->resource->data->metadata->metadata_title)) {
-            $title = $this->plugin_data->resource->data->metadata->metadata_title;
-        } else {
-            $title = '';
-        }
-        if (isset($this->plugin_data->resource->data->metadata->metadata_author)) {
-            $author = $this->plugin_data->resource->data->metadata->metadata_author;
-        } else {
-            $author = '';
-        }
-        if (isset($this->plugin_data->resource->data->metadata->metadata_description)) {
-            $description = $this->plugin_data->resource->data->metadata->metadata_description;
-        } else {
-            $description = '';
-        }
-        if (isset($this->plugin_data->resource->data->metadata->metadata_keywords)) {
-            $keywords = $this->plugin_data->resource->data->metadata->metadata_keywords;
-        } else {
-            $keywords = '';
-        }
-        if (isset($this->plugin_data->resource->data->metadata->metadata_robots)) {
-            $robots = $this->plugin_data->resource->data->metadata->metadata_robots;
-        } else {
-            $robots = '';
-        }
-
-        if (trim($title) == '') {
-            if (isset($this->plugin_data->resource->data->title)) {
-                $title = $this->plugin_data->resource->data->title;
-            }
-
-            if ($title == '') {
-                $title = $this->plugin_data->page->header_title;
-            }
-
-            if ($title == '') {
-            } else {
-                $title .= ': ';
-            }
-
-            $title .= $this->runtime_data->site->name;
-        }
-
-        $this->plugin_data->resource->data->metadata->metadata_title = $title;
-
-        if (trim($description) == '') {
-
-            if (isset($this->plugin_data->resource->data->description)) {
-                $description = $this->plugin_data->resource->data->description;
-
-            } elseif (isset($this->plugin_data->resource->data->content_text_snippet)) {
-                $description = $this->plugin_data->resource->data->content_text_snippet;
-            }
-        }
-
-        $this->plugin_data->resource->data->metadata->metadata_description = $description;
-
-        if (trim($author) == '') {
-
-            if (isset($this->plugin_data->resource->data->author_full_name)) {
-                $author = $this->plugin_data->resource->data->author_full_name;
-            }
-        }
-
-        $this->plugin_data->resource->data->metadata->metadata_author = $author;
-
-        if (trim($robots) == '') {
-            $robots = 'follow,index';
-        }
-
-        $this->plugin_data->resource->data->metadata->metadata_robots = $robots;
-
-        return $this;
-    }
-
-    /**
-     * Set Page Meta Data for List
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    protected function setPageMetaList()
-    {
-
-    }
-
-    /**
-     * Set Page Meta Data for Menuitem
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    protected function setPageMetaMenuItem()
+    protected function setPageMeta()
     {
         $metadata_array                         = array();
         $metadata_array['metadata_title']       = null;
@@ -636,14 +347,20 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         $metadata_array['metadata_keywords']    = null;
         $metadata_array['metadata_robots']      = null;
 
-        $data = $this->plugin_data->resource->menuitem->data->metadata;
-        foreach ($metadata_array as $key => $value) {
-            $metadata_array[$key] = $this->setMetadata($data, $key, $value);
+        if (isset($this->plugin_data->resource->menuitem->data->metadata)) {
+            $data = $this->plugin_data->resource->menuitem->data->metadata;
+
+            foreach ($metadata_array as $key => $value) {
+                $metadata_array[$key] = $this->setMetadata($data, $key, $value);
+            }
         }
 
-        $data = $this->plugin_data->resource->data->metadata;
-        foreach ($metadata_array as $key => $value) {
-            $metadata_array[$key] = $this->setMetadata($data, $key, $value);
+        if (isset($this->plugin_data->resource->data->metadata)) {
+            $data = $this->plugin_data->resource->data->metadata;
+
+            foreach ($metadata_array as $key => $value) {
+                $metadata_array[$key] = $this->setMetadata($data, $key, $value);
+            }
         }
 
         if (trim($metadata_array['metadata_title']) == '') {
@@ -664,7 +381,11 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
         }
 
         foreach ($metadata_array as $key => $value) {
-            $this->plugin_data->resource->menuitem->data->metadata->$key = $value;
+            if (isset($this->plugin_data->resource->menuitem)) {
+                $this->plugin_data->resource->menuitem->data->metadata->$key = $value;
+            } else {
+                $this->plugin_data->resource->data->metadata->$key = $value;
+            }
         }
 
         return $this;
