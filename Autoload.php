@@ -39,9 +39,9 @@ require_once $base_folder . '/vendor/molajo/ioc/Source/AbstractServiceProvider.p
 require_once $base_folder . '/vendor/molajo/ioc/Source/StandardServiceProvider.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/Container.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/ServiceProviderAdapter.php';
-require_once $base_folder . '/vendor/molajo/application/Service/Runtimedata/RuntimedataServiceProvider.php';
-require_once $base_folder . '/vendor/molajo/application/Service/Plugindata/PlugindataServiceProvider.php';
-require_once $base_folder . '/vendor/molajo/resource/Service/Resource/ResourceServiceProvider.php';
+//require_once $base_folder . '/vendor/molajo/application/Services/Runtimedata/RuntimedataServiceProvider.php';
+//require_once $base_folder . '/vendor/molajo/application/Services/Plugindata/PlugindataServiceProvider.php';
+//require_once $base_folder . '/vendor/molajo/resource/Services/Resource/ResourceServiceProvider.php';
 
 require_once $base_folder . '/vendor/molajo/application/Source/Resource/Api/ConfigurationDataInterface.php';
 require_once $base_folder . '/vendor/molajo/application/Source/Resource/Api/ConfigurationInterface.php';

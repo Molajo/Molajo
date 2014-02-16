@@ -59,7 +59,7 @@ foreach ($temp as $folder) {
     $service_provider_folders[] = $base_folder . '/' . $folder;
 }
 
-$folder_namespace                = 'Molajo\\Service';
+$folder_namespace                = 'Molajo\\Services';
 $service_provider_alias_filename = $base_folder . '/vendor/molajo/ioc/Source/Files/Output/ServiceProviderAliases.json';
 
 $map_class = 'Molajo\\IoC\\MapServiceProviders';
