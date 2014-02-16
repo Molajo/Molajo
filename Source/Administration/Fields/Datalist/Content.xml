@@ -1,6 +1,0 @@
-<datalist name="ContentFields">
-    <model
-            name="ContentFields"
-            criteria_catalog_type_id="5500"
-            extends="ContentDatalist"/>
-</datalist>

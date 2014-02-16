@@ -61,7 +61,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
     public function getAuthorProfile($author_id)
     {
         $author = $this->resource->get(
-            'query:///Molajo//Datasource//User.xml',
+            'query:///Molajo//Model//Datasource//User.xml',
             array(
                 'runtime_data' => $this->runtime_data,
                 'plugin_data'  => $this->plugin_data
@@ -111,7 +111,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function getAuthorProfileURL($author_id)
     {
-        $controller = $this->resource->get('query:///Molajo//Datasource//Catalog.xml');
+        $controller = $this->resource->get('query:///Molajo//Model//Datasource//Catalog.xml');
 
         $controller->setModelRegistry('check_view_level_access', 0);
         $controller->setModelRegistry('process_events', 0);

@@ -58,7 +58,7 @@ class PagetypedashboardPlugin extends DisplayEventPlugin implements DisplayInter
     protected function getCurrentMenuItem()
     {
         //todo: fix
-        $model                                           = 'Menuitem' . ':///Molajo//Menuitem//Configuration';
+        $model                                           = 'Menuitem' . ':///Molajo//Model//Menuitem//Configuration';
         $this->runtime_data->current_menuitem            = new stdClass();
         $this->runtime_data->current_menuitem->id        = $this->plugin_data->page->current_menuitem_id;
         $this->runtime_data->current_menuitem->extension = $this->resource->get($model);

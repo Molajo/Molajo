@@ -32,7 +32,7 @@ class MenuitemsPlugin extends SystemEventPlugin implements SystemInterface
      */
     public function onBeforeExecute()
     {
-        $menuitem = $this->resource->get('query:///Molajo//Datasource//Menuitem.xml');
+        $menuitem = $this->resource->get('query:///Molajo//Model//Datasource//Menuitem.xml');
 
         $menuitem->setModelRegistry('check_view_level_access', 1);
         $menuitem->setModelRegistry('process_events', 0);

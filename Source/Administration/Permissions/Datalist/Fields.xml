@@ -1,5 +1,0 @@
-<datalist name="FieldsPermissions">
-    <model
-            name="FieldsPermissions"
-            registry_entry="PermissionsSystemFields"/>
-</datalist>

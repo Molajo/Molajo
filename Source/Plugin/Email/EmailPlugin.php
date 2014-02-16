@@ -58,20 +58,6 @@ class EmailPlugin extends ReadEventPlugin implements ReadInterface
     }
 
     /**
-     * Pre-update processing
-     *
-     * @param   $this ->row
-     * @param   $model
-     *
-     * @return  $this
-     * @since   1.0
-     */
-    public function onBeforeUpdate()
-    {
-        return $this;
-    }
-
-    /**
      * Obfuscate Email
      *
      * @param   string $email_address

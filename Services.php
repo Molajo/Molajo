@@ -1,11 +1,12 @@
 <?php
 /**
- * Services used in Frontpage Initialize
+ * Service Provider input to FrontController Initialise
  *
  * @package    Molajo
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
+
 $services   = array();
 $services[] = 'Runtimedata';
 $services[] = 'Plugindata';

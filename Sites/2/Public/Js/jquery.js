@@ -2787,7 +2787,7 @@
 // Always assume duplicates if they aren't passed to the comparison function
         support.detectDuplicates = hasDuplicate;
 
-// Initialize against the default document
+// Initialise against the default document
         setDocument();
 
 // Support: Webkit<537.32 - Safari 6.0.3/Chrome 25 (fixed in Chrome 27)

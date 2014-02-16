@@ -41,7 +41,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $this->plugin_data->form_select_list = array();
         $this->plugin_data->grid             = new stdClass();
 
-        $this->getCurrentMenuItem();
+//        $this->getCurrentMenuItem();
         $this->setActionList();
         $this->setToolbar();
         $this->getGridColumns();
@@ -63,11 +63,11 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
     protected function getCurrentMenuItem()
     {
         $resource                                        = $this->plugin_data->resource->resource_model_name;
-        $model                                           = 'Menuitem' . ':///Molajo//Menuitem//' . $resource;
+        $model                                           = 'Menuitem' . ':///Molajo//' . $resource . '//Menuitem//Grid.xml';
+
         $this->runtime_data->current_menuitem            = new stdClass();
         $this->runtime_data->current_menuitem->id        = (int)$this->plugin_data->page->current_menuitem_id;
         $this->runtime_data->current_menuitem->extension = $this->resource->get($model);
-
         return $this;
     }
 
@@ -271,7 +271,7 @@ class PagetypegridPlugin extends DisplayEventPlugin implements DisplayInterface
         $parameters      = $this->plugin_data->resource->menuitem->parameters;
         $resource        = $this->plugin_data->resource->resource_model_name;
         $catalog_type_id = $parameters->criteria_catalog_type_id;
-        $model           = 'Molajo//Datasource//' . $resource . '//Configuration.xml';
+        $model           = 'Molajo//' . $resource . '//Configuration.xml';
         $grid            = $this->resource->get('query:///' . $model);
 
         $grid->setModelRegistry('check_view_level_access', 1);

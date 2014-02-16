@@ -1,8 +1,0 @@
-<datalist name="Wrapviews">
-    <model
-            name="Wrapviews"
-            criteria_catalog_type_id="8000"
-            criteria_extension_instance_id="1"
-            extends="ExtensionInstancesDatasource"
-            />
-</datalist>

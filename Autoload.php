@@ -39,10 +39,13 @@ require_once $base_folder . '/vendor/molajo/ioc/Source/AbstractServiceProvider.p
 require_once $base_folder . '/vendor/molajo/ioc/Source/StandardServiceProvider.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/Container.php';
 require_once $base_folder . '/vendor/molajo/ioc/Source/ServiceProviderAdapter.php';
+require_once $base_folder . '/vendor/molajo/application/Service/Runtimedata/RuntimedataServiceProvider.php';
+require_once $base_folder . '/vendor/molajo/application/Service/Plugindata/PlugindataServiceProvider.php';
+require_once $base_folder . '/vendor/molajo/resource/Service/Resource/ResourceServiceProvider.php';
 
-require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/ConfigurationDataInterface.php';
-require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/ConfigurationInterface.php';
-require_once $base_folder . '/vendor/molajo/framework/Source/Resource/Api/RegistryInterface.php';
+require_once $base_folder . '/vendor/molajo/application/Source/Resource/Api/ConfigurationDataInterface.php';
+require_once $base_folder . '/vendor/molajo/application/Source/Resource/Api/ConfigurationInterface.php';
+require_once $base_folder . '/vendor/molajo/application/Source/Resource/Api/RegistryInterface.php';
 
 require_once $base_folder . '/vendor/commonapi/resource/ClassHandlerInterface.php';
 require_once $base_folder . '/vendor/commonapi/resource/ClassMapInterface.php';
@@ -79,11 +82,11 @@ $file                             = $base_folder . '/vendor/molajo/resource/Sour
 $class                            = 'Molajo\\Resource\\Scheme';
 $scheme                           = new $class($file);
 $class                            = 'Molajo\\Resource\\Adapter';
-$class_loader                     = new $class($scheme, $handler_instance);
+$resource_adapter                     = new $class($scheme, $handler_instance);
 
 include __DIR__ . '/SetNamespace.php';
 
-$hold_class_loader = $class_loader;
+$hold_resource_adapter = $resource_adapter;
 
 /** Resource Map */
 if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
@@ -93,7 +96,7 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     $class = 'Molajo\\Resource\\ResourceMap';
 
-    $class_loader = new $class (
+    $resource_adapter = new $class (
         $base_folder,
         $resource_map_filename = $base_folder . '/vendor/molajo/resource/Source/Files/Output/ResourceMap.json',
         $interface_map_filename = $base_folder . '/vendor/molajo/resource/Source/Files/Output/ClassMap.json',
@@ -102,7 +105,7 @@ if (is_file($resource_map_filename . 'vvvvvvvvvvvvvvvvvvv')) {
 
     include __DIR__ . '/SetNamespace.php';
 
-    $class_loader->createMap();
+    $resource_adapter->createMap();
 
     require_once $base_folder . '/vendor/molajo/resource/Source/ClassMap.php';
 

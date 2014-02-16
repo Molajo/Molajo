@@ -109,7 +109,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
             return array();
         }
 
-        $controller = $this->resource->get('query:///Molajo//Datasource//MenuitemsNested.xml');
+        $controller = $this->resource->get('query:///Molajo//Model//Datasource//MenuitemsNested.xml');
 
         $controller->setModelRegistry('check_view_level_access', 1);
         $controller->setModelRegistry('process_events', 1);
@@ -175,7 +175,7 @@ class ApplicationPlugin extends SystemEventPlugin implements SystemInterface
     {
         $menu_id = $this->plugin_data->page->extension_id;
 
-        $controller = $this->resource->get('query:///Molajo//Datasource//Menuitem.xml');
+        $controller = $this->resource->get('query:///Molajo//Model//Datasource//Menuitem.xml');
 
         $controller->setModelRegistry('check_view_level_access', 1);
         $controller->setModelRegistry('process_events', 0);

@@ -39,7 +39,8 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
         $this->plugin_data->form_select_list = array();
         $this->plugin_data->configuration    = new stdClass();
 
-        $this->getCurrentMenuItem();
+//$this->getCurrentMenuItem();
+
         $this->setFieldFilter();
         $this->setFormFields();
 
@@ -55,7 +56,7 @@ class PagetypeconfigurationPlugin extends DisplayEventPlugin implements DisplayI
     protected function getCurrentMenuItem()
     {
         $resource                                        = $this->plugin_data->resource->resource_model_name;
-        $model                                           = 'Menuitem:///Molajo//Menuitem//' . $resource;
+        $model                                           = 'Menuitem:///Molajo//' . $resource . '//Menuitem//Configuration.xml';
         $this->runtime_data->current_menuitem            = new stdClass();
         $this->runtime_data->current_menuitem->id        = (int)$this->plugin_data->page->current_menuitem_id;
         $this->runtime_data->current_menuitem->extension = $this->resource->get($model);

@@ -59,8 +59,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
      */
     protected function getResourceItem()
     {
-        $model = 'Molajo//Resource//'
-            . $this->runtime_data->route->model_name . '//Configuration.xml';
+        $model = 'Molajo//' . $this->runtime_data->route->model_name . '//Configuration.xml';
 
         $resource = $this->resource->get('query:///' . $model);
 
@@ -193,7 +192,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         } else {
             $x          = explode('/', $this->runtime_data->route->sef_request);
             $resource   = ucfirst(strtolower($x[0]));
-            $model      = 'Molajo//Menuitem//' . $resource . '//' . $page_type . '.xml';
+            $model      = 'Molajo//' . $resource . '//Menuitem//' . $page_type . '.xml';
             $controller = $this->resource->get('query:///' . $model);
         }
 
@@ -249,7 +248,7 @@ class ResourcePlugin extends SystemEventPlugin implements SystemInterface
         $x        = explode('/', $this->runtime_data->route->sef_request);
         $resource = ucfirst(strtolower($x[0]));
 
-        $controller = $this->resource->get('query:///Molajo//Menuitem//' . $resource . '//Grid.xml');
+        $controller = $this->resource->get('query:///Molajo//' . $resource . '//Menuitem//Grid.xml');
 
         $controller->setModelRegistry('check_view_level_access', 1);
         $controller->setModelRegistry('process_events', 1);

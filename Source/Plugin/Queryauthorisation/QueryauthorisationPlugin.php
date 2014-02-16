@@ -18,7 +18,7 @@ use CommonApi\Event\ReadInterface;
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @since      1.0
  */
-class Queryauthorisation extends ReadEventPlugin implements ReadInterface
+class QueryauthorisationPlugin extends ReadEventPlugin implements ReadInterface
 {
     /**
      * Append Criteria for Authorisation to Query Object

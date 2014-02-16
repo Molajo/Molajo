@@ -149,7 +149,7 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function getCommentHeading()
     {
-        $model = 'Molajo//Datasource//Comments//Configuration.xml';
+        $model = 'Molajo//Model//Datasource//Comments//Configuration.xml';
 
         $options                 = array();
         $options['runtime_data'] = $this->runtime_data;
@@ -221,7 +221,7 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function getComments()
     {
-        $model = 'Molajo//Datasource//Comments//Configuration.xml';
+        $model = 'Molajo//Model//Datasource//Comments//Configuration.xml';
 
         $options                 = array();
         $options['runtime_data'] = $this->runtime_data;
