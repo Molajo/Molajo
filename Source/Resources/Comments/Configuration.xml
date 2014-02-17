@@ -21,5 +21,16 @@
             use_pagination="1"
             extends="Contentresources"
             model_type="Resource"
-            data_object="Database"/>
+            data_object="Database">
+
+        <customfields>
+            <customfield name="customfields">
+                <field name="visitor_name" type="char" null="0" default=""/>
+                <field name="email_address" type="char" null="0" default=""/>
+                <field name="website" type="url" null="1" default=""/>
+                <field name="ip_address" type="ip" null="0" default="127.0.0.1"/>
+            </customfield>
+        </customfields>
+
+    </model>
 </extension>

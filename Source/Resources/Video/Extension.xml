@@ -20,6 +20,15 @@
             process_events="1"
             use_pagination="0"
             extends="Contentextension"
-            data_object="Database"/>
-
+            data_object="Database">
+        <customfields>
+            <customfield name="parameters">
+                <field name="add_a_parameter" type="boolean" null="0" default="1"/>
+            </customfield>
+            <customfield name="customfields">
+                <field name="anything_can_be_added" type="boolean" null="0" default="0"/>
+                <field name="anything_can_be_overridden" type="boolean" null="0" default="0"/>
+            </customfield>
+        </customfields>
+    </model>
 </extension>

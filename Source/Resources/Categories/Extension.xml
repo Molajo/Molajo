@@ -21,5 +21,4 @@
             use_pagination="0"
             extends="Contentextension"
             data_object="Database"/>
-
 </extension>
