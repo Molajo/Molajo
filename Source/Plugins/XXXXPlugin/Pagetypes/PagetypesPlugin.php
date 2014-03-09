@@ -30,14 +30,14 @@ class PagetypesPlugin extends SystemEventPlugin implements SystemInterface
     {
         return $this;
 
-        $folders = glob(BASE_FOLDER . '/Source/Menuitem/*');
+        $folders = glob($this->runtime_data->reference_data->base_path . '/Source/Menuitem/*');
         if (count($folders) === 0 || $folders === false) {
             $page_type_list = array();
         } else {
             $page_type_list = $folders;
         }
 
-        $folders = glob(BASE_FOLDER . '/Vendor' . '/Molajo' . '/Menuitem/*');
+        $folders = glob($this->runtime_data->reference_data->base_path . '/Vendor' . '/Molajo' . '/Menuitem/*');
         if (count($folders) === 0 || $folders === false) {
         } else {
             $new            = array_merge($page_type_list, $folders);

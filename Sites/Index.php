@@ -22,7 +22,7 @@ $file['sites']['site'][] =
         "id"               => (string)$i,
         "name"             => 'Site ' . $i,
         "site_base_url"    => 'site' . (string)$i,
-        "site_base_folder" => '/Site/' . $i
+        "site_base_path" => '/Site/' . $i
     );
 
 /** Delete Row */

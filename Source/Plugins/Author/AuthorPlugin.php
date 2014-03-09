@@ -24,7 +24,7 @@ use stdClass;
 class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
 {
     /**
-     * After-read processing
+     * Before Rendering the Author Template View, retrieve and store Author in plugin_data
      *
      * @return  $this
      * @since   1.0
@@ -32,6 +32,11 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRenderView()
     {
+        if (isset($this->plugin_data->render->extension->title)) {
+        } else {
+            return $this;
+        }
+
         $test_title = strtolower($this->plugin_data->render->extension->title);
 
         if ($test_title == 'author') {

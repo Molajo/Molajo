@@ -24,6 +24,7 @@
 
         <customfields>
             <customfield name="customfields">
+                <field name="departments" type="char" datalist="Departments" null="1" default=""/>
                 <field name="image1" type="image" null="1" default=""/>
                 <field name="image_caption1" type="char" null="1" default=""/>
                 <field name="image2" type="image" null="1" default=""/>
