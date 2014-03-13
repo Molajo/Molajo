@@ -82,7 +82,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
         $author->setModelRegistry('get_item_children', 0);
 
         try {
-            $data = $author->getData();
+            $data          = $author->getData();
             $data->sef_url = $this->getAuthorProfileURL($author_id);
 
             if (isset($data->parameters)) {

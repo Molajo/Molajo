@@ -1,0 +1,82 @@
+{
+    "asset": {
+        "Name": "asset",
+        "RequireFileExtensions": ".php",
+        "Handler": "Asset"
+    },
+    "class": {
+        "Name": "class",
+        "RequireFileExtensions": ".php",
+        "Handler": "Class"
+    },
+    "cssdeclarations": {
+        "Name": "cssd",
+        "RequireFileExtensions": "",
+        "Handler": "Cssdeclarations"
+    },
+    "css": {
+        "Name": "css",
+        "RequireFileExtensions": ".css",
+        "Handler": "Css"
+    },
+    "file": {
+        "Name": "file",
+        "RequireFileExtensions": "",
+        "Handler": "File"
+    },
+    "folder": {
+        "Name": "folder",
+        "RequireFileExtensions": "",
+        "Handler": "Folder"
+    },
+    "head": {
+        "Name": "head",
+        "RequireFileExtensions": ".php",
+        "Handler": "Head"
+    },
+    "jsdeclarations": {
+        "Name": "jsd",
+        "RequireFileExtensions": "",
+        "Handler": "Jsdeclarations"
+    },
+    "js": {
+        "Name": "js",
+        "RequireFileExtensions": ".js",
+        "Handler": "Js"
+    },
+    "menuitem": {
+        "Name": "menuitem",
+        "RequireFileExtensions": "",
+        "Handler": "Menuitem"
+    },
+    "page": {
+        "Name": "page",
+        "RequireFileExtensions": ".phtml",
+        "Handler": "Page"
+    },
+    "query": {
+        "Name": "query",
+        "RequireFileExtensions": "",
+        "Handler": "Query"
+    },
+    "template": {
+        "Name": "template",
+        "RequireFileExtensions": ".phtml",
+        "Handler": "Template"
+    },
+    "theme": {
+        "Name": "theme",
+        "RequireFileExtensions": ".phtml",
+        "Handler": "Theme"
+    },
+    "wrap": {
+        "Name": "wrap",
+        "RequireFileExtensions": ".phtml",
+        "Handler": "Wrap"
+    },
+    "xml": {
+        "Name": "xml",
+        "RequireFileExtensions": ".xml",
+        "Handler": "Xml"
+    }
+}

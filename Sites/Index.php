@@ -19,9 +19,9 @@ $i     = $file['sites']['site'][$count]['id'] + 1;
 
 $file['sites']['site'][] =
     array(
-        "id"               => (string)$i,
-        "name"             => 'Site ' . $i,
-        "site_base_url"    => 'site' . (string)$i,
+        "id"             => (string)$i,
+        "name"           => 'Site ' . $i,
+        "site_base_url"  => 'site' . (string)$i,
         "site_base_path" => '/Site/' . $i
     );
 

@@ -275,10 +275,10 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     protected function getCommentForm()
     {
-        $temp_row         = new stdClass();
+        $temp_row               = new stdClass();
         $temp_row->comment_open = $this->plugin_data->comment_open;
 
-        $this->plugin_data->comments_form->data           = $temp_row;
+        $this->plugin_data->comments_form->data = $temp_row;
 
         return $this;
 

@@ -1,0 +1,13 @@
+[
+    ".dev",
+    ".travis.yml",
+    ".DS_Store",
+    ".git",
+    ".idea",
+    ".",
+    "..",
+    ".gitattributes",
+    ".gitignore",
+    "Test"
+]
+

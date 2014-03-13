@@ -1,0 +1,18 @@
+[
+    "vendor/molajo/application/Factories/",
+    "vendor/molajo/authorisation/Factories/",
+    "vendor/molajo/cache/Factories/",
+    "vendor/molajo/database/Factories/",
+    "vendor/molajo/email/Factories/",
+    "vendor/molajo/event/Factories/",
+    "vendor/molajo/fieldhandler/Factories/",
+    "vendor/molajo/filesystem/Factories/",
+    "vendor/molajo/Http/Factories/",
+    "vendor/molajo/language/Factories/",
+    "vendor/molajo/molajito/Factories/",
+    "vendor/molajo/render/Factories/",
+    "vendor/molajo/resource/Factories/",
+    "vendor/molajo/route/Factories/",
+    "vendor/molajo/user/Factories/"
+]
+

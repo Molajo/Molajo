@@ -55,8 +55,6 @@ class ChildrenPlugin extends ReadEventPlugin implements ReadInterface
             $options['model_name'] = $model_name;
             $options['model_type'] = $model_type;
 
-//            $getService = $this->getService;
-//            $controller = $this->dependencies['Controllerread', $options];
 
             $this->setModelRegistry('primary_key_value', (int)$id);
             $this->setModelRegistry('get_customfields', 2);

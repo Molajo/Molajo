@@ -106,7 +106,7 @@ class DateformatsPlugin extends CreateEventPlugin implements CreateInterface
 
         try {
             $this->date_controller->convertCCYYMMDD('2011-11-11');
-            /** Skip when Date Service is not available (likely startup) */
+            /** Skip when Date Controller is not available (likely startup) */
         } catch (Exception $e) {
             return $this;
         }

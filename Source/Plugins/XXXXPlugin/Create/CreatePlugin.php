@@ -12,7 +12,7 @@ use Molajo\Controller\CreateController;
 use CommonApi\Event\CreateInterface;
 use Molajo\Plugins\CreateEventPlugin;
 use CommonApi\Exception\RuntimeException;
-use Molajo\Services;
+use Molajo\Factories;
 
 /**
  * Create Plugin
@@ -32,6 +32,7 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
     public function onAfterCreate()
     {
         return $this;
+
         if ($this->row->catalog_type_id >= CATALOG_TYPE_BEGIN
             AND $this->row->catalog_type_id <= CATALOG_TYPE_END
         ) {
@@ -153,13 +154,19 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
     protected function getDestinationFolder($catalog_type, $extension_name)
     {
         if (is_dir($this->runtime_data->reference_data->base_path . '/Source' . '/' . $catalog_type)) {
-            if (is_dir($this->runtime_data->reference_data->base_path . '/Source' . '/' . $catalog_type . '/' . $extension_name)) {
+            if (is_dir(
+                $this->runtime_data->reference_data->base_path . '/Source' . '/' . $catalog_type . '/' . $extension_name
+            )
+            ) {
                 // error extension already exists
                 return $this;
             } else {
                 return $this->runtime_data->reference_data->base_path . '/Source' . '/' . $catalog_type . '/' . $extension_name;
             }
-        } elseif (is_dir($this->runtime_data->reference_data->base_path . '/Source' . '/' . 'Views' . '/' . $catalog_type)) {
+        } elseif (is_dir(
+            $this->runtime_data->reference_data->base_path . '/Source' . '/' . 'Views' . '/' . $catalog_type
+        )
+        ) {
             if (is_dir(
                 $this->runtime_data->reference_data->base_path . '/Source' . '/' . 'Views'
                 . '/' . $catalog_type . '/' . $extension_name
@@ -533,11 +540,17 @@ class CreatePlugin extends CreateEventPlugin implements CreateInterface
     protected function getFolderToDelete($catalog_type, $extension_name)
     {
         if (is_dir($this->runtime_data->reference_data->base_path . '/Source' . '/' . $catalog_type)) {
-            if (is_dir($this->runtime_data->reference_data->base_path . '/Source' . '/' . $catalog_type . '/' . $extension_name)) {
+            if (is_dir(
+                $this->runtime_data->reference_data->base_path . '/Source' . '/' . $catalog_type . '/' . $extension_name
+            )
+            ) {
                 // error extension already exists
                 return $this->runtime_data->reference_data->base_path . '/Source' . '/' . $catalog_type . '/' . $extension_name;
             }
-        } elseif (is_dir($this->runtime_data->reference_data->base_path . '/Source' . '/' . 'Views' . '/' . $catalog_type)) {
+        } elseif (is_dir(
+            $this->runtime_data->reference_data->base_path . '/Source' . '/' . 'Views' . '/' . $catalog_type
+        )
+        ) {
             if (is_dir(
                 $this->runtime_data->reference_data->base_path . '/Source' . '/' . 'Views'
                 . '/' . $catalog_type . '/' . $extension_name

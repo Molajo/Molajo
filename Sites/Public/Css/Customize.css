@@ -5,13 +5,22 @@
     background-color: #DBDBDB;
     padding-top: .5em
 }
+
 .even {
     padding-top: .5em
 }
-.edit-title {}
-.edit-editor {}
-.edit-foooter {}
-.edit-sidebar1, .edit-sidebar2, .edit-sidebar3 {}
+
+.edit-title {
+}
+
+.edit-editor {
+}
+
+.edit-foooter {
+}
+
+.edit-sidebar1, .edit-sidebar2, .edit-sidebar3 {
+}
 
 /*! Footer*/
 .footer-bottom {
@@ -60,16 +69,29 @@
     /* equal to footer height */
     margin-bottom: -60px;
 }
+
 .page-wrap:after {
     content: "";
     display: block;
 }
+
 .footer-bottom, .page-wrap:after {
     /* .push must be the same height as footer */
     height: 80px;
     background: #333333;
 }
 
-.order-down, .order-up {padding-right: 5px}
-.fi-star {color: gold; font-weight: bold; font-size: 1.5rem; text-align: center}
-.center {text-align: center}
+.order-down, .order-up {
+    padding-right: 5px
+}
+
+.fi-star {
+    color: gold;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center
+}
+
+.center {
+    text-align: center
+}

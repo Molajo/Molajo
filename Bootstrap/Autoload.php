@@ -33,15 +33,14 @@ function readJsonFile($file_name)
 require_once $base_path . '/vendor/commonapi/exception/ExceptionInterface.php';
 require_once $base_path . '/vendor/commonapi/exception/RuntimeException.php';
 require_once $base_path . '/vendor/commonapi/ioc/ContainerInterface.php';
-require_once $base_path . '/vendor/commonapi/ioc/ServiceProviderInterface.php';
-require_once $base_path . '/vendor/commonapi/ioc/ServiceProviderAdapterInterface.php';
-require_once $base_path . '/vendor/molajo/ioc/Source/AbstractServiceProvider.php';
-require_once $base_path . '/vendor/molajo/ioc/Source/StandardServiceProvider.php';
+require_once $base_path . '/vendor/commonapi/ioc/FactoryMethodControllerInterface.php';
+require_once $base_path . '/vendor/commonapi/ioc/FactoryMethodInterface.php';
+require_once $base_path . '/vendor/commonapi/ioc/FactoryMethodBatchSchedulingInterface.php';
+require_once $base_path . '/vendor/commonapi/ioc/FactoryMethodSchedulingInterface.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/FactoryBase.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/StandardFactoryMethod.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/Container.php';
-require_once $base_path . '/vendor/molajo/ioc/Source/ServiceProviderAdapter.php';
-//require_once $base_path . '/vendor/molajo/application/Services/Runtimedata/RuntimedataServiceProvider.php';
-//require_once $base_path . '/vendor/molajo/application/Services/Plugindata/PlugindataServiceProvider.php';
-//require_once $base_path . '/vendor/molajo/resource/Services/Resource/ResourceServiceProvider.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethodController.php';
 
 require_once $base_path . '/vendor/molajo/application/Source/Resource/Api/ConfigurationDataInterface.php';
 require_once $base_path . '/vendor/molajo/application/Source/Resource/Api/ConfigurationInterface.php';
@@ -63,7 +62,13 @@ require_once $base_path . '/vendor/molajo/resource/Source/Handler/ClassHandler.p
 require_once $base_path . '/vendor/molajo/resource/Source/Adapter.php';
 require_once $base_path . '/vendor/molajo/resource/Source/Scheme.php';
 
-$resource_map_filename = $base_path . '/vendor/molajo/resource/Source/Files/Output/ResourceMap.json';
+//require_once $base_path . '/vendor/molajo/application/Factories/Runtimedata/RuntimedataFactoryMethod.php';
+//require_once $base_path . '/vendor/molajo/application/Factories/Plugindata/PlugindataFactoryMethod.php';
+//require_once $base_path . '/vendor/molajo/resource/Factories/Resource/ResourceFactoryMethod.php';
+//require_once $base_path . '/vendor/molajo/resource/Factories/Resourcedata/ResourcedataFactoryMethod.php';
+//require_once $base_path . '/vendor/molajo/fieldhandler/Factories/Fieldhandler/FieldhandlerFactoryMethod.php';
+
+$resource_map_filename = __DIR__ . '/Files/Output/ResourceMap.json';
 if (file_exists($resource_map_filename)) {
     $resource_map = readJsonFile($resource_map_filename);
 } else {
@@ -78,7 +83,7 @@ $class                            = 'Molajo\\Resource\\Handler\\ClassHandler';
 $handler                          = new $class($base_path, $resource_map, array(), array('.php'));
 $handler_instance                 = array();
 $handler_instance['ClassHandler'] = $handler;
-$file                             = $base_path . '/vendor/molajo/resource/Source/Files/Input/SchemeClass.json';
+$file                             = __DIR__ . '/Files/Input/SchemeClass.json';
 $class                            = 'Molajo\\Resource\\Scheme';
 $scheme                           = new $class($file);
 $class                            = 'Molajo\\Resource\\Adapter';
@@ -89,7 +94,7 @@ include __DIR__ . '/SetNamespace.php';
 $hold_resource_adapter = $resource_adapter;
 
 /** Resource Map */
-if (is_file($resource_map_filename)) {
+if (is_file($resource_map_filename . 'abcdefghijklmnopqrstuvwxyz')) {
 } else {
 
     require_once $base_path . '/vendor/molajo/resource/Source/ResourceMap.php';
@@ -98,9 +103,9 @@ if (is_file($resource_map_filename)) {
 
     $resource_adapter = new $class (
         $base_path,
-        $resource_map_filename = $base_path . '/vendor/molajo/resource/Source/Files/Output/ResourceMap.json',
-        $interface_map_filename = $base_path . '/vendor/molajo/resource/Source/Files/Output/ClassMap.json',
-        $interface_map_filename = $base_path . '/vendor/molajo/resource/Source/Files/Input/ExcludeFolders.json'
+        $resource_map_filename = __DIR__ . '/Files/Output/ResourceMap.json',
+        $interface_map_filename = __DIR__ . '/Files/Output/ClassMap.json',
+        $interface_map_filename = __DIR__ . '/Files/Input/ExcludeFolders.json'
     );
 
     include __DIR__ . '/SetNamespace.php';
@@ -113,10 +118,10 @@ if (is_file($resource_map_filename)) {
 
     try {
         $map_instance = new $class (
-            $base_path . '/vendor/molajo/resource/Source/Files/Output/ClassMap.json',
-            $base_path . '/vendor/molajo/resource/Source/Files/Output/Interfaces.json',
-            $base_path . '/vendor/molajo/resource/Source/Files/Output/ClassDependencies.json',
-            $base_path . '/vendor/molajo/resource/Source/Files/Output/Events.json'
+            __DIR__ . '/Files/Output/ClassMap.json',
+            __DIR__ . '/Files/Output/Interfaces.json',
+            __DIR__ . '/Files/Output/ClassDependencies.json',
+            __DIR__ . '/Files/Output/Events.json'
         );
     } catch (Exception $e) {
         throw new Exception ('Interface Map ' . $class . ' Exception during Instantiation: ' . $e->getMessage());
