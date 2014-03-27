@@ -6762,7 +6762,7 @@ CREATE TABLE `molajo_users` (
   `email` varchar(255) DEFAULT '  ' COMMENT 'Email address of user',
   `language` char(7) NOT NULL,
   `content_text` longtext COMMENT 'Text for User',
-  `session_key` varchar(255) DEFAULT NULL COMMENT 'Session Key for User',
+  `session_id` varchar(255) DEFAULT NULL COMMENT 'Session Key for User',
   `block` tinyint(6) NOT NULL DEFAULT '0' COMMENT 'If activiated, blocks user from logging on',
   `register_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Registration date for User',
   `activation_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Activation date for User',
@@ -6786,7 +6786,7 @@ CREATE TABLE `molajo_users` (
 -- Dumping data for table `molajo_users`
 --
 
-INSERT INTO `molajo_users` (`id`, `username`, `alias`, `first_name`, `last_name`, `full_name`, `email`, `language`, `content_text`, `session_key`, `block`, `register_datetime`, `activation_datetime`, `activation_code`, `last_visit_datetime`, `last_activity_datetime`, `password_changed_datetime`, `password`, `reset_password_code`, `login_attempts`, `customfields`, `parameters`, `metadata`) VALUES
+INSERT INTO `molajo_users` (`id`, `username`, `alias`, `first_name`, `last_name`, `full_name`, `email`, `language`, `content_text`, `session_id`, `block`, `register_datetime`, `activation_datetime`, `activation_code`, `last_visit_datetime`, `last_activity_datetime`, `password_changed_datetime`, `password`, `reset_password_code`, `login_attempts`, `customfields`, `parameters`, `metadata`) VALUES
 (1, 'admin', 'system-administrator', 'System', 'Administrator', 'System Administrator', 'admin@example.com', 'en-GB', '', '12345', 0, '2012-09-13 12:00:00', '2012-09-13 00:00:00', NULL, '2014-02-17 03:51:43', '2014-02-17 03:51:43', '2013-05-25 20:08:55', '$2a$08$hElLhbL0FI9lnw.MuDfNzONLdmb4.kZlnb7tBHkJpVFtdPuH00nGi', '', 0, '{"gender":"",\r\n"about_me":"<p>Bear claw macaroon candy canes topping cheesecake jelly beans macaroon. Wypas chocolate cake cookie jelly beans applicake donut. Tootsie roll danish sesame snaps faworki wypas toffee danish marshmallow bear claw. Candy canes oat cake marzipan powder gummi bears I love pastry. Donut sesame snaps topping chupa chups croissant.</p>",\r\n"phone":"402-555-1212",\r\n"editor":"",\r\n"language":"",\r\n"date_of_birth":"",\r\n"secondary_email":""}', '{"display_gravatar":"1",\r\n"display_birthdate":"1",\r\n"display_phone":"1",\r\n"display_email":"1",\r\n"theme_id":""}', '{"title":"Administrator", \r\n"description":"Administrator Profile", \r\n"keywords":"", \r\n"robots":"", \r\n"author":"", \r\n"content_rights":""}    '),
 (2, 'kim', 'kim-developer', 'Kim', 'Developer', 'Kim Developer', 'kim@example.com', 'en-GB', '', NULL, 0, '2012-09-13 12:00:00', '0000-00-00 00:00:00', NULL, '2012-09-13 12:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kim', NULL, 0, '{"gender":"",\r\n"about_me":"",\r\n"editor":"",\r\n"language":"",\r\n"date_of_birth":"",\r\n"secondary_email":""}', '{"display_gravatar":"0",\r\n"display_birthdate":"1",\r\n"display_email":"1",\r\n"theme_id":""}', '{}'),
 (3, 'pat', 'pat-manager', 'Pat', 'Manager', 'Pat Manager', 'pat@example.com', 'en-GB', '', NULL, 0, '2012-09-13 12:00:00', '0000-00-00 00:00:00', NULL, '2012-09-13 12:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'kim', NULL, 0, '{"gender":"",\r\n"about_me":"",\r\n"editor":"",\r\n"language":"",\r\n"date_of_birth":"",\r\n"secondary_email":""}', '{"display_gravatar":"0",\r\n"display_birthdate":"1",\r\n"display_email":"1",\r\n"theme_id":""}', '{}'),

@@ -30,6 +30,7 @@ class MessagesPlugin extends DisplayEventPlugin implements DisplayInterface
     public function onBeforeParseHead()
     {
         return $this;
+
         $this->plugin_data->page->messages = new stdClass();
         $this->plugin_data->page->messages = $temp_row;
 

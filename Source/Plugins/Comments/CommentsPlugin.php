@@ -157,26 +157,25 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
 
         $comments = $this->resource->get('query:///' . $model, $options);
 
-        $comments->setModelRegistry('check_view_level_access', 1);
         $comments->setModelRegistry('process_events', 0);
-        $comments->setModelRegistry('get_customfields', 1);
         $comments->setModelRegistry('query_object', 'result');
 
-        $comments->model->query->select('count(*)');
+        $comments->select('count(*)');
 
-        $comments->model->query->where(
-            $comments->model->database->qn($comments->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $comments->model->database->qn('root')
-            . ' = '
-            . (int)$this->plugin_data->resource->data->id
+        $comments->where(
+            'column',
+            $comments->getModelRegistry('primary_prefix', 'a') . '.' . 'root',
+            '=',
+            'integer',
+            (int)$this->plugin_data->resource->data->id
         );
 
-        $comments->model->query->where(
-            $comments->model->database->qn($comments->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $comments->model->database->qn('status')
-            . ' >  0'
+        $comments->where(
+            'column',
+            $comments->getModelRegistry('primary_prefix', 'a') . '.' . 'status',
+            '>',
+            'integer',
+            0
         );
 
         try {
@@ -229,31 +228,25 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
 
         $comments = $this->resource->get('query:///' . $model, $options);
 
-        $comments->setModelRegistry('check_view_level_access', 1);
-        $comments->setModelRegistry('process_events', 1);
-        $comments->setModelRegistry('get_customfields', 1);
-        $comments->setModelRegistry('get_customfields', 1);
-        $comments->setModelRegistry('query_object', 'list');
+        $comments->setModelRegistry('use_pagination', 0);
 
-        $comments->model->query->where(
-            $comments->model->database->qn($comments->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $comments->model->database->qn('root')
-            . ' = '
-            . (int)$this->plugin_data->resource->data->id
+        $comments->where(
+            'column',
+            $comments->getModelRegistry('primary_prefix', 'a') . '.' . 'root',
+            '=',
+            'integer',
+            (int)$this->plugin_data->resource->data->id
         );
 
-        $comments->model->query->where(
-            $comments->model->database->qn($comments->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $comments->model->database->qn('status')
-            . ' >  0'
+        $comments->where(
+            'column',
+            $comments->getModelRegistry('primary_prefix', 'a') . '.' . 'status',
+            '>',
+            'integer',
+            0
         );
 
-        $comments->model->query->order(
-            $comments->model->database->qn($comments->getModelRegistry('primary_prefix', 'a'))
-            . '.' . $comments->model->database->qn('lft')
-        );
+        $comments->order($comments->getModelRegistry('primary_prefix', 'a') . '.' . 'lft', 'ASC');
 
         try {
             $this->plugin_data->comments_list->data           = $comments->getData();

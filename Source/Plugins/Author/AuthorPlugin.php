@@ -12,7 +12,6 @@ use CommonApi\Event\DisplayInterface;
 use CommonApi\Exception\RuntimeException;
 use Exception;
 use Molajo\Plugins\DisplayEventPlugin;
-use stdClass;
 
 /**
  * Author Plugin
@@ -73,28 +72,13 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
             )
         );
 
-        $author->setModelRegistry('check_view_level_access', 0);
-        $author->setModelRegistry('process_events', 1);
         $author->setModelRegistry('query_object', 'item');
-        $author->setModelRegistry('use_special_joins', 1);
-        $author->setModelRegistry('get_customfields', 1);
         $author->setModelRegistry('primary_key_value', (int)$author_id);
         $author->setModelRegistry('get_item_children', 0);
 
         try {
             $data          = $author->getData();
             $data->sef_url = $this->getAuthorProfileURL($author_id);
-
-            if (isset($data->parameters)) {
-                $parameters = $data->parameters;
-                unset($data->parameters);
-            } else {
-                $parameters = new stdClass();
-            }
-
-            foreach (\get_object_vars($parameters) as $key => $value) {
-                $this->parameters->$key = $value;
-            }
 
             $this->query_results   = array();
             $this->query_results[] = $data;
@@ -118,58 +102,58 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
     {
         $controller = $this->resource->get('query:///Molajo//Model//Datasource//Catalog.xml');
 
-        $controller->setModelRegistry('check_view_level_access', 0);
         $controller->setModelRegistry('process_events', 0);
         $controller->setModelRegistry('get_customfields', 0);
         $controller->setModelRegistry('query_object', 'result');
 
-        $controller->model->query->select(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('sef_request')
+        $controller->select($controller->getModelRegistry('primary_prefix', 'a') . '.' . 'sef_request');
+
+        $controller->where(
+            'column',
+            $controller->getModelRegistry('primary_prefix', 'a') . '.' . 'application_id',
+            '=',
+            'integer',
+            (int)$this->runtime_data->application->id
         );
 
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('application_id')
-            . ' = '
-            . (int)$this->runtime_data->application->id
+        $controller->where(
+            'column',
+            $controller->getModelRegistry('primary_prefix', 'a') . '.' . 'enabled',
+            '=',
+            'integer',
+            1
         );
 
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('enabled')
-            . ' = '
-            . ' 1 '
+        $controller->where(
+            'column',
+            $controller->getModelRegistry('primary_prefix', 'a') . '.' . 'redirect_to_id',
+            '=',
+            'integer',
+            0
         );
 
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('redirect_to_id')
-            . ' = '
-            . ' 0 '
-        );
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->getModelRegistry('primary_prefix', 'a'))
-            . ' . '
-            . $controller->model->database->qn('page_type')
-            . ' <> '
-            . $controller->model->database->q('link')
+        $controller->where(
+            'column',
+            $controller->getModelRegistry('primary_prefix', 'a') . '.' . 'page_type',
+            '<>',
+            'string',
+            'link'
         );
 
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->model->getModelRegistry('primary_prefix', 'a'))
-            . '.' . $controller->model->database->qn('source_id')
-            . ' = ' . (int)$author_id
+        $controller->where(
+            'column',
+            $controller->getModelRegistry('primary_prefix', 'a') . '.' . 'source_id',
+            '=',
+            'integer',
+            (int)$author_id
         );
 
-        $controller->model->query->where(
-            $controller->model->database->qn($controller->model->getModelRegistry('primary_prefix', 'a'))
-            . '.' . $controller->model->database->qn('catalog_type_id')
-            . ' = ' . (int)$this->runtime_data->reference_data->catalog_type_user_id
+        $controller->where(
+            'column',
+            $controller->getModelRegistry('primary_prefix', 'a') . '.' . 'catalog_type_id',
+            '=',
+            'integer',
+            (int)$this->runtime_data->reference_data->catalog_type_user_id
         );
 
         try {

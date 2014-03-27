@@ -24,8 +24,8 @@
 
         <customfields>
             <customfield name="customfields">
-                <field name="visitor_name" type="char" null="0" default=""/>
-                <field name="email_address" type="char" null="0" default=""/>
+                <field name="visitor_name" type="string" null="0" default=""/>
+                <field name="email_address" type="string" null="0" default=""/>
                 <field name="website" type="url" null="1" default=""/>
                 <field name="ip_address" type="ip" null="0" default="127.0.0.1"/>
             </customfield>

@@ -29,6 +29,7 @@
     "Messages": "Molajo\\Factories\\Messages",
     "Molajito": "Molajo\\Factories\\Molajito",
     "Plugindata": "Molajo\\Factories\\Plugindata",
+    "Query": "Molajo\\Factories\\Query",
     "Redirect": "Molajo\\Factories\\Redirect",
     "Registration": "Molajo\\Factories\\Registration",
     "Render": "Molajo\\Factories\\Render",

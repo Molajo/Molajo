@@ -30,6 +30,7 @@ $resource_adapter->setNamespace('Molajo\\Views\\Wraps\\', 'vendor/molajo/foundat
  *  APPLICATION EXTENSIONS
  */
 $resource_adapter->setNamespace('Molajo\\Controller\\', 'vendor/molajo/application/Source/Controller/');
+$resource_adapter->setNamespace('Molajo\\Fieldhandler\\', 'vendor/molajo/application/Source/Fieldhandler/');
 $resource_adapter->setNamespace('Molajo\\Model\\', 'vendor/molajo/application/Source/Model/');
 $resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/application/Source/Plugins/');
 $resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/application/Source/Resource/');
@@ -41,49 +42,64 @@ $resource_adapter->setNamespace('Molajo\\', 'vendor/molajo/application/Source/Ex
  *  FRAMEWORK PACKAGES
  */
 $resource_adapter->setNamespace('Molajo\\Authorisation\\', 'vendor/molajo/authorisation/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/authorisation/Factories/');
+$resource_adapter->setNamespace(
+    'Molajo\\Factories\\Authorisation\\',
+    'vendor/molajo/authorisation/Factories/Authorisation'
+);
 
 $resource_adapter->setNamespace('Molajo\\Cache\\', 'vendor/molajo/cache/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/cache/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Cache\\', 'vendor/molajo/cache/Factories/Cache/');
 
 $resource_adapter->setNamespace('Molajo\\Database\\', 'vendor/molajo/database/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/database/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Database\\', 'vendor/molajo/database/Factories/Database/');
 
 $resource_adapter->setNamespace('Molajo\\Email\\', 'vendor/molajo/email/source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/email/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Email\\', 'vendor/molajo/email/Factories/Email/');
 
 $resource_adapter->setNamespace('Molajo\\Event\\', 'vendor/molajo/event/Source/');
 $resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/event/Plugins/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/event/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Dispatcher\\', 'vendor/molajo/event/Factories/Dispatcher/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Event\\', 'vendor/molajo/event/Factories/Event/');
 
 $resource_adapter->setNamespace('Molajo\\Fieldhandler\\', 'vendor/molajo/fieldhandler/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/fieldhandler/Factories/');
+$resource_adapter->setNamespace(
+    'Molajo\\Factories\\Fieldhandler\\',
+    'vendor/molajo/fieldhandler/Factories/Fieldhandler/'
+);
 
 $resource_adapter->setNamespace('Molajo\\Filesystem\\', 'vendor/molajo/filesystem/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/filesystem/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Filesystem\\', 'vendor/molajo/filesystem/Factories/Filesystem/');
 
 $resource_adapter->setNamespace('Molajo\\Http\\', 'vendor/molajo/http/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/http/Factories/');
 
 $resource_adapter->setNamespace('Molajo\\IoC\\', 'vendor/molajo/ioc/Source');
+
 $resource_adapter->setNamespace('Molajo\\Language\\', 'vendor/molajo/Language/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/language/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Language\\', 'vendor/molajo/language/Factories/Language/');
+
 //$resource_adapter->setNamespace('Molajo\\Factories', 'vendor/molajo/Log/Service');
 //$resource_adapter->setNamespace('Molajo\\Log', 'vendor/molajo/Log/Source/');
 
 $resource_adapter->setNamespace('Molajito\\', 'vendor/molajo/molajito/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/molajito/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Molajito\\', 'vendor/molajo/molajito/Factories/Molajito/');
 
-$resource_adapter->setNamespace('Molajo\\Pagination\\', 'vendor/molajo/pagination/Source/');
+$resource_adapter->setNamespace('Molajo\\', 'vendor/molajo/pagination/Source/');
 
 $resource_adapter->setNamespace('Molajo\\Render\\', 'vendor/molajo/render/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/render/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Render\\', 'vendor/molajo/render/Factories/Render/');
 
 $resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/resource/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/resource/Factories/');
 
+$resource_adapter->setNamespace('Molajo\\Controller\\', 'vendor/molajo/query/Controller/');
+$resource_adapter->setNamespace('Molajo\\Model\\', 'vendor/molajo/query/Model/');
+$resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/query/Resource/');
+$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/query/Factories/');
+$resource_adapter->setNamespace('Molajo\\Query\\', 'vendor/molajo/query/Source/');
+
 $resource_adapter->setNamespace('Molajo\\Route\\', 'vendor/molajo/route/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/route/Factories/');
+$resource_adapter->setNamespace('Molajo\\Factories\\Route\\', 'vendor/molajo/route/Factories/Route/');
 
 $resource_adapter->setNamespace('Molajo\\User\\', 'vendor/molajo/user/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/user/Factories/');

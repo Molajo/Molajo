@@ -6,19 +6,12 @@
         "path": "vendor\/commonapi\/authorisation\/AuthorisationInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Authorisation\\Adapter",
-            "Molajo\\Authorisation\\Handler\\AbstractHandler",
-            "Molajo\\Authorisation\\Handler\\Database"
+            "Molajo\\Authorisation\\Adapter\\AbstractAdapter",
+            "Molajo\\Authorisation\\Adapter\\Database",
+            "Molajo\\Authorisation\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Authorisation\\Adapter",
-            "Molajo\\Model\\CreateModel",
-            "Molajo\\Model\\DeleteModel",
-            "Molajo\\Model\\Model",
-            "Molajo\\Model\\ReadModel",
-            "Molajo\\Model\\UpdateModel",
-            "Molajo\\Resource\\Factory\\ReadModelFactory",
-            "Molajo\\Resource\\Handler\\QueryHandler"
+            "Molajo\\Authorisation\\Driver"
         ]
     },
     "CommonApi\\Cache\\CacheInterface": {
@@ -28,27 +21,28 @@
         "path": "vendor\/commonapi\/cache\/CacheInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Cache\\Adapter",
-            "Molajo\\Cache\\Handler\\AbstractHandler",
-            "Molajo\\Cache\\Handler\\Apc",
-            "Molajo\\Cache\\Handler\\Database",
-            "Molajo\\Cache\\Handler\\Dummy",
-            "Molajo\\Cache\\Handler\\File",
-            "Molajo\\Cache\\Handler\\Memcached",
-            "Molajo\\Cache\\Handler\\Memory",
-            "Molajo\\Cache\\Handler\\Redis",
-            "Molajo\\Cache\\Handler\\Wincache",
-            "Molajo\\Cache\\Handler\\Xcache"
+            "Molajo\\Cache\\Adapter\\AbstractAdapter",
+            "Molajo\\Cache\\Adapter\\Apc",
+            "Molajo\\Cache\\Adapter\\Database",
+            "Molajo\\Cache\\Adapter\\Dummy",
+            "Molajo\\Cache\\Adapter\\File",
+            "Molajo\\Cache\\Adapter\\Memcached",
+            "Molajo\\Cache\\Adapter\\Memory",
+            "Molajo\\Cache\\Adapter\\Redis",
+            "Molajo\\Cache\\Adapter\\Wincache",
+            "Molajo\\Cache\\Adapter\\Xcache",
+            "Molajo\\Cache\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Cache\\Adapter",
-            "Molajo\\Model\\CreateModel",
-            "Molajo\\Model\\DeleteModel",
-            "Molajo\\Model\\Model",
-            "Molajo\\Model\\ReadModel",
-            "Molajo\\Model\\UpdateModel",
-            "Molajo\\Resource\\Factory\\ReadModelFactory",
-            "Molajo\\Resource\\Handler\\QueryHandler"
+            "Molajo\\Cache\\Driver",
+            "Molajo\\Controller\\Controller",
+            "Molajo\\Controller\\CreateController",
+            "Molajo\\Controller\\DeleteController",
+            "Molajo\\Controller\\QueryController",
+            "Molajo\\Controller\\ReadController",
+            "Molajo\\Controller\\UpdateController",
+            "Molajo\\Resource\\Adapter\\Query",
+            "Molajo\\Resource\\Factory\\ReadControllerFactory"
         ]
     },
     "CommonApi\\Cache\\CacheItemInterface": {
@@ -100,6 +94,7 @@
             "Molajo\\Controller\\Controller",
             "Molajo\\Controller\\CreateController",
             "Molajo\\Controller\\DeleteController",
+            "Molajo\\Controller\\QueryController",
             "Molajo\\Controller\\ReadController",
             "Molajo\\Controller\\UpdateController"
         ],
@@ -107,11 +102,11 @@
 
         ]
     },
-    "CommonApi\\Controller\\CreateInterface": {
-        "name": "CreateInterface",
+    "CommonApi\\Controller\\CreateControllerInterface": {
+        "name": "CreateControllerInterface",
         "namespace": "CommonApi\\Controller",
-        "fqns": "CommonApi\\Controller\\CreateInterface",
-        "path": "vendor\/commonapi\/controller\/CreateInterface.php",
+        "fqns": "CommonApi\\Controller\\CreateControllerInterface",
+        "path": "vendor\/commonapi\/controller\/CreateControllerInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Controller\\CreateController"
@@ -133,11 +128,11 @@
 
         ]
     },
-    "CommonApi\\Controller\\DeleteInterface": {
-        "name": "DeleteInterface",
+    "CommonApi\\Controller\\DeleteControllerInterface": {
+        "name": "DeleteControllerInterface",
         "namespace": "CommonApi\\Controller",
-        "fqns": "CommonApi\\Controller\\DeleteInterface",
-        "path": "vendor\/commonapi\/controller\/DeleteInterface.php",
+        "fqns": "CommonApi\\Controller\\DeleteControllerInterface",
+        "path": "vendor\/commonapi\/controller\/DeleteControllerInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Controller\\DeleteController"
@@ -211,15 +206,17 @@
 
         ]
     },
-    "CommonApi\\Controller\\ReadInterface": {
-        "name": "ReadInterface",
+    "CommonApi\\Controller\\ReadControllerInterface": {
+        "name": "ReadControllerInterface",
         "namespace": "CommonApi\\Controller",
-        "fqns": "CommonApi\\Controller\\ReadInterface",
-        "path": "vendor\/commonapi\/controller\/ReadInterface.php",
+        "fqns": "CommonApi\\Controller\\ReadControllerInterface",
+        "path": "vendor\/commonapi\/controller\/ReadControllerInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Controller\\CreateController",
-            "Molajo\\Controller\\ReadController"
+            "Molajo\\Controller\\DeleteController",
+            "Molajo\\Controller\\ReadController",
+            "Molajo\\Controller\\UpdateController"
         ],
         "dependency_for": [
 
@@ -264,11 +261,11 @@
             "Molajo\\Controller\\NumberToText"
         ]
     },
-    "CommonApi\\Controller\\UpdateInterface": {
-        "name": "UpdateInterface",
+    "CommonApi\\Controller\\UpdateControllerInterface": {
+        "name": "UpdateControllerInterface",
         "namespace": "CommonApi\\Controller",
-        "fqns": "CommonApi\\Controller\\UpdateInterface",
-        "path": "vendor\/commonapi\/controller\/UpdateInterface.php",
+        "fqns": "CommonApi\\Controller\\UpdateControllerInterface",
+        "path": "vendor\/commonapi\/controller\/UpdateControllerInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Controller\\UpdateController"
@@ -297,8 +294,8 @@
         "path": "vendor\/commonapi\/database\/ConnectionInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Database\\Handler\\AbstractHandler",
-            "Molajo\\Database\\Handler\\Joomla"
+            "Molajo\\Database\\Adapter\\AbstractAdapter",
+            "Molajo\\Database\\Adapter\\Joomla"
         ],
         "dependency_for": [
 
@@ -311,21 +308,27 @@
         "path": "vendor\/commonapi\/database\/DatabaseInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Database\\Adapter",
-            "Molajo\\Database\\Handler\\AbstractHandler",
-            "Molajo\\Database\\Handler\\Joomla"
+            "Molajo\\Database\\Adapter\\AbstractAdapter",
+            "Molajo\\Database\\Adapter\\Joomla",
+            "Molajo\\Database\\Driver"
         ],
         "dependency_for": [
+            "Molajo\\Authorisation\\Adapter\\Database",
             "Molajo\\Controller\\Application",
-            "Molajo\\Database\\Adapter",
-            "Molajo\\Language\\Handler\\DatabaseModel",
+            "Molajo\\Database\\Driver",
+            "Molajo\\Language\\Adapter\\DatabaseModel",
             "Molajo\\Model\\CreateModel",
             "Molajo\\Model\\DeleteModel",
             "Molajo\\Model\\Model",
             "Molajo\\Model\\ReadModel",
             "Molajo\\Model\\UpdateModel",
+            "Molajo\\Query\\Adapter\\AbstractAdapter",
+            "Molajo\\Query\\Adapter\\MySql",
+            "Molajo\\Query\\Adapter\\Postgresql",
+            "Molajo\\Query\\Adapter\\Sqllite",
+            "Molajo\\Query\\Adapter\\Sqlserver",
+            "Molajo\\Resource\\Adapter\\Query",
             "Molajo\\Resource\\Factory\\ReadModelFactory",
-            "Molajo\\Resource\\Handler\\QueryHandler",
             "Molajo\\User\\Activity",
             "Molajo\\User\\UserData"
         ]
@@ -337,13 +340,13 @@
         "path": "vendor\/commonapi\/email\/EmailInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Email\\Adapter",
-            "Molajo\\Email\\Handler\\AbstractHandler",
-            "Molajo\\Email\\Handler\\PhpMailer",
-            "Molajo\\Email\\Handler\\Swiftmailer"
+            "Molajo\\Email\\Adapter\\AbstractAdapter",
+            "Molajo\\Email\\Adapter\\PhpMailer",
+            "Molajo\\Email\\Adapter\\Swiftmailer",
+            "Molajo\\Email\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Email\\Adapter",
+            "Molajo\\Email\\Driver",
             "Molajo\\User\\Utilities\\Mailer"
         ]
     },
@@ -459,7 +462,7 @@
         "path": "vendor\/commonapi\/event\/EventInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Event\\Event"
+            "Molajo\\Event\\Scheduled"
         ],
         "dependency_for": [
 
@@ -554,8 +557,8 @@
         "path": "vendor\/commonapi\/filesystem\/ConnectionInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Filesystem\\Handler\\Local",
-            "Molajo\\Filesystem\\Handler\\Media"
+            "Molajo\\Filesystem\\Adapter\\Local",
+            "Molajo\\Filesystem\\Adapter\\Media"
         ],
         "dependency_for": [
 
@@ -568,11 +571,11 @@
         "path": "vendor\/commonapi\/filesystem\/FilesystemInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Filesystem\\Handler\\Local",
-            "Molajo\\Filesystem\\Handler\\Media"
+            "Molajo\\Filesystem\\Adapter\\Local",
+            "Molajo\\Filesystem\\Adapter\\Media"
         ],
         "dependency_for": [
-            "Molajo\\Filesystem\\Adapter",
+            "Molajo\\Filesystem\\Driver",
             "Molajo\\Http\\Upload"
         ]
     },
@@ -664,24 +667,20 @@
             "Molajo\\IoC\\Container"
         ],
         "dependency_for": [
-            "Molajo\\Controller\\FrontController"
+            "Molajo\\IoC\\Schedule"
         ]
     },
-    "CommonApi\\IoC\\FactoryMethodBatchSchedulingInterface": {
-        "name": "FactoryMethodBatchSchedulingInterface",
+    "CommonApi\\IoC\\FactoryBatchInterface": {
+        "name": "FactoryBatchInterface",
         "namespace": "CommonApi\\IoC",
-        "fqns": "CommonApi\\IoC\\FactoryMethodBatchSchedulingInterface",
-        "path": "vendor\/commonapi\/ioc\/FactoryMethodBatchSchedulingInterface.php",
+        "fqns": "CommonApi\\IoC\\FactoryBatchInterface",
+        "path": "vendor\/commonapi\/ioc\/FactoryBatchInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Factories\\Activity\\ActivityFactoryMethod",
             "Molajo\\Factories\\Authentication\\AuthenticationFactoryMethod",
             "Molajo\\Factories\\Authorisation\\AuthorisationFactoryMethod",
             "Molajo\\Factories\\Cache\\CacheFactoryMethod",
-            "Molajo\\Factories\\Cachemodel\\CachemodelFactoryMethod",
-            "Molajo\\Factories\\Cachepage\\CachepageFactoryMethod",
-            "Molajo\\Factories\\Cachequery\\CachequeryFactoryMethod",
-            "Molajo\\Factories\\Cachetemplate\\CachetemplateFactoryMethod",
             "Molajo\\Factories\\Client\\ClientFactoryMethod",
             "Molajo\\Factories\\Cookie\\CookieFactoryMethod",
             "Molajo\\Factories\\Database\\DatabaseFactoryMethod",
@@ -702,6 +701,7 @@
             "Molajo\\Factories\\Messages\\MessagesFactoryMethod",
             "Molajo\\Factories\\Molajito\\MolajitoFactoryMethod",
             "Molajo\\Factories\\Plugindata\\PlugindataFactoryMethod",
+            "Molajo\\Factories\\Query\\QueryFactoryMethod",
             "Molajo\\Factories\\Redirect\\RedirectFactoryMethod",
             "Molajo\\Factories\\Registration\\RegistrationFactoryMethod",
             "Molajo\\Factories\\Render\\RenderFactoryMethod",
@@ -725,7 +725,7 @@
             "Molajo\\Factories\\Url\\UrlFactoryMethod",
             "Molajo\\Factories\\User\\UserFactoryMethod",
             "Molajo\\Factories\\Userdata\\UserdataFactoryMethod",
-            "Molajo\\IoC\\FactoryBase",
+            "Molajo\\IoC\\FactoryMethodBase",
             "Molajo\\IoC\\FactoryMethodController",
             "Molajo\\IoC\\StandardFactoryMethod"
         ],
@@ -733,34 +733,17 @@
 
         ]
     },
-    "CommonApi\\IoC\\FactoryMethodControllerInterface": {
-        "name": "FactoryMethodControllerInterface",
+    "CommonApi\\IoC\\FactoryInterface": {
+        "name": "FactoryInterface",
         "namespace": "CommonApi\\IoC",
-        "fqns": "CommonApi\\IoC\\FactoryMethodControllerInterface",
-        "path": "vendor\/commonapi\/ioc\/FactoryMethodControllerInterface.php",
-        "parent": false,
-        "implemented_by": [
-            "Molajo\\IoC\\FactoryMethodController"
-        ],
-        "dependency_for": [
-
-        ]
-    },
-    "CommonApi\\IoC\\FactoryMethodInterface": {
-        "name": "FactoryMethodInterface",
-        "namespace": "CommonApi\\IoC",
-        "fqns": "CommonApi\\IoC\\FactoryMethodInterface",
-        "path": "vendor\/commonapi\/ioc\/FactoryMethodInterface.php",
+        "fqns": "CommonApi\\IoC\\FactoryInterface",
+        "path": "vendor\/commonapi\/ioc\/FactoryInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Factories\\Activity\\ActivityFactoryMethod",
             "Molajo\\Factories\\Authentication\\AuthenticationFactoryMethod",
             "Molajo\\Factories\\Authorisation\\AuthorisationFactoryMethod",
             "Molajo\\Factories\\Cache\\CacheFactoryMethod",
-            "Molajo\\Factories\\Cachemodel\\CachemodelFactoryMethod",
-            "Molajo\\Factories\\Cachepage\\CachepageFactoryMethod",
-            "Molajo\\Factories\\Cachequery\\CachequeryFactoryMethod",
-            "Molajo\\Factories\\Cachetemplate\\CachetemplateFactoryMethod",
             "Molajo\\Factories\\Client\\ClientFactoryMethod",
             "Molajo\\Factories\\Cookie\\CookieFactoryMethod",
             "Molajo\\Factories\\Database\\DatabaseFactoryMethod",
@@ -781,6 +764,7 @@
             "Molajo\\Factories\\Messages\\MessagesFactoryMethod",
             "Molajo\\Factories\\Molajito\\MolajitoFactoryMethod",
             "Molajo\\Factories\\Plugindata\\PlugindataFactoryMethod",
+            "Molajo\\Factories\\Query\\QueryFactoryMethod",
             "Molajo\\Factories\\Redirect\\RedirectFactoryMethod",
             "Molajo\\Factories\\Registration\\RegistrationFactoryMethod",
             "Molajo\\Factories\\Render\\RenderFactoryMethod",
@@ -804,7 +788,7 @@
             "Molajo\\Factories\\Url\\UrlFactoryMethod",
             "Molajo\\Factories\\User\\UserFactoryMethod",
             "Molajo\\Factories\\Userdata\\UserdataFactoryMethod",
-            "Molajo\\IoC\\FactoryBase",
+            "Molajo\\IoC\\FactoryMethodBase",
             "Molajo\\IoC\\FactoryMethodController",
             "Molajo\\IoC\\StandardFactoryMethod"
         ],
@@ -812,17 +796,18 @@
             "Molajo\\IoC\\FactoryMethodController"
         ]
     },
-    "CommonApi\\IoC\\FactoryMethodSchedulingInterface": {
-        "name": "FactoryMethodSchedulingInterface",
+    "CommonApi\\IoC\\ScheduleInterface": {
+        "name": "ScheduleInterface",
         "namespace": "CommonApi\\IoC",
-        "fqns": "CommonApi\\IoC\\FactoryMethodSchedulingInterface",
-        "path": "vendor\/commonapi\/ioc\/FactoryMethodSchedulingInterface.php",
+        "fqns": "CommonApi\\IoC\\ScheduleInterface",
+        "path": "vendor\/commonapi\/ioc\/ScheduleInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Controller\\FrontController"
+            "Molajo\\Controller\\FrontController",
+            "Molajo\\IoC\\Schedule"
         ],
         "dependency_for": [
-
+            "Molajo\\Controller\\FrontController"
         ]
     },
     "CommonApi\\Language\\DatabaseModelInterface": {
@@ -832,10 +817,10 @@
         "path": "vendor\/commonapi\/language\/DatabaseModelInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Language\\Handler\\DatabaseModel"
+            "Molajo\\Language\\Adapter\\DatabaseModel"
         ],
         "dependency_for": [
-            "Molajo\\Language\\Handler\\Database"
+            "Molajo\\Language\\Adapter\\Database"
         ]
     },
     "CommonApi\\Language\\LanguageInterface": {
@@ -845,21 +830,21 @@
         "path": "vendor\/commonapi\/language\/LanguageInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Language\\Adapter",
-            "Molajo\\Language\\Handler\\AbstractHandler",
-            "Molajo\\Language\\Handler\\Database"
+            "Molajo\\Language\\Adapter\\AbstractAdapter",
+            "Molajo\\Language\\Adapter\\Database",
+            "Molajo\\Language\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Language\\Adapter",
-            "Molajo\\Language\\Handler\\Database",
-            "Molajo\\Language\\Handler\\Database"
+            "Molajo\\Language\\Adapter\\Database",
+            "Molajo\\Language\\Adapter\\Database",
+            "Molajo\\Language\\Driver"
         ]
     },
-    "CommonApi\\Model\\CreateInterface": {
-        "name": "CreateInterface",
+    "CommonApi\\Model\\CreateModelInterface": {
+        "name": "CreateModelInterface",
         "namespace": "CommonApi\\Model",
-        "fqns": "CommonApi\\Model\\CreateInterface",
-        "path": "vendor\/commonapi\/model\/CreateInterface.php",
+        "fqns": "CommonApi\\Model\\CreateModelInterface",
+        "path": "vendor\/commonapi\/model\/CreateModelInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Model\\CreateModel"
@@ -868,11 +853,11 @@
 
         ]
     },
-    "CommonApi\\Model\\DeleteInterface": {
-        "name": "DeleteInterface",
+    "CommonApi\\Model\\DeleteModelInterface": {
+        "name": "DeleteModelInterface",
         "namespace": "CommonApi\\Model",
-        "fqns": "CommonApi\\Model\\DeleteInterface",
-        "path": "vendor\/commonapi\/model\/DeleteInterface.php",
+        "fqns": "CommonApi\\Model\\DeleteModelInterface",
+        "path": "vendor\/commonapi\/model\/DeleteModelInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Model\\DeleteModel"
@@ -888,22 +873,17 @@
         "path": "vendor\/commonapi\/model\/FieldhandlerInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Adapter",
+            "Molajo\\Fieldhandler\\Driver",
             "Molajo\\User\\Utilities\\Fieldhandler"
         ],
         "dependency_for": [
             "Molajo\\Controller\\Application",
-            "Molajo\\Language\\Handler\\DatabaseModel",
-            "Molajo\\Model\\CreateModel",
-            "Molajo\\Model\\DeleteModel",
-            "Molajo\\Model\\Model",
-            "Molajo\\Model\\ReadModel",
-            "Molajo\\Model\\UpdateModel",
-            "Molajo\\Resource\\Factory\\ReadModelFactory",
-            "Molajo\\Resource\\Handler\\QueryHandler",
-            "Molajo\\User\\Activity",
+            "Molajo\\Query\\Adapter\\AbstractAdapter",
+            "Molajo\\Query\\Adapter\\MySql",
+            "Molajo\\Query\\Adapter\\Postgresql",
+            "Molajo\\Query\\Adapter\\Sqllite",
+            "Molajo\\Query\\Adapter\\Sqlserver",
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\UserData",
             "Molajo\\User\\Utilities\\Fieldhandler",
             "Molajo\\User\\Utilities\\TextTemplate"
         ]
@@ -923,27 +903,32 @@
         ],
         "dependency_for": [
             "Molajo\\Controller\\Controller",
-            "Molajo\\Controller\\ReadController"
+            "Molajo\\Controller\\CreateController",
+            "Molajo\\Controller\\DeleteController",
+            "Molajo\\Controller\\QueryController",
+            "Molajo\\Controller\\ReadController",
+            "Molajo\\Controller\\UpdateController",
+            "Molajo\\Resource\\Factory\\ReadControllerFactory"
         ]
     },
-    "CommonApi\\Model\\ReadInterface": {
-        "name": "ReadInterface",
+    "CommonApi\\Model\\ReadModelInterface": {
+        "name": "ReadModelInterface",
         "namespace": "CommonApi\\Model",
-        "fqns": "CommonApi\\Model\\ReadInterface",
-        "path": "vendor\/commonapi\/model\/ReadInterface.php",
+        "fqns": "CommonApi\\Model\\ReadModelInterface",
+        "path": "vendor\/commonapi\/model\/ReadModelInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Model\\ReadModel"
         ],
         "dependency_for": [
-            "Molajo\\Resource\\Factory\\ReadControllerFactory"
+
         ]
     },
-    "CommonApi\\Model\\UpdateInterface": {
-        "name": "UpdateInterface",
+    "CommonApi\\Model\\UpdateModelInterface": {
+        "name": "UpdateModelInterface",
         "namespace": "CommonApi\\Model",
-        "fqns": "CommonApi\\Model\\UpdateInterface",
-        "path": "vendor\/commonapi\/model\/UpdateInterface.php",
+        "fqns": "CommonApi\\Model\\UpdateModelInterface",
+        "path": "vendor\/commonapi\/model\/UpdateModelInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Model\\UpdateModel"
@@ -959,12 +944,32 @@
         "path": "vendor\/commonapi\/query\/QueryInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Database\\Adapter",
-            "Molajo\\Database\\Handler\\AbstractHandler",
-            "Molajo\\Database\\Handler\\Joomla"
+            "Molajo\\Controller\\CreateController",
+            "Molajo\\Controller\\DeleteController",
+            "Molajo\\Controller\\QueryController",
+            "Molajo\\Controller\\ReadController",
+            "Molajo\\Controller\\UpdateController",
+            "Molajo\\Query\\Adapter\\AbstractAdapter",
+            "Molajo\\Query\\Adapter\\MySql",
+            "Molajo\\Query\\Adapter\\Postgresql",
+            "Molajo\\Query\\Adapter\\Sqllite",
+            "Molajo\\Query\\Adapter\\Sqlserver",
+            "Molajo\\Query\\Driver"
         ],
         "dependency_for": [
-
+            "Molajo\\Authorisation\\Adapter\\Database",
+            "Molajo\\Controller\\Application",
+            "Molajo\\Controller\\Controller",
+            "Molajo\\Controller\\CreateController",
+            "Molajo\\Controller\\DeleteController",
+            "Molajo\\Controller\\QueryController",
+            "Molajo\\Controller\\ReadController",
+            "Molajo\\Controller\\UpdateController",
+            "Molajo\\Language\\Adapter\\DatabaseModel",
+            "Molajo\\Query\\Driver",
+            "Molajo\\Resource\\Factory\\ReadControllerFactory",
+            "Molajo\\User\\Activity",
+            "Molajo\\User\\UserData"
         ]
     },
     "CommonApi\\Render\\DataResourceInterface": {
@@ -990,7 +995,7 @@
             "Molajito\\EventHandler"
         ],
         "dependency_for": [
-            "Molajito\\Molajito",
+            "Molajito\\Driver",
             "Molajito\\TemplateViewRenderer"
         ]
     },
@@ -1004,7 +1009,7 @@
             "Molajito\\ExtensionResource"
         ],
         "dependency_for": [
-            "Molajito\\Molajito"
+            "Molajito\\Driver"
         ]
     },
     "CommonApi\\Render\\PaginationInterface": {
@@ -1014,7 +1019,7 @@
         "path": "vendor\/commonapi\/render\/PaginationInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Pagination\\Pagination"
+            "Molajo\\Pagination"
         ],
         "dependency_for": [
 
@@ -1040,19 +1045,19 @@
         "path": "vendor\/commonapi\/render\/RenderInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajito\\Molajito",
+            "Molajito\\Driver",
             "Molajito\\PageViewRenderer",
+            "Molajito\\PositionRenderer",
             "Molajito\\Render",
             "Molajito\\TemplateViewRenderer",
             "Molajito\\ThemeRenderer",
             "Molajito\\WrapViewRenderer",
-            "Molajo\\Render\\Handler\\AbstractHandler",
-            "Molajo\\Render\\Handler\\Molajito"
+            "Molajo\\Render\\Adapter\\Molajito",
+            "Molajo\\Render\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Render\\Adapter",
-            "Molajo\\Render\\Handler\\AbstractHandler",
-            "Molajo\\Render\\Handler\\Molajito"
+            "Molajo\\Render\\Adapter\\Molajito",
+            "Molajo\\Render\\Driver"
         ]
     },
     "CommonApi\\Resource\\AdapterInterface": {
@@ -1062,35 +1067,38 @@
         "path": "vendor\/commonapi\/resource\/AdapterInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Resource\\Adapter"
+            "Molajo\\Resource\\Adapter\\AbstractAdapter",
+            "Molajo\\Resource\\Adapter\\Asset",
+            "Molajo\\Resource\\Adapter\\ClassLoader",
+            "Molajo\\Resource\\Adapter\\Css",
+            "Molajo\\Resource\\Adapter\\CssDeclarations",
+            "Molajo\\Resource\\Adapter\\File",
+            "Molajo\\Resource\\Adapter\\Folder",
+            "Molajo\\Resource\\Adapter\\Head",
+            "Molajo\\Resource\\Adapter\\Js",
+            "Molajo\\Resource\\Adapter\\JsDeclarations",
+            "Molajo\\Resource\\Adapter\\Menuitem",
+            "Molajo\\Resource\\Adapter\\Page",
+            "Molajo\\Resource\\Adapter\\Query",
+            "Molajo\\Resource\\Adapter\\Template",
+            "Molajo\\Resource\\Adapter\\Theme",
+            "Molajo\\Resource\\Adapter\\Wrap",
+            "Molajo\\Resource\\Adapter\\Xml"
         ],
         "dependency_for": [
-            "Molajo\\Resource\\Configuration\\AbstractHandler",
-            "Molajo\\Resource\\Configuration\\DataobjectHandler",
-            "Molajo\\Resource\\Configuration\\ModelHandler"
+            "Molajo\\Resource\\Configuration\\AbstractAdapter",
+            "Molajo\\Resource\\Configuration\\Dataobject",
+            "Molajo\\Resource\\Configuration\\Model"
         ]
     },
-    "CommonApi\\Resource\\ClassHandlerInterface": {
-        "name": "ClassHandlerInterface",
+    "CommonApi\\Resource\\ClassLoaderInterface": {
+        "name": "ClassLoaderInterface",
         "namespace": "CommonApi\\Resource",
-        "fqns": "CommonApi\\Resource\\ClassHandlerInterface",
-        "path": "vendor\/commonapi\/resource\/ClassHandlerInterface.php",
+        "fqns": "CommonApi\\Resource\\ClassLoaderInterface",
+        "path": "vendor\/commonapi\/resource\/ClassLoaderInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Resource\\Adapter"
-        ],
-        "dependency_for": [
-
-        ]
-    },
-    "CommonApi\\Resource\\ClassMapInterface": {
-        "name": "ClassMapInterface",
-        "namespace": "CommonApi\\Resource",
-        "fqns": "CommonApi\\Resource\\ClassMapInterface",
-        "path": "vendor\/commonapi\/resource\/ClassMapInterface.php",
-        "parent": false,
-        "implemented_by": [
-            "Molajo\\Resource\\ClassMap"
+            "Molajo\\Resource\\Driver"
         ],
         "dependency_for": [
 
@@ -1109,35 +1117,6 @@
 
         ]
     },
-    "CommonApi\\Resource\\HandlerInterface": {
-        "name": "HandlerInterface",
-        "namespace": "CommonApi\\Resource",
-        "fqns": "CommonApi\\Resource\\HandlerInterface",
-        "path": "vendor\/commonapi\/resource\/HandlerInterface.php",
-        "parent": false,
-        "implemented_by": [
-            "Molajo\\Resource\\Handler\\AbstractHandler",
-            "Molajo\\Resource\\Handler\\AssetHandler",
-            "Molajo\\Resource\\Handler\\ClassHandler",
-            "Molajo\\Resource\\Handler\\CssHandler",
-            "Molajo\\Resource\\Handler\\CssdeclarationsHandler",
-            "Molajo\\Resource\\Handler\\FileHandler",
-            "Molajo\\Resource\\Handler\\FolderHandler",
-            "Molajo\\Resource\\Handler\\HeadHandler",
-            "Molajo\\Resource\\Handler\\JsHandler",
-            "Molajo\\Resource\\Handler\\JsdeclarationsHandler",
-            "Molajo\\Resource\\Handler\\MenuitemHandler",
-            "Molajo\\Resource\\Handler\\PageHandler",
-            "Molajo\\Resource\\Handler\\QueryHandler",
-            "Molajo\\Resource\\Handler\\TemplateHandler",
-            "Molajo\\Resource\\Handler\\ThemeHandler",
-            "Molajo\\Resource\\Handler\\WrapHandler",
-            "Molajo\\Resource\\Handler\\XmlHandler"
-        ],
-        "dependency_for": [
-
-        ]
-    },
     "CommonApi\\Resource\\LocatorInterface": {
         "name": "LocatorInterface",
         "namespace": "CommonApi\\Resource",
@@ -1145,7 +1124,7 @@
         "path": "vendor\/commonapi\/resource\/LocatorInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Resource\\Adapter"
+            "Molajo\\Resource\\Driver"
         ],
         "dependency_for": [
 
@@ -1159,6 +1138,7 @@
         "parent": false,
         "implemented_by": [
             "Molajo\\IoC\\MapFactories",
+            "Molajo\\Resource\\ClassMap",
             "Molajo\\Resource\\ResourceMap"
         ],
         "dependency_for": [
@@ -1172,7 +1152,20 @@
         "path": "vendor\/commonapi\/resource\/NamespaceInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Resource\\Adapter"
+            "Molajo\\Resource\\Driver"
+        ],
+        "dependency_for": [
+
+        ]
+    },
+    "CommonApi\\Resource\\ResourceInterface": {
+        "name": "ResourceInterface",
+        "namespace": "CommonApi\\Resource",
+        "fqns": "CommonApi\\Resource\\ResourceInterface",
+        "path": "vendor\/commonapi\/resource\/ResourceInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Resource\\Driver"
         ],
         "dependency_for": [
 
@@ -1185,11 +1178,11 @@
         "path": "vendor\/commonapi\/resource\/SchemeInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Resource\\Adapter",
+            "Molajo\\Resource\\Driver",
             "Molajo\\Resource\\Scheme"
         ],
         "dependency_for": [
-            "Molajo\\Resource\\Adapter"
+            "Molajo\\Resource\\Driver"
         ]
     },
     "CommonApi\\Route\\RouteInterface": {
@@ -1199,12 +1192,12 @@
         "path": "vendor\/commonapi\/route\/RouteInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Route\\Adapter",
-            "Molajo\\Route\\Handler\\AbstractHandler",
-            "Molajo\\Route\\Handler\\Database"
+            "Molajo\\Route\\Adapter\\AbstractAdapter",
+            "Molajo\\Route\\Adapter\\Database",
+            "Molajo\\Route\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Route\\Adapter"
+            "Molajo\\Route\\Driver"
         ]
     },
     "CommonApi\\User\\ActivityInterface": {
@@ -1217,7 +1210,7 @@
             "Molajo\\User\\Activity"
         ],
         "dependency_for": [
-            "Molajo\\User\\User"
+            "Molajo\\User\\Facade"
         ]
     },
     "CommonApi\\User\\AuthenticationInterface": {
@@ -1253,11 +1246,11 @@
         "path": "vendor\/commonapi\/user\/CookieInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Utilities\\Cookie"
+            "Molajo\\User\\Cookie"
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\User"
+            "Molajo\\User\\Facade"
         ]
     },
     "CommonApi\\User\\EncryptInterface": {
@@ -1280,11 +1273,11 @@
         "path": "vendor\/commonapi\/user\/FlashMessageInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Utilities\\FlashMessage"
+            "Molajo\\User\\FlashMessage"
         ],
         "dependency_for": [
-            "Molajo\\User\\User",
-            "Molajo\\User\\Utilities\\Messages"
+            "Molajo\\User\\Facade",
+            "Molajo\\User\\Messages"
         ]
     },
     "CommonApi\\User\\MailerInterface": {
@@ -1307,12 +1300,11 @@
         "path": "vendor\/commonapi\/user\/MessagesInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Utilities\\Messages"
+            "Molajo\\User\\Messages"
         ],
         "dependency_for": [
             "Molajo\\User\\Activity",
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\UserData",
             "Molajo\\User\\Utilities\\Encrypt",
             "Molajo\\User\\Utilities\\Fieldhandler",
             "Molajo\\User\\Utilities\\TextTemplate"
@@ -1338,12 +1330,12 @@
         "path": "vendor\/commonapi\/user\/SessionInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Utilities\\Session"
+            "Molajo\\User\\Session"
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\User",
-            "Molajo\\User\\Utilities\\FlashMessage"
+            "Molajo\\User\\Facade",
+            "Molajo\\User\\FlashMessage"
         ]
     },
     "CommonApi\\User\\TemplateInterface": {
@@ -1370,7 +1362,7 @@
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\User"
+            "Molajo\\User\\Facade"
         ]
     },
     "CommonApi\\User\\UserInterface": {
@@ -1380,7 +1372,7 @@
         "path": "vendor\/commonapi\/user\/UserInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\User"
+            "Molajo\\User\\Facade"
         ],
         "dependency_for": [
 
@@ -1390,38 +1382,38 @@
         "name": "ConfigurationDataInterface",
         "namespace": "Molajo\\Resource\\Api",
         "fqns": "Molajo\\Resource\\Api\\ConfigurationDataInterface",
-        "path": "vendor\/molajo\/application\/Source\/Resource\/Api\/ConfigurationDataInterface.php",
+        "path": "vendor\/molajo\/query\/Resource\/Api\/ConfigurationDataInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Resource\\Configuration\\Data"
         ],
         "dependency_for": [
-            "Molajo\\Resource\\Configuration\\AbstractHandler",
-            "Molajo\\Resource\\Configuration\\DataobjectHandler",
-            "Molajo\\Resource\\Configuration\\ModelHandler"
+            "Molajo\\Resource\\Configuration\\AbstractAdapter",
+            "Molajo\\Resource\\Configuration\\Dataobject",
+            "Molajo\\Resource\\Configuration\\Model"
         ]
     },
     "Molajo\\Resource\\Api\\ConfigurationInterface": {
         "name": "ConfigurationInterface",
         "namespace": "Molajo\\Resource\\Api",
         "fqns": "Molajo\\Resource\\Api\\ConfigurationInterface",
-        "path": "vendor\/molajo\/application\/Source\/Resource\/Api\/ConfigurationInterface.php",
+        "path": "vendor\/molajo\/query\/Resource\/Api\/ConfigurationInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Resource\\Configuration\\AbstractHandler",
-            "Molajo\\Resource\\Configuration\\DataobjectHandler",
-            "Molajo\\Resource\\Configuration\\ModelHandler"
+            "Molajo\\Resource\\Configuration\\AbstractAdapter",
+            "Molajo\\Resource\\Configuration\\Dataobject",
+            "Molajo\\Resource\\Configuration\\Model"
         ],
         "dependency_for": [
-            "Molajo\\Resource\\Handler\\XmlHandler",
-            "Molajo\\Resource\\Handler\\XmlHandler"
+            "Molajo\\Resource\\Adapter\\Xml",
+            "Molajo\\Resource\\Adapter\\Xml"
         ]
     },
     "Molajo\\Resource\\Api\\FactoryInterface": {
         "name": "FactoryInterface",
         "namespace": "Molajo\\Resource\\Api",
         "fqns": "Molajo\\Resource\\Api\\FactoryInterface",
-        "path": "vendor\/molajo\/application\/Source\/Resource\/Api\/FactoryInterface.php",
+        "path": "vendor\/molajo\/query\/Resource\/Api\/FactoryInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Resource\\Factory\\ReadControllerFactory"
@@ -1434,15 +1426,15 @@
         "name": "RegistryInterface",
         "namespace": "Molajo\\Resource\\Api",
         "fqns": "Molajo\\Resource\\Api\\RegistryInterface",
-        "path": "vendor\/molajo\/application\/Source\/Resource\/Api\/RegistryInterface.php",
+        "path": "vendor\/molajo\/query\/Resource\/Api\/RegistryInterface.php",
         "parent": false,
         "implemented_by": [
             "Molajo\\Resource\\Configuration\\Registry"
         ],
         "dependency_for": [
-            "Molajo\\Resource\\Configuration\\AbstractHandler",
-            "Molajo\\Resource\\Configuration\\DataobjectHandler",
-            "Molajo\\Resource\\Configuration\\ModelHandler"
+            "Molajo\\Resource\\Configuration\\AbstractAdapter",
+            "Molajo\\Resource\\Configuration\\Dataobject",
+            "Molajo\\Resource\\Configuration\\Model"
         ]
     }
 }

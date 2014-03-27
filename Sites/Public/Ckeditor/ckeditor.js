@@ -4832,8 +4832,8 @@
             return a.replace(/<\!--\{cke_protected\}([\s\S]+?)--\>/g,function (a, b) {
                 return decodeURIComponent(b)
             }).replace(/\{cke_protected_(\d+)\}/g, function (a, b) {
-                return c && c[b] || ""
-            })
+                    return c && c[b] || ""
+                })
         }
 
         function s(a, b) {
@@ -7377,8 +7377,8 @@
             n(a.getOuterHtml(), /(\S\s*)\n(?:\s|(<span[^>]+data-cke-bookmark.*?\/span>))*\n(?!$)/gi,function (a, b, c) {
                 return b + "</pre>" + c + "<pre>"
             }).replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi, function (a, c) {
-                b.push(c)
-            });
+                    b.push(c)
+                });
             return b
         }
 
@@ -11879,9 +11879,9 @@
                     b.docType = g = a;
                     return""
                 }).replace(/<\?xml\s[^\?]*\?>/i, function (a) {
-                    b.xmlDeclaration = a;
-                    return""
-                }));
+                        b.xmlDeclaration = a;
+                        return""
+                    }));
                 a = b.dataProcessor.toHtml(a);
                 e ? (/<body[\s|>]/.test(a) || (a = "<body>" + a), /<html[\s|>]/.test(a) || (a = "<html>" + a + "</html>"), /<head[\s|>]/.test(a) ? /<title[\s|>]/.test(a) || (a = a.replace(/<head[^>]*>/, "$&<title></title>")) :
                     a = a.replace(/<html[^>]*>/, "$&<head><title></title></head>"), h && (a = a.replace(/<head>/, "$&" + h)), a = a.replace(/<\/head\s*>/, f + "$&"), a = g + a) : a = c.docType + '<html dir="' + c.contentsLangDirection + '" lang="' + (c.contentsLanguage || b.langCode) + '"><head><title>' + this._.docTitle + "</title>" + h + f + "</head><body" + (c.bodyId ? ' id="' + c.bodyId + '"' : "") + (c.bodyClass ? ' class="' + c.bodyClass + '"' : "") + ">" + a + "</body></html>";

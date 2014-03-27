@@ -2,81 +2,81 @@
     "asset": {
         "Name": "asset",
         "RequireFileExtensions": ".php",
-        "Handler": "Asset"
+        "Adapter": "Asset"
     },
     "class": {
-        "Name": "class",
+        "Name": "classloader",
         "RequireFileExtensions": ".php",
-        "Handler": "Class"
+        "Adapter": "ClassLoader"
     },
     "cssdeclarations": {
         "Name": "cssd",
         "RequireFileExtensions": "",
-        "Handler": "Cssdeclarations"
+        "Adapter": "CssDeclarations"
     },
     "css": {
         "Name": "css",
         "RequireFileExtensions": ".css",
-        "Handler": "Css"
+        "Adapter": "Css"
     },
     "file": {
         "Name": "file",
         "RequireFileExtensions": "",
-        "Handler": "File"
+        "Adapter": "File"
     },
     "folder": {
         "Name": "folder",
         "RequireFileExtensions": "",
-        "Handler": "Folder"
+        "Adapter": "Folder"
     },
     "head": {
         "Name": "head",
         "RequireFileExtensions": ".php",
-        "Handler": "Head"
+        "Adapter": "Head"
     },
     "jsdeclarations": {
         "Name": "jsd",
         "RequireFileExtensions": "",
-        "Handler": "Jsdeclarations"
+        "Adapter": "JsDeclarations"
     },
     "js": {
         "Name": "js",
         "RequireFileExtensions": ".js",
-        "Handler": "Js"
+        "Adapter": "Js"
     },
     "menuitem": {
         "Name": "menuitem",
         "RequireFileExtensions": "",
-        "Handler": "Menuitem"
+        "Adapter": "Menuitem"
     },
     "page": {
         "Name": "page",
         "RequireFileExtensions": ".phtml",
-        "Handler": "Page"
+        "Adapter": "Page"
     },
     "query": {
         "Name": "query",
         "RequireFileExtensions": "",
-        "Handler": "Query"
+        "Adapter": "Query"
     },
     "template": {
         "Name": "template",
         "RequireFileExtensions": ".phtml",
-        "Handler": "Template"
+        "Adapter": "Template"
     },
     "theme": {
         "Name": "theme",
         "RequireFileExtensions": ".phtml",
-        "Handler": "Theme"
+        "Adapter": "Theme"
     },
     "wrap": {
         "Name": "wrap",
         "RequireFileExtensions": ".phtml",
-        "Handler": "Wrap"
+        "Adapter": "Wrap"
     },
     "xml": {
         "Name": "xml",
         "RequireFileExtensions": ".xml",
-        "Handler": "Xml"
+        "Adapter": "Xml"
     }
 }

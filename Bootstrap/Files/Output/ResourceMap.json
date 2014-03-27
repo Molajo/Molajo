@@ -47,14 +47,14 @@
     "commonapi\\controller\\controllerinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ControllerInterface.php"
     ],
-    "commonapi\\controller\\createinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/CreateInterface.php"
+    "commonapi\\controller\\createcontrollerinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/CreateControllerInterface.php"
     ],
     "commonapi\\controller\\dateinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/DateInterface.php"
     ],
-    "commonapi\\controller\\deleteinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/DeleteInterface.php"
+    "commonapi\\controller\\deletecontrollerinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/DeleteControllerInterface.php"
     ],
     "commonapi\\controller\\errorhandlinginterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ErrorHandlingInterface.php"
@@ -74,8 +74,8 @@
     "commonapi\\controller\\numbertotextinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/NumberToTextInterface.php"
     ],
-    "commonapi\\controller\\readinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ReadInterface.php"
+    "commonapi\\controller\\readcontrollerinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ReadControllerInterface.php"
     ],
     "commonapi\\controller\\readme.md": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/README.md"
@@ -89,8 +89,8 @@
     "commonapi\\controller\\translateinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/TranslateInterface.php"
     ],
-    "commonapi\\controller\\updateinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/UpdateInterface.php"
+    "commonapi\\controller\\updatecontrollerinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/UpdateControllerInterface.php"
     ],
     "commonapi\\controller\\urlinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/UrlInterface.php"
@@ -287,23 +287,20 @@
     "commonapi\\ioc\\containerinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/ContainerInterface.php"
     ],
-    "commonapi\\ioc\\factorymethodbatchschedulinginterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/FactoryMethodBatchSchedulingInterface.php"
+    "commonapi\\ioc\\factorybatchinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/FactoryBatchInterface.php"
     ],
-    "commonapi\\ioc\\factorymethodcontrollerinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/FactoryMethodControllerInterface.php"
-    ],
-    "commonapi\\ioc\\factorymethodinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/FactoryMethodInterface.php"
-    ],
-    "commonapi\\ioc\\factorymethodschedulinginterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/FactoryMethodSchedulingInterface.php"
+    "commonapi\\ioc\\factoryinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/FactoryInterface.php"
     ],
     "commonapi\\ioc\\license": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/LICENSE"
     ],
     "commonapi\\ioc\\readme.md": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/README.md"
+    ],
+    "commonapi\\ioc\\scheduleinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/ScheduleInterface.php"
     ],
     "commonapi\\language": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/"
@@ -329,11 +326,11 @@
     "commonapi\\model\\composer.json": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/composer.json"
     ],
-    "commonapi\\model\\createinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/CreateInterface.php"
+    "commonapi\\model\\createmodelinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/CreateModelInterface.php"
     ],
-    "commonapi\\model\\deleteinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/DeleteInterface.php"
+    "commonapi\\model\\deletemodelinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/DeleteModelInterface.php"
     ],
     "commonapi\\model\\fieldhandlerinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FieldhandlerInterface.php"
@@ -341,11 +338,11 @@
     "commonapi\\model\\modelinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ModelInterface.php"
     ],
-    "commonapi\\model\\readinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ReadInterface.php"
+    "commonapi\\model\\readmodelinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ReadModelInterface.php"
     ],
-    "commonapi\\model\\updateinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/UpdateInterface.php"
+    "commonapi\\model\\updatemodelinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/UpdateModelInterface.php"
     ],
     "commonapi\\query": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/query\/"
@@ -398,20 +395,14 @@
     "commonapi\\resource\\adapterinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/AdapterInterface.php"
     ],
-    "commonapi\\resource\\classhandlerinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/ClassHandlerInterface.php"
-    ],
-    "commonapi\\resource\\classmapinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/ClassMapInterface.php"
+    "commonapi\\resource\\classloaderinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/ClassLoaderInterface.php"
     ],
     "commonapi\\resource\\composer.json": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/composer.json"
     ],
     "commonapi\\resource\\extensionsinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/ExtensionsInterface.php"
-    ],
-    "commonapi\\resource\\handlerinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/HandlerInterface.php"
     ],
     "commonapi\\resource\\license": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/LICENSE"
@@ -427,6 +418,9 @@
     ],
     "commonapi\\resource\\readme.md": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/README.md"
+    ],
+    "commonapi\\resource\\resourceinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/ResourceInterface.php"
     ],
     "commonapi\\resource\\schemeinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/SchemeInterface.php"
@@ -503,20 +497,23 @@
     "molajito\\dataresource": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/DataResource.php"
     ],
+    "molajito\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Driver.php"
+    ],
     "molajito\\eventhandler": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/EventHandler.php"
     ],
     "molajito\\extensionresource": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/ExtensionResource.php"
     ],
-    "molajito\\molajito": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Molajito.php"
-    ],
     "molajito\\pageviewrenderer": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/PageViewRenderer.php"
     ],
     "molajito\\parse": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Parse.php"
+    ],
+    "molajito\\positionrenderer": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/PositionRenderer.php"
     ],
     "molajito\\render": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Render.php"
@@ -531,7 +528,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/WrapViewRenderer.php"
     ],
     "molajo": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/pagination\/Source\/"
     ],
     "molajo\\applications": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Applications"
@@ -624,58 +621,58 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/"
     ],
     "molajo\\authorisation\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/Adapter"
     ],
-    "molajo\\authorisation\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/Handler"
+    "molajo\\authorisation\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/Adapter\/AbstractAdapter.php"
     ],
-    "molajo\\authorisation\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/Handler\/AbstractHandler.php"
+    "molajo\\authorisation\\adapter\\database": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/Adapter\/Database.php"
     ],
-    "molajo\\authorisation\\handler\\database": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/Handler\/Database.php"
+    "molajo\\authorisation\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Source\/Driver.php"
     ],
     "molajo\\cache": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/"
     ],
     "molajo\\cache\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter"
+    ],
+    "molajo\\cache\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/AbstractAdapter.php"
+    ],
+    "molajo\\cache\\adapter\\apc": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/Apc.php"
+    ],
+    "molajo\\cache\\adapter\\database": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/Database.php"
+    ],
+    "molajo\\cache\\adapter\\dummy": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/Dummy.php"
+    ],
+    "molajo\\cache\\adapter\\file": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/File.php"
+    ],
+    "molajo\\cache\\adapter\\memcached": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/Memcached.php"
+    ],
+    "molajo\\cache\\adapter\\memory": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/Memory.php"
+    ],
+    "molajo\\cache\\adapter\\redis": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/Redis.php"
+    ],
+    "molajo\\cache\\adapter\\wincache": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/Wincache.php"
+    ],
+    "molajo\\cache\\adapter\\xcache": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Adapter\/XCache.php"
     ],
     "molajo\\cache\\cacheitem": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/CacheItem.php"
     ],
-    "molajo\\cache\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler"
-    ],
-    "molajo\\cache\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/AbstractHandler.php"
-    ],
-    "molajo\\cache\\handler\\apc": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/Apc.php"
-    ],
-    "molajo\\cache\\handler\\database": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/Database.php"
-    ],
-    "molajo\\cache\\handler\\dummy": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/Dummy.php"
-    ],
-    "molajo\\cache\\handler\\file": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/File.php"
-    ],
-    "molajo\\cache\\handler\\memcached": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/Memcached.php"
-    ],
-    "molajo\\cache\\handler\\memory": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/Memory.php"
-    ],
-    "molajo\\cache\\handler\\redis": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/Redis.php"
-    ],
-    "molajo\\cache\\handler\\wincache": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/Wincache.php"
-    ],
-    "molajo\\cache\\handler\\xcache": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Handler\/XCache.php"
+    "molajo\\cache\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Source\/Driver.php"
     ],
     "molajo\\categories": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Resources\/Categories"
@@ -741,22 +738,22 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Resources\/Contacts\/Menuitem\/New.xml"
     ],
     "molajo\\controller": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/"
     ],
     "molajo\\controller\\application": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Application.php"
     ],
     "molajo\\controller\\controller": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Controller.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/Controller.php"
     ],
     "molajo\\controller\\createcontroller": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/CreateController.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/CreateController.php"
     ],
     "molajo\\controller\\datecontroller": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/DateController.php"
     ],
     "molajo\\controller\\deletecontroller": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/DeleteController.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/DeleteController.php"
     ],
     "molajo\\controller\\errorhandling": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/ErrorHandling.php"
@@ -776,8 +773,11 @@
     "molajo\\controller\\numbertotext": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/NumberToText.php"
     ],
+    "molajo\\controller\\querycontroller": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/QueryController.php"
+    ],
     "molajo\\controller\\readcontroller": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/ReadController.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/ReadController.php"
     ],
     "molajo\\controller\\site": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Site.php"
@@ -795,7 +795,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Translations\/Translate.php"
     ],
     "molajo\\controller\\updatecontroller": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/UpdateController.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/UpdateController.php"
     ],
     "molajo\\controller\\urlcontroller": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/UrlController.php"
@@ -804,34 +804,34 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/"
     ],
     "molajo\\database\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/Adapter"
     ],
-    "molajo\\database\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/Handler"
+    "molajo\\database\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/Adapter\/AbstractAdapter.php"
     ],
-    "molajo\\database\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/Handler\/AbstractHandler.php"
+    "molajo\\database\\adapter\\joomla": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/Adapter\/Joomla.php"
     ],
-    "molajo\\database\\handler\\joomla": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/Handler\/Joomla.php"
+    "molajo\\database\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Source\/Driver.php"
     ],
     "molajo\\email": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/"
     ],
     "molajo\\email\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Adapter"
     ],
-    "molajo\\email\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Handler"
+    "molajo\\email\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Adapter\/AbstractAdapter.php"
     ],
-    "molajo\\email\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Handler\/AbstractHandler.php"
+    "molajo\\email\\adapter\\phpmailer": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Adapter\/PhpMailer.php"
     ],
-    "molajo\\email\\handler\\phpmailer": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Handler\/PhpMailer.php"
+    "molajo\\email\\adapter\\swiftmailer": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Adapter\/Swiftmailer.php"
     ],
-    "molajo\\email\\handler\\swiftmailer": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Handler\/Swiftmailer.php"
+    "molajo\\email\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/source\/Driver.php"
     ],
     "molajo\\event": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Source\/"
@@ -839,11 +839,11 @@
     "molajo\\event\\dispatcher": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Source\/Dispatcher.php"
     ],
-    "molajo\\event\\event": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Source\/Event.php"
-    ],
     "molajo\\event\\eventdispatcher": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Source\/EventDispatcher.php"
+    ],
+    "molajo\\event\\scheduled": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Source\/Scheduled.php"
     ],
     "molajo\\factories": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/"
@@ -885,49 +885,13 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Factories\/Authorisation\/Configuration.xml"
     ],
     "molajo\\factories\\cache": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cache"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cache\/"
     ],
     "molajo\\factories\\cache\\cachefactorymethod": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cache\/CacheFactoryMethod.php"
     ],
     "molajo\\factories\\cache\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cache\/Configuration.xml"
-    ],
-    "molajo\\factories\\cachemodel": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachemodel"
-    ],
-    "molajo\\factories\\cachemodel\\cachemodelfactorymethod": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachemodel\/CachemodelFactoryMethod.php"
-    ],
-    "molajo\\factories\\cachemodel\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachemodel\/Configuration.xml"
-    ],
-    "molajo\\factories\\cachepage": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachepage"
-    ],
-    "molajo\\factories\\cachepage\\cachepagefactorymethod": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachepage\/CachepageFactoryMethod.php"
-    ],
-    "molajo\\factories\\cachepage\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachepage\/Configuration.xml"
-    ],
-    "molajo\\factories\\cachequery": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachequery"
-    ],
-    "molajo\\factories\\cachequery\\cachequeryfactorymethod": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachequery\/CachequeryFactoryMethod.php"
-    ],
-    "molajo\\factories\\cachequery\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachequery\/Configuration.xml"
-    ],
-    "molajo\\factories\\cachetemplate": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachetemplate"
-    ],
-    "molajo\\factories\\cachetemplate\\cachetemplatefactorymethod": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachetemplate\/CachetemplateFactoryMethod.php"
-    ],
-    "molajo\\factories\\cachetemplate\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachetemplate\/Configuration.xml"
     ],
     "molajo\\factories\\client": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Client"
@@ -951,7 +915,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Cookie\/CookieFactoryMethod.php"
     ],
     "molajo\\factories\\database": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Factories\/Database"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Factories\/Database\/"
     ],
     "molajo\\factories\\database\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Factories\/Database\/Configuration.xml"
@@ -969,7 +933,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Date\/DateFactoryMethod.php"
     ],
     "molajo\\factories\\dispatcher": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Dispatcher"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Dispatcher\/"
     ],
     "molajo\\factories\\dispatcher\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Dispatcher\/Configuration.xml"
@@ -978,7 +942,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Dispatcher\/DispatcherFactoryMethod.php"
     ],
     "molajo\\factories\\email": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/Factories\/Email"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/Factories\/Email\/"
     ],
     "molajo\\factories\\email\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/Factories\/Email\/Configuration.xml"
@@ -1005,7 +969,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Errorhandling\/ErrorhandlingFactoryMethod.php"
     ],
     "molajo\\factories\\event": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Event"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Event\/"
     ],
     "molajo\\factories\\event\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Event\/Configuration.xml"
@@ -1035,7 +999,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Extensions\/ExtensionsFactoryMethod.php"
     ],
     "molajo\\factories\\fieldhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Factories\/Fieldhandler"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Factories\/Fieldhandler\/"
     ],
     "molajo\\factories\\fieldhandler\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Factories\/Fieldhandler\/Configuration.xml"
@@ -1044,7 +1008,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Factories\/Fieldhandler\/FieldhandlerFactoryMethod.php"
     ],
     "molajo\\factories\\filesystem": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Factories\/Filesystem"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Factories\/Filesystem\/"
     ],
     "molajo\\factories\\filesystem\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Factories\/Filesystem\/Configuration.xml"
@@ -1080,7 +1044,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Instantiateuser\/InstantiateuserFactoryMethod.php"
     ],
     "molajo\\factories\\language": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/language\/Factories\/Language"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/language\/Factories\/Language\/"
     ],
     "molajo\\factories\\language\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/language\/Factories\/Language\/Configuration.xml"
@@ -1119,7 +1083,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Messages\/MessagesFactoryMethod.php"
     ],
     "molajo\\factories\\molajito": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Factories\/Molajito"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Factories\/Molajito\/"
     ],
     "molajo\\factories\\molajito\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Factories\/Molajito\/Configuration.xml"
@@ -1135,6 +1099,15 @@
     ],
     "molajo\\factories\\plugindata\\plugindatafactorymethod": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Plugindata\/PlugindataFactoryMethod.php"
+    ],
+    "molajo\\factories\\query": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query"
+    ],
+    "molajo\\factories\\query\\configuration.xml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query\/Configuration.xml"
+    ],
+    "molajo\\factories\\query\\queryfactorymethod": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query\/QueryFactoryMethod.php"
     ],
     "molajo\\factories\\redirect": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Redirect"
@@ -1155,7 +1128,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Registration\/RegistrationFactoryMethod.php"
     ],
     "molajo\\factories\\render": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Factories\/Render"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Factories\/Render\/"
     ],
     "molajo\\factories\\render\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Factories\/Render\/Configuration.xml"
@@ -1200,13 +1173,13 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcecssdeclarations\/ResourcecssdeclarationsFactoryMethod.php"
     ],
     "molajo\\factories\\resourcedata": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcedata"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Resourcedata"
     ],
     "molajo\\factories\\resourcedata\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcedata\/Configuration.xml"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Resourcedata\/Configuration.xml"
     ],
     "molajo\\factories\\resourcedata\\resourcedatafactorymethod": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcedata\/ResourcedataFactoryMethod.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Resourcedata\/ResourcedataFactoryMethod.php"
     ],
     "molajo\\factories\\resourcejs": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcejs"
@@ -1227,13 +1200,13 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcejsdeclarations\/ResourcejsdeclarationsFactoryMethod.php"
     ],
     "molajo\\factories\\resourcequery": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcequery"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Resourcequery"
     ],
     "molajo\\factories\\resourcequery\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcequery\/Configuration.xml"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Resourcequery\/Configuration.xml"
     ],
     "molajo\\factories\\resourcequery\\resourcequeryfactorymethod": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcequery\/ResourcequeryFactoryMethod.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Resourcequery\/ResourcequeryFactoryMethod.php"
     ],
     "molajo\\factories\\resourcerendering": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcerendering"
@@ -1254,7 +1227,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Response\/ResponseFactoryMethod.php"
     ],
     "molajo\\factories\\route": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Factories\/Route"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Factories\/Route\/"
     ],
     "molajo\\factories\\route\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Factories\/Route\/Configuration.xml"
@@ -1368,130 +1341,145 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/"
     ],
     "molajo\\fieldhandler\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter"
     ],
-    "molajo\\fieldhandler\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler"
+    "molajo\\fieldhandler\\adapter\\abstractfieldhandler": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/AbstractFieldhandler.php"
     ],
-    "molajo\\fieldhandler\\handler\\abstractfieldhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/AbstractFieldhandler.php"
+    "molajo\\fieldhandler\\adapter\\accepted": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Accepted.php"
     ],
-    "molajo\\fieldhandler\\handler\\accepted": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Accepted.php"
+    "molajo\\fieldhandler\\adapter\\alias": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alias.php"
     ],
-    "molajo\\fieldhandler\\handler\\alias": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Alias.php"
+    "molajo\\fieldhandler\\adapter\\alpha": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alpha.php"
     ],
-    "molajo\\fieldhandler\\handler\\alpha": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Alpha.php"
+    "molajo\\fieldhandler\\adapter\\alphanumeric": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alphanumeric.php"
     ],
-    "molajo\\fieldhandler\\handler\\alphanumeric": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Alphanumeric.php"
+    "molajo\\fieldhandler\\adapter\\arrays": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Arrays.php"
     ],
-    "molajo\\fieldhandler\\handler\\arrays": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Arrays.php"
+    "molajo\\fieldhandler\\adapter\\boolean": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Boolean.php"
     ],
-    "molajo\\fieldhandler\\handler\\boolean": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Boolean.php"
+    "molajo\\fieldhandler\\adapter\\callback": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Callback.php"
     ],
-    "molajo\\fieldhandler\\handler\\callback": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Callback.php"
+    "molajo\\fieldhandler\\adapter\\contains": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Contains.php"
     ],
-    "molajo\\fieldhandler\\handler\\contains": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Contains.php"
+    "molajo\\fieldhandler\\adapter\\date": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Date.php"
     ],
-    "molajo\\fieldhandler\\handler\\date": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Date.php"
+    "molajo\\fieldhandler\\adapter\\datetime": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Datetime.php"
     ],
-    "molajo\\fieldhandler\\handler\\defaults": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Defaults.php"
+    "molajo\\fieldhandler\\adapter\\defaults": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Defaults.php"
     ],
-    "molajo\\fieldhandler\\handler\\digit": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Digit.php"
+    "molajo\\fieldhandler\\adapter\\digit": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Digit.php"
     ],
-    "molajo\\fieldhandler\\handler\\email": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Email.php"
+    "molajo\\fieldhandler\\adapter\\email": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Email.php"
     ],
-    "molajo\\fieldhandler\\handler\\encoded": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Encoded.php"
+    "molajo\\fieldhandler\\adapter\\encoded": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Encoded.php"
     ],
-    "molajo\\fieldhandler\\handler\\equal": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Equal.php"
+    "molajo\\fieldhandler\\adapter\\equal": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Equal.php"
     ],
-    "molajo\\fieldhandler\\handler\\extensions": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Extensions.php"
+    "molajo\\fieldhandler\\adapter\\float": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Float.php"
     ],
-    "molajo\\fieldhandler\\handler\\float": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Float.php"
+    "molajo\\fieldhandler\\adapter\\foreignkey": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Foreignkey.php"
     ],
-    "molajo\\fieldhandler\\handler\\foreignkey": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Foreignkey.php"
+    "molajo\\fieldhandler\\adapter\\fromto": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fromto.php"
     ],
-    "molajo\\fieldhandler\\handler\\fromto": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Fromto.php"
+    "molajo\\fieldhandler\\adapter\\fullspecialchars": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fullspecialchars.php"
     ],
-    "molajo\\fieldhandler\\handler\\fullspecialchars": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Fullspecialchars.php"
+    "molajo\\fieldhandler\\adapter\\html": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Html.php"
     ],
-    "molajo\\fieldhandler\\handler\\html": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Html.php"
+    "molajo\\fieldhandler\\adapter\\image": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Image.php"
     ],
-    "molajo\\fieldhandler\\handler\\int": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Int.php"
+    "molajo\\fieldhandler\\adapter\\integer": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Integer.php"
     ],
-    "molajo\\fieldhandler\\handler\\ip": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Ip.php"
+    "molajo\\fieldhandler\\adapter\\ip": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php"
     ],
-    "molajo\\fieldhandler\\handler\\lower": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Lower.php"
+    "molajo\\fieldhandler\\adapter\\lower": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php"
     ],
-    "molajo\\fieldhandler\\handler\\maximum": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Maximum.php"
+    "molajo\\fieldhandler\\adapter\\maximum": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Maximum.php"
     ],
-    "molajo\\fieldhandler\\handler\\mimetypes": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Mimetypes.php"
+    "molajo\\fieldhandler\\adapter\\mimetypes": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Mimetypes.php"
     ],
-    "molajo\\fieldhandler\\handler\\minimum": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Minimum.php"
+    "molajo\\fieldhandler\\adapter\\minimum": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Minimum.php"
     ],
-    "molajo\\fieldhandler\\handler\\notequal": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Notequal.php"
+    "molajo\\fieldhandler\\adapter\\notequal": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Notequal.php"
     ],
-    "molajo\\fieldhandler\\handler\\numeric": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Numeric.php"
+    "molajo\\fieldhandler\\adapter\\numeric": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Numeric.php"
     ],
-    "molajo\\fieldhandler\\handler\\object": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Object.php"
+    "molajo\\fieldhandler\\adapter\\object": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Object.php"
     ],
-    "molajo\\fieldhandler\\handler\\raw": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Raw.php"
+    "molajo\\fieldhandler\\adapter\\raw": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Raw.php"
     ],
-    "molajo\\fieldhandler\\handler\\regex": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Regex.php"
+    "molajo\\fieldhandler\\adapter\\regex": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Regex.php"
     ],
-    "molajo\\fieldhandler\\handler\\required": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Required.php"
+    "molajo\\fieldhandler\\adapter\\required": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Required.php"
     ],
-    "molajo\\fieldhandler\\handler\\string": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/String.php"
+    "molajo\\fieldhandler\\adapter\\string": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/String.php"
     ],
-    "molajo\\fieldhandler\\handler\\stringlength": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/StringLength.php"
+    "molajo\\fieldhandler\\adapter\\stringlength": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/StringLength.php"
     ],
-    "molajo\\fieldhandler\\handler\\time": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Time.php"
+    "molajo\\fieldhandler\\adapter\\time": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Time.php"
     ],
-    "molajo\\fieldhandler\\handler\\trim": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Trim.php"
+    "molajo\\fieldhandler\\adapter\\trim": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Trim.php"
     ],
-    "molajo\\fieldhandler\\handler\\upper": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Upper.php"
+    "molajo\\fieldhandler\\adapter\\upper": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Upper.php"
     ],
-    "molajo\\fieldhandler\\handler\\url": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Url.php"
+    "molajo\\fieldhandler\\adapter\\url": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Url.php"
     ],
-    "molajo\\fieldhandler\\handler\\values": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Handler\/Values.php"
+    "molajo\\fieldhandler\\adapter\\values": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Values.php"
+    ],
+    "molajo\\fieldhandler\\catalog_id": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Catalog_id.php"
+    ],
+    "molajo\\fieldhandler\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Driver.php"
+    ],
+    "molajo\\fieldhandler\\extensions": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Extensions.php"
+    ],
+    "molajo\\fieldhandler\\userid": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Userid.php"
+    ],
+    "molajo\\fieldhandler\\username": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Username.php"
     ],
     "molajo\\fields": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Fields"
@@ -1539,22 +1527,22 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/"
     ],
     "molajo\\filesystem\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter"
     ],
-    "molajo\\filesystem\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Handler"
+    "molajo\\filesystem\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter\/AbstractAdapter.php"
     ],
-    "molajo\\filesystem\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Handler\/AbstractHandler.php"
+    "molajo\\filesystem\\adapter\\ftp": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter\/Ftp.php"
     ],
-    "molajo\\filesystem\\handler\\ftp": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Handler\/Ftp.php"
+    "molajo\\filesystem\\adapter\\local": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter\/Local.php"
     ],
-    "molajo\\filesystem\\handler\\local": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Handler\/Local.php"
+    "molajo\\filesystem\\adapter\\media": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter\/Media.php"
     ],
-    "molajo\\filesystem\\handler\\media": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Handler\/Media.php"
+    "molajo\\filesystem\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Driver.php"
     ],
     "molajo\\groups": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Resources\/Groups"
@@ -1622,14 +1610,17 @@
     "molajo\\ioc\\container": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Container.php"
     ],
-    "molajo\\ioc\\factorybase": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryBase.php"
+    "molajo\\ioc\\factorymethodbase": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethodBase.php"
     ],
     "molajo\\ioc\\factorymethodcontroller": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethodController.php"
     ],
     "molajo\\ioc\\mapfactories": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/MapFactories.php"
+    ],
+    "molajo\\ioc\\schedule": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Schedule.php"
     ],
     "molajo\\ioc\\standardfactorymethod": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/StandardFactoryMethod.php"
@@ -1638,19 +1629,19 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/"
     ],
     "molajo\\language\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Adapter"
     ],
-    "molajo\\language\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Handler"
+    "molajo\\language\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Adapter\/AbstractAdapter.php"
     ],
-    "molajo\\language\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Handler\/AbstractHandler.php"
+    "molajo\\language\\adapter\\database": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Adapter\/Database.php"
     ],
-    "molajo\\language\\handler\\database": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Handler\/Database.php"
+    "molajo\\language\\adapter\\databasemodel": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Adapter\/DatabaseModel.php"
     ],
-    "molajo\\language\\handler\\databasemodel": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Handler\/DatabaseModel.php"
+    "molajo\\language\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Language\/Source\/Driver.php"
     ],
     "molajo\\languages": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Languages"
@@ -1737,7 +1728,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Menuitems\/Menuitem\/New.xml"
     ],
     "molajo\\model": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Model\/"
     ],
     "molajo\\model\\application": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Application"
@@ -1782,7 +1773,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Application\/Sites.xml"
     ],
     "molajo\\model\\createmodel": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/CreateModel.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Model\/CreateModel.php"
     ],
     "molajo\\model\\datalist": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Datalist"
@@ -2181,7 +2172,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Datasource\/Wrapview.xml"
     ],
     "molajo\\model\\deletemodel": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/DeleteModel.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Model\/DeleteModel.php"
     ],
     "molajo\\model\\fields": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Fields"
@@ -3665,6 +3656,9 @@
     "molajo\\model\\fields\\phone.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Fields\/Phone.xml"
     ],
+    "molajo\\model\\fields\\positions.xml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Fields\/Positions.xml"
+    ],
     "molajo\\model\\fields\\primary_category_id.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Fields\/Primary_category_id.xml"
     ],
@@ -3745,9 +3739,6 @@
     ],
     "molajo\\model\\fields\\session_id.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Fields\/Session_id.xml"
-    ],
-    "molajo\\model\\fields\\session_key.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Fields\/Session_key.xml"
     ],
     "molajo\\model\\fields\\session_lifetime.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Fields\/Session_lifetime.xml"
@@ -4098,13 +4089,13 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Menuitem\/Template\/Configuration.xml"
     ],
     "molajo\\model\\model": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Model.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Model\/Model.php"
     ],
     "molajo\\model\\readmodel": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/ReadModel.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Model\/ReadModel.php"
     ],
     "molajo\\model\\updatemodel": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/UpdateModel.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Model\/UpdateModel.php"
     ],
     "molajo\\pages": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Resources\/Pages"
@@ -4149,9 +4140,6 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Pageviews\/Menuitem\/New.xml"
     ],
     "molajo\\pagination": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/pagination\/Source\/"
-    ],
-    "molajo\\pagination\\pagination": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/pagination\/Source\/Pagination.php"
     ],
     "molajo\\permissions": [
@@ -4507,549 +4495,160 @@
     "molajo\\plugins\\updateeventplugin": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Plugins\/UpdateEventPlugin.php"
     ],
-    "molajo\\plugins\\xxxxplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin"
+    "molajo\\query": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/"
     ],
-    "molajo\\plugins\\xxxxplugin\\activity": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Activity"
+    "molajo\\query\\adapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter"
     ],
-    "molajo\\plugins\\xxxxplugin\\activity\\activityplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Activity\/ActivityPlugin.php"
+    "molajo\\query\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/AbstractAdapter.php"
     ],
-    "molajo\\plugins\\xxxxplugin\\activity\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Activity\/Configuration.xml"
+    "molajo\\query\\adapter\\mysql": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/Mysql.php"
     ],
-    "molajo\\plugins\\xxxxplugin\\ajax": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ajax"
+    "molajo\\query\\adapter\\postgresql": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/Postgresql.php"
     ],
-    "molajo\\plugins\\xxxxplugin\\ajax\\ajaxplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ajax\/AjaxPlugin.php"
+    "molajo\\query\\adapter\\sqllite": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/Sqllite.php"
     ],
-    "molajo\\plugins\\xxxxplugin\\ajax\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ajax\/Configuration.xml"
+    "molajo\\query\\adapter\\sqlserver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/Sqlserver.php"
     ],
-    "molajo\\plugins\\xxxxplugin\\alias": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Alias"
-    ],
-    "molajo\\plugins\\xxxxplugin\\alias\\aliasplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Alias\/AliasPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\alias\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Alias\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\bargraph": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Bargraph"
-    ],
-    "molajo\\plugins\\xxxxplugin\\bargraph\\bargraphplugin.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Bargraph\/BargraphPlugin.phtml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\bargraph\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Bargraph\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\bargraph\\css": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Bargraph\/Css"
-    ],
-    "molajo\\plugins\\xxxxplugin\\bargraph\\css\\csschart.css": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Bargraph\/Css\/csschart.css"
-    ],
-    "molajo\\plugins\\xxxxplugin\\catalog": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Catalog"
-    ],
-    "molajo\\plugins\\xxxxplugin\\catalog\\catalogplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Catalog\/CatalogPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\catalog\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Catalog\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\checkin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Checkin"
-    ],
-    "molajo\\plugins\\xxxxplugin\\checkin\\checkinplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Checkin\/CheckinPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\checkin\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Checkin\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\checkout": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Checkout"
-    ],
-    "molajo\\plugins\\xxxxplugin\\checkout\\checkoutplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Checkout\/CheckoutPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\checkout\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Checkout\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\children": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Children"
-    ],
-    "molajo\\plugins\\xxxxplugin\\children\\childrenplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Children\/ChildrenPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\children\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Children\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\contentlist": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Contentlist"
-    ],
-    "molajo\\plugins\\xxxxplugin\\contentlist\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Contentlist\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\contentlist\\contentlistplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Contentlist\/ContentlistPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\create": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Create"
-    ],
-    "molajo\\plugins\\xxxxplugin\\create\\component": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Create\/Component"
-    ],
-    "molajo\\plugins\\xxxxplugin\\create\\component\\samples": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Create\/Component\/Samples"
-    ],
-    "molajo\\plugins\\xxxxplugin\\create\\component\\samples\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Create\/Component\/Samples\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\create\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Create\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\create\\createplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Create\/CreatePlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\cssclassandids": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Cssclassandids"
-    ],
-    "molajo\\plugins\\xxxxplugin\\cssclassandids\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Cssclassandids\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\cssclassandids\\cssclassandidsplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Cssclassandids\/CssclassandidsPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\datalist": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Datalist"
-    ],
-    "molajo\\plugins\\xxxxplugin\\datalist\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Datalist\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\datalist\\datalistplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Datalist\/DatalistPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\defer": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Defer"
-    ],
-    "molajo\\plugins\\xxxxplugin\\defer\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Defer\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\defer\\deferplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Defer\/DeferPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\extensioninstance": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Extensioninstance"
-    ],
-    "molajo\\plugins\\xxxxplugin\\extensioninstance\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Extensioninstance\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\extensioninstance\\extensioninstanceplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Extensioninstance\/ExtensioninstancePlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\featured": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Featured"
-    ],
-    "molajo\\plugins\\xxxxplugin\\featured\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Featured\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\featured\\featuredplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Featured\/FeaturedPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\feed": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Feed"
-    ],
-    "molajo\\plugins\\xxxxplugin\\feed\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Feed\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\feed\\feedplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Feed\/FeedPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\formbegin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Formbegin"
-    ],
-    "molajo\\plugins\\xxxxplugin\\formbegin\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Formbegin\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\formbegin\\formbeginplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Formbegin\/FormbeginPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\formselectlist": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Formselectlist"
-    ],
-    "molajo\\plugins\\xxxxplugin\\formselectlist\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Formselectlist\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\formselectlist\\formselectlistplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Formselectlist\/FormselectlistPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\googleanalytics": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Googleanalytics"
-    ],
-    "molajo\\plugins\\xxxxplugin\\googleanalytics\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Googleanalytics\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\googleanalytics\\googleanalyticsplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Googleanalytics\/GoogleanalyticsPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\gravatar": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Gravatar"
-    ],
-    "molajo\\plugins\\xxxxplugin\\gravatar\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Gravatar\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\gravatar\\gravatarplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Gravatar\/GravatarPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\head": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Head"
-    ],
-    "molajo\\plugins\\xxxxplugin\\head\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Head\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\head\\headplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Head\/HeadPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\iframe": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/IFrame"
-    ],
-    "molajo\\plugins\\xxxxplugin\\iframe\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/IFrame\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\iframe\\iframeplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/IFrame\/IFramePlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\images": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Images"
-    ],
-    "molajo\\plugins\\xxxxplugin\\images\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Images\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\images\\imagesplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Images\/ImagesPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\ipaddress": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ipaddress"
-    ],
-    "molajo\\plugins\\xxxxplugin\\ipaddress\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ipaddress\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\ipaddress\\ipaddressplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ipaddress\/IpaddressPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\itemurl": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Itemurl"
-    ],
-    "molajo\\plugins\\xxxxplugin\\itemurl\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Itemurl\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\itemurl\\itemurlplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Itemurl\/ItemurlPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\itemuserpermissions": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Itemuserpermissions"
-    ],
-    "molajo\\plugins\\xxxxplugin\\itemuserpermissions\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Itemuserpermissions\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\itemuserpermissions\\itemuserpermissionsplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Itemuserpermissions\/ItemuserpermissionsPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\linebreaks": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Linebreaks"
-    ],
-    "molajo\\plugins\\xxxxplugin\\linebreaks\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Linebreaks\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\linebreaks\\linebreaksplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Linebreaks\/LinebreaksPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\links": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Links"
-    ],
-    "molajo\\plugins\\xxxxplugin\\links\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Links\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\links\\linksplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Links\/LinksPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\login": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Login"
-    ],
-    "molajo\\plugins\\xxxxplugin\\login\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Login\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\login\\loginplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Login\/LoginPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\logout": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Logout"
-    ],
-    "molajo\\plugins\\xxxxplugin\\logout\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Logout\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\logout\\logoutplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Logout\/LogoutPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\mockdata": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Mockdata"
-    ],
-    "molajo\\plugins\\xxxxplugin\\mockdata\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Mockdata\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\mockdata\\mockdataplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Mockdata\/MockdataPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\mockimage": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Mockimage"
-    ],
-    "molajo\\plugins\\xxxxplugin\\mockimage\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Mockimage\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\mockimage\\mockimageplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Mockimage\/MockimagePlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\ordering": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ordering"
-    ],
-    "molajo\\plugins\\xxxxplugin\\ordering\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ordering\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\ordering\\orderingplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Ordering\/OrderingPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\pagetypes": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Pagetypes"
-    ],
-    "molajo\\plugins\\xxxxplugin\\pagetypes\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Pagetypes\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\pagetypes\\pagetypesplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Pagetypes\/PagetypesPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\paging": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Paging"
-    ],
-    "molajo\\plugins\\xxxxplugin\\paging\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Paging\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\paging\\pagingplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Paging\/PagingPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\password": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Password"
-    ],
-    "molajo\\plugins\\xxxxplugin\\password\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Password\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\password\\passwordplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Password\/PasswordPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\publishedstatus": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Publishedstatus"
-    ],
-    "molajo\\plugins\\xxxxplugin\\publishedstatus\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Publishedstatus\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\publishedstatus\\publishedstatusplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Publishedstatus\/PublishedstatusPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\referencedata": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Referencedata"
-    ],
-    "molajo\\plugins\\xxxxplugin\\referencedata\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Referencedata\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\referencedata\\referencedataplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Referencedata\/ReferencedataPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\templatelist": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Templatelist"
-    ],
-    "molajo\\plugins\\xxxxplugin\\templatelist\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Templatelist\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\templatelist\\templatelistplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Templatelist\/TemplatelistPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\uifoundation": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/UIFoundation"
-    ],
-    "molajo\\plugins\\xxxxplugin\\uifoundation\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/UIFoundation\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\uifoundation\\uifoundationplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/UIFoundation\/UIFoundationPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\useractivity": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Useractivity"
-    ],
-    "molajo\\plugins\\xxxxplugin\\useractivity\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Useractivity\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\useractivity\\useractivityplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Useractivity\/UseractivityPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\username": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Username"
-    ],
-    "molajo\\plugins\\xxxxplugin\\username\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Username\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\username\\usernameplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Username\/UsernamePlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\version": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Version"
-    ],
-    "molajo\\plugins\\xxxxplugin\\version\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Version\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\version\\versionplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Version\/VersionPlugin.php"
-    ],
-    "molajo\\plugins\\xxxxplugin\\weather": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Weather"
-    ],
-    "molajo\\plugins\\xxxxplugin\\weather\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Weather\/Configuration.xml"
-    ],
-    "molajo\\plugins\\xxxxplugin\\weather\\weatherplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/XXXXPlugin\/Weather\/WeatherPlugin.php"
+    "molajo\\query\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Driver.php"
     ],
     "molajo\\render": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/"
     ],
     "molajo\\render\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter"
     ],
-    "molajo\\render\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Handler"
+    "molajo\\render\\adapter\\abstracthandler": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter\/AbstractHandler.php"
     ],
-    "molajo\\render\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Handler\/AbstractHandler.php"
+    "molajo\\render\\adapter\\molajito": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter\/Molajito.php"
     ],
-    "molajo\\render\\handler\\molajito": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Handler\/Molajito.php"
+    "molajo\\render\\adapter\\mustache": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter\/Mustache.php"
     ],
-    "molajo\\render\\handler\\mustache": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Handler\/Mustache.php"
+    "molajo\\render\\adapter\\twig": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter\/Twig.php"
     ],
-    "molajo\\render\\handler\\twig": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Handler\/Twig.php"
+    "molajo\\render\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Driver.php"
     ],
     "molajo\\resource": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/"
     ],
     "molajo\\resource\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Adapter",
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter",
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Adapter"
+    ],
+    "molajo\\resource\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/AbstractAdapter.php"
+    ],
+    "molajo\\resource\\adapter\\asset": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/Asset.php"
+    ],
+    "molajo\\resource\\adapter\\classloader": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/ClassLoader.php"
+    ],
+    "molajo\\resource\\adapter\\css": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/Css.php"
+    ],
+    "molajo\\resource\\adapter\\cssdeclarations": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/Cssdeclarations.php"
+    ],
+    "molajo\\resource\\adapter\\file": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/File.php"
+    ],
+    "molajo\\resource\\adapter\\folder": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/Folder.php"
+    ],
+    "molajo\\resource\\adapter\\head": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/Head.php"
+    ],
+    "molajo\\resource\\adapter\\js": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/Js.php"
+    ],
+    "molajo\\resource\\adapter\\jsdeclarations": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/Jsdeclarations.php"
+    ],
+    "molajo\\resource\\adapter\\menuitem": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Adapter\/Menuitem.php"
+    ],
+    "molajo\\resource\\adapter\\page": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Adapter\/Page.php"
+    ],
+    "molajo\\resource\\adapter\\query": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Adapter\/Query.php"
+    ],
+    "molajo\\resource\\adapter\\template": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Adapter\/Template.php"
+    ],
+    "molajo\\resource\\adapter\\theme": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Adapter\/Theme.php"
+    ],
+    "molajo\\resource\\adapter\\wrap": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Adapter\/Wrap.php"
+    ],
+    "molajo\\resource\\adapter\\xml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Adapter\/Xml.php"
     ],
     "molajo\\resource\\api": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Api"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Api"
     ],
     "molajo\\resource\\api\\configurationdatainterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Api\/ConfigurationDataInterface.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Api\/ConfigurationDataInterface.php"
     ],
     "molajo\\resource\\api\\configurationinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Api\/ConfigurationInterface.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Api\/ConfigurationInterface.php"
     ],
     "molajo\\resource\\api\\factoryinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Api\/FactoryInterface.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Api\/FactoryInterface.php"
     ],
     "molajo\\resource\\api\\registryinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Api\/RegistryInterface.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Api\/RegistryInterface.php"
     ],
     "molajo\\resource\\classmap": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/ClassMap.php"
     ],
     "molajo\\resource\\configuration": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Configuration"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Configuration"
     ],
-    "molajo\\resource\\configuration\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Configuration\/AbstractHandler.php"
+    "molajo\\resource\\configuration\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Configuration\/AbstractAdapter.php"
     ],
     "molajo\\resource\\configuration\\data": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Configuration\/Data.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Configuration\/Data.php"
     ],
-    "molajo\\resource\\configuration\\dataobjecthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Configuration\/DataobjectHandler.php"
+    "molajo\\resource\\configuration\\dataobject": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Configuration\/Dataobject.php"
     ],
-    "molajo\\resource\\configuration\\modelhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Configuration\/ModelHandler.php"
+    "molajo\\resource\\configuration\\model": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Configuration\/Model.php"
     ],
     "molajo\\resource\\configuration\\registry": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Configuration\/Registry.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Configuration\/Registry.php"
+    ],
+    "molajo\\resource\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Driver.php"
     ],
     "molajo\\resource\\extensionmap": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/ExtensionMap.php"
     ],
     "molajo\\resource\\factory": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Factory"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Factory"
     ],
     "molajo\\resource\\factory\\readcontrollerfactory": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Factory\/ReadControllerFactory.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Factory\/ReadControllerFactory.php"
     ],
     "molajo\\resource\\factory\\readmodelfactory": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Factory\/ReadModelFactory.php"
-    ],
-    "molajo\\resource\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Handler",
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler"
-    ],
-    "molajo\\resource\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/AbstractHandler.php"
-    ],
-    "molajo\\resource\\handler\\assethandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/AssetHandler.php"
-    ],
-    "molajo\\resource\\handler\\classhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/ClassHandler.php"
-    ],
-    "molajo\\resource\\handler\\cssdeclarationshandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/CssdeclarationsHandler.php"
-    ],
-    "molajo\\resource\\handler\\csshandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/CssHandler.php"
-    ],
-    "molajo\\resource\\handler\\filehandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/FileHandler.php"
-    ],
-    "molajo\\resource\\handler\\folderhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/FolderHandler.php"
-    ],
-    "molajo\\resource\\handler\\headhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/HeadHandler.php"
-    ],
-    "molajo\\resource\\handler\\jsdeclarationshandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/JsdeclarationsHandler.php"
-    ],
-    "molajo\\resource\\handler\\jshandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Handler\/JsHandler.php"
-    ],
-    "molajo\\resource\\handler\\menuitemhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Handler\/MenuitemHandler.php"
-    ],
-    "molajo\\resource\\handler\\pagehandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Handler\/PageHandler.php"
-    ],
-    "molajo\\resource\\handler\\queryhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Handler\/QueryHandler.php"
-    ],
-    "molajo\\resource\\handler\\templatehandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Handler\/TemplateHandler.php"
-    ],
-    "molajo\\resource\\handler\\themehandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Handler\/ThemeHandler.php"
-    ],
-    "molajo\\resource\\handler\\wraphandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Handler\/WrapHandler.php"
-    ],
-    "molajo\\resource\\handler\\xmlhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Handler\/XmlHandler.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Factory\/ReadModelFactory.php"
     ],
     "molajo\\resource\\resourcemap": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/ResourceMap.php"
@@ -5082,16 +4681,16 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/"
     ],
     "molajo\\route\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter"
     ],
-    "molajo\\route\\handler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Handler"
+    "molajo\\route\\adapter\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/AbstractAdapter.php"
     ],
-    "molajo\\route\\handler\\abstracthandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Handler\/AbstractHandler.php"
+    "molajo\\route\\adapter\\database": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/Database.php"
     ],
-    "molajo\\route\\handler\\database": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Handler\/Database.php"
+    "molajo\\route\\driver": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Driver.php"
     ],
     "molajo\\sites": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Sites\/2\/",
@@ -5295,11 +4894,23 @@
     "molajo\\user\\authentication": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication.php"
     ],
+    "molajo\\user\\cookie": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Cookie.php"
+    ],
+    "molajo\\user\\facade": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Facade.php"
+    ],
+    "molajo\\user\\flashmessage": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/FlashMessage.php"
+    ],
+    "molajo\\user\\messages": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Messages.php"
+    ],
     "molajo\\user\\registration": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Registration.php"
     ],
-    "molajo\\user\\user": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/User.php"
+    "molajo\\user\\session": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Session.php"
     ],
     "molajo\\user\\userdata": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/UserData.php"
@@ -5307,26 +4918,14 @@
     "molajo\\user\\utilities": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities"
     ],
-    "molajo\\user\\utilities\\cookie": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities\/Cookie.php"
-    ],
     "molajo\\user\\utilities\\encrypt": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities\/Encrypt.php"
     ],
     "molajo\\user\\utilities\\fieldhandler": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities\/Fieldhandler.php"
     ],
-    "molajo\\user\\utilities\\flashmessage": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities\/FlashMessage.php"
-    ],
     "molajo\\user\\utilities\\mailer": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities\/Mailer.php"
-    ],
-    "molajo\\user\\utilities\\messages": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities\/Messages.php"
-    ],
-    "molajo\\user\\utilities\\session": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities\/Session.php"
     ],
     "molajo\\user\\utilities\\texttemplate": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Utilities\/TextTemplate.php"
@@ -5385,8 +4984,8 @@
     "molajo\\views\\pages\\article\\index.phtml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Pages\/Article\/Index.phtml"
     ],
-    "molajo\\views\\pages\\article\\xxxindex.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Pages\/Article\/XXXIndex.phtml"
+    "molajo\\views\\pages\\article\\xxindex.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Pages\/Article\/xxIndex.phtml"
     ],
     "molajo\\views\\pages\\composite": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Pages\/Composite"

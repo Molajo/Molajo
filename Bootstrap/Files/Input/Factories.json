@@ -10,6 +10,7 @@
     "vendor/molajo/Http/Factories/",
     "vendor/molajo/language/Factories/",
     "vendor/molajo/molajito/Factories/",
+    "vendor/molajo/query/Factories/",
     "vendor/molajo/render/Factories/",
     "vendor/molajo/resource/Factories/",
     "vendor/molajo/route/Factories/",

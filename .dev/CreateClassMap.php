@@ -7,7 +7,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 
-function CreateClassMap($base, $qcn_prefix, array $exclude_array = array())
+function createClassMap($base, $qcn_prefix, array $exclude_array = array())
 {
     $function_class_map = array();
 
