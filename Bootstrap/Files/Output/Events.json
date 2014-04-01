@@ -10,6 +10,8 @@
         "Molajo\\Plugins\\Dateformats\\DateformatsPlugin",
         "Molajo\\Plugins\\Email\\EmailPlugin",
         "Molajo\\Plugins\\Fullname\\FullnamePlugin",
+        "Molajo\\Plugins\\Linebreaks\\LinebreaksPlugin",
+        "Molajo\\Plugins\\Links\\LinksPlugin",
         "Molajo\\Plugins\\Readmore\\ReadmorePlugin",
         "Molajo\\Plugins\\Smilies\\SmiliesPlugin",
         "Molajo\\Plugins\\Snippet\\SnippetPlugin",
@@ -21,19 +23,21 @@
     ],
     "onBeforeCreate": [
         "Molajo\\Plugins\\Dateformats\\DateformatsPlugin",
+        "Molajo\\Plugins\\Alias\\AliasPlugin",
         "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
     ],
     "onBeforeParseHead": [
         "Molajo\\Plugins\\Messages\\MessagesPlugin"
+    ],
+    "onBeforeUpdate": [
+        "Molajo\\Plugins\\Alias\\AliasPlugin",
+        "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
     ],
     "onBeforeExecute": [
         "Molajo\\Plugins\\Application\\ApplicationPlugin",
         "Molajo\\Plugins\\Menuitems\\MenuitemsPlugin"
     ],
     "onBeforeResponse": [
-        "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
-    ],
-    "onBeforeUpdate": [
         "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
     ],
     "onAfterInitialise": [
@@ -49,6 +53,18 @@
         "Molajo\\Plugins\\Pagetypeitem\\PagetypeitemPlugin",
         "Molajo\\Plugins\\Pagetypelist\\PagetypelistPlugin",
         "Molajo\\Plugins\\Pagetypenew\\PagetypenewPlugin"
+    ],
+    "onBeforeAuthenticate": [
+        "Molajo\\Plugins\\Login\\LoginPlugin"
+    ],
+    "onAfterAuthenticate": [
+        "Molajo\\Plugins\\Login\\LoginPlugin"
+    ],
+    "onBeforeLogout": [
+        "Molajo\\Plugins\\Logout\\LogoutPlugin"
+    ],
+    "onAfterLogout": [
+        "Molajo\\Plugins\\Logout\\LogoutPlugin"
     ],
     "onAfterReadall": [
         "Molajo\\Plugins\\Pagination\\PaginationPlugin"

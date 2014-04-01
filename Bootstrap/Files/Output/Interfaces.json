@@ -115,6 +115,19 @@
 
         ]
     },
+    "CommonApi\\Controller\\DatalistInterface": {
+        "name": "DatalistInterface",
+        "namespace": "CommonApi\\Controller",
+        "fqns": "CommonApi\\Controller\\DatalistInterface",
+        "path": "vendor\/commonapi\/controller\/DatalistInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Controller\\Datalist"
+        ],
+        "dependency_for": [
+
+        ]
+    },
     "CommonApi\\Controller\\DateInterface": {
         "name": "DateInterface",
         "namespace": "CommonApi\\Controller",
@@ -201,6 +214,19 @@
         "parent": false,
         "implemented_by": [
             "Molajo\\Controller\\NumberToText"
+        ],
+        "dependency_for": [
+
+        ]
+    },
+    "CommonApi\\Controller\\RandomStringInterface": {
+        "name": "RandomStringInterface",
+        "namespace": "CommonApi\\Controller",
+        "fqns": "CommonApi\\Controller\\RandomStringInterface",
+        "path": "vendor\/commonapi\/controller\/RandomStringInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Controller\\RandomString"
         ],
         "dependency_for": [
 
@@ -347,7 +373,7 @@
         ],
         "dependency_for": [
             "Molajo\\Email\\Driver",
-            "Molajo\\User\\Utilities\\Mailer"
+            "Molajo\\User\\Mailer"
         ]
     },
     "CommonApi\\Event\\AuthenticateInterface": {
@@ -357,7 +383,9 @@
         "path": "vendor\/commonapi\/event\/AuthenticateInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Plugins\\AuthenticateEventPlugin"
+            "Molajo\\Plugins\\AuthenticateEventPlugin",
+            "Molajo\\Plugins\\Login\\LoginPlugin",
+            "Molajo\\Plugins\\Logout\\LogoutPlugin"
         ],
         "dependency_for": [
 
@@ -383,6 +411,7 @@
         "path": "vendor\/commonapi\/event\/CreateInterface.php",
         "parent": false,
         "implemented_by": [
+            "Molajo\\Plugins\\Alias\\AliasPlugin",
             "Molajo\\Plugins\\CreateEventPlugin",
             "Molajo\\Plugins\\Dateformats\\DateformatsPlugin"
         ],
@@ -479,6 +508,8 @@
             "Molajo\\Plugins\\Customfields\\CustomfieldsPlugin",
             "Molajo\\Plugins\\Email\\EmailPlugin",
             "Molajo\\Plugins\\Fullname\\FullnamePlugin",
+            "Molajo\\Plugins\\Linebreaks\\LinebreaksPlugin",
+            "Molajo\\Plugins\\Links\\LinksPlugin",
             "Molajo\\Plugins\\Pagination\\PaginationPlugin",
             "Molajo\\Plugins\\Queryauthorisation\\QueryauthorisationPlugin",
             "Molajo\\Plugins\\ReadEventPlugin",
@@ -516,6 +547,7 @@
         "path": "vendor\/commonapi\/event\/UpdateInterface.php",
         "parent": false,
         "implemented_by": [
+            "Molajo\\Plugins\\Alias\\AliasPlugin",
             "Molajo\\Plugins\\CreateEventPlugin",
             "Molajo\\Plugins\\Dateformats\\DateformatsPlugin",
             "Molajo\\Plugins\\UpdateEventPlugin"
@@ -866,6 +898,60 @@
 
         ]
     },
+    "CommonApi\\Model\\FieldhandlerAdapterInterface": {
+        "name": "FieldhandlerAdapterInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\FieldhandlerAdapterInterface",
+        "path": "vendor\/commonapi\/model\/FieldhandlerAdapterInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+            "Molajo\\Fieldhandler\\Adapter\\Accepted",
+            "Molajo\\Fieldhandler\\Adapter\\Alias",
+            "Molajo\\Fieldhandler\\Adapter\\Alpha",
+            "Molajo\\Fieldhandler\\Adapter\\Alphanumeric",
+            "Molajo\\Fieldhandler\\Adapter\\Arrays",
+            "Molajo\\Fieldhandler\\Adapter\\Boolean",
+            "Molajo\\Fieldhandler\\Adapter\\Callback",
+            "Molajo\\Fieldhandler\\Adapter\\Contains",
+            "Molajo\\Fieldhandler\\Adapter\\Date",
+            "Molajo\\Fieldhandler\\Adapter\\Datetime",
+            "Molajo\\Fieldhandler\\Adapter\\Defaults",
+            "Molajo\\Fieldhandler\\Adapter\\Digit",
+            "Molajo\\Fieldhandler\\Adapter\\Email",
+            "Molajo\\Fieldhandler\\Adapter\\Encoded",
+            "Molajo\\Fieldhandler\\Adapter\\Equal",
+            "Molajo\\Fieldhandler\\Adapter\\Float",
+            "Molajo\\Fieldhandler\\Adapter\\Foreignkey",
+            "Molajo\\Fieldhandler\\Adapter\\Fromto",
+            "Molajo\\Fieldhandler\\Adapter\\Fullspecialchars",
+            "Molajo\\Fieldhandler\\Adapter\\Html",
+            "Molajo\\Fieldhandler\\Adapter\\Image",
+            "Molajo\\Fieldhandler\\Adapter\\Integer",
+            "Molajo\\Fieldhandler\\Adapter\\Ip",
+            "Molajo\\Fieldhandler\\Adapter\\Lower",
+            "Molajo\\Fieldhandler\\Adapter\\Maximum",
+            "Molajo\\Fieldhandler\\Adapter\\Mimetypes",
+            "Molajo\\Fieldhandler\\Adapter\\Minimum",
+            "Molajo\\Fieldhandler\\Adapter\\Notequal",
+            "Molajo\\Fieldhandler\\Adapter\\Numeric",
+            "Molajo\\Fieldhandler\\Adapter\\Object",
+            "Molajo\\Fieldhandler\\Adapter\\Raw",
+            "Molajo\\Fieldhandler\\Adapter\\Regex",
+            "Molajo\\Fieldhandler\\Adapter\\Required",
+            "Molajo\\Fieldhandler\\Adapter\\String",
+            "Molajo\\Fieldhandler\\Adapter\\Stringlength",
+            "Molajo\\Fieldhandler\\Adapter\\Tel",
+            "Molajo\\Fieldhandler\\Adapter\\Time",
+            "Molajo\\Fieldhandler\\Adapter\\Trim",
+            "Molajo\\Fieldhandler\\Adapter\\Upper",
+            "Molajo\\Fieldhandler\\Adapter\\Url",
+            "Molajo\\Fieldhandler\\Adapter\\Values"
+        ],
+        "dependency_for": [
+
+        ]
+    },
     "CommonApi\\Model\\FieldhandlerInterface": {
         "name": "FieldhandlerInterface",
         "namespace": "CommonApi\\Model",
@@ -874,7 +960,7 @@
         "parent": false,
         "implemented_by": [
             "Molajo\\Fieldhandler\\Driver",
-            "Molajo\\User\\Utilities\\Fieldhandler"
+            "Molajo\\User\\Fieldhandler"
         ],
         "dependency_for": [
             "Molajo\\Controller\\Application",
@@ -884,8 +970,8 @@
             "Molajo\\Query\\Adapter\\Sqllite",
             "Molajo\\Query\\Adapter\\Sqlserver",
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\Utilities\\Fieldhandler",
-            "Molajo\\User\\Utilities\\TextTemplate"
+            "Molajo\\User\\Fieldhandler",
+            "Molajo\\User\\TextTemplate"
         ]
     },
     "CommonApi\\Model\\ModelInterface": {
@@ -1260,7 +1346,7 @@
         "path": "vendor\/commonapi\/user\/EncryptInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Utilities\\Encrypt"
+            "Molajo\\User\\Encrypt"
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication"
@@ -1287,7 +1373,7 @@
         "path": "vendor\/commonapi\/user\/MailerInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Utilities\\Mailer"
+            "Molajo\\User\\Mailer"
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication"
@@ -1305,9 +1391,9 @@
         "dependency_for": [
             "Molajo\\User\\Activity",
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\Utilities\\Encrypt",
-            "Molajo\\User\\Utilities\\Fieldhandler",
-            "Molajo\\User\\Utilities\\TextTemplate"
+            "Molajo\\User\\Encrypt",
+            "Molajo\\User\\Fieldhandler",
+            "Molajo\\User\\TextTemplate"
         ]
     },
     "CommonApi\\User\\RegistrationInterface": {
@@ -1345,10 +1431,10 @@
         "path": "vendor\/commonapi\/user\/TemplateInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Utilities\\TextTemplate"
+            "Molajo\\User\\TextTemplate"
         ],
         "dependency_for": [
-            "Molajo\\User\\Utilities\\Mailer"
+            "Molajo\\User\\Mailer"
         ]
     },
     "CommonApi\\User\\UserDataInterface": {

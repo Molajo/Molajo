@@ -160,7 +160,7 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
         $comments->setModelRegistry('process_events', 0);
         $comments->setModelRegistry('query_object', 'result');
 
-        $comments->select('count(*)');
+        $comments->select('count(*)', null, null, 'special');
 
         $comments->where(
             'column',
@@ -246,7 +246,7 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
             0
         );
 
-        $comments->order($comments->getModelRegistry('primary_prefix', 'a') . '.' . 'lft', 'ASC');
+        $comments->orderBy($comments->getModelRegistry('primary_prefix', 'a') . '.' . 'lft', 'ASC');
 
         try {
             $this->plugin_data->comments_list->data           = $comments->getData();
