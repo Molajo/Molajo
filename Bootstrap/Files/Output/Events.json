@@ -75,6 +75,9 @@
     "onAfterRoute": [
         "Molajo\\Plugins\\Resource\\ResourcePlugin"
     ],
+    "onAfterRender": [
+        "Molajo\\Plugins\\Translate\\TranslatePlugin"
+    ],
     "onBeforeParse": [
         "Molajo\\Plugins\\Foundation\\FoundationPlugin"
     ]

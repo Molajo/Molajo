@@ -527,23 +527,23 @@
         "path": "vendor\/commonapi\/query\/QueryInterface.php",
         "fqns": "CommonApi\\Query\\QueryInterface"
     },
-    "vendor\/commonapi\/render\/DataResourceInterface.php": {
-        "file_name": "DataResourceInterface.php",
-        "base_name": "DataResourceInterface",
-        "path": "vendor\/commonapi\/render\/DataResourceInterface.php",
-        "fqns": "CommonApi\\Render\\DataResourceInterface"
+    "vendor\/commonapi\/render\/DataInterface.php": {
+        "file_name": "DataInterface.php",
+        "base_name": "DataInterface",
+        "path": "vendor\/commonapi\/render\/DataInterface.php",
+        "fqns": "CommonApi\\Render\\DataInterface"
     },
-    "vendor\/commonapi\/render\/EventHandlerInterface.php": {
-        "file_name": "EventHandlerInterface.php",
-        "base_name": "EventHandlerInterface",
-        "path": "vendor\/commonapi\/render\/EventHandlerInterface.php",
-        "fqns": "CommonApi\\Render\\EventHandlerInterface"
+    "vendor\/commonapi\/render\/EscapeInterface.php": {
+        "file_name": "EscapeInterface.php",
+        "base_name": "EscapeInterface",
+        "path": "vendor\/commonapi\/render\/EscapeInterface.php",
+        "fqns": "CommonApi\\Render\\EscapeInterface"
     },
-    "vendor\/commonapi\/render\/ExtensionResourceInterface.php": {
-        "file_name": "ExtensionResourceInterface.php",
-        "base_name": "ExtensionResourceInterface",
-        "path": "vendor\/commonapi\/render\/ExtensionResourceInterface.php",
-        "fqns": "CommonApi\\Render\\ExtensionResourceInterface"
+    "vendor\/commonapi\/render\/EventInterface.php": {
+        "file_name": "EventInterface.php",
+        "base_name": "EventInterface",
+        "path": "vendor\/commonapi\/render\/EventInterface.php",
+        "fqns": "CommonApi\\Render\\EventInterface"
     },
     "vendor\/commonapi\/render\/PaginationInterface.php": {
         "file_name": "PaginationInterface.php",
@@ -557,11 +557,23 @@
         "path": "vendor\/commonapi\/render\/ParseInterface.php",
         "fqns": "CommonApi\\Render\\ParseInterface"
     },
+    "vendor\/commonapi\/render\/PositionInterface.php": {
+        "file_name": "PositionInterface.php",
+        "base_name": "PositionInterface",
+        "path": "vendor\/commonapi\/render\/PositionInterface.php",
+        "fqns": "CommonApi\\Render\\PositionInterface"
+    },
     "vendor\/commonapi\/render\/RenderInterface.php": {
         "file_name": "RenderInterface.php",
         "base_name": "RenderInterface",
         "path": "vendor\/commonapi\/render\/RenderInterface.php",
         "fqns": "CommonApi\\Render\\RenderInterface"
+    },
+    "vendor\/commonapi\/render\/ViewInterface.php": {
+        "file_name": "ViewInterface.php",
+        "base_name": "ViewInterface",
+        "path": "vendor\/commonapi\/render\/ViewInterface.php",
+        "fqns": "CommonApi\\Render\\ViewInterface"
     },
     "vendor\/commonapi\/resource\/AdapterInterface.php": {
         "file_name": "AdapterInterface.php",
@@ -1036,6 +1048,12 @@
         "base_name": "StatusPlugin",
         "path": "vendor\/molajo\/application\/Source\/Plugins\/Status\/StatusPlugin.php",
         "fqns": "Molajo\\Plugins\\Status\\StatusPlugin"
+    },
+    "vendor\/molajo\/application\/Source\/Plugins\/Translate\/TranslatePlugin.php": {
+        "file_name": "TranslatePlugin.php",
+        "base_name": "TranslatePlugin",
+        "path": "vendor\/molajo\/application\/Source\/Plugins\/Translate\/TranslatePlugin.php",
+        "fqns": "Molajo\\Plugins\\Translate\\TranslatePlugin"
     },
     "vendor\/molajo\/application\/Source\/Resource\/Adapter\/Menuitem.php": {
         "file_name": "Menuitem.php",
@@ -1721,35 +1739,59 @@
         "path": "vendor\/molajo\/molajito\/Factories\/Molajito\/MolajitoFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Molajito\\MolajitoFactoryMethod"
     },
-    "vendor\/molajo\/molajito\/Source\/DataResource.php": {
-        "file_name": "DataResource.php",
-        "base_name": "DataResource",
-        "path": "vendor\/molajo\/molajito\/Source\/DataResource.php",
-        "fqns": "Molajito\\DataResource"
+    "vendor\/molajo\/molajito\/Source\/Data.php": {
+        "file_name": "Data.php",
+        "base_name": "Data",
+        "path": "vendor\/molajo\/molajito\/Source\/Data.php",
+        "fqns": "Molajito\\Data"
     },
-    "vendor\/molajo\/molajito\/Source\/Driver.php": {
-        "file_name": "Driver.php",
-        "base_name": "Driver",
-        "path": "vendor\/molajo\/molajito\/Source\/Driver.php",
-        "fqns": "Molajito\\Driver"
+    "vendor\/molajo\/molajito\/Source\/Data\/AbstractAdapter.php": {
+        "file_name": "AbstractAdapter.php",
+        "base_name": "AbstractAdapter",
+        "path": "vendor\/molajo\/molajito\/Source\/Data\/AbstractAdapter.php",
+        "fqns": "Molajito\\Data\\AbstractAdapter"
     },
-    "vendor\/molajo\/molajito\/Source\/EventHandler.php": {
-        "file_name": "EventHandler.php",
-        "base_name": "EventHandler",
-        "path": "vendor\/molajo\/molajito\/Source\/EventHandler.php",
-        "fqns": "Molajito\\EventHandler"
+    "vendor\/molajo\/molajito\/Source\/Data\/Molajo.php": {
+        "file_name": "Molajo.php",
+        "base_name": "Molajo",
+        "path": "vendor\/molajo\/molajito\/Source\/Data\/Molajo.php",
+        "fqns": "Molajito\\Data\\Molajo"
     },
-    "vendor\/molajo\/molajito\/Source\/ExtensionResource.php": {
-        "file_name": "ExtensionResource.php",
-        "base_name": "ExtensionResource",
-        "path": "vendor\/molajo\/molajito\/Source\/ExtensionResource.php",
-        "fqns": "Molajito\\ExtensionResource"
+    "vendor\/molajo\/molajito\/Source\/Engine.php": {
+        "file_name": "Engine.php",
+        "base_name": "Engine",
+        "path": "vendor\/molajo\/molajito\/Source\/Engine.php",
+        "fqns": "Molajito\\Engine"
     },
-    "vendor\/molajo\/molajito\/Source\/PageViewRenderer.php": {
-        "file_name": "PageViewRenderer.php",
-        "base_name": "PageViewRenderer",
-        "path": "vendor\/molajo\/molajito\/Source\/PageViewRenderer.php",
-        "fqns": "Molajito\\PageViewRenderer"
+    "vendor\/molajo\/molajito\/Source\/Escape.php": {
+        "file_name": "Escape.php",
+        "base_name": "Escape",
+        "path": "vendor\/molajo\/molajito\/Source\/Escape.php",
+        "fqns": "Molajito\\Escape"
+    },
+    "vendor\/molajo\/molajito\/Source\/Event.php": {
+        "file_name": "Event.php",
+        "base_name": "Event",
+        "path": "vendor\/molajo\/molajito\/Source\/Event.php",
+        "fqns": "Molajito\\Event"
+    },
+    "vendor\/molajo\/molajito\/Source\/Event\/AbstractAdapter.php": {
+        "file_name": "AbstractAdapter.php",
+        "base_name": "AbstractAdapter",
+        "path": "vendor\/molajo\/molajito\/Source\/Event\/AbstractAdapter.php",
+        "fqns": "Molajito\\Event\\AbstractAdapter"
+    },
+    "vendor\/molajo\/molajito\/Source\/Event\/Molajo.php": {
+        "file_name": "Molajo.php",
+        "base_name": "Molajo",
+        "path": "vendor\/molajo\/molajito\/Source\/Event\/Molajo.php",
+        "fqns": "Molajito\\Event\\Molajo"
+    },
+    "vendor\/molajo\/molajito\/Source\/PageView.php": {
+        "file_name": "PageView.php",
+        "base_name": "PageView",
+        "path": "vendor\/molajo\/molajito\/Source\/PageView.php",
+        "fqns": "Molajito\\PageView"
     },
     "vendor\/molajo\/molajito\/Source\/Parse.php": {
         "file_name": "Parse.php",
@@ -1757,11 +1799,11 @@
         "path": "vendor\/molajo\/molajito\/Source\/Parse.php",
         "fqns": "Molajito\\Parse"
     },
-    "vendor\/molajo\/molajito\/Source\/PositionRenderer.php": {
-        "file_name": "PositionRenderer.php",
-        "base_name": "PositionRenderer",
-        "path": "vendor\/molajo\/molajito\/Source\/PositionRenderer.php",
-        "fqns": "Molajito\\PositionRenderer"
+    "vendor\/molajo\/molajito\/Source\/Position.php": {
+        "file_name": "Position.php",
+        "base_name": "Position",
+        "path": "vendor\/molajo\/molajito\/Source\/Position.php",
+        "fqns": "Molajito\\Position"
     },
     "vendor\/molajo\/molajito\/Source\/Render.php": {
         "file_name": "Render.php",
@@ -1769,23 +1811,41 @@
         "path": "vendor\/molajo\/molajito\/Source\/Render.php",
         "fqns": "Molajito\\Render"
     },
-    "vendor\/molajo\/molajito\/Source\/TemplateViewRenderer.php": {
-        "file_name": "TemplateViewRenderer.php",
-        "base_name": "TemplateViewRenderer",
-        "path": "vendor\/molajo\/molajito\/Source\/TemplateViewRenderer.php",
-        "fqns": "Molajito\\TemplateViewRenderer"
+    "vendor\/molajo\/molajito\/Source\/TemplateView.php": {
+        "file_name": "TemplateView.php",
+        "base_name": "TemplateView",
+        "path": "vendor\/molajo\/molajito\/Source\/TemplateView.php",
+        "fqns": "Molajito\\TemplateView"
     },
-    "vendor\/molajo\/molajito\/Source\/ThemeRenderer.php": {
-        "file_name": "ThemeRenderer.php",
-        "base_name": "ThemeRenderer",
-        "path": "vendor\/molajo\/molajito\/Source\/ThemeRenderer.php",
-        "fqns": "Molajito\\ThemeRenderer"
+    "vendor\/molajo\/molajito\/Source\/Theme.php": {
+        "file_name": "Theme.php",
+        "base_name": "Theme",
+        "path": "vendor\/molajo\/molajito\/Source\/Theme.php",
+        "fqns": "Molajito\\Theme"
     },
-    "vendor\/molajo\/molajito\/Source\/WrapViewRenderer.php": {
-        "file_name": "WrapViewRenderer.php",
-        "base_name": "WrapViewRenderer",
-        "path": "vendor\/molajo\/molajito\/Source\/WrapViewRenderer.php",
-        "fqns": "Molajito\\WrapViewRenderer"
+    "vendor\/molajo\/molajito\/Source\/View.php": {
+        "file_name": "View.php",
+        "base_name": "View",
+        "path": "vendor\/molajo\/molajito\/Source\/View.php",
+        "fqns": "Molajito\\View"
+    },
+    "vendor\/molajo\/molajito\/Source\/View\/AbstractAdapter.php": {
+        "file_name": "AbstractAdapter.php",
+        "base_name": "AbstractAdapter",
+        "path": "vendor\/molajo\/molajito\/Source\/View\/AbstractAdapter.php",
+        "fqns": "Molajito\\View\\AbstractAdapter"
+    },
+    "vendor\/molajo\/molajito\/Source\/View\/Molajo.php": {
+        "file_name": "Molajo.php",
+        "base_name": "Molajo",
+        "path": "vendor\/molajo\/molajito\/Source\/View\/Molajo.php",
+        "fqns": "Molajito\\View\\Molajo"
+    },
+    "vendor\/molajo\/molajito\/Source\/WrapView.php": {
+        "file_name": "WrapView.php",
+        "base_name": "WrapView",
+        "path": "vendor\/molajo\/molajito\/Source\/WrapView.php",
+        "fqns": "Molajito\\WrapView"
     },
     "vendor\/molajo\/pagination\/Source\/Pagination.php": {
         "file_name": "Pagination.php",
@@ -2009,35 +2069,35 @@
         "path": "vendor\/molajo\/render\/Factories\/Render\/RenderFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Render\\RenderFactoryMethod"
     },
-    "vendor\/molajo\/render\/Source\/Adapter\/AbstractHandler.php": {
-        "file_name": "AbstractHandler.php",
-        "base_name": "AbstractHandler",
-        "path": "vendor\/molajo\/render\/Source\/Adapter\/AbstractHandler.php",
-        "fqns": "Molajo\\Render\\Adapter\\AbstractHandler"
-    },
-    "vendor\/molajo\/render\/Source\/Adapter\/Molajito.php": {
-        "file_name": "Molajito.php",
-        "base_name": "Molajito",
-        "path": "vendor\/molajo\/render\/Source\/Adapter\/Molajito.php",
-        "fqns": "Molajo\\Render\\Adapter\\Molajito"
-    },
-    "vendor\/molajo\/render\/Source\/Adapter\/Mustache.php": {
-        "file_name": "Mustache.php",
-        "base_name": "Mustache",
-        "path": "vendor\/molajo\/render\/Source\/Adapter\/Mustache.php",
-        "fqns": "Molajo\\Render\\Adapter\\Mustache"
-    },
-    "vendor\/molajo\/render\/Source\/Adapter\/Twig.php": {
-        "file_name": "Twig.php",
-        "base_name": "Twig",
-        "path": "vendor\/molajo\/render\/Source\/Adapter\/Twig.php",
-        "fqns": "Molajo\\Render\\Adapter\\Twig"
-    },
     "vendor\/molajo\/render\/Source\/Driver.php": {
         "file_name": "Driver.php",
         "base_name": "Driver",
         "path": "vendor\/molajo\/render\/Source\/Driver.php",
         "fqns": "Molajo\\Render\\Driver"
+    },
+    "vendor\/molajo\/render\/Source\/Engine\/AbstractHandler.php": {
+        "file_name": "AbstractHandler.php",
+        "base_name": "AbstractHandler",
+        "path": "vendor\/molajo\/render\/Source\/Engine\/AbstractHandler.php",
+        "fqns": "Molajo\\Render\\Engine\\AbstractHandler"
+    },
+    "vendor\/molajo\/render\/Source\/Engine\/Molajito.php": {
+        "file_name": "Molajito.php",
+        "base_name": "Molajito",
+        "path": "vendor\/molajo\/render\/Source\/Engine\/Molajito.php",
+        "fqns": "Molajo\\Render\\Engine\\Molajito"
+    },
+    "vendor\/molajo\/render\/Source\/Engine\/Mustache.php": {
+        "file_name": "Mustache.php",
+        "base_name": "Mustache",
+        "path": "vendor\/molajo\/render\/Source\/Engine\/Mustache.php",
+        "fqns": "Molajo\\Render\\Engine\\Mustache"
+    },
+    "vendor\/molajo\/render\/Source\/Engine\/Twig.php": {
+        "file_name": "Twig.php",
+        "base_name": "Twig",
+        "path": "vendor\/molajo\/render\/Source\/Engine\/Twig.php",
+        "fqns": "Molajo\\Render\\Engine\\Twig"
     },
     "vendor\/molajo\/resource\/Factories\/Resource\/ResourceFactoryMethod.php": {
         "file_name": "ResourceFactoryMethod.php",

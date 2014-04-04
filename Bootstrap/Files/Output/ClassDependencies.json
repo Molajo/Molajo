@@ -4379,6 +4379,71 @@
             "saveForeignKeyValue"
         ]
     },
+    "Molajo\\Plugins\\Translate\\TranslatePlugin": {
+        "name": "TranslatePlugin",
+        "namespace": "Molajo\\Plugins\\Translate",
+        "fqns": "Molajo\\Plugins\\Translate\\TranslatePlugin",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/Translate\/TranslatePlugin.php",
+        "path": "vendor\/molajo\/application\/Source\/Plugins\/Translate\/TranslatePlugin.php",
+        "parent": "Molajo\\Plugins\\DisplayEventPlugin",
+        "implemented_interfaces": [
+            "CommonApi\\Event\\DisplayInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "plugin_name",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "event_name",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "data",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string  $plugin_name\n     * @param  string  $event_name\n     * @param  array   $data\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "onAfterRender",
+            "parseTokens",
+            "translateToken",
+            "filterTranslation",
+            "replaceToken",
+            "onBeforeRender",
+            "onBeforeParse",
+            "onAfterParse",
+            "onBeforeRenderView",
+            "onBeforeRenderViewHead",
+            "onBeforeRenderViewItem",
+            "onBeforeRenderViewFooter",
+            "onAfterRenderView",
+            "__construct",
+            "get",
+            "getField",
+            "getFieldsByType",
+            "getFieldValue",
+            "setField",
+            "saveForeignKeyValue"
+        ]
+    },
     "Molajo\\Resource\\Adapter\\Menuitem": {
         "name": "Menuitem",
         "namespace": "Molajo\\Resource\\Adapter",
@@ -11398,52 +11463,44 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
+            "onAfterInstantiation",
             "getNamespace",
             "getOptions",
             "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
-            "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
             "scheduleFactories"
         ]
     },
-    "Molajito\\DataResource": {
-        "name": "DataResource",
+    "Molajito\\Data": {
+        "name": "Data",
         "namespace": "Molajito",
-        "fqns": "Molajito\\DataResource",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/DataResource.php",
-        "path": "vendor\/molajo\/molajito\/Source\/DataResource.php",
+        "fqns": "Molajito\\Data",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Data.php",
         "parent": false,
         "implemented_interfaces": [
-            "CommonApi\\Render\\DataResourceInterface"
+            "CommonApi\\Render\\DataInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "runtime_data",
+                "name": "data_adapter",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "plugin_data",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "token",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
+                "instance_of": "CommonApi\\Render\\DataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Data",
+                    "Molajito\\Data\\AbstractAdapter",
+                    "Molajito\\Data\\Molajo"
+                ],
+                "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource\n     * @param  object $runtime_data\n     * @param  object $plugin_data\n     * @param  string $token\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   DataInterface   $data_adapter\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11455,34 +11512,99 @@
             "getData"
         ]
     },
-    "Molajito\\Driver": {
-        "name": "Driver",
+    "Molajito\\Data\\AbstractAdapter": {
+        "name": "AbstractAdapter",
+        "namespace": "Molajito\\Data",
+        "fqns": "Molajito\\Data\\AbstractAdapter",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/AbstractAdapter.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Data\/AbstractAdapter.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Render\\DataInterface"
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "getData"
+        ]
+    },
+    "Molajito\\Data\\Molajo": {
+        "name": "Molajo",
+        "namespace": "Molajito\\Data",
+        "fqns": "Molajito\\Data\\Molajo",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/Molajo.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Data\/Molajo.php",
+        "parent": "Molajito\\Data\\AbstractAdapter",
+        "implemented_interfaces": [
+            "CommonApi\\Render\\DataInterface"
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "getData"
+        ]
+    },
+    "Molajito\\Engine": {
+        "name": "Engine",
         "namespace": "Molajito",
-        "fqns": "Molajito\\Driver",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Driver.php",
-        "path": "vendor\/molajo\/molajito\/Source\/Driver.php",
+        "fqns": "Molajito\\Engine",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Engine.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Engine.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\Render\\RenderInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "exclude_tokens",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "event_handler",
+                "name": "data_instance",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": "CommonApi\\Render\\EventHandlerInterface",
+                "instance_of": "CommonApi\\Render\\DataInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajito\\EventHandler"
+                    "Molajito\\Data",
+                    "Molajito\\Data\\AbstractAdapter",
+                    "Molajito\\Data\\Molajo"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "view_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\ViewInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\View",
+                    "Molajito\\View\\AbstractAdapter",
+                    "Molajito\\View\\Molajo"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "event_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\EventInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Event",
+                    "Molajito\\Event\\AbstractAdapter",
+                    "Molajito\\Event\\Molajo"
                 ],
                 "concrete": false
             },
@@ -11496,15 +11618,24 @@
                 "is_instantiable": false
             },
             {
-                "name": "extension_resource",
+                "name": "parse_instance",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": "CommonApi\\Render\\ExtensionResourceInterface",
+                "instance_of": "CommonApi\\Render\\ParseInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajito\\ExtensionResource"
+                    "Molajito\\Parse"
                 ],
                 "concrete": false
+            },
+            {
+                "name": "exclude_tokens",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
             },
             {
                 "name": "stop_loop_count",
@@ -11514,44 +11645,98 @@
                 "is_instantiable": false
             },
             {
-                "name": "theme_path",
+                "name": "position_instance",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "page_name",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "runtime_data",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "plugin_data",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "rendering_properties",
-                "default_available": true,
-                "default_value": [
-
+                "instance_of": "CommonApi\\Render\\PositionInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Position"
                 ],
-                "instance_of": null,
-                "is_instantiable": false
+                "concrete": false
+            },
+            {
+                "name": "theme_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "page_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "template_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "wrap_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array                      $exclude_tokens\n     * @param  EventHandlerInterface      $event_handler\n     * @param  array                      $event_option_keys\n     * @param  ExtensionResourceInterface $extension_resource\n     * @param  int                        $stop_loop_count\n     * @param  string                     $theme_path\n     * @param  string                     $page_name\n     * @param  object                     $runtime_data\n     * @param  object                     $plugin_data\n     * @param  array                      $rendering_properties\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param DataInterface     $data_instance\n     * @param ViewInterface     $view_instance\n     * @param EventInterface    $event_instance\n     * @param array             $event_option_keys\n     * @param ParseInterface    $parse_instance\n     * @param array             $exclude_tokens\n     * @param int               $stop_loop_count\n     * @param PositionInterface $position_instance\n     * @param RenderInterface   $theme_instance\n     * @param RenderInterface   $page_instance\n     * @param RenderInterface   $template_instance\n     * @param RenderInterface   $wrap_instance\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11564,15 +11749,90 @@
             "renderTheme"
         ]
     },
-    "Molajito\\EventHandler": {
-        "name": "EventHandler",
+    "Molajito\\Escape": {
+        "name": "Escape",
         "namespace": "Molajito",
-        "fqns": "Molajito\\EventHandler",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/EventHandler.php",
-        "path": "vendor\/molajo\/molajito\/Source\/EventHandler.php",
+        "fqns": "Molajito\\Escape",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Escape.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Escape.php",
         "parent": false,
         "implemented_interfaces": [
-            "CommonApi\\Render\\EventHandlerInterface"
+            "CommonApi\\Render\\EscapeInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Driver",
+                    "Molajo\\User\\Fieldhandler"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "escape",
+            "escapeDataElement"
+        ]
+    },
+    "Molajito\\Event": {
+        "name": "Event",
+        "namespace": "Molajito",
+        "fqns": "Molajito\\Event",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Event.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Render\\EventInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "event_adapter",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\EventInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Event",
+                    "Molajito\\Event\\AbstractAdapter",
+                    "Molajito\\Event\\Molajo"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   EventInterface   $event_adapter\n     *\n     * @since   1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "initializeEventOptions",
+            "scheduleEvent"
+        ]
+    },
+    "Molajito\\Event\\AbstractAdapter": {
+        "name": "AbstractAdapter",
+        "namespace": "Molajito\\Event",
+        "fqns": "Molajito\\Event\\AbstractAdapter",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event\/AbstractAdapter.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Event\/AbstractAdapter.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Render\\EventInterface"
         ],
         "constructor_parameters": [
             {
@@ -11605,86 +11865,26 @@
             "scheduleEvent"
         ]
     },
-    "Molajito\\ExtensionResource": {
-        "name": "ExtensionResource",
-        "namespace": "Molajito",
-        "fqns": "Molajito\\ExtensionResource",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/ExtensionResource.php",
-        "path": "vendor\/molajo\/molajito\/Source\/ExtensionResource.php",
-        "parent": false,
+    "Molajito\\Event\\Molajo": {
+        "name": "Molajo",
+        "namespace": "Molajito\\Event",
+        "fqns": "Molajito\\Event\\Molajo",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event\/Molajo.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Event\/Molajo.php",
+        "parent": "Molajito\\Event\\AbstractAdapter",
         "implemented_interfaces": [
-            "CommonApi\\Render\\ExtensionResourceInterface"
+            "CommonApi\\Render\\EventInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "resource",
-                "default_available": false,
+                "name": "event_callback",
+                "default_available": true,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
-                "name": "theme",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "page_view",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "template_view",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "wrap_view",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource\n     * @param  string $theme\n     * @param  string $page_view\n     * @param  string $template_view\n     * @param  string $wrap_view\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "getResourceExtension",
-            "getExtension"
-        ]
-    },
-    "Molajito\\PageViewRenderer": {
-        "name": "PageViewRenderer",
-        "namespace": "Molajito",
-        "fqns": "Molajito\\PageViewRenderer",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/PageViewRenderer.php",
-        "path": "vendor\/molajo\/molajito\/Source\/PageViewRenderer.php",
-        "parent": false,
-        "implemented_interfaces": [
-            "CommonApi\\Render\\RenderInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "include_path",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "rendering_properties",
+                "name": "event_option_keys",
                 "default_available": true,
                 "default_value": [
 
@@ -11693,7 +11893,52 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $include_path\n     * @param  array  $rendering_properties\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  callable $event_callback\n     * @param  array    $event_option_keys\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "initializeEventOptions",
+            "scheduleEvent"
+        ]
+    },
+    "Molajito\\PageView": {
+        "name": "PageView",
+        "namespace": "Molajito",
+        "fqns": "Molajito\\PageView",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/PageView.php",
+        "path": "vendor\/molajo\/molajito\/Source\/PageView.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Render\\RenderInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "render_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  RenderInterface $render_instance\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11716,31 +11961,8 @@
             "CommonApi\\Render\\ParseInterface"
         ],
         "constructor_parameters": [
-            {
-                "name": "rendered_page",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "exclude_tokens",
-                "default_available": true,
-                "default_value": [
 
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "parse_mask",
-                "default_available": true,
-                "default_value": "#<include(.*)\\\/>#iU",
-                "instance_of": null,
-                "is_instantiable": false
-            }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $rendered_page\n     * @param   array  $exclude_tokens\n     * @param   string $parse_mask\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11748,37 +11970,34 @@
 
         ],
         "method": [
-            "__construct",
-            "parse"
+            "parse",
+            "parseTokens"
         ]
     },
-    "Molajito\\PositionRenderer": {
-        "name": "PositionRenderer",
+    "Molajito\\Position": {
+        "name": "Position",
         "namespace": "Molajito",
-        "fqns": "Molajito\\PositionRenderer",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/PositionRenderer.php",
-        "path": "vendor\/molajo\/molajito\/Source\/PositionRenderer.php",
+        "fqns": "Molajito\\Position",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Position.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Position.php",
         "parent": false,
         "implemented_interfaces": [
-            "CommonApi\\Render\\RenderInterface"
+            "CommonApi\\Render\\PositionInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "token",
+                "name": "escape_instance",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "resource_extension",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
+                "instance_of": "CommonApi\\Render\\EscapeInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Escape"
+                ],
+                "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $token\n     * @param  object $resource_extension\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  EscapeInterface $escape_instance\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11787,7 +12006,7 @@
         ],
         "method": [
             "__construct",
-            "render"
+            "getPositionViews"
         ]
     },
     "Molajito\\Render": {
@@ -11801,17 +12020,8 @@
             "CommonApi\\Render\\RenderInterface"
         ],
         "constructor_parameters": [
-            {
-                "name": "options",
-                "default_available": true,
-                "default_value": [
 
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array $options\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11819,36 +12029,61 @@
 
         ],
         "method": [
-            "__construct",
             "render"
         ]
     },
-    "Molajito\\TemplateViewRenderer": {
-        "name": "TemplateViewRenderer",
+    "Molajito\\TemplateView": {
+        "name": "TemplateView",
         "namespace": "Molajito",
-        "fqns": "Molajito\\TemplateViewRenderer",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/TemplateViewRenderer.php",
-        "path": "vendor\/molajo\/molajito\/Source\/TemplateViewRenderer.php",
+        "fqns": "Molajito\\TemplateView",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/TemplateView.php",
+        "path": "vendor\/molajo\/molajito\/Source\/TemplateView.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\Render\\RenderInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "include_path",
+                "name": "escape_instance",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "event_handler",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Render\\EventHandlerInterface",
+                "instance_of": "CommonApi\\Render\\EscapeInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajito\\EventHandler"
+                    "Molajito\\Escape"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "render_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "event_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\EventInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Event",
+                    "Molajito\\Event\\AbstractAdapter",
+                    "Molajito\\Event\\Molajo"
                 ],
                 "concrete": false
             },
@@ -11860,18 +12095,9 @@
                 ],
                 "instance_of": null,
                 "is_instantiable": false
-            },
-            {
-                "name": "rendering_properties",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string                $include_path\n     * @param  EventHandlerInterface $event_handler\n     * @param  array                 $event_option_keys\n     * @param  array                 $rendering_properties\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  EscapeInterface $escape_instance\n     * @param  RenderInterface $render_instance\n     * @param  EventInterface  $event_instance\n     * @param  array           $event_option_keys\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11884,35 +12110,50 @@
             "renderLoop"
         ]
     },
-    "Molajito\\ThemeRenderer": {
-        "name": "ThemeRenderer",
+    "Molajito\\Theme": {
+        "name": "Theme",
         "namespace": "Molajito",
-        "fqns": "Molajito\\ThemeRenderer",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/ThemeRenderer.php",
-        "path": "vendor\/molajo\/molajito\/Source\/ThemeRenderer.php",
+        "fqns": "Molajito\\Theme",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Theme.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Theme.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\Render\\RenderInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "include_path",
+                "name": "escape_instance",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
+                "instance_of": "CommonApi\\Render\\EscapeInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Escape"
+                ],
+                "concrete": false
             },
             {
-                "name": "rendering_properties",
-                "default_available": true,
-                "default_value": [
-
+                "name": "render_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
                 ],
-                "instance_of": null,
-                "is_instantiable": false
+                "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $include_path\n     * @param  array  $rendering_properties\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  EscapeInterface  $escape_instance\n     * @param  RenderInterface  $render_instance\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11924,35 +12165,130 @@
             "render"
         ]
     },
-    "Molajito\\WrapViewRenderer": {
-        "name": "WrapViewRenderer",
+    "Molajito\\View": {
+        "name": "View",
         "namespace": "Molajito",
-        "fqns": "Molajito\\WrapViewRenderer",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/WrapViewRenderer.php",
-        "path": "vendor\/molajo\/molajito\/Source\/WrapViewRenderer.php",
+        "fqns": "Molajito\\View",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View.php",
+        "path": "vendor\/molajo\/molajito\/Source\/View.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Render\\ViewInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "view_adapter",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\ViewInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\View",
+                    "Molajito\\View\\AbstractAdapter",
+                    "Molajito\\View\\Molajo"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   ViewInterface   $view_adapter\n     *\n     * @since   1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "getView"
+        ]
+    },
+    "Molajito\\View\\AbstractAdapter": {
+        "name": "AbstractAdapter",
+        "namespace": "Molajito\\View",
+        "fqns": "Molajito\\View\\AbstractAdapter",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View\/AbstractAdapter.php",
+        "path": "vendor\/molajo\/molajito\/Source\/View\/AbstractAdapter.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Render\\ViewInterface"
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "getView"
+        ]
+    },
+    "Molajito\\View\\Molajo": {
+        "name": "Molajo",
+        "namespace": "Molajito\\View",
+        "fqns": "Molajito\\View\\Molajo",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View\/Molajo.php",
+        "path": "vendor\/molajo\/molajito\/Source\/View\/Molajo.php",
+        "parent": "Molajito\\View\\AbstractAdapter",
+        "implemented_interfaces": [
+            "CommonApi\\Render\\ViewInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "resource",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "getView"
+        ]
+    },
+    "Molajito\\WrapView": {
+        "name": "WrapView",
+        "namespace": "Molajito",
+        "fqns": "Molajito\\WrapView",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/WrapView.php",
+        "path": "vendor\/molajo\/molajito\/Source\/WrapView.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\Render\\RenderInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "include_path",
+                "name": "render_instance",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "rendering_properties",
-                "default_available": true,
-                "default_value": [
-
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
                 ],
-                "instance_of": null,
-                "is_instantiable": false
+                "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $include_path\n     * @param  array  $rendering_properties\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  RenderInterface $render_instance\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -14735,98 +15071,6 @@
             "scheduleFactories"
         ]
     },
-    "Molajo\\Render\\Adapter\\AbstractHandler": {
-
-    },
-    "Molajo\\Render\\Adapter\\Molajito": {
-        "name": "Molajito",
-        "namespace": "Molajo\\Render\\Adapter",
-        "fqns": "Molajo\\Render\\Adapter\\Molajito",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter\/Molajito.php",
-        "path": "vendor\/molajo\/render\/Source\/Adapter\/Molajito.php",
-        "parent": "Molajo\\Render\\Adapter\\AbstractAdapter",
-        "implemented_interfaces": [
-            "CommonApi\\Render\\RenderInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "renderer",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Render\\RenderInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajito\\Driver",
-                    "Molajito\\PageViewRenderer",
-                    "Molajito\\PositionRenderer",
-                    "Molajito\\Render",
-                    "Molajito\\TemplateViewRenderer",
-                    "Molajito\\ThemeRenderer",
-                    "Molajito\\WrapViewRenderer",
-                    "Molajo\\Render\\Adapter\\Molajito",
-                    "Molajo\\Render\\Driver"
-                ],
-                "concrete": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  $renderer  RenderInterface\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "render"
-        ]
-    },
-    "Molajo\\Render\\Adapter\\Mustache": {
-        "name": "Mustache",
-        "namespace": "Molajo\\Render\\Adapter",
-        "fqns": "Molajo\\Render\\Adapter\\Mustache",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter\/Mustache.php",
-        "path": "vendor\/molajo\/render\/Source\/Adapter\/Mustache.php",
-        "parent": false,
-        "implemented_interfaces": [
-
-        ],
-        "constructor_parameters": [
-
-        ],
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-
-        ]
-    },
-    "Molajo\\Render\\Adapter\\Twig": {
-        "name": "Twig",
-        "namespace": "Molajo\\Render\\Adapter",
-        "fqns": "Molajo\\Render\\Adapter\\Twig",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Adapter\/Twig.php",
-        "path": "vendor\/molajo\/render\/Source\/Adapter\/Twig.php",
-        "parent": false,
-        "implemented_interfaces": [
-
-        ],
-        "constructor_parameters": [
-
-        ],
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-
-        ]
-    },
     "Molajo\\Render\\Driver": {
         "name": "Driver",
         "namespace": "Molajo\\Render",
@@ -14845,20 +15089,156 @@
                 "instance_of": "CommonApi\\Render\\RenderInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajito\\Driver",
-                    "Molajito\\PageViewRenderer",
-                    "Molajito\\PositionRenderer",
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
                     "Molajito\\Render",
-                    "Molajito\\TemplateViewRenderer",
-                    "Molajito\\ThemeRenderer",
-                    "Molajito\\WrapViewRenderer",
-                    "Molajo\\Render\\Adapter\\Molajito",
-                    "Molajo\\Render\\Driver"
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
                 ],
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   RenderInterface $render_adapter\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   RenderInterface  $render_adapter\n     *\n     * @since   1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "render"
+        ]
+    },
+    "Molajo\\Render\\Engine\\AbstractHandler": {
+
+    },
+    "Molajo\\Render\\Engine\\Molajito": {
+        "name": "Molajito",
+        "namespace": "Molajo\\Render\\Engine",
+        "fqns": "Molajo\\Render\\Engine\\Molajito",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Engine\/Molajito.php",
+        "path": "vendor\/molajo\/render\/Source\/Engine\/Molajito.php",
+        "parent": "Molajo\\Render\\Engine\\AbstractAdapter",
+        "implemented_interfaces": [
+            "CommonApi\\Render\\RenderInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "render_adapter",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  $renderer  RenderInterface\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "render"
+        ]
+    },
+    "Molajo\\Render\\Engine\\Mustache": {
+        "name": "Mustache",
+        "namespace": "Molajo\\Render\\Engine",
+        "fqns": "Molajo\\Render\\Engine\\Mustache",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Engine\/Mustache.php",
+        "path": "vendor\/molajo\/render\/Source\/Engine\/Mustache.php",
+        "parent": "Molajo\\Render\\Engine\\AbstractAdapter",
+        "implemented_interfaces": [
+            "CommonApi\\Render\\RenderInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "render_adapter",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  $renderer  RenderInterface\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "render"
+        ]
+    },
+    "Molajo\\Render\\Engine\\Twig": {
+        "name": "Twig",
+        "namespace": "Molajo\\Render\\Engine",
+        "fqns": "Molajo\\Render\\Engine\\Twig",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Engine\/Twig.php",
+        "path": "vendor\/molajo\/render\/Source\/Engine\/Twig.php",
+        "parent": "Molajo\\Render\\Engine\\AbstractAdapter",
+        "implemented_interfaces": [
+            "CommonApi\\Render\\RenderInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "render_adapter",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\RenderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Engine",
+                    "Molajito\\PageView",
+                    "Molajito\\Render",
+                    "Molajito\\TemplateView",
+                    "Molajito\\Theme",
+                    "Molajito\\WrapView",
+                    "Molajo\\Render\\Driver",
+                    "Molajo\\Render\\Engine\\Molajito",
+                    "Molajo\\Render\\Engine\\Mustache",
+                    "Molajo\\Render\\Engine\\Twig"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  $renderer  RenderInterface\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],

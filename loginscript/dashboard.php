@@ -26,14 +26,14 @@ $gender = $match_value['gender'];
  <div style="float:right"> <a class="btn btn-info" href="settings.php" > Settings </a>  <a class="btn btn-danger logout" href="logout.php" > Logout</a> </div>
 
  <fieldset>
-    <legend>Welcome <?php echo $username; ?>, </legend>
+    <legend>Welcome <?= $username; ?>, </legend>
 
 	<br/>
 	<br/>
 <table class="table table-hover" style="border:0;width:50%">
-<tr> <td> <b> Full Name:  </b> </td> <td> <?php echo $fullname; ?></td></tr>
-<tr><td>  <b> Location:  </b> </td> <td> <?php echo $location; ?></td></tr>
-<tr><td>  <b> Gender:  </b> </td> <td> <?php echo $gender; ?></td></tr>
+<tr> <td> <b> Full Name:  </b> </td> <td> <?= $fullname; ?></td></tr>
+<tr><td>  <b> Location:  </b> </td> <td> <?= $location; ?></td></tr>
+<tr><td>  <b> Gender:  </b> </td> <td> <?= $gender; ?></td></tr>
 
 </tr>
 

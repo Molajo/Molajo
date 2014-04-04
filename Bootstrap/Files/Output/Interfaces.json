@@ -465,7 +465,8 @@
             "Molajo\\Plugins\\Pagetypegrid\\PagetypegridPlugin",
             "Molajo\\Plugins\\Pagetypeitem\\PagetypeitemPlugin",
             "Molajo\\Plugins\\Pagetypelist\\PagetypelistPlugin",
-            "Molajo\\Plugins\\Pagetypenew\\PagetypenewPlugin"
+            "Molajo\\Plugins\\Pagetypenew\\PagetypenewPlugin",
+            "Molajo\\Plugins\\Translate\\TranslatePlugin"
         ],
         "dependency_for": [
 
@@ -963,6 +964,7 @@
             "Molajo\\User\\Fieldhandler"
         ],
         "dependency_for": [
+            "Molajito\\Escape",
             "Molajo\\Controller\\Application",
             "Molajo\\Query\\Adapter\\AbstractAdapter",
             "Molajo\\Query\\Adapter\\MySql",
@@ -1058,44 +1060,52 @@
             "Molajo\\User\\UserData"
         ]
     },
-    "CommonApi\\Render\\DataResourceInterface": {
-        "name": "DataResourceInterface",
+    "CommonApi\\Render\\DataInterface": {
+        "name": "DataInterface",
         "namespace": "CommonApi\\Render",
-        "fqns": "CommonApi\\Render\\DataResourceInterface",
-        "path": "vendor\/commonapi\/render\/DataResourceInterface.php",
+        "fqns": "CommonApi\\Render\\DataInterface",
+        "path": "vendor\/commonapi\/render\/DataInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajito\\DataResource"
+            "Molajito\\Data",
+            "Molajito\\Data\\AbstractAdapter",
+            "Molajito\\Data\\Molajo"
         ],
         "dependency_for": [
-
+            "Molajito\\Data",
+            "Molajito\\Engine"
         ]
     },
-    "CommonApi\\Render\\EventHandlerInterface": {
-        "name": "EventHandlerInterface",
+    "CommonApi\\Render\\EscapeInterface": {
+        "name": "EscapeInterface",
         "namespace": "CommonApi\\Render",
-        "fqns": "CommonApi\\Render\\EventHandlerInterface",
-        "path": "vendor\/commonapi\/render\/EventHandlerInterface.php",
+        "fqns": "CommonApi\\Render\\EscapeInterface",
+        "path": "vendor\/commonapi\/render\/EscapeInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajito\\EventHandler"
+            "Molajito\\Escape"
         ],
         "dependency_for": [
-            "Molajito\\Driver",
-            "Molajito\\TemplateViewRenderer"
+            "Molajito\\Position",
+            "Molajito\\TemplateView",
+            "Molajito\\Theme"
         ]
     },
-    "CommonApi\\Render\\ExtensionResourceInterface": {
-        "name": "ExtensionResourceInterface",
+    "CommonApi\\Render\\EventInterface": {
+        "name": "EventInterface",
         "namespace": "CommonApi\\Render",
-        "fqns": "CommonApi\\Render\\ExtensionResourceInterface",
-        "path": "vendor\/commonapi\/render\/ExtensionResourceInterface.php",
+        "fqns": "CommonApi\\Render\\EventInterface",
+        "path": "vendor\/commonapi\/render\/EventInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajito\\ExtensionResource"
+            "Molajito\\Event",
+            "Molajito\\Event\\AbstractAdapter",
+            "Molajito\\Event\\Molajo"
         ],
         "dependency_for": [
-            "Molajito\\Driver"
+            "Molajito\\Engine",
+            "Molajito\\Event",
+            "Molajito\\TemplateView"
         ]
     },
     "CommonApi\\Render\\PaginationInterface": {
@@ -1121,7 +1131,20 @@
             "Molajito\\Parse"
         ],
         "dependency_for": [
-
+            "Molajito\\Engine"
+        ]
+    },
+    "CommonApi\\Render\\PositionInterface": {
+        "name": "PositionInterface",
+        "namespace": "CommonApi\\Render",
+        "fqns": "CommonApi\\Render\\PositionInterface",
+        "path": "vendor\/commonapi\/render\/PositionInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajito\\Position"
+        ],
+        "dependency_for": [
+            "Molajito\\Engine"
         ]
     },
     "CommonApi\\Render\\RenderInterface": {
@@ -1131,19 +1154,46 @@
         "path": "vendor\/commonapi\/render\/RenderInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajito\\Driver",
-            "Molajito\\PageViewRenderer",
-            "Molajito\\PositionRenderer",
+            "Molajito\\Engine",
+            "Molajito\\PageView",
             "Molajito\\Render",
-            "Molajito\\TemplateViewRenderer",
-            "Molajito\\ThemeRenderer",
-            "Molajito\\WrapViewRenderer",
-            "Molajo\\Render\\Adapter\\Molajito",
-            "Molajo\\Render\\Driver"
+            "Molajito\\TemplateView",
+            "Molajito\\Theme",
+            "Molajito\\WrapView",
+            "Molajo\\Render\\Driver",
+            "Molajo\\Render\\Engine\\Molajito",
+            "Molajo\\Render\\Engine\\Mustache",
+            "Molajo\\Render\\Engine\\Twig"
         ],
         "dependency_for": [
-            "Molajo\\Render\\Adapter\\Molajito",
-            "Molajo\\Render\\Driver"
+            "Molajito\\Engine",
+            "Molajito\\Engine",
+            "Molajito\\Engine",
+            "Molajito\\Engine",
+            "Molajito\\PageView",
+            "Molajito\\TemplateView",
+            "Molajito\\Theme",
+            "Molajito\\WrapView",
+            "Molajo\\Render\\Driver",
+            "Molajo\\Render\\Engine\\Molajito",
+            "Molajo\\Render\\Engine\\Mustache",
+            "Molajo\\Render\\Engine\\Twig"
+        ]
+    },
+    "CommonApi\\Render\\ViewInterface": {
+        "name": "ViewInterface",
+        "namespace": "CommonApi\\Render",
+        "fqns": "CommonApi\\Render\\ViewInterface",
+        "path": "vendor\/commonapi\/render\/ViewInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajito\\View",
+            "Molajito\\View\\AbstractAdapter",
+            "Molajito\\View\\Molajo"
+        ],
+        "dependency_for": [
+            "Molajito\\Engine",
+            "Molajito\\View"
         ]
     },
     "CommonApi\\Resource\\AdapterInterface": {
