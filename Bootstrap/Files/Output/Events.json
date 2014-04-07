@@ -72,9 +72,6 @@
     "onBeforeRead": [
         "Molajo\\Plugins\\Queryauthorisation\\QueryauthorisationPlugin"
     ],
-    "onAfterRoute": [
-        "Molajo\\Plugins\\Resource\\ResourcePlugin"
-    ],
     "onAfterRender": [
         "Molajo\\Plugins\\Translate\\TranslatePlugin"
     ],

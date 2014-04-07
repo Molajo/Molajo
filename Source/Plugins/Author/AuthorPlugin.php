@@ -27,16 +27,16 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function onBeforeRenderView()
     {
-        if (isset($this->plugin_data->render->extension->title)) {
+        if (isset($this->runtime_data->render->extension->title)) {
         } else {
             return $this;
         }
 
-        $test_title = strtolower($this->plugin_data->render->extension->title);
+        $test_title = strtolower($this->runtime_data->render->extension->title);
 
         if ($test_title == 'author') {
         } else {
@@ -60,7 +60,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     public function getAuthorProfile($author_id)
     {
@@ -96,7 +96,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
      *
      * @return  $this
      * @since   1.0
-     * @throws  \CommonApi\Exception\RuntimeException;
+     * @throws  \CommonApi\Exception\RuntimeException
      */
     protected function getAuthorProfileURL($author_id)
     {

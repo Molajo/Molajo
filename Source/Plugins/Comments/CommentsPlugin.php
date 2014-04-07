@@ -31,12 +31,12 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
      */
     public function onBeforeRenderView()
     {
-        if (isset($this->plugin_data->render->extension->title)) {
+        if (isset($this->runtime_data->render->extension->title)) {
         } else {
             return $this;
         }
 
-        $test_title = strtolower($this->plugin_data->render->extension->title);
+        $test_title = strtolower($this->runtime_data->render->extension->title);
 
         if ($test_title == 'comments') {
         } else {
@@ -167,7 +167,7 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
             $comments->getModelRegistry('primary_prefix', 'a') . '.' . 'root',
             '=',
             'integer',
-            (int)$this->plugin_data->resource->data->id
+            (int)$this->runtime_data->resource->data->id
         );
 
         $comments->where(
@@ -235,7 +235,7 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
             $comments->getModelRegistry('primary_prefix', 'a') . '.' . 'root',
             '=',
             'integer',
-            (int)$this->plugin_data->resource->data->id
+            (int)$this->runtime_data->resource->data->id
         );
 
         $comments->where(

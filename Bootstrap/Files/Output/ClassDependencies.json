@@ -227,10 +227,11 @@
         ],
         "method": [
             "onAfterRead",
-            "onBeforeInitialise",
             "onAfterInitialise",
             "onBeforeRoute",
             "onAfterRoute",
+            "onBeforeResource",
+            "onAfterResource",
             "onBeforeAuthorise",
             "onAfterAuthorise",
             "onBeforeExecute",
@@ -2093,6 +2094,51 @@
             "scheduleFactories"
         ]
     },
+    "Molajo\\Factories\\Resourcecontroller\\ResourcecontrollerFactoryMethod": {
+        "name": "ResourcecontrollerFactoryMethod",
+        "namespace": "Molajo\\Factories\\Resourcecontroller",
+        "fqns": "Molajo\\Factories\\Resourcecontroller\\ResourcecontrollerFactoryMethod",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcecontroller\/ResourcecontrollerFactoryMethod.php",
+        "path": "vendor\/molajo\/application\/Factories\/Resourcecontroller\/ResourcecontrollerFactoryMethod.php",
+        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "implemented_interfaces": [
+            "CommonApi\\IoC\\FactoryBatchInterface",
+            "CommonApi\\IoC\\FactoryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "options",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $options\n     *\n     * @since   1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "setDependencies",
+            "instantiateClass",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator",
+            "onBeforeInstantiation",
+            "instantiateStatic",
+            "onAfterInstantiation",
+            "getProductValue",
+            "removeContainerEntries",
+            "setContainerEntries",
+            "scheduleFactories"
+        ]
+    },
     "Molajo\\Factories\\Resourcerendering\\ResourcerenderingFactoryMethod": {
         "name": "ResourcerenderingFactoryMethod",
         "namespace": "Molajo\\Factories\\Resourcerendering",
@@ -2799,6 +2845,79 @@
             "generateString"
         ]
     },
+    "Molajo\\Controller\\ResourceController": {
+        "name": "ResourceController",
+        "namespace": "Molajo\\Controller",
+        "fqns": "Molajo\\Controller\\ResourceController",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/ResourceController.php",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/ResourceController.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Controller\\ResourceInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "resource_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "default_theme_id",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "page_type",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "model_type",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "model_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "sef_request",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "source_id",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  string $default_theme_id\n     * @param  string $page_type\n     * @param  string $model_type\n     * @param  string $model_name\n     * @param  string $sef_request\n     * @param  string $source_id\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "getResource"
+        ]
+    },
     "Molajo\\Controller\\Site": {
         "name": "Site",
         "namespace": "Molajo\\Controller",
@@ -3133,10 +3252,11 @@
         "method": [
             "onBeforeExecute",
             "getMenuBreadcrumbIds",
-            "onBeforeInitialise",
             "onAfterInitialise",
             "onBeforeRoute",
             "onAfterRoute",
+            "onBeforeResource",
+            "onAfterResource",
             "onBeforeAuthorise",
             "onAfterAuthorise",
             "onAfterExecute",
@@ -3305,9 +3425,10 @@
         ],
         "method": [
             "onAfterInitialise",
-            "onBeforeInitialise",
             "onBeforeRoute",
             "onAfterRoute",
+            "onBeforeResource",
+            "onAfterResource",
             "onBeforeAuthorise",
             "onAfterAuthorise",
             "onBeforeExecute",
@@ -3593,10 +3714,11 @@
         ],
         "method": [
             "onBeforeExecute",
-            "onBeforeInitialise",
             "onAfterInitialise",
             "onBeforeRoute",
             "onAfterRoute",
+            "onBeforeResource",
+            "onAfterResource",
             "onBeforeAuthorise",
             "onAfterAuthorise",
             "onAfterExecute",
@@ -4201,68 +4323,6 @@
             "onBeforeRead",
             "onAfterRead",
             "onAfterReadall",
-            "__construct",
-            "get",
-            "getField",
-            "getFieldsByType",
-            "getFieldValue",
-            "setField",
-            "saveForeignKeyValue"
-        ]
-    },
-    "Molajo\\Plugins\\Resource\\ResourcePlugin": {
-        "name": "ResourcePlugin",
-        "namespace": "Molajo\\Plugins\\Resource",
-        "fqns": "Molajo\\Plugins\\Resource\\ResourcePlugin",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/Resource\/ResourcePlugin.php",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Resource\/ResourcePlugin.php",
-        "parent": "Molajo\\Plugins\\SystemEventPlugin",
-        "implemented_interfaces": [
-            "CommonApi\\Event\\SystemInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "plugin_name",
-                "default_available": true,
-                "default_value": "",
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "event_name",
-                "default_available": true,
-                "default_value": "",
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "data",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string  $plugin_name\n     * @param  string  $event_name\n     * @param  array   $data\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "onAfterRoute",
-            "onBeforeInitialise",
-            "onAfterInitialise",
-            "onBeforeRoute",
-            "onBeforeAuthorise",
-            "onAfterAuthorise",
-            "onBeforeExecute",
-            "onAfterExecute",
-            "onBeforeResponse",
-            "onAfterResponse",
             "__construct",
             "get",
             "getField",
@@ -6785,10 +6845,11 @@
 
         ],
         "method": [
-            "onBeforeInitialise",
             "onAfterInitialise",
             "onBeforeRoute",
             "onAfterRoute",
+            "onBeforeResource",
+            "onAfterResource",
             "onBeforeAuthorise",
             "onAfterAuthorise",
             "onBeforeExecute",
@@ -11227,6 +11288,7 @@
                     "Molajo\\Factories\\Render\\RenderFactoryMethod",
                     "Molajo\\Factories\\Request\\RequestFactoryMethod",
                     "Molajo\\Factories\\Resource\\ResourceFactoryMethod",
+                    "Molajo\\Factories\\Resourcecontroller\\ResourcecontrollerFactoryMethod",
                     "Molajo\\Factories\\Resourcecssdeclarations\\ResourcecssdeclarationsFactoryMethod",
                     "Molajo\\Factories\\Resourcedata\\ResourcedataFactoryMethod",
                     "Molajo\\Factories\\Resourcejs\\ResourcejsFactoryMethod",
@@ -11495,12 +11557,13 @@
                 "implemented_by": [
                     "Molajito\\Data",
                     "Molajito\\Data\\AbstractAdapter",
+                    "Molajito\\Data\\Filesystem",
                     "Molajito\\Data\\Molajo"
                 ],
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   DataInterface   $data_adapter\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   DataInterface $data_adapter\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11532,6 +11595,58 @@
 
         ],
         "method": [
+            "getData"
+        ]
+    },
+    "Molajito\\Data\\Filesystem": {
+        "name": "Filesystem",
+        "namespace": "Molajito\\Data",
+        "fqns": "Molajito\\Data\\Filesystem",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/Filesystem.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Data\/Filesystem.php",
+        "parent": "Molajito\\Data\\AbstractAdapter",
+        "implemented_interfaces": [
+            "CommonApi\\Render\\DataInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "posts_base_folder",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "author_base_folder",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post_model_registry",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "author_model_registry",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  string $theme_base_folder\n     * @param  string $view_base_folder\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
             "getData"
         ]
     },
@@ -11578,6 +11693,7 @@
                 "implemented_by": [
                     "Molajito\\Data",
                     "Molajito\\Data\\AbstractAdapter",
+                    "Molajito\\Data\\Filesystem",
                     "Molajito\\Data\\Molajo"
                 ],
                 "concrete": false
@@ -11591,6 +11707,7 @@
                 "implemented_by": [
                     "Molajito\\View",
                     "Molajito\\View\\AbstractAdapter",
+                    "Molajito\\View\\Filesystem",
                     "Molajito\\View\\Molajo"
                 ],
                 "concrete": false
@@ -11604,6 +11721,7 @@
                 "implemented_by": [
                     "Molajito\\Event",
                     "Molajito\\Event\\AbstractAdapter",
+                    "Molajito\\Event\\Dummy",
                     "Molajito\\Event\\Molajo"
                 ],
                 "concrete": false
@@ -11761,6 +11879,46 @@
         ],
         "constructor_parameters": [
             {
+                "name": "escape_adapter",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Render\\EscapeInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajito\\Escape",
+                    "Molajito\\Escape\\Molajo",
+                    "Molajito\\Escape\\Simple"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   EscapeInterface $escape_adapter\n     *\n     * @since   1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "escape"
+        ]
+    },
+    "Molajito\\Escape\\AbstractAdapter": {
+
+    },
+    "Molajito\\Escape\\Molajo": {
+        "name": "Molajo",
+        "namespace": "Molajito\\Escape",
+        "fqns": "Molajito\\Escape\\Molajo",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Escape\/Molajo.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Escape\/Molajo.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Render\\EscapeInterface"
+        ],
+        "constructor_parameters": [
+            {
                 "name": "fieldhandler",
                 "default_available": false,
                 "default_value": null,
@@ -11782,8 +11940,30 @@
         ],
         "method": [
             "__construct",
-            "escape",
-            "escapeDataElement"
+            "escape"
+        ]
+    },
+    "Molajito\\Escape\\Simple": {
+        "name": "Simple",
+        "namespace": "Molajito\\Escape",
+        "fqns": "Molajito\\Escape\\Simple",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Escape\/Simple.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Escape\/Simple.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Render\\EscapeInterface"
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "escape"
         ]
     },
     "Molajito\\Event": {
@@ -11806,12 +11986,13 @@
                 "implemented_by": [
                     "Molajito\\Event",
                     "Molajito\\Event\\AbstractAdapter",
+                    "Molajito\\Event\\Dummy",
                     "Molajito\\Event\\Molajo"
                 ],
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   EventInterface   $event_adapter\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   EventInterface $event_adapter\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -11865,6 +12046,47 @@
             "scheduleEvent"
         ]
     },
+    "Molajito\\Event\\Dummy": {
+        "name": "Dummy",
+        "namespace": "Molajito\\Event",
+        "fqns": "Molajito\\Event\\Dummy",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event\/Dummy.php",
+        "path": "vendor\/molajo\/molajito\/Source\/Event\/Dummy.php",
+        "parent": "Molajito\\Event\\AbstractAdapter",
+        "implemented_interfaces": [
+            "CommonApi\\Render\\EventInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "event_callback",
+                "default_available": true,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "event_option_keys",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  callable $event_callback\n     * @param  array    $event_option_keys\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "scheduleEvent",
+            "__construct",
+            "initializeEventOptions"
+        ]
+    },
     "Molajito\\Event\\Molajo": {
         "name": "Molajo",
         "namespace": "Molajito\\Event",
@@ -11901,9 +12123,9 @@
 
         ],
         "method": [
+            "scheduleEvent",
             "__construct",
-            "initializeEventOptions",
-            "scheduleEvent"
+            "initializeEventOptions"
         ]
     },
     "Molajito\\PageView": {
@@ -11992,7 +12214,9 @@
                 "instance_of": "CommonApi\\Render\\EscapeInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajito\\Escape"
+                    "Molajito\\Escape",
+                    "Molajito\\Escape\\Molajo",
+                    "Molajito\\Escape\\Simple"
                 ],
                 "concrete": false
             }
@@ -12050,7 +12274,9 @@
                 "instance_of": "CommonApi\\Render\\EscapeInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajito\\Escape"
+                    "Molajito\\Escape",
+                    "Molajito\\Escape\\Molajo",
+                    "Molajito\\Escape\\Simple"
                 ],
                 "concrete": false
             },
@@ -12083,6 +12309,7 @@
                 "implemented_by": [
                     "Molajito\\Event",
                     "Molajito\\Event\\AbstractAdapter",
+                    "Molajito\\Event\\Dummy",
                     "Molajito\\Event\\Molajo"
                 ],
                 "concrete": false
@@ -12128,7 +12355,9 @@
                 "instance_of": "CommonApi\\Render\\EscapeInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajito\\Escape"
+                    "Molajito\\Escape",
+                    "Molajito\\Escape\\Molajo",
+                    "Molajito\\Escape\\Simple"
                 ],
                 "concrete": false
             },
@@ -12153,7 +12382,7 @@
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  EscapeInterface  $escape_instance\n     * @param  RenderInterface  $render_instance\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  EscapeInterface $escape_instance\n     * @param  RenderInterface $render_instance\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -12185,12 +12414,13 @@
                 "implemented_by": [
                     "Molajito\\View",
                     "Molajito\\View\\AbstractAdapter",
+                    "Molajito\\View\\Filesystem",
                     "Molajito\\View\\Molajo"
                 ],
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   ViewInterface   $view_adapter\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param   ViewInterface $view_adapter\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -12222,6 +12452,44 @@
 
         ],
         "method": [
+            "getView"
+        ]
+    },
+    "Molajito\\View\\Filesystem": {
+        "name": "Filesystem",
+        "namespace": "Molajito\\View",
+        "fqns": "Molajito\\View\\Filesystem",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View\/Filesystem.php",
+        "path": "vendor\/molajo\/molajito\/Source\/View\/Filesystem.php",
+        "parent": "Molajito\\View\\AbstractAdapter",
+        "implemented_interfaces": [
+            "CommonApi\\Render\\ViewInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "theme_base_folder",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "view_base_folder",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $theme_base_folder\n     * @param  string $view_base_folder\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
             "getView"
         ]
     },

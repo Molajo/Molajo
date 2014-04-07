@@ -29,9 +29,9 @@ class CopyrightPlugin extends SystemEventPlugin implements SystemInterface
      */
     public function onAfterRead()
     {
-        if (isset($this->plugin_data->render->token)
-            && $this->plugin_data->render->token->type == 'template'
-            && strtolower($this->plugin_data->render->token->name) == 'footer'
+        if (isset($this->runtime_data->render->token)
+            && $this->runtime_data->render->token->type == 'template'
+            && strtolower($this->runtime_data->render->token->name) == 'footer'
         ) {
         } else {
             return $this;
@@ -40,7 +40,7 @@ class CopyrightPlugin extends SystemEventPlugin implements SystemInterface
         $row          = new stdClass();
         $current_year = $this->date_controller->getDate('now', null, 'user', 'Y');
 
-        $first_year = $this->plugin_data->render->extension->parameters->copyright_first_year;
+        $first_year = $this->runtime_data->render->extension->parameters->copyright_first_year;
 
         if ($first_year == null || $first_year == '') {
             $ccDateSpan = $current_year;
@@ -50,11 +50,11 @@ class CopyrightPlugin extends SystemEventPlugin implements SystemInterface
             $ccDateSpan = $first_year . '-' . $current_year;
         }
 
-        $copyright_holder = $this->plugin_data->render->extension->parameters->copyright_holder;
+        $copyright_holder = $this->runtime_data->render->extension->parameters->copyright_holder;
 
         $row->copyright_statement = '&#169;' . ' ' . $ccDateSpan . ' ' . $copyright_holder;
-        $row->link                = $this->plugin_data->render->extension->parameters->link;
-        $row->remaining_text      = $this->plugin_data->render->extension->parameters->link;
+        $row->link                = $this->runtime_data->render->extension->parameters->link;
+        $row->remaining_text      = $this->runtime_data->render->extension->parameters->link;
 
         $this->row[] = $row;
 

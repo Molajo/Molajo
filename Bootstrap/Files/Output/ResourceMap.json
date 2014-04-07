@@ -86,6 +86,9 @@
     "commonapi\\controller\\readme.md": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/README.md"
     ],
+    "commonapi\\controller\\resourceinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ResourceInterface.php"
+    ],
     "commonapi\\controller\\siteinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/SiteInterface.php"
     ],
@@ -516,6 +519,9 @@
     "molajito\\data\\abstractadapter": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/AbstractAdapter.php"
     ],
+    "molajito\\data\\filesystem": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/Filesystem.php"
+    ],
     "molajito\\data\\molajo": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/Molajo.php"
     ],
@@ -523,7 +529,17 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Engine.php"
     ],
     "molajito\\escape": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Escape",
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Escape.php"
+    ],
+    "molajito\\escape\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Escape\/AbstractAdapter.php"
+    ],
+    "molajito\\escape\\molajo": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Escape\/Molajo.php"
+    ],
+    "molajito\\escape\\simple": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Escape\/Simple.php"
     ],
     "molajito\\event": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event",
@@ -531,6 +547,9 @@
     ],
     "molajito\\event\\abstractadapter": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event\/AbstractAdapter.php"
+    ],
+    "molajito\\event\\dummy": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event\/Dummy.php"
     ],
     "molajito\\event\\molajo": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event\/Molajo.php"
@@ -559,6 +578,9 @@
     ],
     "molajito\\view\\abstractadapter": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View\/AbstractAdapter.php"
+    ],
+    "molajito\\view\\filesystem": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View\/Filesystem.php"
     ],
     "molajito\\view\\molajo": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View\/Molajo.php"
@@ -823,6 +845,9 @@
     ],
     "molajo\\controller\\readcontroller": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/ReadController.php"
+    ],
+    "molajo\\controller\\resourcecontroller": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/ResourceController.php"
     ],
     "molajo\\controller\\site": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Site.php"
@@ -1198,6 +1223,15 @@
     ],
     "molajo\\factories\\resource\\resourcefactorymethod": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resource\/ResourceFactoryMethod.php"
+    ],
+    "molajo\\factories\\resourcecontroller": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcecontroller"
+    ],
+    "molajo\\factories\\resourcecontroller\\configuration.xml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcecontroller\/Configuration.xml"
+    ],
+    "molajo\\factories\\resourcecontroller\\resourcecontrollerfactorymethod": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcecontroller\/ResourcecontrollerFactoryMethod.php"
     ],
     "molajo\\factories\\resourcecss": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcecss"
@@ -4537,15 +4571,6 @@
     "molajo\\plugins\\readmore\\readmoreplugin": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/Readmore\/ReadmorePlugin.php"
     ],
-    "molajo\\plugins\\resource": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/Resource"
-    ],
-    "molajo\\plugins\\resource\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/Resource\/Configuration.xml"
-    ],
-    "molajo\\plugins\\resource\\resourceplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/Resource\/ResourcePlugin.php"
-    ],
     "molajo\\plugins\\sites": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/Sites"
     ],
@@ -4963,29 +4988,23 @@
     "molajo\\themes\\system\\view\\template\\error": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Error"
     ],
+    "molajo\\themes\\system\\view\\template\\error\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Error\/Body.phtml"
+    ],
     "molajo\\themes\\system\\view\\template\\error\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Error\/Configuration.xml"
-    ],
-    "molajo\\themes\\system\\view\\template\\error\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Error\/View"
-    ],
-    "molajo\\themes\\system\\view\\template\\error\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Error\/View\/Body.phtml"
     ],
     "molajo\\themes\\system\\view\\template\\offline": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Offline"
     ],
+    "molajo\\themes\\system\\view\\template\\offline\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Offline\/Body.phtml"
+    ],
     "molajo\\themes\\system\\view\\template\\offline\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Offline\/Configuration.xml"
     ],
-    "molajo\\themes\\system\\view\\template\\offline\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Offline\/View"
-    ],
-    "molajo\\themes\\system\\view\\template\\offline\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Offline\/View\/Body.phtml"
-    ],
-    "molajo\\themes\\system\\view\\template\\offline\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Offline\/View\/Header.phtml"
+    "molajo\\themes\\system\\view\\template\\offline\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Themes\/System\/View\/Template\/Offline\/Header.phtml"
     ],
     "molajo\\user": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/"
@@ -5197,6 +5216,9 @@
     "molajo\\views\\templates\\admindashboard": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboard"
     ],
+    "molajo\\views\\templates\\admindashboard\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboard\/Body.phtml"
+    ],
     "molajo\\views\\templates\\admindashboard\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboard\/Configuration.xml"
     ],
@@ -5236,95 +5258,74 @@
     "molajo\\views\\templates\\admindashboard\\js\\defer\\toggle.js": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboard\/Js\/defer\/toggle.js"
     ],
-    "molajo\\views\\templates\\admindashboard\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboard\/View"
-    ],
-    "molajo\\views\\templates\\admindashboard\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboard\/View\/Body.phtml"
-    ],
     "molajo\\views\\templates\\admindashboardtab": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab"
+    ],
+    "molajo\\views\\templates\\admindashboardtab\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab\/Body.phtml"
     ],
     "molajo\\views\\templates\\admindashboardtab\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\admindashboardtab\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab\/View"
+    "molajo\\views\\templates\\admindashboardtab\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\admindashboardtab\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\admindashboardtab\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\admindashboardtab\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab\/View\/Header.phtml"
+    "molajo\\views\\templates\\admindashboardtab\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Admindashboardtab\/Header.phtml"
     ],
     "molajo\\views\\templates\\alerts": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Alerts"
     ],
+    "molajo\\views\\templates\\alerts\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Alerts\/Body.phtml"
+    ],
     "molajo\\views\\templates\\alerts\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Alerts\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\alerts\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Alerts\/View"
-    ],
-    "molajo\\views\\templates\\alerts\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Alerts\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\article": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article"
     ],
+    "molajo\\views\\templates\\article\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/Body.phtml"
+    ],
+    "molajo\\views\\templates\\article\\campus.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/Campus.phtml"
+    ],
+    "molajo\\views\\templates\\article\\college.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/College.phtml"
+    ],
     "molajo\\views\\templates\\article\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\article\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/View"
+    "molajo\\views\\templates\\article\\department.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/Department.phtml"
     ],
-    "molajo\\views\\templates\\article\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/View\/Body.phtml"
+    "molajo\\views\\templates\\article\\university.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/University.phtml"
     ],
-    "molajo\\views\\templates\\article\\view\\campus.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/View\/Campus.phtml"
+    "molajo\\views\\templates\\article\\vcvp.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/Vcvp.phtml"
     ],
-    "molajo\\views\\templates\\article\\view\\college.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/View\/College.phtml"
-    ],
-    "molajo\\views\\templates\\article\\view\\department.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/View\/Department.phtml"
-    ],
-    "molajo\\views\\templates\\article\\view\\university.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/View\/University.phtml"
-    ],
-    "molajo\\views\\templates\\article\\view\\vcvp.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/View\/Vcvp.phtml"
-    ],
-    "molajo\\views\\templates\\article\\view\\xxxbody.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/View\/xxxBody.phtml"
+    "molajo\\views\\templates\\article\\xxxbody.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Article\/xxxBody.phtml"
     ],
     "molajo\\views\\templates\\author": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Author"
     ],
+    "molajo\\views\\templates\\author\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Author\/Body.phtml"
+    ],
     "molajo\\views\\templates\\author\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Author\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\author\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Author\/View"
-    ],
-    "molajo\\views\\templates\\author\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Author\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\blog": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Blog"
     ],
+    "molajo\\views\\templates\\blog\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Blog\/Body.phtml"
+    ],
     "molajo\\views\\templates\\blog\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Blog\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\blog\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Blog\/View"
-    ],
-    "molajo\\views\\templates\\blog\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Blog\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\breadcrumbs": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Breadcrumbs"
@@ -5332,11 +5333,8 @@
     "molajo\\views\\templates\\breadcrumbs\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Breadcrumbs\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\breadcrumbs\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Breadcrumbs\/View"
-    ],
-    "molajo\\views\\templates\\breadcrumbs\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Breadcrumbs\/View\/Custom.phtml"
+    "molajo\\views\\templates\\breadcrumbs\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Breadcrumbs\/Custom.phtml"
     ],
     "molajo\\views\\templates\\comments": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments"
@@ -5344,47 +5342,35 @@
     "molajo\\views\\templates\\comments\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\comments\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments\/View"
-    ],
-    "molajo\\views\\templates\\comments\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments\/View\/Custom.phtml"
+    "molajo\\views\\templates\\comments\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments\/Custom.phtml"
     ],
     "molajo\\views\\templates\\comments_form": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_form"
     ],
+    "molajo\\views\\templates\\comments_form\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_form\/Body.phtml"
+    ],
     "molajo\\views\\templates\\comments_form\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_form\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\comments_form\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_form\/View"
-    ],
-    "molajo\\views\\templates\\comments_form\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_form\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\comments_heading": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_heading"
     ],
+    "molajo\\views\\templates\\comments_heading\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_heading\/Body.phtml"
+    ],
     "molajo\\views\\templates\\comments_heading\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_heading\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\comments_heading\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_heading\/View"
-    ],
-    "molajo\\views\\templates\\comments_heading\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_heading\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\comments_list": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_list"
     ],
+    "molajo\\views\\templates\\comments_list\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_list\/Body.phtml"
+    ],
     "molajo\\views\\templates\\comments_list\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_list\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\comments_list\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_list\/View"
-    ],
-    "molajo\\views\\templates\\comments_list\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Comments_list\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\configuration": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration"
@@ -5392,50 +5378,41 @@
     "molajo\\views\\templates\\configuration\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\configuration\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration\/View"
+    "molajo\\views\\templates\\configuration\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration\/Custom.phtml"
     ],
-    "molajo\\views\\templates\\configuration\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration\/View\/Custom.phtml"
-    ],
-    "molajo\\views\\templates\\configuration\\view\\xxxcustom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration\/View\/xxxCustom.phtml"
+    "molajo\\views\\templates\\configuration\\xxxcustom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration\/xxxCustom.phtml"
     ],
     "molajo\\views\\templates\\configuration_customfields": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields"
     ],
+    "molajo\\views\\templates\\configuration_customfields\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields\/Body.phtml"
+    ],
     "molajo\\views\\templates\\configuration_customfields\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\configuration_customfields\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields\/View"
+    "molajo\\views\\templates\\configuration_customfields\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\configuration_customfields\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\configuration_customfields\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\configuration_customfields\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields\/View\/Header.phtml"
+    "molajo\\views\\templates\\configuration_customfields\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_customfields\/Header.phtml"
     ],
     "molajo\\views\\templates\\configuration_grid": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid"
     ],
+    "molajo\\views\\templates\\configuration_grid\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid\/Body.phtml"
+    ],
     "molajo\\views\\templates\\configuration_grid\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\configuration_grid\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid\/View"
+    "molajo\\views\\templates\\configuration_grid\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\configuration_grid\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\configuration_grid\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\configuration_grid\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid\/View\/Header.phtml"
+    "molajo\\views\\templates\\configuration_grid\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_grid\/Header.phtml"
     ],
     "molajo\\views\\templates\\configuration_permissions": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_permissions"
@@ -5443,11 +5420,8 @@
     "molajo\\views\\templates\\configuration_permissions\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_permissions\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\configuration_permissions\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_permissions\/View"
-    ],
-    "molajo\\views\\templates\\configuration_permissions\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_permissions\/View\/Custom.phtml"
+    "molajo\\views\\templates\\configuration_permissions\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_permissions\/Custom.phtml"
     ],
     "molajo\\views\\templates\\configuration_view": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_view"
@@ -5455,14 +5429,14 @@
     "molajo\\views\\templates\\configuration_view\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_view\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\configuration_view\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_view\/View"
-    ],
-    "molajo\\views\\templates\\configuration_view\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_view\/View\/Custom.phtml"
+    "molajo\\views\\templates\\configuration_view\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Configuration_view\/Custom.phtml"
     ],
     "molajo\\views\\templates\\customfields": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields"
+    ],
+    "molajo\\views\\templates\\customfields\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/Body.phtml"
     ],
     "molajo\\views\\templates\\customfields\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/Configuration.xml"
@@ -5473,35 +5447,26 @@
     "molajo\\views\\templates\\customfields\\css\\template.css": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/Css\/Template.css"
     ],
-    "molajo\\views\\templates\\customfields\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/View"
+    "molajo\\views\\templates\\customfields\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\customfields\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/View\/Body.phtml"
+    "molajo\\views\\templates\\customfields\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/Header.phtml"
     ],
-    "molajo\\views\\templates\\customfields\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\customfields\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/View\/Header.phtml"
-    ],
-    "molajo\\views\\templates\\customfields\\view\\tempcustom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/View\/TEMPCustom.phtml"
+    "molajo\\views\\templates\\customfields\\tempcustom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Customfields\/TEMPCustom.phtml"
     ],
     "molajo\\views\\templates\\dashboard": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dashboard"
     ],
+    "molajo\\views\\templates\\dashboard\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dashboard\/Body.phtml"
+    ],
     "molajo\\views\\templates\\dashboard\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dashboard\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\dashboard\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dashboard\/View"
-    ],
-    "molajo\\views\\templates\\dashboard\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dashboard\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\dashboard\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dashboard\/View\/Custom.phtml"
+    "molajo\\views\\templates\\dashboard\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dashboard\/Custom.phtml"
     ],
     "molajo\\views\\templates\\dummy": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dummy"
@@ -5509,11 +5474,8 @@
     "molajo\\views\\templates\\dummy\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dummy\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\dummy\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dummy\/View"
-    ],
-    "molajo\\views\\templates\\dummy\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dummy\/View\/Custom.phtml"
+    "molajo\\views\\templates\\dummy\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Dummy\/Custom.phtml"
     ],
     "molajo\\views\\templates\\edit": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Edit"
@@ -5521,29 +5483,23 @@
     "molajo\\views\\templates\\edit\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Edit\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\edit\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Edit\/View"
-    ],
-    "molajo\\views\\templates\\edit\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Edit\/View\/Custom.phtml"
+    "molajo\\views\\templates\\edit\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Edit\/Custom.phtml"
     ],
     "molajo\\views\\templates\\errors": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors"
     ],
+    "molajo\\views\\templates\\errors\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors\/Body.phtml"
+    ],
     "molajo\\views\\templates\\errors\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\errors\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors\/View"
+    "molajo\\views\\templates\\errors\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\errors\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\errors\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\errors\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors\/View\/Header.phtml"
+    "molajo\\views\\templates\\errors\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Errors\/Header.phtml"
     ],
     "molajo\\views\\templates\\footer": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Footer"
@@ -5551,140 +5507,107 @@
     "molajo\\views\\templates\\footer\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Footer\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\footer\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Footer\/View"
+    "molajo\\views\\templates\\footer\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Footer\/Custom.phtml"
     ],
-    "molajo\\views\\templates\\footer\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Footer\/View\/Custom.phtml"
-    ],
-    "molajo\\views\\templates\\footer\\view\\xxxcustom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Footer\/View\/xxxCustom.phtml"
+    "molajo\\views\\templates\\footer\\xxxcustom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Footer\/xxxCustom.phtml"
     ],
     "molajo\\views\\templates\\form_audio": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_audio"
     ],
+    "molajo\\views\\templates\\form_audio\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_audio\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_audio\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_audio\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_audio\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_audio\/View"
-    ],
-    "molajo\\views\\templates\\form_audio\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_audio\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_begin": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_begin"
     ],
+    "molajo\\views\\templates\\form_begin\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_begin\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_begin\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_begin\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_begin\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_begin\/View"
-    ],
-    "molajo\\views\\templates\\form_begin\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_begin\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_boolean": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_boolean"
     ],
+    "molajo\\views\\templates\\form_boolean\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_boolean\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_boolean\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_boolean\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_boolean\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_boolean\/View"
-    ],
-    "molajo\\views\\templates\\form_boolean\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_boolean\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_catalog_id": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_catalog_id"
     ],
+    "molajo\\views\\templates\\form_catalog_id\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_catalog_id\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_catalog_id\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_catalog_id\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_catalog_id\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_catalog_id\/View"
-    ],
-    "molajo\\views\\templates\\form_catalog_id\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_catalog_id\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_color": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_color"
     ],
+    "molajo\\views\\templates\\form_color\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_color\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_color\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_color\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_color\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_color\/View"
-    ],
-    "molajo\\views\\templates\\form_color\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_color\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_columns1": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns1"
     ],
+    "molajo\\views\\templates\\form_columns1\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns1\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_columns1\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns1\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_columns1\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns1\/View"
-    ],
-    "molajo\\views\\templates\\form_columns1\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns1\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_columns2": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2"
     ],
+    "molajo\\views\\templates\\form_columns2\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_columns2\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\form_columns2\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2\/View"
+    "molajo\\views\\templates\\form_columns2\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\form_columns2\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\form_columns2\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\form_columns2\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2\/View\/Header.phtml"
+    "molajo\\views\\templates\\form_columns2\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_columns2\/Header.phtml"
     ],
     "molajo\\views\\templates\\form_date": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_date"
     ],
+    "molajo\\views\\templates\\form_date\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_date\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_date\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_date\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_date\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_date\/View"
-    ],
-    "molajo\\views\\templates\\form_date\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_date\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_datetime": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_datetime"
     ],
+    "molajo\\views\\templates\\form_datetime\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_datetime\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_datetime\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_datetime\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_datetime\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_datetime\/View"
-    ],
-    "molajo\\views\\templates\\form_datetime\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_datetime\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_email": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_email"
     ],
+    "molajo\\views\\templates\\form_email\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_email\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_email\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_email\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_email\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_email\/View"
-    ],
-    "molajo\\views\\templates\\form_email\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_email\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_end": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_end"
@@ -5692,293 +5615,236 @@
     "molajo\\views\\templates\\form_end\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_end\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\form_end\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_end\/View"
-    ],
-    "molajo\\views\\templates\\form_end\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_end\/View\/Custom.phtml"
+    "molajo\\views\\templates\\form_end\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_end\/Custom.phtml"
     ],
     "molajo\\views\\templates\\form_file": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_file"
     ],
+    "molajo\\views\\templates\\form_file\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_file\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_file\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_file\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_file\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_file\/View"
-    ],
-    "molajo\\views\\templates\\form_file\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_file\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_folder": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_folder"
     ],
+    "molajo\\views\\templates\\form_folder\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_folder\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_folder\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_folder\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_folder\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_folder\/View"
-    ],
-    "molajo\\views\\templates\\form_folder\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_folder\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_hidden": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_hidden"
     ],
+    "molajo\\views\\templates\\form_hidden\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_hidden\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_hidden\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_hidden\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_hidden\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_hidden\/View"
-    ],
-    "molajo\\views\\templates\\form_hidden\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_hidden\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_html": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_html"
     ],
+    "molajo\\views\\templates\\form_html\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_html\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_html\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_html\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_html\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_html\/View"
-    ],
-    "molajo\\views\\templates\\form_html\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_html\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_id": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_id"
     ],
+    "molajo\\views\\templates\\form_id\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_id\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_id\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_id\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_id\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_id\/View"
-    ],
-    "molajo\\views\\templates\\form_id\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_id\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_image": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_image"
     ],
+    "molajo\\views\\templates\\form_image\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_image\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_image\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_image\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_image\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_image\/View"
-    ],
-    "molajo\\views\\templates\\form_image\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_image\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_input": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_input"
     ],
+    "molajo\\views\\templates\\form_input\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_input\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_input\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_input\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_input\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_input\/View"
-    ],
-    "molajo\\views\\templates\\form_input\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_input\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_integer": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_integer"
     ],
+    "molajo\\views\\templates\\form_integer\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_integer\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_integer\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_integer\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_integer\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_integer\/View"
-    ],
-    "molajo\\views\\templates\\form_integer\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_integer\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_ip_address": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_ip_address"
     ],
+    "molajo\\views\\templates\\form_ip_address\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_ip_address\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_ip_address\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_ip_address\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_ip_address\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_ip_address\/View"
-    ],
-    "molajo\\views\\templates\\form_ip_address\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_ip_address\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_month": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_month"
     ],
+    "molajo\\views\\templates\\form_month\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_month\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_month\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_month\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_month\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_month\/View"
-    ],
-    "molajo\\views\\templates\\form_month\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_month\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_page": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page"
     ],
+    "molajo\\views\\templates\\form_page\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_page\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\form_page\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page\/View"
+    "molajo\\views\\templates\\form_page\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\form_page\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\form_page\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\form_page\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page\/View\/Header.phtml"
+    "molajo\\views\\templates\\form_page\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_page\/Header.phtml"
     ],
     "molajo\\views\\templates\\form_password": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_password"
     ],
+    "molajo\\views\\templates\\form_password\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_password\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_password\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_password\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_password\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_password\/View"
-    ],
-    "molajo\\views\\templates\\form_password\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_password\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_radio": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_radio"
     ],
+    "molajo\\views\\templates\\form_radio\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_radio\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_radio\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_radio\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_radio\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_radio\/View"
-    ],
-    "molajo\\views\\templates\\form_radio\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_radio\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_range": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_range"
     ],
+    "molajo\\views\\templates\\form_range\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_range\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_range\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_range\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_range\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_range\/View"
-    ],
-    "molajo\\views\\templates\\form_range\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_range\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_selectlist": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist"
     ],
+    "molajo\\views\\templates\\form_selectlist\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_selectlist\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\form_selectlist\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist\/View"
+    "molajo\\views\\templates\\form_selectlist\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\form_selectlist\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\form_selectlist\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\form_selectlist\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist\/View\/Header.phtml"
+    "molajo\\views\\templates\\form_selectlist\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_selectlist\/Header.phtml"
     ],
     "molajo\\views\\templates\\form_string": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_string"
     ],
+    "molajo\\views\\templates\\form_string\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_string\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_string\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_string\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_string\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_string\/View"
-    ],
-    "molajo\\views\\templates\\form_string\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_string\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_time": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_time"
     ],
+    "molajo\\views\\templates\\form_time\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_time\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_time\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_time\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_time\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_time\/View"
-    ],
-    "molajo\\views\\templates\\form_time\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_time\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_url": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_url"
     ],
+    "molajo\\views\\templates\\form_url\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_url\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_url\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_url\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_url\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_url\/View"
-    ],
-    "molajo\\views\\templates\\form_url\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_url\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_userid": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_userid"
     ],
+    "molajo\\views\\templates\\form_userid\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_userid\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_userid\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_userid\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\form_userid\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_userid\/View"
-    ],
-    "molajo\\views\\templates\\form_userid\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_userid\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\form_video": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video"
     ],
+    "molajo\\views\\templates\\form_video\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video\/Body.phtml"
+    ],
     "molajo\\views\\templates\\form_video\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\form_video\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video\/View"
+    "molajo\\views\\templates\\form_video\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\form_video\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\form_video\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\form_video\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video\/View\/Header.phtml"
+    "molajo\\views\\templates\\form_video\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Form_video\/Header.phtml"
     ],
     "molajo\\views\\templates\\gallery": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery"
     ],
+    "molajo\\views\\templates\\gallery\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery\/Body.phtml"
+    ],
     "molajo\\views\\templates\\gallery\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\gallery\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery\/View"
+    "molajo\\views\\templates\\gallery\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery\/Custom.phtml"
     ],
-    "molajo\\views\\templates\\gallery\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\gallery\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery\/View\/Custom.phtml"
-    ],
-    "molajo\\views\\templates\\gallery\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery\/View\/Footer.phtml"
+    "molajo\\views\\templates\\gallery\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Gallery\/Footer.phtml"
     ],
     "molajo\\views\\templates\\grid": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid"
     ],
+    "molajo\\views\\templates\\grid\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/Body.phtml"
+    ],
     "molajo\\views\\templates\\grid\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/Configuration.xml"
+    ],
+    "molajo\\views\\templates\\grid\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/Footer.phtml"
+    ],
+    "molajo\\views\\templates\\grid\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/Header.phtml"
     ],
     "molajo\\views\\templates\\grid\\js": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/Js"
@@ -5989,47 +5855,29 @@
     "molajo\\views\\templates\\grid\\js\\defer\\form-submit.js": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/Js\/Defer\/form-submit.js"
     ],
-    "molajo\\views\\templates\\grid\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/View"
-    ],
-    "molajo\\views\\templates\\grid\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\grid\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\grid\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid\/View\/Header.phtml"
-    ],
     "molajo\\views\\templates\\grid_categories": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_categories"
     ],
     "molajo\\views\\templates\\grid_categories\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_categories\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\grid_categories\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_categories\/View"
-    ],
-    "molajo\\views\\templates\\grid_categories\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_categories\/View\/Custom.phtml"
+    "molajo\\views\\templates\\grid_categories\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_categories\/Custom.phtml"
     ],
     "molajo\\views\\templates\\grid_filters": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters"
     ],
+    "molajo\\views\\templates\\grid_filters\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters\/Body.phtml"
+    ],
     "molajo\\views\\templates\\grid_filters\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\grid_filters\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters\/View"
+    "molajo\\views\\templates\\grid_filters\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\grid_filters\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\grid_filters\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\grid_filters\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters\/View\/Header.phtml"
+    "molajo\\views\\templates\\grid_filters\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_filters\/Header.phtml"
     ],
     "molajo\\views\\templates\\grid_permissions": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_permissions"
@@ -6037,11 +5885,8 @@
     "molajo\\views\\templates\\grid_permissions\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_permissions\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\grid_permissions\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_permissions\/View"
-    ],
-    "molajo\\views\\templates\\grid_permissions\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_permissions\/View\/Custom.phtml"
+    "molajo\\views\\templates\\grid_permissions\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_permissions\/Custom.phtml"
     ],
     "molajo\\views\\templates\\grid_tags": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_tags"
@@ -6049,11 +5894,8 @@
     "molajo\\views\\templates\\grid_tags\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_tags\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\grid_tags\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_tags\/View"
-    ],
-    "molajo\\views\\templates\\grid_tags\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_tags\/View\/Custom.phtml"
+    "molajo\\views\\templates\\grid_tags\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Grid_tags\/Custom.phtml"
     ],
     "molajo\\views\\templates\\header": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Header"
@@ -6061,59 +5903,47 @@
     "molajo\\views\\templates\\header\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Header\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\header\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Header\/View"
-    ],
-    "molajo\\views\\templates\\header\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Header\/View\/Custom.phtml"
+    "molajo\\views\\templates\\header\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Header\/Custom.phtml"
     ],
     "molajo\\views\\templates\\item": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Item"
     ],
+    "molajo\\views\\templates\\item\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Item\/Body.phtml"
+    ],
     "molajo\\views\\templates\\item\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Item\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\item\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Item\/View"
-    ],
-    "molajo\\views\\templates\\item\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Item\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\messages": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Messages"
     ],
+    "molajo\\views\\templates\\messages\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Messages\/Body.phtml"
+    ],
     "molajo\\views\\templates\\messages\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Messages\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\messages\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Messages\/View"
-    ],
-    "molajo\\views\\templates\\messages\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Messages\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\messages\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Messages\/View\/Custom.phtml"
+    "molajo\\views\\templates\\messages\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Messages\/Custom.phtml"
     ],
     "molajo\\views\\templates\\navbar": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar"
     ],
+    "molajo\\views\\templates\\navbar\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/Body.phtml"
+    ],
     "molajo\\views\\templates\\navbar\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\navbar\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/View"
+    "molajo\\views\\templates\\navbar\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\navbar\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/View\/Body.phtml"
+    "molajo\\views\\templates\\navbar\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/Header.phtml"
     ],
-    "molajo\\views\\templates\\navbar\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\navbar\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/View\/Header.phtml"
-    ],
-    "molajo\\views\\templates\\navbar\\view\\xxxcustom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/View\/xxxCustom.phtml"
+    "molajo\\views\\templates\\navbar\\xxxcustom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Navbar\/xxxCustom.phtml"
     ],
     "molajo\\views\\templates\\pagination": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Pagination"
@@ -6121,11 +5951,8 @@
     "molajo\\views\\templates\\pagination\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Pagination\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\pagination\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Pagination\/View"
-    ],
-    "molajo\\views\\templates\\pagination\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Pagination\/View\/Custom.phtml"
+    "molajo\\views\\templates\\pagination\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Pagination\/Custom.phtml"
     ],
     "molajo\\views\\templates\\paging": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Paging"
@@ -6133,11 +5960,8 @@
     "molajo\\views\\templates\\paging\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Paging\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\paging\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Paging\/View"
-    ],
-    "molajo\\views\\templates\\paging\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Paging\/View\/Custom.phtml"
+    "molajo\\views\\templates\\paging\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Paging\/Custom.phtml"
     ],
     "molajo\\views\\templates\\sidebar": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Sidebar"
@@ -6145,77 +5969,62 @@
     "molajo\\views\\templates\\sidebar\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Sidebar\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\sidebar\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Sidebar\/View"
-    ],
-    "molajo\\views\\templates\\sidebar\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Sidebar\/View\/Custom.phtml"
+    "molajo\\views\\templates\\sidebar\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Sidebar\/Custom.phtml"
     ],
     "molajo\\views\\templates\\signup": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Signup"
     ],
+    "molajo\\views\\templates\\signup\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Signup\/Body.phtml"
+    ],
     "molajo\\views\\templates\\signup\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Signup\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\signup\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Signup\/View"
-    ],
-    "molajo\\views\\templates\\signup\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Signup\/View\/Body.phtml"
     ],
     "molajo\\views\\templates\\tabs": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs"
     ],
+    "molajo\\views\\templates\\tabs\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs\/Body.phtml"
+    ],
     "molajo\\views\\templates\\tabs\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\tabs\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs\/View"
+    "molajo\\views\\templates\\tabs\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs\/Footer.phtml"
     ],
-    "molajo\\views\\templates\\tabs\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs\/View\/Body.phtml"
-    ],
-    "molajo\\views\\templates\\tabs\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\templates\\tabs\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs\/View\/Header.phtml"
+    "molajo\\views\\templates\\tabs\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Tabs\/Header.phtml"
     ],
     "molajo\\views\\templates\\toolbar": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar"
     ],
+    "molajo\\views\\templates\\toolbar\\configuration.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/Configuration.phtml"
+    ],
     "molajo\\views\\templates\\toolbar\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/Configuration.xml"
     ],
-    "molajo\\views\\templates\\toolbar\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/View"
+    "molajo\\views\\templates\\toolbar\\custom.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/Custom.phtml"
     ],
-    "molajo\\views\\templates\\toolbar\\view\\configuration.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/View\/Configuration.phtml"
+    "molajo\\views\\templates\\toolbar\\edit.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/Edit.phtml"
     ],
-    "molajo\\views\\templates\\toolbar\\view\\custom.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/View\/Custom.phtml"
+    "molajo\\views\\templates\\toolbar\\grid.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/Grid.phtml"
     ],
-    "molajo\\views\\templates\\toolbar\\view\\edit.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/View\/Edit.phtml"
-    ],
-    "molajo\\views\\templates\\toolbar\\view\\grid.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/View\/Grid.phtml"
-    ],
-    "molajo\\views\\templates\\toolbar\\view\\item.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/View\/Item.phtml"
+    "molajo\\views\\templates\\toolbar\\item.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Toolbar\/Item.phtml"
     ],
     "molajo\\views\\templates\\userprofile": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Userprofile"
     ],
+    "molajo\\views\\templates\\userprofile\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Userprofile\/Body.phtml"
+    ],
     "molajo\\views\\templates\\userprofile\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Userprofile\/Configuration.xml"
-    ],
-    "molajo\\views\\templates\\userprofile\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Userprofile\/View"
-    ],
-    "molajo\\views\\templates\\userprofile\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Templates\/Userprofile\/View\/Body.phtml"
     ],
     "molajo\\views\\wraps": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/"
@@ -6223,167 +6032,143 @@
     "molajo\\views\\wraps\\article": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article"
     ],
+    "molajo\\views\\wraps\\article\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\article\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\article\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article\/View"
+    "molajo\\views\\wraps\\article\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\article\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\article\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\article\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article\/View\/Header.phtml"
+    "molajo\\views\\wraps\\article\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Article\/Header.phtml"
     ],
     "molajo\\views\\wraps\\aside": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside"
     ],
+    "molajo\\views\\wraps\\aside\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\aside\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\aside\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside\/View"
+    "molajo\\views\\wraps\\aside\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\aside\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\aside\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\aside\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside\/View\/Header.phtml"
+    "molajo\\views\\wraps\\aside\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Aside\/Header.phtml"
     ],
     "molajo\\views\\wraps\\default": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default"
     ],
+    "molajo\\views\\wraps\\default\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\default\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\default\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default\/View"
+    "molajo\\views\\wraps\\default\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\default\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\default\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\default\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default\/View\/Header.phtml"
+    "molajo\\views\\wraps\\default\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Default\/Header.phtml"
     ],
     "molajo\\views\\wraps\\div": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div"
     ],
+    "molajo\\views\\wraps\\div\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\div\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\div\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div\/View"
+    "molajo\\views\\wraps\\div\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\div\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\div\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\div\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div\/View\/Header.phtml"
+    "molajo\\views\\wraps\\div\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Div\/Header.phtml"
     ],
     "molajo\\views\\wraps\\fieldset": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset"
     ],
+    "molajo\\views\\wraps\\fieldset\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\fieldset\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\fieldset\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset\/View"
+    "molajo\\views\\wraps\\fieldset\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\fieldset\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\fieldset\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\fieldset\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset\/View\/Header.phtml"
+    "molajo\\views\\wraps\\fieldset\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Fieldset\/Header.phtml"
     ],
     "molajo\\views\\wraps\\footer": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer"
     ],
+    "molajo\\views\\wraps\\footer\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\footer\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\footer\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer\/View"
+    "molajo\\views\\wraps\\footer\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\footer\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\footer\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\footer\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer\/View\/Header.phtml"
+    "molajo\\views\\wraps\\footer\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Footer\/Header.phtml"
     ],
     "molajo\\views\\wraps\\form": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form"
     ],
+    "molajo\\views\\wraps\\form\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\form\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\form\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form\/View"
+    "molajo\\views\\wraps\\form\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\form\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\form\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\form\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form\/View\/Header.phtml"
+    "molajo\\views\\wraps\\form\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Form\/Header.phtml"
     ],
     "molajo\\views\\wraps\\header": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header"
     ],
+    "molajo\\views\\wraps\\header\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\header\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\header\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header\/View"
+    "molajo\\views\\wraps\\header\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\header\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\header\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\header\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header\/View\/Header.phtml"
+    "molajo\\views\\wraps\\header\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Header\/Header.phtml"
     ],
     "molajo\\views\\wraps\\hgroup": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup"
     ],
+    "molajo\\views\\wraps\\hgroup\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\hgroup\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\hgroup\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup\/View"
+    "molajo\\views\\wraps\\hgroup\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\hgroup\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\hgroup\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\hgroup\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup\/View\/Header.phtml"
+    "molajo\\views\\wraps\\hgroup\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Hgroup\/Header.phtml"
     ],
     "molajo\\views\\wraps\\iframe": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe"
+    ],
+    "molajo\\views\\wraps\\iframe\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/Body.phtml"
     ],
     "molajo\\views\\wraps\\iframe\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/Configuration.xml"
@@ -6394,17 +6179,11 @@
     "molajo\\views\\wraps\\iframe\\css\\template.css": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/Css\/template.css"
     ],
-    "molajo\\views\\wraps\\iframe\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/View"
+    "molajo\\views\\wraps\\iframe\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\iframe\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\iframe\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\iframe\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/View\/Header.phtml"
+    "molajo\\views\\wraps\\iframe\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Iframe\/Header.phtml"
     ],
     "molajo\\views\\wraps\\index.html": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Index.html"
@@ -6412,8 +6191,17 @@
     "molajo\\views\\wraps\\modal": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal"
     ],
+    "molajo\\views\\wraps\\modal\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\modal\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/Configuration.xml"
+    ],
+    "molajo\\views\\wraps\\modal\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/Footer.phtml"
+    ],
+    "molajo\\views\\wraps\\modal\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/Header.phtml"
     ],
     "molajo\\views\\wraps\\modal\\js": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/Js"
@@ -6421,83 +6209,59 @@
     "molajo\\views\\wraps\\modal\\js\\load.js": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/Js\/Load.js"
     ],
-    "molajo\\views\\wraps\\modal\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/View"
-    ],
-    "molajo\\views\\wraps\\modal\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\modal\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\modal\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Modal\/View\/Header.phtml"
-    ],
     "molajo\\views\\wraps\\nav": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav"
+    ],
+    "molajo\\views\\wraps\\nav\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav\/Body.phtml"
     ],
     "molajo\\views\\wraps\\nav\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\nav\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav\/View"
+    "molajo\\views\\wraps\\nav\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\nav\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\nav\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\nav\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav\/View\/Header.phtml"
+    "molajo\\views\\wraps\\nav\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Nav\/Header.phtml"
     ],
     "molajo\\views\\wraps\\none": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/None"
     ],
+    "molajo\\views\\wraps\\none\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/None\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\none\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/None\/Configuration.xml"
-    ],
-    "molajo\\views\\wraps\\none\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/None\/View"
-    ],
-    "molajo\\views\\wraps\\none\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/None\/View\/Body.phtml"
     ],
     "molajo\\views\\wraps\\portlet": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet"
     ],
+    "molajo\\views\\wraps\\portlet\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\portlet\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\portlet\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet\/View"
+    "molajo\\views\\wraps\\portlet\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\portlet\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\portlet\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\portlet\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet\/View\/Header.phtml"
+    "molajo\\views\\wraps\\portlet\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Portlet\/Header.phtml"
     ],
     "molajo\\views\\wraps\\section": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section"
     ],
+    "molajo\\views\\wraps\\section\\body.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section\/Body.phtml"
+    ],
     "molajo\\views\\wraps\\section\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section\/Configuration.xml"
     ],
-    "molajo\\views\\wraps\\section\\view": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section\/View"
+    "molajo\\views\\wraps\\section\\footer.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section\/Footer.phtml"
     ],
-    "molajo\\views\\wraps\\section\\view\\body.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section\/View\/Body.phtml"
-    ],
-    "molajo\\views\\wraps\\section\\view\\footer.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section\/View\/Footer.phtml"
-    ],
-    "molajo\\views\\wraps\\section\\view\\header.phtml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section\/View\/Header.phtml"
+    "molajo\\views\\wraps\\section\\header.phtml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/foundation5\/Source\/Views\/Wraps\/Section\/Header.phtml"
     ],
     "molajo\\wrapviews": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Wrapviews"

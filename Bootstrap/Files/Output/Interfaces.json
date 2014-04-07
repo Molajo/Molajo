@@ -248,6 +248,19 @@
 
         ]
     },
+    "CommonApi\\Controller\\ResourceInterface": {
+        "name": "ResourceInterface",
+        "namespace": "CommonApi\\Controller",
+        "fqns": "CommonApi\\Controller\\ResourceInterface",
+        "path": "vendor\/commonapi\/controller\/ResourceInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Controller\\ResourceController"
+        ],
+        "dependency_for": [
+
+        ]
+    },
     "CommonApi\\Controller\\SiteInterface": {
         "name": "SiteInterface",
         "namespace": "CommonApi\\Controller",
@@ -534,7 +547,6 @@
             "Molajo\\Plugins\\Copyright\\CopyrightPlugin",
             "Molajo\\Plugins\\Events\\EventsPlugin",
             "Molajo\\Plugins\\Menuitems\\MenuitemsPlugin",
-            "Molajo\\Plugins\\Resource\\ResourcePlugin",
             "Molajo\\Plugins\\SystemEventPlugin"
         ],
         "dependency_for": [
@@ -740,6 +752,7 @@
             "Molajo\\Factories\\Render\\RenderFactoryMethod",
             "Molajo\\Factories\\Request\\RequestFactoryMethod",
             "Molajo\\Factories\\Resource\\ResourceFactoryMethod",
+            "Molajo\\Factories\\Resourcecontroller\\ResourcecontrollerFactoryMethod",
             "Molajo\\Factories\\Resourcecssdeclarations\\ResourcecssdeclarationsFactoryMethod",
             "Molajo\\Factories\\Resourcedata\\ResourcedataFactoryMethod",
             "Molajo\\Factories\\Resourcejs\\ResourcejsFactoryMethod",
@@ -803,6 +816,7 @@
             "Molajo\\Factories\\Render\\RenderFactoryMethod",
             "Molajo\\Factories\\Request\\RequestFactoryMethod",
             "Molajo\\Factories\\Resource\\ResourceFactoryMethod",
+            "Molajo\\Factories\\Resourcecontroller\\ResourcecontrollerFactoryMethod",
             "Molajo\\Factories\\Resourcecssdeclarations\\ResourcecssdeclarationsFactoryMethod",
             "Molajo\\Factories\\Resourcedata\\ResourcedataFactoryMethod",
             "Molajo\\Factories\\Resourcejs\\ResourcejsFactoryMethod",
@@ -964,7 +978,7 @@
             "Molajo\\User\\Fieldhandler"
         ],
         "dependency_for": [
-            "Molajito\\Escape",
+            "Molajito\\Escape\\Molajo",
             "Molajo\\Controller\\Application",
             "Molajo\\Query\\Adapter\\AbstractAdapter",
             "Molajo\\Query\\Adapter\\MySql",
@@ -1069,6 +1083,7 @@
         "implemented_by": [
             "Molajito\\Data",
             "Molajito\\Data\\AbstractAdapter",
+            "Molajito\\Data\\Filesystem",
             "Molajito\\Data\\Molajo"
         ],
         "dependency_for": [
@@ -1083,9 +1098,12 @@
         "path": "vendor\/commonapi\/render\/EscapeInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajito\\Escape"
+            "Molajito\\Escape",
+            "Molajito\\Escape\\Molajo",
+            "Molajito\\Escape\\Simple"
         ],
         "dependency_for": [
+            "Molajito\\Escape",
             "Molajito\\Position",
             "Molajito\\TemplateView",
             "Molajito\\Theme"
@@ -1100,6 +1118,7 @@
         "implemented_by": [
             "Molajito\\Event",
             "Molajito\\Event\\AbstractAdapter",
+            "Molajito\\Event\\Dummy",
             "Molajito\\Event\\Molajo"
         ],
         "dependency_for": [
@@ -1189,6 +1208,7 @@
         "implemented_by": [
             "Molajito\\View",
             "Molajito\\View\\AbstractAdapter",
+            "Molajito\\View\\Filesystem",
             "Molajito\\View\\Molajo"
         ],
         "dependency_for": [
