@@ -1955,6 +1955,12 @@
         "path": "vendor\/molajo\/query\/Factories\/Query\/QueryFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Query\\QueryFactoryMethod"
     },
+    "vendor\/molajo\/query\/Factories\/Query2\/Query2FactoryMethod.php": {
+        "file_name": "Query2FactoryMethod.php",
+        "base_name": "Query2FactoryMethod",
+        "path": "vendor\/molajo\/query\/Factories\/Query2\/Query2FactoryMethod.php",
+        "fqns": "Molajo\\Factories\\Query2\\Query2FactoryMethod"
+    },
     "vendor\/molajo\/query\/Factories\/Resourcedata\/ResourcedataFactoryMethod.php": {
         "file_name": "ResourcedataFactoryMethod.php",
         "base_name": "ResourcedataFactoryMethod",

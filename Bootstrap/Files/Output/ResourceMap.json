@@ -1173,6 +1173,15 @@
     "molajo\\factories\\query": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query"
     ],
+    "molajo\\factories\\query2": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query2"
+    ],
+    "molajo\\factories\\query2\\configuration.xml": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query2\/Configuration.xml"
+    ],
+    "molajo\\factories\\query2\\query2factorymethod": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query2\/Query2FactoryMethod.php"
+    ],
     "molajo\\factories\\query\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query\/Configuration.xml"
     ],
