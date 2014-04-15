@@ -1433,6 +1433,12 @@
         "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Equal.php",
         "fqns": "Molajo\\Fieldhandler\\Adapter\\Equal"
     },
+    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fileextension.php": {
+        "file_name": "Fileextension.php",
+        "base_name": "Fileextension",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fileextension.php",
+        "fqns": "Molajo\\Fieldhandler\\Adapter\\Fileextension"
+    },
     "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Float.php": {
         "file_name": "Float.php",
         "base_name": "Float",
@@ -1480,6 +1486,12 @@
         "base_name": "Ip",
         "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php",
         "fqns": "Molajo\\Fieldhandler\\Adapter\\Ip"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries\/kses.php": {
+        "file_name": "kses.php",
+        "base_name": "kses",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries\/kses.php",
+        "fqns": "Molajo\\Fieldhandler\\Adapter\\Libraries\\kses"
     },
     "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php": {
         "file_name": "Lower.php",
@@ -1769,6 +1781,12 @@
         "path": "vendor\/molajo\/molajito\/Source\/Data\/Filesystem.php",
         "fqns": "Molajito\\Data\\Filesystem"
     },
+    "vendor\/molajo\/molajito\/Source\/Data\/FilesystemModel.php": {
+        "file_name": "FilesystemModel.php",
+        "base_name": "FilesystemModel",
+        "path": "vendor\/molajo\/molajito\/Source\/Data\/FilesystemModel.php",
+        "fqns": "Molajito\\Data\\FilesystemModel"
+    },
     "vendor\/molajo\/molajito\/Source\/Data\/Molajo.php": {
         "file_name": "Molajo.php",
         "base_name": "Molajo",
@@ -1954,12 +1972,6 @@
         "base_name": "QueryFactoryMethod",
         "path": "vendor\/molajo\/query\/Factories\/Query\/QueryFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Query\\QueryFactoryMethod"
-    },
-    "vendor\/molajo\/query\/Factories\/Query2\/Query2FactoryMethod.php": {
-        "file_name": "Query2FactoryMethod.php",
-        "base_name": "Query2FactoryMethod",
-        "path": "vendor\/molajo\/query\/Factories\/Query2\/Query2FactoryMethod.php",
-        "fqns": "Molajo\\Factories\\Query2\\Query2FactoryMethod"
     },
     "vendor\/molajo\/query\/Factories\/Resourcedata\/ResourcedataFactoryMethod.php": {
         "file_name": "ResourcedataFactoryMethod.php",
