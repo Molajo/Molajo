@@ -30,9 +30,6 @@ function readJsonFile($file_name)
     return $temp_array;
 }
 
-/** Composer */
-include $base_path . '/vendor/autoload.php';
-
 /** Molajo */
 require_once $base_path . '/vendor/commonapi/exception/ExceptionInterface.php';
 require_once $base_path . '/vendor/commonapi/exception/RuntimeException.php';
@@ -68,3 +65,6 @@ $class                           = 'Molajo\\Resource\\Driver';
 $resource_adapter                = new $class($scheme, $handler_instance);
 
 include __DIR__ . '/SetNamespace.php';
+
+/** Composer */
+include $base_path . '/vendor/autoload.php';
