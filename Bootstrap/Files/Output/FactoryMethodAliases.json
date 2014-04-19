@@ -31,7 +31,6 @@
     "Plugindata": "Molajo\\Factories\\Plugindata",
     "Query": "Molajo\\Factories\\Query",
     "Query2": "Molajo\\Factories\\Query2",
-    "Redirect": "Molajo\\Factories\\Redirect",
     "Registration": "Molajo\\Factories\\Registration",
     "Render": "Molajo\\Factories\\Render",
     "Request": "Molajo\\Factories\\Request",

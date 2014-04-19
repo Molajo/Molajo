@@ -473,17 +473,23 @@
         "path": "vendor\/commonapi\/ioc\/ScheduleInterface.php",
         "fqns": "CommonApi\\IoC\\ScheduleInterface"
     },
-    "vendor\/commonapi\/language\/DatabaseModelInterface.php": {
-        "file_name": "DatabaseModelInterface.php",
-        "base_name": "DatabaseModelInterface",
-        "path": "vendor\/commonapi\/language\/DatabaseModelInterface.php",
-        "fqns": "CommonApi\\Language\\DatabaseModelInterface"
+    "vendor\/commonapi\/language\/CaptureUntranslatedStringInterface.php": {
+        "file_name": "CaptureUntranslatedStringInterface.php",
+        "base_name": "CaptureUntranslatedStringInterface",
+        "path": "vendor\/commonapi\/language\/CaptureUntranslatedStringInterface.php",
+        "fqns": "CommonApi\\Language\\CaptureUntranslatedStringInterface"
     },
     "vendor\/commonapi\/language\/LanguageInterface.php": {
         "file_name": "LanguageInterface.php",
         "base_name": "LanguageInterface",
         "path": "vendor\/commonapi\/language\/LanguageInterface.php",
         "fqns": "CommonApi\\Language\\LanguageInterface"
+    },
+    "vendor\/commonapi\/language\/TranslateInterface.php": {
+        "file_name": "TranslateInterface.php",
+        "base_name": "TranslateInterface",
+        "path": "vendor\/commonapi\/language\/TranslateInterface.php",
+        "fqns": "CommonApi\\Language\\TranslateInterface"
     },
     "vendor\/commonapi\/model\/CreateModelInterface.php": {
         "file_name": "CreateModelInterface.php",
@@ -497,6 +503,12 @@
         "path": "vendor\/commonapi\/model\/DeleteModelInterface.php",
         "fqns": "CommonApi\\Model\\DeleteModelInterface"
     },
+    "vendor\/commonapi\/model\/EscapeInterface.php": {
+        "file_name": "EscapeInterface.php",
+        "base_name": "EscapeInterface",
+        "path": "vendor\/commonapi\/model\/EscapeInterface.php",
+        "fqns": "CommonApi\\Model\\EscapeInterface"
+    },
     "vendor\/commonapi\/model\/FieldhandlerAdapterInterface.php": {
         "file_name": "FieldhandlerAdapterInterface.php",
         "base_name": "FieldhandlerAdapterInterface",
@@ -508,6 +520,18 @@
         "base_name": "FieldhandlerInterface",
         "path": "vendor\/commonapi\/model\/FieldhandlerInterface.php",
         "fqns": "CommonApi\\Model\\FieldhandlerInterface"
+    },
+    "vendor\/commonapi\/model\/FieldhandlerItemInterface.php": {
+        "file_name": "FieldhandlerItemInterface.php",
+        "base_name": "FieldhandlerItemInterface",
+        "path": "vendor\/commonapi\/model\/FieldhandlerItemInterface.php",
+        "fqns": "CommonApi\\Model\\FieldhandlerItemInterface"
+    },
+    "vendor\/commonapi\/model\/FilterInterface.php": {
+        "file_name": "FilterInterface.php",
+        "base_name": "FilterInterface",
+        "path": "vendor\/commonapi\/model\/FilterInterface.php",
+        "fqns": "CommonApi\\Model\\FilterInterface"
     },
     "vendor\/commonapi\/model\/ModelInterface.php": {
         "file_name": "ModelInterface.php",
@@ -526,6 +550,12 @@
         "base_name": "UpdateModelInterface",
         "path": "vendor\/commonapi\/model\/UpdateModelInterface.php",
         "fqns": "CommonApi\\Model\\UpdateModelInterface"
+    },
+    "vendor\/commonapi\/model\/ValidateInterface.php": {
+        "file_name": "ValidateInterface.php",
+        "base_name": "ValidateInterface",
+        "path": "vendor\/commonapi\/model\/ValidateInterface.php",
+        "fqns": "CommonApi\\Model\\ValidateInterface"
     },
     "vendor\/commonapi\/query\/QueryInterface.php": {
         "file_name": "QueryInterface.php",
@@ -1511,6 +1541,12 @@
         "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php",
         "fqns": "Molajo\\Fieldhandler\\Adapter\\Ip"
     },
+    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries\/kses.php": {
+        "file_name": "kses.php",
+        "base_name": "kses",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries\/kses.php",
+        "fqns": "Molajo\\Fieldhandler\\Adapter\\Libraries\\kses"
+    },
     "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php": {
         "file_name": "Lower.php",
         "base_name": "Lower",
@@ -1625,6 +1661,12 @@
         "path": "vendor\/molajo\/fieldhandler\/Source\/Driver.php",
         "fqns": "Molajo\\Fieldhandler\\Driver"
     },
+    "vendor\/molajo\/fieldhandler\/Source\/FieldhandlerItem.php": {
+        "file_name": "FieldhandlerItem.php",
+        "base_name": "FieldhandlerItem",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/FieldhandlerItem.php",
+        "fqns": "Molajo\\Fieldhandler\\FieldhandlerItem"
+    },
     "vendor\/molajo\/filesystem\/Factories\/Filesystem\/FilesystemFactoryMethod.php": {
         "file_name": "FilesystemFactoryMethod.php",
         "base_name": "FilesystemFactoryMethod",
@@ -1672,12 +1714,6 @@
         "base_name": "ClientFactoryMethod",
         "path": "vendor\/molajo\/http\/Factories\/Client\/ClientFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Client\\ClientFactoryMethod"
-    },
-    "vendor\/molajo\/http\/Factories\/Redirect\/RedirectFactoryMethod.php": {
-        "file_name": "RedirectFactoryMethod.php",
-        "base_name": "RedirectFactoryMethod",
-        "path": "vendor\/molajo\/http\/Factories\/Redirect\/RedirectFactoryMethod.php",
-        "fqns": "Molajo\\Factories\\Redirect\\RedirectFactoryMethod"
     },
     "vendor\/molajo\/http\/Factories\/Request\/RequestFactoryMethod.php": {
         "file_name": "RequestFactoryMethod.php",
@@ -1793,18 +1829,6 @@
         "path": "vendor\/molajo\/molajito\/Source\/Data\/AbstractAdapter.php",
         "fqns": "Molajito\\Data\\AbstractAdapter"
     },
-    "vendor\/molajo\/molajito\/Source\/Data\/Filesystem.php": {
-        "file_name": "Filesystem.php",
-        "base_name": "Filesystem",
-        "path": "vendor\/molajo\/molajito\/Source\/Data\/Filesystem.php",
-        "fqns": "Molajito\\Data\\Filesystem"
-    },
-    "vendor\/molajo\/molajito\/Source\/Data\/FilesystemModel.php": {
-        "file_name": "FilesystemModel.php",
-        "base_name": "FilesystemModel",
-        "path": "vendor\/molajo\/molajito\/Source\/Data\/FilesystemModel.php",
-        "fqns": "Molajito\\Data\\FilesystemModel"
-    },
     "vendor\/molajo\/molajito\/Source\/Data\/Molajo.php": {
         "file_name": "Molajo.php",
         "base_name": "Molajo",
@@ -1865,6 +1889,12 @@
         "path": "vendor\/molajo\/molajito\/Source\/Event\/Molajo.php",
         "fqns": "Molajito\\Event\\Molajo"
     },
+    "vendor\/molajo\/molajito\/Source\/FactoryMethod.php": {
+        "file_name": "FactoryMethod.php",
+        "base_name": "FactoryMethod",
+        "path": "vendor\/molajo\/molajito\/Source\/FactoryMethod.php",
+        "fqns": "Molajito\\FactoryMethod"
+    },
     "vendor\/molajo\/molajito\/Source\/PageView.php": {
         "file_name": "PageView.php",
         "base_name": "PageView",
@@ -1900,6 +1930,30 @@
         "base_name": "Theme",
         "path": "vendor\/molajo\/molajito\/Source\/Theme.php",
         "fqns": "Molajito\\Theme"
+    },
+    "vendor\/molajo\/molajito\/Source\/Translate.php": {
+        "file_name": "Translate.php",
+        "base_name": "Translate",
+        "path": "vendor\/molajo\/molajito\/Source\/Translate.php",
+        "fqns": "Molajito\\Translate"
+    },
+    "vendor\/molajo\/molajito\/Source\/Translate\/AbstractAdapter.php": {
+        "file_name": "AbstractAdapter.php",
+        "base_name": "AbstractAdapter",
+        "path": "vendor\/molajo\/molajito\/Source\/Translate\/AbstractAdapter.php",
+        "fqns": "Molajito\\Translate\\AbstractAdapter"
+    },
+    "vendor\/molajo\/molajito\/Source\/Translate\/MolajoLanguageAdapter.php": {
+        "file_name": "MolajoLanguageAdapter.php",
+        "base_name": "MolajoLanguageAdapter",
+        "path": "vendor\/molajo\/molajito\/Source\/Translate\/MolajoLanguageAdapter.php",
+        "fqns": "Molajito\\Translate\\MolajoLanguageAdapter"
+    },
+    "vendor\/molajo\/molajito\/Source\/Translate\/StringArrayAdapter.php": {
+        "file_name": "StringArrayAdapter.php",
+        "base_name": "StringArrayAdapter",
+        "path": "vendor\/molajo\/molajito\/Source\/Translate\/StringArrayAdapter.php",
+        "fqns": "Molajito\\Translate\\StringArrayAdapter"
     },
     "vendor\/molajo\/molajito\/Source\/View.php": {
         "file_name": "View.php",

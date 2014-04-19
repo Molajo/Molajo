@@ -314,11 +314,11 @@
     "commonapi\\language": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/"
     ],
+    "commonapi\\language\\captureuntranslatedstringinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/CaptureUntranslatedStringInterface.php"
+    ],
     "commonapi\\language\\composer.json": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/composer.json"
-    ],
-    "commonapi\\language\\databasemodelinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/DatabaseModelInterface.php"
     ],
     "commonapi\\language\\languageinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/LanguageInterface.php"
@@ -328,6 +328,9 @@
     ],
     "commonapi\\language\\readme.md": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/README.md"
+    ],
+    "commonapi\\language\\translateinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/TranslateInterface.php"
     ],
     "commonapi\\model": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/"
@@ -341,11 +344,20 @@
     "commonapi\\model\\deletemodelinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/DeleteModelInterface.php"
     ],
+    "commonapi\\model\\escapeinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/EscapeInterface.php"
+    ],
     "commonapi\\model\\fieldhandleradapterinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FieldhandlerAdapterInterface.php"
     ],
     "commonapi\\model\\fieldhandlerinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FieldhandlerInterface.php"
+    ],
+    "commonapi\\model\\fieldhandleriteminterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FieldhandlerItemInterface.php"
+    ],
+    "commonapi\\model\\filterinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FilterInterface.php"
     ],
     "commonapi\\model\\modelinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ModelInterface.php"
@@ -355,6 +367,9 @@
     ],
     "commonapi\\model\\updatemodelinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/UpdateModelInterface.php"
+    ],
+    "commonapi\\model\\validateinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ValidateInterface.php"
     ],
     "commonapi\\query": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/query\/"
@@ -519,12 +534,6 @@
     "molajito\\data\\abstractadapter": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/AbstractAdapter.php"
     ],
-    "molajito\\data\\filesystem": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/Filesystem.php"
-    ],
-    "molajito\\data\\filesystemmodel": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/FilesystemModel.php"
-    ],
     "molajito\\data\\molajo": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Data\/Molajo.php"
     ],
@@ -557,6 +566,9 @@
     "molajito\\event\\molajo": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Event\/Molajo.php"
     ],
+    "molajito\\factorymethod": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/FactoryMethod.php"
+    ],
     "molajito\\pageview": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/PageView.php"
     ],
@@ -574,6 +586,19 @@
     ],
     "molajito\\theme": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Theme.php"
+    ],
+    "molajito\\translate": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Translate",
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Translate.php"
+    ],
+    "molajito\\translate\\abstractadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Translate\/AbstractAdapter.php"
+    ],
+    "molajito\\translate\\molajolanguageadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Translate\/MolajoLanguageAdapter.php"
+    ],
+    "molajito\\translate\\stringarrayadapter": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/Translate\/StringArrayAdapter.php"
     ],
     "molajito\\view": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View",
@@ -1227,15 +1252,6 @@
     "molajo\\factories\\query\\queryfactorymethod": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query\/QueryFactoryMethod.php"
     ],
-    "molajo\\factories\\redirect": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Redirect"
-    ],
-    "molajo\\factories\\redirect\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Redirect\/Configuration.xml"
-    ],
-    "molajo\\factories\\redirect\\redirectfactorymethod": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Redirect\/RedirectFactoryMethod.php"
-    ],
     "molajo\\factories\\registration": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Registration"
     ],
@@ -1552,6 +1568,12 @@
     "molajo\\fieldhandler\\adapter\\ip": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php"
     ],
+    "molajo\\fieldhandler\\adapter\\libraries": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries"
+    ],
+    "molajo\\fieldhandler\\adapter\\libraries\\kses": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries\/kses.php"
+    ],
     "molajo\\fieldhandler\\adapter\\lower": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php"
     ],
@@ -1614,6 +1636,9 @@
     ],
     "molajo\\fieldhandler\\driver": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Driver.php"
+    ],
+    "molajo\\fieldhandler\\fieldhandleritem": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/FieldhandlerItem.php"
     ],
     "molajo\\fields": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Fields"
@@ -4898,6 +4923,9 @@
     ],
     "molajo\\sites\\extension.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Sites\/Extension.xml"
+    ],
+    "molajo\\sites\\extensions": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Sites\/2\/Extensions"
     ],
     "molajo\\sites\\logs": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Sites\/2\/Logs"

@@ -754,7 +754,6 @@
             "Molajo\\Factories\\Plugindata\\PlugindataFactoryMethod",
             "Molajo\\Factories\\Query2\\Query2FactoryMethod",
             "Molajo\\Factories\\Query\\QueryFactoryMethod",
-            "Molajo\\Factories\\Redirect\\RedirectFactoryMethod",
             "Molajo\\Factories\\Registration\\RegistrationFactoryMethod",
             "Molajo\\Factories\\Render\\RenderFactoryMethod",
             "Molajo\\Factories\\Request\\RequestFactoryMethod",
@@ -826,7 +825,6 @@
             "Molajo\\Factories\\Plugindata\\PlugindataFactoryMethod",
             "Molajo\\Factories\\Query2\\Query2FactoryMethod",
             "Molajo\\Factories\\Query\\QueryFactoryMethod",
-            "Molajo\\Factories\\Redirect\\RedirectFactoryMethod",
             "Molajo\\Factories\\Registration\\RegistrationFactoryMethod",
             "Molajo\\Factories\\Render\\RenderFactoryMethod",
             "Molajo\\Factories\\Request\\RequestFactoryMethod",
@@ -873,17 +871,20 @@
             "Molajo\\Controller\\FrontController"
         ]
     },
-    "CommonApi\\Language\\DatabaseModelInterface": {
-        "name": "DatabaseModelInterface",
+    "CommonApi\\Language\\CaptureUntranslatedStringInterface": {
+        "name": "CaptureUntranslatedStringInterface",
         "namespace": "CommonApi\\Language",
-        "fqns": "CommonApi\\Language\\DatabaseModelInterface",
-        "path": "vendor\/commonapi\/language\/DatabaseModelInterface.php",
+        "fqns": "CommonApi\\Language\\CaptureUntranslatedStringInterface",
+        "path": "vendor\/commonapi\/language\/CaptureUntranslatedStringInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Language\\Adapter\\DatabaseModel"
+            "Molajo\\Language\\Adapter\\AbstractAdapter",
+            "Molajo\\Language\\Adapter\\Database",
+            "Molajo\\Language\\Adapter\\DatabaseModel",
+            "Molajo\\Language\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Language\\Adapter\\Database"
+
         ]
     },
     "CommonApi\\Language\\LanguageInterface": {
@@ -898,9 +899,28 @@
             "Molajo\\Language\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Language\\Adapter\\Database",
+            "Molajo\\Language\\Driver"
+        ]
+    },
+    "CommonApi\\Language\\TranslateInterface": {
+        "name": "TranslateInterface",
+        "namespace": "CommonApi\\Language",
+        "fqns": "CommonApi\\Language\\TranslateInterface",
+        "path": "vendor\/commonapi\/language\/TranslateInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajito\\Translate",
+            "Molajito\\Translate\\AbstractAdapter",
+            "Molajito\\Translate\\MolajoLanguageAdapter",
+            "Molajito\\Translate\\StringArrayAdapter",
+            "Molajo\\Language\\Adapter\\AbstractAdapter",
             "Molajo\\Language\\Adapter\\Database",
             "Molajo\\Language\\Driver"
+        ],
+        "dependency_for": [
+            "Molajito\\Engine",
+            "Molajito\\Translate",
+            "Molajito\\Translate\\MolajoLanguageAdapter"
         ]
     },
     "CommonApi\\Model\\CreateModelInterface": {
@@ -924,6 +944,19 @@
         "parent": false,
         "implemented_by": [
             "Molajo\\Model\\DeleteModel"
+        ],
+        "dependency_for": [
+
+        ]
+    },
+    "CommonApi\\Model\\EscapeInterface": {
+        "name": "EscapeInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\EscapeInterface",
+        "path": "vendor\/commonapi\/model\/EscapeInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\Driver"
         ],
         "dependency_for": [
 
@@ -995,7 +1028,6 @@
         "path": "vendor\/commonapi\/model\/FieldhandlerInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Driver",
             "Molajo\\User\\Fieldhandler"
         ],
         "dependency_for": [
@@ -1009,6 +1041,32 @@
             "Molajo\\User\\Authentication",
             "Molajo\\User\\Fieldhandler",
             "Molajo\\User\\TextTemplate"
+        ]
+    },
+    "CommonApi\\Model\\FieldhandlerItemInterface": {
+        "name": "FieldhandlerItemInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\FieldhandlerItemInterface",
+        "path": "vendor\/commonapi\/model\/FieldhandlerItemInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\FieldhandlerItem"
+        ],
+        "dependency_for": [
+
+        ]
+    },
+    "CommonApi\\Model\\FilterInterface": {
+        "name": "FilterInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\FilterInterface",
+        "path": "vendor\/commonapi\/model\/FilterInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\Driver"
+        ],
+        "dependency_for": [
+
         ]
     },
     "CommonApi\\Model\\ModelInterface": {
@@ -1060,6 +1118,19 @@
 
         ]
     },
+    "CommonApi\\Model\\ValidateInterface": {
+        "name": "ValidateInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\ValidateInterface",
+        "path": "vendor\/commonapi\/model\/ValidateInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\Driver"
+        ],
+        "dependency_for": [
+
+        ]
+    },
     "CommonApi\\Query\\QueryInterface": {
         "name": "QueryInterface",
         "namespace": "CommonApi\\Query",
@@ -1104,8 +1175,6 @@
         "implemented_by": [
             "Molajito\\Data",
             "Molajito\\Data\\AbstractAdapter",
-            "Molajito\\Data\\Filesystem",
-            "Molajito\\Data\\FilesystemModel",
             "Molajito\\Data\\Molajo"
         ],
         "dependency_for": [
@@ -1129,7 +1198,10 @@
             "Molajito\\Escape",
             "Molajito\\Position",
             "Molajito\\TemplateView",
-            "Molajito\\Theme"
+            "Molajito\\Theme",
+            "Molajito\\Translate\\AbstractAdapter",
+            "Molajito\\Translate\\MolajoLanguageAdapter",
+            "Molajito\\Translate\\StringArrayAdapter"
         ]
     },
     "CommonApi\\Render\\EventInterface": {
@@ -1160,7 +1232,8 @@
             "Molajo\\Pagination"
         ],
         "dependency_for": [
-            "Molajito\\Data\\FilesystemModel"
+            "Molajito\\Data\\AbstractAdapter",
+            "Molajito\\Data\\Molajo"
         ]
     },
     "CommonApi\\Render\\ParseInterface": {
