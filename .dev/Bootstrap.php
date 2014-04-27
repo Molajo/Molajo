@@ -6,9 +6,12 @@
  * @copyright  2014 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
-$base     = substr(__DIR__, 0, strlen(__DIR__) - 5);
-include $base . '/vendor/autoload.php';
-include_once __DIR__ . '/CreateClassMap.php';
+$base = substr(__DIR__, 0, strlen(__DIR__) - 5);
+if (function_exists('CreateClassMap')) {
+} else {
+    include_once __DIR__ . '/CreateClassMap.php';
+}
+include_once $base . '/vendor/autoload.php';
 
 $classmap = array();
 $results  = createClassMap($base . '/Source/Plugins/Author', 'Molajo\\Plugins\\Author\\');
