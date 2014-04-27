@@ -23,8 +23,7 @@
     "require": {
         "php": ">=5.4",
         "molajo/application": "dev-master",
-        "molajo/foundation5": "dev-master",
-        "molajo/framework": "dev-master"
+        "molajo/foundation5": "dev-master"
     },
 
     "autoload": {

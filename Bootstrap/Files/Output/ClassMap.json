@@ -491,6 +491,12 @@
         "path": "vendor\/commonapi\/language\/TranslateInterface.php",
         "fqns": "CommonApi\\Language\\TranslateInterface"
     },
+    "vendor\/commonapi\/model\/ConstraintInterface.php": {
+        "file_name": "ConstraintInterface.php",
+        "base_name": "ConstraintInterface",
+        "path": "vendor\/commonapi\/model\/ConstraintInterface.php",
+        "fqns": "CommonApi\\Model\\ConstraintInterface"
+    },
     "vendor\/commonapi\/model\/CreateModelInterface.php": {
         "file_name": "CreateModelInterface.php",
         "base_name": "CreateModelInterface",
@@ -509,29 +515,29 @@
         "path": "vendor\/commonapi\/model\/EscapeInterface.php",
         "fqns": "CommonApi\\Model\\EscapeInterface"
     },
-    "vendor\/commonapi\/model\/FieldhandlerAdapterInterface.php": {
-        "file_name": "FieldhandlerAdapterInterface.php",
-        "base_name": "FieldhandlerAdapterInterface",
-        "path": "vendor\/commonapi\/model\/FieldhandlerAdapterInterface.php",
-        "fqns": "CommonApi\\Model\\FieldhandlerAdapterInterface"
-    },
     "vendor\/commonapi\/model\/FieldhandlerInterface.php": {
         "file_name": "FieldhandlerInterface.php",
         "base_name": "FieldhandlerInterface",
         "path": "vendor\/commonapi\/model\/FieldhandlerInterface.php",
         "fqns": "CommonApi\\Model\\FieldhandlerInterface"
     },
-    "vendor\/commonapi\/model\/FieldhandlerItemInterface.php": {
-        "file_name": "FieldhandlerItemInterface.php",
-        "base_name": "FieldhandlerItemInterface",
-        "path": "vendor\/commonapi\/model\/FieldhandlerItemInterface.php",
-        "fqns": "CommonApi\\Model\\FieldhandlerItemInterface"
+    "vendor\/commonapi\/model\/FormatInterface.php": {
+        "file_name": "FormatInterface.php",
+        "base_name": "FormatInterface",
+        "path": "vendor\/commonapi\/model\/FormatInterface.php",
+        "fqns": "CommonApi\\Model\\FormatInterface"
     },
-    "vendor\/commonapi\/model\/FilterInterface.php": {
-        "file_name": "FilterInterface.php",
-        "base_name": "FilterInterface",
-        "path": "vendor\/commonapi\/model\/FilterInterface.php",
-        "fqns": "CommonApi\\Model\\FilterInterface"
+    "vendor\/commonapi\/model\/HandleResponseInterface.php": {
+        "file_name": "HandleResponseInterface.php",
+        "base_name": "HandleResponseInterface",
+        "path": "vendor\/commonapi\/model\/HandleResponseInterface.php",
+        "fqns": "CommonApi\\Model\\HandleResponseInterface"
+    },
+    "vendor\/commonapi\/model\/MessageInterface.php": {
+        "file_name": "MessageInterface.php",
+        "base_name": "MessageInterface",
+        "path": "vendor\/commonapi\/model\/MessageInterface.php",
+        "fqns": "CommonApi\\Model\\MessageInterface"
     },
     "vendor\/commonapi\/model\/ModelInterface.php": {
         "file_name": "ModelInterface.php",
@@ -545,6 +551,12 @@
         "path": "vendor\/commonapi\/model\/ReadModelInterface.php",
         "fqns": "CommonApi\\Model\\ReadModelInterface"
     },
+    "vendor\/commonapi\/model\/SanitizeInterface.php": {
+        "file_name": "SanitizeInterface.php",
+        "base_name": "SanitizeInterface",
+        "path": "vendor\/commonapi\/model\/SanitizeInterface.php",
+        "fqns": "CommonApi\\Model\\SanitizeInterface"
+    },
     "vendor\/commonapi\/model\/UpdateModelInterface.php": {
         "file_name": "UpdateModelInterface.php",
         "base_name": "UpdateModelInterface",
@@ -556,6 +568,12 @@
         "base_name": "ValidateInterface",
         "path": "vendor\/commonapi\/model\/ValidateInterface.php",
         "fqns": "CommonApi\\Model\\ValidateInterface"
+    },
+    "vendor\/commonapi\/model\/ValidateResponseInterface.php": {
+        "file_name": "ValidateResponseInterface.php",
+        "base_name": "ValidateResponseInterface",
+        "path": "vendor\/commonapi\/model\/ValidateResponseInterface.php",
+        "fqns": "CommonApi\\Model\\ValidateResponseInterface"
     },
     "vendor\/commonapi\/query\/QueryInterface.php": {
         "file_name": "QueryInterface.php",
@@ -933,25 +951,25 @@
         "file_name": "Catalog_id.php",
         "base_name": "Catalog_id",
         "path": "vendor\/molajo\/application\/Source\/Fieldhandler\/Catalog_id.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Catalog_id"
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Catalog_id"
     },
     "vendor\/molajo\/application\/Source\/Fieldhandler\/Extensions.php": {
         "file_name": "Extensions.php",
         "base_name": "Extensions",
         "path": "vendor\/molajo\/application\/Source\/Fieldhandler\/Extensions.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Extensions"
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Extensions"
     },
     "vendor\/molajo\/application\/Source\/Fieldhandler\/Userid.php": {
         "file_name": "Userid.php",
         "base_name": "Userid",
         "path": "vendor\/molajo\/application\/Source\/Fieldhandler\/Userid.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Userid"
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Userid"
     },
     "vendor\/molajo\/application\/Source\/Fieldhandler\/Username.php": {
         "file_name": "Username.php",
         "base_name": "Username",
         "path": "vendor\/molajo\/application\/Source\/Fieldhandler\/Username.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Username"
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Username"
     },
     "vendor\/molajo\/application\/Source\/Plugins\/AbstractPlugin.php": {
         "file_name": "AbstractPlugin.php",
@@ -1391,281 +1409,431 @@
         "path": "vendor\/molajo\/fieldhandler\/Factories\/Fieldhandler\/FieldhandlerFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Fieldhandler\\FieldhandlerFactoryMethod"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/AbstractFieldhandler.php": {
-        "file_name": "AbstractFieldhandler.php",
-        "base_name": "AbstractFieldhandler",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/AbstractFieldhandler.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler"
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/AbstractConstraint.php": {
+        "file_name": "AbstractConstraint.php",
+        "base_name": "AbstractConstraint",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/AbstractConstraint.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Accepted.php": {
-        "file_name": "Accepted.php",
-        "base_name": "Accepted",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Accepted.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Accepted"
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractctype.php": {
+        "file_name": "Abstractctype.php",
+        "base_name": "Abstractctype",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractctype.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Abstractctype"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alias.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractfiltervar.php": {
+        "file_name": "Abstractfiltervar.php",
+        "base_name": "Abstractfiltervar",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractfiltervar.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractstring.php": {
+        "file_name": "Abstractstring.php",
+        "base_name": "Abstractstring",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractstring.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Abstractstring"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alias.php": {
         "file_name": "Alias.php",
         "base_name": "Alias",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alias.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Alias"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alias.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Alias"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alpha.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alpha.php": {
         "file_name": "Alpha.php",
         "base_name": "Alpha",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alpha.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Alpha"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alpha.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Alpha"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alphanumeric.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alphanumeric.php": {
         "file_name": "Alphanumeric.php",
         "base_name": "Alphanumeric",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alphanumeric.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Alphanumeric"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alphanumeric.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Alphanumeric"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Arrays.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Arrays.php": {
         "file_name": "Arrays.php",
         "base_name": "Arrays",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Arrays.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Arrays"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Arrays.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Arrays"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Boolean.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Boolean.php": {
         "file_name": "Boolean.php",
         "base_name": "Boolean",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Boolean.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Boolean"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Boolean.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Boolean"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Callback.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Callback.php": {
         "file_name": "Callback.php",
         "base_name": "Callback",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Callback.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Callback"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Callback.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Callback"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Contains.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Contains.php": {
         "file_name": "Contains.php",
         "base_name": "Contains",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Contains.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Contains"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Contains.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Contains"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Date.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Controlcharacters.php": {
+        "file_name": "Controlcharacters.php",
+        "base_name": "Controlcharacters",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Controlcharacters.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Controlcharacters"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Css.php": {
+        "file_name": "Css.php",
+        "base_name": "Css",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Css.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Css"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Date.php": {
         "file_name": "Date.php",
         "base_name": "Date",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Date.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Date"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Date.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Date"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Datetime.php": {
-        "file_name": "Datetime.php",
-        "base_name": "Datetime",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Datetime.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Datetime"
-    },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Defaults.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Defaults.php": {
         "file_name": "Defaults.php",
         "base_name": "Defaults",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Defaults.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Defaults"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Defaults.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Defaults"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Digit.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Digit.php": {
         "file_name": "Digit.php",
         "base_name": "Digit",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Digit.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Digit"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Digit.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Digit"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Email.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Email.php": {
         "file_name": "Email.php",
         "base_name": "Email",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Email.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Email"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Email.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Email"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Encoded.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Encoded.php": {
         "file_name": "Encoded.php",
         "base_name": "Encoded",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Encoded.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Encoded"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Encoded.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Encoded"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Equal.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Equal.php": {
         "file_name": "Equal.php",
         "base_name": "Equal",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Equal.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Equal"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Equal.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Equal"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fileextension.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/False.php": {
+        "file_name": "False.php",
+        "base_name": "False",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/False.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\False"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fileextension.php": {
         "file_name": "Fileextension.php",
         "base_name": "Fileextension",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fileextension.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Fileextension"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fileextension.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Fileextension"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Float.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Float.php": {
         "file_name": "Float.php",
         "base_name": "Float",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Float.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Float"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Float.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Float"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Foreignkey.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Foreignkey.php": {
         "file_name": "Foreignkey.php",
         "base_name": "Foreignkey",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Foreignkey.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Foreignkey"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Foreignkey.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Foreignkey"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fromto.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fromto.php": {
         "file_name": "Fromto.php",
         "base_name": "Fromto",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fromto.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Fromto"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fromto.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Fromto"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fullspecialchars.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fullspecialchars.php": {
         "file_name": "Fullspecialchars.php",
         "base_name": "Fullspecialchars",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fullspecialchars.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Fullspecialchars"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fullspecialchars.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Fullspecialchars"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Html.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Hexidecimal.php": {
+        "file_name": "Hexidecimal.php",
+        "base_name": "Hexidecimal",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Hexidecimal.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Hexidecimal"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Html.php": {
         "file_name": "Html.php",
         "base_name": "Html",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Html.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Html"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Html.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Html"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Image.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/HtmlAttribute.php": {
+        "file_name": "HtmlAttribute.php",
+        "base_name": "HtmlAttribute",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/HtmlAttribute.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\HtmlAttribute"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Image.php": {
         "file_name": "Image.php",
         "base_name": "Image",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Image.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Image"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Image.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Image"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Integer.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Integer.php": {
         "file_name": "Integer.php",
         "base_name": "Integer",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Integer.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Integer"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Integer.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Integer"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Ip.php": {
         "file_name": "Ip.php",
         "base_name": "Ip",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Ip"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Ip.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Ip"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries\/kses.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Js.php": {
+        "file_name": "Js.php",
+        "base_name": "Js",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Js.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Js"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Length.php": {
+        "file_name": "Length.php",
+        "base_name": "Length",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Length.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Length"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Libraries\/kses.php": {
         "file_name": "kses.php",
         "base_name": "kses",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries\/kses.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Libraries\\kses"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Libraries\/kses.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Libraries\\kses"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Lower.php": {
         "file_name": "Lower.php",
         "base_name": "Lower",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Lower"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Lower.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Lower"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Maximum.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Maximum.php": {
         "file_name": "Maximum.php",
         "base_name": "Maximum",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Maximum.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Maximum"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Maximum.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Maximum"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Mimetypes.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Mimetypes.php": {
         "file_name": "Mimetypes.php",
         "base_name": "Mimetypes",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Mimetypes.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Mimetypes"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Mimetypes.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Mimetypes"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Minimum.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Minimum.php": {
         "file_name": "Minimum.php",
         "base_name": "Minimum",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Minimum.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Minimum"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Minimum.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Minimum"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Notequal.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notequal.php": {
         "file_name": "Notequal.php",
         "base_name": "Notequal",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Notequal.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Notequal"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notequal.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Notequal"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Numeric.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Nothing.php": {
+        "file_name": "Nothing.php",
+        "base_name": "Nothing",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Nothing.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Nothing"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notnull.php": {
+        "file_name": "Notnull.php",
+        "base_name": "Notnull",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notnull.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Notnull"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Null.php": {
+        "file_name": "Null.php",
+        "base_name": "Null",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Null.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Null"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Numeric.php": {
         "file_name": "Numeric.php",
         "base_name": "Numeric",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Numeric.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Numeric"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Numeric.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Numeric"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Object.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Object.php": {
         "file_name": "Object.php",
         "base_name": "Object",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Object.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Object"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Object.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Object"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Raw.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Password.php": {
+        "file_name": "Password.php",
+        "base_name": "Password",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Password.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Password"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Primarykey.php": {
+        "file_name": "Primarykey.php",
+        "base_name": "Primarykey",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Primarykey.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Primarykey"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Printable.php": {
+        "file_name": "Printable.php",
+        "base_name": "Printable",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Printable.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Printable"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Punctuation.php": {
+        "file_name": "Punctuation.php",
+        "base_name": "Punctuation",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Punctuation.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Punctuation"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Raw.php": {
         "file_name": "Raw.php",
         "base_name": "Raw",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Raw.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Raw"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Raw.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Raw"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Regex.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Regex.php": {
         "file_name": "Regex.php",
         "base_name": "Regex",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Regex.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Regex"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Regex.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Regex"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Required.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Required.php": {
         "file_name": "Required.php",
         "base_name": "Required",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Required.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Required"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Required.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Required"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/String.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Resource.php": {
+        "file_name": "Resource.php",
+        "base_name": "Resource",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Resource.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Resource"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Scalar.php": {
+        "file_name": "Scalar.php",
+        "base_name": "Scalar",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Scalar.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Scalar"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Something.php": {
+        "file_name": "Something.php",
+        "base_name": "Something",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Something.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Something"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Space.php": {
+        "file_name": "Space.php",
+        "base_name": "Space",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Space.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Space"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/String.php": {
         "file_name": "String.php",
         "base_name": "String",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/String.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\String"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/String.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\String"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/StringLength.php": {
-        "file_name": "StringLength.php",
-        "base_name": "StringLength",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/StringLength.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\StringLength"
-    },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Tel.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Tel.php": {
         "file_name": "Tel.php",
         "base_name": "Tel",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Tel.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Tel"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Tel.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Tel"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Time.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Time.php": {
         "file_name": "Time.php",
         "base_name": "Time",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Time.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Time"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Time.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Time"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Trim.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Trim.php": {
         "file_name": "Trim.php",
         "base_name": "Trim",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Trim.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Trim"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Trim.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Trim"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Upper.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/True.php": {
+        "file_name": "True.php",
+        "base_name": "True",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/True.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\True"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Unique.php": {
+        "file_name": "Unique.php",
+        "base_name": "Unique",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Unique.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Unique"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Upper.php": {
         "file_name": "Upper.php",
         "base_name": "Upper",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Upper.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Upper"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Upper.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Upper"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Url.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Url.php": {
         "file_name": "Url.php",
         "base_name": "Url",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Url.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Url"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Url.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Url"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Values.php": {
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Values.php": {
         "file_name": "Values.php",
         "base_name": "Values",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Values.php",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Values"
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Values.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Values"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/Driver.php": {
-        "file_name": "Driver.php",
-        "base_name": "Driver",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Driver.php",
-        "fqns": "Molajo\\Fieldhandler\\Driver"
+    "vendor\/molajo\/fieldhandler\/Source\/Escape.php": {
+        "file_name": "Escape.php",
+        "base_name": "Escape",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Escape.php",
+        "fqns": "Molajo\\Fieldhandler\\Escape"
     },
-    "vendor\/molajo\/fieldhandler\/Source\/FieldhandlerItem.php": {
-        "file_name": "FieldhandlerItem.php",
-        "base_name": "FieldhandlerItem",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/FieldhandlerItem.php",
-        "fqns": "Molajo\\Fieldhandler\\FieldhandlerItem"
+    "vendor\/molajo\/fieldhandler\/Source\/Escape\/AbstractEscape.php": {
+        "file_name": "AbstractEscape.php",
+        "base_name": "AbstractEscape",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Escape\/AbstractEscape.php",
+        "fqns": "Molajo\\Fieldhandler\\Escape\\AbstractEscape"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Escape\/Zend.php": {
+        "file_name": "Zend.php",
+        "base_name": "Zend",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Escape\/Zend.php",
+        "fqns": "Molajo\\Fieldhandler\\Escape\\Zend"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/HandleResponse.php": {
+        "file_name": "HandleResponse.php",
+        "base_name": "HandleResponse",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/HandleResponse.php",
+        "fqns": "Molajo\\Fieldhandler\\HandleResponse"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Message.php": {
+        "file_name": "Message.php",
+        "base_name": "Message",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Message.php",
+        "fqns": "Molajo\\Fieldhandler\\Message"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Request.php": {
+        "file_name": "Request.php",
+        "base_name": "Request",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Request.php",
+        "fqns": "Molajo\\Fieldhandler\\Request"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/ValidateResponse.php": {
+        "file_name": "ValidateResponse.php",
+        "base_name": "ValidateResponse",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/ValidateResponse.php",
+        "fqns": "Molajo\\Fieldhandler\\ValidateResponse"
     },
     "vendor\/molajo\/filesystem\/Factories\/Filesystem\/FilesystemFactoryMethod.php": {
         "file_name": "FilesystemFactoryMethod.php",
@@ -2500,12 +2668,6 @@
         "base_name": "Facade",
         "path": "vendor\/molajo\/user\/Source\/Facade.php",
         "fqns": "Molajo\\User\\Facade"
-    },
-    "vendor\/molajo\/user\/Source\/Fieldhandler.php": {
-        "file_name": "Fieldhandler.php",
-        "base_name": "Fieldhandler",
-        "path": "vendor\/molajo\/user\/Source\/Fieldhandler.php",
-        "fqns": "Molajo\\User\\Fieldhandler"
     },
     "vendor\/molajo\/user\/Source\/FlashMessage.php": {
         "file_name": "FlashMessage.php",

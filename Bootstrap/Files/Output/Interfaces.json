@@ -923,6 +923,85 @@
             "Molajito\\Translate\\MolajoLanguageAdapter"
         ]
     },
+    "CommonApi\\Model\\ConstraintInterface": {
+        "name": "ConstraintInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\ConstraintInterface",
+        "path": "vendor\/commonapi\/model\/ConstraintInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+            "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
+            "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
+            "Molajo\\Fieldhandler\\Constraint\\Abstractstring",
+            "Molajo\\Fieldhandler\\Constraint\\Alias",
+            "Molajo\\Fieldhandler\\Constraint\\Alpha",
+            "Molajo\\Fieldhandler\\Constraint\\Alphanumeric",
+            "Molajo\\Fieldhandler\\Constraint\\Arrays",
+            "Molajo\\Fieldhandler\\Constraint\\Boolean",
+            "Molajo\\Fieldhandler\\Constraint\\Callback",
+            "Molajo\\Fieldhandler\\Constraint\\Catalog_id",
+            "Molajo\\Fieldhandler\\Constraint\\Contains",
+            "Molajo\\Fieldhandler\\Constraint\\Controlcharacters",
+            "Molajo\\Fieldhandler\\Constraint\\Css",
+            "Molajo\\Fieldhandler\\Constraint\\Date",
+            "Molajo\\Fieldhandler\\Constraint\\Defaults",
+            "Molajo\\Fieldhandler\\Constraint\\Digit",
+            "Molajo\\Fieldhandler\\Constraint\\Email",
+            "Molajo\\Fieldhandler\\Constraint\\Encoded",
+            "Molajo\\Fieldhandler\\Constraint\\Equal",
+            "Molajo\\Fieldhandler\\Constraint\\Extensions",
+            "Molajo\\Fieldhandler\\Constraint\\False",
+            "Molajo\\Fieldhandler\\Constraint\\Fileextension",
+            "Molajo\\Fieldhandler\\Constraint\\Float",
+            "Molajo\\Fieldhandler\\Constraint\\Foreignkey",
+            "Molajo\\Fieldhandler\\Constraint\\Fromto",
+            "Molajo\\Fieldhandler\\Constraint\\Fullspecialchars",
+            "Molajo\\Fieldhandler\\Constraint\\Hexidecimal",
+            "Molajo\\Fieldhandler\\Constraint\\Html",
+            "Molajo\\Fieldhandler\\Constraint\\Htmlattribute",
+            "Molajo\\Fieldhandler\\Constraint\\Image",
+            "Molajo\\Fieldhandler\\Constraint\\Integer",
+            "Molajo\\Fieldhandler\\Constraint\\Ip",
+            "Molajo\\Fieldhandler\\Constraint\\Js",
+            "Molajo\\Fieldhandler\\Constraint\\Length",
+            "Molajo\\Fieldhandler\\Constraint\\Lower",
+            "Molajo\\Fieldhandler\\Constraint\\Maximum",
+            "Molajo\\Fieldhandler\\Constraint\\Mimetypes",
+            "Molajo\\Fieldhandler\\Constraint\\Minimum",
+            "Molajo\\Fieldhandler\\Constraint\\Notequal",
+            "Molajo\\Fieldhandler\\Constraint\\Nothing",
+            "Molajo\\Fieldhandler\\Constraint\\Notnull",
+            "Molajo\\Fieldhandler\\Constraint\\Null",
+            "Molajo\\Fieldhandler\\Constraint\\Numeric",
+            "Molajo\\Fieldhandler\\Constraint\\Object",
+            "Molajo\\Fieldhandler\\Constraint\\Password",
+            "Molajo\\Fieldhandler\\Constraint\\Primarykey",
+            "Molajo\\Fieldhandler\\Constraint\\Printable",
+            "Molajo\\Fieldhandler\\Constraint\\Punctuation",
+            "Molajo\\Fieldhandler\\Constraint\\Raw",
+            "Molajo\\Fieldhandler\\Constraint\\Regex",
+            "Molajo\\Fieldhandler\\Constraint\\Required",
+            "Molajo\\Fieldhandler\\Constraint\\Resource",
+            "Molajo\\Fieldhandler\\Constraint\\Scalar",
+            "Molajo\\Fieldhandler\\Constraint\\Something",
+            "Molajo\\Fieldhandler\\Constraint\\Space",
+            "Molajo\\Fieldhandler\\Constraint\\String",
+            "Molajo\\Fieldhandler\\Constraint\\Tel",
+            "Molajo\\Fieldhandler\\Constraint\\Time",
+            "Molajo\\Fieldhandler\\Constraint\\Trim",
+            "Molajo\\Fieldhandler\\Constraint\\True",
+            "Molajo\\Fieldhandler\\Constraint\\Unique",
+            "Molajo\\Fieldhandler\\Constraint\\Upper",
+            "Molajo\\Fieldhandler\\Constraint\\Url",
+            "Molajo\\Fieldhandler\\Constraint\\Userid",
+            "Molajo\\Fieldhandler\\Constraint\\Username",
+            "Molajo\\Fieldhandler\\Constraint\\Values"
+        ],
+        "dependency_for": [
+
+        ]
+    },
     "CommonApi\\Model\\CreateModelInterface": {
         "name": "CreateModelInterface",
         "namespace": "CommonApi\\Model",
@@ -956,66 +1035,9 @@
         "path": "vendor\/commonapi\/model\/EscapeInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Driver"
-        ],
-        "dependency_for": [
-
-        ]
-    },
-    "CommonApi\\Model\\FieldhandlerAdapterInterface": {
-        "name": "FieldhandlerAdapterInterface",
-        "namespace": "CommonApi\\Model",
-        "fqns": "CommonApi\\Model\\FieldhandlerAdapterInterface",
-        "path": "vendor\/commonapi\/model\/FieldhandlerAdapterInterface.php",
-        "parent": false,
-        "implemented_by": [
-            "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
-            "Molajo\\Fieldhandler\\Adapter\\Accepted",
-            "Molajo\\Fieldhandler\\Adapter\\Alias",
-            "Molajo\\Fieldhandler\\Adapter\\Alpha",
-            "Molajo\\Fieldhandler\\Adapter\\Alphanumeric",
-            "Molajo\\Fieldhandler\\Adapter\\Arrays",
-            "Molajo\\Fieldhandler\\Adapter\\Boolean",
-            "Molajo\\Fieldhandler\\Adapter\\Callback",
-            "Molajo\\Fieldhandler\\Adapter\\Catalog_id",
-            "Molajo\\Fieldhandler\\Adapter\\Contains",
-            "Molajo\\Fieldhandler\\Adapter\\Date",
-            "Molajo\\Fieldhandler\\Adapter\\Datetime",
-            "Molajo\\Fieldhandler\\Adapter\\Defaults",
-            "Molajo\\Fieldhandler\\Adapter\\Digit",
-            "Molajo\\Fieldhandler\\Adapter\\Email",
-            "Molajo\\Fieldhandler\\Adapter\\Encoded",
-            "Molajo\\Fieldhandler\\Adapter\\Equal",
-            "Molajo\\Fieldhandler\\Adapter\\Extensions",
-            "Molajo\\Fieldhandler\\Adapter\\Fileextension",
-            "Molajo\\Fieldhandler\\Adapter\\Float",
-            "Molajo\\Fieldhandler\\Adapter\\Foreignkey",
-            "Molajo\\Fieldhandler\\Adapter\\Fromto",
-            "Molajo\\Fieldhandler\\Adapter\\Fullspecialchars",
-            "Molajo\\Fieldhandler\\Adapter\\Html",
-            "Molajo\\Fieldhandler\\Adapter\\Image",
-            "Molajo\\Fieldhandler\\Adapter\\Integer",
-            "Molajo\\Fieldhandler\\Adapter\\Ip",
-            "Molajo\\Fieldhandler\\Adapter\\Lower",
-            "Molajo\\Fieldhandler\\Adapter\\Maximum",
-            "Molajo\\Fieldhandler\\Adapter\\Mimetypes",
-            "Molajo\\Fieldhandler\\Adapter\\Minimum",
-            "Molajo\\Fieldhandler\\Adapter\\Notequal",
-            "Molajo\\Fieldhandler\\Adapter\\Numeric",
-            "Molajo\\Fieldhandler\\Adapter\\Object",
-            "Molajo\\Fieldhandler\\Adapter\\Raw",
-            "Molajo\\Fieldhandler\\Adapter\\Regex",
-            "Molajo\\Fieldhandler\\Adapter\\Required",
-            "Molajo\\Fieldhandler\\Adapter\\String",
-            "Molajo\\Fieldhandler\\Adapter\\Stringlength",
-            "Molajo\\Fieldhandler\\Adapter\\Tel",
-            "Molajo\\Fieldhandler\\Adapter\\Time",
-            "Molajo\\Fieldhandler\\Adapter\\Trim",
-            "Molajo\\Fieldhandler\\Adapter\\Upper",
-            "Molajo\\Fieldhandler\\Adapter\\Url",
-            "Molajo\\Fieldhandler\\Adapter\\Userid",
-            "Molajo\\Fieldhandler\\Adapter\\Username",
-            "Molajo\\Fieldhandler\\Adapter\\Values"
+            "Molajo\\Fieldhandler\\Escape",
+            "Molajo\\Fieldhandler\\Escape\\AbstractEscape",
+            "Molajo\\Fieldhandler\\Escape\\Zend"
         ],
         "dependency_for": [
 
@@ -1028,7 +1050,7 @@
         "path": "vendor\/commonapi\/model\/FieldhandlerInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Fieldhandler"
+
         ],
         "dependency_for": [
             "Molajito\\Escape\\Molajo",
@@ -1039,31 +1061,43 @@
             "Molajo\\Query\\Adapter\\Sqllite",
             "Molajo\\Query\\Adapter\\Sqlserver",
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\Fieldhandler",
             "Molajo\\User\\TextTemplate"
         ]
     },
-    "CommonApi\\Model\\FieldhandlerItemInterface": {
-        "name": "FieldhandlerItemInterface",
+    "CommonApi\\Model\\FormatInterface": {
+        "name": "FormatInterface",
         "namespace": "CommonApi\\Model",
-        "fqns": "CommonApi\\Model\\FieldhandlerItemInterface",
-        "path": "vendor\/commonapi\/model\/FieldhandlerItemInterface.php",
+        "fqns": "CommonApi\\Model\\FormatInterface",
+        "path": "vendor\/commonapi\/model\/FormatInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\FieldhandlerItem"
+            "Molajo\\Fieldhandler\\Request"
         ],
         "dependency_for": [
 
         ]
     },
-    "CommonApi\\Model\\FilterInterface": {
-        "name": "FilterInterface",
+    "CommonApi\\Model\\HandleResponseInterface": {
+        "name": "HandleResponseInterface",
         "namespace": "CommonApi\\Model",
-        "fqns": "CommonApi\\Model\\FilterInterface",
-        "path": "vendor\/commonapi\/model\/FilterInterface.php",
+        "fqns": "CommonApi\\Model\\HandleResponseInterface",
+        "path": "vendor\/commonapi\/model\/HandleResponseInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Driver"
+            "Molajo\\Fieldhandler\\HandleResponse"
+        ],
+        "dependency_for": [
+
+        ]
+    },
+    "CommonApi\\Model\\MessageInterface": {
+        "name": "MessageInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\MessageInterface",
+        "path": "vendor\/commonapi\/model\/MessageInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\Message"
         ],
         "dependency_for": [
 
@@ -1105,6 +1139,19 @@
 
         ]
     },
+    "CommonApi\\Model\\SanitizeInterface": {
+        "name": "SanitizeInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\SanitizeInterface",
+        "path": "vendor\/commonapi\/model\/SanitizeInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\Request"
+        ],
+        "dependency_for": [
+
+        ]
+    },
     "CommonApi\\Model\\UpdateModelInterface": {
         "name": "UpdateModelInterface",
         "namespace": "CommonApi\\Model",
@@ -1125,7 +1172,20 @@
         "path": "vendor\/commonapi\/model\/ValidateInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Driver"
+            "Molajo\\Fieldhandler\\Request"
+        ],
+        "dependency_for": [
+
+        ]
+    },
+    "CommonApi\\Model\\ValidateResponseInterface": {
+        "name": "ValidateResponseInterface",
+        "namespace": "CommonApi\\Model",
+        "fqns": "CommonApi\\Model\\ValidateResponseInterface",
+        "path": "vendor\/commonapi\/model\/ValidateResponseInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Fieldhandler\\ValidateResponse"
         ],
         "dependency_for": [
 
@@ -1560,7 +1620,6 @@
             "Molajo\\User\\Activity",
             "Molajo\\User\\Authentication",
             "Molajo\\User\\Encrypt",
-            "Molajo\\User\\Fieldhandler",
             "Molajo\\User\\TextTemplate"
         ]
     },

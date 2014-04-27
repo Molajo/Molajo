@@ -338,6 +338,9 @@
     "commonapi\\model\\composer.json": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/composer.json"
     ],
+    "commonapi\\model\\constraintinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ConstraintInterface.php"
+    ],
     "commonapi\\model\\createmodelinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/CreateModelInterface.php"
     ],
@@ -347,17 +350,17 @@
     "commonapi\\model\\escapeinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/EscapeInterface.php"
     ],
-    "commonapi\\model\\fieldhandleradapterinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FieldhandlerAdapterInterface.php"
-    ],
     "commonapi\\model\\fieldhandlerinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FieldhandlerInterface.php"
     ],
-    "commonapi\\model\\fieldhandleriteminterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FieldhandlerItemInterface.php"
+    "commonapi\\model\\formatinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FormatInterface.php"
     ],
-    "commonapi\\model\\filterinterface": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FilterInterface.php"
+    "commonapi\\model\\handleresponseinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/HandleResponseInterface.php"
+    ],
+    "commonapi\\model\\messageinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/MessageInterface.php"
     ],
     "commonapi\\model\\modelinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ModelInterface.php"
@@ -365,11 +368,17 @@
     "commonapi\\model\\readmodelinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ReadModelInterface.php"
     ],
+    "commonapi\\model\\sanitizeinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/SanitizeInterface.php"
+    ],
     "commonapi\\model\\updatemodelinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/UpdateModelInterface.php"
     ],
     "commonapi\\model\\validateinterface": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ValidateInterface.php"
+    ],
+    "commonapi\\model\\validateresponseinterface": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ValidateResponseInterface.php"
     ],
     "commonapi\\query": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/query\/"
@@ -1483,162 +1492,238 @@
     "molajo\\fieldhandler": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/"
     ],
-    "molajo\\fieldhandler\\adapter": [
+    "molajo\\fieldhandler\\constraint": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/",
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint"
     ],
-    "molajo\\fieldhandler\\adapter\\abstractfieldhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/AbstractFieldhandler.php"
+    "molajo\\fieldhandler\\constraint\\abstractconstraint": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/AbstractConstraint.php"
     ],
-    "molajo\\fieldhandler\\adapter\\accepted": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Accepted.php"
+    "molajo\\fieldhandler\\constraint\\abstractctype": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractctype.php"
     ],
-    "molajo\\fieldhandler\\adapter\\alias": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alias.php"
+    "molajo\\fieldhandler\\constraint\\abstractfiltervar": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractfiltervar.php"
     ],
-    "molajo\\fieldhandler\\adapter\\alpha": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alpha.php"
+    "molajo\\fieldhandler\\constraint\\abstractstring": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractstring.php"
     ],
-    "molajo\\fieldhandler\\adapter\\alphanumeric": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alphanumeric.php"
+    "molajo\\fieldhandler\\constraint\\alias": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alias.php"
     ],
-    "molajo\\fieldhandler\\adapter\\arrays": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Arrays.php"
+    "molajo\\fieldhandler\\constraint\\alpha": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alpha.php"
     ],
-    "molajo\\fieldhandler\\adapter\\boolean": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Boolean.php"
+    "molajo\\fieldhandler\\constraint\\alphanumeric": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alphanumeric.php"
     ],
-    "molajo\\fieldhandler\\adapter\\callback": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Callback.php"
+    "molajo\\fieldhandler\\constraint\\arrays": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Arrays.php"
     ],
-    "molajo\\fieldhandler\\adapter\\catalog_id": [
+    "molajo\\fieldhandler\\constraint\\boolean": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Boolean.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\callback": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Callback.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\catalog_id": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Catalog_id.php"
     ],
-    "molajo\\fieldhandler\\adapter\\contains": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Contains.php"
+    "molajo\\fieldhandler\\constraint\\contains": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Contains.php"
     ],
-    "molajo\\fieldhandler\\adapter\\date": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Date.php"
+    "molajo\\fieldhandler\\constraint\\controlcharacters": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Controlcharacters.php"
     ],
-    "molajo\\fieldhandler\\adapter\\datetime": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Datetime.php"
+    "molajo\\fieldhandler\\constraint\\css": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Css.php"
     ],
-    "molajo\\fieldhandler\\adapter\\defaults": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Defaults.php"
+    "molajo\\fieldhandler\\constraint\\date": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Date.php"
     ],
-    "molajo\\fieldhandler\\adapter\\digit": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Digit.php"
+    "molajo\\fieldhandler\\constraint\\defaults": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Defaults.php"
     ],
-    "molajo\\fieldhandler\\adapter\\email": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Email.php"
+    "molajo\\fieldhandler\\constraint\\digit": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Digit.php"
     ],
-    "molajo\\fieldhandler\\adapter\\encoded": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Encoded.php"
+    "molajo\\fieldhandler\\constraint\\email": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Email.php"
     ],
-    "molajo\\fieldhandler\\adapter\\equal": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Equal.php"
+    "molajo\\fieldhandler\\constraint\\encoded": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Encoded.php"
     ],
-    "molajo\\fieldhandler\\adapter\\extensions": [
+    "molajo\\fieldhandler\\constraint\\equal": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Equal.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\extensions": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Extensions.php"
     ],
-    "molajo\\fieldhandler\\adapter\\fileextension": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fileextension.php"
+    "molajo\\fieldhandler\\constraint\\false": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/False.php"
     ],
-    "molajo\\fieldhandler\\adapter\\float": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Float.php"
+    "molajo\\fieldhandler\\constraint\\fileextension": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fileextension.php"
     ],
-    "molajo\\fieldhandler\\adapter\\foreignkey": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Foreignkey.php"
+    "molajo\\fieldhandler\\constraint\\float": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Float.php"
     ],
-    "molajo\\fieldhandler\\adapter\\fromto": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fromto.php"
+    "molajo\\fieldhandler\\constraint\\foreignkey": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Foreignkey.php"
     ],
-    "molajo\\fieldhandler\\adapter\\fullspecialchars": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fullspecialchars.php"
+    "molajo\\fieldhandler\\constraint\\fromto": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fromto.php"
     ],
-    "molajo\\fieldhandler\\adapter\\html": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Html.php"
+    "molajo\\fieldhandler\\constraint\\fullspecialchars": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fullspecialchars.php"
     ],
-    "molajo\\fieldhandler\\adapter\\image": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Image.php"
+    "molajo\\fieldhandler\\constraint\\hexidecimal": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Hexidecimal.php"
     ],
-    "molajo\\fieldhandler\\adapter\\integer": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Integer.php"
+    "molajo\\fieldhandler\\constraint\\html": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Html.php"
     ],
-    "molajo\\fieldhandler\\adapter\\ip": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php"
+    "molajo\\fieldhandler\\constraint\\htmlattribute": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/HtmlAttribute.php"
     ],
-    "molajo\\fieldhandler\\adapter\\libraries": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries"
+    "molajo\\fieldhandler\\constraint\\image": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Image.php"
     ],
-    "molajo\\fieldhandler\\adapter\\libraries\\kses": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Libraries\/kses.php"
+    "molajo\\fieldhandler\\constraint\\integer": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Integer.php"
     ],
-    "molajo\\fieldhandler\\adapter\\lower": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php"
+    "molajo\\fieldhandler\\constraint\\ip": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Ip.php"
     ],
-    "molajo\\fieldhandler\\adapter\\maximum": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Maximum.php"
+    "molajo\\fieldhandler\\constraint\\js": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Js.php"
     ],
-    "molajo\\fieldhandler\\adapter\\mimetypes": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Mimetypes.php"
+    "molajo\\fieldhandler\\constraint\\length": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Length.php"
     ],
-    "molajo\\fieldhandler\\adapter\\minimum": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Minimum.php"
+    "molajo\\fieldhandler\\constraint\\libraries": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Libraries"
     ],
-    "molajo\\fieldhandler\\adapter\\notequal": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Notequal.php"
+    "molajo\\fieldhandler\\constraint\\libraries\\kses": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Libraries\/kses.php"
     ],
-    "molajo\\fieldhandler\\adapter\\numeric": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Numeric.php"
+    "molajo\\fieldhandler\\constraint\\lower": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Lower.php"
     ],
-    "molajo\\fieldhandler\\adapter\\object": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Object.php"
+    "molajo\\fieldhandler\\constraint\\maximum": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Maximum.php"
     ],
-    "molajo\\fieldhandler\\adapter\\raw": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Raw.php"
+    "molajo\\fieldhandler\\constraint\\mimetypes": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Mimetypes.php"
     ],
-    "molajo\\fieldhandler\\adapter\\regex": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Regex.php"
+    "molajo\\fieldhandler\\constraint\\minimum": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Minimum.php"
     ],
-    "molajo\\fieldhandler\\adapter\\required": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Required.php"
+    "molajo\\fieldhandler\\constraint\\notequal": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notequal.php"
     ],
-    "molajo\\fieldhandler\\adapter\\string": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/String.php"
+    "molajo\\fieldhandler\\constraint\\nothing": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Nothing.php"
     ],
-    "molajo\\fieldhandler\\adapter\\stringlength": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/StringLength.php"
+    "molajo\\fieldhandler\\constraint\\notnull": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notnull.php"
     ],
-    "molajo\\fieldhandler\\adapter\\tel": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Tel.php"
+    "molajo\\fieldhandler\\constraint\\null": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Null.php"
     ],
-    "molajo\\fieldhandler\\adapter\\time": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Time.php"
+    "molajo\\fieldhandler\\constraint\\numeric": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Numeric.php"
     ],
-    "molajo\\fieldhandler\\adapter\\trim": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Trim.php"
+    "molajo\\fieldhandler\\constraint\\object": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Object.php"
     ],
-    "molajo\\fieldhandler\\adapter\\upper": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Upper.php"
+    "molajo\\fieldhandler\\constraint\\password": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Password.php"
     ],
-    "molajo\\fieldhandler\\adapter\\url": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Url.php"
+    "molajo\\fieldhandler\\constraint\\primarykey": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Primarykey.php"
     ],
-    "molajo\\fieldhandler\\adapter\\userid": [
+    "molajo\\fieldhandler\\constraint\\printable": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Printable.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\punctuation": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Punctuation.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\raw": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Raw.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\regex": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Regex.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\required": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Required.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\resource": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Resource.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\scalar": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Scalar.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\something": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Something.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\space": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Space.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\string": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/String.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\tel": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Tel.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\time": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Time.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\trim": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Trim.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\true": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/True.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\unique": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Unique.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\upper": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Upper.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\url": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Url.php"
+    ],
+    "molajo\\fieldhandler\\constraint\\userid": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Userid.php"
     ],
-    "molajo\\fieldhandler\\adapter\\username": [
+    "molajo\\fieldhandler\\constraint\\username": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Username.php"
     ],
-    "molajo\\fieldhandler\\adapter\\values": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Values.php"
+    "molajo\\fieldhandler\\constraint\\values": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Values.php"
     ],
-    "molajo\\fieldhandler\\driver": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Driver.php"
+    "molajo\\fieldhandler\\escape": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Escape",
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Escape.php"
     ],
-    "molajo\\fieldhandler\\fieldhandleritem": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/FieldhandlerItem.php"
+    "molajo\\fieldhandler\\escape\\abstractescape": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Escape\/AbstractEscape.php"
+    ],
+    "molajo\\fieldhandler\\escape\\zend": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Escape\/Zend.php"
+    ],
+    "molajo\\fieldhandler\\handleresponse": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/HandleResponse.php"
+    ],
+    "molajo\\fieldhandler\\message": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Message.php"
+    ],
+    "molajo\\fieldhandler\\request": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Request.php"
+    ],
+    "molajo\\fieldhandler\\validateresponse": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/ValidateResponse.php"
     ],
     "molajo\\fields": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Fields"
@@ -5103,9 +5188,6 @@
     ],
     "molajo\\user\\facade": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Facade.php"
-    ],
-    "molajo\\user\\fieldhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Fieldhandler.php"
     ],
     "molajo\\user\\flashmessage": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/FlashMessage.php"

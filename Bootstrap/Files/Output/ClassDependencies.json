@@ -2460,7 +2460,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             },
@@ -3160,19 +3160,19 @@
             "urlShortener"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Catalog_id": {
+    "Molajo\\Fieldhandler\\Constraint\\Catalog_id": {
         "name": "Catalog_id",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Catalog_id",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Catalog_id",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Catalog_id.php",
         "path": "vendor\/molajo\/application\/Source\/Fieldhandler\/Catalog_id.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -3207,7 +3207,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -3216,26 +3216,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Extensions": {
+    "Molajo\\Fieldhandler\\Constraint\\Extensions": {
         "name": "Extensions",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Extensions",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Extensions",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Extensions.php",
         "path": "vendor\/molajo\/application\/Source\/Fieldhandler\/Extensions.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -3270,7 +3273,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -3279,26 +3282,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Userid": {
+    "Molajo\\Fieldhandler\\Constraint\\Userid": {
         "name": "Userid",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Userid",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Userid",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Userid.php",
         "path": "vendor\/molajo\/application\/Source\/Fieldhandler\/Userid.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -3333,7 +3339,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -3342,26 +3348,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Username": {
+    "Molajo\\Fieldhandler\\Constraint\\Username": {
         "name": "Username",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Username",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Username",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Fieldhandler\/Username.php",
         "path": "vendor\/molajo\/application\/Source\/Fieldhandler\/Username.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -3396,7 +3405,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -3405,11 +3414,14 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
     "Molajo\\Plugins\\AbstractPlugin": {
@@ -7597,19 +7609,19 @@
             "scheduleFactories"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler": {
-        "name": "AbstractFieldhandler",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/AbstractFieldhandler.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/AbstractFieldhandler.php",
+    "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint": {
+        "name": "AbstractConstraint",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/AbstractConstraint.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/AbstractConstraint.php",
         "parent": false,
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -7644,7 +7656,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -7653,25 +7665,29 @@
         ],
         "method": [
             "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
             "validate",
-            "filter",
-            "escape",
-            "getErrorMessages"
+            "sanitize",
+            "format",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Accepted": {
-        "name": "Accepted",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Accepted",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Accepted.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Accepted.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+    "Molajo\\Fieldhandler\\Constraint\\Abstractctype": {
+        "name": "Abstractctype",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractctype.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractctype.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -7706,7 +7722,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -7715,25 +7731,163 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Alias": {
+    "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar": {
+        "name": "Abstractfiltervar",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractfiltervar.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractfiltervar.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Abstractstring": {
+        "name": "Abstractstring",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Abstractstring",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractstring.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Abstractstring.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "doStringFunction",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Alias": {
         "name": "Alias",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Alias",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alias.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alias.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Alias",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alias.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alias.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -7768,7 +7922,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -7777,27 +7931,31 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "createAlias",
-            "testValidate",
+            "sanitize",
+            "format",
+            "sanitizeAlias",
+            "formatAlias",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Alpha": {
+    "Molajo\\Fieldhandler\\Constraint\\Alpha": {
         "name": "Alpha",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Alpha",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alpha.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alpha.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Alpha",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alpha.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alpha.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -7832,7 +7990,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -7841,25 +7999,30 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Alphanumeric": {
+    "Molajo\\Fieldhandler\\Constraint\\Alphanumeric": {
         "name": "Alphanumeric",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Alphanumeric",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alphanumeric.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Alphanumeric.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Alphanumeric",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alphanumeric.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Alphanumeric.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -7894,7 +8057,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -7903,25 +8066,30 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Arrays": {
+    "Molajo\\Fieldhandler\\Constraint\\Arrays": {
         "name": "Arrays",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Arrays",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Arrays.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Arrays.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Arrays",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Arrays.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Arrays.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -7956,7 +8124,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -7965,25 +8133,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Boolean": {
+    "Molajo\\Fieldhandler\\Constraint\\Boolean": {
         "name": "Boolean",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Boolean",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Boolean.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Boolean.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Boolean",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Boolean.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Boolean.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8018,7 +8190,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8027,25 +8199,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Callback": {
+    "Molajo\\Fieldhandler\\Constraint\\Callback": {
         "name": "Callback",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Callback",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Callback.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Callback.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Callback",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Callback.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Callback.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8080,7 +8256,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8089,25 +8265,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Contains": {
+    "Molajo\\Fieldhandler\\Constraint\\Contains": {
         "name": "Contains",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Contains",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Contains.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Contains.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Contains",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Contains.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Contains.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8142,7 +8322,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8151,25 +8331,162 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Date": {
+    "Molajo\\Fieldhandler\\Constraint\\Controlcharacters": {
+        "name": "Controlcharacters",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Controlcharacters",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Controlcharacters.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Controlcharacters.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Css": {
+        "name": "Css",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Css",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Css.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Css.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Date": {
         "name": "Date",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Date",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Date.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Date.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Date",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Date.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Date.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8204,7 +8521,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8213,87 +8530,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Datetime": {
-        "name": "Datetime",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Datetime",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Datetime.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Datetime.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
-        "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "fieldhandler_type",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "method",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "field_name",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "field_value",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "options",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "validate",
-            "filter",
-            "escape",
-            "__construct",
-            "getErrorMessages"
-        ]
-    },
-    "Molajo\\Fieldhandler\\Adapter\\Defaults": {
+    "Molajo\\Fieldhandler\\Constraint\\Defaults": {
         "name": "Defaults",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Defaults",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Defaults.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Defaults.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Defaults",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Defaults.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Defaults.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8328,7 +8587,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8337,25 +8596,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Digit": {
+    "Molajo\\Fieldhandler\\Constraint\\Digit": {
         "name": "Digit",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Digit",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Digit.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Digit.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Digit",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Digit.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Digit.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8390,7 +8653,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8399,25 +8662,30 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Email": {
+    "Molajo\\Fieldhandler\\Constraint\\Email": {
         "name": "Email",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Email",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Email.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Email.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Email",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Email.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Email.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8452,7 +8720,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8461,25 +8729,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "format",
+            "sanitize",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Encoded": {
+    "Molajo\\Fieldhandler\\Constraint\\Encoded": {
         "name": "Encoded",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Encoded",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Encoded.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Encoded.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Encoded",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Encoded.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Encoded.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8514,7 +8786,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8523,26 +8795,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Equal": {
+    "Molajo\\Fieldhandler\\Constraint\\Equal": {
         "name": "Equal",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Equal",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Equal.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Equal.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Equal",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Equal.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Equal.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8577,7 +8852,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8586,26 +8861,96 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "getEqual",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Fileextension": {
+    "Molajo\\Fieldhandler\\Constraint\\False": {
+        "name": "False",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\False",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/False.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/False.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Fileextension": {
         "name": "Fileextension",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Fileextension",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fileextension.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fileextension.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Fileextension",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fileextension.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fileextension.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8640,7 +8985,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8649,25 +8994,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Float": {
+    "Molajo\\Fieldhandler\\Constraint\\Float": {
         "name": "Float",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Float",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Float.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Float.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Float",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Float.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Float.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8702,7 +9051,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8711,25 +9060,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Foreignkey": {
+    "Molajo\\Fieldhandler\\Constraint\\Foreignkey": {
         "name": "Foreignkey",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Foreignkey",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Foreignkey.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Foreignkey.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Foreignkey",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Foreignkey.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Foreignkey.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8764,7 +9117,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8773,26 +9126,30 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "verifyForeignKey",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Fromto": {
+    "Molajo\\Fieldhandler\\Constraint\\Fromto": {
         "name": "Fromto",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Fromto",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fromto.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fromto.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Fromto",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fromto.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fromto.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8827,7 +9184,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8836,26 +9193,30 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "getFromto",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Fullspecialchars": {
+    "Molajo\\Fieldhandler\\Constraint\\Fullspecialchars": {
         "name": "Fullspecialchars",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Fullspecialchars",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fullspecialchars.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Fullspecialchars.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Fullspecialchars",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fullspecialchars.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fullspecialchars.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8890,7 +9251,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8899,26 +9260,96 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Html": {
+    "Molajo\\Fieldhandler\\Constraint\\Hexidecimal": {
+        "name": "Hexidecimal",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Hexidecimal",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Hexidecimal.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Hexidecimal.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Html": {
         "name": "Html",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Html",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Html.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Html.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Html",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Html.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Html.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -8953,7 +9384,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -8962,25 +9393,95 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Image": {
+    "Molajo\\Fieldhandler\\Constraint\\HtmlAttribute": {
+        "name": "Htmlattribute",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Htmlattribute",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/HtmlAttribute.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/HtmlAttribute.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Image": {
         "name": "Image",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Image",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Image.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Image.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Image",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Image.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Image.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9015,7 +9516,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9024,26 +9525,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Integer": {
+    "Molajo\\Fieldhandler\\Constraint\\Integer": {
         "name": "Integer",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Integer",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Integer.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Integer.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Integer",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Integer.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Integer.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9078,7 +9582,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9087,26 +9591,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Ip": {
+    "Molajo\\Fieldhandler\\Constraint\\Ip": {
         "name": "Ip",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Ip",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Ip.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Ip",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Ip.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Ip.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9141,7 +9648,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9150,29 +9657,164 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Libraries\\kses": {
+    "Molajo\\Fieldhandler\\Constraint\\Js": {
+        "name": "Js",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Js",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Js.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Js.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Length": {
+        "name": "Length",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Length",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Length.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Length.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Libraries\\kses": {
 
     },
-    "Molajo\\Fieldhandler\\Adapter\\Lower": {
+    "Molajo\\Fieldhandler\\Constraint\\Lower": {
         "name": "Lower",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Lower",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Lower.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Lower",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Lower.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Lower.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractstring",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9207,7 +9849,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9216,25 +9858,30 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
+            "doStringFunction",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Maximum": {
+    "Molajo\\Fieldhandler\\Constraint\\Maximum": {
         "name": "Maximum",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Maximum",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Maximum.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Maximum.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Maximum",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Maximum.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Maximum.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9269,7 +9916,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9278,25 +9925,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Mimetypes": {
+    "Molajo\\Fieldhandler\\Constraint\\Mimetypes": {
         "name": "Mimetypes",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Mimetypes",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Mimetypes.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Mimetypes.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Mimetypes",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Mimetypes.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Mimetypes.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9331,7 +9982,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9340,26 +9991,30 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "getMimetypes",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Minimum": {
+    "Molajo\\Fieldhandler\\Constraint\\Minimum": {
         "name": "Minimum",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Minimum",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Minimum.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Minimum.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Minimum",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Minimum.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Minimum.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9394,7 +10049,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9403,25 +10058,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Notequal": {
+    "Molajo\\Fieldhandler\\Constraint\\Notequal": {
         "name": "Notequal",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Notequal",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Notequal.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Notequal.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Notequal",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notequal.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notequal.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9456,7 +10115,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9465,25 +10124,227 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Numeric": {
+    "Molajo\\Fieldhandler\\Constraint\\Nothing": {
+        "name": "Nothing",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Nothing",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Nothing.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Nothing.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Notnull": {
+        "name": "Notnull",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Notnull",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notnull.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Notnull.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Null": {
+        "name": "Null",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Null",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Null.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Null.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Numeric": {
         "name": "Numeric",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Numeric",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Numeric.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Numeric.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Numeric",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Numeric.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Numeric.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9518,7 +10379,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9527,25 +10388,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Object": {
+    "Molajo\\Fieldhandler\\Constraint\\Object": {
         "name": "Object",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Object",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Object.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Object.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Object",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Object.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Object.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9580,7 +10445,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9589,25 +10454,295 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Raw": {
+    "Molajo\\Fieldhandler\\Constraint\\Password": {
+        "name": "Password",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Password",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Password.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Password.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Primarykey": {
+        "name": "Primarykey",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Primarykey",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Primarykey.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Primarykey.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Printable": {
+        "name": "Printable",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Printable",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Printable.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Printable.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Punctuation": {
+        "name": "Punctuation",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Punctuation",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Punctuation.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Punctuation.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Raw": {
         "name": "Raw",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Raw",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Raw.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Raw.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Raw",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Raw.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Raw.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9642,7 +10777,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9651,25 +10786,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Regex": {
+    "Molajo\\Fieldhandler\\Constraint\\Regex": {
         "name": "Regex",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Regex",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Regex.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Regex.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Regex",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Regex.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Regex.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9704,7 +10843,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9713,25 +10852,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Required": {
+    "Molajo\\Fieldhandler\\Constraint\\Required": {
         "name": "Required",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Required",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Required.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Required.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Required",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Required.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Required.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9766,7 +10909,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9775,25 +10918,294 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\String": {
+    "Molajo\\Fieldhandler\\Constraint\\Resource": {
+        "name": "Resource",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Resource",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Resource.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Resource.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Scalar": {
+        "name": "Scalar",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Scalar",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Scalar.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Scalar.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Something": {
+        "name": "Something",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Something",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Something.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Something.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Space": {
+        "name": "Space",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Space",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Space.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Space.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractctype",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "sanitizeByCType",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\String": {
         "name": "String",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\String",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/String.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/String.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\String",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/String.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/String.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9828,7 +11240,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9837,89 +11249,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\StringLength": {
-        "name": "Stringlength",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Stringlength",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/StringLength.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/StringLength.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
-        "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "fieldhandler_type",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "method",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "field_name",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "field_value",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "options",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "validate",
-            "filter",
-            "escape",
-            "getFromto",
-            "__construct",
-            "getErrorMessages"
-        ]
-    },
-    "Molajo\\Fieldhandler\\Adapter\\Tel": {
+    "Molajo\\Fieldhandler\\Constraint\\Tel": {
         "name": "Tel",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Tel",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Tel.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Tel.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Tel",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Tel.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Tel.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -9954,7 +11306,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -9963,26 +11315,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
-            "setFlags",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Time": {
+    "Molajo\\Fieldhandler\\Constraint\\Time": {
         "name": "Time",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Time",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Time.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Time.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Time",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Time.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Time.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -10017,7 +11372,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -10026,25 +11381,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Trim": {
+    "Molajo\\Fieldhandler\\Constraint\\Trim": {
         "name": "Trim",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Trim",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Trim.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Trim.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Trim",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Trim.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Trim.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractstring",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -10079,7 +11438,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -10088,25 +11447,162 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
+            "doStringFunction",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Upper": {
+    "Molajo\\Fieldhandler\\Constraint\\True": {
+        "name": "True",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\True",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/True.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/True.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Unique": {
+        "name": "Unique",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Unique",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Unique.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Unique.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ConstraintInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "constraint",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "method",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_name",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "field_value",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "options",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "validate",
+            "sanitize",
+            "format",
+            "__construct",
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Constraint\\Upper": {
         "name": "Upper",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Upper",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Upper.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Upper.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Upper",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Upper.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Upper.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractstring",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -10141,7 +11637,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -10150,25 +11646,30 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
+            "doStringFunction",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Url": {
+    "Molajo\\Fieldhandler\\Constraint\\Url": {
         "name": "Url",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Url",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Url.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Url.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Url",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Url.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Url.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\Abstractfiltervar",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -10203,7 +11704,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -10212,25 +11713,29 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Adapter\\Values": {
+    "Molajo\\Fieldhandler\\Constraint\\Values": {
         "name": "Values",
-        "namespace": "Molajo\\Fieldhandler\\Adapter",
-        "fqns": "Molajo\\Fieldhandler\\Adapter\\Values",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Adapter\/Values.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Adapter\/Values.php",
-        "parent": "Molajo\\Fieldhandler\\Adapter\\AbstractFieldhandler",
+        "namespace": "Molajo\\Fieldhandler\\Constraint",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Values",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Constraint\/Values.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Values.php",
+        "parent": "Molajo\\Fieldhandler\\Constraint\\AbstractConstraint",
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerAdapterInterface"
+            "CommonApi\\Model\\ConstraintInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "fieldhandler_type",
+                "name": "constraint",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -10265,7 +11770,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $fieldhandler_type\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $constraint\n     * @param   string $method\n     * @param   string $field_name\n     * @param   mixed  $field_value\n     * @param   array  $options\n     *\n     * @since   1.0.0\n     * @throws  \\CommonApi\\Exception\\UnexpectedValueException\n     *\/",
         "implemented_by": [
 
         ],
@@ -10274,28 +11779,37 @@
         ],
         "method": [
             "validate",
-            "filter",
-            "escape",
+            "sanitize",
+            "format",
             "getFieldValues",
             "__construct",
-            "getErrorMessages"
+            "getValidateMessages",
+            "setValidateMessage",
+            "testMinimumMaximum",
+            "checkMX",
+            "setFlags"
         ]
     },
-    "Molajo\\Fieldhandler\\Driver": {
-        "name": "Driver",
+    "Molajo\\Fieldhandler\\Escape": {
+        "name": "Escape",
         "namespace": "Molajo\\Fieldhandler",
-        "fqns": "Molajo\\Fieldhandler\\Driver",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Driver.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/Driver.php",
+        "fqns": "Molajo\\Fieldhandler\\Escape",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Escape.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Escape.php",
         "parent": false,
         "implemented_interfaces": [
-            "CommonApi\\Model\\ValidateInterface",
-            "CommonApi\\Model\\FilterInterface",
             "CommonApi\\Model\\EscapeInterface"
         ],
         "constructor_parameters": [
-
+            {
+                "name": "adapter",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
         ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $adapter  \\CommonApi\\Model\\EscapeInterface\n     *\n     * @since   1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -10303,38 +11817,136 @@
 
         ],
         "method": [
-            "validate",
-            "filter",
-            "escape"
+            "__construct",
+            "escapeHtml",
+            "escapeHtmlAttributes",
+            "escapeJs",
+            "escapeCss",
+            "escapeUrl"
         ]
     },
-    "Molajo\\Fieldhandler\\FieldhandlerItem": {
-        "name": "FieldhandlerItem",
-        "namespace": "Molajo\\Fieldhandler",
-        "fqns": "Molajo\\Fieldhandler\\FieldhandlerItem",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/FieldhandlerItem.php",
-        "path": "vendor\/molajo\/fieldhandler\/Source\/FieldhandlerItem.php",
+    "Molajo\\Fieldhandler\\Escape\\AbstractEscape": {
+        "name": "AbstractEscape",
+        "namespace": "Molajo\\Fieldhandler\\Escape",
+        "fqns": "Molajo\\Fieldhandler\\Escape\\AbstractEscape",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Escape\/AbstractEscape.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Escape\/AbstractEscape.php",
         "parent": false,
         "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerItemInterface"
+            "CommonApi\\Model\\EscapeInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "field_name",
+                "name": "escape_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $adapter  \\CommonApi\\Model\\EscapeInterface\n     *\n     * @since   1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "escapeHtml",
+            "escapeHtmlAttributes",
+            "escapeJs",
+            "escapeUrl",
+            "escapeCss"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Escape\\Zend": {
+        "name": "Zend",
+        "namespace": "Molajo\\Fieldhandler\\Escape",
+        "fqns": "Molajo\\Fieldhandler\\Escape\\Zend",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Escape\/Zend.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Escape\/Zend.php",
+        "parent": "Molajo\\Fieldhandler\\Escape\\AbstractEscape",
+        "implemented_interfaces": [
+            "CommonApi\\Model\\EscapeInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "escape_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $adapter  \\CommonApi\\Model\\EscapeInterface\n     *\n     * @since   1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "escapeHtml",
+            "escapeHtmlAttributes",
+            "escapeJs",
+            "escapeCss",
+            "escapeUrl",
+            "__construct"
+        ]
+    },
+    "Molajo\\Fieldhandler\\HandleResponse": {
+        "name": "HandleResponse",
+        "namespace": "Molajo\\Fieldhandler",
+        "fqns": "Molajo\\Fieldhandler\\HandleResponse",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/HandleResponse.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/HandleResponse.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Model\\HandleResponseInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "original_data_value",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
-                "name": "return_value",
+                "name": "response_value",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
-            },
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   mixed $original_data_value\n     * @param   mixed $response_value\n     *\n     * @since   1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "getFieldValue",
+            "getChangeIndicator"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Message": {
+        "name": "Message",
+        "namespace": "Molajo\\Fieldhandler",
+        "fqns": "Molajo\\Fieldhandler\\Message",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Message.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Message.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Model\\MessageInterface"
+        ],
+        "constructor_parameters": [
             {
-                "name": "error_messages",
+                "name": "message_templates",
                 "default_available": true,
                 "default_value": [
 
@@ -10343,7 +11955,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $field_name\n     * @param   string $return_value\n     * @param   array  $error_messages\n     *\n     * @since   1.0.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array $message_templates\n     *\n     * @since   1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -10352,9 +11964,86 @@
         ],
         "method": [
             "__construct",
-            "getFieldName",
-            "getReturnValue",
-            "getErrorMessages"
+            "getMessages",
+            "setMessages"
+        ]
+    },
+    "Molajo\\Fieldhandler\\Request": {
+        "name": "Request",
+        "namespace": "Molajo\\Fieldhandler",
+        "fqns": "Molajo\\Fieldhandler\\Request",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/Request.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Request.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ValidateInterface",
+            "CommonApi\\Model\\SanitizeInterface",
+            "CommonApi\\Model\\FormatInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "message_templates",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $message_templates\n     *\n     * @since   1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "validate",
+            "sanitize",
+            "format"
+        ]
+    },
+    "Molajo\\Fieldhandler\\ValidateResponse": {
+        "name": "ValidateResponse",
+        "namespace": "Molajo\\Fieldhandler",
+        "fqns": "Molajo\\Fieldhandler\\ValidateResponse",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Source\/ValidateResponse.php",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/ValidateResponse.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Model\\ValidateResponseInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "validate_response",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "validate_messages",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $validate_response\n     * @param   array  $validate_messages\n     *\n     * @since   1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "getValidateResponse",
+            "getValidateMessages"
         ]
     },
     "Molajo\\Factories\\Filesystem\\FilesystemFactoryMethod": {
@@ -11990,7 +13679,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             }
@@ -15203,7 +16892,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             },
@@ -15274,7 +16963,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             },
@@ -15345,7 +17034,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             },
@@ -15416,7 +17105,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             },
@@ -15487,7 +17176,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             },
@@ -18006,7 +19695,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             },
@@ -18276,54 +19965,6 @@
             "sendCookies"
         ]
     },
-    "Molajo\\User\\Fieldhandler": {
-        "name": "Fieldhandler",
-        "namespace": "Molajo\\User",
-        "fqns": "Molajo\\User\\Fieldhandler",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Fieldhandler.php",
-        "path": "vendor\/molajo\/user\/Source\/Fieldhandler.php",
-        "parent": false,
-        "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "fieldhandler",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
-                ],
-                "concrete": false
-            },
-            {
-                "name": "messages",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\User\\MessagesInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\User\\Messages"
-                ],
-                "concrete": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param FieldhandlerInterface $fieldhandler\n     * @param MessagesInterface     $messages\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "validate",
-            "filter",
-            "escape"
-        ]
-    },
     "Molajo\\User\\FlashMessage": {
         "name": "FlashMessage",
         "namespace": "Molajo\\User",
@@ -18579,7 +20220,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\Fieldhandler"
+
                 ],
                 "concrete": false
             },
