@@ -30,7 +30,6 @@ $resource_adapter->setNamespace('Molajo\\Views\\Wraps\\', 'vendor/molajo/foundat
  *  APPLICATION EXTENSIONS
  */
 $resource_adapter->setNamespace('Molajo\\Controller\\', 'vendor/molajo/application/Source/Controller/');
-$resource_adapter->setNamespace('Molajo\\Fieldhandler\\Constraint\\', 'vendor/molajo/application/Source/Fieldhandler/');
 $resource_adapter->setNamespace('Molajo\\Model\\', 'vendor/molajo/application/Source/Model/');
 $resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/application/Source/Plugins/');
 $resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/application/Source/Resource/');
