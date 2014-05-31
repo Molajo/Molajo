@@ -11,6 +11,7 @@ $requests   = array();
 $requests[] = 'Runtimedata';
 $requests[] = 'Plugindata';
 $requests[] = 'Resource';
+$requests[] = 'Errorhandling';
 $requests[] = 'Request';
 $requests[] = 'Client';
 $requests[] = 'Server';

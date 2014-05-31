@@ -22,7 +22,7 @@ if (is_file($resource_map_filename . 'abcdefghijklmnopqrstuvwxyz')) {
         $interface_map_filename = __DIR__ . '/Files/Input/ExcludeFolders.json'
     );
 
-    include __DIR__ . '/SetNamespace.php';
+    include __DIR__ . '/Files/Input/SetNamespace.php';
 
     $resource_adapter->createMap();
 
@@ -35,7 +35,8 @@ if (is_file($resource_map_filename . 'abcdefghijklmnopqrstuvwxyz')) {
             __DIR__ . '/Files/Output/ClassMap.json',
             __DIR__ . '/Files/Output/Interfaces.json',
             __DIR__ . '/Files/Output/ClassDependencies.json',
-            __DIR__ . '/Files/Output/Events.json'
+            __DIR__ . '/Files/Output/Events.json',
+            __DIR__ . '/Files/Output/Stats.json'
         );
     } catch (Exception $e) {
         throw new Exception ('Interface Map ' . $class . ' Exception during Instantiation: ' . $e->getMessage());

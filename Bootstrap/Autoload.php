@@ -64,7 +64,7 @@ $scheme                          = new $class($file);
 $class                           = 'Molajo\\Resource\\Driver';
 $resource_adapter                = new $class($scheme, $handler_instance);
 
-include __DIR__ . '/SetNamespace.php';
+include __DIR__ . '/Files/Input/SetNamespace.php';
 
 /** Composer */
 include $base_path . '/vendor/autoload.php';

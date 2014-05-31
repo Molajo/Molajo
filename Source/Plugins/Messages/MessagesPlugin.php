@@ -49,16 +49,16 @@ class MessagesPlugin extends DisplayEventPlugin implements DisplayInterface
 
             $temp_row->class = 'alert-box';
             if ($message->type == 'Success') {
-                $temp_row->heading = $this->language_controller->translate('Success');
+                $temp_row->heading = $this->language_controller->translateString('Success');
                 $temp_row->class .= ' success';
             } elseif ($message->type == 'Warning') {
-                $temp_row->heading = $this->language_controller->translate('Warning');
+                $temp_row->heading = $this->language_controller->translateString('Warning');
                 $temp_row->class .= ' warning';
             } elseif ($message->type == 'Error') {
-                $temp_row->heading = $this->language_controller->translate('Error');
+                $temp_row->heading = $this->language_controller->translateString('Error');
                 $temp_row->class .= ' alert';
             } else {
-                $temp_row->heading = $this->language_controller->translate('Information');
+                $temp_row->heading = $this->language_controller->translateString('Information');
                 $temp_row->class .= ' secondary';
             }
 

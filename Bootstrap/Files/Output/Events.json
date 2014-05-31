@@ -71,11 +71,5 @@
     ],
     "onBeforeRead": [
         "Molajo\\Plugins\\Queryauthorisation\\QueryauthorisationPlugin"
-    ],
-    "onAfterRender": [
-        "Molajo\\Plugins\\Translate\\TranslatePlugin"
-    ],
-    "onBeforeParse": [
-        "Molajo\\Plugins\\Foundation\\FoundationPlugin"
     ]
 }

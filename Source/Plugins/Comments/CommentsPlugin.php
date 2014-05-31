@@ -190,15 +190,15 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
         $temp_row->count_of_comments = (int)$count;
 
         if ((int)$count == 0) {
-            $temp_row->title        = $this->language_controller->translate('No comments');
-            $temp_row->content_text = $this->language_controller->translate('There are no comments.');
+            $temp_row->title        = $this->language_controller->translateString('No comments');
+            $temp_row->content_text = $this->language_controller->translateString('There are no comments.');
         } else {
-            $temp_row->title        = $this->language_controller->translate('Comments');
-            $temp_row->content_text = $this->language_controller->translate('Comments');
+            $temp_row->title        = $this->language_controller->translateString('Comments');
+            $temp_row->content_text = $this->language_controller->translateString('Comments');
         }
 
         if ((int)$this->plugin_data->comment_open == 0) {
-            $temp_row->closed_comment = $this->language_controller->translate('Comments are closed.');
+            $temp_row->closed_comment = $this->language_controller->translateString('Comments are closed.');
             $temp_row->closed         = 1;
         } else {
             $temp_row->closed_comment = '';

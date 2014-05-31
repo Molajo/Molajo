@@ -20,7 +20,6 @@ $resource_adapter->setNamespace('Molajo\\', 'Source/Resources/');
 /**
  *  PRESENTATION LAYER
  */
-$resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/foundation5/Source/Plugins/');
 $resource_adapter->setNamespace('Molajo\\Themes\\', 'vendor/molajo/foundation5/Source/Themes/');
 $resource_adapter->setNamespace('Molajo\\Views\\Pages\\', 'vendor/molajo/foundation5/Source/Views/Pages/');
 $resource_adapter->setNamespace('Molajo\\Views\\Templates\\', 'vendor/molajo/foundation5/Source/Views/Templates/');
@@ -43,7 +42,7 @@ $resource_adapter->setNamespace('Molajo\\', 'vendor/molajo/application/Source/Ex
 $resource_adapter->setNamespace('Molajo\\Authorisation\\', 'vendor/molajo/authorisation/Source/');
 $resource_adapter->setNamespace(
     'Molajo\\Factories\\Authorisation\\',
-    'vendor/molajo/authorisation/Factories/Authorisation'
+    'vendor/molajo/authorisation/Factories/Authorisation/'
 );
 
 $resource_adapter->setNamespace('Molajo\\Cache\\', 'vendor/molajo/cache/Source/');
@@ -72,13 +71,15 @@ $resource_adapter->setNamespace('Molajo\\Factories\\Filesystem\\', 'vendor/molaj
 $resource_adapter->setNamespace('Molajo\\Http\\', 'vendor/molajo/http/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/http/Factories/');
 
-$resource_adapter->setNamespace('Molajo\\IoC\\', 'vendor/molajo/ioc/Source');
+$resource_adapter->setNamespace('Molajo\\IoC\\', 'vendor/molajo/ioc/Source/');
 
 $resource_adapter->setNamespace('Molajo\\Language\\', 'vendor/molajo/Language/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/language/Factories/');
 
-//$resource_adapter->setNamespace('Molajo\\Factories', 'vendor/molajo/Log/Service');
-//$resource_adapter->setNamespace('Molajo\\Log', 'vendor/molajo/Log/Source/');
+$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/Log/Factories/');
+$resource_adapter->setNamespace('Molajo\\Controller\\', 'vendor/molajo/Log/Controller/');
+$resource_adapter->setNamespace('Molajo\\Log\\', 'vendor/molajo/Log/Source/');
+$resource_adapter->setNamespace('Psr\\Log\\', 'vendor/psr/log/Psr/Log/');
 
 $resource_adapter->setNamespace('Molajito\\', 'vendor/molajo/molajito/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/molajito/Factories/');
