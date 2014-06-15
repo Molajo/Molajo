@@ -37,7 +37,7 @@ class SnippetPlugin extends ReadEventPlugin implements ReadInterface
 //todo criteria_snippet_length
         $snippetLength = 200;
 
-        if (is_array($fields) && count($fields) > 0) {
+        if (count($fields) > 0) {
 
             foreach ($fields as $field) {
 

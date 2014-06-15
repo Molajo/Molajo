@@ -32,7 +32,7 @@ class EmailPlugin extends ReadEventPlugin implements ReadInterface
     {
         $fields = $this->getFieldsByType('email');
 
-        if (is_array($fields) && count($fields) > 0) {
+        if (count($fields) > 0) {
 
             foreach ($fields as $field) {
 

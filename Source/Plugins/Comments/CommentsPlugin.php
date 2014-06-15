@@ -182,7 +182,7 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
             $count = $comments->getData();
 
         } catch (Exception $e) {
-            throw new RuntimeException ($e->getMessage());
+            throw new RuntimeException($e->getMessage());
         }
 
         $temp_row = new stdClass();
@@ -253,7 +253,7 @@ class CommentsPlugin extends DisplayEventPlugin implements DisplayInterface
             $this->plugin_data->comments_list->model_registry = $comments->getModelRegistry('*');
 
         } catch (Exception $e) {
-            throw new RuntimeException ($e->getMessage());
+            throw new RuntimeException($e->getMessage());
         }
 
         return $this;

@@ -85,7 +85,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
             $this->model_registry  = $author->getModelRegistry('*');
 
         } catch (Exception $e) {
-            throw new RuntimeException ($e->getMessage());
+            throw new RuntimeException($e->getMessage());
         }
 
         return $this;
@@ -159,7 +159,7 @@ class AuthorPlugin extends DisplayEventPlugin implements DisplayInterface
         try {
             return $controller->getData();
         } catch (Exception $e) {
-            throw new RuntimeException ($e->getMessage());
+            throw new RuntimeException($e->getMessage());
         }
     }
 }

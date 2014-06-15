@@ -36,7 +36,7 @@ class DateformatsPlugin extends CreateEventPlugin implements CreateInterface
 
         $fields = $this->getFieldsByType('datetime');
 
-        if (is_array($fields) && count($fields) > 0) {
+        if (count($fields) > 0) {
 
             foreach ($fields as $field) {
 
@@ -111,7 +111,7 @@ class DateformatsPlugin extends CreateEventPlugin implements CreateInterface
             return $this;
         }
 
-        if (is_array($fields) && count($fields) > 0) {
+        if (count($fields) > 0) {
 
             foreach ($fields as $field) {
 

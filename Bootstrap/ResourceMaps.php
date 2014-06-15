@@ -39,7 +39,7 @@ if (is_file($resource_map_filename . 'abcdefghijklmnopqrstuvwxyz')) {
             __DIR__ . '/Files/Output/Stats.json'
         );
     } catch (Exception $e) {
-        throw new Exception ('Interface Map ' . $class . ' Exception during Instantiation: ' . $e->getMessage());
+        throw new Exception('Interface Map ' . $class . ' Exception during Instantiation: ' . $e->getMessage());
     }
 
     $map_instance->createMap();
