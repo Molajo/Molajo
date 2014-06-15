@@ -55,31 +55,8 @@ $resource_adapter->setNamespace('Molajo\\Email\\', 'vendor/molajo/email/source/'
 $resource_adapter->setNamespace('Molajo\\Factories\\Email\\', 'vendor/molajo/email/Factories/Email/');
 
 $resource_adapter->setNamespace('Molajo\\Event\\', 'vendor/molajo/event/Source/');
+$resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/event/Plugins/');
 $resource_adapter->setNamespace('Molajo\\Factories\\Dispatcher\\', 'vendor/molajo/event/Factories/Dispatcher/');
-$resource_adapter->setNamespace(
-    'Molajo\\Plugins\\AuthenticateEventPlugin',
-    'vendor/molajo/event/Plugins/AuthenticateEventPlugin'
-);
-$resource_adapter->setNamespace(
-    'Molajo\\Plugins\\CreateEventPlugin',
-    'vendor/molajo/event/Plugins/CreateEventPlugin'
-);
-$resource_adapter->setNamespace(
-    'Molajo\\Plugins\\DisplayEventPlugin',
-    'vendor/molajo/event/Plugins/DisplayEventPlugin'
-);
-$resource_adapter->setNamespace(
-    'Molajo\\Plugins\\ReadEventPlugin',
-    'vendor/molajo/event/Plugins/ReadEventPlugin'
-);
-$resource_adapter->setNamespace(
-    'Molajo\\Plugins\\SystemEventPlugin',
-    'vendor/molajo/event/Plugins/SystemEventPlugin'
-);
-$resource_adapter->setNamespace(
-    'Molajo\\Plugins\\UpdateEventPlugin',
-    'vendor/molajo/event/Plugins/UpdateEventPlugin'
-);
 
 $resource_adapter->setNamespace('Molajo\\Fieldhandler\\', 'vendor/molajo/fieldhandler/Source/');
 $resource_adapter->setNamespace(

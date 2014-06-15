@@ -40,7 +40,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -60,7 +60,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Blockquote\\BlockquotePlugin": {
@@ -98,7 +99,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -111,7 +112,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Comments\\CommentsPlugin": {
@@ -149,7 +151,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -168,7 +170,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Copyright\\CopyrightPlugin": {
@@ -206,7 +209,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -228,7 +231,8 @@
             "onAfterResponse",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Dateformats\\DateformatsPlugin": {
@@ -267,7 +271,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -282,7 +286,8 @@
             "onAfterUpdate",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Email\\EmailPlugin": {
@@ -320,7 +325,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -333,7 +338,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Fullname\\FullnamePlugin": {
@@ -371,7 +377,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -384,7 +390,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Linebreaks\\LinebreaksPlugin": {
@@ -422,7 +429,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -435,7 +442,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Links\\LinksPlugin": {
@@ -473,7 +481,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -486,7 +494,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Messages\\MessagesPlugin": {
@@ -524,7 +533,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -544,7 +553,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Readmore\\ReadmorePlugin": {
@@ -582,7 +592,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -596,7 +606,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Smilies\\SmiliesPlugin": {
@@ -634,7 +645,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -647,7 +658,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Snippet\\SnippetPlugin": {
@@ -685,7 +697,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -698,7 +710,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "CommonApi\\Exception\\BadFunctionCallException": {
@@ -1628,12 +1641,12 @@
             "translateString"
         ]
     },
-    "Molajo\\Controller\\ErrorHandling": {
-        "name": "ErrorHandling",
+    "Molajo\\Controller\\Errorhandling": {
+        "name": "Errorhandling",
         "namespace": "Molajo\\Controller",
-        "fqns": "Molajo\\Controller\\ErrorHandling",
+        "fqns": "Molajo\\Controller\\Errorhandling",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/ErrorHandling.php",
-        "path": "vendor\/molajo\/Log\/Controller\/ErrorHandling.php",
+        "path": "vendor\/molajo\/Log\/Controller\/Errorhandling.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\Controller\\ErrorHandlingInterface"
@@ -1674,12 +1687,12 @@
             "setError"
         ]
     },
-    "Molajo\\Controller\\ExceptionHandling": {
+    "Molajo\\Controller\\Exceptionhandling": {
         "name": "ExceptionHandling",
         "namespace": "Molajo\\Controller",
         "fqns": "Molajo\\Controller\\ExceptionHandling",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/ExceptionHandling.php",
-        "path": "vendor\/molajo\/Log\/Controller\/ExceptionHandling.php",
+        "path": "vendor\/molajo\/Log\/Controller\/Exceptionhandling.php",
         "parent": false,
         "implemented_interfaces": [
 
@@ -1752,11 +1765,11 @@
         ],
         "method": [
             "__construct",
-            "onAfterInstantiation",
             "setDependencies",
-            "onBeforeInstantiation",
             "instantiateClass",
+            "onBeforeInstantiation",
             "instantiateStatic",
+            "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
@@ -3514,7 +3527,7 @@
         "name": "AbstractPlugin",
         "namespace": "Molajo\\Plugins",
         "fqns": "Molajo\\Plugins\\AbstractPlugin",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Plugins\/AbstractPlugin.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/AbstractPlugin.php",
         "path": "vendor\/molajo\/event\/Plugins\/AbstractPlugin.php",
         "parent": false,
         "implemented_interfaces": [
@@ -3545,7 +3558,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3555,7 +3568,8 @@
         "method": [
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Alias\\AliasPlugin": {
@@ -3594,7 +3608,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3608,7 +3622,8 @@
             "onAfterUpdate",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Application\\ApplicationPlugin": {
@@ -3646,7 +3661,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3668,7 +3683,8 @@
             "onAfterResponse",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin": {
@@ -3706,7 +3722,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3719,7 +3735,8 @@
             "onBeforeUpdate",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Customfields\\CustomfieldsPlugin": {
@@ -3757,7 +3774,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3770,7 +3787,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Events\\EventsPlugin": {
@@ -3808,7 +3826,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3829,7 +3847,8 @@
             "onAfterResponse",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Fields\\FieldsPlugin": {
@@ -3867,7 +3886,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3886,7 +3905,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Footer\\FooterPlugin": {
@@ -3924,7 +3944,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3935,7 +3955,8 @@
             "onBeforeRenderView",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Login\\LoginPlugin": {
@@ -3973,7 +3994,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3987,7 +4008,8 @@
             "onAfterLogout",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Logout\\LogoutPlugin": {
@@ -4025,7 +4047,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4039,7 +4061,8 @@
             "onAfterAuthenticate",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Menuitems\\MenuitemsPlugin": {
@@ -4077,7 +4100,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4098,7 +4121,8 @@
             "onAfterResponse",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagetypeapplication\\PagetypeapplicationPlugin": {
@@ -4136,7 +4160,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4155,7 +4179,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagetypeconfiguration\\PagetypeconfigurationPlugin": {
@@ -4193,7 +4218,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4212,7 +4237,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagetypedashboard\\PagetypedashboardPlugin": {
@@ -4250,7 +4276,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4269,7 +4295,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagetypeedit\\PagetypeeditPlugin": {
@@ -4307,7 +4334,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4327,7 +4354,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagetypegrid\\PagetypegridPlugin": {
@@ -4365,7 +4393,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4384,7 +4412,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagetypeitem\\PagetypeitemPlugin": {
@@ -4422,7 +4451,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4441,7 +4470,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagetypelist\\PagetypelistPlugin": {
@@ -4479,7 +4509,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4498,7 +4528,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagetypenew\\PagetypenewPlugin": {
@@ -4536,7 +4567,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4555,7 +4586,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Pagination\\PaginationPlugin": {
@@ -4593,7 +4625,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4606,7 +4638,8 @@
             "onAfterRead",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Queryauthorisation\\QueryauthorisationPlugin": {
@@ -4644,7 +4677,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4657,7 +4690,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Sites\\SitesPlugin": {
@@ -4695,7 +4729,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4705,7 +4739,8 @@
         "method": [
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\Status\\StatusPlugin": {
@@ -4743,7 +4778,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -4756,7 +4791,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Resource\\Adapter\\Menuitem": {
@@ -6431,51 +6467,6 @@
             "getStoreContainerEntryIndicator"
         ]
     },
-    "Molajo\\Factories\\Event\\EventFactoryMethod": {
-        "name": "EventFactoryMethod",
-        "namespace": "Molajo\\Factories\\Event",
-        "fqns": "Molajo\\Factories\\Event\\EventFactoryMethod",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Event\/EventFactoryMethod.php",
-        "path": "vendor\/molajo\/event\/Factories\/Event\/EventFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
-        "implemented_interfaces": [
-            "CommonApi\\IoC\\FactoryBatchInterface",
-            "CommonApi\\IoC\\FactoryInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "options",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array $options\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "setDependencies",
-            "instantiateClass",
-            "onBeforeInstantiation",
-            "instantiateStatic",
-            "onAfterInstantiation",
-            "getProductValue",
-            "removeContainerEntries",
-            "setContainerEntries",
-            "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator"
-        ]
-    },
     "Molajo\\Plugins\\AuthenticateEventPlugin": {
         "name": "AuthenticateEventPlugin",
         "namespace": "Molajo\\Plugins",
@@ -6511,7 +6502,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -6525,7 +6516,8 @@
             "onAfterLogout",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\CreateEventPlugin": {
@@ -6564,7 +6556,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -6578,7 +6570,8 @@
             "onAfterUpdate",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\DisplayEventPlugin": {
@@ -6616,7 +6609,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -6635,7 +6628,8 @@
             "onAfterRender",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\ReadEventPlugin": {
@@ -6673,7 +6667,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -6686,7 +6680,8 @@
             "onAfterReadall",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\SystemEventPlugin": {
@@ -6724,7 +6719,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -6745,7 +6740,8 @@
             "onAfterResponse",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Plugins\\UpdateEventPlugin": {
@@ -6783,7 +6779,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $plugin_name\n     * @param  string $event_name\n     * @param  array  $data\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -6795,7 +6791,8 @@
             "onAfterUpdate",
             "__construct",
             "get",
-            "set"
+            "setField",
+            "saveForeignKeyValue"
         ]
     },
     "Molajo\\Event\\Dispatcher": {
@@ -13015,7 +13012,6 @@
                     "Molajo\\Factories\\Email\\EmailFactoryMethod",
                     "Molajo\\Factories\\Encrypt\\EncryptFactoryMethod",
                     "Molajo\\Factories\\Errorhandling\\ErrorhandlingFactoryMethod",
-                    "Molajo\\Factories\\Event\\EventFactoryMethod",
                     "Molajo\\Factories\\Exceptionhandling\\ExceptionhandlingFactoryMethod",
                     "Molajo\\Factories\\Execute\\ExecuteFactoryMethod",
                     "Molajo\\Factories\\Extensions\\ExtensionsFactoryMethod",

@@ -797,17 +797,17 @@
         "path": "vendor\/molajo\/Language\/Source\/Driver.php",
         "fqns": "Molajo\\Language\\Driver"
     },
-    "vendor\/molajo\/Log\/Controller\/ErrorHandling.php": {
-        "file_name": "ErrorHandling.php",
-        "base_name": "ErrorHandling",
-        "path": "vendor\/molajo\/Log\/Controller\/ErrorHandling.php",
-        "fqns": "Molajo\\Controller\\ErrorHandling"
+    "vendor\/molajo\/Log\/Controller\/Errorhandling.php": {
+        "file_name": "Errorhandling.php",
+        "base_name": "Errorhandling",
+        "path": "vendor\/molajo\/Log\/Controller\/Errorhandling.php",
+        "fqns": "Molajo\\Controller\\Errorhandling"
     },
-    "vendor\/molajo\/Log\/Controller\/ExceptionHandling.php": {
-        "file_name": "ExceptionHandling.php",
-        "base_name": "ExceptionHandling",
-        "path": "vendor\/molajo\/Log\/Controller\/ExceptionHandling.php",
-        "fqns": "Molajo\\Controller\\ExceptionHandling"
+    "vendor\/molajo\/Log\/Controller\/Exceptionhandling.php": {
+        "file_name": "Exceptionhandling.php",
+        "base_name": "Exceptionhandling",
+        "path": "vendor\/molajo\/Log\/Controller\/Exceptionhandling.php",
+        "fqns": "Molajo\\Controller\\Exceptionhandling"
     },
     "vendor\/molajo\/Log\/Factories\/Errorhandling\/ErrorhandlingFactoryMethod.php": {
         "file_name": "ErrorhandlingFactoryMethod.php",
@@ -1360,12 +1360,6 @@
         "base_name": "DispatcherFactoryMethod",
         "path": "vendor\/molajo\/event\/Factories\/Dispatcher\/DispatcherFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Dispatcher\\DispatcherFactoryMethod"
-    },
-    "vendor\/molajo\/event\/Factories\/Event\/EventFactoryMethod.php": {
-        "file_name": "EventFactoryMethod.php",
-        "base_name": "EventFactoryMethod",
-        "path": "vendor\/molajo\/event\/Factories\/Event\/EventFactoryMethod.php",
-        "fqns": "Molajo\\Factories\\Event\\EventFactoryMethod"
     },
     "vendor\/molajo\/event\/Plugins\/AbstractPlugin.php": {
         "file_name": "AbstractPlugin.php",

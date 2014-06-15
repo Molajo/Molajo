@@ -144,7 +144,7 @@
         "path": "vendor\/commonapi\/controller\/ErrorHandlingInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Controller\\ErrorHandling",
+            "Molajo\\Controller\\Errorhandling",
             "Molajo\\Controller\\FrontController"
         ],
         "dependency_for": [
@@ -698,7 +698,6 @@
             "Molajo\\Factories\\Email\\EmailFactoryMethod",
             "Molajo\\Factories\\Encrypt\\EncryptFactoryMethod",
             "Molajo\\Factories\\Errorhandling\\ErrorhandlingFactoryMethod",
-            "Molajo\\Factories\\Event\\EventFactoryMethod",
             "Molajo\\Factories\\Exceptionhandling\\ExceptionhandlingFactoryMethod",
             "Molajo\\Factories\\Execute\\ExecuteFactoryMethod",
             "Molajo\\Factories\\Extensions\\ExtensionsFactoryMethod",
@@ -770,7 +769,6 @@
             "Molajo\\Factories\\Email\\EmailFactoryMethod",
             "Molajo\\Factories\\Encrypt\\EncryptFactoryMethod",
             "Molajo\\Factories\\Errorhandling\\ErrorhandlingFactoryMethod",
-            "Molajo\\Factories\\Event\\EventFactoryMethod",
             "Molajo\\Factories\\Exceptionhandling\\ExceptionhandlingFactoryMethod",
             "Molajo\\Factories\\Execute\\ExecuteFactoryMethod",
             "Molajo\\Factories\\Extensions\\ExtensionsFactoryMethod",
@@ -1806,7 +1804,7 @@
             "Psr\\Log\\NullLogger"
         ],
         "dependency_for": [
-            "Molajo\\Controller\\ErrorHandling",
+            "Molajo\\Controller\\Errorhandling",
             "Molajo\\Controller\\ExceptionHandling"
         ]
     }

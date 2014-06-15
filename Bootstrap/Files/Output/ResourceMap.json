@@ -849,10 +849,10 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/DateController.php"
     ],
     "molajo\\controller\\errorhandling": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/ErrorHandling.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/Errorhandling.php"
     ],
     "molajo\\controller\\exceptionhandling": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/ExceptionHandling.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/Exceptionhandling.php"
     ],
     "molajo\\controller\\frontcontroller": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/FrontController.php"
@@ -1100,15 +1100,6 @@
     ],
     "molajo\\factories\\errorhandling\\errorhandlingfactorymethod": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Factories\/Errorhandling\/ErrorhandlingFactoryMethod.php"
-    ],
-    "molajo\\factories\\event": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Event\/"
-    ],
-    "molajo\\factories\\event\\configuration.xml": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Event\/Configuration.xml"
-    ],
-    "molajo\\factories\\event\\eventfactorymethod": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Event\/EventFactoryMethod.php"
     ],
     "molajo\\factories\\exceptionhandling": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Factories\/Exceptionhandling"
