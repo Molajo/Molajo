@@ -16,7 +16,7 @@ tools:
         config:
             standard: "PSR2"
         filter:
-            excluded_paths: [ "vendor/*", ".dev/*", "Factories/*" ]
+            excluded_paths: [ "vendor/*", ".dev/*", "Bootstrap/*", "Factories/*" ]
 
     # https://scrutinizer-ci.com/docs/tools/php/mess-detector/
     php_mess_detector: true
