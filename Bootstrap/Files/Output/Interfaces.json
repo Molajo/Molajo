@@ -78,7 +78,6 @@
         "parent": false,
         "implemented_by": [
             "Molajo\\Controller\\Controller",
-            "Molajo\\Controller\\ModelRegistryQuery",
             "Molajo\\Controller\\QueryController",
             "Molajo\\Controller\\ReadController"
         ],
@@ -186,20 +185,6 @@
         "parent": false,
         "implemented_by": [
 
-        ],
-        "dependency_for": [
-
-        ]
-    },
-    "CommonApi\\Controller\\ModelRegistryInterface": {
-        "name": "ModelRegistryInterface",
-        "namespace": "CommonApi\\Controller",
-        "fqns": "CommonApi\\Controller\\ModelRegistryInterface",
-        "path": "vendor\/commonapi\/controller\/ModelRegistryInterface.php",
-        "parent": false,
-        "implemented_by": [
-            "Molajo\\Controller\\ModelRegistryQuery",
-            "Molajo\\Controller\\ReadController"
         ],
         "dependency_for": [
 
@@ -340,13 +325,11 @@
             "Molajo\\Database\\Driver",
             "Molajo\\Model\\Model",
             "Molajo\\Model\\ReadModel",
-            "Molajo\\Query\\Adapter\\AbstractAdapter",
-            "Molajo\\Query\\Adapter\\AbstractCollect",
-            "Molajo\\Query\\Adapter\\AbstractConstruct",
             "Molajo\\Query\\Adapter\\Mysql",
             "Molajo\\Query\\Adapter\\Postgresql",
             "Molajo\\Query\\Adapter\\Sqllite",
             "Molajo\\Query\\Adapter\\Sqlserver",
+            "Molajo\\Query\\Builder\\Sql",
             "Molajo\\Resource\\Adapter\\Query",
             "Molajo\\Resource\\Factory\\ReadModelFactory",
             "Molajo\\User\\Activity",
@@ -580,8 +563,7 @@
         "path": "vendor\/commonapi\/filesystem\/ConnectionInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Filesystem\\Adapter\\Local",
-            "Molajo\\Filesystem\\Adapter\\Media"
+
         ],
         "dependency_for": [
 
@@ -594,11 +576,9 @@
         "path": "vendor\/commonapi\/filesystem\/FilesystemInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Filesystem\\Adapter\\Local",
-            "Molajo\\Filesystem\\Adapter\\Media"
+
         ],
         "dependency_for": [
-            "Molajo\\Filesystem\\Driver",
             "Molajo\\Http\\Upload"
         ]
     },
@@ -690,7 +670,7 @@
             "Molajo\\IoC\\Container"
         ],
         "dependency_for": [
-            "Molajo\\IoC\\Schedule"
+
         ]
     },
     "CommonApi\\IoC\\FactoryBatchInterface": {
@@ -723,7 +703,6 @@
             "Molajo\\Factories\\Execute\\ExecuteFactoryMethod",
             "Molajo\\Factories\\Extensions\\ExtensionsFactoryMethod",
             "Molajo\\Factories\\Fieldhandler\\FieldhandlerFactoryMethod",
-            "Molajo\\Factories\\Filesystem\\FilesystemFactoryMethod",
             "Molajo\\Factories\\Flashmessage\\FlashmessageFactoryMethod",
             "Molajo\\Factories\\Image\\ImageFactoryMethod",
             "Molajo\\Factories\\Instantiateuser\\InstantiateuserFactoryMethod",
@@ -758,9 +737,9 @@
             "Molajo\\Factories\\Url\\UrlFactoryMethod",
             "Molajo\\Factories\\User\\UserFactoryMethod",
             "Molajo\\Factories\\Userdata\\UserdataFactoryMethod",
-            "Molajo\\IoC\\FactoryMethodBase",
-            "Molajo\\IoC\\FactoryMethodController",
-            "Molajo\\IoC\\StandardFactoryMethod"
+            "Molajo\\IoC\\FactoryMethod\\Base",
+            "Molajo\\IoC\\FactoryMethod\\Controller",
+            "Molajo\\IoC\\FactoryMethod\\Standard"
         ],
         "dependency_for": [
 
@@ -796,7 +775,6 @@
             "Molajo\\Factories\\Execute\\ExecuteFactoryMethod",
             "Molajo\\Factories\\Extensions\\ExtensionsFactoryMethod",
             "Molajo\\Factories\\Fieldhandler\\FieldhandlerFactoryMethod",
-            "Molajo\\Factories\\Filesystem\\FilesystemFactoryMethod",
             "Molajo\\Factories\\Flashmessage\\FlashmessageFactoryMethod",
             "Molajo\\Factories\\Image\\ImageFactoryMethod",
             "Molajo\\Factories\\Instantiateuser\\InstantiateuserFactoryMethod",
@@ -831,12 +809,12 @@
             "Molajo\\Factories\\Url\\UrlFactoryMethod",
             "Molajo\\Factories\\User\\UserFactoryMethod",
             "Molajo\\Factories\\Userdata\\UserdataFactoryMethod",
-            "Molajo\\IoC\\FactoryMethodBase",
-            "Molajo\\IoC\\FactoryMethodController",
-            "Molajo\\IoC\\StandardFactoryMethod"
+            "Molajo\\IoC\\FactoryMethod\\Base",
+            "Molajo\\IoC\\FactoryMethod\\Controller",
+            "Molajo\\IoC\\FactoryMethod\\Standard"
         ],
         "dependency_for": [
-            "Molajo\\IoC\\FactoryMethodController"
+            "Molajo\\IoC\\FactoryMethod\\Controller"
         ]
     },
     "CommonApi\\IoC\\ScheduleInterface": {
@@ -859,7 +837,6 @@
         "path": "vendor\/commonapi\/language\/CaptureUntranslatedStringInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Language\\Capture\\Database",
             "Molajo\\Language\\Capture\\Dummy"
         ],
         "dependency_for": [
@@ -1047,13 +1024,11 @@
         "dependency_for": [
             "Molajito\\Escape\\Molajo",
             "Molajo\\Controller\\Application",
-            "Molajo\\Query\\Adapter\\AbstractAdapter",
-            "Molajo\\Query\\Adapter\\AbstractCollect",
-            "Molajo\\Query\\Adapter\\AbstractConstruct",
             "Molajo\\Query\\Adapter\\Mysql",
             "Molajo\\Query\\Adapter\\Postgresql",
             "Molajo\\Query\\Adapter\\Sqllite",
             "Molajo\\Query\\Adapter\\Sqlserver",
+            "Molajo\\Query\\Builder\\Sql",
             "Molajo\\User\\Authentication",
             "Molajo\\User\\Fieldhandler",
             "Molajo\\User\\TextTemplate"
@@ -1111,7 +1086,6 @@
         ],
         "dependency_for": [
             "Molajo\\Controller\\Controller",
-            "Molajo\\Controller\\ModelRegistryQuery",
             "Molajo\\Controller\\QueryController",
             "Molajo\\Controller\\ReadController",
             "Molajo\\Resource\\Factory\\ReadControllerFactory"
@@ -1184,6 +1158,40 @@
 
         ]
     },
+    "CommonApi\\Query\\ModelRegistryInterface": {
+        "name": "ModelRegistryInterface",
+        "namespace": "CommonApi\\Query",
+        "fqns": "CommonApi\\Query\\ModelRegistryInterface",
+        "path": "vendor\/commonapi\/query\/ModelRegistryInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Controller\\QueryController",
+            "Molajo\\Controller\\ReadController",
+            "Molajo\\Query\\Model\\Registry",
+            "Molajo\\Query\\QueryBuilder"
+        ],
+        "dependency_for": [
+
+        ]
+    },
+    "CommonApi\\Query\\QueryBuilderInterface": {
+        "name": "QueryBuilderInterface",
+        "namespace": "CommonApi\\Query",
+        "fqns": "CommonApi\\Query\\QueryBuilderInterface",
+        "path": "vendor\/commonapi\/query\/QueryBuilderInterface.php",
+        "parent": false,
+        "implemented_by": [
+            "Molajo\\Controller\\QueryController",
+            "Molajo\\Controller\\ReadController",
+            "Molajo\\Query\\Model\\Registry",
+            "Molajo\\Query\\QueryBuilder"
+        ],
+        "dependency_for": [
+            "Molajo\\Controller\\QueryController",
+            "Molajo\\Controller\\ReadController",
+            "Molajo\\Query\\QueryBuilder"
+        ]
+    },
     "CommonApi\\Query\\QueryInterface": {
         "name": "QueryInterface",
         "namespace": "CommonApi\\Query",
@@ -1191,26 +1199,33 @@
         "path": "vendor\/commonapi\/query\/QueryInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Controller\\ModelRegistryQuery",
             "Molajo\\Controller\\QueryController",
             "Molajo\\Controller\\ReadController",
-            "Molajo\\Query\\Adapter\\AbstractAdapter",
-            "Molajo\\Query\\Adapter\\AbstractCollect",
-            "Molajo\\Query\\Adapter\\AbstractConstruct",
             "Molajo\\Query\\Adapter\\Mysql",
             "Molajo\\Query\\Adapter\\Postgresql",
             "Molajo\\Query\\Adapter\\Sqllite",
             "Molajo\\Query\\Adapter\\Sqlserver",
-            "Molajo\\Query\\Driver"
+            "Molajo\\Query\\Model\\Columns",
+            "Molajo\\Query\\Model\\Criteria",
+            "Molajo\\Query\\Model\\Defaults",
+            "Molajo\\Query\\Model\\Query",
+            "Molajo\\Query\\Model\\Registry",
+            "Molajo\\Query\\Model\\Table",
+            "Molajo\\Query\\Model\\Utilities",
+            "Molajo\\Query\\QueryBuilder",
+            "Molajo\\Query\\QueryProxy"
         ],
         "dependency_for": [
             "Molajo\\Authorisation\\Adapter\\Database",
             "Molajo\\Controller\\Application",
-            "Molajo\\Controller\\Controller",
-            "Molajo\\Controller\\ModelRegistryQuery",
-            "Molajo\\Controller\\QueryController",
-            "Molajo\\Controller\\ReadController",
-            "Molajo\\Query\\Driver",
+            "Molajo\\Query\\Model\\Columns",
+            "Molajo\\Query\\Model\\Criteria",
+            "Molajo\\Query\\Model\\Defaults",
+            "Molajo\\Query\\Model\\Query",
+            "Molajo\\Query\\Model\\Registry",
+            "Molajo\\Query\\Model\\Table",
+            "Molajo\\Query\\Model\\Utilities",
+            "Molajo\\Query\\QueryProxy",
             "Molajo\\Resource\\Factory\\ReadControllerFactory",
             "Molajo\\User\\Activity",
             "Molajo\\User\\UserData"

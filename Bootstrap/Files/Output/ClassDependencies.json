@@ -1515,7 +1515,6 @@
                 "instance_of": "CommonApi\\Language\\CaptureUntranslatedStringInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Language\\Capture\\Database",
                     "Molajo\\Language\\Capture\\Dummy"
                 ],
                 "concrete": false
@@ -1558,29 +1557,6 @@
             "__construct",
             "get",
             "translateString"
-        ]
-    },
-    "Molajo\\Language\\Capture\\Database": {
-        "name": "Database",
-        "namespace": "Molajo\\Language\\Capture",
-        "fqns": "Molajo\\Language\\Capture\\Database",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/language\/Source\/Capture\/Database.php",
-        "path": "vendor\/molajo\/Language\/Source\/Capture\/Database.php",
-        "parent": false,
-        "implemented_interfaces": [
-            "CommonApi\\Language\\CaptureUntranslatedStringInterface"
-        ],
-        "constructor_parameters": [
-
-        ],
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "setString"
         ]
     },
     "Molajo\\Language\\Capture\\Dummy": {
@@ -1664,7 +1640,7 @@
         ],
         "constructor_parameters": [
             {
-                "name": "logger",
+                "name": "logger_instance",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": "Psr\\Log\\LoggerInterface",
@@ -1751,7 +1727,7 @@
         "fqns": "Molajo\\Factories\\Errorhandling\\ErrorhandlingFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/log\/Factories\/Errorhandling\/ErrorhandlingFactoryMethod.php",
         "path": "vendor\/molajo\/Log\/Factories\/Errorhandling\/ErrorhandlingFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -1777,9 +1753,6 @@
         "method": [
             "__construct",
             "onAfterInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
@@ -1787,7 +1760,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Exceptionhandling\\ExceptionhandlingFactoryMethod": {
@@ -1796,7 +1772,7 @@
         "fqns": "Molajo\\Factories\\Exceptionhandling\\ExceptionhandlingFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/log\/Factories\/Exceptionhandling\/ExceptionhandlingFactoryMethod.php",
         "path": "vendor\/molajo\/Log\/Factories\/Exceptionhandling\/ExceptionhandlingFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -1821,9 +1797,6 @@
         ],
         "method": [
             "__construct",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
@@ -1832,7 +1805,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Logger\\LoggerFactoryMethod": {
@@ -1841,7 +1817,7 @@
         "fqns": "Molajo\\Factories\\Logger\\LoggerFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/log\/Factories\/Logger\/LoggerFactoryMethod.php",
         "path": "vendor\/molajo\/Log\/Factories\/Logger\/LoggerFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -1867,9 +1843,6 @@
         "method": [
             "__construct",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -1877,7 +1850,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Log\\Adapter\\AbstractLogger": {
@@ -2195,6 +2171,36 @@
             "clearLog"
         ]
     },
+    "Molajo\\Log\\LogTrait": {
+        "name": "LogTrait",
+        "namespace": "Molajo\\Log",
+        "fqns": "Molajo\\Log\\LogTrait",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/log\/Source\/LogTrait.php",
+        "path": "vendor\/molajo\/Log\/Source\/LogTrait.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "emergency",
+            "alert",
+            "critical",
+            "error",
+            "warning",
+            "notice",
+            "info",
+            "debug"
+        ]
+    },
     "Molajo\\Log\\Logger": {
         "name": "Logger",
         "namespace": "Molajo\\Log",
@@ -2256,7 +2262,7 @@
         "fqns": "Molajo\\Factories\\Application\\ApplicationFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Application\/ApplicationFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Application\/ApplicationFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2286,14 +2292,14 @@
             "onAfterInstantiation",
             "setContainerEntries",
             "getApplicationInstances",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateClass",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Authenticate\\AuthenticateFactoryMethod": {
@@ -2302,7 +2308,7 @@
         "fqns": "Molajo\\Factories\\Authenticate\\AuthenticateFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Authenticate\/AuthenticateFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Authenticate\/AuthenticateFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2328,9 +2334,6 @@
         "method": [
             "__construct",
             "setDependencies",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateClass",
             "instantiateStatic",
@@ -2338,7 +2341,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Date\\DateFactoryMethod": {
@@ -2347,7 +2353,7 @@
         "fqns": "Molajo\\Factories\\Date\\DateFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Date\/DateFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Date\/DateFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2375,15 +2381,15 @@
             "setDependencies",
             "instantiateClass",
             "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
-            "setContainerEntries"
+            "setContainerEntries",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Execute\\ExecuteFactoryMethod": {
@@ -2392,7 +2398,7 @@
         "fqns": "Molajo\\Factories\\Execute\\ExecuteFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Execute\/ExecuteFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Execute\/ExecuteFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2422,13 +2428,13 @@
             "onAfterInstantiation",
             "setContainerEntries",
             "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateClass",
             "instantiateStatic",
             "getProductValue",
-            "removeContainerEntries"
+            "removeContainerEntries",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Extensions\\ExtensionsFactoryMethod": {
@@ -2437,7 +2443,7 @@
         "fqns": "Molajo\\Factories\\Extensions\\ExtensionsFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Extensions\/ExtensionsFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Extensions\/ExtensionsFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2465,15 +2471,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Image\\ImageFactoryMethod": {
@@ -2482,7 +2488,7 @@
         "fqns": "Molajo\\Factories\\Image\\ImageFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Image\/ImageFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Image\/ImageFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2509,16 +2515,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Plugindata\\PlugindataFactoryMethod": {
@@ -2527,7 +2533,7 @@
         "fqns": "Molajo\\Factories\\Plugindata\\PlugindataFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Plugindata\/PlugindataFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Plugindata\/PlugindataFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2553,9 +2559,6 @@
         "method": [
             "__construct",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -2563,7 +2566,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Resourcecontroller\\ResourcecontrollerFactoryMethod": {
@@ -2572,7 +2578,7 @@
         "fqns": "Molajo\\Factories\\Resourcecontroller\\ResourcecontrollerFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcecontroller\/ResourcecontrollerFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Resourcecontroller\/ResourcecontrollerFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2602,13 +2608,13 @@
             "onAfterInstantiation",
             "setContainerEntries",
             "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "getProductValue",
-            "removeContainerEntries"
+            "removeContainerEntries",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Resourcerendering\\ResourcerenderingFactoryMethod": {
@@ -2617,7 +2623,7 @@
         "fqns": "Molajo\\Factories\\Resourcerendering\\ResourcerenderingFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Resourcerendering\/ResourcerenderingFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Resourcerendering\/ResourcerenderingFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2644,16 +2650,16 @@
             "__construct",
             "setDependencies",
             "onBeforeInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateClass",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Runtimedata\\RuntimedataFactoryMethod": {
@@ -2662,7 +2668,7 @@
         "fqns": "Molajo\\Factories\\Runtimedata\\RuntimedataFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Runtimedata\/RuntimedataFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Runtimedata\/RuntimedataFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2689,16 +2695,16 @@
             "__construct",
             "instantiateClass",
             "setContainerEntries",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Site\\SiteFactoryMethod": {
@@ -2707,7 +2713,7 @@
         "fqns": "Molajo\\Factories\\Site\\SiteFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Site\/SiteFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Site\/SiteFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2736,14 +2742,14 @@
             "instantiateClass",
             "onAfterInstantiation",
             "setContainerEntries",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Text\\TextFactoryMethod": {
@@ -2752,7 +2758,7 @@
         "fqns": "Molajo\\Factories\\Text\\TextFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Text\/TextFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Text\/TextFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2779,9 +2785,6 @@
             "__construct",
             "instantiateClass",
             "getTextList",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -2789,7 +2792,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Url\\UrlFactoryMethod": {
@@ -2798,7 +2804,7 @@
         "fqns": "Molajo\\Factories\\Url\\UrlFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/Url\/UrlFactoryMethod.php",
         "path": "vendor\/molajo\/application\/Factories\/Url\/UrlFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -2825,16 +2831,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Controller\\Application": {
@@ -2868,17 +2874,21 @@
                 "instance_of": "CommonApi\\Query\\QueryInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
                     "Molajo\\Controller\\QueryController",
                     "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
                     "Molajo\\Query\\Adapter\\Mysql",
                     "Molajo\\Query\\Adapter\\Postgresql",
                     "Molajo\\Query\\Adapter\\Sqllite",
                     "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
                 ],
                 "concrete": false
             },
@@ -5176,7 +5186,7 @@
         "fqns": "Molajo\\Factories\\Authorisation\\AuthorisationFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/authorisation\/Factories\/Authorisation\/AuthorisationFactoryMethod.php",
         "path": "vendor\/molajo\/authorisation\/Factories\/Authorisation\/AuthorisationFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -5206,13 +5216,13 @@
             "instantiateClass",
             "onAfterInstantiation",
             "setContainerEntries",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Authorisation\\Adapter\\AbstractAdapter": {
@@ -5399,17 +5409,21 @@
                 "instance_of": "CommonApi\\Query\\QueryInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
                     "Molajo\\Controller\\QueryController",
                     "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
                     "Molajo\\Query\\Adapter\\Mysql",
                     "Molajo\\Query\\Adapter\\Postgresql",
                     "Molajo\\Query\\Adapter\\Sqllite",
                     "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
                 ],
                 "concrete": false
             }
@@ -5470,7 +5484,7 @@
         "fqns": "Molajo\\Factories\\Cache\\CacheFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cache\/CacheFactoryMethod.php",
         "path": "vendor\/molajo\/cache\/Factories\/Cache\/CacheFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -5497,16 +5511,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Cachemodel\\CachemodelFactoryMethod": {
@@ -5515,7 +5529,7 @@
         "fqns": "Molajo\\Factories\\Cachemodel\\CachemodelFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachemodel\/CachemodelFactoryMethod.php",
         "path": "vendor\/molajo\/cache\/Factories\/Cachemodel\/CachemodelFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -5541,9 +5555,6 @@
         "method": [
             "__construct",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -5551,7 +5562,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Cachepage\\CachepageFactoryMethod": {
@@ -5560,7 +5574,7 @@
         "fqns": "Molajo\\Factories\\Cachepage\\CachepageFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachepage\/CachepageFactoryMethod.php",
         "path": "vendor\/molajo\/cache\/Factories\/Cachepage\/CachepageFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -5586,9 +5600,6 @@
         "method": [
             "__construct",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -5596,7 +5607,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Cachequery\\CachequeryFactoryMethod": {
@@ -5605,7 +5619,7 @@
         "fqns": "Molajo\\Factories\\Cachequery\\CachequeryFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachequery\/CachequeryFactoryMethod.php",
         "path": "vendor\/molajo\/cache\/Factories\/Cachequery\/CachequeryFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -5631,9 +5645,6 @@
         "method": [
             "__construct",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -5641,7 +5652,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Cachetemplate\\CachetemplateFactoryMethod": {
@@ -5650,7 +5664,7 @@
         "fqns": "Molajo\\Factories\\Cachetemplate\\CachetemplateFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/cache\/Factories\/Cachetemplate\/CachetemplateFactoryMethod.php",
         "path": "vendor\/molajo\/cache\/Factories\/Cachetemplate\/CachetemplateFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -5676,9 +5690,6 @@
         "method": [
             "__construct",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -5686,7 +5697,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Cache\\Adapter\\AbstractAdapter": {
@@ -5934,7 +5948,7 @@
         "fqns": "Molajo\\Factories\\Database\\DatabaseFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/database\/Factories\/Database\/DatabaseFactoryMethod.php",
         "path": "vendor\/molajo\/database\/Factories\/Database\/DatabaseFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -5961,16 +5975,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Database\\Adapter\\AbstractAdapter": {
@@ -6100,7 +6114,7 @@
         "fqns": "Molajo\\Factories\\Email\\EmailFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/email\/Factories\/Email\/EmailFactoryMethod.php",
         "path": "vendor\/molajo\/email\/Factories\/Email\/EmailFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -6128,15 +6142,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Email\\Adapter\\AbstractAdapter": {
@@ -6378,7 +6392,7 @@
         "fqns": "Molajo\\Factories\\Dispatcher\\DispatcherFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Dispatcher\/DispatcherFactoryMethod.php",
         "path": "vendor\/molajo\/event\/Factories\/Dispatcher\/DispatcherFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -6405,16 +6419,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Event\\EventFactoryMethod": {
@@ -6423,7 +6437,7 @@
         "fqns": "Molajo\\Factories\\Event\\EventFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Factories\/Event\/EventFactoryMethod.php",
         "path": "vendor\/molajo\/event\/Factories\/Event\/EventFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -6450,16 +6464,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Plugins\\AuthenticateEventPlugin": {
@@ -6900,7 +6914,7 @@
         "fqns": "Molajo\\Factories\\Fieldhandler\\FieldhandlerFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/fieldhandler\/Factories\/Fieldhandler\/FieldhandlerFactoryMethod.php",
         "path": "vendor\/molajo\/fieldhandler\/Factories\/Fieldhandler\/FieldhandlerFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -6925,9 +6939,6 @@
         ],
         "method": [
             "__construct",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
@@ -6936,7 +6947,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Fieldhandler\\Constraint\\AbstractArrays": {
@@ -12195,273 +12209,13 @@
             "getValidateMessages"
         ]
     },
-    "Molajo\\Factories\\Filesystem\\FilesystemFactoryMethod": {
-        "name": "FilesystemFactoryMethod",
-        "namespace": "Molajo\\Factories\\Filesystem",
-        "fqns": "Molajo\\Factories\\Filesystem\\FilesystemFactoryMethod",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Factories\/Filesystem\/FilesystemFactoryMethod.php",
-        "path": "vendor\/molajo\/filesystem\/Factories\/Filesystem\/FilesystemFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
-        "implemented_interfaces": [
-            "CommonApi\\IoC\\FactoryBatchInterface",
-            "CommonApi\\IoC\\FactoryInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "options",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  $options\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
-            "setDependencies",
-            "onBeforeInstantiation",
-            "instantiateStatic",
-            "onAfterInstantiation",
-            "getProductValue",
-            "removeContainerEntries",
-            "setContainerEntries",
-            "scheduleFactories"
-        ]
-    },
-    "Molajo\\Filesystem\\Adapter\\AbstractAdapter": {
-        "name": "AbstractAdapter",
-        "namespace": "Molajo\\Filesystem\\Adapter",
-        "fqns": "Molajo\\Filesystem\\Adapter\\AbstractAdapter",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter\/AbstractAdapter.php",
-        "path": "vendor\/molajo\/filesystem\/Source\/Adapter\/AbstractAdapter.php",
-        "parent": false,
-        "implemented_interfaces": [
-
-        ],
-        "constructor_parameters": [
-            {
-                "name": "options",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array  $options\n     * @param   string $adapter\n     *\n     * @since   1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "connect"
-        ]
-    },
-    "Molajo\\Filesystem\\Adapter\\Ftp": {
-        "name": "Ftp",
-        "namespace": "Molajo\\Filesystem\\Adapter",
-        "fqns": "Molajo\\Filesystem\\Adapter\\Ftp",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter\/Ftp.php",
-        "path": "vendor\/molajo\/filesystem\/Source\/Adapter\/Ftp.php",
-        "parent": "Molajo\\Filesystem\\Adapter\\AbstractAdapter",
-        "implemented_interfaces": [
-
-        ],
-        "constructor_parameters": [
-            {
-                "name": "options",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array $options\n     *\n     * @since   1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "connect",
-            "getPath",
-            "getMetadata",
-            "__destruct"
-        ]
-    },
-    "Molajo\\Filesystem\\Adapter\\Local": {
-        "name": "Local",
-        "namespace": "Molajo\\Filesystem\\Adapter",
-        "fqns": "Molajo\\Filesystem\\Adapter\\Local",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter\/Local.php",
-        "path": "vendor\/molajo\/filesystem\/Source\/Adapter\/Local.php",
-        "parent": "Molajo\\Filesystem\\Adapter\\AbstractAdapter",
-        "implemented_interfaces": [
-            "CommonApi\\Filesystem\\ConnectionInterface",
-            "CommonApi\\Filesystem\\FilesystemInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "options",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array $options\n     *\n     * @since   1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "connect",
-            "close",
-            "exists",
-            "getMetadata",
-            "read",
-            "getList",
-            "write",
-            "delete",
-            "copy",
-            "move",
-            "rename",
-            "changeOwner",
-            "changeGroup",
-            "changePermission",
-            "touch",
-            "getPath"
-        ]
-    },
-    "Molajo\\Filesystem\\Adapter\\Media": {
-        "name": "Media",
-        "namespace": "Molajo\\Filesystem\\Adapter",
-        "fqns": "Molajo\\Filesystem\\Adapter\\Media",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Adapter\/Media.php",
-        "path": "vendor\/molajo\/filesystem\/Source\/Adapter\/Media.php",
-        "parent": "Molajo\\Filesystem\\Adapter\\Local",
-        "implemented_interfaces": [
-            "CommonApi\\Filesystem\\FilesystemInterface",
-            "CommonApi\\Filesystem\\ConnectionInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "options",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param array $options\n     *\n     * @since   1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "connect",
-            "close",
-            "exists",
-            "getMetadata",
-            "read",
-            "getList",
-            "write",
-            "delete",
-            "copy",
-            "move",
-            "rename",
-            "changeOwner",
-            "changeGroup",
-            "changePermission",
-            "touch",
-            "getPath"
-        ]
-    },
-    "Molajo\\Filesystem\\Driver": {
-        "name": "Driver",
-        "namespace": "Molajo\\Filesystem",
-        "fqns": "Molajo\\Filesystem\\Driver",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/filesystem\/Source\/Driver.php",
-        "path": "vendor\/molajo\/filesystem\/Source\/Driver.php",
-        "parent": false,
-        "implemented_interfaces": [
-
-        ],
-        "constructor_parameters": [
-            {
-                "name": "filesystem",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Filesystem\\FilesystemInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Filesystem\\Adapter\\Local",
-                    "Molajo\\Filesystem\\Adapter\\Media"
-                ],
-                "concrete": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   FilesystemInterface $filesystem\n     *\n     * @since   1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "exists",
-            "getMetadata",
-            "read",
-            "getList",
-            "write",
-            "delete",
-            "copy",
-            "move",
-            "rename",
-            "changeOwner",
-            "changeGroup",
-            "changePermission",
-            "touch"
-        ]
-    },
     "Molajo\\Factories\\Client\\ClientFactoryMethod": {
         "name": "ClientFactoryMethod",
         "namespace": "Molajo\\Factories\\Client",
         "fqns": "Molajo\\Factories\\Client\\ClientFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Client\/ClientFactoryMethod.php",
         "path": "vendor\/molajo\/http\/Factories\/Client\/ClientFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -12490,14 +12244,14 @@
             "instantiateClass",
             "onAfterInstantiation",
             "setContainerEntries",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Request\\RequestFactoryMethod": {
@@ -12506,7 +12260,7 @@
         "fqns": "Molajo\\Factories\\Request\\RequestFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Request\/RequestFactoryMethod.php",
         "path": "vendor\/molajo\/http\/Factories\/Request\/RequestFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -12535,14 +12289,14 @@
             "instantiateClass",
             "onAfterInstantiation",
             "setContainerEntries",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Response\\ResponseFactoryMethod": {
@@ -12551,7 +12305,7 @@
         "fqns": "Molajo\\Factories\\Response\\ResponseFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Response\/ResponseFactoryMethod.php",
         "path": "vendor\/molajo\/http\/Factories\/Response\/ResponseFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -12578,16 +12332,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Server\\ServerFactoryMethod": {
@@ -12596,7 +12350,7 @@
         "fqns": "Molajo\\Factories\\Server\\ServerFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Server\/ServerFactoryMethod.php",
         "path": "vendor\/molajo\/http\/Factories\/Server\/ServerFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -12625,14 +12379,14 @@
             "instantiateClass",
             "onAfterInstantiation",
             "setContainerEntries",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Upload\\UploadFactoryMethod": {
@@ -12641,7 +12395,7 @@
         "fqns": "Molajo\\Factories\\Upload\\UploadFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/http\/Factories\/Upload\/UploadFactoryMethod.php",
         "path": "vendor\/molajo\/http\/Factories\/Upload\/UploadFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -12668,16 +12422,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Http\\Client": {
@@ -13090,8 +12844,7 @@
                 "instance_of": "CommonApi\\Filesystem\\FilesystemInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Filesystem\\Adapter\\Local",
-                    "Molajo\\Filesystem\\Adapter\\Media"
+
                 ],
                 "concrete": false
             }
@@ -13120,7 +12873,7 @@
         ],
         "constructor_parameters": [
             {
-                "name": "adapter_aliases",
+                "name": "factory_method_aliases",
                 "default_available": true,
                 "default_value": [
 
@@ -13129,7 +12882,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array $adapter_aliases\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array $factory_method_aliases\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -13141,16 +12894,52 @@
             "has",
             "get",
             "set",
-            "remove"
+            "remove",
+            "getKey"
         ]
     },
-    "Molajo\\IoC\\FactoryMethodBase": {
-        "name": "FactoryMethodBase",
-        "namespace": "Molajo\\IoC",
-        "fqns": "Molajo\\IoC\\FactoryMethodBase",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethodBase.php",
-        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethodBase.php",
+    "Molajo\\IoC\\FactoryMethod\\Adapter": {
+        "name": "Adapter",
+        "namespace": "Molajo\\IoC\\FactoryMethod",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Adapter",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethod\/Adapter.php",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Adapter.php",
         "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "options",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $options\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
+        ]
+    },
+    "Molajo\\IoC\\FactoryMethod\\Base": {
+        "name": "Base",
+        "namespace": "Molajo\\IoC\\FactoryMethod",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Base",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethod\/Base.php",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Base.php",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Instantiate",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryInterface",
             "CommonApi\\IoC\\FactoryBatchInterface"
@@ -13166,7 +12955,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $options\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $options\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -13174,10 +12963,6 @@
 
         ],
         "method": [
-            "__construct",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
@@ -13186,15 +12971,19 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "__construct",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
-    "Molajo\\IoC\\FactoryMethodController": {
-        "name": "FactoryMethodController",
-        "namespace": "Molajo\\IoC",
-        "fqns": "Molajo\\IoC\\FactoryMethodController",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethodController.php",
-        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethodController.php",
+    "Molajo\\IoC\\FactoryMethod\\Controller": {
+        "name": "Controller",
+        "namespace": "Molajo\\IoC\\FactoryMethod",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Controller",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethod\/Controller.php",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Controller.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryInterface",
@@ -13231,7 +13020,6 @@
                     "Molajo\\Factories\\Execute\\ExecuteFactoryMethod",
                     "Molajo\\Factories\\Extensions\\ExtensionsFactoryMethod",
                     "Molajo\\Factories\\Fieldhandler\\FieldhandlerFactoryMethod",
-                    "Molajo\\Factories\\Filesystem\\FilesystemFactoryMethod",
                     "Molajo\\Factories\\Flashmessage\\FlashmessageFactoryMethod",
                     "Molajo\\Factories\\Image\\ImageFactoryMethod",
                     "Molajo\\Factories\\Instantiateuser\\InstantiateuserFactoryMethod",
@@ -13266,14 +13054,14 @@
                     "Molajo\\Factories\\Url\\UrlFactoryMethod",
                     "Molajo\\Factories\\User\\UserFactoryMethod",
                     "Molajo\\Factories\\Userdata\\UserdataFactoryMethod",
-                    "Molajo\\IoC\\FactoryMethodBase",
-                    "Molajo\\IoC\\FactoryMethodController",
-                    "Molajo\\IoC\\StandardFactoryMethod"
+                    "Molajo\\IoC\\FactoryMethod\\Base",
+                    "Molajo\\IoC\\FactoryMethod\\Controller",
+                    "Molajo\\IoC\\FactoryMethod\\Standard"
                 ],
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * The Constructor is invoked by Controller->setProductWorkObject for each request\n     *\n     * @param  FactoryInterface $factory_adapter\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * The Constructor is invoked by Controller->setProductWorkObject for each request\n     *\n     * @param  FactoryInterface $factory_adapter\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -13296,6 +13084,93 @@
             "removeContainerEntries",
             "setContainerEntries",
             "scheduleFactories"
+        ]
+    },
+    "Molajo\\IoC\\FactoryMethod\\Instantiate": {
+        "name": "Instantiate",
+        "namespace": "Molajo\\IoC\\FactoryMethod",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Instantiate",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethod\/Instantiate.php",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Instantiate.php",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Adapter",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "options",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $options\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "instantiateClass",
+            "instantiateStatic",
+            "onAfterInstantiation",
+            "getProductValue",
+            "removeContainerEntries",
+            "setContainerEntries",
+            "scheduleFactories",
+            "__construct",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
+        ]
+    },
+    "Molajo\\IoC\\FactoryMethod\\Standard": {
+        "name": "Standard",
+        "namespace": "Molajo\\IoC\\FactoryMethod",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Standard",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/FactoryMethod\/Standard.php",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Standard.php",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
+        "implemented_interfaces": [
+            "CommonApi\\IoC\\FactoryBatchInterface",
+            "CommonApi\\IoC\\FactoryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "options",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   $options\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "setDependencies",
+            "onBeforeInstantiation",
+            "instantiateClass",
+            "instantiateStatic",
+            "onAfterInstantiation",
+            "getProductValue",
+            "removeContainerEntries",
+            "setContainerEntries",
+            "scheduleFactories",
+            "__construct",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\IoC\\MapFactories": {
@@ -13333,7 +13208,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array  $folders\n     * @param  string $adapter_namespace_prefix\n     * @param  null   $adapter_alias_filename\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array  $folders\n     * @param  string $adapter_namespace_prefix\n     * @param  null   $adapter_alias_filename\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -13345,53 +13220,26 @@
             "createMap"
         ]
     },
-    "Molajo\\IoC\\Schedule": {
-        "name": "Schedule",
-        "namespace": "Molajo\\IoC",
-        "fqns": "Molajo\\IoC\\Schedule",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Schedule.php",
-        "path": "vendor\/molajo\/ioc\/Source\/Schedule.php",
+    "Molajo\\IoC\\Product\\ClassDependencies": {
+        "name": "ClassDependencies",
+        "namespace": "Molajo\\IoC\\Product",
+        "fqns": "Molajo\\IoC\\Product\\ClassDependencies",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Product\/ClassDependencies.php",
+        "path": "vendor\/molajo\/ioc\/Source\/Product\/ClassDependencies.php",
         "parent": false,
         "implemented_interfaces": [
-            "CommonApi\\IoC\\ScheduleInterface"
+
         ],
         "constructor_parameters": [
-            {
-                "name": "container",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\IoC\\ContainerInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\IoC\\Container"
-                ],
-                "concrete": false
-            },
-            {
-                "name": "adapter_aliases",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            },
             {
                 "name": "class_dependencies_filename",
                 "default_available": true,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
-            },
-            {
-                "name": "standard_adapter_namespaces",
-                "default_available": true,
-                "default_value": "Molajo\\IoC\\StandardFactoryMethod",
-                "instance_of": null,
-                "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param ContainerInterface $container\n     * @param array              $adapter_aliases\n     * @param null               $class_dependencies_filename\n     * @param string             $standard_adapter_namespaces\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     *\n     * @since  1.0.0\n     * @param string $class_dependencies_filename\n     *\/",
         "implemented_by": [
 
         ],
@@ -13400,19 +13248,18 @@
         ],
         "method": [
             "__construct",
-            "scheduleFactoryMethod"
+            "get"
         ]
     },
-    "Molajo\\IoC\\StandardFactoryMethod": {
-        "name": "StandardFactoryMethod",
-        "namespace": "Molajo\\IoC",
-        "fqns": "Molajo\\IoC\\StandardFactoryMethod",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/StandardFactoryMethod.php",
-        "path": "vendor\/molajo\/ioc\/Source\/StandardFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+    "Molajo\\IoC\\Product\\Create": {
+        "name": "Create",
+        "namespace": "Molajo\\IoC\\Product",
+        "fqns": "Molajo\\IoC\\Product\\Create",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Product\/Create.php",
+        "path": "vendor\/molajo\/ioc\/Source\/Product\/Create.php",
+        "parent": false,
         "implemented_interfaces": [
-            "CommonApi\\IoC\\FactoryBatchInterface",
-            "CommonApi\\IoC\\FactoryInterface"
+
         ],
         "constructor_parameters": [
             {
@@ -13425,7 +13272,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array $options\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array $options\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -13434,18 +13281,276 @@
         ],
         "method": [
             "__construct",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
-            "setDependencies",
-            "onBeforeInstantiation",
-            "instantiateClass",
-            "instantiateStatic",
-            "onAfterInstantiation",
-            "getProductValue",
-            "removeContainerEntries",
-            "setContainerEntries",
-            "scheduleFactories"
+            "instantiateFactoryMethod"
+        ]
+    },
+    "Molajo\\IoC\\Product\\SetNamespace": {
+        "name": "SetNamespace",
+        "namespace": "Molajo\\IoC\\Product",
+        "fqns": "Molajo\\IoC\\Product\\SetNamespace",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Product\/SetNamespace.php",
+        "path": "vendor\/molajo\/ioc\/Source\/Product\/SetNamespace.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "standard_adapter_namespace",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $standard_adapter_namespace\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "get"
+        ]
+    },
+    "Molajo\\IoC\\Schedule": {
+        "name": "Schedule",
+        "namespace": "Molajo\\IoC",
+        "fqns": "Molajo\\IoC\\Schedule",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Schedule.php",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule.php",
+        "parent": "Molajo\\IoC\\Schedule\\Request",
+        "implemented_interfaces": [
+            "CommonApi\\IoC\\ScheduleInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "factory_method_aliases",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "class_dependencies_file",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "standard_adapter_namespace",
+                "default_available": true,
+                "default_value": "Molajo\\IoC\\FactoryMethod\\Standard",
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $class_dependencies_file\n     * @param  string $standard_adapter_namespace\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "scheduleFactoryMethod",
+            "processRequestQueue",
+            "processRequests",
+            "processNewRequestQueue",
+            "setProductRequest",
+            "setProductRequestWorkObject",
+            "__construct"
+        ]
+    },
+    "Molajo\\IoC\\Schedule\\Base": {
+        "name": "Base",
+        "namespace": "Molajo\\IoC\\Schedule",
+        "fqns": "Molajo\\IoC\\Schedule\\Base",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Schedule\/Base.php",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule\/Base.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "factory_method_aliases",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "class_dependencies_file",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "standard_adapter_namespace",
+                "default_available": true,
+                "default_value": "Molajo\\IoC\\FactoryMethod\\Standard",
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $class_dependencies_file\n     * @param  string $standard_adapter_namespace\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\IoC\\Schedule\\Create": {
+        "name": "Create",
+        "namespace": "Molajo\\IoC\\Schedule",
+        "fqns": "Molajo\\IoC\\Schedule\\Create",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Schedule\/Create.php",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule\/Create.php",
+        "parent": "Molajo\\IoC\\Schedule\\Base",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "factory_method_aliases",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "class_dependencies_file",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "standard_adapter_namespace",
+                "default_available": true,
+                "default_value": "Molajo\\IoC\\FactoryMethod\\Standard",
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $class_dependencies_file\n     * @param  string $standard_adapter_namespace\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\IoC\\Schedule\\Dependency": {
+        "name": "Dependency",
+        "namespace": "Molajo\\IoC\\Schedule",
+        "fqns": "Molajo\\IoC\\Schedule\\Dependency",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Schedule\/Dependency.php",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule\/Dependency.php",
+        "parent": "Molajo\\IoC\\Schedule\\Create",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "factory_method_aliases",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "class_dependencies_file",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "standard_adapter_namespace",
+                "default_available": true,
+                "default_value": "Molajo\\IoC\\FactoryMethod\\Standard",
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $class_dependencies_file\n     * @param  string $standard_adapter_namespace\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\IoC\\Schedule\\Request": {
+        "name": "Request",
+        "namespace": "Molajo\\IoC\\Schedule",
+        "fqns": "Molajo\\IoC\\Schedule\\Request",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/ioc\/Source\/Schedule\/Request.php",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule\/Request.php",
+        "parent": "Molajo\\IoC\\Schedule\\Dependency",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "factory_method_aliases",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "class_dependencies_file",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "standard_adapter_namespace",
+                "default_available": true,
+                "default_value": "Molajo\\IoC\\FactoryMethod\\Standard",
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $class_dependencies_file\n     * @param  string $standard_adapter_namespace\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "setProductRequest",
+            "setProductRequestWorkObject",
+            "__construct"
         ]
     },
     "Molajo\\Factories\\Language\\LanguageFactoryMethod": {
@@ -13454,7 +13559,7 @@
         "fqns": "Molajo\\Factories\\Language\\LanguageFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/language\/Factories\/Language\/LanguageFactoryMethod.php",
         "path": "vendor\/molajo\/language\/Factories\/Language\/LanguageFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -13481,16 +13586,16 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Molajito\\MolajitoFactoryMethod": {
@@ -13499,7 +13604,7 @@
         "fqns": "Molajo\\Factories\\Molajito\\MolajitoFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Factories\/Molajito\/MolajitoFactoryMethod.php",
         "path": "vendor\/molajo\/molajito\/Factories\/Molajito\/MolajitoFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -13527,15 +13632,15 @@
             "setDependencies",
             "instantiateClass",
             "onAfterInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajito\\Data": {
@@ -15198,27 +15303,6 @@
         ],
         "constructor_parameters": [
             {
-                "name": "query",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Query\\QueryInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
-                    "Molajo\\Controller\\QueryController",
-                    "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
-                    "Molajo\\Query\\Adapter\\Mysql",
-                    "Molajo\\Query\\Adapter\\Postgresql",
-                    "Molajo\\Query\\Adapter\\Sqllite",
-                    "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
-                ],
-                "concrete": false
-            },
-            {
                 "name": "model",
                 "default_available": true,
                 "default_value": null,
@@ -15256,7 +15340,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  QueryInterface $query\n     * @param  ModelInterface $model\n     * @param  array          $runtime_data\n     * @param  array          $plugin_data\n     * @param  callable       $schedule_event\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  ModelInterface $model\n     * @param  array          $runtime_data\n     * @param  array          $plugin_data\n     * @param  callable       $schedule_event\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -15265,153 +15349,6 @@
         ],
         "method": [
             "__construct",
-            "getValue",
-            "setValue"
-        ]
-    },
-    "Molajo\\Controller\\ModelRegistryDefaults": {
-        "name": "ModelRegistryDefaults",
-        "namespace": "Molajo\\Controller",
-        "fqns": "Molajo\\Controller\\ModelRegistryDefaults",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/ModelRegistryDefaults.php",
-        "path": "vendor\/molajo\/query\/Controller\/ModelRegistryDefaults.php",
-        "parent": false,
-        "implemented_interfaces": [
-
-        ],
-        "constructor_parameters": [
-            {
-                "name": "model_registry",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  array $model_registry\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "setModelRegistryDefaults",
-            "setModelRegistryBase"
-        ]
-    },
-    "Molajo\\Controller\\ModelRegistryQuery": {
-        "name": "ModelRegistryQuery",
-        "namespace": "Molajo\\Controller",
-        "fqns": "Molajo\\Controller\\ModelRegistryQuery",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/ModelRegistryQuery.php",
-        "path": "vendor\/molajo\/query\/Controller\/ModelRegistryQuery.php",
-        "parent": "Molajo\\Controller\\QueryController",
-        "implemented_interfaces": [
-            "CommonApi\\Query\\QueryInterface",
-            "CommonApi\\Controller\\ControllerInterface",
-            "CommonApi\\Controller\\ModelRegistryInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "query",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Query\\QueryInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
-                    "Molajo\\Controller\\QueryController",
-                    "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
-                    "Molajo\\Query\\Adapter\\Mysql",
-                    "Molajo\\Query\\Adapter\\Postgresql",
-                    "Molajo\\Query\\Adapter\\Sqllite",
-                    "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
-                ],
-                "concrete": false
-            },
-            {
-                "name": "model",
-                "default_available": true,
-                "default_value": null,
-                "instance_of": "CommonApi\\Model\\ModelInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Model\\Model",
-                    "Molajo\\Model\\ReadModel"
-                ],
-                "concrete": false
-            },
-            {
-                "name": "runtime_data",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "plugin_data",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "schedule_event",
-                "default_available": true,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "model_registry",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  QueryInterface $query\n     * @param  ModelInterface $model\n     * @param  array          $runtime_data\n     * @param  array          $plugin_data\n     * @param  callable       $schedule_event\n     * @param  array          $model_registry\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "getModelRegistry",
-            "setModelRegistry",
-            "getSQL",
-            "get",
-            "clearQuery",
-            "setType",
-            "getDateFormat",
-            "getDate",
-            "getNullDate",
-            "setDistinct",
-            "select",
-            "from",
-            "whereGroup",
-            "where",
-            "groupBy",
-            "havingGroup",
-            "having",
-            "orderBy",
-            "setOffsetAndLimit",
             "getValue",
             "setValue"
         ]
@@ -15425,30 +15362,11 @@
         "parent": "Molajo\\Controller\\Controller",
         "implemented_interfaces": [
             "CommonApi\\Controller\\ControllerInterface",
-            "CommonApi\\Query\\QueryInterface"
+            "CommonApi\\Query\\QueryBuilderInterface",
+            "CommonApi\\Query\\QueryInterface",
+            "CommonApi\\Query\\ModelRegistryInterface"
         ],
         "constructor_parameters": [
-            {
-                "name": "query",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Query\\QueryInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
-                    "Molajo\\Controller\\QueryController",
-                    "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
-                    "Molajo\\Query\\Adapter\\Mysql",
-                    "Molajo\\Query\\Adapter\\Postgresql",
-                    "Molajo\\Query\\Adapter\\Sqllite",
-                    "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
-                ],
-                "concrete": false
-            },
             {
                 "name": "model",
                 "default_available": true,
@@ -15485,9 +15403,23 @@
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
+            },
+            {
+                "name": "query",
+                "default_available": true,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryBuilderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\QueryBuilder"
+                ],
+                "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  QueryInterface $query\n     * @param  ModelInterface $model\n     * @param  array          $runtime_data\n     * @param  array          $plugin_data\n     * @param  callable       $schedule_event\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  ModelInterface        $model\n     * @param  array                 $runtime_data\n     * @param  array                 $plugin_data\n     * @param  callable              $schedule_event\n     * @param  QueryBuilderInterface $query\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -15495,26 +15427,28 @@
 
         ],
         "method": [
+            "__construct",
+            "getValue",
+            "setValue",
             "get",
             "clearQuery",
             "setType",
-            "getDateFormat",
             "getDate",
             "getNullDate",
+            "getDateFormat",
             "setDistinct",
             "select",
             "from",
             "whereGroup",
-            "where",
-            "groupBy",
             "havingGroup",
+            "where",
             "having",
+            "groupBy",
             "orderBy",
             "setOffsetAndLimit",
-            "getSQL",
-            "__construct",
-            "getValue",
-            "setValue"
+            "getSql",
+            "getModelRegistry",
+            "setModelRegistry"
         ]
     },
     "Molajo\\Controller\\ReadController": {
@@ -15523,35 +15457,15 @@
         "fqns": "Molajo\\Controller\\ReadController",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/ReadController.php",
         "path": "vendor\/molajo\/query\/Controller\/ReadController.php",
-        "parent": "Molajo\\Controller\\ModelRegistryQuery",
+        "parent": "Molajo\\Controller\\QueryController",
         "implemented_interfaces": [
-            "CommonApi\\Controller\\ModelRegistryInterface",
-            "CommonApi\\Controller\\ControllerInterface",
+            "CommonApi\\Query\\ModelRegistryInterface",
             "CommonApi\\Query\\QueryInterface",
+            "CommonApi\\Query\\QueryBuilderInterface",
+            "CommonApi\\Controller\\ControllerInterface",
             "CommonApi\\Controller\\ReadControllerInterface"
         ],
         "constructor_parameters": [
-            {
-                "name": "query",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Query\\QueryInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
-                    "Molajo\\Controller\\QueryController",
-                    "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
-                    "Molajo\\Query\\Adapter\\Mysql",
-                    "Molajo\\Query\\Adapter\\Postgresql",
-                    "Molajo\\Query\\Adapter\\Sqllite",
-                    "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
-                ],
-                "concrete": false
-            },
             {
                 "name": "model",
                 "default_available": true,
@@ -15590,16 +15504,21 @@
                 "is_instantiable": false
             },
             {
-                "name": "model_registry",
+                "name": "query",
                 "default_available": true,
-                "default_value": [
-
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryBuilderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\QueryBuilder"
                 ],
-                "instance_of": null,
-                "is_instantiable": false
+                "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  QueryInterface $query\n     * @param  ModelInterface $model\n     * @param  array          $runtime_data\n     * @param  array          $plugin_data\n     * @param  callable       $schedule_event\n     * @param  array          $model_registry\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  ModelInterface        $model\n     * @param  array                 $runtime_data\n     * @param  array                 $plugin_data\n     * @param  callable              $schedule_event\n     * @param  QueryBuilderInterface $query\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -15612,27 +15531,27 @@
             "triggerOnAfterReadEvent",
             "triggerOnAfterReadallEvent",
             "__construct",
-            "getModelRegistry",
-            "setModelRegistry",
-            "getSQL",
+            "getValue",
+            "setValue",
             "get",
             "clearQuery",
             "setType",
-            "getDateFormat",
             "getDate",
             "getNullDate",
+            "getDateFormat",
             "setDistinct",
             "select",
             "from",
             "whereGroup",
-            "where",
-            "groupBy",
             "havingGroup",
+            "where",
             "having",
+            "groupBy",
             "orderBy",
             "setOffsetAndLimit",
-            "getValue",
-            "setValue"
+            "getSql",
+            "getModelRegistry",
+            "setModelRegistry"
         ]
     },
     "Molajo\\Factories\\Query\\QueryFactoryMethod": {
@@ -15641,7 +15560,7 @@
         "fqns": "Molajo\\Factories\\Query\\QueryFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Query\/QueryFactoryMethod.php",
         "path": "vendor\/molajo\/query\/Factories\/Query\/QueryFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -15669,15 +15588,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Resourcedata\\ResourcedataFactoryMethod": {
@@ -15686,7 +15605,7 @@
         "fqns": "Molajo\\Factories\\Resourcedata\\ResourcedataFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Resourcedata\/ResourcedataFactoryMethod.php",
         "path": "vendor\/molajo\/query\/Factories\/Resourcedata\/ResourcedataFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -15716,14 +15635,14 @@
             "onAfterInstantiation",
             "setContainerEntries",
             "createXml",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Resourcequery\\ResourcequeryFactoryMethod": {
@@ -15732,7 +15651,7 @@
         "fqns": "Molajo\\Factories\\Resourcequery\\ResourcequeryFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Factories\/Resourcequery\/ResourcequeryFactoryMethod.php",
         "path": "vendor\/molajo\/query\/Factories\/Resourcequery\/ResourcequeryFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -15760,15 +15679,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "onAfterInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateClass",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Model\\Model": {
@@ -16385,17 +16304,21 @@
                 "instance_of": "CommonApi\\Query\\QueryInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
                     "Molajo\\Controller\\QueryController",
                     "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
                     "Molajo\\Query\\Adapter\\Mysql",
                     "Molajo\\Query\\Adapter\\Postgresql",
                     "Molajo\\Query\\Adapter\\Sqllite",
                     "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
                 ],
                 "concrete": false
             },
@@ -16496,255 +16419,13 @@
             "instantiateClass"
         ]
     },
-    "Molajo\\Query\\Adapter\\AbstractAdapter": {
-        "name": "AbstractAdapter",
-        "namespace": "Molajo\\Query\\Adapter",
-        "fqns": "Molajo\\Query\\Adapter\\AbstractAdapter",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/AbstractAdapter.php",
-        "path": "vendor\/molajo\/query\/Source\/Adapter\/AbstractAdapter.php",
-        "parent": false,
-        "implemented_interfaces": [
-            "CommonApi\\Query\\QueryInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "fieldhandler",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
-                ],
-                "concrete": false
-            },
-            {
-                "name": "database_prefix",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "database",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Database\\DatabaseInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Database\\Adapter\\AbstractAdapter",
-                    "Molajo\\Database\\Adapter\\Joomla",
-                    "Molajo\\Database\\Driver"
-                ],
-                "concrete": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "get",
-            "clearQuery",
-            "getDateFormat",
-            "getDate",
-            "getNullDate",
-            "editArray",
-            "editDataType",
-            "editRequired",
-            "editConnector",
-            "editWhere",
-            "setOrFilterColumn",
-            "setType",
-            "setDistinct",
-            "select",
-            "from",
-            "whereGroup",
-            "where",
-            "groupBy",
-            "havingGroup",
-            "having",
-            "orderBy",
-            "setOffsetAndLimit",
-            "getSQL"
-        ]
-    },
-    "Molajo\\Query\\Adapter\\AbstractCollect": {
-        "name": "AbstractCollect",
-        "namespace": "Molajo\\Query\\Adapter",
-        "fqns": "Molajo\\Query\\Adapter\\AbstractCollect",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/AbstractCollect.php",
-        "path": "vendor\/molajo\/query\/Source\/Adapter\/AbstractCollect.php",
-        "parent": "Molajo\\Query\\Adapter\\AbstractAdapter",
-        "implemented_interfaces": [
-            "CommonApi\\Query\\QueryInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "fieldhandler",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
-                ],
-                "concrete": false
-            },
-            {
-                "name": "database_prefix",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "database",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Database\\DatabaseInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Database\\Adapter\\AbstractAdapter",
-                    "Molajo\\Database\\Adapter\\Joomla",
-                    "Molajo\\Database\\Driver"
-                ],
-                "concrete": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "setType",
-            "setDistinct",
-            "select",
-            "from",
-            "whereGroup",
-            "where",
-            "whereLeft",
-            "whereRight",
-            "groupBy",
-            "havingGroup",
-            "having",
-            "buildItem",
-            "orderBy",
-            "setOffsetAndLimit",
-            "__construct",
-            "get",
-            "clearQuery",
-            "getDateFormat",
-            "getDate",
-            "getNullDate",
-            "editArray",
-            "editDataType",
-            "editRequired",
-            "editConnector",
-            "editWhere",
-            "setOrFilterColumn",
-            "getSQL"
-        ]
-    },
-    "Molajo\\Query\\Adapter\\AbstractConstruct": {
-        "name": "AbstractConstruct",
-        "namespace": "Molajo\\Query\\Adapter",
-        "fqns": "Molajo\\Query\\Adapter\\AbstractConstruct",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/AbstractConstruct.php",
-        "path": "vendor\/molajo\/query\/Source\/Adapter\/AbstractConstruct.php",
-        "parent": "Molajo\\Query\\Adapter\\AbstractCollect",
-        "implemented_interfaces": [
-            "CommonApi\\Query\\QueryInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "fieldhandler",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
-                ],
-                "concrete": false
-            },
-            {
-                "name": "database_prefix",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "database",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Database\\DatabaseInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Database\\Adapter\\AbstractAdapter",
-                    "Molajo\\Database\\Adapter\\Joomla",
-                    "Molajo\\Database\\Driver"
-                ],
-                "concrete": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "getSQL",
-            "getSQLExternal",
-            "getSQLGenerate",
-            "setType",
-            "setDistinct",
-            "select",
-            "from",
-            "whereGroup",
-            "where",
-            "whereLeft",
-            "whereRight",
-            "groupBy",
-            "havingGroup",
-            "having",
-            "buildItem",
-            "orderBy",
-            "setOffsetAndLimit",
-            "__construct",
-            "get",
-            "clearQuery",
-            "getDateFormat",
-            "getDate",
-            "getNullDate",
-            "editArray",
-            "editDataType",
-            "editRequired",
-            "editConnector",
-            "editWhere",
-            "setOrFilterColumn"
-        ]
-    },
     "Molajo\\Query\\Adapter\\Mysql": {
         "name": "Mysql",
         "namespace": "Molajo\\Query\\Adapter",
         "fqns": "Molajo\\Query\\Adapter\\Mysql",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/Mysql.php",
         "path": "vendor\/molajo\/query\/Source\/Adapter\/Mysql.php",
-        "parent": "Molajo\\Query\\Adapter\\AbstractConstruct",
+        "parent": "Molajo\\Query\\Builder\\Sql",
         "implemented_interfaces": [
             "CommonApi\\Query\\QueryInterface"
         ],
@@ -16782,7 +16463,7 @@
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -16790,35 +16471,24 @@
 
         ],
         "method": [
-            "getSQL",
-            "getSQLExternal",
-            "getSQLGenerate",
+            "__construct",
+            "getSql",
+            "get",
+            "clearQuery",
             "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
             "setDistinct",
             "select",
             "from",
             "whereGroup",
-            "where",
-            "whereLeft",
-            "whereRight",
-            "groupBy",
             "havingGroup",
+            "where",
             "having",
-            "buildItem",
+            "groupBy",
             "orderBy",
-            "setOffsetAndLimit",
-            "__construct",
-            "get",
-            "clearQuery",
-            "getDateFormat",
-            "getDate",
-            "getNullDate",
-            "editArray",
-            "editDataType",
-            "editRequired",
-            "editConnector",
-            "editWhere",
-            "setOrFilterColumn"
+            "setOffsetAndLimit"
         ]
     },
     "Molajo\\Query\\Adapter\\Postgresql": {
@@ -16827,7 +16497,7 @@
         "fqns": "Molajo\\Query\\Adapter\\Postgresql",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/Postgresql.php",
         "path": "vendor\/molajo\/query\/Source\/Adapter\/Postgresql.php",
-        "parent": "Molajo\\Query\\Adapter\\AbstractConstruct",
+        "parent": "Molajo\\Query\\Builder\\Sql",
         "implemented_interfaces": [
             "CommonApi\\Query\\QueryInterface"
         ],
@@ -16865,7 +16535,7 @@
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -16873,35 +16543,24 @@
 
         ],
         "method": [
-            "getSQL",
-            "getSQLExternal",
-            "getSQLGenerate",
+            "__construct",
+            "getSql",
+            "get",
+            "clearQuery",
             "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
             "setDistinct",
             "select",
             "from",
             "whereGroup",
-            "where",
-            "whereLeft",
-            "whereRight",
-            "groupBy",
             "havingGroup",
+            "where",
             "having",
-            "buildItem",
+            "groupBy",
             "orderBy",
-            "setOffsetAndLimit",
-            "__construct",
-            "get",
-            "clearQuery",
-            "getDateFormat",
-            "getDate",
-            "getNullDate",
-            "editArray",
-            "editDataType",
-            "editRequired",
-            "editConnector",
-            "editWhere",
-            "setOrFilterColumn"
+            "setOffsetAndLimit"
         ]
     },
     "Molajo\\Query\\Adapter\\Sqllite": {
@@ -16910,7 +16569,7 @@
         "fqns": "Molajo\\Query\\Adapter\\Sqllite",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/Sqllite.php",
         "path": "vendor\/molajo\/query\/Source\/Adapter\/Sqllite.php",
-        "parent": "Molajo\\Query\\Adapter\\AbstractConstruct",
+        "parent": "Molajo\\Query\\Builder\\Sql",
         "implemented_interfaces": [
             "CommonApi\\Query\\QueryInterface"
         ],
@@ -16948,7 +16607,7 @@
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -16956,35 +16615,24 @@
 
         ],
         "method": [
-            "getSQL",
-            "getSQLExternal",
-            "getSQLGenerate",
+            "__construct",
+            "getSql",
+            "get",
+            "clearQuery",
             "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
             "setDistinct",
             "select",
             "from",
             "whereGroup",
-            "where",
-            "whereLeft",
-            "whereRight",
-            "groupBy",
             "havingGroup",
+            "where",
             "having",
-            "buildItem",
+            "groupBy",
             "orderBy",
-            "setOffsetAndLimit",
-            "__construct",
-            "get",
-            "clearQuery",
-            "getDateFormat",
-            "getDate",
-            "getNullDate",
-            "editArray",
-            "editDataType",
-            "editRequired",
-            "editConnector",
-            "editWhere",
-            "setOrFilterColumn"
+            "setOffsetAndLimit"
         ]
     },
     "Molajo\\Query\\Adapter\\Sqlserver": {
@@ -16993,7 +16641,7 @@
         "fqns": "Molajo\\Query\\Adapter\\Sqlserver",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Adapter\/Sqlserver.php",
         "path": "vendor\/molajo\/query\/Source\/Adapter\/Sqlserver.php",
-        "parent": "Molajo\\Query\\Adapter\\AbstractConstruct",
+        "parent": "Molajo\\Query\\Builder\\Sql",
         "implemented_interfaces": [
             "CommonApi\\Query\\QueryInterface"
         ],
@@ -17031,7 +16679,7 @@
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -17039,71 +16687,885 @@
 
         ],
         "method": [
-            "getSQL",
-            "getSQLExternal",
-            "getSQLGenerate",
+            "__construct",
+            "getSql",
+            "get",
+            "clearQuery",
             "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
             "setDistinct",
             "select",
             "from",
             "whereGroup",
-            "where",
-            "whereLeft",
-            "whereRight",
-            "groupBy",
             "havingGroup",
+            "where",
             "having",
-            "buildItem",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit"
+        ]
+    },
+    "Molajo\\Query\\Builder\\Base": {
+        "name": "Base",
+        "namespace": "Molajo\\Query\\Builder",
+        "fqns": "Molajo\\Query\\Builder\\Base",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Builder\/Base.php",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/Base.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+
+        ]
+    },
+    "Molajo\\Query\\Builder\\BuildSql": {
+        "name": "BuildSql",
+        "namespace": "Molajo\\Query\\Builder",
+        "fqns": "Molajo\\Query\\Builder\\BuildSql",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Builder\/BuildSql.php",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/BuildSql.php",
+        "parent": "Molajo\\Query\\Builder\\BuildSqlElements",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+
+        ]
+    },
+    "Molajo\\Query\\Builder\\BuildSqlElements": {
+        "name": "BuildSqlElements",
+        "namespace": "Molajo\\Query\\Builder",
+        "fqns": "Molajo\\Query\\Builder\\BuildSqlElements",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Builder\/BuildSqlElements.php",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/BuildSqlElements.php",
+        "parent": "Molajo\\Query\\Builder\\BuildSqlGroups",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+
+        ]
+    },
+    "Molajo\\Query\\Builder\\BuildSqlGroups": {
+        "name": "BuildSqlGroups",
+        "namespace": "Molajo\\Query\\Builder",
+        "fqns": "Molajo\\Query\\Builder\\BuildSqlGroups",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Builder\/BuildSqlGroups.php",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/BuildSqlGroups.php",
+        "parent": "Molajo\\Query\\Builder\\SetData",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+
+        ]
+    },
+    "Molajo\\Query\\Builder\\EditData": {
+        "name": "EditData",
+        "namespace": "Molajo\\Query\\Builder",
+        "fqns": "Molajo\\Query\\Builder\\EditData",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Builder\/EditData.php",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/EditData.php",
+        "parent": "Molajo\\Query\\Builder\\FilterData",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+
+        ]
+    },
+    "Molajo\\Query\\Builder\\FilterData": {
+        "name": "FilterData",
+        "namespace": "Molajo\\Query\\Builder",
+        "fqns": "Molajo\\Query\\Builder\\FilterData",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Builder\/FilterData.php",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/FilterData.php",
+        "parent": "Molajo\\Query\\Builder\\Base",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+
+        ]
+    },
+    "Molajo\\Query\\Builder\\SetData": {
+        "name": "SetData",
+        "namespace": "Molajo\\Query\\Builder",
+        "fqns": "Molajo\\Query\\Builder\\SetData",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Builder\/SetData.php",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/SetData.php",
+        "parent": "Molajo\\Query\\Builder\\EditData",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+
+        ]
+    },
+    "Molajo\\Query\\Builder\\Sql": {
+        "name": "Sql",
+        "namespace": "Molajo\\Query\\Builder",
+        "fqns": "Molajo\\Query\\Builder\\Sql",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Builder\/Sql.php",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/Sql.php",
+        "parent": "Molajo\\Query\\Builder\\BuildSql",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request",
+                    "Molajo\\User\\Fieldhandler"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "database_prefix",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "database",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Database\\DatabaseInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Database\\Adapter\\AbstractAdapter",
+                    "Molajo\\Database\\Adapter\\Joomla",
+                    "Molajo\\Database\\Driver"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "getSql",
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit"
+        ]
+    },
+    "Molajo\\Query\\Model\\Base": {
+        "name": "Base",
+        "namespace": "Molajo\\Query\\Model",
+        "fqns": "Molajo\\Query\\Model\\Base",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Model\/Base.php",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Base.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+
+        ]
+    },
+    "Molajo\\Query\\Model\\Columns": {
+        "name": "Columns",
+        "namespace": "Molajo\\Query\\Model",
+        "fqns": "Molajo\\Query\\Model\\Columns",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Model\/Columns.php",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Columns.php",
+        "parent": "Molajo\\Query\\Model\\Table",
+        "implemented_interfaces": [
+            "CommonApi\\Query\\QueryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  array $model_registry\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "setModelRegistryDefaults",
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
             "orderBy",
             "setOffsetAndLimit",
+            "getSql"
+        ]
+    },
+    "Molajo\\Query\\Model\\Criteria": {
+        "name": "Criteria",
+        "namespace": "Molajo\\Query\\Model",
+        "fqns": "Molajo\\Query\\Model\\Criteria",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Model\/Criteria.php",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Criteria.php",
+        "parent": "Molajo\\Query\\Model\\Columns",
+        "implemented_interfaces": [
+            "CommonApi\\Query\\QueryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  array $model_registry\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "setModelRegistryDefaults",
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit",
+            "getSql"
+        ]
+    },
+    "Molajo\\Query\\Model\\Defaults": {
+        "name": "Defaults",
+        "namespace": "Molajo\\Query\\Model",
+        "fqns": "Molajo\\Query\\Model\\Defaults",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Model\/Defaults.php",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Defaults.php",
+        "parent": "Molajo\\Query\\Model\\Utilities",
+        "implemented_interfaces": [
+            "CommonApi\\Query\\QueryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  array $model_registry\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "setModelRegistryDefaults",
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit",
+            "getSql"
+        ]
+    },
+    "Molajo\\Query\\Model\\Query": {
+        "name": "Query",
+        "namespace": "Molajo\\Query\\Model",
+        "fqns": "Molajo\\Query\\Model\\Query",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Model\/Query.php",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Query.php",
+        "parent": "Molajo\\Query\\Model\\Base",
+        "implemented_interfaces": [
+            "CommonApi\\Query\\QueryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  QueryInterface $query\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
             "__construct",
             "get",
             "clearQuery",
-            "getDateFormat",
+            "setType",
             "getDate",
             "getNullDate",
-            "editArray",
-            "editDataType",
-            "editRequired",
-            "editConnector",
-            "editWhere",
-            "setOrFilterColumn"
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit",
+            "getSql"
         ]
     },
-    "Molajo\\Query\\Driver": {
-        "name": "Driver",
+    "Molajo\\Query\\Model\\Registry": {
+        "name": "Registry",
+        "namespace": "Molajo\\Query\\Model",
+        "fqns": "Molajo\\Query\\Model\\Registry",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Model\/Registry.php",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Registry.php",
+        "parent": "Molajo\\Query\\Model\\Criteria",
+        "implemented_interfaces": [
+            "CommonApi\\Query\\QueryInterface",
+            "CommonApi\\Query\\QueryBuilderInterface",
+            "CommonApi\\Query\\ModelRegistryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  QueryInterface $query\n     * @param  array          $model_registry\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "getSql",
+            "getModelRegistry",
+            "setModelRegistry",
+            "setModelRegistryDefaults",
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit"
+        ]
+    },
+    "Molajo\\Query\\Model\\Table": {
+        "name": "Table",
+        "namespace": "Molajo\\Query\\Model",
+        "fqns": "Molajo\\Query\\Model\\Table",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Model\/Table.php",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Table.php",
+        "parent": "Molajo\\Query\\Model\\Defaults",
+        "implemented_interfaces": [
+            "CommonApi\\Query\\QueryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  array $model_registry\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "setModelRegistryDefaults",
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit",
+            "getSql"
+        ]
+    },
+    "Molajo\\Query\\Model\\Utilities": {
+        "name": "Utilities",
+        "namespace": "Molajo\\Query\\Model",
+        "fqns": "Molajo\\Query\\Model\\Utilities",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Model\/Utilities.php",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Utilities.php",
+        "parent": "Molajo\\Query\\Model\\Query",
+        "implemented_interfaces": [
+            "CommonApi\\Query\\QueryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  QueryInterface $query\n     *\n     * @since  1.0.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit",
+            "getSql"
+        ]
+    },
+    "Molajo\\Query\\QueryBuilder": {
+        "name": "QueryBuilder",
         "namespace": "Molajo\\Query",
-        "fqns": "Molajo\\Query\\Driver",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/Driver.php",
-        "path": "vendor\/molajo\/query\/Source\/Driver.php",
+        "fqns": "Molajo\\Query\\QueryBuilder",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/QueryBuilder.php",
+        "path": "vendor\/molajo\/query\/Source\/QueryBuilder.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\Query\\QueryBuilderInterface",
+            "CommonApi\\Query\\QueryInterface",
+            "CommonApi\\Query\\ModelRegistryInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryBuilderInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\QueryBuilder"
+                ],
+                "concrete": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  QueryBuilderInterface $query\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit",
+            "getSql",
+            "getModelRegistry",
+            "setModelRegistry"
+        ]
+    },
+    "Molajo\\Query\\QueryProxy": {
+        "name": "QueryProxy",
+        "namespace": "Molajo\\Query",
+        "fqns": "Molajo\\Query\\QueryProxy",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Source\/QueryProxy.php",
+        "path": "vendor\/molajo\/query\/Source\/QueryProxy.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\Query\\QueryInterface"
         ],
         "constructor_parameters": [
             {
-                "name": "adapter",
+                "name": "query",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": "CommonApi\\Query\\QueryInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
                     "Molajo\\Controller\\QueryController",
                     "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
                     "Molajo\\Query\\Adapter\\Mysql",
                     "Molajo\\Query\\Adapter\\Postgresql",
                     "Molajo\\Query\\Adapter\\Sqllite",
                     "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
                 ],
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  QueryInterface $adapter\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  QueryProxy $query\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -17115,20 +17577,83 @@
             "get",
             "clearQuery",
             "setType",
-            "getDateFormat",
             "getDate",
             "getNullDate",
+            "getDateFormat",
             "setDistinct",
             "select",
             "from",
             "whereGroup",
-            "where",
-            "groupBy",
             "havingGroup",
+            "where",
             "having",
+            "groupBy",
             "orderBy",
             "setOffsetAndLimit",
-            "getSQL"
+            "getSql"
+        ]
+    },
+    "Molajo\\Query\\ModelRegistryTrait": {
+        "name": "ModelRegistryTrait",
+        "namespace": "Molajo\\Query",
+        "fqns": "Molajo\\Query\\ModelRegistryTrait",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Traits\/ModelRegistryTrait.php",
+        "path": "vendor\/molajo\/query\/Traits\/ModelRegistryTrait.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "getModelRegistry",
+            "setModelRegistry"
+        ]
+    },
+    "Molajo\\Query\\QueryTrait": {
+        "name": "QueryTrait",
+        "namespace": "Molajo\\Query",
+        "fqns": "Molajo\\Query\\QueryTrait",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Traits\/QueryTrait.php",
+        "path": "vendor\/molajo\/query\/Traits\/QueryTrait.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+
+        ],
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "get",
+            "clearQuery",
+            "setType",
+            "getDate",
+            "getNullDate",
+            "getDateFormat",
+            "setDistinct",
+            "select",
+            "from",
+            "whereGroup",
+            "havingGroup",
+            "where",
+            "having",
+            "groupBy",
+            "orderBy",
+            "setOffsetAndLimit",
+            "getSql"
         ]
     },
     "Molajo\\Factories\\Render\\RenderFactoryMethod": {
@@ -17137,7 +17662,7 @@
         "fqns": "Molajo\\Factories\\Render\\RenderFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Factories\/Render\/RenderFactoryMethod.php",
         "path": "vendor\/molajo\/render\/Factories\/Render\/RenderFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -17165,16 +17690,16 @@
             "setDependencies",
             "instantiateClass",
             "getMolajitoAdapter",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Render\\Adapter\\AbstractAdapter": {
@@ -17418,7 +17943,7 @@
         "fqns": "Molajo\\Factories\\Resource\\ResourceFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resource\/ResourceFactoryMethod.php",
         "path": "vendor\/molajo\/resource\/Factories\/Resource\/ResourceFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -17447,14 +17972,14 @@
             "onBeforeInstantiation",
             "instantiateClass",
             "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
-            "setContainerEntries"
+            "setContainerEntries",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Resourcecss\\ResourcecssFactoryMethod": {
@@ -17463,7 +17988,7 @@
         "fqns": "Molajo\\Factories\\Resourcecss\\ResourcecssFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcecss\/ResourcecssFactoryMethod.php",
         "path": "vendor\/molajo\/resource\/Factories\/Resourcecss\/ResourcecssFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -17491,15 +18016,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "onAfterInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateClass",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Resourcecssdeclarations\\ResourcecssdeclarationsFactoryMethod": {
@@ -17508,7 +18033,7 @@
         "fqns": "Molajo\\Factories\\Resourcecssdeclarations\\ResourcecssdeclarationsFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcecssdeclarations\/ResourcecssdeclarationsFactoryMethod.php",
         "path": "vendor\/molajo\/resource\/Factories\/Resourcecssdeclarations\/ResourcecssdeclarationsFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -17536,15 +18061,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "onAfterInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateClass",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Resourcejs\\ResourcejsFactoryMethod": {
@@ -17553,7 +18078,7 @@
         "fqns": "Molajo\\Factories\\Resourcejs\\ResourcejsFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcejs\/ResourcejsFactoryMethod.php",
         "path": "vendor\/molajo\/resource\/Factories\/Resourcejs\/ResourcejsFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -17581,15 +18106,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "onAfterInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateClass",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Resourcejsdeclarations\\ResourcejsdeclarationsFactoryMethod": {
@@ -17598,7 +18123,7 @@
         "fqns": "Molajo\\Factories\\Resourcejsdeclarations\\ResourcejsdeclarationsFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Factories\/Resourcejsdeclarations\/ResourcejsdeclarationsFactoryMethod.php",
         "path": "vendor\/molajo\/resource\/Factories\/Resourcejsdeclarations\/ResourcejsdeclarationsFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -17626,15 +18151,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "onAfterInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateClass",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Resource\\Adapter\\AbstractAdapter": {
@@ -18345,13 +18870,6 @@
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
-            },
-            {
-                "name": "stats_filename",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
             }
         ],
         "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  string $class_map_filename\n     * @param  string $interface_classes_filename\n     * @param  string $concrete_classes_filename\n     * @param  string $events_filename\n     *\n     * @since  1.0\n     *\/",
@@ -18524,7 +19042,7 @@
         "fqns": "Molajo\\Factories\\Route\\RouteFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Factories\/Route\/RouteFactoryMethod.php",
         "path": "vendor\/molajo\/route\/Factories\/Route\/RouteFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -18555,13 +19073,13 @@
             "onAfterInstantiation",
             "setContainerEntries",
             "getApplicationFilters",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Route\\Adapter\\AbstractAdapter": {
@@ -18618,6 +19136,15 @@
                 "is_instantiable": false
             },
             {
+                "name": "task_to_action",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
                 "name": "filters",
                 "default_available": true,
                 "default_value": [
@@ -18627,7 +19154,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object $request\n     * @param   int    $url_force_ssl\n     * @param   int    $application_home_catalog_id\n     * @param   string $application_path\n     * @param   int    $application_id\n     * @param   string $base_url\n     * @param   array  $filters\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object $request\n     * @param   int    $url_force_ssl\n     * @param   int    $application_home_catalog_id\n     * @param   string $application_path\n     * @param   int    $application_id\n     * @param   string $base_url\n     * @param   array  $task_to_action\n     * @param   array  $filters\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -18697,6 +19224,15 @@
                 "is_instantiable": false
             },
             {
+                "name": "task_to_action",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
                 "name": "filters",
                 "default_available": true,
                 "default_value": [
@@ -18715,7 +19251,7 @@
                 "concrete": true
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object         $request\n     * @param   int            $url_force_ssl\n     * @param   int            $application_home_catalog_id\n     * @param   string         $application_path\n     * @param   int            $application_id\n     * @param   string         $base_url\n     * @param   array          $filters\n     * @param   ReadController $resource_query\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object         $request\n     * @param   int            $url_force_ssl\n     * @param   int            $application_home_catalog_id\n     * @param   string         $application_path\n     * @param   int            $application_id\n     * @param   string         $base_url\n     * @param   array          $task_to_action\n     * @param   array          $filters\n     * @param   ReadController $resource_query\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -18777,7 +19313,7 @@
         "fqns": "Molajo\\Factories\\Activity\\ActivityFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Activity\/ActivityFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Activity\/ActivityFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -18802,18 +19338,18 @@
         ],
         "method": [
             "__construct",
-            "setDependencies",
             "onBeforeInstantiation",
+            "setDependencies",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Authentication\\AuthenticationFactoryMethod": {
@@ -18822,7 +19358,7 @@
         "fqns": "Molajo\\Factories\\Authentication\\AuthenticationFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Authentication\/AuthenticationFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Authentication\/AuthenticationFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -18852,13 +19388,13 @@
             "instantiateClass",
             "onAfterInstantiation",
             "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "setContainerEntries"
+            "setContainerEntries",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Cookie\\CookieFactoryMethod": {
@@ -18867,7 +19403,7 @@
         "fqns": "Molajo\\Factories\\Cookie\\CookieFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Cookie\/CookieFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Cookie\/CookieFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -18893,9 +19429,6 @@
         "method": [
             "__construct",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -18903,7 +19436,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Encrypt\\EncryptFactoryMethod": {
@@ -18912,7 +19448,7 @@
         "fqns": "Molajo\\Factories\\Encrypt\\EncryptFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Encrypt\/EncryptFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Encrypt\/EncryptFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -18938,9 +19474,6 @@
         "method": [
             "__construct",
             "onBeforeInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "instantiateClass",
             "instantiateStatic",
@@ -18948,7 +19481,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Flashmessage\\FlashmessageFactoryMethod": {
@@ -18957,7 +19493,7 @@
         "fqns": "Molajo\\Factories\\Flashmessage\\FlashmessageFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Flashmessage\/FlashmessageFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Flashmessage\/FlashmessageFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -18983,9 +19519,6 @@
         "method": [
             "__construct",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateStatic",
@@ -18993,7 +19526,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Instantiateuser\\InstantiateuserFactoryMethod": {
@@ -19002,7 +19538,7 @@
         "fqns": "Molajo\\Factories\\Instantiateuser\\InstantiateuserFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Instantiateuser\/InstantiateuserFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Instantiateuser\/InstantiateuserFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -19030,15 +19566,15 @@
             "setDependencies",
             "setContainerEntries",
             "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "onBeforeInstantiation",
             "instantiateClass",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
-            "removeContainerEntries"
+            "removeContainerEntries",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Mailer\\MailerFactoryMethod": {
@@ -19047,7 +19583,7 @@
         "fqns": "Molajo\\Factories\\Mailer\\MailerFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Mailer\/MailerFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Mailer\/MailerFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -19073,9 +19609,6 @@
         "method": [
             "__construct",
             "onBeforeInstantiation",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "instantiateClass",
             "instantiateStatic",
@@ -19083,7 +19616,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Messages\\MessagesFactoryMethod": {
@@ -19092,7 +19628,7 @@
         "fqns": "Molajo\\Factories\\Messages\\MessagesFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Messages\/MessagesFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Messages\/MessagesFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -19120,15 +19656,15 @@
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Registration\\RegistrationFactoryMethod": {
@@ -19137,7 +19673,7 @@
         "fqns": "Molajo\\Factories\\Registration\\RegistrationFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Registration\/RegistrationFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Registration\/RegistrationFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -19162,9 +19698,6 @@
         ],
         "method": [
             "__construct",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
@@ -19173,7 +19706,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Session\\SessionFactoryMethod": {
@@ -19182,7 +19718,7 @@
         "fqns": "Molajo\\Factories\\Session\\SessionFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Session\/SessionFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Session\/SessionFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -19207,9 +19743,6 @@
         ],
         "method": [
             "__construct",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
@@ -19218,7 +19751,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Template\\TemplateFactoryMethod": {
@@ -19227,7 +19763,7 @@
         "fqns": "Molajo\\Factories\\Template\\TemplateFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Template\/TemplateFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Template\/TemplateFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -19254,9 +19790,6 @@
             "__construct",
             "onBeforeInstantiation",
             "getTemplates",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "setDependencies",
             "instantiateClass",
             "instantiateStatic",
@@ -19264,7 +19797,10 @@
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
-            "scheduleFactories"
+            "scheduleFactories",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Template\\en-GB\\password_reset_request.template": {
@@ -19279,7 +19815,7 @@
         "fqns": "Molajo\\Factories\\User\\UserFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/User\/UserFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/User\/UserFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -19309,14 +19845,14 @@
             "instantiateClass",
             "getSessionInput",
             "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
-            "setContainerEntries"
+            "setContainerEntries",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\Factories\\Userdata\\UserdataFactoryMethod": {
@@ -19325,7 +19861,7 @@
         "fqns": "Molajo\\Factories\\Userdata\\UserdataFactoryMethod",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Userdata\/UserdataFactoryMethod.php",
         "path": "vendor\/molajo\/user\/Factories\/Userdata\/UserdataFactoryMethod.php",
-        "parent": "Molajo\\IoC\\FactoryMethodBase",
+        "parent": "Molajo\\IoC\\FactoryMethod\\Base",
         "implemented_interfaces": [
             "CommonApi\\IoC\\FactoryBatchInterface",
             "CommonApi\\IoC\\FactoryInterface"
@@ -19355,13 +19891,13 @@
             "instantiateClass",
             "onAfterInstantiation",
             "scheduleFactories",
-            "getNamespace",
-            "getOptions",
-            "getStoreContainerEntryIndicator",
             "instantiateStatic",
             "getProductValue",
             "removeContainerEntries",
-            "setContainerEntries"
+            "setContainerEntries",
+            "getNamespace",
+            "getOptions",
+            "getStoreContainerEntryIndicator"
         ]
     },
     "Molajo\\User\\Activity": {
@@ -19395,17 +19931,21 @@
                 "instance_of": "CommonApi\\Query\\QueryInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
                     "Molajo\\Controller\\QueryController",
                     "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
                     "Molajo\\Query\\Adapter\\Mysql",
                     "Molajo\\Query\\Adapter\\Postgresql",
                     "Molajo\\Query\\Adapter\\Sqllite",
                     "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
                 ],
                 "concrete": false
             },
@@ -20199,17 +20739,21 @@
                 "instance_of": "CommonApi\\Query\\QueryInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Controller\\ModelRegistryQuery",
                     "Molajo\\Controller\\QueryController",
                     "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\AbstractAdapter",
-                    "Molajo\\Query\\Adapter\\AbstractCollect",
-                    "Molajo\\Query\\Adapter\\AbstractConstruct",
                     "Molajo\\Query\\Adapter\\Mysql",
                     "Molajo\\Query\\Adapter\\Postgresql",
                     "Molajo\\Query\\Adapter\\Sqllite",
                     "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Driver"
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
                 ],
                 "concrete": false
             },

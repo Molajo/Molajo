@@ -15,10 +15,22 @@ require_once $base_path . '/vendor/commonapi/ioc/FactoryBatchInterface.php';
 require_once $base_path . '/vendor/commonapi/ioc/FactoryInterface.php';
 require_once $base_path . '/vendor/commonapi/ioc/ScheduleInterface.php';
 
-require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethodBase.php';
-require_once $base_path . '/vendor/molajo/ioc/Source/StandardFactoryMethod.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Adapter.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Base.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Controller.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Instantiate.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Standard.php';
+
+require_once $base_path . '/vendor/molajo/ioc/Source/Product/ClassDependencies.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/Product/Create.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/Product/SetNamespace.php';
+
+require_once $base_path . '/vendor/molajo/ioc/Source/Schedule/Base.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/Schedule/Create.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/Schedule/Dependency.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/Schedule/Request.php';
+
 require_once $base_path . '/vendor/molajo/ioc/Source/Container.php';
-require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethodController.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/Schedule.php';
 
 // 1. Factory Method Namespaces and Aliases
@@ -36,14 +48,14 @@ $map                    = new $map_class ($factory_method_folders, $folder_names
 
 $map->createMap();
 
-// 2. IoC Container
-require_once $base_path . '/vendor/molajo/ioc/Source/Container.php';
-$aliases             = readJsonFile($adapter_alias_filename);
-$ioc_container_class = 'Molajo\\IoC\\Container';
-$ioc_container       = new $ioc_container_class ($aliases);
-
 // 3. Factory Method Scheduling
-require_once $base_path . '/vendor/molajo/ioc/Source/Schedule.php';
-$classDependencies      = __DIR__ . '/Files/Output/ClassDependencies.json';
+$factory_method_aliases      = readJsonFile(__DIR__ . '/Files/Output/FactoryMethodAliases.json');
+$class_dependencies_filename = __DIR__ . '/Files/ClassDependencies.json';
+$standard_adapter_namespaces = 'Molajo\\IoC\\FactoryMethod\\Standard';
+
 $schedule_factory_class = 'Molajo\\IoC\\Schedule';
-$schedule_factory       = new $schedule_factory_class ($ioc_container, $aliases, $classDependencies);
+$schedule_factory = new $schedule_factory_class(
+    $factory_method_aliases,
+    $class_dependencies_filename,
+    $standard_adapter_namespaces
+);

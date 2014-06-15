@@ -22,7 +22,6 @@
     "Execute": "Molajo\\Factories\\Execute",
     "Extensions": "Molajo\\Factories\\Extensions",
     "Fieldhandler": "Molajo\\Factories\\Fieldhandler",
-    "Filesystem": "Molajo\\Factories\\Filesystem",
     "Flashmessage": "Molajo\\Factories\\Flashmessage",
     "Image": "Molajo\\Factories\\Image",
     "Instantiateuser": "Molajo\\Factories\\Instantiateuser",

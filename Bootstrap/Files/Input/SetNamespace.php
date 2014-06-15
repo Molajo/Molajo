@@ -65,9 +65,6 @@ $resource_adapter->setNamespace(
     'vendor/molajo/fieldhandler/Factories/Fieldhandler/'
 );
 
-$resource_adapter->setNamespace('Molajo\\Filesystem\\', 'vendor/molajo/filesystem/Source/');
-$resource_adapter->setNamespace('Molajo\\Factories\\Filesystem\\', 'vendor/molajo/filesystem/Factories/Filesystem/');
-
 $resource_adapter->setNamespace('Molajo\\Http\\', 'vendor/molajo/http/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/http/Factories/');
 
@@ -98,6 +95,7 @@ $resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/query/Resou
 
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/query/Factories/');
 $resource_adapter->setNamespace('Molajo\\Query\\', 'vendor/molajo/query/Source/');
+$resource_adapter->setNamespace('Molajo\\Query\\', 'vendor/molajo/query/Traits/');
 
 $resource_adapter->setNamespace('Molajo\\Route\\', 'vendor/molajo/route/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\Route\\', 'vendor/molajo/route/Factories/Route/');

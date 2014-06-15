@@ -6,7 +6,6 @@
     "vendor/molajo/email/Factories/",
     "vendor/molajo/event/Factories/",
     "vendor/molajo/fieldhandler/Factories/",
-    "vendor/molajo/filesystem/Factories/",
     "vendor/molajo/Http/Factories/",
     "vendor/molajo/language/Factories/",
     "vendor/molajo/log/Factories/",

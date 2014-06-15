@@ -173,12 +173,6 @@
         "path": "vendor\/commonapi\/controller\/LoadTranslationInterface.php",
         "fqns": "CommonApi\\Controller\\LoadTranslationInterface"
     },
-    "vendor\/commonapi\/controller\/ModelRegistryInterface.php": {
-        "file_name": "ModelRegistryInterface.php",
-        "base_name": "ModelRegistryInterface",
-        "path": "vendor\/commonapi\/controller\/ModelRegistryInterface.php",
-        "fqns": "CommonApi\\Controller\\ModelRegistryInterface"
-    },
     "vendor\/commonapi\/controller\/NumberToTextInterface.php": {
         "file_name": "NumberToTextInterface.php",
         "base_name": "NumberToTextInterface",
@@ -575,6 +569,18 @@
         "path": "vendor\/commonapi\/model\/ValidateResponseInterface.php",
         "fqns": "CommonApi\\Model\\ValidateResponseInterface"
     },
+    "vendor\/commonapi\/query\/ModelRegistryInterface.php": {
+        "file_name": "ModelRegistryInterface.php",
+        "base_name": "ModelRegistryInterface",
+        "path": "vendor\/commonapi\/query\/ModelRegistryInterface.php",
+        "fqns": "CommonApi\\Query\\ModelRegistryInterface"
+    },
+    "vendor\/commonapi\/query\/QueryBuilderInterface.php": {
+        "file_name": "QueryBuilderInterface.php",
+        "base_name": "QueryBuilderInterface",
+        "path": "vendor\/commonapi\/query\/QueryBuilderInterface.php",
+        "fqns": "CommonApi\\Query\\QueryBuilderInterface"
+    },
     "vendor\/commonapi\/query\/QueryInterface.php": {
         "file_name": "QueryInterface.php",
         "base_name": "QueryInterface",
@@ -779,12 +785,6 @@
         "path": "vendor\/molajo\/Language\/Source\/Adapter\/StringArray.php",
         "fqns": "Molajo\\Language\\Adapter\\StringArray"
     },
-    "vendor\/molajo\/Language\/Source\/Capture\/Database.php": {
-        "file_name": "Database.php",
-        "base_name": "Database",
-        "path": "vendor\/molajo\/Language\/Source\/Capture\/Database.php",
-        "fqns": "Molajo\\Language\\Capture\\Database"
-    },
     "vendor\/molajo\/Language\/Source\/Capture\/Dummy.php": {
         "file_name": "Dummy.php",
         "base_name": "Dummy",
@@ -880,6 +880,12 @@
         "base_name": "MemoryLogger",
         "path": "vendor\/molajo\/Log\/Source\/Adapter\/MemoryLogger.php",
         "fqns": "Molajo\\Log\\Adapter\\MemoryLogger"
+    },
+    "vendor\/molajo\/Log\/Source\/LogTrait.php": {
+        "file_name": "LogTrait.php",
+        "base_name": "LogTrait",
+        "path": "vendor\/molajo\/Log\/Source\/LogTrait.php",
+        "fqns": "Molajo\\Log\\LogTrait"
     },
     "vendor\/molajo\/Log\/Source\/Logger.php": {
         "file_name": "Logger.php",
@@ -1925,42 +1931,6 @@
         "path": "vendor\/molajo\/fieldhandler\/Source\/ValidateResponse.php",
         "fqns": "Molajo\\Fieldhandler\\ValidateResponse"
     },
-    "vendor\/molajo\/filesystem\/Factories\/Filesystem\/FilesystemFactoryMethod.php": {
-        "file_name": "FilesystemFactoryMethod.php",
-        "base_name": "FilesystemFactoryMethod",
-        "path": "vendor\/molajo\/filesystem\/Factories\/Filesystem\/FilesystemFactoryMethod.php",
-        "fqns": "Molajo\\Factories\\Filesystem\\FilesystemFactoryMethod"
-    },
-    "vendor\/molajo\/filesystem\/Source\/Adapter\/AbstractAdapter.php": {
-        "file_name": "AbstractAdapter.php",
-        "base_name": "AbstractAdapter",
-        "path": "vendor\/molajo\/filesystem\/Source\/Adapter\/AbstractAdapter.php",
-        "fqns": "Molajo\\Filesystem\\Adapter\\AbstractAdapter"
-    },
-    "vendor\/molajo\/filesystem\/Source\/Adapter\/Ftp.php": {
-        "file_name": "Ftp.php",
-        "base_name": "Ftp",
-        "path": "vendor\/molajo\/filesystem\/Source\/Adapter\/Ftp.php",
-        "fqns": "Molajo\\Filesystem\\Adapter\\Ftp"
-    },
-    "vendor\/molajo\/filesystem\/Source\/Adapter\/Local.php": {
-        "file_name": "Local.php",
-        "base_name": "Local",
-        "path": "vendor\/molajo\/filesystem\/Source\/Adapter\/Local.php",
-        "fqns": "Molajo\\Filesystem\\Adapter\\Local"
-    },
-    "vendor\/molajo\/filesystem\/Source\/Adapter\/Media.php": {
-        "file_name": "Media.php",
-        "base_name": "Media",
-        "path": "vendor\/molajo\/filesystem\/Source\/Adapter\/Media.php",
-        "fqns": "Molajo\\Filesystem\\Adapter\\Media"
-    },
-    "vendor\/molajo\/filesystem\/Source\/Driver.php": {
-        "file_name": "Driver.php",
-        "base_name": "Driver",
-        "path": "vendor\/molajo\/filesystem\/Source\/Driver.php",
-        "fqns": "Molajo\\Filesystem\\Driver"
-    },
     "vendor\/molajo\/http\/Factories\/Client\/ClientFactoryMethod.php": {
         "file_name": "ClientFactoryMethod.php",
         "base_name": "ClientFactoryMethod",
@@ -2051,17 +2021,35 @@
         "path": "vendor\/molajo\/ioc\/Source\/Container.php",
         "fqns": "Molajo\\IoC\\Container"
     },
-    "vendor\/molajo\/ioc\/Source\/FactoryMethodBase.php": {
-        "file_name": "FactoryMethodBase.php",
-        "base_name": "FactoryMethodBase",
-        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethodBase.php",
-        "fqns": "Molajo\\IoC\\FactoryMethodBase"
+    "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Adapter.php": {
+        "file_name": "Adapter.php",
+        "base_name": "Adapter",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Adapter.php",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Adapter"
     },
-    "vendor\/molajo\/ioc\/Source\/FactoryMethodController.php": {
-        "file_name": "FactoryMethodController.php",
-        "base_name": "FactoryMethodController",
-        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethodController.php",
-        "fqns": "Molajo\\IoC\\FactoryMethodController"
+    "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Base.php",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Base"
+    },
+    "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Controller.php": {
+        "file_name": "Controller.php",
+        "base_name": "Controller",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Controller.php",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Controller"
+    },
+    "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Instantiate.php": {
+        "file_name": "Instantiate.php",
+        "base_name": "Instantiate",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Instantiate.php",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Instantiate"
+    },
+    "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Standard.php": {
+        "file_name": "Standard.php",
+        "base_name": "Standard",
+        "path": "vendor\/molajo\/ioc\/Source\/FactoryMethod\/Standard.php",
+        "fqns": "Molajo\\IoC\\FactoryMethod\\Standard"
     },
     "vendor\/molajo\/ioc\/Source\/MapFactories.php": {
         "file_name": "MapFactories.php",
@@ -2069,17 +2057,53 @@
         "path": "vendor\/molajo\/ioc\/Source\/MapFactories.php",
         "fqns": "Molajo\\IoC\\MapFactories"
     },
+    "vendor\/molajo\/ioc\/Source\/Product\/ClassDependencies.php": {
+        "file_name": "ClassDependencies.php",
+        "base_name": "ClassDependencies",
+        "path": "vendor\/molajo\/ioc\/Source\/Product\/ClassDependencies.php",
+        "fqns": "Molajo\\IoC\\Product\\ClassDependencies"
+    },
+    "vendor\/molajo\/ioc\/Source\/Product\/Create.php": {
+        "file_name": "Create.php",
+        "base_name": "Create",
+        "path": "vendor\/molajo\/ioc\/Source\/Product\/Create.php",
+        "fqns": "Molajo\\IoC\\Product\\Create"
+    },
+    "vendor\/molajo\/ioc\/Source\/Product\/SetNamespace.php": {
+        "file_name": "SetNamespace.php",
+        "base_name": "SetNamespace",
+        "path": "vendor\/molajo\/ioc\/Source\/Product\/SetNamespace.php",
+        "fqns": "Molajo\\IoC\\Product\\SetNamespace"
+    },
     "vendor\/molajo\/ioc\/Source\/Schedule.php": {
         "file_name": "Schedule.php",
         "base_name": "Schedule",
         "path": "vendor\/molajo\/ioc\/Source\/Schedule.php",
         "fqns": "Molajo\\IoC\\Schedule"
     },
-    "vendor\/molajo\/ioc\/Source\/StandardFactoryMethod.php": {
-        "file_name": "StandardFactoryMethod.php",
-        "base_name": "StandardFactoryMethod",
-        "path": "vendor\/molajo\/ioc\/Source\/StandardFactoryMethod.php",
-        "fqns": "Molajo\\IoC\\StandardFactoryMethod"
+    "vendor\/molajo\/ioc\/Source\/Schedule\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule\/Base.php",
+        "fqns": "Molajo\\IoC\\Schedule\\Base"
+    },
+    "vendor\/molajo\/ioc\/Source\/Schedule\/Create.php": {
+        "file_name": "Create.php",
+        "base_name": "Create",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule\/Create.php",
+        "fqns": "Molajo\\IoC\\Schedule\\Create"
+    },
+    "vendor\/molajo\/ioc\/Source\/Schedule\/Dependency.php": {
+        "file_name": "Dependency.php",
+        "base_name": "Dependency",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule\/Dependency.php",
+        "fqns": "Molajo\\IoC\\Schedule\\Dependency"
+    },
+    "vendor\/molajo\/ioc\/Source\/Schedule\/Request.php": {
+        "file_name": "Request.php",
+        "base_name": "Request",
+        "path": "vendor\/molajo\/ioc\/Source\/Schedule\/Request.php",
+        "fqns": "Molajo\\IoC\\Schedule\\Request"
     },
     "vendor\/molajo\/language\/Factories\/Language\/LanguageFactoryMethod.php": {
         "file_name": "LanguageFactoryMethod.php",
@@ -2297,18 +2321,6 @@
         "path": "vendor\/molajo\/query\/Controller\/Controller.php",
         "fqns": "Molajo\\Controller\\Controller"
     },
-    "vendor\/molajo\/query\/Controller\/ModelRegistryDefaults.php": {
-        "file_name": "ModelRegistryDefaults.php",
-        "base_name": "ModelRegistryDefaults",
-        "path": "vendor\/molajo\/query\/Controller\/ModelRegistryDefaults.php",
-        "fqns": "Molajo\\Controller\\ModelRegistryDefaults"
-    },
-    "vendor\/molajo\/query\/Controller\/ModelRegistryQuery.php": {
-        "file_name": "ModelRegistryQuery.php",
-        "base_name": "ModelRegistryQuery",
-        "path": "vendor\/molajo\/query\/Controller\/ModelRegistryQuery.php",
-        "fqns": "Molajo\\Controller\\ModelRegistryQuery"
-    },
     "vendor\/molajo\/query\/Controller\/QueryController.php": {
         "file_name": "QueryController.php",
         "base_name": "QueryController",
@@ -2429,24 +2441,6 @@
         "path": "vendor\/molajo\/query\/Resource\/Factory\/ReadModelFactory.php",
         "fqns": "Molajo\\Resource\\Factory\\ReadModelFactory"
     },
-    "vendor\/molajo\/query\/Source\/Adapter\/AbstractAdapter.php": {
-        "file_name": "AbstractAdapter.php",
-        "base_name": "AbstractAdapter",
-        "path": "vendor\/molajo\/query\/Source\/Adapter\/AbstractAdapter.php",
-        "fqns": "Molajo\\Query\\Adapter\\AbstractAdapter"
-    },
-    "vendor\/molajo\/query\/Source\/Adapter\/AbstractCollect.php": {
-        "file_name": "AbstractCollect.php",
-        "base_name": "AbstractCollect",
-        "path": "vendor\/molajo\/query\/Source\/Adapter\/AbstractCollect.php",
-        "fqns": "Molajo\\Query\\Adapter\\AbstractCollect"
-    },
-    "vendor\/molajo\/query\/Source\/Adapter\/AbstractConstruct.php": {
-        "file_name": "AbstractConstruct.php",
-        "base_name": "AbstractConstruct",
-        "path": "vendor\/molajo\/query\/Source\/Adapter\/AbstractConstruct.php",
-        "fqns": "Molajo\\Query\\Adapter\\AbstractConstruct"
-    },
     "vendor\/molajo\/query\/Source\/Adapter\/Mysql.php": {
         "file_name": "Mysql.php",
         "base_name": "Mysql",
@@ -2471,11 +2465,125 @@
         "path": "vendor\/molajo\/query\/Source\/Adapter\/Sqlserver.php",
         "fqns": "Molajo\\Query\\Adapter\\Sqlserver"
     },
-    "vendor\/molajo\/query\/Source\/Driver.php": {
-        "file_name": "Driver.php",
-        "base_name": "Driver",
-        "path": "vendor\/molajo\/query\/Source\/Driver.php",
-        "fqns": "Molajo\\Query\\Driver"
+    "vendor\/molajo\/query\/Source\/Builder\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/Base.php",
+        "fqns": "Molajo\\Query\\Builder\\Base"
+    },
+    "vendor\/molajo\/query\/Source\/Builder\/BuildSql.php": {
+        "file_name": "BuildSql.php",
+        "base_name": "BuildSql",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/BuildSql.php",
+        "fqns": "Molajo\\Query\\Builder\\BuildSql"
+    },
+    "vendor\/molajo\/query\/Source\/Builder\/BuildSqlElements.php": {
+        "file_name": "BuildSqlElements.php",
+        "base_name": "BuildSqlElements",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/BuildSqlElements.php",
+        "fqns": "Molajo\\Query\\Builder\\BuildSqlElements"
+    },
+    "vendor\/molajo\/query\/Source\/Builder\/BuildSqlGroups.php": {
+        "file_name": "BuildSqlGroups.php",
+        "base_name": "BuildSqlGroups",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/BuildSqlGroups.php",
+        "fqns": "Molajo\\Query\\Builder\\BuildSqlGroups"
+    },
+    "vendor\/molajo\/query\/Source\/Builder\/EditData.php": {
+        "file_name": "EditData.php",
+        "base_name": "EditData",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/EditData.php",
+        "fqns": "Molajo\\Query\\Builder\\EditData"
+    },
+    "vendor\/molajo\/query\/Source\/Builder\/FilterData.php": {
+        "file_name": "FilterData.php",
+        "base_name": "FilterData",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/FilterData.php",
+        "fqns": "Molajo\\Query\\Builder\\FilterData"
+    },
+    "vendor\/molajo\/query\/Source\/Builder\/SetData.php": {
+        "file_name": "SetData.php",
+        "base_name": "SetData",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/SetData.php",
+        "fqns": "Molajo\\Query\\Builder\\SetData"
+    },
+    "vendor\/molajo\/query\/Source\/Builder\/Sql.php": {
+        "file_name": "Sql.php",
+        "base_name": "Sql",
+        "path": "vendor\/molajo\/query\/Source\/Builder\/Sql.php",
+        "fqns": "Molajo\\Query\\Builder\\Sql"
+    },
+    "vendor\/molajo\/query\/Source\/Model\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Base.php",
+        "fqns": "Molajo\\Query\\Model\\Base"
+    },
+    "vendor\/molajo\/query\/Source\/Model\/Columns.php": {
+        "file_name": "Columns.php",
+        "base_name": "Columns",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Columns.php",
+        "fqns": "Molajo\\Query\\Model\\Columns"
+    },
+    "vendor\/molajo\/query\/Source\/Model\/Criteria.php": {
+        "file_name": "Criteria.php",
+        "base_name": "Criteria",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Criteria.php",
+        "fqns": "Molajo\\Query\\Model\\Criteria"
+    },
+    "vendor\/molajo\/query\/Source\/Model\/Defaults.php": {
+        "file_name": "Defaults.php",
+        "base_name": "Defaults",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Defaults.php",
+        "fqns": "Molajo\\Query\\Model\\Defaults"
+    },
+    "vendor\/molajo\/query\/Source\/Model\/Query.php": {
+        "file_name": "Query.php",
+        "base_name": "Query",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Query.php",
+        "fqns": "Molajo\\Query\\Model\\Query"
+    },
+    "vendor\/molajo\/query\/Source\/Model\/Registry.php": {
+        "file_name": "Registry.php",
+        "base_name": "Registry",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Registry.php",
+        "fqns": "Molajo\\Query\\Model\\Registry"
+    },
+    "vendor\/molajo\/query\/Source\/Model\/Table.php": {
+        "file_name": "Table.php",
+        "base_name": "Table",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Table.php",
+        "fqns": "Molajo\\Query\\Model\\Table"
+    },
+    "vendor\/molajo\/query\/Source\/Model\/Utilities.php": {
+        "file_name": "Utilities.php",
+        "base_name": "Utilities",
+        "path": "vendor\/molajo\/query\/Source\/Model\/Utilities.php",
+        "fqns": "Molajo\\Query\\Model\\Utilities"
+    },
+    "vendor\/molajo\/query\/Source\/QueryBuilder.php": {
+        "file_name": "QueryBuilder.php",
+        "base_name": "QueryBuilder",
+        "path": "vendor\/molajo\/query\/Source\/QueryBuilder.php",
+        "fqns": "Molajo\\Query\\QueryBuilder"
+    },
+    "vendor\/molajo\/query\/Source\/QueryProxy.php": {
+        "file_name": "QueryProxy.php",
+        "base_name": "QueryProxy",
+        "path": "vendor\/molajo\/query\/Source\/QueryProxy.php",
+        "fqns": "Molajo\\Query\\QueryProxy"
+    },
+    "vendor\/molajo\/query\/Traits\/ModelRegistryTrait.php": {
+        "file_name": "ModelRegistryTrait.php",
+        "base_name": "ModelRegistryTrait",
+        "path": "vendor\/molajo\/query\/Traits\/ModelRegistryTrait.php",
+        "fqns": "Molajo\\Query\\ModelRegistryTrait"
+    },
+    "vendor\/molajo\/query\/Traits\/QueryTrait.php": {
+        "file_name": "QueryTrait.php",
+        "base_name": "QueryTrait",
+        "path": "vendor\/molajo\/query\/Traits\/QueryTrait.php",
+        "fqns": "Molajo\\Query\\QueryTrait"
     },
     "vendor\/molajo\/render\/Factories\/Render\/RenderFactoryMethod.php": {
         "file_name": "RenderFactoryMethod.php",
