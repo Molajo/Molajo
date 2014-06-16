@@ -1182,6 +1182,9 @@
     "molajo\\factories\\logger\\configuration.xml": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Factories\/Logger\/Configuration.xml"
     ],
+    "molajo\\factories\\logger\\filelog.json": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Factories\/Logger\/FileLog.json"
+    ],
     "molajo\\factories\\logger\\loggerfactorymethod": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Factories\/Logger\/LoggerFactoryMethod.php"
     ],

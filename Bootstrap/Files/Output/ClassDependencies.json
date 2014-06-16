@@ -2941,7 +2941,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param DatabaseInterface     $database\n     * @param QueryInterface        $query\n     * @param FieldhandlerInterface $fieldhandler\n     * @param string                $request_path\n     * @param array                 $applications\n     * @param null|object           $model_registry\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param DatabaseInterface     $database\n     * @param QueryInterface        $query\n     * @param FieldhandlerInterface $fieldhandler\n     * @param string                $request_path\n     * @param array                 $applications\n     * @param null|array            $model_registry\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -15582,8 +15582,8 @@
         "method": [
             "__construct",
             "setDependencies",
-            "onBeforeInstantiation",
             "instantiateClass",
+            "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
@@ -17014,6 +17014,7 @@
         ],
         "method": [
             "__construct",
+            "initialiseModelRegistry",
             "setModelRegistryDefaults",
             "get",
             "clearQuery",
@@ -17089,6 +17090,7 @@
         ],
         "method": [
             "__construct",
+            "initialiseModelRegistry",
             "setModelRegistryDefaults",
             "get",
             "clearQuery",
@@ -17164,6 +17166,7 @@
         ],
         "method": [
             "__construct",
+            "initialiseModelRegistry",
             "setModelRegistryDefaults",
             "get",
             "clearQuery",
@@ -17307,6 +17310,7 @@
             "getSql",
             "getModelRegistry",
             "setModelRegistry",
+            "initialiseModelRegistry",
             "setModelRegistryDefaults",
             "get",
             "clearQuery",
@@ -17381,6 +17385,7 @@
         ],
         "method": [
             "__construct",
+            "initialiseModelRegistry",
             "setModelRegistryDefaults",
             "get",
             "clearQuery",

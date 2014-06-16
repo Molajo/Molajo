@@ -50,7 +50,7 @@ $map->createMap();
 
 // 3. Factory Method Scheduling
 $factory_method_aliases      = readJsonFile(__DIR__ . '/Files/Output/FactoryMethodAliases.json');
-$class_dependencies_filename = __DIR__ . '/Files/ClassDependencies.json';
+$class_dependencies_filename = __DIR__ . '/Files/Output/ClassDependencies.json';
 $standard_adapter_namespaces = 'Molajo\\IoC\\FactoryMethod\\Standard';
 
 $schedule_factory_class = 'Molajo\\IoC\\Schedule';
