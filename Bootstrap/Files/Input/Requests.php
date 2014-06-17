@@ -30,3 +30,7 @@ $requests[] = 'Resourcecss';
 $requests[] = 'Resourcecssdeclarations';
 $requests[] = 'Resourcejs';
 $requests[] = 'Resourcejsdeclarations';
+$requests[] = 'Session';
+$requests[] = 'Flashmessage';
+$requests[] = 'Messages';
+$requests[] = 'User';

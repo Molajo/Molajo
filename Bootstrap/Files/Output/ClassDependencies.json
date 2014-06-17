@@ -1645,7 +1645,7 @@
         "name": "Errorhandling",
         "namespace": "Molajo\\Controller",
         "fqns": "Molajo\\Controller\\Errorhandling",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/ErrorHandling.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/Errorhandling.php",
         "path": "vendor\/molajo\/Log\/Controller\/Errorhandling.php",
         "parent": false,
         "implemented_interfaces": [
@@ -1691,7 +1691,7 @@
         "name": "ExceptionHandling",
         "namespace": "Molajo\\Controller",
         "fqns": "Molajo\\Controller\\ExceptionHandling",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/ExceptionHandling.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/Exceptionhandling.php",
         "path": "vendor\/molajo\/Log\/Controller\/Exceptionhandling.php",
         "parent": false,
         "implemented_interfaces": [
@@ -6455,9 +6455,9 @@
             "__construct",
             "setDependencies",
             "instantiateClass",
+            "onAfterInstantiation",
             "onBeforeInstantiation",
             "instantiateStatic",
-            "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
@@ -19474,9 +19474,9 @@
         ],
         "method": [
             "__construct",
-            "onBeforeInstantiation",
             "setDependencies",
             "instantiateClass",
+            "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
@@ -19519,8 +19519,8 @@
         ],
         "method": [
             "__construct",
-            "instantiateClass",
             "setDependencies",
+            "instantiateClass",
             "onBeforeInstantiation",
             "instantiateStatic",
             "onAfterInstantiation",
@@ -19744,11 +19744,11 @@
         ],
         "method": [
             "__construct",
+            "onAfterInstantiation",
             "setDependencies",
             "onBeforeInstantiation",
             "instantiateClass",
             "instantiateStatic",
-            "onAfterInstantiation",
             "getProductValue",
             "removeContainerEntries",
             "setContainerEntries",
@@ -19843,9 +19843,9 @@
             "__construct",
             "setDependencies",
             "onBeforeInstantiation",
-            "instantiateClass",
             "getSessionInput",
             "scheduleFactories",
+            "instantiateClass",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
@@ -20010,7 +20010,7 @@
                 "instance_of": "CommonApi\\User\\UserDataInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\UserData"
+                    "Molajo\\User\\Userdata"
                 ],
                 "concrete": false
             },
@@ -20233,14 +20233,21 @@
                 "concrete": false
             },
             {
-                "name": "default_exception",
+                "name": "length",
                 "default_available": true,
-                "default_value": null,
+                "default_value": 15,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "characters",
+                "default_available": true,
+                "default_value": "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
                 "instance_of": null,
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param   MessagesInterface $messages\n     * @param   null              $default_exception\n     *\n     * @since   1.0\n     * @throws  EncryptException\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param   MessagesInterface $messages\n     * @param   null              $default_exception\n     *\n     * @since   1.0\n     * @throws  RuntimeException\n     *\/",
         "implemented_by": [
 
         ],
@@ -20251,7 +20258,7 @@
             "__construct",
             "createHashString",
             "verifyHashString",
-            "getRandomToken"
+            "generateString"
         ]
     },
     "Molajo\\User\\Facade": {
@@ -20272,7 +20279,7 @@
                 "instance_of": "CommonApi\\User\\UserDataInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\UserData"
+                    "Molajo\\User\\Userdata"
                 ],
                 "concrete": false
             },
@@ -20294,7 +20301,7 @@
                 "instance_of": "CommonApi\\User\\FlashMessageInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\FlashMessage"
+                    "Molajo\\User\\Flashmessage"
                 ],
                 "concrete": false
             },
@@ -20331,16 +20338,16 @@
         "method": [
             "__construct",
             "load",
-            "getUserData",
-            "insertUserData",
-            "updateUserData",
-            "deleteUserData",
+            "getUserdata",
+            "insertUserdata",
+            "updateUserdata",
+            "deleteUserdata",
             "getSession",
             "setSession",
             "deleteSession",
-            "getFlashMessage",
-            "setFlashMessage",
-            "deleteFlashMessage",
+            "getFlashmessage",
+            "setFlashmessage",
+            "deleteFlashmessage",
             "getCookie",
             "setCookie",
             "deleteCookie",
@@ -20399,12 +20406,12 @@
             "format"
         ]
     },
-    "Molajo\\User\\FlashMessage": {
-        "name": "FlashMessage",
+    "Molajo\\User\\Flashmessage": {
+        "name": "Flashmessage",
         "namespace": "Molajo\\User",
-        "fqns": "Molajo\\User\\FlashMessage",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/FlashMessage.php",
-        "path": "vendor\/molajo\/user\/Source\/FlashMessage.php",
+        "fqns": "Molajo\\User\\Flashmessage",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Flashmessage.php",
+        "path": "vendor\/molajo\/user\/Source\/Flashmessage.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\User\\FlashMessageInterface"
@@ -20447,9 +20454,9 @@
         ],
         "method": [
             "__construct",
-            "getFlashMessage",
-            "setFlashMessage",
-            "deleteFlashMessage"
+            "getFlashmessage",
+            "setFlashmessage",
+            "deleteFlashmessage"
         ]
     },
     "Molajo\\User\\Mailer": {
@@ -20535,7 +20542,7 @@
                 "instance_of": "CommonApi\\User\\FlashMessageInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\User\\FlashMessage"
+                    "Molajo\\User\\Flashmessage"
                 ],
                 "concrete": false
             },
@@ -20567,7 +20574,7 @@
             "__construct",
             "setMessage",
             "getMessage",
-            "setFlashMessage",
+            "setFlashmessage",
             "throwException"
         ]
     },
@@ -20612,15 +20619,8 @@
             "CommonApi\\User\\SessionInterface"
         ],
         "constructor_parameters": [
-            {
-                "name": "session_exception",
-                "default_available": true,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            }
+
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  null $session_exception\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -20628,7 +20628,7 @@
 
         ],
         "method": [
-            "__construct",
+            "startSession",
             "getSession",
             "setSession",
             "deleteSession",
@@ -20709,12 +20709,12 @@
             "render"
         ]
     },
-    "Molajo\\User\\UserData": {
-        "name": "UserData",
+    "Molajo\\User\\Userdata": {
+        "name": "Userdata",
         "namespace": "Molajo\\User",
-        "fqns": "Molajo\\User\\UserData",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/UserData.php",
-        "path": "vendor\/molajo\/user\/Source\/UserData.php",
+        "fqns": "Molajo\\User\\Userdata",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Userdata.php",
+        "path": "vendor\/molajo\/user\/Source\/Userdata.php",
         "parent": false,
         "implemented_interfaces": [
             "CommonApi\\User\\UserDataInterface"
@@ -20783,10 +20783,10 @@
         "method": [
             "__construct",
             "load",
-            "getUserData",
-            "insertUserData",
-            "updateUserData",
-            "deleteUserData",
+            "getUserdata",
+            "insertUserdata",
+            "updateUserdata",
+            "deleteUserdata",
             "getChildData"
         ]
     },

@@ -333,7 +333,7 @@
             "Molajo\\Resource\\Adapter\\Query",
             "Molajo\\Resource\\Factory\\ReadModelFactory",
             "Molajo\\User\\Activity",
-            "Molajo\\User\\UserData"
+            "Molajo\\User\\Userdata"
         ]
     },
     "CommonApi\\Email\\EmailInterface": {
@@ -1226,7 +1226,7 @@
             "Molajo\\Query\\QueryProxy",
             "Molajo\\Resource\\Factory\\ReadControllerFactory",
             "Molajo\\User\\Activity",
-            "Molajo\\User\\UserData"
+            "Molajo\\User\\Userdata"
         ]
     },
     "CommonApi\\Render\\DataInterface": {
@@ -1615,7 +1615,7 @@
         "path": "vendor\/commonapi\/user\/FlashMessageInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\FlashMessage"
+            "Molajo\\User\\Flashmessage"
         ],
         "dependency_for": [
             "Molajo\\User\\Facade",
@@ -1677,7 +1677,7 @@
         "dependency_for": [
             "Molajo\\User\\Authentication",
             "Molajo\\User\\Facade",
-            "Molajo\\User\\FlashMessage"
+            "Molajo\\User\\Flashmessage"
         ]
     },
     "CommonApi\\User\\TemplateInterface": {
@@ -1700,7 +1700,7 @@
         "path": "vendor\/commonapi\/user\/UserDataInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\UserData"
+            "Molajo\\User\\Userdata"
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication",

@@ -5304,7 +5304,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Fieldhandler.php"
     ],
     "molajo\\user\\flashmessage": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/FlashMessage.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Flashmessage.php"
     ],
     "molajo\\user\\mailer": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Mailer.php"
@@ -5322,7 +5322,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/TextTemplate.php"
     ],
     "molajo\\user\\userdata": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/UserData.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Userdata.php"
     ],
     "molajo\\users": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Users"

@@ -2153,8 +2153,8 @@
         "data_dependencies": 0,
         "instantiable_dependencies": 2
     },
-    "Molajo\\User\\FlashMessage": {
-        "key": "Molajo\\User\\FlashMessage",
+    "Molajo\\User\\Flashmessage": {
+        "key": "Molajo\\User\\Flashmessage",
         "dependencies": 3,
         "data_dependencies": 2,
         "instantiable_dependencies": 1
@@ -2189,8 +2189,8 @@
         "data_dependencies": 3,
         "instantiable_dependencies": 2
     },
-    "Molajo\\User\\UserData": {
-        "key": "Molajo\\User\\UserData",
+    "Molajo\\User\\Userdata": {
+        "key": "Molajo\\User\\Userdata",
         "dependencies": 4,
         "data_dependencies": 2,
         "instantiable_dependencies": 2

@@ -2879,11 +2879,11 @@
         "path": "vendor\/molajo\/user\/Source\/Fieldhandler.php",
         "fqns": "Molajo\\User\\Fieldhandler"
     },
-    "vendor\/molajo\/user\/Source\/FlashMessage.php": {
-        "file_name": "FlashMessage.php",
-        "base_name": "FlashMessage",
-        "path": "vendor\/molajo\/user\/Source\/FlashMessage.php",
-        "fqns": "Molajo\\User\\FlashMessage"
+    "vendor\/molajo\/user\/Source\/Flashmessage.php": {
+        "file_name": "Flashmessage.php",
+        "base_name": "Flashmessage",
+        "path": "vendor\/molajo\/user\/Source\/Flashmessage.php",
+        "fqns": "Molajo\\User\\Flashmessage"
     },
     "vendor\/molajo\/user\/Source\/Mailer.php": {
         "file_name": "Mailer.php",
@@ -2915,11 +2915,11 @@
         "path": "vendor\/molajo\/user\/Source\/TextTemplate.php",
         "fqns": "Molajo\\User\\TextTemplate"
     },
-    "vendor\/molajo\/user\/Source\/UserData.php": {
-        "file_name": "UserData.php",
-        "base_name": "UserData",
-        "path": "vendor\/molajo\/user\/Source\/UserData.php",
-        "fqns": "Molajo\\User\\UserData"
+    "vendor\/molajo\/user\/Source\/Userdata.php": {
+        "file_name": "Userdata.php",
+        "base_name": "Userdata",
+        "path": "vendor\/molajo\/user\/Source\/Userdata.php",
+        "fqns": "Molajo\\User\\Userdata"
     },
     "vendor\/psr\/log\/Psr\/Log\/AbstractLogger.php": {
         "file_name": "AbstractLogger.php",
