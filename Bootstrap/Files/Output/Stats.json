@@ -209,8 +209,8 @@
         "data_dependencies": 1,
         "instantiable_dependencies": 1
     },
-    "Molajo\\Controller\\ExceptionHandling": {
-        "key": "Molajo\\Controller\\ExceptionHandling",
+    "Molajo\\Controller\\Exceptionhandling": {
+        "key": "Molajo\\Controller\\Exceptionhandling",
         "dependencies": 2,
         "data_dependencies": 1,
         "instantiable_dependencies": 1

@@ -51,7 +51,8 @@ class LinksPlugin extends ReadEventPlugin implements ReadInterface
 
                 $text_field = $this->getFieldValue($field);
 
-                $pattern = "/(((http[s]?:\/\/)|(www\/.))?(([a-z][-a-z0-9]+\/.)?[a-z][-a-z0-9]+\/.[a-z]+(\/.[a-z]{2,2})?)\/?[a-z0-9._\/~#&=;%+?-]+[a-z0-9\/#=?]{1,1})/is";
+                $pattern
+                    = "/(((http[s]?:\/\/)|(www\/.))?(([a-z][-a-z0-9]+\/.)?[a-z][-a-z0-9]+\/.[a-z]+(\/.[a-z]{2,2})?)\/?[a-z0-9._\/~#&=;%+?-]+[a-z0-9\/#=?]{1,1})/is";
 
                 $text_field = preg_replace($pattern, " <a href='$1'>$1</a>", $text_field);
 

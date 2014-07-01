@@ -69,8 +69,8 @@ class BlockquotePlugin extends ReadEventPlugin implements ReadInterface
 
         preg_match_all($pattern, $text, $matches);
 
-        $replaceThis  = array();
-        $withThis     = array();
+        $replaceThis = array();
+        $withThis    = array();
 
         if (count($matches) == 0) {
             return null;
@@ -95,7 +95,7 @@ class BlockquotePlugin extends ReadEventPlugin implements ReadInterface
                 }
                 $withThis[] = '<blockquote>' . $blockquote . $cite . '</blockquote>';
             }
-            $i ++;
+            $i++;
         }
 
         $text = str_replace($replaceThis, $withThis, $text);

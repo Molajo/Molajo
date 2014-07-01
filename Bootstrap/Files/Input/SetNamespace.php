@@ -25,16 +25,6 @@ $resource_adapter->setNamespace('Molajo\\Views\\Pages\\', 'vendor/molajo/foundat
 $resource_adapter->setNamespace('Molajo\\Views\\Templates\\', 'vendor/molajo/foundation5/Source/Views/Templates/');
 $resource_adapter->setNamespace('Molajo\\Views\\Wraps\\', 'vendor/molajo/foundation5/Source/Views/Wraps/');
 
-/**
- *  APPLICATION EXTENSIONS
- */
-$resource_adapter->setNamespace('Molajo\\Controller\\', 'vendor/molajo/application/Source/Controller/');
-$resource_adapter->setNamespace('Molajo\\Model\\', 'vendor/molajo/application/Source/Model/');
-$resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/application/Source/Plugins/');
-$resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/application/Source/Resource/');
-$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/application/Factories/');
-$resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/application/Source/Resource/');
-$resource_adapter->setNamespace('Molajo\\', 'vendor/molajo/application/Source/Extensions/');
 
 /**
  *  FRAMEWORK PACKAGES
@@ -101,6 +91,17 @@ $resource_adapter->setNamespace('Molajo\\Factories\\Route\\', 'vendor/molajo/rou
 
 $resource_adapter->setNamespace('Molajo\\User\\', 'vendor/molajo/user/Source/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/user/Factories/');
+
+/**
+ *  APPLICATION EXTENSIONS
+ */
+$resource_adapter->setNamespace('Molajo\\Controller\\', 'vendor/molajo/application/Source/Controller/');
+$resource_adapter->setNamespace('Molajo\\Model\\', 'vendor/molajo/application/Source/Model/');
+$resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/application/Source/Plugins/');
+$resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/application/Source/Resource/');
+$resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/application/Factories/');
+$resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/application/Source/Resource/');
+$resource_adapter->setNamespace('Molajo\\', 'vendor/molajo/application/Source/Extensions/');
 
 /**
  *  COMMON API

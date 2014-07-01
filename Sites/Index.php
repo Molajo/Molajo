@@ -7,23 +7,23 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 
-$file =
-    json_decode(
-        file_get_contents('sites.json'),
-        true
-    );
+$file
+    = json_decode(
+    file_get_contents('sites.json'),
+    true
+);
 
 /** Insert New Row */
 $count = count($file['sites']['site']) - 1;
 $i     = $file['sites']['site'][$count]['id'] + 1;
 
-$file['sites']['site'][] =
-    array(
-        "id"             => (string)$i,
-        "name"           => 'Site ' . $i,
-        "site_base_url"  => 'site' . (string)$i,
-        "site_base_path" => '/Site/' . $i
-    );
+$file['sites']['site'][]
+    = array(
+    "id"             => (string)$i,
+    "name"           => 'Site ' . $i,
+    "site_base_url"  => 'site' . (string)$i,
+    "site_base_path" => '/Site/' . $i
+);
 
 /** Delete Row */
 $delete = 2;
@@ -32,7 +32,7 @@ foreach ($file['sites']['site'] as $id => $site) {
     if ($site['id'] == $delete) {
         unset($file['sites']['site'][$i]);
     }
-    $i ++;
+    $i++;
 }
 
 /** Update Row */
@@ -42,7 +42,7 @@ foreach ($file['sites']['site'] as $id => $site) {
     if ($site['id'] == $delete) {
         unset($file['sites']['site'][$i]);
     }
-    $i ++;
+    $i++;
 }
 
 /** Save file */

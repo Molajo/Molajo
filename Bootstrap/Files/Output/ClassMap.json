@@ -1361,12 +1361,6 @@
         "path": "vendor\/molajo\/event\/Factories\/Dispatcher\/DispatcherFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Dispatcher\\DispatcherFactoryMethod"
     },
-    "vendor\/molajo\/event\/Plugins\/AbstractPlugin.php": {
-        "file_name": "AbstractPlugin.php",
-        "base_name": "AbstractPlugin",
-        "path": "vendor\/molajo\/event\/Plugins\/AbstractPlugin.php",
-        "fqns": "Molajo\\Plugins\\AbstractPlugin"
-    },
     "vendor\/molajo\/event\/Plugins\/AuthenticateEventPlugin.php": {
         "file_name": "AuthenticateEventPlugin.php",
         "base_name": "AuthenticateEventPlugin",
@@ -1384,6 +1378,12 @@
         "base_name": "DisplayEventPlugin",
         "path": "vendor\/molajo\/event\/Plugins\/DisplayEventPlugin.php",
         "fqns": "Molajo\\Plugins\\DisplayEventPlugin"
+    },
+    "vendor\/molajo\/event\/Plugins\/ModelAbstractPlugin.php": {
+        "file_name": "ModelAbstractPlugin.php",
+        "base_name": "ModelAbstractPlugin",
+        "path": "vendor\/molajo\/event\/Plugins\/ModelAbstractPlugin.php",
+        "fqns": "Molajo\\Plugins\\ModelAbstractPlugin"
     },
     "vendor\/molajo\/event\/Plugins\/ReadEventPlugin.php": {
         "file_name": "ReadEventPlugin.php",
@@ -2855,11 +2855,101 @@
         "path": "vendor\/molajo\/user\/Source\/Authentication.php",
         "fqns": "Molajo\\User\\Authentication"
     },
+    "vendor\/molajo\/user\/Source\/Authentication\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Base.php",
+        "fqns": "Molajo\\User\\Authentication\\Base"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/Cookie.php": {
+        "file_name": "Cookie.php",
+        "base_name": "Cookie",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Cookie.php",
+        "fqns": "Molajo\\User\\Authentication\\Cookie"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/Encrypt.php": {
+        "file_name": "Encrypt.php",
+        "base_name": "Encrypt",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Encrypt.php",
+        "fqns": "Molajo\\User\\Authentication\\Encrypt"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/Mailer.php": {
+        "file_name": "Mailer.php",
+        "base_name": "Mailer",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Mailer.php",
+        "fqns": "Molajo\\User\\Authentication\\Mailer"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/Message.php": {
+        "file_name": "Message.php",
+        "base_name": "Message",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Message.php",
+        "fqns": "Molajo\\User\\Authentication\\Message"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/Session.php": {
+        "file_name": "Session.php",
+        "base_name": "Session",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Session.php",
+        "fqns": "Molajo\\User\\Authentication\\Session"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/UpdateUser.php": {
+        "file_name": "UpdateUser.php",
+        "base_name": "UpdateUser",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/UpdateUser.php",
+        "fqns": "Molajo\\User\\Authentication\\UpdateUser"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/VerifyCredentials.php": {
+        "file_name": "VerifyCredentials.php",
+        "base_name": "VerifyCredentials",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/VerifyCredentials.php",
+        "fqns": "Molajo\\User\\Authentication\\VerifyCredentials"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/VerifyNewPassword.php": {
+        "file_name": "VerifyNewPassword.php",
+        "base_name": "VerifyNewPassword",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/VerifyNewPassword.php",
+        "fqns": "Molajo\\User\\Authentication\\VerifyNewPassword"
+    },
+    "vendor\/molajo\/user\/Source\/Authentication\/VerifyUser.php": {
+        "file_name": "VerifyUser.php",
+        "base_name": "VerifyUser",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/VerifyUser.php",
+        "fqns": "Molajo\\User\\Authentication\\VerifyUser"
+    },
     "vendor\/molajo\/user\/Source\/Cookie.php": {
         "file_name": "Cookie.php",
         "base_name": "Cookie",
         "path": "vendor\/molajo\/user\/Source\/Cookie.php",
         "fqns": "Molajo\\User\\Cookie"
+    },
+    "vendor\/molajo\/user\/Source\/Data\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Base.php",
+        "fqns": "Molajo\\User\\Data\\Base"
+    },
+    "vendor\/molajo\/user\/Source\/Data\/Delete.php": {
+        "file_name": "Delete.php",
+        "base_name": "Delete",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Delete.php",
+        "fqns": "Molajo\\User\\Data\\Delete"
+    },
+    "vendor\/molajo\/user\/Source\/Data\/Insert.php": {
+        "file_name": "Insert.php",
+        "base_name": "Insert",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Insert.php",
+        "fqns": "Molajo\\User\\Data\\Insert"
+    },
+    "vendor\/molajo\/user\/Source\/Data\/Load.php": {
+        "file_name": "Load.php",
+        "base_name": "Load",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Load.php",
+        "fqns": "Molajo\\User\\Data\\Load"
+    },
+    "vendor\/molajo\/user\/Source\/Data\/Update.php": {
+        "file_name": "Update.php",
+        "base_name": "Update",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Update.php",
+        "fqns": "Molajo\\User\\Data\\Update"
     },
     "vendor\/molajo\/user\/Source\/Encrypt.php": {
         "file_name": "Encrypt.php",
@@ -2872,12 +2962,6 @@
         "base_name": "Facade",
         "path": "vendor\/molajo\/user\/Source\/Facade.php",
         "fqns": "Molajo\\User\\Facade"
-    },
-    "vendor\/molajo\/user\/Source\/Fieldhandler.php": {
-        "file_name": "Fieldhandler.php",
-        "base_name": "Fieldhandler",
-        "path": "vendor\/molajo\/user\/Source\/Fieldhandler.php",
-        "fqns": "Molajo\\User\\Fieldhandler"
     },
     "vendor\/molajo\/user\/Source\/Flashmessage.php": {
         "file_name": "Flashmessage.php",

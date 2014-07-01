@@ -320,7 +320,6 @@
             "Molajo\\Database\\Driver"
         ],
         "dependency_for": [
-            "Molajo\\Authorisation\\Adapter\\Database",
             "Molajo\\Controller\\Application",
             "Molajo\\Database\\Driver",
             "Molajo\\Model\\Model",
@@ -333,6 +332,11 @@
             "Molajo\\Resource\\Adapter\\Query",
             "Molajo\\Resource\\Factory\\ReadModelFactory",
             "Molajo\\User\\Activity",
+            "Molajo\\User\\Data\\Base",
+            "Molajo\\User\\Data\\Delete",
+            "Molajo\\User\\Data\\Insert",
+            "Molajo\\User\\Data\\Load",
+            "Molajo\\User\\Data\\Update",
             "Molajo\\User\\Userdata"
         ]
     },
@@ -1016,8 +1020,7 @@
         "path": "vendor\/commonapi\/model\/FieldhandlerInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Request",
-            "Molajo\\User\\Fieldhandler"
+            "Molajo\\Fieldhandler\\Request"
         ],
         "dependency_for": [
             "Molajito\\Escape\\Molajo",
@@ -1028,7 +1031,16 @@
             "Molajo\\Query\\Adapter\\Sqlserver",
             "Molajo\\Query\\Builder\\Sql",
             "Molajo\\User\\Authentication",
-            "Molajo\\User\\Fieldhandler",
+            "Molajo\\User\\Authentication\\Base",
+            "Molajo\\User\\Authentication\\Cookie",
+            "Molajo\\User\\Authentication\\Encrypt",
+            "Molajo\\User\\Authentication\\Mailer",
+            "Molajo\\User\\Authentication\\Message",
+            "Molajo\\User\\Authentication\\Session",
+            "Molajo\\User\\Authentication\\UpdateUser",
+            "Molajo\\User\\Authentication\\VerifyCredentials",
+            "Molajo\\User\\Authentication\\VerifyNewPassword",
+            "Molajo\\User\\Authentication\\VerifyUser",
             "Molajo\\User\\TextTemplate"
         ]
     },
@@ -1039,8 +1051,7 @@
         "path": "vendor\/commonapi\/model\/FormatInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Request",
-            "Molajo\\User\\Fieldhandler"
+            "Molajo\\Fieldhandler\\Request"
         ],
         "dependency_for": [
 
@@ -1109,8 +1120,7 @@
         "path": "vendor\/commonapi\/model\/SanitizeInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Request",
-            "Molajo\\User\\Fieldhandler"
+            "Molajo\\Fieldhandler\\Request"
         ],
         "dependency_for": [
 
@@ -1136,8 +1146,7 @@
         "path": "vendor\/commonapi\/model\/ValidateInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Fieldhandler\\Request",
-            "Molajo\\User\\Fieldhandler"
+            "Molajo\\Fieldhandler\\Request"
         ],
         "dependency_for": [
 
@@ -1214,7 +1223,6 @@
             "Molajo\\Query\\QueryProxy"
         ],
         "dependency_for": [
-            "Molajo\\Authorisation\\Adapter\\Database",
             "Molajo\\Controller\\Application",
             "Molajo\\Query\\Model\\Columns",
             "Molajo\\Query\\Model\\Criteria",
@@ -1226,6 +1234,11 @@
             "Molajo\\Query\\QueryProxy",
             "Molajo\\Resource\\Factory\\ReadControllerFactory",
             "Molajo\\User\\Activity",
+            "Molajo\\User\\Data\\Base",
+            "Molajo\\User\\Data\\Delete",
+            "Molajo\\User\\Data\\Insert",
+            "Molajo\\User\\Data\\Load",
+            "Molajo\\User\\Data\\Update",
             "Molajo\\User\\Userdata"
         ]
     },
@@ -1562,7 +1575,16 @@
         "path": "vendor\/commonapi\/user\/AuthenticationInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\User\\Authentication"
+            "Molajo\\User\\Authentication",
+            "Molajo\\User\\Authentication\\Cookie",
+            "Molajo\\User\\Authentication\\Encrypt",
+            "Molajo\\User\\Authentication\\Mailer",
+            "Molajo\\User\\Authentication\\Message",
+            "Molajo\\User\\Authentication\\Session",
+            "Molajo\\User\\Authentication\\UpdateUser",
+            "Molajo\\User\\Authentication\\VerifyCredentials",
+            "Molajo\\User\\Authentication\\VerifyNewPassword",
+            "Molajo\\User\\Authentication\\VerifyUser"
         ],
         "dependency_for": [
 
@@ -1592,6 +1614,11 @@
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication",
+            "Molajo\\User\\Authentication\\Cookie",
+            "Molajo\\User\\Authentication\\Session",
+            "Molajo\\User\\Authentication\\VerifyCredentials",
+            "Molajo\\User\\Authentication\\VerifyNewPassword",
+            "Molajo\\User\\Authentication\\VerifyUser",
             "Molajo\\User\\Facade"
         ]
     },
@@ -1605,7 +1632,16 @@
             "Molajo\\User\\Encrypt"
         ],
         "dependency_for": [
-            "Molajo\\User\\Authentication"
+            "Molajo\\User\\Authentication",
+            "Molajo\\User\\Authentication\\Cookie",
+            "Molajo\\User\\Authentication\\Encrypt",
+            "Molajo\\User\\Authentication\\Mailer",
+            "Molajo\\User\\Authentication\\Message",
+            "Molajo\\User\\Authentication\\Session",
+            "Molajo\\User\\Authentication\\UpdateUser",
+            "Molajo\\User\\Authentication\\VerifyCredentials",
+            "Molajo\\User\\Authentication\\VerifyNewPassword",
+            "Molajo\\User\\Authentication\\VerifyUser"
         ]
     },
     "CommonApi\\User\\FlashMessageInterface": {
@@ -1632,7 +1668,14 @@
             "Molajo\\User\\Mailer"
         ],
         "dependency_for": [
-            "Molajo\\User\\Authentication"
+            "Molajo\\User\\Authentication",
+            "Molajo\\User\\Authentication\\Cookie",
+            "Molajo\\User\\Authentication\\Mailer",
+            "Molajo\\User\\Authentication\\Message",
+            "Molajo\\User\\Authentication\\Session",
+            "Molajo\\User\\Authentication\\VerifyCredentials",
+            "Molajo\\User\\Authentication\\VerifyNewPassword",
+            "Molajo\\User\\Authentication\\VerifyUser"
         ]
     },
     "CommonApi\\User\\MessagesInterface": {
@@ -1647,8 +1690,13 @@
         "dependency_for": [
             "Molajo\\User\\Activity",
             "Molajo\\User\\Authentication",
+            "Molajo\\User\\Authentication\\Cookie",
+            "Molajo\\User\\Authentication\\Message",
+            "Molajo\\User\\Authentication\\Session",
+            "Molajo\\User\\Authentication\\VerifyCredentials",
+            "Molajo\\User\\Authentication\\VerifyNewPassword",
+            "Molajo\\User\\Authentication\\VerifyUser",
             "Molajo\\User\\Encrypt",
-            "Molajo\\User\\Fieldhandler",
             "Molajo\\User\\TextTemplate"
         ]
     },
@@ -1676,6 +1724,10 @@
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication",
+            "Molajo\\User\\Authentication\\Session",
+            "Molajo\\User\\Authentication\\VerifyCredentials",
+            "Molajo\\User\\Authentication\\VerifyNewPassword",
+            "Molajo\\User\\Authentication\\VerifyUser",
             "Molajo\\User\\Facade",
             "Molajo\\User\\Flashmessage"
         ]
@@ -1700,10 +1752,23 @@
         "path": "vendor\/commonapi\/user\/UserDataInterface.php",
         "parent": false,
         "implemented_by": [
+            "Molajo\\User\\Data\\Base",
+            "Molajo\\User\\Data\\Delete",
+            "Molajo\\User\\Data\\Insert",
+            "Molajo\\User\\Data\\Load",
+            "Molajo\\User\\Data\\Update",
             "Molajo\\User\\Userdata"
         ],
         "dependency_for": [
             "Molajo\\User\\Authentication",
+            "Molajo\\User\\Authentication\\Cookie",
+            "Molajo\\User\\Authentication\\Mailer",
+            "Molajo\\User\\Authentication\\Message",
+            "Molajo\\User\\Authentication\\Session",
+            "Molajo\\User\\Authentication\\UpdateUser",
+            "Molajo\\User\\Authentication\\VerifyCredentials",
+            "Molajo\\User\\Authentication\\VerifyNewPassword",
+            "Molajo\\User\\Authentication\\VerifyUser",
             "Molajo\\User\\Facade"
         ]
     },
@@ -1805,7 +1870,7 @@
         ],
         "dependency_for": [
             "Molajo\\Controller\\Errorhandling",
-            "Molajo\\Controller\\ExceptionHandling"
+            "Molajo\\Controller\\Exceptionhandling"
         ]
     }
 }

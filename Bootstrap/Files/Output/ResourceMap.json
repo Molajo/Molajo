@@ -642,7 +642,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/molajito\/Source\/View\/Molajo.php"
     ],
     "molajo": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/pagination\/Source\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/"
     ],
     "molajo\\applications": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Applications"
@@ -837,7 +837,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Resources\/Contacts\/Menuitem\/New.xml"
     ],
     "molajo\\controller": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/"
     ],
     "molajo\\controller\\application": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Application.php"
@@ -934,7 +934,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Source\/Scheduled.php"
     ],
     "molajo\\factories": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Factories\/"
     ],
     "molajo\\factories\\activity": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Factories\/Activity"
@@ -2050,7 +2050,7 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Menuitems\/Menuitem\/New.xml"
     ],
     "molajo\\model": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Model\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/"
     ],
     "molajo\\model\\application": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Model\/Application"
@@ -4477,12 +4477,11 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Permissions\/Menuitem\/New.xml"
     ],
     "molajo\\plugins": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Plugins\/",
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/",
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Extensions\/Plugins"
     ],
     "molajo\\plugins\\abstractplugin": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/AbstractPlugin.php",
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Plugins\/AbstractPlugin.php"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/AbstractPlugin.php"
     ],
     "molajo\\plugins\\alias": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/Alias"
@@ -4690,6 +4689,9 @@
     ],
     "molajo\\plugins\\messages\\messagesplugin": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/Source\/Plugins\/Messages\/MessagesPlugin.php"
+    ],
+    "molajo\\plugins\\modelabstractplugin": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Plugins\/ModelAbstractPlugin.php"
     ],
     "molajo\\plugins\\pagetypeapplication": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/Pagetypeapplication"
@@ -4941,12 +4943,12 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/render\/Source\/Driver.php"
     ],
     "molajo\\resource": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/"
     ],
     "molajo\\resource\\adapter": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Adapter",
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter",
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Adapter"
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Resource\/Adapter",
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Resource\/Adapter"
     ],
     "molajo\\resource\\adapter\\abstractadapter": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Adapter\/AbstractAdapter.php"
@@ -5289,19 +5291,65 @@
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Activity.php"
     ],
     "molajo\\user\\authentication": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication",
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication.php"
+    ],
+    "molajo\\user\\authentication\\base": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Base.php"
+    ],
+    "molajo\\user\\authentication\\cookie": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Cookie.php"
+    ],
+    "molajo\\user\\authentication\\encrypt": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Encrypt.php"
+    ],
+    "molajo\\user\\authentication\\mailer": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Mailer.php"
+    ],
+    "molajo\\user\\authentication\\message": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Message.php"
+    ],
+    "molajo\\user\\authentication\\session": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Session.php"
+    ],
+    "molajo\\user\\authentication\\updateuser": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/UpdateUser.php"
+    ],
+    "molajo\\user\\authentication\\verifycredentials": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/VerifyCredentials.php"
+    ],
+    "molajo\\user\\authentication\\verifynewpassword": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/VerifyNewPassword.php"
+    ],
+    "molajo\\user\\authentication\\verifyuser": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/VerifyUser.php"
     ],
     "molajo\\user\\cookie": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Cookie.php"
+    ],
+    "molajo\\user\\data": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data"
+    ],
+    "molajo\\user\\data\\base": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Base.php"
+    ],
+    "molajo\\user\\data\\delete": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Delete.php"
+    ],
+    "molajo\\user\\data\\insert": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Insert.php"
+    ],
+    "molajo\\user\\data\\load": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Load.php"
+    ],
+    "molajo\\user\\data\\update": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Update.php"
     ],
     "molajo\\user\\encrypt": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Encrypt.php"
     ],
     "molajo\\user\\facade": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Facade.php"
-    ],
-    "molajo\\user\\fieldhandler": [
-        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Fieldhandler.php"
     ],
     "molajo\\user\\flashmessage": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Flashmessage.php"

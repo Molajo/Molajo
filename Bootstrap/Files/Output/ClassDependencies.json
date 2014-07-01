@@ -1645,7 +1645,7 @@
         "name": "Errorhandling",
         "namespace": "Molajo\\Controller",
         "fqns": "Molajo\\Controller\\Errorhandling",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/Errorhandling.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/log\/Controller\/Errorhandling.php",
         "path": "vendor\/molajo\/Log\/Controller\/Errorhandling.php",
         "parent": false,
         "implemented_interfaces": [
@@ -1688,10 +1688,10 @@
         ]
     },
     "Molajo\\Controller\\Exceptionhandling": {
-        "name": "ExceptionHandling",
+        "name": "Exceptionhandling",
         "namespace": "Molajo\\Controller",
-        "fqns": "Molajo\\Controller\\ExceptionHandling",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/Log\/Controller\/Exceptionhandling.php",
+        "fqns": "Molajo\\Controller\\Exceptionhandling",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/log\/Controller\/Exceptionhandling.php",
         "path": "vendor\/molajo\/Log\/Controller\/Exceptionhandling.php",
         "parent": false,
         "implemented_interfaces": [
@@ -2244,7 +2244,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array  $logger_requests\n     * @param   array  $logger_adapters\n     *\n     * @since   1.0.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array $logger_requests\n     * @param   array $logger_adapters\n     *\n     * @since   1.0.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -2912,8 +2912,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             },
@@ -3528,7 +3527,7 @@
         "namespace": "Molajo\\Plugins",
         "fqns": "Molajo\\Plugins\\AbstractPlugin",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Plugins\/AbstractPlugin.php",
-        "path": "vendor\/molajo\/event\/Plugins\/AbstractPlugin.php",
+        "path": "vendor\/molajo\/application\/Source\/Plugins\/AbstractPlugin.php",
         "parent": false,
         "implemented_interfaces": [
 
@@ -5274,63 +5273,69 @@
         "constructor_parameters": [
             {
                 "name": "site_id",
-                "default_available": true,
+                "default_available": false,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "application_id",
-                "default_available": true,
+                "default_available": false,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "actions",
-                "default_available": true,
-                "default_value": [
-
-                ],
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "action_ids",
-                "default_available": true,
-                "default_value": [
-
-                ],
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "task_to_action_id",
-                "default_available": true,
-                "default_value": [
-
-                ],
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "task_to_action",
-                "default_available": true,
-                "default_value": [
-
-                ],
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "offline_switch",
-                "default_available": true,
-                "default_value": 0,
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "permissions",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "database",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "query",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -5347,7 +5352,7 @@
         "method": [
             "__construct",
             "isUserAuthorised",
-            "isUserAuthorisedOfflineMode"
+            "isUserAuthorisedOfflinemode"
         ]
     },
     "Molajo\\Authorisation\\Adapter\\Database": {
@@ -5363,58 +5368,50 @@
         "constructor_parameters": [
             {
                 "name": "site_id",
-                "default_available": true,
+                "default_available": false,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "application_id",
-                "default_available": true,
+                "default_available": false,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "actions",
-                "default_available": true,
-                "default_value": [
-
-                ],
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "action_ids",
-                "default_available": true,
-                "default_value": [
-
-                ],
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "task_to_action_id",
-                "default_available": true,
-                "default_value": [
-
-                ],
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "task_to_action",
-                "default_available": true,
-                "default_value": [
-
-                ],
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
                 "name": "offline_switch",
-                "default_available": true,
-                "default_value": 0,
+                "default_available": false,
+                "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             },
@@ -5429,42 +5426,18 @@
                 "name": "database",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": "CommonApi\\Database\\DatabaseInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Database\\Adapter\\AbstractAdapter",
-                    "Molajo\\Database\\Adapter\\Joomla",
-                    "Molajo\\Database\\Driver"
-                ],
-                "concrete": false
+                "instance_of": null,
+                "is_instantiable": false
             },
             {
                 "name": "query",
                 "default_available": false,
                 "default_value": null,
-                "instance_of": "CommonApi\\Query\\QueryInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Controller\\QueryController",
-                    "Molajo\\Controller\\ReadController",
-                    "Molajo\\Query\\Adapter\\Mysql",
-                    "Molajo\\Query\\Adapter\\Postgresql",
-                    "Molajo\\Query\\Adapter\\Sqllite",
-                    "Molajo\\Query\\Adapter\\Sqlserver",
-                    "Molajo\\Query\\Model\\Columns",
-                    "Molajo\\Query\\Model\\Criteria",
-                    "Molajo\\Query\\Model\\Defaults",
-                    "Molajo\\Query\\Model\\Query",
-                    "Molajo\\Query\\Model\\Registry",
-                    "Molajo\\Query\\Model\\Table",
-                    "Molajo\\Query\\Model\\Utilities",
-                    "Molajo\\Query\\QueryBuilder",
-                    "Molajo\\Query\\QueryProxy"
-                ],
-                "concrete": false
+                "instance_of": null,
+                "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  null              $site_id\n     * @param  null              $application_id\n     * @param  array             $actions\n     * @param  array             $action_ids\n     * @param  array             $task_to_action_id\n     * @param  array             $task_to_action\n     * @param  int               $offline_switch\n     * @param  object            $permissions\n     * @param  DatabaseInterface $database\n     * @param  QueryInterface    $query\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  null   $site_id\n     * @param  null   $application_id\n     * @param  array  $actions\n     * @param  array  $action_ids\n     * @param  array  $task_to_action_id\n     * @param  array  $task_to_action\n     * @param  int    $offline_switch\n     * @param  object $permissions\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -5474,7 +5447,7 @@
         "method": [
             "__construct",
             "isUserAuthorised",
-            "isUserAuthorisedOfflineMode"
+            "isUserAuthorisedOfflinemode"
         ]
     },
     "Molajo\\Authorisation\\Driver": {
@@ -5760,7 +5733,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array  $options\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   array $options\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -5834,7 +5807,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array  $options\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  array $options\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -6630,6 +6603,54 @@
             "get",
             "setField",
             "saveForeignKeyValue"
+        ]
+    },
+    "Molajo\\Plugins\\ModelAbstractPlugin": {
+        "name": "ModelAbstractPlugin",
+        "namespace": "Molajo\\Plugins",
+        "fqns": "Molajo\\Plugins\\ModelAbstractPlugin",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/event\/Plugins\/ModelAbstractPlugin.php",
+        "path": "vendor\/molajo\/event\/Plugins\/ModelAbstractPlugin.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "plugin_name",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "event_name",
+                "default_available": true,
+                "default_value": "",
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "data",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   string $plugin_name\n     * @param   string $event_name\n     * @param   array  $data\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "get",
+            "set"
         ]
     },
     "Molajo\\Plugins\\ReadEventPlugin": {
@@ -13235,7 +13256,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     *\n     * @since  1.0.0\n     * @param string $class_dependencies_filename\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     *\n     * @since  1.0.0\n     *\n     * @param string $class_dependencies_filename\n     *\/",
         "implemented_by": [
 
         ],
@@ -13964,8 +13985,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             }
@@ -16433,8 +16453,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             },
@@ -16505,8 +16524,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             },
@@ -16577,8 +16595,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             },
@@ -16649,8 +16666,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             },
@@ -16882,8 +16898,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             },
@@ -17926,7 +17941,7 @@
                 "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  RenderInterface  $render_adapter\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Class Constructor\n     *\n     * @param  RenderInterface $render_adapter\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -19225,15 +19240,6 @@
                 "is_instantiable": false
             },
             {
-                "name": "task_to_action",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
                 "name": "filters",
                 "default_available": true,
                 "default_value": [
@@ -19252,7 +19258,7 @@
                 "concrete": true
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object         $request\n     * @param   int            $url_force_ssl\n     * @param   int            $application_home_catalog_id\n     * @param   string         $application_path\n     * @param   int            $application_id\n     * @param   string         $base_url\n     * @param   array          $task_to_action\n     * @param   array          $filters\n     * @param   ReadController $resource_query\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object         $request\n     * @param   int            $url_force_ssl\n     * @param   int            $application_home_catalog_id\n     * @param   string         $application_path\n     * @param   int            $application_id\n     * @param   string         $base_url\n     * @param   array          $filters\n     * @param   ReadController $resource_query\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -19565,10 +19571,10 @@
         "method": [
             "__construct",
             "setDependencies",
+            "instantiateClass",
             "setContainerEntries",
             "scheduleFactories",
             "onBeforeInstantiation",
-            "instantiateClass",
             "instantiateStatic",
             "onAfterInstantiation",
             "getProductValue",
@@ -19962,13 +19968,6 @@
                 "concrete": false
             },
             {
-                "name": "default_exception",
-                "default_available": true,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
                 "name": "id",
                 "default_available": true,
                 "default_value": 0,
@@ -19976,7 +19975,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  DatabaseInterface $database\n     * @param  QueryInterface    $query\n     * @param  MessagesInterface $messages\n     * @param  null              $default_exception\n     * @param  int               $id\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  DatabaseInterface $database\n     * @param  QueryInterface    $query\n     * @param  MessagesInterface $messages\n     * @param  int               $id\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -19998,7 +19997,7 @@
         "fqns": "Molajo\\User\\Authentication",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication.php",
         "path": "vendor\/molajo\/user\/Source\/Authentication.php",
-        "parent": false,
+        "parent": "Molajo\\User\\Authentication\\VerifyCredentials",
         "implemented_interfaces": [
             "CommonApi\\User\\AuthenticationInterface"
         ],
@@ -20010,6 +20009,11 @@
                 "instance_of": "CommonApi\\User\\UserDataInterface",
                 "is_instantiable": false,
                 "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
                     "Molajo\\User\\Userdata"
                 ],
                 "concrete": false
@@ -20076,8 +20080,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             },
@@ -20108,16 +20111,1110 @@
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  SessionInterface      $session\n     * @param  CookieInterface       $cookie\n     * @param  MailerInterface       $mailer\n     * @param  MessagesInterface     $messages\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     * @param  string                $external_session_id\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout",
+            "__construct"
+        ]
+    },
+    "Molajo\\User\\Authentication\\Base": {
+        "name": "Base",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\Base",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Base.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Base.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
             },
             {
-                "name": "default_exception",
-                "default_available": true,
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  SessionInterface      $session\n     * @param  CookieInterface       $cookie\n     * @param  MailerInterface       $mailer\n     * @param  MessagesInterface     $messages\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     * @param  string                $external_session_id\n     * @param  null|string           $default_exception\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\User\\Authentication\\Cookie": {
+        "name": "Cookie",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\Cookie",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Cookie.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Cookie.php",
+        "parent": "Molajo\\User\\Authentication\\Message",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "userdata",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\UserDataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
+                    "Molajo\\User\\Userdata"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "cookie",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\CookieInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Cookie"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "mailer",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MailerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Mailer"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "messages",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MessagesInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Messages"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  CookieInterface       $cookie\n     * @param  MailerInterface       $mailer\n     * @param  MessagesInterface     $messages\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout"
+        ]
+    },
+    "Molajo\\User\\Authentication\\Encrypt": {
+        "name": "Encrypt",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\Encrypt",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Encrypt.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Encrypt.php",
+        "parent": "Molajo\\User\\Authentication\\Base",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout"
+        ]
+    },
+    "Molajo\\User\\Authentication\\Mailer": {
+        "name": "Mailer",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\Mailer",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Mailer.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Mailer.php",
+        "parent": "Molajo\\User\\Authentication\\UpdateUser",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "userdata",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\UserDataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
+                    "Molajo\\User\\Userdata"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "mailer",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MailerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Mailer"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  MailerInterface       $mailer\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout"
+        ]
+    },
+    "Molajo\\User\\Authentication\\Message": {
+        "name": "Message",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\Message",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Message.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Message.php",
+        "parent": "Molajo\\User\\Authentication\\Mailer",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "userdata",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\UserDataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
+                    "Molajo\\User\\Userdata"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "mailer",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MailerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Mailer"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "messages",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MessagesInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Messages"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  MailerInterface       $mailer\n     * @param  MessagesInterface     $messages\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout"
+        ]
+    },
+    "Molajo\\User\\Authentication\\Session": {
+        "name": "Session",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\Session",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/Session.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/Session.php",
+        "parent": "Molajo\\User\\Authentication\\Cookie",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "userdata",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\UserDataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
+                    "Molajo\\User\\Userdata"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "session",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\SessionInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Session"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "cookie",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\CookieInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Cookie"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "mailer",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MailerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Mailer"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "messages",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MessagesInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Messages"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "external_session_id",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  SessionInterface      $session\n     * @param  CookieInterface       $cookie\n     * @param  MailerInterface       $mailer\n     * @param  MessagesInterface     $messages\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     * @param  string                $external_session_id\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout"
+        ]
+    },
+    "Molajo\\User\\Authentication\\UpdateUser": {
+        "name": "UpdateUser",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\UpdateUser",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/UpdateUser.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/UpdateUser.php",
+        "parent": "Molajo\\User\\Authentication\\Encrypt",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "userdata",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\UserDataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
+                    "Molajo\\User\\Userdata"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout"
+        ]
+    },
+    "Molajo\\User\\Authentication\\VerifyCredentials": {
+        "name": "VerifyCredentials",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\VerifyCredentials",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/VerifyCredentials.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/VerifyCredentials.php",
+        "parent": "Molajo\\User\\Authentication\\VerifyNewPassword",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "userdata",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\UserDataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
+                    "Molajo\\User\\Userdata"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "session",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\SessionInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Session"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "cookie",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\CookieInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Cookie"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "mailer",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MailerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Mailer"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "messages",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MessagesInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Messages"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "external_session_id",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  SessionInterface      $session\n     * @param  CookieInterface       $cookie\n     * @param  MailerInterface       $mailer\n     * @param  MessagesInterface     $messages\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     * @param  string                $external_session_id\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout"
+        ]
+    },
+    "Molajo\\User\\Authentication\\VerifyNewPassword": {
+        "name": "VerifyNewPassword",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\VerifyNewPassword",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/VerifyNewPassword.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/VerifyNewPassword.php",
+        "parent": "Molajo\\User\\Authentication\\VerifyUser",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "userdata",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\UserDataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
+                    "Molajo\\User\\Userdata"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "session",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\SessionInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Session"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "cookie",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\CookieInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Cookie"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "mailer",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MailerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Mailer"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "messages",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MessagesInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Messages"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "external_session_id",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  SessionInterface      $session\n     * @param  CookieInterface       $cookie\n     * @param  MailerInterface       $mailer\n     * @param  MessagesInterface     $messages\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     * @param  string                $external_session_id\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "isGuest",
+            "login",
+            "isLoggedOn",
+            "changePassword",
+            "requestPasswordReset",
+            "logout"
+        ]
+    },
+    "Molajo\\User\\Authentication\\VerifyUser": {
+        "name": "VerifyUser",
+        "namespace": "Molajo\\User\\Authentication",
+        "fqns": "Molajo\\User\\Authentication\\VerifyUser",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Authentication\/VerifyUser.php",
+        "path": "vendor\/molajo\/user\/Source\/Authentication\/VerifyUser.php",
+        "parent": "Molajo\\User\\Authentication\\Session",
+        "implemented_interfaces": [
+            "CommonApi\\User\\AuthenticationInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "userdata",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\UserDataInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
+                    "Molajo\\User\\Userdata"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "session",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\SessionInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Session"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "cookie",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\CookieInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Cookie"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "mailer",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MailerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Mailer"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "messages",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\MessagesInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Messages"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "encrypt",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\User\\EncryptInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\User\\Encrypt"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "fieldhandler",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Fieldhandler\\Request"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "configuration",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "server",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "post",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "external_session_id",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  UserDataInterface     $userdata\n     * @param  SessionInterface      $session\n     * @param  CookieInterface       $cookie\n     * @param  MailerInterface       $mailer\n     * @param  MessagesInterface     $messages\n     * @param  EncryptInterface      $encrypt\n     * @param  FieldhandlerInterface $fieldhandler\n     * @param  stdClass              $configuration\n     * @param  object                $server\n     * @param  object                $post\n     * @param  string                $external_session_id\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -20146,16 +21243,11 @@
         ],
         "constructor_parameters": [
             {
-                "name": "request_cookies",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "response_cookies",
-                "default_available": false,
-                "default_value": null,
+                "name": "cookies",
+                "default_available": true,
+                "default_value": [
+
+                ],
                 "instance_of": null,
                 "is_instantiable": false
             },
@@ -20195,7 +21287,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param   string $request_cookies\n     * @param   string $response_cookies\n     * @param   int    $expire\n     * @param   null   $path\n     * @param   null   $domain\n     * @param   int    $secure\n     * @param   bool   $http_only\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param   array   $cookies\n     * @param   int     $expire\n     * @param   null    $path\n     * @param   null    $domain\n     * @param   int     $secure\n     * @param   boolean $http_only\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -20207,7 +21299,415 @@
             "getCookie",
             "setCookie",
             "deleteCookie",
+            "destroyCookies",
             "sendCookies"
+        ]
+    },
+    "Molajo\\User\\Data\\Base": {
+        "name": "Base",
+        "namespace": "Molajo\\User\\Data",
+        "fqns": "Molajo\\User\\Data\\Base",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Base.php",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Base.php",
+        "parent": false,
+        "implemented_interfaces": [
+            "CommonApi\\User\\UserDataInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "database",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Database\\DatabaseInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Database\\Adapter\\AbstractAdapter",
+                    "Molajo\\Database\\Adapter\\Joomla",
+                    "Molajo\\Database\\Driver"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "child_model_registries",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param DatabaseInterface $database\n     * @param QueryInterface    $query\n     * @param                   $model_registry\n     * @param                   $child_model_registries\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "load",
+            "getUserData",
+            "insertUserData",
+            "updateUserData",
+            "deleteUserData"
+        ]
+    },
+    "Molajo\\User\\Data\\Delete": {
+        "name": "Delete",
+        "namespace": "Molajo\\User\\Data",
+        "fqns": "Molajo\\User\\Data\\Delete",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Delete.php",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Delete.php",
+        "parent": "Molajo\\User\\Data\\Base",
+        "implemented_interfaces": [
+            "CommonApi\\User\\UserDataInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "database",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Database\\DatabaseInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Database\\Adapter\\AbstractAdapter",
+                    "Molajo\\Database\\Adapter\\Joomla",
+                    "Molajo\\Database\\Driver"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "child_model_registries",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param DatabaseInterface $database\n     * @param QueryInterface    $query\n     * @param                   $model_registry\n     * @param                   $child_model_registries\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "deleteUserdata",
+            "__construct",
+            "load",
+            "getUserData",
+            "insertUserData",
+            "updateUserData"
+        ]
+    },
+    "Molajo\\User\\Data\\Insert": {
+        "name": "Insert",
+        "namespace": "Molajo\\User\\Data",
+        "fqns": "Molajo\\User\\Data\\Insert",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Insert.php",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Insert.php",
+        "parent": "Molajo\\User\\Data\\Update",
+        "implemented_interfaces": [
+            "CommonApi\\User\\UserDataInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "database",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Database\\DatabaseInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Database\\Adapter\\AbstractAdapter",
+                    "Molajo\\Database\\Adapter\\Joomla",
+                    "Molajo\\Database\\Driver"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "child_model_registries",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param DatabaseInterface $database\n     * @param QueryInterface    $query\n     * @param                   $model_registry\n     * @param                   $child_model_registries\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "insertUser",
+            "__construct",
+            "updateUser",
+            "deleteUserdata",
+            "load",
+            "getUserData",
+            "insertUserData",
+            "updateUserData"
+        ]
+    },
+    "Molajo\\User\\Data\\Load": {
+        "name": "Load",
+        "namespace": "Molajo\\User\\Data",
+        "fqns": "Molajo\\User\\Data\\Load",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Load.php",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Load.php",
+        "parent": "Molajo\\User\\Data\\Insert",
+        "implemented_interfaces": [
+            "CommonApi\\User\\UserDataInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "database",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Database\\DatabaseInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Database\\Adapter\\AbstractAdapter",
+                    "Molajo\\Database\\Adapter\\Joomla",
+                    "Molajo\\Database\\Driver"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "child_model_registries",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param DatabaseInterface $database\n     * @param QueryInterface    $query\n     * @param                   $model_registry\n     * @param                   $child_model_registries\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "loadUser",
+            "getUserdata",
+            "getChildData",
+            "insertUser",
+            "__construct",
+            "updateUser",
+            "deleteUserdata",
+            "load",
+            "insertUserData",
+            "updateUserData"
+        ]
+    },
+    "Molajo\\User\\Data\\Update": {
+        "name": "Update",
+        "namespace": "Molajo\\User\\Data",
+        "fqns": "Molajo\\User\\Data\\Update",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Data\/Update.php",
+        "path": "vendor\/molajo\/user\/Source\/Data\/Update.php",
+        "parent": "Molajo\\User\\Data\\Delete",
+        "implemented_interfaces": [
+            "CommonApi\\User\\UserDataInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "database",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Database\\DatabaseInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Database\\Adapter\\AbstractAdapter",
+                    "Molajo\\Database\\Adapter\\Joomla",
+                    "Molajo\\Database\\Driver"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "query",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": "CommonApi\\Query\\QueryInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\QueryController",
+                    "Molajo\\Controller\\ReadController",
+                    "Molajo\\Query\\Adapter\\Mysql",
+                    "Molajo\\Query\\Adapter\\Postgresql",
+                    "Molajo\\Query\\Adapter\\Sqllite",
+                    "Molajo\\Query\\Adapter\\Sqlserver",
+                    "Molajo\\Query\\Model\\Columns",
+                    "Molajo\\Query\\Model\\Criteria",
+                    "Molajo\\Query\\Model\\Defaults",
+                    "Molajo\\Query\\Model\\Query",
+                    "Molajo\\Query\\Model\\Registry",
+                    "Molajo\\Query\\Model\\Table",
+                    "Molajo\\Query\\Model\\Utilities",
+                    "Molajo\\Query\\QueryBuilder",
+                    "Molajo\\Query\\QueryProxy"
+                ],
+                "concrete": false
+            },
+            {
+                "name": "model_registry",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "child_model_registries",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param DatabaseInterface $database\n     * @param QueryInterface    $query\n     * @param                   $model_registry\n     * @param                   $child_model_registries\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct",
+            "updateUser",
+            "deleteUserdata",
+            "load",
+            "getUserData",
+            "insertUserData",
+            "updateUserData"
         ]
     },
     "Molajo\\User\\Encrypt": {
@@ -20247,7 +21747,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param   MessagesInterface $messages\n     * @param   null              $default_exception\n     *\n     * @since   1.0\n     * @throws  RuntimeException\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param   MessagesInterface $messages\n     *\n     * @since   1.0\n     * @throws  RuntimeException\n     *\/",
         "implemented_by": [
 
         ],
@@ -20279,6 +21779,11 @@
                 "instance_of": "CommonApi\\User\\UserDataInterface",
                 "is_instantiable": false,
                 "implemented_by": [
+                    "Molajo\\User\\Data\\Base",
+                    "Molajo\\User\\Data\\Delete",
+                    "Molajo\\User\\Data\\Insert",
+                    "Molajo\\User\\Data\\Load",
+                    "Molajo\\User\\Data\\Update",
                     "Molajo\\User\\Userdata"
                 ],
                 "concrete": false
@@ -20352,58 +21857,6 @@
             "setCookie",
             "deleteCookie",
             "sendCookies"
-        ]
-    },
-    "Molajo\\User\\Fieldhandler": {
-        "name": "Fieldhandler",
-        "namespace": "Molajo\\User",
-        "fqns": "Molajo\\User\\Fieldhandler",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Fieldhandler.php",
-        "path": "vendor\/molajo\/user\/Source\/Fieldhandler.php",
-        "parent": false,
-        "implemented_interfaces": [
-            "CommonApi\\Model\\FieldhandlerInterface",
-            "CommonApi\\Model\\FormatInterface",
-            "CommonApi\\Model\\SanitizeInterface",
-            "CommonApi\\Model\\ValidateInterface"
-        ],
-        "constructor_parameters": [
-            {
-                "name": "fieldhandler",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
-                ],
-                "concrete": false
-            },
-            {
-                "name": "messages",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": "CommonApi\\User\\MessagesInterface",
-                "is_instantiable": false,
-                "implemented_by": [
-                    "Molajo\\User\\Messages"
-                ],
-                "concrete": false
-            }
-        ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param FieldhandlerInterface $fieldhandler\n     * @param MessagesInterface     $messages\n     *\n     * @since  1.0\n     *\/",
-        "implemented_by": [
-
-        ],
-        "dependency_for": [
-
-        ],
-        "method": [
-            "__construct",
-            "validate",
-            "sanitize",
-            "format"
         ]
     },
     "Molajo\\User\\Flashmessage": {
@@ -20493,25 +21946,9 @@
                     "Molajo\\User\\TextTemplate"
                 ],
                 "concrete": false
-            },
-            {
-                "name": "default_exception",
-                "default_available": true,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "options",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param EmailInterface         $email\n     * @param null|TemplateInterface $template\n     * @param null|string            $default_exception\n     * @param array                  $options\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  EmailInterface    $email\n     * @param  TemplateInterface $template\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -20520,7 +21957,6 @@
         ],
         "method": [
             "__construct",
-            "render",
             "send"
         ]
     },
@@ -20554,16 +21990,9 @@
                 ],
                 "instance_of": null,
                 "is_instantiable": false
-            },
-            {
-                "name": "messages_exception",
-                "default_available": true,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  FlashMessageInterface $flashmessage\n     * @param  array                 $messages\n     * @param  null                  $messages_exception\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param  FlashMessageInterface $flashmessage\n     * @param  array                 $messages\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -20573,8 +22002,8 @@
         "method": [
             "__construct",
             "setMessage",
-            "getMessage",
             "setFlashmessage",
+            "getMessage",
             "throwException"
         ]
     },
@@ -20653,8 +22082,7 @@
                 "instance_of": "CommonApi\\Model\\FieldhandlerInterface",
                 "is_instantiable": false,
                 "implemented_by": [
-                    "Molajo\\Fieldhandler\\Request",
-                    "Molajo\\User\\Fieldhandler"
+                    "Molajo\\Fieldhandler\\Request"
                 ],
                 "concrete": false
             },
@@ -20670,23 +22098,7 @@
                 "concrete": false
             },
             {
-                "name": "default_exception",
-                "default_available": true,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
                 "name": "templates",
-                "default_available": true,
-                "default_value": [
-
-                ],
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "data",
                 "default_available": true,
                 "default_value": [
 
@@ -20695,7 +22107,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param   FieldhandlerInterface $fieldhandler\n     * @param   MessagesInterface     $messages\n     * @param   string                $default_exception\n     * @param   array                 $templates\n     * @param   array                 $data\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Construct\n     *\n     * @param   FieldhandlerInterface $fieldhandler\n     * @param   MessagesInterface     $messages\n     * @param   array                 $templates\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -20706,7 +22118,8 @@
             "__construct",
             "get",
             "set",
-            "render"
+            "render",
+            "renderSection"
         ]
     },
     "Molajo\\User\\Userdata": {
@@ -20715,7 +22128,7 @@
         "fqns": "Molajo\\User\\Userdata",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/user\/Source\/Userdata.php",
         "path": "vendor\/molajo\/user\/Source\/Userdata.php",
-        "parent": false,
+        "parent": "Molajo\\User\\Data\\Load",
         "implemented_interfaces": [
             "CommonApi\\User\\UserDataInterface"
         ],
@@ -20781,13 +22194,16 @@
 
         ],
         "method": [
-            "__construct",
             "load",
+            "insertUserData",
+            "updateUserData",
+            "deleteUserData",
+            "loadUser",
             "getUserdata",
-            "insertUserdata",
-            "updateUserdata",
-            "deleteUserdata",
-            "getChildData"
+            "getChildData",
+            "insertUser",
+            "__construct",
+            "updateUser"
         ]
     },
     "Psr\\Log\\AbstractLogger": {

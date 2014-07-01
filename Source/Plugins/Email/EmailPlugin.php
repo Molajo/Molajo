@@ -69,7 +69,7 @@ class EmailPlugin extends ReadEventPlugin implements ReadInterface
     {
         $obfuscate_email = "";
 
-        for ($i = 0; $i < strlen($email_address); $i ++) {
+        for ($i = 0; $i < strlen($email_address); $i++) {
             $obfuscate_email .= "&#" . ord($email_address[$i]) . ";";
         }
 

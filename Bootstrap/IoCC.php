@@ -54,7 +54,7 @@ $class_dependencies_filename = __DIR__ . '/Files/Output/ClassDependencies.json';
 $standard_adapter_namespaces = 'Molajo\\IoC\\FactoryMethod\\Standard';
 
 $schedule_factory_class = 'Molajo\\IoC\\Schedule';
-$schedule_factory = new $schedule_factory_class(
+$schedule_factory       = new $schedule_factory_class(
     $factory_method_aliases,
     $class_dependencies_filename,
     $standard_adapter_namespaces
