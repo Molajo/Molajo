@@ -226,7 +226,7 @@
             "Molajo\\Controller\\ReadController"
         ],
         "dependency_for": [
-
+            "Molajo\\Route\\Adapter\\Database"
         ]
     },
     "CommonApi\\Controller\\ResourceInterface": {
@@ -1548,6 +1548,8 @@
         "parent": false,
         "implemented_by": [
             "Molajo\\Route\\Adapter\\AbstractAdapter",
+            "Molajo\\Route\\Adapter\\AbstractRequest",
+            "Molajo\\Route\\Adapter\\AbstractVerifyHome",
             "Molajo\\Route\\Adapter\\Database",
             "Molajo\\Route\\Driver"
         ],

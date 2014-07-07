@@ -3297,13 +3297,235 @@
             "generateString"
         ]
     },
+    "Molajo\\Controller\\Resource\\Base": {
+        "name": "Base",
+        "namespace": "Molajo\\Controller\\Resource",
+        "fqns": "Molajo\\Controller\\Resource\\Base",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/Base.php",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/Base.php",
+        "parent": false,
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "resource_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "resource",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  object $resource\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\Controller\\Resource\\Extension": {
+        "name": "Extension",
+        "namespace": "Molajo\\Controller\\Resource",
+        "fqns": "Molajo\\Controller\\Resource\\Extension",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/Extension.php",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/Extension.php",
+        "parent": "Molajo\\Controller\\Resource\\Base",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "resource_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "resource",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  object $resource\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\Controller\\Resource\\GridMenuitem": {
+        "name": "GridMenuitem",
+        "namespace": "Molajo\\Controller\\Resource",
+        "fqns": "Molajo\\Controller\\Resource\\GridMenuitem",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/GridMenuitem.php",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/GridMenuitem.php",
+        "parent": "Molajo\\Controller\\Resource\\ListPageType",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "resource_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "resource",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  object $resource\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\Controller\\Resource\\ItemPageType": {
+        "name": "ItemPageType",
+        "namespace": "Molajo\\Controller\\Resource",
+        "fqns": "Molajo\\Controller\\Resource\\ItemPageType",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/ItemPageType.php",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/ItemPageType.php",
+        "parent": "Molajo\\Controller\\Resource\\Extension",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "resource_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "resource",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  object $resource\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\Controller\\Resource\\ListPageType": {
+        "name": "ListPageType",
+        "namespace": "Molajo\\Controller\\Resource",
+        "fqns": "Molajo\\Controller\\Resource\\ListPageType",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/ListPageType.php",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/ListPageType.php",
+        "parent": "Molajo\\Controller\\Resource\\ItemPageType",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "resource_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "resource",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  object $resource\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
+    "Molajo\\Controller\\Resource\\MenuitemPageType": {
+        "name": "MenuitemPageType",
+        "namespace": "Molajo\\Controller\\Resource",
+        "fqns": "Molajo\\Controller\\Resource\\MenuitemPageType",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/MenuitemPageType.php",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/MenuitemPageType.php",
+        "parent": "Molajo\\Controller\\Resource\\GridMenuitem",
+        "implemented_interfaces": [
+
+        ],
+        "constructor_parameters": [
+            {
+                "name": "resource_instance",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "resource",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  object $resource\n     *\n     * @since  1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "__construct"
+        ]
+    },
     "Molajo\\Controller\\ResourceController": {
         "name": "ResourceController",
         "namespace": "Molajo\\Controller",
         "fqns": "Molajo\\Controller\\ResourceController",
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/ResourceController.php",
         "path": "vendor\/molajo\/application\/Source\/Controller\/ResourceController.php",
-        "parent": false,
+        "parent": "Molajo\\Controller\\Resource\\MenuitemPageType",
         "implemented_interfaces": [
             "CommonApi\\Controller\\ResourceInterface"
         ],
@@ -3316,49 +3538,14 @@
                 "is_instantiable": false
             },
             {
-                "name": "default_theme_id",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "page_type",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "model_type",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "model_name",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "sef_request",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "source_id",
+                "name": "resource",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  string $default_theme_id\n     * @param  string $page_type\n     * @param  string $model_type\n     * @param  string $model_name\n     * @param  string $sef_request\n     * @param  string $source_id\n     *\n     * @since  1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param  object $resource_instance\n     * @param  object $resource\n     *\n     * @since  1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -3366,8 +3553,8 @@
 
         ],
         "method": [
-            "__construct",
-            "getResource"
+            "getResource",
+            "__construct"
         ]
     },
     "Molajo\\Controller\\Site": {
@@ -15543,9 +15730,6 @@
         ],
         "method": [
             "getData",
-            "triggerOnBeforeReadEvent",
-            "triggerOnAfterReadEvent",
-            "triggerOnAfterReadallEvent",
             "__construct",
             "getValue",
             "setValue",
@@ -19117,37 +19301,11 @@
                 "is_instantiable": false
             },
             {
-                "name": "url_force_ssl",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "application_home_catalog_id",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "application_path",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "application_id",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "base_url",
-                "default_available": false,
-                "default_value": null,
+                "name": "filters",
+                "default_available": true,
+                "default_value": [
+
+                ],
                 "instance_of": null,
                 "is_instantiable": false
             },
@@ -19161,7 +19319,7 @@
                 "is_instantiable": false
             },
             {
-                "name": "filters",
+                "name": "page_types",
                 "default_available": true,
                 "default_value": [
 
@@ -19170,7 +19328,7 @@
                 "is_instantiable": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object $request\n     * @param   int    $url_force_ssl\n     * @param   int    $application_home_catalog_id\n     * @param   string $application_path\n     * @param   int    $application_id\n     * @param   string $base_url\n     * @param   array  $task_to_action\n     * @param   array  $filters\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object $request\n     * @param   array  $filters\n     * @param   array  $task_to_action\n     * @param   array  $page_types\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -19180,18 +19338,79 @@
         "method": [
             "__construct",
             "verifySecureProtocol",
-            "verifyHome",
-            "setRequest",
             "setRoute",
-            "setRedirect"
+            "verifyHome",
+            "setRequest"
         ]
     },
-    "Molajo\\Route\\Adapter\\Database": {
-        "name": "Database",
+    "Molajo\\Route\\Adapter\\AbstractRequest": {
+        "name": "AbstractRequest",
         "namespace": "Molajo\\Route\\Adapter",
-        "fqns": "Molajo\\Route\\Adapter\\Database",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/Database.php",
-        "path": "vendor\/molajo\/route\/Source\/Adapter\/Database.php",
+        "fqns": "Molajo\\Route\\Adapter\\AbstractRequest",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/AbstractRequest.php",
+        "path": "vendor\/molajo\/route\/Source\/Adapter\/AbstractRequest.php",
+        "parent": "Molajo\\Route\\Adapter\\AbstractVerifyHome",
+        "implemented_interfaces": [
+            "CommonApi\\Route\\RouteInterface"
+        ],
+        "constructor_parameters": [
+            {
+                "name": "request",
+                "default_available": false,
+                "default_value": null,
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "filters",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "task_to_action",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "page_types",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object $request\n     * @param   array  $filters\n     * @param   array  $task_to_action\n     * @param   array  $page_types\n     *\n     * @since   1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "setRequest",
+            "verifyHome",
+            "verifyHomeIndex",
+            "__construct",
+            "verifySecureProtocol",
+            "setRoute"
+        ]
+    },
+    "Molajo\\Route\\Adapter\\AbstractVerifyHome": {
+        "name": "AbstractVerifyHome",
+        "namespace": "Molajo\\Route\\Adapter",
+        "fqns": "Molajo\\Route\\Adapter\\AbstractVerifyHome",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/AbstractVerifyHome.php",
+        "path": "vendor\/molajo\/route\/Source\/Adapter\/AbstractVerifyHome.php",
         "parent": "Molajo\\Route\\Adapter\\AbstractAdapter",
         "implemented_interfaces": [
             "CommonApi\\Route\\RouteInterface"
@@ -19205,35 +19424,62 @@
                 "is_instantiable": false
             },
             {
-                "name": "url_force_ssl",
-                "default_available": false,
-                "default_value": null,
+                "name": "filters",
+                "default_available": true,
+                "default_value": [
+
+                ],
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
-                "name": "application_home_catalog_id",
-                "default_available": false,
-                "default_value": null,
+                "name": "task_to_action",
+                "default_available": true,
+                "default_value": [
+
+                ],
                 "instance_of": null,
                 "is_instantiable": false
             },
             {
-                "name": "application_path",
-                "default_available": false,
-                "default_value": null,
+                "name": "page_types",
+                "default_available": true,
+                "default_value": [
+
+                ],
                 "instance_of": null,
                 "is_instantiable": false
-            },
+            }
+        ],
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object $request\n     * @param   array  $filters\n     * @param   array  $task_to_action\n     * @param   array  $page_types\n     *\n     * @since   1.0\n     *\/",
+        "implemented_by": [
+
+        ],
+        "dependency_for": [
+
+        ],
+        "method": [
+            "verifyHome",
+            "verifyHomeIndex",
+            "__construct",
+            "verifySecureProtocol",
+            "setRoute",
+            "setRequest"
+        ]
+    },
+    "Molajo\\Route\\Adapter\\Database": {
+        "name": "Database",
+        "namespace": "Molajo\\Route\\Adapter",
+        "fqns": "Molajo\\Route\\Adapter\\Database",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/Database.php",
+        "path": "vendor\/molajo\/route\/Source\/Adapter\/Database.php",
+        "parent": "Molajo\\Route\\Adapter\\AbstractRequest",
+        "implemented_interfaces": [
+            "CommonApi\\Route\\RouteInterface"
+        ],
+        "constructor_parameters": [
             {
-                "name": "application_id",
-                "default_available": false,
-                "default_value": null,
-                "instance_of": null,
-                "is_instantiable": false
-            },
-            {
-                "name": "base_url",
+                "name": "request",
                 "default_available": false,
                 "default_value": null,
                 "instance_of": null,
@@ -19249,16 +19495,36 @@
                 "is_instantiable": false
             },
             {
+                "name": "task_to_action",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
+                "name": "page_types",
+                "default_available": true,
+                "default_value": [
+
+                ],
+                "instance_of": null,
+                "is_instantiable": false
+            },
+            {
                 "name": "resource_query",
-                "default_available": false,
+                "default_available": true,
                 "default_value": null,
-                "instance_of": "Molajo\\Controller\\ReadController",
-                "is_instantiable": true,
-                "implemented_by": null,
-                "concrete": true
+                "instance_of": "CommonApi\\Controller\\ReadControllerInterface",
+                "is_instantiable": false,
+                "implemented_by": [
+                    "Molajo\\Controller\\ReadController"
+                ],
+                "concrete": false
             }
         ],
-        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object         $request\n     * @param   int            $url_force_ssl\n     * @param   int            $application_home_catalog_id\n     * @param   string         $application_path\n     * @param   int            $application_id\n     * @param   string         $base_url\n     * @param   array          $filters\n     * @param   ReadController $resource_query\n     *\n     * @since   1.0\n     *\/",
+        "constructor_docComment": "\/**\n     * Constructor\n     *\n     * @param   object                  $request\n     * @param   array                   $filters\n     * @param   array                   $task_to_action\n     * @param   array                   $page_types\n     * @param   ReadControllerInterface $resource_query\n     *\n     * @since   1.0\n     *\/",
         "implemented_by": [
 
         ],
@@ -19268,10 +19534,16 @@
         "method": [
             "__construct",
             "setRoute",
-            "verifySecureProtocol",
-            "verifyHome",
+            "buildRouteQuery",
+            "runRouteQuery",
+            "buildRouteQueryWhereClause",
+            "setRouteNotFound",
+            "setRouteRedirect",
+            "setRouteData",
             "setRequest",
-            "setRedirect"
+            "verifyHome",
+            "verifyHomeIndex",
+            "verifySecureProtocol"
         ]
     },
     "Molajo\\Route\\Driver": {
@@ -19293,6 +19565,8 @@
                 "is_instantiable": false,
                 "implemented_by": [
                     "Molajo\\Route\\Adapter\\AbstractAdapter",
+                    "Molajo\\Route\\Adapter\\AbstractRequest",
+                    "Molajo\\Route\\Adapter\\AbstractVerifyHome",
                     "Molajo\\Route\\Adapter\\Database",
                     "Molajo\\Route\\Driver"
                 ],

@@ -879,6 +879,27 @@
     "molajo\\controller\\readcontroller": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/query\/Controller\/ReadController.php"
     ],
+    "molajo\\controller\\resource": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource"
+    ],
+    "molajo\\controller\\resource\\base": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/Base.php"
+    ],
+    "molajo\\controller\\resource\\extension": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/Extension.php"
+    ],
+    "molajo\\controller\\resource\\gridmenuitem": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/GridMenuitem.php"
+    ],
+    "molajo\\controller\\resource\\itempagetype": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/ItemPageType.php"
+    ],
+    "molajo\\controller\\resource\\listpagetype": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/ListPageType.php"
+    ],
+    "molajo\\controller\\resource\\menuitempagetype": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/Resource\/MenuitemPageType.php"
+    ],
     "molajo\\controller\\resourcecontroller": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/application\/Source\/Controller\/ResourceController.php"
     ],
@@ -5087,6 +5108,12 @@
     ],
     "molajo\\route\\adapter\\abstractadapter": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/AbstractAdapter.php"
+    ],
+    "molajo\\route\\adapter\\abstractrequest": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/AbstractRequest.php"
+    ],
+    "molajo\\route\\adapter\\abstractverifyhome": [
+        "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/AbstractVerifyHome.php"
     ],
     "molajo\\route\\adapter\\database": [
         "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/route\/Source\/Adapter\/Database.php"

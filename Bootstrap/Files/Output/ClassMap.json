@@ -1019,6 +1019,42 @@
         "path": "vendor\/molajo\/application\/Source\/Controller\/RandomString.php",
         "fqns": "Molajo\\Controller\\RandomString"
     },
+    "vendor\/molajo\/application\/Source\/Controller\/Resource\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/Base.php",
+        "fqns": "Molajo\\Controller\\Resource\\Base"
+    },
+    "vendor\/molajo\/application\/Source\/Controller\/Resource\/Extension.php": {
+        "file_name": "Extension.php",
+        "base_name": "Extension",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/Extension.php",
+        "fqns": "Molajo\\Controller\\Resource\\Extension"
+    },
+    "vendor\/molajo\/application\/Source\/Controller\/Resource\/GridMenuitem.php": {
+        "file_name": "GridMenuitem.php",
+        "base_name": "GridMenuitem",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/GridMenuitem.php",
+        "fqns": "Molajo\\Controller\\Resource\\GridMenuitem"
+    },
+    "vendor\/molajo\/application\/Source\/Controller\/Resource\/ItemPageType.php": {
+        "file_name": "ItemPageType.php",
+        "base_name": "ItemPageType",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/ItemPageType.php",
+        "fqns": "Molajo\\Controller\\Resource\\ItemPageType"
+    },
+    "vendor\/molajo\/application\/Source\/Controller\/Resource\/ListPageType.php": {
+        "file_name": "ListPageType.php",
+        "base_name": "ListPageType",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/ListPageType.php",
+        "fqns": "Molajo\\Controller\\Resource\\ListPageType"
+    },
+    "vendor\/molajo\/application\/Source\/Controller\/Resource\/MenuitemPageType.php": {
+        "file_name": "MenuitemPageType.php",
+        "base_name": "MenuitemPageType",
+        "path": "vendor\/molajo\/application\/Source\/Controller\/Resource\/MenuitemPageType.php",
+        "fqns": "Molajo\\Controller\\Resource\\MenuitemPageType"
+    },
     "vendor\/molajo\/application\/Source\/Controller\/ResourceController.php": {
         "file_name": "ResourceController.php",
         "base_name": "ResourceController",
@@ -2740,6 +2776,18 @@
         "base_name": "AbstractAdapter",
         "path": "vendor\/molajo\/route\/Source\/Adapter\/AbstractAdapter.php",
         "fqns": "Molajo\\Route\\Adapter\\AbstractAdapter"
+    },
+    "vendor\/molajo\/route\/Source\/Adapter\/AbstractRequest.php": {
+        "file_name": "AbstractRequest.php",
+        "base_name": "AbstractRequest",
+        "path": "vendor\/molajo\/route\/Source\/Adapter\/AbstractRequest.php",
+        "fqns": "Molajo\\Route\\Adapter\\AbstractRequest"
+    },
+    "vendor\/molajo\/route\/Source\/Adapter\/AbstractVerifyHome.php": {
+        "file_name": "AbstractVerifyHome.php",
+        "base_name": "AbstractVerifyHome",
+        "path": "vendor\/molajo\/route\/Source\/Adapter\/AbstractVerifyHome.php",
+        "fqns": "Molajo\\Route\\Adapter\\AbstractVerifyHome"
     },
     "vendor\/molajo\/route\/Source\/Adapter\/Database.php": {
         "file_name": "Database.php",

@@ -23,13 +23,13 @@
     "require": {
         "php": ">=5.4",
         "molajo/application": "dev-master",
+        "molajo/plugins": "dev-master",
         "molajo/foundation5": "dev-master"
     },
 
     "autoload": {
         "psr-4": {
             "Molajo\\Sites\\": "Sites/",
-            "Molajo\\Plugins\\": "Source/Plugins/",
             "Molajo\\": "Source/Resources/"
         }
     },
