@@ -1,0 +1,29 @@
+{
+    "name": "commonapi/event",
+    "description": "Common Event Api Interface",
+    "keywords": ["api", "CommonApi", "event"],
+    "homepage": "https://github.com/CommonApi/Event",
+    "type": "api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "AmyStephen",
+            "email": "AmyStephen@Molajo.org",
+            "homepage": "http://Molajo.org"
+        }
+    ],
+    "require": {
+        "commonapi/exception": ">=0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "CommonApi\\Event\\": ""
+        }
+    },
+
+    "archive": {
+        "exclude": ["/.dev"]
+    },
+
+    "minimum-stability": "dev"
+}

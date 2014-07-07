@@ -1,0 +1,29 @@
+{
+    "name": "commonapi/user",
+    "description": "Common User Api Interface",
+    "keywords": ["api", "CommonApi", "user"],
+    "homepage": "https://github.com/CommonApi/User",
+    "type": "api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "AmyStephen",
+            "email": "AmyStephen@Molajo.org",
+            "homepage": "http://Molajo.org"
+        }
+    ],
+    "require": {
+        "commonapi/exception": ">=0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "CommonApi\\User\\": ""
+        }
+    },
+
+    "archive": {
+        "exclude": ["/.dev"]
+    },
+
+    "minimum-stability": "dev"
+}

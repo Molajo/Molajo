@@ -1,0 +1,47 @@
+{
+    "name": "molajo/plugins",
+    "description": "Molajo Plugins",
+    "version": "1.0.0",
+    "type": "molajo-package",
+    "keywords": ["plugins", "commonapi", "molajo"],
+    "homepage": "http://github.com/Molajo/Plugins",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Amy Stephen",
+            "email": "AmyStephen@molajo.org",
+            "homepage": "http://AmyStephen.com",
+            "role": "Developer"
+        }
+    ],
+
+    "support": {
+        "issues": "https://github.com/Molajo/Plugins/issues",
+        "forum": "https://groups.google.com/forum/#!forum/molajo",
+        "irc": "irc://irc.freenode.org/molajo",
+        "source": "https://github.com/Molajo/Plugins"
+    },
+
+    "require": {
+        "php": ">=5.4",
+        "commonapi/authorisation": "dev-master",
+        "commonapi/controller": "dev-master",
+        "commonapi/event": "dev-master",
+        "commonapi/exception": "dev-master",
+        "commonapi/language": "dev-master",
+        "commonapi/model": "dev-master",
+        "commonapi/user": "dev-master"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Molajo\\Plugins\\": "Source/"
+        }
+    },
+
+    "archive": {
+        "exclude": ["/.dev"]
+    },
+
+    "minimum-stability": "dev"
+}

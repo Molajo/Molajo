@@ -1,0 +1,29 @@
+{
+    "name": "commonapi/controller",
+    "description": "Common Controller Api Interface",
+    "keywords": ["api", "CommonApi", "controller"],
+    "homepage": "https://github.com/CommonApi/Controller",
+    "type": "api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "AmyStephen",
+            "email": "AmyStephen@Molajo.org",
+            "homepage": "http://Molajo.org"
+        }
+    ],
+    "require": {
+        "commonapi/exception": ">=0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "CommonApi\\Controller\\": ""
+        }
+    },
+
+    "archive": {
+        "exclude": ["/.dev"]
+    },
+
+    "minimum-stability": "dev"
+}
