@@ -1,4 +1,0 @@
-Plugins
-=========
-
-Molajo
