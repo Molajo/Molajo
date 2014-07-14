@@ -1,0 +1,40 @@
+{
+    "name": "molajo/database",
+    "type": "molajo-package",
+    "description": "Molajo Database: platform independent multi-database support for PHP Applications",
+    "keywords": ["Molajo", "Database", "SQL Server", "MySQL", "Oracle", "CommonApi"],
+    "homepage": "http://github.com/Molajo/Event",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Amy Stephen",
+            "email": "AmyStephen@Molajo.org",
+            "homepage": "http://AmyStephen.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "commonapi/database": "dev-master",
+        "commonapi/query": "dev-master",
+        "commonapi/exception": "dev-master",
+        "joomla/database": "dev-master"
+    },
+
+    "support": {
+        "event": "hello@molajo.org",
+        "irc": "irc://irc.freenode.org/molajo"
+    },
+    "autoload": {
+        "psr-4": {
+            "Molajo\\Database\\": "Source/",
+            "Molajo\\Factories\\Database\\": "Factories/Database/"
+        }
+    },
+
+    "archive": {
+        "exclude": ["/.dev"]
+    },
+
+    "minimum-stability": "dev"
+}
+

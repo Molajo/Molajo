@@ -1,4 +1,20 @@
 {
+    "onBeforeCreate": [
+        "Molajo\\Plugins\\Alias\\AliasPlugin",
+        "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin",
+        "Molajo\\Plugins\\Dateformats\\DateformatsPlugin"
+    ],
+    "onBeforeUpdate": [
+        "Molajo\\Plugins\\Alias\\AliasPlugin",
+        "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
+    ],
+    "onAfterUpdate": [
+        "Molajo\\Plugins\\Alias\\AliasPlugin"
+    ],
+    "onBeforeExecute": [
+        "Molajo\\Plugins\\Application\\ApplicationPlugin",
+        "Molajo\\Plugins\\Menuitems\\MenuitemsPlugin"
+    ],
     "onBeforeRenderView": [
         "Molajo\\Plugins\\Author\\AuthorPlugin",
         "Molajo\\Plugins\\Comments\\CommentsPlugin",
@@ -7,6 +23,7 @@
     "onAfterRead": [
         "Molajo\\Plugins\\Blockquote\\BlockquotePlugin",
         "Molajo\\Plugins\\Copyright\\CopyrightPlugin",
+        "Molajo\\Plugins\\Customfields\\CustomfieldsPlugin",
         "Molajo\\Plugins\\Dateformats\\DateformatsPlugin",
         "Molajo\\Plugins\\Email\\EmailPlugin",
         "Molajo\\Plugins\\Fullname\\FullnamePlugin",
@@ -15,27 +32,10 @@
         "Molajo\\Plugins\\Readmore\\ReadmorePlugin",
         "Molajo\\Plugins\\Smilies\\SmiliesPlugin",
         "Molajo\\Plugins\\Snippet\\SnippetPlugin",
-        "Molajo\\Plugins\\Customfields\\CustomfieldsPlugin",
         "Molajo\\Plugins\\Status\\StatusPlugin"
     ],
     "onAfterRenderView": [
         "Molajo\\Plugins\\Comments\\CommentsPlugin"
-    ],
-    "onBeforeCreate": [
-        "Molajo\\Plugins\\Dateformats\\DateformatsPlugin",
-        "Molajo\\Plugins\\Alias\\AliasPlugin",
-        "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
-    ],
-    "onBeforeParseHead": [
-        "Molajo\\Plugins\\Messages\\MessagesPlugin"
-    ],
-    "onBeforeUpdate": [
-        "Molajo\\Plugins\\Alias\\AliasPlugin",
-        "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
-    ],
-    "onBeforeExecute": [
-        "Molajo\\Plugins\\Application\\ApplicationPlugin",
-        "Molajo\\Plugins\\Menuitems\\MenuitemsPlugin"
     ],
     "onBeforeResponse": [
         "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
@@ -65,6 +65,9 @@
     ],
     "onAfterLogout": [
         "Molajo\\Plugins\\Logout\\LogoutPlugin"
+    ],
+    "onBeforeParseHead": [
+        "Molajo\\Plugins\\Messages\\MessagesPlugin"
     ],
     "onAfterReadall": [
         "Molajo\\Plugins\\Pagination\\PaginationPlugin"

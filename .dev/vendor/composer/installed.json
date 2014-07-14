@@ -1,0 +1,2088 @@
+[
+    {
+        "name": "commonapi/exception",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Exception.git",
+            "reference": "0eef226e7134ed318da3cec25732d7bf88684e2a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Exception/zipball/0eef226e7134ed318da3cec25732d7bf88684e2a",
+            "reference": "0eef226e7134ed318da3cec25732d7bf88684e2a",
+            "shasum": ""
+        },
+        "time": "2014-04-28 20:33:01",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Exception\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Exception Api Interface",
+        "homepage": "https://github.com/CommonApi/Exception",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "exception"
+        ]
+    },
+    {
+        "name": "commonapi/cache",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Cache.git",
+            "reference": "eba3888a94116b0d21e30786e90963257dae21b2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Cache/zipball/eba3888a94116b0d21e30786e90963257dae21b2",
+            "reference": "eba3888a94116b0d21e30786e90963257dae21b2",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-05-28 03:21:58",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Cache\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "AmyStephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Cache Api Interface",
+        "homepage": "https://github.com/CommonApi/Cache",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "cache"
+        ]
+    },
+    {
+        "name": "commonapi/resource",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Resource.git",
+            "reference": "329ccfcb87c35fd0fcfcd1cb8753b71533a1b6fd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Resource/zipball/329ccfcb87c35fd0fcfcd1cb8753b71533a1b6fd",
+            "reference": "329ccfcb87c35fd0fcfcd1cb8753b71533a1b6fd",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-04-28 20:36:08",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Resource\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Resource Api Interface",
+        "homepage": "https://github.com/CommonApi/Resource",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "resource"
+        ]
+    },
+    {
+        "name": "psr/log",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/log.git",
+            "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/a78d6504ff5d4367497785ab2ade91db3a9fbe11",
+            "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11",
+            "shasum": ""
+        },
+        "time": "2014-01-18 15:33:09",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Psr\\Log\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for logging libraries",
+        "keywords": [
+            "log",
+            "psr",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "joomla/database",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/joomla-framework/database.git",
+            "reference": "2a4779655c6528f5a0c8731c39bbdf9b2a2133ae"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/joomla-framework/database/zipball/2a4779655c6528f5a0c8731c39bbdf9b2a2133ae",
+            "reference": "2a4779655c6528f5a0c8731c39bbdf9b2a2133ae",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.10",
+            "psr/log": "~1.0"
+        },
+        "require-dev": {
+            "joomla/test": "~1.0"
+        },
+        "time": "2014-05-24 15:34:11",
+        "type": "joomla-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Joomla\\Database\\": "src/",
+                "Joomla\\Database\\Tests\\": "Tests/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Joomla Database Package",
+        "homepage": "https://github.com/joomla-framework/database",
+        "keywords": [
+            "database",
+            "framework",
+            "joomla"
+        ]
+    },
+    {
+        "name": "commonapi/query",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Query.git",
+            "reference": "9fbd01f41734bb8d4b2f56ebba2d2bf2cc8a31f0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Query/zipball/9fbd01f41734bb8d4b2f56ebba2d2bf2cc8a31f0",
+            "reference": "9fbd01f41734bb8d4b2f56ebba2d2bf2cc8a31f0",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-01 23:56:14",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Query\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "AmyStephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Query Api Interface",
+        "homepage": "https://github.com/CommonApi/Query",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "query"
+        ]
+    },
+    {
+        "name": "commonapi/database",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Database.git",
+            "reference": "2fefb195db7b090eb932145cf21371ecf6286061"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Database/zipball/2fefb195db7b090eb932145cf21371ecf6286061",
+            "reference": "2fefb195db7b090eb932145cf21371ecf6286061",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-04-28 20:20:36",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Database\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Database Api Interface",
+        "homepage": "https://github.com/CommonApi/Database",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "database"
+        ]
+    },
+    {
+        "name": "molajo/database",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Database.git",
+            "reference": "22bfac2ffa83442cf05cbf611adc500b98c59ac0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Database/zipball/22bfac2ffa83442cf05cbf611adc500b98c59ac0",
+            "reference": "22bfac2ffa83442cf05cbf611adc500b98c59ac0",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/database": "dev-master",
+            "commonapi/exception": "dev-master",
+            "commonapi/query": "dev-master",
+            "joomla/database": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:15:44",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Database\\": "Source/",
+                "Molajo\\Factories\\Database\\": "Factories/Database/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Database: platform independent multi-database support for PHP Applications",
+        "homepage": "http://github.com/Molajo/Event",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "database",
+            "mysql",
+            "oracle",
+            "sql server"
+        ]
+    },
+    {
+        "name": "zendframework/zend-escaper",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "target-dir": "Zend/Escaper",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zendframework/Component_ZendEscaper.git",
+            "reference": "1a046d2bb55ce8fe686246df972408c8483cc40a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zendframework/Component_ZendEscaper/zipball/1a046d2bb55ce8fe686246df972408c8483cc40a",
+            "reference": "1a046d2bb55ce8fe686246df972408c8483cc40a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.23"
+        },
+        "time": "2014-03-13 16:23:28",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.3-dev",
+                "dev-develop": "2.4-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Zend\\Escaper\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "keywords": [
+            "escaper",
+            "zf2"
+        ]
+    },
+    {
+        "name": "commonapi/model",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Model.git",
+            "reference": "2a9a9c7214d190dc80ac23f417358b915d4fab10"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Model/zipball/2a9a9c7214d190dc80ac23f417358b915d4fab10",
+            "reference": "2a9a9c7214d190dc80ac23f417358b915d4fab10",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-05-08 10:22:51",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Model\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Model Api Interface",
+        "homepage": "https://github.com/CommonApi/Model",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "model"
+        ]
+    },
+    {
+        "name": "molajo/fieldhandler",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Fieldhandler.git",
+            "reference": "b715a7f7cc44154be4556e6f2134c2151689613d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Fieldhandler/zipball/b715a7f7cc44154be4556e6f2134c2151689613d",
+            "reference": "b715a7f7cc44154be4556e6f2134c2151689613d",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": "dev-master",
+            "commonapi/model": "dev-master",
+            "zendframework/zend-escaper": "dev-master"
+        },
+        "time": "2014-06-18 17:20:32",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Fieldhandler\\": "Source/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Fieldhandler: Validates and Filters Input; Escapes and Formats Output",
+        "homepage": "http://github.com/Molajo/Fieldhandler",
+        "keywords": [
+            "Escape",
+            "FieldHandler",
+            "Molajo",
+            "filter",
+            "format",
+            "validate"
+        ]
+    },
+    {
+        "name": "commonapi/controller",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Controller.git",
+            "reference": "b2917ca0c53e7804561b5697c70bd70a971b5366"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Controller/zipball/b2917ca0c53e7804561b5697c70bd70a971b5366",
+            "reference": "b2917ca0c53e7804561b5697c70bd70a971b5366",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-05-31 07:24:23",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Controller\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "AmyStephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Controller Api Interface",
+        "homepage": "https://github.com/CommonApi/Controller",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "controller"
+        ]
+    },
+    {
+        "name": "ircmaxell/password-compat",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ircmaxell/password_compat.git",
+            "reference": "c91b1168bc53c26f56fc65f16958b5be45ca5dc9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/c91b1168bc53c26f56fc65f16958b5be45ca5dc9",
+            "reference": "c91b1168bc53c26f56fc65f16958b5be45ca5dc9",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.*"
+        },
+        "time": "2014-03-21 11:47:21",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "files": [
+                "lib/password.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anthony Ferrara",
+                "email": "ircmaxell@php.net",
+                "homepage": "http://blog.ircmaxell.com"
+            }
+        ],
+        "description": "A compatibility library for the proposed simplified password hashing algorithm: https://wiki.php.net/rfc/password_hash",
+        "homepage": "https://github.com/ircmaxell/password_compat",
+        "keywords": [
+            "hashing",
+            "password"
+        ]
+    },
+    {
+        "name": "commonapi/email",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Email.git",
+            "reference": "51ee796e466162793f32c027c80ca51ad2eace46"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Email/zipball/51ee796e466162793f32c027c80ca51ad2eace46",
+            "reference": "51ee796e466162793f32c027c80ca51ad2eace46",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-04-28 20:35:13",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Email\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Email Api Interface",
+        "homepage": "https://github.com/CommonApi/Email",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "email"
+        ]
+    },
+    {
+        "name": "commonapi/user",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/User.git",
+            "reference": "0f4c17c841b1f016874eb5c116914554a2cfc689"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/User/zipball/0f4c17c841b1f016874eb5c116914554a2cfc689",
+            "reference": "0f4c17c841b1f016874eb5c116914554a2cfc689",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-06-17 18:25:57",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\User\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "AmyStephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common User Api Interface",
+        "homepage": "https://github.com/CommonApi/User",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "user"
+        ]
+    },
+    {
+        "name": "commonapi/route",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Route.git",
+            "reference": "870978016407cf78debfab7cfdfa4f85732c4d63"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Route/zipball/870978016407cf78debfab7cfdfa4f85732c4d63",
+            "reference": "870978016407cf78debfab7cfdfa4f85732c4d63",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-04-28 20:40:58",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Route\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Route Api Interface",
+        "homepage": "https://github.com/CommonApi/Route",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "route"
+        ]
+    },
+    {
+        "name": "commonapi/render",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Render.git",
+            "reference": "187e5cf4f08f21ecf08495be60eddc6a3437dfe3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Render/zipball/187e5cf4f08f21ecf08495be60eddc6a3437dfe3",
+            "reference": "187e5cf4f08f21ecf08495be60eddc6a3437dfe3",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-05-24 13:31:27",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Render\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Render Api Interface",
+        "homepage": "https://github.com/CommonApi/Render",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "render"
+        ]
+    },
+    {
+        "name": "molajo/render",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Render.git",
+            "reference": "8cfcce52896703d67eac553e61b2b93e0cdfa6e6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Render/zipball/8cfcce52896703d67eac553e61b2b93e0cdfa6e6",
+            "reference": "8cfcce52896703d67eac553e61b2b93e0cdfa6e6",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/render": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:36:17",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Render\\": "Source/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Rendering for PHP Applications",
+        "homepage": "http://github.com/Molajo/Render",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "render"
+        ]
+    },
+    {
+        "name": "molajo/pagination",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Pagination.git",
+            "reference": "5feef2ea3f3d087566c8314f606036e4f38fc7fa"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Pagination/zipball/5feef2ea3f3d087566c8314f606036e4f38fc7fa",
+            "reference": "5feef2ea3f3d087566c8314f606036e4f38fc7fa",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": "dev-master",
+            "commonapi/render": "dev-master"
+        },
+        "time": "2014-05-24 18:24:04",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\": "Source/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Pagination Support for PHP Applications",
+        "homepage": "http://github.com/Molajo/Pagination",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "pagination",
+            "render"
+        ]
+    },
+    {
+        "name": "commonapi/language",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Language.git",
+            "reference": "d734f65731e56b19e19448078eacf2b7b6568107"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Language/zipball/d734f65731e56b19e19448078eacf2b7b6568107",
+            "reference": "d734f65731e56b19e19448078eacf2b7b6568107",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-05-17 16:51:35",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Language\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Language Api Interface",
+        "homepage": "https://github.com/CommonApi/Language",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "language"
+        ]
+    },
+    {
+        "name": "molajo/log",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Log.git",
+            "reference": "2ef7a023c9303e55557639507536a46af27242bf"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Log/zipball/2ef7a023c9303e55557639507536a46af27242bf",
+            "reference": "2ef7a023c9303e55557639507536a46af27242bf",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/controller": "dev-master",
+            "commonapi/exception": "dev-master",
+            "psr/log": "dev-master"
+        },
+        "time": "2014-06-18 17:30:11",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Controller\\": "Controller/",
+                "Molajo\\Log\\": "Source/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Logs: Basic PSR-3 compliant Log Package for PHP applications",
+        "homepage": "http://github.com/Molajo/Log",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "log"
+        ]
+    },
+    {
+        "name": "molajo/language",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Language.git",
+            "reference": "345cbfe0497182430688c9a2732d505b8f298a3d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Language/zipball/345cbfe0497182430688c9a2732d505b8f298a3d",
+            "reference": "345cbfe0497182430688c9a2732d505b8f298a3d",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/language": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:25:37",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Language\\": "Source/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Language Services for PHP Applications",
+        "homepage": "http://github.com/Molajo/Language",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "language"
+        ]
+    },
+    {
+        "name": "commonapi/event",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Event.git",
+            "reference": "24997df42fabbef56137e0540d71f222751f0491"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Event/zipball/24997df42fabbef56137e0540d71f222751f0491",
+            "reference": "24997df42fabbef56137e0540d71f222751f0491",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-04-28 20:33:56",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Event\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Event Api Interface",
+        "homepage": "https://github.com/CommonApi/Event",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "event"
+        ]
+    },
+    {
+        "name": "commonapi/ioc",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/IoC.git",
+            "reference": "506cf917bcf1183c62ae1b3a4aec05a1ed07a7d3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/IoC/zipball/506cf917bcf1183c62ae1b3a4aec05a1ed07a7d3",
+            "reference": "506cf917bcf1183c62ae1b3a4aec05a1ed07a7d3",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-04-28 20:39:24",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\IoC\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common IoC Api Interface",
+        "homepage": "https://github.com/CommonApi/IoC",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "ioc"
+        ]
+    },
+    {
+        "name": "molajo/ioc",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/IoC.git",
+            "reference": "d9e54e6a2a4a6ba95b7e184d4a746473e1d72374"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/IoC/zipball/d9e54e6a2a4a6ba95b7e184d4a746473e1d72374",
+            "reference": "d9e54e6a2a4a6ba95b7e184d4a746473e1d72374",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/event": "dev-master",
+            "commonapi/ioc": "dev-master",
+            "commonapi/resource": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:24:13",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\IoC\\": "Source/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Inversion of Control package offers a full-featured, simple-to-use dependency injection and object construction solution for PHP applications. ",
+        "homepage": "http://github.com/Molajo/IoC",
+        "keywords": [
+            "Molajo",
+            "dependency injection",
+            "inversion of control",
+            "ioc"
+        ]
+    },
+    {
+        "name": "commonapi/filesystem",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Filesystem.git",
+            "reference": "664d173526972928106e8f198d63f67a0e723fb3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Filesystem/zipball/664d173526972928106e8f198d63f67a0e723fb3",
+            "reference": "664d173526972928106e8f198d63f67a0e723fb3",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-04-28 20:37:55",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Filesystem\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "AmyStephen",
+                "email": "AmyStephen@gmail.com",
+                "homepage": "http://Molajo.org"
+            }
+        ],
+        "description": "Common Filesystem Api Interface",
+        "homepage": "https://github.com/CommonApi/Filesystem",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "filesystem"
+        ]
+    },
+    {
+        "name": "commonapi/http",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Http.git",
+            "reference": "f8488abfa4c042ae18b5149ae26488ac84039e5e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Http/zipball/f8488abfa4c042ae18b5149ae26488ac84039e5e",
+            "reference": "f8488abfa4c042ae18b5149ae26488ac84039e5e",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-05-25 08:52:25",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Http\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Http Api Interface",
+        "homepage": "https://github.com/CommonApi/Http",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "http"
+        ]
+    },
+    {
+        "name": "molajo/http",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Http.git",
+            "reference": "124ef60837347f86a955579b29704c4cea5c863c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Http/zipball/124ef60837347f86a955579b29704c4cea5c863c",
+            "reference": "124ef60837347f86a955579b29704c4cea5c863c",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/filesystem": "dev-master",
+            "commonapi/http": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:22:53",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Http\\": "Source/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Http: Client, File Upload, Redirect, Request, Response, Server for PHP Applications",
+        "homepage": "http://github.com/Molajo/Http",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "http"
+        ]
+    },
+    {
+        "name": "molajo/event",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Event.git",
+            "reference": "074fd9d719e2e440179c248b86cd34ec0979a4c8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Event/zipball/074fd9d719e2e440179c248b86cd34ec0979a4c8",
+            "reference": "074fd9d719e2e440179c248b86cd34ec0979a4c8",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/event": "dev-master",
+            "commonapi/exception": "dev-master"
+        },
+        "time": "2014-06-18 17:18:55",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Event\\": "Source/",
+                "Molajo\\Plugins\\": "Plugins/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Events: Dispatcher, Event Dispatcher and Event Package for PHP applications",
+        "homepage": "http://github.com/Molajo/Event",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "event"
+        ]
+    },
+    {
+        "name": "swiftmailer/swiftmailer",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/swiftmailer/swiftmailer.git",
+            "reference": "7b048deea4ee9c49c70c40a15f4045f8dff765bc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7b048deea4ee9c49c70c40a15f4045f8dff765bc",
+            "reference": "7b048deea4ee9c49c70c40a15f4045f8dff765bc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.4"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9.1"
+        },
+        "time": "2014-06-13 11:45:24",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.2-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "files": [
+                "lib/swift_required.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com",
+                "homepage": "http://fabien.potencier.org",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Chris Corbyn"
+            }
+        ],
+        "description": "Swiftmailer, free feature-rich PHP mailer",
+        "homepage": "http://swiftmailer.org",
+        "keywords": [
+            "mail",
+            "mailer"
+        ]
+    },
+    {
+        "name": "phpmailer/phpmailer",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPMailer/PHPMailer.git",
+            "reference": "022382c9bf970409dae5c3e7d248b38e2e2f9b74"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/022382c9bf970409dae5c3e7d248b38e2e2f9b74",
+            "reference": "022382c9bf970409dae5c3e7d248b38e2e2f9b74",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0.0"
+        },
+        "require-dev": {
+            "phpdocumentor/phpdocumentor": "*",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2014-06-13 09:18:30",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "class.phpmailer.php",
+                "class.pop3.php",
+                "class.smtp.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-2.1"
+        ],
+        "authors": [
+            {
+                "name": "Jim Jagielski",
+                "email": "jimjag@gmail.com"
+            },
+            {
+                "name": "Marcus Bointon",
+                "email": "phpmailer@synchromedia.co.uk"
+            },
+            {
+                "name": "Andy Prevost",
+                "email": "codeworxtech@users.sourceforge.net"
+            },
+            {
+                "name": "Brent R. Matzelle"
+            }
+        ],
+        "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
+    },
+    {
+        "name": "molajo/email",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Email.git",
+            "reference": "5fccef9f6bcf6d46ffcfb7ea3826ce6ad2653b11"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Email/zipball/5fccef9f6bcf6d46ffcfb7ea3826ce6ad2653b11",
+            "reference": "5fccef9f6bcf6d46ffcfb7ea3826ce6ad2653b11",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/email": "dev-master",
+            "php": ">=5.4",
+            "phpmailer/phpmailer": "dev-master",
+            "swiftmailer/swiftmailer": "dev-master"
+        },
+        "time": "2014-06-18 17:17:07",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Email\\": "Source/",
+                "Molajo\\Factories\\Email\\": "Factories/Email/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Email: platform independent support with adapters for PHPMailer, SwiftMail, and native PHP mail",
+        "homepage": "http://github.com/Molajo/Email",
+        "keywords": [
+            "Molajo",
+            "Swiftmail",
+            "email",
+            "phpmailer"
+        ]
+    },
+    {
+        "name": "molajo/cache",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Cache.git",
+            "reference": "f68de2df00612930dd651445e4039821ba319086"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Cache/zipball/f68de2df00612930dd651445e4039821ba319086",
+            "reference": "f68de2df00612930dd651445e4039821ba319086",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/cache": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:08:34",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Cache\\": "Source/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Cache API for PHP applications with APC, Database, File, Memcached, In-memory, Redis, Wincache, and xCache handlers.",
+        "homepage": "http://github.com/Molajo/Cache",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "apc",
+            "cache",
+            "memcached",
+            "redis",
+            "wincache",
+            "xcache"
+        ]
+    },
+    {
+        "name": "commonapi/authorisation",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CommonApi/Authorisation.git",
+            "reference": "55a5d66f7aa3a7c659aea4416d3d31637e5e38db"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CommonApi/Authorisation/zipball/55a5d66f7aa3a7c659aea4416d3d31637e5e38db",
+            "reference": "55a5d66f7aa3a7c659aea4416d3d31637e5e38db",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": ">=0.1"
+        },
+        "time": "2014-04-28 20:21:22",
+        "type": "api",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "CommonApi\\Authorisation\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Common Authorisation Api Interface",
+        "homepage": "https://github.com/CommonApi/Authorisation",
+        "keywords": [
+            "CommonApi",
+            "api",
+            "authorisation"
+        ]
+    },
+    {
+        "name": "molajo/authorisation",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Authorisation.git",
+            "reference": "7a3b9ab7764d5907037f742c2407a3d6a11d581b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Authorisation/zipball/7a3b9ab7764d5907037f742c2407a3d6a11d581b",
+            "reference": "7a3b9ab7764d5907037f742c2407a3d6a11d581b",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/authorisation": "dev-master",
+            "commonapi/database": "dev-master",
+            "commonapi/query": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:09:49",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Authorisation\\": "Source/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Authorisation support for PHP Applications",
+        "homepage": "http://github.com/Molajo/Authorisation",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "authorisation"
+        ]
+    },
+    {
+        "name": "molajo/framework",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Framework.git",
+            "reference": "34f34739a3240d7ecfda5327ff32a0a8f5549163"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Framework/zipball/34f34739a3240d7ecfda5327ff32a0a8f5549163",
+            "reference": "34f34739a3240d7ecfda5327ff32a0a8f5549163",
+            "shasum": ""
+        },
+        "require": {
+            "molajo/authorisation": "dev-master",
+            "molajo/cache": "dev-master",
+            "molajo/email": "dev-master",
+            "molajo/event": "dev-master",
+            "molajo/fieldhandler": "dev-master",
+            "molajo/http": "dev-master",
+            "molajo/ioc": "dev-master",
+            "molajo/language": "dev-master",
+            "molajo/log": "dev-master",
+            "molajo/molajito": "dev-master",
+            "molajo/pagination": "dev-master",
+            "molajo/query": "dev-master",
+            "molajo/render": "dev-master",
+            "molajo/resource": "dev-master",
+            "molajo/route": "dev-master",
+            "molajo/user": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-04 03:47:11",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Framework Packages for PHP Applications",
+        "homepage": "http://github.com/Molajo/Framework",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "framework"
+        ]
+    },
+    {
+        "name": "molajo/application",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Application.git",
+            "reference": "2845d699442be5b592bf6fdf3fdad89c303c9ac7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Application/zipball/2845d699442be5b592bf6fdf3fdad89c303c9ac7",
+            "reference": "2845d699442be5b592bf6fdf3fdad89c303c9ac7",
+            "shasum": ""
+        },
+        "require": {
+            "molajo/framework": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:07:12",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\": "Source/Extensions/",
+                "Molajo\\Controller\\": "Source/Controller/",
+                "Molajo\\Fieldhandler\\Adapter\\": "Source/Fieldhandler/",
+                "Molajo\\Model\\": "Source/Model/",
+                "Molajo\\Plugins\\": "Source/Plugins/",
+                "Molajo\\Resource\\": "Source/Resource/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Application for use in developing Molajo Distributions",
+        "homepage": "http://github.com/Molajo/Application",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "application"
+        ]
+    },
+    {
+        "name": "molajo/foundation5",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Foundation5.git",
+            "reference": "eddd2cb6fd88fcdcc9ca3d9effd8fe7489e6b155"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Foundation5/zipball/eddd2cb6fd88fcdcc9ca3d9effd8fe7489e6b155",
+            "reference": "eddd2cb6fd88fcdcc9ca3d9effd8fe7489e6b155",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4"
+        },
+        "time": "2014-05-25 09:21:08",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Plugins\\": "Source/Plugins/",
+                "Molajo\\Themes\\": "Source/Themes/",
+                "Molajo\\Views\\Pages\\": "Source/Views/Pages/",
+                "Molajo\\Views\\Templates\\": "Source/Views/Templates/",
+                "Molajo\\Views\\Wraps\\": "Source/Views/Wraps/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Theme and View Package for Foundation5",
+        "homepage": "http://github.com/Molajo/Foundation5",
+        "keywords": [
+            "Foundation5",
+            "Molajo"
+        ]
+    },
+    {
+        "name": "molajo/resource",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Resource.git",
+            "reference": "24f349ed094336bf762c06071d7f1f785488e8a5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Resource/zipball/24f349ed094336bf762c06071d7f1f785488e8a5",
+            "reference": "24f349ed094336bf762c06071d7f1f785488e8a5",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/resource": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:37:51",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Factories\\": "Factories/",
+                "Molajo\\Resource\\": "Source/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Resource Services for PHP Applications",
+        "homepage": "http://github.com/Molajo/Resource",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "resource"
+        ]
+    },
+    {
+        "name": "molajo/route",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Route.git",
+            "reference": "eda699482d3a96f8e31b61368d1ae85633811964"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Route/zipball/eda699482d3a96f8e31b61368d1ae85633811964",
+            "reference": "eda699482d3a96f8e31b61368d1ae85633811964",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/route": "dev-master",
+            "molajo/query": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:39:15",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Factories\\": "Factories/",
+                "Molajo\\Route\\": "Source/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Route Services for PHP Applications",
+        "homepage": "http://github.com/Molajo/Route",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "route"
+        ]
+    },
+    {
+        "name": "molajo/molajito",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Molajito.git",
+            "reference": "bd7ad734cb749a51e9bc12c041de3679366bce42"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Molajito/zipball/bd7ad734cb749a51e9bc12c041de3679366bce42",
+            "reference": "bd7ad734cb749a51e9bc12c041de3679366bce42",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/exception": "dev-master",
+            "commonapi/language": "dev-master",
+            "commonapi/model": "dev-master",
+            "commonapi/render": "dev-master",
+            "molajo/fieldhandler": "dev-master",
+            "molajo/pagination": "dev-master"
+        },
+        "time": "2014-06-18 17:32:10",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajito\\": "Source/",
+                "Molajo\\Factories\\": "Factories/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajito View Rendering for PHP Applications",
+        "homepage": "http://github.com/Molajo/Molajito",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "molajito",
+            "render"
+        ]
+    },
+    {
+        "name": "molajo/user",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/User.git",
+            "reference": "c620ff9747aecd173ec9dc236fce368ae1d51e52"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/User/zipball/c620ff9747aecd173ec9dc236fce368ae1d51e52",
+            "reference": "c620ff9747aecd173ec9dc236fce368ae1d51e52",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/email": "dev-master",
+            "commonapi/user": "dev-master",
+            "ircmaxell/password-compat": "dev-master",
+            "molajo/query": "dev-master",
+            "php": ">=5.4"
+        },
+        "suggest": {
+            "molajo/email": "dev-master"
+        },
+        "time": "2014-06-18 16:38:25",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Factories\\": "Factories/",
+                "Molajo\\User\\": "Source/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amy Stephen",
+                "email": "AmyStephen@molajo.org",
+                "homepage": "http://AmyStephen.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo User Services for PHP Applications",
+        "homepage": "http://github.com/Molajo/User",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "user"
+        ]
+    },
+    {
+        "name": "molajo/query",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Molajo/Query.git",
+            "reference": "54c6b5e105f19db7ca3c0807ad80902c9cb9ca29"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Molajo/Query/zipball/54c6b5e105f19db7ca3c0807ad80902c9cb9ca29",
+            "reference": "54c6b5e105f19db7ca3c0807ad80902c9cb9ca29",
+            "shasum": ""
+        },
+        "require": {
+            "commonapi/cache": "dev-master",
+            "commonapi/controller": "dev-master",
+            "commonapi/model": "dev-master",
+            "commonapi/query": "dev-master",
+            "molajo/database": "dev-master",
+            "molajo/fieldhandler": "dev-master",
+            "molajo/resource": "dev-master",
+            "php": ">=5.4"
+        },
+        "time": "2014-06-18 17:04:58",
+        "type": "molajo-package",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Molajo\\Factories\\": "Factories/",
+                "Molajo\\Query\\": "Source/, Traits/",
+                "Molajo\\Controller\\": "Controller/",
+                "Molajo\\Model\\": "Model/",
+                "Molajo\\Resource\\": "Resource/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "AmyStephen",
+                "email": "AmyStephen@Molajo.org",
+                "homepage": "http://Molajo.org",
+                "role": "Developer"
+            }
+        ],
+        "description": "Molajo Query Services for PHP Applications",
+        "homepage": "http://github.com/Molajo/Query",
+        "keywords": [
+            "CommonApi",
+            "Molajo",
+            "query"
+        ]
+    }
+]

@@ -11,84 +11,6 @@
         "path": "Sites\/2\/Logs\/error.php",
         "fqns": "Molajo\\Sites\\Logs\\error"
     },
-    "Source\/Plugins\/Author\/AuthorPlugin.php": {
-        "file_name": "AuthorPlugin.php",
-        "base_name": "AuthorPlugin",
-        "path": "Source\/Plugins\/Author\/AuthorPlugin.php",
-        "fqns": "Molajo\\Plugins\\Author\\AuthorPlugin"
-    },
-    "Source\/Plugins\/Blockquote\/BlockquotePlugin.php": {
-        "file_name": "BlockquotePlugin.php",
-        "base_name": "BlockquotePlugin",
-        "path": "Source\/Plugins\/Blockquote\/BlockquotePlugin.php",
-        "fqns": "Molajo\\Plugins\\Blockquote\\BlockquotePlugin"
-    },
-    "Source\/Plugins\/Comments\/CommentsPlugin.php": {
-        "file_name": "CommentsPlugin.php",
-        "base_name": "CommentsPlugin",
-        "path": "Source\/Plugins\/Comments\/CommentsPlugin.php",
-        "fqns": "Molajo\\Plugins\\Comments\\CommentsPlugin"
-    },
-    "Source\/Plugins\/Copyright\/CopyrightPlugin.php": {
-        "file_name": "CopyrightPlugin.php",
-        "base_name": "CopyrightPlugin",
-        "path": "Source\/Plugins\/Copyright\/CopyrightPlugin.php",
-        "fqns": "Molajo\\Plugins\\Copyright\\CopyrightPlugin"
-    },
-    "Source\/Plugins\/Dateformats\/DateformatsPlugin.php": {
-        "file_name": "DateformatsPlugin.php",
-        "base_name": "DateformatsPlugin",
-        "path": "Source\/Plugins\/Dateformats\/DateformatsPlugin.php",
-        "fqns": "Molajo\\Plugins\\Dateformats\\DateformatsPlugin"
-    },
-    "Source\/Plugins\/Email\/EmailPlugin.php": {
-        "file_name": "EmailPlugin.php",
-        "base_name": "EmailPlugin",
-        "path": "Source\/Plugins\/Email\/EmailPlugin.php",
-        "fqns": "Molajo\\Plugins\\Email\\EmailPlugin"
-    },
-    "Source\/Plugins\/Fullname\/FullnamePlugin.php": {
-        "file_name": "FullnamePlugin.php",
-        "base_name": "FullnamePlugin",
-        "path": "Source\/Plugins\/Fullname\/FullnamePlugin.php",
-        "fqns": "Molajo\\Plugins\\Fullname\\FullnamePlugin"
-    },
-    "Source\/Plugins\/Linebreaks\/LinebreaksPlugin.php": {
-        "file_name": "LinebreaksPlugin.php",
-        "base_name": "LinebreaksPlugin",
-        "path": "Source\/Plugins\/Linebreaks\/LinebreaksPlugin.php",
-        "fqns": "Molajo\\Plugins\\Linebreaks\\LinebreaksPlugin"
-    },
-    "Source\/Plugins\/Links\/LinksPlugin.php": {
-        "file_name": "LinksPlugin.php",
-        "base_name": "LinksPlugin",
-        "path": "Source\/Plugins\/Links\/LinksPlugin.php",
-        "fqns": "Molajo\\Plugins\\Links\\LinksPlugin"
-    },
-    "Source\/Plugins\/Messages\/MessagesPlugin.php": {
-        "file_name": "MessagesPlugin.php",
-        "base_name": "MessagesPlugin",
-        "path": "Source\/Plugins\/Messages\/MessagesPlugin.php",
-        "fqns": "Molajo\\Plugins\\Messages\\MessagesPlugin"
-    },
-    "Source\/Plugins\/Readmore\/ReadmorePlugin.php": {
-        "file_name": "ReadmorePlugin.php",
-        "base_name": "ReadmorePlugin",
-        "path": "Source\/Plugins\/Readmore\/ReadmorePlugin.php",
-        "fqns": "Molajo\\Plugins\\Readmore\\ReadmorePlugin"
-    },
-    "Source\/Plugins\/Smilies\/SmiliesPlugin.php": {
-        "file_name": "SmiliesPlugin.php",
-        "base_name": "SmiliesPlugin",
-        "path": "Source\/Plugins\/Smilies\/SmiliesPlugin.php",
-        "fqns": "Molajo\\Plugins\\Smilies\\SmiliesPlugin"
-    },
-    "Source\/Plugins\/Snippet\/SnippetPlugin.php": {
-        "file_name": "SnippetPlugin.php",
-        "base_name": "SnippetPlugin",
-        "path": "Source\/Plugins\/Snippet\/SnippetPlugin.php",
-        "fqns": "Molajo\\Plugins\\Snippet\\SnippetPlugin"
-    },
     "vendor\/commonapi\/authorisation\/AuthorisationInterface.php": {
         "file_name": "AuthorisationInterface.php",
         "base_name": "AuthorisationInterface",
@@ -1079,144 +1001,6 @@
         "path": "vendor\/molajo\/application\/Source\/Controller\/UrlController.php",
         "fqns": "Molajo\\Controller\\UrlController"
     },
-    "vendor\/molajo\/application\/Source\/Plugins\/AbstractPlugin.php": {
-        "file_name": "AbstractPlugin.php",
-        "base_name": "AbstractPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/AbstractPlugin.php",
-        "fqns": "Molajo\\Plugins\\AbstractPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Alias\/AliasPlugin.php": {
-        "file_name": "AliasPlugin.php",
-        "base_name": "AliasPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Alias\/AliasPlugin.php",
-        "fqns": "Molajo\\Plugins\\Alias\\AliasPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Application\/ApplicationPlugin.php": {
-        "file_name": "ApplicationPlugin.php",
-        "base_name": "ApplicationPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Application\/ApplicationPlugin.php",
-        "fqns": "Molajo\\Plugins\\Application\\ApplicationPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Csrftoken\/CsrftokenPlugin.php": {
-        "file_name": "CsrftokenPlugin.php",
-        "base_name": "CsrftokenPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Csrftoken\/CsrftokenPlugin.php",
-        "fqns": "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Customfields\/CustomfieldsPlugin.php": {
-        "file_name": "CustomfieldsPlugin.php",
-        "base_name": "CustomfieldsPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Customfields\/CustomfieldsPlugin.php",
-        "fqns": "Molajo\\Plugins\\Customfields\\CustomfieldsPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Events\/EventsPlugin.php": {
-        "file_name": "EventsPlugin.php",
-        "base_name": "EventsPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Events\/EventsPlugin.php",
-        "fqns": "Molajo\\Plugins\\Events\\EventsPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Fields\/FieldsPlugin.php": {
-        "file_name": "FieldsPlugin.php",
-        "base_name": "FieldsPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Fields\/FieldsPlugin.php",
-        "fqns": "Molajo\\Plugins\\Fields\\FieldsPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Footer\/FooterPlugin.php": {
-        "file_name": "FooterPlugin.php",
-        "base_name": "FooterPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Footer\/FooterPlugin.php",
-        "fqns": "Molajo\\Plugins\\Footer\\FooterPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Login\/LoginPlugin.php": {
-        "file_name": "LoginPlugin.php",
-        "base_name": "LoginPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Login\/LoginPlugin.php",
-        "fqns": "Molajo\\Plugins\\Login\\LoginPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Logout\/LogoutPlugin.php": {
-        "file_name": "LogoutPlugin.php",
-        "base_name": "LogoutPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Logout\/LogoutPlugin.php",
-        "fqns": "Molajo\\Plugins\\Logout\\LogoutPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Menuitems\/MenuitemsPlugin.php": {
-        "file_name": "MenuitemsPlugin.php",
-        "base_name": "MenuitemsPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Menuitems\/MenuitemsPlugin.php",
-        "fqns": "Molajo\\Plugins\\Menuitems\\MenuitemsPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagetypeapplication\/PagetypeapplicationPlugin.php": {
-        "file_name": "PagetypeapplicationPlugin.php",
-        "base_name": "PagetypeapplicationPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagetypeapplication\/PagetypeapplicationPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagetypeapplication\\PagetypeapplicationPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagetypeconfiguration\/PagetypeconfigurationPlugin.php": {
-        "file_name": "PagetypeconfigurationPlugin.php",
-        "base_name": "PagetypeconfigurationPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagetypeconfiguration\/PagetypeconfigurationPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagetypeconfiguration\\PagetypeconfigurationPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagetypedashboard\/PagetypedashboardPlugin.php": {
-        "file_name": "PagetypedashboardPlugin.php",
-        "base_name": "PagetypedashboardPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagetypedashboard\/PagetypedashboardPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagetypedashboard\\PagetypedashboardPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagetypeedit\/PagetypeeditPlugin.php": {
-        "file_name": "PagetypeeditPlugin.php",
-        "base_name": "PagetypeeditPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagetypeedit\/PagetypeeditPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagetypeedit\\PagetypeeditPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagetypegrid\/PagetypegridPlugin.php": {
-        "file_name": "PagetypegridPlugin.php",
-        "base_name": "PagetypegridPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagetypegrid\/PagetypegridPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagetypegrid\\PagetypegridPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagetypeitem\/PagetypeitemPlugin.php": {
-        "file_name": "PagetypeitemPlugin.php",
-        "base_name": "PagetypeitemPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagetypeitem\/PagetypeitemPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagetypeitem\\PagetypeitemPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagetypelist\/PagetypelistPlugin.php": {
-        "file_name": "PagetypelistPlugin.php",
-        "base_name": "PagetypelistPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagetypelist\/PagetypelistPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagetypelist\\PagetypelistPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagetypenew\/PagetypenewPlugin.php": {
-        "file_name": "PagetypenewPlugin.php",
-        "base_name": "PagetypenewPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagetypenew\/PagetypenewPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagetypenew\\PagetypenewPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Pagination\/PaginationPlugin.php": {
-        "file_name": "PaginationPlugin.php",
-        "base_name": "PaginationPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Pagination\/PaginationPlugin.php",
-        "fqns": "Molajo\\Plugins\\Pagination\\PaginationPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Queryauthorisation\/QueryauthorisationPlugin.php": {
-        "file_name": "QueryauthorisationPlugin.php",
-        "base_name": "QueryauthorisationPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Queryauthorisation\/QueryauthorisationPlugin.php",
-        "fqns": "Molajo\\Plugins\\Queryauthorisation\\QueryauthorisationPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Sites\/SitesPlugin.php": {
-        "file_name": "SitesPlugin.php",
-        "base_name": "SitesPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Sites\/SitesPlugin.php",
-        "fqns": "Molajo\\Plugins\\Sites\\SitesPlugin"
-    },
-    "vendor\/molajo\/application\/Source\/Plugins\/Status\/StatusPlugin.php": {
-        "file_name": "StatusPlugin.php",
-        "base_name": "StatusPlugin",
-        "path": "vendor\/molajo\/application\/Source\/Plugins\/Status\/StatusPlugin.php",
-        "fqns": "Molajo\\Plugins\\Status\\StatusPlugin"
-    },
     "vendor\/molajo\/application\/Source\/Resource\/Adapter\/Menuitem.php": {
         "file_name": "Menuitem.php",
         "base_name": "Menuitem",
@@ -1396,48 +1180,6 @@
         "base_name": "DispatcherFactoryMethod",
         "path": "vendor\/molajo\/event\/Factories\/Dispatcher\/DispatcherFactoryMethod.php",
         "fqns": "Molajo\\Factories\\Dispatcher\\DispatcherFactoryMethod"
-    },
-    "vendor\/molajo\/event\/Plugins\/AuthenticateEventPlugin.php": {
-        "file_name": "AuthenticateEventPlugin.php",
-        "base_name": "AuthenticateEventPlugin",
-        "path": "vendor\/molajo\/event\/Plugins\/AuthenticateEventPlugin.php",
-        "fqns": "Molajo\\Plugins\\AuthenticateEventPlugin"
-    },
-    "vendor\/molajo\/event\/Plugins\/CreateEventPlugin.php": {
-        "file_name": "CreateEventPlugin.php",
-        "base_name": "CreateEventPlugin",
-        "path": "vendor\/molajo\/event\/Plugins\/CreateEventPlugin.php",
-        "fqns": "Molajo\\Plugins\\CreateEventPlugin"
-    },
-    "vendor\/molajo\/event\/Plugins\/DisplayEventPlugin.php": {
-        "file_name": "DisplayEventPlugin.php",
-        "base_name": "DisplayEventPlugin",
-        "path": "vendor\/molajo\/event\/Plugins\/DisplayEventPlugin.php",
-        "fqns": "Molajo\\Plugins\\DisplayEventPlugin"
-    },
-    "vendor\/molajo\/event\/Plugins\/ModelAbstractPlugin.php": {
-        "file_name": "ModelAbstractPlugin.php",
-        "base_name": "ModelAbstractPlugin",
-        "path": "vendor\/molajo\/event\/Plugins\/ModelAbstractPlugin.php",
-        "fqns": "Molajo\\Plugins\\ModelAbstractPlugin"
-    },
-    "vendor\/molajo\/event\/Plugins\/ReadEventPlugin.php": {
-        "file_name": "ReadEventPlugin.php",
-        "base_name": "ReadEventPlugin",
-        "path": "vendor\/molajo\/event\/Plugins\/ReadEventPlugin.php",
-        "fqns": "Molajo\\Plugins\\ReadEventPlugin"
-    },
-    "vendor\/molajo\/event\/Plugins\/SystemEventPlugin.php": {
-        "file_name": "SystemEventPlugin.php",
-        "base_name": "SystemEventPlugin",
-        "path": "vendor\/molajo\/event\/Plugins\/SystemEventPlugin.php",
-        "fqns": "Molajo\\Plugins\\SystemEventPlugin"
-    },
-    "vendor\/molajo\/event\/Plugins\/UpdateEventPlugin.php": {
-        "file_name": "UpdateEventPlugin.php",
-        "base_name": "UpdateEventPlugin",
-        "path": "vendor\/molajo\/event\/Plugins\/UpdateEventPlugin.php",
-        "fqns": "Molajo\\Plugins\\UpdateEventPlugin"
     },
     "vendor\/molajo\/event\/Source\/Dispatcher.php": {
         "file_name": "Dispatcher.php",
@@ -1631,6 +1373,12 @@
         "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Fileextension.php",
         "fqns": "Molajo\\Fieldhandler\\Constraint\\Fileextension"
     },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Filename.php": {
+        "file_name": "Filename.php",
+        "base_name": "Filename",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Filename.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Filename"
+    },
     "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Float.php": {
         "file_name": "Float.php",
         "base_name": "Float",
@@ -1684,6 +1432,12 @@
         "base_name": "HtmlAttribute",
         "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/HtmlAttribute.php",
         "fqns": "Molajo\\Fieldhandler\\Constraint\\HtmlAttribute"
+    },
+    "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Image.php": {
+        "file_name": "Image.php",
+        "base_name": "Image",
+        "path": "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Image.php",
+        "fqns": "Molajo\\Fieldhandler\\Constraint\\Image"
     },
     "vendor\/molajo\/fieldhandler\/Source\/Constraint\/Integer.php": {
         "file_name": "Integer.php",
@@ -2344,6 +2098,354 @@
         "base_name": "Pagination",
         "path": "vendor\/molajo\/pagination\/Source\/Pagination.php",
         "fqns": "Molajo\\Pagination"
+    },
+    "vendor\/molajo\/plugins\/Source\/AbstractFieldsPlugin.php": {
+        "file_name": "AbstractFieldsPlugin.php",
+        "base_name": "AbstractFieldsPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/AbstractFieldsPlugin.php",
+        "fqns": "Molajo\\Plugins\\AbstractFieldsPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/AbstractPlugin.php": {
+        "file_name": "AbstractPlugin.php",
+        "base_name": "AbstractPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/AbstractPlugin.php",
+        "fqns": "Molajo\\Plugins\\AbstractPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Alias\/AliasPlugin.php": {
+        "file_name": "AliasPlugin.php",
+        "base_name": "AliasPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Alias\/AliasPlugin.php",
+        "fqns": "Molajo\\Plugins\\Alias\\AliasPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Application\/ApplicationBreadcrumbs.php": {
+        "file_name": "ApplicationBreadcrumbs.php",
+        "base_name": "ApplicationBreadcrumbs",
+        "path": "vendor\/molajo\/plugins\/Source\/Application\/ApplicationBreadcrumbs.php",
+        "fqns": "Molajo\\Plugins\\Application\\ApplicationBreadcrumbs"
+    },
+    "vendor\/molajo\/plugins\/Source\/Application\/ApplicationMenu.php": {
+        "file_name": "ApplicationMenu.php",
+        "base_name": "ApplicationMenu",
+        "path": "vendor\/molajo\/plugins\/Source\/Application\/ApplicationMenu.php",
+        "fqns": "Molajo\\Plugins\\Application\\ApplicationMenu"
+    },
+    "vendor\/molajo\/plugins\/Source\/Application\/ApplicationMetadata.php": {
+        "file_name": "ApplicationMetadata.php",
+        "base_name": "ApplicationMetadata",
+        "path": "vendor\/molajo\/plugins\/Source\/Application\/ApplicationMetadata.php",
+        "fqns": "Molajo\\Plugins\\Application\\ApplicationMetadata"
+    },
+    "vendor\/molajo\/plugins\/Source\/Application\/ApplicationPlugin.php": {
+        "file_name": "ApplicationPlugin.php",
+        "base_name": "ApplicationPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Application\/ApplicationPlugin.php",
+        "fqns": "Molajo\\Plugins\\Application\\ApplicationPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Application\/ApplicationTitle.php": {
+        "file_name": "ApplicationTitle.php",
+        "base_name": "ApplicationTitle",
+        "path": "vendor\/molajo\/plugins\/Source\/Application\/ApplicationTitle.php",
+        "fqns": "Molajo\\Plugins\\Application\\ApplicationTitle"
+    },
+    "vendor\/molajo\/plugins\/Source\/AuthenticateEventPlugin.php": {
+        "file_name": "AuthenticateEventPlugin.php",
+        "base_name": "AuthenticateEventPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/AuthenticateEventPlugin.php",
+        "fqns": "Molajo\\Plugins\\AuthenticateEventPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Author\/AuthorPlugin.php": {
+        "file_name": "AuthorPlugin.php",
+        "base_name": "AuthorPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Author\/AuthorPlugin.php",
+        "fqns": "Molajo\\Plugins\\Author\\AuthorPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Blockquote\/BlockquotePlugin.php": {
+        "file_name": "BlockquotePlugin.php",
+        "base_name": "BlockquotePlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Blockquote\/BlockquotePlugin.php",
+        "fqns": "Molajo\\Plugins\\Blockquote\\BlockquotePlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Comments\/Comments.php": {
+        "file_name": "Comments.php",
+        "base_name": "Comments",
+        "path": "vendor\/molajo\/plugins\/Source\/Comments\/Comments.php",
+        "fqns": "Molajo\\Plugins\\Comments\\Comments"
+    },
+    "vendor\/molajo\/plugins\/Source\/Comments\/CommentsHeading.php": {
+        "file_name": "CommentsHeading.php",
+        "base_name": "CommentsHeading",
+        "path": "vendor\/molajo\/plugins\/Source\/Comments\/CommentsHeading.php",
+        "fqns": "Molajo\\Plugins\\Comments\\CommentsHeading"
+    },
+    "vendor\/molajo\/plugins\/Source\/Comments\/CommentsPlugin.php": {
+        "file_name": "CommentsPlugin.php",
+        "base_name": "CommentsPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Comments\/CommentsPlugin.php",
+        "fqns": "Molajo\\Plugins\\Comments\\CommentsPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Comments\/ProcessComments.php": {
+        "file_name": "ProcessComments.php",
+        "base_name": "ProcessComments",
+        "path": "vendor\/molajo\/plugins\/Source\/Comments\/ProcessComments.php",
+        "fqns": "Molajo\\Plugins\\Comments\\ProcessComments"
+    },
+    "vendor\/molajo\/plugins\/Source\/Copyright\/CopyrightPlugin.php": {
+        "file_name": "CopyrightPlugin.php",
+        "base_name": "CopyrightPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Copyright\/CopyrightPlugin.php",
+        "fqns": "Molajo\\Plugins\\Copyright\\CopyrightPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/CreateEventPlugin.php": {
+        "file_name": "CreateEventPlugin.php",
+        "base_name": "CreateEventPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/CreateEventPlugin.php",
+        "fqns": "Molajo\\Plugins\\CreateEventPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Csrftoken\/CsrftokenPlugin.php": {
+        "file_name": "CsrftokenPlugin.php",
+        "base_name": "CsrftokenPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Csrftoken\/CsrftokenPlugin.php",
+        "fqns": "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Customfields\/CustomfieldGroupValue.php": {
+        "file_name": "CustomfieldGroupValue.php",
+        "base_name": "CustomfieldGroupValue",
+        "path": "vendor\/molajo\/plugins\/Source\/Customfields\/CustomfieldGroupValue.php",
+        "fqns": "Molajo\\Plugins\\Customfields\\CustomfieldGroupValue"
+    },
+    "vendor\/molajo\/plugins\/Source\/Customfields\/CustomfieldsPlugin.php": {
+        "file_name": "CustomfieldsPlugin.php",
+        "base_name": "CustomfieldsPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Customfields\/CustomfieldsPlugin.php",
+        "fqns": "Molajo\\Plugins\\Customfields\\CustomfieldsPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Customfields\/ProcessCustomfields.php": {
+        "file_name": "ProcessCustomfields.php",
+        "base_name": "ProcessCustomfields",
+        "path": "vendor\/molajo\/plugins\/Source\/Customfields\/ProcessCustomfields.php",
+        "fqns": "Molajo\\Plugins\\Customfields\\ProcessCustomfields"
+    },
+    "vendor\/molajo\/plugins\/Source\/Dateformats\/DateformatsPlugin.php": {
+        "file_name": "DateformatsPlugin.php",
+        "base_name": "DateformatsPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Dateformats\/DateformatsPlugin.php",
+        "fqns": "Molajo\\Plugins\\Dateformats\\DateformatsPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/DisplayEventPlugin.php": {
+        "file_name": "DisplayEventPlugin.php",
+        "base_name": "DisplayEventPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/DisplayEventPlugin.php",
+        "fqns": "Molajo\\Plugins\\DisplayEventPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Email\/EmailPlugin.php": {
+        "file_name": "EmailPlugin.php",
+        "base_name": "EmailPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Email\/EmailPlugin.php",
+        "fqns": "Molajo\\Plugins\\Email\\EmailPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Events\/EventsPlugin.php": {
+        "file_name": "EventsPlugin.php",
+        "base_name": "EventsPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Events\/EventsPlugin.php",
+        "fqns": "Molajo\\Plugins\\Events\\EventsPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Fields\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/plugins\/Source\/Fields\/Base.php",
+        "fqns": "Molajo\\Plugins\\Fields\\Base"
+    },
+    "vendor\/molajo\/plugins\/Source\/Fields\/CustomFields.php": {
+        "file_name": "CustomFields.php",
+        "base_name": "CustomFields",
+        "path": "vendor\/molajo\/plugins\/Source\/Fields\/CustomFields.php",
+        "fqns": "Molajo\\Plugins\\Fields\\CustomFields"
+    },
+    "vendor\/molajo\/plugins\/Source\/Fields\/FieldsPlugin.php": {
+        "file_name": "FieldsPlugin.php",
+        "base_name": "FieldsPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Fields\/FieldsPlugin.php",
+        "fqns": "Molajo\\Plugins\\Fields\\FieldsPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Fields\/JoinFields.php": {
+        "file_name": "JoinFields.php",
+        "base_name": "JoinFields",
+        "path": "vendor\/molajo\/plugins\/Source\/Fields\/JoinFields.php",
+        "fqns": "Molajo\\Plugins\\Fields\\JoinFields"
+    },
+    "vendor\/molajo\/plugins\/Source\/Fields\/StandardFields.php": {
+        "file_name": "StandardFields.php",
+        "base_name": "StandardFields",
+        "path": "vendor\/molajo\/plugins\/Source\/Fields\/StandardFields.php",
+        "fqns": "Molajo\\Plugins\\Fields\\StandardFields"
+    },
+    "vendor\/molajo\/plugins\/Source\/Footer\/FooterPlugin.php": {
+        "file_name": "FooterPlugin.php",
+        "base_name": "FooterPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Footer\/FooterPlugin.php",
+        "fqns": "Molajo\\Plugins\\Footer\\FooterPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Fullname\/FullnamePlugin.php": {
+        "file_name": "FullnamePlugin.php",
+        "base_name": "FullnamePlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Fullname\/FullnamePlugin.php",
+        "fqns": "Molajo\\Plugins\\Fullname\\FullnamePlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Linebreaks\/LinebreaksPlugin.php": {
+        "file_name": "LinebreaksPlugin.php",
+        "base_name": "LinebreaksPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Linebreaks\/LinebreaksPlugin.php",
+        "fqns": "Molajo\\Plugins\\Linebreaks\\LinebreaksPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Links\/LinksPlugin.php": {
+        "file_name": "LinksPlugin.php",
+        "base_name": "LinksPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Links\/LinksPlugin.php",
+        "fqns": "Molajo\\Plugins\\Links\\LinksPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Login\/LoginPlugin.php": {
+        "file_name": "LoginPlugin.php",
+        "base_name": "LoginPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Login\/LoginPlugin.php",
+        "fqns": "Molajo\\Plugins\\Login\\LoginPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Logout\/LogoutPlugin.php": {
+        "file_name": "LogoutPlugin.php",
+        "base_name": "LogoutPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Logout\/LogoutPlugin.php",
+        "fqns": "Molajo\\Plugins\\Logout\\LogoutPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Menuitems\/MenuitemsPlugin.php": {
+        "file_name": "MenuitemsPlugin.php",
+        "base_name": "MenuitemsPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Menuitems\/MenuitemsPlugin.php",
+        "fqns": "Molajo\\Plugins\\Menuitems\\MenuitemsPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Messages\/MessagesPlugin.php": {
+        "file_name": "MessagesPlugin.php",
+        "base_name": "MessagesPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Messages\/MessagesPlugin.php",
+        "fqns": "Molajo\\Plugins\\Messages\\MessagesPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypeapplication\/PagetypeapplicationPlugin.php": {
+        "file_name": "PagetypeapplicationPlugin.php",
+        "base_name": "PagetypeapplicationPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypeapplication\/PagetypeapplicationPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagetypeapplication\\PagetypeapplicationPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypeconfiguration\/PagetypeconfigurationPlugin.php": {
+        "file_name": "PagetypeconfigurationPlugin.php",
+        "base_name": "PagetypeconfigurationPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypeconfiguration\/PagetypeconfigurationPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagetypeconfiguration\\PagetypeconfigurationPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypedashboard\/PagetypedashboardPlugin.php": {
+        "file_name": "PagetypedashboardPlugin.php",
+        "base_name": "PagetypedashboardPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypedashboard\/PagetypedashboardPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagetypedashboard\\PagetypedashboardPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypeedit\/PagetypeeditPlugin.php": {
+        "file_name": "PagetypeeditPlugin.php",
+        "base_name": "PagetypeeditPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypeedit\/PagetypeeditPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagetypeedit\\PagetypeeditPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypegrid\/Base.php": {
+        "file_name": "Base.php",
+        "base_name": "Base",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypegrid\/Base.php",
+        "fqns": "Molajo\\Plugins\\Pagetypegrid\\Base"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypegrid\/GridQuery.php": {
+        "file_name": "GridQuery.php",
+        "base_name": "GridQuery",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypegrid\/GridQuery.php",
+        "fqns": "Molajo\\Plugins\\Pagetypegrid\\GridQuery"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypegrid\/PagetypegridPlugin.php": {
+        "file_name": "PagetypegridPlugin.php",
+        "base_name": "PagetypegridPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypegrid\/PagetypegridPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagetypegrid\\PagetypegridPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypeitem\/PagetypeitemPlugin.php": {
+        "file_name": "PagetypeitemPlugin.php",
+        "base_name": "PagetypeitemPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypeitem\/PagetypeitemPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagetypeitem\\PagetypeitemPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypelist\/PagetypelistPlugin.php": {
+        "file_name": "PagetypelistPlugin.php",
+        "base_name": "PagetypelistPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypelist\/PagetypelistPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagetypelist\\PagetypelistPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagetypenew\/PagetypenewPlugin.php": {
+        "file_name": "PagetypenewPlugin.php",
+        "base_name": "PagetypenewPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagetypenew\/PagetypenewPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagetypenew\\PagetypenewPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Pagination\/PaginationPlugin.php": {
+        "file_name": "PaginationPlugin.php",
+        "base_name": "PaginationPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Pagination\/PaginationPlugin.php",
+        "fqns": "Molajo\\Plugins\\Pagination\\PaginationPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Queryauthorisation\/QueryauthorisationPlugin.php": {
+        "file_name": "QueryauthorisationPlugin.php",
+        "base_name": "QueryauthorisationPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Queryauthorisation\/QueryauthorisationPlugin.php",
+        "fqns": "Molajo\\Plugins\\Queryauthorisation\\QueryauthorisationPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/ReadEventPlugin.php": {
+        "file_name": "ReadEventPlugin.php",
+        "base_name": "ReadEventPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/ReadEventPlugin.php",
+        "fqns": "Molajo\\Plugins\\ReadEventPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Readmore\/ReadmorePlugin.php": {
+        "file_name": "ReadmorePlugin.php",
+        "base_name": "ReadmorePlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Readmore\/ReadmorePlugin.php",
+        "fqns": "Molajo\\Plugins\\Readmore\\ReadmorePlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Sites\/SitesPlugin.php": {
+        "file_name": "SitesPlugin.php",
+        "base_name": "SitesPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Sites\/SitesPlugin.php",
+        "fqns": "Molajo\\Plugins\\Sites\\SitesPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Smilies\/SmiliesPlugin.php": {
+        "file_name": "SmiliesPlugin.php",
+        "base_name": "SmiliesPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Smilies\/SmiliesPlugin.php",
+        "fqns": "Molajo\\Plugins\\Smilies\\SmiliesPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Snippet\/SnippetPlugin.php": {
+        "file_name": "SnippetPlugin.php",
+        "base_name": "SnippetPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Snippet\/SnippetPlugin.php",
+        "fqns": "Molajo\\Plugins\\Snippet\\SnippetPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/Status\/StatusPlugin.php": {
+        "file_name": "StatusPlugin.php",
+        "base_name": "StatusPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/Status\/StatusPlugin.php",
+        "fqns": "Molajo\\Plugins\\Status\\StatusPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/SystemEventPlugin.php": {
+        "file_name": "SystemEventPlugin.php",
+        "base_name": "SystemEventPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/SystemEventPlugin.php",
+        "fqns": "Molajo\\Plugins\\SystemEventPlugin"
+    },
+    "vendor\/molajo\/plugins\/Source\/UpdateEventPlugin.php": {
+        "file_name": "UpdateEventPlugin.php",
+        "base_name": "UpdateEventPlugin",
+        "path": "vendor\/molajo\/plugins\/Source\/UpdateEventPlugin.php",
+        "fqns": "Molajo\\Plugins\\UpdateEventPlugin"
     },
     "vendor\/molajo\/query\/Controller\/Controller.php": {
         "file_name": "Controller.php",

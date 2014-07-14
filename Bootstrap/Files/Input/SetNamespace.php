@@ -14,7 +14,6 @@
  *  - resources should each be installable
  */
 $resource_adapter->setNamespace('Molajo\\Sites\\', 'Sites/2/');
-$resource_adapter->setNamespace('Molajo\\Plugins\\', 'Source/Plugins/');
 $resource_adapter->setNamespace('Molajo\\', 'Source/Resources/');
 
 /**
@@ -45,7 +44,6 @@ $resource_adapter->setNamespace('Molajo\\Email\\', 'vendor/molajo/email/source/'
 $resource_adapter->setNamespace('Molajo\\Factories\\Email\\', 'vendor/molajo/email/Factories/Email/');
 
 $resource_adapter->setNamespace('Molajo\\Event\\', 'vendor/molajo/event/Source/');
-$resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/event/Plugins/');
 $resource_adapter->setNamespace('Molajo\\Factories\\Dispatcher\\', 'vendor/molajo/event/Factories/Dispatcher/');
 
 $resource_adapter->setNamespace('Molajo\\Fieldhandler\\', 'vendor/molajo/fieldhandler/Source/');
@@ -97,7 +95,7 @@ $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/user/Facto
  */
 $resource_adapter->setNamespace('Molajo\\Controller\\', 'vendor/molajo/application/Source/Controller/');
 $resource_adapter->setNamespace('Molajo\\Model\\', 'vendor/molajo/application/Source/Model/');
-$resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/application/Source/Plugins/');
+$resource_adapter->setNamespace('Molajo\\Plugins\\', 'vendor/molajo/plugins/Source/');
 $resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/application/Source/Resource/');
 $resource_adapter->setNamespace('Molajo\\Factories\\', 'vendor/molajo/application/Factories/');
 $resource_adapter->setNamespace('Molajo\\Resource\\', 'vendor/molajo/application/Source/Resource/');

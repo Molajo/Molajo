@@ -1,4 +1,0 @@
-Authorisation
-=============
-
-Authorisation Interfaces
