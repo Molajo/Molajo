@@ -17,12 +17,11 @@ require_once $base_path . '/vendor/commonapi/ioc/ScheduleInterface.php';
 
 require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Adapter.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Base.php';
-require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Controller.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Instantiate.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod/Standard.php';
 
 require_once $base_path . '/vendor/molajo/ioc/Source/Product/ClassDependencies.php';
-require_once $base_path . '/vendor/molajo/ioc/Source/Product/Create.php';
+require_once $base_path . '/vendor/molajo/ioc/Source/Product/CreateFactoryMethod.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/Product/SetNamespace.php';
 
 require_once $base_path . '/vendor/molajo/ioc/Source/Schedule/Base.php';
@@ -30,6 +29,7 @@ require_once $base_path . '/vendor/molajo/ioc/Source/Schedule/Create.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/Schedule/Dependency.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/Schedule/Request.php';
 
+require_once $base_path . '/vendor/molajo/ioc/Source/FactoryMethod.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/Container.php';
 require_once $base_path . '/vendor/molajo/ioc/Source/Schedule.php';
 
@@ -41,12 +41,15 @@ foreach ($temp as $folder) {
     $factory_method_folders[] = $base_path . '/' . $folder;
 }
 
-$folder_namespace       = 'Molajo\\Factories';
 $adapter_alias_filename = __DIR__ . '/Files/Output/FactoryMethodAliases.json';
-$map_class              = 'Molajo\\IoC\\MapFactories';
-$map                    = new $map_class ($factory_method_folders, $folder_namespace, $adapter_alias_filename);
+if (is_file($adapter_alias_filename)) {
+} else {
+    $folder_namespace       = 'Molajo\\Factories';
+    $map_class              = 'Molajo\\IoC\\MapFactories';
+    $map                    = new $map_class ($factory_method_folders, $folder_namespace, $adapter_alias_filename);
 
-$map->createMap();
+    $map->createMap();
+}
 
 // 3. Factory Method Scheduling
 $factory_method_aliases      = readJsonFile(__DIR__ . '/Files/Output/FactoryMethodAliases.json');

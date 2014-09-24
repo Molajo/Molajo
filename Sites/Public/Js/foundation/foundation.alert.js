@@ -1,37 +1,43 @@
-;
-(function ($, window, document, undefined) {
-    'use strict';
+;(function ($, window, document, undefined) {
+  'use strict';
 
-    Foundation.libs.alert = {
-        name: 'alert',
+  Foundation.libs.alert = {
+    name : 'alert',
 
-        version: '5.0.0',
+    version : '5.3.3',
 
-        settings: {
-            animation: 'fadeOut',
-            speed: 300, // fade out speed
-            callback: function () {
-            }
-        },
+    settings : {
+      callback: function (){}
+    },
 
-        init: function (scope, method, options) {
-            this.bindings(method, options);
-        },
+    init : function (scope, method, options) {
+      this.bindings(method, options);
+    },
 
-        events: function () {
-            $(this.scope).off('.alert').on('click.fndtn.alert', '[data-alert] a.close', function (e) {
-                var alertBox = $(this).closest("[data-alert]"),
-                    settings = alertBox.data('alert-init');
+    events : function () {
+      var self = this,
+          S = this.S;
 
-                e.preventDefault();
-                alertBox[settings.animation](settings.speed, function () {
-                    $(this).trigger('closed').remove();
-                    settings.callback();
-                });
-            });
-        },
+      $(this.scope).off('.alert').on('click.fndtn.alert', '[' + this.attr_name() + '] a.close', function (e) {
+          var alertBox = S(this).closest('[' + self.attr_name() + ']'),
+              settings = alertBox.data(self.attr_name(true) + '-init') || self.settings;
 
-        reflow: function () {
+        e.preventDefault();
+        if (Modernizr.csstransitions) {
+          alertBox.addClass("alert-close");
+          alertBox.on('transitionend webkitTransitionEnd oTransitionEnd', function(e) {
+            S(this).trigger('close').trigger('close.fndtn.alert').remove();
+            settings.callback();
+          });
+        } else {
+          alertBox.fadeOut(300, function () {
+            S(this).trigger('close').trigger('close.fndtn.alert').remove();
+            settings.callback();
+          });
         }
-    };
-}(jQuery, this, this.document));
+      });
+    },
+
+    reflow : function () {}
+  };
+}(jQuery, window, window.document));

@@ -6,7 +6,7 @@
     "vendor/molajo/email/Factories/",
     "vendor/molajo/event/Factories/",
     "vendor/molajo/fieldhandler/Factories/",
-    "vendor/molajo/Http/Factories/",
+    "vendor/molajo/http/Factories/",
     "vendor/molajo/language/Factories/",
     "vendor/molajo/log/Factories/",
     "vendor/molajo/molajito/Factories/",
