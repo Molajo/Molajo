@@ -16,7 +16,7 @@ $force_rebuild1 = '';
 $force_rebuild2 = '';
 
 /**
- *  Create ClassMap and ResourceMap output
+ *  Creates ClassMap.json and ResourceMap.json Output files
  */
 if (file_exists($classmap_filename . $force_rebuild1)
     && file_exists($resource_map_filename . $force_rebuild1)
@@ -46,7 +46,7 @@ if (file_exists($classmap_filename . $force_rebuild1)
 }
 
 /**
- *  Classmap - Interfaces - Class Dependencies - Events
+ *  Creates Interfaces.json, ClassDependencies.json and Events.json Output files
  */
 if (file_exists($interfaces_filename . $force_rebuild2)) {
 } else {

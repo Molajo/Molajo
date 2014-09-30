@@ -3,7 +3,7 @@
         "name": "AuthorisationInterface",
         "namespace": "CommonApi\\Authorisation",
         "qns": "CommonApi\\Authorisation\\AuthorisationInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/authorisation\/AuthorisationInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/authorisation\/AuthorisationInterface.php",
         "path": "vendor\/commonapi\/authorisation\/AuthorisationInterface.php",
         "parent": false,
         "implemented_by": [
@@ -19,7 +19,7 @@
         "name": "CacheInterface",
         "namespace": "CommonApi\\Cache",
         "qns": "CommonApi\\Cache\\CacheInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/cache\/CacheInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/cache\/CacheInterface.php",
         "path": "vendor\/commonapi\/cache\/CacheInterface.php",
         "parent": false,
         "implemented_by": [
@@ -37,7 +37,7 @@
         "name": "CacheItemInterface",
         "namespace": "CommonApi\\Cache",
         "qns": "CommonApi\\Cache\\CacheItemInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/cache\/CacheItemInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/cache\/CacheItemInterface.php",
         "path": "vendor\/commonapi\/cache\/CacheItemInterface.php",
         "parent": false,
         "implemented_by": [
@@ -51,7 +51,7 @@
         "name": "ConnectionInterface",
         "namespace": "CommonApi\\Cache",
         "qns": "CommonApi\\Cache\\ConnectionInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/cache\/ConnectionInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/cache\/ConnectionInterface.php",
         "path": "vendor\/commonapi\/cache\/ConnectionInterface.php",
         "parent": false,
         "implemented_by": [
@@ -65,7 +65,7 @@
         "name": "ApplicationInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\ApplicationInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ApplicationInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/ApplicationInterface.php",
         "path": "vendor\/commonapi\/controller\/ApplicationInterface.php",
         "parent": false,
         "implemented_by": [
@@ -79,7 +79,7 @@
         "name": "ControllerInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\ControllerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ControllerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/ControllerInterface.php",
         "path": "vendor\/commonapi\/controller\/ControllerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -95,7 +95,7 @@
         "name": "CreateControllerInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\CreateControllerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/CreateControllerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/CreateControllerInterface.php",
         "path": "vendor\/commonapi\/controller\/CreateControllerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -109,7 +109,7 @@
         "name": "DatalistInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\DatalistInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/DatalistInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/DatalistInterface.php",
         "path": "vendor\/commonapi\/controller\/DatalistInterface.php",
         "parent": false,
         "implemented_by": [
@@ -123,7 +123,7 @@
         "name": "DateInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\DateInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/DateInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/DateInterface.php",
         "path": "vendor\/commonapi\/controller\/DateInterface.php",
         "parent": false,
         "implemented_by": [
@@ -137,7 +137,7 @@
         "name": "DeleteControllerInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\DeleteControllerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/DeleteControllerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/DeleteControllerInterface.php",
         "path": "vendor\/commonapi\/controller\/DeleteControllerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -151,7 +151,7 @@
         "name": "ErrorHandlingInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\ErrorHandlingInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ErrorHandlingInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/ErrorHandlingInterface.php",
         "path": "vendor\/commonapi\/controller\/ErrorHandlingInterface.php",
         "parent": false,
         "implemented_by": [
@@ -166,7 +166,7 @@
         "name": "FrontControllerInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\FrontControllerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/FrontControllerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/FrontControllerInterface.php",
         "path": "vendor\/commonapi\/controller\/FrontControllerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -180,7 +180,7 @@
         "name": "ImageInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\ImageInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ImageInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/ImageInterface.php",
         "path": "vendor\/commonapi\/controller\/ImageInterface.php",
         "parent": false,
         "implemented_by": [
@@ -194,7 +194,7 @@
         "name": "LoadTranslationInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\LoadTranslationInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/LoadTranslationInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/LoadTranslationInterface.php",
         "path": "vendor\/commonapi\/controller\/LoadTranslationInterface.php",
         "parent": false,
         "implemented_by": [
@@ -208,7 +208,7 @@
         "name": "NumberToTextInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\NumberToTextInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/NumberToTextInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/NumberToTextInterface.php",
         "path": "vendor\/commonapi\/controller\/NumberToTextInterface.php",
         "parent": false,
         "implemented_by": [
@@ -222,7 +222,7 @@
         "name": "RandomStringInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\RandomStringInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/RandomStringInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/RandomStringInterface.php",
         "path": "vendor\/commonapi\/controller\/RandomStringInterface.php",
         "parent": false,
         "implemented_by": [
@@ -236,7 +236,7 @@
         "name": "ReadControllerInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\ReadControllerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ReadControllerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/ReadControllerInterface.php",
         "path": "vendor\/commonapi\/controller\/ReadControllerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -250,7 +250,7 @@
         "name": "ResourceInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\ResourceInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/ResourceInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/ResourceInterface.php",
         "path": "vendor\/commonapi\/controller\/ResourceInterface.php",
         "parent": false,
         "implemented_by": [
@@ -264,7 +264,7 @@
         "name": "SiteInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\SiteInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/SiteInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/SiteInterface.php",
         "path": "vendor\/commonapi\/controller\/SiteInterface.php",
         "parent": false,
         "implemented_by": [
@@ -278,7 +278,7 @@
         "name": "TextInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\TextInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/TextInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/TextInterface.php",
         "path": "vendor\/commonapi\/controller\/TextInterface.php",
         "parent": false,
         "implemented_by": [
@@ -292,7 +292,7 @@
         "name": "UpdateControllerInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\UpdateControllerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/UpdateControllerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/UpdateControllerInterface.php",
         "path": "vendor\/commonapi\/controller\/UpdateControllerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -306,7 +306,7 @@
         "name": "UrlInterface",
         "namespace": "CommonApi\\Controller",
         "qns": "CommonApi\\Controller\\UrlInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/controller\/UrlInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/controller\/UrlInterface.php",
         "path": "vendor\/commonapi\/controller\/UrlInterface.php",
         "parent": false,
         "implemented_by": [
@@ -320,7 +320,7 @@
         "name": "ConnectionInterface",
         "namespace": "CommonApi\\Database",
         "qns": "CommonApi\\Database\\ConnectionInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/database\/ConnectionInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/database\/ConnectionInterface.php",
         "path": "vendor\/commonapi\/database\/ConnectionInterface.php",
         "parent": false,
         "implemented_by": [
@@ -335,7 +335,7 @@
         "name": "DatabaseInterface",
         "namespace": "CommonApi\\Database",
         "qns": "CommonApi\\Database\\DatabaseInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/database\/DatabaseInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/database\/DatabaseInterface.php",
         "path": "vendor\/commonapi\/database\/DatabaseInterface.php",
         "parent": false,
         "implemented_by": [
@@ -368,7 +368,7 @@
         "name": "EmailInterface",
         "namespace": "CommonApi\\Email",
         "qns": "CommonApi\\Email\\EmailInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/email\/EmailInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/email\/EmailInterface.php",
         "path": "vendor\/commonapi\/email\/EmailInterface.php",
         "parent": false,
         "implemented_by": [
@@ -385,7 +385,7 @@
         "name": "AuthenticateInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\AuthenticateInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/AuthenticateInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/AuthenticateInterface.php",
         "path": "vendor\/commonapi\/event\/AuthenticateInterface.php",
         "parent": false,
         "implemented_by": [
@@ -401,7 +401,7 @@
         "name": "AuthoriseInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\AuthoriseInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/AuthoriseInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/AuthoriseInterface.php",
         "path": "vendor\/commonapi\/event\/AuthoriseInterface.php",
         "parent": false,
         "implemented_by": [
@@ -415,7 +415,7 @@
         "name": "CreateInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\CreateInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/CreateInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/CreateInterface.php",
         "path": "vendor\/commonapi\/event\/CreateInterface.php",
         "parent": false,
         "implemented_by": [
@@ -431,7 +431,7 @@
         "name": "DeleteInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\DeleteInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/DeleteInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/DeleteInterface.php",
         "path": "vendor\/commonapi\/event\/DeleteInterface.php",
         "parent": false,
         "implemented_by": [
@@ -445,7 +445,7 @@
         "name": "DispatcherInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\DispatcherInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/DispatcherInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/DispatcherInterface.php",
         "path": "vendor\/commonapi\/event\/DispatcherInterface.php",
         "parent": false,
         "implemented_by": [
@@ -459,7 +459,7 @@
         "name": "DisplayInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\DisplayInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/DisplayInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/DisplayInterface.php",
         "path": "vendor\/commonapi\/event\/DisplayInterface.php",
         "parent": false,
         "implemented_by": [
@@ -494,7 +494,7 @@
         "name": "EventDispatcherInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\EventDispatcherInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/EventDispatcherInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/EventDispatcherInterface.php",
         "path": "vendor\/commonapi\/event\/EventDispatcherInterface.php",
         "parent": false,
         "implemented_by": [
@@ -508,7 +508,7 @@
         "name": "EventInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\EventInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/EventInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/EventInterface.php",
         "path": "vendor\/commonapi\/event\/EventInterface.php",
         "parent": false,
         "implemented_by": [
@@ -522,7 +522,7 @@
         "name": "ReadInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\ReadInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/ReadInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/ReadInterface.php",
         "path": "vendor\/commonapi\/event\/ReadInterface.php",
         "parent": false,
         "implemented_by": [
@@ -550,7 +550,7 @@
         "name": "SystemInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\SystemInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/SystemInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/SystemInterface.php",
         "path": "vendor\/commonapi\/event\/SystemInterface.php",
         "parent": false,
         "implemented_by": [
@@ -572,7 +572,7 @@
         "name": "UpdateInterface",
         "namespace": "CommonApi\\Event",
         "qns": "CommonApi\\Event\\UpdateInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/event\/UpdateInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/UpdateInterface.php",
         "path": "vendor\/commonapi\/event\/UpdateInterface.php",
         "parent": false,
         "implemented_by": [
@@ -587,7 +587,7 @@
         "name": "ExceptionInterface",
         "namespace": "CommonApi\\Exception",
         "qns": "CommonApi\\Exception\\ExceptionInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/exception\/ExceptionInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/exception\/ExceptionInterface.php",
         "path": "vendor\/commonapi\/exception\/ExceptionInterface.php",
         "parent": false,
         "implemented_by": [
@@ -614,7 +614,7 @@
         "name": "ConnectionInterface",
         "namespace": "CommonApi\\Filesystem",
         "qns": "CommonApi\\Filesystem\\ConnectionInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/filesystem\/ConnectionInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/filesystem\/ConnectionInterface.php",
         "path": "vendor\/commonapi\/filesystem\/ConnectionInterface.php",
         "parent": false,
         "implemented_by": [
@@ -628,7 +628,7 @@
         "name": "FilesystemInterface",
         "namespace": "CommonApi\\Filesystem",
         "qns": "CommonApi\\Filesystem\\FilesystemInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/filesystem\/FilesystemInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/filesystem\/FilesystemInterface.php",
         "path": "vendor\/commonapi\/filesystem\/FilesystemInterface.php",
         "parent": false,
         "implemented_by": [
@@ -642,7 +642,7 @@
         "name": "ClientInterface",
         "namespace": "CommonApi\\Http",
         "qns": "CommonApi\\Http\\ClientInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/http\/ClientInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/http\/ClientInterface.php",
         "path": "vendor\/commonapi\/http\/ClientInterface.php",
         "parent": false,
         "implemented_by": [
@@ -656,7 +656,7 @@
         "name": "RedirectInterface",
         "namespace": "CommonApi\\Http",
         "qns": "CommonApi\\Http\\RedirectInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/http\/RedirectInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/http\/RedirectInterface.php",
         "path": "vendor\/commonapi\/http\/RedirectInterface.php",
         "parent": false,
         "implemented_by": [
@@ -670,7 +670,7 @@
         "name": "RequestInterface",
         "namespace": "CommonApi\\Http",
         "qns": "CommonApi\\Http\\RequestInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/http\/RequestInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/http\/RequestInterface.php",
         "path": "vendor\/commonapi\/http\/RequestInterface.php",
         "parent": false,
         "implemented_by": [
@@ -684,7 +684,7 @@
         "name": "ResponseInterface",
         "namespace": "CommonApi\\Http",
         "qns": "CommonApi\\Http\\ResponseInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/http\/ResponseInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/http\/ResponseInterface.php",
         "path": "vendor\/commonapi\/http\/ResponseInterface.php",
         "parent": false,
         "implemented_by": [
@@ -698,7 +698,7 @@
         "name": "ServerInterface",
         "namespace": "CommonApi\\Http",
         "qns": "CommonApi\\Http\\ServerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/http\/ServerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/http\/ServerInterface.php",
         "path": "vendor\/commonapi\/http\/ServerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -712,7 +712,7 @@
         "name": "UploadInterface",
         "namespace": "CommonApi\\Http",
         "qns": "CommonApi\\Http\\UploadInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/http\/UploadInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/http\/UploadInterface.php",
         "path": "vendor\/commonapi\/http\/UploadInterface.php",
         "parent": false,
         "implemented_by": [
@@ -726,7 +726,7 @@
         "name": "ContainerInterface",
         "namespace": "CommonApi\\IoC",
         "qns": "CommonApi\\IoC\\ContainerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/ContainerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/ioc\/ContainerInterface.php",
         "path": "vendor\/commonapi\/ioc\/ContainerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -740,7 +740,7 @@
         "name": "FactoryBatchInterface",
         "namespace": "CommonApi\\IoC",
         "qns": "CommonApi\\IoC\\FactoryBatchInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/FactoryBatchInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/ioc\/FactoryBatchInterface.php",
         "path": "vendor\/commonapi\/ioc\/FactoryBatchInterface.php",
         "parent": false,
         "implemented_by": [
@@ -759,7 +759,6 @@
             "Molajo\\Factories\\Database\\DatabaseFactoryMethod",
             "Molajo\\Factories\\Date\\DateFactoryMethod",
             "Molajo\\Factories\\Debug\\DebugFactoryMethod",
-            "Molajo\\Factories\\Debuglogger\\DebugloggerFactoryMethod",
             "Molajo\\Factories\\Dispatch\\DispatchFactoryMethod",
             "Molajo\\Factories\\Dispatcher\\DispatcherFactoryMethod",
             "Molajo\\Factories\\Email\\EmailFactoryMethod",
@@ -814,7 +813,7 @@
         "name": "FactoryInterface",
         "namespace": "CommonApi\\IoC",
         "qns": "CommonApi\\IoC\\FactoryInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/FactoryInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/ioc\/FactoryInterface.php",
         "path": "vendor\/commonapi\/ioc\/FactoryInterface.php",
         "parent": false,
         "implemented_by": [
@@ -833,7 +832,6 @@
             "Molajo\\Factories\\Database\\DatabaseFactoryMethod",
             "Molajo\\Factories\\Date\\DateFactoryMethod",
             "Molajo\\Factories\\Debug\\DebugFactoryMethod",
-            "Molajo\\Factories\\Debuglogger\\DebugloggerFactoryMethod",
             "Molajo\\Factories\\Dispatch\\DispatchFactoryMethod",
             "Molajo\\Factories\\Dispatcher\\DispatcherFactoryMethod",
             "Molajo\\Factories\\Email\\EmailFactoryMethod",
@@ -888,7 +886,7 @@
         "name": "ScheduleInterface",
         "namespace": "CommonApi\\IoC",
         "qns": "CommonApi\\IoC\\ScheduleInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/ioc\/ScheduleInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/ioc\/ScheduleInterface.php",
         "path": "vendor\/commonapi\/ioc\/ScheduleInterface.php",
         "parent": false,
         "implemented_by": [
@@ -902,7 +900,7 @@
         "name": "CaptureUntranslatedStringInterface",
         "namespace": "CommonApi\\Language",
         "qns": "CommonApi\\Language\\CaptureUntranslatedStringInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/CaptureUntranslatedStringInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/language\/CaptureUntranslatedStringInterface.php",
         "path": "vendor\/commonapi\/language\/CaptureUntranslatedStringInterface.php",
         "parent": false,
         "implemented_by": [
@@ -916,7 +914,7 @@
         "name": "LanguageInterface",
         "namespace": "CommonApi\\Language",
         "qns": "CommonApi\\Language\\LanguageInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/LanguageInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/language\/LanguageInterface.php",
         "path": "vendor\/commonapi\/language\/LanguageInterface.php",
         "parent": false,
         "implemented_by": [
@@ -933,7 +931,7 @@
         "name": "TranslateInterface",
         "namespace": "CommonApi\\Language",
         "qns": "CommonApi\\Language\\TranslateInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/language\/TranslateInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/language\/TranslateInterface.php",
         "path": "vendor\/commonapi\/language\/TranslateInterface.php",
         "parent": false,
         "implemented_by": [
@@ -957,7 +955,7 @@
         "name": "ConstraintInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\ConstraintInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ConstraintInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/ConstraintInterface.php",
         "path": "vendor\/commonapi\/model\/ConstraintInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1047,7 +1045,7 @@
         "name": "CreateModelInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\CreateModelInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/CreateModelInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/CreateModelInterface.php",
         "path": "vendor\/commonapi\/model\/CreateModelInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1061,7 +1059,7 @@
         "name": "DeleteModelInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\DeleteModelInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/DeleteModelInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/DeleteModelInterface.php",
         "path": "vendor\/commonapi\/model\/DeleteModelInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1075,7 +1073,7 @@
         "name": "EscapeInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\EscapeInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/EscapeInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/EscapeInterface.php",
         "path": "vendor\/commonapi\/model\/EscapeInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1091,7 +1089,7 @@
         "name": "FieldhandlerInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\FieldhandlerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FieldhandlerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/FieldhandlerInterface.php",
         "path": "vendor\/commonapi\/model\/FieldhandlerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1123,7 +1121,7 @@
         "name": "FormatInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\FormatInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/FormatInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/FormatInterface.php",
         "path": "vendor\/commonapi\/model\/FormatInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1137,7 +1135,7 @@
         "name": "HandleResponseInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\HandleResponseInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/HandleResponseInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/HandleResponseInterface.php",
         "path": "vendor\/commonapi\/model\/HandleResponseInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1151,7 +1149,7 @@
         "name": "MessageInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\MessageInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/MessageInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/MessageInterface.php",
         "path": "vendor\/commonapi\/model\/MessageInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1165,7 +1163,7 @@
         "name": "ModelInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\ModelInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ModelInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/ModelInterface.php",
         "path": "vendor\/commonapi\/model\/ModelInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1183,7 +1181,7 @@
         "name": "ReadModelInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\ReadModelInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ReadModelInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/ReadModelInterface.php",
         "path": "vendor\/commonapi\/model\/ReadModelInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1197,7 +1195,7 @@
         "name": "SanitizeInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\SanitizeInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/SanitizeInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/SanitizeInterface.php",
         "path": "vendor\/commonapi\/model\/SanitizeInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1211,7 +1209,7 @@
         "name": "UpdateModelInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\UpdateModelInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/UpdateModelInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/UpdateModelInterface.php",
         "path": "vendor\/commonapi\/model\/UpdateModelInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1225,7 +1223,7 @@
         "name": "ValidateInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\ValidateInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ValidateInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/ValidateInterface.php",
         "path": "vendor\/commonapi\/model\/ValidateInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1239,7 +1237,7 @@
         "name": "ValidateResponseInterface",
         "namespace": "CommonApi\\Model",
         "qns": "CommonApi\\Model\\ValidateResponseInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/model\/ValidateResponseInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/model\/ValidateResponseInterface.php",
         "path": "vendor\/commonapi\/model\/ValidateResponseInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1253,7 +1251,7 @@
         "name": "ModelRegistryInterface",
         "namespace": "CommonApi\\Query",
         "qns": "CommonApi\\Query\\ModelRegistryInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/query\/ModelRegistryInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/ModelRegistryInterface.php",
         "path": "vendor\/commonapi\/query\/ModelRegistryInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1270,7 +1268,7 @@
         "name": "QueryBuilderInterface",
         "namespace": "CommonApi\\Query",
         "qns": "CommonApi\\Query\\QueryBuilderInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/query\/QueryBuilderInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/QueryBuilderInterface.php",
         "path": "vendor\/commonapi\/query\/QueryBuilderInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1289,7 +1287,7 @@
         "name": "QueryInterface",
         "namespace": "CommonApi\\Query",
         "qns": "CommonApi\\Query\\QueryInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/query\/QueryInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/QueryInterface.php",
         "path": "vendor\/commonapi\/query\/QueryInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1333,7 +1331,7 @@
         "name": "DataInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\DataInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/DataInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/DataInterface.php",
         "path": "vendor\/commonapi\/render\/DataInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1350,7 +1348,7 @@
         "name": "EscapeInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\EscapeInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/EscapeInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/EscapeInterface.php",
         "path": "vendor\/commonapi\/render\/EscapeInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1376,7 +1374,7 @@
         "name": "EventInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\EventInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/EventInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/EventInterface.php",
         "path": "vendor\/commonapi\/render\/EventInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1400,7 +1398,7 @@
         "name": "PaginationInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\PaginationInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/PaginationInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/PaginationInterface.php",
         "path": "vendor\/commonapi\/render\/PaginationInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1415,7 +1413,7 @@
         "name": "ParseInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\ParseInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/ParseInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/ParseInterface.php",
         "path": "vendor\/commonapi\/render\/ParseInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1429,7 +1427,7 @@
         "name": "PositionInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\PositionInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/PositionInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/PositionInterface.php",
         "path": "vendor\/commonapi\/render\/PositionInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1443,7 +1441,7 @@
         "name": "RenderInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\RenderInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/RenderInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/RenderInterface.php",
         "path": "vendor\/commonapi\/render\/RenderInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1480,7 +1478,7 @@
         "name": "TokenInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\TokenInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/TokenInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/TokenInterface.php",
         "path": "vendor\/commonapi\/render\/TokenInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1494,7 +1492,7 @@
         "name": "ViewInterface",
         "namespace": "CommonApi\\Render",
         "qns": "CommonApi\\Render\\ViewInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/render\/ViewInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/render\/ViewInterface.php",
         "path": "vendor\/commonapi\/render\/ViewInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1512,7 +1510,7 @@
         "name": "AdapterInterface",
         "namespace": "CommonApi\\Resource",
         "qns": "CommonApi\\Resource\\AdapterInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/AdapterInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/AdapterInterface.php",
         "path": "vendor\/commonapi\/resource\/AdapterInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1543,7 +1541,7 @@
         "name": "ClassLoaderInterface",
         "namespace": "CommonApi\\Resource",
         "qns": "CommonApi\\Resource\\ClassLoaderInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/ClassLoaderInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/ClassLoaderInterface.php",
         "path": "vendor\/commonapi\/resource\/ClassLoaderInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1557,7 +1555,7 @@
         "name": "ExtensionsInterface",
         "namespace": "CommonApi\\Resource",
         "qns": "CommonApi\\Resource\\ExtensionsInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/ExtensionsInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/ExtensionsInterface.php",
         "path": "vendor\/commonapi\/resource\/ExtensionsInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1571,7 +1569,7 @@
         "name": "LocatorInterface",
         "namespace": "CommonApi\\Resource",
         "qns": "CommonApi\\Resource\\LocatorInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/LocatorInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/LocatorInterface.php",
         "path": "vendor\/commonapi\/resource\/LocatorInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1585,7 +1583,7 @@
         "name": "MapInterface",
         "namespace": "CommonApi\\Resource",
         "qns": "CommonApi\\Resource\\MapInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/MapInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/MapInterface.php",
         "path": "vendor\/commonapi\/resource\/MapInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1601,7 +1599,7 @@
         "name": "NamespaceInterface",
         "namespace": "CommonApi\\Resource",
         "qns": "CommonApi\\Resource\\NamespaceInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/NamespaceInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/NamespaceInterface.php",
         "path": "vendor\/commonapi\/resource\/NamespaceInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1615,7 +1613,7 @@
         "name": "ResourceInterface",
         "namespace": "CommonApi\\Resource",
         "qns": "CommonApi\\Resource\\ResourceInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/ResourceInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/ResourceInterface.php",
         "path": "vendor\/commonapi\/resource\/ResourceInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1631,7 +1629,7 @@
         "name": "SchemeInterface",
         "namespace": "CommonApi\\Resource",
         "qns": "CommonApi\\Resource\\SchemeInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/resource\/SchemeInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/SchemeInterface.php",
         "path": "vendor\/commonapi\/resource\/SchemeInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1646,7 +1644,7 @@
         "name": "RouteInterface",
         "namespace": "CommonApi\\Route",
         "qns": "CommonApi\\Route\\RouteInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/route\/RouteInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/route\/RouteInterface.php",
         "path": "vendor\/commonapi\/route\/RouteInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1664,7 +1662,7 @@
         "name": "ActivityInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\ActivityInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/ActivityInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/ActivityInterface.php",
         "path": "vendor\/commonapi\/user\/ActivityInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1678,7 +1676,7 @@
         "name": "AuthenticationInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\AuthenticationInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/AuthenticationInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/AuthenticationInterface.php",
         "path": "vendor\/commonapi\/user\/AuthenticationInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1701,7 +1699,7 @@
         "name": "AuthorisationInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\AuthorisationInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/AuthorisationInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/AuthorisationInterface.php",
         "path": "vendor\/commonapi\/user\/AuthorisationInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1715,7 +1713,7 @@
         "name": "CookieInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\CookieInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/CookieInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/CookieInterface.php",
         "path": "vendor\/commonapi\/user\/CookieInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1735,7 +1733,7 @@
         "name": "EncryptInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\EncryptInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/EncryptInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/EncryptInterface.php",
         "path": "vendor\/commonapi\/user\/EncryptInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1758,7 +1756,7 @@
         "name": "FlashMessageInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\FlashMessageInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/FlashMessageInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/FlashMessageInterface.php",
         "path": "vendor\/commonapi\/user\/FlashMessageInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1773,7 +1771,7 @@
         "name": "MailerInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\MailerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/MailerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/MailerInterface.php",
         "path": "vendor\/commonapi\/user\/MailerInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1794,7 +1792,7 @@
         "name": "MessagesInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\MessagesInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/MessagesInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/MessagesInterface.php",
         "path": "vendor\/commonapi\/user\/MessagesInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1817,7 +1815,7 @@
         "name": "RegistrationInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\RegistrationInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/RegistrationInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/RegistrationInterface.php",
         "path": "vendor\/commonapi\/user\/RegistrationInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1831,7 +1829,7 @@
         "name": "SessionInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\SessionInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/SessionInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/SessionInterface.php",
         "path": "vendor\/commonapi\/user\/SessionInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1851,7 +1849,7 @@
         "name": "TemplateInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\TemplateInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/TemplateInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/TemplateInterface.php",
         "path": "vendor\/commonapi\/user\/TemplateInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1865,7 +1863,7 @@
         "name": "UserDataInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\UserDataInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/UserDataInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/UserDataInterface.php",
         "path": "vendor\/commonapi\/user\/UserDataInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1893,7 +1891,7 @@
         "name": "UserInterface",
         "namespace": "CommonApi\\User",
         "qns": "CommonApi\\User\\UserInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/commonapi\/user\/UserInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/user\/UserInterface.php",
         "path": "vendor\/commonapi\/user\/UserInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1907,7 +1905,7 @@
         "name": "ConfigurationDataInterface",
         "namespace": "Molajo\\Resource\\Api",
         "qns": "Molajo\\Resource\\Api\\ConfigurationDataInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Api\/ConfigurationDataInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/molajo\/resource\/Source\/Api\/ConfigurationDataInterface.php",
         "path": "vendor\/molajo\/resource\/Source\/Api\/ConfigurationDataInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1923,7 +1921,7 @@
         "name": "ConfigurationInterface",
         "namespace": "Molajo\\Resource\\Api",
         "qns": "Molajo\\Resource\\Api\\ConfigurationInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Api\/ConfigurationInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/molajo\/resource\/Source\/Api\/ConfigurationInterface.php",
         "path": "vendor\/molajo\/resource\/Source\/Api\/ConfigurationInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1939,7 +1937,7 @@
         "name": "FactoryInterface",
         "namespace": "Molajo\\Resource\\Api",
         "qns": "Molajo\\Resource\\Api\\FactoryInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Api\/FactoryInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/molajo\/resource\/Source\/Api\/FactoryInterface.php",
         "path": "vendor\/molajo\/resource\/Source\/Api\/FactoryInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1953,7 +1951,7 @@
         "name": "RegistryInterface",
         "namespace": "Molajo\\Resource\\Api",
         "qns": "Molajo\\Resource\\Api\\RegistryInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/molajo\/resource\/Source\/Api\/RegistryInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/molajo\/resource\/Source\/Api\/RegistryInterface.php",
         "path": "vendor\/molajo\/resource\/Source\/Api\/RegistryInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1969,7 +1967,7 @@
         "name": "LoggerAwareInterface",
         "namespace": "Psr\\Log",
         "qns": "Psr\\Log\\LoggerAwareInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/psr\/log\/Psr\/Log\/LoggerAwareInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/psr\/log\/Psr\/Log\/LoggerAwareInterface.php",
         "path": "vendor\/psr\/log\/Psr\/Log\/LoggerAwareInterface.php",
         "parent": false,
         "implemented_by": [
@@ -1983,7 +1981,7 @@
         "name": "LoggerInterface",
         "namespace": "Psr\\Log",
         "qns": "Psr\\Log\\LoggerInterface",
-        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/Molajo\/vendor\/psr\/log\/Psr\/Log\/LoggerInterface.php",
+        "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/psr\/log\/Psr\/Log\/LoggerInterface.php",
         "path": "vendor\/psr\/log\/Psr\/Log\/LoggerInterface.php",
         "parent": false,
         "implemented_by": [

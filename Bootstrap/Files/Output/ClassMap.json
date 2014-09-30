@@ -1,16 +1,4 @@
 {
-    "Sites\/2\/Logs\/debug.php": {
-        "file_name": "debug.php",
-        "base_name": "debug",
-        "path": "Sites\/2\/Logs\/debug.php",
-        "qns": "Molajo\\Sites\\Logs\\debug"
-    },
-    "Sites\/2\/Logs\/error.php": {
-        "file_name": "error.php",
-        "base_name": "error",
-        "path": "Sites\/2\/Logs\/error.php",
-        "qns": "Molajo\\Sites\\Logs\\error"
-    },
     "vendor\/commonapi\/authorisation\/AuthorisationInterface.php": {
         "file_name": "AuthorisationInterface.php",
         "base_name": "AuthorisationInterface",
@@ -724,12 +712,6 @@
         "base_name": "DebugFactoryMethod",
         "path": "vendor\/molajo\/Log\/Factories\/Debug\/DebugFactoryMethod.php",
         "qns": "Molajo\\Factories\\Debug\\DebugFactoryMethod"
-    },
-    "vendor\/molajo\/Log\/Factories\/Debuglogger\/DebugloggerFactoryMethod.php": {
-        "file_name": "DebugloggerFactoryMethod.php",
-        "base_name": "DebugloggerFactoryMethod",
-        "path": "vendor\/molajo\/Log\/Factories\/Debuglogger\/DebugloggerFactoryMethod.php",
-        "qns": "Molajo\\Factories\\Debuglogger\\DebugloggerFactoryMethod"
     },
     "vendor\/molajo\/Log\/Factories\/Errorhandling\/ErrorhandlingFactoryMethod.php": {
         "file_name": "ErrorhandlingFactoryMethod.php",

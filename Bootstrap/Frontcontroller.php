@@ -46,7 +46,9 @@ $debug_types = array(
     'onBeforeUpdate',
     'onAfterUpdate',
 );
-$debug_types = array();
+
+$debug_types = array(
+);
 
 $front_controller_class = 'Molajo\\Controller\\FrontController';
 $front_controller       = new $front_controller_class (

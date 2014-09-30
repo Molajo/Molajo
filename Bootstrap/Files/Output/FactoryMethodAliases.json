@@ -14,7 +14,6 @@
     "Database": "Molajo\\Factories\\Database",
     "Date": "Molajo\\Factories\\Date",
     "Debug": "Molajo\\Factories\\Debug",
-    "Debuglogger": "Molajo\\Factories\\Debuglogger",
     "Dispatch": "Molajo\\Factories\\Dispatch",
     "Dispatcher": "Molajo\\Factories\\Dispatcher",
     "Email": "Molajo\\Factories\\Email",
