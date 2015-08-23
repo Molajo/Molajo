@@ -6,7 +6,7 @@
  * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
-$base_path   = substr(__DIR__, 0, strlen(__DIR__) - strlen('/Bootstrap/Commit/Molajo'));
+$base_path   = substr(__DIR__, 0, strlen(__DIR__) - strlen('/Molajo/Bootstrap/Commit'));
 $source_path = '/Molajo/Source/Themes/';
 $target_path = '/git/MolajoThemes/';
 
