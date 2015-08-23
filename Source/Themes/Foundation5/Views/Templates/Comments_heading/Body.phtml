@@ -1,0 +1,23 @@
+<?
+/**
+ * Comments_heading Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+
+if ($this->row->closed == 1) :
+    $comment = $this->row->closed_comment;
+elseif ($this->row->count_of_comments == 0) :
+    $comment = $this->row->content_text;
+else :
+    $comment = $this->row->content_text . ' ' . $this->row->count_of_comments . '.';
+endif; ?>
+<div class="comment-head">
+    <h3>
+        <?= $this->row->title; ?>
+    </h3>
+    <?= $comment; ?>
+</div>
+

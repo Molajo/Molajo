@@ -1,0 +1,40 @@
+<?
+/**
+ * Author Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="row">
+    <div class="large-12 columns">
+        <div class="panel">
+            <h5><?= $this->row->full_name; ?></h5>
+            <? if ((int) $this->row->parameters->display_gravatar === 1) : ?>
+                <p>
+                    <img class="gravatar float_left" src="<?= $this->row->email_gravatar; ?>"
+                         alt="[<?= $this->row->full_name; ?>]">
+                </p>
+            <? endif; ?>
+            <p>
+                <a href="" title="<?= $this->row->full_name; ?>">
+                    <?= $this->row->full_name; ?>
+                </a>
+            </p>
+            <? if ((int) $this->row->parameters->display_phone === 1) : ?>
+                <p itemprop="tel">
+                    <?= $this->row->customfields->phone; ?>
+                </p>
+            <? endif; ?>
+            <? if ((int) $this->row->parameters->display_email === 1) : ?>
+                <h5>
+                    <?= $this->row->email_obfuscated; ?>
+                </h5>
+            <? endif; ?>
+            <p>
+                About me
+            </p>
+        </div>
+    </div>
+</div>

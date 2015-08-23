@@ -1,0 +1,93 @@
+<?
+/**
+ * Configuration Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="row">
+    <div class="small-12 columns edit-primary-column">
+        <dl class="accordion" data-accordion>
+            <dd>
+                <a href="#basic">{T Basic Configuration T}</a>
+                <div id="basic" class="content active panel">
+                    <h4>{T Basic Configuration T}</h4>
+                    <p>{T configuration_basic_description T}</p>
+                {I template=Form_columns2 model_name=Configuration_basic I}
+                {I template=Form_columns2 model_name=Configuration_content I}
+                {I template=Form_columns2 model_name=Configuration_response I}
+                {I template=Form_columns2 model_name=Configuration_broadcast I}
+                {I template=Form_columns2 model_name=Configuration_categorize I}
+                {I template=Form_columns2 model_name=Configuration_protection I}
+                {I template=Form_columns2 model_name=Configuration_system I}
+                {I template=Form_columns2 model_name=Configuration_metadata I}
+                </div>
+            </dd>
+
+            <dd>
+                <a href="#customfields">{T Custom Fields T}</a>
+                <div id="customfields" class="content panel">
+                    <h4>{T Custom Fields T}</h4>
+                    <p>{T custom_fields_configuration_description T}</p>
+                {I template=Configuration_customfields model_name=Configuration_customfields I}
+                {I template=Configuration_customfields model_name=Configuration_metadata I}
+                {I template=Configuration_customfields model_name=Configuration_parameters I}
+                </div>
+            </dd>
+
+            <dd>
+                <a href="#views">{T View Settings T}</a>
+                <div id="views" class="content panel">
+                    <h4>{T View Settings T}</h4>
+                    <p>{T configuration_resource_view_description T}</p>
+                {I template=Configuration_view I}
+                </div>
+            </dd>
+
+            <dd>
+                <a href="#permissions">{T Resource Permissions T}</a>
+                <div id="permissions" class="content panel">
+                    <h4>{T Resource Permissions T}</h4>
+                    <p>{T configuration_resource_permissions_description T}</p>
+                {I template=Configuration_permissions I}
+                </div>
+            </dd>
+
+            <dd>
+                <a href="#editor">{T Editor Layout T}</a>
+                <div id="editor" class="content panel">
+                    <h4>{T Editor Layout T}</h4>
+                    <p>{T configuration_edit_layout_description T}</p>
+                {I template=Form_columns2 model_name=Edit_toolbar_buttons_new I}
+                {I template=Form_columns2 model_name=Edit_toolbar_buttons_edit I}
+                {I template=Form_columns2 model_name=Edit_title I}
+                {I template=Form_columns2 model_name=Edit_editor I}
+                {I template=Form_columns2 model_name=Edit_subeditor I}
+                {I template=Form_columns2 model_name=Edit_sidebar1 I}
+                {I template=Form_columns2 model_name=Edit_sidebar2 I}
+                {I template=Form_columns2 model_name=Edit_sidebar3 I}
+                {I template=Form_columns2 model_name=Edit_sidebar4 I}
+                {I template=Form_columns2 model_name=Edit_footer I}
+                </div>
+            </dd>
+
+            <dd>
+                <a href="#grid">{T Grid Parameters T}</a>
+                <div id="grid" class="content panel">
+                    <h4>{T Grid Parameters T}</h4>
+                    <p>{T configuration_grid_description T}</p>
+                {I template=Form_columns2 model_name=Grid_toolbar_buttons I}
+                {I template=Form_columns2 model_name=Grid_actions I}
+                {I template=Form_columns2 model_name=Grid_batch I}
+                {I template=Form_columns2 model_name=Grid_display_columns I}
+                {I template=Form_columns2 model_name=Grid_display_filters I}
+                {I template=Form_columns2 model_name=Grid_display_pagination I}
+                </div>
+            </dd>
+
+        </dl>
+    </div>
+</div>
+</form>

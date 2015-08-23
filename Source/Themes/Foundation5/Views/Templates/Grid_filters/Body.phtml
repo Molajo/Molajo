@@ -1,0 +1,18 @@
+<?
+/**
+ * Grid Filters Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+if ($this->row->even_or_odd == 'odd') : ?>
+    <div class="row">
+<? endif; ?>
+        <div class="large-6 columns">
+            {I template=Form_selectlist model_name=<?= trim($this->row->list_name); ?> I}
+        </div>
+<? if ($this->row->even_or_odd == 'odd') : ?>
+<? else : ?>
+    </div>
+<? endif;

@@ -1,0 +1,54 @@
+<?
+/**
+ * Grid Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+$nowrap = '';
+?>
+{I template=Grid_filters I}
+{I template=Grid_categories I}
+{I template=Grid_tags I}
+{I template=Grid_permissions I}
+<table class="grid responsive" role="main">
+    <thead>
+    <tr>
+        <?
+        $count       = 1;
+        $column_array = $this->plugin_data->grid_columns;
+
+        foreach ($column_array as $column) {
+
+            if (trim($column) == '') {
+            } else {
+                $extra_class = '';
+                $nowrap      = '';
+                if ($count == 1) {
+                    $extra_class .= 'first';
+                    $nowrap = ' nowrap';
+                }
+                if ($count == count($column_array)) {
+                    $extra_class .= 'last';
+                }
+                if ($extra_class == '') {
+                } else {
+                    $temp        = trim($extra_class);
+                    $extra_class = ' class=' . '"' . $temp . '"';
+                }
+                ?>
+                <th<?= $extra_class . $nowrap; ?>>
+                    <span>{T GRID_<?= strtoupper($column); ?>_COLUMN_HEADING T}</span>
+                </th>
+                <?
+                $count++;
+            }
+
+        } ?>
+        <th width="1%">
+            <input type="checkbox" class="checkall">
+        </th>
+    </tr>
+    </thead>
+    <tbody>

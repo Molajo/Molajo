@@ -1,0 +1,24 @@
+<?
+/**
+ * Configuration View Include Code
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="row">
+    <div class="small-12 columns">
+        <fieldset>
+            <legend>{T <?= $type; ?> T}</legend>
+            <div class="row">
+                <div class="large-6 columns">
+                    {I template=Form_selectlist model_type=plugin_data model_name=<?= $theme; ?> I}
+                </div>
+                <div class="large-6 columns">
+                    {I template=Form_selectlist model_type=plugin_data model_name=<?= $page; ?> I}
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

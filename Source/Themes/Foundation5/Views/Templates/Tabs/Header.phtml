@@ -1,0 +1,24 @@
+<?
+/**
+ * Tabs Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<dl class="tabs" data-tab>
+    <?
+    $tabs   = $this->plugin_data->sections;
+    $active = ' active';
+    foreach ($tabs as $item) {
+        ?>
+        <dd class="<?= $active; ?>">
+            <a href="#<?= $item->template_view; ?>">
+                <?= $item->form_section_label; ?>
+            </a>
+        </dd>
+        <? $active = '';
+    } ?>
+</dl>
+<div class="tabs-content">

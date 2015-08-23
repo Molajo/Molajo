@@ -1,0 +1,17 @@
+<?
+/**
+ * Image Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<figure class="<?= trim('panel ' . $this->row->align) ?>">
+    <img class="img" src="<?= $this->row->image ?>" <? if (trim($this->row->image_caption) !== '') : ?>alt="<?= trim($this->row->image_caption) ?>" <? endif; ?>>
+    <? if (trim($this->row->image_caption) !== '') : ?>
+        <figcaption>
+            <?= $this->row->image_caption ?>
+        </figcaption>
+    <? endif; ?>
+</figure>

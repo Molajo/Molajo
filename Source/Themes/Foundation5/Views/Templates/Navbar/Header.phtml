@@ -1,0 +1,34 @@
+<?
+/**
+ * @package    Molajo\Themes\Foundation5
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+$profile_link = '';
+?>
+<div class="fixed contain-to-grid" id="navigation-bar" role="banner">
+    <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="<?= $this->row->home_url; ?>"><?= $this->row->title; ?></a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+
+        <!-- Top Bar Section -->
+        <section class="top-bar-section">
+
+            <!-- Right Nav Section -->
+            <ul class="right">
+                <li class="active has-dropdown">
+                    <a href="<?= $profile_link; ?>"><?= $this->runtime_data->user->full_name; ?></a>
+                    <ul class="dropdown">
+                        <li><a href="#">{T Profile T}</a></li>
+                        <li><a href="#">{T Logout T}</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- End Right Nav Section -->
+
+            <!-- Left Nav Section -->
+            <ul class="left">

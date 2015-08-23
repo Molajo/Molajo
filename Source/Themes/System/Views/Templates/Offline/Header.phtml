@@ -1,0 +1,24 @@
+<?
+/**
+ * 404 Template View
+ *
+ * @package    Molajo\Themes\System
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="row">
+    <div class="one columns show-for-small">
+        <form action="<?= $this->row->catalog_id_url; ?>/edit">
+            <input type="submit" class="submit button medium" value="Edit">
+        </form>
+    </div>
+    <div class="ten columns">
+        <h2><?= $this->row->title; ?></h2>
+    </div>
+    <div class="one columns hide-for-small">
+        <form action="<?= $this->row->catalog_id_url; ?>/edit">
+            <input type="submit" class="submit button medium" value="Edit">
+        </form>
+    </div>
+</div>

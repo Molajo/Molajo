@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Templateview" version="1.0">
+    <name>VIEW_TEMPLATE_WEATHER_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2015</create_date>
+    <copyright>Copyright (C) 2014-2015 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_TEMPLATE_WEATHER_DESCRIPTION</description>
+    <model name="Weather" extends="Templateview">
+        <customfields>
+            <customfield name="parameters">
+                <include field="city"/>
+                <include field="zip"/>
+                <include field="country"/>
+                <include field="fahrenheit_or_celsius"/>
+                <include field="language"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

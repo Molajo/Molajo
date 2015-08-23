@@ -1,0 +1,10 @@
+<?
+/**
+ * Form Selectlist Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+    <option value="<?= $this->row->id; ?>"<?= $this->row->selected; ?>><?= trim($this->row->value) . '</option>' . chr(10);

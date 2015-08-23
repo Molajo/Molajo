@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>Molajo Activity Plugin</title>
+    <parser>
+        <target>.dev/Docs</target>
+        <markers>
+            <item>TODO</item>
+            <item>FIXME</item>
+        </markers>
+        <extensions>
+            <extension>php</extension>
+            <extension>phtml</extension>
+        </extensions>
+    </parser>
+    <transformer>
+        <target>.dev/Docs</target>
+    </transformer>
+    <transformations>
+        <template name="clean"/>
+    </transformations>
+    <files>
+        <directory>.</directory>
+        <ignore>.dev/*</ignore>
+    </files>
+</phpdoc>

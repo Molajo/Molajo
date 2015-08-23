@@ -1,0 +1,84 @@
+<?
+/**
+ * Comments Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+$indent = $this->row->lvl - 1;
+if ($indent > 4) {
+    $indent = 4;
+}
+$column1_content = '<div class="large-' . $indent . ' small-12 columns">&nbsp;</div>';
+$column2_content = '<div class="large-' . (12 - $indent) . ' small-12 columns">';
+?>
+<?= $column1_content ?>
+<?= $column2_content ?>
+    <nav class="row <?= trim('comment' . ' ' . $this->row->first . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd); ?>" id="<?= $this->row->alias; ?>">
+        <? if ((int) $this->row->parameters->display_gravatar === 1) { ?>
+        <div class="large-2 columns">
+            <img alt="<?= $this->row->customfields->visitor_name; ?>" src="<?= $this->row->customfields->email_address_gravatar; ?>" class="gravatar float_right" />
+        </div>
+        <div class="large-10 columns">
+        <? } else { ?>
+        <div class="large-12 columns">
+        <? } ?>
+            <a class="small permalink" href="<?= $this->row->page_url; ?>#<?= $this->row->alias; ?>">#</a>
+            {T On T}
+            <time datetime="<?= $this->row->created_datetime; ?>" pubdate>
+                <?=
+                $this->row->created_datetime_month_name
+                . ' ' . $this->row->created_datetime_day_number
+                . ', ' . $this->row->created_datetime_ccyy
+                . ' ' . '{T at T}'
+                . ' ' . $this->row->created_datetime_time;
+                ?>
+            </time>
+            <? if ($this->row->customfields->website == '') :
+            else : ?>
+            <a href="<?= $this->row->customfields->website; ?>" rel="external nofollow" class="url">
+            <? endif; ?>
+            <?= $this->row->customfields->visitor_name; ?>
+            <? if ($this->row->customfields->website == '') :
+            else : ?>
+            </a>
+            <? endif; ?>
+            {T said T}:
+            <? if ($this->row->title == '') :
+            else : ?>
+            <header>
+                <h5><?= $this->row->title; ?></h5>
+            </header>
+            <? endif; ?>
+        </div>
+    </nav>
+    <article class="row <?= trim('comment' . ' ' . $this->row->first . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd); ?>">
+        <div class="large-12 columns">
+            <?= $this->row->content_text; ?>
+        </div>
+    </article>
+    <nav class="respond row <?= trim('comment' . ' ' . $this->row->first . ' ' . $this->row->last_row . ' ' . $this->row->even_or_odd); ?>">
+        <div class="large-1 columns">
+            <span align="center" class="like left">
+                <i class="fi-plus" alt="{T Like T}"></i>
+            </span>
+        </div>
+        <div class="large-1 columns">
+            <span align="center" class="dislike left">
+                <i class="fi-minus" alt="{T Dislike T}"></i>
+            </span>
+        </div>
+        <div class="large-1 columns">
+            <span align="center" class="share left">
+                <i class="fi-share" alt="{T Share T}"></i>
+            </span>
+        </div>
+        <div class="large-3 columns">
+            <span align="center" class="comment left">
+                <a class="small permalink" href="<?= $this->row->page_urls ?>#reply">{T Reply T}</a>
+            </span>
+        </div>
+        <div class="large-7 columns small">&nbsp;</div>
+    </nav>
+</div>

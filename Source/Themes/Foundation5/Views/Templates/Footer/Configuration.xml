@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Templateview" version="1.0">
+    <name>VIEW_TEMPLATE_FOOTER_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2015</create_date>
+    <copyright>Copyright (C) 2014-2015 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>AmyStephen@molajo.com</author_email>
+    <author_url>http://molajo.com</author_url>
+    <version>1.0</version>
+    <description>VIEW_TEMPLATE_FOOTER_DESCRIPTION</description>
+    <model name="Footer" extends="Templateview">
+        <customfields>
+            <customfield name="parameters">
+                <include field="copyright_holder"/>
+                <include field="copyright_first_year"/>
+                <include field="link"/>
+                <include field="linked_text"/>
+                <include field="remaining_text"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

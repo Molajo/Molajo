@@ -1,0 +1,68 @@
+<?
+/**
+ * Configuration Customfields Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="row">
+    <div class="large-12 columns">
+        <fieldset>
+            <legend>{T <?= $this->row->form_section_label; ?> T}</legend>
+            <div class="row">
+                <div class="large-2 columns">
+                    <strong>{T Field T}</strong>
+                </div>
+                <div class="large-10 columns">
+                    <input type="text" name="field_name"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-2 columns">
+                    <strong>{T Type T}</strong>
+                </div>
+                <div class="large-10 columns">
+                    {I template=Form_selectlist model_name=configuration_datatypes I}
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-2 columns">
+                    <strong>{T Null T}</strong>
+                </div>
+                <div class="large-10 columns">
+                    <input type="text" name="field_name"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-2 columns">
+                    <strong>{T Default T}</strong>
+                </div>
+                <div class="large-8 columns">
+                    <input type="text" name="field_name"/>
+                </div>
+                <div class="large-2 columns">
+                    <span class="right"><a href="#" class="button tiny radius">{T Create T}</a></span>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>{T Existing <?= $this->row->form_section_label; ?> T}</legend>
+            <div class="row">
+                <div class="large-4 small-10 columns">
+                    <strong>{T Field T}</strong>
+                </div>
+                <div class="large-2 columns show-for-large-up">
+                    <strong>{T Type T}</strong>
+                </div>
+                <div class="large-2 columns show-for-large-up">
+                    <strong>{T Null T}</strong>
+                </div>
+                <div class="large-2 columns show-for-large-up">
+                    <strong>{T Default T}</strong>
+                </div>
+                <div class="large-2 small-2 columns">
+                </div>
+            </div>

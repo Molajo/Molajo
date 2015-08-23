@@ -1,0 +1,75 @@
+<?
+/**
+ * Customfields Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="configuration-header">
+    <header>
+        <h3><?= $this->row->page_title_extended; ?></h3>
+        <? if ($this->runtime_data->application_help == 1) { ?>
+            <h6><?= $this->row->page_description; ?></h6>
+        <? } ?>
+    </header>
+    <section>
+        <ul class="inline-list right">
+            <li><a href="#"><strong>{T Reset T}</strong></a></li>
+            <li><a href="#" class="button success radius">{T Save T}</a></li>
+        </ul>
+    </section>
+</div>
+
+{I template=<?= $this->row->view; ?> parameter_np=<?= $this->row->name; ?> I}
+
+<div class="configuration-body">
+
+    <table class="responsive">
+        <thead>
+        <tr>
+            <th class="create-type">{T Criteria T}</th>
+            <th class="create-value">{T Value T}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="create-type">{T Name T}</td>
+            <td class="create-value">
+                <input id="custom_field_name" type="text" placeholder="Customfield Name"/>
+                {I template=Form_input id="custom_field_name" type="text" I}
+            </td>
+        </tr>
+        <tr>
+            <td class="create-type">
+                {I template=Form_select id="custom_field_type" datalist="datatype" I}
+            </td>
+        </tr>
+        <tr>
+            <td class="create-type">{T Required T}</td>
+            <td class="create-value"></td>
+        </tr>
+        <tr>
+            <td class="create-type">{T List T}</td>
+            <td class="create-value"></td>
+        </tr>
+        <tr>
+            <td class="create-type">{T Hidden T}</td>
+            <td class="create-value"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="responsive">
+        <thead>
+        <tr>
+            <th class="name">{T Name T}</th>
+            <th class="type">{T Type T}</th>
+            <th class="required">{T Required T}</th>
+            <th class="datalist">{T List T}</th>
+            <th class="hidden">{T Hidden T}</th>
+            <th width="1%">{T Delete T}</th>
+        </tr>
+        </thead>
+        <tbody>

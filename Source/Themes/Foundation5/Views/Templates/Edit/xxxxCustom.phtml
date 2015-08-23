@@ -1,0 +1,69 @@
+<?
+/**
+ * Edit Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="row">
+    <div class="large-8 small-12 columns edit-primary-column">
+        <div class="row">
+            <div class="small-12 columns edit-title">
+                {I template=Form_columns2 model_type=plugin_data model_name=edit_title I}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns edit-editor">
+                {I template=Form_columns1 model_type=plugin_data model_name=edit_editor I}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns edit-footer">
+                {I template=Form_columns2 model_type=plugin_data model_name=edit_subeditor I}
+            </div>
+        </div>
+    </div>
+
+    <div class="large-4 small-12 columns">
+        <dl class="accordion" data-accordion>
+            <dd>
+                <a href="#sidebar1">{T Publishing T}</a>
+
+                <div id="sidebar1" class="content active">
+                    {I template=Form_columns1 model_type=plugin_data model_name=edit_sidebar1 I}
+                </div>
+            </dd>
+            <dd>
+                <a href="#sidebar2">{T Categorization T}</a>
+
+                <div id="sidebar2" class="content">
+                    {I template=Form_columns1 model_type=plugin_data model_name=edit_sidebar2 I}
+                </div>
+            </dd>
+            <dd>
+                <a href="#sidebar3">{T Metadata T}</a>
+
+                <div id="sidebar3" class="content">
+                    {I template=Form_columns1 model_type=plugin_data model_name=edit_sidebar3 I}
+                </div>
+            </dd>
+            <dd>
+                <a href="#sidebar4">{T Response T}</a>
+
+                <div id="sidebar4" class="content">
+                    {I template=Form_columns1 model_type=plugin_data model_name=edit_sidebar4 I}
+                </div>
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="small-12 columns edit-primary-column">
+        {I template=Form_columns1 model_type=plugin_data model_name=edit_Footer I}
+    </div>
+</div>

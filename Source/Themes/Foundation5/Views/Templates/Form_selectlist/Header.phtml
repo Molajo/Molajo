@@ -1,0 +1,18 @@
+<?
+/**
+ * Form Select List Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<span data-tooltip class="has-tip" title="{T <?= $this->row->list_name; ?> T}">
+    <label for="<?= $this->row->list_name; ?>">
+        {T <?= $this->row->list_name; ?> T}
+    </label>
+</span>
+<select<?= $this->row->multiple; ?><?= $this->row->size; ?> name="<?= $this->row->value. '">' . chr(10); ?>
+<? if ($this->row->multiple === '') { ?>
+    <option value="">{T SELECT_<?= strtoupper($this->row->list_name) . ' T}</option>' . chr(10); ?>
+<? }

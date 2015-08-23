@@ -1,0 +1,100 @@
+<?
+/**
+ * Grid Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<tr class="<?= $this->row->grid_row_class; ?>"><?
+    $columnCount = 1;
+    $nowrap      = ' nowrap';
+    $first       = 1;
+    $column_array = $this->plugin_data->grid_columns;
+
+    foreach ($column_array as $column) {
+        $class  = '';
+        $nowrap = '';
+        if ($column == 'ordering') :
+            $nowrap = ' nowrap';
+        elseif ($column == 'featured' || $column == 'stickied' || $column == 'status') :
+            $class = ' class="center"';
+        endif; ?>
+        <td<?= $class ?><?= $nowrap; ?>><?
+        if ($column == 'title') : ?>
+            <a href="<?= $this->row->home_url . $this->row->catalog_sef_request; ?>"><?= $this->row->$column; ?></a>
+        <? elseif ($column == 'username') : ?>
+            <a href="<?= $this->row->home_url . $this->row->username_url; ?>"><?= $this->row->$column; ?></a>
+        <?
+        elseif ($column == 'status' || $column == 'status_name') :
+            if ((int)$this->row->status == 2) :
+                $class = 'success radius label';
+            elseif ((int)$this->row->status == 1) :
+                $class = 'success radius label';
+            elseif ((int)$this->row->status == 0) :
+                $class = 'radius label';
+            elseif ((int)$this->row->status == -1) :
+                $class = 'alert radius label';
+            elseif ((int)$this->row->status == -2) :
+                $class = 'alert radius label';
+            elseif ((int)$this->row->status == -5) :
+                $class = 'radius label';
+            elseif ((int)$this->row->status == -10) :
+                $class = 'secondary radius label';
+            endif; ?>
+            <span align="center" class="<?= $class; ?>">{T <?= $this->row->status_name; ?> T}</span>
+        <?
+        elseif ($column == 'stickied') : ?>
+            <span align="center" class="stickied centered">
+            <? if ((int)$this->row->$column == 1) : ?>
+                <i class="fi-check" alt="{T Stickied T}"></i>
+            <? endif; ?>
+            </span>
+        <?
+        elseif ($column == 'featured') : ?>
+            <span class="featured center">
+            <? if ((int)$this->row->$column == 1) : ?>
+                <i class="fi-star" alt="{T Featured T}"></i>
+            <? endif; ?>
+            </span>
+        <?
+        elseif ($column == 'ordering') : ?>
+            <? if ((int)$this->row->last_row == 1) : ?>
+
+            <? else : ?>
+                <span class="order-down"><i class="fi-arrow-down"></i></span>
+            <? endif; ?>
+            <? if ((int)$this->row->first_row == 1) : ?>
+            <? else : ?>
+                <span class="order-up"><i class="fi-arrow-up"></i></span>
+            <? endif; ?>
+            <span class="ordering"><?= $this->row->ordering; ?></span>
+
+        <?
+        else :
+            if (isset($this->row->$column)) : ?>
+                <?= $this->row->$column; ?>
+            <?
+            else :
+                if (substr($column, 0, strlen('metadata_')) == 'metadata_') :
+                    $column = substr($column, strlen('metadata_'), 9999);
+                    echo $this->row->metadata->$column;
+                else :
+                    // column does not exist
+                endif;
+            endif;
+        endif;
+        ?>
+        </td><?
+
+        if ($first == 1) :
+            $first  = 0;
+            $nowrap = '';
+        endif;
+
+        $columnCount++;
+    }
+    ?>
+    <td class="center last"><input type="checkbox" id="checkbox<?= $this->row->id; ?>"></td>
+</tr>

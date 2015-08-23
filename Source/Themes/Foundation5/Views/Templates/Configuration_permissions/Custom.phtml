@@ -1,0 +1,33 @@
+<?
+/**
+ * Configuration Permissions Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="row">
+    <div class="large-6 columns">
+        {I template=Form_selectlist model_type=plugin_data model_name=datalist_access_create_groups I}
+    </div>
+    <div class="large-6 columns">
+        {I template=Form_selectlist model_type=plugin_data model_name=datalist_access_read_groups I}
+    </div>
+</div>
+<div class="row">
+    <div class="large-6 columns">
+        {I template=Form_selectlist model_type=plugin_data model_name=datalist_access_update_groups I}
+    </div>
+    <div class="large-6 columns">
+        {I template=Form_selectlist model_type=plugin_data model_name=datalist_access_delete_groups I}
+    </div>
+</div>
+<div class="row">
+    <div class="large-6 columns">
+        {I template=Form_selectlist model_type=plugin_data model_name=datalist_access_publish_groups I}
+    </div>
+    <div class="large-6 columns">
+        {I template=Form_selectlist model_type=plugin_data model_name=datalist_access_administer_groups I}
+    </div>
+</div>

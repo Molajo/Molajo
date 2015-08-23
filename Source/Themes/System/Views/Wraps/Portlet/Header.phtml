@@ -1,0 +1,16 @@
+<?
+/**
+ * Portlet Wrap View
+ *
+ * @package    Molajo\Themes\System
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div class="portlet-header">
+    <? if ($this->runtime_data->criteria_title == '') :
+    else : ?>
+        <h4><?= $this->runtime_data->criteria_title; ?></h4>
+    <? endif; ?>
+</div>
+<div class="portlet-content">

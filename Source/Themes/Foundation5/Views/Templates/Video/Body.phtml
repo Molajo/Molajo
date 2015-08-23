@@ -1,0 +1,19 @@
+<?
+/**
+ * Video Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+
+?>
+<div class="video-wrapper">
+    <div class="video-container">
+        <iframe src="<?= $this->row->criteria_video; ?>"
+                width="<?= $this->row->criteria_width; ?>"
+                height="<?= $this->row->criteria_height; ?>"
+                frameborder="0">
+        </iframe>
+    </div>
+</div>

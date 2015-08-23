@@ -1,0 +1,20 @@
+/*
+@package     Molajo
+@copyright   Copyright (C) 2014-2015 Amy Stephen. All rights reserved.
+@license     MIT, see License folder
+*/
+.map-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden
+}
+
+.map-container iframe, .map-container object, .map-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 96%;
+    height: 96%;
+    padding: 2%
+}

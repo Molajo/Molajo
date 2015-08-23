@@ -1,0 +1,36 @@
+.bar {
+    margin-bottom: 10px;
+    color: #fff;
+    padding: 4px;
+    text-align: center;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ff7617), to(#ba550f));
+
+    -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.25)));
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-animation-name: bar;
+    -webkit-animation-duration: 0.5s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-out;
+}
+
+#data-one {
+    -webkit-animation-name: bar-one;
+    background-color: #adff2f;
+}
+
+#data-two {
+    -webkit-animation-name: bar-two;
+    background-color: green;
+}
+
+#data-three {
+    -webkit-animation-name: bar-three;
+    background-color: #8a2be2;
+}
+
+#data-four {
+    -webkit-animation-name: bar-four;
+    background-color: #daa520;
+}

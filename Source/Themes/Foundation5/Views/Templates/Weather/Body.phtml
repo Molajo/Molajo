@@ -1,0 +1,84 @@
+<?
+/**
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ */
+
+if ((int)$this->row->results == 0) :
+    return;
+endif;
+
+http://forecast.weather.gov/MapClick.php?lat=40.841628455989564&lon=-96.30158644265947&site=all&smap=1#.VMGwa8bWiWd
+?>
+
+<div class="weather-wrapper">
+    <div class="weather current">
+        <div class="weather-icon float-left">
+            <img src="<?= $this->row->now_icon; ?>" alt="<?= $this->row->now_condition; ?>"
+                 title="<?= $this->row->now_condition; ?>"/>
+        </div>
+        <div class="weather-info forecast-info float-left">
+            <b>{T Today T}</b><br>
+
+            <div class="temp"><?= $this->row->now_temp; ?></div>
+            <div class="condition"><?= $this->row->now_condition; ?></div>
+            <div class="wind"><?= $this->row->now_wind_condition; ?></div>
+        </div>
+    </div>
+    <h5 class="weather">{T Forecast T}</h5>
+
+    <div class="weather forecast forecast-1">
+        <div class="weather-icon float-left">
+            <img src="<?= $this->row->day1_forecast_icon; ?>"
+                 alt="<?= $this->row->day1_forecast_day_of_week; ?>"
+                 title="<?= $this->row->day1_forecast_day_of_week; ?>"/>
+        </div>
+        <div class="weather-info forecast-info float-left">
+            <b><?= $this->row->day1_forecast_day_of_week; ?></b><br>
+            <?= $this->row->day1_forecast_low_temperature; ?>
+            | <?= $this->row->day1_forecast_high_temperature; ?><br>
+            <?= $this->row->day1_forecast_condition; ?>
+        </div>
+    </div>
+    <div class="weather forecast forecast-2">
+        <div class="weather-icon float-left">
+            <img src="<?= $this->row->day2_forecast_icon; ?>"
+                 alt="<?= $this->row->day2_forecast_day_of_week; ?>"
+                 title="<?= $this->row->day2_forecast_day_of_week; ?>"/>
+        </div>
+        <div class="weather-info forecast-info float-left">
+            <b><?= $this->row->day2_forecast_day_of_week; ?></b><br>
+            <?= $this->row->day2_forecast_low_temperature; ?>
+            | <?= $this->row->day2_forecast_high_temperature; ?><br>
+            <?= $this->row->day2_forecast_condition; ?>
+        </div>
+    </div>
+    <div class="weather forecast forecast-3">
+        <div class="weather-icon float-left">
+            <img src="<?= $this->row->day3_forecast_icon; ?>"
+                 alt="<?= $this->row->day3_forecast_day_of_week; ?>"
+                 title="<?= $this->row->day3_forecast_day_of_week; ?>"/>
+        </div>
+        <div class="weather-info forecast-info float-left">
+            <b><?= $this->row->day3_forecast_day_of_week; ?></b><br>
+            <?= $this->row->day3_forecast_low_temperature; ?>
+            | <?= $this->row->day3_forecast_high_temperature; ?><br>
+            <?= $this->row->day3_forecast_condition; ?>
+        </div>
+    </div>
+    <div class="weather forecast forecast-4">
+        <div class="weather-icon float-left">
+            <img src="<?= $this->row->day4_forecast_icon; ?>"
+                 alt="<?= $this->row->day4_forecast_day_of_week; ?>"
+                 title="<?= $this->row->day4_forecast_day_of_week; ?>"/>
+        </div>
+        <div class="weather-info forecast-info float-left">
+            <b><?= $this->row->day4_forecast_day_of_week; ?></b><br>
+            <?= $this->row->day4_forecast_low_temperature; ?>
+            | <?= $this->row->day4_forecast_high_temperature; ?><br>
+            <?= $this->row->day4_forecast_condition; ?>
+        </div>
+    </div>
+</div>

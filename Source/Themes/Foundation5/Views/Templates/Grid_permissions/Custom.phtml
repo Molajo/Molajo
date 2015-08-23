@@ -1,0 +1,62 @@
+<?
+/**
+ * Grid Permissions Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<div id="toolbar-permissions" class="row">
+    <div class="large-12 columns">
+        <div class="row">
+            <div class="large-12 columns">
+                <h3>{T Permissions T}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-6 small-12 columns">
+                {I template=Form_selectlist model_name=grid_batch_groups I}
+            </div>
+            <div class="large-6 small-12 columns">
+                <div class="row">
+                    <div class="large-12 columns">
+                        <label for="create">
+                            {T Permission T}
+                        </label>
+                    </div>
+                </div>
+                <input id="create" type="checkbox">
+                <label for="create">
+                    {T Create T}
+                </label>
+                <input id="read" type="checkbox">
+                <label for="read">
+                    {T Read T}
+                </label>
+                <input id="update" type="checkbox">
+                <label for="update">
+                    {T Update T}
+                </label>
+                <input id="publish" type="checkbox">
+                <label for="publish">
+                    {T Publish T}
+                </label>
+                <input id="delete" type="checkbox">
+                <label for="delete">
+                    {T Delete T}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-6 small-6 columns text-right">
+                <input type="submit" class="submit button small radius"
+                       name="submit" id="AssignPermissions" value="{T Assign T}"/>
+            </div>
+            <div class="large-6 small-6 columns right-text">
+                <input type="submit" class="submit button small radius"
+                       name="submit" id="RemovePermissions" value="{T Remove T}"/>
+            </div>
+        </div>
+    </div>
+</div>

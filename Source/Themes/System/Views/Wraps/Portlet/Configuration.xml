@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="Wrapview" version="1.0">
+    <name>VIEW_WRAP_PORTLET_NAME</name>
+    <author>Amy Stephen</author>
+    <create_date>January 2015</create_date>
+    <copyright>Copyright (C) 2014-2015 Amy Stephen. All rights reserved.</copyright>
+    <license>MIT</license>
+    <author_email>hello@molajo.org</author_email>
+    <author_url>http://molajo.org</author_url>
+    <version>1.0</version>
+    <description>VIEW_WRAP_PORTLET_DESCRIPTION</description>
+    <model name="Portlet" extends="Wrapview">
+        <customfields>
+            <customfield name="parameters">
+                <include field="display_title"/>
+                <include field="display_body"/>
+            </customfield>
+        </customfields>
+    </model>
+</extension>

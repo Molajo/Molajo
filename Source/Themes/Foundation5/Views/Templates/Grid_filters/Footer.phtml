@@ -1,0 +1,54 @@
+<?
+/**
+ * Gridfilters Template View
+ *
+ * @package    Molajo\Themes\Foundation5
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
+ */
+?>
+<? if ($this->row->even_or_odd == 'odd') : ?>
+    <div class="large-6 columns">
+    </div>
+    </div>
+<? endif; ?>
+<div class="row">
+    <div class="large-6 columns">
+        {I template=Form_selectlist model_name=grid_fields I}
+    </div>
+    <div class="large-6 columns">
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    {T Direction T}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-6 columns">
+                <input type="radio" name="ordering" value="ascending" id="ordering-ascending">
+                <label for="ordering-ascending">
+                    {T Asc T}
+                </label>
+            </div>
+            <div class="large-6 columns">
+                <input type="radio" name="ordering" value="descending" id="ordering-descending">
+                <label for="ordering-descending">
+                    {T Desc T}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-6 columns">
+        <label>{T Search T}</label>
+        <input name="search" id="search" type="text" placeholder="{T Search For T}"/>
+    </div>
+    <div class="large-6 columns">
+        <input type="submit" class="submit button small right" name="filter-button" id="filter-button" value="Filter">
+    </div>
+</div>
+</div>
+</div>
