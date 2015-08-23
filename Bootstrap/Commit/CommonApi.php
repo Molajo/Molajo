@@ -1,6 +1,6 @@
 <?php
 /**
- * Packages
+ * Common Api
  *
  * @package    Molajo
  * @copyright  2014-2015 Amy Stephen. All rights reserved.
@@ -14,7 +14,6 @@ foreach (scandir($base_path . $source_path) as $folder) {
 
     if (substr($folder, 0, 1) === '.') {
     } else {
-        echo 'cd ' . $folder . chr(10);
         $source_plugin = $source_path . $folder;
         $target_plugin = $target_path . ucfirst($folder);
         include $base_path . '/Molajo/Bootstrap/Commit/ExecuteCopy.php';

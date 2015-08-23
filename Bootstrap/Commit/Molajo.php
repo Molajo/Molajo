@@ -7,8 +7,8 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 $base_path   = substr(__DIR__, 0, strlen(__DIR__) - strlen('/Molajo/Bootstrap/Commit'));
-$source_path = '/Molajo/vendor/molajo/';
-$target_path = '/git/MolajoVendor/';
+$source_path = '/Molajo/';
+$target_path = '/git/Molajo/';
 
 foreach (scandir($base_path . $source_path) as $folder) {
 
