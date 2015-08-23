@@ -3,10 +3,12 @@
  * Front Controller
  *
  * @package    Molajo
- * @copyright  2014 Amy Stephen. All rights reserved.
+ * @copyright  2014-2015 Amy Stephen. All rights reserved.
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
-$steps = array('Initialise', 'Route', 'Authorisation', 'Dispatcher', 'Execute', 'Response');
+//'Authorisation';
+
+$steps = array('Route', 'Dispatcher', 'Execute', 'Response');
 
 $dependencies = array(
     'runtime_data'   => 'Runtimedata',
@@ -29,7 +31,7 @@ $debug_types = array(
     'Initialise',
     'Container',
     'Event',
-    'onAfterInitialise',
+    'onAfterStart',
     'onBeforeAuthenticate',
     'onAfterAuthenticate',
     'onBeforeLogout',
@@ -37,31 +39,30 @@ $debug_types = array(
     'onBeforeLogout',
     'onBeforeExecute',
     'onBeforeParseHead',
-    'onBeforeRenderView',
-    'onAfterRenderView',
+    'onBeforeRenderTemplate',
+    'onAfterRenderTemplate',
     'onBeforeRead',
+    'onAfterReadRow',
     'onAfterRead',
-    'onAfterReadall',
     'onBeforeCreate',
     'onBeforeUpdate',
     'onAfterUpdate',
 );
 
-$debug_types = array(
-);
+$debug_types = array();
 
 $front_controller_class = 'Molajo\\Controller\\FrontController';
-$front_controller       = new $front_controller_class (
+
+$front_controller = new $front_controller_class (
     $schedule_factory,
     $requests,
-    $base_path,
     $steps,
     $dependencies,
     $error_handler = null,
     $exception_handler = null,
-    $debug = false,
+    $debug_handler = null,
     $debug_types,
-    $debug_handler = null
+    $debug = false
 );
 
 $front_controller->process();

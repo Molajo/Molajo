@@ -1,7 +1,0 @@
-{
-    "class": {
-        "Name": "classloader",
-        "RequireFileExtensions": ".php",
-        "Adapter": "ClassLoader"
-    }
-}
