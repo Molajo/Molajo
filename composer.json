@@ -39,17 +39,11 @@
     "commonapi/resource": "dev-master",
     "commonapi/route": "dev-master",
     "commonapi/user": "dev-master",
-
     "ircmaxell/password-compat": "dev-master",
-
     "php": ">=5.4",
-
     "phpmailer/phpmailer": "dev-master",
-
     "psr/log": "dev-master",
-
     "molajo/application": "dev-master",
-    "molajo/authorisation": "dev-master",
     "molajo/cache": "dev-master",
     "molajo/email": "dev-master",
     "molajo/event": "dev-master",
@@ -65,84 +59,15 @@
     "molajo/resource": "dev-master",
     "molajo/route": "dev-master",
     "molajo/user": "dev-master",
-
-    "molajoplugins/activity": "dev-master",
-    "molajoplugins/alias": "dev-master",
-    "molajoplugins/application": "dev-master",
-    "molajoplugins/article": "dev-master",
-    "molajoplugins/author": "dev-master",
-    "molajoplugins/authorisation": "dev-master",
-    "molajoplugins/blockquote": "dev-master",
-    "molajoplugins/breadcrumbs": "dev-master",
-    "molajoplugins/catalog": "dev-master",
-    "molajoplugins/checkin": "dev-master",
-    "molajoplugins/checkout": "dev-master",
-    "molajoplugins/comments": "dev-master",
-    "molajoplugins/copyright": "dev-master",
-    "molajoplugins/csrftoken": "dev-master",
-    "molajoplugins/customfields": "dev-master",
-    "molajoplugins/dateformats": "dev-master",
-    "molajoplugins/defer": "dev-master",
-    "molajoplugins/email": "dev-master",
-    "molajoplugins/events": "dev-master",
-    "molajoplugins/extensions": "dev-master",
-    "molajoplugins/feed": "dev-master",
-    "molajoplugins/fields": "dev-master",
-    "molajoplugins/footer": "dev-master",
-    "molajoplugins/fullname": "dev-master",
-    "molajoplugins/gravatar": "dev-master",
-    "molajoplugins/head": "dev-master",
-    "molajoplugins/header": "dev-master",
-    "molajoplugins/image": "dev-master",
-    "molajoplugins/item": "dev-master",
-    "molajoplugins/linebreaks": "dev-master",
-    "molajoplugins/links": "dev-master",
-    "molajoplugins/login": "dev-master",
-    "molajoplugins/logout": "dev-master",
-    "molajoplugins/menuitems": "dev-master",
-    "molajoplugins/messages": "dev-master",
-    "molajoplugins/navbar": "dev-master",
-    "molajoplugins/ordering": "dev-master",
-    "molajoplugins/page": "dev-master",
-    "molajoplugins/pagetypeapplication": "dev-master",
-    "molajoplugins/pagetypeconfiguration": "dev-master",
-    "molajoplugins/pagetypedashboard": "dev-master",
-    "molajoplugins/pagetypeedit": "dev-master",
-    "molajoplugins/pagetypegrid": "dev-master",
-    "molajoplugins/pagetypeitem": "dev-master",
-    "molajoplugins/pagetypelist": "dev-master",
-    "molajoplugins/pagetypenew": "dev-master",
-    "molajoplugins/pagination": "dev-master",
-    "molajoplugins/paging": "dev-master",
-    "molajoplugins/parse": "dev-master",
-    "molajoplugins/position": "dev-master",
-    "molajoplugins/queryauthorisation": "dev-master",
-    "molajoplugins/readmore": "dev-master",
-    "molajoplugins/sites": "dev-master",
-    "molajoplugins/smilies": "dev-master",
-    "molajoplugins/snippet": "dev-master",
-    "molajoplugins/spamprotection": "dev-master",
-    "molajoplugins/status": "dev-master",
-    "molajoplugins/template": "dev-master",
-    "molajoplugins/theme": "dev-master",
-    "molajoplugins/toolbar": "dev-master",
-    "molajoplugins/wrap": "dev-master",
-
-    "molajothemes/foundation5": "dev-master",
-    "molajothemes/system": "dev-master",
-
     "swiftmailer/swiftmailer": "dev-master"
   },
-
   "autoload": {
     "psr-4": {
       "Molajo\\Sites\\": "Sites/"
     }
   },
-
   "archive": {
     "exclude": ["/.dev"]
   },
-
   "minimum-stability": "dev"
 }

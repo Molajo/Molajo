@@ -1,0 +1,12 @@
+{
+    "\/Plugins\/": [
+        "Source\/Plugins\/"
+    ],
+    "\/Resources\/": [
+        "Source\/Resources\/",
+        "vendor\/molajo\/application\/Source\/Resources\/"
+    ],
+    "\/Themes\/": [
+        "Source\/Themes\/"
+    ]
+}

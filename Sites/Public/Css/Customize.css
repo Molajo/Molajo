@@ -16,12 +16,14 @@
 .edit-editor {
 }
 
-.edit-foooter {
+.edit-footer {
 }
 
 .edit-sidebar1, .edit-sidebar2, .edit-sidebar3 {
 }
-
+span.display-value {
+    padding-bottom: .5em
+}
 .order-down, .order-up {
     padding-right: 5px
 }

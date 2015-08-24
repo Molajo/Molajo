@@ -1,0 +1,554 @@
+{
+    "home": {
+        "home": 1,
+        "model_name": "Menuitems",
+        "model_type": "System",
+        "page_type": "Dashboard",
+        "sef_request": ""
+    },
+    "page_types": {
+        "access-dashboard": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Dashboard",
+            "sef_request": "access-dashboard"
+        },
+        "applications": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "applications"
+        },
+        "applications\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "applications\/configuration"
+        },
+        "articles": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "articles"
+        },
+        "articles\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "articles\/configuration"
+        },
+        "audio": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "audio"
+        },
+        "audio\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "audio\/configuration"
+        },
+        "build-dashboard": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Dashboard",
+            "sef_request": "build-dashboard"
+        },
+        "categories": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "categories"
+        },
+        "categories\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "categories\/configuration"
+        },
+        "comments": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "comments"
+        },
+        "comments\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "comments\/configuration"
+        },
+        "configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Application",
+            "sef_request": "configuration"
+        },
+        "contacts": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "contacts"
+        },
+        "contacts\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "contacts\/configuration"
+        },
+        "fields": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "fields"
+        },
+        "files": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "files"
+        },
+        "files\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "files\/configuration"
+        },
+        "groups": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "groups"
+        },
+        "groups\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "groups\/configuration"
+        },
+        "images": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "images"
+        },
+        "images\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "images\/configuration"
+        },
+        "languages": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "languages"
+        },
+        "languages\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "languages\/configuration"
+        },
+        "languagestrings": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "languagestrings"
+        },
+        "languagestrings\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "languagestrings\/configuration"
+        },
+        "links": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "links"
+        },
+        "links\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "links\/configuration"
+        },
+        "media-dashboard": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Dashboard",
+            "sef_request": "media-dashboard"
+        },
+        "menuitems": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "menuitems"
+        },
+        "menuitems\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "menuitems\/configuration"
+        },
+        "pages": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "pages"
+        },
+        "pages\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "pages\/configuration"
+        },
+        "pageviews": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "pageviews"
+        },
+        "pageviews\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "pageviews\/configuration"
+        },
+        "permissions": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "permissions"
+        },
+        "permissions\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "permissions\/configuration"
+        },
+        "plugins": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "plugins"
+        },
+        "plugins\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "plugins\/configuration"
+        },
+        "positions": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "positions"
+        },
+        "positions\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "positions\/configuration"
+        },
+        "resources": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "resources"
+        },
+        "resources-dashboard": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Dashboard",
+            "sef_request": "resources-dashboard"
+        },
+        "resources\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "resources\/configuration"
+        },
+        "sites": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "sites"
+        },
+        "sites\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "sites\/configuration"
+        },
+        "sites\/install": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Template",
+            "sef_request": "sites\/install"
+        },
+        "sites\/update": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Template",
+            "sef_request": "sites\/update"
+        },
+        "system-dashboard": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Dashboard",
+            "sef_request": "system-dashboard"
+        },
+        "tags": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "tags"
+        },
+        "tags\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "tags\/configuration"
+        },
+        "templateviews": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "templateviews"
+        },
+        "templateviews\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "templateviews\/configuration"
+        },
+        "themes": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "themes"
+        },
+        "themes\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "themes\/configuration"
+        },
+        "users": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "users"
+        },
+        "users\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "users\/configuration"
+        },
+        "video": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "video"
+        },
+        "video\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "video\/configuration"
+        },
+        "wrapviews": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Grid",
+            "sef_request": "wrapviews"
+        },
+        "wrapviews\/configuration": {
+            "home": 0,
+            "model_name": "Menuitems",
+            "model_type": "System",
+            "page_type": "Configuration",
+            "sef_request": "wrapviews\/configuration"
+        }
+    },
+    "resources": {
+        "articles": {
+            "home": 0,
+            "model_name": "Articles",
+            "model_type": "Resources",
+            "sef_request": "articles"
+        },
+        "audio": {
+            "home": 0,
+            "model_name": "Audio",
+            "model_type": "Resources",
+            "sef_request": "audio"
+        },
+        "categories": {
+            "home": 0,
+            "model_name": "Categories",
+            "model_type": "Resources",
+            "sef_request": "categories"
+        },
+        "comments": {
+            "home": 0,
+            "model_name": "Comments",
+            "model_type": "Resources",
+            "sef_request": "comments"
+        },
+        "contacts": {
+            "home": 0,
+            "model_name": "Contacts",
+            "model_type": "Resources",
+            "sef_request": "contacts"
+        },
+        "files": {
+            "home": 0,
+            "model_name": "Files",
+            "model_type": "Resources",
+            "sef_request": "files"
+        },
+        "groups": {
+            "home": 0,
+            "model_name": "Groups",
+            "model_type": "Resources",
+            "sef_request": "groups"
+        },
+        "images": {
+            "home": 0,
+            "model_name": "Images",
+            "model_type": "Resources",
+            "sef_request": "images"
+        },
+        "languages": {
+            "home": 0,
+            "model_name": "Languages",
+            "model_type": "System",
+            "sef_request": "languages"
+        },
+        "languagestrings": {
+            "home": 0,
+            "model_name": "Languagestrings",
+            "model_type": "System",
+            "sef_request": "languagestrings"
+        },
+        "links": {
+            "home": 0,
+            "model_name": "Links",
+            "model_type": "Resources",
+            "sef_request": "links"
+        },
+        "pages": {
+            "home": 0,
+            "model_name": "Pages",
+            "model_type": "Resources",
+            "sef_request": "pages"
+        },
+        "pageviews": {
+            "home": 0,
+            "model_name": "Views\/\/Pages",
+            "model_type": "System",
+            "sef_request": "pageviews"
+        },
+        "plugins": {
+            "home": 0,
+            "model_name": "Plugins",
+            "model_type": "System",
+            "sef_request": "plugins"
+        },
+        "tags": {
+            "home": 0,
+            "model_name": "Tags",
+            "model_type": "Resources",
+            "sef_request": "tags"
+        },
+        "templateviews": {
+            "home": 0,
+            "model_name": "Views\/\/Templates",
+            "model_type": "System",
+            "sef_request": "templateviews"
+        },
+        "themes": {
+            "home": 0,
+            "model_name": "Themes",
+            "model_type": "System",
+            "sef_request": "themes"
+        },
+        "video": {
+            "home": 0,
+            "model_name": "Video",
+            "model_type": "Resources",
+            "sef_request": "video"
+        },
+        "wrapviews": {
+            "home": 0,
+            "model_name": "Views\/\/Wraps",
+            "model_type": "System",
+            "sef_request": "wrapviews"
+        }
+    }
+}

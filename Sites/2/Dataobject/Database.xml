@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model
+        type="mysqli"
+        host="127.0.0.1"
+        port="3306"
+        user="root"
+        password="root"
+        database="molajo_site2"
+        prefix="molajo_"
+        />
