@@ -1596,6 +1596,24 @@
         "size": null,
         "locked": null
     },
+    "contentfields": {
+        "name": "contentfields",
+        "type": "string",
+        "length": null,
+        "null": null,
+        "default": null,
+        "unique": null,
+        "identity": null,
+        "values": null,
+        "display": null,
+        "cols": null,
+        "rows": null,
+        "hidden": null,
+        "datalist": null,
+        "multiple": null,
+        "size": null,
+        "locked": null
+    },
     "content_text": {
         "name": "content_text",
         "type": "html",

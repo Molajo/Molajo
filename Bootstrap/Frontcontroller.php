@@ -9,6 +9,7 @@
 //'Authorisation';
 
 $steps = array('Route', 'Dispatcher', 'Execute', 'Response');
+//$steps = array('Route', 'Dispatcher', 'Execute');
 
 $dependencies = array(
     'runtime_data'   => 'Runtimedata',

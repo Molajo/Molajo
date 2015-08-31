@@ -151,14 +151,8 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/authorisation\/AuthorisationInterface.php",
         "path": "vendor\/commonapi\/authorisation\/AuthorisationInterface.php",
         "parent": false,
-        "implemented_by": [
-            "Molajo\\Authorisation\\Adapter\\AbstractAdapter",
-            "Molajo\\Authorisation\\Adapter\\Database",
-            "Molajo\\Authorisation\\Driver"
-        ],
-        "dependency_for": [
-            "Molajo\\Authorisation\\Driver"
-        ]
+        "implemented_by": [],
+        "dependency_for": []
     },
     "CommonApi\\Cache\\CacheInterface": {
         "name": "CacheInterface",
@@ -563,7 +557,15 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/event\/TriggerInterface.php",
         "path": "vendor\/commonapi\/event\/TriggerInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Cache",
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Delete",
+            "Molajo\\Controller\\Event",
+            "Molajo\\Controller\\Initialise",
+            "Molajo\\Controller\\Read",
+            "Molajo\\Controller\\Update"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Event\\UpdateEventInterface": {
@@ -610,7 +612,6 @@
         "path": "vendor\/commonapi\/event\/UserEventInterface.php",
         "parent": false,
         "implemented_by": [
-            "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin",
             "Molajo\\Plugins\\Login\\LoginPlugin",
             "Molajo\\Plugins\\Logout\\LogoutPlugin",
             "Molajo\\Plugins\\UserEvent"
@@ -787,6 +788,12 @@
             "Molajo\\Controller\\Resource\\NewPageType",
             "Molajo\\Controller\\Resource\\UpdatePageType",
             "Molajo\\Language\\Capture\\Database",
+            "Molajo\\Query\\Adapter\\Mysqli",
+            "Molajo\\Query\\Adapter\\Postgresql",
+            "Molajo\\Query\\Adapter\\Sqllite",
+            "Molajo\\Query\\Adapter\\Sqlserver",
+            "Molajo\\Query\\Builder\\Sql",
+            "Molajo\\Resource\\Defaults",
             "Molajo\\Resource\\ExtensionMap",
             "Molajo\\Resource\\ExtensionMap\\Base",
             "Molajo\\Resource\\ExtensionMap\\CatalogTypes",
@@ -989,7 +996,6 @@
             "Molajo\\Factories\\Application\\ApplicationFactoryMethod",
             "Molajo\\Factories\\Authenticate\\AuthenticateFactoryMethod",
             "Molajo\\Factories\\Authentication\\AuthenticationFactoryMethod",
-            "Molajo\\Factories\\Authorisation\\AuthorisationFactoryMethod",
             "Molajo\\Factories\\Cache\\CacheFactoryMethod",
             "Molajo\\Factories\\Cacheconfiguration\\CacheconfigurationFactoryMethod",
             "Molajo\\Factories\\Cachepage\\CachepageFactoryMethod",
@@ -1032,6 +1038,8 @@
             "Molajo\\Factories\\Resourcecss\\ResourcecssFactoryMethod",
             "Molajo\\Factories\\Resourcecssdeclarations\\ResourcecssdeclarationsFactoryMethod",
             "Molajo\\Factories\\Resourcedata\\ResourcedataFactoryMethod",
+            "Molajo\\Factories\\Resourcedefaults\\ResourcedefaultsFactoryMethod",
+            "Molajo\\Factories\\Resourceextension\\ResourceextensionFactoryMethod",
             "Molajo\\Factories\\Resourcefield\\ResourcefieldFactoryMethod",
             "Molajo\\Factories\\Resourcefile\\ResourcefileFactoryMethod",
             "Molajo\\Factories\\Resourcefolder\\ResourcefolderFactoryMethod",
@@ -1074,7 +1082,6 @@
             "Molajo\\Factories\\Application\\ApplicationFactoryMethod",
             "Molajo\\Factories\\Authenticate\\AuthenticateFactoryMethod",
             "Molajo\\Factories\\Authentication\\AuthenticationFactoryMethod",
-            "Molajo\\Factories\\Authorisation\\AuthorisationFactoryMethod",
             "Molajo\\Factories\\Cache\\CacheFactoryMethod",
             "Molajo\\Factories\\Cacheconfiguration\\CacheconfigurationFactoryMethod",
             "Molajo\\Factories\\Cachepage\\CachepageFactoryMethod",
@@ -1117,6 +1124,8 @@
             "Molajo\\Factories\\Resourcecss\\ResourcecssFactoryMethod",
             "Molajo\\Factories\\Resourcecssdeclarations\\ResourcecssdeclarationsFactoryMethod",
             "Molajo\\Factories\\Resourcedata\\ResourcedataFactoryMethod",
+            "Molajo\\Factories\\Resourcedefaults\\ResourcedefaultsFactoryMethod",
+            "Molajo\\Factories\\Resourceextension\\ResourceextensionFactoryMethod",
             "Molajo\\Factories\\Resourcefield\\ResourcefieldFactoryMethod",
             "Molajo\\Factories\\Resourcefile\\ResourcefileFactoryMethod",
             "Molajo\\Factories\\Resourcefolder\\ResourcefolderFactoryMethod",
@@ -1227,7 +1236,21 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/ConfigurationInterface.php",
         "path": "vendor\/commonapi\/query\/ConfigurationInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Resource\\Configuration\\AbstractAdapter",
+            "Molajo\\Resource\\Configuration\\Children",
+            "Molajo\\Resource\\Configuration\\Criteria",
+            "Molajo\\Resource\\Configuration\\Customfields",
+            "Molajo\\Resource\\Configuration\\Dataobject",
+            "Molajo\\Resource\\Configuration\\Fields",
+            "Molajo\\Resource\\Configuration\\Foreignkeys",
+            "Molajo\\Resource\\Configuration\\Includes",
+            "Molajo\\Resource\\Configuration\\Inherit",
+            "Molajo\\Resource\\Configuration\\Joins",
+            "Molajo\\Resource\\Configuration\\Model",
+            "Molajo\\Resource\\Configuration\\Plugins",
+            "Molajo\\Resource\\Configuration\\Values"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\ConnectionInterface": {
@@ -1237,7 +1260,14 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/ConnectionInterface.php",
         "path": "vendor\/commonapi\/query\/ConnectionInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Data\\Adapter\\AbstractAdapter",
+            "Molajo\\Data\\Adapter\\Mysqli",
+            "Molajo\\Data\\Adapter\\MysqliBase",
+            "Molajo\\Data\\Adapter\\Postgresql",
+            "Molajo\\Data\\Adapter\\Sqllite",
+            "Molajo\\Data\\Adapter\\Sqlserver"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\ControllerInterface": {
@@ -1247,7 +1277,17 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/ControllerInterface.php",
         "path": "vendor\/commonapi\/query\/ControllerInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Base",
+            "Molajo\\Controller\\Cache",
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Delete",
+            "Molajo\\Controller\\Event",
+            "Molajo\\Controller\\Initialise",
+            "Molajo\\Controller\\Query",
+            "Molajo\\Controller\\Read",
+            "Molajo\\Controller\\Update"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\CreateControllerInterface": {
@@ -1257,7 +1297,9 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/CreateControllerInterface.php",
         "path": "vendor\/commonapi\/query\/CreateControllerInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Create"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\CreateModelInterface": {
@@ -1267,7 +1309,11 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/CreateModelInterface.php",
         "path": "vendor\/commonapi\/query\/CreateModelInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Model\\Create",
+            "Molajo\\Model\\Delete",
+            "Molajo\\Model\\Update"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\DatabaseInterface": {
@@ -1277,8 +1323,27 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/DatabaseInterface.php",
         "path": "vendor\/commonapi\/query\/DatabaseInterface.php",
         "parent": false,
-        "implemented_by": [],
-        "dependency_for": []
+        "implemented_by": [
+            "Molajo\\Data\\Adapter\\AbstractAdapter",
+            "Molajo\\Data\\Adapter\\Mysqli",
+            "Molajo\\Data\\Adapter\\MysqliBase",
+            "Molajo\\Data\\Adapter\\Postgresql",
+            "Molajo\\Data\\Adapter\\Sqllite",
+            "Molajo\\Data\\Adapter\\Sqlserver",
+            "Molajo\\Data\\Driver",
+            "Molajo\\Query\\Database"
+        ],
+        "dependency_for": [
+            "Molajo\\Data\\Driver",
+            "Molajo\\Model\\Base",
+            "Molajo\\Model\\Create",
+            "Molajo\\Model\\Delete",
+            "Molajo\\Model\\Log",
+            "Molajo\\Model\\Read",
+            "Molajo\\Model\\Update",
+            "Molajo\\Query\\Database",
+            "Molajo\\Query\\Factory\\ModelFactory"
+        ]
     },
     "CommonApi\\Query\\DeleteControllerInterface": {
         "name": "DeleteControllerInterface",
@@ -1287,7 +1352,9 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/DeleteControllerInterface.php",
         "path": "vendor\/commonapi\/query\/DeleteControllerInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Delete"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\DeleteModelInterface": {
@@ -1297,7 +1364,9 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/DeleteModelInterface.php",
         "path": "vendor\/commonapi\/query\/DeleteModelInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Model\\Delete"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\InitialiseControllerInterface": {
@@ -1307,7 +1376,10 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/InitialiseControllerInterface.php",
         "path": "vendor\/commonapi\/query\/InitialiseControllerInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Initialise"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\MessageInterface": {
@@ -1329,8 +1401,26 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/ModelInterface.php",
         "path": "vendor\/commonapi\/query\/ModelInterface.php",
         "parent": false,
-        "implemented_by": [],
-        "dependency_for": []
+        "implemented_by": [
+            "Molajo\\Model\\Base",
+            "Molajo\\Model\\Create",
+            "Molajo\\Model\\Delete",
+            "Molajo\\Model\\Log",
+            "Molajo\\Model\\Read",
+            "Molajo\\Model\\Update"
+        ],
+        "dependency_for": [
+            "Molajo\\Controller\\Base",
+            "Molajo\\Controller\\Cache",
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Delete",
+            "Molajo\\Controller\\Event",
+            "Molajo\\Controller\\Initialise",
+            "Molajo\\Controller\\Query",
+            "Molajo\\Controller\\Read",
+            "Molajo\\Controller\\Update",
+            "Molajo\\Query\\Factory\\ControllerFactory"
+        ]
     },
     "CommonApi\\Query\\ModelRegistryInterface": {
         "name": "ModelRegistryInterface",
@@ -1339,7 +1429,19 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/ModelRegistryInterface.php",
         "path": "vendor\/commonapi\/query\/ModelRegistryInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Cache",
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Delete",
+            "Molajo\\Controller\\Event",
+            "Molajo\\Controller\\Initialise",
+            "Molajo\\Controller\\Query",
+            "Molajo\\Controller\\Read",
+            "Molajo\\Controller\\Update",
+            "Molajo\\Query\\Database",
+            "Molajo\\Query\\Model\\Registry",
+            "Molajo\\Query\\QueryBuilder"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\QueryBuilderInterface": {
@@ -1349,8 +1451,31 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/QueryBuilderInterface.php",
         "path": "vendor\/commonapi\/query\/QueryBuilderInterface.php",
         "parent": false,
-        "implemented_by": [],
-        "dependency_for": []
+        "implemented_by": [
+            "Molajo\\Controller\\Cache",
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Delete",
+            "Molajo\\Controller\\Event",
+            "Molajo\\Controller\\Initialise",
+            "Molajo\\Controller\\Query",
+            "Molajo\\Controller\\Read",
+            "Molajo\\Controller\\Update",
+            "Molajo\\Query\\Database",
+            "Molajo\\Query\\Model\\Registry",
+            "Molajo\\Query\\QueryBuilder"
+        ],
+        "dependency_for": [
+            "Molajo\\Controller\\Cache",
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Delete",
+            "Molajo\\Controller\\Event",
+            "Molajo\\Controller\\Initialise",
+            "Molajo\\Controller\\Query",
+            "Molajo\\Controller\\Read",
+            "Molajo\\Controller\\Update",
+            "Molajo\\Query\\Database",
+            "Molajo\\Query\\QueryBuilder"
+        ]
     },
     "CommonApi\\Query\\QueryInterface": {
         "name": "QueryInterface",
@@ -1359,7 +1484,30 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/QueryInterface.php",
         "path": "vendor\/commonapi\/query\/QueryInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Cache",
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Delete",
+            "Molajo\\Controller\\Event",
+            "Molajo\\Controller\\Initialise",
+            "Molajo\\Controller\\Query",
+            "Molajo\\Controller\\Read",
+            "Molajo\\Controller\\Update",
+            "Molajo\\Query\\Adapter\\Mysqli",
+            "Molajo\\Query\\Adapter\\Postgresql",
+            "Molajo\\Query\\Adapter\\Sqllite",
+            "Molajo\\Query\\Adapter\\Sqlserver",
+            "Molajo\\Query\\Database",
+            "Molajo\\Query\\Model\\Columns",
+            "Molajo\\Query\\Model\\Criteria",
+            "Molajo\\Query\\Model\\Defaults",
+            "Molajo\\Query\\Model\\Query",
+            "Molajo\\Query\\Model\\Registry",
+            "Molajo\\Query\\Model\\Table",
+            "Molajo\\Query\\Model\\Utilities",
+            "Molajo\\Query\\QueryBuilder",
+            "Molajo\\Query\\QueryProxy"
+        ],
         "dependency_for": [
             "Molajo\\Controller\\Application",
             "Molajo\\Controller\\Application\\Base",
@@ -1377,6 +1525,16 @@
             "Molajo\\Controller\\Resource\\NewPageType",
             "Molajo\\Controller\\Resource\\UpdatePageType",
             "Molajo\\Language\\Capture\\Database",
+            "Molajo\\Query\\Factory\\ControllerFactory",
+            "Molajo\\Query\\Model\\Columns",
+            "Molajo\\Query\\Model\\Criteria",
+            "Molajo\\Query\\Model\\Defaults",
+            "Molajo\\Query\\Model\\Query",
+            "Molajo\\Query\\Model\\Registry",
+            "Molajo\\Query\\Model\\Table",
+            "Molajo\\Query\\Model\\Utilities",
+            "Molajo\\Query\\QueryProxy",
+            "Molajo\\Resource\\Defaults",
             "Molajo\\Resource\\ExtensionMap",
             "Molajo\\Resource\\ExtensionMap\\Base",
             "Molajo\\Resource\\ExtensionMap\\CatalogTypes",
@@ -1399,7 +1557,11 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/ReadControllerInterface.php",
         "path": "vendor\/commonapi\/query\/ReadControllerInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Create",
+            "Molajo\\Controller\\Initialise",
+            "Molajo\\Controller\\Read"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\ReadModelInterface": {
@@ -1409,7 +1571,9 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/ReadModelInterface.php",
         "path": "vendor\/commonapi\/query\/ReadModelInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Model\\Read"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\RegistryInterface": {
@@ -1419,8 +1583,24 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/RegistryInterface.php",
         "path": "vendor\/commonapi\/query\/RegistryInterface.php",
         "parent": false,
-        "implemented_by": [],
-        "dependency_for": []
+        "implemented_by": [
+            "Molajo\\Resource\\Configuration\\Registry"
+        ],
+        "dependency_for": [
+            "Molajo\\Resource\\Configuration\\AbstractAdapter",
+            "Molajo\\Resource\\Configuration\\Children",
+            "Molajo\\Resource\\Configuration\\Criteria",
+            "Molajo\\Resource\\Configuration\\Customfields",
+            "Molajo\\Resource\\Configuration\\Dataobject",
+            "Molajo\\Resource\\Configuration\\Fields",
+            "Molajo\\Resource\\Configuration\\Foreignkeys",
+            "Molajo\\Resource\\Configuration\\Includes",
+            "Molajo\\Resource\\Configuration\\Inherit",
+            "Molajo\\Resource\\Configuration\\Joins",
+            "Molajo\\Resource\\Configuration\\Model",
+            "Molajo\\Resource\\Configuration\\Plugins",
+            "Molajo\\Resource\\Configuration\\Values"
+        ]
     },
     "CommonApi\\Query\\UpdateControllerInterface": {
         "name": "UpdateControllerInterface",
@@ -1429,7 +1609,9 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/UpdateControllerInterface.php",
         "path": "vendor\/commonapi\/query\/UpdateControllerInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Controller\\Update"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Query\\UpdateModelInterface": {
@@ -1439,7 +1621,10 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/query\/UpdateModelInterface.php",
         "path": "vendor\/commonapi\/query\/UpdateModelInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Model\\Delete",
+            "Molajo\\Model\\Update"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Render\\EscapeInterface": {
@@ -1584,7 +1769,10 @@
         "file_name": "\/Users\/amystephen\/Sites\/Molajo\/vendor\/commonapi\/resource\/FactoryInterface.php",
         "path": "vendor\/commonapi\/resource\/FactoryInterface.php",
         "parent": false,
-        "implemented_by": [],
+        "implemented_by": [
+            "Molajo\\Query\\Factory\\ControllerFactory",
+            "Molajo\\Query\\Factory\\ModelFactory"
+        ],
         "dependency_for": []
     },
     "CommonApi\\Resource\\LocatorInterface": {
@@ -1630,16 +1818,47 @@
         "path": "vendor\/commonapi\/resource\/ResourceInterface.php",
         "parent": false,
         "implemented_by": [
+            "Molajo\\Resource\\Adapter\\AssetBase",
+            "Molajo\\Resource\\Adapter\\AssetCollection",
+            "Molajo\\Resource\\Adapter\\AssetSelection",
+            "Molajo\\Resource\\Adapter\\Assets",
             "Molajo\\Resource\\Adapter\\ClassLoader",
             "Molajo\\Resource\\Adapter\\ConfigurationFactory",
+            "Molajo\\Resource\\Adapter\\Css",
+            "Molajo\\Resource\\Adapter\\Cssdeclarations",
+            "Molajo\\Resource\\Adapter\\Extension",
             "Molajo\\Resource\\Adapter\\Field",
             "Molajo\\Resource\\Adapter\\File",
             "Molajo\\Resource\\Adapter\\Folder",
+            "Molajo\\Resource\\Adapter\\Js",
+            "Molajo\\Resource\\Adapter\\Jsdeclarations",
+            "Molajo\\Resource\\Adapter\\Menuitem",
             "Molajo\\Resource\\Adapter\\NamespaceHandler",
+            "Molajo\\Resource\\Adapter\\Page",
+            "Molajo\\Resource\\Adapter\\Plugin",
+            "Molajo\\Resource\\Adapter\\Query",
+            "Molajo\\Resource\\Adapter\\QueryFactory",
+            "Molajo\\Resource\\Adapter\\Template",
+            "Molajo\\Resource\\Adapter\\Theme",
+            "Molajo\\Resource\\Adapter\\Wrap",
             "Molajo\\Resource\\Adapter\\Xml",
             "Molajo\\Resource\\Proxy"
         ],
-        "dependency_for": []
+        "dependency_for": [
+            "Molajo\\Resource\\Configuration\\AbstractAdapter",
+            "Molajo\\Resource\\Configuration\\Children",
+            "Molajo\\Resource\\Configuration\\Criteria",
+            "Molajo\\Resource\\Configuration\\Customfields",
+            "Molajo\\Resource\\Configuration\\Dataobject",
+            "Molajo\\Resource\\Configuration\\Fields",
+            "Molajo\\Resource\\Configuration\\Foreignkeys",
+            "Molajo\\Resource\\Configuration\\Includes",
+            "Molajo\\Resource\\Configuration\\Inherit",
+            "Molajo\\Resource\\Configuration\\Joins",
+            "Molajo\\Resource\\Configuration\\Model",
+            "Molajo\\Resource\\Configuration\\Plugins",
+            "Molajo\\Resource\\Configuration\\Values"
+        ]
     },
     "CommonApi\\Resource\\SchemeInterface": {
         "name": "SchemeInterface",

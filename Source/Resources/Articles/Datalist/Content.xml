@@ -1,7 +1,0 @@
-<datalist name="ContentarticlesDatalist">
-    <model
-            name="ContentarticlesDatalist"
-            criteria_catalog_type_id="16000"
-            criteria_extension_instance_id="16000"
-            extends="ContentDatalist"/>
-</datalist>

@@ -22,19 +22,13 @@ $force_rebuild2 = '';
  *  Creates ClassMap.json, ResourceMap.json and ExtensionFolders.json Output files
  */
 if (file_exists($classmap_filename . $force_rebuild1)
-    && file_exists($resource_map_filename . $force_rebuild1)
-) {
+    && file_exists($resource_map_filename . $force_rebuild1)) {
+
     $resourcemap_files = readJsonFile($resource_map_filename);
 
     require_once $base_path . '/vendor/molajo/fieldhandler/Source/Constraint/Library/kses.php';
 
 } else {
-//todo: remove once back in composer
-    require_once $base_path . '/vendor/molajo/resource/Source/ResourceMap/Base.php';
-    require_once $base_path . '/vendor/molajo/resource/Source/ResourceMap/Folders.php';
-    require_once $base_path . '/vendor/molajo/resource/Source/ResourceMap/Prefixes.php';
-    require_once $base_path . '/vendor/molajo/resource/Source/ResourceMap.php';
-
     $exclude_folders_array = readJsonFile(__DIR__ . '/Files/Input/ExcludeFolders.json');
 
     $class = 'Molajo\\Resource\\ResourceMap';
@@ -60,13 +54,6 @@ if (file_exists($classmap_filename . $force_rebuild1)
  */
 if (file_exists($interfaces_filename . $force_rebuild2)) {
 } else {
-
-//todo: remove once back in composer
-    require_once $base_path . '/vendor/molajo/resource/Source/ClassMap/Base.php';
-    require_once $base_path . '/vendor/molajo/resource/Source/ClassMap/Events.php';
-    require_once $base_path . '/vendor/molajo/resource/Source/ClassMap/Aggregate.php';
-    require_once $base_path . '/vendor/molajo/resource/Source/ClassMap/Items.php';
-    require_once $base_path . '/vendor/molajo/resource/Source/ClassMap.php';
 
     $classmap_files = readJsonFile($classmap_filename);
 

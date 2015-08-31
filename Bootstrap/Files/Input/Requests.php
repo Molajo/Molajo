@@ -21,6 +21,7 @@ $requests[] = 'Database';
 $requests[] = 'Fieldhandler';
 $requests[] = 'Resourcequery';
 $requests[] = 'Resourcefield';
+$requests[] = 'Resourceextension';
 $requests[] = 'Application';
 
 $requests[] = 'Resourcecss';

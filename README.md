@@ -1,4 +1,7 @@
 # Molajo #
+[![Latest Stable Version](https://poser.pugx.org/molajo/molajo/v/stable)](https://packagist.org/packages/molajo/molajo) 
+[![Total Downloads](https://poser.pugx.org/molajo/molajo/downloads)](https://packagist.org/packages/molajo/molajo)
+[![License](https://poser.pugx.org/molajo/molajo/license)](https://packagist.org/packages/molajo/molajo)
 
 # Molajo is pre-alpha, not ready for use #
 
@@ -6,7 +9,7 @@
 
 Molajo is a web application development environment for custom solutions from simple to complex data architecture, presentation output, and access control.
 
-Molajo's primary user focus is frontend developers and designers with a goal of making it easier to *plug in* professionally designed layouts and customize data collection processes without writing code.
+Molajo's primary user focus is frontend developers and designers with a goal of making it easier to plug in professionally designed layouts and customize data collection processes without writing code.
 
 There are many ways to learn more about Molajo, you can:
 

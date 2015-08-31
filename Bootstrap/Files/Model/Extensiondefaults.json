@@ -1,0 +1,2062 @@
+{
+    "Plugins activity": {
+        "extension_type": "Plugins",
+        "id": "27112",
+        "name": "Activity",
+        "alias": "activity",
+        "namespace": "Molajo\\Plugins\\Activity",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins alias": {
+        "extension_type": "Plugins",
+        "id": "27113",
+        "name": "Alias",
+        "alias": "alias",
+        "namespace": "Molajo\\Plugins\\Alias",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins application": {
+        "extension_type": "Plugins",
+        "id": "27114",
+        "name": "Application",
+        "alias": "application",
+        "namespace": "Molajo\\Plugins\\Application",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins article": {
+        "extension_type": "Plugins",
+        "id": "27115",
+        "name": "Article",
+        "alias": "article",
+        "namespace": "Molajo\\Plugins\\Article",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins author": {
+        "extension_type": "Plugins",
+        "id": "27116",
+        "name": "Author",
+        "alias": "author",
+        "namespace": "Molajo\\Plugins\\Author",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins authorisation": {
+        "extension_type": "Plugins",
+        "id": "27117",
+        "name": "Authorisation",
+        "alias": "authorisation",
+        "namespace": "Molajo\\Plugins\\Authorisation",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins blockquote": {
+        "extension_type": "Plugins",
+        "id": "27118",
+        "name": "Blockquote",
+        "alias": "blockquote",
+        "namespace": "Molajo\\Plugins\\Blockquote",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins breadcrumbs": {
+        "extension_type": "Plugins",
+        "id": "27119",
+        "name": "Breadcrumbs",
+        "alias": "breadcrumbs",
+        "namespace": "Molajo\\Plugins\\Breadcrumbs",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins catalog": {
+        "extension_type": "Plugins",
+        "id": "27120",
+        "name": "Catalog",
+        "alias": "catalog",
+        "namespace": "Molajo\\Plugins\\Catalog",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins checkin": {
+        "extension_type": "Plugins",
+        "id": "27121",
+        "name": "Checkin",
+        "alias": "checkin",
+        "namespace": "Molajo\\Plugins\\Checkin",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins checkout": {
+        "extension_type": "Plugins",
+        "id": "27122",
+        "name": "Checkout",
+        "alias": "checkout",
+        "namespace": "Molajo\\Plugins\\Checkout",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins comments": {
+        "extension_type": "Plugins",
+        "id": "27123",
+        "name": "Comments",
+        "alias": "comments",
+        "namespace": "Molajo\\Plugins\\Comments",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins copyright": {
+        "extension_type": "Plugins",
+        "id": "27124",
+        "name": "Copyright",
+        "alias": "copyright",
+        "namespace": "Molajo\\Plugins\\Copyright",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins csrftoken": {
+        "extension_type": "Plugins",
+        "id": "27125",
+        "name": "Csrftoken",
+        "alias": "csrftoken",
+        "namespace": "Molajo\\Plugins\\Csrftoken",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins customfields": {
+        "extension_type": "Plugins",
+        "id": "27126",
+        "name": "Customfields",
+        "alias": "customfields",
+        "namespace": "Molajo\\Plugins\\Customfields",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins dateformats": {
+        "extension_type": "Plugins",
+        "id": "27127",
+        "name": "Dateformats",
+        "alias": "dateformats",
+        "namespace": "Molajo\\Plugins\\Dateformats",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins defer": {
+        "extension_type": "Plugins",
+        "id": "27128",
+        "name": "Defer",
+        "alias": "defer",
+        "namespace": "Molajo\\Plugins\\Defer",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins email": {
+        "extension_type": "Plugins",
+        "id": "27129",
+        "name": "Email",
+        "alias": "email",
+        "namespace": "Molajo\\Plugins\\Email",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins events": {
+        "extension_type": "Plugins",
+        "id": "27130",
+        "name": "Events",
+        "alias": "events",
+        "namespace": "Molajo\\Plugins\\Events",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins extensions": {
+        "extension_type": "Plugins",
+        "id": "27131",
+        "name": "Extensions",
+        "alias": "extensions",
+        "namespace": "Molajo\\Plugins\\Extensions",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins feed": {
+        "extension_type": "Plugins",
+        "id": "27132",
+        "name": "Feed",
+        "alias": "feed",
+        "namespace": "Molajo\\Plugins\\Feed",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins fields": {
+        "extension_type": "Plugins",
+        "id": "27133",
+        "name": "Fields",
+        "alias": "fields",
+        "namespace": "Molajo\\Plugins\\Fields",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins footer": {
+        "extension_type": "Plugins",
+        "id": "27134",
+        "name": "Footer",
+        "alias": "footer",
+        "namespace": "Molajo\\Plugins\\Footer",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins fullname": {
+        "extension_type": "Plugins",
+        "id": "27135",
+        "name": "Fullname",
+        "alias": "fullname",
+        "namespace": "Molajo\\Plugins\\Fullname",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins gravatar": {
+        "extension_type": "Plugins",
+        "id": "27136",
+        "name": "Gravatar",
+        "alias": "gravatar",
+        "namespace": "Molajo\\Plugins\\Gravatar",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins head": {
+        "extension_type": "Plugins",
+        "id": "27137",
+        "name": "Head",
+        "alias": "head",
+        "namespace": "Molajo\\Plugins\\Head",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins header": {
+        "extension_type": "Plugins",
+        "id": "27138",
+        "name": "Header",
+        "alias": "header",
+        "namespace": "Molajo\\Plugins\\Header",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins image": {
+        "extension_type": "Plugins",
+        "id": "27139",
+        "name": "Image",
+        "alias": "image",
+        "namespace": "Molajo\\Plugins\\Image",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins item": {
+        "extension_type": "Plugins",
+        "id": "27140",
+        "name": "Item",
+        "alias": "item",
+        "namespace": "Molajo\\Plugins\\Item",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins linebreaks": {
+        "extension_type": "Plugins",
+        "id": "27141",
+        "name": "Linebreaks",
+        "alias": "linebreaks",
+        "namespace": "Molajo\\Plugins\\Linebreaks",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins links": {
+        "extension_type": "Plugins",
+        "id": "27142",
+        "name": "Links",
+        "alias": "links",
+        "namespace": "Molajo\\Plugins\\Links",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins login": {
+        "extension_type": "Plugins",
+        "id": "27143",
+        "name": "Login",
+        "alias": "login",
+        "namespace": "Molajo\\Plugins\\Login",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins logout": {
+        "extension_type": "Plugins",
+        "id": "27144",
+        "name": "Logout",
+        "alias": "logout",
+        "namespace": "Molajo\\Plugins\\Logout",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins menuitems": {
+        "extension_type": "Plugins",
+        "id": "27145",
+        "name": "Menuitems",
+        "alias": "menuitems",
+        "namespace": "Molajo\\Plugins\\Menuitems",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins messages": {
+        "extension_type": "Plugins",
+        "id": "27146",
+        "name": "Messages",
+        "alias": "messages",
+        "namespace": "Molajo\\Plugins\\Messages",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins navbar": {
+        "extension_type": "Plugins",
+        "id": "27147",
+        "name": "Navbar",
+        "alias": "navbar",
+        "namespace": "Molajo\\Plugins\\Navbar",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins ordering": {
+        "extension_type": "Plugins",
+        "id": "27148",
+        "name": "Ordering",
+        "alias": "ordering",
+        "namespace": "Molajo\\Plugins\\Ordering",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins page": {
+        "extension_type": "Plugins",
+        "id": "27149",
+        "name": "Page",
+        "alias": "page",
+        "namespace": "Molajo\\Plugins\\Page",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagetypeapplication": {
+        "extension_type": "Plugins",
+        "id": "27150",
+        "name": "Pagetypeapplication",
+        "alias": "pagetypeapplication",
+        "namespace": "Molajo\\Plugins\\Pagetypeapplication",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagetypeconfiguration": {
+        "extension_type": "Plugins",
+        "id": "27151",
+        "name": "Pagetypeconfiguration",
+        "alias": "pagetypeconfiguration",
+        "namespace": "Molajo\\Plugins\\Pagetypeconfiguration",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagetypedashboard": {
+        "extension_type": "Plugins",
+        "id": "27152",
+        "name": "Pagetypedashboard",
+        "alias": "pagetypedashboard",
+        "namespace": "Molajo\\Plugins\\Pagetypedashboard",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagetypeedit": {
+        "extension_type": "Plugins",
+        "id": "27153",
+        "name": "Pagetypeedit",
+        "alias": "pagetypeedit",
+        "namespace": "Molajo\\Plugins\\Pagetypeedit",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagetypegrid": {
+        "extension_type": "Plugins",
+        "id": "27154",
+        "name": "Pagetypegrid",
+        "alias": "pagetypegrid",
+        "namespace": "Molajo\\Plugins\\Pagetypegrid",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagetypeitem": {
+        "extension_type": "Plugins",
+        "id": "27155",
+        "name": "Pagetypeitem",
+        "alias": "pagetypeitem",
+        "namespace": "Molajo\\Plugins\\Pagetypeitem",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagetypelist": {
+        "extension_type": "Plugins",
+        "id": "27156",
+        "name": "Pagetypelist",
+        "alias": "pagetypelist",
+        "namespace": "Molajo\\Plugins\\Pagetypelist",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagetypenew": {
+        "extension_type": "Plugins",
+        "id": "27157",
+        "name": "Pagetypenew",
+        "alias": "pagetypenew",
+        "namespace": "Molajo\\Plugins\\Pagetypenew",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins pagination": {
+        "extension_type": "Plugins",
+        "id": "27158",
+        "name": "Pagination",
+        "alias": "pagination",
+        "namespace": "Molajo\\Plugins\\Pagination",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins paging": {
+        "extension_type": "Plugins",
+        "id": "27159",
+        "name": "Paging",
+        "alias": "paging",
+        "namespace": "Molajo\\Plugins\\Paging",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins parse": {
+        "extension_type": "Plugins",
+        "id": "27160",
+        "name": "Parse",
+        "alias": "parse",
+        "namespace": "Molajo\\Plugins\\Parse",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins position": {
+        "extension_type": "Plugins",
+        "id": "27161",
+        "name": "Position",
+        "alias": "position",
+        "namespace": "Molajo\\Plugins\\Position",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins queryauthorisation": {
+        "extension_type": "Plugins",
+        "id": "27162",
+        "name": "Queryauthorisation",
+        "alias": "queryauthorisation",
+        "namespace": "Molajo\\Plugins\\Queryauthorisation",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins readmore": {
+        "extension_type": "Plugins",
+        "id": "27163",
+        "name": "Readmore",
+        "alias": "readmore",
+        "namespace": "Molajo\\Plugins\\Readmore",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins sites": {
+        "extension_type": "Plugins",
+        "id": "27164",
+        "name": "Sites",
+        "alias": "sites",
+        "namespace": "Molajo\\Plugins\\Sites",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins smilies": {
+        "extension_type": "Plugins",
+        "id": "27165",
+        "name": "Smilies",
+        "alias": "smilies",
+        "namespace": "Molajo\\Plugins\\Smilies",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins snippet": {
+        "extension_type": "Plugins",
+        "id": "27166",
+        "name": "Snippet",
+        "alias": "snippet",
+        "namespace": "Molajo\\Plugins\\Snippet",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins spamprotection": {
+        "extension_type": "Plugins",
+        "id": "27167",
+        "name": "Spamprotection",
+        "alias": "spamprotection",
+        "namespace": "Molajo\\Plugins\\Spamprotection",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins status": {
+        "extension_type": "Plugins",
+        "id": "27168",
+        "name": "Status",
+        "alias": "status",
+        "namespace": "Molajo\\Plugins\\Status",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins template": {
+        "extension_type": "Plugins",
+        "id": "27169",
+        "name": "Template",
+        "alias": "template",
+        "namespace": "Molajo\\Plugins\\Template",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins theme": {
+        "extension_type": "Plugins",
+        "id": "27170",
+        "name": "Theme",
+        "alias": "theme",
+        "namespace": "Molajo\\Plugins\\Theme",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins toolbar": {
+        "extension_type": "Plugins",
+        "id": "27171",
+        "name": "Toolbar",
+        "alias": "toolbar",
+        "namespace": "Molajo\\Plugins\\Toolbar",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Plugins wrap": {
+        "extension_type": "Plugins",
+        "id": "27172",
+        "name": "Wrap",
+        "alias": "wrap",
+        "namespace": "Molajo\\Plugins\\Wrap",
+        "extension_catalog_type_id": "5000",
+        "content_catalog_type_id": "5000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Themes foundation5": {
+        "extension_type": "Themes",
+        "id": "7010",
+        "name": "Foundation5",
+        "alias": "foundation5",
+        "namespace": "Molajo\\Themes\\Foundation5",
+        "extension_catalog_type_id": "7000",
+        "content_catalog_type_id": "7000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Themes system": {
+        "extension_type": "Themes",
+        "id": "7999",
+        "name": "System",
+        "alias": "system",
+        "namespace": "Molajo\\Themes\\System",
+        "extension_catalog_type_id": "7000",
+        "content_catalog_type_id": "7000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages article": {
+        "extension_type": "Pages",
+        "id": "8010",
+        "name": "Article",
+        "alias": "article",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Pages\\Article",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages configuration": {
+        "extension_type": "Pages",
+        "id": "8020",
+        "name": "Configuration",
+        "alias": "configuration",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Pages\\Configuration",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages dashboard": {
+        "extension_type": "Pages",
+        "id": "8030",
+        "name": "Dashboard",
+        "alias": "dashboard",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Pages\\Dashboard",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages edit": {
+        "extension_type": "Pages",
+        "id": "8060",
+        "name": "Edit",
+        "alias": "edit",
+        "namespace": "Molajo\\Themes\\System\\Views\\Pages\\Edit",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages error": {
+        "extension_type": "Pages",
+        "id": "8070",
+        "name": "Error",
+        "alias": "error",
+        "namespace": "Molajo\\Themes\\System\\Views\\Pages\\Error",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages grid": {
+        "extension_type": "Pages",
+        "id": "8090",
+        "name": "Grid",
+        "alias": "grid",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Pages\\Grid",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages item": {
+        "extension_type": "Pages",
+        "id": "8100",
+        "name": "Item",
+        "alias": "item",
+        "namespace": "Molajo\\Themes\\System\\Views\\Pages\\Item",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages list": {
+        "extension_type": "Pages",
+        "id": "8105",
+        "name": "List",
+        "alias": "list",
+        "namespace": "Molajo\\Themes\\System\\Views\\Pages\\List",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages login": {
+        "extension_type": "Pages",
+        "id": "8110",
+        "name": "Login",
+        "alias": "login",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Pages\\Login",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Pages offline": {
+        "extension_type": "Pages",
+        "id": "8080",
+        "name": "Offline",
+        "alias": "offline",
+        "namespace": "Molajo\\Themes\\System\\Views\\Pages\\Offline",
+        "extension_catalog_type_id": "8000",
+        "content_catalog_type_id": "8000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates admindashboard": {
+        "extension_type": "Templates",
+        "id": "9010",
+        "name": "Admindashboard",
+        "alias": "admindashboard",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Admindashboard",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates admindashboardtab": {
+        "extension_type": "Templates",
+        "id": "9020",
+        "name": "Admindashboardtab",
+        "alias": "admindashboardtab",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Admindashboardtab",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates application": {
+        "extension_type": "Templates",
+        "id": "9030",
+        "name": "Application",
+        "alias": "application",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Application",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates article": {
+        "extension_type": "Templates",
+        "id": "9040",
+        "name": "Article",
+        "alias": "article",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Article",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates assetscss": {
+        "extension_type": "Templates",
+        "id": "9050",
+        "name": "Assetscss",
+        "alias": "assetscss",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Assetscss",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates assetscssdeclarations": {
+        "extension_type": "Templates",
+        "id": "9060",
+        "name": "Assetscssdeclarations",
+        "alias": "assetscssdeclarations",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Assetscssdeclarations",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates assetsjs": {
+        "extension_type": "Templates",
+        "id": "9070",
+        "name": "Assetsjs",
+        "alias": "assetsjs",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Assetsjs",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates assetsjsdeclarations": {
+        "extension_type": "Templates",
+        "id": "9080",
+        "name": "Assetsjsdeclarations",
+        "alias": "assetsjsdeclarations",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Assetsjsdeclarations",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates assetsjsdeclarationsdefer": {
+        "extension_type": "Templates",
+        "id": "9090",
+        "name": "Assetsjsdeclarationsdefer",
+        "alias": "assetsjsdeclarationsdefer",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Assetsjsdeclarationsdefer",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates assetsjsdefer": {
+        "extension_type": "Templates",
+        "id": "9100",
+        "name": "Assetsjsdefer",
+        "alias": "assetsjsdefer",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Assetsjsdefer",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates assetslinks": {
+        "extension_type": "Templates",
+        "id": "9110",
+        "name": "Assetslinks",
+        "alias": "assetslinks",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Assetslinks",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates audio": {
+        "extension_type": "Templates",
+        "id": "9115",
+        "name": "Audio",
+        "alias": "audio",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Audio",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates author": {
+        "extension_type": "Templates",
+        "id": "9120",
+        "name": "Author",
+        "alias": "author",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Author",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates blog": {
+        "extension_type": "Templates",
+        "id": "9130",
+        "name": "Blog",
+        "alias": "blog",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Blog",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates breadcrumbs": {
+        "extension_type": "Templates",
+        "id": "9140",
+        "name": "Breadcrumbs",
+        "alias": "breadcrumbs",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Breadcrumbs",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates calendar": {
+        "extension_type": "Templates",
+        "id": "9145",
+        "name": "Calendar",
+        "alias": "calendar",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Calendar",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates category": {
+        "extension_type": "Templates",
+        "id": "9146",
+        "name": "Category",
+        "alias": "category",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Category",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates comments": {
+        "extension_type": "Templates",
+        "id": "9150",
+        "name": "Comments",
+        "alias": "comments",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Comments",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates comments_form": {
+        "extension_type": "Templates",
+        "id": "9160",
+        "name": "Comments_form",
+        "alias": "comments_form",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Comments_form",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates comments_heading": {
+        "extension_type": "Templates",
+        "id": "9170",
+        "name": "Comments_heading",
+        "alias": "comments_heading",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Comments_heading",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates comments_list": {
+        "extension_type": "Templates",
+        "id": "9175",
+        "name": "Comments_list",
+        "alias": "comments_list",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Comments_list",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates configuration": {
+        "extension_type": "Templates",
+        "id": "9180",
+        "name": "Configuration",
+        "alias": "configuration",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Configuration",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates configuration_customfields": {
+        "extension_type": "Templates",
+        "id": "9190",
+        "name": "Configuration_customfields",
+        "alias": "configuration_customfields",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Configuration_customfields",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates configuration_grid": {
+        "extension_type": "Templates",
+        "id": "9200",
+        "name": "Configuration_grid",
+        "alias": "configuration_grid",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Configuration_grid",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates configuration_permissions": {
+        "extension_type": "Templates",
+        "id": "9210",
+        "name": "Configuration_permissions",
+        "alias": "configuration_permissions",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Configuration_permissions",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates configuration_view": {
+        "extension_type": "Templates",
+        "id": "9220",
+        "name": "Configuration_view",
+        "alias": "configuration_view",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Configuration_view",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates contact": {
+        "extension_type": "Templates",
+        "id": "9230",
+        "name": "Contact",
+        "alias": "contact",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Contact",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates content_list": {
+        "extension_type": "Templates",
+        "id": "9235",
+        "name": "Content_list",
+        "alias": "content_list",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Content_list",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates content_navigation": {
+        "extension_type": "Templates",
+        "id": "9223",
+        "name": "Content_navigation",
+        "alias": "content_navigation",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Content_navigation",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates csv": {
+        "extension_type": "Templates",
+        "id": "9225",
+        "name": "Csv",
+        "alias": "csv",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Csv",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates customfields": {
+        "extension_type": "Templates",
+        "id": "9240",
+        "name": "Customfields",
+        "alias": "customfields",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Customfields",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates dashboard": {
+        "extension_type": "Templates",
+        "id": "9250",
+        "name": "Dashboard",
+        "alias": "dashboard",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Dashboard",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates dummy": {
+        "extension_type": "Templates",
+        "id": "9280",
+        "name": "Dummy",
+        "alias": "dummy",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Dummy",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates edit": {
+        "extension_type": "Templates",
+        "id": "9290",
+        "name": "Edit",
+        "alias": "edit",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Edit",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates error": {
+        "extension_type": "Templates",
+        "id": "9285",
+        "name": "Error",
+        "alias": "error",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Error",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates errors": {
+        "extension_type": "Templates",
+        "id": "9300",
+        "name": "Errors",
+        "alias": "errors",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Errors",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates featured": {
+        "extension_type": "Templates",
+        "id": "9305",
+        "name": "Featured",
+        "alias": "featured",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Featured",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates feed": {
+        "extension_type": "Templates",
+        "id": "9310",
+        "name": "Feed",
+        "alias": "feed",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Feed",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates footer": {
+        "extension_type": "Templates",
+        "id": "9320",
+        "name": "Footer",
+        "alias": "footer",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Footer",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_audio": {
+        "extension_type": "Templates",
+        "id": "9325",
+        "name": "Form_audio",
+        "alias": "form_audio",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_audio",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_begin": {
+        "extension_type": "Templates",
+        "id": "9330",
+        "name": "Form_begin",
+        "alias": "form_begin",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_begin",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_boolean": {
+        "extension_type": "Templates",
+        "id": "9340",
+        "name": "Form_boolean",
+        "alias": "form_boolean",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_boolean",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_catalog_id": {
+        "extension_type": "Templates",
+        "id": "9350",
+        "name": "Form_catalog_id",
+        "alias": "form_catalog_id",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_catalog_id",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_color": {
+        "extension_type": "Templates",
+        "id": "9360",
+        "name": "Form_color",
+        "alias": "form_color",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_color",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_columns1": {
+        "extension_type": "Templates",
+        "id": "9370",
+        "name": "Form_columns1",
+        "alias": "form_columns1",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_columns1",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_columns2": {
+        "extension_type": "Templates",
+        "id": "9380",
+        "name": "Form_columns2",
+        "alias": "form_columns2",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_columns2",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_date": {
+        "extension_type": "Templates",
+        "id": "9390",
+        "name": "Form_date",
+        "alias": "form_date",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_date",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_datetime": {
+        "extension_type": "Templates",
+        "id": "9400",
+        "name": "Form_datetime",
+        "alias": "form_datetime",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_datetime",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_display": {
+        "extension_type": "Templates",
+        "id": "9405",
+        "name": "Form_display",
+        "alias": "form_display",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_display",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_email": {
+        "extension_type": "Templates",
+        "id": "9410",
+        "name": "Form_email",
+        "alias": "form_email",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_email",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_end": {
+        "extension_type": "Templates",
+        "id": "9420",
+        "name": "Form_end",
+        "alias": "form_end",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_end",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_file": {
+        "extension_type": "Templates",
+        "id": "9430",
+        "name": "Form_file",
+        "alias": "form_file",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_file",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_folder": {
+        "extension_type": "Templates",
+        "id": "9440",
+        "name": "Form_folder",
+        "alias": "form_folder",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_folder",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_hidden": {
+        "extension_type": "Templates",
+        "id": "9450",
+        "name": "Form_hidden",
+        "alias": "form_hidden",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_hidden",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_html": {
+        "extension_type": "Templates",
+        "id": "9460",
+        "name": "Form_html",
+        "alias": "form_html",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_html",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_id": {
+        "extension_type": "Templates",
+        "id": "9470",
+        "name": "Form_id",
+        "alias": "form_id",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_id",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_image": {
+        "extension_type": "Templates",
+        "id": "9480",
+        "name": "Form_image",
+        "alias": "form_image",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_image",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_ip_address": {
+        "extension_type": "Templates",
+        "id": "9500",
+        "name": "Form_ip_address",
+        "alias": "form_ip_address",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_ip_address",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_month": {
+        "extension_type": "Templates",
+        "id": "9510",
+        "name": "Form_month",
+        "alias": "form_month",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_month",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_numeric": {
+        "extension_type": "Templates",
+        "id": "9490",
+        "name": "Form_numeric",
+        "alias": "form_numeric",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_numeric",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_page": {
+        "extension_type": "Templates",
+        "id": "9520",
+        "name": "Form_page",
+        "alias": "form_page",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_page",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_password": {
+        "extension_type": "Templates",
+        "id": "9530",
+        "name": "Form_password",
+        "alias": "form_password",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_password",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_radio": {
+        "extension_type": "Templates",
+        "id": "9540",
+        "name": "Form_radio",
+        "alias": "form_radio",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_radio",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_range": {
+        "extension_type": "Templates",
+        "id": "9550",
+        "name": "Form_range",
+        "alias": "form_range",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_range",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_selectlist": {
+        "extension_type": "Templates",
+        "id": "9560",
+        "name": "Form_selectlist",
+        "alias": "form_selectlist",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_selectlist",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_string": {
+        "extension_type": "Templates",
+        "id": "9570",
+        "name": "Form_string",
+        "alias": "form_string",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_string",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_time": {
+        "extension_type": "Templates",
+        "id": "9580",
+        "name": "Form_time",
+        "alias": "form_time",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_time",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_url": {
+        "extension_type": "Templates",
+        "id": "9590",
+        "name": "Form_url",
+        "alias": "form_url",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_url",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_userid": {
+        "extension_type": "Templates",
+        "id": "9600",
+        "name": "Form_userid",
+        "alias": "form_userid",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_userid",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates form_video": {
+        "extension_type": "Templates",
+        "id": "9610",
+        "name": "Form_video",
+        "alias": "form_video",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Form_video",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates gallery": {
+        "extension_type": "Templates",
+        "id": "9620",
+        "name": "Gallery",
+        "alias": "gallery",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Gallery",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates grid": {
+        "extension_type": "Templates",
+        "id": "9630",
+        "name": "Grid",
+        "alias": "grid",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Grid",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates grid_categories": {
+        "extension_type": "Templates",
+        "id": "9640",
+        "name": "Grid_categories",
+        "alias": "grid_categories",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Grid_categories",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates grid_filters": {
+        "extension_type": "Templates",
+        "id": "9650",
+        "name": "Grid_filters",
+        "alias": "grid_filters",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Grid_filters",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates grid_permissions": {
+        "extension_type": "Templates",
+        "id": "9660",
+        "name": "Grid_permissions",
+        "alias": "grid_permissions",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Grid_permissions",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates grid_tags": {
+        "extension_type": "Templates",
+        "id": "9670",
+        "name": "Grid_tags",
+        "alias": "grid_tags",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Grid_tags",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates head": {
+        "extension_type": "Templates",
+        "id": "9680",
+        "name": "Head",
+        "alias": "head",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Head",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates header": {
+        "extension_type": "Templates",
+        "id": "9690",
+        "name": "Header",
+        "alias": "header",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Header",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates image": {
+        "extension_type": "Templates",
+        "id": "27188",
+        "name": "Image",
+        "alias": "image",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Image",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates install": {
+        "extension_type": "Templates",
+        "id": "9700",
+        "name": "Install",
+        "alias": "install",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Install",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates item": {
+        "extension_type": "Templates",
+        "id": "9710",
+        "name": "Item",
+        "alias": "item",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Item",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates json": {
+        "extension_type": "Templates",
+        "id": "9720",
+        "name": "Json",
+        "alias": "json",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Json",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates list": {
+        "extension_type": "Templates",
+        "id": "9730",
+        "name": "List",
+        "alias": "list",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Head",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates map": {
+        "extension_type": "Templates",
+        "id": "9695",
+        "name": "Map",
+        "alias": "map",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Map",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates messages": {
+        "extension_type": "Templates",
+        "id": "9740",
+        "name": "Messages",
+        "alias": "messages",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Messages",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates metadata": {
+        "extension_type": "Templates",
+        "id": "9745",
+        "name": "Metadata",
+        "alias": "metadata",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Metadata",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates navbar": {
+        "extension_type": "Templates",
+        "id": "9750",
+        "name": "Navbar",
+        "alias": "navbar",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Navbar",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates offline": {
+        "extension_type": "Templates",
+        "id": "9785",
+        "name": "Offline",
+        "alias": "offline",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Offline",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates pagination": {
+        "extension_type": "Templates",
+        "id": "9760",
+        "name": "Pagination",
+        "alias": "pagination",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Pagination",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates paging": {
+        "extension_type": "Templates",
+        "id": "9770",
+        "name": "Paging",
+        "alias": "paging",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Paging",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates profile": {
+        "extension_type": "Templates",
+        "id": "9780",
+        "name": "Profile",
+        "alias": "profile",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Profile",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates profiler": {
+        "extension_type": "Templates",
+        "id": "9790",
+        "name": "Profiler",
+        "alias": "profiler",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Profiler",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates promotion": {
+        "extension_type": "Templates",
+        "id": "9800",
+        "name": "Promotion",
+        "alias": "promotion",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Promotion",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates quick_links": {
+        "extension_type": "Templates",
+        "id": "9805",
+        "name": "Quick_links",
+        "alias": "quick_links",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Quick_links",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates rotator": {
+        "extension_type": "Templates",
+        "id": "9810",
+        "name": "Rotator",
+        "alias": "rotator",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Rotator",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates search": {
+        "extension_type": "Templates",
+        "id": "9820",
+        "name": "Search",
+        "alias": "search",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Search",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates sidebar": {
+        "extension_type": "Templates",
+        "id": "9815",
+        "name": "Sidebar",
+        "alias": "sidebar",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Sidebar",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates signup": {
+        "extension_type": "Templates",
+        "id": "9830",
+        "name": "Signup",
+        "alias": "signup",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Signup",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates systeminfo": {
+        "extension_type": "Templates",
+        "id": "9840",
+        "name": "Systeminfo",
+        "alias": "systeminfo",
+        "namespace": "Molajo\\Themes\\System\\Views\\Templates\\Systeminfo",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates tableofcontents": {
+        "extension_type": "Templates",
+        "id": "9755",
+        "name": "Table_of_contents",
+        "alias": "tableofcontents",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\TableOfContents",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates tabs": {
+        "extension_type": "Templates",
+        "id": "9845",
+        "name": "Tabs",
+        "alias": "tabs",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Tabs",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates tags": {
+        "extension_type": "Templates",
+        "id": "9855",
+        "name": "Tags",
+        "alias": "tags",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Tags",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates toolbar": {
+        "extension_type": "Templates",
+        "id": "9850",
+        "name": "Toolbar",
+        "alias": "toolbar",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Toolbar",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates video": {
+        "extension_type": "Templates",
+        "id": "9860",
+        "name": "Video",
+        "alias": "video",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Video",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates vote": {
+        "extension_type": "Templates",
+        "id": "9870",
+        "name": "Vote",
+        "alias": "vote",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Vote",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Templates weather": {
+        "extension_type": "Templates",
+        "id": "9890",
+        "name": "Weather",
+        "alias": "weather",
+        "namespace": "Molajo\\Themes\\Foundation5\\Views\\Templates\\Weather",
+        "extension_catalog_type_id": "9000",
+        "content_catalog_type_id": "9000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps article": {
+        "extension_type": "Wraps",
+        "id": "10010",
+        "name": "Article",
+        "alias": "article",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Article",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps aside": {
+        "extension_type": "Wraps",
+        "id": "10020",
+        "name": "Aside",
+        "alias": "aside",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Aside",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps default": {
+        "extension_type": "Wraps",
+        "id": "10030",
+        "name": "Default",
+        "alias": "default",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Default",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps div": {
+        "extension_type": "Wraps",
+        "id": "10040",
+        "name": "Div",
+        "alias": "div",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Div",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps fieldset": {
+        "extension_type": "Wraps",
+        "id": "10050",
+        "name": "Fieldset",
+        "alias": "fieldset",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Fieldset",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps footer": {
+        "extension_type": "Wraps",
+        "id": "10060",
+        "name": "Footer",
+        "alias": "footer",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Footer",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps form": {
+        "extension_type": "Wraps",
+        "id": "10070",
+        "name": "Form",
+        "alias": "form",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Form",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps header": {
+        "extension_type": "Wraps",
+        "id": "10080",
+        "name": "Header",
+        "alias": "header",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Header",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps hgroup": {
+        "extension_type": "Wraps",
+        "id": "10090",
+        "name": "Hgroup",
+        "alias": "hgroup",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Hgroup",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps iframe": {
+        "extension_type": "Wraps",
+        "id": "10100",
+        "name": "Iframe",
+        "alias": "iframe",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Iframe",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps modal": {
+        "extension_type": "Wraps",
+        "id": "10110",
+        "name": "Modal",
+        "alias": "modal",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Modal",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps nav": {
+        "extension_type": "Wraps",
+        "id": "10120",
+        "name": "Nav",
+        "alias": "nav",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Nav",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps none": {
+        "extension_type": "Wraps",
+        "id": "10130",
+        "name": "None",
+        "alias": "none",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\None",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps portlet": {
+        "extension_type": "Wraps",
+        "id": "10140",
+        "name": "Portlet",
+        "alias": "portlet",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Portlet",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Wraps section": {
+        "extension_type": "Wraps",
+        "id": "10150",
+        "name": "Section",
+        "alias": "section",
+        "namespace": "Molajo\\Themes\\System\\Views\\Wraps\\Section",
+        "extension_catalog_type_id": "10000",
+        "content_catalog_type_id": "10000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources articles": {
+        "extension_type": "Resources",
+        "id": "16000",
+        "name": "Articles",
+        "alias": "articles",
+        "namespace": "Molajo\\Resources\\Articles",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "16000",
+        "contentfields": "{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \r\n         \"Image1\",\r\n         \"Image1_caption\",\r\n         \"Image2\",\r\n         \"Image2_caption\",\r\n         \"Image3\",\r\n         \"Image3_caption\"\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources audio": {
+        "extension_type": "Resources",
+        "id": "24000",
+        "name": "Audio",
+        "alias": "audio",
+        "namespace": "Molajo\\Resources\\Audio",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "24000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources categories": {
+        "extension_type": "Resources",
+        "id": "14000",
+        "name": "Categories",
+        "alias": "categories",
+        "namespace": "Molajo\\Resources\\Categories",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "14000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources comments": {
+        "extension_type": "Resources",
+        "id": "17000",
+        "name": "Comments",
+        "alias": "comments",
+        "namespace": "Molajo\\Resources\\Comments",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "17000",
+        "contentfields": "{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \r\n         \"Display_gravatar\",\r\n            \"Visitor_name\",\r\n            \"Email_address\",\r\n            \"Website\",\r\n            \"Ip_address\"\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}"
+    },
+    "Resources contacts": {
+        "extension_type": "Resources",
+        "id": "18000",
+        "name": "Contacts",
+        "alias": "contacts",
+        "namespace": "Molajo\\Resources\\Contacts",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "18000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources files": {
+        "extension_type": "Resources",
+        "id": "22000",
+        "name": "Files",
+        "alias": "files",
+        "namespace": "Molajo\\Resources\\Files",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "22000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources groups": {
+        "extension_type": "Resources",
+        "id": "13000",
+        "name": "Groups",
+        "alias": "groups",
+        "namespace": "Molajo\\Resources\\Groups",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "13000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources images": {
+        "extension_type": "Resources",
+        "id": "21000",
+        "name": "Images",
+        "alias": "images",
+        "namespace": "Molajo\\Resources\\Images",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "21000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources links": {
+        "extension_type": "Resources",
+        "id": "25000",
+        "name": "Links",
+        "alias": "links",
+        "namespace": "Molajo\\Resources\\Links",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "25000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources pages": {
+        "extension_type": "Resources",
+        "id": "20000",
+        "name": "Pages",
+        "alias": "pages",
+        "namespace": "Molajo\\Resources\\Pages",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "20000",
+        "contentfields": "{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \r\n         \"Image1\",\r\n         \"Image1_caption\",\r\n         \"Image2\",\r\n         \"Image2_caption\",\r\n         \"Image3\",\r\n         \"Image3_caption\"\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources tags": {
+        "extension_type": "Resources",
+        "id": "15000",
+        "name": "Tags",
+        "alias": "tags",
+        "namespace": "Molajo\\Resources\\Tags",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "15000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    },
+    "Resources video": {
+        "extension_type": "Resources",
+        "id": "23000",
+        "name": "Video",
+        "alias": "video",
+        "namespace": "Molajo\\Resources\\Video",
+        "extension_catalog_type_id": "12000",
+        "content_catalog_type_id": "23000",
+        "contentfields": "\r\n{  \r\n   \"field_keys\":[  \r\n      \"customfields\",\r\n      \"metadata\",\r\n      \"parameters\"\r\n   ],\r\n   \"fields\":{  \r\n      \"customfields\":[  \n\n\r\n      ],\r\n      \"metadata\":[  \r\n\r\n      ],\r\n      \"parameters\":[  \r\n\r\n      ]\r\n   }\r\n}\r\n"
+    }
+}

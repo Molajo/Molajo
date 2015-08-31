@@ -3,9 +3,6 @@
         "Molajo\\Plugins\\Activity\\ActivityPlugin",
         "Molajo\\Plugins\\Login\\LoginPlugin"
     ],
-    "onAfterAuthorisation": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin"
-    ],
     "onAfterCreate": [
         "Molajo\\Plugins\\Activity\\ActivityPlugin",
         "Molajo\\Plugins\\Catalog\\CatalogPlugin",
@@ -17,11 +14,9 @@
         "Molajo\\Plugins\\Item\\ItemPlugin"
     ],
     "onAfterDispatcher": [
-        "Molajo\\Plugins\\Activity\\ActivityPlugin",
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin"
+        "Molajo\\Plugins\\Activity\\ActivityPlugin"
     ],
     "onAfterExecute": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin",
         "Molajo\\Plugins\\Messages\\MessagesPlugin"
     ],
     "onAfterInitialise": [
@@ -71,14 +66,7 @@
     "onAfterRenderTheme": [
         "Molajo\\Plugins\\Theme\\ThemePlugin"
     ],
-    "onAfterResponse": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin"
-    ],
-    "onAfterRoute": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin"
-    ],
     "onAfterStart": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin",
         "Molajo\\Plugins\\Events\\EventsPlugin",
         "Molajo\\Plugins\\Extensions\\ExtensionsPlugin",
         "Molajo\\Plugins\\Messages\\MessagesPlugin"
@@ -92,9 +80,6 @@
     "onBeforeAuthenticate": [
         "Molajo\\Plugins\\Login\\LoginPlugin"
     ],
-    "onBeforeAuthorisation": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin"
-    ],
     "onBeforeCreate": [
         "Molajo\\Plugins\\Alias\\AliasPlugin",
         "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin",
@@ -105,12 +90,8 @@
     "onBeforeDelete": [
         "Molajo\\Plugins\\Item\\ItemPlugin"
     ],
-    "onBeforeDispatcher": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin"
-    ],
     "onBeforeExecute": [
         "Molajo\\Plugins\\Application\\ApplicationPlugin",
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin",
         "Molajo\\Plugins\\Fields\\FieldsPlugin",
         "Molajo\\Plugins\\Menuitems\\MenuitemsPlugin"
     ],
@@ -151,12 +132,8 @@
         "Molajo\\Plugins\\Wrap\\WrapPlugin"
     ],
     "onBeforeResponse": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin",
         "Molajo\\Plugins\\Csrftoken\\CsrftokenPlugin",
         "Molajo\\Plugins\\Spamprotection\\SpamprotectionPlugin"
-    ],
-    "onBeforeRoute": [
-        "Molajo\\Plugins\\Authorisation\\AuthorisationPlugin"
     ],
     "onBeforeUpdate": [
         "Molajo\\Plugins\\Alias\\AliasPlugin",
